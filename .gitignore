@@ -1,0 +1,13 @@
+# dependencies
+node_modules
+
+# build
+dist
+
+# testing
+coverage
+
+# debugging
+.vscode/launch.json
+
+storybook-static

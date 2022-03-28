@@ -1,0 +1,43 @@
+{
+	"compilerOptions": {
+		/* General settings */
+		"target": "ES2019",
+		"declaration": true,
+		"declarationDir": "dist",
+		"isolatedModules": true,
+		"jsx": "react",
+		/* Module settings */
+		"module": "es6",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"baseUrl": "./",
+		"esModuleInterop": true,
+		"noEmit": true,
+		/* Compiler settings */
+		"allowJs": true,
+		"skipLibCheck": true,
+		"keyofStringsOnly": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"alwaysStrict": true,
+		"strictBindCallApply": true,
+		/* Output Files */
+		"outDir": "build",
+		"sourceMap": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"preserveConstEnums": true,
+		/* Paths */
+		"lib": [
+			"ES2020",
+			"ES2021",
+		]
+	},
+	"include": [
+		"src"
+	],
+	"exclude": [
+		"**/node_modules/*",
+		"rollup.config.js",
+	],
+}
