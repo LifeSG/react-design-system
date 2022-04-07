@@ -26,13 +26,7 @@
         }
     },
     "rules": {
-        "indent": [
-            "warn",
-            "tab",
-            {
-                "SwitchCase": 1
-            }
-        ],
+        "indent": "off", // Need this else it clashes with @typescript-eslint/indent
         "no-empty": "off",
         "no-console": "off",
         "no-debugger": "off",
@@ -57,7 +51,7 @@
                 "ignoreDeclarationSort": true
             }
         ],
-        "@typescript-eslint/indent": ["warn", 4],
+        "@typescript-eslint/indent": ["warn", "tab"],
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/member-delimiter-style": [
             "warn",
