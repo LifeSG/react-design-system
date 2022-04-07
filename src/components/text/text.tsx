@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { StyledComponent, css } from "styled-components";
+import styled, { css } from "styled-components";
 import { Icon } from "../icon";
 import { Color } from "../styles/theme";
 import { TextStyleHelper } from "./helper";
