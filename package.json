@@ -1,5 +1,5 @@
 {
-    "name": "react-design-system",
+    "name": "@lifesg/react-design-system",
     "version": "6.0.0",
     "description": "A component design system for LifeSG web apps",
     "main": "dist/index.js",
@@ -13,7 +13,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/LifeSG/design-system-react.git"
+        "url": "git+https://github.com/LifeSG/react-design-system.git"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
     },
     "keywords": [
         "design-system"
@@ -21,9 +24,9 @@
     "author": "LifeSG",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/LifeSG/design-system-react/issues"
+        "url": "https://github.com/LifeSG/react-design-system/issues"
     },
-    "homepage": "https://github.com/LifeSG/design-system-react#readme",
+    "homepage": "https://github.com/LifeSG/react-design-system#readme",
     "devDependencies": {
         "@babel/core": "^7.17.8",
         "@babel/preset-env": "^7.16.11",
