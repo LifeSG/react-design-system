@@ -32,10 +32,10 @@ const DBody = styled.h1<TextProps>`
     ${(props) => {
         return css`
             ${TextStyleHelper.getTextStyle(
-        "DBody",
-        props.weight,
-        props.paragraph
-    )}
+                "DBody",
+                props.weight,
+                props.paragraph
+            )}
             color: ${Color.Neutral[1]};
             ${TextStyleHelper.getDisplayStyle(props.inline, props.paragraph)}
         `;
@@ -104,12 +104,12 @@ const H6 = styled.h6<TextProps>`
 
 const Body = styled.p<TextProps>`
     ${(props) => {
-        return `
+        return css`
             ${TextStyleHelper.getTextStyle(
-        "Body",
-        props.weight,
-        props.paragraph
-    )}
+                "Body",
+                props.weight,
+                props.paragraph
+            )}
             color: ${Color.Neutral[1]};
             ${TextStyleHelper.getDisplayStyle(props.inline, props.paragraph)}
         `;
@@ -120,10 +120,10 @@ const BodySmall = styled.p<TextProps>`
     ${(props) => {
         return css`
             ${TextStyleHelper.getTextStyle(
-        "BodySmall",
-        props.weight,
-        props.paragraph
-    )}
+                "BodySmall",
+                props.weight,
+                props.paragraph
+            )}
             color: ${Color.Neutral[1]};
             ${TextStyleHelper.getDisplayStyle(props.inline, props.paragraph)}
         `;
@@ -134,10 +134,10 @@ const XSmall = styled.span<TextProps>`
     ${(props) => {
         return css`
             ${TextStyleHelper.getTextStyle(
-        "XSmall",
-        props.weight,
-        props.paragraph
-    )}
+                "XSmall",
+                props.weight,
+                props.paragraph
+            )}
             color: ${Color.Neutral[1]};
             ${TextStyleHelper.getDisplayStyle(props.inline, props.paragraph)}
         `;
