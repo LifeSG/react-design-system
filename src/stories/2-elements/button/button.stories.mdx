@@ -1,0 +1,79 @@
+import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { Button } from "src/components";
+import { Container } from "./doc-elements";
+
+<Meta title="elements/Button" />
+
+# Button
+
+The primary call to action component.
+
+The `Button` component comes in 2 sizes, a default and small size.
+
+### Default size
+
+<Canvas>
+    <Story name="Button">
+        <Container>
+            <Button.Default>Default</Button.Default>
+            <Button.Default styleType="secondary">Secondary</Button.Default>
+            <Button.Default styleType="light">Light</Button.Default>
+            <Button.Default disabled>Disabled</Button.Default>
+        </Container>
+    </Story>
+</Canvas>
+
+### Small size
+
+<Preview>
+    <Container>
+        <Button.Small>Small</Button.Small>
+        <Button.Small styleType="secondary">Secondary</Button.Small>
+        <Button.Small styleType="light">Light</Button.Small>
+        <Button.Small disabled>Disabled</Button.Small>
+    </Container>
+</Preview>
+
+### Animated buttons
+
+#### Loading
+
+To indicate to a user that a certain action is in progress.
+
+<Preview>
+    <Container>
+        <Button.Default loading>Loading</Button.Default>
+        <Button.Default styleType="secondary" loading>
+            Loading
+        </Button.Default>
+        <Button.Default styleType="light" loading>
+            Loading
+        </Button.Default>
+        <Button.Default disabled loading>
+            Loading
+        </Button.Default>
+    </Container>
+    <Container>
+        <Button.Small loading>Loading</Button.Small>
+        <Button.Small styleType="secondary" loading>
+            Loading
+        </Button.Small>
+        <Button.Small styleType="light" loading>
+            Loading
+        </Button.Small>
+        <Button.Small disabled loading>
+            Loading
+        </Button.Small>
+    </Container>
+</Preview>
+
+## Props
+
+The component also inherits the [HTMLButtonElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement).
+
+Custom props for this component are as such:
+
+| Name             |                            Description                             |   Default |
+| ---------------- | :----------------------------------------------------------------: | --------: |
+| **styleType**`*` | The style of the **Button**. <br />`default`, `secondary`, `light` | `default` |
+| **loading**      |      Setting will display a loading spinner. <br />`boolean`       |   `false` |
