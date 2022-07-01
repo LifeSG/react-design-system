@@ -1,52 +1,52 @@
 @import url("https://cdn.jsdelivr.net/npm/sgds-govtech@1.3.17/css/sgds.css");
 
 @font-face {
-  font-family: "Open Sans";
-  src: url("https://mol-mgmt-app-assets.s3-ap-southeast-1.amazonaws.com/lifesg/OpenSans-Regular.ttf");
+    font-family: "Open Sans";
+    src: url("./assets/font/OpenSans-Regular.ttf");
 }
 
 @font-face {
-  font-family: "Open Sans Semibold";
-  src: url("https://mol-mgmt-app-assets.s3-ap-southeast-1.amazonaws.com/lifesg/OpenSans-Semibold.ttf");
+    font-family: "Open Sans Semibold";
+    src: url("./assets/font/OpenSans-Semibold.ttf");
 }
 
 @font-face {
-  font-family: "Open Sans Bold";
-  src: url("https://mol-mgmt-app-assets.s3-ap-southeast-1.amazonaws.com/lifesg/OpenSans-Bold.ttf");
+    font-family: "Open Sans Bold";
+    src: url("./assets/font/OpenSans-Bold.ttf");
 }
 
 @font-face {
-  font-family: "Open Sans Extra Bold";
-  src: url("https://mol-mgmt-app-assets.s3-ap-southeast-1.amazonaws.com/lifesg/OpenSans-ExtraBold.ttf");
+    font-family: "Open Sans Extra Bold";
+    src: url("./assets/font/OpenSans-ExtraBold.ttf");
 }
 
 @font-face {
-  font-family: "Open Sans Light";
-  src: url("https://mol-mgmt-app-assets.s3-ap-southeast-1.amazonaws.com/lifesg/OpenSans-Light.ttf");
+    font-family: "Open Sans Light";
+    src: url("./assets/font/OpenSans-Light.ttf");
 }
 
 @font-face {
-	font-family: "Lato";
-	src: url("/src/assets/font/Lato-Regular.ttf");
+    font-family: "Lato";
+    src: url("./assets/font/Lato-Regular.ttf");
 }
 
 .sgds-icon {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "sgds-icons" !important;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1rem;
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "sgds-icons" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1rem;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .external-link::after {
-  display: inline-block;
-  font-family: "sgds-icons";
-  content: "\e95c";
-  padding-left: 0.25rem;
+    display: inline-block;
+    font-family: "sgds-icons";
+    content: "\e95c";
+    padding-left: 0.25rem;
 }
