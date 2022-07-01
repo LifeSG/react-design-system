@@ -51,7 +51,6 @@
                 "ignoreDeclarationSort": true
             }
         ],
-        "@typescript-eslint/indent": ["warn", "tab"],
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/member-delimiter-style": [
             "warn",
