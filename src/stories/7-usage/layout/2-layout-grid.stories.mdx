@@ -1,0 +1,69 @@
+import { Meta } from "@storybook/addon-docs";
+import { ExampleGridComponent } from "./doc-elements";
+
+<Meta title="Usage/Layout/Grid Layout" />
+
+# Grid Layout
+
+Similar to what the `Section`, `Container` and `Content` does, this provides a set of components that is in a [Grid](https://www.w3schools.com/css/css_grid.asp) layout format.
+
+## The Grid
+
+The design system uses a **12 column** grid layout, with a column gutter of `2rem` for desktop viewports. The other viewport sizes are as such:
+
+-   Tablet **8 columns**, `1.5rem` gutter
+-   Mobile **4 columns**, `1rem` gutter
+
+<ExampleGridComponent />
+
+## Usage
+
+There are 2 main components you can make use of:
+
+-   `GridContainer` - this provides a div with a grid layout.
+-   `GridContent` - similar to `Content`, this is meant to provide a fuss free usage while achieving the grid layout.
+
+### GridContainer
+
+This serves as just a div providing the grid layout. **You will still require to use it along with `Section` and `Container`**.
+
+```tsx
+<Layout.Section>
+    <Layout.Container>
+        <Layout.GridContainer>
+            <CustomComponent />
+        </Layout.GridContainer>
+    </Layout.Container>
+</Layout.Section>
+```
+
+### GridContent
+
+Using this component does not require you to specify the `Section` and `Container` components.
+
+```tsx
+<Layout.GridContent>
+    <CustomComponent />
+</Layout.GridContent>
+```
+
+## Amending the styling
+
+You can simply amend the style of the Layout components as such
+
+### With `styled-components`
+
+```tsx
+const StyledContainer = styled(Layout.GridContainer)`
+    background: red;
+    padding: 1rem;
+`;
+```
+
+### With CSS
+
+```tsx
+<Layout.GridContainer className="my-custom-class">
+    Example layout
+</Layout.GridContainer>
+```

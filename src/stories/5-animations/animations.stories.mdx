@@ -1,0 +1,46 @@
+import {
+    Canvas,
+    Description,
+    Meta,
+    Story,
+    Preview,
+} from "@storybook/addon-docs";
+import { LoadingDots, LoadingSpinner } from "src/components";
+import {
+    AnimationDisplay,
+    AnimationItem,
+    AnimationPane,
+    Content,
+} from "./doc-elements";
+
+<Meta title="animations/Core Animations" />
+
+# Core Animations
+
+<AnimationDisplay>
+    <AnimationItem>
+        <AnimationPane>
+			<LoadingSpinner />
+		</AnimationPane>
+        <Content>
+			<Description>#### Loading Spinner</Description>
+			<Description>
+				An animation that can be shown in between page transitions or while waiting for fetching of data.
+			</Description>
+			<code>{"<LoadingSpinner />"}</code>
+		</Content>
+    </AnimationItem>
+	 <AnimationItem>
+        <AnimationPane>
+			<LoadingDots />
+		</AnimationPane>
+        <Content>
+			<Description>#### Loading Dots</Description>
+			<Description>
+				An animation that can be shown in between page transitions or while waiting for fetching of data.
+			</Description>
+			<code>{"<LoadingDots />"}</code>
+		</Content>
+    </AnimationItem>
+
+</AnimationDisplay>

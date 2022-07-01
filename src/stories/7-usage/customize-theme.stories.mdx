@@ -1,0 +1,93 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Usage/Customizing Themes" />
+
+# Customizing Themes
+
+All themes start off with a `default` configuration. The default values can be found in each theme's exported object.
+
+> eg: In `color-theme.ts`, the default color scheme is `"base"`.
+
+For a more basic usage of themes, refer to Usage section under [Getting Started](/docs/getting-started--page).
+
+## Basics
+
+### Understanding the `Theme` object
+
+This is the structure of the object passed into ThemeProvider.
+
+```typescript
+{
+	colorScheme: "base",
+	layout: "normal",
+	...
+}
+```
+
+## Customizing
+
+### Overriding default theme settings
+
+You can override the default theme settings in various ways:
+
+1. On component using ThemeProvider
+2. On individual element using modified props
+
+#### Override component with ThemeProvider
+
+Wrap ThemeProvider over the specified component and pass customized theme object as a prop.
+
+```tsx
+import { ThemeProvider } from "styled-components";
+import { ThemeSpec } from "react-lifesg-design-system/types";
+
+const anotherTheme: ThemeSpec = {
+	colorScheme: "dark"
+}
+
+<ThemeProvider theme={anotherTheme}>
+	<SomeComponent />
+</ThemeProvider>
+
+
+```
+
+#### Override element with modified props
+
+##### Styling (default)
+
+```tsx
+${props => {
+	return`
+		color: ${Color.Neutral[3](props)};
+		border: 1px solid ${Color.Neutral[3](props)};
+	`
+}}
+```
+
+##### Styling (modified)
+
+```tsx
+${props => {
+	const modifiedProps = {
+		...props,
+		theme: { colorScheme: "dark" }
+	}
+	return `
+		color: ${Color.Neutral[3](modifiedProps)};
+		border: 1px solid ${Color.Neutral[3](props)};
+	`
+}}
+```
+
+### Implementing dynamic themes
+
+For themes to update visuals dynamically, you will need to pass a function to return an updated theme prop in the ThemeProvider.
+
+```tsx
+const currentTheme = changeThemeFn()
+
+<ThemeProvider theme={currentTheme}>
+	<SomeComponent/>
+</ThemeProvider>
+```

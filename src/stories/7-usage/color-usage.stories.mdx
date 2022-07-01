@@ -1,0 +1,79 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Usage/Color" />
+
+# Color
+
+You are recommended to use the colors of the design system in order to adhere to the design guidelines. To do so, you will just need to import `Color` from the library.
+
+> Note: Colors are tied to the applied theme. Without the theme specification, the default color set will be used.
+
+```tsx
+import { Color } from "react-lifesg-design-system";
+```
+
+## Usage
+
+### With `styled-components`
+
+#### Regular usage
+
+```tsx
+import styled from "styled-components";
+import { Color } from "react-lifesg-design-system";
+
+const Element = styled.div`
+    display: flex;
+    background: ${Color.Brand[1]};
+`;
+```
+
+#### Using with props adaptation
+
+You will need to pass in the props to Color as the style is now a function.
+
+```tsx
+import styled from "styled-components";
+import { Color } from "react-lifesg-design-system";
+import { ElementProps } from "./types";
+
+const Element = styled.div<ElementProps>`
+    display: flex;
+    ${(props) => {
+        if (props.selected) {
+            return `
+				background: ${Color.Brand[3](props)};
+			`;
+        } else {
+            return `
+				background: ${Color.Brand[1](props)};
+			`;
+        }
+    }};
+`;
+```
+
+### With CSS
+
+```tsx
+import React from "react";
+import { Color } from "react-lifesg-design-system";
+
+export const SomeElement = () => {
+	return (
+		<div className="your-css-class" style={{ background: Color.Primary }}>
+			<!-- render logic -->
+		</div>
+	);
+}
+```
+
+## Accessing the actual value of the color
+
+In the unlikely event you need the access the actual hex value of the Color, you can do as such.
+
+```tsx
+import { BaseTheme, Color } from "react-lifesg-design-system";
+
+const colorCode = Color.Neutral[1]({ theme: BaseTheme });
+```

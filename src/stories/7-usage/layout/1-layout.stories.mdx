@@ -1,0 +1,93 @@
+import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { ExampleComponent } from "./doc-elements";
+
+<Meta title="Usage/Layout/Default" />
+
+# Layout
+
+The layout components help limit elements based on the user's screen size.
+
+These components uses the styles from the **Singapore Government Design System (SGDS)**. [Read more](https://www.designsystem.tech.gov.sg/docs/container/) to find out.
+
+There are 5 main components you can make use of:
+
+-   `Section` - this is the equivalent of `sgds-section` class.
+-   `Container` - this is the equivalent of `sgds-container` class.
+-   `Content` - this is a combination of `Section` and `Container` to provide a fuss free usage.
+
+## Usage
+
+Based on the **SGDS**, it recommends to use the `Section` and `Container` together to achieve the correct responsive layout.
+
+<ExampleComponent />
+
+<br />
+
+Our `Layout` components follows the same behaviour. Here is how you can use it.
+
+```tsx
+import { Layout } from "react-lifesg-design-system";
+
+<Layout.Section>
+    <Layout.Container>Example layout</Layout.Container>
+</Layout.Section>;
+```
+
+However we understand that having to remember to use two different components could be cumbersome.
+As such, for a more fuss free approach, we have the `Content` component that composes of `Section` and `Container`. To use it, simply do this:
+
+```tsx
+import { Layout } from "react-lifesg-design-system";
+
+<Layout.Content>Example layout</Layout.Content>;
+```
+
+## Style Specifications
+
+The `Section` component has a built in `1.5rem` horizontal padding for screen widths of `768px` and below, as part of our design system guidelines.
+To overwrite that style, you will simply need to overwrite the css style:
+
+```css
+padding-left: 0 !important;
+padding-right: 0 !important;
+```
+
+## Amending the styling
+
+You can simply amend the style of the Layout components as such
+
+### With `styled-components`
+
+```tsx
+const StyledContainer = styled(Layout.Container)`
+    background: red;
+    display: flex;
+    flex-direction: column;
+`;
+```
+
+### With CSS
+
+```tsx
+<Layout.Container className="my-custom-class">Example layout</Layout.Container>
+```
+
+**NOTE**: For the `Content` component, amending the styling will affect the `Container` component rather than the `Section` component. If you require more customized styling, we suggest
+composing the components yourself.
+
+## Passing Ref
+
+Layout components also support the passing of the `ref` property. Here is how to do it.
+
+```tsx
+import { useRef } from "react";
+
+const sectionRef = useRef<HTMLDivElement>(null);
+
+// Render function
+return (
+    <Layout.Section ref={sectionRef}>
+        <YourComponent />
+    </Layout.Section>
+);
+```
