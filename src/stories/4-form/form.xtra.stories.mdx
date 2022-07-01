@@ -1,0 +1,130 @@
+import { ArgsTable, Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Form, Checkbox } from "src/components";
+import {
+    DisplayLabelForm,
+    FormFieldWithAddon,
+    StyledCheckbox,
+    UsedSeparately,
+} from "./doc-elements";
+
+<Meta title="Form/Form Labels" />
+
+# Label Elements
+
+Here are some form label elements that you can also use alongside your forms if required.
+
+## Form label
+
+Here you can specify the label wherever you require by just using the `Form.Label` component. The props are exactly the same as the HTML `<label>` component.
+
+<Canvas>
+    <Story name="Form Labels">
+        <DisplayLabelForm>
+            <StyledCheckbox />
+            <Form.Label style={{ marginBottom: "0px" }}>
+                This is a checkbox
+            </Form.Label>
+        </DisplayLabelForm>
+    </Story>
+</Canvas>
+
+### Label Addon
+
+Form labels also come with the optional addon, by default is an information icon, that triggers a `Tooltip` or `Popover` to appear.
+
+To enable it, you will need to pass in the `addon` prop to the component as such
+
+<DisplayLabelForm>
+    <StyledCheckbox />
+    <Form.Label
+        style={{ marginBottom: "0px" }}
+        text="This is a checkbox with addon"
+        addon={{
+            content: "This is my addon",
+        }}
+    />
+</DisplayLabelForm>
+
+```tsx
+<DisplayLabelForm>
+    <StyledCheckbox />
+    <Form.Label
+        style={{ marginBottom: "0px" }}
+        text="This is a checkbox with addon"
+        addon={{ content: "This is my addon" }}
+    />
+</DisplayLabelForm>
+```
+
+#### Addon Options
+
+| Name            |                       Description                        | Default   |
+| --------------- | :------------------------------------------------------: | --------- |
+| **content**     | The content of the **addon**<br />`string` `JSX.Element` | -         |
+| **type**        |         The addon type<br />`tooltip` `popover`          | `popover` |
+| **id**          |          The id of the **addon**<br />`string`           | -         |
+| **data-testid** |        The test id of the **addon**<br />`string`        | -         |
+
+#### Using addon with Form elements
+
+You can also enable addon for all `Form` elements
+
+<FormFieldWithAddon />
+
+```tsx
+<Form.Field
+    label={{
+        text: "Field with addon",
+        addon: {
+            content: (
+                <div style={{ background: "yellow" }}>
+                    Custom component addon
+                </div>
+            ),
+        },
+    }}
+    placeholder="Enter field"
+/>
+```
+
+#### Important note ⚠️
+
+There has been occurrence where the usage of the addon leads to undesirable behaviours on the website it is being used on. In the event your site also has some issues, we recommend to integrate the addon component separately. The `Form.LabelAddon` component has been exposed for usage.
+
+<UsedSeparately />
+
+```tsx
+const TriggerComponent = () => <Form.LabelAddon addonType="popover" />;
+const AddonHOC = withPopover(TriggerComponent, {
+    content: "This is my popover content",
+});
+
+export const UsedSeparately = () => (
+    <Form.Label>
+        This was crafted separately
+        <AddonHOC />
+    </Form.Label>
+);
+```
+
+<br />
+
+## Error Message
+
+In some cases, you might need to display error messages at places outside of the form fields.
+Hence the `Form.ErrorMessage` component would come in handy.
+
+The props are inherited from the `Text` component.
+
+<Preview>
+    <div>
+        <Form.Field
+            label="Enter name"
+            errorMessage="Default error message of field"
+        />
+        <br />
+        <Form.ErrorMessage>
+            An additional error message that you can place anywhere
+        </Form.ErrorMessage>
+    </div>
+</Preview>
