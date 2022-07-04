@@ -1,0 +1,167 @@
+import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { Accordion, Text, TextList } from "src/components";
+
+<Meta title="modules/Accordion" component={Accordion} />
+
+# Accordion
+
+Displays expandable and collapsible content panels that can be toggled by the user.
+
+<Canvas>
+    <Story name="Accordion">
+        <Accordion.Base title="My Accordion">
+            <Accordion.Item title="This is the first item">
+                <Text.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </Text.Body>
+            </Accordion.Item>
+            <Accordion.Item title="This is the second item">
+                <Text.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor&nbsp;
+                    <Text.Hyperlink.Default
+                        href="https://www.google.com"
+                        target="_blank"
+                    >
+                        see more here
+                    </Text.Hyperlink.Default>.
+                </Text.Body>
+            </Accordion.Item>
+        </Accordion.Base>
+    </Story>
+</Canvas>
+
+#### Accordion Item with style type `small`
+
+This style type produces a smaller text size for each item's title.
+
+<Preview>
+    <Accordion.Base title="Accordion with smaller text size for each item">
+        <Accordion.Item title="This is the first item" type="small">
+            <Text.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+            </Text.Body>
+        </Accordion.Item>
+        <Accordion.Item title="This is the second item" type="small">
+            <Text.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor&nbsp;
+                <Text.Hyperlink.Default
+                    href="https://www.google.com"
+                    target="_blank"
+                >
+                    see more here
+                </Text.Hyperlink.Default>.
+            </Text.Body>
+        </Accordion.Item>
+    </Accordion.Base>
+</Preview>
+
+#### Show Title in mobile
+
+<Preview>
+    <Accordion.Base
+        title="Accordion with title shown in mobile"
+        showTitleInMobile={true}
+    >
+        <Accordion.Item title="This is the first item">
+            <Text.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+            </Text.Body>
+        </Accordion.Item>
+        <Accordion.Item title="This is the second item">
+            <Text.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor&nbsp;
+                <Text.Hyperlink.Default
+                    href="https://www.google.com"
+                    target="_blank"
+                >
+                    see more here
+                </Text.Hyperlink.Default>.
+            </Text.Body>
+        </Accordion.Item>
+    </Accordion.Base>
+</Preview>
+
+#### Without a title
+
+<Preview>
+    <Accordion.Base>
+        <Accordion.Item title="This is the first item">
+            <Text.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+            </Text.Body>
+        </Accordion.Item>
+        <Accordion.Item title="This is the second item">
+            <Text.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor&nbsp;
+                <Text.Hyperlink.Default
+                    href="https://www.google.com"
+                    target="_blank"
+                >
+                    see more here
+                </Text.Hyperlink.Default>.
+            </Text.Body>
+        </Accordion.Item>
+    </Accordion.Base>
+</Preview>
+
+## Constructing the Accordion
+
+The Accordion is made up of 2 supporting components.
+
+-   `Base` - It serves as the outer container of the Accordion, holding the title as well as a collapse/expand all mechanism
+-   `Item` - This is each of the element in the Accordion. Users are free to construct any content of their choice.
+
+<Preview>
+    <Accordion.Base title="This is the Base">
+        <Accordion.Item title="This is Item">
+            <Text.Body paragraph>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+            </Text.Body>
+            <TextList.Ul>
+                <li>The first item</li>
+                <li>The second item</li>
+                <li>The third item</li>
+            </TextList.Ul>
+        </Accordion.Item>
+    </Accordion.Base>
+</Preview>
+
+## Props
+
+| Name                  |                                      Description                                       | Default |
+| --------------------- | :------------------------------------------------------------------------------------: | ------: |
+| **children**`*`       |          The content of the **Accordion**<br /> `JSX.Element` `JSX.Element[]`          |       - |
+| **title**             |              The label text for the **Accordion** header <br /> `string`               |       - |
+| **enableExpandAll**   | Specifies if the feature to expand/collapse all child items is enabled<br /> `boolean` |  `true` |
+| **showTitleInMobile** |       Specifies if the title should be shown in mobile viewports<br /> `boolean`       | `false` |
+| **className**         |                    Class selector for the component<br /> `string`                     |       - |
+
+### Accordion Item Props
+
+| Name            |                                Description                                |   Default |
+| --------------- | :-----------------------------------------------------------------------: | --------: |
+| **children**`*` | The content of the **Accordion.Item**<br /> `JSX.Element` `JSX.Element[]` |         - |
+| **title**`*`    |     The label text for the **Accordion.Item** header <br /> `string`      |         - |
+| **expanded**    |             Specifies if the item is expanded<br /> `boolean`             |         - |
+| **data-testid** |               The test id for the component<br /> `string`                |         - |
+| **type**        |       Sets the style type of the component<br /> `default` `small`        | `default` |
+| **className**   |              Class selector for the component<br /> `string`              |         - |

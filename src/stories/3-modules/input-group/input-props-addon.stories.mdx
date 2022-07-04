@@ -1,0 +1,52 @@
+import { ArgsTable, Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+
+<Meta title="modules/InputGroup/Addon Props" />
+
+# Addon Props
+
+For the `InputGroup` addons, there are a few types of props that you can specify.
+
+### Basic Props
+
+`type` - This specify the type of addon. There are a few options to choose from:
+
+-   `label`: this will render readonly text that could add as a prefix or description for the field
+-   `list`: this will render dropdown list of options that can be selected
+-   `custom`: this will render any custom component of your choice
+
+### Label-type Props
+
+| Props | Type     | Description                              |
+| ----- | -------- | ---------------------------------------- |
+| value | `string` | The display value of the readonly string |
+
+### List-type Props
+
+| Props                 | Type                                      | Description                                                                                                                    |
+| --------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| value                 | `T`                                       | The value of the selected option (Generic Type)                                                                                |
+| placeholder           | `string`                                  | The placeholder value, should the value be undefined                                                                           |
+| listItems             | `T[]`                                     | The options for selection                                                                                                      |
+| onSelectItem          | `(item: T, extractedValue?: any) => void` | The callback function upon selecting an option                                                                                 |
+| valueExtractor        | `(item: T) => void`                       | A function that handles deriving the value of the option that has been selected                                                |
+| listExtractor         | `(item: T) => void`                       | A function that handles deriving the value of the option that is to be displayed in the options                                |
+| displayValueExtractor | `(item: T) => void`                       | A function that handles deriving the value of the selected option that is to be displayed in the selector                      |
+| enableSearch          | `(searchValue: string) => T[]`            | Specifies if the list options are to be searchable. Specifying `searchFunction` also allows the search                         |
+| searchFunction        | `boolean`                                 | On specifying, the search function will be used to perform the search. Also specifies if the list options are to be searchable |
+| onShowOptions         | `() => void`                              | The callback function when the options are being shown                                                                         |
+| onHideOptions         | `() => void`                              | The callback function when the options are being dismissed                                                                     |
+
+### Custom-type Props
+
+| Props    | Type          | Description                    |
+| -------- | ------------- | ------------------------------ |
+| children | `JSX.Element` | The custom component specified |
+
+## Example
+
+```typescript
+addon: {
+	type: "label",
+	value: "Selected option"
+}
+```

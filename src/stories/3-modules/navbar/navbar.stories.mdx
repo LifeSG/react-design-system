@@ -1,0 +1,177 @@
+import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { Navbar } from "src/components/navbar";
+
+<Meta title="modules/Navbar" component={Navbar} />
+
+# Navbar
+
+This is the default LifeSG top navigation bar. Resize page to view in desktop or mobile.
+
+<Canvas>
+    <Story name="Navbar">
+        <Navbar
+            items={{
+                desktop: [
+                    {
+                        id: "home",
+                        children: "Home",
+                        href: "https://www.life.gov.sg",
+                        target: "_blank",
+                    },
+                    {
+                        id: "guides",
+                        children: "Guides",
+                        href: "https://www.life.gov.sg",
+                    },
+                    {
+                        id: "lifesg-app",
+                        children: "LifeSG app",
+                        href: "https://www.life.gov.sg",
+                    },
+                    {
+                        id: "blog",
+                        children: "Blog",
+                        href: "https://www.life.gov.sg/blog",
+                        target: "_blank",
+                    },
+                ],
+                mobile: [
+                    {
+                        id: "home",
+                        children: "Home",
+                        href: "https://www.life.gov.sg",
+                    },
+                    {
+                        id: "guides",
+                        children: "Guides",
+                        href: "https://www.life.gov.sg",
+                    },
+                    {
+                        id: "lifesg-app",
+                        children: "LifeSG app",
+                        href: "https://www.life.gov.sg",
+                    },
+                    {
+                        id: "blog",
+                        children: "Blog",
+                        href: "https://www.life.gov.sg/blog",
+                    },
+                ],
+            }}
+            selectedId="home"
+            fixed={false} /* For storybook purposes */
+        />
+    </Story>
+</Canvas>
+
+## Components
+
+The Navbar comes with 3 main components:
+
+-   Masthead
+-   Brand
+-   Navigation links
+
+In the mobile viewports, the navigation links are presented in a drawer and is triggered by clicking on the menu icon button.
+
+> **NOTE**: The `Navbar` drawer dismissal animation takes **550ms**. If you are intending to perform scrolling effects in page after a selection in the drawer, you can add a timeout before performing the scrolling
+
+## Props
+
+| Name             |                                            Description                                            |           Default |
+| ---------------- | :-----------------------------------------------------------------------------------------------: | ----------------: |
+| **items**`*`     |               The navigation link items<br /> `INavbarItems<Type>` (see more below)               |                 - |
+| **resources**    | The navbar resources such as the brandName and logo source<br /> `INavResources` (see more below) | `LifeSG resource` |
+| **selectedId**   |               The current selected navigation link item identifier <br /> `string`                |                 - |
+| **compress**     |                    Specifies the `Navbar` should be compressed<br /> `boolean`                    |           `false` |
+| **fixed**        |           Specifies if the `Navbar` position is to be fixed at the top<br /> `boolean`            |            `true` |
+| **addon**        |    Specifies if the `Navbar` (mobile viewport) should have an addon displayed<br /> `download`    |        `download` |
+| **id**           |                       The unique identifier of the component<br /> `string`                       |                 - |
+| **data-testid**  |                        The test identifier of the component<br /> `string`                        |                 - |
+| **onBrandClick** |                    Event handler when brand logo is clicked<br /> `() => void`                    |                 - |
+| **onItemClick**  |     Event handler when navigation link item is clicked<br /> `(item: INavItem<Type>) => void`     |                 - |
+
+#### INavbarItems
+
+These are the props for the navigation link items.
+
+| Name           |                                         Description                                          | Default |
+| -------------- | :------------------------------------------------------------------------------------------: | ------: |
+| **desktop**`*` | The navigation link items for the desktop viewport<br /> `INavItem<Type>[]` (see more below) |       - |
+| **mobile**     | The navigation link items for the mobile viewport<br /> `INavItem<Type>[]` (see more below)  |       - |
+
+> If the `mobile` navigation items are not specified, then the `desktop` ones will be used.
+
+#### INavItem
+
+These are props for a single navigation link item.
+
+This also inherits the [HTMLAnchorAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement) properties. Additional props include:
+
+> Note: Specifying the `onClick` event handler will override the `onItemClick` event handler
+
+| Name        |                                                     Description                                                      | Default |
+| ----------- | :------------------------------------------------------------------------------------------------------------------: | ------: |
+| **id**`*`   | A unique identifier for the navigation link item. It will be used as the identifier for `selectedId` <br /> `string` |       - |
+| **options** |                     Any additional props to be passed to the navigation link item <br /> `Type`                      |       - |
+
+#### INavResources
+
+These are the props for the navigation resources.
+
+| Name             |                    Description                     | Default |
+| ---------------- | :------------------------------------------------: | ------: |
+| **brandName**`*` |    The brand name of the website<br /> `string`    |       - |
+| **logoSrc**`*`   | The image source for the brand logo<br /> `string` |       - |
+
+## Usage
+
+#### Specifying the navigation link items with custom options
+
+```typescript
+interface CustomType {
+    isExternal?: boolean;
+}
+
+const items: INavbarItems<CustomType> = {
+    desktop: [
+        {
+            id: "home",
+            children: "Home",
+            href: "https://www.life.gov.sg",
+            target: "_blank",
+        },
+        {
+            id: "services",
+            children: "Services",
+            href: "https://www.life.gov.sg",
+            options: {
+                isExternal: true,
+            },
+        },
+        {
+            id: "guides",
+            children: "Guides",
+            href: "https://www.life.gov.sg",
+        },
+        {
+            id: "lifesg-app",
+            children: "LifeSG app",
+            href: "https://www.life.gov.sg",
+        },
+        {
+            id: "news-media",
+            children: "News and Media",
+            href: "https://www.life.gov.sg",
+        },
+        {
+            id: "blog",
+            children: "Blog",
+            href: "https://www.life.gov.sg/blog",
+            options: {
+                isExternal: true,
+            },
+        },
+    ],
+};
+```

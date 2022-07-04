@@ -1,0 +1,123 @@
+import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { Tooltip } from "src/components";
+import { StoryContainer } from "src/stories/common/components";
+import { TooltipDisplay, TooltipHOCExample } from "./doc-elements";
+
+<Meta title="modules/Tooltip" />
+
+# Tooltip
+
+A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.
+
+You can click to interact with the tooltips.
+
+<TooltipDisplay />
+
+```tsx
+// Passing the content as a string
+
+<Tooltip visible={true} position="top">
+	This is the tooltip content
+</Tooltip>
+
+
+
+// Passing the content as a component
+
+<Tooltip visible={true} position="right">
+	<div>
+		This is my tooltip content component
+	</div>
+</Tooltip>
+```
+
+## Props
+
+| Name          |                         Description                         | Default |
+| ------------- | :---------------------------------------------------------: | ------: |
+| `visible`     |     The visibility state of the tooltip<br />`boolean`      |   false |
+| `position`    | The position the tooltip<br />`top` `bottom` `left` `right` |   `top` |
+| `children`    |  The content of the `Tooltip`<br />`string` `JSX.Element`   |       - |
+| `className`   |               The class name of the component               |       - |
+| `id`          |                   The id of the component                   |       - |
+| `data-testid` |            The test id property of the component            |       - |
+
+## Using as a HOC (Higher Order Component)
+
+You can use the `withTooltip` HOC to wrap your custom component and a tooltip will be automatically added to it.
+
+<br />
+<TooltipHOCExample />
+<br />
+
+**IMPORTANT**
+
+Do take note that when using a HOC, it is important to ensure that the declaration of the HOC is not within the function. While it works, it actually re-renders the component causing some things like display animations to not function correctly. Here is an example of how you should do it.
+
+```tsx
+/** Your custom component to be wrapped **/
+
+interface ComponentProps {
+    onHover: (type: "in" | "out") => void;
+}
+
+const Component = (props: ComponentProps) => (
+    <TestButton
+        onMouseEnter={() => props.onHover("in")}
+        onMouseLeave={() => props.onHover("out")}
+    >
+        Hover over me
+    </TestButton>
+);
+
+/** Declaring the wrapped component **/
+
+const WrappedComponent = withTooltip(Component, {
+    content: "This is my tooltip",
+});
+
+/** The final composite component **/
+
+export const TooltipHOCExample = () => {
+    const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
+
+    const handleHover = (type: "in" | "out") => {
+        if (type === "in" && !tooltipVisible) {
+            setTooltipVisible(true);
+        } else if (type === "out" && tooltipVisible) {
+            setTooltipVisible(false);
+        } else {
+            // Do nothing
+        }
+    };
+
+    return (
+        <HOCContainer>
+            <WrappedComponent
+                onHover={handleHover}
+                tooltipVisible={tooltipVisible}
+                position="right"
+            />
+        </HOCContainer>
+    );
+};
+```
+
+### Params
+
+The `withTooltip` requires 2 parameters:
+
+-   The component to be wrapped
+-   The tooltip options
+
+```tsx
+const WrappedComponent = withTooltip(MainComponent, {
+    content: "This is my tooltip",
+});
+```
+
+Here are the props for the tooltip options
+
+| Name      |                       Description                        |
+| --------- | :------------------------------------------------------: |
+| `content` | The content of the `Tooltip`<br />`string` `JSX.Element` |

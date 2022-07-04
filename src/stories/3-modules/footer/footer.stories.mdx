@@ -1,0 +1,257 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { BottomOnlyStory, CustomStory } from "./doc-elements";
+import { Footer } from "../../../components/footer";
+
+<Meta title="modules/Footer" component={Footer} />
+
+# Footer
+
+The component that holds the directory and information at the bottom of the website.
+
+<br />
+
+#### Default layout
+
+<Canvas>
+    <Story name="Footer" withSource="none">
+        <Footer
+            lastUpdated={new Date()}
+            addon="download"
+            links={[
+                [
+                    { children: "Home", href: "https://www.life.gov.sg" },
+                    {
+                        children: "How it works",
+                        href: "https://www.life.gov.sg/#how-it-works",
+                    },
+                    {
+                        children: "Ways we help",
+                        href: "https://www.life.gov.sg/#ways-we-help",
+                    },
+                    {
+                        children: "Campaigns",
+                        href: "https://www.life.gov.sg/#campaigns",
+                    },
+                    {
+                        children: "News and media",
+                        href: "https://www.life.gov.sg/#newsandmedia",
+                    },
+                ],
+                [
+                    {
+                        children: "About us",
+                        href: "https://www.life.gov.sg/about-us",
+                    },
+                    {
+                        children: "Help & Support",
+                        href: "https://www.life.gov.sg/help-support",
+                    },
+                    {
+                        children: "Get in touch with us",
+                        href: "https://www.life.gov.sg/get-in-touch",
+                    },
+                ],
+            ]}
+        />
+    </Story>
+</Canvas>
+
+```tsx
+<Footer
+    lastUpdated={new Date()}
+    addon="download"
+    links={[
+        [
+            { children: "Home", href: "https://www.life.gov.sg" },
+            {
+                children: "How it works",
+                href: "https://www.life.gov.sg/#how-it-works",
+            },
+            {
+                children: "Ways we help",
+                href: "https://www.life.gov.sg/#ways-we-help",
+            },
+            {
+                children: "Campaigns",
+                href: "https://www.life.gov.sg/#campaigns",
+            },
+            {
+                children: "News and media",
+                href: "https://www.life.gov.sg/#newsandmedia",
+            },
+        ],
+        [
+            {
+                children: "About us",
+                href: "https://www.life.gov.sg/about-us",
+            },
+            {
+                children: "Help & Support",
+                href: "https://www.life.gov.sg/help-support",
+            },
+            {
+                children: "Get in touch with us",
+                href: "https://www.life.gov.sg/get-in-touch",
+            },
+        ],
+    ]}
+/>
+```
+
+#### Bottom only layout
+
+<BottomOnlyStory />
+
+```tsx
+<Footer lastUpdated={new Date()} />
+```
+
+#### Custom layout
+
+<CustomStory />
+
+```tsx
+const CustomComponent = (
+    <div style={{ background: "yellow", padding: "1rem 1.25rem" }}>
+        Hello world
+    </div>
+);
+
+<Footer lastUpdated={new Date()}>
+    <CustomComponent />
+</Footer>;
+```
+
+## Sections
+
+The `Footer` has 2 sections.
+
+The top section holds the
+
+-   logo
+-   links
+-   addon (if specified)
+
+Whereas the bottom section holds the mandatory
+
+-   disclaimer links
+-   copyright and last updated information
+
+> Note that the **bottom section** will always be present
+
+## Props
+
+| Name                  |                                                                      Description                                                                       | Default |
+| --------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------: | ------: |
+| **children**          |   The custom content of the **Footer**. Specifying this will give you the ability to customise the top section. <br /> `tsx.Element` `tsx.Element[]`   |       - |
+| **links**             | The links in the top section of the **Footer**. Note that if you specified the `children` prop, this will be overwritten. <br /> `FooterLinkProps[][]` |       - |
+| **lastUpdated**`*`    |                                                 The last updated date to be displayed. <br /> `string`                                                 |       - |
+| **disclaimerLinks**   |                                        The attributes of the mandated disclaimer links <br /> `DisclaimerLinks`                                        |       - |
+| **addon**             |         The footer addon that usually takes up the rightmost section. If not specified, that section will not be rendered. <br /> `"download"`         |       - |
+| **onFooterLinkClick** |                            The click handler when a footer item is being clicked. <br /> `(item: FooterLinkProps) => void`                             |       - |
+
+## Specifying the top section links
+
+#### FooterLinkProps
+
+This also inherits the [HTMLAnchorAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement) properties. Additional props include:
+
+> **Note** Specifying the `onClick` handler will override the `onFooterLinkClick` on the `Footer` component
+
+| Name        |                           Description                            | Default |
+| ----------- | :--------------------------------------------------------------: | ------: |
+| **options** | Any additional props to be passed to the link item <br /> `Type` |       - |
+
+#### Usage
+
+Here is an example how you can specify a 2 column layout of links.
+
+```typescript
+links: [
+    [
+        {
+            children: "Home",
+            href: "https://www.life.gov.sg",
+        },
+        {
+            children: "How it works",
+            href: "https://www.life.gov.sg/#how-it-works",
+        },
+        {
+            children: "Ways we help",
+            href: "https://www.life.gov.sg/#ways-we-help",
+        },
+        { children: "Campaigns", href: "https://www.life.gov.sg/#campaigns" },
+        {
+            children: "News and media",
+            href: "https://www.life.gov.sg/#newsandmedia",
+        },
+    ],
+    [
+        {
+            children: "About us",
+            href: "https://www.life.gov.sg/about-us",
+        },
+        {
+            children: "Help & Support",
+            href: "https://www.life.gov.sg/help-support",
+        },
+        {
+            children: "Get in touch with us",
+            href: "https://www.life.gov.sg/get-in-touch",
+        },
+    ],
+];
+```
+
+Here is an example specifying with additional options
+
+```typescript
+interface MyCustomProps {
+	isExternal: boolean;
+}
+
+const links: FooterLinkProps<MyCustomProps> = [
+	[
+		{ children: "Home", href: "https://www.life.gov.sg", options: { isExternal: true }},
+		...
+	]
+];
+
+```
+
+> Note: Only the first 2 sets of links will be rendered as it is the maximum number of columns set
+
+## Customizing the disclaimer links
+
+While the type of disclaimer links are mandated, you may modify the attributes of the links such as their `href`, `rel`, `target` etc.<br />
+The prop `disclaimerLinks` takes in the information in a format as such:
+
+> Note: Not all keys are needed to be specified
+
+```typescript
+{
+    privacy: TextLinkProps;
+    termsOfUse: TextLinkProps;
+    reportVulnerability: TextLinkProps;
+}
+```
+
+The disclaimer links also uses the [TextLinkProps](?path=/docs/elements-text-introduction--page#props) properties. Example usage:
+
+```typescript
+{
+	reportVulnerability: {
+		href: "https://tech.gov.sg/report_vulnerability",
+		target: "_blank",
+		rel: "noopener",
+		external: true
+	}
+}
+```
+
+## Addons
+
+The addon is a preset section that can be displayed on the `Footer`. The decision to use the addon depends on the website's purpose.
+
+> Currently there is only the **Download** section

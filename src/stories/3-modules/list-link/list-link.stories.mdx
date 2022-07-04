@@ -1,0 +1,149 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { LinkList } from "../../../components/list";
+import { StoryContainer } from "../../common/components";
+import { Text } from "../../../components/text";
+import { Button } from "../../../components/button";
+
+<Meta title="modules/LinkList" component={LinkList} />
+
+# LinkList
+
+Displays a continuous group of link elements.
+
+#### Default
+
+The default styling of the LinkList.
+
+<Canvas>
+    <Story name="LinkList">
+        <StoryContainer>
+            <LinkList
+                items={[
+                    {
+                        title: "First item",
+                        href: "https://www.google.com",
+                        target: "_blank",
+                    },
+                    {
+                        title: "Second item",
+                        description: "This is the description",
+                        href: "https://www.google.com",
+                        target: "_blank",
+                    },
+                ]}
+            />
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+#### Small
+
+A scaled down text styling of the LinkList.
+
+<Preview>
+    <StoryContainer>
+        <LinkList
+            items={[
+                {
+                    title: "First item",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                },
+                {
+                    title: "Second item",
+                    description: "Lorem ipsum dolar sit amet",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                },
+            ]}
+            style="small"
+        />
+    </StoryContainer>
+</Preview>
+
+#### With maximum number of items to show
+
+Setting this will only show the specified number of items while the rest are being minimized. In this example, the
+`maxShown` is set to `2`.
+
+<Preview>
+    <StoryContainer>
+        <LinkList
+            items={[
+                {
+                    title: "First item",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                },
+                {
+                    title: "Second item",
+                    description:
+                        "Excepteur sint occaecat cupidatat non proident",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                },
+                {
+                    title: "Third item",
+                    description: "Lorem ipsum dolar sit amet",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                },
+                {
+                    title: "Fourth item",
+                    description:
+                        "Ut enim ad minima veniam, quis nostrum exercitationem",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                },
+            ]}
+            style="small"
+            maxShown={2}
+        />
+    </StoryContainer>
+</Preview>
+
+## Props
+
+#### LinkList
+
+| Name            |                                        Description                                         |   Default |
+| --------------- | :----------------------------------------------------------------------------------------: | --------: |
+| **items**`*`    |     The list items to be shown <br /> `ListLinkItemProps<Type>[]` (see details below)      |         - |
+| **maxShown**    |    The maximum number of items to be shown, while the rest are minimized<br /> `number`    |         - |
+| **style**       |                 The size style for the `LinkList`<br /> `default` `small`                  | `default` |
+| **onItemClick** | The click handler when the item is clicked<br /> `(item: LinkListItemProps<Type>) => void` |         - |
+| **className**   |               The style class to override the default styling<br /> `string`               |         - |
+| **data-testid** |                           The id used for testing<br /> `string`                           |         - |
+
+#### LinkListItemProps
+
+This also inherits the [HTMLAnchor](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a) properties.
+
+> Do note that specifying the `onClick` prop will override the `onItemClick` event handler
+
+| Name            |                        Description                         | Default |
+| --------------- | :--------------------------------------------------------: | ------: |
+| **title**`*`    |           The title to be shown <br /> `string`            |       - |
+| **description** |         The description to be shown<br /> `string`         |       - |
+| **options**     | Any additional props to be passed to the item<br /> `Type` |       - |
+
+Here is an example when specifying the `options` prop
+
+```typescript
+interface MyCustomProps {
+    isExternal: boolean;
+}
+
+const linkListItems: LinkListItemProps<MyCustomProps> = [
+    {
+        title: "First item",
+        description: "This is the first",
+        options: { isExternal: false },
+    },
+    {
+        title: "Second item",
+        description: "This is the second",
+        options: { isExternal: true },
+    },
+];
+```
