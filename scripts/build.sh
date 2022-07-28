@@ -28,17 +28,6 @@ SCRIPT_DIR=$( dirname $( ${READLINK} -f $0 ) )
 PROJECT_DIR=$( cd ${SCRIPT_DIR} && cd .. && pwd )
 
 # ==============================================================================
-# Inputs
-# ==============================================================================
-
-# Variables
-echo "Checking variables"
-ASSERT_VAR_SCRIPT="${PROJECT_DIR}/node_modules/mol-lib-config/shared-scripts/helpers/assert-variable.sh"
-
-export BUILD_ENV=${1:-development}	# development or production only
-source ${ASSERT_VAR_SCRIPT} BUILD_ENV
-
-# ==============================================================================
 # Script
 # ==============================================================================
 
