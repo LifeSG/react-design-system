@@ -98,5 +98,8 @@
         "*.ts{x}": [
             "eslint --fix"
         ]
+    },
+    "dependencies": {
+        "@react-theming/storybook-addon": "^1.1.7"
     }
 }

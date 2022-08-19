@@ -8,6 +8,7 @@ module.exports = {
         "@storybook/addon-interactions",
         "@storybook/addon-controls",
         "@storybook/addon-postcss",
+        "@react-theming/storybook-addon",
     ],
     typescript: {
         reactDocgen: "react-docgen-typescript",
