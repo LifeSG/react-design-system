@@ -3,7 +3,7 @@
         /** General settings **/
         "target": "esnext",
         "module": "esnext",
-        "lib": ["esnext"],
+        "lib": ["dom", "esnext"],
         "jsx": "react", // transpile JSX to React.createElement
         "isolatedModules": true, // warns if code can’t be correctly interpreted by a single-file transpilation process
         "noEmit": true, // declares that tsc is only used for type checking and compiler to not output transpiled code
