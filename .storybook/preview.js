@@ -1,12 +1,10 @@
 import { withThemes } from "@react-theming/storybook-addon";
+import { withA11y } from "@storybook/addon-a11y";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { addDecorator } from "@storybook/react";
 import pretty from "pretty";
 import { ThemeProvider } from "styled-components";
-import {
-    BaseTheme,
-    BookingSGTheme,
-} from "../src/components/styles/theme/themes";
+import { BaseTheme, BookingSGTheme } from "src/theme";
 
 export const parameters = {
     viewport: {
@@ -19,6 +17,11 @@ export const parameters = {
     docs: {
         transformSource: (input) => pretty(input),
     },
+    options: {
+        storySort: {
+            order: ["Getting started", "General", "Form"],
+        },
+    },
 };
 
 const themes = [
@@ -27,3 +30,4 @@ const themes = [
 ];
 
 addDecorator(withThemes(ThemeProvider, themes));
+addDecorator(withA11y);
