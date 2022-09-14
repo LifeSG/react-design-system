@@ -19,7 +19,13 @@ export const parameters = {
     },
     options: {
         storySort: {
-            order: ["Getting started", "General", "Form"],
+            order: [
+                "Getting started",
+                "General",
+                "Form",
+                "Data Input",
+                "Modules",
+            ],
         },
     },
 };
