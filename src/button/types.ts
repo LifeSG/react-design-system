@@ -1,0 +1,24 @@
+import React from "react";
+
+type StyleType = "default" | "secondary" | "light" | "link";
+
+export interface ButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    styleType?: StyleType | undefined;
+    /** Indicates if a loading spinner is to be displayed */
+    loading?: boolean | undefined;
+}
+
+export type ButtonRef = React.Ref<HTMLButtonElement>;
+
+export type MainButtonStyle =
+    | "default"
+    | "disabled"
+    | "secondary"
+    | "light"
+    | "link";
+export type MainButtonSize = "default" | "small";
+export interface MainStyleProps {
+    $buttonStyle: MainButtonStyle;
+    $buttonSize: MainButtonSize;
+}
