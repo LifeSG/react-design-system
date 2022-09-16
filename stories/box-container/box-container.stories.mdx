@@ -1,0 +1,123 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { BoxContainer } from "src/box-container";
+import { Button } from "src/button";
+import { Text } from "src/text";
+import { Secondary, Heading3, Title } from "../storybook-common";
+import { PropsTable } from "./props-table.tsx";
+
+<Meta title="Modules/BoxContainer" component={BoxContainer} />
+
+<Title>BoxContainer</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays contents in a box styling layout that can be collapsible if specified.
+
+```tsx
+import { BoxContainer } from "@lifesg/react-design-system/box-container";
+```
+
+<Canvas>
+    <Story name="BoxContainer">
+        <BoxContainer title="This is the title">
+            <div style={{ padding: "2rem" }}>
+                <Text.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </Text.Body>
+            </div>
+        </BoxContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Non-collapsible</Heading3>
+
+<Preview>
+    <Story name="Non collapsible">
+        <BoxContainer title="This is not collapsible" collapsible={false}>
+            <div style={{ padding: "2rem" }}>
+                <Text.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </Text.Body>
+            </div>
+        </BoxContainer>
+    </Story>
+</Preview>
+
+<Heading3>With a display state</Heading3>
+
+Specifying the display state allows you to render an icon alongside the title. It is good to indicate if the contents
+of the `BoxContainer` has some special attention required.
+
+There are currently 3 states:
+
+-   `default` - where no icon will be rendered
+-   `error` - a red icon
+-   `warning` - an orange icon
+
+In this example, we are using the `error` display state.
+
+<Preview>
+    <Story name="With display state">
+        <BoxContainer
+            title="This comes with an error icon"
+            displayState="error"
+        >
+            <div style={{ padding: "2rem" }}>
+                <Text.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </Text.Body>
+            </div>
+        </BoxContainer>
+        <BoxContainer
+            title="This comes with a warning icon"
+            displayState="warning"
+        >
+            <div style={{ padding: "2rem" }}>
+                <Text.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </Text.Body>
+            </div>
+        </BoxContainer>
+    </Story>
+</Preview>
+
+<Heading3>Specifying a custom call to action</Heading3>
+
+You can also specify a custom call to action that will appear on the header of the `BoxContainer`.
+
+<Preview>
+    <Story name="With custom call to action">
+        <BoxContainer
+            title="This has a call to action button"
+            expanded={true}
+            callToActionComponent={
+                <Button.Default styleType="light">Edit</Button.Default>
+            }
+        >
+            <div style={{ padding: "2rem" }}>
+                <Text.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </Text.Body>
+            </div>
+        </BoxContainer>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
