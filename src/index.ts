@@ -1,6 +1,8 @@
 // Alphabetical order
 export * from "./accordion";
 export * from "./alert";
+export * from "./animations";
+export * from "./box-container";
 export * from "./button";
 export * from "./checkbox";
 export * from "./color";
