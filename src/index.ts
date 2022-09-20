@@ -14,4 +14,5 @@ export * from "./media";
 export * from "./overlay";
 export * from "./text";
 export * from "./theme";
+export * from "./toggle-button";
 export * from "./transition";
