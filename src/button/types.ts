@@ -5,6 +5,7 @@ type StyleType = "default" | "secondary" | "light" | "link";
 
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    /** The style type of the button. Values: "default" | "secondary" | "light" | "link" */
     styleType?: StyleType | undefined;
     /** Indicates if a loading spinner is to be displayed */
     loading?: boolean | undefined;
