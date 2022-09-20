@@ -58,20 +58,37 @@ export const AccordionItemPropsTable = () => (
             <DefaultCol />
         </tr>
         <tr>
-            <NameCol>actionLink</NameCol>
-            <DescriptionCol
-                propTypes={
-                    <a
-                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <code>HTMLAnchorAttributes</code>
-                    </a>
-                }
-            >
-                The attributes of an action link that performs an action on
-                click
+            <NameCol mandatory>title</NameCol>
+            <DescriptionCol propTypes={["string"]}>
+                The label text for the Accordion.Item header
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>type</NameCol>
+            <DescriptionCol propTypes={[`"default"`, `"small`]}>
+                Sets the style type of the component
+            </DescriptionCol>
+            <DefaultCol>{[`"default"`]}</DefaultCol>
+        </tr>
+        <tr>
+            <NameCol>expanded</NameCol>
+            <DescriptionCol propTypes={["boolean"]}>
+                Specifies if the item is expanded
+            </DescriptionCol>
+            <DefaultCol>{["true"]}</DefaultCol>
+        </tr>
+        <tr>
+            <NameCol>className</NameCol>
+            <DescriptionCol propTypes={["string"]}>
+                Class selector for the component
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>data-testid</NameCol>
+            <DescriptionCol propTypes={["string"]}>
+                The test id for the component
             </DescriptionCol>
             <DefaultCol />
         </tr>
