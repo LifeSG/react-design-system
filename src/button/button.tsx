@@ -19,7 +19,7 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSize: "default",
+        $buttonSizeStyle: "default",
     };
 
     return (
@@ -47,7 +47,7 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSize: "small",
+        $buttonSizeStyle: "small",
     };
 
     return (

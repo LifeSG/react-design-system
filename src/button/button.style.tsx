@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
 import { MediaQuery } from "../media/media";
-import { ComponentLoadingSpinner } from "../shared/loading-spinner";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
 import { MainStyleProps } from "./types";
 
@@ -97,7 +97,7 @@ export const Main = styled.button<MainStyleProps>`
 	// BUTTON SIZE + TEXT SIZE
 	// -----------------------------------------------------------------------------
 	${(props) => {
-        switch (props.$buttonSize) {
+        switch (props.$buttonSizeStyle) {
             case "small":
                 return css`
                     height: 2.5rem;

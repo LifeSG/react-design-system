@@ -5,7 +5,7 @@ import {
     InnerRing3,
     InnerRing4,
     OuterRing,
-} from "./loading-spinner.style";
+} from "./component-loading-spinner.style";
 
 /**
  * This component is mainly used within components and is not to be confused
