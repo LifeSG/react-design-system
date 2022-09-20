@@ -5,7 +5,8 @@ import { MediaQuery } from "../media";
 import { Text } from "../text/text";
 
 // =============================================================================
-// STYLE TYPES
+// STYLE TYPES, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface FadeProps {
     $backgroundColor?: string[];
