@@ -175,3 +175,8 @@ export type IconType =
 export interface IconProps extends React.HTMLAttributes<HTMLElement> {
     type: IconType;
 }
+
+export interface IconSvgProps {
+    id?: string | undefined;
+    className?: string | undefined;
+}

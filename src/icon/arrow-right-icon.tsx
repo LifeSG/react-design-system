@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../color";
+import { IconSvgProps } from "./types";
 
-interface Props {
-    id?: string | undefined;
-    className?: string | undefined;
-}
-
-export const ArrowRightIcon = ({ id, className }: Props): JSX.Element => {
+export const ArrowRightIcon = ({
+    id,
+    className,
+}: IconSvgProps): JSX.Element => {
     return (
         <SVG
             xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +17,7 @@ export const ArrowRightIcon = ({ id, className }: Props): JSX.Element => {
             className={className}
         >
             <g fill="none" fillRule="evenodd">
-                <g id="fill-group" fillRule="nonzero">
+                <g id="path" fillRule="nonzero">
                     <g>
                         <g>
                             <g>
@@ -43,7 +42,7 @@ const SVG = styled.svg`
     width: 1rem;
     vertical-align: text-top;
 
-    #fill-group {
-        fill: ${Color.Primary};
+    #path {
+        fill: ${Color.Neutral[8]};
     }
 `;

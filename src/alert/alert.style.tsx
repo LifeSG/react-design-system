@@ -9,7 +9,7 @@ import { AlertType } from "./types";
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
-	$type: AlertType;
+    $type: AlertType;
 }
 
 // =============================================================================
@@ -23,32 +23,32 @@ export const Wrapper = styled.div<StyleProps>`
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
 
     ${(props) => {
-		let backgroundColor: string;
-		let borderColor: string;
-		switch (props.$type) {
-			case "error":
-				backgroundColor = Color.Validation.Red.Background(props);
-				borderColor = Color.Validation.Red.Border(props);
-				break;
-			case "success":
-				backgroundColor = Color.Validation.Green.Background(props);
-				borderColor = Color.Validation.Green.Border(props);
-				break;
-			case "warning":
-				backgroundColor = Color.Validation.Orange.Background(props);
-				borderColor = Color.Validation.Orange.Border(props);
-				break;
-			default:
-				backgroundColor = Color.Validation.Green.Background(props);
-				borderColor = Color.Validation.Green.Border(props);
-				break;
-		}
+        let backgroundColor: string;
+        let borderColor: string;
+        switch (props.$type) {
+            case "error":
+                backgroundColor = Color.Validation.Red.Background(props);
+                borderColor = Color.Validation.Red.Border(props);
+                break;
+            case "success":
+                backgroundColor = Color.Validation.Green.Background(props);
+                borderColor = Color.Validation.Green.Border(props);
+                break;
+            case "warning":
+                backgroundColor = Color.Validation.Orange.Background(props);
+                borderColor = Color.Validation.Orange.Border(props);
+                break;
+            default:
+                backgroundColor = Color.Validation.Green.Background(props);
+                borderColor = Color.Validation.Green.Border(props);
+                break;
+        }
 
-		return `
+        return `
 			background: ${backgroundColor};
 			border-left: 2pt solid ${borderColor};
 		`;
-	}}
+    }}
 
 	p {
         ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
@@ -78,7 +78,7 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)`
     align-items: center;
 
     :hover {
-        #fill-group {
+        #path {
             // This belongs to the arrow icon
             fill: ${Color.Secondary};
         }
@@ -87,4 +87,8 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)`
 
 export const ArrowIcon = styled(Icon)`
     margin-left: 0.25rem;
+
+    #path {
+        fill: ${Color.Primary};
+    }
 `;
