@@ -13,6 +13,7 @@ export * from "./input-select";
 // export * from "./layout";
 export * from "./masonry";
 export * from "./media";
+export * from "./modal";
 export * from "./overlay";
 export * from "./radio-button";
 export * from "./text";

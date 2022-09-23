@@ -1,0 +1,169 @@
+import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Button } from "src/button";
+import { Modal } from "src/modal";
+import { Secondary, Heading3, Title } from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Modal" component={Modal} />
+
+<Title>Modal</Title>
+
+<Secondary>Overview</Secondary>
+
+A window or pop up that displays over other page contents and provides information or actions
+that a user can perform.
+
+```tsx
+import { Modal } from "@lifesg/react-design-system/modal";
+```
+
+There are 2 components that can be used:
+
+-   `Modal` represents the base modal overlay. This is a **mandatory component** to be used.
+-   `Modal.Box` represents the dialog box that comes with a rounded border and a close button.
+
+> **Note**: Due to the storybook environment, the background of the overlay is scrollable. However in actual, it should not be the case
+
+<Canvas>
+    <Story name="Modal">
+        {() => {
+            const [show, setShow] = useState(false);
+            const openModal = () => setShow(true);
+            const closeModal = () => setShow(false);
+            return (
+                <div>
+                    <Button.Default onClick={openModal}>
+                        Click to open
+                    </Button.Default>
+                    <Modal show={show} onOverlayClick={closeModal}>
+                        <Modal.Box onClose={closeModal}>
+                            <div
+                                style={{
+                                    padding: "2rem",
+                                    height: "10rem",
+                                    overflow: "auto",
+                                }}
+                            >
+                                <span>I am a Modal</span>
+                            </div>
+                        </Modal.Box>
+                    </Modal>
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Custom content</Heading3>
+
+<Preview>
+    <Story name="Custom content">
+        {() => {
+            const [show, setShow] = useState(false);
+            const openModal = () => setShow(true);
+            const closeModal = () => setShow(false);
+            return (
+                <>
+                    <Button.Default onClick={openModal}>
+                        Open custom modal
+                    </Button.Default>
+                    <Modal
+                        show={show}
+                        onOverlayClick={closeModal}
+                        enableOverlayClick={true}
+                    >
+                        <div
+                            style={{
+                                width: "50%",
+                                padding: "2rem",
+                                background: "yellow",
+                            }}
+                        >
+                            This is a custom component
+                        </div>
+                    </Modal>
+                </>
+            );
+        }}
+    </Story>
+</Preview>
+
+<Heading3>Stacked modals</Heading3>
+
+In some cases, you would require a stacked modal layout. Here is how you can construct it.
+
+<Preview>
+    <Story name="Stacked modals">
+        {() => {
+            const [showFirst, setShowFirst] = useState(false);
+            const [showStacked, setShowStacked] = useState(false);
+            const handleFirst = (show) => () => {
+                setShowFirst(show);
+            };
+            const handleStacked = (show) => () => {
+                setShowStacked(show);
+            };
+            return (
+                <div>
+                    <Button.Default onClick={handleFirst(true)}>
+                        Click to open
+                    </Button.Default>
+                    <Modal show={showFirst} onOverlayClick={handleFirst(false)}>
+                        <Modal.Box onClose={handleFirst(false)}>
+                            <div
+                                style={{
+                                    padding: "2rem",
+                                }}
+                            >
+                                <span>I am the first Modal</span>
+                                <br />
+                                <br />
+                                <Button.Default onClick={handleStacked(true)}>
+                                    Click to open the stacked modal
+                                </Button.Default>
+                            </div>
+                        </Modal.Box>
+                    </Modal>
+                    <Modal
+                        id="stacked-modal"
+                        show={showStacked}
+                        onOverlayClick={handleStacked(false)}
+                    >
+                        <Modal.Box onClose={handleStacked(false)}>
+                            <div
+                                style={{
+                                    padding: "2rem",
+                                    height: "10rem",
+                                }}
+                            >
+                                <span>I am the stacked Modal</span>
+                            </div>
+                        </Modal.Box>
+                    </Modal>
+                </div>
+            );
+        }}
+    </Story>
+</Preview>
+
+<Heading3>Modal.Box</Heading3>
+
+This component holds the dialog box.
+
+> **Note**: This component does not come with a scrollable container and it is the
+> onus on the child element to possess the scroll behaviour
+
+```tsx
+<Modal.Box onClose={closeModal}>
+    <ScrollableContent>
+        <span>I am a Modal</span>
+    </ScrollableContent>
+</Modal.Box>
+```
+
+<Secondary>Component API</Secondary>
+
+Both components also inherit the [HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
+
+<PropsTable />
