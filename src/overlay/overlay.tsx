@@ -40,9 +40,10 @@ export const Overlay = ({
             setStacked(isStacked);
 
             if (!isStacked) {
-                setTimeout(() => {
+                const timerId = setTimeout(() => {
                     applyBodyStyleClass("add");
                 }, 200); // Allow overlay animations to complete
+                return () => clearTimeout(timerId);
             }
         } else {
             /**
@@ -51,9 +52,10 @@ export const Overlay = ({
              * on <body>
              */
             if (!stacked.current) {
-                setTimeout(() => {
-                    applyBodyStyleClass("remove");
+                const timerId = setTimeout(() => {
+                    applyBodyStyleClass("add");
                 }, 200); // Allow overlay animations to complete
+                return () => clearTimeout(timerId);
             }
         }
     }, [show]);
