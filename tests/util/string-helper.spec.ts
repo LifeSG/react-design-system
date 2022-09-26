@@ -55,4 +55,96 @@ describe("StringHelper", () => {
             );
         });
     });
+
+    describe("shouldTruncateToTwoLines", () => {
+        it("should return false since there is enough width available", () => {
+            const testString = "Hello world";
+            const widthOfElement = 54;
+
+            expect(
+                StringHelper.shouldTruncateToTwoLines(
+                    testString,
+                    widthOfElement
+                )
+            ).toBeFalsy();
+        });
+
+        it("should return true since there is not enough width available", () => {
+            const testString = "Hello world";
+            const widthOfElement = 53;
+
+            expect(
+                StringHelper.shouldTruncateToTwoLines(
+                    testString,
+                    widthOfElement
+                )
+            ).toBeTruthy();
+        });
+    });
+
+    describe("truncateOneLine", () => {
+        it("should truncate if input text length > baseline char length, and there is no additional space", () => {
+            const testString = "123456789012";
+            const widthOfElement = 54;
+            const minDivSize = 53;
+            const initialCharLength = 8;
+
+            expect(
+                StringHelper.truncateOneLine(
+                    testString,
+                    widthOfElement,
+                    minDivSize,
+                    initialCharLength
+                )
+            ).toEqual("1234 ... 9012");
+        });
+
+        it("should not truncate if input text length = baseline char length, and there is no additional space ", () => {
+            const testString = "12345678";
+            const widthOfElement = 54;
+            const minDivSize = 53;
+            const initialCharLength = 8;
+
+            expect(
+                StringHelper.truncateOneLine(
+                    testString,
+                    widthOfElement,
+                    minDivSize,
+                    initialCharLength
+                )
+            ).toEqual("12345678");
+        });
+
+        it("should not truncate if input text length < baseline char length, and there is no additional space ", () => {
+            const testString = "12345";
+            const widthOfElement = 54;
+            const minDivSize = 53;
+            const initialCharLength = 8;
+
+            expect(
+                StringHelper.truncateOneLine(
+                    testString,
+                    widthOfElement,
+                    minDivSize,
+                    initialCharLength
+                )
+            ).toEqual("12345");
+        });
+
+        it("should not truncate if input text length > baseline char length, and there is additional space", () => {
+            const testString = "123456789";
+            const widthOfElement = 61;
+            const minDivSize = 53;
+            const initialCharLength = 8;
+
+            expect(
+                StringHelper.truncateOneLine(
+                    testString,
+                    widthOfElement,
+                    minDivSize,
+                    initialCharLength
+                )
+            ).toEqual("123456789");
+        });
+    });
 });

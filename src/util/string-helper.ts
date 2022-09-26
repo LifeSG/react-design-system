@@ -34,7 +34,7 @@ export namespace StringHelper {
 
     /**
      * Checks if the text is required to be truncated and broken into two lines based
-     * on the available width of container
+     * on the available width of container. **Note: This is relevant to font size 18px or 1.125rem only **
      * @param text input text
      * @param widthOfElement element width in px
      */
@@ -42,6 +42,8 @@ export namespace StringHelper {
         text: string,
         widthOfElement: number
     ): boolean => {
+        // This is arbitrary and based on tests to derive that every 9px increment ~= 1 char length.
+        // But this applies to font size 18px or 1.125rem only
         const estimatedCharOnLine = Math.floor(widthOfElement / 9);
         return (
             text.length >= estimatedCharOnLine * 2 ||
@@ -49,25 +51,36 @@ export namespace StringHelper {
         );
     };
 
+    /**
+     * Performs a truncation by adding ellipsis in the middle of the text.
+     * **Note: This is relevant to font size 18px or 1.125rem only **
+     * @param text input text
+     * @param widthOfElement the dynamic width of the container in px
+     * @param minDivSize the minimum container size (using size on mobileS viewport as baseline)
+     * @param baselineCharLength the baseline amount of characters to be displayed before truncation kicks. This
+     * will be increased if there is more space available (derived from `widthOfElement`)
+     */
     export const truncateOneLine = (
         text: string,
         widthOfElement: number,
         minDivSize: number,
-        initialCharLength: number
+        baselineCharLength: number
     ): string => {
-        //minDivSize -> Minimum div size for Mobile S
-        let additionThreshold = 0;
+        let additionalCharAllowed = 0;
         if (widthOfElement > minDivSize) {
-            additionThreshold = Math.floor((widthOfElement - minDivSize) / 8); //Every 8px increment ~= 1 char length
+            // This is arbitrary and based on tests to derive that every 8px increment ~= 1 char length.
+            // But this applies to font size 18px or 1.125rem only
+            additionalCharAllowed = Math.floor(
+                (widthOfElement - minDivSize) / 8
+            );
         }
-        const threshold = initialCharLength + additionThreshold;
-        const length = text.length;
-        if (length > threshold) {
-            const thresholdIndex = Math.floor(threshold / 2);
+        const allowedCharLength = baselineCharLength + additionalCharAllowed;
+        if (allowedCharLength < text.length) {
+            const thresholdIndex = Math.floor(allowedCharLength / 2); // We will cut it halfway to derive x num of characters
             return (
-                text.substring(0, thresholdIndex) +
+                text.substring(0, thresholdIndex) + // Use the first x
                 " ... " +
-                text.substring(text.length - thresholdIndex, text.length)
+                text.substring(text.length - thresholdIndex, text.length) // Use the last x
             );
         }
 
