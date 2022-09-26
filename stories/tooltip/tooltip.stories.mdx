@@ -1,0 +1,239 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Button } from "src/button";
+import { Tooltip } from "src/tooltip";
+import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
+import {
+    Container,
+    Item,
+    TOOLTIP_ATTRS,
+    TooltipHOCExample,
+} from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Tooltip" component={Tooltip} />
+
+<Title>Tooltip</Title>
+
+<Secondary>Overview</Secondary>
+
+A component which appears when hovering or clicking on a target element and
+displays information about a certain element in the page.
+
+```tsx
+import { Tooltip } from "@lifesg/react-design-system/tooltip";
+```
+
+<Canvas>
+    <Story name="Tooltip">
+        {() => {
+            const [visible, setVisible] = useState(false);
+            return (
+                <Container>
+                    <Item>
+                        <Tooltip visible={visible} position="top">
+                            I am a top positioned tooltip
+                        </Tooltip>
+                        <Button.Default
+                            onMouseEnter={() => setVisible(true)}
+                            onMouseOut={() => setVisible(false)}
+                        >
+                            Hover me to interact
+                        </Button.Default>
+                    </Item>
+                </Container>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Available positions</Heading3>
+
+There are 4 types of positions that the `Tooltip` can appear. You can specify so using the `position` prop.
+
+In this example, click to interact with the buttons.
+
+<Preview>
+    <Story name="Positions">
+        {() => {
+            const [tooltip1Visible, setTooltip1Visible] = useState(false);
+            const [tooltip2Visible, setTooltip2Visible] = useState(false);
+            const [tooltip3Visible, setTooltip3Visible] = useState(false);
+            const [tooltip4Visible, setTooltip4Visible] = useState(false);
+            return (
+                <Container>
+                    <Item key="first">
+                        <Tooltip
+                            key="first-tooltip"
+                            visible={tooltip1Visible}
+                            position="left"
+                        >
+                            I am a left positioned tooltip
+                        </Tooltip>
+                        <Button.Default
+                            key="button-1"
+                            onClick={() => setTooltip1Visible(!tooltip1Visible)}
+                        >
+                            Left
+                        </Button.Default>
+                    </Item>
+                    <Item key="second">
+                        <Tooltip
+                            key="second-tooltip"
+                            visible={tooltip2Visible}
+                            position="top"
+                        >
+                            I am a top positioned tooltip
+                        </Tooltip>
+                        <Button.Default
+                            key="button-2"
+                            onClick={() => setTooltip2Visible(!tooltip2Visible)}
+                        >
+                            Top
+                        </Button.Default>
+                    </Item>
+                    <Item key="third">
+                        <Tooltip
+                            key="third-tooltip"
+                            visible={tooltip3Visible}
+                            position="bottom"
+                        >
+                            I am a bottom positioned tooltip
+                        </Tooltip>
+                        <Button.Default
+                            key="button-3"
+                            onClick={() => setTooltip3Visible(!tooltip3Visible)}
+                        >
+                            Bottom
+                        </Button.Default>
+                    </Item>
+                    <Item key="fourth">
+                        <Tooltip
+                            key="fourth-tooltip"
+                            visible={tooltip4Visible}
+                            position="right"
+                        >
+                            I am a right positioned tooltip
+                        </Tooltip>
+                        <Button.Default
+                            key="button-4"
+                            onClick={() => setTooltip4Visible(!tooltip4Visible)}
+                        >
+                            Right
+                        </Button.Default>
+                    </Item>
+                </Container>
+            );
+        }}
+    </Story>
+</Preview>
+
+<Heading3>Using as a HOC (Higher Order Component)</Heading3>
+
+```tsx
+import { withTooltip } from "@lifesg/react-design-system/tooltip";
+```
+
+You can use the `withTooltip` HOC to wrap your custom component and a tooltip will be automatically added to it.
+
+<Heading4>Example</Heading4>
+
+<Story name="withTooltip HOC">
+    <TooltipHOCExample />
+</Story>
+
+```tsx
+/** The base component **/
+interface ComponentProps {
+    onHover: (type: "in" | "out") => void;
+}
+
+const Component = (props: ComponentProps) => (
+    <TestButton
+        onMouseEnter={() => props.onHover("in")}
+        onMouseLeave={() => props.onHover("out")}
+    >
+        Hover over me
+    </TestButton>
+);
+
+/** HOC **/
+const WrappedComponent = withTooltip(Component, {
+    content: "This is my tooltip",
+});
+
+/** Final layout **/
+export const TooltipHOCExample = () => {
+    const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
+
+    const handleHover = (type: "in" | "out") => {
+        if (type === "in" && !tooltipVisible) {
+            setTooltipVisible(true);
+        } else if (type === "out" && tooltipVisible) {
+            setTooltipVisible(false);
+        } else {
+            // Do nothing
+        }
+    };
+
+    return (
+        <HOCContainer>
+            <WrappedComponent
+                onHover={handleHover}
+                tooltipVisible={tooltipVisible}
+                position="right"
+            />
+        </HOCContainer>
+    );
+};
+```
+
+> Take note that when using a HOC, it is important to
+> **ensure that the declaration of the HOC is not within the functional component**.
+> Doing so would cause certain display animations to not function correctly.
+
+```tsx
+/** Wrong **/
+
+export const Example1 = () => {
+    const Wrapped = withTooltip(Component, {
+        content: "This is my tooltip",
+    }); // You should never do this
+
+    /** state and event handlers code */
+
+    return (
+        <Container>
+            <Wrapped
+                onHover={handleHover}
+                tooltipVisible={tooltipVisible}
+                position="right"
+            />
+        </Container>
+    );
+};
+
+/** Correct **/
+
+const Wrapped = withTooltip(Component, {
+    content: "This is my tooltip",
+});
+
+export const Example1 = () => {
+    /** state and event handlers code */
+
+    return (
+        <Container>
+            <Wrapped
+                onHover={handleHover}
+                tooltipVisible={tooltipVisible}
+                position="right"
+            />
+        </Container>
+    );
+};
+```
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

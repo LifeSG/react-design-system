@@ -20,4 +20,5 @@ export * from "./text";
 export * from "./text-list";
 export * from "./theme";
 export * from "./toggle-button";
+export * from "./tooltip";
 export * from "./transition";
