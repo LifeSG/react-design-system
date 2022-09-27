@@ -6,7 +6,7 @@ import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
 import {
     Container,
     Item,
-    TOOLTIP_ATTRS,
+    PositionalTooltips,
     TooltipHOCExample,
 } from "./doc-elements";
 import { PropsTable } from "./props-table";
@@ -21,169 +21,57 @@ A component which appears when hovering or clicking on a target element and
 displays information about a certain element in the page.
 
 ```tsx
-import { Tooltip } from "@lifesg/react-design-system/tooltip";
+import { useTooltip } from "@lifesg/react-design-system/tooltip";
 ```
 
 <Canvas>
     <Story name="Tooltip">
-        {() => {
-            const [visible, setVisible] = useState(false);
-            return (
-                <Container>
-                    <Item>
-                        <Tooltip visible={visible} position="top">
-                            I am a top positioned tooltip
-                        </Tooltip>
-                        <Button.Default
-                            onMouseEnter={() => setVisible(true)}
-                            onMouseOut={() => setVisible(false)}
-                        >
-                            Hover me to interact
-                        </Button.Default>
-                    </Item>
-                </Container>
-            );
-        }}
+        <TooltipHOCExample />
     </Story>
 </Canvas>
 
-<Heading3>Available positions</Heading3>
+<!-- USAGE -->
 
-There are 4 types of positions that the `Tooltip` can appear. You can specify so using the `position` prop.
+<Heading3>Usage</Heading3>
 
-In this example, click to interact with the buttons.
+We recommend using the `withTooltip` higher order component (HOC) to construct the component. Here
+is how you can do it.
 
-<Preview>
-    <Story name="Positions">
-        {() => {
-            const [tooltip1Visible, setTooltip1Visible] = useState(false);
-            const [tooltip2Visible, setTooltip2Visible] = useState(false);
-            const [tooltip3Visible, setTooltip3Visible] = useState(false);
-            const [tooltip4Visible, setTooltip4Visible] = useState(false);
-            return (
-                <Container>
-                    <Item key="first">
-                        <Tooltip
-                            key="first-tooltip"
-                            visible={tooltip1Visible}
-                            position="left"
-                        >
-                            I am a left positioned tooltip
-                        </Tooltip>
-                        <Button.Default
-                            key="button-1"
-                            onClick={() => setTooltip1Visible(!tooltip1Visible)}
-                        >
-                            Left
-                        </Button.Default>
-                    </Item>
-                    <Item key="second">
-                        <Tooltip
-                            key="second-tooltip"
-                            visible={tooltip2Visible}
-                            position="top"
-                        >
-                            I am a top positioned tooltip
-                        </Tooltip>
-                        <Button.Default
-                            key="button-2"
-                            onClick={() => setTooltip2Visible(!tooltip2Visible)}
-                        >
-                            Top
-                        </Button.Default>
-                    </Item>
-                    <Item key="third">
-                        <Tooltip
-                            key="third-tooltip"
-                            visible={tooltip3Visible}
-                            position="bottom"
-                        >
-                            I am a bottom positioned tooltip
-                        </Tooltip>
-                        <Button.Default
-                            key="button-3"
-                            onClick={() => setTooltip3Visible(!tooltip3Visible)}
-                        >
-                            Bottom
-                        </Button.Default>
-                    </Item>
-                    <Item key="fourth">
-                        <Tooltip
-                            key="fourth-tooltip"
-                            visible={tooltip4Visible}
-                            position="right"
-                        >
-                            I am a right positioned tooltip
-                        </Tooltip>
-                        <Button.Default
-                            key="button-4"
-                            onClick={() => setTooltip4Visible(!tooltip4Visible)}
-                        >
-                            Right
-                        </Button.Default>
-                    </Item>
-                </Container>
-            );
-        }}
-    </Story>
-</Preview>
-
-<Heading3>Using as a HOC (Higher Order Component)</Heading3>
+<Heading4>Step 1: Create the trigger component</Heading4>
 
 ```tsx
-import { withTooltip } from "@lifesg/react-design-system/tooltip";
+import { Button, ButtonProps } from "@lifesg/react-design-system/button";
+
+const TriggerComponent = (props: ButtonProps) => (
+    <Button.Default {...props}>Click on me</Button.Default>
+);
 ```
 
-You can use the `withTooltip` HOC to wrap your custom component and a tooltip will be automatically added to it.
-
-<Heading4>Example</Heading4>
-
-<Story name="withTooltip HOC">
-    <TooltipHOCExample />
-</Story>
+<Heading4>Step 2: Use the HOC function to create a HOC</Heading4>
 
 ```tsx
-/** The base component **/
-interface ComponentProps {
-    onHover: (type: "in" | "out") => void;
-}
-
-const Component = (props: ComponentProps) => (
-    <TestButton
-        onMouseEnter={() => props.onHover("in")}
-        onMouseLeave={() => props.onHover("out")}
-    >
-        Hover over me
-    </TestButton>
-);
-
-/** HOC **/
-const WrappedComponent = withTooltip(Component, {
+const WrappedComponent = withTooltip(TriggerComponent, {
     content: "This is my tooltip",
 });
+```
 
-/** Final layout **/
+<Heading4>Step 3: Compose the component with the HOC</Heading4>
+
+You may choose to handle the visibility of the `Tooltip` within the composed function or
+expose props to allow the usage from parent elements.
+
+```tsx
 export const TooltipHOCExample = () => {
-    const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
-
-    const handleHover = (type: "in" | "out") => {
-        if (type === "in" && !tooltipVisible) {
-            setTooltipVisible(true);
-        } else if (type === "out" && tooltipVisible) {
-            setTooltipVisible(false);
-        } else {
-            // Do nothing
-        }
-    };
+    const [visible, setVisible] = useState(false);
 
     return (
-        <HOCContainer>
+        <div style={{ display: "flex" }}>
             <WrappedComponent
-                onHover={handleHover}
-                tooltipVisible={tooltipVisible}
+                onClick={() => setVisible(!visible)}
                 position="right"
+                tooltipVisible={visible}
             />
-        </HOCContainer>
+        </div>
     );
 };
 ```
@@ -195,17 +83,17 @@ export const TooltipHOCExample = () => {
 ```tsx
 /** Wrong **/
 
-export const Example1 = () => {
+export const WrongExample = () => {
     const Wrapped = withTooltip(Component, {
         content: "This is my tooltip",
-    }); // You should never do this
+    }); // You should not do this
 
     /** state and event handlers code */
 
     return (
         <Container>
             <Wrapped
-                onHover={handleHover}
+                onClick={handleClick}
                 tooltipVisible={tooltipVisible}
                 position="right"
             />
@@ -215,17 +103,17 @@ export const Example1 = () => {
 
 /** Correct **/
 
-const Wrapped = withTooltip(Component, {
+const WrappedCorrectly = withTooltip(Component, {
     content: "This is my tooltip",
 });
 
-export const Example1 = () => {
+export const CorrectExample = () => {
     /** state and event handlers code */
 
     return (
         <Container>
-            <Wrapped
-                onHover={handleHover}
+            <WrappedCorrectly
+                onClick={handleClick}
                 tooltipVisible={tooltipVisible}
                 position="right"
             />
@@ -233,6 +121,46 @@ export const Example1 = () => {
     );
 };
 ```
+
+<!-- USING AS A COMPONENT -->
+
+<Heading3>Using as a component</Heading3>
+
+You also have the freedom to construct the `Tooltip` as a separate component from its trigger.
+
+<Preview>
+    <Story name="Using as a component">
+        {() => {
+            const [visible, setVisible] = useState(false);
+            return (
+                <Container>
+                    <Item>
+                        <Tooltip visible={visible} position="top">
+                            I am a top positioned tooltip
+                        </Tooltip>
+                        <Button.Default onClick={() => setVisible(!visible)}>
+                            Click me to interact
+                        </Button.Default>
+                    </Item>
+                </Container>
+            );
+        }}
+    </Story>
+</Preview>
+
+<!-- POSITIONS -->
+
+<Heading3>Available positions</Heading3>
+
+There are 4 types of positions that the `Tooltip` can appear. You can specify so using the `position` prop.
+
+In this example, click to interact with the buttons.
+
+<Preview>
+    <Story name="Available positions">
+        <PositionalTooltips />
+    </Story>
+</Preview>
 
 <Secondary>Component API</Secondary>
 

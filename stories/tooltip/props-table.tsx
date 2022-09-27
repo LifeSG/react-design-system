@@ -80,10 +80,6 @@ export const HOCTable = () => (
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
-        title: "Tooltip",
-        component: <TooltipTable />,
-    },
-    {
         title: "withTooltip",
         component: (
             <div
@@ -102,6 +98,10 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
                 <HOCTable />
             </div>
         ),
+    },
+    {
+        title: "Tooltip",
+        component: <TooltipTable />,
     },
 ];
 
