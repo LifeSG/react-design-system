@@ -56,7 +56,7 @@ export const withPopover =
 
         const handleTriggerClick = (event: React.MouseEvent) => {
             event.preventDefault();
-            if (triggerBehaviour === "click") {
+            if (triggerBehaviour === "click" || isMobile) {
                 setVisible(!visible);
 
                 if (!visible && onPopoverAppear) onPopoverAppear();
@@ -64,9 +64,15 @@ export const withPopover =
             }
         };
 
-        const handleOnMouseEnter = (enter: boolean) => {
-            if (triggerBehaviour === "hover") {
-                setVisible(enter);
+        const handleOnMouseEnter = () => {
+            if (triggerBehaviour === "hover" && !isMobile) {
+                setVisible(true);
+            }
+        };
+
+        const handleOnMouseLeave = () => {
+            if (triggerBehaviour === "hover" && visible && !isMobile) {
+                setVisible(false);
             }
         };
 
@@ -81,8 +87,8 @@ export const withPopover =
                     }`}
                     type="button"
                     onClick={handleTriggerClick}
-                    onMouseEnter={() => handleOnMouseEnter(true)}
-                    onMouseLeave={() => handleOnMouseEnter(false)}
+                    onMouseEnter={handleOnMouseEnter}
+                    onMouseLeave={handleOnMouseLeave}
                     aria-label="popover-button"
                 >
                     <Component {...innerProps} />
