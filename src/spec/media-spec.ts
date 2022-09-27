@@ -1,6 +1,6 @@
-import { IMediaWidth } from "../media/types";
+import { MediaWidth } from "../media/types";
 
-export const MediaWidths: IMediaWidth = {
+export const MediaWidths: MediaWidth = {
     mobileS: 320,
     mobileM: 375,
     mobileL: 480,
