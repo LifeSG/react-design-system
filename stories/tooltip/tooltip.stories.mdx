@@ -20,6 +20,8 @@ import { PropsTable } from "./props-table";
 A component which appears when hovering or clicking on a target element and
 displays information about a certain element in the page.
 
+> **If the content within the bubble is long, it is recommended to use the [Popover](/docs/modules-popover--popover) instead.**
+
 ```tsx
 import { useTooltip } from "@lifesg/react-design-system/tooltip";
 ```
@@ -127,6 +129,10 @@ export const CorrectExample = () => {
 <Heading3>Using as a component</Heading3>
 
 You also have the freedom to construct the `Tooltip` as a separate component from its trigger.
+
+```tsx
+import { Tooltip } from "@lifesg/react-design-system/tooltip";
+```
 
 <Preview>
     <Story name="Using as a component">
