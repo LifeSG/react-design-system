@@ -15,6 +15,7 @@ export * from "./masonry";
 export * from "./media";
 export * from "./modal";
 export * from "./overlay";
+export * from "./popover";
 export * from "./radio-button";
 export * from "./text";
 export * from "./text-list";
