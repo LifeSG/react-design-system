@@ -1,27 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import { Color } from "../../src/color";
+import { Color } from "../../../src/color";
+import { DefaultColProps, DescriptionColProps } from "./types";
 
 // =============================================================================
 // TABLE
 // =============================================================================
 interface TableProps {
-    children: JSX.Element | JSX.Element[];
+	children: JSX.Element | JSX.Element[];
 }
 
 export const Table = ({ children }: TableProps) => {
-    return (
-        <StyledTable>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Default value</th>
-                </tr>
-            </thead>
-            <tbody>{children}</tbody>
-        </StyledTable>
-    );
+	return (
+		<StyledTable>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Default value</th>
+				</tr>
+			</thead>
+			<tbody>{children}</tbody>
+		</StyledTable>
+	);
 };
 
 const StyledTable = styled.table`
@@ -70,13 +71,13 @@ const StyledTable = styled.table`
 // =============================================================================
 
 interface SectionProps {
-    children: string;
+	children: string;
 }
 
 export const Section = ({ children }: SectionProps) => (
-    <SectionRow>
-        <td colSpan={3}>{children}</td>
-    </SectionRow>
+	<SectionRow>
+		<td colSpan={3}>{children}</td>
+	</SectionRow>
 );
 
 const SectionRow = styled.tr`
@@ -89,16 +90,16 @@ const SectionRow = styled.tr`
 // NAME COLUMN
 // =============================================================================
 interface NameColProps {
-    children: string;
-    mandatory?: boolean;
+	children: string;
+	mandatory?: boolean;
 }
 
 export const NameCol = ({ children, mandatory = false }: NameColProps) => {
-    if (mandatory) {
-        return <Mandatory>{children}</Mandatory>;
-    }
+	if (mandatory) {
+		return <Mandatory>{children}</Mandatory>;
+	}
 
-    return <Label>{children}</Label>;
+	return <Label>{children}</Label>;
 };
 
 const Label = styled.td`
@@ -116,42 +117,37 @@ const Mandatory = styled.td`
 // =============================================================================
 // DESCRIPTION COLUMN
 // =============================================================================
-interface DescriptionColProps {
-    children?: string | JSX.Element | JSX.Element[] | undefined;
-    propTypes?: string[] | JSX.Element | undefined;
-}
-
 export const DescriptionCol = ({
-    children,
-    propTypes,
+	children,
+	propTypes,
 }: DescriptionColProps) => {
-    let component = propTypes;
+	let component = propTypes;
 
-    if (
-        propTypes &&
-        Array.isArray(propTypes) &&
-        typeof propTypes[0] === "string"
-    ) {
-        component = (
-            <PropsContainer>
-                {propTypes.map((prop, index) => (
-                    <code key={index}>{prop}</code>
-                ))}
-            </PropsContainer>
-        );
-    }
+	if (
+		propTypes &&
+		Array.isArray(propTypes) &&
+		typeof propTypes[0] === "string"
+	) {
+		component = (
+			<PropsContainer>
+				{propTypes.map((prop, index) => (
+					<code key={index}>{prop}</code>
+				))}
+			</PropsContainer>
+		);
+	}
 
-    return (
-        <td>
-            {children && (
-                <>
-                    {children}
-                    <br />
-                </>
-            )}
-            {component}
-        </td>
-    );
+	return (
+		<td>
+			{children && (
+				<>
+					{children}
+					<br />
+				</>
+			)}
+			{component}
+		</td>
+	);
 };
 
 const PropsContainer = styled.div`
@@ -166,29 +162,26 @@ const PropsContainer = styled.div`
 // =============================================================================
 // DEFAULT VALUE COLUMN
 // =============================================================================
-interface DefaultColProps {
-    children?: string[] | JSX.Element | undefined;
-}
 export const DefaultCol = ({ children }: DefaultColProps) => {
-    if (!children) {
-        return (
-            <td>
-                <code>-</code>
-            </td>
-        );
-    }
+	if (!children) {
+		return (
+			<td>
+				<code>-</code>
+			</td>
+		);
+	}
 
-    if (Array.isArray(children) && typeof children[0] === "string") {
-        return (
-            <td>
-                <PropsContainer>
-                    {children.map((value, index) => (
-                        <code key={index}>{value}</code>
-                    ))}
-                </PropsContainer>
-            </td>
-        );
-    }
+	if (Array.isArray(children) && typeof children[0] === "string") {
+		return (
+			<td>
+				<PropsContainer>
+					{children.map((value, index) => (
+						<code key={index}>{value}</code>
+					))}
+				</PropsContainer>
+			</td>
+		);
+	}
 
-    return <td>{children}</td>;
+	return <td>{children}</td>;
 };
