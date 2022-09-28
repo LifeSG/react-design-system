@@ -1,31 +1,41 @@
 {
-    "compilerOptions": {
-        /** General settings **/
-        "target": "esnext",
-        "module": "esnext",
-        "lib": ["dom", "esnext"],
-        "jsx": "react", // transpile JSX to React.createElement
-        "isolatedModules": true, // warns if code can’t be correctly interpreted by a single-file transpilation process
-        "noEmit": true, // declares that tsc is only used for type checking and compiler to not output transpiled code
-        /** Module settings **/
-        "moduleResolution": "node", // use Nodejs module resolution strategy (else uses classic TS strategy)
-        "baseUrl": "./", // for absolute file resolution
-        "esModuleInterop": true, // allow interop between ESM and CJS/AMD/UMD modules
-        "resolveJsonModule": true, // allow importing .json files
-        /** Output files **/
-        "declaration": true, // generate d.ts files for every ts or js file
-        "declarationDir": "dist", // root directory where d.ts files are emitted
-        "sourceMap": true, // generate a .js.map files for compilers to display original Typescript source
-        "preserveConstEnums": true, // do not erase const enum declarations, allow enums to exist at runtime
-        /** Compiler settings **/
-        "allowJs": true, // allow JS files to be imported
-        "skipLibCheck": true, // type check code specifically referring to rather than all d.ts files for libs
-        "forceConsistentCasingInFileNames": true, // issue error if file import is of different case
-        "strictBindCallApply": true, // check that functions are invoked with the correct arguments
-        "allowSyntheticDefaultImports": true, // allow for imports e.g. import React from "react"
-        "alwaysStrict": true, // ensures files are parsed in ECMAScript strict mode
-        "noFallthroughCasesInSwitch": true // report error for fallthrough cases
-    },
-    "include": ["src/**/*", "tests/**/*", "custom-types/*"],
-    "exclude": ["node_modules", "rollup.config.js"]
+	"compilerOptions": {
+		/** General settings **/
+		"target": "esnext",
+		"module": "esnext",
+		"lib": [
+			"dom",
+			"esnext"
+		],
+		"jsx": "react-jsx", // transpile JSX to React.createElement
+		"isolatedModules": true, // warns if code can’t be correctly interpreted by a single-file transpilation process
+		"noEmit": true, // declares that tsc is only used for type checking and compiler to not output transpiled code
+		/** Module settings **/
+		"moduleResolution": "node", // use Nodejs module resolution strategy (else uses classic TS strategy)
+		"baseUrl": "./", // for absolute file resolution
+		"esModuleInterop": true, // allow interop between ESM and CJS/AMD/UMD modules
+		"resolveJsonModule": true, // allow importing .json files
+		/** Output files **/
+		"declaration": true, // generate d.ts files for every ts or js file
+		"declarationDir": "dist", // root directory where d.ts files are emitted
+		"sourceMap": true, // generate a .js.map files for compilers to display original Typescript source
+		"preserveConstEnums": true, // do not erase const enum declarations, allow enums to exist at runtime
+		/** Compiler settings **/
+		"allowJs": true, // allow JS files to be imported
+		"skipLibCheck": true, // type check code specifically referring to rather than all d.ts files for libs
+		"forceConsistentCasingInFileNames": true, // issue error if file import is of different case
+		"strictBindCallApply": true, // check that functions are invoked with the correct arguments
+		"allowSyntheticDefaultImports": true, // allow for imports e.g. import React from "react"
+		"alwaysStrict": true, // ensures files are parsed in ECMAScript strict mode
+		"noFallthroughCasesInSwitch": true // report error for fallthrough cases
+	},
+	"include": [
+		"src/**/*",
+		"tests/**/*",
+		"custom-types/*"
+	],
+	"exclude": [
+		"node_modules",
+		"rollup.config.js"
+	]
 }
