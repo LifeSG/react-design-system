@@ -8,6 +8,7 @@ const SPACER = 600;
 
 export const StoryContainer = styled.div`
     min-width: 500px;
+    margin: auto;
     width: calc(
         ${MediaWidths.desktopM}px -
             ${MINIMUM_SIDE_PADDING + SIDEBAR_WIDTH + SPACER}px
