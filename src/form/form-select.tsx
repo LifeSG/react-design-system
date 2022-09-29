@@ -7,9 +7,8 @@ export const FormSelect = <T, V>({
     label,
     errorMessage,
     "data-error-testid": testId,
-    id = "form-input-select",
+    id = "form-select",
     enableSearch = false,
-    placeholder = "Select",
     ...otherProps
 }: FormInputSelectProps<T, V>): JSX.Element => {
     return (
@@ -25,7 +24,6 @@ export const FormSelect = <T, V>({
                 data-testid="input-select"
                 error={!!errorMessage}
                 enableSearch={enableSearch}
-                placeholder={placeholder}
                 {...otherProps}
             />
         </FormWrapper>

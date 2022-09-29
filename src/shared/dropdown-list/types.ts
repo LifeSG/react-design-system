@@ -17,17 +17,23 @@ export interface DropdownEventHandlerProps<T, V> {
     onSelectItems?: (items: T[]) => void | undefined;
 }
 
-export interface DropdownListProps<T, V>
-    extends React.HTMLAttributes<HTMLUListElement>,
-        DropdownEventHandlerProps<T, V>,
-        DropdownDisplayExtractorProps<T, V>,
-        DropdownStyleProps {
-    listItems?: T[] | undefined;
-    visible?: boolean | undefined;
+export interface DropdownSearchProps<T> {
+    /** Specifying will render a search bar in the dropdown */
     enableSearch?: boolean | undefined;
     searchPlaceholder?: string | undefined;
     /** Custom function to perform search when a user keys in a value in the search input */
     searchFunction?: (searchValue: string) => T[] | undefined;
+    onSearch?: () => void | undefined;
+}
+
+export interface DropdownListProps<T, V>
+    extends React.HTMLAttributes<HTMLUListElement>,
+        DropdownEventHandlerProps<T, V>,
+        DropdownDisplayExtractorProps<T, V>,
+        DropdownSearchProps<T>,
+        DropdownStyleProps {
+    listItems?: T[] | undefined;
+    visible?: boolean | undefined;
     multiSelect?: boolean | undefined;
     selectedItems?: T[] | undefined;
     /**
@@ -38,7 +44,6 @@ export interface DropdownListProps<T, V>
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     itemTruncationType?: TruncateType | undefined;
 
-    onSearch?: () => void | undefined;
     onDismiss?: () => void | undefined;
     onSelectAll?: () => void | undefined;
     onRetry?: () => void | undefined;
