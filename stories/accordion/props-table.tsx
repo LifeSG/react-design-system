@@ -1,108 +1,108 @@
 import React from "react";
 import {
+    ApiTable,
     DefaultCol,
     DescriptionCol,
     NameCol,
     Table,
 } from "../storybook-common/api-table";
+import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
-export const AccordionPropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol mandatory>children</NameCol>
-            <DescriptionCol propTypes={["JSX.Element", "JSX.Element[]"]}>
-                The content of the Accordion
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>title</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                The header text content for the Accordion
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>enableExpandAll</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                Specifies if the feature to expand/collapse all child items is
-                enabled
-            </DescriptionCol>
-            <DefaultCol>{["true"]}</DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>showTitleInMobile</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                Specifies if the title should be shown in mobile viewports
-            </DescriptionCol>
-            <DefaultCol>{["false"]}</DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>className</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                Class selector for the component
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+const ACCORDION_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                mandatory: true,
+                description: "The content of the Accordion",
+                propTypes: ["JSX.Element", "JSX.Element[]"],
+            },
+            {
+                name: "title",
+                description: "The header text content for the Accordion",
+                propTypes: ["string"],
+            },
+            {
+                name: "enableExpandAll",
+                description:
+                    "Specifies if the feature to expand/collapse all child items is enabled",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
+                name: "showTitleInMobile",
+                description:
+                    "Specifies if the title should be shown in mobile viewports",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
 
-export const AccordionItemPropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol mandatory>children</NameCol>
-            <DescriptionCol propTypes={["JSX.Element", "JSX.Element[]"]}>
-                The content of the Accordion.Item
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol mandatory>title</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                The label text for the Accordion.Item header
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>type</NameCol>
-            <DescriptionCol propTypes={[`"default"`, `"small`]}>
-                Sets the style type of the component
-            </DescriptionCol>
-            <DefaultCol>{[`"default"`]}</DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>expanded</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                Specifies if the item is expanded
-            </DescriptionCol>
-            <DefaultCol>{["true"]}</DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>className</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                Class selector for the component
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>data-testid</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                The test id for the component
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                mandatory: true,
+                description: (
+                    <>
+                        The content of the <code>Accordion.Item</code>
+                    </>
+                ),
+                propTypes: ["JSX.Element", "JSX.Element[]"],
+            },
+            {
+                name: "title",
+                description: (
+                    <>
+                        The header text of the <code>Accordion.Item</code>{" "}
+                        header
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "type",
+                description: "Sets the style type of the component",
+                propTypes: [`"default"`, `"small"`],
+                defaultValue: `"default"`,
+            },
+            {
+                name: "expanded",
+                description: "Specifies if the item is expanded",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "Accordion",
-        component: <AccordionPropsTable />,
+        component: <ApiTable sections={ACCORDION_DATA} />,
     },
     {
         title: "Accordion.Item",
-        component: <AccordionItemPropsTable />,
+        component: <ApiTable sections={ACCORDION_ITEM_DATA} />,
     },
 ];
 
