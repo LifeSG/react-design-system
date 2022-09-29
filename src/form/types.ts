@@ -1,5 +1,5 @@
 import { IconType } from "../icon/types";
-// import { InputGroupPartialProps } from "../input-group/types";
+import { InputGroupPartialProps } from "../input-group/types";
 import {
     InputMultiSelectPartialProps,
     InputSelectPartialProps,
@@ -47,7 +47,11 @@ export interface FormWrapperProps extends BaseFormElementProps {
 export interface FormFieldProps
     extends InputPartialProps,
         BaseFormElementProps {}
-// export interface FormFieldGroupProps<T> extends InputGroupPartialProps<T>, BaseFormElementProps {}
+
+export interface FormFieldGroupProps<T, V>
+    extends InputGroupPartialProps<T, V>,
+        BaseFormElementProps {}
+
 export interface FormTextareaProps
     extends TextareaPartialProps,
         BaseFormElementProps {}

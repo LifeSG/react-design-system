@@ -1,0 +1,129 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Icon } from "src/icon";
+import { InputGroup } from "src/input-group";
+import { Form } from "src/form";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+
+<Meta title="Form/FieldGroup" component={Form.FieldGroup} />
+
+<Title>Form.FieldGroup</Title>
+
+<Secondary>Overview</Secondary>
+
+An enhanced field that allows a user to enter a response and display extra information.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas>
+    <Story name="FieldGroup">
+        <StoryContainer>
+            <Container>
+                <Form.FieldGroup
+                    label="This is the field group"
+                    placeholder="Enter an amount"
+                    addon={{ value: "$" }}
+                />
+                <br />
+                <Form.FieldGroup
+                    label="This is the disabled state"
+                    placeholder="Enter an amount"
+                    addon={{ value: "$" }}
+                    disabled
+                />
+                <br />
+                <Form.FieldGroup
+                    label="This is the error state"
+                    placeholder="Enter an amount"
+                    addon={{ value: "$" }}
+                    errorMessage="Input is required"
+                />
+                <br />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Addon variants</Heading3>
+
+You are able to specify attributes in the `addon` property to construct advanced `FieldGroup` components.
+
+<Preview>
+    <Story name="With different addons">
+        <StoryContainer>
+            <Container>
+                <Form.FieldGroup
+                    label="With a static addon"
+                    placeholder="Enter an amount"
+                    addon={{ value: "$" }}
+                />
+                <br />
+                <Form.FieldGroup
+                    label="With a list addon"
+                    placeholder="Enter something"
+                    addon={{
+                        placeholder: "Select",
+                        type: "list",
+                        listItems: [
+                            { value: "SG", display: "Singapore" },
+                            { value: "US", display: "United States" },
+                            { value: "UK", display: "United Kingdom" },
+                            { value: "JP", display: "Japan" },
+                        ],
+                        valueExtractor: (item) => item.value,
+                        listExtractor: (item) => item.display,
+                    }}
+                />
+                <br />
+                <Form.FieldGroup
+                    label="With a static addon on the right"
+                    placeholder="Enter an amount"
+                    addon={{ value: "kg", position: "right" }}
+                />
+                <br />
+                <Form.FieldGroup
+                    label="With a custom addon"
+                    placeholder="Enter something"
+                    addon={{ type: "custom", children: <Icon type="search" /> }}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the input group field as a standalone, you can do this.
+
+```tsx
+import { InputGroup } from "@lifesg/react-design-system/input-group";
+```
+
+<Preview>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <Container>
+                <InputGroup
+                    placeholder="Enter an amount"
+                    addon={{ value: "$" }}
+                />
+                <br />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<!-- TODO: -->
+
+**Props table wip**
