@@ -12,6 +12,7 @@ export * from "./icon";
 export * from "./icon-button";
 export * from "./input";
 export * from "./input-select";
+export * from "./input-textarea";
 // export * from "./layout";
 export * from "./masonry";
 export * from "./media";

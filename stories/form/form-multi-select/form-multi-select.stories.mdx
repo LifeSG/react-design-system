@@ -1,6 +1,6 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
-import { InputSelect } from "src/input-select";
+import { InputMultiSelect } from "src/input-select";
 import { Form } from "src/form";
 import { Text } from "src/text";
 import {
@@ -12,9 +12,9 @@ import {
 } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 
-<Meta title="Form/Select" component={Form.Select} />
+<Meta title="Form/MultiSelect" component={Form.MultiSelect} />
 
-<Title>Form.Select</Title>
+<Title>Form.MultiSelect</Title>
 
 <Secondary>Overview</Secondary>
 
@@ -25,10 +25,10 @@ import { Form } from "@lifesg/react-design-system/form";
 ```
 
 <Canvas>
-    <Story name="Select">
+    <Story name="MultiSelect">
         <StoryContainer>
             <Container>
-                <Form.Select
+                <Form.MultiSelect
                     label="This is the select field"
                     options={[
                         { value: "A", label: "Option A" },
@@ -41,7 +41,7 @@ import { Form } from "@lifesg/react-design-system/form";
                     displayValueExtractor={(item) => item.label}
                 />
                 <br />
-                <Form.Select
+                <Form.MultiSelect
                     label="This is the disabled state"
                     options={[
                         { value: "A", label: "Option A" },
@@ -55,7 +55,7 @@ import { Form } from "@lifesg/react-design-system/form";
                     disabled
                 />
                 <br />
-                <Form.Select
+                <Form.MultiSelect
                     label="This is the error state"
                     options={[
                         { value: "A", label: "Option A" },
@@ -68,6 +68,23 @@ import { Form } from "@lifesg/react-design-system/form";
                     displayValueExtractor={(item) => item.label}
                     errorMessage="Selection is required"
                 />
+                <br />
+                <Form.MultiSelect
+                    label="This has preselected items"
+                    options={[
+                        { value: "A", label: "Option A" },
+                        { value: "B", label: "Option B" },
+                        { value: "C", label: "Option C" },
+                        { value: "D", label: "Option D" },
+                    ]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    selectedOptions={[
+                        { value: "A", label: "Option A" },
+                        { value: "C", label: "Option C" },
+                    ]}
+                />
             </Container>
         </StoryContainer>
     </Story>
@@ -79,7 +96,7 @@ import { Form } from "@lifesg/react-design-system/form";
     <Story name="With search">
         <StoryContainer>
             <Container>
-                <Form.Select
+                <Form.MultiSelect
                     label="This has searchable options"
                     options={[
                         { value: "A", label: "Option A" },
@@ -99,17 +116,17 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Heading3>Using the field as a standalone</Heading3>
 
-In the case that you require the select field as a standalone, you can do this.
+In the case that you require the multi select field as a standalone, you can do this.
 
 ```tsx
-import { InputSelect } from "@lifesg/react-design-system/input-select";
+import { InputMultiSelect } from "@lifesg/react-design-system/input-select";
 ```
 
 <Preview>
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
-                <InputSelect
+                <InputMultiSelect
                     options={[
                         { value: "A", label: "Option A" },
                         { value: "B", label: "Option B" },
@@ -118,11 +135,10 @@ import { InputSelect } from "@lifesg/react-design-system/input-select";
                     ]}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
-                    placeholder="Default select"
+                    placeholder="Default multi select"
                 />
                 <br />
-                <InputSelect
+                <InputMultiSelect
                     options={[
                         { value: "A", label: "Option A" },
                         { value: "B", label: "Option B" },
@@ -131,8 +147,21 @@ import { InputSelect } from "@lifesg/react-design-system/input-select";
                     ]}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
-                    placeholder="Searchable select"
+                    placeholder="Searchable multi select"
+                    enableSearch
+                />
+                <br />
+                <InputMultiSelect
+                    options={[
+                        { value: "A", label: "Option A" },
+                        { value: "B", label: "Option B" },
+                        { value: "C", label: "Option C" },
+                        { value: "D", label: "Option D" },
+                    ]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    placeholder="Searchable multi select"
+                    selectedOptions={[{ value: "B", label: "Option B" }]}
                     enableSearch
                 />
             </Container>

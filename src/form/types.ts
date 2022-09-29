@@ -1,8 +1,11 @@
 import { IconType } from "../icon/types";
 // import { InputGroupPartialProps } from "../input-group/types";
-import { InputSelectPartialProps } from "../input-select/types";
+import {
+    InputMultiSelectPartialProps,
+    InputSelectPartialProps,
+} from "../input-select/types";
 import { InputPartialProps } from "../input/types";
-// import { TextareaPartialProps } from "../textarea/types";
+import { TextareaPartialProps } from "../input-textarea/types";
 // import { DateInputProps } from "../date-input/types";
 // import { TimepickerProps } from "../timepicker/types";
 // import { InputMultiSelectPartialProps } from "../input-multi-select/types";
@@ -45,12 +48,17 @@ export interface FormFieldProps
     extends InputPartialProps,
         BaseFormElementProps {}
 // export interface FormFieldGroupProps<T> extends InputGroupPartialProps<T>, BaseFormElementProps {}
-// export interface FormTextareaProps extends TextareaPartialProps, BaseFormElementProps {}
+export interface FormTextareaProps
+    extends TextareaPartialProps,
+        BaseFormElementProps {}
 // export interface FormCustomFieldProps extends FormWrapperProps, BaseFormElementProps {}
 export interface FormInputSelectProps<T, V>
     extends InputSelectPartialProps<T, V>,
         BaseFormElementProps {}
-// export interface FormInputMultiSelectProps<T> extends InputMultiSelectPartialProps<T>, BaseFormElementProps {}
+
+export interface FormMultiSelectProps<T, V>
+    extends InputMultiSelectPartialProps<T, V>,
+        BaseFormElementProps {}
 // export interface FormDateInputProps extends DateInputProps, BaseFormElementProps {}
 
 // export interface FormTimepickerProps extends TimepickerProps, BaseFormElementProps {}
