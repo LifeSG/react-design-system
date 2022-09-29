@@ -27,9 +27,9 @@ export type InputType =
 
 export interface InputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
-    type?: InputType;
-    spacing?: number;
-    error?: boolean;
+    type?: InputType | undefined;
+    spacing?: number | undefined;
+    error?: boolean | undefined;
 }
 
 /** To be exposed for Form component inheritance */
