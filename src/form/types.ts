@@ -6,9 +6,8 @@ import {
 } from "../input-select/types";
 import { InputPartialProps } from "../input/types";
 import { TextareaPartialProps } from "../input-textarea/types";
-// import { DateInputProps } from "../date-input/types";
+import { DateInputProps } from "../date-input/types";
 // import { TimepickerProps } from "../timepicker/types";
-// import { InputMultiSelectPartialProps } from "../input-multi-select/types";
 
 export type FormLabelAddonType = "tooltip" | "popover";
 
@@ -63,6 +62,9 @@ export interface FormInputSelectProps<T, V>
 export interface FormMultiSelectProps<T, V>
     extends InputMultiSelectPartialProps<T, V>,
         BaseFormElementProps {}
-// export interface FormDateInputProps extends DateInputProps, BaseFormElementProps {}
+
+export interface FormDateInputProps
+    extends DateInputProps,
+        BaseFormElementProps {}
 
 // export interface FormTimepickerProps extends TimepickerProps, BaseFormElementProps {}

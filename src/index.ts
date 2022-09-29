@@ -7,6 +7,7 @@ export * from "./breadcrumb";
 export * from "./button";
 export * from "./checkbox";
 export * from "./color";
+export * from "./date-input";
 export * from "./form";
 export * from "./icon";
 export * from "./icon-button";

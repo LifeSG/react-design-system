@@ -1,3 +1,4 @@
+import { FormDateInput } from "./form-date-input";
 import { FormField } from "./form-field";
 import { FormFieldGroup } from "./form-field-group";
 import { FormLabel } from "./form-label";
@@ -6,6 +7,7 @@ import { FormSelect } from "./form-select";
 import { FormTextarea } from "./form-textarea";
 
 export const Form = {
+    DateInput: FormDateInput,
     Field: FormField,
     FieldGroup: FormFieldGroup,
     Label: FormLabel,
