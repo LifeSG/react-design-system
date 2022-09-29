@@ -58,7 +58,7 @@ import { Form } from "@lifesg/react-design-system/form";
     </Story>
 </Canvas>
 
-<Heading3>Using the field independently</Heading3>
+<Heading3>Using the field as a standalone</Heading3>
 
 In the case that you require the textarea field as a standalone, you can do this.
 
@@ -67,11 +67,13 @@ import { Textarea } from "@lifesg/react-design-system/input-textarea";
 ```
 
 <Preview>
-    <StoryContainer>
-        <Container>
-            <Textarea placeholder="Enter here..." maxLength={100} />
-        </Container>
-    </StoryContainer>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <Container>
+                <Textarea placeholder="Enter here..." maxLength={100} />
+            </Container>
+        </StoryContainer>
+    </Story>
 </Preview>
 
 <Secondary>Component API</Secondary>
