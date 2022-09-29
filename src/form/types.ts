@@ -1,6 +1,6 @@
 import { IconType } from "../icon/types";
 // import { InputGroupPartialProps } from "../input-group/types";
-// import { InputSelectPartialProps } from "../input-select/types";
+import { InputSelectPartialProps } from "../input-select/types";
 import { InputPartialProps } from "../input/types";
 // import { TextareaPartialProps } from "../textarea/types";
 // import { DateInputProps } from "../date-input/types";
@@ -47,7 +47,9 @@ export interface FormFieldProps
 // export interface FormFieldGroupProps<T> extends InputGroupPartialProps<T>, BaseFormElementProps {}
 // export interface FormTextareaProps extends TextareaPartialProps, BaseFormElementProps {}
 // export interface FormCustomFieldProps extends FormWrapperProps, BaseFormElementProps {}
-// export interface FormInputSelectProps<T> extends InputSelectPartialProps<T>, BaseFormElementProps {}
+export interface FormInputSelectProps<T, V>
+    extends InputSelectPartialProps<T, V>,
+        BaseFormElementProps {}
 // export interface FormInputMultiSelectProps<T> extends InputMultiSelectPartialProps<T>, BaseFormElementProps {}
 // export interface FormDateInputProps extends DateInputProps, BaseFormElementProps {}
 

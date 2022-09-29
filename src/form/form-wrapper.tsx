@@ -12,23 +12,17 @@ import { FormWrapperProps } from "./types";
 export const FormWrapper = ({
     label,
     errorMessage,
-    "data-error-testid": errorTestId,
     id,
     disabled,
     children,
+    "data-error-testid": errorTestId,
 }: FormWrapperProps): JSX.Element => {
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
 
     const getErrorTestMessageId = () => {
-        if (errorTestId) {
-            return errorTestId;
-        } else if (id) {
-            return `${id}-error-message`;
-        } else {
-            return "error-message";
-        }
+        return errorTestId || (id ? `${id}-error-message` : "error-message");
     };
 
     // =============================================================================

@@ -7,9 +7,9 @@ export const SearchIcon = ({ id, className }: IconSvgProps): JSX.Element => {
     return (
         <SVG
             xmlns="http://www.w3.org/2000/svg"
-            width="1rem"
-            height="1rem"
-            viewBox="0 0 16 16"
+            width="2rem"
+            height="2rem"
+            viewBox="0 0 32 32"
             fill="none"
             id={id}
             className={className}
