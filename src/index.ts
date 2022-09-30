@@ -25,6 +25,7 @@ export * from "./radio-button";
 export * from "./text";
 export * from "./text-list";
 export * from "./theme";
+export * from "./timepicker";
 export * from "./toggle-button";
 export * from "./tooltip";
 export * from "./transition";

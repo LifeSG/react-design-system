@@ -5,6 +5,7 @@ import { FormLabel } from "./form-label";
 import { FormMultiSelect } from "./form-multi-select";
 import { FormSelect } from "./form-select";
 import { FormTextarea } from "./form-textarea";
+import { FormTimepicker } from "./form-timepicker";
 
 export const Form = {
     DateInput: FormDateInput,
@@ -14,4 +15,5 @@ export const Form = {
     MultiSelect: FormMultiSelect,
     Select: FormSelect,
     Textarea: FormTextarea,
+    Timepicker: FormTimepicker,
 };
