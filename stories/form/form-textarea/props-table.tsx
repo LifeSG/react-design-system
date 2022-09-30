@@ -1,66 +1,30 @@
 import React from "react";
 import { ApiTable } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
     {
+        name: "Textarea specific props",
         attributes: [
             {
-                name: "disabled",
-                description:
-                    "Indicates if a disabled display should be applied",
-                propTypes: ["string"],
-            },
-            {
-                name: "addon",
+                name: "error",
                 description: (
                     <>
-                        The addon attributes for the <code>Form.Label</code>
+                        Indicates if an error display is to be set&nbsp; (Not
+                        needed if you indicated <code>errorMessage</code>)
                     </>
                 ),
-                propTypes: ["FormLabelAddonProps"],
-            },
-        ],
-    },
-    {
-        name: "FormLabelAddonProps",
-        attributes: [
-            {
-                name: "content",
-                mandatory: true,
-                description: (
-                    <>
-                        Since the addon is either a <code>Tooltip</code> or{" "}
-                        <code>Popover</code>, this attribute controls the
-                        content within their bubble display
-                    </>
-                ),
-                propTypes: ["string", "JSX.Element"],
-            },
-            {
-                name: "type",
-                description: "The type of addon",
-                propTypes: [`"tooltip"`, `"popover"`],
-                defaultValue: `"popover"`,
-            },
-            {
-                name: "icon",
-                description: "The type of icon used in the addon trigger",
-                propTypes: ["IconType", "JSX.Element"],
-                defaultValue: `"info"`,
-            },
-            {
-                name: "id",
-                description: "The unique identifier of the addon",
-                propTypes: ["string"],
+                propTypes: ["boolean"],
             },
             {
                 name: "data-testid",
-                description: "The test identifier of the addon",
+                description: "The test identifier of the component",
                 propTypes: ["string"],
             },
         ],
     },
+    ...SHARED_FORM_PROPS_DATA,
 ];
 
 export const PropsTable = () => <ApiTable sections={DATA} />;

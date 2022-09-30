@@ -11,6 +11,7 @@ import {
     Title,
 } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
 
 <Meta title="Form/FieldGroup" component={Form.FieldGroup} />
 
@@ -31,20 +32,32 @@ import { Form } from "@lifesg/react-design-system/form";
                 <Form.FieldGroup
                     label="This is the field group"
                     placeholder="Enter an amount"
-                    addon={{ value: "$" }}
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
                 />
                 <br />
                 <Form.FieldGroup
                     label="This is the disabled state"
                     placeholder="Enter an amount"
-                    addon={{ value: "$" }}
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
                     disabled
                 />
                 <br />
                 <Form.FieldGroup
                     label="This is the error state"
                     placeholder="Enter an amount"
-                    addon={{ value: "$" }}
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
                     errorMessage="Input is required"
                 />
                 <br />
@@ -64,36 +77,53 @@ You are able to specify attributes in the `addon` property to construct advanced
                 <Form.FieldGroup
                     label="With a static addon"
                     placeholder="Enter an amount"
-                    addon={{ value: "$" }}
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
                 />
                 <br />
                 <Form.FieldGroup
                     label="With a list addon"
                     placeholder="Enter something"
                     addon={{
-                        placeholder: "Select",
                         type: "list",
-                        listItems: [
-                            { value: "SG", display: "Singapore" },
-                            { value: "US", display: "United States" },
-                            { value: "UK", display: "United Kingdom" },
-                            { value: "JP", display: "Japan" },
-                        ],
-                        valueExtractor: (item) => item.value,
-                        listExtractor: (item) => item.display,
+                        attributes: {
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                        },
                     }}
                 />
                 <br />
                 <Form.FieldGroup
                     label="With a static addon on the right"
                     placeholder="Enter an amount"
-                    addon={{ value: "kg", position: "right" }}
+                    addon={{
+                        position: "right",
+                        attributes: {
+                            value: "kg",
+                        },
+                    }}
                 />
                 <br />
                 <Form.FieldGroup
                     label="With a custom addon"
                     placeholder="Enter something"
-                    addon={{ type: "custom", children: <Icon type="search" /> }}
+                    addon={{
+                        type: "custom",
+                        attributes: {
+                            children: <Icon type="search" />,
+                        },
+                    }}
                 />
             </Container>
         </StoryContainer>
@@ -114,7 +144,11 @@ import { InputGroup } from "@lifesg/react-design-system/input-group";
             <Container>
                 <InputGroup
                     placeholder="Enter an amount"
-                    addon={{ value: "$" }}
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
                 />
                 <br />
             </Container>
@@ -124,6 +158,4 @@ import { InputGroup } from "@lifesg/react-design-system/input-group";
 
 <Secondary>Component API</Secondary>
 
-<!-- TODO: -->
-
-**Props table wip**
+<PropsTable />
