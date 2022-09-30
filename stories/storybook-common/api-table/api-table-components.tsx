@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../../../src/color";
 import { DefaultColProps, DescriptionColProps } from "./types";
 
@@ -94,24 +94,45 @@ interface NameColProps {
     mandatory?: boolean;
 }
 
+interface NameColStyleProps {
+    $isFunction?: boolean;
+}
+
 export const NameCol = ({ children, mandatory = false }: NameColProps) => {
+    const isFunction = children.substring(0, 2) === "on";
+
     if (mandatory) {
-        return <Mandatory>{children}</Mandatory>;
+        return <Mandatory $isFunction={isFunction}>{children}</Mandatory>;
     }
 
-    return <Label>{children}</Label>;
+    return <Label $isFunction={isFunction}>{children}</Label>;
 };
 
-const Label = styled.td`
+const Label = styled.td<NameColStyleProps>`
     font-weight: bold;
+    ${(props) => {
+        if (props.$isFunction) {
+            return css`
+                color: ${Color.PrimaryDark};
+            `;
+        }
+    }}
 `;
 
-const Mandatory = styled.td`
+const Mandatory = styled.td<NameColStyleProps>`
     font-weight: bold;
     :after {
         content: " *";
         color: ${Color.Validation.Red.Text};
     }
+
+    ${(props) => {
+        if (props.$isFunction) {
+            return css`
+                color: ${Color.PrimaryDark};
+            `;
+        }
+    }}
 `;
 
 // =============================================================================
