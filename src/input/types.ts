@@ -1,33 +1,8 @@
 import React from "react";
 
-export type InputType =
-    | "button"
-    | "checkbox"
-    | "color"
-    | "date"
-    | "datetime-local"
-    | "email"
-    | "file"
-    | "hidden"
-    | "image"
-    | "month"
-    | "number"
-    | "password"
-    | "radio"
-    | "range"
-    | "reset"
-    | "search"
-    | "submit"
-    | "tel"
-    | "text"
-    | "time"
-    | "url"
-    | "week"
-    | "readonly";
-
 export interface InputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
-    type?: InputType | undefined;
+    /** Sets the number of characters before a space is added (works only with type `tel` input) */
     spacing?: number | undefined;
     error?: boolean | undefined;
     "data-testid"?: string | undefined;
