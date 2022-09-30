@@ -72,7 +72,7 @@ export const StyledIcon = styled(Icon)`
 
 export const LabelContainer = styled.div`
     display: flex;
-    flex: 1;
+    flex: 1 1 auto;
 `;
 
 export const ValueLabel = styled(Text.Body)`
@@ -90,7 +90,7 @@ export const PlaceholderLabel = styled(ValueLabel)`
 `;
 
 export const Divider = styled.div`
-    margin: 1rem 0;
+    margin: 1rem 1rem 1rem 0;
     width: 1px;
     background: ${Color.Neutral[5]};
 `;
