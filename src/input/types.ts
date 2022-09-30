@@ -30,6 +30,7 @@ export interface InputProps
     type?: InputType | undefined;
     spacing?: number | undefined;
     error?: boolean | undefined;
+    "data-testid"?: string | undefined;
 }
 
 /** To be exposed for Form component inheritance */

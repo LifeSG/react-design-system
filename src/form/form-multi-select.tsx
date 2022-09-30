@@ -5,8 +5,9 @@ import { FormMultiSelectProps } from "./types";
 export const FormMultiSelect = <T, V>({
     label,
     errorMessage,
-    "data-error-testid": errorTestId,
     id = "form-multi-select",
+    "data-error-testid": errorTestId,
+    "data-testid": testId,
     enableSearch = false,
     ...otherProps
 }: FormMultiSelectProps<T, V>): JSX.Element => {
@@ -20,7 +21,7 @@ export const FormMultiSelect = <T, V>({
         >
             <InputMultiSelect
                 id={`${id}-base`}
-                data-testid="input-multi-select"
+                data-testid={testId || id}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
                 {...otherProps}

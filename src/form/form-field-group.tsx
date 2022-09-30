@@ -10,8 +10,9 @@ const Component = <T, V>(
     const {
         label,
         errorMessage,
-        "data-error-testid": testId,
         id = "form-field-group",
+        "data-error-testid": errorTestId,
+        "data-testid": testId,
         ...otherProps
     } = props;
 
@@ -21,12 +22,12 @@ const Component = <T, V>(
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
-            data-error-testid={testId}
+            data-error-testid={errorTestId}
         >
             <InputGroup
                 ref={ref}
                 id={`${id}-base`}
-                data-testid={id || "input-group"}
+                data-testid={testId || id}
                 error={!!errorMessage}
                 {...otherProps}
             />

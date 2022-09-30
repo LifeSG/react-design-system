@@ -5,22 +5,22 @@ import { FormDateInputProps } from "./types";
 export const FormDateInput = ({
     label,
     errorMessage,
-    "data-error-testid": testId,
+    id = "form-date-input",
+    "data-error-testid": errorTestId,
+    "data-testid": testId,
     ...otherProps
 }: FormDateInputProps): JSX.Element => {
-    const id = otherProps.id || "form-date-input";
-
     return (
         <FormWrapper
             id={id}
             label={label}
             errorMessage={errorMessage}
-            data-error-testid={testId}
+            data-error-testid={errorTestId}
             disabled={otherProps.disabled}
         >
             <DateInput
                 id={`${id}-base`}
-                data-testid="date-input"
+                data-testid={testId || id}
                 error={!!errorMessage}
                 {...otherProps}
             />

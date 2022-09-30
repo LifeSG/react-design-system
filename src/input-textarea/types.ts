@@ -3,7 +3,8 @@ import React from "react";
 
 export interface TextareaProps
     extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    error?: boolean;
+    error?: boolean | undefined;
+    "data-testid"?: string | undefined;
 }
 
 /** To be exposed for Form component inheritance */

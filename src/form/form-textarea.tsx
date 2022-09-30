@@ -11,20 +11,23 @@ import { FormWrapper } from "./form-wrapper";
 import { FormTextareaProps } from "./types";
 
 const FormTextareaComponent = (
-    {
-        label,
-        value,
-        errorMessage,
-        "data-error-testid": testId,
-        id = "form-textarea",
-        onChange,
-        ...otherProps
-    }: FormTextareaProps,
+    props: FormTextareaProps,
     ref: TextareaRef
 ): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const {
+        label,
+        value,
+        errorMessage,
+        id = "form-textarea",
+        "data-error-testid": errorTestId,
+        "data-testid": testId,
+        onChange,
+        ...otherProps
+    } = props;
+
     const [stateValue, setStateValue] = useState<
         string | number | readonly string[]
     >(value);
@@ -41,7 +44,7 @@ const FormTextareaComponent = (
     // =============================================================================
 
     const getErrorTestMessageId = () => {
-        return testId || (id ? `${id}-error-message` : "error-message");
+        return errorTestId || (id ? `${id}-error-message` : "error-message");
     };
 
     // =============================================================================
@@ -87,7 +90,7 @@ const FormTextareaComponent = (
         <FormWrapper id={id} label={label} disabled={otherProps.disabled}>
             <TextareaBase
                 id={`${id}-base`}
-                data-testid={id || "textarea"}
+                data-testid={testId || id}
                 value={stateValue}
                 error={!!errorMessage}
                 onChange={handleChange}

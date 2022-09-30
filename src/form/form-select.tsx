@@ -6,8 +6,9 @@ import { FormInputSelectProps } from "./types";
 export const FormSelect = <T, V>({
     label,
     errorMessage,
-    "data-error-testid": testId,
     id = "form-select",
+    "data-error-testid": errorTestId,
+    "data-testid": testId,
     enableSearch = false,
     ...otherProps
 }: FormInputSelectProps<T, V>): JSX.Element => {
@@ -16,12 +17,12 @@ export const FormSelect = <T, V>({
             id={id}
             label={label}
             errorMessage={errorMessage}
-            data-error-testid={testId}
+            data-error-testid={errorTestId}
             disabled={otherProps.disabled}
         >
             <InputSelect
                 id={`${id}-base`}
-                data-testid="input-select"
+                data-testid={testId || id}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
                 {...otherProps}

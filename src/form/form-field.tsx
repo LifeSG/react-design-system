@@ -4,27 +4,27 @@ import { InputRef } from "../input/types";
 import { FormWrapper } from "./form-wrapper";
 import { FormFieldProps } from "./types";
 
-const Component = (
-    {
+const Component = (props: FormFieldProps, ref: InputRef): JSX.Element => {
+    const {
         label,
         errorMessage,
-        "data-error-testid": testId,
         id = "form-field",
+        "data-error-testid": errorTestId,
+        "data-testid": testId,
         ...otherProps
-    }: FormFieldProps,
-    ref: InputRef
-): JSX.Element => {
+    } = props;
+
     return (
         <FormWrapper
             id={id}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
-            data-error-testid={testId}
+            data-error-testid={errorTestId}
         >
             <Input
                 id={`${id}-base`}
-                data-testid={id || "input"}
+                data-testid={testId || id}
                 ref={ref}
                 error={!!errorMessage}
                 {...otherProps}
