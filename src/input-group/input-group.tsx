@@ -1,6 +1,6 @@
 import React from "react";
 import { AddOnContainer, Container, MainInput } from "./input-group.style";
-import { InputGroupProps } from "./types";
+import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
 import { InputGroupListAddon } from "./input-group-list-addon";
 
 const Component = <T, V>(
@@ -19,11 +19,12 @@ const Component = <T, V>(
     );
 
     if (addon) {
-        const { type = "label" } = addon;
-        const position = addon.position || "left";
+        const { type = "label", position = "left" } = addon;
+
         switch (type) {
-            case "list":
-                if (addon.listItems && addon.listItems.length > 0) {
+            case "list": {
+                const listAddon = addon.attributes as ListAddon<T, V>;
+                if (listAddon.options && listAddon.options.length > 0) {
                     return (
                         <InputGroupListAddon
                             addon={addon}
@@ -34,8 +35,10 @@ const Component = <T, V>(
                 } else {
                     return renderNoAddons();
                 }
-            case "custom":
-                if (addon.children) {
+            }
+            case "custom": {
+                const customAddon = addon.attributes as CustomAddon;
+                if (customAddon.children) {
                     return (
                         <Container
                             $error={error}
@@ -48,7 +51,7 @@ const Component = <T, V>(
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
                             >
-                                {addon.children}
+                                {customAddon.children}
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
@@ -60,8 +63,10 @@ const Component = <T, V>(
                 } else {
                     return renderNoAddons();
                 }
-            default:
-                if (addon.value) {
+            }
+            default: {
+                const labelAddon = addon.attributes as LabelAddon;
+                if (labelAddon.value) {
                     return (
                         <Container
                             disabled={otherProps.disabled}
@@ -74,7 +79,7 @@ const Component = <T, V>(
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
                             >
-                                {addon.value}
+                                {labelAddon.value}
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
@@ -86,6 +91,7 @@ const Component = <T, V>(
                 } else {
                     return renderNoAddons();
                 }
+            }
         }
     } else {
         return renderNoAddons();

@@ -13,7 +13,7 @@ import {
     Wrapper,
 } from "./input-group-list-addon.style";
 import { MainInput } from "./input-group.style";
-import { InputGroupProps } from "./types";
+import { InputGroupProps, ListAddon } from "./types";
 
 export const InputGroupListAddon = <T, V>({
     addon,
@@ -23,17 +23,18 @@ export const InputGroupListAddon = <T, V>({
     const {
         value,
         placeholder,
-        listItems,
+        options,
         enableSearch,
         searchFunction,
+        searchPlaceholder,
         valueExtractor,
         listExtractor,
         displayValueExtractor,
-        onSelectItem,
+        onSelectOption,
         onHideOptions,
         onShowOptions,
         "data-selector-testid": selectorTestId,
-    } = addon;
+    } = addon.attributes as ListAddon<T, V>;
 
     // =============================================================================
     // CONST, STATE, REF
@@ -119,8 +120,8 @@ export const InputGroupListAddon = <T, V>({
             selectorRef.current.focus();
         }
 
-        if (onSelectItem) {
-            onSelectItem(item, extractedValue);
+        if (onSelectOption) {
+            onSelectOption(item, extractedValue);
         }
     };
 
@@ -128,16 +129,17 @@ export const InputGroupListAddon = <T, V>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderOptionList = () => {
-        if (listItems && listItems.length > 0) {
+        if (options && options.length > 0) {
             return (
                 <DropdownList
-                    listItems={listItems}
+                    listItems={options}
                     onSelectItem={handleListItemClick}
                     valueExtractor={valueExtractor}
                     listExtractor={listExtractor}
                     visible={showOptions}
                     enableSearch={enableSearch}
                     searchFunction={searchFunction}
+                    searchPlaceholder={searchPlaceholder}
                     data-testid="dropdown-list"
                 />
             );
