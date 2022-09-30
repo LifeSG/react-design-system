@@ -25,7 +25,7 @@ export const InputMultiSelect = <T, V>({
     searchPlaceholder,
     valueExtractor,
     listExtractor,
-    onSelectItems,
+    onSelectOptions,
     listStyleWidth,
     onShowOptions,
     onHideOptions,
@@ -85,8 +85,8 @@ export const InputMultiSelect = <T, V>({
             selectorRef.current.focus();
         }
 
-        if (onSelectItems) {
-            onSelectItems(selectedCopy);
+        if (onSelectOptions) {
+            onSelectOptions(selectedCopy);
         }
     };
 
@@ -104,10 +104,10 @@ export const InputMultiSelect = <T, V>({
     const handleSelectAllClick = () => {
         if (selected && selected.length > 0) {
             setSelected([]);
-            onSelectItems([]);
+            onSelectOptions([]);
         } else {
             setSelected(options);
-            onSelectItems(options);
+            onSelectOptions(options);
         }
     };
 

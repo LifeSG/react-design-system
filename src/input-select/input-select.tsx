@@ -28,7 +28,7 @@ export const InputSelect = <T, V>({
     valueToStringFunction,
     listExtractor,
     displayValueExtractor,
-    onSelectItem,
+    onSelectOption,
     listStyleWidth,
     onShowOptions,
     onHideOptions,
@@ -74,8 +74,8 @@ export const InputSelect = <T, V>({
             selectorRef.current.focus();
         }
 
-        if (onSelectItem) {
-            onSelectItem(item, extractedValue);
+        if (onSelectOption) {
+            onSelectOption(item, extractedValue);
         }
     };
 
