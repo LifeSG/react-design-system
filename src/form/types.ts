@@ -43,11 +43,11 @@ export interface FormWrapperProps extends BaseFormElementProps {
     disabled?: boolean | undefined;
 }
 
-export interface FormFieldProps
+export interface FormInputProps
     extends InputPartialProps,
         BaseFormElementProps {}
 
-export interface FormFieldGroupProps<T, V>
+export interface FormInputGroupProps<T, V>
     extends InputGroupPartialProps<T, V>,
         BaseFormElementProps {}
 

@@ -13,9 +13,9 @@ import {
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
 
-<Meta title="Form/FieldGroup" component={Form.FieldGroup} />
+<Meta title="Form/InputGroup" component={Form.InputGroup} />
 
-<Title>Form.FieldGroup</Title>
+<Title>Form.InputGroup</Title>
 
 <Secondary>Overview</Secondary>
 
@@ -26,10 +26,10 @@ import { Form } from "@lifesg/react-design-system/form";
 ```
 
 <Canvas>
-    <Story name="FieldGroup">
+    <Story name="InputGroup">
         <StoryContainer>
             <Container>
-                <Form.FieldGroup
+                <Form.InputGroup
                     label="This is the field group"
                     placeholder="Enter an amount"
                     addon={{
@@ -39,7 +39,7 @@ import { Form } from "@lifesg/react-design-system/form";
                     }}
                 />
                 <br />
-                <Form.FieldGroup
+                <Form.InputGroup
                     label="This is the disabled state"
                     placeholder="Enter an amount"
                     addon={{
@@ -50,7 +50,7 @@ import { Form } from "@lifesg/react-design-system/form";
                     disabled
                 />
                 <br />
-                <Form.FieldGroup
+                <Form.InputGroup
                     label="This is the error state"
                     placeholder="Enter an amount"
                     addon={{
@@ -68,13 +68,13 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Heading3>Addon variants</Heading3>
 
-You are able to specify attributes in the `addon` property to construct advanced `FieldGroup` components.
+You are able to specify attributes in the `addon` property to construct advanced `InputGroup` components.
 
 <Preview>
     <Story name="With different addons">
         <StoryContainer>
             <Container>
-                <Form.FieldGroup
+                <Form.InputGroup
                     label="With a static addon"
                     placeholder="Enter an amount"
                     addon={{
@@ -84,7 +84,7 @@ You are able to specify attributes in the `addon` property to construct advanced
                     }}
                 />
                 <br />
-                <Form.FieldGroup
+                <Form.InputGroup
                     label="With a list addon"
                     placeholder="Enter something"
                     addon={{
@@ -104,7 +104,7 @@ You are able to specify attributes in the `addon` property to construct advanced
                     }}
                 />
                 <br />
-                <Form.FieldGroup
+                <Form.InputGroup
                     label="With a static addon on the right"
                     placeholder="Enter an amount"
                     addon={{
@@ -115,7 +115,7 @@ You are able to specify attributes in the `addon` property to construct advanced
                     }}
                 />
                 <br />
-                <Form.FieldGroup
+                <Form.InputGroup
                     label="With a custom addon"
                     placeholder="Enter something"
                     addon={{

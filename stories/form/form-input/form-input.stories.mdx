@@ -12,9 +12,9 @@ import {
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
 
-<Meta title="Form/Field" component={Form.Field} />
+<Meta title="Form/Input" component={Form.Input} />
 
-<Title>Form.Field</Title>
+<Title>Form.Input</Title>
 
 <Secondary>Overview</Secondary>
 
@@ -31,24 +31,24 @@ import { Form } from "@lifesg/react-design-system/form";
             return (
                 <StoryContainer>
                     <Container>
-                        <Form.Field
+                        <Form.Input
                             label="This is a input field"
                             placeholder="Enter here..."
                         />
                         <br />
-                        <Form.Field
+                        <Form.Input
                             label="This is the error state"
                             errorMessage="Input is required"
                             placeholder="Enter here..."
                         />
                         <br />
-                        <Form.Field
+                        <Form.Input
                             label="This is the disabled state"
                             placeholder="Enter here..."
                             disabled
                         />
                         <br />
-                        <Form.Field
+                        <Form.Input
                             label="This has text spacing properties (works with tel type only)"
                             placeholder="Enter here..."
                             value={input4}

@@ -2,9 +2,9 @@ import React from "react";
 import { Input } from "../input";
 import { InputRef } from "../input/types";
 import { FormWrapper } from "./form-wrapper";
-import { FormFieldProps } from "./types";
+import { FormInputProps } from "./types";
 
-const Component = (props: FormFieldProps, ref: InputRef): JSX.Element => {
+const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
     const {
         label,
         errorMessage,
@@ -33,4 +33,4 @@ const Component = (props: FormFieldProps, ref: InputRef): JSX.Element => {
     );
 };
 
-export const FormField = React.forwardRef(Component);
+export const FormInput = React.forwardRef(Component);

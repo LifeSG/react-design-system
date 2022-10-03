@@ -38,10 +38,12 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 
 Several components have had their names amended for ease of use.
 
-| component   | old              | new         |
-| ----------- | ---------------- | ----------- |
-| `Accordion` | `Accordion.Base` | `Accordion` |
-| `Modal`     | `Modal.Base`     | `Modal`     |
+| component    | old               | new               |
+| ------------ | ----------------- | ----------------- |
+| `Accordion`  | `Accordion.Base`  | `Accordion`       |
+| `Modal`      | `Modal.Base`      | `Modal`           |
+| `Field`      | `Form.Field`      | `Form.Input`      |
+| `FieldGroup` | `Form.FieldGroup` | `Form.InputGroup` |
 
 <br />
 
@@ -51,9 +53,11 @@ Several components have had their names amended for ease of use.
 
 All props previously with I or E prefixes have been removed for standardisation.
 
-| component | old            | new           |
-| --------- | -------------- | ------------- |
-| `Navbar`  | `INavbarProps` | `NavbarProps` |
+| component    | old                   | new                   |
+| ------------ | --------------------- | --------------------- |
+| `Navbar`     | `INavbarProps`        | `NavbarProps`         |
+| `Field`      | `FormFieldProps`      | `FormInputProps`      |
+| `FieldGroup` | `FormFieldGroupProps` | `FormInputGroupProps` |
 
 ### Type structure changes
 

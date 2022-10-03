@@ -1,10 +1,10 @@
 import React from "react";
 import { InputGroup } from "../input-group";
 import { FormWrapper } from "./form-wrapper";
-import { FormFieldGroupProps } from "./types";
+import { FormInputGroupProps } from "./types";
 
 const Component = <T, V>(
-    props: FormFieldGroupProps<T, V>,
+    props: FormInputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     const {
@@ -35,4 +35,4 @@ const Component = <T, V>(
     );
 };
 
-export const FormFieldGroup = React.forwardRef(Component);
+export const FormInputGroup = React.forwardRef(Component);
