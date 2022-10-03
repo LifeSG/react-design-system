@@ -1,5 +1,3 @@
-// Generated with util/create-component.js
-
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
