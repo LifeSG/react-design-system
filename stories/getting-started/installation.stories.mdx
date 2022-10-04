@@ -1,16 +1,17 @@
-# LifeSG React Design System
+import { Meta, Preview } from "@storybook/addon-docs";
+import { Text } from "src/text";
+import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
+import { PropsTable } from "./themes-props-table";
 
-A React component library for LifeSG and BookingSG related products.
+<Meta title="Getting started/Installation" />
 
-## Installation
+<Title>Installation</Title>
+
+Install the LifeSG Design System package.
 
 ```
 npm i @lifesg/react-design-system
 ```
-
-<br />
-
-## Getting Started
 
 The module requires some custom css for certain components to work properly. As the module does not ship with css, you will need to add this into the `head` of your html file.
 
@@ -30,7 +31,7 @@ Or if you are importing to an existing css file
 
 <br />
 
-## Setting up the theme
+<Secondary>Setting up the theme</Secondary>
 
 If you are intending to make use of the themes, you will need [**Styled Components**](https://styled-components.com/docs).
 
@@ -53,16 +54,6 @@ const App = () => {
 export default App;
 ```
 
-For more information on the usage of themes, you can visit our [documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-themes--page) about it.
+For more information on the usage of themes, you can visit our [documentation](/docs/getting-started-themes--page) about it.
 
 <br />
-
-## Importing the components
-
-```tsx
-// Efficient manner
-import { Button } from "@lifesg/react-design-system/button";
-
-// Less ideal manner
-import { Button } from "@lifesg/react-design-system";
-```
