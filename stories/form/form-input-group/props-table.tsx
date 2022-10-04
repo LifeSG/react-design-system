@@ -11,7 +11,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        All other props inherit&nbsp;
+                        This also inherits props from&nbsp;
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement"
                             rel="noreferrer"
