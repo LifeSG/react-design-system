@@ -38,12 +38,14 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 
 Several components have had their names amended for ease of use.
 
-| component    | old               | new               |
-| ------------ | ----------------- | ----------------- |
-| `Accordion`  | `Accordion.Base`  | `Accordion`       |
-| `Modal`      | `Modal.Base`      | `Modal`           |
-| `Field`      | `Form.Field`      | `Form.Input`      |
-| `FieldGroup` | `Form.FieldGroup` | `Form.InputGroup` |
+| component    | old                    | new                            |
+| ------------ | ---------------------- | ------------------------------ |
+| `Accordion`  | `Accordion.Base`       | `Accordion`                    |
+| `Modal`      | `Modal.Base`           | `Modal`                        |
+| `Field`      | `Form.Field`           | `Form.Input`                   |
+| `FieldGroup` | `Form.FieldGroup`      | `Form.InputGroup`              |
+| `AlertBox`   | `AlertBox.Base`        | `Alert`                        |
+| `AlertBox`   | `AlertBox.Description` | deprecated (use `<p>` instead) |
 
 <br />
 
