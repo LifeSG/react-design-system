@@ -88,3 +88,8 @@ export interface AddonProps<T, V> {
 
 // Refer to the storybook docs for the full list of new props
 ```
+
+`LinkList`
+
+-   `onDefaultClickHandler` has been deprecated and replaced by `onItemClick`. Previously `onItemClick`
+    did not return the `event` object in its params.
