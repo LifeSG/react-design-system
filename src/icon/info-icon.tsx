@@ -1,17 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import { Color } from "../color";
+import { SVG } from "./shared.style";
 import { IconSvgProps } from "./types";
 
-export const InfoIcon = ({ id, className }: IconSvgProps): JSX.Element => {
+export const InfoIcon = (props: IconSvgProps): JSX.Element => {
     return (
         <SVG
             width="1rem"
             height="1rem"
             viewBox="0 0 40 40"
             xmlns="http://www.w3.org/2000/svg"
-            id={id}
-            className={className}
+            {...props}
         >
             <path
                 id="path"
@@ -23,16 +20,3 @@ export const InfoIcon = ({ id, className }: IconSvgProps): JSX.Element => {
         </SVG>
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const SVG = styled.svg`
-    height: 1rem;
-    width: 1rem;
-    vertical-align: text-top;
-
-    #path {
-        fill: ${Color.Neutral[8]};
-    }
-`;

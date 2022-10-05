@@ -1,20 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import { Color } from "../color";
+import { SVG } from "./shared.style";
 import { IconSvgProps } from "./types";
 
-export const ArrowRightIcon = ({
-    id,
-    className,
-}: IconSvgProps): JSX.Element => {
+export const ArrowRightIcon = (props: IconSvgProps): JSX.Element => {
     return (
         <SVG
             xmlns="http://www.w3.org/2000/svg"
             width="1rem"
             height="1rem"
             viewBox="0 0 16 16"
-            id={id}
-            className={className}
+            {...props}
         >
             <g fill="none" fillRule="evenodd">
                 <g id="path" fillRule="nonzero">
@@ -33,16 +27,3 @@ export const ArrowRightIcon = ({
         </SVG>
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const SVG = styled.svg`
-    height: 1rem;
-    width: 1rem;
-    vertical-align: text-top;
-
-    #path {
-        fill: ${Color.Neutral[8]};
-    }
-`;

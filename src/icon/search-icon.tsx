@@ -1,9 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { Color } from "../color";
+import { SVG } from "./shared.style";
 import { IconSvgProps } from "./types";
 
-export const SearchIcon = ({ id, className }: IconSvgProps): JSX.Element => {
+export const SearchIcon = (props: IconSvgProps): JSX.Element => {
     return (
         <SVG
             xmlns="http://www.w3.org/2000/svg"
@@ -11,8 +9,7 @@ export const SearchIcon = ({ id, className }: IconSvgProps): JSX.Element => {
             height="2rem"
             viewBox="0 0 32 32"
             fill="none"
-            id={id}
-            className={className}
+            {...props}
         >
             <g id="search">
                 <path
@@ -25,16 +22,3 @@ export const SearchIcon = ({ id, className }: IconSvgProps): JSX.Element => {
         </SVG>
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const SVG = styled.svg`
-    height: 1rem;
-    width: 1rem;
-    vertical-align: text-top;
-
-    #path {
-        fill: ${Color.Neutral[8]};
-    }
-`;
