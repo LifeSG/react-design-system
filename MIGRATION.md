@@ -34,36 +34,62 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 
 <br />
 
-## Component name changes
+## Component changes
 
-Several components have had their names amended for ease of use.
-
-| component    | old                    | new                            |
-| ------------ | ---------------------- | ------------------------------ |
-| `Accordion`  | `Accordion.Base`       | `Accordion`                    |
-| `Modal`      | `Modal.Base`           | `Modal`                        |
-| `Field`      | `Form.Field`           | `Form.Input`                   |
-| `FieldGroup` | `Form.FieldGroup`      | `Form.InputGroup`              |
-| `AlertBox`   | `AlertBox.Base`        | `Alert`                        |
-| `AlertBox`   | `AlertBox.Description` | deprecated (use `<p>` instead) |
+-   [Accordion](#accordion)
+-   [Alert](#alert)
+-   [Form](#form)
+-   [InputGroup](#input-group)
+-   [LinkList](#link-list)
+-   [Modal](#modal)
+-   [Navbar](#navbar)
 
 <br />
 
-## Typing changes
+<br />
 
-### Type name changes
+<a id="accordion"></a>
 
-All props previously with I or E prefixes have been removed for standardisation.
+### Accordion
+
+-   `Accordion.Base` has been replaced with just `Accordion`
+-   `Accordion.Item` still remains
+
+You may refer to the storybook documentation for more details.
+
+<br />
+
+<a id="alert"></a>
+
+### Alert
+
+-   `AlertBox` has been renamed as `Alert` in terms of terminology
+-   `AlertBox.Base` has been renamed to `Alert`
+-   `AlertBox.Description` has been deprecated to have the style applied to `<p>` instead
+
+You may refer to the storybook documentation for more details.
+
+<br />
+
+<a id="form"></a>
+
+### Form
+
+-   `Form.Field` has been replaced to `Form.Input` to be more in sync with the base component
+-   `Form.FieldGroup` has been replaced to `Form.InputGroup` to be more in sync with the base component
+
+The corresponding type names have also been changed.
 
 | component    | old                   | new                   |
 | ------------ | --------------------- | --------------------- |
-| `Navbar`     | `INavbarProps`        | `NavbarProps`         |
 | `Field`      | `FormFieldProps`      | `FormInputProps`      |
 | `FieldGroup` | `FormFieldGroupProps` | `FormInputGroupProps` |
 
-### Type structure changes
+<br />
 
-`InputGroup`
+<a id="input-group"></a>
+
+### InputGroup
 
 -   `InputGroupProps.addon` has been amended for clarity
 
@@ -91,7 +117,28 @@ export interface AddonProps<T, V> {
 // Refer to the storybook docs for the full list of new props
 ```
 
-`LinkList`
+<br />
+
+<a id="link-list"></a>
+
+### LinkList
 
 -   `onDefaultClickHandler` has been deprecated and replaced by `onItemClick`. Previously `onItemClick`
-    did not return the `event` object in its params.
+    did not return the `event` object in its params. It now does.
+
+<br />
+
+<a id="modal"></a>
+
+### Modal
+
+-   `Modal.Base` has been renamed to just `Modal` for simplicity
+-   `Modal.Box` still remains the same
+
+<br />
+
+<a id="navbar"></a>
+
+### Navbar
+
+-   `INavbarProps` has been renamed to just `NavbarProps` for standardisation (removal of prefix)
