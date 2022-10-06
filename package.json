@@ -19,9 +19,6 @@
         "type": "git",
         "url": "git+https://github.com/LifeSG/react-design-system.git"
     },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com"
-    },
     "keywords": [
         "design-system"
     ],
