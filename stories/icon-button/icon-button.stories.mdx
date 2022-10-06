@@ -1,0 +1,43 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { IconButton } from "src/icon-button";
+import { Secondary, Heading3, Title } from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="General/IconButton" component={IconButton} />
+
+<Title>Icon Button</Title>
+
+<Secondary>Overview</Secondary>
+
+A call to action component with an icon in it.
+
+```tsx
+import { IconButton } from "@lifesg/react-design-system/icon-button";
+```
+
+<Canvas>
+    <Story name="IconButton">
+        <IconButton iconType="home" />
+    </Story>
+</Canvas>
+
+<Heading3>Using custom components</Heading3>
+
+You can also pass in custom components to the `IconButton`. In this example, we will pass in an image.
+
+<Preview>
+    <Story name="Custom components">
+        <IconButton>
+            <img
+                src="https://cdn-icons-png.flaticon.com/128/2171/2171991.png"
+                alt="icon-image"
+            />
+        </IconButton>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+The component also inherits the [Button](/docs/general-button--button) props.
+
+<PropsTable />

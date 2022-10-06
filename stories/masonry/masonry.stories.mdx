@@ -1,0 +1,102 @@
+import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { Masonry } from "src/masonry";
+import {
+    Secondary,
+    StoryContainer,
+    Title,
+    Heading3,
+} from "../storybook-common";
+import { DemoContainer } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="modules/Masonry" component={Masonry} />
+
+<Title>Masonry</Title>
+
+<Secondary>Overview</Secondary>
+
+The component that produces a masonry-tile like layout.
+
+```tsx
+import { Masonry } from "@lifesg/react-design-system/masonry";
+```
+
+The component has 2 sub components:
+
+-   `Masonry.Grid` - This holds the wrapper container and it is used to control the number of columns for the `Masonry`
+-   `Masonry.Tile` - This element holds the content for each of the grid item
+
+<Canvas>
+    <Story name="Masonry" withSource="none">
+        <StoryContainer>
+            <Masonry.Grid numOfCols={{ lg: 3 }}>
+                <Masonry.Tile startLg={1} colsLg={1}>
+                    <DemoContainer>1</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile colsLg={2}>
+                    <DemoContainer>2</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile colsLg={3}>
+                    <DemoContainer>3</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile colsLg={2}>
+                    <DemoContainer>4</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile>
+                    <DemoContainer>5</DemoContainer>
+                </Masonry.Tile>
+            </Masonry.Grid>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Guidelines</Heading3>
+
+While you may specify any number of columns to be present on the `Masonry.Grid`, there are still
+some restrictions to ensure that the design principles are met. These restrictions are:
+
+1. Specifying the number of columns for the large layout (`numOfCols.lg`) will not cascade down to the
+   smaller screen sizes (`md` and `sm`)
+2. However specifying the number of columns for the smaller layouts will be applied to the larger screen sizes
+
+Here are some of the guidelines for the different layouts:
+
+|                 | Large (`lg`) |  Medium (`md`)   |          Small (`sm`) |
+| --------------- | :----------: | :--------------: | --------------------: |
+| Device widths   |   Desktop    | Tablet (<1200px) | Mobile phone (<481px) |
+| Default columns |      -       |        2         |                     1 |
+| Maximum columns |      -       |        -         |                     2 |
+
+<br />
+
+<Heading3>Layouts for different media widths</Heading3>
+
+Here is an example how you can specify the different layouts for different media widths. (Reduce your viewport size to view)
+
+<Preview>
+    <Story name="Different media widths">
+        <StoryContainer>
+            <Masonry.Grid numOfCols={{ lg: 4, md: 3, sm: 2 }}>
+                <Masonry.Tile startLg={1} colsLg={1}>
+                    <DemoContainer>1</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile colsLg={1} colsMd={2}>
+                    <DemoContainer>2</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile colsLg={1} colsMd={3}>
+                    <DemoContainer>3</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile colsLg={1} colsMd={2}>
+                    <DemoContainer>4</DemoContainer>
+                </Masonry.Tile>
+                <Masonry.Tile colsSm={2} colsMd={1} colsLg={2}>
+                    <DemoContainer>5</DemoContainer>
+                </Masonry.Tile>
+            </Masonry.Grid>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

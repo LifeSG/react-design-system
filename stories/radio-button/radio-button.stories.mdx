@@ -1,0 +1,75 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { RadioButton } from "src/radio-button";
+import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
+import { Container, OptionContainer, Label } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="Data Input/RadioButton" component={RadioButton} />
+
+<Title>RadioButton</Title>
+
+<Secondary>Overview</Secondary>
+
+A field that allows a user to enter a response by clicking, and shown with a
+graphical component when activated. Usually Radio Buttons are used to allow
+selection of a predefined set of mutually exclusive options.
+
+```tsx
+import { RadioButton } from "@lifesg/react-design-system/radio-button";
+```
+
+<Canvas>
+    <Story name="RadioButton">
+        {() => {
+            const [checked, setChecked] = useState(false);
+            const handleChange = () => {
+                if (!checked) setChecked(true);
+            };
+            return <RadioButton checked={checked} onChange={handleChange} />;
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Multiple options</Heading3>
+
+<Preview>
+    <Story name="Multiple options">
+        {() => {
+            const [value, setValue] = useState("");
+            const handleSelection = (event) => {
+                setValue(event.target.value);
+            };
+            return (
+                <Container>
+                    <OptionContainer key="A">
+                        <RadioButton
+                            value="A"
+                            id="options-a"
+                            name="options"
+                            checked={value === "A"}
+                            onChange={handleSelection}
+                        />
+                        <Label htmlFor="options-a">Option A</Label>
+                    </OptionContainer>
+                    <OptionContainer key="B">
+                        <RadioButton
+                            value="B"
+                            id="options-b"
+                            name="options"
+                            checked={value === "B"}
+                            onChange={handleSelection}
+                        />
+                        <Label htmlFor="options-b">Option B</Label>
+                    </OptionContainer>
+                </Container>
+            );
+        }}
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+The component also inherits the [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
+
+<PropsTable />

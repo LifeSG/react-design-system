@@ -1,0 +1,79 @@
+import { Meta, Preview, Story } from "@storybook/addon-docs";
+import { Text } from "src/text";
+import { Secondary, Heading3, Title } from "../storybook-common";
+import { DisplayContainer, LinkDiv, TextDisplay } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="General/Text/Advanced Usage" component={Text} />
+
+<Secondary>Advanced Usage</Secondary>
+
+In certain use cases, you might need to use multiple `Text` components to achieve the desired result.
+
+<Heading3>Example 1</Heading3>
+
+Including a hyperlink within a set of text.
+
+<Preview>
+    <Text.Body>
+        The quick brown fox&nbsp;
+        <Text.Hyperlink.Default href="https://www.google.com">
+            jumps over
+        </Text.Hyperlink.Default>
+        &nbsp;the lazy dog
+    </Text.Body>
+</Preview>
+
+<Heading3>Example 2</Heading3>
+
+Including different weights within a set of text. All you need to do is to specify the `inline` prop
+for the child components.
+
+<Preview>
+    <Text.Body>
+        The quick&nbsp;
+        <Text.Body weight="light" inline={true}>
+            brown fox
+        </Text.Body>&nbsp;
+        <Text.Body weight="semibold" inline={true}>
+            jumps over
+        </Text.Body>
+        &nbsp;the lazy dog
+    </Text.Body>
+</Preview>
+
+<Heading3>Example 3</Heading3>
+
+Adding a paragraph styled spacing between text blocks. All you need to do is to specify the `paragraph` prop.
+
+<Preview>
+    <>
+        <Text.Body paragraph={true}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            euismod quam eget ex tincidunt dapibus. Donec vitae leo vehicula,
+            fermentum urna vitae, gravida ex.
+        </Text.Body>
+        <Text.Body paragraph={true}>
+            Aenean imperdiet faucibus velit, eu maximus libero facilisis ut.
+            Donec nulla nisi, fermentum eget lorem at, feugiat ultricies ex.
+            Aliquam volutpat nibh non suscipit rhoncus.
+        </Text.Body>
+    </>
+</Preview>
+
+Comparing to if you did not specify it.
+
+<Preview>
+    <>
+        <Text.Body>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            euismod quam eget ex tincidunt dapibus. Donec vitae leo vehicula,
+            fermentum urna vitae, gravida ex.
+        </Text.Body>
+        <Text.Body>
+            Aenean imperdiet faucibus velit, eu maximus libero facilisis ut.
+            Donec nulla nisi, fermentum eget lorem at, feugiat ultricies ex.
+            Aliquam volutpat nibh non suscipit rhoncus.
+        </Text.Body>
+    </>
+</Preview>
