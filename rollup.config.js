@@ -52,7 +52,6 @@ const subfolderPlugins = (folderName) => [
 ];
 
 const folderBuildConfigs = getFolders("./src").map((folder) => {
-    console.log("** folder = ", folder);
     return {
         input: `src/${folder}/index.ts`,
         output: {
@@ -71,12 +70,6 @@ export default [
         input: "src/index.ts",
         output: [
             {
-                file: pkg.main,
-                format: "cjs",
-                sourcemap: true,
-                exports: "named",
-            },
-            {
                 file: pkg.module,
                 format: "esm",
                 sourcemap: true,
@@ -87,44 +80,17 @@ export default [
         external: ["react", "react-dom", "styled-components"],
     },
     ...folderBuildConfigs,
+    {
+        input: "src/index.ts",
+        output: [
+            {
+                file: pkg.main,
+                format: "cjs",
+                sourcemap: true,
+                exports: "named",
+            },
+        ],
+        plugins,
+        external: ["react", "react-dom", "styled-components"],
+    },
 ];
-
-// export default {
-// 	input: "src/index.ts",
-// 	output: [
-// 		{
-// 			file: pkg.main,
-// 			format: "cjs",
-// 			sourcemap: true,
-// 			exports: "named"
-// 		}
-// 	],
-// 	plugins: [
-// 		peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
-// 		nodeResolve(), // Locates modules in the project's node_modules directory
-// 		commonjs(), // converts CommonJS to ES6 modules
-// 		typescript({
-// 			useTsconfigDeclarationDir: true,
-// 			tsconfig: "tsconfig.json",
-// 			tsconfigOverride: { // Override base tsconfig.json during build
-// 				exclude: [
-// 					"**/stories/**",
-// 					"**/__tests__/**",
-// 					"**/__mocks__/**",
-// 					"**/util/**",
-// 					"**/custom-types/**"
-// 				]
-// 			}
-// 		}),
-// 		postcss({
-// 			extract: true,
-// 			modules: false,
-// 			plugins: [
-// 				require("postcss-import")
-// 			]
-// 		}),
-// 		image(),
-// 		json(),
-// 		terser() // Helps remove comments, whitespace or logging codes
-// 	]
-// };
