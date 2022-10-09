@@ -38,28 +38,29 @@ Now that you are starting off, first create a branch following these conventions
 
 ### **2. Adding components**
 
-Components are to be added in the `src/components` directory in a structure like this
+Components are to be added in the `src` directory in a structure like this
 
 ```
 ├── src
-   ├── __tests__
-   └── components
-		├── component-name
-    	│   ├── component-name.tsx
-    	│   ├── component-name.styles.tsx
-		│	├── index.tsx
-		│   └── types.ts
- 	 	└── dir-2
+│	├── component-name
+│	│	├── component-name.tsx
+│	│	├── component-name.style.tsx
+│	│	├── index.tsx
+│	│	└── types.ts
+│	└── index.ts
+└── tests
+	└── component-name
+		└── component-name.spec.tsx
 ```
 
 Where
 
 -   `component-name.tsx` contains the component src
--   `component-name.styles.tsx` contains the styled components of the component
--   `index.ts` the exportable file of the component which should be re-exported in the `src/components/index.ts`
--   `types.ts` the type definitions which should be re-exported in the `src/components/types.ts`
+-   `component-name.style.tsx` contains the styled components of the component
+-   `types.ts` the type definitions
+-   `index.ts` to contain the exportable of the component and its typings. This is to be reexported to `src/index.ts`
 
-Tests files will sit in the `__tests__` folder bearing the same folder name as the component.
+Tests files will sit in the `tests` folder bearing the same folder name as the component.
 
 > File and folder structure are in `kebab-case`
 
@@ -88,8 +89,7 @@ It is very important to provide enough information for potential users to unders
 Some principles include:
 
 -   Properly describing and documenting your props
--   If need, create a Usage document for advanced usages
--   Have enough examples and provide controls only if deemed necessary/logical
+-   Adding sufficient stories to describe the variations
 
 <a id="pull-request"></a>
 <br />
@@ -143,30 +143,9 @@ In terms of versioning, you may follow the guidelines as such:
 Like all libraries, documenting changes are extremely important for users to note of the changes being made in the code. This is done in `CHANGELOG.md`. Some principles include:
 
 -   Indicate version number and date of release
--   State the type if it is `Fixes` or `Changes`
+-   State the type if it is `New features`, `Improvements` or `Bug fixes`
 -   State purpose clearly. Indicate if it is Breaking change by indicating the tag `[BREAKING]`
 -   If you would warn users of the change you can indicate using the tag `[WARNING]`
-
-Here is an example of the changelog entry
-
-```markdown
-## v6.0.1-canary.1 (27 June, 2022)
-
-### Changes
-
--   Introduce `Masonry` component
-
-### Fixes
-
--   Fix fonts not being accessible on `index.css` of library
-```
-
-#### **Updating the version in storybook**
-
-As we have a Storybook documentation to document the components, it is required to also update the `VersionTag` component's `currentStable` prop in `src/stories/intro/intro-stories.mdx`. The beta will always reference the `package.json` version. So your job is just to indicate the stable version.
-
-<a id="updating"></a>
-<br />
 
 ### **3. How to update this library?**
 
