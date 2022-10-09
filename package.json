@@ -7,8 +7,10 @@
     "typings": "dist/index.d.ts",
     "scripts": {
         "build": "npm run rollup && npm run post:build",
+		"build-check": "npm run rollup",
         "rollup": "rm -rf dist && rollup -c",
         "post:build": "node ./scripts/post-build.js",
+		"publish-lib": "npm publish dist --access public",
         "start": "rollup -c -w",
         "test": "jest --coverage",
         "prepare": "(test -d ./.git && npx husky install) || true",
