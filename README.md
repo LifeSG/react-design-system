@@ -66,3 +66,5 @@ import { Button } from "@lifesg/react-design-system/button";
 // Less ideal manner
 import { Button } from "@lifesg/react-design-system";
 ```
+
+To see the full suite of components available, visit our [Storybook documentation](https://designsystem.life.gov.sg/react/index.html?path=/story/getting-started-installation--page).
