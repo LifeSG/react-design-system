@@ -1,3 +1,4 @@
+import { FormCustomField } from "./form-custom-field";
 import { FormDateInput } from "./form-date-input";
 import { FormInput } from "./form-input";
 import { FormInputGroup } from "./form-input-group";
@@ -16,4 +17,5 @@ export const Form = {
     Select: FormSelect,
     Textarea: FormTextarea,
     Timepicker: FormTimepicker,
+    CustomField: FormCustomField,
 };

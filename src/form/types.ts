@@ -54,7 +54,11 @@ export interface FormInputGroupProps<T, V>
 export interface FormTextareaProps
     extends TextareaPartialProps,
         BaseFormElementProps {}
-// export interface FormCustomFieldProps extends FormWrapperProps, BaseFormElementProps {}
+
+export interface FormCustomFieldProps
+    extends FormWrapperProps,
+        BaseFormElementProps {}
+
 export interface FormInputSelectProps<T, V>
     extends InputSelectPartialProps<T, V>,
         BaseFormElementProps {}
