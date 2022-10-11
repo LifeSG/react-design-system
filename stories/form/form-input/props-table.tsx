@@ -8,6 +8,21 @@ const DATA: ApiTableSectionProps[] = [
         name: "Input specific props",
         attributes: [
             {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            HTMLInputElement
+                        </a>
+                    </>
+                ),
+            },
+            {
                 name: "spacing",
                 description: (
                     <>

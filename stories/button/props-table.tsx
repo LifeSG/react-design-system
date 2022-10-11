@@ -1,28 +1,44 @@
 import React from "react";
-import {
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable } from "../storybook-common/api-table";
+import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
-export const PropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol mandatory>styleType</NameCol>
-            <DescriptionCol
-                propTypes={[`"default"`, `"secondary"`, `"light"`, `"link"`]}
-            >
-                The style of the Button
-            </DescriptionCol>
-            <DefaultCol>{[`"default"`]}</DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>loading</NameCol>
-            <DescriptionCol propTypes={[`boolean`]}>
-                Setting will display a loading spinner
-            </DescriptionCol>
-            <DefaultCol>{["false"]}</DefaultCol>
-        </tr>
-    </Table>
-);
+const DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            HTMLButtonElement
+                        </a>
+                    </>
+                ),
+            },
+            {
+                name: "styleType",
+                mandatory: true,
+                description: (
+                    <>
+                        The style of the <code>Button</code>
+                    </>
+                ),
+                propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
+                defaultValue: `"default"`,
+            },
+            {
+                name: "loading",
+                description: "Setting will display a loading spinner",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+        ],
+    },
+];
+
+export const PropsTable = () => <ApiTable sections={DATA} />;

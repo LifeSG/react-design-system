@@ -8,6 +8,21 @@ const DATA: ApiTableSectionProps[] = [
         name: "Textarea specific props",
         attributes: [
             {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            HTMLTextareaElement
+                        </a>
+                    </>
+                ),
+            },
+            {
                 name: "error",
                 description: (
                     <>

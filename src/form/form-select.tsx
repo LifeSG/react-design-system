@@ -1,4 +1,3 @@
-import React from "react";
 import { InputSelect } from "../input-select";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputSelectProps } from "./types";
