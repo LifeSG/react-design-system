@@ -10,7 +10,7 @@
         "build-check": "npm run rollup",
         "rollup": "rm -rf dist && rollup -c",
         "post:build": "node ./scripts/post-build.js",
-        "publish-lib": "npm publish dist --access public",
+        "publish-lib": "cd dist && npm publish && cd ..",
         "start": "rollup -c -w",
         "test": "jest --coverage",
         "prepare": "(test -d ./.git && npx husky install) || true",
