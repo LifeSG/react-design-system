@@ -1,0 +1,34 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Button } from "src/button";
+import { Text } from "src/text";
+import { Masthead } from "src/masthead";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Masthead" component={Masthead} />
+
+<Title>Masthead</Title>
+
+<Secondary>Overview</Secondary>
+
+A mandatory banner to be displayed at the top of the page on every .gov.sg digital services. For more info,
+visit the [Singapore Government Design System](https://designsystem.tech.gov.sg/components/official-government-banner).
+
+```tsx
+import { Masthead } from "@lifesg/react-design-system/masthead";
+```
+
+> The masthead is a styled version from the original [Masthead](https://github.com/GovTechSG/sgds-masthead/tree/master/sgds-masthead-react)
+> component.
+
+<Canvas>
+    <Story name="Masthead">
+        <Masthead />
+    </Story>
+</Canvas>

@@ -18,6 +18,7 @@ export * from "./input-textarea";
 export * from "./link-list";
 // export * from "./layout";
 export * from "./masonry";
+export * from "./masthead";
 export * from "./media";
 export * from "./modal";
 export * from "./overlay";
