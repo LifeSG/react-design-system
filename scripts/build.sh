@@ -35,13 +35,8 @@ PROJECT_DIR=$( cd ${SCRIPT_DIR} && cd .. && pwd )
 pushd ${PROJECT_DIR}
 
 # Build and pack
-rm -rf ./dist
-
 echo "Building"
 npm run build
-
-cp ./package.json ./dist/
-cp ./package-lock.json ./dist/
 
 echo "Packaging"
 pushd dist
