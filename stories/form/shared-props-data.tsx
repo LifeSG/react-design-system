@@ -1,7 +1,7 @@
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import {
     FORM_LABEL_ADDON_PROPS_DATA,
-    FORM_LABEL_PROPS_DATA,
+    FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA,
 } from "./form-label/props-table";
 
 export const SHARED_FORM_PROPS_DATA: ApiTableSectionProps[] = [
@@ -27,7 +27,7 @@ export const SHARED_FORM_PROPS_DATA: ApiTableSectionProps[] = [
     },
     {
         name: "FormLabelProps",
-        ...FORM_LABEL_PROPS_DATA,
+        ...FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA,
     },
     FORM_LABEL_ADDON_PROPS_DATA,
 ];
