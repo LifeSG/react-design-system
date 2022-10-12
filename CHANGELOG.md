@@ -22,6 +22,14 @@ Template. Keep at top
 
 -->
 
+## v1.0.0-alpha.3
+
+### 🎉 New features
+
+-   Add `Form.CustomField` to allow usage of custom form components but still come with the label and error message
+
+---
+
 ## v1.0.0-alpha.2
 
 ### 🐞 Bug fixes

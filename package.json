@@ -1,6 +1,6 @@
 {
     "name": "@lifesg/react-design-system",
-    "version": "1.0.0-alpha.2",
+    "version": "1.0.0-alpha.3",
     "description": "A component design system for LifeSG web apps",
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
@@ -10,7 +10,7 @@
         "build-check": "npm run rollup",
         "rollup": "rm -rf dist && rollup -c",
         "post:build": "node ./scripts/post-build.js",
-        "publish-lib": "cd dist && npm publish && cd ..",
+        "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
         "test": "jest --coverage",
         "prepare": "(test -d ./.git && npx husky install) || true",
