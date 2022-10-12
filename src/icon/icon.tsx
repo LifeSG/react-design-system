@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ArrowRightIcon } from "./arrow-right-icon";
 import { InfoIcon } from "./info-icon";
-import { PlayAltIcon } from "./play-alt-icon";
+import { PlayIcon } from "./play-icon";
 import { SearchIcon } from "./search-icon";
 import { IconProps } from "./types";
 
@@ -13,8 +13,8 @@ export const Icon = ({ type, ...props }: IconProps) => {
             return <InfoIcon {...props} />;
         case "search":
             return <SearchIcon {...props} />;
-        case "play-alt":
-            return <PlayAltIcon {...props} />;
+        case "play":
+            return <PlayIcon {...props} />;
         default: {
             const baseClassName = `sgds-icon sgds-icon-${type}`;
             const mergedClassName = props.className

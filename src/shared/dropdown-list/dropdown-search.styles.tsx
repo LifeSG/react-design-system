@@ -33,8 +33,5 @@ export const SearchIcon = styled(Icon)`
     height: 1.5rem;
     width: 1.5rem;
     margin: 0 0.5rem;
-
-    #path {
-        fill: ${Color.Neutral[3]};
-    }
+    color: ${Color.Neutral[3]};
 `;

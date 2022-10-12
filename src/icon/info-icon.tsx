@@ -11,6 +11,7 @@ export const InfoIcon = (props: IconSvgProps): JSX.Element => {
             {...props}
         >
             <path
+                fill="currentColor"
                 id="path"
                 d="M20
 		8.639c-.934

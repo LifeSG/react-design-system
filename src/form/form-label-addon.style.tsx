@@ -1,4 +1,3 @@
-import { Color } from "../color";
 import styled from "styled-components";
 
 export const TriggerArea = styled.button`
@@ -6,12 +5,6 @@ export const TriggerArea = styled.button`
     border: none;
     background: none;
     cursor: pointer;
-
-    svg {
-        #path {
-            fill: ${Color.Primary};
-        }
-    }
 `;
 
 export const AddonWrapper = styled.div`
