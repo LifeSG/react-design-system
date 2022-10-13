@@ -50,12 +50,14 @@ const Component = <T, V>(
                             <AddOnContainer
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
+                                $readOnly={otherProps.type === "readonly"}
                             >
                                 {customAddon.children}
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
                                 $position={position}
+                                $readOnly={otherProps.type === "readonly"}
                                 data-testid="input"
                             />
                         </Container>
@@ -78,12 +80,14 @@ const Component = <T, V>(
                             <AddOnContainer
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
+                                $readOnly={otherProps.type === "readonly"}
                             >
                                 {labelAddon.value}
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
                                 $position={position}
+                                $readOnly={otherProps.type === "readonly"}
                                 data-testid="input"
                             />
                         </Container>
