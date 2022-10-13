@@ -16,7 +16,7 @@ export * from "./input-group";
 export * from "./input-select";
 export * from "./input-textarea";
 export * from "./link-list";
-// export * from "./layout";
+export * from "./layout";
 export * from "./masonry";
 export * from "./masthead";
 export * from "./media";

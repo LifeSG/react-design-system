@@ -1,7 +1,7 @@
 import { ColorSet, ColorSetOptions } from "../color/types";
 import { TextStyleSetOptionsType, TextStyleSetType } from "../text/types";
 
-export type Layout = "normal";
+export type ThemeLayout = "normal";
 
 // =============================================================================
 // COLOR THEMES
@@ -40,7 +40,7 @@ export interface ThemeSpec {
     /** Sets the text style scheme of the theme */
     [ThemeContextKeys.textStyleScheme]: TextStyleScheme;
     /** Sets the layout scheme of the theme */
-    [ThemeContextKeys.layout]?: Layout | undefined;
+    [ThemeContextKeys.layout]?: ThemeLayout | undefined;
     /** For specific customisations to any schemes */
     options?: ThemeSpecOptions | undefined;
 }
