@@ -70,6 +70,34 @@ Form labels come with an optional addon that you can use by specifying the `addo
     </Story>
 </Preview>
 
+<Heading3>With subtitle</Heading3>
+
+Form labels come with an optional subtitle that you can use by specifying the `subtitle` prop.
+
+<Preview>
+    <Story name="With subtitle">
+        {() => {
+            const [checked, setChecked] = useState(false);
+            return (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ marginRight: "1.5rem" }}>
+                        <Checkbox
+                            checked={checked}
+                            onClick={() => setChecked(!checked)}
+                        />
+                    </div>
+                    <Form.Label
+                        style={{ marginBottom: "0" }}
+                        subtitle={"This is subtitle"}
+                    >
+                        The form label with a subtitle
+                    </Form.Label>
+                </div>
+            );
+        }}
+    </Story>
+</Preview>
+
 <Secondary>Component API</Secondary>
 
 <PropsTable />
