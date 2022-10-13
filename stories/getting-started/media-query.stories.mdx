@@ -65,3 +65,24 @@ const Components = styled.div`
 
 }
 ```
+
+<Heading3>Using media width values</Heading3>
+
+```tsx
+import { MediaWidths } from "@lifesg/react-design-system/media";
+```
+
+You can import `MediaWidths` and use the value as required. It will return the various breakpoint values.
+
+```tsx
+import { MediaWidths } from "@lifesg/react-design-system/media";
+
+export const MyComponent = () => {
+    const { innerWidth } = window;
+    if (innerWidth > MediaWidths.mobileL) {
+        // render something
+    } else {
+        // render something else
+    }
+};
+```
