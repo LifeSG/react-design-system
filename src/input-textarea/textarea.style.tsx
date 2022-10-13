@@ -40,7 +40,7 @@ export const Element = styled.textarea<StyleProps>`
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[34]};
+        color: ${Color.Neutral[4]};
     }
 
     ${(props) => {
