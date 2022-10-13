@@ -76,6 +76,7 @@ const TextareaComponent = (
                     disabled={disabled}
                     value={stateValue}
                     maxLength={otherProps.maxLength}
+                    counterLabelFunction={otherProps.counterLabelFunction}
                 />
             )}
         </Wrapper>

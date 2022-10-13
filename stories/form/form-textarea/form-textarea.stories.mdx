@@ -10,7 +10,7 @@ import {
     Title,
 } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
+import { PropsTable, counterLabelFunction } from "./props-table";
 
 <Meta title="Form/Textarea" component={Form.Textarea} />
 
@@ -52,6 +52,13 @@ import { Form } from "@lifesg/react-design-system/form";
                 <Form.Textarea
                     label="This is does not have a counter"
                     placeholder="Enter here..."
+                />
+                <br />
+                <Form.Textarea
+                    label="This is does not have a counter"
+                    placeholder="Enter here..."
+                    maxLength={100}
+                    counterLabelFunction={counterLabelFunction}
                 />
             </Container>
         </StoryContainer>
