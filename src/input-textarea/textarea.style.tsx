@@ -44,7 +44,19 @@ export const Element = styled.textarea<StyleProps>`
     }
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.readOnly) {
+            return css`
+                border: none;
+                padding-left: 0rem;
+                background: transparent !important;
+
+                :focus,
+                :active {
+                    border: none;
+                    box-shadow: none;
+                }
+            `;
+        } else if (props.disabled) {
             return css`
                 background: ${Color.Neutral[6](props)};
                 cursor: not-allowed;
@@ -56,9 +68,7 @@ export const Element = styled.textarea<StyleProps>`
                     box-shadow: none;
                 }
             `;
-        }
-
-        if (props.error) {
+        } else if (props.error) {
             return css`
                 border: 1px solid ${Color.Validation.Red.Border(props)};
 
