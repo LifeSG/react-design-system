@@ -1,8 +1,6 @@
 import findIndex from "lodash/findIndex";
 import React from "react";
 import { ButtonProps } from "../button/types";
-import appStoreIcon from "./img/apple-app-store.png";
-import playStoreIcon from "./img/google-play-store.png";
 import {
     ActionButton,
     ButtonItem,
@@ -14,6 +12,11 @@ import {
     Wrapper,
 } from "./navbar-action-buttons.styles";
 import { NavbarButtonComponentProps, NavbarButtonProps } from "./types";
+
+const APP_STORE_ICON =
+    "https://assets.life.gov.sg/react-design-system/img/download/apple-app-store.png";
+const PLAY_STORE_ICON =
+    "https://assets.life.gov.sg/react-design-system/img/download/google-play-store.png";
 
 interface Props {
     actionButtons?: NavbarButtonProps[] | undefined;
@@ -99,7 +102,7 @@ export const NavbarActionButtons = ({
                         data-testid="button__app-store"
                         onClick={handleDownloadAppImageLinkClick}
                     >
-                        <img src={appStoreIcon} alt="apple-app-store" />
+                        <img src={APP_STORE_ICON} alt="apple-app-store" />
                     </DownloadAppImageLink>
                     <DownloadAppImageLink
                         href="https://play.google.com/store/apps/details?id=sg.gov.app.mol&hl=en_SG"
@@ -108,7 +111,7 @@ export const NavbarActionButtons = ({
                         data-testid="button__play-store"
                         onClick={handleDownloadAppImageLinkClick}
                     >
-                        <img src={playStoreIcon} alt="google-play-store" />
+                        <img src={PLAY_STORE_ICON} alt="google-play-store" />
                     </DownloadAppImageLink>
                 </DownloadAppImageLinkWrapper>
             </DownloadAppWrapper>
