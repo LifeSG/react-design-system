@@ -35,7 +35,7 @@ export const ErrorMessage = styled(Text.H6)`
     margin-bottom: 0;
 `;
 
-export const SubLabel = styled(Text.XSmall)<LabelProps>`
+export const Subtitle = styled(Text.XSmall)<LabelProps>`
     color: ${(props) =>
         props.disabled ? Color.Neutral[4](props) : Color.Neutral[3](props)};
 `;

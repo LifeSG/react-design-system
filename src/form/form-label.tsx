@@ -1,12 +1,13 @@
 import { TextProps } from "../text";
 import { PopoverAddon } from "./form-label-addon";
-import { ErrorMessage, Label, SubLabel } from "./form-label.style";
+import { ErrorMessage, Label, Subtitle } from "./form-label.style";
 import { FormLabelProps } from "./types";
 
 export const FormLabel = ({
     children,
     addon,
     subtitle,
+    "data-testid": testId,
     ...otherProps
 }: FormLabelProps): JSX.Element => {
     // -------------------------------------------------------------------------
@@ -26,7 +27,12 @@ export const FormLabel = ({
             {children}
             {addon && addon.type && renderAddon()}
             {typeof subtitle === "string" ? (
-                <SubLabel {...otherProps}>{subtitle}</SubLabel>
+                <Subtitle
+                    data-testid={testId ? `${testId}-subtitle` : "subtitle"}
+                    {...otherProps}
+                >
+                    {subtitle}
+                </Subtitle>
             ) : (
                 subtitle
             )}
