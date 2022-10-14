@@ -1,7 +1,6 @@
 **Changes**
 Description of changes...
 
-- [ready | do not] merge
 - [keep | delete] branch
 
 <!-- Remove if not required -->
