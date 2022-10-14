@@ -70,17 +70,6 @@ export const InputContainer = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-
-    // Removal of arrow buttons for Mozilla Firefox
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type="number"] {
-        -moz-appearance: textfield;
-    }
 `;
 
 export const BaseInput = styled.input`
@@ -133,7 +122,6 @@ export const Divider = styled(Text.Body)<LabelStyleProps>`
 `;
 
 export const MonthDivider = styled(Divider)`
-    /* margin: 0.1rem 0.2rem 0 0.4rem; */
     ${(props) => {
         if (props.$compress) {
             return css`
@@ -170,27 +158,3 @@ export const MonthPlaceholder = styled(Placeholder)<LabelStyleProps>`
 export const YearPlaceholder = styled(Placeholder)<LabelStyleProps>`
     width: 3.5rem;
 `;
-
-// export const DayPlaceholderDivider = styled(Placeholder)`
-//     margin: 2px 2px 0 2px;
-
-//     ${(props) => {
-// 		if (props.compress) {
-// 			return css`
-//                 margin: 2px 1px 0 2px;
-//             `;
-// 		}
-// 	}}
-// `;
-
-// export const MonthPlaceholderDivider = styled(Placeholder)`
-//     margin: 2px 2px 0 2px;
-
-//     ${(props) => {
-// 		if (props.compress) {
-// 			return css`
-//                 margin: 2px -5px 0 2px;
-//             `;
-// 		}
-// 	}}
-// `;
