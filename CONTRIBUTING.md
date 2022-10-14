@@ -26,12 +26,8 @@ Do also adhere to the guidelines mentioned below.
 
 ### **1. Creating a branch**
 
-Now that you are starting off, first create a branch following these conventions:
-
--   If you have a ticket, `<ticket_num>-a-short-description` (e.g. `MOL-1234-fix-navbar`)
--   If you do not have a ticket, `just-a-short-description` (e.g. `fix-navbar`)
-
-> Note that branches are to be created in kebab-case
+Now that you are starting off, first create a branch with a short and easy description in **kebab-case**
+e.g. `update-navbar-style`
 
 <a id="adding-components"></a>
 <br />
@@ -112,6 +108,8 @@ Some of the changes could result in some breaking changes or things to note for 
 [BREAKING] Rename `data` prop for <ComponentName> for better clarity
 ```
 
+If you are working with a JIRA ticket, you may add the ticket's url in the message as well.
+
 ---
 
 <a id="repo-owner"></a>
@@ -140,15 +138,17 @@ In terms of versioning, you may follow the guidelines as such:
 
 ### **2. Documenting change**
 
-Like all libraries, documenting changes are extremely important for users to note of the changes being made in the code. This is done in `CHANGELOG.md`. Some principles include:
+Like all libraries, documenting changes are extremely important for users to note of the changes being made in the code. This is done in the [Changelog Wiki](https://github.com/LifeSG/react-design-system/wiki/Changelog). Some principles include:
 
 -   Indicate version number and date of release
--   State the type if it is `New features`, `Improvements` or `Bug fixes`
+-   State the type if it is `New features` or `Bug fixes`
 -   State purpose clearly. Indicate if it is Breaking change by indicating the tag `[BREAKING]`
 -   If you would warn users of the change you can indicate using the tag `[WARNING]`
 
 ### **3. How to update this library?**
 
 1. Create a branch with a signature as such `bump-v6.0.1-canary.1`
-2. Update the `CHANGELOG.md`
+2. Update the version number in `package.json` and `package-lock.json`
 3. Create a pull request to have it merged
+4. Update the [Changelog Wiki](https://github.com/LifeSG/react-design-system/wiki/Changelog)
+5. Code owner will proceed to create a release
