@@ -6,7 +6,7 @@ interface Props {
     value: string | number | readonly string[];
     maxLength: number;
     disabled?: boolean | undefined;
-    counterLabelFunction?: (
+    renderCustomCounter?: (
         maxLength: number,
         currentValueLength: number
     ) => JSX.Element;
@@ -16,7 +16,7 @@ export const TextareaCounter = ({
     value,
     maxLength,
     disabled,
-    counterLabelFunction,
+    renderCustomCounter,
 }: Props): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
@@ -36,8 +36,8 @@ export const TextareaCounter = ({
     // HELPER FUNCTIONS
     // =============================================================================
     const getCounterLabel = (value: string | number | readonly string[]) => {
-        if (counterLabelFunction) {
-            return counterLabelFunction(maxLength, value.toString().length);
+        if (renderCustomCounter) {
+            return renderCustomCounter(maxLength, value.toString().length);
         } else {
             const remainingLength = maxLength - value.toString().length;
             if (remainingLength <= 1) {

@@ -1,9 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import { ApiTable } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
-import { Text } from "../../../src/text/text";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -39,25 +37,17 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The test identifier of the component",
                 propTypes: ["string"],
             },
+            {
+                name: "renderCustomCounter",
+                description:
+                    "Function to render a custom counter label component",
+                propTypes: [
+                    "(maxLength: number,currentValueLength: number) => JSX.Element",
+                ],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
 ];
 
 export const PropsTable = () => <ApiTable sections={DATA} />;
-
-export const counterLabelFunction = (
-    maxLength: number,
-    currentValueLength: number
-): JSX.Element => {
-    const CustomCounterLabel = styled(Text.H6)`
-        text-align: right;
-        color: #a4a4a4 !important;
-        font-size: 14px;
-    `;
-    return (
-        <CustomCounterLabel data-testid={"counter-label"} weight="semibold">
-            {currentValueLength}/{maxLength}
-        </CustomCounterLabel>
-    );
-};

@@ -4,7 +4,7 @@ export interface TextareaProps
     extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     error?: boolean | undefined;
     "data-testid"?: string | undefined;
-    counterLabelFunction?: (
+    renderCustomCounter?: (
         maxLength: number,
         currentValueLength: number
     ) => JSX.Element;
