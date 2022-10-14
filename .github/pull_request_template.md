@@ -1,9 +1,10 @@
 **Changes**
 Description of changes...
 
-- ready to merge
+- [ready | do not] merge
 - [keep | delete] branch
 
+<!-- Remove if not required -->
 **Changelog entry**
 
 - [BREAKING | WARNING | remove if none] Description of change in `Component-name`
