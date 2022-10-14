@@ -8,6 +8,7 @@ import { TextStyleHelper } from "../text/helper";
 interface InputStyleProps {
     error?: boolean;
     readOnly?: boolean;
+    type?: React.HTMLInputTypeAttribute;
 }
 
 // =============================================================================
@@ -36,6 +37,23 @@ export const InputElement = styled.input<InputStyleProps>`
     ::-webkit-input-placeholder {
         color: ${Color.Neutral[3]};
     }
+
+    ${(props) => {
+        // Hiding of spinners for number type input
+        if (props.type === "number") {
+            return css`
+                // Chrome, Safari, Edge, Opera
+                ::-webkit-outer-spin-button,
+                ::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+
+                // Firefox
+                -moz-appearance: textfield;
+            `;
+        }
+    }}
 
     ${(props) => {
         if (props.readOnly) {
