@@ -84,8 +84,26 @@ It is very important to provide enough information for potential users to unders
 
 Some principles include:
 
--   Properly describing and documenting your props
 -   Adding sufficient stories to describe the variations
+-   Add additional usage information for others to understand and use the component correctly
+-   Indicate the component properties clearly
+
+The file naming convention is as such:
+
+-   The component story `component-name.stories.mdx`
+-   Supporting elements `doc-elements.tsx`
+-   Component properties `props-table.tsx`
+
+A suggested folder structure is as such:
+
+```
+└── stories
+	└── component-name
+		├── component-name.stories.mdx
+		├── doc-elements.tsx
+		├── props-table.tsx
+		└── types.ts
+```
 
 <a id="pull-request"></a>
 <br />
@@ -94,21 +112,7 @@ Some principles include:
 
 Once you have committed and pushed your code, you are to create a pull request to have it approved to be in the `master` branch.
 
-Simply create a pull request with a meaningful title and description of the change. This will be used in the `Changelog` document when the code owner publishes a new version.
-
-An example of a good title is
-
-```
-Add a new event handler prop for <ComponentName>
-```
-
-Some of the changes could result in some breaking changes or things to note for users of the component. You can add the `[WARNING]` or `[BREAKING]` indicator so that the repository owner can help indicate these in the `Changelog` document.
-
-```
-[BREAKING] Rename `data` prop for <ComponentName> for better clarity
-```
-
-If you are working with a JIRA ticket, you may add the ticket's url in the message as well.
+Add a meaningful title to your pull request and follow the template provided.
 
 ---
 
@@ -122,16 +126,33 @@ If you are working with a JIRA ticket, you may add the ticket's url in the messa
 
 ### **1. Version management**
 
-The design system follows a **canary release system**. This allows us to test new features/fixes before we roll out the official version to the other users. The version tags are as such:
+There are different types of versions that we can include in the design system.
 
--   `canary` v6.0.1-canary.1
--   `stable` v6.0.1
+For larger features/changes such as migrations, we would introduce
+alpha versions to inform others of the potential breakages in these versions. We can denote alpha versions as such
+
+```
+v1.x.x-alpha.x
+
+e.g.
+v1.2.0-alpha.2
+```
+
+Where `v1.2.0` is the version that we will eventually release to.
+
+> It is advisable to work in a separate branch for alpha releases so as not to disrupt the `master` branch which is
+> always a reflection of the latest in production
+
+For all other changes, we follow the **canary release system**. This allows us to test new features/fixes before we roll out the official version to the other users. The version tags are as such:
+
+-   `canary` v1.0.1-canary.1
+-   `stable` v1.0.1
 
 In terms of versioning, you may follow the guidelines as such:
 
 -   If it is breaking change (not backward compatible), increase the major version (e.g. `x.0.0`)
--   If it is a regular enhancement, increase the minor version (e.g. `6.x.0`)
--   If it is a bug fix, increase thepatch version (e.g. `6.1.x`)
+-   If it is a regular enhancement, increase the minor version (e.g. `1.x.0`)
+-   If it is a bug fix, increase thepatch version (e.g. `1.1.x`)
 
 <a id="documenting-change"></a>
 <br />
