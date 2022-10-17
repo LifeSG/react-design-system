@@ -79,6 +79,16 @@ import { Textarea } from "@lifesg/react-design-system/input-textarea";
 
 <Heading3>Textarea with custom counter label</Heading3>
 
+```tsx
+const renderCustomCounter = (maxLength: number, currentValueLength: number) => {
+    return (
+        <CustomCounterLabel>
+            {currentValueLength} / {maxLength}
+        </CustomCounterLabel>
+    );
+};
+```
+
 <Preview>
     <Story name="With custom counter">
         <StoryContainer>
