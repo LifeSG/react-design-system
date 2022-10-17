@@ -61,6 +61,7 @@
         "babel-plugin-styled-components": "^2.0.6",
         "css-loader": "^5.2.7",
         "dayjs": "^1.11.3",
+        "dompurify": "^2.4.0",
         "eslint": "^8.11.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-mdx": "^2.0.4",

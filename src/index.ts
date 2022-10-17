@@ -23,6 +23,7 @@ export * from "./masthead";
 export * from "./media";
 export * from "./modal";
 export * from "./navbar";
+export * from "./notification-banner";
 export * from "./overlay";
 export * from "./popover";
 export * from "./radio-button";
