@@ -59,6 +59,33 @@ import { Form } from "@lifesg/react-design-system/form";
     </Story>
 </Canvas>
 
+<Heading3>Textarea with custom counter label</Heading3>
+
+<Preview>
+    <Story name="With custom counter">
+        <StoryContainer>
+            <Container>
+                <Form.Textarea
+                    label="This is a textarea with a custom counter label"
+                    placeholder="Enter here..."
+                    maxLength={100}
+                    renderCustomCounter={renderCustomCounter}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+```tsx
+const renderCustomCounter = (maxLength: number, currentValueLength: number) => {
+    return (
+        <CustomCounterLabel>
+            {currentValueLength} / {maxLength}
+        </CustomCounterLabel>
+    );
+};
+```
+
 <Heading3>Using the field as a standalone</Heading3>
 
 In the case that you require the textarea field as a standalone, you can do this.
@@ -72,33 +99,6 @@ import { Textarea } from "@lifesg/react-design-system/input-textarea";
         <StoryContainer>
             <Container>
                 <Textarea placeholder="Enter here..." maxLength={100} />
-            </Container>
-        </StoryContainer>
-    </Story>
-</Preview>
-
-<Heading3>Textarea with custom counter label</Heading3>
-
-```tsx
-const renderCustomCounter = (maxLength: number, currentValueLength: number) => {
-    return (
-        <CustomCounterLabel>
-            {currentValueLength} / {maxLength}
-        </CustomCounterLabel>
-    );
-};
-```
-
-<Preview>
-    <Story name="With custom counter">
-        <StoryContainer>
-            <Container>
-                <Form.Textarea
-                    label="This is a textarea with a custom counter label"
-                    placeholder="Enter here..."
-                    maxLength={100}
-                    renderCustomCounter={renderCustomCounter}
-                />
             </Container>
         </StoryContainer>
     </Story>
