@@ -16,6 +16,7 @@ interface AddonStyleProps {
 }
 
 interface MainInputStyleProps {
+    $readOnly?: boolean;
     $position?: "left" | "right" | undefined;
 }
 
@@ -31,6 +32,8 @@ export const Container = styled.div<AddonStyleProps>`
     background: ${Color.Neutral[8]};
     height: 3rem;
     width: 100%;
+    flex-direction: ${(props) =>
+        props.$position === "right" ? "row-reverse" : "row"};
 
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
@@ -38,11 +41,6 @@ export const Container = styled.div<AddonStyleProps>`
     }
 
     ${(props) => {
-        if (props.$position === "right") {
-            return css`
-                flex-direction: row-reverse;
-            `;
-        }
         if (props.$readOnly) {
             return css`
                 border: none;
@@ -91,6 +89,11 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
     }
 
     ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                padding-left: 0rem;
+            `;
+        }
         switch (props.$position) {
             case "right":
                 return css`
@@ -126,7 +129,11 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
     }
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$readOnly) {
+            return css`
+                padding-left: 0rem;
+            `;
+        } else if (props.disabled) {
             return css`
                 color: ${Color.Neutral[4](props)};
                 svg {

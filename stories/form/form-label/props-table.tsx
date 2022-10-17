@@ -24,6 +24,15 @@ export const FORM_LABEL_PROPS_DATA: ApiTableSectionProps = {
             description: "Indicates if a disabled display should be applied",
             propTypes: ["string"],
         },
+        {
+            name: "subtitle",
+            description: (
+                <>
+                    The subtitle for the <code>Form.Label</code>
+                </>
+            ),
+            propTypes: ["string", "JSX.Element"],
+        },
     ],
 };
 
