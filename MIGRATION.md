@@ -44,6 +44,7 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 -   [LinkList](#link-list)
 -   [Modal](#modal)
 -   [Navbar](#navbar)
+-   [NotificationBanner](#notif-banner)
 
 <br />
 
@@ -185,3 +186,13 @@ Here is the full list of changes
 -   `blockDrawerDismissalMethods` in `NavbarProps` has been renamed to `drawerDismissalExclusions` for clarity
 
 You can refer to the Storybook documentation for the amended names of the types
+
+<br />
+
+<a id="notif-banner"></a>
+
+### NotificationBanner
+
+-   `NotificationBanner.Base` has been simplified to be just `NotificationBanner`
+-   `NotificationBanner.Label` has been deprecated and the style has been integrated into the main component. You may
+    just specify the content plainly
