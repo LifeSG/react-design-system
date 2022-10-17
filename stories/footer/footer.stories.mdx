@@ -1,0 +1,193 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Footer } from "src/footer";
+import { Layout } from "src/layout";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Footer" component={Footer} />
+
+<Title>Footer</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that holds the directory and disclaimer information at the bottom of the website.
+
+```tsx
+import { Footer } from "@lifesg/react-design-system/footer";
+```
+
+<Canvas>
+    <Story name="Footer">
+        <Footer
+            lastUpdated={new Date()}
+            showDownloadAddon
+            links={[
+                [
+                    { children: "Home", href: "https://www.life.gov.sg" },
+                    {
+                        children: "How it works",
+                        href: "https://www.life.gov.sg/#how-it-works",
+                    },
+                    {
+                        children: "Ways we help",
+                        href: "https://www.life.gov.sg/#ways-we-help",
+                    },
+                    {
+                        children: "Campaigns",
+                        href: "https://www.life.gov.sg/#campaigns",
+                    },
+                    {
+                        children: "News and media",
+                        href: "https://www.life.gov.sg/#newsandmedia",
+                    },
+                ],
+                [
+                    {
+                        children: "About us",
+                        href: "https://www.life.gov.sg/about-us",
+                    },
+                    {
+                        children: "Help & Support",
+                        href: "https://www.life.gov.sg/help-support",
+                    },
+                    {
+                        children: "Get in touch with us",
+                        href: "https://www.life.gov.sg/get-in-touch",
+                    },
+                ],
+            ]}
+        />
+    </Story>
+</Canvas>
+
+<Secondary>Other usages</Secondary>
+
+<Heading3>With custom content</Heading3>
+
+<Preview>
+    <Story name="With custom content">
+        <Footer lastUpdated={new Date()}>
+            <Layout.Content>
+                <div
+                    style={{
+                        padding: "2rem 0",
+                        background: "yellow",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    My custom content
+                </div>
+            </Layout.Content>
+        </Footer>
+    </Story>
+</Preview>
+
+<Heading3>With other customisations</Heading3>
+
+You are also able to customise the logo, copyright text and disclaimerLinks. In this example, we will customise the
+
+-   logo
+-   copyright text
+-   privacy disclaimer link
+
+<Preview>
+    <Story name="Other customisations">
+        <Footer
+            lastUpdated={new Date()}
+            copyrightInfo="This is the custom copyright information"
+            logoSrc="https://cdn-icons-png.flaticon.com/512/1055/1055666.png"
+            links={[
+                [
+                    { children: "Home", href: "https://www.life.gov.sg" },
+                    {
+                        children: "How it works",
+                        href: "https://www.life.gov.sg/#how-it-works",
+                    },
+                    {
+                        children: "Ways we help",
+                        href: "https://www.life.gov.sg/#ways-we-help",
+                    },
+                    {
+                        children: "Campaigns",
+                        href: "https://www.life.gov.sg/#campaigns",
+                    },
+                    {
+                        children: "News and media",
+                        href: "https://www.life.gov.sg/#newsandmedia",
+                    },
+                ],
+                [
+                    {
+                        children: "About us",
+                        href: "https://www.life.gov.sg/about-us",
+                    },
+                    {
+                        children: "Help & Support",
+                        href: "https://www.life.gov.sg/help-support",
+                    },
+                    {
+                        children: "Get in touch with us",
+                        href: "https://www.life.gov.sg/get-in-touch",
+                    },
+                ],
+            ]}
+            disclaimerLinks={{
+                privacy: {
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noreferrer",
+                },
+            }}
+        />
+    </Story>
+</Preview>
+
+<Secondary>About disclaimer links</Secondary>
+
+As the disclaimer links are mandated to be in the `Footer`, the component already comes with a predefined set of values.
+
+<Heading3>Predefined values</Heading3>
+
+|            | privacy                                   | termsOfUse                           | reportVulnerability                      |
+| ---------- | ----------------------------------------- | ------------------------------------ | ---------------------------------------- |
+| `children` | Privacy statement                         | Terms of use                         | Report vulnerability                     |
+| `href`     | https://www.life.gov.sg/privacy-statement | https://www.life.gov.sg/terms-of-use | https://tech.gov.sg/report_vulnerability |
+| `rel`      | `noopener`                                | `noopener`                           | `noopener`                               |
+| `external` | `false`                                   | `false`                              | `true`                                   |
+
+> Refer to the Component API table below for more information on the properties
+
+<br />
+<Heading3>Customising the links</Heading3>
+
+You are given the flexibility to customise any of the links **except the link text**. You can do so as such:
+
+```tsx
+import { DisclaimerLinks, Footer } from "@lifesg/react-design-system/footer";
+
+const disclaimerLinks: DisclaimerLinks = {
+    reportVulnerability: {
+        href: "https://tech.gov.sg/report_vulnerability",
+        target: "_blank",
+        rel: "noopener",
+        external: true,
+    },
+};
+
+return (
+	<Footer disclaimerLinks={disclaimerLinks} />;
+);
+```
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

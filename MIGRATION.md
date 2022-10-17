@@ -40,6 +40,7 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 -   [Alert](#alert)
 -   [Form](#form)
 -   [InputGroup](#input-group)
+-   [Layout](#layout)
 -   [LinkList](#link-list)
 -   [Modal](#modal)
 -   [Navbar](#navbar)
@@ -68,6 +69,20 @@ You may refer to the storybook documentation for more details.
 -   `AlertBox.Description` has been deprecated to have the style applied to `<p>` instead
 
 You may refer to the storybook documentation for more details.
+
+<br />
+
+<a id="footer"></a>
+
+### Footer
+
+-   The footer props have been amended for clarity
+    -   `addon` has been deprecated and replaced with `showDownloadAddon`
+    -   Introduced `copyrightInfo` and `logoSrc` to allow customisation of the copyright text and logo respectively
+    -   `options` in `FooterLinkProps` has been replaced with `data-options`
+    -   `lastUpdated` has been made optional. Defaults to today's date if it is not specified
+
+Refer to the storybook documentation for more details
 
 <br />
 
@@ -119,6 +134,17 @@ export interface AddonProps<T, V> {
 
 <br />
 
+<a id="layout"></a>
+
+### Layout
+
+-   `Layout.GridContent` has been deprecated and merged with `Layout.Content`. You can switch to use flex or grid
+    using the `type` prop
+-   `Layout.GridContainer` has been deprecated and merged with `Layout.Container`. You can switch to use flex or grid
+    using the `type` prop
+
+<br />
+
 <a id="link-list"></a>
 
 ### LinkList
@@ -141,4 +167,21 @@ export interface AddonProps<T, V> {
 
 ### Navbar
 
--   `INavbarProps` has been renamed to just `NavbarProps` for standardisation (removal of prefix)
+-   All Navbar prop types have been renamed to remove their prefix
+
+Here is the full list of changes
+
+| Previous                      | New                          |
+| ----------------------------- | ---------------------------- |
+| `INavItem`                    | `NavItemProps`               |
+| `INavbarItems`                | `NavItemsProps`              |
+| `INavResources`               | `NavbarResourcesProps`       |
+| `INavbarButtonComponentProps` | `NavbarButtonComponentProps` |
+| `INavbarActionButtons`        | `NavbarActionButtonsProps`   |
+| `INavbarButton`               | `NavbarButtonProps`          |
+| `TDrawerDismissalMethod`      | `DrawerDismissalMethod`      |
+| `INavbarProps`                | `NavbarProps`                |
+
+-   `blockDrawerDismissalMethods` in `NavbarProps` has been renamed to `drawerDismissalExclusions` for clarity
+
+You can refer to the Storybook documentation for the amended names of the types
