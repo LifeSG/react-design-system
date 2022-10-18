@@ -1,0 +1,267 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Text } from "src/text";
+import { Layout } from "src/layout";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { Label, PaddingLabel } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta
+    title="Getting Started/Layout"
+    component={Layout}
+    parameters={{ layout: "fullscreen" }}
+/>
+
+<Title>Layout</Title>
+
+<Secondary>Overview</Secondary>
+
+The layout components handle responsive displays for its child elements.
+
+```tsx
+import { Layout } from "@lifesg/react-design-system/layout";
+```
+
+<Heading3>Anatomy</Heading3>
+
+A standard layout comprises of 2 components:
+
+-   `Section` the component that represents the `<section>` tag
+-   `Container` the component that represents the child `<div>` tag
+
+<Heading4>Section</Heading4>
+
+This is the wrapper component that uses the `<section>` under the hood. It's style specifications are
+as such:
+
+| Attribute          | Value    |
+| ------------------ | -------- |
+| width              | `100%`   |
+| horizontal padding | `1.5rem` |
+| vertical padding   | `0`      |
+
+<Heading4>Container</Heading4>
+
+This is the child component that uses a `<div>` under the hood. This component **does not come with any padding** but it enforces a maximum width based on the viewport. The maximum width values are as follow:
+
+| Viewport                        | Max width          |
+| ------------------------------- | ------------------ |
+| `desktop4k`, `desktopL`         | `1344px`           |
+| `desktopM`                      | `1152px`           |
+| `tablet`                        | `960px`            |
+| `mobileL`, `mobileM`, `mobileS` | Takes `100%` width |
+
+<br />
+
+<!-- DIAGRAM -->
+
+<div style={{ padding: "3rem 0" }}>
+    <Layout.Section
+        style={{
+            padding: "2.5rem 1.5rem",
+            background: "#F9B5B2",
+            display: "flex",
+            justifyContent: "center",
+        }}
+    >
+        <Label>Section</Label>
+        <PaddingLabel>1.5rem</PaddingLabel>
+        <PaddingLabel direction="right">1.5rem</PaddingLabel>
+        <Layout.Container
+            style={{
+                background: "#FDDDD7",
+                display: "flex",
+                justifyContent: "center",
+            }}
+        >
+            <Label>Container</Label>
+            <div
+                style={{
+                    width: "100%",
+                    height: "50px",
+                }}
+            />
+        </Layout.Container>
+    </Layout.Section>
+    <br />
+    <Text.XSmall>
+        <em>
+            Note: <strong>Section</strong> does not come with vertical padding.
+            This is for illustration purposes.
+        </em>
+    </Text.XSmall>
+</div>
+
+<!-- STORY -->
+
+<Secondary>Usage</Secondary>
+
+<Heading3>General usage</Heading3>
+
+To allow ease of use and not having to compose the two components, we have provided the `Content` that comes with the `Section` and `Container`. This is the **recommended usage** and should fit most use cases.
+
+<Canvas>
+    <Story name="General usage">
+        <Layout.Content>
+            <div
+                style={{
+                    width: "100%",
+                    padding: "2rem 0",
+                    border: "2px dotted #A4A4A4",
+                }}
+            >
+                <Text.H1>My content</Text.H1>
+                <br />
+                <Text.Body>
+                    You can adjust the viewport to see how the maximum width in
+                    the
+                    <code>Layout.Container</code> affects how the content looks.
+                </Text.Body>
+            </div>
+        </Layout.Content>
+    </Story>
+</Canvas>
+
+<Heading3>Customising the style</Heading3>
+
+There are two ways to customize the style of the `Layout` elements.
+
+<Heading4>Nesting styles</Heading4>
+
+If you are using `Layout.Content`, you are able to modify the styles by extending the component.
+
+```tsx
+import { Layout } from "@lifesg/react-design-system/layout";
+import styled from "styled-components";
+
+// Method 1: Using the data-id property
+export const ModifiedContent = styled(Layout.Content)`
+    /* Modifying styles here will modify the Section component */
+
+    [data-id="container"] {
+        /* Modifying styles here will modify the Container component */
+    }
+`;
+
+// Method 2: Using the component itself
+export const ModifiedContent2 = styled(Layout.Content)`
+    /* Modifying styles here will modify the Section component */
+
+    ${Layout.Container} {
+        /* Modifying styles here will modify the Container component */
+    }
+`;
+```
+
+<Heading4>Breaking up Layout.Content</Heading4>
+
+You can break up the `Section` and `Container` separately and style them separately for more freedom. This is useful
+if you intend to add complex styles or other elements inside `Section`.
+
+```tsx
+import { Layout } from "@lifesg/react-design-system/layout";
+import styled from "styled-components";
+
+const ModifiedSection = styled(Layout.Section)`
+    /* Your styles here */
+`;
+
+const ModifiedContainer = styled(Layout.Container)`
+    /* Your styles here */
+`;
+
+// Composition of the components
+export const MyComponent = () => (
+    <ModifiedSection>
+        <ModifiedContainer>
+            <div>The content here</div>
+        </ModifiedContainer>
+    </ModifiedSection>
+);
+```
+
+<Heading3>Split usage</Heading3>
+
+As mentioned above, you can separately compose the `Section` and `Container` components.
+
+<Preview>
+    <Story name="Split usage">
+        <Layout.Section>
+            <Layout.Container>
+                <div
+                    style={{
+                        width: "100%",
+                        padding: "2rem 0",
+                        border: "2px dotted #A4A4A4",
+                    }}
+                >
+                    <Text.H1>Split usage example</Text.H1>
+                    <br />
+                    <Text.Body>
+                        You can adjust the viewport to see how the maximum width
+                        in the
+                        <code>Layout.Container</code> affects how the content looks.
+                    </Text.Body>
+                </div>
+            </Layout.Container>
+        </Layout.Section>
+    </Story>
+</Preview>
+
+<Secondary>Grid layout</Secondary>
+
+You can make use of the `type` prop to specify if the layout will use the [CSS Grid](https://css-tricks.com/snippets/css/complete-guide-grid/).
+
+<Preview>
+    <Story name="Grid layout">
+        {() => {
+            const renderColumn = (index) => (
+                <div
+                    style={{
+                        border: "2px dotted #F26664",
+                        background: "#F9B5B2",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "300px",
+                    }}
+                    key={index}
+                >
+                    <Text.BodySmall weight="semibold">
+                        {index + 1}
+                    </Text.BodySmall>
+                </div>
+            );
+            const renderColumns = () => {
+                const columns = [];
+                for (let i = 0; i < 12; i++) {
+                    columns.push(renderColumn(i));
+                }
+                return columns;
+            };
+            return (
+                <Layout.Content type="grid" style={{ background: "#FDDDD7" }}>
+                    {renderColumns()}
+                </Layout.Content>
+            );
+        }}
+    </Story>
+</Preview>
+
+<Heading3>About the Grid</Heading3>
+
+The design system uses a **12 column** grid layout, with a column gutter of `2rem` for desktop viewports. The other viewport sizes are as such:
+
+-   Tablet **8 columns**, `1.5rem` gutter
+-   Mobile **4 columns**, `1rem` gutter
+
+<br />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
