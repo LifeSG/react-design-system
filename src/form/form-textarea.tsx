@@ -80,6 +80,7 @@ const FormTextareaComponent = (
                         disabled={otherProps.disabled}
                         value={stateValue}
                         maxLength={otherProps.maxLength}
+                        renderCustomCounter={otherProps.renderCustomCounter}
                     />
                 )}
             </LabelContainer>

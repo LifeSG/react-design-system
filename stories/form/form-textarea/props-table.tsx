@@ -37,6 +37,14 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The test identifier of the component",
                 propTypes: ["string"],
             },
+            {
+                name: "renderCustomCounter",
+                description:
+                    "Function to render a custom counter label component",
+                propTypes: [
+                    "(maxLength: number,currentValueLength: number) => JSX.Element",
+                ],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
