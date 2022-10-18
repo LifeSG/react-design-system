@@ -26,6 +26,7 @@ export * from "./navbar";
 export * from "./notification-banner";
 export * from "./overlay";
 export * from "./popover";
+export * from "./progress-indicator";
 export * from "./radio-button";
 export * from "./text";
 export * from "./text-list";
