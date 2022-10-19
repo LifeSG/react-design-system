@@ -22,6 +22,8 @@ export interface ErrorDisplayAttributes {
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
     title?: string | undefined;
     description?: string | JSX.Element | undefined;
+    /** The action button displayed at the bottom of the Error Display */
+    actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
     additionalProps?:
         | MaintenanceAdditionalAttributes
         | Error500AdditionalAttributes

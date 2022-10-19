@@ -1,6 +1,18 @@
 import React from "react";
+import styled from "styled-components";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+
+// =============================================================================
+// CUSTOM STYLING
+// =============================================================================
+const StyledCode = styled.code`
+    margin-right: 0.25rem;
+`;
+
+// =============================================================================
+// DATA
+// =============================================================================
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -17,31 +29,17 @@ const DATA: ApiTableSectionProps[] = [
                                 marginBottom: "0.25rem",
                             }}
                         >
-                            <code
-                                style={{ marginRight: "0.25rem" }}
-                            >{`"400"`}</code>
-                            <code
-                                style={{ marginRight: "0.25rem" }}
-                            >{`"403"`}</code>
-                            <code
-                                style={{ marginRight: "0.25rem" }}
-                            >{`"404"`}</code>
-                            <code
-                                style={{ marginRight: "0.25rem" }}
-                            >{`"408"`}</code>
-                            <code
-                                style={{ marginRight: "0.25rem" }}
-                            >{`"500"`}</code>
+                            <StyledCode>{`"400"`}</StyledCode>
+                            <StyledCode>{`"403"`}</StyledCode>
+                            <StyledCode>{`"404"`}</StyledCode>
+                            <StyledCode>{`"408"`}</StyledCode>
+                            <StyledCode>{`"500"`}</StyledCode>
                             <code>{`"503"`}</code>
                         </div>
                         <div style={{ display: "block" }}>
-                            <code
-                                style={{ marginRight: "0.25rem" }}
-                            >{`"maintenance"`}</code>
-                            <code
-                                style={{ marginRight: "0.25rem" }}
-                            >{`"unsupported-browser"`}</code>
-                            <code>{`"partially-unsupported-browser"`}</code>
+                            <StyledCode>{`"maintenance"`}</StyledCode>
+                            <StyledCode>{`"unsupported-browser"`}</StyledCode>
+                            <code>{`"partially-supported-browser"`}</code>
                         </div>
                     </>
                 ),
@@ -78,6 +76,29 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["string", "JSX.Element"],
+            },
+            {
+                name: "actionButton",
+                description:
+                    "The properties of the action button that appears at the bottom of the component",
+                propTypes: (
+                    <>
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <code>HTMLButtonElement</code>
+                        </a>
+                    </>
+                ),
+                defaultValue: (
+                    <>
+                        No default values except,
+                        <br />
+                        <code>children</code>: <code>Proceed</code>
+                    </>
+                ),
             },
             {
                 name: "additionalProps",

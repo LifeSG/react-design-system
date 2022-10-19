@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "../button";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
@@ -63,5 +64,14 @@ export const DescriptionContainer = styled.div`
         :focus {
             color: ${Color.Secondary};
         }
+    }
+`;
+
+export const ActionButton = styled(Button.Default)`
+    margin: 4rem auto 0;
+    width: 21rem;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 100%;
     }
 `;
