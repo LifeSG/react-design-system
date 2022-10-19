@@ -24,19 +24,40 @@ export const Modal = ({
     // =============================================================================
     useEffect(() => {
         //set initial vh
-        setVerticalHeight(window.innerHeight * 0.01);
-        window.addEventListener("resize", handleResize);
 
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
+        // use VisualViewport API if available, it gives more accurate dimensions when iOS software keyboard is active
+        if (window.visualViewport) {
+            handleViewportResize();
+            window.visualViewport.addEventListener(
+                "resize",
+                handleViewportResize
+            );
+            return () => {
+                window.visualViewport.removeEventListener(
+                    "resize",
+                    handleViewportResize
+                );
+            };
+        } else {
+            // fallback to Window API
+            handleWindowResize();
+            window.addEventListener("resize", handleWindowResize);
+            return () => {
+                window.removeEventListener("resize", handleWindowResize);
+            };
+        }
     }, []);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleResize = () => {
+    const handleWindowResize = () => {
         const newVerticalHeight = window.innerHeight * 0.01;
+        setVerticalHeight(newVerticalHeight);
+    };
+
+    const handleViewportResize = () => {
+        const newVerticalHeight = window.visualViewport.height * 0.01;
         setVerticalHeight(newVerticalHeight);
     };
 
