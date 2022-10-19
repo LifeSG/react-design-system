@@ -3,11 +3,12 @@ import styled from "styled-components";
 
 interface Props {
     children: JSX.Element | JSX.Element[];
+    className?: string;
 }
 
-export const PreviewBox = ({ children }: Props) => {
+export const PreviewBox = ({ children, className }: Props) => {
     return (
-        <Container>
+        <Container className={className}>
             <Inner>{children}</Inner>
         </Container>
     );
