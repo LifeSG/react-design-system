@@ -31,11 +31,56 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
     </Story>
 </Canvas>
 
+<Secondary>Other usages</Secondary>
+
+<Heading3>With action button</Heading3>
+
+You can also add an action button to be present in the `ErrorDisplay`. The action button will
+appear at the bottom of the component.
+
+<Preview>
+    <Story name="With action button">
+        <ErrorDisplay
+            type="unsupported-browser"
+            actionButton={{
+                children: "Continue anyway",
+                onClick: () => {
+                    alert("Clicked on continue button");
+                },
+            }}
+        />
+    </Story>
+</Preview>
+
+<Heading3>Customisation</Heading3>
+
+The `ErrorDisplay` component is customisable according to your project's needs. Customisation includes
+
+-   image
+-   title
+-   description
+
+<Preview>
+    <Story name="Custom error">
+        <ErrorDisplay
+            type="404"
+            title="My Custom 404"
+            description={
+                <>
+                    You can pass a <strong>JSX component</strong> here as well
+                </>
+            }
+        />
+    </Story>
+</Preview>
+
 <Heading3>See also</Heading3>
 
-[Customisation](#customisation) | [Component API](#component-api)
+[Variants](#variants) | [Component API](#component-api)
 
 <br />
+
+<a id="variants"></a>
 
 <Secondary>Variants</Secondary>
 
@@ -46,7 +91,8 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 [500 Internal server error](#error-500) |
 [503 Service unavailable](#error-503)<br />
 [Maintenance](#maintenance) |
-[Unsupported browser](#unsupported-browser)
+[Unsupported browser](#unsupported-browser) |
+[Partially supported browser](#partially-supported-browser)
 
 <!-- 400 -->
 
@@ -187,25 +233,19 @@ This is shown when the browser is of an unsupported version.
     </Story>
 </Preview>
 
-<Secondary>Customisation</Secondary>
+<!-- PARTIALLY SUPPORTED BROWSER -->
 
-The `ErrorDisplay` component is customisable according to your project's needs. Customisation includes
+<a id="partially-supported-browser"></a>
 
--   image
--   title
--   description
+<Heading3>Partially supported browser</Heading3>
+
+This is shown when the browser is of a partially supported version.
+
+[Back to see all variants](#variants-top)
 
 <Preview>
-    <Story name="Custom error">
-        <ErrorDisplay
-            type="404"
-            title="My Custom 404"
-            description={
-                <>
-                    You can pass a <strong>JSX component</strong> here as well
-                </>
-            }
-        />
+    <Story name="Partially supported Browser">
+        <ErrorDisplay type="partially-supported-browser" />
     </Story>
 </Preview>
 

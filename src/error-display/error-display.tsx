@@ -1,6 +1,7 @@
 import React from "react";
 import { ERROR_DISPLAY_DATA } from "./error-display-data";
 import {
+    ActionButton,
     Container,
     DescriptionContainer,
     Img,
@@ -18,6 +19,7 @@ export const ErrorDisplay = ({
     img,
     title,
     description,
+    actionButton,
     additionalProps,
     ...otherProps
 }: ErrorDisplayProps): JSX.Element => {
@@ -58,6 +60,15 @@ export const ErrorDisplay = ({
         return null;
     }
 
+    const renderActionButton = () => {
+        const buttonProps: React.ButtonHTMLAttributes<HTMLButtonElement> = {
+            children: "Proceed",
+            ...actionButton,
+        };
+
+        return <ActionButton {...buttonProps} />;
+    };
+
     const updatedAssets = {
         ...defaultAssets,
         ...(img && { img }),
@@ -80,6 +91,7 @@ export const ErrorDisplay = ({
                     )}
                 </DescriptionContainer>
             </TextContainer>
+            {actionButton && renderActionButton()}
         </Container>
     );
 };
