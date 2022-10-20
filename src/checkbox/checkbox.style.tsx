@@ -79,21 +79,21 @@ export const Input = styled.input<CheckboxProps>`
 
 export const Checkmark = styled(Icon)<StyleProps>`
     ${(props) => {
-        let fontSize;
+        let size;
 
         switch (props.$displaySize) {
             case "small":
-                fontSize = "1.3rem";
+                size = "1.3rem";
                 break;
             default:
-                fontSize = "1.5rem";
+                size = "1.5rem";
                 break;
         }
 
         return css`
-            font-size: ${fontSize};
+            height: ${size};
+            width: ${size};
         `;
     }}
-    font-weight: bold;
     color: ${(props) => (props.disabled ? Color.Neutral[4] : Color.Neutral[8])};
 `;

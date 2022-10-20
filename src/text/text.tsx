@@ -267,6 +267,10 @@ const HyperlinkBase = styled.a<TextLinkStyleProps>`
             :active,
             :focus {
                 color: ${Color.Secondary};
+
+                svg {
+                    color: ${Color.Secondary};
+                }
             }
         `;
     }}

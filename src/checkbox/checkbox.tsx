@@ -65,7 +65,7 @@ export const Checkbox = ({
             />
             {selected && (
                 <Checkmark
-                    type="check"
+                    type="tick"
                     id="checkmark"
                     data-testid="checkmark"
                     disabled={disabled}

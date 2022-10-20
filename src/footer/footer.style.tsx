@@ -171,8 +171,16 @@ export const DisclaimerTextLink = styled(Text.Hyperlink.Small)`
         margin-right: 1.5rem;
     }
 
+    svg {
+        color: ${Color.Neutral[1]};
+        vertical-align: sub;
+    }
+
     &:hover {
         color: ${Color.Neutral[3]};
+        svg {
+            color: ${Color.Neutral[3]};
+        }
     }
 
     ${MediaQuery.MaxWidth.tablet} {
