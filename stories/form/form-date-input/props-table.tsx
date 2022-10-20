@@ -82,6 +82,17 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: string) => void"],
             },
             {
+                name: "onChangeRaw",
+                description: (
+                    <>
+                        Called when the user enters a value in the field.
+                        Returns unformatted value in an array format as such [
+                        <code>day</code>, <code>month</code>, <code>year</code>]
+                    </>
+                ),
+                propTypes: ["(value: string[]) => void"],
+            },
+            {
                 name: "onBlur",
                 description: (
                     <>
@@ -91,6 +102,17 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
+            },
+            {
+                name: "onBlurRaw",
+                description: (
+                    <>
+                        Called when a defocus happens. Returns unformatted value
+                        in an array format as such [<code>day</code>,{" "}
+                        <code>month</code>, <code>year</code>]
+                    </>
+                ),
+                propTypes: ["(value: string[]) => void"],
             },
         ],
     },
