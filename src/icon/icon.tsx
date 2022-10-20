@@ -1,37 +1,41 @@
 import styled from "styled-components";
-import { ArrowRightIcon } from "./arrow-right-icon";
-import { CrossIcon } from "./cross-icon";
-import { InfoIcon } from "./info-icon";
-import { PlayIcon } from "./play-icon";
-import { SearchIcon } from "./search-icon";
+import { Color } from "../color";
+import { IconData } from "./icon-data";
 import { IconProps } from "./types";
 
 export const Icon = ({ type, ...props }: IconProps) => {
-    switch (type) {
-        case "arrow-right":
-            return <ArrowRightIcon {...props} />;
-        case "info":
-            return <InfoIcon {...props} />;
-        case "cross":
-            return <CrossIcon {...props} />;
-        case "play":
-            return <PlayIcon {...props} />;
-        case "search":
-            return <SearchIcon {...props} />;
-        default: {
-            const baseClassName = `sgds-icon sgds-icon-${type}`;
-            const mergedClassName = props.className
-                ? `${baseClassName} ${props.className}`
-                : baseClassName;
+    const iconData = IconData[type];
 
-            return <IconSpan {...props} className={mergedClassName} />;
+    if (!iconData) return null;
+
+    const renderPaths = () => {
+        if (Array.isArray(iconData)) {
+            return iconData.map((data, index) => {
+                return (
+                    <path
+                        key={`${type}-${index}`}
+                        fill="currentColor"
+                        {...data}
+                    />
+                );
+            });
+        } else {
+            return <path fill="currentColor" {...iconData} />;
         }
-    }
+    };
+
+    return (
+        <SVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" {...props}>
+            {renderPaths()}
+        </SVG>
+    );
 };
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const IconSpan = styled.span`
-    font-size: 1rem;
+export const SVG = styled.svg`
+    height: 1rem;
+    width: 1rem;
+    color: ${Color.Primary};
 `;
