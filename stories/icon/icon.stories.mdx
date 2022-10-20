@@ -1,0 +1,53 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Icon } from "src/icon";
+import {
+    Heading3,
+    Heading4,
+    PreviewBox,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { IconSet } from "./doc-elements";
+
+<Meta title="General/Icon" component={Icon} />
+
+<Title>Icon</Title>
+
+<Secondary>Overview</Secondary>
+
+```tsx
+import { Icon } from "@lifesg/react-design-system";
+```
+
+<Canvas>
+    <Story name="Icon">
+        <Icon type="arrow-right" />
+    </Story>
+</Canvas>
+
+<Secondary>Collection</Secondary>
+
+<IconSet
+    icons={[
+        "address-book",
+        "alert",
+        "arrow-down",
+        "arrow-left",
+        "arrow-right",
+        "arrow-up",
+        "camera",
+        "chevron-down",
+        "chevron-left",
+        "chevron-right",
+        "chevron-up",
+        "clock",
+        "cross",
+        "cross-encased",
+        "external",
+        "info",
+        "link",
+        "search",
+    ]}
+/>
