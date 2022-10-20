@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
 
 // =============================================================================
 // COLOR PALETTE
@@ -25,14 +24,12 @@ export const ColorPalette = ({ set, category }: ColorPaletteProps) => {
 
     return (
         <Palette>
-            {Object.values(set).map((color, index) => {
+            {Object.entries(set).map(([key, color], index) => {
                 return (
                     <PaletteItem key={index}>
                         <Swatch $bg={color as string} />
                         <SwatchLabel>
-                            {category
-                                ? `${category}.${Object.keys(set)[index]}`
-                                : Object.keys(set)[index]}
+                            {category ? `${category}.${key}` : key}
                         </SwatchLabel>
                         <PaletteItemLabel>{color}</PaletteItemLabel>
                     </PaletteItem>
