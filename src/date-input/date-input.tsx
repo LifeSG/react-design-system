@@ -24,6 +24,8 @@ export const DateInput = ({
     value,
     onChange,
     onBlur,
+    onChangeRaw,
+    onBlurRaw,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -333,6 +335,16 @@ export const DateInput = ({
             const returnValue = getFormattedValue(values);
             onChange(returnValue);
         }
+
+        if (onChangeRaw) {
+            const valuesArr = [
+                ...(field === "day" ? [changeValue] : [dayValue]),
+                ...(field === "month" ? [changeValue] : [monthValue]),
+                ...(field === "year" ? [changeValue] : [yearValue]),
+            ];
+
+            onChangeRaw(valuesArr);
+        }
     };
 
     const performOnBlurHandler = () => {
@@ -345,6 +357,16 @@ export const DateInput = ({
 
             const returnValue = getFormattedValue(values);
             onBlur(returnValue);
+        }
+
+        if (onBlurRaw) {
+            const valuesArr = [
+                dayValueStateRef.current,
+                monthValueStateRef.current,
+                yearValueStateRef.current,
+            ];
+
+            onBlurRaw(valuesArr);
         }
     };
 
