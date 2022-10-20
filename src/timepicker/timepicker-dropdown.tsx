@@ -280,6 +280,7 @@ export const TimepickerDropdown = ({
     const renderHourInput = () => (
         <InputContainer>
             <SwitchButton
+                aria-label="increment hour"
                 name={EInputButtonName.HOUR_UP}
                 type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -289,6 +290,7 @@ export const TimepickerDropdown = ({
                 <Icon type="chevron-up" />
             </SwitchButton>
             <TimeInput
+                aria-label="Hour"
                 type="number"
                 name={EInputName.HOUR}
                 id="hour"
@@ -305,6 +307,7 @@ export const TimepickerDropdown = ({
                 data-testid={getTestId("hour-input")}
             />
             <SwitchButton
+                aria-label="decrement hour"
                 name={EInputButtonName.HOUR_DOWN}
                 type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -319,6 +322,7 @@ export const TimepickerDropdown = ({
     const renderMinuteInput = () => (
         <InputContainer>
             <SwitchButton
+                aria-label="increment minute"
                 name={EInputButtonName.MINUTE_UP}
                 type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -328,6 +332,7 @@ export const TimepickerDropdown = ({
                 <Icon type="chevron-up" />
             </SwitchButton>
             <TimeInput
+                aria-label="minute"
                 type="number"
                 name={EInputName.MINUTE}
                 id="minute"
@@ -344,6 +349,7 @@ export const TimepickerDropdown = ({
                 data-testid={getTestId("minute-input")}
             />
             <SwitchButton
+                aria-label="decrement minute"
                 name={EInputButtonName.MINUTE_DOWN}
                 type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -363,6 +369,7 @@ export const TimepickerDropdown = ({
                 type="radio"
                 onChange={handleTimePeriodChange}
                 data-testid={getTestId("am-toggle")}
+                aria-label="select AM"
             >
                 AM
             </TimePeriodToggle>
@@ -372,6 +379,7 @@ export const TimepickerDropdown = ({
                 type="radio"
                 onChange={handleTimePeriodChange}
                 data-testid={getTestId("pm-toggle")}
+                aria-label="select PM"
             >
                 PM
             </TimePeriodToggle>
@@ -401,6 +409,7 @@ export const TimepickerDropdown = ({
                 </InputSection>
                 <ControlSection>
                     <ControlButton
+                        aria-label="close selector"
                         type="button"
                         styleType="secondary"
                         onClick={onCancel}
@@ -409,6 +418,7 @@ export const TimepickerDropdown = ({
                         Cancel
                     </ControlButton>
                     <ControlButton
+                        aria-label="confirm selection"
                         type="button"
                         onClick={handleConfirm}
                         disabled={hourValue === "" || minuteValue === ""}
