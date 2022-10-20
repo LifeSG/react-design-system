@@ -1,0 +1,55 @@
+import { Meta } from "@storybook/addon-docs";
+import {
+    Heading3,
+    Heading4,
+    PreviewBox,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { Text } from "src/text";
+import { ColorPalette } from "./doc-color-palette";
+import { BookingSGColorSet } from "src/spec/color-spec/bookingsg-color-set";
+
+<Meta title="General/Color/BookingSG Color" />
+
+<Title>BookingSG Colors</Title>
+
+<Secondary>Overview</Secondary>
+
+This will be the palette used when the `colorScheme` is `"bookingsg"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colorScheme: "bookingsg",
+	...other specifications
+};
+```
+
+<Secondary>Colors</Secondary>
+
+<ColorPalette set={BookingSGColorSet.Brand} category="Brand" />
+<ColorPalette
+    set={{
+        Primary: BookingSGColorSet.Primary,
+        PrimaryDark: BookingSGColorSet.PrimaryDark,
+        Secondary: BookingSGColorSet.Secondary,
+    }}
+/>
+<ColorPalette set={BookingSGColorSet.Neutral} category="Neutral" />
+
+<ColorPalette set={BookingSGColorSet.Accent.Dark} category="Accent.Dark" />
+
+<ColorPalette set={BookingSGColorSet.Accent.Light} category="Accent.Light" />
+
+<br />
+
+<Text.H3>Validation</Text.H3>
+
+<PreviewBox>
+    <code>{"Color.Validation.<color>"}</code>
+</PreviewBox>
+
+<ColorPalette set={BookingSGColorSet.Validation.Green} category="Green" />
+<ColorPalette set={BookingSGColorSet.Validation.Orange} category="Orange" />
+<ColorPalette set={BookingSGColorSet.Validation.Red} category="Red" />
