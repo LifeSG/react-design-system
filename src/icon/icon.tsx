@@ -1,9 +1,28 @@
-import styled from "styled-components";
-import { Color } from "../color";
+import { DocumentWithPencilIcon } from "./document-with-pencil-icon";
 import { IconData } from "./icon-data";
+import { SVG } from "./icon-style";
+import { LocationUnknownIcon } from "./location-unknown-icon";
+import { MailUnreadIcon } from "./mail-unread-icon";
 import { IconProps } from "./types";
 
 export const Icon = ({ type, ...props }: IconProps) => {
+    /**
+     * Complex structure icons
+     */
+    switch (type) {
+        case "document-with-pencil":
+            return <DocumentWithPencilIcon {...props} />;
+        case "location-unknown":
+            return <LocationUnknownIcon {...props} />;
+        case "mail-unread":
+            return <MailUnreadIcon {...props} />;
+        default:
+            break;
+    }
+
+    /**
+     * General icons
+     */
     const iconData = IconData[type];
 
     if (!iconData) return null;
@@ -30,12 +49,3 @@ export const Icon = ({ type, ...props }: IconProps) => {
         </SVG>
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-export const SVG = styled.svg`
-    height: 1rem;
-    width: 1rem;
-    color: ${Color.Primary};
-`;
