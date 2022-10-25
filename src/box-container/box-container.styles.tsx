@@ -131,6 +131,7 @@ export const HandleIconContainer = styled.div<StyleProps>`
 `;
 
 export const HandleIcon = styled(Icon)`
+    color: ${Color.Neutral[3]};
     height: 1.2rem;
     width: 1.2rem;
 `;
