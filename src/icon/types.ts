@@ -54,7 +54,7 @@ export type IconType =
     | "star"
     | "tick"
     | "ticket"
-    | "thrash-bin"
+    | "trash-bin"
     | "upload"
     | "users"
     | "web";
