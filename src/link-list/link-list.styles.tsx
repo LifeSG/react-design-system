@@ -30,9 +30,8 @@ export const ItemTitleSmall = styled(Text.Body)`
 `;
 
 export const ItemIcon = styled(Icon)`
-    color: ${Color.Primary};
-    font-weight: bold;
-    font-size: 1.125rem;
+    height: 1.125rem;
+    width: 1.125rem;
 `;
 
 export const Item = styled.a`
@@ -79,11 +78,7 @@ export const ToggleButtonLabel = styled(Text.H5)`
     margin-right: 0.5rem;
 `;
 
-export const ToggleButtonIcon = styled(Icon)`
-    color: ${Color.Primary};
-    font-weight: bold;
-    font-size: 1.15rem;
-`;
+export const ToggleButtonIcon = styled(ItemIcon)``;
 
 export const ToggleButton = styled.button<ToggleStyleProps>`
     display: flex;

@@ -111,7 +111,6 @@ export const Item = styled.li<ItemStyleProps>`
 
 export const Caret = styled(Icon)<CaretProps>`
     margin: 0.25rem 0.25rem 0.1rem 0.25rem;
-    font-weight: bold !important;
     color: ${(props) => props.$color || Color.Neutral[4]};
 `;
 

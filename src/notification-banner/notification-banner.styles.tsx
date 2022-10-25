@@ -102,7 +102,7 @@ export const StyledIconButton = styled(IconButton)`
 `;
 
 export const StyledIcon = styled(Icon)`
-    font-weight: bold;
-    font-size: 2rem;
+    height: 2rem;
+    width: 2rem;
     color: ${Color.Neutral[8]};
 `;

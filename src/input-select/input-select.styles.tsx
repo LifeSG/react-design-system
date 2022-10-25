@@ -131,8 +131,8 @@ export const IconContainer = styled.div<InputSelectStyleProps>`
 
 export const StyledIcon = styled(Icon)`
     color: ${Color.Neutral[3]};
-    font-size: ${TextStyle.Body.fontSize}rem;
-    font-weight: bold;
+    height: ${TextStyle.Body.fontSize}rem;
+    width: ${TextStyle.Body.fontSize}rem;
 `;
 
 export const Divider = styled.div`
