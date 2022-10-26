@@ -71,9 +71,8 @@ export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
 `;
 
 export const ChevronIcon = styled(Icon)`
-    color: ${Color.Primary};
-    font-size: 1.25rem;
-    font-weight: bold;
+    height: 1.25rem;
+    width: 1.25rem;
 `;
 
 export const Expandable = styled(animated.div)<StyleProps>`

@@ -87,8 +87,4 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)`
 
 export const ArrowIcon = styled(Icon)`
     margin-left: 0.25rem;
-
-    #path {
-        fill: ${Color.Primary};
-    }
 `;

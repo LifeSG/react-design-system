@@ -19,11 +19,19 @@ interface WrapperStyleProps {
 // =============================================================================
 const commonLinkStyle = css`
     color: ${Color.Validation.Orange.Icon};
+
+    svg {
+        color: ${Color.Validation.Orange.Icon};
+    }
+
     :hover,
     :active,
     :visited,
     :focus {
         color: ${Color.Validation.Orange.Icon};
+        svg {
+            color: ${Color.Validation.Orange.Icon};
+        }
     }
 `;
 
@@ -94,7 +102,7 @@ export const StyledIconButton = styled(IconButton)`
 `;
 
 export const StyledIcon = styled(Icon)`
-    font-weight: bold;
-    font-size: 2rem;
+    height: 2rem;
+    width: 2rem;
     color: ${Color.Neutral[8]};
 `;

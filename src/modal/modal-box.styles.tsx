@@ -39,6 +39,7 @@ export const CloseButton = styled(IconButton)`
 `;
 
 export const CloseIcon = styled(Icon)`
-    font-size: 2rem;
+    height: 1.25rem;
+    width: 1.25rem;
     color: ${Color.Neutral[4]};
 `;

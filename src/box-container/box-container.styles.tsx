@@ -132,6 +132,6 @@ export const HandleIconContainer = styled.div<StyleProps>`
 
 export const HandleIcon = styled(Icon)`
     color: ${Color.Neutral[3]};
-    font-weight: bold;
-    font-size: 1.2rem;
+    height: 1.2rem;
+    width: 1.2rem;
 `;

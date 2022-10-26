@@ -5,6 +5,10 @@ export const TriggerArea = styled.button`
     border: none;
     background: none;
     cursor: pointer;
+
+    svg {
+        vertical-align: text-bottom;
+    }
 `;
 
 export const AddonWrapper = styled.div`

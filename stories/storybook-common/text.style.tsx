@@ -42,7 +42,10 @@ const Link = styled.a`
     margin-left: -1.5rem;
     padding-right: 0.5rem;
     color: ${Color.Neutral[4]};
-    vertical-align: bottom;
+
+    svg {
+        vertical-align: baseline;
+    }
 
     :hover {
         color: ${Color.Neutral[4]};

@@ -85,12 +85,18 @@ export const TopBar = styled.div`
     padding: 2.5rem 1rem 2rem;
 `;
 
+export const CloseIcon = styled(Icon)`
+    height: 1.25rem;
+    width: 1.25rem;
+    margin-right: -0.25rem;
+`;
+
 export const CloseButton = styled(IconButton)`
     position: absolute;
     right: -0.5rem;
     bottom: 0.65rem;
 
-    span {
+    ${CloseIcon} {
         color: ${Color.Neutral[1]};
     }
 
@@ -102,9 +108,4 @@ export const CloseButton = styled(IconButton)`
             color: ${Color.Primary};
         }
     }
-`;
-
-export const CloseIcon = styled(Icon)`
-    font-size: 2rem;
-    margin-right: -0.25rem;
 `;

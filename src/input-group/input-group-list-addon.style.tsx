@@ -66,8 +66,9 @@ export const IconContainer = styled.div<StyleProps>`
 
 export const StyledIcon = styled(Icon)`
     color: ${Color.Neutral[3]};
-    font-size: ${TextStyle.Body.fontSize}rem;
-    font-weight: bold;
+    height: ${TextStyle.Body.fontSize}rem;
+    width: ${TextStyle.Body.fontSize}rem;
+    vertical-align: bottom;
 `;
 
 export const LabelContainer = styled.div`

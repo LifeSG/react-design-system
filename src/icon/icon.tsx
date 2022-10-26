@@ -1,37 +1,51 @@
-import styled from "styled-components";
-import { ArrowRightIcon } from "./arrow-right-icon";
-import { CrossIcon } from "./cross-icon";
-import { InfoIcon } from "./info-icon";
-import { PlayIcon } from "./play-icon";
-import { SearchIcon } from "./search-icon";
+import { DocumentWithPencilIcon } from "./document-with-pencil-icon";
+import { IconData } from "./icon-data";
+import { SVG } from "./icon-style";
+import { LocationUnknownIcon } from "./location-unknown-icon";
+import { MailUnreadIcon } from "./mail-unread-icon";
 import { IconProps } from "./types";
 
 export const Icon = ({ type, ...props }: IconProps) => {
+    /**
+     * Complex structure icons
+     */
     switch (type) {
-        case "arrow-right":
-            return <ArrowRightIcon {...props} />;
-        case "info":
-            return <InfoIcon {...props} />;
-        case "cross":
-            return <CrossIcon {...props} />;
-        case "play":
-            return <PlayIcon {...props} />;
-        case "search":
-            return <SearchIcon {...props} />;
-        default: {
-            const baseClassName = `sgds-icon sgds-icon-${type}`;
-            const mergedClassName = props.className
-                ? `${baseClassName} ${props.className}`
-                : baseClassName;
-
-            return <IconSpan {...props} className={mergedClassName} />;
-        }
+        case "document-with-pencil":
+            return <DocumentWithPencilIcon {...props} />;
+        case "location-unknown":
+            return <LocationUnknownIcon {...props} />;
+        case "mail-unread":
+            return <MailUnreadIcon {...props} />;
+        default:
+            break;
     }
-};
 
-// =============================================================================
-// STYLING
-// =============================================================================
-const IconSpan = styled.span`
-    font-size: 1rem;
-`;
+    /**
+     * General icons
+     */
+    const iconData = IconData[type];
+
+    if (!iconData) return null;
+
+    const renderPaths = () => {
+        if (Array.isArray(iconData)) {
+            return iconData.map((data, index) => {
+                return (
+                    <path
+                        key={`${type}-${index}`}
+                        fill="currentColor"
+                        {...data}
+                    />
+                );
+            });
+        } else {
+            return <path fill="currentColor" {...iconData} />;
+        }
+    };
+
+    return (
+        <SVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" {...props}>
+            {renderPaths()}
+        </SVG>
+    );
+};

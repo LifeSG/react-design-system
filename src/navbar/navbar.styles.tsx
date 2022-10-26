@@ -57,8 +57,9 @@ export const MobileMenuButton = styled(IconButton)`
         background: transparent;
         outline-style: none;
 
-        span {
-            font-size: 1.5rem;
+        svg {
+            height: 1.25rem;
+            width: 1.25rem;
             color: ${Color.Neutral[1]};
         }
 
@@ -69,8 +70,9 @@ export const MobileMenuButton = styled(IconButton)`
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        span {
-            font-size: 1.25rem;
+        svg {
+            height: 1.25rem;
+            width: 1.25rem;
         }
     }
 `;
