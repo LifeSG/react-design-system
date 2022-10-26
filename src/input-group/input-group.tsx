@@ -14,7 +14,7 @@ const Component = <T, V>(
             $readOnly={otherProps.type === "readonly"}
             data-testid={otherProps["data-testid"]}
         >
-            <MainInput ref={ref} data-testid="input" {...otherProps} />
+            <MainInput ref={ref} {...otherProps} data-testid="input" />
         </Container>
     );
 
