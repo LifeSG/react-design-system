@@ -53,7 +53,7 @@ export const Overlay = ({
              */
             if (!stacked.current) {
                 const timerId = setTimeout(() => {
-                    applyBodyStyleClass("add");
+                    applyBodyStyleClass("remove");
                 }, 200); // Allow overlay animations to complete
                 return () => clearTimeout(timerId);
             }
