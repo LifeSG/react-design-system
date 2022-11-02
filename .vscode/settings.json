@@ -10,5 +10,6 @@
         "javascriptreact",
         "typescriptreact",
         "mdx"
-    ]
+    ],
+    "editor.rulers": [80]
 }

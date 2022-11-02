@@ -5,6 +5,6 @@ export const Container = styled.div`
     flex-direction: column;
 
     &:not(:last-child) {
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
 `;

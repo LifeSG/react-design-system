@@ -40,19 +40,16 @@ import { Form } from "@lifesg/react-design-system/form";
                             value={time1}
                             onChange={(value) => setTime1(value)}
                         />
-                        <br />
                         <Form.Timepicker
                             label="This is the disabled state"
                             disabled
                         />
-                        <br />
                         <Form.Timepicker
                             label="This is the error state"
                             value={time3}
                             onChange={(value) => setTime3(value)}
                             errorMessage="Time input required"
                         />
-                        <br />
                         <Form.Timepicker
                             label="This is the 12 hour format timepicker"
                             value={time4}
@@ -85,7 +82,6 @@ import { Timepicker } from "@lifesg/react-design-system/timepicker";
                             value={time}
                             onChange={(value) => setTime(value)}
                         />
-                        <br />
                     </Container>
                 </StoryContainer>
             );
