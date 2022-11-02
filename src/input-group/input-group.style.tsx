@@ -81,6 +81,7 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
     // overwrite default styles
     background: transparent;
     border: none;
+
     :focus,
     :active {
         outline: none;
@@ -88,21 +89,27 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
         box-shadow: none;
     }
 
+    padding: 0.2rem 1rem 0.3rem; // Input text appears lower hence the higher lower padding
+
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                padding-left: 0rem;
+                padding-left: 0;
             `;
         }
         switch (props.$position) {
             case "right":
                 return css`
-                    padding: 0.2rem 0 0.3rem 1rem; // Input text appears lower hence the higher lower padding
+                    :not(:only-child) {
+                        padding-right: 0;
+                    }
                 `;
             case "left":
             default:
                 return css`
-                    padding: 0.2rem 1rem 0.3rem 0; // Input text appears lower hence the higher lower padding
+                    :not(:only-child) {
+                        padding-left: 0;
+                    }
                 `;
         }
     }}
