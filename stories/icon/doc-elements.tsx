@@ -43,8 +43,12 @@ const Item = styled.li`
     align-items: center;
     justify-content: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         width: calc(100% / 4);
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: calc(100% / 2);
     }
 `;
 
