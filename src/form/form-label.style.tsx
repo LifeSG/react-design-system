@@ -38,4 +38,5 @@ export const ErrorMessage = styled(Text.H6)`
 export const Subtitle = styled(Text.XSmall)<LabelProps>`
     color: ${(props) =>
         props.disabled ? Color.Neutral[4](props) : Color.Neutral[3](props)};
+    font-size: 1rem !important;
 `;
