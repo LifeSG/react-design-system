@@ -89,8 +89,6 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
         box-shadow: none;
     }
 
-    padding: 0.2rem 1rem 0.3rem; // Input text appears lower hence the higher lower padding
-
     ${(props) => {
         if (props.$readOnly) {
             return css`
