@@ -28,6 +28,7 @@ export const FormLabel = ({
             {addon && addon.type && renderAddon()}
             {typeof subtitle === "string" ? (
                 <Subtitle
+                    as="span"
                     data-testid={testId ? `${testId}-subtitle` : "subtitle"}
                     {...otherProps}
                 >
