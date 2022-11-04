@@ -49,6 +49,16 @@ import { Form } from "@lifesg/react-design-system/form";
                     disabled
                 />
                 <Form.InputGroup
+                    label="This is the readonly state"
+                    placeholder="Enter an amount"
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
+                    readOnly
+                />
+                <Form.InputGroup
                     label="This is the error state"
                     placeholder="Enter an amount"
                     addon={{
@@ -98,6 +108,26 @@ You are able to specify attributes in the `addon` property to construct advanced
                             listExtractor: (option) => option.display,
                         },
                     }}
+                />
+                <Form.InputGroup
+                    label="With a list addon"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                        },
+                    }}
+                    readOnly
                 />
                 <Form.InputGroup
                     label="With a static addon on the right"

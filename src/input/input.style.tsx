@@ -20,7 +20,7 @@ export const InputElement = styled.input<InputStyleProps>`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     display: block;
-    padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
+    padding: 0.2rem 1rem 0.3rem; // Somehow the input text appears lower
     height: 3rem;
     width: 100%;
     background: ${Color.Neutral[8]};
@@ -59,7 +59,7 @@ export const InputElement = styled.input<InputStyleProps>`
         if (props.readOnly) {
             return css`
                 border: none;
-                padding-left: 0rem;
+                padding: 0.2rem 0 0.3rem;
                 background: transparent !important;
 
                 :focus,

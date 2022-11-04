@@ -16,7 +16,6 @@ interface AddonStyleProps {
 }
 
 interface MainInputStyleProps {
-    $readOnly?: boolean;
     $position?: "left" | "right" | undefined;
 }
 
@@ -89,14 +88,7 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
         box-shadow: none;
     }
 
-    padding: 0.2rem 1rem 0.3rem; // Input text appears lower hence the higher lower padding
-
     ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                padding-left: 0;
-            `;
-        }
         switch (props.$position) {
             case "right":
                 return css`
