@@ -12,12 +12,14 @@ export const Modal = ({
     rootComponentId,
     zIndex,
     onOverlayClick,
+    dismissKeyboardOnShow = true,
     ...otherProps
 }: ModalProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [verticalHeight, setVerticalHeight] = useState<number>();
+    const [offsetTop, setOffsetTop] = useState<number>();
 
     // =============================================================================
     // EFFECTS
@@ -48,6 +50,13 @@ export const Modal = ({
         }
     }, []);
 
+    useEffect(() => {
+        if (show && dismissKeyboardOnShow) {
+            // dismiss software keyboard to put modal in fullscreen
+            (document.activeElement as HTMLElement)?.blur?.();
+        }
+    }, [show]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -59,6 +68,7 @@ export const Modal = ({
     const handleViewportResize = () => {
         const newVerticalHeight = window.visualViewport.height * 0.01;
         setVerticalHeight(newVerticalHeight);
+        setOffsetTop(window.visualViewport.offsetTop);
     };
 
     // =============================================================================
@@ -79,6 +89,7 @@ export const Modal = ({
                 animationFrom={animationFrom}
                 data-testid={id}
                 verticalHeight={verticalHeight}
+                offsetTop={offsetTop}
                 {...otherProps}
             >
                 {children}

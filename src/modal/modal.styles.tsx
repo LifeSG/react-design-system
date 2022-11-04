@@ -6,6 +6,7 @@ interface Props {
     show: boolean;
     animationFrom?: ModalAnimationDirection;
     verticalHeight?: number;
+    offsetTop?: number;
 }
 
 const visibilityStyle = (
@@ -38,19 +39,14 @@ export const Container = styled.div<Props>`
     overflow: hidden;
     ${(props) => visibilityStyle(props.show, props.animationFrom || "bottom")}
 
-    ${(props) => {
-        if (props.verticalHeight) {
-            return css`
-                ${MediaQuery.MaxWidth.mobileL} {
-                    height: calc(${props.verticalHeight}px * 100);
-                }
-            `;
-        } else {
-            return css`
-                ${MediaQuery.MaxWidth.mobileL} {
-                    height: calc(1vh * 100);
-                }
-            `;
-        }
-    }}
+    ${MediaQuery.MaxWidth.mobileL} {
+        height: calc(
+            ${(props) =>
+                    props.verticalHeight
+                        ? `${props.verticalHeight}px`
+                        : "1vh"} * 100
+        );
+
+        top: ${(props) => props.offsetTop || 0}px;
+    }
 `;
