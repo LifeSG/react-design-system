@@ -11,7 +11,7 @@ const Component = <T, V>(
         <Container
             disabled={otherProps.disabled}
             $error={error}
-            $readOnly={otherProps.type === "readonly"}
+            $readOnly={otherProps.readOnly}
             data-testid={otherProps["data-testid"]}
         >
             <MainInput ref={ref} {...otherProps} data-testid="input" />
