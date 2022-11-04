@@ -43,21 +43,20 @@ const Component = <T, V>(
                         <Container
                             $error={error}
                             disabled={otherProps.disabled}
-                            $readOnly={otherProps.type === "readonly"}
+                            $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
                         >
                             <AddOnContainer
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
-                                $readOnly={otherProps.type === "readonly"}
+                                $readOnly={otherProps.readOnly}
                             >
                                 {customAddon.children}
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
                                 $position={position}
-                                $readOnly={otherProps.type === "readonly"}
                                 data-testid="input"
                             />
                         </Container>
@@ -73,21 +72,20 @@ const Component = <T, V>(
                         <Container
                             disabled={otherProps.disabled}
                             $error={error}
-                            $readOnly={otherProps.type === "readonly"}
+                            $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
                         >
                             <AddOnContainer
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
-                                $readOnly={otherProps.type === "readonly"}
+                                $readOnly={otherProps.readOnly}
                             >
                                 {labelAddon.value}
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
                                 $position={position}
-                                $readOnly={otherProps.type === "readonly"}
                                 data-testid="input"
                             />
                         </Container>

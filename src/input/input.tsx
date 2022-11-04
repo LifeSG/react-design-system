@@ -81,7 +81,6 @@ const Component = (
             error={error}
             onChange={onChangeFn}
             type={type}
-            readOnly={type === "readonly"}
             {...otherProps}
         />
     );

@@ -40,14 +40,14 @@ export const Element = styled.textarea<StyleProps>`
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[4]};
+        color: ${Color.Neutral[3]};
     }
 
     ${(props) => {
         if (props.readOnly) {
             return css`
                 border: none;
-                padding-left: 0rem;
+                padding: 0.75rem 0;
                 background: transparent !important;
 
                 :focus,

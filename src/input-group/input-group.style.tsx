@@ -16,7 +16,6 @@ interface AddonStyleProps {
 }
 
 interface MainInputStyleProps {
-    $readOnly?: boolean;
     $position?: "left" | "right" | undefined;
 }
 
@@ -90,11 +89,6 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
     }
 
     ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                padding-left: 0;
-            `;
-        }
         switch (props.$position) {
             case "right":
                 return css`
