@@ -1,0 +1,23 @@
+// =============================================================================
+// This is a list of extensions we recommend for the project
+// =============================================================================
+{
+    "recommendations": [
+        // General
+        "naumovs.color-highlight",
+        "formulahendry.auto-close-tag",
+        "formulahendry.auto-rename-tag",
+        "mikestead.dotenv",
+        "eamodio.gitlens",
+        "unifiedjs.vscode-mdx",
+        "christian-kohler.path-intellisense",
+        "esbenp.prettier-vscode",
+        "styled-components.vscode-styled-components",
+
+        // Documentation
+        "dinhani.divider",
+
+        // UI
+        "vscode-icons-team.vscode-icons"
+    ]
+}
