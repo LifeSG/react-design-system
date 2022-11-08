@@ -72,6 +72,13 @@ export const ModalTable = () => (
             </DescriptionCol>
             <DefaultCol />
         </tr>
+        <tr>
+            <NameCol>dismissKeyboardOnShow</NameCol>
+            <DescriptionCol propTypes={["boolean"]}>
+                <>Dismisses keyboard when modal is shown</>
+            </DescriptionCol>
+            <DefaultCol>{["true"]}</DefaultCol>
+        </tr>
     </Table>
 );
 
