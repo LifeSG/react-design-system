@@ -12,6 +12,8 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     rootComponentId?: string | undefined;
     zIndex?: number | undefined;
     onOverlayClick?: () => void | undefined;
+    /** Dismiss keyboard to keep modal in fullscreen */
+    dismissKeyboardOnShow?: boolean;
 }
 
 export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
