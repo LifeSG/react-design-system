@@ -1,0 +1,28 @@
+import { Meta, Preview, Story } from "@storybook/addon-docs";
+import { Text } from "src/text";
+import { BaseTextStyleSet } from "src/spec/text-spec/base-text-style-set";
+import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
+import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
+
+<Meta title="General/Text/Base Style" component={Text} />
+
+<Title>Base Style</Title>
+
+<Secondary>Overview</Secondary>
+
+This will be the collection used when the `textStyleScheme` is `base`.
+
+```tsx
+const theme: ThemeSpec = {
+    textStyleScheme: "base",
+    ...other specifications
+};
+```
+
+<Secondary>Font Family</Secondary>
+
+<Text.D1>Open Sans</Text.D1>
+<FontDisplay />
+
+<Secondary>Text Styles</Secondary>
+<FontSizeDisplay textStyles={BaseTextStyleSet} />
