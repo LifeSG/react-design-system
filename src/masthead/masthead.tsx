@@ -29,15 +29,22 @@ export const Masthead = (): JSX.Element => {
         }
     };
 
+    const createContent = () => {
+        /**
+         * Note: Had to use this method because we had to create a
+         * custom type to handle Web Components (refer to this guide
+         * https://blog.devgenius.io/how-to-use-web-components-in-react-54c951399bfd)
+         * But we are having troubles exporting the custom type definition
+         * via rollup
+         */
+        return { __html: "<sgds-masthead></sgds-masthead>" };
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
 
-    return (
-        <Wrapper>
-            <sgds-masthead></sgds-masthead>
-        </Wrapper>
-    );
+    return <Wrapper dangerouslySetInnerHTML={createContent()} />;
 };
 
 // =============================================================================
