@@ -10,7 +10,7 @@ import {
     PreviousLink,
     Wrapper,
 } from "./breadcrumb.style";
-import { BreadcrumbProps } from "./types";
+import { BreadcrumbProps, FadeColorSet } from "./types";
 
 export const Breadcrumb = ({
     links,
@@ -137,13 +137,35 @@ export const Breadcrumb = ({
     };
 
     const renderFade = () => {
+        let fadeColorSet: FadeColorSet;
+
+        if (Array.isArray(fadeColor)) {
+            fadeColorSet = {
+                left: fadeColor,
+                right: fadeColor,
+            };
+        } else if (fadeColor === undefined) {
+            fadeColorSet = {
+                left: undefined,
+                right: undefined,
+            };
+        } else {
+            fadeColorSet = fadeColor;
+        }
+
         return (
             <>
                 {showFadeLeft && (
-                    <Fade $backgroundColor={fadeColor} $position="left" />
+                    <Fade
+                        $backgroundColor={fadeColorSet.left}
+                        $position="left"
+                    />
                 )}
                 {showFadeRight && (
-                    <Fade $backgroundColor={fadeColor} $position="right" />
+                    <Fade
+                        $backgroundColor={fadeColorSet.right}
+                        $position="right"
+                    />
                 )}
             </>
         );
