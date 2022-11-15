@@ -167,7 +167,7 @@ const SpecValueLabel = styled(Text.BodySmall)`
 `;
 
 const FontSpecLabelContainer = styled.div`
-    width: 7rem;
+    width: 8rem;
     margin-right: 1rem;
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
 

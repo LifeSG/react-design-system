@@ -55,6 +55,58 @@ import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
     </Story>
 </Canvas>
 
+<Secondary>Customising the fade color</Secondary>
+
+> Note that the fade effect appears only if the `Breadcrumbs` are compressed and
+> becomes scrollable
+
+<br />
+
+<Heading3>Different fade colors</Heading3>
+
+You can specify different fade colors on both ends of the `Breadcrumb` or even
+on one side.
+
+<Preview>
+    <Story name="Different fade colors">
+        <Breadcrumb
+            links={[
+                {
+                    children: "Home",
+                    href: "https://life.gov.sg",
+                    target: "_blank",
+                    rel: "noreferrer",
+                },
+                {
+                    children: "Breadcrumb without url",
+                },
+                {
+                    children: "Normal breadcrumb",
+                    href: "https://life.gov.sg",
+                    target: "_blank",
+                    rel: "noreferrer",
+                },
+                {
+                    children: "Breadcrumb with a callback function",
+                    href: "https://life.gov.sg",
+                    onClick: (event) => {
+                        event.preventDefault();
+                        alert("I got clicked");
+                    },
+                },
+                {
+                    children: "Last breadcrumb (unclickable)",
+                    href: "https://www.google.com", // Unclickable even if you pass a url
+                },
+            ]}
+            fadeColor={{
+                left: ["red", "orange"],
+                right: ["blue", "green"],
+            }}
+        />
+    </Story>
+</Preview>
+
 <Secondary>Component API</Secondary>
 
 <PropsTable />

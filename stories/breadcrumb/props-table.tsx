@@ -1,18 +1,15 @@
 import React from "react";
-import {
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Section,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable } from "../storybook-common/api-table";
+import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
-export const PropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol mandatory>links</NameCol>
-            <DescriptionCol
-                propTypes={
+const DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "links",
+                mandatory: true,
+                description: "The links for the breadcrumbs",
+                propTypes: (
                     <a
                         href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement"
                         target="_blank"
@@ -20,80 +17,73 @@ export const PropsTable = () => (
                     >
                         HTMLAnchorElement
                     </a>
-                }
-            >
-                The links for the breadcrumbs
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>fadeColor</NameCol>
-            <DescriptionCol propTypes={["string[]"]}>
-                When the breadcrumbs are too long, there will be a fade effect
-                at the ends of the breadcrumb. This will control the color of
-                the fade.
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>fadePosition</NameCol>
-            <DescriptionCol propTypes={[`"left"`, `"right"`]}>
-                When the breadcrumbs are too long, there will be a fade effect
-                at the ends of the breadcrumb. This will control the color of
-                the fade.
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>itemStyle</NameCol>
-            <DescriptionCol propTypes={["CSS-JS string"]}>
-                Custom style that can be passed to the Breadcrumb items
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>id</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                A unique identifier for each Breadcrumb item
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>data-testid</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                The id used for testing purposes
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+                ),
+            },
+            {
+                name: "fadeColor",
+                description: (
+                    <>
+                        When the breadcrumbs are too long, there will be a fade
+                        effect at the ends of the breadcrumb. This will control
+                        the color of the fade.
+                    </>
+                ),
+                propTypes: ["string[]", "FadeColorSet"],
+            },
+            {
+                name: "fadePosition",
+                description: (
+                    <>
+                        When the breadcrumbs are too long, there will be a fade
+                        effect at the ends of the breadcrumb. This will control
+                        the color of the fade.
+                    </>
+                ),
+                propTypes: [`"left"`, `"right"`, `"both"`],
+                defaultValue: `"both"`,
+            },
+            {
+                name: "itemStyle",
+                description: (
+                    <>
+                        Custom style that can be passed to the
+                        <code>Breadcrumb</code> items
+                    </>
+                ),
+                propTypes: ["CSS-JS string"],
+            },
+            {
+                name: "id",
+                description: (
+                    <>
+                        A unique identifier for each <code>Breadcrumb</code>
+                        &nbsp;item
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The id used for testing purposes",
+                propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "FadeColorSet",
+        attributes: [
+            {
+                name: "left",
+                description: "The color of the left fade",
+                propTypes: ["string[]"],
+            },
+            {
+                name: "right",
+                description: "The color of the right fade",
+                propTypes: ["string[]"],
+            },
+        ],
+    },
+];
 
-export const AccordionItemPropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol mandatory>children</NameCol>
-            <DescriptionCol propTypes={["JSX.Element", "JSX.Element[]"]}>
-                The content of the Accordion.Item
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>actionLink</NameCol>
-            <DescriptionCol
-                propTypes={
-                    <a
-                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <code>HTMLAnchorAttributes</code>
-                    </a>
-                }
-            >
-                The attributes of an action link that performs an action on
-                click
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+export const PropsTable = () => <ApiTable sections={DATA} />;
