@@ -139,18 +139,19 @@ export const Breadcrumb = ({
     const renderFade = () => {
         let fadeColorSet: FadeColorSet;
 
-        if (Array.isArray(fadeColor)) {
+        if (Array.isArray(fadeColor) && fadeColor.length > 0) {
+            // Single array, apply same color
             fadeColorSet = {
                 left: fadeColor,
                 right: fadeColor,
             };
-        } else if (fadeColor === undefined) {
+        } else if (!fadeColor) {
             fadeColorSet = {
                 left: undefined,
                 right: undefined,
             };
         } else {
-            fadeColorSet = fadeColor;
+            fadeColorSet = fadeColor as FadeColorSet;
         }
 
         return (
