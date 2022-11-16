@@ -81,9 +81,9 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Called when the user enters a value in the field.
                         Returns value in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format. Should the value be
-                        invalid, the&nbsp; &lsquo;Invalid date&rsquo; value will
-                        be returned
+                        <code>00-8888</code>&nbsp;format. Should the value be
+                        invalid, the&nbsp; &lsquo;Invalid unit number&rsquo;
+                        value will be returned
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
@@ -94,7 +94,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Called when the user enters a value in the field.
                         Returns unformatted value in an array format as such [
-                        <code>day</code>, <code>month</code>, <code>year</code>]
+                        <code>floor</code>, <code>unit</code>]
                     </>
                 ),
                 propTypes: ["(value: string[]) => void"],
@@ -105,7 +105,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Called when a defocus happens. Returns the existing
                         value in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format
+                        <code>00-8888</code>&nbsp;format
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
@@ -115,8 +115,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Called when a defocus happens. Returns unformatted value
-                        in an array format as such [<code>day</code>,{" "}
-                        <code>month</code>, <code>year</code>]
+                        in an array format as such [<code>floor</code>,{" "}
+                        <code>unit</code>]
                     </>
                 ),
                 propTypes: ["(value: string[]) => void"],
