@@ -10,6 +10,8 @@ import { Text } from "../text/text";
 interface ContainerStyleProps {
     disabled?: boolean;
     $error?: boolean;
+    $readOnly?: boolean;
+    $addOn?: boolean;
 }
 interface LabelStyleProps {
     $hide?: boolean;
@@ -29,7 +31,7 @@ export const Container = styled.div<ContainerStyleProps>`
     background: ${Color.Neutral[8]};
     height: 3rem;
     width: 100%;
-    padding: 0.1rem 1rem 0;
+    padding: ${(props) => (props.$addOn ? "0" : "0.1rem 1rem 0")};
 
     :focus,
     :focus-within {
@@ -38,7 +40,18 @@ export const Container = styled.div<ContainerStyleProps>`
     }
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$readOnly) {
+            return css`
+                border: none;
+                padding-left: 0rem;
+                background: transparent !important;
+
+                :focus-within {
+                    border: none;
+                    box-shadow: none;
+                }
+            `;
+        } else if (props.disabled) {
             return css`
                 background: ${Color.Neutral[6](props)};
                 :hover {
@@ -63,10 +76,10 @@ export const Container = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<ContainerStyleProps>`
     position: absolute;
     top: 0;
-    left: 1rem; // input value appears slightly right
+    left: ${(props) => (props.$addOn && !props.$readOnly ? "2rem" : "1rem")};
     height: 100%;
     display: flex;
     align-items: center;
@@ -119,6 +132,17 @@ export const YearInput = styled(BaseInput)`
 export const Divider = styled(Text.Body)<LabelStyleProps>`
     opacity: ${(props) => (props.$hide ? 0 : 1)};
     margin: 0.1rem 0.2rem 0 0.2rem;
+`;
+
+export const UnitNumberDivider = styled(Text.Body)<LabelStyleProps>`
+    margin: 0 0.1rem 0 0.1rem;
+    ${(props) => {
+        if (props.$hide) {
+            return css`
+                color: ${Color.Neutral[3]};
+            `;
+        }
+    }}
 `;
 
 export const MonthDivider = styled(Divider)`
