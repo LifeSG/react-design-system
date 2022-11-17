@@ -12,6 +12,7 @@ import {
     Wrapper,
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
+import kebabCase from "lodash/kebabCase";
 
 export const ProgressIndicator = <T,>({
     steps,
@@ -125,6 +126,14 @@ export const ProgressIndicator = <T,>({
         }
     };
 
+    const getId = (stepIndex: number, currentIndex: number) => {
+        return kebabCase(
+            `${getAriaLabel(stepIndex, currentIndex)} ${
+                stepIndex < currentIndex ? stepIndex : stepIndex - currentIndex
+            }`
+        );
+    };
+
     // =============================================================================
     // RENDER
     // =============================================================================
@@ -140,7 +149,7 @@ export const ProgressIndicator = <T,>({
                 <Indicator
                     key={stepIndex}
                     aria-label={getAriaLabel(stepIndex, currentIndex)}
-                    id={getAriaLabel(stepIndex, currentIndex)}
+                    id={getId(stepIndex, currentIndex)}
                 >
                     <IndicatorBar highlighted={highlighted}></IndicatorBar>
                     <IndicatorTitle
