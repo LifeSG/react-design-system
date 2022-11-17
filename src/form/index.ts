@@ -7,7 +7,7 @@ import { FormMultiSelect } from "./form-multi-select";
 import { FormSelect } from "./form-select";
 import { FormTextarea } from "./form-textarea";
 import { FormTimepicker } from "./form-timepicker";
-import { FormUnitNumberInput } from "./form-unitnumber-input";
+import { FormUnitNumberInput } from "./form-unit-number-input";
 
 export const Form = {
     DateInput: FormDateInput,
