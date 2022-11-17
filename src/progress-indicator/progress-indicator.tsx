@@ -140,6 +140,7 @@ export const ProgressIndicator = <T,>({
                 <Indicator
                     key={stepIndex}
                     aria-label={getAriaLabel(stepIndex, currentIndex)}
+                    id={getAriaLabel(stepIndex, currentIndex)}
                 >
                     <IndicatorBar highlighted={highlighted}></IndicatorBar>
                     <IndicatorTitle
