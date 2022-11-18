@@ -135,8 +135,6 @@ export const UnitNumberInput = ({
          * to slip through.
          */
 
-        const name = (event.target as any).name;
-
         const permittableEventCodes = [
             "Tab",
             "Backspace",
@@ -147,12 +145,11 @@ export const UnitNumberInput = ({
 
         // form validation for inputs is not supported on ios,
         // hence manual checks needed to prevent special characters input
-        const isNotPermittedCharacter =
-            !/[0-9]/.test(event.key) &&
-            !/[A-Za-z]/.test(event.key) &&
-            !permittableEventCodes.includes(event.code);
+        const isPermittedCharacter =
+            /[0-9A-Za-z]/.test(event.key) ||
+            permittableEventCodes.includes(event.code);
 
-        if (isNotPermittedCharacter) {
+        if (!isPermittedCharacter) {
             event.preventDefault();
         }
     };
@@ -186,18 +183,20 @@ export const UnitNumberInput = ({
         event.target.select();
     };
 
+    const formatInput = (value: string) => {
+        return /^[0-9]$/.test(value)
+            ? StringHelper.padValue(value, true)
+            : value.toLocaleUpperCase();
+    };
+
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
         const targetValue = event.target.value;
 
         if (targetName === "floor") {
-            setFloorValue(
-                /^[0-9]$/.test(targetValue)
-                    ? StringHelper.padValue(targetValue, true)
-                    : targetValue.toLocaleUpperCase()
-            );
+            setFloorValue(formatInput(targetValue));
         } else {
-            setUnitValue(targetValue.toLocaleUpperCase());
+            setUnitValue(formatInput(targetValue));
         }
     };
 
@@ -212,15 +211,17 @@ export const UnitNumberInput = ({
          * Ignore inputs that exceed the respective max length
          */
 
+        const value = event.target.value.toLocaleUpperCase();
+
         if (targetName === "floor") {
-            if (event.target.value.length <= 3) {
-                setFloorValue(event.target.value.toLocaleUpperCase());
-                performOnChangeHandler(event.target.value, targetName);
+            if (value.length <= 3) {
+                setFloorValue(value);
+                performOnChangeHandler(value, targetName);
             }
         } else {
-            if (event.target.value.length <= 4) {
-                setUnitValue(event.target.value.toLocaleUpperCase());
-                performOnChangeHandler(event.target.value, targetName);
+            if (value.length <= 4) {
+                setUnitValue(value);
+                performOnChangeHandler(value, targetName);
             }
         }
     };
@@ -245,12 +246,8 @@ export const UnitNumberInput = ({
                 const floor = valueArr[0];
                 const unit = valueArr[1];
 
-                setFloorValue(
-                    /^[0-9]$/.test(floor)
-                        ? StringHelper.padValue(floor, true)
-                        : floor.toLocaleUpperCase()
-                );
-                setUnitValue(unit.toString());
+                setFloorValue(formatInput(floor));
+                setUnitValue(formatInput(unit));
             }
         }
     };
@@ -301,9 +298,9 @@ export const UnitNumberInput = ({
     };
 
     const getFormattedValue = (values: Record<ValueFieldTypes, string>) => {
-        const valueArr = [values.floor, values.unit]; // eventual format YYYY-MM-DD
+        const valueArr = [values.floor, values.unit];
 
-        if (values.floor.length >= 1 && values.unit.length === 4) {
+        if (values.floor.length > 0 && values.unit.length > 0) {
             return valueArr.join("-");
         } else if (valueArr.every((value) => value === "")) {
             return "";
@@ -350,7 +347,7 @@ export const UnitNumberInput = ({
                     disabled={disabled}
                     readOnly={otherProps.readOnly}
                     type="text"
-                    pattern="[0-9A-Z]{2}|[0-9A-Z]{3}|[0-9]{2}"
+                    pattern="[0-9A-Z]{2,3}"
                     data-testid="floor-input"
                     aria-label="floor-input"
                     placeholder={
@@ -373,7 +370,7 @@ export const UnitNumberInput = ({
                     disabled={disabled}
                     readOnly={otherProps.readOnly}
                     type="text"
-                    pattern="[0-9A-Z]{4}|[0-9A-Z]{4}|[0-9]{4}"
+                    pattern="[0-9A-Z]{2,4}"
                     data-testid="unit-input"
                     aria-label="unit-input"
                     placeholder={
