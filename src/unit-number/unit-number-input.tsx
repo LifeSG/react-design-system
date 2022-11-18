@@ -219,7 +219,7 @@ export const UnitNumberInput = ({
                 performOnChangeHandler(value, targetName);
             }
         } else {
-            if (value.length <= 4) {
+            if (value.length <= 5) {
                 setUnitValue(value);
                 performOnChangeHandler(value, targetName);
             }
@@ -361,7 +361,7 @@ export const UnitNumberInput = ({
                 </UnitNumberDivider>
                 <YearInput
                     name="unit"
-                    maxLength={4}
+                    maxLength={5}
                     value={unitValue}
                     ref={unitInputRef}
                     onFocus={handleFocus}
@@ -370,7 +370,7 @@ export const UnitNumberInput = ({
                     disabled={disabled}
                     readOnly={otherProps.readOnly}
                     type="text"
-                    pattern="[0-9A-Z]{2,4}"
+                    pattern="[0-9A-Z]{2,5}"
                     data-testid="unit-input"
                     aria-label="unit-input"
                     placeholder={
