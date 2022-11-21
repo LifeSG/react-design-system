@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StringHelper } from "../util/string-helper";
 import {
-    BaseInput,
     Container,
+    FloorInput,
     InputContainer,
+    UnitInput,
     UnitNumberDivider,
-    YearInput,
-} from "../date-input/date-input.style";
+} from "./unit-number-input.style";
 import { AddOnContainer } from "../input-group/input-group.style";
 import { DateInputProps } from "../date-input/types";
 
@@ -77,13 +77,6 @@ export const UnitNumberInput = ({
             nodeRef.current.addEventListener("keydown", handleNodeKeyDown);
         }
 
-        if (floorInputRef.current) {
-            floorInputRef.current.addEventListener("keydown", handleKeyDown);
-        }
-        if (unitInputRef.current) {
-            unitInputRef.current.addEventListener("keydown", handleKeyDown);
-        }
-
         return () => {
             document.removeEventListener("mousedown", handleMouseDown);
 
@@ -91,19 +84,6 @@ export const UnitNumberInput = ({
                 nodeRef.current.removeEventListener(
                     "keydown",
                     handleNodeKeyDown
-                );
-            }
-
-            if (floorInputRef.current) {
-                floorInputRef.current.removeEventListener(
-                    "keydown",
-                    handleKeyDown
-                );
-            }
-            if (unitInputRef.current) {
-                unitInputRef.current.removeEventListener(
-                    "keydown",
-                    handleKeyDown
                 );
             }
         };
@@ -127,33 +107,6 @@ export const UnitNumberInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleKeyDown = (event: KeyboardEvent) => {
-        /**
-         * NOTE: This is the most deterministic way in handling
-         * incorrect characters from being entered. The pattern
-         * added in the input still allows some special characters
-         * to slip through.
-         */
-
-        const permittableEventCodes = [
-            "Tab",
-            "Backspace",
-            "Delete",
-            "ArrowLeft",
-            "ArrowRight",
-        ];
-
-        // form validation for inputs is not supported on ios,
-        // hence manual checks needed to prevent special characters input
-        const isPermittedCharacter =
-            /[0-9A-Za-z]/.test(event.key) ||
-            permittableEventCodes.includes(event.code);
-
-        if (!isPermittedCharacter) {
-            event.preventDefault();
-        }
-    };
-
     const handleMouseDown = (event: MouseEvent) => {
         if (disabled || otherProps.readOnly) {
             return;
@@ -211,18 +164,17 @@ export const UnitNumberInput = ({
          * Ignore inputs that exceed the respective max length
          */
 
-        const value = event.target.value.toLocaleUpperCase();
+        let value = event.target.value.toLocaleUpperCase();
+        if (!/.*[0-9A-Za-z]$/.test(value)) {
+            value = value.replace(/.$/, "");
+        }
 
         if (targetName === "floor") {
-            if (value.length <= 3) {
-                setFloorValue(value);
-                performOnChangeHandler(value, targetName);
-            }
+            setFloorValue(value);
+            performOnChangeHandler(value, targetName);
         } else {
-            if (value.length <= 5) {
-                setUnitValue(value);
-                performOnChangeHandler(value, targetName);
-            }
+            setUnitValue(value);
+            performOnChangeHandler(value, targetName);
         }
     };
 
@@ -325,7 +277,6 @@ export const UnitNumberInput = ({
             disabled={disabled}
             $error={error}
             $readOnly={otherProps.readOnly}
-            $addOn={true}
             data-testid={otherProps["data-testid"]}
         >
             <AddOnContainer
@@ -335,8 +286,8 @@ export const UnitNumberInput = ({
             >
                 #
             </AddOnContainer>
-            <InputContainer $addOn={true} $readOnly={otherProps.readOnly}>
-                <BaseInput
+            <InputContainer $readOnly={otherProps.readOnly}>
+                <FloorInput
                     name="floor"
                     maxLength={3}
                     value={floorValue}
@@ -359,7 +310,7 @@ export const UnitNumberInput = ({
                 <UnitNumberDivider $hide={floorValue.length === 0}>
                     -
                 </UnitNumberDivider>
-                <YearInput
+                <UnitInput
                     name="unit"
                     maxLength={5}
                     value={unitValue}

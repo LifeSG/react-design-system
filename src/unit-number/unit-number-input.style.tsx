@@ -10,6 +10,7 @@ import { Text } from "../text/text";
 interface ContainerStyleProps {
     disabled?: boolean;
     $error?: boolean;
+    $readOnly?: boolean;
 }
 interface LabelStyleProps {
     $hide?: boolean;
@@ -29,7 +30,7 @@ export const Container = styled.div<ContainerStyleProps>`
     background: ${Color.Neutral[8]};
     height: 3rem;
     width: 100%;
-    padding: 0.1rem 1rem 0;
+    padding: 0;
 
     :focus,
     :focus-within {
@@ -38,7 +39,18 @@ export const Container = styled.div<ContainerStyleProps>`
     }
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$readOnly) {
+            return css`
+                border: none;
+                padding-left: 0rem;
+                background: transparent !important;
+
+                :focus-within {
+                    border: none;
+                    box-shadow: none;
+                }
+            `;
+        } else if (props.disabled) {
             return css`
                 background: ${Color.Neutral[6](props)};
                 :hover {
@@ -63,20 +75,20 @@ export const Container = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<ContainerStyleProps>`
     position: absolute;
     top: 0;
-    left: 1rem; // input value appears slightly right
+    left: 2rem;
     height: 100%;
     display: flex;
     align-items: center;
 `;
 
-export const BaseInput = styled.input`
+export const FloorInput = styled.input`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     background: transparent;
     height: 100%;
-    width: 2.5rem;
+    width: 3rem;
     border: none;
     text-align: center;
     padding: 0;
@@ -108,53 +120,17 @@ export const BaseInput = styled.input`
     }}
 `;
 
-export const MonthInput = styled(BaseInput)`
-    width: 2.6rem;
+export const UnitInput = styled(FloorInput)`
+    width: 4.5rem;
 `;
 
-export const YearInput = styled(BaseInput)`
-    width: 3.5rem;
-`;
-
-export const Divider = styled(Text.Body)<LabelStyleProps>`
-    opacity: ${(props) => (props.$hide ? 0 : 1)};
-    margin: 0.1rem 0.2rem 0 0.2rem;
-`;
-
-export const MonthDivider = styled(Divider)`
+export const UnitNumberDivider = styled(Text.Body)<LabelStyleProps>`
+    margin: 0 0.1rem 0 0.1rem;
     ${(props) => {
-        if (props.$compress) {
+        if (props.$hide) {
             return css`
-                margin: 0.1rem 0.1rem 0 0.1rem;
+                color: ${Color.Neutral[3]};
             `;
         }
     }}
-`;
-
-// =============================================================================
-// PLACEHOLDERS
-// =============================================================================
-export const PlaceholderContainer = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-export const Placeholder = styled(Text.Body)<LabelStyleProps>`
-    opacity: ${(props) => (props.$hide ? 0 : 1)};
-    color: ${Color.Neutral[3]};
-    display: inline;
-    width: 2.5rem;
-    text-align: center;
-`;
-
-export const PlaceholderDivider = styled(Divider)<LabelStyleProps>`
-    color: ${Color.Neutral[3]};
-`;
-
-export const MonthPlaceholder = styled(Placeholder)<LabelStyleProps>`
-    width: 2.6rem;
-`;
-
-export const YearPlaceholder = styled(Placeholder)<LabelStyleProps>`
-    width: 3.5rem;
 `;
