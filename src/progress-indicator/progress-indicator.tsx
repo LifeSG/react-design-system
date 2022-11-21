@@ -128,9 +128,7 @@ export const ProgressIndicator = <T,>({
 
     const getId = (stepIndex: number, currentIndex: number) => {
         return kebabCase(
-            `${getAriaLabel(stepIndex, currentIndex)} ${
-                stepIndex < currentIndex ? stepIndex : stepIndex - currentIndex
-            }`
+            `${getAriaLabel(stepIndex, currentIndex)} ${stepIndex}`
         );
     };
 
