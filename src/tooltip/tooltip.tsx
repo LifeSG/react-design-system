@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import { Text } from "../text/text";
-import { Arrow, Bubble } from "./tooltip.styles";
+import { Arrow, Bubble, BubbleWrap } from "./tooltip.styles";
 import { TooltipPosition, TooltipProps } from "./types";
 
 export const Tooltip = ({
@@ -82,24 +82,23 @@ export const Tooltip = ({
     // RENDER FUNCTIONS
     // =============================================================================
 
-    const renderContent = () => {
-        if (typeof children === "string") {
-            return <Text.BodySmall>{children}</Text.BodySmall>;
-        }
-
-        return children;
-    };
+    const renderContent = () =>
+        typeof children === "string" ? (
+            <Text.BodySmall>{children}</Text.BodySmall>
+        ) : (
+            children
+        );
 
     return (
-        <Bubble
+        <BubbleWrap
             position={currPosition}
             data-testid={testId}
             visible={visible}
             ref={bubbleRef}
             {...otherProps}
         >
-            {renderContent()}
+            <Bubble>{renderContent()}</Bubble>
             <Arrow position={currPosition} />
-        </Bubble>
+        </BubbleWrap>
     );
 };
