@@ -1,0 +1,51 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Button } from "src/button";
+import { SmartAppBanner } from "src/smart-app-banner";
+import { Secondary, Title } from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/SmartAppBanner" component={SmartAppBanner} />
+
+<Title>Smart App Banner</Title>
+
+<Secondary>Overview</Secondary>
+
+A sticky banner that displays over other page contents. Brings users to specified link when pressed.
+
+```tsx
+import { SmartAppBanner } from "@lifesg/react-design-system/smart-app-banner";
+```
+
+<Canvas>
+    <Story name="SmartAppBanner">
+        {() => {
+            const [show, setShow] = useState(false);
+            const onButtonPress = () => setShow(!show);
+            return (
+                <div>
+                    <Button.Default onClick={onButtonPress}>
+                        {show ? "Click to close" : "Click to open"}
+                    </Button.Default>
+                    <SmartAppBanner
+                        show={show}
+                        offset={0}
+                        link="https://www.google.com"
+                        content={{
+                            title: "LifeSG App",
+                            message:
+                                "Report neighbourhood issues in 3 simple steps",
+                            buttonLabel: "Download",
+                            buttonAriaLabel: "Download LifeSG App",
+                        }}
+                        onBannerDismiss={() => setShow(false)}
+                    />
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
