@@ -32,7 +32,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "offset",
                 mandatory: false,
-                description: "Sets the 'top' value",
+                description: "Sets the 'top' value in pixels",
                 propTypes: ["number"],
                 defaultValue: `0`,
             },

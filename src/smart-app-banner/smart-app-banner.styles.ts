@@ -11,27 +11,27 @@ export const SmartAppBannerContainer = styled.div<{ $offset: number }>`
     flex-direction: row;
     align-items: stretch;
     position: fixed;
-    margin: 8px 20px;
+    margin: 0.5rem 1.25rem;
     ${(props) => {
         return `top: ${props.$offset}px;`;
     }}
     left: 0;
-    width: calc(100% - 40px);
-    min-height: 88px;
+    width: calc(100% - 2.5rem);
+    min-height: 5.5rem;
     z-index: 9001;
     background: #ffffff;
-    box-shadow: 0px 2px 8px rgba(104, 104, 104, 0.25);
-    border-radius: 8px;
+    box-shadow: 0px 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
+    border-radius: 0.5rem;
     transition: top 0.5s ease;
 `;
 
-export const CloseContainer = styled.div`
+export const DismissContainer = styled.div`
     display: flex;
     align-items: center;
-    padding: 8px 4px 8px 16px;
+    padding: 0.5rem 0.25rem 0.5rem 1rem;
 `;
 
-export const CrossButton = styled(IconButton)`
+export const DismissButton = styled(IconButton)`
     padding: 0;
     svg {
         color: ${Color.Neutral[1]};
@@ -42,20 +42,20 @@ export const CrossIcon = styled(Icon)`
     color: ${Color.Neutral[1]};
 `;
 
-export const ClickableContainer = styled.div`
+export const ProceedContainer = styled.div`
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 8px 16px 8px 4px;
+    padding: 0.5rem 1rem 0.5rem 0.25rem;
 `;
 export const TextContainer = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: left;
-    margin: 8px;
+    margin: 0.5rem;
     ${MediaQuery.MaxWidth.mobileM} {
-        margin: 0 8px;
+        margin: 0 0.5rem;
     }
 `;
 
@@ -70,7 +70,7 @@ export const DownloadContainer = styled.div`
 `;
 
 export const DownloadButton = styled(Button.Small)`
-    padding: 8px;
+    padding: 0.5rem;
     & > span {
         ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }

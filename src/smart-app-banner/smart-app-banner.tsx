@@ -1,12 +1,12 @@
 import {
-    ClickableContainer,
-    CloseContainer,
-    CrossButton,
     CrossIcon,
     Description,
+    DismissButton,
+    DismissContainer,
     DownloadButton,
     DownloadContainer,
     LifeSgAppIcon,
+    ProceedContainer,
     SmartAppBannerContainer,
     TextContainer,
     Title,
@@ -16,10 +16,10 @@ interface SmartAppBannerProps {
     show: boolean;
     link: string;
     content: Content;
-    offset?: number;
-    className?: string;
+    offset?: number | undefined;
+    className?: string | undefined;
     onBannerDismiss: () => void;
-    onBannerPress?: () => void;
+    onBannerPress?: () => void | undefined;
 }
 
 interface Content {
@@ -31,6 +31,8 @@ interface Content {
 
 const APP_ICON =
     "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png";
+
+const ID = "smart-app-banner";
 
 export const SmartAppBanner = ({
     className,
@@ -54,12 +56,20 @@ export const SmartAppBanner = ({
         <>
             {show && (
                 <SmartAppBannerContainer $offset={offset} className={className}>
-                    <CloseContainer onClick={onBannerDismiss}>
-                        <CrossButton aria-label="Dismiss">
+                    <DismissContainer
+                        onClick={onBannerDismiss}
+                        id={`${ID}-dismiss`}
+                        data-testid={`${ID}-dismiss-container`}
+                    >
+                        <DismissButton aria-label="Dismiss">
                             <CrossIcon type="cross" />
-                        </CrossButton>
-                    </CloseContainer>
-                    <ClickableContainer onClick={onPress}>
+                        </DismissButton>
+                    </DismissContainer>
+                    <ProceedContainer
+                        onClick={onPress}
+                        id={`${ID}-proceed`}
+                        data-testid={`${ID}-proceed-container`}
+                    >
                         <LifeSgAppIcon src={APP_ICON} alt="" />
                         <TextContainer>
                             <Title>{content.title}</Title>
@@ -73,7 +83,7 @@ export const SmartAppBanner = ({
                                 {content.buttonLabel}
                             </DownloadButton>
                         </DownloadContainer>
-                    </ClickableContainer>
+                    </ProceedContainer>
                 </SmartAppBannerContainer>
             )}
         </>
