@@ -72,15 +72,15 @@ export const SmartAppBanner = ({
         const hasHalfStar = numberOfStars - Math.floor(numberOfStars) >= 0.4;
 
         for (let i = 0; i < Math.floor(numberOfStars); i++) {
-            stars.push(<img src={STAR_IMG} />);
+            stars.push(<img alt="" src={STAR_IMG} />);
         }
         if (hasHalfStar) {
-            stars.push(<img src={HALF_STAR_IMG} />);
+            stars.push(<img alt="" src={HALF_STAR_IMG} />);
         }
         if (stars.length < 5) {
             const remaining = 5 - stars.length;
             for (let i = 0; i < remaining; i++) {
-                stars.push(<img src={EMPTY_STAR_IMG} />);
+                stars.push(<img alt="" src={EMPTY_STAR_IMG} />);
             }
         }
 
