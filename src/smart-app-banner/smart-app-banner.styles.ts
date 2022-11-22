@@ -83,3 +83,15 @@ export const Title = styled(Text.H6)`
 `;
 
 export const Description = styled(Text.XSmall)``;
+
+export const RatingContainer = styled.div`
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+
+    img {
+        height: 1.5rem;
+        width: 1.5rem;
+        padding-right: 0.25rem;
+    }
+`;
