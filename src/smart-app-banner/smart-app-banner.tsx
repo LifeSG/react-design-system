@@ -26,7 +26,7 @@ interface Content {
     title: string;
     buttonLabel: string;
     buttonAriaLabel: string;
-    message?: string;
+    message?: string | undefined;
 }
 
 const APP_ICON =
