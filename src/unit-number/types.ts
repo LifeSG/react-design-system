@@ -18,14 +18,14 @@ export interface UnitNumberInputProps extends React.AriaAttributes {
     disabled?: boolean | undefined;
     onChange?: (value: string) => void | undefined;
     /**
-     * Function that returns the raw values in the DateInput on change in an array format
-     * as such [day, month, year]
+     * Function that returns the raw values in the UnitNumberInput on change in an array format
+     * as such [floor, unit]
      */
     onChangeRaw?: (value: string[]) => void | undefined;
     onBlur?: (value: string) => void | undefined;
     /**
-     * Function that returns the raw values in the DateInput on blur in an array format
-     * as such [day, month, year]
+     * Function that returns the raw values in the UnitNumberInput on blur in an array format
+     * as such [floor, unit]
      */
     onBlurRaw?: (value: string[]) => void | undefined;
 }
