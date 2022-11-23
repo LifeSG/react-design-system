@@ -23,7 +23,7 @@ interface SmartAppBannerProps {
     onBannerPress?: () => void | undefined;
 }
 
-interface Content {
+export interface Content {
     title: string;
     buttonLabel: string;
     buttonAriaLabel: string;
