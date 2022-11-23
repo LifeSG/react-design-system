@@ -7,6 +7,7 @@ import {
     DownloadContainer,
     LifeSgAppIcon,
     ProceedContainer,
+    RatingContainer,
     SmartAppBannerContainer,
     TextContainer,
     Title,
@@ -27,10 +28,17 @@ interface Content {
     buttonLabel: string;
     buttonAriaLabel: string;
     message?: string | undefined;
+    numberOfStars: number;
 }
 
 const APP_ICON =
     "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png";
+const STAR_IMG =
+    "https://assets.life.gov.sg/react-design-system/img/star-rating/full-star.svg";
+const HALF_STAR_IMG =
+    "https://assets.life.gov.sg/react-design-system/img/star-rating/half-star.svg";
+const EMPTY_STAR_IMG =
+    "https://assets.life.gov.sg/react-design-system/img/star-rating/empty-star.svg";
 
 const ID = "smart-app-banner";
 
@@ -52,6 +60,33 @@ export const SmartAppBanner = ({
         onBannerPress?.();
     };
 
+    const { title, message, buttonLabel, buttonAriaLabel, numberOfStars } =
+        content;
+
+    const generateStarRating = () => {
+        if (isNaN(numberOfStars) || numberOfStars < 0) {
+            return;
+        }
+
+        const stars = [];
+        const hasHalfStar = numberOfStars - Math.floor(numberOfStars) >= 0.4;
+
+        for (let i = 0; i < Math.floor(numberOfStars); i++) {
+            stars.push(<img alt="" src={STAR_IMG} />);
+        }
+        if (hasHalfStar) {
+            stars.push(<img alt="" src={HALF_STAR_IMG} />);
+        }
+        if (stars.length < 5) {
+            const remaining = 5 - stars.length;
+            for (let i = 0; i < remaining; i++) {
+                stars.push(<img alt="" src={EMPTY_STAR_IMG} />);
+            }
+        }
+
+        /* maximum of 5 stars */
+        return <RatingContainer>{stars.slice(0, 5)}</RatingContainer>;
+    };
     return (
         <>
             {show && (
@@ -72,15 +107,16 @@ export const SmartAppBanner = ({
                     >
                         <LifeSgAppIcon src={APP_ICON} alt="" />
                         <TextContainer>
-                            <Title>{content.title}</Title>
-                            <Description>{content.message}</Description>
+                            <Title>{title}</Title>
+                            <Description>{message}</Description>
+                            {generateStarRating()}
                         </TextContainer>
                         <DownloadContainer>
                             <DownloadButton
                                 onClick={onPress}
-                                aria-label={content.buttonAriaLabel}
+                                aria-label={buttonAriaLabel}
                             >
-                                {content.buttonLabel}
+                                {buttonLabel}
                             </DownloadButton>
                         </DownloadContainer>
                     </ProceedContainer>
