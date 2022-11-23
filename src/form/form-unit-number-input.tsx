@@ -5,7 +5,7 @@ import { FormUnitNumberInputProps } from "./types";
 export const FormUnitNumberInput = ({
     label,
     errorMessage,
-    id = "form-date-input",
+    id = "form-unit-number-input",
     "data-error-testid": errorTestId,
     "data-testid": testId,
     ...otherProps

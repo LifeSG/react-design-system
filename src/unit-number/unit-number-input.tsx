@@ -8,14 +8,10 @@ import {
     UnitNumberDivider,
 } from "./unit-number-input.style";
 import { AddOnContainer } from "../input-group/input-group.style";
-import { DateInputProps } from "../date-input/types";
+import { UnitNumberInputProps } from "./types";
 
 type FieldType = "floor" | "unit" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
-
-export interface UnitNumberInputProps extends DateInputProps {
-    placeholder?: string;
-}
 
 export const UnitNumberInput = ({
     disabled,
@@ -25,6 +21,8 @@ export const UnitNumberInput = ({
     onBlur,
     onChangeRaw,
     onBlurRaw,
+    readOnly,
+    placeholder,
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -108,7 +106,7 @@ export const UnitNumberInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleMouseDown = (event: MouseEvent) => {
-        if (disabled || otherProps.readOnly) {
+        if (disabled || readOnly) {
             return;
         }
 
@@ -156,17 +154,9 @@ export const UnitNumberInput = ({
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
 
-        /**
-         * NOTE: Unfortunately, the maxLength is not respected for
-         * input type=number. Will need to add safeguards.
-         * Reference: https://stackoverflow.com/a/18510925
-         *
-         * Ignore inputs that exceed the respective max length
-         */
-
         let value = event.target.value.toLocaleUpperCase();
-        if (!/.*[0-9A-Za-z]$/.test(value)) {
-            value = value.replace(/.$/, "");
+        if (/[^0-9A-Za-z]/.test(value)) {
+            value = value.replace(/[^0-9A-Za-z]/, "");
         }
 
         if (targetName === "floor") {
@@ -250,7 +240,7 @@ export const UnitNumberInput = ({
     };
 
     const getFormattedValue = (values: Record<ValueFieldTypes, string>) => {
-        const valueArr = [values.floor, values.unit];
+        const valueArr = [formatInput(values.floor), formatInput(values.unit)];
 
         if (values.floor.length > 0 && values.unit.length > 0) {
             return valueArr.join("-");
@@ -276,17 +266,17 @@ export const UnitNumberInput = ({
             onClick={handleNodeClick}
             disabled={disabled}
             $error={error}
-            $readOnly={otherProps.readOnly}
+            $readOnly={readOnly}
             data-testid={otherProps["data-testid"]}
         >
             <AddOnContainer
                 data-testid="addon"
                 disabled={disabled}
-                $readOnly={otherProps.readOnly}
+                $readOnly={readOnly}
             >
                 #
             </AddOnContainer>
-            <InputContainer $readOnly={otherProps.readOnly}>
+            <InputContainer $readOnly={readOnly}>
                 <FloorInput
                     name="floor"
                     maxLength={3}
@@ -296,15 +286,15 @@ export const UnitNumberInput = ({
                     onBlur={handleBlur}
                     onChange={handleChange}
                     disabled={disabled}
-                    readOnly={otherProps.readOnly}
+                    readOnly={readOnly}
                     type="text"
                     pattern="[0-9A-Z]{2,3}"
                     data-testid="floor-input"
                     aria-label="floor-input"
                     placeholder={
-                        currentFocus === "floor" && !otherProps.readOnly
+                        currentFocus === "floor" && !readOnly
                             ? ""
-                            : getPlaceholder(otherProps.placeholder)[0]
+                            : getPlaceholder(placeholder)[0]
                     }
                 />
                 <UnitNumberDivider $hide={floorValue.length === 0}>
@@ -319,15 +309,15 @@ export const UnitNumberInput = ({
                     onBlur={handleBlur}
                     onChange={handleChange}
                     disabled={disabled}
-                    readOnly={otherProps.readOnly}
+                    readOnly={readOnly}
                     type="text"
                     pattern="[0-9A-Z]{2,5}"
                     data-testid="unit-input"
                     aria-label="unit-input"
                     placeholder={
-                        currentFocus === "unit" && !otherProps.readOnly
+                        currentFocus === "unit" && !readOnly
                             ? ""
-                            : getPlaceholder(otherProps.placeholder)[1]
+                            : getPlaceholder(placeholder)[1]
                     }
                 />
             </InputContainer>

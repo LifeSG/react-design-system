@@ -121,6 +121,16 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["(value: string[]) => void"],
             },
+            {
+                name: "placeholder",
+                description: (
+                    <>
+                        The placeholder text of the unit input as such{" "}
+                        <code>floor-unit</code>
+                    </>
+                ),
+                propTypes: ["string"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
