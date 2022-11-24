@@ -37,6 +37,13 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `0`,
             },
             {
+                name: "icon",
+                mandatory: false,
+                description: "Url for the icon",
+                propTypes: ["string"],
+                defaultValue: `https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png`,
+            },
+            {
                 name: "onBannerDismiss",
                 mandatory: true,
                 description: (

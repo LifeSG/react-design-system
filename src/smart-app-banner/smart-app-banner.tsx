@@ -18,6 +18,7 @@ interface SmartAppBannerProps {
     link: string;
     content: Content;
     offset?: number | undefined;
+    icon?: string | undefined;
     className?: string | undefined;
     onBannerDismiss: () => void;
     onBannerPress?: () => void | undefined;
@@ -48,6 +49,7 @@ export const SmartAppBanner = ({
     link,
     content,
     offset = 0,
+    icon = APP_ICON,
     onBannerDismiss,
     onBannerPress,
 }: SmartAppBannerProps): JSX.Element => {
@@ -105,7 +107,7 @@ export const SmartAppBanner = ({
                         id={`${ID}-proceed`}
                         data-testid={`${ID}-proceed-container`}
                     >
-                        <LifeSgAppIcon src={APP_ICON} alt="" />
+                        <LifeSgAppIcon src={icon} alt="" />
                         <TextContainer>
                             <Title>{title}</Title>
                             <Description>{message}</Description>
