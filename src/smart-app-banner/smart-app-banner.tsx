@@ -58,7 +58,6 @@ export const SmartAppBanner = ({
     ) => {
         e.stopPropagation();
         window.open(link, "_blank", "noreferrer");
-        onBannerDismiss();
         onBannerPress?.();
     };
 
