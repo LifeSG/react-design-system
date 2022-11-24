@@ -1,14 +1,14 @@
 import {
+    ButtonContainer,
     CrossIcon,
     Description,
     DismissButton,
     DismissContainer,
-    DownloadButton,
-    DownloadContainer,
     LifeSgAppIcon,
     ProceedContainer,
     RatingContainer,
     SmartAppBannerContainer,
+    StyledButton,
     TextContainer,
     Title,
 } from "./smart-app-banner.styles";
@@ -111,14 +111,14 @@ export const SmartAppBanner = ({
                             <Description>{message}</Description>
                             {generateStarRating()}
                         </TextContainer>
-                        <DownloadContainer>
-                            <DownloadButton
+                        <ButtonContainer>
+                            <StyledButton
                                 onClick={onPress}
                                 aria-label={buttonAriaLabel}
                             >
                                 {buttonLabel}
-                            </DownloadButton>
-                        </DownloadContainer>
+                            </StyledButton>
+                        </ButtonContainer>
                     </ProceedContainer>
                 </SmartAppBannerContainer>
             )}

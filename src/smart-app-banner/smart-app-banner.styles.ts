@@ -64,12 +64,12 @@ export const LifeSgAppIcon = styled.img`
     align-self: center;
 `;
 
-export const DownloadContainer = styled.div`
+export const ButtonContainer = styled.div`
     display: flex;
     align-items: center;
 `;
 
-export const DownloadButton = styled(Button.Small)`
+export const StyledButton = styled(Button.Small)`
     padding: 0.5rem;
     & > span {
         ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
