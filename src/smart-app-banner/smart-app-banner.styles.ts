@@ -1,12 +1,26 @@
-import { Text, TextStyleHelper } from "../text";
+import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
-import styled from "styled-components";
-import { IconButton } from "../icon-button";
 import { Icon } from "../icon";
+import { IconButton } from "../icon-button";
+import { MediaQuery } from "../media";
+import { Text, TextStyleHelper } from "../text";
 
-export const SmartAppBannerContainer = styled.div<{ $offset: number }>`
+const slideDown = keyframes`
+	from {
+		opacity: 0;
+		transform: translate3d(0, -20%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+`;
+
+export const SmartAppBannerContainer = styled.div<{
+    $offset: number;
+    $isAnimated: boolean;
+}>`
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -22,7 +36,12 @@ export const SmartAppBannerContainer = styled.div<{ $offset: number }>`
     background: #ffffff;
     box-shadow: 0px 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
     border-radius: 0.5rem;
-    transition: top 0.5s ease;
+    ${(props) => {
+        if (props.$isAnimated)
+            return css`
+                animation: ${slideDown} 0.5s;
+            `;
+    }}
 `;
 
 export const DismissContainer = styled.div`

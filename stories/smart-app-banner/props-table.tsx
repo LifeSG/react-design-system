@@ -44,6 +44,14 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png`,
             },
             {
+                name: "isAnimated",
+                mandatory: false,
+                description:
+                    "Set banner to appear with slide down animation is it's true",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onBannerDismiss",
                 mandatory: true,
                 description: (

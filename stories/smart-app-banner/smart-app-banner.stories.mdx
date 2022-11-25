@@ -21,15 +21,34 @@ import { SmartAppBanner } from "@lifesg/react-design-system/smart-app-banner";
     <Story name="SmartAppBanner">
         {() => {
             const [show, setShow] = useState(false);
-            const onButtonPress = () => setShow(!show);
+            const [isAnimated, setIsAnimated] = useState(false);
+            const onButtonPress = (isAnimated) => {
+                setShow(!show);
+                setIsAnimated(!!isAnimated);
+            };
             return (
-                <div>
-                    <Button.Default onClick={onButtonPress}>
+                <div style={{ flex: 1, justifyContent: "center" }}>
+                    <Button.Default
+                        onClick={() => {
+                            onButtonPress();
+                        }}
+                    >
                         {show ? "Click to close" : "Click to open"}
                     </Button.Default>
+                    <br />
+                    {!show && (
+                        <Button.Default
+                            onClick={() => {
+                                onButtonPress(true);
+                            }}
+                        >
+                            Click to open with animation
+                        </Button.Default>
+                    )}
                     <SmartAppBanner
                         show={show}
                         offset={0}
+                        isAnimated={isAnimated}
                         link="https://www.google.com"
                         content={{
                             title: "LifeSG App",
