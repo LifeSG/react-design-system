@@ -16,14 +16,14 @@ import {
 interface SmartAppBannerProps {
     show: boolean;
     link: string;
-    content: Content;
+    content: SmartAppBannerContent;
     offset?: number | undefined;
     className?: string | undefined;
     onBannerDismiss: () => void;
     onBannerPress?: () => void | undefined;
 }
 
-export interface Content {
+export interface SmartAppBannerContent {
     title: string;
     buttonLabel: string;
     buttonAriaLabel: string;
