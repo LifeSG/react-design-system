@@ -89,6 +89,13 @@ const DATA: ApiTableSectionProps[] = [
                     "The description of the banner displayed below the title",
                 propTypes: ["string"],
             },
+            {
+                name: "numberOfStars",
+                mandatory: false,
+                description:
+                    "Number of stars to display on the smart app banner. Can take in decimal numbers. If NaN or < 0, will hide the stars component",
+                propTypes: ["string"],
+            },
         ],
     },
 ];
