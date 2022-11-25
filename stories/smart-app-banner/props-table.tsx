@@ -37,6 +37,13 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `0`,
             },
             {
+                name: "isAnimated",
+                mandatory: false,
+                description: "Set banner to appear with slide down animation is it's true",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onBannerDismiss",
                 mandatory: true,
                 description: (
