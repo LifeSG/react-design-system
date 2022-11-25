@@ -18,6 +18,7 @@ interface SmartAppBannerProps {
     link: string;
     content: Content;
     offset?: number | undefined;
+    isAnimated?: boolean | undefined;
     className?: string | undefined;
     onBannerDismiss: () => void;
     onBannerPress?: () => void | undefined;
@@ -48,6 +49,7 @@ export const SmartAppBanner = ({
     link,
     content,
     offset = 0,
+    isAnimated = false,
     onBannerDismiss,
     onBannerPress,
 }: SmartAppBannerProps): JSX.Element => {
@@ -90,7 +92,7 @@ export const SmartAppBanner = ({
     return (
         <>
             {show && (
-                <SmartAppBannerContainer $offset={offset} className={className}>
+                <SmartAppBannerContainer $isAnimated={isAnimated} $offset={offset} className={className}>
                     <DismissContainer
                         onClick={onBannerDismiss}
                         id={`${ID}-dismiss`}
