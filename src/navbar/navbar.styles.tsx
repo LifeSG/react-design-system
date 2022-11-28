@@ -38,7 +38,7 @@ export const Nav = styled.nav<StyleProps>`
     transition: ${Transition.Base};
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 3.5rem;
+        height: ${() => NAVBAR_MOBILE_HEIGHT}rem;
     }
 `;
 
@@ -84,3 +84,5 @@ export const NAVBAR_HEIGHT = {
     notCompress: 6,
     compress: 4,
 };
+
+export const NAVBAR_MOBILE_HEIGHT = 3.5;
