@@ -38,7 +38,10 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 
 -   [Accordion](#accordion)
 -   [Alert](#alert)
+-   [ErrorDisplay](#error-display)
+-   [Footer](#footer)
 -   [Form](#form)
+-   [Icon](#icon)
 -   [InputGroup](#input-group)
 -   [Layout](#layout)
 -   [LinkList](#link-list)
@@ -73,6 +76,14 @@ You may refer to the storybook documentation for more details.
 
 <br />
 
+<a id="error-display"></a>
+
+### ErrorDisplay
+
+-   The components now takes in `img` so you can configure all image attributes instead of just `imgSrc`
+
+<br />
+
 <a id="footer"></a>
 
 ### Footer
@@ -93,6 +104,7 @@ Refer to the storybook documentation for more details
 
 -   `Form.Field` has been replaced to `Form.Input` to be more in sync with the base component
 -   `Form.FieldGroup` has been replaced to `Form.InputGroup` to be more in sync with the base component
+-   `Form.ErrorMessage` has been removed; to render error messages, pass in the `errorMessage` prop
 
 The corresponding type names have also been changed.
 
@@ -100,6 +112,14 @@ The corresponding type names have also been changed.
 | ------------ | --------------------- | --------------------- |
 | `Field`      | `FormFieldProps`      | `FormInputProps`      |
 | `FieldGroup` | `FormFieldGroupProps` | `FormInputGroupProps` |
+
+<br />
+
+<a id="icon"></a>
+
+### Icon
+
+-   Use height and width with `styled(Icon)` to resize icons; `font-size` is no longer needed
 
 <br />
 
