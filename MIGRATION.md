@@ -216,3 +216,37 @@ You can refer to the Storybook documentation for the amended names of the types
 -   `NotificationBanner.Base` has been simplified to be just `NotificationBanner`
 -   `NotificationBanner.Label` has been deprecated and the style has been integrated into the main component. You may
     just specify the content plainly
+
+<br />
+
+## Other issues
+
+### NextJS
+
+You may encounter the following when developing with NextJS:
+
+-   Hydration error in the console `` Warning: Prop `className` did not match. ``
+-   CSS changes applied to `styled(DSComponent)` are not reflected on Fast Refresh. A manual refresh in the browser is required
+
+So far these issues have been observed only in dev mode. You can choose to live with them.
+
+Otherwise, a workaround is to add the following webpack config in `next.config.js`. However note that this may affect other libraries that rely on specific module resolution.
+
+```
+module.exports = {
+	webpack: (config, { isServer }) => {
+		return {
+			...config,
+			resolve: {
+				...config.resolve,
+				mainFields: isServer
+					? ["main", "module"]
+					: ["browser", "main", "module"],
+			},
+		};
+	},
+    // rest of your config
+};
+```
+
+> The root cause is webpack resolving the component's entry point from CJS on the server and from ESM on the browser. This affects the load order of `styled-components` generated styles. For more details, see [this NextJS issue](https://github.com/vercel/next.js/issues/9323).
