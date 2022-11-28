@@ -1,3 +1,4 @@
+import React from "react";
 import {
     ButtonContainer,
     CrossIcon,
@@ -44,17 +45,21 @@ const EMPTY_STAR_IMG =
 
 const ID = "smart-app-banner";
 
-export const SmartAppBanner = ({
-    className,
-    show,
-    link,
-    content,
-    offset = 0,
-    icon = APP_ICON,
-    isAnimated = false,
-    onBannerDismiss,
-    onBannerPress,
-}: SmartAppBannerProps): JSX.Element => {
+function SmartAppBannerComponent(
+    props: SmartAppBannerProps,
+    ref: React.Ref<HTMLDivElement>
+): JSX.Element {
+    const {
+        className,
+        show,
+        link,
+        content,
+        offset = 0,
+        icon = APP_ICON,
+        isAnimated = false,
+        onBannerDismiss,
+        onBannerPress,
+    } = props;
     const onPress = (
         e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
     ) => {
@@ -90,10 +95,12 @@ export const SmartAppBanner = ({
         /* maximum of 5 stars */
         return <RatingContainer>{stars.slice(0, 5)}</RatingContainer>;
     };
+
     return (
         <>
             {show && (
                 <SmartAppBannerContainer
+                    ref={ref}
                     $isAnimated={isAnimated}
                     $offset={offset}
                     className={className}
@@ -131,4 +138,6 @@ export const SmartAppBanner = ({
             )}
         </>
     );
-};
+}
+
+export const SmartAppBanner = React.forwardRef(SmartAppBannerComponent);

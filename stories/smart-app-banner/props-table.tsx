@@ -52,6 +52,12 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "ref",
+                mandatory: false,
+                description: "Sets the ref of the SmartAppBanner",
+                propTypes: ["React.Ref<HTMLDivElement>"],
+            },
+            {
                 name: "onBannerDismiss",
                 mandatory: true,
                 description: (
