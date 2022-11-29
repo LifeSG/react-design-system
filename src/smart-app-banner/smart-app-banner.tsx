@@ -12,24 +12,7 @@ import {
     TextContainer,
     Title,
 } from "./smart-app-banner.styles";
-
-interface SmartAppBannerProps {
-    show: boolean;
-    link: string;
-    content: SmartAppBannerContent;
-    offset?: number | undefined;
-    className?: string | undefined;
-    onBannerDismiss: () => void;
-    onBannerPress?: () => void | undefined;
-}
-
-export interface SmartAppBannerContent {
-    title: string;
-    buttonLabel: string;
-    buttonAriaLabel: string;
-    message?: string | undefined;
-    numberOfStars: number;
-}
+import { SmartAppBannerProps } from "./types";
 
 const APP_ICON =
     "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png";
@@ -51,6 +34,15 @@ export const SmartAppBanner = ({
     onBannerDismiss,
     onBannerPress,
 }: SmartAppBannerProps): JSX.Element => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const { title, message, buttonLabel, buttonAriaLabel, numberOfStars } =
+        content;
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
     const onPress = (
         e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
     ) => {
@@ -60,8 +52,9 @@ export const SmartAppBanner = ({
         onBannerPress?.();
     };
 
-    const { title, message, buttonLabel, buttonAriaLabel, numberOfStars } =
-        content;
+    // =============================================================================
+    // RENDER FUNCTION
+    // =============================================================================
 
     const generateStarRating = () => {
         if (isNaN(numberOfStars) || numberOfStars < 0) {
@@ -89,6 +82,7 @@ export const SmartAppBanner = ({
         /* maximum of 5 stars */
         return <RatingContainer>{stars.slice(0, 5)}</RatingContainer>;
     };
+
     return (
         <>
             {show && (
