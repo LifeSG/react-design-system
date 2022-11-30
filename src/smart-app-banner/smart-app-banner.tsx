@@ -1,14 +1,15 @@
+import React from "react";
 import {
+    ButtonContainer,
     CrossIcon,
     Description,
     DismissButton,
     DismissContainer,
-    DownloadButton,
-    DownloadContainer,
     LifeSgAppIcon,
     ProceedContainer,
     RatingContainer,
     SmartAppBannerContainer,
+    StyledButton,
     TextContainer,
     Title,
 } from "./smart-app-banner.styles";
@@ -25,18 +26,25 @@ const EMPTY_STAR_IMG =
 
 const ID = "smart-app-banner";
 
-export const SmartAppBanner = ({
-    className,
-    show,
-    link,
-    content,
-    offset = 0,
-    onBannerDismiss,
-    onBannerPress,
-}: SmartAppBannerProps): JSX.Element => {
+function SmartAppBannerComponent(
+    props: SmartAppBannerProps,
+    ref: React.Ref<HTMLDivElement>
+): JSX.Element {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const {
+        className,
+        show,
+        link,
+        content,
+        offset = 0,
+        icon = APP_ICON,
+        isAnimated = false,
+        onBannerDismiss,
+        onBannerPress,
+    } = props;
+
     const { title, message, buttonLabel, buttonAriaLabel, numberOfStars } =
         content;
 
@@ -86,7 +94,12 @@ export const SmartAppBanner = ({
     return (
         <>
             {show && (
-                <SmartAppBannerContainer $offset={offset} className={className}>
+                <SmartAppBannerContainer
+                    ref={ref}
+                    $isAnimated={isAnimated}
+                    $offset={offset}
+                    className={className}
+                >
                     <DismissContainer
                         onClick={onBannerDismiss}
                         id={`${ID}-dismiss`}
@@ -101,23 +114,25 @@ export const SmartAppBanner = ({
                         id={`${ID}-proceed`}
                         data-testid={`${ID}-proceed-container`}
                     >
-                        <LifeSgAppIcon src={APP_ICON} alt="" />
+                        <LifeSgAppIcon src={icon} alt="" />
                         <TextContainer>
                             <Title>{title}</Title>
                             <Description>{message}</Description>
                             {generateStarRating()}
                         </TextContainer>
-                        <DownloadContainer>
-                            <DownloadButton
+                        <ButtonContainer>
+                            <StyledButton
                                 onClick={onPress}
                                 aria-label={buttonAriaLabel}
                             >
                                 {buttonLabel}
-                            </DownloadButton>
-                        </DownloadContainer>
+                            </StyledButton>
+                        </ButtonContainer>
                     </ProceedContainer>
                 </SmartAppBannerContainer>
             )}
         </>
     );
-};
+}
+
+export const SmartAppBanner = React.forwardRef(SmartAppBannerComponent);

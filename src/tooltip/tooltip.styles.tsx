@@ -1,3 +1,4 @@
+import { Card } from "src/card";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
@@ -95,16 +96,18 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
     }
 };
 
-export const Bubble = styled.div<TooltipStyleProps>`
+export const BubbleWrap = styled.div<TooltipStyleProps>`
     position: absolute;
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    box-shadow: 3px 2px 10px 1px rgba(91, 91, 91, 0.2);
     max-width: 30rem;
+    pointer-events: auto;
+
     ${(props) => getBubblePositionStyle(props.position)}
     ${(props) => getVisibilityStyle(props.visible)}
-	pointer-events: auto;
+`;
+
+export const Bubble = styled(Card)`
+    border-radius: 4px;
+    box-shadow: 3px 2px 10px 1px rgba(91, 91, 91, 0.2);
 `;
 
 export const Arrow = styled.div<TooltipStyleProps>`

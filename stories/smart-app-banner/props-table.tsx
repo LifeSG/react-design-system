@@ -37,6 +37,27 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `0`,
             },
             {
+                name: "icon",
+                mandatory: false,
+                description: "Url for the icon",
+                propTypes: ["string"],
+                defaultValue: `https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png`,
+            },
+            {
+                name: "isAnimated",
+                mandatory: false,
+                description:
+                    "Set banner to appear with slide down animation is it's true",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "ref",
+                mandatory: false,
+                description: "Sets the ref of the SmartAppBanner",
+                propTypes: ["React.Ref<HTMLDivElement>"],
+            },
+            {
                 name: "onBannerDismiss",
                 mandatory: true,
                 description: (

@@ -1,10 +1,11 @@
 import debounce from "lodash/debounce";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { Card } from "src/card";
 import { Modal } from "../modal/modal";
 import { MediaWidths } from "../spec/media-spec";
 import { Text } from "../text/text";
-import { Bubble, MobileModalBox, OffsetPosition } from "./popover.styles";
+import { BubbleWrap, MobileModalBox, OffsetPosition } from "./popover.styles";
 import { PopoverProps } from "./types";
 
 export const Popover = ({
@@ -121,25 +122,24 @@ export const Popover = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderContent = () => {
-        if (typeof children === "string") {
-            return <Text.BodySmall>{children}</Text.BodySmall>;
-        }
-
-        return children;
-    };
+    const renderContent = () =>
+        typeof children === "string" ? (
+            <Text.BodySmall>{children}</Text.BodySmall>
+        ) : (
+            children
+        );
 
     return (
         <>
-            <Bubble
+            <BubbleWrap
                 ref={bubbleRef}
                 data-testid={testId}
                 $visible={visible}
                 $offset={offset}
                 {...otherProps}
             >
-                {renderContent()}
-            </Bubble>
+                <Card>{renderContent()}</Card>
+            </BubbleWrap>
             {isMobile && (
                 <Modal show={visible} onOverlayClick={handleMobileClose}>
                     <MobileModalBox onClose={handleMobileClose}>

@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ModalBox } from "../modal/modal-box";
 import { Transition } from "../transition";
@@ -95,11 +94,7 @@ const getBubblePosition = (offset: OffsetPosition) => {
     }
 };
 
-export const Bubble = styled.div<PopoverStyleProps>`
-    border-radius: 8px;
-    background: ${Color.Neutral[8]};
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 8px 0 rgba(104, 104, 104, 0.24);
+export const BubbleWrap = styled.div<PopoverStyleProps>`
     max-width: 30rem;
     pointer-events: auto;
     position: absolute;

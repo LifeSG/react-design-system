@@ -3,6 +3,8 @@ export interface SmartAppBannerProps {
     link: string;
     content: SmartAppBannerContentProps;
     offset?: number | undefined;
+    icon?: string | undefined;
+    isAnimated?: boolean | undefined;
     className?: string | undefined;
     onBannerDismiss: () => void;
     onBannerPress?: () => void | undefined;

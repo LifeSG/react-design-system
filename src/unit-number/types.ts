@@ -1,17 +1,4 @@
-export interface DateInputTarget {
-    value: string;
-    type?: string | undefined; // input type
-    name?: string | undefined;
-    id?: string | undefined;
-}
-
-/* This mimics the React.SyntheticEvent */
-export interface DateInputEvent {
-    bubbles: boolean;
-    target: DateInputTarget;
-}
-
-export interface DateInputProps extends React.AriaAttributes {
+export interface UnitNumberInputProps extends React.AriaAttributes {
     // Standard HTML Attributes
     className?: string | undefined;
     id?: string | undefined;
@@ -19,6 +6,7 @@ export interface DateInputProps extends React.AriaAttributes {
     tabIndex?: number | undefined;
     "data-testid"?: string | undefined;
     readOnly?: boolean;
+    placeholder?: string;
 
     // WAI-ARIA
     role?: string;
@@ -30,14 +18,14 @@ export interface DateInputProps extends React.AriaAttributes {
     disabled?: boolean | undefined;
     onChange?: (value: string) => void | undefined;
     /**
-     * Function that returns the raw values in the DateInput on change in an array format
-     * as such [day, month, year]
+     * Function that returns the raw values in the UnitNumberInput on change in an array format
+     * as such [floor, unit]
      */
     onChangeRaw?: (value: string[]) => void | undefined;
     onBlur?: (value: string) => void | undefined;
     /**
-     * Function that returns the raw values in the DateInput on blur in an array format
-     * as such [day, month, year]
+     * Function that returns the raw values in the UnitNumberInput on blur in an array format
+     * as such [floor, unit]
      */
     onBlurRaw?: (value: string[]) => void | undefined;
 }
