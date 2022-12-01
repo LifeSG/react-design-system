@@ -154,10 +154,9 @@ export const UnitNumberInput = ({
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
 
-        let value = event.target.value.toLocaleUpperCase();
-        if (/[^0-9A-Za-z]/.test(value)) {
-            value = value.replace(/[^0-9A-Za-z]/, "");
-        }
+        const value = event.target.value
+            .toLocaleUpperCase()
+            .replace(/[^0-9A-Za-z]/, "");
 
         if (targetName === "floor") {
             setFloorValue(value);
@@ -171,6 +170,18 @@ export const UnitNumberInput = ({
     const handleNodeClick = () => {
         if (currentFocus === "none" && floorInputRef.current) {
             floorInputRef.current.focus();
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        /**
+         * Allow going to the field before if user presses Backspace
+         * on an empty field
+         */
+        if (event.code === "Backspace" || event.key === "Backspace") {
+            if (currentFocus === "unit" && unitValue.length === 0) {
+                floorInputRef.current.focus();
+            }
         }
     };
 
@@ -210,8 +221,12 @@ export const UnitNumberInput = ({
 
         if (onChangeRaw) {
             const valuesArr = [
-                ...(field === "floor" ? [changeValue] : [floorValue]),
-                ...(field === "unit" ? [changeValue] : [unitValue]),
+                ...(field === "floor"
+                    ? [formatInput(changeValue)]
+                    : [floorValue]),
+                ...(field === "unit"
+                    ? [formatInput(changeValue)]
+                    : [unitValue]),
             ];
 
             onChangeRaw(valuesArr);
@@ -231,8 +246,8 @@ export const UnitNumberInput = ({
 
         if (onBlurRaw) {
             const valuesArr = [
-                floorValueStateRef.current,
-                unitValueStateRef.current,
+                formatInput(floorValueStateRef.current),
+                formatInput(unitValueStateRef.current),
             ];
 
             onBlurRaw(valuesArr);
@@ -308,6 +323,7 @@ export const UnitNumberInput = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     disabled={disabled}
                     readOnly={readOnly}
                     type="text"

@@ -78,7 +78,7 @@ export const Container = styled.div<ContainerStyleProps>`
 export const InputContainer = styled.div<ContainerStyleProps>`
     position: absolute;
     top: 0;
-    left: 2rem;
+    left: ${(props) => (props.$readOnly ? "1rem" : "2rem")};
     height: 100%;
     display: flex;
     align-items: center;
@@ -125,7 +125,7 @@ export const UnitInput = styled(FloorInput)`
 `;
 
 export const UnitNumberDivider = styled(Text.Body)<LabelStyleProps>`
-    margin: 0 0.1rem 0 0.1rem;
+    margin-left: 0.1rem;
     ${(props) => {
         if (props.$hide) {
             return css`
