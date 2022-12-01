@@ -6,12 +6,7 @@ import {
     Divider,
     InputContainer,
     MonthInput,
-    MonthPlaceholder,
-    Placeholder,
-    PlaceholderContainer,
-    PlaceholderDivider,
     YearInput,
-    YearPlaceholder,
 } from "./date-input.style";
 import { DateInputProps } from "./types";
 
@@ -26,6 +21,7 @@ export const DateInput = ({
     onBlur,
     onChangeRaw,
     onBlurRaw,
+    readOnly,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -86,16 +82,6 @@ export const DateInput = ({
             nodeRef.current.addEventListener("keydown", handleNodeKeyDown);
         }
 
-        if (dayInputRef.current) {
-            dayInputRef.current.addEventListener("keydown", handleKeyDown);
-        }
-        if (monthInputRef.current) {
-            monthInputRef.current.addEventListener("keydown", handleKeyDown);
-        }
-        if (yearInputRef.current) {
-            yearInputRef.current.addEventListener("keydown", handleKeyDown);
-        }
-
         return () => {
             document.removeEventListener("mousedown", handleMouseDown);
 
@@ -103,25 +89,6 @@ export const DateInput = ({
                 nodeRef.current.removeEventListener(
                     "keydown",
                     handleNodeKeyDown
-                );
-            }
-
-            if (dayInputRef.current) {
-                dayInputRef.current.removeEventListener(
-                    "keydown",
-                    handleKeyDown
-                );
-            }
-            if (monthInputRef.current) {
-                monthInputRef.current.removeEventListener(
-                    "keydown",
-                    handleKeyDown
-                );
-            }
-            if (yearInputRef.current) {
-                yearInputRef.current.removeEventListener(
-                    "keydown",
-                    handleKeyDown
                 );
             }
         };
@@ -156,64 +123,8 @@ export const DateInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleKeyDown = (event: KeyboardEvent) => {
-        /**
-         * NOTE: This is the most deterministic way in handling
-         * incorrect characters from being entered. The pattern
-         * added in the input still allows some special characters
-         * to slip through.
-         */
-
-        const permittableEventCodes = [
-            "Digit0",
-            "Digit1",
-            "Digit2",
-            "Digit3",
-            "Digit4",
-            "Digit5",
-            "Digit6",
-            "Digit7",
-            "Digit8",
-            "Digit9",
-            "Tab",
-            "Backspace",
-            "Delete",
-            "ArrowLeft",
-            "ArrowRight",
-        ];
-
-        const permittableEventKeys = [
-            "Backspace",
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-        ];
-
-        // form validation for inputs is not supported on ios,
-        // hence manual checks needed to prevent special characters input
-        const isSpecialCharacter =
-            event.code &&
-            event.code.startsWith("Digit") &&
-            !permittableEventKeys.includes(event.key);
-
-        const isNotPermittedCharacter =
-            !permittableEventCodes.includes(event.code) &&
-            !permittableEventKeys.includes(event.key); // mobile devices
-
-        if (isNotPermittedCharacter || isSpecialCharacter) {
-            event.preventDefault();
-        }
-    };
-
     const handleMouseDown = (event: MouseEvent) => {
-        if (disabled) {
+        if (disabled || readOnly) {
             return;
         }
 
@@ -260,32 +171,20 @@ export const DateInput = ({
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
 
-        /**
-         * NOTE: Unfortunately, the maxLength is not respected for
-         * input type=number. Will need to add safeguards.
-         * Reference: https://stackoverflow.com/a/18510925
-         *
-         * Ignore inputs that exceed the respective max length
-         */
+        const value = event.target.value.replace(/[^0-9]/g, "");
 
         switch (targetName) {
             case "day":
-                if (event.target.value.length <= 2) {
-                    setDayValue(event.target.value);
-                    performOnChangeHandler(event.target.value, targetName);
-                }
+                setDayValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             case "month":
-                if (event.target.value.length <= 2) {
-                    setMonthValue(event.target.value);
-                    performOnChangeHandler(event.target.value, targetName);
-                }
+                setMonthValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             case "year":
-                if (event.target.value.length <= 4) {
-                    setYearValue(event.target.value);
-                    performOnChangeHandler(event.target.value, targetName);
-                }
+                setYearValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             default:
                 break;
@@ -295,6 +194,22 @@ export const DateInput = ({
     const handleNodeClick = () => {
         if (currentFocus === "none" && dayInputRef.current) {
             dayInputRef.current.focus();
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        /**
+         * Allow going to the field before if user presses Backspace
+         * on an empty field
+         */
+        if (event.code === "Backspace" || event.key === "Backspace") {
+            if (currentFocus === "month" && monthValue.length === 0) {
+                dayInputRef.current.focus();
+            }
+
+            if (currentFocus === "year" && yearValue.length === 0) {
+                monthInputRef.current.focus();
+            }
         }
     };
 
@@ -338,8 +253,12 @@ export const DateInput = ({
 
         if (onChangeRaw) {
             const valuesArr = [
-                ...(field === "day" ? [changeValue] : [dayValue]),
-                ...(field === "month" ? [changeValue] : [monthValue]),
+                ...(field === "day"
+                    ? [StringHelper.padValue(changeValue)]
+                    : [dayValue]),
+                ...(field === "month"
+                    ? [StringHelper.padValue(changeValue)]
+                    : [monthValue]),
                 ...(field === "year" ? [changeValue] : [yearValue]),
             ];
 
@@ -361,8 +280,8 @@ export const DateInput = ({
 
         if (onBlurRaw) {
             const valuesArr = [
-                dayValueStateRef.current,
-                monthValueStateRef.current,
+                StringHelper.padValue(dayValueStateRef.current.toString()),
+                StringHelper.padValue(monthValueStateRef.current.toString()),
                 yearValueStateRef.current,
             ];
 
@@ -389,37 +308,6 @@ export const DateInput = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-
-    const renderPlaceholder = () => (
-        <PlaceholderContainer>
-            <Placeholder
-                $hide={currentFocus === "day" || dayValue.length > 0}
-                data-testid="day-placeholder"
-            >
-                DD
-            </Placeholder>
-            <PlaceholderDivider $hide={dayValue.length > 0}>
-                /
-            </PlaceholderDivider>
-            <MonthPlaceholder
-                $hide={currentFocus === "month" || monthValue.length > 0}
-                data-testid="month-placeholder"
-            >
-                MM
-            </MonthPlaceholder>
-            <PlaceholderDivider $hide={monthValue.length > 0}>
-                /
-            </PlaceholderDivider>
-            <YearPlaceholder
-                $hide={currentFocus === "year" || yearValue.length > 0}
-                data-testid="year-placeholder"
-                $addGap={dayValue.length === 0 && yearValue.length === 0}
-            >
-                YYYY
-            </YearPlaceholder>
-        </PlaceholderContainer>
-    );
-
     return (
         <Container
             ref={nodeRef}
@@ -427,9 +315,9 @@ export const DateInput = ({
             disabled={disabled}
             $error={error}
             data-testid={otherProps["data-testid"]}
+            $readOnly={readOnly}
         >
-            {renderPlaceholder()}
-            <InputContainer>
+            <InputContainer $readOnly={readOnly}>
                 <BaseInput
                     name="day"
                     maxLength={2}
@@ -439,10 +327,15 @@ export const DateInput = ({
                     onBlur={handleBlur}
                     onChange={handleChange}
                     disabled={disabled}
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     pattern="[0-9]{2}"
                     data-testid="day-input"
                     aria-label="day-input"
+                    readOnly={readOnly}
+                    placeholder={
+                        currentFocus === "day" && !readOnly ? "" : "DD"
+                    }
                 />
                 <Divider $hide={dayValue.length === 0}>/</Divider>
                 <MonthInput
@@ -453,11 +346,17 @@ export const DateInput = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     disabled={disabled}
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     pattern="[0-9]{2}"
                     data-testid="month-input"
                     aria-label="month-input"
+                    readOnly={readOnly}
+                    placeholder={
+                        currentFocus === "month" && !readOnly ? "" : "MM"
+                    }
                 />
                 <Divider $hide={monthValue.length === 0}>/</Divider>
                 <YearInput
@@ -468,11 +367,17 @@ export const DateInput = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     disabled={disabled}
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     pattern="[0-9]{4}"
                     data-testid="year-input"
                     aria-label="year-input"
+                    readOnly={readOnly}
+                    placeholder={
+                        currentFocus === "year" && !readOnly ? "" : "YYYY"
+                    }
                 />
             </InputContainer>
         </Container>
