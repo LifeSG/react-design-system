@@ -171,37 +171,20 @@ export const DateInput = ({
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
 
-        /**
-         * NOTE: Unfortunately, the maxLength is not respected for
-         * input type=number. Will need to add safeguards.
-         * Reference: https://stackoverflow.com/a/18510925
-         *
-         * Ignore inputs that exceed the respective max length
-         */
-
-        let value = event.target.value;
-        if (/[^0-9]/.test(value)) {
-            value = value.replace(/[^0-9]/, "");
-        }
+        const value = event.target.value.replace(/[^0-9]/g, "");
 
         switch (targetName) {
             case "day":
-                if (value.length <= 2) {
-                    setDayValue(value);
-                    performOnChangeHandler(value, targetName);
-                }
+                setDayValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             case "month":
-                if (value.length <= 2) {
-                    setMonthValue(value);
-                    performOnChangeHandler(value, targetName);
-                }
+                setMonthValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             case "year":
-                if (value.length <= 4) {
-                    setYearValue(value);
-                    performOnChangeHandler(value, targetName);
-                }
+                setYearValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             default:
                 break;
@@ -211,6 +194,22 @@ export const DateInput = ({
     const handleNodeClick = () => {
         if (currentFocus === "none" && dayInputRef.current) {
             dayInputRef.current.focus();
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        /**
+         * Allow going to the field before if user presses Backspace
+         * on an empty field
+         */
+        if (event.code === "Backspace" || event.key === "Backspace") {
+            if (currentFocus === "month" && monthValue.length === 0) {
+                dayInputRef.current.focus();
+            }
+
+            if (currentFocus === "year" && yearValue.length === 0) {
+                monthInputRef.current.focus();
+            }
         }
     };
 
@@ -324,7 +323,8 @@ export const DateInput = ({
                     onBlur={handleBlur}
                     onChange={handleChange}
                     disabled={disabled}
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     pattern="[0-9]{2}"
                     data-testid="day-input"
                     aria-label="day-input"
@@ -342,8 +342,10 @@ export const DateInput = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     disabled={disabled}
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     pattern="[0-9]{2}"
                     data-testid="month-input"
                     aria-label="month-input"
@@ -361,8 +363,10 @@ export const DateInput = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     disabled={disabled}
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     pattern="[0-9]{4}"
                     data-testid="year-input"
                     aria-label="year-input"
