@@ -253,8 +253,12 @@ export const DateInput = ({
 
         if (onChangeRaw) {
             const valuesArr = [
-                ...(field === "day" ? [changeValue] : [dayValue]),
-                ...(field === "month" ? [changeValue] : [monthValue]),
+                ...(field === "day"
+                    ? [StringHelper.padValue(changeValue)]
+                    : [dayValue]),
+                ...(field === "month"
+                    ? [StringHelper.padValue(changeValue)]
+                    : [monthValue]),
                 ...(field === "year" ? [changeValue] : [yearValue]),
             ];
 
@@ -276,8 +280,8 @@ export const DateInput = ({
 
         if (onBlurRaw) {
             const valuesArr = [
-                dayValueStateRef.current,
-                monthValueStateRef.current,
+                StringHelper.padValue(dayValueStateRef.current.toString()),
+                StringHelper.padValue(monthValueStateRef.current.toString()),
                 yearValueStateRef.current,
             ];
 
