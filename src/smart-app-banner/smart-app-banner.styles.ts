@@ -39,7 +39,7 @@ export const SmartAppBannerContainer = styled.div<{
     ${(props) => {
         if (props.$isAnimated)
             return css`
-                animation: ${slideDown} 0.5s;
+                animation: ${slideDown} 0.3s;
             `;
     }}
 `;
