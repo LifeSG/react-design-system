@@ -9,6 +9,7 @@ module.exports = {
         "@storybook/addon-a11y",
         "@react-theming/storybook-addon",
     ],
+    staticDirs: ["../public"],
     typescript: {
         reactDocgen: "react-docgen-typescript",
     },
