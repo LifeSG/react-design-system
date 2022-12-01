@@ -78,8 +78,9 @@ export const TextContainer = styled.div`
     }
 `;
 
-export const LifeSgAppIcon = styled.img`
-    width: 42.5px;
+export const BannerIcon = styled.img`
+    width: 2.65rem;
+    height: auto;
     align-self: center;
 `;
 

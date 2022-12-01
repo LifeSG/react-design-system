@@ -1,11 +1,11 @@
 import React from "react";
 import {
+    BannerIcon,
     ButtonContainer,
     CrossIcon,
     Description,
     DismissButton,
     DismissContainer,
-    LifeSgAppIcon,
     ProceedContainer,
     RatingContainer,
     SmartAppBannerContainer,
@@ -114,7 +114,7 @@ function SmartAppBannerComponent(
                         id={`${ID}-proceed`}
                         data-testid={`${ID}-proceed-container`}
                     >
-                        <LifeSgAppIcon src={icon} alt="" />
+                        <BannerIcon src={icon} alt="lifesg-app-icon" />
                         <TextContainer>
                             <Title>{title}</Title>
                             <Description>{message}</Description>
