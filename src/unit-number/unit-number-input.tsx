@@ -134,12 +134,6 @@ export const UnitNumberInput = ({
         event.target.select();
     };
 
-    const formatInput = (value: string) => {
-        return /^[0-9]$/.test(value)
-            ? StringHelper.padValue(value, true)
-            : value.toLocaleUpperCase();
-    };
-
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
         const targetValue = event.target.value;
@@ -188,6 +182,12 @@ export const UnitNumberInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const formatInput = (value: string) => {
+        return /^[0-9]$/.test(value)
+            ? StringHelper.padValue(value, true)
+            : value.toLocaleUpperCase();
+    };
+
     const formatDisplayValues = (value: string | undefined) => {
         if (value === undefined || value === "") {
             setFloorValue("");
@@ -275,6 +275,9 @@ export const UnitNumberInput = ({
         }
     };
 
+    // =============================================================================
+    // RENDER FUNCTION
+    // =============================================================================
     return (
         <Container
             ref={nodeRef}
