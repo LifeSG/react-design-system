@@ -1,13 +1,13 @@
 export interface SmartAppBannerProps {
     show: boolean;
-    link: string;
+    href: string;
     content: SmartAppBannerContentProps;
     offset?: number | undefined;
     icon?: string | undefined;
-    isAnimated?: boolean | undefined;
+    animated?: boolean | undefined;
     className?: string | undefined;
-    onBannerDismiss: () => void;
-    onBannerPress?: () => void | undefined;
+    onDismiss: () => void;
+    onClick?: () => void | undefined;
 }
 
 export interface SmartAppBannerContentProps {

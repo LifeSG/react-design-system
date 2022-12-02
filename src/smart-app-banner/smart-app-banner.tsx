@@ -36,13 +36,13 @@ function SmartAppBannerComponent(
     const {
         className,
         show,
-        link,
+        href,
         content,
         offset = 0,
         icon = APP_ICON,
-        isAnimated = false,
-        onBannerDismiss,
-        onBannerPress,
+        animated = false,
+        onDismiss,
+        onClick,
     } = props;
 
     const { title, message, buttonLabel, buttonAriaLabel, numberOfStars } =
@@ -55,9 +55,9 @@ function SmartAppBannerComponent(
         e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
     ) => {
         e.stopPropagation();
-        window.open(link, "_blank", "noreferrer");
-        onBannerDismiss();
-        onBannerPress?.();
+        window.open(href, "_blank", "noreferrer");
+        onDismiss();
+        onClick?.();
     };
 
     // =============================================================================
@@ -96,12 +96,12 @@ function SmartAppBannerComponent(
             {show && (
                 <SmartAppBannerContainer
                     ref={ref}
-                    $isAnimated={isAnimated}
+                    $isAnimated={animated}
                     $offset={offset}
                     className={className}
                 >
                     <DismissContainer
-                        onClick={onBannerDismiss}
+                        onClick={onDismiss}
                         id={`${ID}-dismiss`}
                         data-testid={`${ID}-dismiss-container`}
                     >

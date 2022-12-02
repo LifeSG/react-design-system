@@ -17,7 +17,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "link",
+                name: "href",
                 mandatory: true,
                 description: (
                     <>
@@ -52,7 +52,7 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png`,
             },
             {
-                name: "isAnimated",
+                name: "animated",
                 mandatory: false,
                 description: "Adds a slide down animation upon appearance",
                 propTypes: ["boolean"],
@@ -65,7 +65,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["React.Ref<HTMLDivElement>"],
             },
             {
-                name: "onBannerDismiss",
+                name: "onDismiss",
                 mandatory: true,
                 description: (
                     <>
@@ -76,7 +76,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
-                name: "onBannerPress",
+                name: "onClick",
                 mandatory: false,
                 description: (
                     <>
