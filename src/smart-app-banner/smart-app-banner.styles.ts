@@ -67,6 +67,7 @@ export const ProceedContainer = styled.div`
     align-items: center;
     padding: 0.5rem 1rem 0.5rem 0.25rem;
 `;
+
 export const TextContainer = styled.div`
     flex: 1;
     display: flex;
@@ -84,24 +85,29 @@ export const LifeSgAppIcon = styled.img`
 `;
 
 export const ButtonContainer = styled.div`
-    display: flex;
+    max-width: 30%;
     align-items: center;
 `;
 
 export const StyledButton = styled(Button.Small)`
     padding: 0.5rem;
+    height: auto;
     & > span {
-        ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+        overflow-wrap: anywhere;
+        ${TextStyleHelper.getTextStyle("XSmall", "semibold")};
     }
 `;
 
 export const Title = styled(Text.H6)`
+    overflow-wrap: anywhere;
     ${MediaQuery.MaxWidth.mobileM} {
         ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }
 `;
 
-export const Description = styled(Text.XSmall)``;
+export const Description = styled(Text.XSmall)`
+    overflow-wrap: anywhere;
+`;
 
 export const RatingContainer = styled.div`
     margin-top: 0.25rem;
