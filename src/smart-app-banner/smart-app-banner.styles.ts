@@ -66,6 +66,7 @@ export const ProceedContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem 0.5rem 0.25rem;
+    cursor: pointer;
 `;
 export const TextContainer = styled.div`
     flex: 1;
