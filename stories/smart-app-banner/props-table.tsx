@@ -8,14 +8,23 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "show",
                 mandatory: true,
-                description: "Set to 'true' to show",
+                description: (
+                    <>
+                        Specifies if the <code>SmartAppBanner</code> is to be
+                        displayed
+                    </>
+                ),
                 propTypes: ["boolean"],
             },
             {
-                name: "link",
+                name: "href",
                 mandatory: true,
-                description:
-                    "Sets the url for SmartAppBanner to open when pressed",
+                description: (
+                    <>
+                        The destination url when the <code>SmartAppBanner</code>{" "}
+                        is clicked
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
@@ -23,16 +32,15 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        Object containing `title`, `message`, `buttonLabel`,
-                        `buttonAriaLabel` keys
+                        The content of the <code>SmartAppBanner</code>
                     </>
                 ),
-                propTypes: [`"Content"`],
+                propTypes: ["SmartAppBannerContentProps"],
             },
             {
                 name: "offset",
                 mandatory: false,
-                description: "Sets the 'top' value in pixels",
+                description: "Sets the 'top' value (in px)",
                 propTypes: ["number"],
                 defaultValue: `0`,
             },
@@ -44,10 +52,9 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png`,
             },
             {
-                name: "isAnimated",
+                name: "animated",
                 mandatory: false,
-                description:
-                    "Set banner to appear with slide down animation is it's true",
+                description: "Adds a slide down animation upon appearance",
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
@@ -58,7 +65,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["React.Ref<HTMLDivElement>"],
             },
             {
-                name: "onBannerDismiss",
+                name: "onDismiss",
                 mandatory: true,
                 description: (
                     <>
@@ -69,7 +76,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
-                name: "onBannerPress",
+                name: "onClick",
                 mandatory: false,
                 description: (
                     <>
@@ -83,12 +90,12 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "Content",
+        name: "SmartAppBannerContentProps",
         attributes: [
             {
                 name: "title",
                 mandatory: true,
-                description: "The title",
+                description: "The display title",
                 propTypes: ["string"],
             },
             {
@@ -102,6 +109,19 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: "The aria label of the button",
                 propTypes: ["string"],
+            },
+            {
+                name: "numberOfStars",
+                mandatory: true,
+                description: (
+                    <>
+                        The number of stars to display in the{" "}
+                        <code>SmartAppBanner</code>. Decimal values are
+                        acceptable and if <code>NaN</code> or negative values
+                        are specified, the stars display will be hidden
+                    </>
+                ),
+                propTypes: ["number"],
             },
             {
                 name: "message",
