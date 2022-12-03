@@ -134,12 +134,6 @@ export const UnitNumberInput = ({
         event.target.select();
     };
 
-    const formatInput = (value: string) => {
-        return /^[0-9]$/.test(value)
-            ? StringHelper.padValue(value, true)
-            : value.toLocaleUpperCase();
-    };
-
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
         const targetValue = event.target.value;
@@ -154,10 +148,9 @@ export const UnitNumberInput = ({
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
 
-        let value = event.target.value.toLocaleUpperCase();
-        if (/[^0-9A-Za-z]/.test(value)) {
-            value = value.replace(/[^0-9A-Za-z]/, "");
-        }
+        const value = event.target.value
+            .toLocaleUpperCase()
+            .replace(/[^0-9A-Za-z]/, "");
 
         if (targetName === "floor") {
             setFloorValue(value);
@@ -174,9 +167,27 @@ export const UnitNumberInput = ({
         }
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        /**
+         * Allow going to the field before if user presses Backspace
+         * on an empty field
+         */
+        if (event.code === "Backspace" || event.key === "Backspace") {
+            if (currentFocus === "unit" && unitValue.length === 0) {
+                floorInputRef.current.focus();
+            }
+        }
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const formatInput = (value: string) => {
+        return /^[0-9]$/.test(value)
+            ? StringHelper.padValue(value, true)
+            : value.toLocaleUpperCase();
+    };
+
     const formatDisplayValues = (value: string | undefined) => {
         if (value === undefined || value === "") {
             setFloorValue("");
@@ -210,8 +221,12 @@ export const UnitNumberInput = ({
 
         if (onChangeRaw) {
             const valuesArr = [
-                ...(field === "floor" ? [changeValue] : [floorValue]),
-                ...(field === "unit" ? [changeValue] : [unitValue]),
+                ...(field === "floor"
+                    ? [formatInput(changeValue)]
+                    : [floorValue]),
+                ...(field === "unit"
+                    ? [formatInput(changeValue)]
+                    : [unitValue]),
             ];
 
             onChangeRaw(valuesArr);
@@ -231,8 +246,8 @@ export const UnitNumberInput = ({
 
         if (onBlurRaw) {
             const valuesArr = [
-                floorValueStateRef.current,
-                unitValueStateRef.current,
+                formatInput(floorValueStateRef.current),
+                formatInput(unitValueStateRef.current),
             ];
 
             onBlurRaw(valuesArr);
@@ -260,6 +275,9 @@ export const UnitNumberInput = ({
         }
     };
 
+    // =============================================================================
+    // RENDER FUNCTION
+    // =============================================================================
     return (
         <Container
             ref={nodeRef}
@@ -308,6 +326,7 @@ export const UnitNumberInput = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     disabled={disabled}
                     readOnly={readOnly}
                     type="text"
