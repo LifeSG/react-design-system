@@ -86,7 +86,6 @@ export const LifeSgAppIcon = styled.img`
 
 export const ButtonContainer = styled.div`
     max-width: 30%;
-    align-items: center;
 `;
 
 export const StyledButton = styled(Button.Small)`
