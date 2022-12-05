@@ -68,6 +68,7 @@ export const ProceedContainer = styled.div`
     padding: 0.5rem 1rem 0.5rem 0.25rem;
     cursor: pointer;
 `;
+
 export const TextContainer = styled.div`
     flex: 1;
     display: flex;
@@ -86,24 +87,28 @@ export const BannerIcon = styled.img`
 `;
 
 export const ButtonContainer = styled.div`
-    display: flex;
-    align-items: center;
+    max-width: 30%;
 `;
 
 export const StyledButton = styled(Button.Small)`
     padding: 0.5rem;
+    height: auto;
     & > span {
-        ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+        overflow-wrap: anywhere;
+        ${TextStyleHelper.getTextStyle("XSmall", "semibold")};
     }
 `;
 
 export const Title = styled(Text.H6)`
+    overflow-wrap: anywhere;
     ${MediaQuery.MaxWidth.mobileM} {
         ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }
 `;
 
-export const Description = styled(Text.XSmall)``;
+export const Description = styled(Text.XSmall)`
+    overflow-wrap: anywhere;
+`;
 
 export const RatingContainer = styled.div`
     margin-top: 0.25rem;
