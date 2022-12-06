@@ -255,7 +255,7 @@ export const UnitNumberInput = ({
     };
 
     const getFormattedValue = (values: Record<ValueFieldTypes, string>) => {
-        const valueArr = [formatInput(values.floor), formatInput(values.unit)];
+        const valueArr = [values.floor, values.unit];
 
         if (values.floor.length > 0 && values.unit.length > 0) {
             return valueArr.join("-");
