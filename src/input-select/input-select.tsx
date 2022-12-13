@@ -65,7 +65,7 @@ export const InputSelect = <T, V>({
         }
     };
 
-    const handleListItemClick = (item: T, extractedValue: T | V) => {
+    const handleListItemClick = (item: T, extractedValue: V) => {
         setSelected(item);
         setShowOptions(false);
         triggerOptionDisplayCallback(false);

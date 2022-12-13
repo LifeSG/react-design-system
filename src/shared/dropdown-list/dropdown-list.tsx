@@ -139,8 +139,8 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const getValue = (item: T): V | T => {
-        return valueExtractor ? valueExtractor(item) : item;
+    const getValue = (item: T): V => {
+        return valueExtractor ? valueExtractor(item) : (item as unknown as V);
     };
 
     const getItemKey = (item: T, index: number) => {

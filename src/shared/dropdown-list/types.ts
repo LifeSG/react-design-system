@@ -13,7 +13,7 @@ export interface DropdownStyleProps {
 }
 
 export interface DropdownEventHandlerProps<T, V> {
-    onSelectItem?: (item: T, extractedValue: T | V) => void | undefined;
+    onSelectItem?: (item: T, extractedValue: V) => void | undefined;
     onSelectItems?: (items: T[]) => void | undefined;
 }
 
