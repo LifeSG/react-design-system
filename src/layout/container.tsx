@@ -40,20 +40,22 @@ const StyledContainer = styled.div<StyleProps>`
     margin: 0 auto;
     position: relative;
     width: auto;
+    padding: 0 0.75rem;
 
     /* Max width restrictions */
-    max-width: 1344px;
+    max-width: 1320px;
 
     ${MediaQuery.MaxWidth.desktopM} {
-        max-width: 1152px;
+        max-width: 1140px;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        max-width: 960px;
+        max-width: 720px;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: 100%;
+        padding: 0;
         max-width: unset;
     }
 
