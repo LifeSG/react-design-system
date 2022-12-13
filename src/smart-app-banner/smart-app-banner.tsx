@@ -56,7 +56,6 @@ function SmartAppBannerComponent(
     ) => {
         e.stopPropagation();
         window.open(href, "_blank", "noreferrer");
-        onDismiss();
         onClick?.();
     };
 
