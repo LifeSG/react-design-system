@@ -82,7 +82,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Sets additional behaviour when SmartAppBanner is pressed
                         on non-dismiss area. Default behaviour opens link in new
-                        tab and dismisses the SmartAppBanner.
+                        tab.
                     </>
                 ),
                 propTypes: ["() => void"],
