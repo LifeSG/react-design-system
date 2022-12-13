@@ -5,6 +5,16 @@ import { MediaQuery } from "../media";
 import { Transition } from "../transition";
 
 // =============================================================================
+// CONSTANTS
+// =============================================================================
+export const NAVBAR_HEIGHT = {
+    notCompress: 6,
+    compress: 4,
+};
+
+export const NAVBAR_MOBILE_HEIGHT = 3.5;
+
+// =============================================================================
 // STYLE INTERFACE
 // =============================================================================
 interface StyleProps {
@@ -38,7 +48,7 @@ export const Nav = styled.nav<StyleProps>`
     transition: ${Transition.Base};
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: ${() => NAVBAR_MOBILE_HEIGHT}rem;
+        height: ${NAVBAR_MOBILE_HEIGHT}rem;
     }
 `;
 
@@ -76,13 +86,3 @@ export const MobileMenuButton = styled(IconButton)`
         }
     }
 `;
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-export const NAVBAR_HEIGHT = {
-    notCompress: 6,
-    compress: 4,
-};
-
-export const NAVBAR_MOBILE_HEIGHT = 3.5;
