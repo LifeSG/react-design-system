@@ -86,8 +86,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Called when the user enters a value in the field.
-                        Returns unformatted value in an array format as such [
+                        Returns actual values in an array format as such [
                         <code>day</code>, <code>month</code>, <code>year</code>]
+                        &nbsp;regardless if it is invalid
                     </>
                 ),
                 propTypes: ["(value: string[]) => void"],
@@ -107,9 +108,10 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onBlurRaw",
                 description: (
                     <>
-                        Called when a defocus happens. Returns unformatted value
-                        in an array format as such [<code>day</code>,{" "}
-                        <code>month</code>, <code>year</code>]
+                        Called when a defocus happens. Returns values in an
+                        array format as such [<code>day</code>,{" "}
+                        <code>month</code>, <code>year</code>] &nbsp;regardless
+                        if it is invalid
                     </>
                 ),
                 propTypes: ["(value: string[]) => void"],
