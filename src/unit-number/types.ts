@@ -5,11 +5,11 @@ export interface UnitNumberInputProps extends React.AriaAttributes {
     style?: React.CSSProperties | undefined;
     tabIndex?: number | undefined;
     "data-testid"?: string | undefined;
-    readOnly?: boolean;
-    placeholder?: string;
+    readOnly?: boolean | undefined;
+    placeholder?: string | undefined;
 
     // WAI-ARIA
-    role?: string;
+    role?: string | undefined;
 
     // Input-specific Attributes
     value?: string | undefined;

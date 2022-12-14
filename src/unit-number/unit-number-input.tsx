@@ -22,7 +22,7 @@ export const UnitNumberInput = ({
     onChangeRaw,
     onBlurRaw,
     readOnly,
-    placeholder,
+    placeholder = "00-8888",
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -191,11 +191,12 @@ export const UnitNumberInput = ({
     const updateValues = (value: string | undefined) => {
         if (value === INVALID_VALUE) {
             return;
-        }
-
-        if (!(value === undefined || value.length === 0)) {
+        } else if (value === undefined || value.length === 0) {
+            setFloorValue("");
+            setUnitValue("");
+        } else {
             const valueArr = value.split("-");
-            if (valueArr.length !== 0) {
+            if (valueArr.length === 2) {
                 // Valid value
                 const floor = valueArr[0];
                 const unit = valueArr[1];
@@ -206,9 +207,6 @@ export const UnitNumberInput = ({
                     currentFocus === "unit" ? unit : formatInput(unit)
                 );
             }
-        } else {
-            setFloorValue("");
-            setUnitValue("");
         }
     };
 
@@ -267,13 +265,8 @@ export const UnitNumberInput = ({
         }
     };
 
-    const getPlaceholder = (value: string | undefined) => {
-        if (value === undefined || value === "") {
-            return ["00", "8888"];
-        } else {
-            const valueArr = value.split("-");
-            return valueArr;
-        }
+    const getPlaceholder = (value: string) => {
+        return value.split("-");
     };
 
     // =============================================================================

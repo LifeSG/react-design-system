@@ -45,8 +45,15 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "placeholder",
-                description: "The placeholder of the component",
+                description: (
+                    <>
+                        The placeholder of the component. We recommend to use
+                        the
+                        <code>{`<floor>-<unit>`}</code> format.
+                    </>
+                ),
                 propTypes: ["string"],
+                defaultValue: "00-8888",
             },
             {
                 name: "disabled",
