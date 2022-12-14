@@ -7,6 +7,8 @@ import { StringHelper } from "../../util/string-helper";
 import {
     Container,
     DropdownCommonButton,
+    Image,
+    ImageWrapper,
     Label,
     LabelIcon,
     List,
@@ -149,7 +151,7 @@ export const DropdownList = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    const getOptionLabel = (item: T): string => {
+    const getOptionLabel = (item: T): string | HTMLImageElement => {
         return listExtractor ? listExtractor(item) : item.toString();
     };
 
@@ -157,6 +159,11 @@ export const DropdownList = <T, V>({
         const displayText = listExtractor
             ? listExtractor(item)
             : item.toString();
+
+        if (typeof displayText !== "string") {
+            return false;
+        }
+
         let widthOfElement = 0;
         if (listRef && listRef.current) {
             widthOfElement =
@@ -181,7 +188,9 @@ export const DropdownList = <T, V>({
             setDisplayListItems(updated);
         } else {
             const updated = listItems.filter((item) => {
-                const displayValue = getOptionLabel(item).toLowerCase();
+                const displayValue = (
+                    getOptionLabel(item) as string
+                ).toLowerCase();
                 return displayValue.includes(searchValue.trim().toLowerCase());
             });
             setDisplayListItems(updated);
@@ -257,6 +266,25 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const renderLabelItem = (item: T): JSX.Element => {
+        if (typeof item === "string") {
+            return (
+                <Label truncateType={itemTruncationType}>
+                    {itemTruncationType === "middle" &&
+                    hasExceededContainer(item)
+                        ? renderTruncatedText(item)
+                        : getOptionLabel(item)}
+                </Label>
+            );
+        } else {
+            return (
+                <ImageWrapper>
+                    <Image src={item as string} />
+                </ImageWrapper>
+            );
+        }
+    };
+
     const renderTruncatedText = (item: T): JSX.Element => {
         const displayText = listExtractor
             ? listExtractor(item)
@@ -295,12 +323,7 @@ export const DropdownList = <T, V>({
                                     displaySize={"small"}
                                 />
                             )}
-                            <Label truncateType={itemTruncationType}>
-                                {itemTruncationType === "middle" &&
-                                hasExceededContainer(item)
-                                    ? renderTruncatedText(item)
-                                    : getOptionLabel(item)}
-                            </Label>
+                            {renderLabelItem(item)}
                         </ListItemSelector>
                     </ListItem>
                 );
