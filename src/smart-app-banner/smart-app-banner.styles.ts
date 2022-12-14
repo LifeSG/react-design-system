@@ -1,12 +1,26 @@
-import { Text, TextStyleHelper } from "../text";
+import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
-import styled from "styled-components";
-import { IconButton } from "../icon-button";
 import { Icon } from "../icon";
+import { IconButton } from "../icon-button";
+import { MediaQuery } from "../media";
+import { Text, TextStyleHelper } from "../text";
 
-export const SmartAppBannerContainer = styled.div<{ $offset: number }>`
+const slideDown = keyframes`
+	from {
+		opacity: 0;
+		transform: translateY(-20%);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+`;
+
+export const SmartAppBannerContainer = styled.div<{
+    $offset: number;
+    $isAnimated: boolean;
+}>`
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -22,7 +36,12 @@ export const SmartAppBannerContainer = styled.div<{ $offset: number }>`
     background: #ffffff;
     box-shadow: 0px 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
     border-radius: 0.5rem;
-    transition: top 0.5s ease;
+    ${(props) => {
+        if (props.$isAnimated)
+            return css`
+                animation: ${slideDown} 0.3s;
+            `;
+    }}
 `;
 
 export const DismissContainer = styled.div`
@@ -47,7 +66,9 @@ export const ProceedContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem 0.5rem 0.25rem;
+    cursor: pointer;
 `;
+
 export const TextContainer = styled.div`
     flex: 1;
     display: flex;
@@ -59,30 +80,35 @@ export const TextContainer = styled.div`
     }
 `;
 
-export const LifeSgAppIcon = styled.img`
-    width: 42.5px;
+export const BannerIcon = styled.img`
+    width: 2.65rem;
+    height: auto;
     align-self: center;
 `;
 
-export const DownloadContainer = styled.div`
-    display: flex;
-    align-items: center;
+export const ButtonContainer = styled.div`
+    max-width: 30%;
 `;
 
-export const DownloadButton = styled(Button.Small)`
+export const StyledButton = styled(Button.Small)`
     padding: 0.5rem;
+    height: auto;
     & > span {
-        ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+        overflow-wrap: anywhere;
+        ${TextStyleHelper.getTextStyle("XSmall", "semibold")};
     }
 `;
 
 export const Title = styled(Text.H6)`
+    overflow-wrap: anywhere;
     ${MediaQuery.MaxWidth.mobileM} {
         ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }
 `;
 
-export const Description = styled(Text.XSmall)``;
+export const Description = styled(Text.XSmall)`
+    overflow-wrap: anywhere;
+`;
 
 export const RatingContainer = styled.div`
     margin-top: 0.25rem;
