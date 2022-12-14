@@ -36,8 +36,8 @@ A standard layout comprises of 2 components:
 
 <Heading4>Section</Heading4>
 
-This is the wrapper component that uses the `<section>` under the hood. It's style specifications are
-as such:
+This is the wrapper component that uses the `<section>` under the hood.
+It's style specifications are as such:
 
 | Attribute          | Value    |
 | ------------------ | -------- |
@@ -47,14 +47,20 @@ as such:
 
 <Heading4>Container</Heading4>
 
-This is the child component that uses a `<div>` under the hood. This component **does not come with any padding** but it enforces a maximum width based on the viewport. The maximum width values are as follow:
+This is the child component that uses a `<div>` under the hood.
+This component **comes with a horizontal padding** on certain viewports and
+enforces a maximum width based on the viewport. The maximum width values are
+as follow:
 
-| Viewport                        | Max width          |
-| ------------------------------- | ------------------ |
-| `desktop4k`, `desktopL`         | `1344px`           |
-| `desktopM`                      | `1152px`           |
-| `tablet`                        | `960px`            |
-| `mobileL`, `mobileM`, `mobileS` | Takes `100%` width |
+> **Note**: The horizontal padding is meant to be aligned with the
+> [Singapore Government Design System](https://designsystem.tech.gov.sg/)
+
+| Viewport                        | Max width          | Horizontal Padding |
+| ------------------------------- | ------------------ | ------------------ |
+| `desktop4k`, `desktopL`         | `1320px`           | `0.75rem`          |
+| `desktopM`                      | `1140px`           | `0.75rem`          |
+| `tablet`                        | `720px`            | `0.75rem`          |
+| `mobileL`, `mobileM`, `mobileS` | Takes `100%` width | `0`                |
 
 <br />
 
