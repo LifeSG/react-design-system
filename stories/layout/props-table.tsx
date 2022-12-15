@@ -29,8 +29,8 @@ const CONTENT_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "type",
-                description: "The display type to be render",
-                propTypes: [`"flex"`, `"grid"`],
+                description: "The display type to be rendered",
+                propTypes: [`"flex"`, `"flex-column"`, `"grid"`],
                 defaultValue: `"flex"`,
             },
             {
@@ -89,8 +89,8 @@ const CONTAINER_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "type",
-                description: "The display type to be render",
-                propTypes: [`"flex"`, `"grid"`],
+                description: "The display type to be rendered",
+                propTypes: [`"flex"`, `"flex-column"`, `"grid"`],
                 defaultValue: `"flex"`,
             },
             {
