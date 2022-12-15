@@ -6,6 +6,8 @@ export interface DropdownDisplayExtractorProps<T, V> {
     valueExtractor?: (item: T) => V | undefined;
     /** Function to derive options display value from an item */
     listExtractor?: (item: T) => string | undefined;
+    /** Function to render custom component */
+    renderListItem?: (item: T) => JSX.Element | undefined;
 }
 
 export interface DropdownStyleProps {

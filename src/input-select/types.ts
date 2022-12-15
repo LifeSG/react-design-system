@@ -60,6 +60,8 @@ export interface InputSelectProps<T, V>
     displayValueExtractor?: (option: T) => string | undefined;
     /** Function to convert value into a string */
     valueToStringFunction?: (value: V) => string | undefined;
+    /** Function to render selected custom component */
+    renderCustomSelectedItem?: (item: any) => JSX.Element | undefined;
 }
 
 /** To be exposed for Form component inheritance */

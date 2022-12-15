@@ -169,16 +169,3 @@ export const ValueLabel = styled(Text.Body)<ValueLabelStyleProps>`
 export const PlaceholderLabel = styled(ValueLabel)`
     color: ${Color.Neutral[3]};
 `;
-
-export const ImageWrapper = styled.div`
-    display: flex;
-    border-radius: 4px;
-    border: 1px solid;
-    overflow: hidden;
-    align-items: center;
-`;
-
-export const Image = styled.img`
-    height: 40px;
-    width: 184px;
-`;

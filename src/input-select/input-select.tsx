@@ -5,8 +5,6 @@ import { InputSelectWrapper } from "./input-select-wrapper";
 import {
     Divider,
     IconContainer,
-    Image,
-    ImageWrapper,
     LabelContainer,
     PlaceholderLabel,
     Selector,
@@ -37,6 +35,8 @@ export const InputSelect = <T, V>({
     onRetry,
     optionsLoadState = "success",
     optionTruncationType = "end",
+    renderCustomSelectedItem,
+    renderListItem,
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -159,15 +159,8 @@ export const InputSelect = <T, V>({
                 </PlaceholderLabel>
             );
         } else {
-            if (StringHelper.isImageUrl(getDisplayValue() as string)) {
-                return (
-                    <ImageWrapper>
-                        <Image
-                            src={getDisplayValue() as string}
-                            alt={getDisplayValue() as string}
-                        />
-                    </ImageWrapper>
-                );
+            if (renderCustomSelectedItem(getDisplayValue())) {
+                return renderCustomSelectedItem(getDisplayValue());
             } else {
                 return (
                     <ValueLabel truncateType={optionTruncationType}>
@@ -208,6 +201,7 @@ export const InputSelect = <T, V>({
                     onRetry={onRetry}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
+                    renderListItem={renderListItem}
                 />
             );
         }

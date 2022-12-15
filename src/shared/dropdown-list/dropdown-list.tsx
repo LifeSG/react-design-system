@@ -7,8 +7,6 @@ import { StringHelper } from "../../util/string-helper";
 import {
     Container,
     DropdownCommonButton,
-    Image,
-    ImageWrapper,
     Label,
     LabelIcon,
     List,
@@ -47,6 +45,7 @@ export const DropdownList = <T, V>({
     onRetry,
     itemsLoadState = "success",
     itemTruncationType = "end",
+    renderListItem,
     ...otherProps
 }: DropdownListProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -260,28 +259,6 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderLabelItem = (item: T): JSX.Element => {
-        if (StringHelper.isImageUrl(getOptionLabel(item))) {
-            return (
-                <ImageWrapper>
-                    <Image
-                        src={getOptionLabel(item)}
-                        alt={getOptionLabel(item)}
-                    />
-                </ImageWrapper>
-            );
-        } else {
-            return (
-                <Label truncateType={itemTruncationType}>
-                    {itemTruncationType === "middle" &&
-                    hasExceededContainer(item)
-                        ? renderTruncatedText(item)
-                        : getOptionLabel(item)}
-                </Label>
-            );
-        }
-    };
-
     const renderTruncatedText = (item: T): JSX.Element => {
         const displayText = listExtractor
             ? listExtractor(item)
@@ -320,7 +297,16 @@ export const DropdownList = <T, V>({
                                     displaySize={"small"}
                                 />
                             )}
-                            {renderLabelItem(item)}
+                            {renderListItem(item) ? (
+                                renderListItem(item)
+                            ) : (
+                                <Label truncateType={itemTruncationType}>
+                                    {itemTruncationType === "middle" &&
+                                    hasExceededContainer(item)
+                                        ? renderTruncatedText(item)
+                                        : getOptionLabel(item)}
+                                </Label>
+                            )}
                         </ListItemSelector>
                     </ListItem>
                 );
