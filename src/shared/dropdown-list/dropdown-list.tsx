@@ -184,9 +184,7 @@ export const DropdownList = <T, V>({
             setDisplayListItems(updated);
         } else {
             const updated = listItems.filter((item) => {
-                const displayValue = (
-                    getOptionLabel(item) as string
-                ).toLowerCase();
+                const displayValue = getOptionLabel(item).toLowerCase();
                 return displayValue.includes(searchValue.trim().toLowerCase());
             });
             setDisplayListItems(updated);
