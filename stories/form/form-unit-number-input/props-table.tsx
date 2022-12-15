@@ -44,6 +44,18 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "placeholder",
+                description: (
+                    <>
+                        The placeholder of the component. We recommend to use
+                        the
+                        <code>{`<floor>-<unit>`}</code> format.
+                    </>
+                ),
+                propTypes: ["string"],
+                defaultValue: "00-8888",
+            },
+            {
                 name: "disabled",
                 description:
                     "Indicates if the component is disabled and entry is not allowed",
@@ -93,8 +105,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Called when the user enters a value in the field.
-                        Returns unformatted value in an array format as such [
-                        <code>floor</code>, <code>unit</code>]
+                        Returns values in an array format as such [
+                        <code>floor</code>, <code>unit</code>]&nbsp;regardless
+                        if it is invalid
                     </>
                 ),
                 propTypes: ["(value: string[]) => void"],
@@ -103,9 +116,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onBlur",
                 description: (
                     <>
-                        Called when a defocus happens. Returns the existing
+                        Called when a defocus happens. Returns the formatted
                         value in&nbsp;
-                        <code>00-8888</code>&nbsp;format
+                        <code>00-8888</code>&nbsp;format. (E.g.{" "}
+                        <code>11-2</code>
+                        will be returned as <code>11-02</code>)
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
@@ -114,22 +129,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onBlurRaw",
                 description: (
                     <>
-                        Called when a defocus happens. Returns unformatted value
+                        Called when a defocus happens. Returns formatted values
                         in an array format as such [<code>floor</code>,{" "}
-                        <code>unit</code>]
+                        <code>unit</code>]&nbsp;regardless if it is invalid
                     </>
                 ),
                 propTypes: ["(value: string[]) => void"],
-            },
-            {
-                name: "placeholder",
-                description: (
-                    <>
-                        The placeholder text of the unit input as such{" "}
-                        <code>floor-unit</code>
-                    </>
-                ),
-                propTypes: ["string"],
             },
         ],
     },

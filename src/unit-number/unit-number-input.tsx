@@ -22,7 +22,7 @@ export const UnitNumberInput = ({
     onChangeRaw,
     onBlurRaw,
     readOnly,
-    placeholder,
+    placeholder = "00-8888",
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -99,7 +99,7 @@ export const UnitNumberInput = ({
     }, [floorValue]);
 
     useEffect(() => {
-        formatDisplayValues(value);
+        updateValues(value);
     }, [value]);
 
     // =============================================================================
@@ -188,69 +188,68 @@ export const UnitNumberInput = ({
             : value.toLocaleUpperCase();
     };
 
-    const formatDisplayValues = (value: string | undefined) => {
-        if (value === undefined || value === "") {
+    const updateValues = (value: string | undefined) => {
+        if (value === INVALID_VALUE) {
+            return;
+        } else if (value === undefined || value.length === 0) {
             setFloorValue("");
             setUnitValue("");
         } else {
             const valueArr = value.split("-");
-            if (valueArr.length !== 0) {
+            if (valueArr.length === 2) {
                 // Valid value
                 const floor = valueArr[0];
                 const unit = valueArr[1];
-
-                setFloorValue(formatInput(floor));
-                setUnitValue(formatInput(unit));
+                setFloorValue(
+                    currentFocus === "floor" ? floor : formatInput(floor)
+                );
+                setUnitValue(
+                    currentFocus === "unit" ? unit : formatInput(unit)
+                );
             }
         }
     };
 
     const performOnChangeHandler = (changeValue: string, field: FieldType) => {
+        if (!onChange && !onChangeRaw) {
+            return;
+        }
+
+        const values: Record<ValueFieldTypes, string> = {
+            floor: floorValueStateRef.current,
+            unit: unitValueStateRef.current,
+        };
+
+        // Update the specific field value
+        values[field] = changeValue;
+
         if (onChange) {
-            const values: Record<ValueFieldTypes, string> = {
-                floor: floorValue,
-                unit: unitValue,
-            };
-
-            // Update the specific field value
-            values[field] = changeValue;
-
             const returnValue = getFormattedValue(values);
             onChange(returnValue);
         }
 
         if (onChangeRaw) {
-            const valuesArr = [
-                ...(field === "floor"
-                    ? [formatInput(changeValue)]
-                    : [floorValue]),
-                ...(field === "unit"
-                    ? [formatInput(changeValue)]
-                    : [unitValue]),
-            ];
-
-            onChangeRaw(valuesArr);
+            onChangeRaw([values.floor, values.unit]);
         }
     };
 
     const performOnBlurHandler = () => {
-        if (onBlur) {
-            const values: Record<ValueFieldTypes, string> = {
-                floor: floorValueStateRef.current,
-                unit: unitValueStateRef.current,
-            };
+        if (!onBlur && !onBlurRaw) {
+            return;
+        }
 
+        const values: Record<ValueFieldTypes, string> = {
+            floor: formatInput(floorValueStateRef.current),
+            unit: formatInput(unitValueStateRef.current),
+        };
+
+        if (onBlur) {
             const returnValue = getFormattedValue(values);
             onBlur(returnValue);
         }
 
         if (onBlurRaw) {
-            const valuesArr = [
-                formatInput(floorValueStateRef.current),
-                formatInput(unitValueStateRef.current),
-            ];
-
-            onBlurRaw(valuesArr);
+            onBlurRaw([values.floor, values.unit]);
         }
     };
 
@@ -266,13 +265,8 @@ export const UnitNumberInput = ({
         }
     };
 
-    const getPlaceholder = (value: string | undefined) => {
-        if (value === undefined || value === "") {
-            return ["00", "8888"];
-        } else {
-            const valueArr = value.split("-");
-            return valueArr;
-        }
+    const getPlaceholder = (value: string) => {
+        return value.split("-");
     };
 
     // =============================================================================
