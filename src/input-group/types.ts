@@ -1,6 +1,6 @@
 import { InputProps } from "../input/types";
 import {
-    DropdownDisplayExtractorProps,
+    DropdownDisplayProps,
     DropdownSearchProps,
     ItemsLoadStateType,
     TruncateType,
@@ -17,7 +17,7 @@ export interface LabelAddon {
 }
 
 export interface ListAddon<T, V>
-    extends DropdownDisplayExtractorProps<T, V>,
+    extends DropdownDisplayProps<T, V>,
         DropdownSearchProps<T> {
     value?: T | undefined;
     placeholder?: string | undefined;
