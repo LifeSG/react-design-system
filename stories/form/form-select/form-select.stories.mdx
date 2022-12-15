@@ -91,10 +91,10 @@ import { Form } from "@lifesg/react-design-system/form";
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
-                    renderCustomSelectedItem={(option) => {
+                    renderCustomSelectedItem={(url) => {
                         return (
                             <ImageWrapper>
-                                <Image src={option.label} alt={option.label} />
+                                <Image src={url} alt={url} />
                             </ImageWrapper>
                         );
                     }}
