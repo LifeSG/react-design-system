@@ -86,4 +86,8 @@ export namespace StringHelper {
 
         return text;
     };
+
+    export const isImageUrl = (url: string) => {
+        return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+    };
 }

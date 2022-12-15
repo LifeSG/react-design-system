@@ -5,7 +5,7 @@ export interface DropdownDisplayExtractorProps<T, V> {
     /** Function to derive value from an item */
     valueExtractor?: (item: T) => V | undefined;
     /** Function to derive options display value from an item */
-    listExtractor?: (item: T) => string | HTMLImageElement | undefined;
+    listExtractor?: (item: T) => string | undefined;
 }
 
 export interface DropdownStyleProps {

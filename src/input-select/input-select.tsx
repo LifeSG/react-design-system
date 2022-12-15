@@ -5,6 +5,8 @@ import { InputSelectWrapper } from "./input-select-wrapper";
 import {
     Divider,
     IconContainer,
+    Image,
+    ImageWrapper,
     LabelContainer,
     PlaceholderLabel,
     Selector,
@@ -157,11 +159,22 @@ export const InputSelect = <T, V>({
                 </PlaceholderLabel>
             );
         } else {
-            return (
-                <ValueLabel truncateType={optionTruncationType}>
-                    {truncateValue(getDisplayValue())}
-                </ValueLabel>
-            );
+            if (StringHelper.isImageUrl(getDisplayValue() as string)) {
+                return (
+                    <ImageWrapper>
+                        <Image
+                            src={getDisplayValue() as string}
+                            alt={getDisplayValue() as string}
+                        />
+                    </ImageWrapper>
+                );
+            } else {
+                return (
+                    <ValueLabel truncateType={optionTruncationType}>
+                        {truncateValue(getDisplayValue())}
+                    </ValueLabel>
+                );
+            }
         }
     };
 

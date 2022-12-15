@@ -151,7 +151,7 @@ export const DropdownList = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    const getOptionLabel = (item: T): string | HTMLImageElement => {
+    const getOptionLabel = (item: T): string => {
         return listExtractor ? listExtractor(item) : item.toString();
     };
 
@@ -159,10 +159,6 @@ export const DropdownList = <T, V>({
         const displayText = listExtractor
             ? listExtractor(item)
             : item.toString();
-
-        if (typeof displayText !== "string") {
-            return false;
-        }
 
         let widthOfElement = 0;
         if (listRef && listRef.current) {
@@ -267,7 +263,16 @@ export const DropdownList = <T, V>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderLabelItem = (item: T): JSX.Element => {
-        if (typeof item === "string") {
+        if (StringHelper.isImageUrl(getOptionLabel(item))) {
+            return (
+                <ImageWrapper>
+                    <Image
+                        src={getOptionLabel(item)}
+                        alt={getOptionLabel(item)}
+                    />
+                </ImageWrapper>
+            );
+        } else {
             return (
                 <Label truncateType={itemTruncationType}>
                     {itemTruncationType === "middle" &&
@@ -275,12 +280,6 @@ export const DropdownList = <T, V>({
                         ? renderTruncatedText(item)
                         : getOptionLabel(item)}
                 </Label>
-            );
-        } else {
-            return (
-                <ImageWrapper>
-                    <Image src={item as string} />
-                </ImageWrapper>
             );
         }
     };
