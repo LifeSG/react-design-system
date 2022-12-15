@@ -159,15 +159,13 @@ export const InputSelect = <T, V>({
                 </PlaceholderLabel>
             );
         } else {
-            if (renderCustomSelectedItem(getDisplayValue())) {
-                return renderCustomSelectedItem(getDisplayValue());
-            } else {
-                return (
-                    <ValueLabel truncateType={optionTruncationType}>
-                        {truncateValue(getDisplayValue())}
-                    </ValueLabel>
-                );
-            }
+            return renderCustomSelectedItem ? (
+                renderCustomSelectedItem(getDisplayValue())
+            ) : (
+                <ValueLabel truncateType={optionTruncationType}>
+                    {truncateValue(getDisplayValue())}
+                </ValueLabel>
+            );
         }
     };
 

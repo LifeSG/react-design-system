@@ -297,7 +297,7 @@ export const DropdownList = <T, V>({
                                     displaySize={"small"}
                                 />
                             )}
-                            {renderListItem(item) ? (
+                            {renderListItem ? (
                                 renderListItem(item)
                             ) : (
                                 <Label truncateType={itemTruncationType}>
