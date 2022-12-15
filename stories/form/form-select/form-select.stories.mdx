@@ -12,6 +12,7 @@ import {
 } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
+import { Image, ImageWrapper } from "./doc-element";
 
 <Meta title="Form/Select" component={Form.Select} />
 
@@ -66,6 +67,44 @@ import { Form } from "@lifesg/react-design-system/form";
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
                     errorMessage="Selection is required"
+                />
+                <Form.Select
+                    label="This is for custom render label"
+                    options={[
+                        {
+                            value: "A",
+                            label: "https://picsum.photos/1000/300",
+                        },
+                        {
+                            value: "B",
+                            label: "https://picsum.photos/1000/300",
+                        },
+                        {
+                            value: "C",
+                            label: "https://picsum.photos/1000/300",
+                        },
+                        {
+                            value: "D",
+                            label: "https://picsum.photos/1000/300",
+                        },
+                    ]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    renderCustomSelectedItem={(option) => {
+                        return (
+                            <ImageWrapper>
+                                <Image src={option.label} alt={option.label} />
+                            </ImageWrapper>
+                        );
+                    }}
+                    renderListItem={(option) => {
+                        return (
+                            <ImageWrapper>
+                                <Image src={option.label} alt={option.label} />
+                            </ImageWrapper>
+                        );
+                    }}
                 />
             </Container>
         </StoryContainer>
