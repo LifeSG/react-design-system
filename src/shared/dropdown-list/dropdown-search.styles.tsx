@@ -35,3 +35,10 @@ export const SearchIcon = styled(Icon)`
     margin: 0 0.5rem;
     color: ${Color.Neutral[3]};
 `;
+
+export const CancelIcon = styled(Icon)`
+    height: 1.125rem;
+    width: 1.125rem;
+    margin: 0 0.5rem;
+    color: ${Color.Neutral[3]};
+`;

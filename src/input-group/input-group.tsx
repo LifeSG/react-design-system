@@ -20,6 +20,7 @@ const Component = <T, V>(
 
     if (addon) {
         const { type = "label", position = "left" } = addon;
+        const { allowClear } = otherProps;
 
         switch (type) {
             case "list": {
@@ -56,6 +57,8 @@ const Component = <T, V>(
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
+                                allowClear={allowClear && position !== "right"}
+                                error={error}
                                 $position={position}
                                 data-testid="input"
                             />
@@ -85,6 +88,8 @@ const Component = <T, V>(
                             </AddOnContainer>
                             <MainInput
                                 {...otherProps}
+                                allowClear={allowClear && position !== "right"}
+                                error={error}
                                 $position={position}
                                 data-testid="input"
                             />

@@ -9,6 +9,7 @@ import { TextareaPartialProps } from "../input-textarea/types";
 import { DateInputProps } from "../date-input/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
+import { PhoneNumberInputProps } from "src/phone-number-input/types";
 
 export type FormLabelAddonType = "tooltip" | "popover";
 
@@ -80,4 +81,8 @@ export interface FormTimepickerProps
 
 export interface FormUnitNumberInputProps
     extends UnitNumberInputProps,
+        BaseFormElementProps {}
+
+export interface FormPhoneNumberInputProps<T, V>
+    extends PhoneNumberInputProps<T, V>,
         BaseFormElementProps {}

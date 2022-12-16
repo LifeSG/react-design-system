@@ -30,7 +30,7 @@ export const DisplayContainer = styled.div<StyleProps>`
     position: relative;
     display: flex;
     height: 3rem;
-    margin: 0 0.5rem;
+    margin-left: 0.5rem;
     ${(props) => {
         if (props.$expanded) {
             return css`

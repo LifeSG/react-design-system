@@ -1,0 +1,147 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { PhoneNumberInput } from "src/phone-number-input";
+import { Form } from "src/form";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="Form/PhoneNumberInput" component={Form.PhoneNumberInput} />
+
+<Title>Form.PhoneNumberInput</Title>
+
+<Secondary>Overview</Secondary>
+
+The field that allows a user to enter a phone number value.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+> **Important note**: This component currently does not do phone number value validation
+
+<Canvas>
+    <Story name="Phone Number Input">
+        <StoryContainer>
+            <Container>
+                <Form.PhoneNumberInput
+                    label="This is the default state"
+                    placeholder="Enter phone number"
+                    allowClear={true}
+                    countrySelector={{
+                        valueExtractor: (option) => `+${option.countryCode}`,
+                        listExtractor: (option) => option.name,
+                    }}
+                />
+                <Form.PhoneNumberInput
+                    label="This is with secondary label"
+                    placeholder="Enter phone number"
+                    allowClear={true}
+                    countrySelector={{
+                        valueExtractor: (option) => `+${option.countryCode}`,
+                        listExtractor: (option) => ({
+                            title: option.name,
+                            secondaryLabel: `+${option.countryCode}`,
+                        }),
+                    }}
+                />
+                <Form.PhoneNumberInput
+                    label="This is the disabled state"
+                    disabled
+                    placeholder="Enter phone number"
+                    allowClear={true}
+                    countrySelector={{
+                        valueExtractor: (option) => `+${option.countryCode}`,
+                        listExtractor: (option) => ({
+                            title: option.name,
+                            secondaryLabel: `+${option.countryCode}`,
+                        }),
+                    }}
+                />
+                <Form.PhoneNumberInput
+                    label="This is the error state"
+                    errorMessage="Mobile number is required"
+                    placeholder="Enter phone number"
+                    allowClear={true}
+                    countrySelector={{
+                        valueExtractor: (option) => `+${option.countryCode}`,
+                        listExtractor: (option) => ({
+                            title: option.name,
+                        }),
+                    }}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With search capabilities</Heading3>
+
+<Canvas>
+    <Story name="With search">
+        <StoryContainer>
+            <Container>
+                <Form.PhoneNumberInput
+                    label="This has searchable option"
+                    placeholder="Enter phone number"
+                    allowClear={true}
+                    countrySelector={{
+                        enableSearch: true,
+                        selectedOption: {
+                            countryCode: "65",
+                            format: "+.. .... ....",
+                            iso2: "sg",
+                            name: "Singapore",
+                            regions: ["asia"],
+                        },
+                        valueExtractor: (option) => `+${option.countryCode}`,
+                        listExtractor: (option) => ({
+                            title: option.name,
+                            secondaryLabel: `+${option.countryCode}`,
+                        }),
+                    }}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the phone number input field as a standalone, you can do this.
+
+```tsx
+import { PhoneNumberInput } from "@lifesg/react-design-system/phone-number-input";
+```
+
+<Preview>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <Container>
+                <PhoneNumberInput
+                    label="This is the phone number input"
+                    placeholder="Enter phone number"
+                    allowClear={true}
+                    countrySelector={{
+                        enableSearch: true,
+                        valueExtractor: (option) => `+${option.countryCode}`,
+                        listExtractor: (option) => ({
+                            title: option.name,
+                            secondaryLabel: `+${option.countryCode}`,
+                        }),
+                    }}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
