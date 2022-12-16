@@ -111,6 +111,18 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(searchValue: string) => T[]"],
             },
             {
+                name: "renderListItem",
+                description:
+                    "Function to customise the rendering of a list item",
+                propTypes: ["(option: T) => JSX.Element"],
+            },
+            {
+                name: "renderCustomSelectedOption",
+                description:
+                    "Function to customise the rendering of the selected option object",
+                propTypes: ["(option: T) => JSX.Element"],
+            },
+            {
                 name: "onSelectOption",
                 description: "Called when an option is selected",
                 propTypes: ["(option: T, extractedValue: T | V) => void"],

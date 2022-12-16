@@ -68,40 +68,50 @@ import { Form } from "@lifesg/react-design-system/form";
                     displayValueExtractor={(item) => item.label}
                     errorMessage="Selection is required"
                 />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With custom display</Heading3>
+
+You are able to customise the rendering of the selected option and the dropdown items.
+
+<Canvas>
+    <Story name="With custom display">
+        <StoryContainer>
+            <Container>
                 <Form.Select
-                    label="This is for custom render label"
+                    label="This has custom rendering"
                     options={[
                         {
                             value: "A",
-                            label: "https://picsum.photos/1000/300",
+                            url: "https://picsum.photos/seed/A/300/100",
                         },
                         {
                             value: "B",
-                            label: "https://picsum.photos/1000/300",
+                            url: "https://picsum.photos/seed/B/500/200",
                         },
                         {
                             value: "C",
-                            label: "https://picsum.photos/1000/300",
+                            url: "https://picsum.photos/seed/C/300/300",
                         },
                         {
                             value: "D",
-                            label: "https://picsum.photos/1000/300",
+                            url: "https://picsum.photos/seed/D/600/150",
                         },
                     ]}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
                     renderCustomSelectedOption={(option) => {
                         return (
                             <ImageWrapper>
-                                <Image src={option.label} alt={option.label} />
+                                <Image src={option.url} alt={option.value} />
                             </ImageWrapper>
                         );
                     }}
                     renderListItem={(option) => {
                         return (
                             <ImageWrapper>
-                                <Image src={option.label} alt={option.label} />
+                                <Image src={option.url} alt={option.value} />
                             </ImageWrapper>
                         );
                     }}
