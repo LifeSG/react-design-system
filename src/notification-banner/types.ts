@@ -6,7 +6,7 @@ export interface NotificationBannerProps
     dismissible?: boolean | undefined;
     visible?: boolean | undefined;
     sticky?: boolean | undefined;
-    onDismiss?: () => void | undefined;
+    onDismiss?: (() => void) | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps

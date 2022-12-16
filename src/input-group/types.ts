@@ -21,13 +21,13 @@ export interface ListAddon<T, V>
         DropdownSearchProps<T> {
     value?: T | undefined;
     placeholder?: string | undefined;
-    displayValueExtractor?: (item: T) => string | undefined;
+    displayValueExtractor?: ((item: T) => string) | undefined;
     "data-selector-testid"?: string | undefined;
 
     // Dropdown props (unable to inherit directly)
     options?: T[] | undefined;
     selectedOption?: T | undefined;
-    onSelectOption?: (option: T, extractedValue: T | V) => void | undefined;
+    onSelectOption?: ((option: T, extractedValue: T | V) => void) | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"
@@ -36,9 +36,9 @@ export interface ListAddon<T, V>
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     optionTruncationType?: TruncateType | undefined;
 
-    onRetry?: () => void | undefined;
-    onHideOptions?: () => void | undefined;
-    onShowOptions?: () => void | undefined;
+    onRetry?: (() => void) | undefined;
+    onHideOptions?: (() => void) | undefined;
+    onShowOptions?: (() => void) | undefined;
 }
 
 export interface AddonProps<T, V> {
@@ -48,7 +48,7 @@ export interface AddonProps<T, V> {
 }
 
 export interface InputGroupProps<T, V> extends InputProps {
-    addon?: AddonProps<T, V>;
+    addon?: AddonProps<T, V> | undefined;
 }
 
 /** To be exposed for Form component inheritance */

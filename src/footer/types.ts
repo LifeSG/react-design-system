@@ -29,7 +29,7 @@ export interface FooterProps<T = void> {
     logoSrc?: string | undefined;
     /** Last updated date value that is displayed in the bottom of the Footer */
     lastUpdated?: Date | undefined;
-    onFooterLinkClick?: (link: FooterLinkProps<T>) => void | undefined;
+    onFooterLinkClick?: ((link: FooterLinkProps<T>) => void) | undefined;
 }
 
 // TODO: Update component and migration

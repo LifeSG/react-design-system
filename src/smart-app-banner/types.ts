@@ -7,7 +7,7 @@ export interface SmartAppBannerProps {
     animated?: boolean | undefined;
     className?: string | undefined;
     onDismiss: () => void;
-    onClick?: () => void | undefined;
+    onClick?: (() => void) | undefined;
 }
 
 export interface SmartAppBannerContentProps {

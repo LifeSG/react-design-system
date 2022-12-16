@@ -16,10 +16,9 @@ export interface DropdownDisplayProps<T, V> {
     /** Function to derive options display value from an item */
     listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
     /** Function to render custom component */
-    renderListItem?: (
-        item: T,
-        args: ListItemRenderArgs
-    ) => JSX.Element | undefined;
+    renderListItem?:
+        | ((item: T, args: ListItemRenderArgs) => JSX.Element)
+        | undefined;
 }
 
 export interface DropdownStyleProps {
@@ -27,8 +26,8 @@ export interface DropdownStyleProps {
 }
 
 export interface DropdownEventHandlerProps<T, V> {
-    onSelectItem?: (item: T, extractedValue: V) => void | undefined;
-    onSelectItems?: (items: T[]) => void | undefined;
+    onSelectItem?: ((item: T, extractedValue: V) => void) | undefined;
+    onSelectItems?: ((items: T[]) => void) | undefined;
 }
 
 export interface DropdownSearchProps<T> {
@@ -36,8 +35,8 @@ export interface DropdownSearchProps<T> {
     enableSearch?: boolean | undefined;
     searchPlaceholder?: string | undefined;
     /** Custom function to perform search when a user keys in a value in the search input */
-    searchFunction?: (searchValue: string) => T[] | undefined;
-    onSearch?: () => void | undefined;
+    searchFunction?: ((searchValue: string) => T[]) | undefined;
+    onSearch?: (() => void) | undefined;
 }
 
 export interface DropdownListProps<T, V>
@@ -58,11 +57,11 @@ export interface DropdownListProps<T, V>
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     itemTruncationType?: TruncateType | undefined;
 
-    onDismiss?: () => void | undefined;
-    onSelectAll?: () => void | undefined;
-    onRetry?: () => void | undefined;
+    onDismiss?: (() => void) | undefined;
+    onSelectAll?: (() => void) | undefined;
+    onRetry?: (() => void) | undefined;
 }
 
 export interface ListItemSelectorProps {
-    onClick?: () => void | undefined;
+    onClick?: (() => void) | undefined;
 }
