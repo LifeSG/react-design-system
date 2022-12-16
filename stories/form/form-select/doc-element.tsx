@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ImageWrapper = styled.div`
     display: flex;
     border-radius: 4px;
-    border: 1px solid;
+    border: 1px solid black;
     overflow: hidden;
     align-items: center;
 `;

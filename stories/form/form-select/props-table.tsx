@@ -119,7 +119,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "renderCustomSelectedOption",
                 description:
-                    "Function to customise the rendering of the selected option object",
+                    "Function to customise the selected option display in the selector",
                 propTypes: ["(option: T) => JSX.Element"],
             },
             {
