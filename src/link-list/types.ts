@@ -18,8 +18,10 @@ export interface LinkListProps<T> {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     /** Captures item clicks on a component level */
-    onItemClick?: (
-        item: LinkListItemProps<T>,
-        event: React.MouseEvent<HTMLAnchorElement>
-    ) => void | undefined;
+    onItemClick?:
+        | ((
+              item: LinkListItemProps<T>,
+              event: React.MouseEvent<HTMLAnchorElement>
+          ) => void)
+        | undefined;
 }

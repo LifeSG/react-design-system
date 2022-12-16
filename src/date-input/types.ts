@@ -18,7 +18,7 @@ export interface DateInputProps extends React.AriaAttributes {
     style?: React.CSSProperties | undefined;
     tabIndex?: number | undefined;
     "data-testid"?: string | undefined;
-    readOnly?: boolean;
+    readOnly?: boolean | undefined;
 
     // WAI-ARIA
     role?: string;
@@ -28,16 +28,16 @@ export interface DateInputProps extends React.AriaAttributes {
     name?: string | undefined;
     error?: boolean | undefined;
     disabled?: boolean | undefined;
-    onChange?: (value: string) => void | undefined;
+    onChange?: ((value: string) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on change in an array format
      * as such [day, month, year]
      */
-    onChangeRaw?: (value: string[]) => void | undefined;
-    onBlur?: (value: string) => void | undefined;
+    onChangeRaw?: ((value: string[]) => void) | undefined;
+    onBlur?: ((value: string) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on blur in an array format
      * as such [day, month, year]
      */
-    onBlurRaw?: (value: string[]) => void | undefined;
+    onBlurRaw?: ((value: string[]) => void) | undefined;
 }
