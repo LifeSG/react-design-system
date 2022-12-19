@@ -7,7 +7,10 @@ export interface DropdownDisplayProps<T, V> {
     /** Function to derive options display value from an item */
     listExtractor?: (item: T) => string | undefined;
     /** Function to render custom component */
-    renderListItem?: (item: T) => JSX.Element | undefined;
+    renderListItem?: (
+        item: T,
+        checkListItemSelected: boolean
+    ) => JSX.Element | undefined;
 }
 
 export interface DropdownStyleProps {

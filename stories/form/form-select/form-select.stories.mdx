@@ -12,7 +12,12 @@ import {
 } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
-import { Image, ImageWrapper } from "./doc-element";
+import {
+    Image,
+    ImageWrapper,
+    ImageWrapperSelected,
+    Checkmark,
+} from "./doc-elements";
 
 <Meta title="Form/Select" component={Form.Select} />
 
@@ -108,12 +113,29 @@ You are able to customise the display of the dropdown list items as well as the 
                             </ImageWrapper>
                         );
                     }}
-                    renderListItem={(option) => {
-                        return (
-                            <ImageWrapper>
-                                <Image src={option.url} alt={option.value} />
-                            </ImageWrapper>
-                        );
+                    renderListItem={(option, checkListItemSelected) => {
+                        if (checkListItemSelected) {
+                            return (
+                                <ImageWrapperSelected>
+                                    <ImageWrapper>
+                                        <Image
+                                            src={option.url}
+                                            alt={option.value}
+                                        />
+                                    </ImageWrapper>
+                                    <Checkmark type="tick" />
+                                </ImageWrapperSelected>
+                            );
+                        } else {
+                            return (
+                                <ImageWrapper>
+                                    <Image
+                                        src={option.url}
+                                        alt={option.value}
+                                    />
+                                </ImageWrapper>
+                            );
+                        }
                     }}
                 />
             </Container>
