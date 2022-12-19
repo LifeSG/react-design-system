@@ -299,7 +299,7 @@ export const DropdownList = <T, V>({
                             )}
                             {renderListItem ? (
                                 renderListItem(item, {
-                                    isSelected: checkListItemSelected(item),
+                                    selected: checkListItemSelected(item),
                                 })
                             ) : (
                                 <Label truncateType={itemTruncationType}>

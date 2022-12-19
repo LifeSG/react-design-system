@@ -1,6 +1,10 @@
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 
+export interface ListItemRenderOptionsProps {
+    selected: boolean;
+}
+
 export interface DropdownDisplayProps<T, V> {
     /** Function to derive value from an item */
     valueExtractor?: (item: T) => V | undefined;
@@ -56,8 +60,4 @@ export interface DropdownListProps<T, V>
 
 export interface ListItemSelectorProps {
     onClick?: () => void | undefined;
-}
-
-export interface ListItemRenderOptionsProps {
-    isSelected: boolean;
 }
