@@ -40,6 +40,7 @@ const StyledContainer = styled.div<StyleProps>`
     margin: 0 auto;
     position: relative;
     width: auto;
+    height: auto;
     padding: 0 0.75rem;
 
     /* Max width restrictions */
@@ -66,7 +67,6 @@ const StyledContainer = styled.div<StyleProps>`
                     column-gap: 2rem;
                     display: grid;
                     grid-template-columns: repeat(12, minmax(0, 1fr));
-                    height: auto;
 
                     ${MediaQuery.MaxWidth.tablet} {
                         column-gap: 1.5rem;
@@ -78,11 +78,15 @@ const StyledContainer = styled.div<StyleProps>`
                         grid-template-columns: repeat(4, minmax(0, 1fr));
                     }
                 `;
+            case "flex-column":
+                return css`
+                    display: flex;
+                    flex-direction: column;
+                `;
             case "flex":
             default:
                 return css`
                     display: flex;
-                    height: auto;
                 `;
         }
     }}

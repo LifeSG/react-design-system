@@ -219,6 +219,35 @@ As mentioned above, you can separately compose the `Section` and `Container` com
     </Story>
 </Preview>
 
+<Secondary>Flex column layout</Secondary>
+
+You can arrange content vertically with the `type` prop set to `flex-column`.
+
+<Preview>
+    <Story name="Flex column layout">
+        {() => {
+            const renderContent = (content) => {
+                return (
+                    <div
+                        style={{
+                            padding: "2rem",
+                            border: "2px dotted #A4A4A4",
+                        }}
+                    >
+                        {content}
+                    </div>
+                );
+            };
+            return (
+                <Layout.Content type="flex-column">
+                    {renderContent(<Text.Body>First item</Text.Body>)}
+                    {renderContent(<Text.Body>Second item</Text.Body>)}
+                </Layout.Content>
+            );
+        }}
+    </Story>
+</Preview>
+
 <Secondary>Grid layout</Secondary>
 
 You can make use of the `type` prop to specify if the layout will use the [CSS Grid](https://css-tricks.com/snippets/css/complete-guide-grid/).

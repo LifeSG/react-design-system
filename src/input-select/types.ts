@@ -55,7 +55,7 @@ export interface InputSelectProps<T, V>
         DropdownSearchProps<T>,
         DropdownStyleProps {
     selectedOption?: T | undefined;
-    onSelectOption?: (option: T, extractedValue: T | V) => void | undefined;
+    onSelectOption?: (option: T, extractedValue: V) => void | undefined;
     /** Function to derive display value for selected option */
     displayValueExtractor?: (option: T) => string | undefined;
     /** Function to convert value into a string */

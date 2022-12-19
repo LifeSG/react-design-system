@@ -38,7 +38,10 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 
 -   [Accordion](#accordion)
 -   [Alert](#alert)
+-   [ErrorDisplay](#error-display)
+-   [Footer](#footer)
 -   [Form](#form)
+-   [Icon](#icon)
 -   [InputGroup](#input-group)
 -   [Layout](#layout)
 -   [LinkList](#link-list)
@@ -73,6 +76,14 @@ You may refer to the storybook documentation for more details.
 
 <br />
 
+<a id="error-display"></a>
+
+### ErrorDisplay
+
+-   The components now takes in `img` so you can configure all image attributes instead of just `imgSrc`
+
+<br />
+
 <a id="footer"></a>
 
 ### Footer
@@ -93,6 +104,7 @@ Refer to the storybook documentation for more details
 
 -   `Form.Field` has been replaced to `Form.Input` to be more in sync with the base component
 -   `Form.FieldGroup` has been replaced to `Form.InputGroup` to be more in sync with the base component
+-   `Form.ErrorMessage` has been removed; to render error messages, pass in the `errorMessage` prop
 
 The corresponding type names have also been changed.
 
@@ -100,6 +112,14 @@ The corresponding type names have also been changed.
 | ------------ | --------------------- | --------------------- |
 | `Field`      | `FormFieldProps`      | `FormInputProps`      |
 | `FieldGroup` | `FormFieldGroupProps` | `FormInputGroupProps` |
+
+<br />
+
+<a id="icon"></a>
+
+### Icon
+
+-   Use height and width with `styled(Icon)` to resize icons; `font-size` is no longer needed
 
 <br />
 
@@ -196,3 +216,37 @@ You can refer to the Storybook documentation for the amended names of the types
 -   `NotificationBanner.Base` has been simplified to be just `NotificationBanner`
 -   `NotificationBanner.Label` has been deprecated and the style has been integrated into the main component. You may
     just specify the content plainly
+
+<br />
+
+## Other issues
+
+### NextJS
+
+You may encounter the following when developing with NextJS:
+
+-   Hydration error in the console `` Warning: Prop `className` did not match. ``
+-   CSS changes applied to `styled(DSComponent)` are not reflected on Fast Refresh. A manual refresh in the browser is required
+
+So far these issues have been observed only in dev mode. You can choose to live with them.
+
+Otherwise, a workaround is to add the following webpack config in `next.config.js`. However note that this may affect other libraries that rely on specific module resolution.
+
+```
+module.exports = {
+	webpack: (config, { isServer }) => {
+		return {
+			...config,
+			resolve: {
+				...config.resolve,
+				mainFields: isServer
+					? ["main", "module"]
+					: ["browser", "main", "module"],
+			},
+		};
+	},
+    // rest of your config
+};
+```
+
+> The root cause is webpack resolving the component's entry point from CJS on the server and from ESM on the browser. This affects the load order of `styled-components` generated styles. For more details, see [this NextJS issue](https://github.com/vercel/next.js/issues/9323).
