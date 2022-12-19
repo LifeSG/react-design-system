@@ -1,0 +1,54 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { FeedbackRating } from "src/feedback-rating";
+import { Modal } from "src/modal";
+import { Secondary, Title } from "../storybook-common";
+import { PropsTable } from "./props-table";
+import { ModalBoxDiv } from "./doc-elements";
+
+<Meta title="Modules/FeedbackRating" component={FeedbackRating} />
+
+<Title>FeedbackRating</Title>
+
+<Secondary>Overview</Secondary>
+
+A feedback rating component contains a banner, a description, star radio buttons and a submit
+button. It allows a user to rate, based on the star radio button clicked,
+followed by a call to action after clicking the submit button.
+
+```tsx
+import { FeedbackRating } from "@lifesg/react-design-system/feedback-rating";
+```
+
+<Canvas>
+    <Story name="FeedbackRating">
+        {() => {
+            const [rating, setRating] = useState(0);
+            const [show, setShow] = useState(false);
+            const openModal = () => setShow(true);
+            const closeModal = () => setShow(false);
+            return (
+                <div>
+                    <Modal show={show} onOverlayClick={closeModal}>
+                        <Modal.Box onClose={closeModal}>
+                            <ModalBoxDiv>
+                                <span>{`You have rated: ${rating} star${
+                                    rating === 1 ? "" : "s"
+                                }`}</span>
+                            </ModalBoxDiv>
+                        </Modal.Box>
+                    </Modal>
+                    <FeedbackRating
+                        ratings={rating}
+                        onRatingsChange={setRating}
+                        onSubmit={openModal}
+                    />
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
