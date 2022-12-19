@@ -42,7 +42,7 @@ const DATA: ApiTableSectionProps[] = [
                         set <code>ratings</code>
                     </>
                 ),
-                propTypes: ["() => void"],
+                propTypes: ["(value: number) => void"],
             },
             {
                 name: "onSubmit",
