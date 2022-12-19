@@ -87,7 +87,7 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
         } else {
             return css`
                 padding: 0 1rem;
-                height: 3.5rem;
+                min-height: 3.5rem;
                 align-items: center;
             `;
         }
