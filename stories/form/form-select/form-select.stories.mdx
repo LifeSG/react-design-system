@@ -106,21 +106,21 @@ You are able to customise the display of the dropdown list items as well as the 
                             url: "https://picsum.photos/seed/D/600/150",
                         },
                     ]}
-                    renderCustomSelectedOption={(option) => {
+                    renderCustomSelectedOption={(item) => {
                         return (
                             <ImageWrapper>
-                                <Image src={option.url} alt={option.value} />
+                                <Image src={item.url} alt={item.value} />
                             </ImageWrapper>
                         );
                     }}
-                    renderListItem={(option, checkListItemSelected) => {
-                        if (checkListItemSelected) {
+                    renderListItem={(item, option) => {
+                        if (option.isSelected) {
                             return (
                                 <ImageWrapperSelected>
                                     <ImageWrapper>
                                         <Image
-                                            src={option.url}
-                                            alt={option.value}
+                                            src={item.url}
+                                            alt={item.value}
                                         />
                                     </ImageWrapper>
                                     <Checkmark type="tick" />
@@ -129,10 +129,7 @@ You are able to customise the display of the dropdown list items as well as the 
                         } else {
                             return (
                                 <ImageWrapper>
-                                    <Image
-                                        src={option.url}
-                                        alt={option.value}
-                                    />
+                                    <Image src={item.url} alt={item.value} />
                                 </ImageWrapper>
                             );
                         }

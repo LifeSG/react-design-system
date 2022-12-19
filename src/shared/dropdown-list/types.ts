@@ -9,7 +9,7 @@ export interface DropdownDisplayProps<T, V> {
     /** Function to render custom component */
     renderListItem?: (
         item: T,
-        checkListItemSelected: boolean
+        options: ListItemRenderOptionsProps
     ) => JSX.Element | undefined;
 }
 
@@ -56,4 +56,8 @@ export interface DropdownListProps<T, V>
 
 export interface ListItemSelectorProps {
     onClick?: () => void | undefined;
+}
+
+export interface ListItemRenderOptionsProps {
+    isSelected: boolean;
 }

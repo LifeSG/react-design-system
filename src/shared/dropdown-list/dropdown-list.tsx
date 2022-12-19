@@ -298,10 +298,9 @@ export const DropdownList = <T, V>({
                                 />
                             )}
                             {renderListItem ? (
-                                renderListItem(
-                                    item,
-                                    checkListItemSelected(item)
-                                )
+                                renderListItem(item, {
+                                    isSelected: checkListItemSelected(item),
+                                })
                             ) : (
                                 <Label truncateType={itemTruncationType}>
                                     {itemTruncationType === "middle" &&
