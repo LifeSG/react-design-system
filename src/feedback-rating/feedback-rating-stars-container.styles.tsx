@@ -1,5 +1,10 @@
-import { Color } from "src/color";
+import { Icon } from "src/icon";
 import styled from "styled-components";
+
+export const StarIcon = styled(Icon)`
+    width: 2rem;
+    height: 2rem;
+`;
 
 export const Input = styled.input`
     position: absolute;
@@ -18,12 +23,6 @@ export const Label = styled.label`
     @media screen and (max-width: 38rem) {
         margin: 0rem 0.5rem;
     }
-`;
-
-export const SVG = styled.svg`
-    height: 2rem;
-    width: 2rem;
-    color: ${Color.Primary};
 `;
 
 export const Container = styled.div`

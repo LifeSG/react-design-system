@@ -57,7 +57,9 @@ export type IconType =
     | "trash-bin"
     | "upload"
     | "users"
-    | "web";
+    | "web"
+    | "star-rating-unfilled"
+    | "star-rating-filled";
 
 export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
     type: IconType;

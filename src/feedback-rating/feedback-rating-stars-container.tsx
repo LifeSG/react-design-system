@@ -1,13 +1,11 @@
 import { StarContainerData } from "./feedback-rating-stars-container-data";
 import {
     Container,
-    Img,
     Input,
     Label,
+    StarIcon,
 } from "./feedback-rating-stars-container.styles";
 import { FeedbackRatingStarsContainerProps } from "./types";
-import StarFilledIcon from "./star-filled-icon.png";
-import StarUnfilledIcon from "./star-unfilled-icon.png";
 
 export const FeedbackRatingStarsContainer = ({
     rating,
@@ -33,13 +31,10 @@ export const FeedbackRatingStarsContainer = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderStar = (starIndex: number) => {
-        const altText = `${starIndex} star${starIndex === 1 ? "" : "s"}${
-            rating === starIndex ? ", selected" : ""
-        }`;
         if (starIndex <= rating) {
-            return <Img src={StarFilledIcon} alt={altText} />;
+            return <StarIcon type="star-rating-filled"></StarIcon>;
         } else {
-            return <Img src={StarUnfilledIcon} alt={altText} />;
+            return <StarIcon type="star-rating-unfilled"></StarIcon>;
         }
     };
 
