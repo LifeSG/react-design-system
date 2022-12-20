@@ -13,10 +13,6 @@ export const Input = styled.input`
     height: 0;
 `;
 
-export const Img = styled.img`
-    pointer-events: none;
-`;
-
 export const Label = styled.label`
     margin: 0rem 1rem;
     padding: 0rem;
