@@ -23,6 +23,8 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         onSubmit,
     } = props;
     const bannerSrc = imgSrc ?? FeedbackRatingData.IMG;
+    const componentDescription =
+        description ?? FeedbackRatingData.DEFAULT_DESCRIPTION;
 
     return (
         <MainContainer className={className}>
@@ -36,10 +38,9 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 ></Image>
             )}
             <ChildContainer>
-                <Text.H3 weight={"semibold"}>
-                    {description ?? FeedbackRatingData.DEFAULT_DESCRIPTION}
-                </Text.H3>
+                <Text.H3 weight={"semibold"}>{componentDescription}</Text.H3>
                 <FeedbackRatingStarsContainer
+                    description={componentDescription}
                     rating={rating}
                     onRatingChange={onRatingChange}
                 ></FeedbackRatingStarsContainer>

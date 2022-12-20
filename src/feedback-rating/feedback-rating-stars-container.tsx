@@ -7,10 +7,14 @@ import {
 } from "./feedback-rating-stars-container.styles";
 import { FeedbackRatingStarsContainerProps } from "./types";
 
-export const FeedbackRatingStarsContainer = ({
-    rating,
-    onRatingChange,
-}: FeedbackRatingStarsContainerProps): JSX.Element => {
+export const FeedbackRatingStarsContainer = (
+    props: FeedbackRatingStarsContainerProps
+): JSX.Element => {
+    // =========================================================================
+    // CONST, STATE, REF
+    // =========================================================================
+    const { description, rating, onRatingChange } = props;
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -31,10 +35,22 @@ export const FeedbackRatingStarsContainer = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderStar = (starIndex: number) => {
+        const ariaLabel = `${starIndex} star${starIndex === 1 ? "" : "s"}`;
+
         if (starIndex <= rating) {
-            return <StarIcon type="star-rating-filled"></StarIcon>;
+            return (
+                <StarIcon
+                    type="star-rating-filled"
+                    aria-label={ariaLabel}
+                ></StarIcon>
+            );
         } else {
-            return <StarIcon type="star-rating-unfilled"></StarIcon>;
+            return (
+                <StarIcon
+                    type="star-rating-unfilled"
+                    aria-label={ariaLabel}
+                ></StarIcon>
+            );
         }
     };
 
@@ -50,9 +66,6 @@ export const FeedbackRatingStarsContainer = ({
                         tabIndex={-1}
                         type="radio"
                         name="star"
-                        aria-label={`star-${index + 1}-${
-                            index + 1 <= rating ? "selected" : "unselected"
-                        }`}
                         checked={index + 1 === rating}
                         onChange={() => handleStarSelection(index + 1)}
                     />
@@ -62,5 +75,9 @@ export const FeedbackRatingStarsContainer = ({
         });
     };
 
-    return <Container>{renderRatings()}</Container>;
+    return (
+        <Container role="radiogroup" aria-label={description}>
+            {renderRatings()}
+        </Container>
+    );
 };

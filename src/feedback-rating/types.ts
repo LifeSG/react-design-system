@@ -9,6 +9,7 @@ export interface FeedbackRatingProps {
 }
 
 export interface FeedbackRatingStarsContainerProps {
+    description: string;
     rating: number;
     onRatingChange: (value: number) => void;
 }
