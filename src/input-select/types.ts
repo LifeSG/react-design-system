@@ -61,7 +61,7 @@ export interface InputSelectProps<T, V>
     /** Function to convert value into a string */
     valueToStringFunction?: (value: V) => string | undefined;
     /** Function to render selected custom component */
-    renderCustomSelectedOption?: (item: T) => JSX.Element | undefined;
+    renderCustomSelectedOption?: (option: T) => JSX.Element | undefined;
 }
 
 /** To be exposed for Form component inheritance */

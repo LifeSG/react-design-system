@@ -1,7 +1,7 @@
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 
-export interface ListItemRenderOptionsProps {
+export interface ListItemRenderArgs {
     selected: boolean;
 }
 
@@ -13,7 +13,7 @@ export interface DropdownDisplayProps<T, V> {
     /** Function to render custom component */
     renderListItem?: (
         item: T,
-        options: ListItemRenderOptionsProps
+        args: ListItemRenderArgs
     ) => JSX.Element | undefined;
 }
 
