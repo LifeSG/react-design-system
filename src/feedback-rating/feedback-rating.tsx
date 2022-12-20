@@ -6,36 +6,43 @@ import {
     MainContainer,
     SubmitButton,
 } from "./feedback-rating.styles";
-import { StarsContainer } from "./stars-container";
-import { FeedbackRatingProp } from "./types";
+import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
+import { FeedbackRatingProps } from "./types";
 
-export const FeedbackRating = ({
-    imgSrc,
-    buttonLabel,
-    description,
-    ratings,
-    onRatingsChange,
-    onSubmit,
-}: FeedbackRatingProp): JSX.Element => {
+export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
+    const {
+        imgSrc,
+        buttonLabel,
+        description,
+        rating,
+        className,
+        onRatingChange,
+        onSubmit,
+    } = props;
     const bannerSrc = imgSrc ?? FeedbackRatingData.IMG;
 
     return (
-        <MainContainer>
+        <MainContainer className={className}>
             {bannerSrc && (
-                <Image src={bannerSrc} alt={FeedbackRatingData.IMG_ALT}></Image>
+                <Image
+                    src={bannerSrc}
+                    onError={(event) =>
+                        (event.currentTarget.style.display = "none")
+                    }
+                ></Image>
             )}
             <ChildContainer>
                 <Text.H3 weight={"semibold"}>
                     {description ?? FeedbackRatingData.DEFAULT_DESCRIPTION}
                 </Text.H3>
-                <StarsContainer
-                    ratings={ratings}
-                    onRatingsChange={onRatingsChange}
-                ></StarsContainer>
-                <SubmitButton disabled={!ratings} onClick={onSubmit}>
+                <FeedbackRatingStarsContainer
+                    rating={rating}
+                    onRatingChange={onRatingChange}
+                ></FeedbackRatingStarsContainer>
+                <SubmitButton disabled={!rating} onClick={onSubmit}>
                     {buttonLabel ?? FeedbackRatingData.DEFAULT_BUTTON_LABEL}
                 </SubmitButton>
             </ChildContainer>

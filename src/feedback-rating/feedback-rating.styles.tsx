@@ -7,7 +7,7 @@ export const Image = styled.img`
     width: 9.5rem;
     height: 9.5rem;
     margin: 1rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    @media screen and (max-width: 38rem) {
         width: 5.5rem;
         height: 5.5rem;
         margin: 0.5rem;
@@ -22,7 +22,7 @@ export const MainContainer = styled.div`
     align-items: center;
     justify-content: center;
     padding: 1rem 0rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    @media screen and (max-width: 38rem) {
         padding: 1.5rem 0rem;
         flex-direction: column;
     }
@@ -33,9 +33,16 @@ export const ChildContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 1rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    @media screen and (max-width: 38rem) {
         margin: 0.5rem;
         width: 21rem;
+    }
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin: 0.5rem;
+        width: 18rem;
+    }
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 16rem;
     }
 `;
 
@@ -43,7 +50,13 @@ export const SubmitButton = styled(Button.Default)`
     margin-top: 1rem;
     height: 3rem;
     width: 26.5rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    @media screen and (max-width: 38rem) {
         width: 21rem;
+    }
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 18rem;
+    }
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 16rem;
     }
 `;
