@@ -29,6 +29,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
             {bannerSrc && (
                 <Image
                     src={bannerSrc}
+                    alt=""
                     onError={(event) =>
                         (event.currentTarget.style.display = "none")
                     }
