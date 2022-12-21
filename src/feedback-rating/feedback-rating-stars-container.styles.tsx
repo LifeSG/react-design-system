@@ -12,8 +12,9 @@ export const Input = styled.input`
 export const StarIcon = styled(Icon)`
     width: 2rem;
     height: 2rem;
-    ${Input}:focus + & {
-        border: 1px solid ${Color.PrimaryDark};
+    ${Input}:focus-visible + & {
+        border: 0.125rem solid ${Color.Primary};
+        border-radius: 0.25rem;
     }
 `;
 
