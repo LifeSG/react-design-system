@@ -1,16 +1,20 @@
 import { Icon } from "src/icon";
 import styled from "styled-components";
-
-export const StarIcon = styled(Icon)`
-    width: 2rem;
-    height: 2rem;
-`;
+import { Color } from "../color";
 
 export const Input = styled.input`
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
+`;
+
+export const StarIcon = styled(Icon)`
+    width: 2rem;
+    height: 2rem;
+    ${Input}:focus + & {
+        border: 1px solid ${Color.PrimaryDark};
+    }
 `;
 
 export const Label = styled.label`

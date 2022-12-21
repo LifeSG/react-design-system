@@ -22,15 +22,6 @@ export const FeedbackRatingStarsContainer = (
         onRatingChange(starIndex);
     };
 
-    const handleKeyUp = (
-        event: React.KeyboardEvent<HTMLLabelElement>,
-        value: number
-    ) => {
-        if (event.key === "Enter") {
-            handleStarSelection(value);
-        }
-    };
-
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -57,13 +48,8 @@ export const FeedbackRatingStarsContainer = (
     const renderRatings = () => {
         return [...Array(StarContainerData.MAX_STAR)].map((_star, index) => {
             return (
-                <Label
-                    key={index + 1}
-                    tabIndex={0}
-                    onKeyUp={(e) => handleKeyUp(e, index + 1)}
-                >
+                <Label key={index + 1}>
                     <Input
-                        tabIndex={-1}
                         type="radio"
                         name="star"
                         checked={index + 1 === rating}
