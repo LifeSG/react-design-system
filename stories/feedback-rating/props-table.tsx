@@ -28,13 +28,13 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"Submit"`,
             },
             {
-                name: "ratings",
+                name: "rating",
                 mandatory: true,
                 description: "Current selected rating state",
                 propTypes: ["number"],
             },
             {
-                name: "onRatingsChange",
+                name: "onRatingChange",
                 mandatory: true,
                 description: (
                     <>

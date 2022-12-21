@@ -52,14 +52,14 @@ export type IconType =
     | "sort-high-low"
     | "sort-low-high"
     | "star"
+    | "star-rating-filled"
+    | "star-rating-unfilled"
     | "tick"
     | "ticket"
     | "trash-bin"
     | "upload"
     | "users"
-    | "web"
-    | "star-rating-unfilled"
-    | "star-rating-filled";
+    | "web";
 
 export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
     type: IconType;

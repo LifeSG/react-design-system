@@ -47,15 +47,16 @@ export const FeedbackRatingStarsContainer = (
 
     const renderRatings = () => {
         return [...Array(StarContainerData.MAX_STAR)].map((_star, index) => {
+            const starIndex = index + 1;
             return (
-                <Label key={index + 1}>
+                <Label key={starIndex}>
                     <Input
                         type="radio"
                         name="star"
-                        checked={index + 1 === rating}
-                        onChange={() => handleStarSelection(index + 1)}
+                        checked={starIndex === rating}
+                        onChange={() => handleStarSelection(starIndex)}
                     />
-                    {renderStar(index + 1)}
+                    {renderStar(starIndex)}
                 </Label>
             );
         });
