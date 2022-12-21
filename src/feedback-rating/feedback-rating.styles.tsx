@@ -5,9 +5,11 @@ import styled from "styled-components";
 export const Image = styled.img`
     width: 9.5rem;
     height: 9.5rem;
+    margin-right: 1rem;
     @media screen and (max-width: 38rem) {
         width: 5.5rem;
         height: 5.5rem;
+        margin-right: 0rem;
     }
 `;
 
