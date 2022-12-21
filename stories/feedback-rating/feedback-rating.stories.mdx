@@ -4,7 +4,7 @@ import { FeedbackRating } from "src/feedback-rating";
 import { Modal } from "src/modal";
 import { Secondary, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
-import { Div, ModalBoxDiv } from "./doc-elements";
+import { ModalBoxDiv } from "./doc-elements";
 
 <Meta title="Modules/FeedbackRating" component={FeedbackRating} />
 
@@ -28,7 +28,7 @@ import { FeedbackRating } from "@lifesg/react-design-system/feedback-rating";
             const openModal = () => setShow(true);
             const closeModal = () => setShow(false);
             return (
-                <Div>
+                <div>
                     <Modal show={show} onOverlayClick={closeModal}>
                         <Modal.Box onClose={closeModal}>
                             <ModalBoxDiv>
@@ -43,7 +43,7 @@ import { FeedbackRating } from "@lifesg/react-design-system/feedback-rating";
                         onRatingChange={setRating}
                         onSubmit={openModal}
                     />
-                </Div>
+                </div>
             );
         }}
     </Story>
