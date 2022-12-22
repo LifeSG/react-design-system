@@ -13,7 +13,8 @@ export const StarIcon = styled(Icon)`
     width: 2rem;
     height: 2rem;
     ${Input}:focus-visible + & {
-        border: 0.125rem solid ${Color.Primary};
+        outline: 0.125rem solid ${Color.Primary};
+        outline-offset: -0.0625rem;
         border-radius: 0.25rem;
     }
 `;
