@@ -21,8 +21,12 @@ export const FormWrapper = ({
     // HELPER FUNCTIONS
     // =============================================================================
 
-    const getErrorTestMessageId = () => {
+    const getErrorTestMessageId = (): string => {
         return errorTestId || (id ? `${id}-error-message` : "error-message");
+    };
+
+    const isInvalidState = (): boolean => {
+        return !!errorMessage;
     };
 
     // =============================================================================
@@ -53,12 +57,17 @@ export const FormWrapper = ({
     };
 
     return (
-        <Container>
+        <Container
+            aria-invalid={isInvalidState()}
+            aria-errormessage={isInvalidState() && getErrorTestMessageId()}
+        >
             {label && renderFormLabel()}
             {children}
             {errorMessage && (
                 <ErrorMessage
+                    id={getErrorTestMessageId()}
                     weight="semibold"
+                    tabIndex={0}
                     data-testid={getErrorTestMessageId()}
                 >
                     {errorMessage}
