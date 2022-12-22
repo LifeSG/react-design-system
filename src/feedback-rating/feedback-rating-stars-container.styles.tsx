@@ -5,8 +5,8 @@ import { Color } from "../color";
 export const Input = styled.input`
     position: absolute;
     opacity: 0;
-    width: 0rem;
-    height: 0rem;
+    width: 0;
+    height: 0;
 `;
 
 export const StarIcon = styled(Icon)`
@@ -20,11 +20,10 @@ export const StarIcon = styled(Icon)`
 `;
 
 export const Label = styled.label`
-    margin: 0rem 1rem;
-    padding: 0rem;
-    line-height: 0rem;
+    margin: 0 1rem;
+    line-height: 0;
     @media screen and (max-width: 38rem) {
-        margin: 0rem 0.5rem;
+        margin: 0 0.5rem;
     }
 `;
 

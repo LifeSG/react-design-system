@@ -5,11 +5,11 @@ import styled from "styled-components";
 export const Image = styled.img`
     width: 9.5rem;
     height: 9.5rem;
-    margin: 0rem 1rem;
+    margin: 0 1rem;
     @media screen and (max-width: 38rem) {
         width: 5.5rem;
         height: 5.5rem;
-        margin: 0rem 0rem;
+        margin: 0;
     }
 `;
 
@@ -23,7 +23,7 @@ export const MainContainer = styled.div`
     width: 100%;
     padding: 1rem 3rem;
     @media screen and (max-width: 38rem) {
-        padding: 2rem 0rem 1rem;
+        padding: 2rem 0 1rem;
         flex-direction: column;
     }
 `;
