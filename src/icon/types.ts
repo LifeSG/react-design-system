@@ -52,6 +52,8 @@ export type IconType =
     | "sort-high-low"
     | "sort-low-high"
     | "star"
+    | "star-rating-filled"
+    | "star-rating-unfilled"
     | "tick"
     | "ticket"
     | "trash-bin"
