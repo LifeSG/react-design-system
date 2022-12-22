@@ -12,6 +12,12 @@ import {
 } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
+import {
+    Image,
+    ImageWrapper,
+    ImageWrapperSelected,
+    Checkmark,
+} from "./doc-elements";
 
 <Meta title="Form/Select" component={Form.Select} />
 
@@ -66,6 +72,68 @@ import { Form } from "@lifesg/react-design-system/form";
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
                     errorMessage="Selection is required"
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With custom list item display</Heading3>
+
+You are able to customise the display of the dropdown list items as well as the selected option.
+
+<Canvas>
+    <Story name="With custom list item display">
+        <StoryContainer>
+            <Container>
+                <Form.Select
+                    label="This has a custom list item display"
+                    options={[
+                        {
+                            value: "A",
+                            url: "https://picsum.photos/seed/A/300/100",
+                        },
+                        {
+                            value: "B",
+                            url: "https://picsum.photos/seed/B/500/200",
+                        },
+                        {
+                            value: "C",
+                            url: "https://picsum.photos/seed/C/300/300",
+                        },
+                        {
+                            value: "D",
+                            url: "https://picsum.photos/seed/D/600/150",
+                        },
+                    ]}
+                    renderCustomSelectedOption={(option) => {
+                        return (
+                            <ImageWrapper>
+                                <Image src={option.url} alt={option.value} />
+                            </ImageWrapper>
+                        );
+                    }}
+                    renderListItem={(item, args) => {
+                        if (args.selected) {
+                            return (
+                                <ImageWrapperSelected>
+                                    <ImageWrapper>
+                                        <Image
+                                            src={item.url}
+                                            alt={item.value}
+                                        />
+                                    </ImageWrapper>
+                                    <Checkmark type="tick" />
+                                </ImageWrapperSelected>
+                            );
+                        } else {
+                            return (
+                                <ImageWrapper>
+                                    <Image src={item.url} alt={item.value} />
+                                </ImageWrapper>
+                            );
+                        }
+                    }}
                 />
             </Container>
         </StoryContainer>

@@ -1,5 +1,5 @@
 import {
-    DropdownDisplayExtractorProps,
+    DropdownDisplayProps,
     DropdownSearchProps,
     DropdownStyleProps,
     ItemsLoadStateType,
@@ -51,7 +51,7 @@ export interface InputSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
         InputSelectSharedProps<T>,
-        DropdownDisplayExtractorProps<T, V>,
+        DropdownDisplayProps<T, V>,
         DropdownSearchProps<T>,
         DropdownStyleProps {
     selectedOption?: T | undefined;
@@ -60,6 +60,8 @@ export interface InputSelectProps<T, V>
     displayValueExtractor?: (option: T) => string | undefined;
     /** Function to convert value into a string */
     valueToStringFunction?: (value: V) => string | undefined;
+    /** Function to render selected custom component */
+    renderCustomSelectedOption?: (option: T) => JSX.Element | undefined;
 }
 
 /** To be exposed for Form component inheritance */
@@ -75,7 +77,7 @@ export interface InputMultiSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
         InputSelectSharedProps<T>,
-        DropdownDisplayExtractorProps<T, V>,
+        DropdownDisplayProps<T, V>,
         DropdownSearchProps<T>,
         DropdownStyleProps {
     selectedOptions?: T[] | undefined;

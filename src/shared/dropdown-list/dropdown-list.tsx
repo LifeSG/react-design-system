@@ -45,6 +45,7 @@ export const DropdownList = <T, V>({
     onRetry,
     itemsLoadState = "success",
     itemTruncationType = "end",
+    renderListItem,
     ...otherProps
 }: DropdownListProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -157,6 +158,7 @@ export const DropdownList = <T, V>({
         const displayText = listExtractor
             ? listExtractor(item)
             : item.toString();
+
         let widthOfElement = 0;
         if (listRef && listRef.current) {
             widthOfElement =
@@ -295,12 +297,18 @@ export const DropdownList = <T, V>({
                                     displaySize={"small"}
                                 />
                             )}
-                            <Label truncateType={itemTruncationType}>
-                                {itemTruncationType === "middle" &&
-                                hasExceededContainer(item)
-                                    ? renderTruncatedText(item)
-                                    : getOptionLabel(item)}
-                            </Label>
+                            {renderListItem ? (
+                                renderListItem(item, {
+                                    selected: checkListItemSelected(item),
+                                })
+                            ) : (
+                                <Label truncateType={itemTruncationType}>
+                                    {itemTruncationType === "middle" &&
+                                    hasExceededContainer(item)
+                                        ? renderTruncatedText(item)
+                                        : getOptionLabel(item)}
+                                </Label>
+                            )}
                         </ListItemSelector>
                     </ListItem>
                 );

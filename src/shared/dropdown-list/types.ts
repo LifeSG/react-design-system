@@ -1,11 +1,20 @@
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 
-export interface DropdownDisplayExtractorProps<T, V> {
+export interface ListItemRenderArgs {
+    selected: boolean;
+}
+
+export interface DropdownDisplayProps<T, V> {
     /** Function to derive value from an item */
     valueExtractor?: (item: T) => V | undefined;
     /** Function to derive options display value from an item */
     listExtractor?: (item: T) => string | undefined;
+    /** Function to render custom component */
+    renderListItem?: (
+        item: T,
+        args: ListItemRenderArgs
+    ) => JSX.Element | undefined;
 }
 
 export interface DropdownStyleProps {
@@ -29,7 +38,7 @@ export interface DropdownSearchProps<T> {
 export interface DropdownListProps<T, V>
     extends React.HTMLAttributes<HTMLUListElement>,
         DropdownEventHandlerProps<T, V>,
-        DropdownDisplayExtractorProps<T, V>,
+        DropdownDisplayProps<T, V>,
         DropdownSearchProps<T>,
         DropdownStyleProps {
     listItems?: T[] | undefined;

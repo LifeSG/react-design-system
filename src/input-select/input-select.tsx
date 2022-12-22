@@ -35,6 +35,8 @@ export const InputSelect = <T, V>({
     onRetry,
     optionsLoadState = "success",
     optionTruncationType = "end",
+    renderCustomSelectedOption,
+    renderListItem,
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -156,6 +158,8 @@ export const InputSelect = <T, V>({
                     {placeholder}
                 </PlaceholderLabel>
             );
+        } else if (renderCustomSelectedOption) {
+            return renderCustomSelectedOption(selected);
         } else {
             return (
                 <ValueLabel truncateType={optionTruncationType}>
@@ -195,6 +199,7 @@ export const InputSelect = <T, V>({
                     onRetry={onRetry}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
+                    renderListItem={renderListItem}
                 />
             );
         }
