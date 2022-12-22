@@ -5,11 +5,11 @@ import styled from "styled-components";
 export const Image = styled.img`
     width: 9.5rem;
     height: 9.5rem;
-    margin-right: 1rem;
+    margin: 0rem 1rem;
     @media screen and (max-width: 38rem) {
         width: 5.5rem;
         height: 5.5rem;
-        margin-right: 0rem;
+        margin: 0rem 0rem;
     }
 `;
 
@@ -21,9 +21,9 @@ export const MainContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 1rem 0rem;
+    padding: 1rem 3rem;
     @media screen and (max-width: 38rem) {
-        padding-top: 2rem;
+        padding: 2rem 0rem 1rem;
         flex-direction: column;
     }
 `;
@@ -32,20 +32,16 @@ export const ChildContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 1rem;
+    margin: 1rem 1rem;
     width: 100%;
-    max-width: 26rem;
     text-align: center;
     @media screen and (max-width: 38rem) {
+        margin: 1rem 1.25rem;
         max-width: calc(100% - 2.5rem);
     }
 `;
 
 export const SubmitButton = styled(Button.Default)`
     margin-top: 1rem;
-    height: 3rem;
     width: 100%;
-    @media screen and (max-width: 38rem) {
-        max-width: 21rem;
-    }
 `;

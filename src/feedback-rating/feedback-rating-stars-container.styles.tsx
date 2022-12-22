@@ -5,8 +5,8 @@ import { Color } from "../color";
 export const Input = styled.input`
     position: absolute;
     opacity: 0;
-    width: 0;
-    height: 0;
+    width: 0rem;
+    height: 0rem;
 `;
 
 export const StarIcon = styled(Icon)`
@@ -22,6 +22,7 @@ export const StarIcon = styled(Icon)`
 export const Label = styled.label`
     margin: 0rem 1rem;
     padding: 0rem;
+    line-height: 0rem;
     @media screen and (max-width: 38rem) {
         margin: 0rem 0.5rem;
     }
@@ -30,6 +31,5 @@ export const Label = styled.label`
 export const Container = styled.div`
     display: flex;
     justify-content: center;
-    height: 2rem;
     margin: 1rem;
 `;
