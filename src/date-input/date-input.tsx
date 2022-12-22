@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { DateHelper } from "../util";
 import { StringHelper } from "../util/string-helper";
 import {
     BaseInput,
@@ -120,6 +121,27 @@ export const DateInput = ({
         formatDisplayValues(value);
     }, [value]);
 
+    useEffect(() => {
+        if (dayValue && monthValue && yearValue.length === 4) {
+            handleChange({
+                target: {
+                    name: "day",
+                    value: StringHelper.padValue(
+                        DateHelper.clampDay(dayValue, monthValue, yearValue)
+                    ),
+                },
+            } as React.ChangeEvent<HTMLInputElement>);
+            handleChange({
+                target: {
+                    name: "month",
+                    value: StringHelper.padValue(
+                        DateHelper.clampMonth(monthValue)
+                    ),
+                },
+            } as React.ChangeEvent<HTMLInputElement>);
+        }
+    }, [dayValue, monthValue, yearValue]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -225,13 +247,17 @@ export const DateInput = ({
             const date = new Date(value);
             if (!isNaN(date.getTime())) {
                 // Valid value
-                const day = date.getDate();
-                const month = date.getMonth() + 1; // returns as an index
-                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString(); // returns as an index
+                const year = date.getFullYear().toString();
+                const day = DateHelper.clampDay(
+                    date.getDate().toString(),
+                    month,
+                    year
+                );
 
-                setDayValue(StringHelper.padValue(day.toString()));
-                setMonthValue(StringHelper.padValue(month.toString()));
-                setYearValue(year.toString());
+                setDayValue(StringHelper.padValue(day));
+                setMonthValue(StringHelper.padValue(month));
+                setYearValue(year);
             }
         }
     };
