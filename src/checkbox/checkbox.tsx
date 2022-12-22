@@ -59,7 +59,7 @@ export const Checkbox = ({
                 onClick={handleOnCheck}
                 disabled={disabled}
                 tabIndex={disabled ? -1 : 0}
-                checked={checked}
+                defaultChecked={selected}
                 {...otherProps}
             />
             {selected && (
