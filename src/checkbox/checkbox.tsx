@@ -51,8 +51,6 @@ export const Checkbox = ({
             className={className}
             data-testid="checkbox"
             onKeyPress={handleOnCheck}
-            tabIndex={disabled ? -1 : 0}
-            role="checkbox"
             $displaySize={displaySize}
         >
             <Input
@@ -60,7 +58,8 @@ export const Checkbox = ({
                 data-testid="checkbox-input"
                 onClick={handleOnCheck}
                 disabled={disabled}
-                tabIndex={-1} // Need this else it is able to be tabbed to
+                tabIndex={disabled ? -1 : 0}
+                checked={checked}
                 {...otherProps}
             />
             {selected && (
