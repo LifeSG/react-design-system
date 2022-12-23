@@ -1,4 +1,4 @@
-import { Icon } from "src/icon";
+import { Icon } from "../icon";
 import styled from "styled-components";
 import { Color } from "../color";
 

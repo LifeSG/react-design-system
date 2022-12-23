@@ -1,5 +1,5 @@
-import { Button } from "src/button";
-import { Color } from "src/color";
+import { Button } from "../button";
+import { Color } from "../color";
 import styled from "styled-components";
 
 export const Image = styled.img`
