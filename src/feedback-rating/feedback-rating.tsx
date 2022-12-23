@@ -1,5 +1,5 @@
 import { FeedbackRatingData } from "./feedback-rating-data";
-import { Text } from "src/text";
+import { Text } from "../text";
 import {
     ChildContainer,
     Image,

@@ -1,6 +1,6 @@
-import { Button } from "src/button";
-import { Color } from "src/color";
 import styled from "styled-components";
+import { Button } from "../button";
+import { Color } from "../color";
 
 export const Image = styled.img`
     width: 9.5rem;
