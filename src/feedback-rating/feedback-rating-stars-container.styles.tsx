@@ -1,6 +1,6 @@
+import { Color } from "../color";
 import { Icon } from "../icon";
 import styled from "styled-components";
-import { Color } from "../color";
 
 export const Input = styled.input`
     position: absolute;
