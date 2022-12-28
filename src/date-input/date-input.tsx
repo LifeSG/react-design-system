@@ -121,27 +121,6 @@ export const DateInput = ({
         formatDisplayValues(value);
     }, [value]);
 
-    useEffect(() => {
-        if (dayValue && monthValue && yearValue.length === 4) {
-            handleChange({
-                target: {
-                    name: "day",
-                    value: StringHelper.padValue(
-                        DateHelper.clampDay(dayValue, monthValue, yearValue)
-                    ),
-                },
-            } as React.ChangeEvent<HTMLInputElement>);
-            handleChange({
-                target: {
-                    name: "month",
-                    value: StringHelper.padValue(
-                        DateHelper.clampMonth(monthValue)
-                    ),
-                },
-            } as React.ChangeEvent<HTMLInputElement>);
-        }
-    }, [dayValue, monthValue, yearValue]);
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -176,17 +155,37 @@ export const DateInput = ({
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
+        const targetValue = StringHelper.padValue(event.target.value, true);
 
         switch (targetName) {
             case "day":
-                setDayValue(StringHelper.padValue(event.target.value, true));
+                setDayValue(targetValue);
                 break;
             case "month":
-                setMonthValue(StringHelper.padValue(event.target.value, true));
+                setMonthValue(targetValue);
                 break;
             case "year":
             default:
                 break;
+        }
+
+        const isFullyFormedDate =
+            dayValue.length && monthValue.length && yearValue.length === 4;
+        const isDayTarget = targetName === "day";
+
+        if (isFullyFormedDate) {
+            setDayValue(
+                StringHelper.padValue(
+                    DateHelper.clampDay(
+                        isDayTarget ? targetValue : dayValue,
+                        DateHelper.clampMonth(monthValue),
+                        yearValue
+                    )
+                )
+            );
+            setMonthValue(
+                StringHelper.padValue(DateHelper.clampMonth(monthValue))
+            );
         }
     };
 
