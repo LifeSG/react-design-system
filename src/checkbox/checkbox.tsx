@@ -6,7 +6,7 @@ export const Checkbox = ({
     className,
     checked,
     disabled,
-    onClick,
+    onChange,
     onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
     ...otherProps
@@ -25,14 +25,12 @@ export const Checkbox = ({
     // =============================================================================
     const handleOnCheck = (
         event:
-            | React.MouseEvent<HTMLInputElement, MouseEvent>
+            | React.ChangeEvent<HTMLInputElement>
             | React.KeyboardEvent<HTMLDivElement>
     ) => {
         if (!disabled) {
-            if (onClick) {
-                onClick(
-                    event as React.MouseEvent<HTMLInputElement, MouseEvent>
-                );
+            if (onChange) {
+                onChange(event as React.ChangeEvent<HTMLInputElement>);
             }
 
             if (onKeyPress) {
@@ -56,10 +54,10 @@ export const Checkbox = ({
             <Input
                 type="checkbox"
                 data-testid="checkbox-input"
-                onClick={handleOnCheck}
+                onChange={handleOnCheck}
                 disabled={disabled}
                 tabIndex={disabled ? -1 : 0}
-                defaultChecked={selected}
+                checked={selected}
                 {...otherProps}
             />
             {selected && (
