@@ -57,15 +57,16 @@ export const FormWrapper = ({
     };
 
     return (
-        <Container
-            aria-invalid={isInvalidState()}
-            aria-errormessage={isInvalidState() && getErrorTestMessageId()}
-        >
+        <Container>
             {label && renderFormLabel()}
             {children}
             {errorMessage && (
                 <ErrorMessage
                     id={getErrorTestMessageId()}
+                    aria-invalid={isInvalidState()}
+                    aria-describedby={
+                        isInvalidState() && getErrorTestMessageId()
+                    }
                     weight="semibold"
                     tabIndex={0}
                     data-testid={getErrorTestMessageId()}
