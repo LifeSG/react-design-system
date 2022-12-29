@@ -4,7 +4,7 @@
  *
  */
 
-import { Children, cloneElement, createElement } from "react";
+import { Children, cloneElement } from "react";
 import { FormLabel } from "./form-label";
 import { ErrorMessage } from "./form-label.style";
 import { Container } from "./form-wrapper.style";
@@ -61,10 +61,8 @@ export const FormWrapper = ({
             "aria-invalid": isInvalidState(),
             "aria-describedby": isInvalidState() && getErrorTestMessageId(),
         };
-        return createElement(
-            "div",
-            ariaState,
-            Children.map(children, (child) => cloneElement(child, ariaState))
+        return Children.map(children, (child) =>
+            cloneElement(child, ariaState)
         );
     };
 
