@@ -1,5 +1,5 @@
-const MONTHS_WITH_31_DAYS = ["1", "3", "5", "7", "8", "10", "12"];
-const MONTHS_WITH_30_DAYS = ["4", "6", "9", "11"];
+const MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
+const MONTHS_WITH_30_DAYS = [4, 6, 9, 11];
 
 export namespace DateHelper {
     /**
@@ -13,22 +13,26 @@ export namespace DateHelper {
         month: string,
         year: string
     ): string => {
-        if (day == "0") {
+        const dayNumber = parseInt(day);
+        const monthNumber = parseInt(month);
+        const yearNumber = parseInt(year);
+
+        if (dayNumber == 0) {
             return "1";
         }
 
-        if (MONTHS_WITH_31_DAYS.includes(month)) {
-            return Math.min(parseInt(day), 31).toString();
+        if (MONTHS_WITH_31_DAYS.includes(monthNumber)) {
+            return Math.min(dayNumber, 31).toString();
         }
 
-        if (MONTHS_WITH_30_DAYS.includes(month)) {
-            return Math.min(parseInt(day), 30).toString();
+        if (MONTHS_WITH_30_DAYS.includes(monthNumber)) {
+            return Math.min(dayNumber, 30).toString();
         }
 
-        if (month === "2") {
-            return isLeapYear(parseInt(year))
-                ? Math.min(parseInt(day), 29).toString()
-                : Math.min(parseInt(day), 28).toString();
+        if (monthNumber === 2) {
+            return isLeapYear(yearNumber)
+                ? Math.min(dayNumber, 29).toString()
+                : Math.min(dayNumber, 28).toString();
         }
 
         return day;

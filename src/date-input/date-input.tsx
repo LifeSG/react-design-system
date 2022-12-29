@@ -172,20 +172,19 @@ export const DateInput = ({
         const isFullyFormedDate =
             dayValue.length && monthValue.length && yearValue.length === 4;
         const isDayTarget = targetName === "day";
+        const clampedMonth = DateHelper.clampMonth(monthValue);
 
         if (isFullyFormedDate) {
             setDayValue(
                 StringHelper.padValue(
                     DateHelper.clampDay(
                         isDayTarget ? targetValue : dayValue,
-                        DateHelper.clampMonth(monthValue),
+                        clampedMonth,
                         yearValue
                     )
                 )
             );
-            setMonthValue(
-                StringHelper.padValue(DateHelper.clampMonth(monthValue))
-            );
+            setMonthValue(StringHelper.padValue(clampedMonth));
         }
     };
 
