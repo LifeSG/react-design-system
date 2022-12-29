@@ -48,7 +48,6 @@ export const Checkbox = ({
             disabled={disabled}
             className={className}
             data-testid="checkbox"
-            onKeyPress={handleOnCheck}
             $displaySize={displaySize}
         >
             <Input
