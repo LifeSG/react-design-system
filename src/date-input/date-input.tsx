@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { DateHelper } from "../util";
 import { StringHelper } from "../util/string-helper";
 import {
     BaseInput,
@@ -154,17 +155,36 @@ export const DateInput = ({
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
+        const targetValue = StringHelper.padValue(event.target.value, true);
 
         switch (targetName) {
             case "day":
-                setDayValue(StringHelper.padValue(event.target.value, true));
+                setDayValue(targetValue);
                 break;
             case "month":
-                setMonthValue(StringHelper.padValue(event.target.value, true));
+                setMonthValue(targetValue);
                 break;
             case "year":
             default:
                 break;
+        }
+
+        const isFullyFormedDate =
+            dayValue.length && monthValue.length && yearValue.length === 4;
+        const isDayTarget = targetName === "day";
+        const clampedMonth = DateHelper.clampMonth(monthValue);
+
+        if (isFullyFormedDate) {
+            setDayValue(
+                StringHelper.padValue(
+                    DateHelper.clampDay(
+                        isDayTarget ? targetValue : dayValue,
+                        clampedMonth,
+                        yearValue
+                    )
+                )
+            );
+            setMonthValue(StringHelper.padValue(clampedMonth));
         }
     };
 
@@ -225,13 +245,17 @@ export const DateInput = ({
             const date = new Date(value);
             if (!isNaN(date.getTime())) {
                 // Valid value
-                const day = date.getDate();
-                const month = date.getMonth() + 1; // returns as an index
-                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString(); // returns as an index
+                const year = date.getFullYear().toString();
+                const day = DateHelper.clampDay(
+                    date.getDate().toString(),
+                    month,
+                    year
+                );
 
-                setDayValue(StringHelper.padValue(day.toString()));
-                setMonthValue(StringHelper.padValue(month.toString()));
-                setYearValue(year.toString());
+                setDayValue(StringHelper.padValue(day));
+                setMonthValue(StringHelper.padValue(month));
+                setYearValue(year);
             }
         }
     };

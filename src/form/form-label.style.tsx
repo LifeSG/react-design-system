@@ -33,6 +33,7 @@ export const ErrorMessage = styled(Text.H6)`
     color: ${Color.Validation.Red.Text};
     margin-top: 0.5rem;
     margin-bottom: 0;
+    outline: none;
 `;
 
 export const Subtitle = styled(Text.BodySmall)<LabelProps>`
