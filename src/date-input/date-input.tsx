@@ -22,6 +22,7 @@ export const DateInput = ({
     onChangeRaw,
     onBlurRaw,
     readOnly,
+    id,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -314,6 +315,7 @@ export const DateInput = ({
             onClick={handleNodeClick}
             disabled={disabled}
             $error={error}
+            id={id}
             data-testid={otherProps["data-testid"]}
             $readOnly={readOnly}
         >
