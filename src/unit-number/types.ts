@@ -9,7 +9,7 @@ export interface UnitNumberInputProps extends React.AriaAttributes {
     placeholder?: string | undefined;
 
     // WAI-ARIA
-    role?: string | undefined;
+    role?: React.AriaRole | undefined;
 
     // Input-specific Attributes
     value?: string | undefined;
