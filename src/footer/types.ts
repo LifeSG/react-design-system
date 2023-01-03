@@ -22,7 +22,7 @@ export interface FooterProps<T = void> {
     /** Custom component. This overrides the logo, links and download section */
     children?: JSX.Element | JSX.Element[] | undefined;
     /** Custom disclaimer link attributes */
-    disclaimerLinks?: DisclaimerLinks;
+    disclaimerLinks?: DisclaimerLinks | undefined;
     /** A custom copyright text */
     copyrightInfo?: string | undefined;
     /** Custom logo source */

@@ -1,3 +1,3 @@
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-    "data-testid"?: string;
+    "data-testid"?: string | undefined;
 }

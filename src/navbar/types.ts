@@ -78,5 +78,7 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
 
     onBrandClick?: (() => void) | undefined; // override
     onItemClick?: ((item: NavItemProps<T>) => void) | undefined;
-    onActionButtonClick?: (actionButton: NavbarButtonProps) => void;
+    onActionButtonClick?:
+        | ((actionButton: NavbarButtonProps) => void)
+        | undefined;
 }
