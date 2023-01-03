@@ -95,12 +95,12 @@ export const Footer = <T,>({
                             data-testid="logo"
                         />
                     </LogoSection>
-                    {links[0] && (
+                    {links?.[0] && (
                         <LinkSection key="link-col-1" data-testid="link-col-1">
                             {renderFooterLinks(links[0])}
                         </LinkSection>
                     )}
-                    {links[1] && (
+                    {links?.[1] && (
                         <LinkSection key="link-col-2" data-testid="link-col-2">
                             {renderFooterLinks(links[1])}
                         </LinkSection>
