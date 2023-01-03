@@ -5,7 +5,7 @@ export interface DateInputProps extends React.AriaAttributes {
     readOnly?: boolean | undefined;
 
     // WAI-ARIA
-    role?: string | undefined;
+    role?: React.AriaRole | undefined;
 
     // Input-specific Attributes
     "data-testid"?: string | undefined;
