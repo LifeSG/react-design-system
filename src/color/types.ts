@@ -10,6 +10,8 @@ export interface ValidationTypes {
     Green: ValidationElementAttributes;
     Orange: ValidationElementAttributes;
     Red: ValidationElementAttributes;
+    Blue: ValidationElementAttributes;
+    DarkMode: ValidationElementAttributes;
 }
 
 export interface ColorSet {
