@@ -47,9 +47,9 @@ export interface NavbarSharedProps {
     resources?: NavbarResourcesProps | undefined;
     actionButtons?: NavbarActionButtonsProps | undefined;
     /** Triggered when the brand icon is being clicked */
-    onBrandClick?: (
-        event: React.MouseEvent<HTMLAnchorElement>
-    ) => void | undefined;
+    onBrandClick?:
+        | ((event: React.MouseEvent<HTMLAnchorElement>) => void)
+        | undefined;
 }
 
 export type DrawerDismissalMethod =
@@ -60,7 +60,7 @@ export type DrawerDismissalMethod =
 export interface NavbarDrawerProps extends NavbarSharedProps {
     show: boolean;
     children: JSX.Element | JSX.Element[];
-    onClose?: () => void | undefined;
+    onClose?: (() => void) | undefined;
 }
 
 export interface NavbarProps<T = void> extends NavbarSharedProps {
@@ -76,7 +76,9 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
 
-    onBrandClick?: () => void | undefined; // override
-    onItemClick?: (item: NavItemProps<T>) => void | undefined;
-    onActionButtonClick?: (actionButton: NavbarButtonProps) => void;
+    onBrandClick?: (() => void) | undefined; // override
+    onItemClick?: ((item: NavItemProps<T>) => void) | undefined;
+    onActionButtonClick?:
+        | ((actionButton: NavbarButtonProps) => void)
+        | undefined;
 }

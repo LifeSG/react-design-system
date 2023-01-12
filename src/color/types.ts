@@ -22,7 +22,7 @@ export interface ColorSet {
         6: string;
     };
     Primary: string;
-    PrimaryDark?: string;
+    PrimaryDark?: string | undefined;
     Secondary: string;
     Accent: {
         Dark: {

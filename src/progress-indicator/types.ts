@@ -5,5 +5,5 @@ export interface ProgressIndicatorProps<T> {
     currentIndex: number;
     fadeColor?: string[] | undefined;
     fadePosition?: FadePosition | undefined;
-    displayExtractor?: (item: T) => string | undefined;
+    displayExtractor?: ((item: T) => string) | undefined;
 }

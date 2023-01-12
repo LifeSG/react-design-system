@@ -9,7 +9,7 @@ export interface OverlayProps {
     disableTransition?: boolean | undefined;
     enableOverlayClick?: boolean | undefined;
     zIndex?: number | undefined;
-    onOverlayClick?: () => void | undefined;
+    onOverlayClick?: (() => void) | undefined;
     id?: string | undefined;
 }
 

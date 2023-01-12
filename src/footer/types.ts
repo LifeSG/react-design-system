@@ -22,14 +22,14 @@ export interface FooterProps<T = void> {
     /** Custom component. This overrides the logo, links and download section */
     children?: JSX.Element | JSX.Element[] | undefined;
     /** Custom disclaimer link attributes */
-    disclaimerLinks?: DisclaimerLinks;
+    disclaimerLinks?: DisclaimerLinks | undefined;
     /** A custom copyright text */
     copyrightInfo?: string | undefined;
     /** Custom logo source */
     logoSrc?: string | undefined;
     /** Last updated date value that is displayed in the bottom of the Footer */
     lastUpdated?: Date | undefined;
-    onFooterLinkClick?: (link: FooterLinkProps<T>) => void | undefined;
+    onFooterLinkClick?: ((link: FooterLinkProps<T>) => void) | undefined;
 }
 
 // TODO: Update component and migration
