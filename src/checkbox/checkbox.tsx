@@ -49,13 +49,19 @@ export const Checkbox = ({
             className={className}
             data-testid="checkbox"
             $displaySize={displaySize}
+            role="checkbox"
+            aria-checked={selected}
+            aria-labelledby="checkbox-input"
+            tabIndex={disabled ? -1 : 0}
         >
             <Input
-                type="checkbox"
+                id="checkbox-input"
                 data-testid="checkbox-input"
+                aria-hidden="true"
+                type="checkbox"
+                tabIndex={-1}
                 onChange={handleOnCheck}
                 disabled={disabled}
-                tabIndex={disabled ? -1 : 0}
                 checked={selected}
                 {...otherProps}
             />
