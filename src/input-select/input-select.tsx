@@ -61,7 +61,7 @@ export const InputSelect = <T, V>({
     const handleSelectorClick = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        if (!disabled) {
+        if (!disabled && !otherProps.readOnly) {
             setShowOptions(!showOptions);
             triggerOptionDisplayCallback(!showOptions);
         }
@@ -174,9 +174,11 @@ export const InputSelect = <T, V>({
             <LabelContainer ref={labelContainerRef}>
                 {renderLabel()}
             </LabelContainer>
-            <IconContainer expanded={showOptions}>
-                <StyledIcon type="chevron-down" />
-            </IconContainer>
+            {!otherProps.readOnly && (
+                <IconContainer expanded={showOptions}>
+                    <StyledIcon type="chevron-down" />
+                </IconContainer>
+            )}
         </>
     );
 
@@ -212,6 +214,7 @@ export const InputSelect = <T, V>({
             show={showOptions}
             error={error && !showOptions}
             disabled={disabled}
+            readOnly={otherProps.readOnly}
             testId={testId}
             onBlur={handleWrapperBlur}
         >

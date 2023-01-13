@@ -61,6 +61,19 @@ import { Form } from "@lifesg/react-design-system/form";
                     disabled
                 />
                 <Form.Select
+                    label="This is the readonly state"
+                    options={[
+                        { value: "A", label: "Option A" },
+                        { value: "B", label: "Option B" },
+                        { value: "C", label: "Option C" },
+                        { value: "D", label: "Option D" },
+                    ]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    readOnly
+                />
+                <Form.Select
                     label="This is the error state"
                     options={[
                         { value: "A", label: "Option A" },
