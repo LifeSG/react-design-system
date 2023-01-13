@@ -58,6 +58,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "readOnly",
+                description:
+                    "Indicates if the component is readOnly and selection is not allowed",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "error",
                 description: (
                     <>
