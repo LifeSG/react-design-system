@@ -61,10 +61,11 @@ export const InputSelect = <T, V>({
     const handleSelectorClick = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        if (!disabled && !otherProps.readOnly) {
-            setShowOptions(!showOptions);
-            triggerOptionDisplayCallback(!showOptions);
+        if (disabled || otherProps.readOnly) {
+            return;
         }
+        setShowOptions(!showOptions);
+        triggerOptionDisplayCallback(!showOptions);
     };
 
     const handleListItemClick = (item: T, extractedValue: V) => {
