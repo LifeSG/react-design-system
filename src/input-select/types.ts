@@ -42,6 +42,7 @@ export interface InputSelectWrapperProps {
     error?: boolean | undefined;
     disabled?: boolean | undefined;
     testId?: string | undefined;
+    readOnly?: boolean | undefined;
 }
 
 // =============================================================================
@@ -54,6 +55,7 @@ export interface InputSelectProps<T, V>
         DropdownDisplayProps<T, V>,
         DropdownSearchProps<T>,
         DropdownStyleProps {
+    readOnly?: boolean | undefined;
     selectedOption?: T | undefined;
     onSelectOption?: ((option: T, extractedValue: V) => void) | undefined;
     /** Function to derive display value for selected option */

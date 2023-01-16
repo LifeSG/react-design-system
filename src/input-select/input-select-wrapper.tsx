@@ -9,6 +9,7 @@ export const InputSelectWrapper = ({
     disabled,
     testId,
     onBlur,
+    readOnly,
 }: InputSelectWrapperProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -56,6 +57,7 @@ export const InputSelectWrapper = ({
                 ref={nodeRef}
                 error={error && !show}
                 disabled={disabled}
+                $readOnly={readOnly}
                 expanded={show}
                 data-testid={testId}
             >

@@ -61,10 +61,11 @@ export const InputSelect = <T, V>({
     const handleSelectorClick = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        if (!disabled) {
-            setShowOptions(!showOptions);
-            triggerOptionDisplayCallback(!showOptions);
+        if (disabled || otherProps.readOnly) {
+            return;
         }
+        setShowOptions(!showOptions);
+        triggerOptionDisplayCallback(!showOptions);
     };
 
     const handleListItemClick = (item: T, extractedValue: V) => {
@@ -174,9 +175,11 @@ export const InputSelect = <T, V>({
             <LabelContainer ref={labelContainerRef}>
                 {renderLabel()}
             </LabelContainer>
-            <IconContainer expanded={showOptions}>
-                <StyledIcon type="chevron-down" />
-            </IconContainer>
+            {!otherProps.readOnly && (
+                <IconContainer expanded={showOptions}>
+                    <StyledIcon type="chevron-down" />
+                </IconContainer>
+            )}
         </>
     );
 
@@ -212,6 +215,7 @@ export const InputSelect = <T, V>({
             show={showOptions}
             error={error && !showOptions}
             disabled={disabled}
+            readOnly={otherProps.readOnly}
             testId={testId}
             onBlur={handleWrapperBlur}
         >
