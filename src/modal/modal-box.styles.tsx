@@ -1,6 +1,6 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled from "styled-components";
 import { Color } from "../color";
-import { Icon } from "../icon";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 
@@ -38,8 +38,8 @@ export const CloseButton = styled(IconButton)`
     }
 `;
 
-export const CloseIcon = styled(Icon)`
-    height: 1.25rem;
-    width: 1.25rem;
+export const CloseIcon = styled(CrossIcon)`
+    height: 1.5rem;
+    width: 1.5rem;
     color: ${Color.Neutral[4]};
 `;
