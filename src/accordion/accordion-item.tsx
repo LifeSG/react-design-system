@@ -106,7 +106,7 @@ export const AccordionItem = ({
                     $isCollapsed={expand}
                     aria-label={expand ? "Collapse" : "Expand"}
                 >
-                    <ChevronIcon type="chevron-up" />
+                    <ChevronIcon />
                 </ExpandCollapseButton>
             </TitleContainer>
             {renderContent()}
