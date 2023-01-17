@@ -104,5 +104,8 @@
         "*.ts{x}": [
             "eslint --fix"
         ]
+    },
+    "dependencies": {
+        "@lifesg/react-icons": "^1.0.0"
     }
 }
