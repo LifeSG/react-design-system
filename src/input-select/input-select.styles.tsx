@@ -1,6 +1,6 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
 import { Color } from "../color";
-import { Icon } from "../icon";
 import { MediaQuery } from "../media";
 import { TruncateType } from "../shared/dropdown-list/types";
 import { Text, TextStyle } from "../text";
@@ -144,7 +144,7 @@ export const IconContainer = styled.div<InputSelectStyleProps>`
     margin-left: 1rem;
 `;
 
-export const StyledIcon = styled(Icon)`
+export const StyledChevronIcon = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
     height: ${TextStyle.Body.fontSize}rem;
     width: ${TextStyle.Body.fontSize}rem;
