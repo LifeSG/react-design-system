@@ -1,9 +1,9 @@
-import { Text, TextStyleHelper } from "../text";
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { Icon } from "../icon";
 import { IconButton } from "../icon-button";
 import { Layout } from "../layout";
+import { Text, TextStyleHelper } from "../text";
 import { Transition } from "../transition";
 
 // =============================================================================
@@ -89,20 +89,14 @@ export const StyledIconButton = styled(IconButton)`
     padding-left: 1rem;
     height: max-content;
 
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-        color: ${Color.Neutral[8]};
-    }
-
     :focus,
     :active {
         background: transparent;
     }
 `;
 
-export const StyledIcon = styled(Icon)`
-    height: 2rem;
-    width: 2rem;
+export const StyledIcon = styled(CrossIcon)`
+    height: 1.875rem;
+    width: 1.875rem;
     color: ${Color.Neutral[8]};
 `;
