@@ -1,6 +1,6 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { Icon } from "../icon";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 
@@ -85,9 +85,9 @@ export const TopBar = styled.div`
     padding: 2.5rem 1rem 2rem;
 `;
 
-export const CloseIcon = styled(Icon)`
-    height: 1.25rem;
-    width: 1.25rem;
+export const CloseIcon = styled(CrossIcon)`
+    height: 1.5rem;
+    width: 1.5rem;
     margin-right: -0.25rem;
 `;
 
@@ -95,17 +95,11 @@ export const CloseButton = styled(IconButton)`
     position: absolute;
     right: -0.5rem;
     bottom: 0.65rem;
-
-    ${CloseIcon} {
-        color: ${Color.Neutral[1]};
-    }
+    color: ${Color.Neutral[1]};
 
     :active,
     :focus {
         background: transparent;
-
-        span {
-            color: ${Color.Primary};
-        }
+        color: ${Color.Primary};
     }
 `;

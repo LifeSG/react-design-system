@@ -57,7 +57,7 @@ const Component = (
                 data-testid="drawer__brand"
             />
             <CloseButton onClick={onClose} aria-label="Close nav menu">
-                <CloseIcon type="cross" />
+                <CloseIcon />
             </CloseButton>
         </TopBar>
     );
