@@ -12,8 +12,9 @@ import {
     ItemTitleDefault,
     ItemTitleSmall,
     ToggleButton,
-    ToggleButtonIcon,
     ToggleButtonLabel,
+    ViewLessIcon,
+    ViewMoreIcon,
 } from "./link-list.styles";
 import { LinkListItemProps, LinkListProps } from "./types";
 
@@ -89,7 +90,7 @@ export const LinkList = <T,>({
                     )}
                     {secondaryDescription}
                 </ItemContent>
-                <ItemIcon type="chevron-right" />
+                <ItemIcon />
             </>
         );
     };
@@ -161,7 +162,7 @@ export const LinkList = <T,>({
             >
                 {showMinimised ? "View less" : "View more"}
             </ToggleButtonLabel>
-            <ToggleButtonIcon type={showMinimised ? "minus" : "plus"} />
+            {showMinimised ? <ViewLessIcon /> : <ViewMoreIcon />}
         </ToggleButton>
     );
 
