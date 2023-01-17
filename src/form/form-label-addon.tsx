@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ButtonProps } from "../button";
-import { Icon, IconType } from "../icon";
 import { Popover } from "../popover";
 import { MediaWidths } from "../spec/media-spec";
-import { AddonWrapper, TriggerArea } from "./form-label-addon.style";
+import { AddonWrapper, InfoIcon, TriggerArea } from "./form-label-addon.style";
 import { FormLabelAddonProps, FormLabelAddonType } from "./types";
 
 // =============================================================================
@@ -13,7 +12,7 @@ import { FormLabelAddonProps, FormLabelAddonType } from "./types";
 
 interface Props extends ButtonProps {
     addonType?: FormLabelAddonType | undefined /* For informational purposes */;
-    icon?: IconType | JSX.Element | undefined;
+    icon?: JSX.Element | undefined;
     "data-testid"?: string | undefined;
 }
 
@@ -24,12 +23,10 @@ export const AddonTrigger = ({
     ...buttonProps
 }: Props): JSX.Element => {
     const renderIcon = () => {
-        if (typeof icon === "string") {
-            return <Icon type={icon} id={`${addonType}-icon`} />;
-        } else if (icon) {
+        if (icon) {
             return icon;
         } else {
-            return <Icon type="info" id={`${addonType}-icon`} />;
+            return <InfoIcon id={`${addonType}-icon`} />;
         }
     };
 
