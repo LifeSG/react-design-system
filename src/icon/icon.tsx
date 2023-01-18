@@ -5,6 +5,9 @@ import { LocationUnknownIcon } from "./location-unknown-icon";
 import { MailUnreadIcon } from "./mail-unread-icon";
 import { IconProps } from "./types";
 
+/**
+ * @deprecated Use icon collection from `@lifesg/react-icons`
+ */
 export const Icon = ({ type, ...props }: IconProps) => {
     /**
      * Complex structure icons
