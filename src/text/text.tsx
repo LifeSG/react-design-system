@@ -1,7 +1,6 @@
-import React from "react";
+import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { Icon } from "../icon/icon";
 import { TextStyleHelper } from "./helper";
 import { TextLinkProps, TextLinkStyleProps, TextProps } from "./types";
 
@@ -276,8 +275,11 @@ const HyperlinkBase = styled.a<TextLinkStyleProps>`
     }}
 `;
 
-const ExternalIcon = styled(Icon)`
+const StyledExternalIcon = styled(ExternalIcon)`
+    height: 1rem;
+    width: 1rem;
     margin-left: 0.4rem;
+    vertical-align: middle;
 `;
 
 const HyperlinkComponent = ({
@@ -288,7 +290,7 @@ const HyperlinkComponent = ({
     return (
         <HyperlinkBase {...rest}>
             {children}
-            {external && <ExternalIcon type="external" />}
+            {external && <StyledExternalIcon />}
         </HyperlinkBase>
     );
 };
