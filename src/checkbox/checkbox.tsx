@@ -29,12 +29,21 @@ export const Checkbox = ({
             | React.KeyboardEvent<HTMLDivElement>
     ) => {
         if (!disabled) {
+            const keyboardEvent =
+                event as React.KeyboardEvent<HTMLInputElement>;
+            const isValid =
+                keyboardEvent.key === " " || event.type === "change";
+
+            if (!isValid) {
+                return;
+            }
+
             if (onChange) {
                 onChange(event as React.ChangeEvent<HTMLInputElement>);
             }
 
             if (onKeyPress) {
-                onKeyPress(event as React.KeyboardEvent<HTMLInputElement>);
+                onKeyPress(keyboardEvent);
             }
         }
     };
@@ -49,13 +58,20 @@ export const Checkbox = ({
             className={className}
             data-testid="checkbox"
             $displaySize={displaySize}
+            role="checkbox"
+            aria-checked={selected}
+            aria-labelledby="checkbox-input"
+            tabIndex={disabled ? -1 : 0}
+            onKeyDown={handleOnCheck}
         >
             <Input
-                type="checkbox"
+                id="checkbox-input"
                 data-testid="checkbox-input"
+                aria-hidden="true"
+                type="checkbox"
+                tabIndex={-1}
                 onChange={handleOnCheck}
                 disabled={disabled}
-                tabIndex={disabled ? -1 : 0}
                 checked={selected}
                 {...otherProps}
             />
