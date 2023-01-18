@@ -4,11 +4,21 @@ import { Main } from "./icon-button.style";
 import { IconButtonProps } from "./types";
 
 const Component = (
-    { children, ...otherProps }: IconButtonProps,
+    {
+        children,
+        focusHighlight = true,
+        focusOutline = "none",
+        ...otherProps
+    }: IconButtonProps,
     ref: ButtonRef
 ) => {
     return (
-        <Main ref={ref} {...otherProps}>
+        <Main
+            ref={ref}
+            $outline={focusOutline}
+            $highlight={focusHighlight}
+            {...otherProps}
+        >
             {children}
         </Main>
     );

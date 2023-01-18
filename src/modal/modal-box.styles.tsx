@@ -27,11 +27,6 @@ export const CloseButton = styled(IconButton)`
     right: 0;
     padding: 1rem 0.75rem;
     border-top-right-radius: 0.75rem;
-    :focus-visible,
-    :focus,
-    :active {
-        background: transparent;
-    }
     :focus-visible {
         outline: 4px solid ${Color.Accent.Light[1]};
     }

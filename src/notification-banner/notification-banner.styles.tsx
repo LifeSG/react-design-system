@@ -87,11 +87,6 @@ export const StyledIconButton = styled(IconButton)`
     margin-right: -1.5rem;
     padding-left: 1rem;
     height: max-content;
-
-    :focus,
-    :active {
-        background: transparent;
-    }
 `;
 
 export const StyledIcon = styled(CrossIcon)`

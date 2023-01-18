@@ -64,6 +64,7 @@ export const NBComponent = ({
                         onClick={handleDismiss}
                         id={formatId("dismiss-button", id)}
                         data-testid={formatId("dismiss-button", testId)}
+                        focusHighlight={false}
                     >
                         <StyledIcon />
                     </StyledIconButton>

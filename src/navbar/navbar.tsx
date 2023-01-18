@@ -203,6 +203,7 @@ const Component = <T,>(
                                 aria-label="Open nav menu"
                                 data-testid="button__mobile-menu"
                                 onClick={handleMobileMenuButtonClick}
+                                focusHighlight={false}
                             >
                                 <MobileMenuIcon />
                             </MobileMenuButton>

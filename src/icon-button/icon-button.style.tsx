@@ -1,7 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../color/color";
 
-export const Main = styled.button`
+interface StyleProps {
+    $outline: "none" | "browser";
+    $highlight: boolean;
+}
+
+export const Main = styled.button<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,8 +20,14 @@ export const Main = styled.button`
         width: 1rem;
     }
 
+    &:active,
     &:focus {
-        outline: none;
-        background-color: ${Color.Neutral[7]};
+        ${({ $outline }) => $outline === "none" && "outline: none;"}
+
+        ${({ $highlight }) =>
+            $highlight &&
+            css`
+                background-color: ${Color.Neutral[7]};
+            `}
     }
 `;

@@ -99,7 +99,6 @@ export const CloseButton = styled(IconButton)`
 
     :active,
     :focus {
-        background: transparent;
         color: ${Color.Primary};
     }
 `;

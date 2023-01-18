@@ -56,7 +56,11 @@ const Component = (
                 onClick={onBrandClick}
                 data-testid="drawer__brand"
             />
-            <CloseButton onClick={onClose} aria-label="Close nav menu">
+            <CloseButton
+                onClick={onClose}
+                focusHighlight={false}
+                aria-label="Close nav menu"
+            >
                 <CloseIcon />
             </CloseButton>
         </TopBar>

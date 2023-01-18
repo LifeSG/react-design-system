@@ -54,11 +54,6 @@ export const TitleH4 = styled(Text.H4)<StyleProps>`
 `;
 
 export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
-    :active,
-    :focus {
-        background-color: transparent;
-        outline: revert;
-    }
     height: 3.25rem;
     width: 3.25rem;
     padding: 1rem;
