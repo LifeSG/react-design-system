@@ -1,7 +1,8 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
-import { Icon } from "../icon";
 import { StringHelper } from "../util/string-helper";
 import { Period, TimepickerHelper } from "./helper";
 import {
@@ -287,7 +288,7 @@ export const TimepickerDropdown = ({
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("hour-increment-button")}
             >
-                <Icon type="chevron-up" />
+                <ChevronUpIcon />
             </SwitchButton>
             <TimeInput
                 aria-label="hour"
@@ -314,7 +315,7 @@ export const TimepickerDropdown = ({
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("hour-decrement-button")}
             >
-                <Icon type="chevron-down" />
+                <ChevronDownIcon />
             </SwitchButton>
         </InputContainer>
     );
@@ -329,7 +330,7 @@ export const TimepickerDropdown = ({
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("minute-increment-button")}
             >
-                <Icon type="chevron-up" />
+                <ChevronUpIcon />
             </SwitchButton>
             <TimeInput
                 aria-label="minute"
@@ -356,7 +357,7 @@ export const TimepickerDropdown = ({
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("minute-decrement-button")}
             >
-                <Icon type="chevron-down" />
+                <ChevronDownIcon />
             </SwitchButton>
         </InputContainer>
     );
