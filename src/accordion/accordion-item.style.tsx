@@ -61,9 +61,6 @@ export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
     }
     height: 3.25rem;
     width: 3.25rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 1rem;
     transform: rotate(${(props) => (props.$isCollapsed ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;

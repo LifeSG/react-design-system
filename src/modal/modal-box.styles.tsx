@@ -27,7 +27,6 @@ export const CloseButton = styled(IconButton)`
     right: 0;
     padding: 1rem 0.75rem;
     border-top-right-radius: 0.75rem;
-    background: transparent;
     :focus-visible,
     :focus,
     :active {

@@ -6,7 +6,7 @@ export const Main = styled.button`
     justify-content: center;
     align-items: center;
     padding: 1.5rem;
-    background-color: ${Color.Neutral[8]};
+    background-color: transparent;
     border: none;
     cursor: pointer;
 

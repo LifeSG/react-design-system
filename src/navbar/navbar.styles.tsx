@@ -65,7 +65,6 @@ export const MobileMenuButton = styled(IconButton)`
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
-        background: transparent;
         outline-style: none;
 
         :active,

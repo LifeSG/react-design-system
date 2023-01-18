@@ -84,7 +84,6 @@ export const ContentLink = styled(Text.Hyperlink.Default)`
 `;
 
 export const StyledIconButton = styled(IconButton)`
-    background: transparent;
     margin-right: -1.5rem;
     padding-left: 1rem;
     height: max-content;
