@@ -18,6 +18,7 @@ export const DownloadApp = () => (
                 href="https://apps.apple.com/sg/app/moments-of-life/id1383218758"
                 target="_blank"
                 rel="noopener noreferrer"
+                id="footer-download-app-apple"
             >
                 <img src={APP_STORE_ICON} alt="apple-app-store" />
             </AppStoreLink>
@@ -25,6 +26,7 @@ export const DownloadApp = () => (
                 href="https://play.google.com/store/apps/details?id=sg.gov.app.mol&hl=en_SG"
                 target="_blank"
                 rel="noopener noreferrer"
+                id="footer-download-app-android"
             >
                 <img src={PLAY_STORE_ICON} alt="google-play-store" />
             </AppStoreLink>
