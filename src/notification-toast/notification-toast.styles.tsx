@@ -89,7 +89,7 @@ export const Wrapper = styled.div<StyleProps>`
 
          p {
                 ${TextStyleHelper.getTextStyle("XSmall", "light")}
-                margin-left: 34px;
+                margin-left: 30px;
                 font-size: 14px;
                 line-height: 18px;   
             }
@@ -97,13 +97,13 @@ export const Wrapper = styled.div<StyleProps>`
          strong {
             ${TextStyleHelper.getTextStyle("Body", "semibold")}
             color:  ${textColor};
-            margin-left: 5px;
+            margin-left: 1px;
           }  
 
           svg {
             color: ${iconColor};
             font-size: 24px;
-            margin-right: 5px;
+            margin-right: 4px;
             margin-bottom: -7px;
         }
         
@@ -121,16 +121,14 @@ export const Container = styled.div`
 export const Content = styled.div`
     display: inline-block;
     width: 100%;
-    // padding-top: 2px;
-    // margin-top: 4px;
 
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
 `;
 
 export const StyledIconButton = styled(IconButton)<StyleProps>`
     background: transparent;
-    margin-right: -1.7rem;
-    margin-top: -1.2rem;
+    margin-right: -2.2rem;
+    margin-top: -1rem;
     padding-left: 3rem;
     height: 20px;
 
@@ -149,8 +147,14 @@ export const StyledIconButton = styled(IconButton)<StyleProps>`
             case "info":
                 iconColor = Color.Validation.Blue.Icon(props);
                 break;
-            default:
+            case "successDark":
+            case "errorDark":
+            case "warningDark":
+            case "infoDark":
                 iconColor = Color.Validation.DarkMode.Icon(props);
+                break;
+            default:
+                iconColor = Color.Validation.Green.Icon(props);
                 break;
         }
         return `
