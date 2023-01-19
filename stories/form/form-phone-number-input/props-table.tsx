@@ -52,6 +52,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "optionPlaceholder",
+                description: "The placeholder for the dropdown selector",
+                propTypes: ["string"],
+            },
+            {
                 name: "optionSearchPlaceholder",
                 description: (
                     <>

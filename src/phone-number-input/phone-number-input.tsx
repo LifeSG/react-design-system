@@ -14,6 +14,7 @@ export const PhoneNumberInput = ({
     allowClear,
     onClear,
     error,
+    optionPlaceholder = "Select",
     optionSearchPlaceholder,
     enableSearch,
     onHideOptions,
@@ -132,7 +133,7 @@ export const PhoneNumberInput = ({
                     type: "list",
                     attributes: {
                         value: selectedOption,
-                        placeholder: "Select",
+                        placeholder: optionPlaceholder,
                         options: PhoneNumberInputHelper.getCountries,
                         selectedOption: selectedOption,
                         enableSearch: enableSearch,

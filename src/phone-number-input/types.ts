@@ -8,22 +8,34 @@ export interface CountryValue {
     format: string;
 }
 export interface PhoneNumberInputValue {
+    /**
+     * You may choose to specify with or without the +. The return value
+     * will always contain the +
+     */
     countryCode?: string | undefined;
     number?: string | undefined;
 }
 
 export interface PhoneNumberInputProps extends React.AriaAttributes {
     value?: PhoneNumberInputValue | undefined;
-    onChange?: ((value: PhoneNumberInputValue) => void) | undefined;
     error?: boolean | undefined;
+    /** Specifies if the clear button should be present in the input */
     allowClear?: boolean | undefined;
-    onClear?: () => void | undefined;
     "data-testid"?: string | undefined;
+    onChange?: ((value: PhoneNumberInputValue) => void) | undefined;
+    /** Called when the clear button in the input field is clicked */
+    onClear?: () => void | undefined;
 
     // Dropdown option props
+    /** The placeholder value for the dropdown selector */
+    optionPlaceholder?: string | undefined;
+    /** The placeholder value for the dropdown search */
     optionSearchPlaceholder?: string | undefined;
+    /** Specifies if search is enabled in the dropdown */
     enableSearch?: boolean | undefined;
+    /** Called when the dropdown is dismissed */
     onHideOptions?: (() => void) | undefined;
+    /** Called when the dropdown is visible */
     onShowOptions?: (() => void) | undefined;
 
     // Input props
