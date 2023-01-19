@@ -14,7 +14,7 @@ export interface PhoneNumberInputValue {
 
 export interface PhoneNumberInputProps extends React.AriaAttributes {
     value?: PhoneNumberInputValue | undefined;
-    onChange?: (value: PhoneNumberInputValue) => void | undefined;
+    onChange?: ((value: PhoneNumberInputValue) => void) | undefined;
     error?: boolean | undefined;
     allowClear?: boolean | undefined;
     onClear?: () => void | undefined;
@@ -23,8 +23,8 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     // Dropdown option props
     optionSearchPlaceholder?: string | undefined;
     enableSearch?: boolean | undefined;
-    onHideOptions?: () => void | undefined;
-    onShowOptions?: () => void | undefined;
+    onHideOptions?: (() => void) | undefined;
+    onShowOptions?: (() => void) | undefined;
 
     // Input props
     disabled?: boolean | undefined;

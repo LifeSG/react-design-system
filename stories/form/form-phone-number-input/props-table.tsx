@@ -10,26 +10,14 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "value",
                 description:
-                    "The value of the country code options and phone number input",
+                    "The value containing the country code and phone number",
                 propTypes: ["PhoneNumberInputValue"],
             },
             {
-                name: "onChange",
-                description:
-                    "Called when an country code options is selected and when phone number input change/clear",
-                propTypes: ["(value: PhoneNumberInputValue) => void"],
-            },
-
-            {
                 name: "allowClear",
                 description:
-                    "Indicates if the phone number input should have clearable option or not",
+                    "Indicates if the clear icon button will be displayed in the input",
                 propTypes: ["boolean"],
-            },
-            {
-                name: "onClear",
-                description: "Called when an phone number input is cleared",
-                propTypes: ["() => void"],
             },
             {
                 name: "name",
@@ -38,8 +26,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "placeholder",
-                description:
-                    "The placeholder phone number input of the component",
+                description: "The placeholder for the input",
                 propTypes: ["string"],
                 defaultValue: "Select",
             },
@@ -66,8 +53,13 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "optionSearchPlaceholder",
-                description:
-                    "The placeholder for the country code search field",
+                description: (
+                    <>
+                        The placeholder for the country code options search
+                        field (applicable if
+                        <code>enableSearch</code> is set to <code>true</code>
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
@@ -76,6 +68,18 @@ const DATA: ApiTableSectionProps[] = [
                     "When specified, it will allow a text base search for the country code options",
                 propTypes: ["boolean"],
                 defaultValue: "false",
+            },
+            {
+                name: "onChange",
+                description:
+                    "Called when a change is made on the input field or a selection on the country code options dropdown",
+                propTypes: ["(value: PhoneNumberInputValue) => void"],
+            },
+            {
+                name: "onClear",
+                description:
+                    "Called when the clear icon of the input is clicked",
+                propTypes: ["() => void"],
             },
             {
                 name: "onShowOptions",
@@ -95,12 +99,23 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "number",
-                description: "The value of the phone number input",
+                description: "The value of the phone number",
                 propTypes: ["string"],
             },
             {
                 name: "countryCode",
-                description: "The value of the country code options",
+                description: (
+                    <>
+                        The value of the country code (e.g. +65)
+                        <br />
+                        <strong>
+                            Note: When passing in a value, you may choose to
+                            omit the &ldquo;+&rdquo;. But the return value in
+                            the <code>onChange</code> function will always
+                            include the &ldquo;+&rdquo;
+                        </strong>
+                    </>
+                ),
                 propTypes: ["string"],
             },
         ],
