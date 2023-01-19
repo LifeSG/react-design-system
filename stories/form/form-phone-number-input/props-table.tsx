@@ -8,13 +8,38 @@ const DATA: ApiTableSectionProps[] = [
         name: "PhoneNumberInput specific props",
         attributes: [
             {
+                name: "value",
+                description:
+                    "The value of the country code options and phone number input",
+                propTypes: ["PhoneNumberInputValue"],
+            },
+            {
+                name: "onChange",
+                description:
+                    "Called when an country code options is selected and when phone number input change/clear",
+                propTypes: ["(value: PhoneNumberInputValue) => void"],
+            },
+
+            {
+                name: "allowClear",
+                description:
+                    "Indicates if the phone number input should have clearable option or not",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "onClear",
+                description: "Called when an phone number input is cleared",
+                propTypes: ["() => void"],
+            },
+            {
                 name: "name",
                 description: "The name of the component",
                 propTypes: ["string"],
             },
             {
                 name: "placeholder",
-                description: "The placeholder text of the component",
+                description:
+                    "The placeholder phone number input of the component",
                 propTypes: ["string"],
                 defaultValue: "Select",
             },
@@ -40,125 +65,43 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "countrySelector",
-                description: "The countrySelector component properties",
-                propTypes: ["ListAddon<T, V>"],
-            },
-        ],
-    },
-    {
-        name: "CountrySelector<T, V>",
-        attributes: [
-            {
-                name: "value",
-                description: "The value of the country selector",
-                propTypes: ["T"],
-            },
-            {
-                name: "placeholder",
-                description: (
-                    <>
-                        The placeholder text of the addon (relevant if{" "}
-                        <code>type</code>&nbsp; is <code>{`"list"`}</code>)
-                    </>
-                ),
-                propTypes: ["string"],
-                defaultValue: "Select",
-            },
-            {
-                name: "options",
-                description: "A list of options that a user can choose from",
-                propTypes: ["T[]"],
-            },
-            {
-                name: "selectedOption",
-                description: "The option that is being selected",
-                propTypes: ["T"],
-            },
-            {
-                name: "valueExtractor",
-                description: "The function to derive the value from an option",
-                propTypes: ["(option: T) => V"],
-            },
-            {
-                name: "listExtractor",
+                name: "optionSearchPlaceholder",
                 description:
-                    "The function to derive the option display value from an option",
-                propTypes: ["(option: T) => string | object"],
-            },
-            {
-                name: "displayValueExtractor",
-                description:
-                    "The function to derive the selector's display value from an option",
-                propTypes: ["(option: T) => V"],
-            },
-            {
-                name: "optionsLoadState",
-                description:
-                    "The visual state to represent the progress when options are loaded asynchronously",
-                propTypes: [`"success"`, `"loading"`, `"failed"`],
-                defaultValue: `"success"`,
-            },
-            {
-                name: "optionTruncationType",
-                description:
-                    "Specifies the trunction type of the options display. Truncated text will be replaced with ellipsis",
-                propTypes: [`"end"`, `"middle"`],
-                defaultValue: `"end"`,
-            },
-            {
-                name: "data-selector-testid",
-                description: (
-                    <>
-                        The test identifier of the addon selector (relevant if{" "}
-                        <code>type</code>&nbsp; is <code>{`"list"`}</code>)
-                    </>
-                ),
+                    "The placeholder for the country code search field",
                 propTypes: ["string"],
             },
             {
                 name: "enableSearch",
                 description:
-                    "When specified, it will allow a text base search for the items in the list",
+                    "When specified, it will allow a text base search for the country code options",
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
             {
-                name: "searchPlaceholder",
-                description: "The placeholder for the search field",
-                propTypes: ["string"],
-            },
-            {
-                name: "searchFunction",
-                description:
-                    "The custom function to perform a search when the user enters a value in the search input",
-                propTypes: ["(searchValue: string) => T[]"],
-            },
-            {
-                name: "onSelectOption",
-                description: "Called when an option is selected",
-                propTypes: ["(option: T, extractedValue: T | V) => void"],
-            },
-            {
                 name: "onShowOptions",
-                description: "Called when the options dropdown is expanded",
+                description: "Called when the country code options is expanded",
                 propTypes: ["() => void"],
             },
             {
                 name: "onHideOptions",
-                description: "Called when options dropdown is minimised",
-                propTypes: ["() => void"],
-            },
-            {
-                name: "onRetry",
                 description:
-                    "Called when retry button is clicked to retry loading the options",
+                    "Called when the country code options is minimised",
                 propTypes: ["() => void"],
             },
+        ],
+    },
+    {
+        name: "PhoneNumberInputValue",
+        attributes: [
             {
-                name: "onSearch",
-                description: "Called when a search is being executed",
-                propTypes: ["() => void"],
+                name: "number",
+                description: "The value of the phone number input",
+                propTypes: ["string"],
+            },
+            {
+                name: "countryCode",
+                description: "The value of the country code options",
+                propTypes: ["string"],
             },
         ],
     },

@@ -1,5 +1,6 @@
 import { CountryData } from "./data/country-code";
 import { reduce } from "lodash";
+import { CountryValue } from "./types";
 
 // Format stucture: prefix+countryCode+' '+defaultMask
 const defaultMask = "... ... ... ... ..";
@@ -24,13 +25,13 @@ const getMask = (
 };
 
 export namespace PhoneNumberInputHelper {
-    export const getCountries = [].concat(
-        ...CountryData.map((country) => {
+    export const getCountries: CountryValue[] = [].concat(
+        ...CountryData.map((country): CountryValue => {
             const countryItem = {
-                name: country[0],
-                regions: country[1],
-                iso2: country[2],
-                countryCode: country[3],
+                name: country[0] as string,
+                regions: country[1] as string[],
+                iso2: country[2] as string,
+                countryCode: country[3] as string,
                 format: getMask(
                     prefix,
                     country[3] as string,
@@ -43,7 +44,10 @@ export namespace PhoneNumberInputHelper {
         })
     );
 
-    export const formatNumber = (text, country) => {
+    export const formatNumber = (
+        text: string,
+        country: CountryValue | undefined
+    ): string => {
         if (!country) return text;
 
         const { format } = country;

@@ -111,16 +111,19 @@ export const InputElement = styled.input<InputStyleProps>`
     }
 `;
 
-export const IconContainer = styled.div<InputStyleProps>`
+export const ClearContainer = styled.button<InputStyleProps>`
     position: relative;
     display: flex;
     align-items: center;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     padding: 0 0.6875rem 0 1rem;
+    cursor: pointer;
 
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${Color.Neutral[3]};
+    background-color: transparent;
+    border: none;
 
     /* SVG Icon */
     svg {

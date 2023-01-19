@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "src/icon";
 import { StringHelper } from "../util/string-helper";
-import { Container, IconContainer, InputElement } from "./input.style";
+import { ClearContainer, Container, InputElement } from "./input.style";
 import { InputProps, InputRef } from "./types";
 
 const Component = (
@@ -63,6 +63,10 @@ const Component = (
         element.value = currentValue;
     };
 
+    const handleClear = () => {
+        if (onClear) onClear();
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -75,7 +79,6 @@ const Component = (
      */
     const updatedValue = value ? convertInputString(value) : value;
     const onChangeFn = onChange ? handleChange : undefined;
-    const onClearFn = onClear ? onClear : undefined;
     const showClearButton = allowClear && !disabled && !readOnly && !error;
 
     return (
@@ -97,9 +100,9 @@ const Component = (
                 {...otherProps}
             />
             {showClearButton && (
-                <IconContainer onClick={onClearFn}>
+                <ClearContainer onClick={handleClear}>
                     <Icon type="cross" />
-                </IconContainer>
+                </ClearContainer>
             )}
         </Container>
     );

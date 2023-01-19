@@ -18,7 +18,7 @@ import { InputGroupProps, ListAddon } from "./types";
 export const InputGroupListAddon = <T, V>({
     addon,
     error,
-    onInputChange,
+    onChange,
     ...otherProps
 }: InputGroupProps<T, V>) => {
     const {
@@ -50,13 +50,9 @@ export const InputGroupListAddon = <T, V>({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    // useEffect(() => {
-    //     setSelected(value);
-    // }, [value]);
-
     useEffect(() => {
-        setSelected(selectedOption);
-    }, [selectedOption]);
+        setSelected(value);
+    }, [value]);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClick);
@@ -132,7 +128,7 @@ export const InputGroupListAddon = <T, V>({
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (onInputChange) onInputChange(event, selected);
+        if (onChange) onChange(event);
     };
 
     // =============================================================================

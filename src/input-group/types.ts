@@ -49,10 +49,6 @@ export interface AddonProps<T, V> {
 
 export interface InputGroupProps<T, V> extends InputProps {
     addon?: AddonProps<T, V>;
-    onInputChange?: (
-        event: React.ChangeEvent<HTMLInputElement>,
-        selected: T
-    ) => void | undefined;
 }
 
 /** To be exposed for Form component inheritance */

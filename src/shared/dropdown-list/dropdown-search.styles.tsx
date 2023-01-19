@@ -41,4 +41,5 @@ export const CancelIcon = styled(Icon)`
     width: 1.125rem;
     margin: 0 0.5rem;
     color: ${Color.Neutral[3]};
+    cursor: pointer;
 `;

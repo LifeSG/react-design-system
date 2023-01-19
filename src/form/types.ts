@@ -83,6 +83,6 @@ export interface FormUnitNumberInputProps
     extends UnitNumberInputProps,
         BaseFormElementProps {}
 
-export interface FormPhoneNumberInputProps<T, V>
-    extends PhoneNumberInputProps<T, V>,
+export interface FormPhoneNumberInputProps
+    extends PhoneNumberInputProps,
         BaseFormElementProps {}
