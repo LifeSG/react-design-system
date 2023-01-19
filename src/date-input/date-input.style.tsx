@@ -11,7 +11,7 @@ import { IconButton } from "../icon-button";
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface ContainerStyleProps {
-    disabled?: boolean;
+    $disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
     $variant?: DateInputVariant;
@@ -33,6 +33,7 @@ export const Container = styled.div<ContainerStyleProps>`
     border-radius: 0.25rem;
     background: ${Color.Neutral[8]};
     height: 3rem;
+    width: 100%;
     min-width: 20.75rem;
     padding: 0.1rem 1rem 0;
 
@@ -56,8 +57,7 @@ export const Container = styled.div<ContainerStyleProps>`
         ${(props) => {
             if (props.$variant === "range") {
                 return css`
-                    min-width: unset;
-                    max-width: 23.25rem;
+                    width: 100%;
                     height: 5.125rem;
 
                     ${ArrowRangeIcon} {
@@ -68,7 +68,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 `;
             } else if (props.$variant === "single") {
                 return css`
-                    min-width: unset;
+                    width: 100%;
                 `;
             }
         }}
@@ -86,7 +86,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     box-shadow: none;
                 }
             `;
-        } else if (props.disabled) {
+        } else if (props.$disabled) {
             return css`
                 background: ${Color.Neutral[6](props)};
                 :hover {
@@ -104,6 +104,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                 :focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
+                    box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;
         }
@@ -133,7 +134,7 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
     background-color: ${Color.Primary};
     height: 0.125rem;
     width: calc(100% - 50% - 2rem); // paddingX is 2rem,
-    transition: left 350ms ease-in-out;
+    transition: left 350ms ease-in-out, opacity 350ms ease-in-out;
     left: 1rem;
     bottom: -0.1rem;
 
