@@ -10,6 +10,7 @@ export * from "./card";
 export * from "./checkbox";
 export * from "./color";
 export * from "./date-input";
+export * from "./date-picker";
 export * from "./error-display";
 export * from "./feedback-rating";
 export * from "./footer";
