@@ -1,6 +1,7 @@
 import React from "react";
+import { Icon } from "src/icon";
 import { StringHelper } from "../util/string-helper";
-import { InputElement } from "./input.style";
+import { ClearContainer, Container, InputElement } from "./input.style";
 import { InputProps, InputRef } from "./types";
 
 const Component = (
@@ -10,7 +11,10 @@ const Component = (
         type,
         error,
         disabled,
+        readOnly,
         onChange,
+        onClear,
+        allowClear = false,
         ...otherProps
     }: InputProps,
     ref: InputRef
@@ -59,6 +63,10 @@ const Component = (
         element.value = currentValue;
     };
 
+    const handleClear = () => {
+        if (onClear) onClear();
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -71,18 +79,32 @@ const Component = (
      */
     const updatedValue = value ? convertInputString(value) : value;
     const onChangeFn = onChange ? handleChange : undefined;
+    const showClearButton = allowClear && !disabled && !readOnly && !error;
 
     return (
-        <InputElement
-            data-testid="input"
-            ref={ref}
-            disabled={disabled}
-            value={updatedValue}
+        <Container
             error={error}
-            onChange={onChangeFn}
-            type={type}
+            disabled={disabled}
+            readOnly={readOnly}
             {...otherProps}
-        />
+        >
+            <InputElement
+                data-testid="input"
+                ref={ref}
+                disabled={disabled}
+                value={updatedValue}
+                error={error}
+                onChange={onChangeFn}
+                type={type}
+                readOnly={readOnly}
+                {...otherProps}
+            />
+            {showClearButton && (
+                <ClearContainer onClick={handleClear}>
+                    <Icon type="cross" />
+                </ClearContainer>
+            )}
+        </Container>
     );
 };
 

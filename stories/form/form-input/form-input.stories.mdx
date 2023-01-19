@@ -57,6 +57,8 @@ import { Form } from "@lifesg/react-design-system/form";
                             spacing={4}
                             type="tel"
                             onChange={(event) => setInput4(event.target.value)}
+                            allowClear={true}
+                            onClear={() => setInput4("")}
                         />
                     </Container>
                 </StoryContainer>

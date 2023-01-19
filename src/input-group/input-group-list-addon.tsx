@@ -18,6 +18,7 @@ import { InputGroupProps, ListAddon } from "./types";
 export const InputGroupListAddon = <T, V>({
     addon,
     error,
+    onChange,
     ...otherProps
 }: InputGroupProps<T, V>) => {
     const {
@@ -30,6 +31,7 @@ export const InputGroupListAddon = <T, V>({
         valueExtractor,
         listExtractor,
         displayValueExtractor,
+        selectedOption,
         onSelectOption,
         onHideOptions,
         onShowOptions,
@@ -125,6 +127,10 @@ export const InputGroupListAddon = <T, V>({
         }
     };
 
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (onChange) onChange(event);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -133,6 +139,7 @@ export const InputGroupListAddon = <T, V>({
             return (
                 <DropdownList
                     listItems={options}
+                    selectedItems={selectedOption ? [selectedOption] : []}
                     onSelectItem={handleListItemClick}
                     valueExtractor={valueExtractor}
                     listExtractor={listExtractor}
@@ -179,6 +186,8 @@ export const InputGroupListAddon = <T, V>({
             <Divider />
             <MainInput
                 {...otherProps}
+                error={error}
+                onChange={handleInputChange}
                 data-testid={otherProps["data-testid"] || "input"}
             />
         </DisplayContainer>
