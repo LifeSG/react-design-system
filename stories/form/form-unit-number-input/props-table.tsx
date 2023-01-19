@@ -80,7 +80,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "role",
                 description: "The aria role of the component",
-                propTypes: ["string"],
+                propTypes: ["React.AriaRole"],
             },
             {
                 name: "data-testid",

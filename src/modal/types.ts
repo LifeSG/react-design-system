@@ -11,13 +11,13 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /** The identifier of the element to inject the Modal into */
     rootComponentId?: string | undefined;
     zIndex?: number | undefined;
-    onOverlayClick?: () => void | undefined;
+    onOverlayClick?: (() => void) | undefined;
     /** Dismiss keyboard to keep modal in fullscreen */
-    dismissKeyboardOnShow?: boolean;
+    dismissKeyboardOnShow?: boolean | undefined;
 }
 
 export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
     children: JSX.Element | JSX.Element[];
     showCloseButton?: boolean | undefined;
-    onClose?: () => void | undefined;
+    onClose?: (() => void) | undefined;
 }

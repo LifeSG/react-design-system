@@ -6,7 +6,9 @@ interface Props {
     resources: NavbarResourcesProps;
     compress?: boolean | undefined;
     "data-testid"?: string | undefined;
-    onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void | undefined;
+    onClick?:
+        | ((event: React.MouseEvent<HTMLAnchorElement>) => void)
+        | undefined;
 }
 
 export const Brand = ({

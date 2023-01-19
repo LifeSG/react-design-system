@@ -4,6 +4,7 @@
  *
  */
 
+import { Children, cloneElement } from "react";
 import { FormLabel } from "./form-label";
 import { ErrorMessage } from "./form-label.style";
 import { Container } from "./form-wrapper.style";
@@ -21,15 +22,19 @@ export const FormWrapper = ({
     // HELPER FUNCTIONS
     // =============================================================================
 
-    const getErrorTestMessageId = () => {
+    const getErrorTestMessageId = (): string => {
         return errorTestId || (id ? `${id}-error-message` : "error-message");
+    };
+
+    const isInvalidState = (): boolean => {
+        return !!errorMessage;
     };
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
 
-    const renderFormLabel = () => {
+    const renderFormLabel = (): JSX.Element => {
         if (typeof label === "string") {
             return (
                 <FormLabel
@@ -40,25 +45,36 @@ export const FormWrapper = ({
                     {label}
                 </FormLabel>
             );
-        } else {
-            return (
-                <FormLabel
-                    htmlFor={`${id}-base`}
-                    data-testid={id ? `${id}-label` : "form-label"}
-                    disabled={disabled}
-                    {...label}
-                />
-            );
         }
+        return (
+            <FormLabel
+                htmlFor={`${id}-base`}
+                data-testid={id ? `${id}-label` : "form-label"}
+                disabled={disabled}
+                {...label}
+            />
+        );
+    };
+
+    const renderChildren = (): JSX.Element | JSX.Element[] => {
+        const ariaState = {
+            "aria-invalid": isInvalidState(),
+            "aria-describedby": isInvalidState() && getErrorTestMessageId(),
+        };
+        return Children.map(children, (child) =>
+            cloneElement(child, ariaState)
+        );
     };
 
     return (
         <Container>
             {label && renderFormLabel()}
-            {children}
+            {renderChildren()}
             {errorMessage && (
                 <ErrorMessage
+                    id={getErrorTestMessageId()}
                     weight="semibold"
+                    tabIndex={0}
                     data-testid={getErrorTestMessageId()}
                 >
                     {errorMessage}

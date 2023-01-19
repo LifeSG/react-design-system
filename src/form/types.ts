@@ -30,7 +30,7 @@ export interface FormLabelProps
     extends React.LabelHTMLAttributes<HTMLLabelElement> {
     addon?: FormLabelAddonProps | undefined;
     disabled?: boolean | undefined;
-    subtitle?: string | JSX.Element;
+    subtitle?: string | JSX.Element | undefined;
     "data-testid"?: string | undefined;
 }
 

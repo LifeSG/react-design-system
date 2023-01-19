@@ -11,6 +11,7 @@ import { Transition } from "../transition";
 // =============================================================================
 export interface InputSelectStyleProps {
     disabled?: boolean;
+    $readOnly?: boolean;
     error?: boolean;
     expanded?: boolean;
 }
@@ -107,6 +108,20 @@ export const ElementBoundary = styled.div<InputSelectStyleProps>`
 
                 :focus-within {
                     border: 1px solid ${Color.Neutral[5](props)};
+                    box-shadow: none;
+                }
+            `;
+        } else if (props.$readOnly) {
+            return css`
+                border: none;
+                background: transparent !important;
+
+                ${Selector} {
+                    padding-left: 0rem;
+                }
+
+                :focus-within {
+                    border: none;
                     box-shadow: none;
                 }
             `;

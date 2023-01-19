@@ -396,14 +396,11 @@ export const DropdownList = <T, V>({
         }
     };
 
-    return (
-        <Container
-            style={containerStyles}
-            data-testid={
-                visible ? "dropdown-container" : "dropdown-container-hidden"
-            }
-            ref={nodeRef}
-        >
+    const renderList = () => {
+        if (!visible) {
+            return;
+        }
+        return (
             <List
                 ref={listRef}
                 data-testid="dropdown-list"
@@ -418,6 +415,18 @@ export const DropdownList = <T, V>({
                 {renderTryAgain()}
                 {renderItems()}
             </List>
+        );
+    };
+
+    return (
+        <Container
+            style={containerStyles}
+            data-testid={
+                visible ? "dropdown-container" : "dropdown-container-hidden"
+            }
+            ref={nodeRef}
+        >
+            {renderList()}
         </Container>
     );
 };

@@ -18,11 +18,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "name",
-                description: "The name of the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "error",
                 description: (
                     <>
@@ -49,19 +44,9 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "tabIndex",
-                description: "Specifies the tab order of the component",
-                propTypes: ["number"],
-            },
-            {
-                name: "style",
-                description: "Allows for inline styling of the component",
-                propTypes: ["React.CSSProperties"],
-            },
-            {
                 name: "role",
                 description: "The aria role of the component",
-                propTypes: ["string"],
+                propTypes: ["React.AriaRole"],
             },
             {
                 name: "data-testid",

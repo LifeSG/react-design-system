@@ -4,12 +4,12 @@ export interface PopoverProps {
     id?: string | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
-    onMobileClose?: () => void | undefined;
+    onMobileClose?: (() => void) | undefined;
 }
 
 export interface PopoverHOCProps {
-    onPopoverAppear?: () => void | undefined;
-    onPopoverDismiss?: () => void | undefined;
+    onPopoverAppear?: (() => void) | undefined;
+    onPopoverDismiss?: (() => void) | undefined;
 }
 
 export interface PopoverHOCOptionsProps {

@@ -9,23 +9,23 @@ export interface UnitNumberInputProps extends React.AriaAttributes {
     placeholder?: string | undefined;
 
     // WAI-ARIA
-    role?: string | undefined;
+    role?: React.AriaRole | undefined;
 
     // Input-specific Attributes
     value?: string | undefined;
     name?: string | undefined;
     error?: boolean | undefined;
     disabled?: boolean | undefined;
-    onChange?: (value: string) => void | undefined;
+    onChange?: ((value: string) => void) | undefined;
     /**
      * Function that returns the raw values in the UnitNumberInput on change in an array format
      * as such [floor, unit]
      */
-    onChangeRaw?: (value: string[]) => void | undefined;
-    onBlur?: (value: string) => void | undefined;
+    onChangeRaw?: ((value: string[]) => void) | undefined;
+    onBlur?: ((value: string) => void) | undefined;
     /**
      * Function that returns the raw values in the UnitNumberInput on blur in an array format
      * as such [floor, unit]
      */
-    onBlurRaw?: (value: string[]) => void | undefined;
+    onBlurRaw?: ((value: string[]) => void) | undefined;
 }

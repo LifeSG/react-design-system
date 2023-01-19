@@ -6,7 +6,7 @@ export const Checkbox = ({
     className,
     checked,
     disabled,
-    onClick,
+    onChange,
     onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
     ...otherProps
@@ -25,18 +25,25 @@ export const Checkbox = ({
     // =============================================================================
     const handleOnCheck = (
         event:
-            | React.MouseEvent<HTMLInputElement, MouseEvent>
+            | React.ChangeEvent<HTMLInputElement>
             | React.KeyboardEvent<HTMLDivElement>
     ) => {
         if (!disabled) {
-            if (onClick) {
-                onClick(
-                    event as React.MouseEvent<HTMLInputElement, MouseEvent>
-                );
+            const keyboardEvent =
+                event as React.KeyboardEvent<HTMLInputElement>;
+            const isValid =
+                keyboardEvent.key === " " || event.type === "change";
+
+            if (!isValid) {
+                return;
+            }
+
+            if (onChange) {
+                onChange(event as React.ChangeEvent<HTMLInputElement>);
             }
 
             if (onKeyPress) {
-                onKeyPress(event as React.KeyboardEvent<HTMLInputElement>);
+                onKeyPress(keyboardEvent);
             }
         }
     };
@@ -50,17 +57,22 @@ export const Checkbox = ({
             disabled={disabled}
             className={className}
             data-testid="checkbox"
-            onKeyPress={handleOnCheck}
-            tabIndex={disabled ? -1 : 0}
-            role="checkbox"
             $displaySize={displaySize}
+            role="checkbox"
+            aria-checked={selected}
+            aria-labelledby="checkbox-input"
+            tabIndex={disabled ? -1 : 0}
+            onKeyDown={handleOnCheck}
         >
             <Input
-                type="checkbox"
+                id="checkbox-input"
                 data-testid="checkbox-input"
-                onClick={handleOnCheck}
+                aria-hidden="true"
+                type="checkbox"
+                tabIndex={-1}
+                onChange={handleOnCheck}
                 disabled={disabled}
-                tabIndex={-1} // Need this else it is able to be tabbed to
+                checked={selected}
                 {...otherProps}
             />
             {selected && (
