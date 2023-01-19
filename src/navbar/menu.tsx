@@ -3,26 +3,24 @@ import { TextWeight } from "../text";
 import {
     Link,
     LinkIndicator,
-    LinkItem,
+    MenuBar,
+    MenuItem,
     MobileWrapper,
-    Wrapper,
-} from "./navbar-items.styles";
+} from "./menu.styles";
 import { NavItemProps, NavSubItemProps } from "./types";
-import { Menu } from "./menu";
 
 interface Props<T> {
-    items: NavItemProps<T>[];
+    items: NavSubItemProps<T>[];
     selectedId?: string | undefined;
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemProps<T>
+        item: NavSubItemProps<T>
     ) => void;
-    subMenu?: NavSubItemProps<T>[] | undefined;
 }
 
-export const NavbarItems = <T,>({
+export const Menu = <T,>({
     items,
     selectedId,
     mobile = false,
@@ -37,24 +35,11 @@ export const NavbarItems = <T,>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleLinkClick = (item: NavItemProps<T>, index) => {
+    const handleLinkClick = (item: NavSubItemProps<T>, index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             setShowDrawer(index);
-            if (item && !item.subMenu) {
-                onItemClick(event, item);
-            }
-        };
-    };
-
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleSubLinkClick = (item: NavSubItemProps<T>[], index) => {
-        return (event: React.MouseEvent<HTMLAnchorElement>) => {
-            event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
-            setShowDrawer(index);
-            onItemClick(event, item[index]);
+            onItemClick(event, item);
         };
     };
 
@@ -76,7 +61,7 @@ export const NavbarItems = <T,>({
                 : `link__${index + 1}`;
 
             return (
-                <LinkItem key={index}>
+                <MenuItem key={index}>
                     <Link
                         data-testid={testId}
                         weight={textWeight}
@@ -88,21 +73,7 @@ export const NavbarItems = <T,>({
                         {children}
                         {selected && <LinkIndicator />}
                     </Link>
-
-                    {isMobile &&
-                        selectedIndex >= 0 &&
-                        selectedIndex === index && (
-                            <Menu
-                                items={item.subMenu}
-                                selectedId={"selectedId"}
-                                mobile={isMobile}
-                                onItemClick={handleSubLinkClick(
-                                    item?.subMenu,
-                                    0
-                                )}
-                            ></Menu>
-                        )}
-                </LinkItem>
+                </MenuItem>
             );
         });
     };
@@ -114,20 +85,7 @@ export const NavbarItems = <T,>({
                 {mobile ? (
                     <MobileWrapper>{renderItems(mobile)}</MobileWrapper>
                 ) : (
-                    <Wrapper>
-                        {renderItems(mobile)}
-                        {items && selectedIndex && items[selectedIndex] && (
-                            <Menu
-                                items={items[selectedIndex].subMenu}
-                                selectedId={"selectedId"}
-                                mobile={false}
-                                onItemClick={handleSubLinkClick(
-                                    items[selectedIndex]?.subMenu,
-                                    0
-                                )}
-                            ></Menu>
-                        )}
-                    </Wrapper>
+                    <MenuBar>{renderItems(mobile)}</MenuBar>
                 )}
             </>
         );

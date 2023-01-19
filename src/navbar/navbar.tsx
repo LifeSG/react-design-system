@@ -13,6 +13,8 @@ import {
     MobileMenuButton,
     Nav,
     NavElementsContainer,
+    NavLogoContainer,
+    NavSeprator,
     Wrapper,
 } from "./navbar.styles";
 import {
@@ -34,6 +36,8 @@ const Component = <T,>(
         hideNavElements = false,
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
+        resourcesSecondaryBrand,
+        children,
         onItemClick,
         onActionButtonClick,
         onBrandClick,
@@ -186,6 +190,18 @@ const Component = <T,>(
                         onClick={handleBrandClick}
                         data-testid="main__brand"
                     />
+                    {resourcesSecondaryBrand && (
+                        <NavLogoContainer>
+                            <NavSeprator />
+                            <Brand
+                                resources={resourcesSecondaryBrand}
+                                compress={compress}
+                                onClick={handleBrandClick}
+                                data-testid="main__brand"
+                            />
+                        </NavLogoContainer>
+                    )}
+
                     {!hideNavElements && (
                         <NavElementsContainer>
                             <NavbarItems
@@ -193,6 +209,7 @@ const Component = <T,>(
                                 onItemClick={handleNavItemClick}
                                 selectedId={selectedId}
                             />
+                            {children}
                             <NavbarActionButtons
                                 actionButtons={
                                     actionButtons && actionButtons.desktop
@@ -209,21 +226,24 @@ const Component = <T,>(
                         </NavElementsContainer>
                     )}
                 </Nav>
+
                 {!hideNavElements && renderDrawer()}
             </Layout.Content>
         );
     };
 
     return (
-        <Wrapper
-            ref={ref}
-            fixed={fixed}
-            id={id || "navbar-wrapper"}
-            data-testid={otherProps["data-testid"] || "navbar-wrapper"}
-        >
-            <Masthead />
-            {renderNavbar()}
-        </Wrapper>
+        <div>
+            <Wrapper
+                ref={ref}
+                fixed={fixed}
+                id={id || "navbar-wrapper"}
+                data-testid={otherProps["data-testid"] || "navbar-wrapper"}
+            >
+                <Masthead />
+                {renderNavbar()}
+            </Wrapper>
+        </div>
     );
 };
 

@@ -309,6 +309,310 @@ the `blockDrawerDismissalMethods` prop to do just that.
     </Story>
 </Preview>
 
+<Heading3>Double logo with Menu</Heading3>
+
+This is a common use case among web apps where it requires a Logout button on the navigation bar.
+
+<Preview>
+    <Story name="Double logo with Menu">
+        {() => {
+            const [selected, setSelected] = useState("home");
+            return (
+                <Navbar
+                    items={{
+                        desktop: [
+                            {
+                                id: "home",
+                                children: "Home",
+                                onClick: () => {
+                                    setSelected("home");
+                                },
+                            },
+                            {
+                                id: "guides",
+                                children: "Guides",
+                                onClick: () => {
+                                    setSelected("guides");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "guides1",
+                                        children: "Sub Guides 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "guides2",
+                                        children: "Sub Guides 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "guides3",
+                                        children: "Sub Guides 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                            {
+                                id: "lifesg-app",
+                                children: "LifeSG app",
+                                onClick: () => {
+                                    setSelected("lifesg-app");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "lifesg1",
+                                        children: "Sub LifeSG 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg2",
+                                        children: "Sub LifeSG 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg3",
+                                        children: "Sub LifeSG 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg4",
+                                        children: "Sub LifeSG 4",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                            {
+                                id: "blog",
+                                children: "Blog",
+                                onClick: () => {
+                                    setSelected("blog");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "blogsg1",
+                                        children: "Sub Blog 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg2",
+                                        children: "Sub Blog 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg3",
+                                        children: "Sub Blog 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg4",
+                                        children: "Sub Blog 4",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg5",
+                                        children: "Sub Blog 5",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg6",
+                                        children: "Sub Blog 6",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg7",
+                                        children: "Sub Blog 7",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                        ],
+                        mobile: [
+                            {
+                                id: "home-mobile",
+                                children: "Home",
+                                onClick: () => {
+                                    setSelected("guides");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "guides1",
+                                        children: "Sub Guides 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "guides2",
+                                        children: "Sub Guides 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "guides3",
+                                        children: "Sub Guides 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                            {
+                                id: "guides-mobile",
+                                children: "Guides",
+                                onClick: () => {
+                                    setSelected("lifesg-app");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "lifesg1",
+                                        children: "Sub LifeSG 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg2",
+                                        children: "Sub LifeSG 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg3",
+                                        children: "Sub LifeSG 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg4",
+                                        children: "Sub LifeSG 4",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                            {
+                                id: "lifesg-app-mobile",
+                                children: "LifeSG app",
+                                onClick: () => {
+                                    setSelected("lifesg-app");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "lifesg1",
+                                        children: "Sub LifeSG 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg2",
+                                        children: "Sub LifeSG 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg3",
+                                        children: "Sub LifeSG 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg4",
+                                        children: "Sub LifeSG 4",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                            {
+                                id: "blog-mobile",
+                                children: "Blog",
+                                onClick: () => {
+                                    setSelected("blog");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "blogsg1",
+                                        children: "Sub Blog 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg2",
+                                        children: "Sub Blog 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg3",
+                                        children: "Sub Blog 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg4",
+                                        children: "Sub Blog 4",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg5",
+                                        children: "Sub Blog 5",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg6",
+                                        children: "Sub Blog 6",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "blogsg7",
+                                        children: "Sub Blog 7",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                        ],
+                    }}
+                    actionButtons={{
+                        desktop: [
+                            {
+                                type: "button",
+                                args: {
+                                    styleType: "link",
+                                    children: "FAQ",
+                                },
+                            },
+                            {
+                                type: "button",
+                                args: {
+                                    styleType: "secondary",
+                                    children: "Logout",
+                                },
+                            },
+                            {
+                                type: "download",
+                            },
+                        ],
+                        mobile: [
+                            {
+                                type: "download",
+                            },
+                            {
+                                type: "button",
+                                args: {
+                                    styleType: "secondary",
+                                    children: "Logout",
+                                },
+                            },
+                            {
+                                type: "button",
+                                args: {
+                                    styleType: "link",
+                                    children: "FAQ",
+                                },
+                            },
+                        ],
+                    }}
+                    selectedId={selected}
+                    fixed={false} /* For storybook purposes */
+                    resources={{
+                        brandName: "BookingSG",
+                        logoSrc:
+                            "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+                    }}
+                    resourcesSecondaryBrand={{
+                        brandName: "Skillsfuture",
+                        logoSrc:
+                            "https://www.skillsfuture.gov.sg/-/media/Images/Feature/Header/ssg_logo_coloured.ashx?h=88&w=336&la=en&hash=BF38E063E59FFA280C4E5C3F2567E725",
+                    }}
+                ></Navbar>
+            );
+        }}
+    </Story>
+</Preview>
+
 <Secondary>Troubleshooting</Secondary>
 
 > The component also uses a custom script. Should you encounter a content security

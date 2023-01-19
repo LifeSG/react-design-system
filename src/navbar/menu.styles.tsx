@@ -32,6 +32,7 @@ export const MobileWrapper = styled.ul`
     ${MediaQuery.MaxWidth.tablet} {
         display: flex;
         flex-direction: column;
+        padding-bottom: 1rem;
     }
 `;
 
@@ -40,7 +41,7 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 export const LinkItem = styled.li`
     position: relative;
-    display: grid;
+    display: flex;
     align-items: center;
     :not(:last-of-type) {
         margin-right: 1rem;
@@ -58,11 +59,19 @@ export const LinkItem = styled.li`
 export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     display: flex;
     position: relative;
-    align-items: center;
-    text-align: center;
+    align-items: left;
+    text-align: left;
     color: ${Color.Neutral[1]};
-    height: 100%;
-    padding: 0 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 26px;
+
+    /* identical to box height, or 186% */
+    letter-spacing: 0.12px;
 
     :active,
     :focus {
@@ -102,9 +111,10 @@ export const LinkIndicator = styled.div`
     }
 `;
 
-export const Menu = styled.div`
+export const MenuBar = styled.ul`
     width: 100%;
-    height: 160px;
+    overflow: auto;
+    display: table;
     margin-top: 0rem;
     left: 0;
     top: 102%;
@@ -116,6 +126,24 @@ export const Menu = styled.div`
     background: #ffffff;
     box-shadow: 0px 2px 8px rgba(75, 83, 159, 0.24);
     border-radius: 0px 0px 8px 8px;
+`;
+// =============================================================================
+// LINK ITEMS
+// =============================================================================
+export const MenuItem = styled.li`
+    width: 100%;
+    height: 22px;
+    position: relative;
+    display: table-row;
+    align-items: left;
+    :not(:last-of-type) {
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 `;
 
 export const LinkWrapper = styled.ul`

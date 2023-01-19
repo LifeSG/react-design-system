@@ -8,6 +8,13 @@ export interface NavItemProps<T> extends TextLinkProps {
     id: string;
     "data-testid"?: string | undefined;
     options?: T | undefined;
+    subMenu?: NavSubItemProps<T>[] | undefined;
+}
+
+export interface NavSubItemProps<T> extends TextLinkProps {
+    id: string;
+    "data-testid"?: string | undefined;
+    options?: T | undefined;
 }
 
 export interface NavItemsProps<T> {
@@ -63,7 +70,18 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     onClose?: () => void | undefined;
 }
 
-export interface NavbarProps<T = void> extends NavbarSharedProps {
+export interface NavbarSecondarySharedProps {
+    resourcesSecondaryBrand?: NavbarResourcesProps | undefined;
+    actionButtons?: NavbarActionButtonsProps | undefined;
+    /** Triggered when the brand icon is being clicked */
+    onBrandClick?: (
+        event: React.MouseEvent<HTMLAnchorElement>
+    ) => void | undefined;
+}
+
+export interface NavbarProps<T = void>
+    extends NavbarSharedProps,
+        NavbarSecondarySharedProps {
     items: NavItemsProps<T>;
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -75,7 +93,8 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     /** Specifies which methods will not dismiss the drawer */
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
-
+    /** Custom component. This overrides the logo, links and download section */
+    children?: JSX.Element | JSX.Element[] | undefined;
     onBrandClick?: () => void | undefined; // override
     onItemClick?: (item: NavItemProps<T>) => void | undefined;
     onActionButtonClick?: (actionButton: NavbarButtonProps) => void;

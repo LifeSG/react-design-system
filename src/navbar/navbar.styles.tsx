@@ -55,6 +55,8 @@ export const Nav = styled.nav<StyleProps>`
 export const NavElementsContainer = styled.div`
     display: flex;
     height: 100%;
+
+    position: relative;
 `;
 
 export const MobileMenuButton = styled(IconButton)`
@@ -85,4 +87,20 @@ export const MobileMenuButton = styled(IconButton)`
             width: 1.25rem;
         }
     }
+`;
+export const NavLogoContainer = styled.div`
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+`;
+export const NavSeprator = styled.div`
+    display: flex;
+    background-color: ${Color.Neutral[5]};
+    height: 2.8125rem;
+    width: 0.05rem;
+    left: 13.435625rem;
+    margin-right: 1.504375rem;
 `;
