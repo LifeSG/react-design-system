@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { FocusToTypes } from "src/date-picker";
 import { StringHelper } from "src/util/string-helper";
@@ -26,6 +27,8 @@ export const Component = (
         transitionValues,
         focusTo,
         hoverValue,
+        readOnly,
+        onBlur,
     }: DateInputRangeProps,
     ref: RangeElementRef
 ): JSX.Element => {
@@ -108,14 +111,7 @@ export const Component = (
     }, [transitionValues]);
 
     useEffect(() => {
-        if (calendarManualRangeInput.length === 10) {
-            // handle after confirm and manual input the value state
-            setTransitionValue({
-                ...transitionValues,
-                range: calendarManualRangeInput,
-                rangeStatus: "pre-confirmed",
-            });
-        }
+        syncValueWithTransition();
     }, [calendarManualRangeInput]);
 
     useEffect(() => {
@@ -148,11 +144,38 @@ export const Component = (
         event.target.select();
     };
 
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        const targetName = event.target.name as RangeFieldType;
+        const targetValue = StringHelper.padValue(event.target.value, true);
+
+        const [yyyy, mm, dd] = calendarManualRangeInput.split("-");
+        let result = "",
+            year = yyyy,
+            month = mm,
+            day = dd;
+
+        if (yyyy === undefined || yyyy === null) year = "";
+        if (mm === undefined || yyyy === null) month = "";
+        if (dd === undefined || dd === null) day = "";
+
+        switch (targetName) {
+            case "range-day":
+                result = `${year}-${month}-${targetValue}`;
+                break;
+            case "range-month":
+                result = `${year}-${targetValue}-${day}`;
+                break;
+            case "range-year":
+                result = `${targetValue}-${month}-${day}`;
+        }
+
+        setCalendarManualRangeInput(result);
+    };
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as RangeFieldType;
 
         const value = event.target.value.replace(/[^0-9]/g, "");
-
         switch (targetName) {
             case "range-day":
                 onChangeManualRangeInput(value);
@@ -182,7 +205,7 @@ export const Component = (
                 .previousSibling as HTMLDivElement;
 
             if (startInputContainer) {
-                startInputContainer.click();
+                startInputContainer.parentElement.click();
 
                 const startPlaceholder =
                     startInputContainer.parentElement.parentElement.querySelector(
@@ -201,11 +224,12 @@ export const Component = (
     ): Promise<void> => {
         event.stopPropagation();
 
-        await setIsOpenCalendar(true);
         setFocusTo((prev: FocusToTypes) => ({
             container: "range",
             countToEvenClose: prev.countToEvenClose,
         }));
+
+        await setIsOpenCalendar(true);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -248,6 +272,7 @@ export const Component = (
         // outside click
         if (rangeCurrentFocusStateRef.current !== "none") {
             setRangeCurrentFocus("none");
+            performOnBlurHandler();
         }
     };
 
@@ -291,6 +316,46 @@ export const Component = (
         }
     };
 
+    const syncValueWithTransition = () => {
+        if (calendarManualRangeInput.length === 10) {
+            // check if range is before start;
+            const isStartInvalid =
+                transitionValues.start &&
+                dayjs(calendarManualRangeInput).isBefore(transitionValues.start)
+                    ? true
+                    : false;
+
+            // handle value once fields been updated
+            setTransitionValue({
+                ...transitionValues,
+                range: calendarManualRangeInput,
+                rangeStatus:
+                    rangeValue === calendarManualRangeInput
+                        ? "confirmed"
+                        : "pre-confirmed",
+                ...(isStartInvalid && {
+                    start: "",
+                    startStatus: "pre-confirmed",
+                }),
+            });
+        }
+
+        if (calendarManualRangeInput.length === 0) {
+            // handle deletion
+            setTransitionValue({
+                ...transitionValues,
+                range: "",
+                rangeStatus: "pre-confirmed",
+            });
+        }
+    };
+
+    const performOnBlurHandler = () => {
+        if (onBlur) {
+            onBlur(calendarManualRangeInput);
+        }
+    };
+
     const performOnChangeHandler = (
         changeValue: string,
         field: RangeFieldType
@@ -314,8 +379,17 @@ export const Component = (
 
     return (
         <>
-            <InputRangeArrow type="arrow-right" />
-            <InputRangeWrapper ref={ref} onClick={handleRangeNodeClick}>
+            <InputRangeArrow
+                $readOnly={readOnly}
+                $variant={type}
+                type="arrow-right"
+            />
+            <InputRangeWrapper
+                ref={ref}
+                $readOnly={readOnly}
+                $variant={type}
+                onClick={handleRangeNodeClick}
+            >
                 <InputRangeContainer
                     type={type}
                     isTransition={
@@ -338,6 +412,7 @@ export const Component = (
                         }
                         ref={rangeDayInputRef}
                         onFocus={handleFocus}
+                        onBlur={handleBlur}
                         onChange={handleChange}
                         type="text"
                         inputMode="numeric"
@@ -366,6 +441,7 @@ export const Component = (
                         }
                         ref={rangeMonthInputRef}
                         onFocus={handleFocus}
+                        onBlur={handleBlur}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
                         type="text"
@@ -395,6 +471,7 @@ export const Component = (
                         }
                         ref={rangeYearInputRef}
                         onFocus={handleFocus}
+                        onBlur={handleBlur}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
                         type="text"

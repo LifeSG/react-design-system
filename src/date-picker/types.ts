@@ -32,6 +32,13 @@ export type FocusToTypes = {
     countToEvenClose: number;
 };
 
+export type ValidateDate = {
+    isStartBeforeRange: boolean;
+    isRangeAfterStart: boolean;
+    start: string;
+    range: string;
+};
+
 export interface DatePickerProps extends React.HTMLAttributes<HTMLElement> {
     "data-testid"?: string;
     disabled?: boolean;
