@@ -12,6 +12,7 @@ import {
 import { DateInputProps, DateInputRangeProps } from "./types";
 import { DateInputRange } from "./date-input-range";
 import { FocusToTypes } from "src/date-picker";
+import dayjs from "dayjs";
 
 type FieldType = "day" | "month" | "year" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
@@ -50,7 +51,6 @@ export const DateInput = ({
     const monthInputRef = useRef<HTMLInputElement>(null);
     const yearInputRef = useRef<HTMLInputElement>(null);
 
-    // const rangeNodeRef = useRef<RangeElementRef>(null);
     const rangeNodeRef = useRef<HTMLDivElement | null>(null);
     /**
      * Have to use refs to allow the state values to be accessible
@@ -137,18 +137,13 @@ export const DateInput = ({
 
     useEffect(() => {
         // sync up with manual input state
-        if (transitionValues) setCalendarManualInput(transitionValues.start);
+        if (transitionValues) {
+            setCalendarManualInput(transitionValues.start);
+        }
     }, [transitionValues]);
 
     useEffect(() => {
-        if (calendarManualInput.length === 10) {
-            // handle after confirm and manual input the value state
-            setTransitionValue({
-                ...transitionValues,
-                start: calendarManualInput,
-                startStatus: "pre-confirmed",
-            });
-        }
+        syncValueWithTransition();
     }, [calendarManualInput]);
 
     useEffect(() => {
@@ -213,7 +208,6 @@ export const DateInput = ({
 
                 const rootCalendar = rangeNodeRef.current.parentElement
                     .parentElement as HTMLDivElement;
-
                 const rangePlaceholder = rootCalendar.querySelector(
                     '[data-id="range"]'
                 ) as HTMLDivElement;
@@ -230,13 +224,39 @@ export const DateInput = ({
         event.target.select();
     };
 
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        const targetName = event.target.name as FieldType;
-        const targetValue = StringHelper.padValue(event.target.value, true);
+    const _handleCalendarBlur = (
+        targetName: FieldType,
+        targetValue: string
+    ) => {
+        if (typeof setIsOpenCalendar === "function") {
+            const [yyyy, mm, dd] = calendarManualInput.split("-");
+            let result = "",
+                year = yyyy,
+                month = mm,
+                day = dd;
 
-        // skip blur in calendar (for pre-view issue)
-        if (typeof setIsOpenCalendar === "function") return;
+            if (yyyy === undefined || yyyy === null) year = "";
+            if (mm === undefined || yyyy === null) month = "";
+            if (dd === undefined || dd === null) day = "";
 
+            switch (targetName) {
+                case "day":
+                    result = `${year}-${month}-${targetValue}`;
+                    break;
+                case "month":
+                    result = `${year}-${targetValue}-${day}`;
+                    break;
+                case "year":
+                    result = `${targetValue}-${month}-${day}`;
+            }
+            setCalendarManualInput(result);
+        }
+    };
+
+    const _handleWithoutCalendarBlur = (
+        targetName: FieldType,
+        targetValue: string
+    ) => {
         switch (targetName) {
             case "day":
                 setDayValue(targetValue);
@@ -266,6 +286,17 @@ export const DateInput = ({
             );
             setMonthValue(StringHelper.padValue(clampedMonth));
         }
+    };
+
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        const targetName = event.target.name as FieldType;
+
+        const targetValue = StringHelper.padValue(event.target.value, true);
+        _handleCalendarBlur(targetName, targetValue);
+        // stop in here if use calendar feature
+        if (typeof setIsOpenCalendar === "function") return;
+
+        _handleWithoutCalendarBlur(targetName, targetValue);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -385,11 +416,44 @@ export const DateInput = ({
                     month,
                     year
                 );
-
                 setDayValue(StringHelper.padValue(day));
                 setMonthValue(StringHelper.padValue(month));
                 setYearValue(year);
             }
+        }
+    };
+
+    const syncValueWithTransition = () => {
+        if (calendarManualInput.length === 10) {
+            // check if start is after range;
+            const isRangeInvalid =
+                transitionValues.range &&
+                dayjs(calendarManualInput).isAfter(transitionValues.range)
+                    ? true
+                    : false;
+
+            // handle value once fields been updated
+            setTransitionValue({
+                ...transitionValues,
+                start: calendarManualInput,
+                startStatus:
+                    value === transitionValues.start
+                        ? "confirmed"
+                        : "pre-confirmed",
+                ...(isRangeInvalid && {
+                    range: "",
+                    rangeStatus: "pre-confirmed",
+                }),
+            });
+        }
+
+        if (calendarManualInput.length === 0) {
+            // handle deletion
+            setTransitionValue({
+                ...transitionValues,
+                start: "",
+                startStatus: "pre-confirmed",
+            });
         }
     };
 
@@ -498,10 +562,10 @@ export const DateInput = ({
             return INVALID_VALUE;
         }
     };
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-
     return (
         <Container
             ref={nodeRef}
@@ -635,6 +699,7 @@ export const DateInput = ({
                     transitionValues={transitionValues}
                     hoverValue={hoverValue}
                     focusTo={focusTo}
+                    readOnly={readOnly}
                 />
             )}
         </Container>

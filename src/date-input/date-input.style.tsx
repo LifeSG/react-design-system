@@ -1,3 +1,4 @@
+import { MediaQuery } from "src/media";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
@@ -103,6 +104,10 @@ export const Container = styled.div<ContainerStyleProps>`
         if (props.type === "range") {
             return css`
                 padding: 0.1rem 15px 0;
+
+                ${MediaQuery.MaxWidth.mobileL} {
+                    height: 100%;
+                }
             `;
         }
     }}
@@ -147,6 +152,11 @@ export const InputContainer = styled.div<ContainerStyleProps>`
                 }
                 p {
                     margin: 0.1rem 0 0 0;
+                }
+
+                ${MediaQuery.MaxWidth.mobileL} {
+                    height: 26px;
+                    top: 11px;
                 }
             `;
         }

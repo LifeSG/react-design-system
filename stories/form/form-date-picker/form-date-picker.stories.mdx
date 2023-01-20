@@ -46,9 +46,17 @@ import { Form } from "@lifesg/react-design-system/form";
                     rangeValue=""
                 />
                 <Form.DatePicker
+                    label="Single calendar with button"
+                    disabledDate={["2023-01-01", "2023-01-08"]}
+                    hasButton={true}
+                    type="start"
+                    value=""
+                    rangeValue=""
+                />
+                <Form.DatePicker
                     label="Range calendar with button"
                     hasButton={true}
-                    disabledDate={["2023-01-01", "2023-01-08"]}
+                    disabledDate={["2023-01-10", "2023-01-15"]}
                     type="range"
                     value=""
                     rangeValue=""

@@ -11,8 +11,8 @@ interface MonthCellProps {
 
 export const MonthPickerContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 40px);
+    grid-template-columns: repeat(2, 104px);
+    grid-template-rows: repeat(6, 34.67px);
     gap: 8px 16px;
     align-items: center;
     justify-items: center;
