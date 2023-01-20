@@ -93,5 +93,6 @@ export const PlaceholderLabel = styled(ValueLabel)`
 export const Divider = styled.div`
     margin: 1rem 1rem 1rem 0;
     width: 1px;
+    height: 1.25rem;
     background: ${Color.Neutral[5]};
 `;

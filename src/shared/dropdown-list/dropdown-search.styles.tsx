@@ -12,7 +12,7 @@ export const Container = styled.li`
 
 export const SearchInput = styled.input`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    height: 3.5rem;
+    height: 3rem;
     border: none;
     background: transparent;
     width: 100%;
