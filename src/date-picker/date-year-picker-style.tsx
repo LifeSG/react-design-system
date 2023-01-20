@@ -1,3 +1,4 @@
+import { MediaQuery } from "src/media";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
@@ -14,6 +15,11 @@ export const YearPickerContainer = styled.div`
     grid-template-columns: repeat(3, minmax(82.3px, 1fr));
     grid-template-rows: repeat(4, 64px);
     gap: 8px 16px;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        grid-template-columns: repeat(3, 64px);
+        grid-template-rows: repeat(4, 54px);
+    }
 `;
 
 export const YearCell = styled.div<YearCellProps>`

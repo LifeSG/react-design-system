@@ -8,6 +8,7 @@ import React, {
 import { DateInput } from "src/date-input";
 import { Icon } from "../icon";
 import dayjs, { Dayjs } from "dayjs";
+import { useMediaQuery } from "react-responsive";
 import {
     ButtonContainer,
     CalendarContainer,
@@ -41,6 +42,7 @@ import {
     GenerateDayStatusValue,
     InputContainerType,
     TransitionValue,
+    ValidateDate,
     VariantDay,
     View,
 } from "./types";
@@ -48,6 +50,8 @@ import isBetween from "dayjs/plugin/isBetween";
 import { MonthPicker } from "./date-month-picker";
 import { YearPicker } from "./date-year-picker";
 import { Text } from "src/text";
+import { MediaWidths } from "../spec/media-spec";
+
 dayjs.extend(isBetween);
 
 type PlaceholderValue = Record<DatePickerType, boolean>;
@@ -73,6 +77,9 @@ export const DatePicker = ({
         startStatus: "pre-confirmed",
         rangeStatus: "pre-confirmed",
         tmpStateValue: "",
+    });
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
     });
 
     const [showView, setShowView] = useState<View>("Day");
@@ -156,6 +163,20 @@ export const DatePicker = ({
             document.removeEventListener("mousedown", outsideDetecter);
         };
     }, [focusTo]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const { start, range } = transitionValue;
+        // show selected calender date
+        switch (focusTo.container) {
+            case "start":
+                if (start.length) setCalendarDate(dayjs(start));
+                break;
+            case "range":
+                if (range.length) setCalendarDate(dayjs(range));
+                break;
+        }
+    }, [isOpen]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -248,6 +269,20 @@ export const DatePicker = ({
         return date.split("-").reverse().join("-");
     };
 
+    const validateDate = (): ValidateDate => {
+        const { start, range } = transitionValue;
+
+        const isStartBeforeRange = dayjs(start).isBefore(range);
+        const isRangeAfterStart = dayjs(range).isAfter(start);
+
+        return {
+            isStartBeforeRange,
+            isRangeAfterStart,
+            start,
+            range,
+        };
+    };
+
     const generateDayStatus = (day: Date): GenerateDayStatusValue => {
         const _dateStartWithDay = new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",
@@ -264,7 +299,8 @@ export const DatePicker = ({
         let disabledBefore = false;
         let disabledAfter = false;
 
-        const { start, range } = controlTransitionValue();
+        const { start, range, startStatus, rangeStatus } =
+            controlTransitionValue();
 
         const variant: VariantDay =
             calendarDate?.clone().toDate().getMonth() !== day.getMonth()
@@ -290,6 +326,12 @@ export const DatePicker = ({
                     disabledBefore = false;
                 }
             }
+
+            if (startStatus === "confirmed" && rangeStatus === "confirmed") {
+                // remove disabled if alredy been confirmed before
+                disabledBefore = false;
+                disabledAfter = false;
+            }
         }
 
         return {
@@ -301,7 +343,6 @@ export const DatePicker = ({
         };
     };
 
-    // Previous verion
     const generateDayClass = (date: string, variant: VariantDay): string => {
         const classes: string[] = [];
         const { start, range, startStatus, rangeStatus } =
@@ -318,9 +359,21 @@ export const DatePicker = ({
             dayjs(date).isBetween(start, range, "day", "[]")
         ) {
             classes.push("selected-between pre-selected-between");
+
+            if (dayjs().isSame(date, "day")) {
+                // remove default today bg the date between start and range
+                classes.push("start-today-range");
+            }
+
+            if (disabledDate.includes(date)) {
+                classes.push("start-disabled-range");
+            }
         }
 
         if (variant === "nextMonth" && range === date) {
+            classes.push("next-month-selected");
+        }
+        if (variant === "nextMonth" && start === date) {
             classes.push("next-month-selected");
         }
 
@@ -342,6 +395,23 @@ export const DatePicker = ({
             classes.push("selected-start");
         if (range === date && rangeStatus === "confirmed") {
             classes.push("selected-end");
+        }
+
+        if (
+            focusTo.container === "start" &&
+            dayjs(hoverValue).isAfter(range, "day") &&
+            dayjs(date).isBetween(start, range, "day", "[]")
+        ) {
+            // remove selected-between if start over range
+            classes.push("start-hover-after-range");
+        }
+        if (
+            focusTo.container === "range" &&
+            dayjs(hoverValue).isBefore(start, "day") &&
+            dayjs(date).isBetween(start, range, "day", "[]")
+        ) {
+            // remove selected-between if range isBefore start
+            classes.push("range-hover-before-start");
         }
 
         return classes.join(" ");
@@ -566,12 +636,26 @@ export const DatePicker = ({
     };
 
     const handleDayClick = async (value: string) => {
+        const isStartInvalid =
+            transitionValue.start &&
+            dayjs(value).isBefore(transitionValue.start)
+                ? true
+                : false;
+        const isRangeInvalid =
+            transitionValue.range && dayjs(value).isAfter(transitionValue.range)
+                ? true
+                : false;
+
         switch (focusTo.container) {
             case "start":
                 setTransitionValue({
                     ...transitionValue,
                     start: value,
                     startStatus: "pre-confirmed",
+                    ...(isRangeInvalid && {
+                        range: "",
+                        rangeStatus: "pre-confirmed",
+                    }),
                 });
 
                 setFocusTo((prev) => ({
@@ -584,6 +668,10 @@ export const DatePicker = ({
                     ...transitionValue,
                     range: value,
                     rangeStatus: "pre-confirmed",
+                    ...(isStartInvalid && {
+                        start: "",
+                        startStatus: "pre-confirmed",
+                    }),
                 });
 
                 setFocusTo((prev) => ({
@@ -700,10 +788,8 @@ export const DatePicker = ({
     };
 
     const handleDoneButton = async (): Promise<void> => {
-        const { start, range } = transitionValue;
-
-        const isStartBeforeRange = dayjs(start).isBefore(range);
-        const isRangeAfterStart = dayjs(range).isAfter(start);
+        const { isStartBeforeRange, isRangeAfterStart, start, range } =
+            validateDate();
 
         switch (showView) {
             case "Day":
@@ -778,7 +864,6 @@ export const DatePicker = ({
                 setButtonDisable(true);
 
                 setCalendarDate(dayjs());
-
                 if (selectedStartDate.length && selectedRangeDate.length) {
                     setTransitionValue({
                         ...transitionValue,
@@ -822,6 +907,15 @@ export const DatePicker = ({
                     setCalendarDate(dayjs(goToDate));
                 }
                 break;
+        }
+
+        if (selectedStartDate.length && selectedRangeDate.length) {
+            // handle status value from pre-confirmed to confirmed if exist confirmed value
+            setTransitionValue({
+                ...transitionValue,
+                startStatus: "confirmed",
+                rangeStatus: "confirmed",
+            });
         }
 
         setShowView("Day");
@@ -924,6 +1018,7 @@ export const DatePicker = ({
     // =============================================================================
     // Render Function
     // =============================================================================
+
     const YearHeaderComponent = () => {
         if (showView === "Year") {
             const beginDecaded =
@@ -947,12 +1042,29 @@ export const DatePicker = ({
         );
     };
 
+    const WeekDate = (props: { day: Date }) => {
+        const day = props.day;
+
+        if (!isMobile) {
+            return <>{dayjs(day).format("ddd")}</>;
+        }
+
+        return (
+            <>
+                {dayjs(day).format("dd").toLocaleLowerCase() == "sa"
+                    ? "Sat"
+                    : dayjs(day).format("dd")}
+            </>
+        );
+    };
+
     return (
         <Container
             ref={containerRef}
             disabled={disabled}
             $error={error}
             $readOnly={readOnly}
+            type={type}
         >
             <DateInput
                 value={selectedStartDate}
@@ -965,6 +1077,7 @@ export const DatePicker = ({
                 transitionValues={transitionValue}
                 hoverValue={hoverValue}
                 focusTo={focusTo}
+                readOnly={readOnly}
             />
             <CalendarContainer isOpen={isOpen}>
                 <CalendarHeaderWrapper>
@@ -1002,7 +1115,7 @@ export const DatePicker = ({
                         <WeekDaysContainer>
                             {generateWeeksOfTheMonth[0].map((day, index) => (
                                 <WeekDayCell key={`week-day-${index}`}>
-                                    {dayjs(day).format("ddd")}
+                                    <WeekDate day={day} />
                                 </WeekDayCell>
                             ))}
                         </WeekDaysContainer>
@@ -1118,7 +1231,6 @@ export const DatePicker = ({
                 disabled={disabled}
                 focusTo={focusTo}
             />
-
             <InputPlaceholder
                 placeholder="To"
                 data-id="range"
