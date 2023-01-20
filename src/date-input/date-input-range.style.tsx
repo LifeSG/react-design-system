@@ -1,22 +1,48 @@
+import { DatePickerType } from "src/date-picker";
 import { Icon } from "src/icon";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { BaseDatePickerInput } from "./date-input.style";
+import { MediaQuery } from "src/media";
 
 interface InputRangeContainerProps extends BaseDatePickerInput {}
+
+interface AttributeValues {
+    $readOnly?: boolean;
+    $variant?: DatePickerType;
+}
 
 // =============================================================================
 // STYLING
 // =============================================================================
+const READ_ONLY = "8px";
 
-export const InputRangeArrow = styled(Icon)`
+export const InputRangeArrow = styled(Icon)<AttributeValues>`
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     color: ${Color.Neutral[3]};
+
+    ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                left: calc(50% - ${READ_ONLY});
+            `;
+        }
+
+        if (props.$variant === "range") {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    left: 56%;
+                    transform: unset;
+                    top: 1.05rem;
+                }
+            `;
+        }
+    }}
 `;
 
-export const InputRangeWrapper = styled.div`
+export const InputRangeWrapper = styled.div<AttributeValues>`
     position: absolute;
     top: 0;
     height: 100%;
@@ -24,12 +50,25 @@ export const InputRangeWrapper = styled.div`
     align-items: center;
     left: calc(50% + 17px);
 
-    svg {
-        color: ${Color.Neutral[3]};
-        width: 12px;
-        height: 12px;
-        margin: auto 0.15rem;
-    }
+    ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                left: calc(50% + 17px - ${READ_ONLY});
+            `;
+        }
+
+        if (props.$variant) {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    height: 26px;
+                    width: calc(100% - 1rem - 1rem);
+                    left: 1rem;
+                    bottom: 11px;
+                    top: unset;
+                }
+            `;
+        }
+    }}
 `;
 
 const InputTextColor = (color: any) => {

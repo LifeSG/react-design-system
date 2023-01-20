@@ -1,4 +1,6 @@
+import { type } from "os";
 import { Button } from "src/button";
+import { MediaQuery } from "src/media";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
@@ -11,6 +13,7 @@ interface ContainerStyleProps {
     disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
+    type: DatePickerType;
 }
 
 interface CalendarContainerProps {
@@ -76,7 +79,6 @@ export const Container = styled.div<ContainerStyleProps>`
         } else if (props.disabled) {
             return css`
                 pointer-events: none;
-                background: ${Color.Neutral[6]};
 
                 & > :is([type="range"], [data-id="start"], [data-id="range"]) {
                     background: ${Color.Neutral[6]};
@@ -84,7 +86,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 }
 
                 & > :is([data-id="start"], [data-id="range"]) {
-                    display: none;
+                    margin-left: 3px;
                 }
 
                 :focus-within {
@@ -94,12 +96,25 @@ export const Container = styled.div<ContainerStyleProps>`
             `;
         } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border};
-                border-radius: 4px;
-
-                :focus-within {
+                & > [type="range"]:first-child {
                     border: 1px solid ${Color.Validation.Red.Border};
-                    box-shadow: inset 0 0 4px 1px rgba(221, 102, 102, 0.8);
+                    border-radius: 4px;
+
+                    & :focus-within {
+                        border: 1px solid ${Color.Validation.Red.Border};
+                        box-shadow: inset 0 0 4px 1px rgba(221, 102, 102, 0.8);
+                    }
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.type === "range") {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    max-width: 280px;
+                    height: 82px;
                 }
             `;
         }
@@ -213,6 +228,37 @@ export const InputPlaceholder = styled.div<InputPlaceholderProps>`
                         opacity: 0;
                     }
                 `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.type === "range") {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    &[data-id="start"]::before {
+                        opacity: 0;
+                    }
+
+                    width: 128px;
+                    height: 26px;
+                    top: 11px;
+                    transform: unset;
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.type === "range" && props.placeholder === "To") {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    top: unset;
+                    right: unset;
+                    bottom: 11px;
+                    left: 18px;
+                    width: calc(100% - 18px - 16px);
+                }
+            `;
         }
     }}
 `;
@@ -347,6 +393,7 @@ export const WeekDayCell = styled.div`
     align-items: center;
     justify-content: center;
     color: ${Color.Neutral[1]};
+    font-size: 14px;
 `;
 
 const CircleBgColor = (color: any) => {
@@ -492,7 +539,8 @@ const HoverToRangeStlyes = css`
 `;
 
 const HoverToStartStlyes = css`
-    &.pre-selected-end {
+    &.pre-selected-end,
+    &.selected-end {
         & [data-cell="left"] {
             ${HoverCellLightBg};
 
@@ -551,6 +599,7 @@ export const RightCell = styled(DayCellBasic)``;
 export const CalendarDaySection = styled.div`
     display: flex;
     flex-direction: row;
+    margin-bottom: 4px;
 `;
 
 // Previous verion
@@ -561,15 +610,34 @@ export const GrowDayCell = styled.div`
     flex: 1;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4px;
     transition: background-color 100ms ease-in-out;
 
     &.hover-to-range {
         ${HoverToRangeStlyes};
+
+        &.selected-start {
+            & > [data-cell="left"] {
+                background-color: ${Color.Neutral[8]};
+            }
+
+            & > [data-cell="right"] {
+                background-color: ${Color.Accent.Light[6]};
+
+                &::before {
+                    ${PseudoBaseCellStyle};
+                    ${DashedBaseCellStyle};
+                }
+            }
+        }
     }
 
     &.hover-to-start {
         ${HoverToStartStlyes}
+
+        &.selected-end::before {
+            background-color: ${Color.Neutral[8]};
+            ${ResetPseudoCell};
+        }
     }
 
     &.pre-selected-start:has(~ .pre-selected-between) {
@@ -696,11 +764,13 @@ export const GrowDayCell = styled.div`
             ${HoverReSelectedCell};
         }
 
-        &.pre-selected-start {
+        &.pre-selected-start,
+        &.selected-start {
             ${CircleBgColor(Color.Accent.Light[4])}
         }
 
-        &.pre-selected-end {
+        &.pre-selected-end,
+        &.selected-end {
             ${CircleBgColor(Color.Accent.Light[4])}
         }
     }
@@ -764,6 +834,89 @@ export const GrowDayCell = styled.div`
             border: 1px solid ${Color.Primary};
         }
     }
+    &.next-month-selected.selected-start,
+    &.next-month-selected.pre-selected-start {
+        & [data-circle="left"] {
+            background-color: ${Color.Accent.Light[5]};
+            border: 1px solid ${Color.Primary};
+        }
+
+        & [data-circle="right"] {
+            background-color: ${Color.Accent.Light[5]};
+            border: 1px solid ${Color.Primary};
+        }
+    }
+
+    &.start-today-range :is([data-circle="left"], [data-circle="right"]) {
+        background: ${Color.Accent.Light[5]};
+
+        &::before {
+            ${PseudoBaseCellStyle};
+            ${SolidBaseCellStyle};
+        }
+    }
+
+    &.start-disabled-range :is([data-type="number"]) {
+        color: ${Color.Accent.Light[2]};
+    }
+
+    &.start-today-range {
+        & :is([data-circle="left"], [data-circle="right"]) {
+            background: ${Color.Accent.Light[5]};
+
+            &::before {
+                ${PseudoBaseCellStyle};
+                ${SolidBaseCellStyle};
+            }
+        }
+
+        &.hover-reselected-start.selected-between
+            :is([data-circle="left"], [data-circle="right"]) {
+            background-color: ${Color.Accent.Light[4]};
+        }
+        &.hover-reselected-range.selected-between
+            :is([data-circle="left"], [data-circle="right"]) {
+            background-color: ${Color.Accent.Light[4]};
+        }
+
+        &.hover-outside-selected-between {
+            & :is([data-circle="left"], [data-circle="right"]) {
+                background-color: ${Color.Accent.Light[4]};
+            }
+
+            &.range-hover-before-start
+                :is([data-circle="left"], [data-circle="right"]) {
+                background-color: ${Color.Accent.Light[5]};
+            }
+        }
+    }
+
+    &.start-hover-after-range.pre-selected-between.hover-outside-selected-between {
+        background-color: ${Color.Accent.Light[5]};
+
+        &.start-today-range :is([data-circle="left"], [data-circle="right"]) {
+            background-color: ${Color.Accent.Light[5]};
+        }
+
+        &.selected-end {
+            & > [data-cell="left"] {
+                background-color: ${Color.Accent.Light[5]};
+
+                &::before {
+                    ${PseudoBaseCellStyle};
+                    ${SolidBaseCellStyle};
+                }
+            }
+        }
+    }
+
+    &.range-hover-before-start.pre-selected-between.hover-outside-selected-between {
+        background-color: ${Color.Accent.Light[5]};
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        height: 32px;
+    }
 `;
 
 export const Circle = styled.div<CircleProps>`
@@ -816,6 +969,11 @@ export const Circle = styled.div<CircleProps>`
                 `;
         }
     }}
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 32px;
+        height: 32px;
+    }
 `;
 
 export const DayNumber = styled.div<DayNumerProps>`
@@ -833,8 +991,7 @@ export const DayNumber = styled.div<DayNumerProps>`
     ${(props) => {
         if (props.disabled) {
             return css`
-                background-color: ${Color.Neutral[6]};
-                color: ${Color.Neutral[3]};
+                color: ${Color.Neutral[4]};
                 pointer-events: none;
             `;
         }
@@ -895,8 +1052,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     ${(props) => {
         if (props.disabled) {
             return css`
-                background-color: ${Color.Neutral[6]};
-                color: ${Color.Neutral[3]};
+                color: ${Color.Neutral[4]};
                 cursor: none;
                 pointer-events: none;
             `;
@@ -914,15 +1070,24 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
     }}
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 32px;
+        height: 32px;
+    }
 `;
 
 export const ButtonContainer = styled.div`
     display: flex;
-    margin-top: 24px;
+    margin-top: 32px;
     gap: 8px;
 
     button:first-child {
         border: 1;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-top: 24px;
     }
 `;
 
