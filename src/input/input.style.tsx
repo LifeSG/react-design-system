@@ -117,7 +117,7 @@ export const ClearContainer = styled.button<InputStyleProps>`
     align-items: center;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
-    padding: 0 0.6875rem 0 1rem;
+    padding: 0.875rem 1rem;
     cursor: pointer;
 
     ${TextStyleHelper.getTextStyle("Body", "regular")}
