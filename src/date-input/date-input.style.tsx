@@ -162,3 +162,7 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
         display: none;
     }
 `;
+
+export const TrickAction = styled.div`
+    display: none;
+`;
