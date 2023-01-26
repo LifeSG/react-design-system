@@ -39,8 +39,9 @@ export type ValidateDate = {
     range: string;
 };
 
-export interface DatePickerProps extends React.HTMLAttributes<HTMLElement> {
+export interface DatePickerProps extends React.AriaAttributes {
     "data-testid"?: string;
+    id?: string | undefined;
     disabled?: boolean;
 
     // Input-specific Attributes
@@ -51,6 +52,8 @@ export interface DatePickerProps extends React.HTMLAttributes<HTMLElement> {
     value?: string; // YYYY-MM-DD
     rangeValue?: string; // YYYY-MM-DD
     type: DatePickerType;
+
+    onChange?: ((value: string) => void) | undefined;
 }
 
 export interface GenerateDayStatusValue {

@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
-import { FocusToTypes } from "src/date-picker";
+import { DatePickerType, FocusToTypes } from "src/date-picker";
 import { StringHelper } from "src/util/string-helper";
 import {
     InputRangeArrow,
@@ -36,6 +36,7 @@ export const Component = (
     // CONST, STATE, REF
     // =============================================================================
 
+    /** range***Value state are confirmed value*/
     const [rangeDayValue, _setRangeDayValue] = useState<string>("");
     const [rangeMonthValue, _setRangeMonthValue] = useState<string>("");
     const [rangeYearValue, _setRangeYearValue] = useState<string>("");
@@ -200,17 +201,33 @@ export const Component = (
             (event.target as any).name === "range-year" &&
             event.code === "Tab"
         ) {
-            const startInputContainer = rangeDayInputRef.current.parentElement
-                .parentElement.previousSibling
-                .previousSibling as HTMLDivElement;
+            /* select DatePicker Root Container */
+            const datePickerRootContainer = rangeDayInputRef.current
+                .parentElement.parentElement.parentElement
+                .parentElement as HTMLDivElement;
 
-            if (startInputContainer) {
-                startInputContainer.parentElement.click();
+            /* Warning it if the DOM has changed */
+            const containerType: DatePickerType[] = ["start", "range"];
+            const isRootContainer = containerType.includes(
+                datePickerRootContainer.getAttribute("type") as any
+            );
 
-                const startPlaceholder =
-                    startInputContainer.parentElement.parentElement.querySelector(
-                        '[data-id="start"]'
-                    ) as HTMLDivElement;
+            if (!isRootContainer) {
+                console.warn(
+                    "---------- The DatePicker/DateInput/DateRangeInput DOM has been changed. Please check ---------"
+                );
+            }
+
+            if (isRootContainer) {
+                const selectTrickAction = datePickerRootContainer.querySelector(
+                    "[data-trick]"
+                ) as HTMLDivElement;
+
+                selectTrickAction.click();
+
+                const startPlaceholder = datePickerRootContainer.querySelector(
+                    '[data-id="start-placeholder"]'
+                ) as HTMLDivElement;
 
                 startPlaceholder.click();
             }
@@ -361,10 +378,6 @@ export const Component = (
         field: RangeFieldType
     ) => {
         if (onChange) {
-            /*  
-                use calendarManualRangeInput instead "stateValue", 
-                stateValue is a confirmed state in calendar 
-            */
             const [yyyy, mm, dd] = calendarManualRangeInput.split("-");
             const calendarManualRaw = [
                 ...(field === "range-day" ? [changeValue] : [dd]),
