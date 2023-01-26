@@ -534,7 +534,7 @@ export const DateInput = ({
                 ];
 
                 const returnValue = calendarManualRaw.join("-");
-                console.log("returnValue: ", returnValue);
+
                 onChange(returnValue);
             }
         }
