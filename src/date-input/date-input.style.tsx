@@ -245,3 +245,7 @@ export const MonthDivider = styled(Divider)`
         }
     }}
 `;
+
+export const TrickAction = styled.div`
+    display: none;
+`;

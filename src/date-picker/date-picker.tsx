@@ -61,6 +61,7 @@ export const DatePicker = ({
     hasButton,
     value,
     rangeValue,
+    onChange,
     type,
     disabled,
     error,
@@ -295,7 +296,11 @@ export const DatePicker = ({
         // YYYY-MM-DD
         const dateStartWithYear = revertedDateFormat(_dateStartWithDay);
 
-        const isDisabled: boolean = disabledDate.includes(dateStartWithYear);
+        let isDisabled = false;
+        if (disabledDate && disabledDate.length) {
+            isDisabled = disabledDate.includes(dateStartWithYear);
+        }
+
         let disabledBefore = false;
         let disabledAfter = false;
 
@@ -517,6 +522,12 @@ export const DatePicker = ({
         return classes.join(" ");
     };
 
+    const performOnChangeHandler = (changeValue: string) => {
+        if (onChange) {
+            onChange(changeValue);
+        }
+    };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -577,6 +588,8 @@ export const DatePicker = ({
 
             setCalendarDate(dayjs(dateFromYear));
 
+            performOnChangeHandler(dateFromYear);
+
             if (!manualInputValidation) {
                 switch (focusTo.container) {
                     case "start":
@@ -594,6 +607,8 @@ export const DatePicker = ({
                         });
                         break;
                 }
+
+                // return
                 return;
             }
 
@@ -779,7 +794,8 @@ export const DatePicker = ({
             return;
         }
 
-        const key = e.currentTarget.getAttribute("data-id") as DatePickerType;
+        const attributeValue = e.currentTarget.getAttribute("data-id");
+        const key = attributeValue.split("-")[0] as DatePickerType;
         if (!key) return;
 
         setShowPlaceholder({ ...showPlaceholder, [key]: false });
@@ -1223,7 +1239,7 @@ export const DatePicker = ({
             </CalendarContainer>
             <InputPlaceholder
                 placeholder="From"
-                data-id="start"
+                data-id="start-placeholder"
                 type={type}
                 left="11px"
                 show={showPlaceholder.start.toString()}
@@ -1233,7 +1249,7 @@ export const DatePicker = ({
             />
             <InputPlaceholder
                 placeholder="To"
-                data-id="range"
+                data-id="range-placeholder"
                 type={type}
                 right="16px"
                 show={showPlaceholder.range.toString()}

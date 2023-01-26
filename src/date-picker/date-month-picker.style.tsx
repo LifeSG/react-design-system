@@ -1,3 +1,4 @@
+import { MediaQuery } from "src/media";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
@@ -11,11 +12,16 @@ interface MonthCellProps {
 
 export const MonthPickerContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, 104px);
-    grid-template-rows: repeat(6, 34.67px);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 40px);
     gap: 8px 16px;
     align-items: center;
     justify-items: center;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        grid-template-columns: repeat(2, 104px);
+        grid-template-rows: repeat(6, 34.67px);
+    }
 `;
 
 export const MonthCell = styled.div<MonthCellProps>`

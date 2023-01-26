@@ -7,11 +7,12 @@ import {
     Divider,
     InputContainer,
     MonthInput,
+    TrickAction,
     YearInput,
 } from "./date-input.style";
 import { DateInputProps, DateInputRangeProps } from "./types";
 import { DateInputRange } from "./date-input-range";
-import { FocusToTypes } from "src/date-picker";
+import { DatePickerType, FocusToTypes } from "src/date-picker";
 import dayjs from "dayjs";
 
 type FieldType = "day" | "month" | "year" | "none";
@@ -136,13 +137,14 @@ export const DateInput = ({
     }, [value]);
 
     useEffect(() => {
-        // sync up with manual input state
+        /* sync up with manual input state */
         if (transitionValues) {
             setCalendarManualInput(transitionValues.start);
         }
     }, [transitionValues]);
 
     useEffect(() => {
+        /* sync up with manual input state once lenght === 10 or 0*/
         syncValueWithTransition();
     }, [calendarManualInput]);
 
@@ -206,13 +208,30 @@ export const DateInput = ({
             if (rangeNodeRef.current) {
                 rangeNodeRef.current.click();
 
-                const rootCalendar = rangeNodeRef.current.parentElement
-                    .parentElement as HTMLDivElement;
-                const rangePlaceholder = rootCalendar.querySelector(
-                    '[data-id="range"]'
-                ) as HTMLDivElement;
+                /* select DatePicker Root Container */
+                const datePickerRootContainer = rangeNodeRef.current
+                    .parentElement.parentElement as HTMLDivElement;
 
-                rangePlaceholder.click();
+                /* Warning it if the DOM has changed */
+                const containerType: DatePickerType[] = ["start", "range"];
+                const isRootContainer = containerType.includes(
+                    datePickerRootContainer.getAttribute("type") as any
+                );
+
+                if (!isRootContainer) {
+                    console.warn(
+                        "---------- The DatePicker/DateInput/DateRangeInput DOM has been changed. Please check ---------"
+                    );
+                }
+
+                if (isRootContainer) {
+                    const rangePlaceholder =
+                        datePickerRootContainer.querySelector(
+                            '[data-id="range-placeholder"]'
+                        ) as HTMLDivElement;
+
+                    rangePlaceholder.click();
+                }
             }
 
             setCurrentFocus("none");
@@ -312,7 +331,6 @@ export const DateInput = ({
                     break;
                 }
 
-                /* below line code use in without calendar*/
                 setDayValue(value);
                 performOnChangeHandler(value, targetName);
                 break;
@@ -424,6 +442,8 @@ export const DateInput = ({
     };
 
     const syncValueWithTransition = () => {
+        if (typeof setIsOpenCalendar !== "function") return;
+
         if (calendarManualInput.length === 10) {
             // check if start is after range;
             const isRangeInvalid =
@@ -455,6 +475,17 @@ export const DateInput = ({
                 startStatus: "pre-confirmed",
             });
         }
+    };
+
+    const TrickActionFn = () => {
+        /**
+            use 'Tab' from range input to select dd
+            somehow unexpected state re-render, the mm will be selected.
+         */
+        setTimeout(() => {
+            setCurrentFocus("day");
+            dayInputRef.current.focus();
+        }, 1);
     };
 
     const onChangeManualInput = (value: string) => {
@@ -503,6 +534,7 @@ export const DateInput = ({
                 ];
 
                 const returnValue = calendarManualRaw.join("-");
+                console.log("returnValue: ", returnValue);
                 onChange(returnValue);
             }
         }
@@ -686,7 +718,6 @@ export const DateInput = ({
                     }
                 />
             </InputContainer>
-
             {type === "range" && (
                 <DateInputRange
                     setIsOpenCalendar={setIsOpenCalendar}
@@ -702,6 +733,7 @@ export const DateInput = ({
                     readOnly={readOnly}
                 />
             )}
+            <TrickAction data-trick onClick={TrickActionFn} />
         </Container>
     );
 };
