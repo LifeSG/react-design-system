@@ -5,11 +5,16 @@ export interface ListItemRenderArgs {
     selected: boolean;
 }
 
+export interface ListItemDisplayProps {
+    title: string;
+    secondaryLabel?: string | undefined;
+}
+
 export interface DropdownDisplayProps<T, V> {
     /** Function to derive value from an item */
     valueExtractor?: ((item: T) => V) | undefined;
     /** Function to derive options display value from an item */
-    listExtractor?: ((item: T) => string) | undefined;
+    listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
     /** Function to render custom component */
     renderListItem?:
         | ((item: T, args: ListItemRenderArgs) => JSX.Element)

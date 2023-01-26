@@ -30,7 +30,7 @@ export const DisplayContainer = styled.div<StyleProps>`
     position: relative;
     display: flex;
     height: 3rem;
-    margin: 0 0.5rem;
+    margin-left: 0.5rem;
     ${(props) => {
         if (props.$expanded) {
             return css`
@@ -93,5 +93,6 @@ export const PlaceholderLabel = styled(ValueLabel)`
 export const Divider = styled.div`
     margin: 1rem 1rem 1rem 0;
     width: 1px;
+    height: 1.25rem;
     background: ${Color.Neutral[5]};
 `;

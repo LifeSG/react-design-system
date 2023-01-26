@@ -5,6 +5,8 @@ export interface InputProps
     /** Sets the number of characters before a space is added (works only with type `tel` input) */
     spacing?: number | undefined;
     error?: boolean | undefined;
+    allowClear?: boolean | undefined;
+    onClear?: () => void | undefined;
     "data-testid"?: string | undefined;
 }
 

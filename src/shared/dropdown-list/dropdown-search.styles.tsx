@@ -12,7 +12,7 @@ export const Container = styled.li`
 
 export const SearchInput = styled.input`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    height: 3.5rem;
+    height: 3rem;
     border: none;
     background: transparent;
     width: 100%;
@@ -34,4 +34,12 @@ export const SearchIcon = styled(Icon)`
     width: 1.5rem;
     margin: 0 0.5rem;
     color: ${Color.Neutral[3]};
+`;
+
+export const CancelIcon = styled(Icon)`
+    height: 1.125rem;
+    width: 1.125rem;
+    margin: 0 0.5rem;
+    color: ${Color.Neutral[3]};
+    cursor: pointer;
 `;

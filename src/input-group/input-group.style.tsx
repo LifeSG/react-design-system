@@ -81,8 +81,7 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
     background: transparent;
     border: none;
 
-    :focus,
-    :active {
+    :focus-within {
         outline: none;
         border: none;
         box-shadow: none;
@@ -99,6 +98,7 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
             case "left":
             default:
                 return css`
+                    padding: unset;
                     :not(:only-child) {
                         padding-left: 0;
                     }

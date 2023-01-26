@@ -15,13 +15,14 @@ import {
     ListItemSelector,
     ResultStateContainer,
     ResultStateText,
+    SecondaryLabel,
     SelectAllContainer,
     TruncateContainer,
     TruncateFirstLine,
     TruncateSecondLine,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
-import { DropdownListProps } from "./types";
+import { DropdownListProps, ListItemDisplayProps } from "./types";
 
 /**
  * NOTE: This component is not directly exportables
@@ -150,7 +151,7 @@ export const DropdownList = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    const getOptionLabel = (item: T): string => {
+    const getOptionLabel = (item: T): string | ListItemDisplayProps => {
         return listExtractor ? listExtractor(item) : item.toString();
     };
 
@@ -165,7 +166,7 @@ export const DropdownList = <T, V>({
                 listRef.current.getBoundingClientRect().width - 100;
         }
         return StringHelper.shouldTruncateToTwoLines(
-            displayText,
+            typeof displayText === "string" ? displayText : displayText.title,
             widthOfElement
         );
     };
@@ -183,8 +184,23 @@ export const DropdownList = <T, V>({
             setDisplayListItems(updated);
         } else {
             const updated = listItems.filter((item) => {
-                const displayValue = getOptionLabel(item).toLowerCase();
-                return displayValue.includes(searchValue.trim().toLowerCase());
+                const label = getOptionLabel(item);
+                const title =
+                    typeof label === "object"
+                        ? label.title.toLowerCase()
+                        : label.toLowerCase();
+
+                // include secondary label filter/search
+                if (typeof label === "object" && label.secondaryLabel) {
+                    return (
+                        title.includes(searchValue.trim().toLowerCase()) ||
+                        label.secondaryLabel.includes(
+                            searchValue.trim().toLowerCase()
+                        )
+                    );
+                }
+
+                return title.includes(searchValue.trim().toLowerCase());
             });
             setDisplayListItems(updated);
         }
@@ -252,6 +268,12 @@ export const DropdownList = <T, V>({
         if (onSearch) onSearch();
     };
 
+    const handleOnClear = () => {
+        setSearchValue("");
+
+        if (onSearch) onSearch();
+    };
+
     const handleTryAgain = () => {
         if (onRetry) onRetry();
     };
@@ -260,15 +282,30 @@ export const DropdownList = <T, V>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderTruncatedText = (item: T): JSX.Element => {
-        const displayText = listExtractor
-            ? listExtractor(item)
-            : item.toString();
+        const label = getOptionLabel(item);
+        const displayText = typeof label === "string" ? label : label.title;
         return (
             <TruncateContainer data-testid="truncate-middle-container">
                 <TruncateFirstLine>{displayText}</TruncateFirstLine>
                 <TruncateSecondLine> {displayText}</TruncateSecondLine>
             </TruncateContainer>
         );
+    };
+
+    const renderLabel = (item: T): JSX.Element => {
+        const label = getOptionLabel(item);
+        if (typeof label === "string") {
+            return <>{label}</>;
+        } else {
+            return (
+                <>
+                    {label.title}
+                    {label.secondaryLabel && (
+                        <SecondaryLabel>{label.secondaryLabel}</SecondaryLabel>
+                    )}
+                </>
+            );
+        }
     };
 
     const renderItems = () => {
@@ -306,7 +343,7 @@ export const DropdownList = <T, V>({
                                     {itemTruncationType === "middle" &&
                                     hasExceededContainer(item)
                                         ? renderTruncatedText(item)
-                                        : getOptionLabel(item)}
+                                        : renderLabel(item)}
                                 </Label>
                             )}
                         </ListItemSelector>
@@ -327,6 +364,7 @@ export const DropdownList = <T, V>({
                     data-testid="search-input"
                     aria-label="search-input"
                     tabIndex={visible ? 0 : -1}
+                    onClear={handleOnClear}
                 />
             );
         }

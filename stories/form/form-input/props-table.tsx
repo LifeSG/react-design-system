@@ -44,6 +44,18 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "allowClear",
+                description:
+                    "Indicates if clear icon button will be displayed in the component",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "onClear",
+                description: "Called when clear icon is clicked",
+                propTypes: ["() => void"],
+            },
+            {
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],

@@ -141,6 +141,12 @@ export const Label = styled.div<LabelProps>`
     }}
 `;
 
+export const SecondaryLabel = styled.span`
+    color: ${Color.Neutral[4]};
+    display: inline;
+    padding-left: 0.4rem;
+`;
+
 export const TruncateContainer = styled.div`
     display: flex;
     flex-direction: column;
