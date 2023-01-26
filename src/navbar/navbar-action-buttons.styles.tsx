@@ -9,7 +9,7 @@ import { Text } from "../text";
 export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
-    margin-left: 4rem;
+    margin-left: 0rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;

@@ -115,21 +115,11 @@ export const LinkIndicator = styled.div`
     }
 `;
 
-export const MenuBar = styled.ul`
-    width: 100%;
-    overflow: auto;
-    display: table;
-    margin-top: 0rem;
-    left: 0;
-    top: 102%;
-
-    /* N8 #FFFFFF */
-    position: absolute;
-
-    /* N8 #FFFFFF */
-    background: #ffffff;
-    box-shadow: 0px 2px 8px rgba(75, 83, 159, 0.24);
-    border-radius: 0px 0px 8px 8px;
+export const MenuBar = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 `;
 // =============================================================================
 // LINK ITEMS

@@ -27,4 +27,20 @@ export const Clickable = styled.a<StyleProps>`
             height: 1.375rem;
         }
     }
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-right: 1rem;
+    }
 `;

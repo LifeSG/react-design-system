@@ -55,8 +55,23 @@ export const Nav = styled.nav<StyleProps>`
 export const NavElementsContainer = styled.div`
     display: flex;
     height: 100%;
-
+    margin-left: 80px;
     position: relative;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    }
+`;
+
+export const NavElementsRightContainer = styled.div`
+    display: flex;
+    height: 100%;
+    margin-left: 80px;
+    position: relative;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    }
 `;
 
 export const MobileMenuButton = styled(IconButton)`
@@ -103,4 +118,24 @@ export const NavSeprator = styled.div`
     width: 0.05rem;
     left: 13.435625rem;
     margin-right: 1.504375rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        height: 24px;
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        height: 24px;
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        height: 24px;
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        height: 24px;
+        margin-right: 1rem;
+    }
 `;

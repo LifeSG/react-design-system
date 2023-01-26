@@ -98,7 +98,7 @@ export const LinkIndicator = styled.div`
         bottom: 0;
         height: 100%;
         width: 4px;
-        background-color: ${Color.Accent.Light[1]};
+        background-color: ${Color.Primary};
     }
 `;
 

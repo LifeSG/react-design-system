@@ -9,10 +9,12 @@ import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import { NavbarActionButtons } from "./navbar-action-buttons";
 import { NavbarItems } from "./navbar-items";
+import { SearchInput } from "./search-input";
 import {
     MobileMenuButton,
     Nav,
     NavElementsContainer,
+    NavElementsRightContainer,
     NavLogoContainer,
     NavSeprator,
     Wrapper,
@@ -50,6 +52,7 @@ const Component = <T,>(
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
+    const [toggleheaderClick, setToggleHeaderClick] = useState<boolean>(false);
 
     // =============================================================================
     // EFFECTS
@@ -145,6 +148,10 @@ const Component = <T,>(
         }
     };
 
+    const handleheaderClick = () => {
+        setToggleHeaderClick(!toggleheaderClick);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -204,18 +211,31 @@ const Component = <T,>(
 
                     {!hideNavElements && (
                         <NavElementsContainer>
-                            <NavbarItems
-                                items={items.desktop}
-                                onItemClick={handleNavItemClick}
-                                selectedId={selectedId}
-                            />
-                            {children}
-                            <NavbarActionButtons
-                                actionButtons={
-                                    actionButtons && actionButtons.desktop
-                                }
-                                onActionButtonClick={handleActionButtonClick}
-                            />
+                            {!toggleheaderClick && (
+                                <NavbarItems
+                                    items={items.desktop}
+                                    onItemClick={handleNavItemClick}
+                                    selectedId={selectedId}
+                                />
+                            )}
+                            <NavElementsRightContainer>
+                                {children}
+                                <SearchInput
+                                    items={items.desktop}
+                                    onItemClick={handleNavItemClick}
+                                    selectedId={selectedId}
+                                    toggleheaderClick={toggleheaderClick}
+                                    onToggleHeaderClick={handleheaderClick}
+                                />
+                                <NavbarActionButtons
+                                    actionButtons={
+                                        actionButtons && actionButtons.desktop
+                                    }
+                                    onActionButtonClick={
+                                        handleActionButtonClick
+                                    }
+                                />
+                            </NavElementsRightContainer>
                             <MobileMenuButton
                                 aria-label="Open nav menu"
                                 data-testid="button__mobile-menu"

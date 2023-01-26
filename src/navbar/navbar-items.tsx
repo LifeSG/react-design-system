@@ -63,7 +63,7 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderItems = (isMobile = false) => {
         return items.map((item, index) => {
-            const selected = item.id === selectedId;
+            const selected = selectedIndex === index;
             const { children, options, ...otherItemAttrs } = item;
 
             const textWeight: TextWeight = selected
@@ -94,7 +94,7 @@ export const NavbarItems = <T,>({
                         selectedIndex === index && (
                             <Menu
                                 items={item.subMenu}
-                                selectedId={"selectedId"}
+                                selectedId={selectedId}
                                 mobile={isMobile}
                                 onItemClick={handleSubLinkClick(
                                     item?.subMenu,
@@ -119,7 +119,7 @@ export const NavbarItems = <T,>({
                         {items && selectedIndex && items[selectedIndex] && (
                             <Menu
                                 items={items[selectedIndex].subMenu}
-                                selectedId={"selectedId"}
+                                selectedId={selectedId}
                                 mobile={false}
                                 onItemClick={handleSubLinkClick(
                                     items[selectedIndex]?.subMenu,
