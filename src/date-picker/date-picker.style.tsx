@@ -66,7 +66,8 @@ export const Container = styled.div<ContainerStyleProps>`
                 padding-left: 0rem;
                 background: transparent !important;
 
-                & > :is([type="range"], [data-id="start"], [data-id="range"]) {
+                &
+                    > :is([type="range"], [data-id="start-placeholder"], [data-id="range-placeholder"]) {
                     border: none;
                     pointer-events: none;
                 }
@@ -80,12 +81,14 @@ export const Container = styled.div<ContainerStyleProps>`
             return css`
                 pointer-events: none;
 
-                & > :is([type="range"], [data-id="start"], [data-id="range"]) {
+                &
+                    > :is([type="range"], [data-id="start-placeholder"], [data-id="range-placeholder"]) {
                     background: ${Color.Neutral[6]};
                     cursor: not-allowed;
                 }
 
-                & > :is([data-id="start"], [data-id="range"]) {
+                &
+                    > :is([data-id="start-placeholder"], [data-id="range-placeholder"]) {
                     margin-left: 3px;
                 }
 
@@ -164,7 +167,7 @@ export const InputPlaceholder = styled.div<InputPlaceholderProps>`
     z-index: 1;
     cursor: pointer;
 
-    &[data-id="start"]::before {
+    &[data-id="start-placeholder"]::before {
         content: "";
         position: absolute;
         height: 2px;
@@ -210,21 +213,21 @@ export const InputPlaceholder = styled.div<InputPlaceholderProps>`
         switch (props.focusTo.container) {
             case "start":
                 return css`
-                    &[data-id="start"]::before {
+                    &[data-id="start-placeholder"]::before {
                         left: 0%;
                         opacity: 1;
                     }
                 `;
             case "range":
                 return css`
-                    &[data-id="start"]::before {
+                    &[data-id="start-placeholder"]::before {
                         left: calc(100% + 16px + 23px);
                         opacity: 1;
                     }
                 `;
             case "none":
                 return css`
-                    &[data-id="start"]::before {
+                    &[data-id="start-placeholder"]::before {
                         opacity: 0;
                     }
                 `;
@@ -235,7 +238,7 @@ export const InputPlaceholder = styled.div<InputPlaceholderProps>`
         if (props.type === "range") {
             return css`
                 ${MediaQuery.MaxWidth.mobileL} {
-                    &[data-id="start"]::before {
+                    &[data-id="start-placeholder"]::before {
                         opacity: 0;
                     }
 
@@ -819,6 +822,38 @@ export const GrowDayCell = styled.div`
                 ${PseudoBaseCellStyle};
                 ${DashedBaseCellStyle};
             }
+        }
+    }
+
+    &.pre-selected-start.pre-selected-end {
+        &:not(.hover-reselecting-start)::before {
+            ${ResetPseudoCell};
+        }
+        &:not(.hover-reselecting-start) > [data-cell="left"]::before {
+            ${ResetPseudoCell};
+        }
+        &:not(.hover-reselecting-start) > [data-cell="right"]::before {
+            ${ResetPseudoCell};
+        }
+        &.hover-reselecting-start.hover-outside-selected-between
+            > [data-cell="right"]::before {
+            ${ResetPseudoCell};
+        }
+        &.hover-reselecting-range.hover-outside-selected-between
+            > [data-cell="right"]::before {
+            ${DashedBaseCellStyle}
+        }
+
+        & > [data-cell="left"] {
+            background-color: ${Color.Neutral[8]};
+        }
+
+        & > [data-cell="right"] {
+            background-color: ${Color.Neutral[8]};
+        }
+
+        &.selected-between {
+            background-color: ${Color.Neutral[8]};
         }
     }
 
