@@ -15,7 +15,6 @@ interface AttributeValues {
 // =============================================================================
 // STYLING
 // =============================================================================
-const READ_ONLY = "8px";
 
 export const InputRangeArrow = styled(Icon)<AttributeValues>`
     position: absolute;
@@ -26,7 +25,7 @@ export const InputRangeArrow = styled(Icon)<AttributeValues>`
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                left: calc(50% - ${READ_ONLY});
+                left: calc(50% - 20px);
             `;
         }
 
@@ -53,7 +52,11 @@ export const InputRangeWrapper = styled.div<AttributeValues>`
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                left: calc(50% + 17px - ${READ_ONLY});
+                left: calc(50% + 17px - 19px);
+
+                & input[name="range-year"] {
+                    width: 48px !important;
+                }
             `;
         }
 
@@ -97,13 +100,16 @@ export const InputRangeContainer = styled.div<InputRangeContainerProps>`
         if (props.type === "range") {
             return css`
                 input[name="range-day"] {
-                    width: 2rem;
+                    width: 28px;
+                    margin-right: 4px;
                 }
                 input[name="range-month"] {
-                    width: 2.5rem;
+                    width: 40px;
+                    padding: 0 4px;
                 }
                 input[name="range-year"] {
-                    width: 3.06rem;
+                    width: 45px;
+                    margin-left: 4px;
                 }
                 p {
                     margin: 0.1rem 0 0 0;

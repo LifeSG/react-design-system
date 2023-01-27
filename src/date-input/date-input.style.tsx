@@ -142,13 +142,16 @@ export const InputContainer = styled.div<ContainerStyleProps>`
         if (props.type === "range") {
             return css`
                 input[name="day"] {
-                    width: 2rem;
+                    width: 28px;
+                    margin-right: 4px;
                 }
                 input[name="month"] {
-                    width: 2.5rem;
+                    width: 40px;
+                    padding: 0 4px;
                 }
                 input[name="year"] {
-                    width: 3.06rem;
+                    width: 45px;
+                    margin-left: 4px;
                 }
                 p {
                     margin: 0.1rem 0 0 0;
@@ -157,6 +160,18 @@ export const InputContainer = styled.div<ContainerStyleProps>`
                 ${MediaQuery.MaxWidth.mobileL} {
                     height: 26px;
                     top: 11px;
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.type === "range" && props.$readOnly) {
+            return css`
+                left: 0;
+
+                & input[name="year"] {
+                    width: 48px;
                 }
             `;
         }
