@@ -6,6 +6,7 @@ export * from "./box-container";
 export * from "./breadcrumb";
 export * from "./button";
 export * from "./card";
+export * from "./calendar";
 export * from "./checkbox";
 export * from "./color";
 export * from "./date-input";
