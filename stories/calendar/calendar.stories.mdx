@@ -1,0 +1,32 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { Calendar } from "src/calendar";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Calendar" component={Calendar} />
+
+<Title>Calendar</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays the calendar with today date in default.
+
+```tsx
+import { Calendar } from "@lifesg/react-design-system/calendar";
+```
+
+<Canvas>
+    <Story name="Calendar">
+        <Calendar />
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
