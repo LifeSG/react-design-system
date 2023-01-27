@@ -1,6 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { StarIcon } from "@lifesg/react-icons/star";
 import { StarFillIcon } from "@lifesg/react-icons/star-fill";
+import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
@@ -128,8 +129,7 @@ export const Star = styled(StarFillIcon)`
     ${starIconStyle}
 `;
 
-// TODO:
-export const StarHalf = styled(StarFillIcon)`
+export const StarHalf = styled(StarHalfIcon)`
     ${starIconStyle}
 `;
 
