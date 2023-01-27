@@ -658,7 +658,7 @@ export const GrowDayCell = styled.div`
         ${SelectedBgColor};
         ${SelectedBetweenStyles};
 
-        & > [data-type="number"] {
+        &:not(.next-month) > [data-type="number"] {
             ${TextStyleHelper.getFontFamily("H5", "semibold")}
             color: ${Color.Primary};
         }
@@ -892,7 +892,7 @@ export const GrowDayCell = styled.div`
     }
 
     &.start-disabled-range :is([data-type="number"]) {
-        color: ${Color.Accent.Light[2]};
+        color: ${Color.Accent.Light[2]} !important;
     }
 
     &.start-today-range {
@@ -1022,6 +1022,11 @@ export const DayNumber = styled.div<DayNumerProps>`
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        ${TextStyleHelper.getFontFamily("H6", "regular")}
+        font-size: 14px;
+    }
 
     ${(props) => {
         if (props.disabled) {
