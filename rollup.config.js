@@ -20,10 +20,9 @@ const plugins = [
         tsconfigOverride: {
             // Override base tsconfig.json during build
             exclude: [
+                "tests",
                 "**/stories/**",
-                "**/__tests__/**",
                 "**/__mocks__/**",
-                "**/util/**",
                 "**/custom-types/css.d.ts",
                 "**/custom-types/jpg.d.ts",
                 "**/custom-types/mdx.d.ts",
