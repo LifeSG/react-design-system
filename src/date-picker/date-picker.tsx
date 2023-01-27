@@ -127,6 +127,10 @@ export const DatePicker = ({
                     setButtonDisable(false);
                 }
 
+                if (hasButton && type === "start" && selectedStartDate.length) {
+                    setButtonDisable(false);
+                }
+
                 break;
             case "Month":
                 setButtonDisable(false);
@@ -152,6 +156,20 @@ export const DatePicker = ({
         if (focusTo.countToEvenClose % 2 === 0) {
             setIsOpen(false).then(() => {
                 setFocusTo({ container: "none", countToEvenClose: 0 });
+
+                if (
+                    transitionValue.start.length &&
+                    transitionValue.range.length
+                ) {
+                    setTransitionValue({
+                        ...transitionValue,
+                        startStatus: "confirmed",
+                        rangeStatus: "confirmed",
+                    });
+
+                    setSelectedStartDate(transitionValue.start);
+                    setSelectedRangeDate(transitionValue.range);
+                }
             });
         }
     }, [focusTo]);
@@ -373,6 +391,10 @@ export const DatePicker = ({
             if (disabledDate.includes(date)) {
                 classes.push("start-disabled-range");
             }
+        }
+
+        if (variant === "nextMonth") {
+            classes.push("next-month");
         }
 
         if (variant === "nextMonth" && range === date) {
@@ -651,6 +673,13 @@ export const DatePicker = ({
     };
 
     const handleDayClick = async (value: string) => {
+        const isNextMonthDay =
+            calendarDate?.clone().toDate().getMonth() !== dayjs(value).month();
+
+        if (isNextMonthDay) {
+            setCalendarDate(dayjs(value));
+        }
+
         const isStartInvalid =
             transitionValue.start &&
             dayjs(value).isBefore(transitionValue.start)
@@ -673,10 +702,17 @@ export const DatePicker = ({
                     }),
                 });
 
-                setFocusTo((prev) => ({
-                    container: "range",
-                    countToEvenClose: ++prev.countToEvenClose,
-                }));
+                if (type === "range") {
+                    if (focusTo.countToEvenClose >= 1 && hasButton) {
+                        break;
+                    }
+
+                    setFocusTo((prev) => ({
+                        container: "range",
+                        countToEvenClose: ++prev.countToEvenClose,
+                    }));
+                }
+
                 break;
             case "range":
                 setTransitionValue({
@@ -689,17 +725,23 @@ export const DatePicker = ({
                     }),
                 });
 
-                setFocusTo((prev) => ({
-                    container: "start",
-                    countToEvenClose: ++prev.countToEvenClose,
-                }));
+                if (type === "range") {
+                    if (focusTo.countToEvenClose >= 1 && hasButton) {
+                        break;
+                    }
+
+                    setFocusTo((prev) => ({
+                        container: "start",
+                        countToEvenClose: ++prev.countToEvenClose,
+                    }));
+                }
                 break;
             default:
                 break;
         }
 
         setShowPlaceholder({ start: false, range: false });
-        if (type === "start") await setIsOpen(false);
+        if (type === "start" && !hasButton) await setIsOpen(false);
     };
 
     const _handleMonthYearClick = (
@@ -822,6 +864,16 @@ export const DatePicker = ({
                     rangeStatus: "confirmed",
                 });
 
+                if (type === "start") {
+                    setSelectedStartDate(start);
+
+                    setTransitionValue({
+                        ...transitionValue,
+                        start,
+                        startStatus: "confirmed",
+                    });
+                }
+
                 setFocusTo({ container: "none", countToEvenClose: 0 });
                 break;
             case "Month":
@@ -878,8 +930,19 @@ export const DatePicker = ({
             case "Day":
                 await setIsOpen(false);
                 setButtonDisable(true);
-
                 setCalendarDate(dayjs());
+
+                if (hasButton && type === "start") {
+                    /* handle status in single calender with button */
+                    setTransitionValue({
+                        ...transitionValue,
+                        start: selectedStartDate.length
+                            ? selectedStartDate
+                            : "",
+                        startStatus: "pre-confirmed",
+                    });
+                }
+
                 if (selectedStartDate.length && selectedRangeDate.length) {
                     setTransitionValue({
                         ...transitionValue,
@@ -1065,13 +1128,7 @@ export const DatePicker = ({
             return <>{dayjs(day).format("ddd")}</>;
         }
 
-        return (
-            <>
-                {dayjs(day).format("dd").toLocaleLowerCase() == "sa"
-                    ? "Sat"
-                    : dayjs(day).format("dd")}
-            </>
-        );
+        return <>{dayjs(day).format("dd")}</>;
     };
 
     return (
@@ -1241,7 +1298,7 @@ export const DatePicker = ({
                 placeholder="From"
                 data-id="start-placeholder"
                 type={type}
-                left="11px"
+                left="10px"
                 show={showPlaceholder.start.toString()}
                 onClick={handleShowPlaceholder}
                 disabled={disabled}
@@ -1251,7 +1308,7 @@ export const DatePicker = ({
                 placeholder="To"
                 data-id="range-placeholder"
                 type={type}
-                right="16px"
+                right="18px"
                 show={showPlaceholder.range.toString()}
                 onClick={handleShowPlaceholder}
                 disabled={disabled}

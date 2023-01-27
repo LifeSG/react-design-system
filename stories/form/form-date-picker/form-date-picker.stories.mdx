@@ -32,13 +32,6 @@ import { Form } from "@lifesg/react-design-system/form";
         <StoryContainer>
             <Container>
                 <Form.DatePicker
-                    label="Calendar without button"
-                    disabledDate={["2023-01-01", "2023-01-08"]}
-                    type="range"
-                    value=""
-                    rangeValue=""
-                />
-                <Form.DatePicker
                     label="Single calendar"
                     disabledDate={["2023-01-01", "2023-01-08"]}
                     type="start"
@@ -54,9 +47,16 @@ import { Form } from "@lifesg/react-design-system/form";
                     rangeValue=""
                 />
                 <Form.DatePicker
+                    label="Range calendar without button"
+                    disabledDate={["2023-02-10", "2023-02-20"]}
+                    type="range"
+                    value=""
+                    rangeValue=""
+                />
+                <Form.DatePicker
                     label="Range calendar with button"
                     hasButton={true}
-                    disabledDate={["2023-01-10", "2023-01-15"]}
+                    disabledDate={["2023-02-15", "2023-02-03"]}
                     type="range"
                     value=""
                     rangeValue=""
