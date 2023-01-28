@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "src/icon";
+import { Icon } from "../icon/icon";
 import { StringHelper } from "../util/string-helper";
 import { ClearContainer, Container, InputElement } from "./input.style";
 import { InputProps, InputRef } from "./types";

@@ -1,4 +1,4 @@
-import { PhoneNumberInput } from "../phone-number-input";
+import { PhoneNumberInput } from "../phone-number-input/phone-number-input";
 import { FormWrapper } from "./form-wrapper";
 import { FormPhoneNumberInputProps } from "./types";
 

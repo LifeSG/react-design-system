@@ -1,15 +1,15 @@
+import { DateInputProps } from "../date-input/types";
 import { IconType } from "../icon/types";
 import { InputGroupPartialProps } from "../input-group/types";
 import {
     InputMultiSelectPartialProps,
     InputSelectPartialProps,
 } from "../input-select/types";
-import { InputPartialProps } from "../input/types";
 import { TextareaPartialProps } from "../input-textarea/types";
-import { DateInputProps } from "../date-input/types";
+import { InputPartialProps } from "../input/types";
+import { PhoneNumberInputProps } from "../phone-number-input/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
-import { PhoneNumberInputProps } from "src/phone-number-input/types";
 
 export type FormLabelAddonType = "tooltip" | "popover";
 
