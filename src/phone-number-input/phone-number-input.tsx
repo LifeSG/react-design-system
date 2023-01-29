@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { InputGroup } from "../input-group/input-group";
+import { PhoneNumberInputHelper } from "./phone-number-input-helper";
+import { Wrapper } from "./phone-number-input.styles";
 import {
     CountryValue,
     PhoneNumberInputProps,
     PhoneNumberInputValue,
 } from "./types";
-import { PhoneNumberInputHelper } from "./phone-number-input-helper";
-import { InputGroup } from "../input-group";
-import { Wrapper } from "./phone-number-input.styles";
 
 export const PhoneNumberInput = ({
     onChange,
