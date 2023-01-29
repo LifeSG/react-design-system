@@ -30,10 +30,25 @@ export const MobileWrapper = styled.ul`
     list-style: none;
 
     ${MediaQuery.MaxWidth.tablet} {
-        border-left: 4px solid ${Color.Primary};
         display: flex;
         flex-direction: column;
         padding-bottom: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: flex;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        display: flex;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        display: flex;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        display: flex;
     }
 `;
 
@@ -65,7 +80,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     color: ${Color.Neutral[1]};
     margin-top: 1rem;
     margin-bottom: 1rem;
-    margin-left: 2rem;
+    margin-left: 1rem;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -115,11 +130,44 @@ export const LinkIndicator = styled.div`
     }
 `;
 
+export const DropDownBar = styled.ul`
+    width: 100%;
+    overflow: auto;
+    display: table;
+    margin-top: 0rem;
+    left: 0;
+    top: 102%;
+
+    /* N8 #FFFFFF */
+    position: absolute;
+
+    /* N8 #FFFFFF */
+    background: #ffffff;
+    box-shadow: 0px 2px 8px rgba(75, 83, 159, 0.24);
+    border-radius: 0px 0px 8px 8px;
+`;
+
 export const MenuBar = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: none;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        display: none;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        display: none;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        display: none;
+    }
 `;
 // =============================================================================
 // LINK ITEMS
@@ -131,7 +179,10 @@ export const MenuItem = styled.li`
     display: table-row;
     align-items: left;
     :not(:last-of-type) {
-        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
+    &:last-child {
+        margin-bottom: 2rem;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
@@ -150,3 +201,14 @@ export const LinkWrapper = styled.ul`
         display: none;
     }
 `;
+
+export const SearchBarContainer = styled.div`
+    display: grid;
+    position: relative;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    }
+`;
+
+export const SearchBarInputContainer = styled.div``;

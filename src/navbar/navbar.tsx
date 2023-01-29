@@ -14,6 +14,7 @@ import {
     MobileMenuButton,
     Nav,
     NavElementsContainer,
+    NavElementsMobileContainer,
     NavElementsRightContainer,
     NavLogoContainer,
     NavSeprator,
@@ -190,64 +191,83 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content>
-                <Nav compress={compress}>
-                    <Brand
-                        resources={resources}
-                        compress={compress}
-                        onClick={handleBrandClick}
-                        data-testid="main__brand"
+                <NavElementsMobileContainer>
+                    <Nav compress={compress}>
+                        <Brand
+                            resources={resources}
+                            compress={compress}
+                            onClick={handleBrandClick}
+                            data-testid="main__brand"
+                        />
+                        {resourcesSecondaryBrand && (
+                            <NavLogoContainer>
+                                <NavSeprator />
+                                <Brand
+                                    resources={resourcesSecondaryBrand}
+                                    compress={compress}
+                                    onClick={handleBrandClick}
+                                    data-testid="main__brand"
+                                />
+                            </NavLogoContainer>
+                        )}
+
+                        {!hideNavElements && (
+                            <NavElementsMobileContainer>
+                                <NavElementsContainer>
+                                    {!toggleheaderClick && (
+                                        <NavbarItems
+                                            items={items.desktop}
+                                            onItemClick={handleNavItemClick}
+                                            selectedId={selectedId}
+                                        />
+                                    )}
+                                    <NavElementsRightContainer>
+                                        {children}
+                                        <SearchInput
+                                            items={items.desktop}
+                                            onItemClick={handleNavItemClick}
+                                            selectedId={selectedId}
+                                            toggleheaderClick={
+                                                toggleheaderClick
+                                            }
+                                            onToggleHeaderClick={
+                                                handleheaderClick
+                                            }
+                                            mobile={false}
+                                        />
+                                        <NavbarActionButtons
+                                            actionButtons={
+                                                actionButtons &&
+                                                actionButtons.desktop
+                                            }
+                                            onActionButtonClick={
+                                                handleActionButtonClick
+                                            }
+                                        />
+                                    </NavElementsRightContainer>
+                                    <MobileMenuButton
+                                        aria-label="Open nav menu"
+                                        data-testid="button__mobile-menu"
+                                        onClick={handleMobileMenuButtonClick}
+                                    >
+                                        <Icon type="menu" />
+                                    </MobileMenuButton>
+                                </NavElementsContainer>
+                            </NavElementsMobileContainer>
+                        )}
+                    </Nav>
+
+                    <SearchInput
+                        items={items.desktop}
+                        onItemClick={handleNavItemClick}
+                        selectedId={selectedId}
+                        toggleheaderClick={toggleheaderClick}
+                        onToggleHeaderClick={handleheaderClick}
+                        mobile={true}
                     />
-                    {resourcesSecondaryBrand && (
-                        <NavLogoContainer>
-                            <NavSeprator />
-                            <Brand
-                                resources={resourcesSecondaryBrand}
-                                compress={compress}
-                                onClick={handleBrandClick}
-                                data-testid="main__brand"
-                            />
-                        </NavLogoContainer>
-                    )}
 
-                    {!hideNavElements && (
-                        <NavElementsContainer>
-                            {!toggleheaderClick && (
-                                <NavbarItems
-                                    items={items.desktop}
-                                    onItemClick={handleNavItemClick}
-                                    selectedId={selectedId}
-                                />
-                            )}
-                            <NavElementsRightContainer>
-                                {children}
-                                <SearchInput
-                                    items={items.desktop}
-                                    onItemClick={handleNavItemClick}
-                                    selectedId={selectedId}
-                                    toggleheaderClick={toggleheaderClick}
-                                    onToggleHeaderClick={handleheaderClick}
-                                />
-                                <NavbarActionButtons
-                                    actionButtons={
-                                        actionButtons && actionButtons.desktop
-                                    }
-                                    onActionButtonClick={
-                                        handleActionButtonClick
-                                    }
-                                />
-                            </NavElementsRightContainer>
-                            <MobileMenuButton
-                                aria-label="Open nav menu"
-                                data-testid="button__mobile-menu"
-                                onClick={handleMobileMenuButtonClick}
-                            >
-                                <Icon type="menu" />
-                            </MobileMenuButton>
-                        </NavElementsContainer>
-                    )}
-                </Nav>
-
-                {!hideNavElements && renderDrawer()}
+                    {!hideNavElements && renderDrawer()}
+                </NavElementsMobileContainer>
             </Layout.Content>
         );
     };

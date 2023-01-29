@@ -139,3 +139,13 @@ export const NavSeprator = styled.div`
         margin-right: 1rem;
     }
 `;
+
+export const NavElementsMobileContainer = styled.div`
+    display: flex;
+    height: 100%;
+    position: relative;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: grid;
+    }
+`;

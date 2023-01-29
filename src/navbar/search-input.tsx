@@ -1,14 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
 import { Form } from "../form";
 import { IconButton } from "../icon-button/icon-button";
 import { Icon } from "../icon";
 import {
+    DropDownBar,
     Link,
-    LinkIndicator,
     MenuBar,
     MenuItem,
     MobileWrapper,
+    SearchBarContainer,
+    SearchBarInputContainer,
 } from "./search-input.styles";
 import { NavItemProps, NavSubItemProps } from "./types";
 
@@ -37,6 +39,8 @@ export const SearchInput = <T,>({
     // STATE DECLARATIONS
     // =============================================================================
     const [toggleInput, setToggleInput] = useState<boolean>(false);
+    const [inputValue, setInputValue] = useState<string>("");
+    const [itemsLocal, setItemsLocalValue] = useState<NavSubItemProps<T>[]>([]);
     const wrapperRef = useRef(null);
     //useOutsideAlerter(wrapperRef);
 
@@ -51,28 +55,25 @@ export const SearchInput = <T,>({
         };
     };
 
-    /**
-     * Hook that alerts clicks outside of the passed ref
-     */
-    // function useOutsideAlerter(ref) {
-    //     useEffect(() => {
-    //         /**
-    //          * Alert if clicked on outside of element
-    //          */
-    //         function handleClickOutside(event) {
-    //             setToggleInput(!toggleInput);
-    //             if (ref.current && !ref.current.contains(event.target)) {
-    //                 // setToggleInput(!toggleInput);
-    //             }
-    //         }
-    //         // Bind the event listener
-    //         document.addEventListener("mousedown", handleClickOutside);
-    //         return () => {
-    //             // Unbind the event listener on clean up
-    //             document.removeEventListener("mousedown", handleClickOutside);
-    //         };
-    //     }, [ref]);
-    // }
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const setInput4 = (value) => {
+        setInputValue(value);
+    };
+
+    useEffect(() => {
+        const filtered =
+            inputValue && inputValue.length >= 1
+                ? items.filter((data) =>
+                      data.children
+                          .toString()
+                          .toLocaleLowerCase()
+                          .includes(inputValue?.toString()?.toLocaleLowerCase())
+                  )
+                : [];
+        setItemsLocalValue(filtered);
+    }, [inputValue]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -86,7 +87,7 @@ export const SearchInput = <T,>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderItems = (isMobile = false) => {
-        return items.map((item, index) => {
+        return itemsLocal.map((item, index) => {
             const selected = item.id === selectedId;
             const { children, options, ...otherItemAttrs } = item;
 
@@ -110,7 +111,6 @@ export const SearchInput = <T,>({
                         {...options}
                     >
                         {children}
-                        {selected && <LinkIndicator />}
                     </Link>
                 </MenuItem>
             );
@@ -126,30 +126,49 @@ export const SearchInput = <T,>({
                 {!toggleInput ? (
                     <IconButton iconType="search" onClick={handleToggleClick} />
                 ) : (
-                    <Form.InputGroup
-                        label=""
-                        placeholder="Search"
-                        addon={{
-                            type: "custom",
-                            position: "right",
-                            attributes: {
-                                children: <Icon type="search" />,
-                            },
-                        }}
-                    />
+                    <>{renderSearchComponent(isMobile)}</>
                 )}
+            </>
+        );
+    };
 
-                {/* {renderItems(mobile)} */}
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+    const renderSearchComponent = (isMobile = false) => {
+        return (
+            <>
+                <SearchBarContainer>
+                    <SearchBarInputContainer>
+                        <Form.InputGroup
+                            label=""
+                            placeholder="Search"
+                            addon={{
+                                type: "custom",
+                                position: "right",
+                                attributes: {
+                                    children: <Icon type="search" />,
+                                },
+                            }}
+                            value={inputValue}
+                            onChange={(event) => setInput4(event.target.value)}
+                        />
+                    </SearchBarInputContainer>
+                    {inputValue && inputValue.length >= 1 && (
+                        <DropDownBar>{renderItems(mobile)}</DropDownBar>
+                    )}
+                </SearchBarContainer>
             </>
         );
     };
 
     if (items && items.length > 0) {
-        //const ContentWrapper = mobile ? MobileWrapper : Wrapper;
         return (
             <>
                 {mobile ? (
-                    <MobileWrapper>{renderComponent(mobile)}</MobileWrapper>
+                    <MobileWrapper>
+                        {renderSearchComponent(mobile)}
+                    </MobileWrapper>
                 ) : (
                     <MenuBar>{renderComponent(mobile)} </MenuBar>
                 )}
