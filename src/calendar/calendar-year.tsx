@@ -26,10 +26,10 @@ export const CalendarYear = ({
 
         variant = isDecadedYear
             ? "nextDecaded"
-            : dayjs().isSame(date, "year")
-            ? "currentYear"
             : dayjs(selectedStartDate).isSame(date, "year")
             ? "selectedYear"
+            : dayjs().isSame(date, "year")
+            ? "currentYear"
             : "default";
 
         return {
@@ -74,6 +74,10 @@ export const CalendarYear = ({
         <YearPickerContainer>
             {yearDate.map((date, yearIndex) => {
                 const { variant, year, value } = generateYearStatus(date);
+
+                if (variant === "selectedYear") {
+                    console.log("date: ", date);
+                }
 
                 return (
                     <YearCell
