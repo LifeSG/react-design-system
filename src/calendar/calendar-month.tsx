@@ -44,14 +44,27 @@ export const CalendarMonth = ({
         const [yyyy, , dd] = calendarDate.format("YYYY-MM-DD").split("-");
 
         for (let i = 0; i < 12; i++) {
-            const month = `${yyyy}-${Months[i]}-${dd}`;
+            const dayInMonth = dayjs(`${yyyy}-${Months[i]}-01`).daysInMonth();
+            let month = "";
+
+            month = `${yyyy}-${Months[i]}-${dd}`;
+
+            /**
+             * month would be 2023-01-30 but it not exist 30 in Feb
+             * dd === 30
+             * dayInMonth it may only 28 in the month
+             */
+            if (+dd > dayInMonth) {
+                // get last day of the month
+                month = `${yyyy}-${Months[i]}-${dayInMonth}`;
+            }
+
             months.push(month);
         }
-
         setMonthDate(months);
     };
 
-    if (!monthDate.length) return null;
+    if (monthDate.length < 1) return null;
 
     return (
         <MonthPickerContainer>

@@ -34,6 +34,7 @@ export const Container = styled.div`
     width: 656px;
     background-color: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
+    height: 403px;
     border-radius: 12px;
     padding-top: 32px;
     padding-bottom: 32px;
