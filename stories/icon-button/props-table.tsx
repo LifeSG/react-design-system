@@ -7,7 +7,7 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "focusHighlight",
-                description: "If button is highlighted when focused",
+                description: "Specifies if button is highlighted when focused",
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
