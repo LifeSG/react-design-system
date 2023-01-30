@@ -23,65 +23,66 @@ import { NotificationToast } from "@lifesg/react-design-system/notification-toas
 <Preview>
     <Story name="NotificationToast">
         <p>Success notification toast in context</p>
-        <Notification type="success">
-            <IoMdCheckmarkCircle />
-            Template successfully updated.
+        <Notification type="success" icon=<IoMdCheckmarkCircle />>
+            <p>Template successfully updated.</p>
         </Notification>
         <br />
-        <Notification type="success">
-            <IoMdCheckmarkCircle />
-            <strong>Updated</strong>
-            <p>Template successfully updated.</p>
+        <p>Success notification toast in context</p>
+        <Notification
+            type="success"
+            title="Updated"
+            icon=<IoMdCheckmarkCircle />
+        >
+            Template successfully updated.
         </Notification>
         <br />
         <br />
         <p>Error notification toast in context</p>
-        <Notification type="error">
-            <IoMdAlert />
-            An internal system error had occured. Please log out and try again.
-        </Notification>
-        <br />
-        <Notification type="error">
-            <IoMdAlert />
-            <strong>System error</strong>
+        <Notification type="error" icon=<IoMdAlert />>
             <p>
                 An internal system error had occured. Please log out and try
                 again.
             </p>
         </Notification>
         <br />
-        <br />
-        <p>Warning notification toast in context</p>
-        <Notification type="warning">
-            <IoIosWarning />
-            The template contains characters that cannot be updated. Please remove
-            the characters and try again.
+        <Notification type="error" icon=<IoMdAlert /> title="System error">
+            An internal system error had occured. Please log out and try again.
         </Notification>
         <br />
-        <Notification type="warning">
-            <IoIosWarning />
-            <strong>Unknown characters</strong>
+        <br />
+        <p>Warning notification toast in context</p>
+        <Notification type="warning" icon=<IoIosWarning />>
             <p>
                 The template contains characters that cannot be updated. Please
                 remove the characters and try again.
             </p>
         </Notification>
         <br />
-        <br />
-        <p>Info notification toast in context</p>
-        <Notification type="info">
-            <IoMdInformationCircle />
-            The calendar will be automatically updated when you have done editing
-            the event information.
+        <Notification
+            type="warning"
+            icon=<IoIosWarning />
+            title="Unknown characters"
+        >
+            The template contains characters that cannot be updated. Please
+            remove the characters and try again.
         </Notification>
         <br />
-        <Notification type="info">
-            <IoMdInformationCircle />
-            <strong>Updated automatically</strong>
+        <br />
+        <p>Info notification toast in context</p>
+        <Notification type="info" icon=<IoMdInformationCircle />>
             <p>
                 The calendar will be automatically updated when you have done
                 editing the event information.
             </p>
+        </Notification>
+        <br />
+        <Notification
+            type="info"
+            icon=<IoMdInformationCircle />
+            title="Updated automatically"
+        >
+            The calendar will be automatically updated when you have done
+            editing the event information.
         </Notification>
     </Story>
 </Preview>
@@ -95,61 +96,65 @@ Specifying the type in the `NotificationToast.type` to animate into a screen by 
         <>
             <p>Success</p>
             <strong>Default</strong>
-            <Notification type="success">
-                <IoMdCheckmarkCircle />
-                Success Notification
+            <Notification type="success" icon=<IoMdCheckmarkCircle />>
+                <p>Success Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="success">
-                <IoMdCheckmarkCircle />
-                <strong>Success Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="success"
+                icon=<IoMdCheckmarkCircle />
+                title="Success Notification"
+            >
+                Your description goes here
             </Notification>
             <br />
             <br />
             <p>Error</p>
             <strong>Default</strong>
-            <Notification type="error">
-                <IoMdAlert />
-                Error Notification
+            <Notification type="error" icon=<IoMdAlert />>
+                <p>Error Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="error">
-                <IoMdAlert />
-                <strong>Error Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="error"
+                icon=<IoMdAlert />
+                title="Error Notification"
+            >
+                Your description goes here
             </Notification>
             <br />
             <br />
             <p>Warning</p>
             <strong>Default</strong>
-            <Notification type="warning">
-                <IoIosWarning />
-                Warning Notification
+            <Notification type="warning" icon=<IoIosWarning />>
+                <p>Warning Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="warning">
-                <IoIosWarning />
-                <strong>Warning Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="warning"
+                icon=<IoIosWarning />
+                title="Warning Notification"
+            >
+                Your description goes here
             </Notification>
             <br />
             <br />
             <p>Info</p>
             <strong>Default</strong>
-            <Notification type="info">
-                <IoMdInformationCircle />
-                Info Notification
+            <Notification type="info" icon=<IoMdInformationCircle />>
+                <p>Info Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="info">
-                <IoMdInformationCircle />
-                <strong>Info Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="info"
+                icon=<IoMdInformationCircle />
+                title="Info Notification"
+            >
+                Your description goes here
             </Notification>
             <br />
         </>
@@ -158,72 +163,76 @@ Specifying the type in the `NotificationToast.type` to animate into a screen by 
 
 <Heading3>Dark mode notification toast</Heading3>
 
-While `NotificationToast.Item` are an effective method of communicating with users, they are disruptive and should be used sparingly.
+While `NotificationToast.Type` are an effective method of communicating with users, they are disruptive and should be used sparingly.
 
-<Preview>
+<Canvas>
     <Story name="Dark mode">
         <>
             <p>Success</p>
             <strong>Default</strong>
-            <Notification type="successDark">
-                <IoMdCheckmarkCircle />
-                Success Notification
+            <Notification type="successDark" icon=<IoMdCheckmarkCircle />>
+                <p>Success Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="successDark">
-                <IoMdCheckmarkCircle />
-                <strong>Success Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="successDark"
+                icon=<IoMdCheckmarkCircle />
+                title="Success Notification"
+            >
+                Your description goes here
             </Notification>
             <br />
             <br />
             <p>Error</p>
             <strong>Default</strong>
-            <Notification type="errorDark">
-                <IoMdAlert />
-                Error Notification
+            <Notification type="errorDark" icon=<IoMdAlert />>
+                <p>Error Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="errorDark">
-                <IoMdAlert />
-                <strong>Error Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="errorDark"
+                icon=<IoMdAlert />
+                title="Error Notification"
+            >
+                Your description goes here
             </Notification>
             <br />
             <br />
             <p>Warning</p>
             <strong>Default</strong>
-            <Notification type="warningDark">
-                <IoIosWarning />
-                Warning Notification
+            <Notification type="warningDark" icon=<IoIosWarning />>
+                <p>Warning Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="warningDark">
-                <IoIosWarning />
-                <strong>Warning Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="warningDark"
+                icon=<IoIosWarning />
+                title="Warning Notification"
+            >
+                Your description goes here
             </Notification>
             <br />
             <br />
             <p>Info</p>
             <strong>Default</strong>
-            <Notification type="infoDark">
-                <IoMdInformationCircle />
-                Info Notification
+            <Notification type="infoDark" icon=<IoMdInformationCircle />>
+                <p>Info Notification</p>
             </Notification>
             <br />
             <strong>Description</strong>
-            <Notification type="infoDark">
-                <IoMdInformationCircle />
-                <strong>Info Notification</strong>
-                <p>Your description goes here</p>
+            <Notification
+                type="infoDark"
+                icon=<IoMdInformationCircle />
+                title="Info Notification"
+            >
+                Your description goes here
             </Notification>
         </>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

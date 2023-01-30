@@ -24,3 +24,9 @@ export interface ApiTableSectionProps {
 export interface ApiTableProps {
     sections: ApiTableSectionProps[];
 }
+
+export interface ApiNotificationAttributeProps {
+    type: string | undefined;
+    title: string;
+    description: string;
+}
