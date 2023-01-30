@@ -191,14 +191,27 @@ export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
         }
 
         if (!value.length) return;
-
         const hasStartDate: string[] = selectedStartDate.split("-");
 
-        const [yyyy, mm, dd] = hasStartDate;
+        const [yyyy, mm, _dd] = hasStartDate;
         const selectedMonth = value.split("-")[1];
         const selectedYear = value.split("-")[0];
 
         if (hasStartDate.length === 3) {
+            /**
+             * Handle last day check/validate
+             * user select 2023-01-30 and select month calendar which didn't exist 30 day in the month
+             * it will get the last day of the month
+             */
+            const lastDayInMonth: number = dayjs(
+                `${yyyy}-${selectedMonth}-01`
+            ).daysInMonth();
+            let dd: string = _dd;
+
+            if (+_dd > lastDayInMonth) {
+                dd = +lastDayInMonth;
+            }
+
             // date already been selected
             const fullDate =
                 show === "Month"

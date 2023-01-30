@@ -23,13 +23,19 @@ export const CalendarMonth = ({
         const arrayDate = date.split("-");
         const month = arrayDate[1] as Month;
         const value = dayjs(date).format("YYYY-MM-DD");
-
         let variant: VariantMonth = "default";
 
-        variant = dayjs().isSame(value, "month")
-            ? "currentMonth"
-            : dayjs(selectedStartDate).isSame(value, "month")
+        if (!dayjs(value).isValid())
+            return {
+                month,
+                value,
+                variant,
+            };
+
+        variant = dayjs(selectedStartDate).isSame(value, "month")
             ? "selectedMonth"
+            : dayjs().isSame(value, "month")
+            ? "currentMonth"
             : "default";
 
         return {
@@ -61,6 +67,7 @@ export const CalendarMonth = ({
 
             months.push(month);
         }
+
         setMonthDate(months);
     };
 
