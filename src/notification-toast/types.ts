@@ -13,5 +13,7 @@ export type NotificationToast =
 export interface NotificationToastProps
     extends React.HTMLAttributes<HTMLDivElement> {
     type: NotificationToast;
-    iconColor: NotificationToast;
+    title: string | undefined;
+    description: string | undefined;
+    icon: string | undefined;
 }

@@ -17,7 +17,6 @@ export const Wrapper = styled.div<StyleProps>`
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    width: 100%;
     ${TextStyleHelper.getTextStyle("XSmall", "light")}
 
     ${(props) => {
@@ -86,25 +85,17 @@ export const Wrapper = styled.div<StyleProps>`
 			border: 1pt solid ${borderColor};
             color: ${textColor};    
 
-
-         p {
-                ${TextStyleHelper.getTextStyle("XSmall", "light")}
-                margin-left: 30px;
-                font-size: 14px;
-                line-height: 18px;   
-            }
-            
-         strong {
-            ${TextStyleHelper.getTextStyle("Body", "semibold")}
-            color:  ${textColor};
-            margin-left: 1px;
-          }  
-
           svg {
             color: ${iconColor};
             font-size: 24px;
-            margin-right: 4px;
-            margin-bottom: -7px;
+            margin-right: 4px;  
+        }
+
+        p {
+            ${TextStyleHelper.getTextStyle("Body", "regular")}
+            margin-left: 30px;
+            margin-top: -34px;
+            margin-right: 20px;
         }
         
         :focus,
@@ -116,48 +107,67 @@ export const Wrapper = styled.div<StyleProps>`
 
 export const Container = styled.div`
     display: flex;
+    padding: 0;
 `;
 
 export const Content = styled.div`
     display: inline-block;
     width: 100%;
+    padding: 0;
 
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+`;
+
+export const Title = styled.div`
+    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+    margin-top: -33px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+    margin-right: 8px;
+`;
+
+export const Description = styled.div`
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    margin-top: -6px;
+    margin-left: 30px;
+    margin-right: 60px;
 `;
 
 export const StyledIconButton = styled(IconButton)<StyleProps>`
     background: transparent;
-    margin-right: -2.2rem;
-    margin-top: -1rem;
-    padding-left: 3rem;
-    height: 20px;
+    padding: 0;
+    padding-top: 5px;
+    margin-right: -6px;
+    margin-left: 8px;
+    float: right;
 
     ${(props) => {
         let iconColor: string;
         switch (props.$type) {
             case "success":
-                iconColor = Color.Validation.Green.Icon(props);
+                iconColor = Color.Validation.Green.Text(props);
                 break;
             case "error":
-                iconColor = Color.Validation.Red.Icon(props);
+                iconColor = Color.Validation.Red.Text(props);
                 break;
             case "warning":
-                iconColor = Color.Validation.Orange.Icon(props);
+                iconColor = Color.Validation.Orange.Text(props);
                 break;
             case "info":
-                iconColor = Color.Validation.Blue.Icon(props);
+                iconColor = Color.Validation.Blue.Text(props);
                 break;
             case "successDark":
             case "errorDark":
             case "warningDark":
             case "infoDark":
-                iconColor = Color.Validation.DarkMode.Icon(props);
+                iconColor = Color.Validation.DarkMode.Text(props);
                 break;
             default:
-                iconColor = Color.Validation.Green.Icon(props);
+                iconColor = Color.Validation.Green.Text(props);
                 break;
         }
         return `
+
         svg {
             color: ${iconColor};
         }
@@ -165,6 +175,7 @@ export const StyledIconButton = styled(IconButton)<StyleProps>`
         :focus,
         :active {
             background: transparent;
+
         }`;
     }}
 `;

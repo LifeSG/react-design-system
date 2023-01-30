@@ -18,21 +18,6 @@ export const PropsTable = () => (
             <DefaultCol />
         </tr>
         <tr>
-            <NameCol>actionLink</NameCol>
-            <DescriptionCol
-                propTypes={
-                    <a
-                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <code>HTMLAnchorAttributes</code>
-                    </a>
-                }
-            >
-                The attributes of an action link that performs an action on
-                click
-            </DescriptionCol>
             <DefaultCol />
         </tr>
     </Table>
