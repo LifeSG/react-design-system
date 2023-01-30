@@ -1,9 +1,10 @@
+import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ButtonProps } from "../button";
 import { Popover } from "../popover";
 import { MediaWidths } from "../spec/media-spec";
-import { AddonWrapper, InfoIcon, TriggerArea } from "./form-label-addon.style";
+import { AddonWrapper, TriggerArea } from "./form-label-addon.style";
 import { FormLabelAddonProps, FormLabelAddonType } from "./types";
 
 // =============================================================================
@@ -26,7 +27,7 @@ export const AddonTrigger = ({
         if (icon) {
             return icon;
         } else {
-            return <InfoIcon id={`${addonType}-icon`} />;
+            return <ICircleFillIcon id={`${addonType}-icon`} />;
         }
     };
 

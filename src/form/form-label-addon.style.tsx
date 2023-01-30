@@ -1,4 +1,3 @@
-import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import styled from "styled-components";
 import { Color } from "../color";
 
@@ -8,8 +7,11 @@ export const TriggerArea = styled.button`
     background: none;
     cursor: pointer;
 
-    svg {
+    & > svg {
         vertical-align: text-bottom;
+        height: 1rem;
+        width: 1rem;
+        color: ${Color.Primary};
     }
 `;
 
@@ -17,10 +19,4 @@ export const AddonWrapper = styled.div`
     display: inline;
     position: relative;
     width: fit-content;
-`;
-
-export const InfoIcon = styled(ICircleFillIcon)`
-    height: 1rem;
-    width: 1rem;
-    color: ${Color.Primary};
 `;
