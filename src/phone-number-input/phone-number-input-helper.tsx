@@ -1,5 +1,5 @@
+import reduce from "lodash/reduce";
 import { CountryData } from "./data/country-code";
-import { reduce } from "lodash";
 import { CountryValue } from "./types";
 
 // Format stucture: prefix+countryCode+' '+defaultMask

@@ -28,6 +28,7 @@ export * from "./modal";
 export * from "./navbar";
 export * from "./notification-banner";
 export * from "./overlay";
+export * from "./phone-number-input";
 export * from "./popover";
 export * from "./progress-indicator";
 export * from "./radio-button";

@@ -1,5 +1,5 @@
-import { Color } from "src/color";
 import styled from "styled-components";
+import { Color } from "../color/color";
 
 // =============================================================================
 // STYLING
