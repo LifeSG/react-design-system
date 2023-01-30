@@ -702,6 +702,8 @@ export const DatePicker = ({
                     }),
                 });
 
+                performOnChangeHandler(value);
+
                 if (type === "range") {
                     if (focusTo.countToEvenClose >= 1 && hasButton) {
                         break;
@@ -724,6 +726,8 @@ export const DatePicker = ({
                         startStatus: "pre-confirmed",
                     }),
                 });
+
+                performOnChangeHandler(value);
 
                 if (type === "range") {
                     if (focusTo.countToEvenClose >= 1 && hasButton) {
@@ -906,10 +910,13 @@ export const DatePicker = ({
                     });
                 }
 
-                setFocusTo((prev) => ({
-                    container: prev.container === "start" ? "range" : "start",
-                    countToEvenClose: ++prev.countToEvenClose,
-                }));
+                if (type === "range") {
+                    setFocusTo((prev) => ({
+                        container:
+                            prev.container === "start" ? "range" : "start",
+                        countToEvenClose: ++prev.countToEvenClose,
+                    }));
+                }
 
                 setShowPlaceholder({ start: false, range: false });
                 break;
