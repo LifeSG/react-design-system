@@ -209,7 +209,7 @@ export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
             let dd: string = _dd;
 
             if (+_dd > lastDayInMonth) {
-                dd = +lastDayInMonth;
+                dd = lastDayInMonth.toString();
             }
 
             // date already been selected
