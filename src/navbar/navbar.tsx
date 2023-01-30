@@ -41,6 +41,7 @@ const Component = <T,>(
         actionButtons,
         resourcesSecondaryBrand,
         children,
+        showSearch = false,
         onItemClick,
         onActionButtonClick,
         onBrandClick,
@@ -223,18 +224,20 @@ const Component = <T,>(
                                     )}
                                     <NavElementsRightContainer>
                                         {children}
-                                        <SearchInput
-                                            items={items.desktop}
-                                            onItemClick={handleNavItemClick}
-                                            selectedId={selectedId}
-                                            toggleheaderClick={
-                                                toggleheaderClick
-                                            }
-                                            onToggleHeaderClick={
-                                                handleheaderClick
-                                            }
-                                            mobile={false}
-                                        />
+                                        {showSearch && (
+                                            <SearchInput
+                                                items={items.desktop}
+                                                onItemClick={handleNavItemClick}
+                                                selectedId={selectedId}
+                                                toggleheaderClick={
+                                                    toggleheaderClick
+                                                }
+                                                onToggleHeaderClick={
+                                                    handleheaderClick
+                                                }
+                                                mobile={false}
+                                            />
+                                        )}
                                         <NavbarActionButtons
                                             actionButtons={
                                                 actionButtons &&
@@ -257,14 +260,16 @@ const Component = <T,>(
                         )}
                     </Nav>
 
-                    <SearchInput
-                        items={items.desktop}
-                        onItemClick={handleNavItemClick}
-                        selectedId={selectedId}
-                        toggleheaderClick={toggleheaderClick}
-                        onToggleHeaderClick={handleheaderClick}
-                        mobile={true}
-                    />
+                    {showSearch && (
+                        <SearchInput
+                            items={items.desktop}
+                            onItemClick={handleNavItemClick}
+                            selectedId={selectedId}
+                            toggleheaderClick={toggleheaderClick}
+                            onToggleHeaderClick={handleheaderClick}
+                            mobile={true}
+                        />
+                    )}
 
                     {!hideNavElements && renderDrawer()}
                 </NavElementsMobileContainer>

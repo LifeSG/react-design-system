@@ -95,6 +95,7 @@ export interface NavbarProps<T = void>
     hideNavElements?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
     children?: JSX.Element | JSX.Element[] | undefined;
+    showSearch?: boolean | undefined;
     onBrandClick?: () => void | undefined; // override
     onItemClick?: (item: NavItemProps<T>) => void | undefined;
     onActionButtonClick?:
