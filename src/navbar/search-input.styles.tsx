@@ -147,7 +147,7 @@ export const DropDownBar = styled.ul`
     border-radius: 0px 0px 8px 8px;
 `;
 
-export const MenuBar = styled.div`
+export const SearchBarDesktop = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;

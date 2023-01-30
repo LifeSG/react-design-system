@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
 import {
     Link,
@@ -32,7 +32,33 @@ export const NavbarItems = <T,>({
     // STATE DECLARATIONS
     // =============================================================================
     const [selectedIndex, setShowDrawer] = useState<number>(-1);
-    //let selectedIndex = -1;
+    const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+    // =============================================================================
+    // CONST, STATE, REFS
+    // =============================================================================
+    const ref = useRef(null);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                onBlur();
+            }
+        };
+        document.addEventListener("click", handleClickOutside, true);
+        return () => {
+            document.removeEventListener("click", handleClickOutside, true);
+        };
+    }, []);
+
+    // =============================================================================
+    // HELPER FUNCTION
+    // =============================================================================
+    const onBlur = () => {
+        setToggleDropdown(false);
+    };
 
     // =============================================================================
     // EVENT HANDLERS
@@ -41,6 +67,7 @@ export const NavbarItems = <T,>({
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             setShowDrawer(index);
+            setToggleDropdown(true);
             if (item && !item.subMenu) {
                 onItemClick(event, item);
             }
@@ -91,7 +118,8 @@ export const NavbarItems = <T,>({
 
                     {isMobile &&
                         selectedIndex >= 0 &&
-                        selectedIndex === index && (
+                        selectedIndex === index &&
+                        toggleDropdown && (
                             <Menu
                                 items={item.subMenu}
                                 selectedId={selectedId}
@@ -112,21 +140,26 @@ export const NavbarItems = <T,>({
         return (
             <>
                 {mobile ? (
-                    <MobileWrapper>{renderItems(mobile)}</MobileWrapper>
-                ) : (
-                    <Wrapper>
+                    <MobileWrapper ref={ref}>
                         {renderItems(mobile)}
-                        {items && selectedIndex && items[selectedIndex] && (
-                            <Menu
-                                items={items[selectedIndex].subMenu}
-                                selectedId={selectedId}
-                                mobile={false}
-                                onItemClick={handleSubLinkClick(
-                                    items[selectedIndex]?.subMenu,
-                                    0
-                                )}
-                            ></Menu>
-                        )}
+                    </MobileWrapper>
+                ) : (
+                    <Wrapper ref={ref}>
+                        {renderItems(mobile)}
+                        {items &&
+                            selectedIndex &&
+                            items[selectedIndex] &&
+                            toggleDropdown && (
+                                <Menu
+                                    items={items[selectedIndex].subMenu}
+                                    selectedId={selectedId}
+                                    mobile={false}
+                                    onItemClick={handleSubLinkClick(
+                                        items[selectedIndex]?.subMenu,
+                                        0
+                                    )}
+                                ></Menu>
+                            )}
                     </Wrapper>
                 )}
             </>

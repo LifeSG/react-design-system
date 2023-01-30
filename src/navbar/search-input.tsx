@@ -6,10 +6,10 @@ import { Icon } from "../icon";
 import {
     DropDownBar,
     Link,
-    MenuBar,
     MenuItem,
     MobileWrapper,
     SearchBarContainer,
+    SearchBarDesktop,
     SearchBarInputContainer,
 } from "./search-input.styles";
 import { NavItemProps, NavSubItemProps } from "./types";
@@ -41,8 +41,33 @@ export const SearchInput = <T,>({
     const [toggleInput, setToggleInput] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
     const [itemsLocal, setItemsLocalValue] = useState<NavSubItemProps<T>[]>([]);
-    const wrapperRef = useRef(null);
-    //useOutsideAlerter(wrapperRef);
+    const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+    // =============================================================================
+    // CONST, STATE, REFS
+    // =============================================================================
+    const ref = useRef(null);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                onBlur();
+            }
+        };
+        document.addEventListener("click", handleClickOutside, true);
+        return () => {
+            document.removeEventListener("click", handleClickOutside, true);
+        };
+    }, []);
+
+    // =============================================================================
+    // HELPER FUNCTION
+    // =============================================================================
+    const onBlur = () => {
+        setToggleDropdown(false);
+    };
 
     // =============================================================================
     // EVENT HANDLERS
@@ -73,6 +98,7 @@ export const SearchInput = <T,>({
                   )
                 : [];
         setItemsLocalValue(filtered);
+        setToggleDropdown(true);
     }, [inputValue]);
 
     // =============================================================================
@@ -155,7 +181,7 @@ export const SearchInput = <T,>({
                             autoComplete="nope"
                         />
                     </SearchBarInputContainer>
-                    {inputValue && inputValue.length >= 1 && (
+                    {inputValue && inputValue.length >= 1 && toggleDropdown && (
                         <DropDownBar>{renderItems(mobile)}</DropDownBar>
                     )}
                 </SearchBarContainer>
@@ -167,11 +193,13 @@ export const SearchInput = <T,>({
         return (
             <>
                 {mobile ? (
-                    <MobileWrapper>
+                    <MobileWrapper ref={ref}>
                         {renderSearchComponent(mobile)}
                     </MobileWrapper>
                 ) : (
-                    <MenuBar>{renderComponent(mobile)} </MenuBar>
+                    <SearchBarDesktop ref={ref}>
+                        {renderComponent(mobile)}{" "}
+                    </SearchBarDesktop>
                 )}
             </>
         );
