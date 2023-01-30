@@ -95,12 +95,12 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        ${(props) => {
+        /* ${(props) => {
             return TextStyleHelper.getTextStyle(
                 "H4",
                 props.$selected ? "bold" : "regular"
             );
-        }}
+        }} */
         font-weight: bold !important;
         width: 100%;
         padding: 0.625rem 1rem;
@@ -182,12 +182,16 @@ export const MenuItem = styled.li`
         margin-bottom: 1rem;
     }
     &:last-child {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
         margin-top: 0rem;
         margin-bottom: 1.4rem;
+
+        &:last-child {
+            height: 65px !important;
+        }
     }
 `;
 

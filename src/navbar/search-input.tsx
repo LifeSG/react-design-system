@@ -50,7 +50,7 @@ export const SearchInput = <T,>({
     const handleLinkClick = (item: NavSubItemProps<T>, index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
-            //setShowDrawer(index);
+            setInputValue("");
             onItemClick(event, item);
         };
     };
@@ -152,6 +152,7 @@ export const SearchInput = <T,>({
                             }}
                             value={inputValue}
                             onChange={(event) => setInput4(event.target.value)}
+                            autoComplete="nope"
                         />
                     </SearchBarInputContainer>
                     {inputValue && inputValue.length >= 1 && (
