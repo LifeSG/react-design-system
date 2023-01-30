@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * @deprecated
+ */
 export type IconType =
     | "address-book"
     | "alert"
@@ -61,10 +64,16 @@ export type IconType =
     | "users"
     | "web";
 
+/**
+ * @deprecated
+ */
 export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
     type: IconType;
 }
 
+/**
+ * @deprecated
+ */
 export interface IconSvgProps {
     id?: string | undefined;
     className?: string | undefined;

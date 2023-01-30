@@ -3,6 +3,7 @@ import {
     Container,
     Content,
     ContentLink as NBLink,
+    StyledIcon,
     StyledIconButton,
     TextContainer,
     Wrapper,
@@ -11,7 +12,6 @@ import {
     NotificationBannerProps,
     NotificationBannerWithForwardedRefProps,
 } from "./types";
-import { Icon } from "../icon";
 
 export const NBComponent = ({
     children,
@@ -64,8 +64,9 @@ export const NBComponent = ({
                         onClick={handleDismiss}
                         id={formatId("dismiss-button", id)}
                         data-testid={formatId("dismiss-button", testId)}
+                        focusHighlight={false}
                     >
-                        <Icon type="cross" />
+                        <StyledIcon />
                     </StyledIconButton>
                 )}
             </Container>

@@ -1,13 +1,12 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import { Button } from "src/button";
 import { Card } from "src/card";
-import { Icon } from "src/icon";
 import { IconButton } from "src/icon-button";
 import { Layout } from "src/layout";
 import { Text } from "src/text";
 import { PropsTable } from "./props-table";
-import { StyledIcon } from "../icon/doc-elements";
 
 <Meta title="Modules/Card" component={Card} />
 
@@ -46,7 +45,9 @@ The child `JSX.Element` is unaltered and is simply wrapped by the `Card`.
                     alignItems: "center",
                 }}
             >
-                <StyledIcon type="alert" />
+                <ExclamationCircleFillIcon
+                    style={{ height: "1.5rem", width: "1.5rem" }}
+                />
                 <Text.BodySmall>
                     This is a Card with a JSX.Element as its children.
                 </Text.BodySmall>

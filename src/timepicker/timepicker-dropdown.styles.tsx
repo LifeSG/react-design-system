@@ -97,6 +97,7 @@ export const InputContainer = styled.div`
 export const SwitchButton = styled(IconButton)`
     width: 5rem;
     padding: 1rem 0;
+    color: ${Color.Primary};
 `;
 
 export const DividerLabel = styled(Text.Body)`

@@ -8,7 +8,7 @@ import {
     LabelContainer,
     PlaceholderLabel,
     Selector,
-    StyledIcon,
+    StyledChevronIcon,
     ValueLabel,
 } from "./input-select.styles";
 import { InputSelectProps } from "./types";
@@ -177,7 +177,7 @@ export const InputSelect = <T, V>({
             </LabelContainer>
             {!otherProps.readOnly && (
                 <IconContainer expanded={showOptions}>
-                    <StyledIcon type="chevron-down" />
+                    <StyledChevronIcon />
                 </IconContainer>
             )}
         </>

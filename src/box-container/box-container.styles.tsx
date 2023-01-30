@@ -1,11 +1,12 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { Icon } from "../icon/icon";
-import { MediaQuery } from "../media";
-import { Transition } from "../transition";
 import { Color } from "../color";
+import { MediaQuery } from "../media";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
+import { Transition } from "../transition";
 import { BoxContainerDisplayState } from "./types";
 
 // =============================================================================
@@ -71,11 +72,6 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
     font-size: 1.5rem;
     vertical-align: middle;
 
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-    }
-
     ${(props) => {
         switch (props.$displayState) {
             case "error":
@@ -90,6 +86,11 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
                 break;
         }
     }}
+`;
+
+export const AlertIcon = styled(ExclamationCircleFillIcon)`
+    height: 1.5rem;
+    width: 1.5rem;
 `;
 
 export const CallToActionContainer = styled.div<StyleProps>`
@@ -130,7 +131,7 @@ export const HandleIconContainer = styled.div<StyleProps>`
     transition: ${Transition.Base};
 `;
 
-export const HandleIcon = styled(Icon)`
+export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
     height: 1.2rem;
     width: 1.2rem;

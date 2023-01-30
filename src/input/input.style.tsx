@@ -1,3 +1,4 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
@@ -115,23 +116,15 @@ export const ClearContainer = styled.button<InputStyleProps>`
     position: relative;
     display: flex;
     align-items: center;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
     padding: 0.875rem 1rem;
     cursor: pointer;
 
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${Color.Neutral[3]};
     background-color: transparent;
     border: none;
+`;
 
-    /* SVG Icon */
-    svg {
-        height: 1.125rem;
-        width: 1.125rem;
-        color: ${Color.Neutral[3]};
-        #path {
-            fill: ${Color.Neutral[3]};
-        }
-    }
+export const ClearIcon = styled(CrossIcon)`
+    height: 1.25rem;
+    width: 1.25rem;
 `;

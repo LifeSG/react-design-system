@@ -1,3 +1,4 @@
+import { LockIcon } from "@lifesg/react-icons/lock";
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { IconButton } from "src/icon-button";
 import { Secondary, Heading3, Title } from "../storybook-common";
@@ -17,9 +18,37 @@ import { IconButton } from "@lifesg/react-design-system/icon-button";
 
 <Canvas>
     <Story name="IconButton">
-        <IconButton iconType="lock" />
+        <IconButton>
+            <LockIcon />
+        </IconButton>
     </Story>
 </Canvas>
+
+<Heading3>Highlight</Heading3>
+
+By default, the button is highlighted when focused. This can be customised with the `focusHighlight` prop.
+
+<Preview>
+    <Story name="Highlight">
+        <IconButton focusHighlight={false}>
+            <LockIcon />
+        </IconButton>
+    </Story>
+</Preview>
+
+<Heading3>Outline</Heading3>
+
+By default, the button is not outlined when focused. To defer to the browser's default style, specify the `focusOutline` prop.
+
+(Try focusing the button below with the Tab key)
+
+<Preview>
+    <Story name="Outline">
+        <IconButton focusOutline="browser">
+            <LockIcon />
+        </IconButton>
+    </Story>
+</Preview>
 
 <Heading3>Using custom components</Heading3>
 

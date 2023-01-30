@@ -1,3 +1,4 @@
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
@@ -218,20 +219,9 @@ export const ResultStateContainer = styled.div`
 
 export const ResultStateText = styled(Text.Body)``;
 
-export const LabelIcon = styled.div`
-    display: flex;
-    align-items: center;
+export const LabelIcon = styled(ExclamationCircleFillIcon)`
     margin-right: 0.625rem;
-    font-size: 1.5rem;
-
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-    }
-
-    ${(props) => {
-        return css`
-            color: ${Color.Validation.Red.Icon(props)};
-        `;
-    }}
+    height: 1.5rem;
+    width: 1.5rem;
+    color: ${Color.Validation.Red.Icon};
 `;

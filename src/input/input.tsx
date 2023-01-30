@@ -1,7 +1,11 @@
 import React from "react";
-import { Icon } from "../icon/icon";
 import { StringHelper } from "../util/string-helper";
-import { ClearContainer, Container, InputElement } from "./input.style";
+import {
+    ClearContainer,
+    ClearIcon,
+    Container,
+    InputElement,
+} from "./input.style";
 import { InputProps, InputRef } from "./types";
 
 const Component = (
@@ -101,7 +105,7 @@ const Component = (
             />
             {showClearButton && (
                 <ClearContainer onClick={handleClear}>
-                    <Icon type="cross" />
+                    <ClearIcon />
                 </ClearContainer>
             )}
         </Container>

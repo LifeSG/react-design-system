@@ -1,7 +1,7 @@
+import { LinkIcon as DSLinkIcon } from "@lifesg/react-icons/link";
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../../src/color";
-import { Icon } from "../../src/icon";
 import { Text, TextProps, TextStyleHelper } from "../../src/text";
 
 interface HeadingProps {
@@ -25,7 +25,7 @@ const withLink =
                     tabIndex={-1}
                     target="_self"
                 >
-                    <Icon type="link" />
+                    <LinkIcon />
                 </Link>
                 {children}
             </Component>
@@ -43,13 +43,19 @@ const Link = styled.a`
     padding-right: 0.5rem;
     color: ${Color.Neutral[4]};
 
-    svg {
-        vertical-align: baseline;
-    }
-
     :hover {
         color: ${Color.Neutral[4]};
     }
+`;
+
+const LinkIcon = styled(DSLinkIcon)`
+    margin-left: 0.25rem;
+    margin-right: -0.375rem;
+    height: 1rem;
+    width: 1rem;
+    vertical-align: baseline;
+    color: ${Color.Primary};
+    transform: rotate(-45deg);
 `;
 
 const StyledTitle = styled(Text.D1)`

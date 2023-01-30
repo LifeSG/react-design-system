@@ -8,7 +8,7 @@ import {
     LabelContainer,
     PlaceholderLabel,
     Selector,
-    StyledIcon,
+    StyledChevronIcon,
     ValueLabel,
 } from "./input-select.styles";
 import { InputMultiSelectProps } from "./types";
@@ -156,7 +156,7 @@ export const InputMultiSelect = <T, V>({
         <>
             <LabelContainer>{renderLabel()}</LabelContainer>
             <IconContainer expanded={showOptions}>
-                <StyledIcon type="chevron-down" />
+                <StyledChevronIcon />
             </IconContainer>
         </>
     );

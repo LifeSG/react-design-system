@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { MediaWidths } from "../spec/media-spec";
 import {
@@ -130,7 +130,7 @@ export const Breadcrumb = ({
             return (
                 <Item key={index} $styleProps={itemStyle}>
                     {element}
-                    {index < links.length - 1 && <Caret type="chevron-right" />}
+                    {index < links.length - 1 && <Caret />}
                 </Item>
             );
         });
