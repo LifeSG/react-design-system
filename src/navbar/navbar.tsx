@@ -13,7 +13,9 @@ import {
     MobileMenuButton,
     MobileMenuIcon,
     Nav,
+    NavBrandContainer,
     NavElementsContainer,
+    NavElementsLeftContainer,
     NavElementsMobileContainer,
     NavElementsRightContainer,
     NavLogoContainer,
@@ -194,26 +196,28 @@ const Component = <T,>(
             <Layout.Content>
                 <NavElementsMobileContainer>
                     <Nav compress={compress}>
-                        <Brand
-                            resources={resources}
-                            compress={compress}
-                            onClick={handleBrandClick}
-                            data-testid="main__brand"
-                        />
-                        {resourcesSecondaryBrand && (
-                            <NavLogoContainer>
-                                <NavSeprator />
-                                <Brand
-                                    resources={resourcesSecondaryBrand}
-                                    compress={compress}
-                                    onClick={handleBrandClick}
-                                    data-testid="main__brand"
-                                />
-                            </NavLogoContainer>
-                        )}
+                        <NavBrandContainer>
+                            <Brand
+                                resources={resources}
+                                compress={compress}
+                                onClick={handleBrandClick}
+                                data-testid="main__brand"
+                            />
+                            {resourcesSecondaryBrand && (
+                                <NavLogoContainer>
+                                    <NavSeprator />
+                                    <Brand
+                                        resources={resourcesSecondaryBrand}
+                                        compress={compress}
+                                        onClick={handleBrandClick}
+                                        data-testid="main__brand"
+                                    />
+                                </NavLogoContainer>
+                            )}
+                        </NavBrandContainer>
 
                         {!hideNavElements && (
-                            <NavElementsMobileContainer>
+                            <NavElementsLeftContainer>
                                 <NavElementsContainer>
                                     {!toggleheaderClick && (
                                         <NavbarItems
@@ -257,7 +261,7 @@ const Component = <T,>(
                                         <MobileMenuIcon />
                                     </MobileMenuButton>
                                 </NavElementsContainer>
-                            </NavElementsMobileContainer>
+                            </NavElementsLeftContainer>
                         )}
                     </Nav>
 

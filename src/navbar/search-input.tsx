@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useRef, useState } from "react";
+import { GearIcon } from "@lifesg/react-icons/";
 import { TextWeight } from "../text";
 import { Form } from "../form";
 import { IconButton } from "../icon-button/icon-button";
@@ -158,7 +159,9 @@ export const SearchInput = <T,>({
         return (
             <>
                 {!toggleInput ? (
-                    <IconButton iconType="search" onClick={handleToggleClick} />
+                    <IconButton onClick={handleToggleClick}>
+                        <Icon type="search" onClick={handleSearchIconClick} />
+                    </IconButton>
                 ) : (
                     <>{renderSearchComponent(isMobile)}</>
                 )}
