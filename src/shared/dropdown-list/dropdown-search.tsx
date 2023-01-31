@@ -1,6 +1,6 @@
-import React from "react";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import {
+    CancelButton,
     CancelIcon,
     Container,
     SearchIcon,
@@ -19,12 +19,16 @@ const Component = (
     const { onClear, ...otherProps } = props;
     return (
         <Container key="search">
-            <SearchIcon type="search" />
+            <SearchIcon />
             <SearchInput ref={ref} {...otherProps} />
             {otherProps.value && (
-                <div onClick={onClear}>
-                    <CancelIcon type="cross" />
-                </div>
+                <CancelButton
+                    aria-label="Clear search"
+                    focusOutline="browser"
+                    onClick={onClear}
+                >
+                    <CancelIcon />
+                </CancelButton>
             )}
         </Container>
     );

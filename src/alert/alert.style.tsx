@@ -1,6 +1,6 @@
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import styled from "styled-components";
 import { Color } from "../color/color";
-import { Icon } from "../icon";
 import { Text, TextStyleHelper } from "../text";
 import { AlertType } from "./types";
 
@@ -76,15 +76,10 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)`
     margin-top: 0.5rem;
     display: flex;
     align-items: center;
-
-    :hover {
-        #path {
-            // This belongs to the arrow icon
-            fill: ${Color.Secondary};
-        }
-    }
 `;
 
-export const ArrowIcon = styled(Icon)`
+export const ArrowIcon = styled(ArrowRightIcon)`
+    height: 1.375rem;
+    width: 1.375rem;
     margin-left: 0.25rem;
 `;

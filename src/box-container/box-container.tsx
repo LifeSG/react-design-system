@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { IoMdAlert } from "react-icons/io";
+import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import {
+    AlertIcon,
     CallToActionContainer,
     ChildContainer,
     Container,
@@ -83,7 +83,7 @@ export const BoxContainer = ({
                             `${displayState}-icon`
                         }
                     >
-                        <IoMdAlert />
+                        <AlertIcon />
                     </LabelIcon>
                 );
             default:
@@ -120,7 +120,7 @@ export const BoxContainer = ({
                         data-testid={subComponentTestIds?.handle || "handle"}
                     >
                         <HandleIconContainer $expanded={showExpanded}>
-                            <HandleIcon type="chevron-down" />
+                            <HandleIcon />
                         </HandleIconContainer>
                     </Handle>
                 )}

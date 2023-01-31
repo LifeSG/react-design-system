@@ -1,3 +1,4 @@
+import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { Color } from "../color";
 import { IconButton } from "../icon-button";
@@ -55,23 +56,6 @@ export const Nav = styled.nav<StyleProps>`
 export const NavElementsContainer = styled.div`
     display: flex;
     height: 100%;
-    margin-left: 80px;
-    position: relative;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0px;
-    }
-`;
-
-export const NavElementsRightContainer = styled.div`
-    display: flex;
-    height: 100%;
-    margin-left: 80px;
-    position: relative;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0px;
-    }
 `;
 
 export const MobileMenuButton = styled(IconButton)`
@@ -81,71 +65,11 @@ export const MobileMenuButton = styled(IconButton)`
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
-        background: transparent;
-        outline-style: none;
-
-        svg {
-            height: 1.25rem;
-            width: 1.25rem;
-            color: ${Color.Neutral[1]};
-        }
-
-        :active,
-        :focus {
-            background: transparent;
-        }
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        svg {
-            height: 1.25rem;
-            width: 1.25rem;
-        }
-    }
-`;
-export const NavLogoContainer = styled.div`
-    display: flex;
-    height: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-`;
-export const NavSeprator = styled.div`
-    display: flex;
-    background-color: ${Color.Neutral[5]};
-    height: 2.8125rem;
-    width: 0.05rem;
-    left: 13.435625rem;
-    margin-right: 1.504375rem;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        height: 24px;
-        margin-right: 1rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        height: 24px;
-        margin-right: 1rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
-        height: 24px;
-        margin-right: 1rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        height: 24px;
-        margin-right: 1rem;
     }
 `;
 
-export const NavElementsMobileContainer = styled.div`
-    display: flex;
-    height: 100%;
-    position: relative;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: grid;
-    }
+export const MobileMenuIcon = styled(MenuIcon)`
+    height: 1.5rem;
+    width: 1.5rem;
+    color: ${Color.Neutral[1]};
 `;

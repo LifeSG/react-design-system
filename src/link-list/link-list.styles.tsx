@@ -1,7 +1,9 @@
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import { MinusIcon } from "@lifesg/react-icons/minus";
+import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "react-spring";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { Icon } from "../icon";
 import { Text } from "../text";
 
 // =============================================================================
@@ -15,6 +17,11 @@ interface ToggleStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+const iconStyle = css`
+    height: 1.125rem;
+    width: 1.125rem;
+    color: ${Color.Primary};
+`;
 
 export const Container = styled.div`
     border-top: 1px solid ${Color.Neutral[5]};
@@ -29,9 +36,8 @@ export const ItemTitleSmall = styled(Text.Body)`
     color: ${Color.Primary};
 `;
 
-export const ItemIcon = styled(Icon)`
-    height: 1.125rem;
-    width: 1.125rem;
+export const ItemIcon = styled(ChevronRightIcon)`
+    ${iconStyle}
 `;
 
 export const Item = styled.a`
@@ -78,7 +84,12 @@ export const ToggleButtonLabel = styled(Text.H5)`
     margin-right: 0.5rem;
 `;
 
-export const ToggleButtonIcon = styled(ItemIcon)``;
+export const ViewMoreIcon = styled(PlusIcon)`
+    ${iconStyle}
+`;
+export const ViewLessIcon = styled(MinusIcon)`
+    ${iconStyle}
+`;
 
 export const ToggleButton = styled.button<ToggleStyleProps>`
     display: flex;
@@ -94,7 +105,8 @@ export const ToggleButton = styled.button<ToggleStyleProps>`
 
     :hover {
         ${ToggleButtonLabel},
-        ${ToggleButtonIcon} {
+        ${ViewMoreIcon},
+        ${ViewLessIcon} {
             color: ${Color.PrimaryDark};
         }
     }

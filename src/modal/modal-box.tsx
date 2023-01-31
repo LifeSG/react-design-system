@@ -25,8 +25,9 @@ export const ModalBox = ({
                 type="button"
                 onClick={onClose}
                 data-testid="close-button"
+                focusHighlight={false}
             >
-                <CloseIcon type="cross" />
+                <CloseIcon />
             </CloseButton>
         );
     };

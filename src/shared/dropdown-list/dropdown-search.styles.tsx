@@ -1,6 +1,8 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled from "styled-components";
 import { Color } from "../../color";
-import { Icon } from "../../icon";
+import { IconButton } from "../../icon-button";
 import { TextStyleHelper } from "../../text";
 
 export const Container = styled.li`
@@ -15,7 +17,7 @@ export const SearchInput = styled.input`
     height: 3rem;
     border: none;
     background: transparent;
-    width: 100%;
+    flex: 1;
     padding: 0 0.5rem 0 0;
 
     :focus,
@@ -29,17 +31,22 @@ export const SearchInput = styled.input`
     }
 `;
 
-export const SearchIcon = styled(Icon)`
-    height: 1.5rem;
-    width: 1.5rem;
+export const SearchIcon = styled(MagnifierIcon)`
+    height: 1.375rem;
+    width: 1.375rem;
     margin: 0 0.5rem;
     color: ${Color.Neutral[3]};
 `;
 
-export const CancelIcon = styled(Icon)`
-    height: 1.125rem;
-    width: 1.125rem;
+export const CancelButton = styled(IconButton)`
+    padding: 0;
     margin: 0 0.5rem;
     color: ${Color.Neutral[3]};
     cursor: pointer;
+`;
+
+export const CancelIcon = styled(CrossIcon)`
+    height: 1.375rem;
+    width: 1.375rem;
+    color: ${Color.Neutral[3]};
 `;

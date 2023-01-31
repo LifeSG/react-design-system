@@ -1,6 +1,6 @@
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled from "styled-components";
 import { Color } from "../color";
-import { Icon } from "../icon/icon";
 import { MediaQuery } from "../media";
 import { Text } from "../text/text";
 
@@ -11,10 +11,6 @@ import { Text } from "../text/text";
 interface FadeProps {
     $backgroundColor?: string[];
     $position?: "left" | "right";
-}
-
-interface CaretProps {
-    $color?: string;
 }
 
 interface ItemStyleProps {
@@ -109,9 +105,9 @@ export const Item = styled.li<ItemStyleProps>`
     }};
 `;
 
-export const Caret = styled(Icon)<CaretProps>`
+export const Caret = styled(ChevronRightIcon)`
     margin: 0.25rem 0.25rem 0.1rem 0.25rem;
-    color: ${(props) => props.$color || Color.Neutral[4]};
+    color: ${Color.Neutral[4]};
 `;
 
 export const CurrentLabel = styled(Text.BodySmall)`

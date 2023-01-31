@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Alert } from "../../src/alert";
 import { Icon, IconType } from "../../src/icon";
 import { MediaQuery } from "../../src/media";
 import { TextStyleHelper } from "../../src/text";
@@ -57,4 +58,15 @@ const Label = styled.span`
     font-size: 0.9rem !important;
     margin-top: 0.75rem;
     margin-bottom: 0;
+`;
+
+export const DeprecationWarning = styled(Alert).attrs({ type: "warning" })`
+    p {
+        ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+        ${TextStyleHelper.getDisplayStyle(false, true)}
+    }
+
+    p:first-of-type {
+        margin-top: 0;
+    }
 `;

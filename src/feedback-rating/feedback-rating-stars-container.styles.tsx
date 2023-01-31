@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import { Color } from "../color";
-import { Icon } from "../icon";
+import { StarIcon } from "@lifesg/react-icons/star";
+import { StarFillIcon } from "@lifesg/react-icons/star-fill";
+import styled, { css } from "styled-components";
+import { Color } from "../color/color";
 
 export const Input = styled.input`
     position: absolute;
@@ -9,9 +10,10 @@ export const Input = styled.input`
     height: 0;
 `;
 
-export const StarIcon = styled(Icon)`
-    width: 2rem;
-    height: 2rem;
+const starStyle = css`
+    width: 2.75rem;
+    height: 2.75rem;
+    color: ${Color.Primary};
     ${Input}:focus-visible + & {
         outline: 0.125rem solid ${Color.Primary};
         outline-offset: -0.0625rem;
@@ -19,8 +21,16 @@ export const StarIcon = styled(Icon)`
     }
 `;
 
+export const StarUnfilled = styled(StarIcon)`
+    ${starStyle}
+`;
+
+export const StarFilled = styled(StarFillIcon)`
+    ${starStyle}
+`;
+
 export const Label = styled.label`
-    margin: 0 1rem;
+    margin: 0 0.5rem;
     line-height: 0;
     @media screen and (max-width: 38rem) {
         margin: 0 0.5rem;
@@ -30,5 +40,5 @@ export const Label = styled.label`
 export const Container = styled.div`
     display: flex;
     justify-content: center;
-    margin: 1rem;
+    margin: 0.5rem 1rem;
 `;

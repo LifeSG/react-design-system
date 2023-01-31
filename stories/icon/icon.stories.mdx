@@ -1,6 +1,7 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Icon } from "src/icon";
+import { Text } from "../../src/text";
 import {
     Heading3,
     Heading4,
@@ -9,12 +10,30 @@ import {
     StoryContainer,
     Title,
 } from "../storybook-common";
-import { IconSet } from "./doc-elements";
+import { IconSet, DeprecationWarning } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
-<Meta title="General/Icon" component={Icon} />
+<Meta title="General/Icon (Deprecated)" component={Icon} />
 
 <Title>Icon</Title>
+
+<DeprecationWarning>
+    <p>
+        This component is <b>deprecated</b>.
+    </p>
+    <p>
+        The latest icon collection is available at{" "}
+        <code>@lifesg/react-icons</code>. For information on installation and
+        usage, refer to the{" "}
+        <Text.Hyperlink.Small
+            href="https://designsystem.life.gov.sg/reacticons/index.html?path=/story/getting-started--page"
+            target="_blank"
+        >
+            documentation
+        </Text.Hyperlink.Small>
+        .
+    </p>
+</DeprecationWarning>
 
 <Secondary>Overview</Secondary>
 

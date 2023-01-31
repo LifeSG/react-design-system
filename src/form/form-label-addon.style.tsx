@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../color";
 
 export const TriggerArea = styled.button`
     padding: 0.25rem 0.5rem 0.25rem 0.25rem;
@@ -6,8 +7,11 @@ export const TriggerArea = styled.button`
     background: none;
     cursor: pointer;
 
-    svg {
+    & > svg {
         vertical-align: text-bottom;
+        height: 1rem;
+        width: 1rem;
+        color: ${Color.Primary};
     }
 `;
 

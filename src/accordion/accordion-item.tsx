@@ -104,9 +104,11 @@ export const AccordionItem = ({
                     data-testid={`${testId}-expand-collapse-button`}
                     onClick={handleExpandCollapseClick}
                     $isCollapsed={expand}
+                    focusHighlight={false}
+                    focusOutline="browser"
                     aria-label={expand ? "Collapse" : "Expand"}
                 >
-                    <ChevronIcon type="chevron-up" />
+                    <ChevronIcon />
                 </ExpandCollapseButton>
             </TitleContainer>
             {renderContent()}

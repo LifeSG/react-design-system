@@ -1,5 +1,4 @@
 import { DateInputProps } from "../date-input/types";
-import { IconType } from "../icon/types";
 import { InputGroupPartialProps } from "../input-group/types";
 import {
     InputMultiSelectPartialProps,
@@ -15,14 +14,14 @@ export type FormLabelAddonType = "tooltip" | "popover";
 
 export interface FormLabelAddonTriggerProps {
     addonType?: FormLabelAddonType | undefined /* For informational purposes */;
-    icon?: IconType | JSX.Element | undefined;
+    icon?: JSX.Element | undefined;
     "data-testid"?: string | undefined;
 }
 
 export interface FormLabelAddonProps {
     content: string | JSX.Element;
     type?: FormLabelAddonType | undefined;
-    icon?: IconType | JSX.Element | undefined;
+    icon?: JSX.Element | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
 }

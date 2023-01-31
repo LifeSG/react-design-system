@@ -1,6 +1,6 @@
+import { GearIcon } from "@lifesg/react-icons/gear";
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
-import { Icon } from "src/icon";
 import { IconButton } from "src/icon-button";
 import { Navbar } from "src/navbar";
 import {
@@ -246,11 +246,10 @@ You can also choose to render a custom component of your choice as an action but
                         args: {
                             render: (
                                 <IconButton>
-                                    <Icon
-                                        type="cog"
+                                    <GearIcon
                                         style={{
-                                            fontSize: "1.25rem",
-                                            marginTop: "4px",
+                                            width: "1.25rem",
+                                            height: "1.25rem",
                                         }}
                                     />
                                 </IconButton>
