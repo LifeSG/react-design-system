@@ -110,6 +110,14 @@ export const SearchInput = <T,>({
     };
 
     // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleSearchIconClick = () => {
+        setItemsLocalValue(items);
+        setToggleDropdown(true);
+    };
+
+    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderItems = (isMobile = false) => {
@@ -173,12 +181,17 @@ export const SearchInput = <T,>({
                                 type: "custom",
                                 position: "right",
                                 attributes: {
-                                    children: <Icon type="search" />,
+                                    children: (
+                                        <Icon
+                                            type="search"
+                                            onClick={handleSearchIconClick}
+                                        />
+                                    ),
                                 },
                             }}
                             value={inputValue}
                             onChange={(event) => setInput4(event.target.value)}
-                            autoComplete="nope"
+                            autoComplete="off"
                         />
                     </SearchBarInputContainer>
                     {inputValue && inputValue.length >= 1 && toggleDropdown && (

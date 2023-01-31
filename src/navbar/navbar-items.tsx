@@ -147,7 +147,7 @@ export const NavbarItems = <T,>({
                     <Wrapper ref={ref}>
                         {renderItems(mobile)}
                         {items &&
-                            selectedIndex &&
+                            selectedIndex >= 0 &&
                             items[selectedIndex] &&
                             toggleDropdown && (
                                 <Menu
@@ -156,7 +156,7 @@ export const NavbarItems = <T,>({
                                     mobile={false}
                                     onItemClick={handleSubLinkClick(
                                         items[selectedIndex]?.subMenu,
-                                        0
+                                        selectedIndex
                                     )}
                                 ></Menu>
                             )}
