@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { Icon } from "../icon";
 import { Input } from "../input/input";
 import { TextStyleHelper } from "../text";
 
@@ -143,9 +142,4 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
             `;
         }
     }}
-`;
-
-export const IconContainer = styled(Icon)`
-    padding-left: 0.5rem;
-    color: ${Color.Neutral[4]};
 `;

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { Icon } from "../icon/icon";
 import { CheckboxProps, CheckboxSize } from "./types";
+import { TickIcon } from "@lifesg/react-icons/tick";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -77,16 +77,16 @@ export const Input = styled.input<CheckboxProps>`
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 `;
 
-export const Checkmark = styled(Icon)<StyleProps>`
+export const Checkmark = styled(TickIcon)<StyleProps>`
     ${(props) => {
         let size;
 
         switch (props.$displaySize) {
             case "small":
-                size = "1.3rem";
+                size = "1.5rem";
                 break;
             default:
-                size = "1.5rem";
+                size = "1.75rem";
                 break;
         }
 

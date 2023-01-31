@@ -60,8 +60,8 @@ export const FORM_LABEL_ADDON_PROPS_DATA: ApiTableSectionProps = {
         {
             name: "icon",
             description: "The type of icon used in the addon trigger",
-            propTypes: ["IconType", "JSX.Element"],
-            defaultValue: `"info"`,
+            propTypes: ["JSX.Element"],
+            defaultValue: `<ICircleFillIcon />`,
         },
         {
             name: "id",

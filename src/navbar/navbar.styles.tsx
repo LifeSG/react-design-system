@@ -1,3 +1,4 @@
+import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { Color } from "../color";
 import { IconButton } from "../icon-button";
@@ -64,25 +65,11 @@ export const MobileMenuButton = styled(IconButton)`
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
-        background: transparent;
-        outline-style: none;
-
-        svg {
-            height: 1.25rem;
-            width: 1.25rem;
-            color: ${Color.Neutral[1]};
-        }
-
-        :active,
-        :focus {
-            background: transparent;
-        }
     }
+`;
 
-    ${MediaQuery.MaxWidth.mobileS} {
-        svg {
-            height: 1.25rem;
-            width: 1.25rem;
-        }
-    }
+export const MobileMenuIcon = styled(MenuIcon)`
+    height: 1.5rem;
+    width: 1.5rem;
+    color: ${Color.Neutral[1]};
 `;

@@ -3,7 +3,8 @@ import {
     Container,
     Input,
     Label,
-    StarIcon,
+    StarFilled,
+    StarUnfilled,
 } from "./feedback-rating-stars-container.styles";
 import { FeedbackRatingStarsContainerProps } from "./types";
 
@@ -29,19 +30,9 @@ export const FeedbackRatingStarsContainer = (
         const ariaLabel = `${starIndex} star${starIndex === 1 ? "" : "s"}`;
 
         if (starIndex <= rating) {
-            return (
-                <StarIcon
-                    type="star-rating-filled"
-                    aria-label={ariaLabel}
-                ></StarIcon>
-            );
+            return <StarFilled aria-label={ariaLabel}></StarFilled>;
         } else {
-            return (
-                <StarIcon
-                    type="star-rating-unfilled"
-                    aria-label={ariaLabel}
-                ></StarIcon>
-            );
+            return <StarUnfilled aria-label={ariaLabel}></StarUnfilled>;
         }
     };
 

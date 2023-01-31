@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { ButtonProps } from "../button/types";
-import { Icon } from "../icon/icon";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
@@ -11,6 +10,7 @@ import { NavbarActionButtons } from "./navbar-action-buttons";
 import { NavbarItems } from "./navbar-items";
 import {
     MobileMenuButton,
+    MobileMenuIcon,
     Nav,
     NavElementsContainer,
     Wrapper,
@@ -203,8 +203,9 @@ const Component = <T,>(
                                 aria-label="Open nav menu"
                                 data-testid="button__mobile-menu"
                                 onClick={handleMobileMenuButtonClick}
+                                focusHighlight={false}
                             >
-                                <Icon type="menu" />
+                                <MobileMenuIcon />
                             </MobileMenuButton>
                         </NavElementsContainer>
                     )}

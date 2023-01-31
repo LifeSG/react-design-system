@@ -8,7 +8,7 @@ import {
     LabelContainer,
     PlaceholderLabel,
     Selector,
-    StyledIcon,
+    StyledChevronIcon,
     ValueLabel,
     Wrapper,
 } from "./input-group-list-addon.style";
@@ -168,7 +168,7 @@ export const InputGroupListAddon = <T, V>({
                 )}
             </LabelContainer>
             <IconContainer $expanded={showOptions}>
-                <StyledIcon type="chevron-down" />
+                <StyledChevronIcon />
             </IconContainer>
         </>
     );

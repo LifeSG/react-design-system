@@ -1,5 +1,6 @@
+import { TickIcon } from "@lifesg/react-icons/tick";
 import styled from "styled-components";
-import { Icon } from "../../../src/icon/icon";
+import { Color } from "../../../src/color";
 
 export const ImageWrapper = styled.div`
     display: flex;
@@ -21,7 +22,8 @@ export const ImageWrapperSelected = styled.div`
     justify-content: space-between;
 `;
 
-export const Checkmark = styled(Icon)`
+export const Checkmark = styled(TickIcon)`
     height: 32px;
     width: 32px;
+    color: ${Color.Primary};
 `;

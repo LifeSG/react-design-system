@@ -2,13 +2,16 @@ import React from "react";
 import {
     BannerIcon,
     ButtonContainer,
-    CrossIcon,
+    Cross,
     Description,
     DismissButton,
     DismissContainer,
     ProceedContainer,
     RatingContainer,
     SmartAppBannerContainer,
+    Star,
+    StarEmpty,
+    StarHalf,
     StyledButton,
     TextContainer,
     Title,
@@ -17,12 +20,6 @@ import { SmartAppBannerProps } from "./types";
 
 const APP_ICON =
     "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png";
-const STAR_IMG =
-    "https://assets.life.gov.sg/react-design-system/img/star-rating/full-star.svg";
-const HALF_STAR_IMG =
-    "https://assets.life.gov.sg/react-design-system/img/star-rating/half-star.svg";
-const EMPTY_STAR_IMG =
-    "https://assets.life.gov.sg/react-design-system/img/star-rating/empty-star.svg";
 
 const ID = "smart-app-banner";
 
@@ -72,17 +69,15 @@ function SmartAppBannerComponent(
         const hasHalfStar = numberOfStars - Math.floor(numberOfStars) >= 0.4;
 
         for (let i = 0; i < Math.floor(numberOfStars); i++) {
-            stars.push(<img key={`star${i}`} alt="" src={STAR_IMG} />);
+            stars.push(<Star key={`star${i}`} />);
         }
         if (hasHalfStar) {
-            stars.push(<img key={`halfstar`} alt="" src={HALF_STAR_IMG} />);
+            stars.push(<StarHalf key={`halfstar`} />);
         }
         if (stars.length < 5) {
             const remaining = 5 - stars.length;
             for (let i = 0; i < remaining; i++) {
-                stars.push(
-                    <img key={`emptystar${i}`} alt="" src={EMPTY_STAR_IMG} />
-                );
+                stars.push(<StarEmpty key={`emptystar${i}`} />);
             }
         }
 
@@ -105,7 +100,7 @@ function SmartAppBannerComponent(
                         data-testid={`${ID}-dismiss-container`}
                     >
                         <DismissButton aria-label="Dismiss">
-                            <CrossIcon type="cross" />
+                            <Cross />
                         </DismissButton>
                     </DismissContainer>
                     <ProceedContainer

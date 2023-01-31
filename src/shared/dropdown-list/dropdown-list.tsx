@@ -1,6 +1,5 @@
 import findIndex from "lodash/findIndex";
 import React, { useEffect, useRef, useState } from "react";
-import { IoMdAlert } from "react-icons/io";
 import { useSpring } from "react-spring";
 import { Spinner } from "../../button/button.style";
 import { StringHelper } from "../../util/string-helper";
@@ -398,9 +397,7 @@ export const DropdownList = <T, V>({
                     key="noResults"
                     data-testid="list-no-results"
                 >
-                    <LabelIcon data-testid="no-result-icon">
-                        <IoMdAlert />
-                    </LabelIcon>
+                    <LabelIcon data-testid="no-result-icon" />
                     <ResultStateText>No results found.</ResultStateText>
                 </ResultStateContainer>
             );
@@ -422,9 +419,7 @@ export const DropdownList = <T, V>({
         if (onRetry && itemsLoadState === "fail") {
             return (
                 <ResultStateContainer key="noResults" data-testid="list-fail">
-                    <LabelIcon data-testid="load-error-icon">
-                        <IoMdAlert />
-                    </LabelIcon>
+                    <LabelIcon data-testid="load-error-icon" />
                     <ResultStateText>Failed to load.</ResultStateText>
                     <DropdownCommonButton onClick={handleTryAgain}>
                         Try again.

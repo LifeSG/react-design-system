@@ -1,7 +1,10 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
+import { StarIcon } from "@lifesg/react-icons/star";
+import { StarFillIcon } from "@lifesg/react-icons/star-fill";
+import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
-import { Icon } from "../icon";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
@@ -52,13 +55,12 @@ export const DismissContainer = styled.div`
 
 export const DismissButton = styled(IconButton)`
     padding: 0;
-    svg {
-        color: ${Color.Neutral[1]};
-    }
 `;
 
-export const CrossIcon = styled(Icon)`
+export const Cross = styled(CrossIcon)`
     color: ${Color.Neutral[1]};
+    height: 1.25rem;
+    width: 1.25rem;
 `;
 
 export const ProceedContainer = styled.div`
@@ -114,10 +116,23 @@ export const RatingContainer = styled.div`
     margin-top: 0.25rem;
     display: flex;
     align-items: center;
+`;
 
-    img {
-        height: 1.5rem;
-        width: 1.5rem;
-        padding-right: 0.25rem;
-    }
+const starIconStyle = css`
+    height: 2rem;
+    width: 2rem;
+    padding-right: 0.25rem;
+    color: #ffc107;
+`;
+
+export const Star = styled(StarFillIcon)`
+    ${starIconStyle}
+`;
+
+export const StarHalf = styled(StarHalfIcon)`
+    ${starIconStyle}
+`;
+
+export const StarEmpty = styled(StarIcon)`
+    ${starIconStyle}
 `;
