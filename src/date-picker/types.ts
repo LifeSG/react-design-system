@@ -47,7 +47,7 @@ export interface DatePickerProps extends React.AriaAttributes {
     // Input-specific Attributes
     error?: boolean;
     readOnly?: boolean;
-    disabledDate?: string[]; // [YYYY-MM-DD]
+    disabledDates?: string[]; // [YYYY-MM-DD]
     hasButton?: boolean;
     value?: string; // YYYY-MM-DD
     rangeValue?: string; // YYYY-MM-DD
