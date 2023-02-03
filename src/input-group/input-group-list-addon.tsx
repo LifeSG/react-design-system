@@ -200,6 +200,7 @@ export const InputGroupListAddon = <T, V>({
                 disabled={otherProps.disabled}
                 error={error && !showOptions}
                 expanded={showOptions}
+                data-testid={otherProps["data-testid"] || "selector-wrapper"}
             >
                 {renderDisplay()}
                 {renderOptionList()}
