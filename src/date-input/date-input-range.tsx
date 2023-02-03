@@ -29,6 +29,8 @@ export const Component = (
         hoverValue,
         readOnly,
         onBlur,
+        handleCancelButton,
+        calendarRootId,
     }: DateInputRangeProps,
     ref: RangeElementRef
 ): JSX.Element => {
@@ -199,40 +201,46 @@ export const Component = (
         if (
             rangeDayInputRef &&
             (event.target as any).name === "range-year" &&
+            event.code === "Enter"
+        ) {
+            // Done button
+            const rootElm = document.querySelector(
+                `#${calendarRootId}`
+            ) as HTMLDivElement;
+
+            if (rootElm) {
+                const doneElm = rootElm.querySelector(
+                    '[data-type="done"]'
+                ) as HTMLButtonElement;
+
+                /**
+                 * handleDoneButton been trigger here some how got some button
+                 * use click to the element
+                 */
+                doneElm.click();
+                (event.target as any).blur();
+                setRangeCurrentFocus("none");
+            }
+        }
+
+        if (
+            rangeDayInputRef &&
+            (event.target as any).name === "range-year" &&
             event.code === "Tab"
         ) {
-            /* select DatePicker Root Container */
-            const datePickerRootContainer = rangeDayInputRef.current
-                .parentElement.parentElement.parentElement
-                .parentElement as HTMLDivElement;
-
-            /* Warning it if the DOM has changed */
-            const containerType: DatePickerType[] = ["start", "range"];
-            const isRootContainer = containerType.includes(
-                datePickerRootContainer.getAttribute("type") as any
-            );
-
-            if (!isRootContainer) {
-                console.warn(
-                    "---------- The DatePicker/DateInput/DateRangeInput DOM has been changed. Please check ---------"
-                );
-            }
-
-            if (isRootContainer) {
-                const selectTrickAction = datePickerRootContainer.querySelector(
-                    "[data-trick]"
-                ) as HTMLDivElement;
-
-                selectTrickAction.click();
-
-                const startPlaceholder = datePickerRootContainer.querySelector(
-                    '[data-id="start-placeholder"]'
-                ) as HTMLDivElement;
-
-                startPlaceholder.click();
-            }
-
             setRangeCurrentFocus("none");
+            handleCancelButton();
+            (event.target as any).blur();
+        }
+
+        if (
+            typeof setIsOpenCalendar === "function" &&
+            event.code === "Escape"
+        ) {
+            // close the calendar same as Cancel button
+            setRangeCurrentFocus("none");
+            handleCancelButton();
+            (event.target as any).blur();
         }
     };
 
