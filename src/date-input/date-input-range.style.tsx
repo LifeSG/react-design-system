@@ -25,16 +25,34 @@ export const InputRangeArrow = styled(Icon)<AttributeValues>`
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                left: calc(50% - 20px);
+                ${MediaQuery.MinWidth.mobileL} {
+                    left: 44%;
+
+                    @media (min-width: 1420px) {
+                        left: calc(50% - 19%);
+                    }
+                }
             `;
         }
+    }}
 
+    ${(props) => {
         if (props.$variant === "range") {
             return css`
                 ${MediaQuery.MaxWidth.mobileL} {
                     left: 56%;
                     transform: unset;
                     top: 1.05rem;
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$variant === "range" && props.$readOnly) {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    left: 51%;
                 }
             `;
         }
@@ -52,14 +70,20 @@ export const InputRangeWrapper = styled.div<AttributeValues>`
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                left: calc(50% + 17px - 19px);
+                left: 49%;
 
                 & input[name="range-year"] {
                     width: 48px !important;
                 }
+
+                @media (min-width: 1420px) {
+                    left: 35%;
+                }
             `;
         }
+    }}
 
+    ${(props) => {
         if (props.$variant) {
             return css`
                 ${MediaQuery.MaxWidth.mobileL} {
@@ -68,6 +92,16 @@ export const InputRangeWrapper = styled.div<AttributeValues>`
                     left: 1rem;
                     bottom: 11px;
                     top: unset;
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$variant && props.$readOnly) {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    left: 0;
                 }
             `;
         }
