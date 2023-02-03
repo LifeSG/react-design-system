@@ -7,7 +7,6 @@ import {
     Divider,
     InputContainer,
     MonthInput,
-    TrickAction,
     YearInput,
 } from "./date-input.style";
 import { DateInputProps, DateInputRangeProps } from "./types";
@@ -36,6 +35,8 @@ export const DateInput = ({
     transitionValues,
     hoverValue,
     focusTo,
+    handleCancelButton,
+    calendarRootId,
     ...otherProps
 }: DateInputProps & DateInputRangeProps) => {
     // =============================================================================
@@ -205,6 +206,14 @@ export const DateInput = ({
             (event.target as any).name === "year" &&
             event.code === "Tab"
         ) {
+            // use in single calendar
+            if (!rangeNodeRef.current) {
+                setCurrentFocus("none");
+                setIsOpenCalendar(false);
+                (event.target as any).blur();
+            }
+
+            // use for range calendar
             if (rangeNodeRef.current) {
                 rangeNodeRef.current.click();
 
@@ -235,6 +244,36 @@ export const DateInput = ({
             }
 
             setCurrentFocus("none");
+        }
+
+        if ((event.target as any).name === "year" && event.code === "Enter") {
+            const rootElm = document.querySelector(
+                `#${calendarRootId}`
+            ) as HTMLDivElement;
+
+            if (rootElm) {
+                const doneElm = rootElm.querySelector(
+                    '[data-type="done"]'
+                ) as HTMLButtonElement;
+
+                /**
+                 * handleDoneButton been trigger here some how got some button
+                 * use click to the element
+                 */
+                doneElm.click();
+                (event.target as any).blur();
+                setCurrentFocus("none");
+            }
+        }
+
+        if (
+            typeof setIsOpenCalendar === "function" &&
+            event.code === "Escape"
+        ) {
+            // close the calendar same as Cancel button
+            setCurrentFocus("none");
+            handleCancelButton();
+            (event.target as any).blur();
         }
     };
 
@@ -477,17 +516,6 @@ export const DateInput = ({
         }
     };
 
-    const TrickActionFn = () => {
-        /**
-            use 'Tab' from range input to select dd
-            somehow unexpected state re-render, the mm will be selected.
-         */
-        setTimeout(() => {
-            setCurrentFocus("day");
-            dayInputRef.current.focus();
-        }, 1);
-    };
-
     const onChangeManualInput = (value: string) => {
         setCalendarManualInput((prev) => {
             let [yyyy, mm, dd] = prev.split("-");
@@ -534,7 +562,7 @@ export const DateInput = ({
                 ];
 
                 const returnValue = calendarManualRaw.join("-");
-                console.log("returnValue: ", returnValue);
+
                 onChange(returnValue);
             }
         }
@@ -731,9 +759,10 @@ export const DateInput = ({
                     hoverValue={hoverValue}
                     focusTo={focusTo}
                     readOnly={readOnly}
+                    handleCancelButton={handleCancelButton}
+                    calendarRootId={calendarRootId}
                 />
             )}
-            <TrickAction data-trick onClick={TrickActionFn} />
         </Container>
     );
 };

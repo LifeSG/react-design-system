@@ -79,10 +79,14 @@ export const DatePicker = ({
         rangeStatus: "pre-confirmed",
         tmpStateValue: "",
     });
+
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
 
+    const [calendarRootId, setCalendarRootId] = useState<string>("");
+
+    const [mountCalendar, setMounCalendar] = useState<boolean>(true);
     const [showView, setShowView] = useState<View>("Day");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
     const [selectedRangeDate, setSelectedRangeDate] = useState<string>(""); // YYYY-MM-DD
@@ -101,6 +105,14 @@ export const DatePicker = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
+    useEffect(() => {
+        /**
+         * Handle "Tab" would be selected calendar in disabled and readonly
+         */
+        isPainting();
+        uniqueId();
+    }, []);
+
     useEffect(() => {
         if (value === undefined || value === "") return;
         setSelectedStartDate(value);
@@ -300,6 +312,14 @@ export const DatePicker = ({
             start,
             range,
         };
+    };
+
+    const uniqueId = () => {
+        const dateString = Date.now().toString(36);
+        const randomness = Math.random().toString(36).substr(2);
+        const id = dateString + randomness;
+
+        setCalendarRootId(id);
     };
 
     const generateDayStatus = (day: Date): GenerateDayStatusValue => {
@@ -564,6 +584,19 @@ export const DatePicker = ({
         setHoverValue("");
     };
 
+    const handleRootoOnFocus = () => {
+        // handle focus from other component via Tab into this component
+        if (containerRef.current) {
+            const startPlacehoderElm = containerRef.current.querySelector(
+                '[data-id="start-placeholder"]'
+            ) as HTMLDivElement;
+
+            if (showPlaceholder.start) {
+                startPlacehoderElm.click();
+            }
+        }
+    };
+
     const handleOnChange = (value: string): void => {
         const dateFromYearArr = value.split("-").reverse();
         const [year, month, day] = dateFromYearArr;
@@ -600,7 +633,7 @@ export const DatePicker = ({
 
                     if (!hasButton && transitionValue.start) {
                         manualInputValidation = dayjs(
-                            transitionValue.range
+                            transitionValue.start
                         ).isBefore(dateFromYear);
                     }
                     break;
@@ -630,45 +663,8 @@ export const DatePicker = ({
                         break;
                 }
 
-                // return
                 return;
             }
-
-            // handle behavior of manual updating the input value in not button calendar
-            if (!hasButton) {
-                setShowPlaceholder({
-                    start: false,
-                    range: false,
-                });
-
-                _handleNoButtonOnChange();
-            }
-        }
-    };
-
-    const _handleNoButtonOnChange = async () => {
-        setFocusTo((prev) => ({
-            container: prev.container === "start" ? "range" : "start",
-            countToEvenClose: ++prev.countToEvenClose,
-        }));
-
-        const rootContainer = containerRef.current as Element;
-        if (focusTo.container === "start") {
-            const rangeContainer = rootContainer.firstElementChild
-                .lastElementChild as HTMLDivElement;
-            const dayInput = rangeContainer.firstElementChild
-                .firstElementChild as HTMLInputElement;
-
-            dayInput.select();
-        }
-        if (focusTo.container === "range") {
-            const startContainer = rootContainer.firstElementChild
-                .firstElementChild as HTMLDivElement;
-
-            const dayInput =
-                startContainer.firstElementChild as HTMLInputElement;
-
-            dayInput.select();
         }
     };
 
@@ -1098,8 +1094,23 @@ export const DatePicker = ({
             firstDayOfFirstWeekOfMonth
         );
 
+        if (disabled || readOnly) return [[]];
+
         return firstDayOfEachWeek.map((date) => generateWeek(date));
     }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
+
+    const isPainting = (): boolean => {
+        if (disabled === true) {
+            setMounCalendar(false);
+            return;
+        }
+        if (readOnly === true) {
+            setMounCalendar(false);
+            return;
+        }
+
+        setMounCalendar(true);
+    };
 
     // =============================================================================
     // Render Function
@@ -1145,6 +1156,8 @@ export const DatePicker = ({
             $error={error}
             $readOnly={readOnly}
             type={type}
+            onFocus={handleRootoOnFocus}
+            id={calendarRootId}
         >
             <DateInput
                 value={selectedStartDate}
@@ -1158,8 +1171,10 @@ export const DatePicker = ({
                 hoverValue={hoverValue}
                 focusTo={focusTo}
                 readOnly={readOnly}
+                handleCancelButton={handleCancelButton}
+                calendarRootId={calendarRootId}
             />
-            <CalendarContainer isOpen={isOpen}>
+            <CalendarContainer isOpen={isOpen} $isPainting={mountCalendar}>
                 <CalendarHeaderWrapper>
                     <HeaderDropdown>
                         <DropdownMonth
@@ -1284,22 +1299,21 @@ export const DatePicker = ({
                         />
                     </YearView>
                 </Views>
-                {hasButton && (
-                    <ButtonContainer>
-                        <CancelButton
-                            styleType="light"
-                            onClick={handleCancelButton}
-                        >
-                            Cancel
-                        </CancelButton>
-                        <DoneButton
-                            disabled={buttonDisable}
-                            onClick={handleDoneButton}
-                        >
-                            Done
-                        </DoneButton>
-                    </ButtonContainer>
-                )}
+                <ButtonContainer hasButton={hasButton}>
+                    <CancelButton
+                        styleType="light"
+                        onClick={handleCancelButton}
+                    >
+                        Cancel
+                    </CancelButton>
+                    <DoneButton
+                        disabled={buttonDisable}
+                        onClick={handleDoneButton}
+                        data-type="done"
+                    >
+                        Done
+                    </DoneButton>
+                </ButtonContainer>
             </CalendarContainer>
             <InputPlaceholder
                 placeholder="From"
@@ -1309,7 +1323,9 @@ export const DatePicker = ({
                 show={showPlaceholder.start.toString()}
                 onClick={handleShowPlaceholder}
                 disabled={disabled}
+                $readOnly={readOnly}
                 focusTo={focusTo}
+                value={value}
             />
             <InputPlaceholder
                 placeholder="To"
@@ -1319,7 +1335,9 @@ export const DatePicker = ({
                 show={showPlaceholder.range.toString()}
                 onClick={handleShowPlaceholder}
                 disabled={disabled}
+                $readOnly={readOnly}
                 focusTo={focusTo}
+                value={rangeValue}
             />
         </Container>
     );

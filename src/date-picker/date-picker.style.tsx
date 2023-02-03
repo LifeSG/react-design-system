@@ -1,4 +1,3 @@
-import { type } from "os";
 import { Button } from "src/button";
 import { MediaQuery } from "src/media";
 import styled, { css } from "styled-components";
@@ -18,6 +17,7 @@ interface ContainerStyleProps {
 
 interface CalendarContainerProps {
     isOpen: boolean;
+    $isPainting: boolean;
 }
 
 interface CalendarViewProps {
@@ -27,12 +27,14 @@ interface CalendarViewProps {
 
 interface InputPlaceholderProps {
     disabled?: boolean;
+    $readOnly?: boolean;
     left?: string;
     placeholder: "To" | "From";
     right?: string;
     show: string;
     type: DatePickerType;
     focusTo: Pick<FocusToTypes, "container">;
+    value?: string;
 }
 
 interface DropdownHeaderProps {
@@ -44,6 +46,10 @@ interface DayNumerProps {
     disabled: boolean;
     disabledAfter: boolean;
     disabledBefore: boolean;
+}
+
+interface ButtonContainerProps {
+    hasButton?: boolean | undefined;
 }
 
 interface CircleProps extends Pick<DayNumerProps, "variant"> {
@@ -85,11 +91,6 @@ export const Container = styled.div<ContainerStyleProps>`
                     > :is([type="range"], [data-id="start-placeholder"], [data-id="range-placeholder"]) {
                     background: ${Color.Neutral[6]};
                     cursor: not-allowed;
-                }
-
-                &
-                    > :is([data-id="start-placeholder"], [data-id="range-placeholder"]) {
-                    margin-left: 3px;
                 }
 
                 :focus-within {
@@ -146,6 +147,14 @@ export const CalendarContainer = styled.div<CalendarContainerProps>`
                 display: flex;
                 opacity: 1;
                 top: calc(100% + 9px);
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (!props.$isPainting) {
+            return css`
+                display: none;
             `;
         }
     }}
@@ -242,11 +251,29 @@ export const InputPlaceholder = styled.div<InputPlaceholderProps>`
                         opacity: 0;
                     }
 
-                    width: 128px;
+                    width: 130px;
                     height: 26px;
                     top: 11px;
                     transform: unset;
                 }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.type === "range" && (props.disabled || props.$readOnly)) {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    width: 136px;
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.disabled && props.value.length) {
+            return css`
+                display: none;
             `;
         }
     }}
@@ -926,6 +953,21 @@ export const GrowDayCell = styled.div`
         }
     }
 
+    &.start-today-range.pre-selected-between {
+        &.pre-selected-start [data-circle="left"]::before {
+            ${ResetPseudoCell}
+        }
+        &.pre-selected-start [data-circle="right"]::before {
+            ${ResetPseudoCell}
+        }
+        &.selected-start [data-circle="left"]::before {
+            ${ResetPseudoCell}
+        }
+        &.selected-start [data-circle="right"]::before {
+            ${ResetPseudoCell}
+        }
+    }
+
     &.start-hover-after-range.pre-selected-between.hover-outside-selected-between {
         background-color: ${Color.Accent.Light[5]};
 
@@ -1117,7 +1159,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }
 `;
 
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div<ButtonContainerProps>`
     display: flex;
     margin-top: 32px;
     gap: 8px;
@@ -1129,6 +1171,14 @@ export const ButtonContainer = styled.div`
     ${MediaQuery.MaxWidth.mobileL} {
         margin-top: 24px;
     }
+
+    ${(props) => {
+        if (!props.hasButton) {
+            return css`
+                display: none;
+            `;
+        }
+    }}
 `;
 
 export const CancelButton = styled(Button.Default)`
