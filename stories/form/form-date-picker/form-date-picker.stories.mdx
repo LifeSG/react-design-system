@@ -33,14 +33,14 @@ import { Form } from "@lifesg/react-design-system/form";
             <Container>
                 <Form.DatePicker
                     label="Single calendar"
-                    disabledDate={["2023-01-01", "2023-01-08"]}
+                    disabledDates={["2023-01-01", "2023-01-08"]}
                     type="start"
                     value=""
                     rangeValue=""
                 />
                 <Form.DatePicker
                     label="Single calendar with button"
-                    disabledDate={["2023-01-01", "2023-01-08"]}
+                    disabledDates={["2023-01-01", "2023-01-08"]}
                     hasButton={true}
                     type="start"
                     value=""
@@ -48,7 +48,7 @@ import { Form } from "@lifesg/react-design-system/form";
                 />
                 <Form.DatePicker
                     label="Range calendar without button"
-                    disabledDate={["2023-02-10", "2023-02-20"]}
+                    disabledDates={["2023-02-10", "2023-02-20"]}
                     type="range"
                     value=""
                     rangeValue=""
@@ -56,7 +56,7 @@ import { Form } from "@lifesg/react-design-system/form";
                 <Form.DatePicker
                     label="Range calendar with button"
                     hasButton={true}
-                    disabledDate={["2023-02-15", "2023-02-03"]}
+                    disabledDates={["2023-02-15", "2023-02-03"]}
                     type="range"
                     value=""
                     rangeValue=""
