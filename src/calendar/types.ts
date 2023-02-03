@@ -1,7 +1,5 @@
 import { Dayjs } from "dayjs";
 
-export interface CalendarProps {}
-
 export type View = "Day" | "Month" | "Year";
 
 export type VariantDay = "default" | "nextMonth" | "today";
@@ -19,9 +17,9 @@ export type VariantYear =
     | "selectedYear";
 
 export interface CalendarProps {
-    disabledDate?: string[];
+    disabledDates?: string[] | undefined;
     onChange?: ((value: string) => void) | undefined;
-    value?: string; // YYYY-MM-DD
+    value?: string | undefined; // YYYY-MM-DD
 }
 
 export interface YearMonthBase {
