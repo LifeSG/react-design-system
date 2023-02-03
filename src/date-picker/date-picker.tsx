@@ -6,7 +6,9 @@ import React, {
     useState,
 } from "react";
 import { DateInput } from "src/date-input";
-import { Icon } from "../icon";
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import dayjs, { Dayjs } from "dayjs";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -57,7 +59,7 @@ dayjs.extend(isBetween);
 type PlaceholderValue = Record<DatePickerType, boolean>;
 
 export const DatePicker = ({
-    disabledDate = [],
+    disabledDates,
     hasButton,
     value,
     rangeValue,
@@ -335,8 +337,8 @@ export const DatePicker = ({
         const dateStartWithYear = revertedDateFormat(_dateStartWithDay);
 
         let isDisabled = false;
-        if (disabledDate && disabledDate.length) {
-            isDisabled = disabledDate.includes(dateStartWithYear);
+        if (disabledDates && disabledDates.length) {
+            isDisabled = disabledDates.includes(dateStartWithYear);
         }
 
         let disabledBefore = false;
@@ -408,7 +410,7 @@ export const DatePicker = ({
                 classes.push("start-today-range");
             }
 
-            if (disabledDate.includes(date)) {
+            if (disabledDates && disabledDates.includes(date)) {
                 classes.push("start-disabled-range");
             }
         }
@@ -1184,25 +1186,19 @@ export const DatePicker = ({
                             <Text.BodySmall>
                                 {dayjs(calendarDate).format("MMM")}
                             </Text.BodySmall>
-                            <Icon type="chevron-down" />
+                            <ChevronDownIcon />
                         </DropdownMonth>
                         <DropdownYear
                             view={showView}
                             onClick={() => handleView("Year")}
                         >
                             {YearHeaderComponent()}
-                            <Icon type="chevron-down" />
+                            <ChevronDownIcon />
                         </DropdownYear>
                     </HeaderDropdown>
                     <HeaderIcon>
-                        <Icon
-                            type="chevron-left"
-                            onClick={handleLeftArrowClick}
-                        />
-                        <Icon
-                            type="chevron-right"
-                            onClick={handleRightArrowClick}
-                        />
+                        <ChevronLeftIcon onClick={handleLeftArrowClick} />
+                        <ChevronRightIcon onClick={handleRightArrowClick} />
                     </HeaderIcon>
                 </CalendarHeaderWrapper>
                 <Views show={showView}>
