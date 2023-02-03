@@ -1,5 +1,5 @@
 import { Color } from "src/color";
-import { Icon } from "src/icon";
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import styled, { css } from "styled-components";
 import { TextStyleHelper } from "../text/helper";
 import { VariantDay, View } from "./types";
@@ -261,7 +261,7 @@ export const DayNumber = styled.div<DayNumerProps>`
     }}
 `;
 
-const ArrowLeftRightBase = styled(Icon)`
+const ArrowLeftRightBase = styled(ChevronLeftIcon)`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -274,6 +274,7 @@ export const ArrowLeft = styled(ArrowLeftRightBase)`
 `;
 export const ArrowRight = styled(ArrowLeftRightBase)`
     right: 20px;
+    transform: rotate(180deg) translateY(50%);
 `;
 
 export const InteractiveCircle = styled.div<InteractiveCircleProps>`

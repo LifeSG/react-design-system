@@ -22,12 +22,13 @@ import {
     YearView,
 } from "./calendar.style";
 import { Text } from "src/text";
-import { Icon } from "src/icon";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { CalendarProps, VariantDay, View } from "./types";
 import { CalendarMonth } from "./calendar-month";
 import { CalendarYear } from "./calendar-year";
+import { generateCalendar } from "src/util/calendar-helper";
 
-export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
+export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -44,12 +45,6 @@ export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
     // =============================================================================
     // Helper Functions
     // =============================================================================
-
-    const revertedDateFormat = (date: string) => {
-        // DD-MM-YYYY to YYYY-MM-DD
-        return date.split("-").reverse().join("-");
-    };
-
     const generateDayClass = (date: string): string => {
         const classes: string[] = [];
 
@@ -60,26 +55,15 @@ export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
         return classes.join(" ");
     };
 
-    const generateDayStatus = (day: Date) => {
-        const _dateStartWithDay = new Intl.DateTimeFormat("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        })
-            .format(day)
-            .replaceAll("/", "-");
-
-        // YYYY-MM-DD
-        const dateStartWithYear = revertedDateFormat(_dateStartWithDay);
-
+    const generateDayStatus = (day: Dayjs) => {
+        const dateStartWithYear = dayjs(day).format("YYYY-MM-DD");
         let isDisabled = false;
 
-        if (disabledDate && disabledDate.length) {
-            isDisabled = disabledDate.includes(dateStartWithYear);
+        if (disabledDates && disabledDates.length) {
+            isDisabled = disabledDates.includes(dateStartWithYear);
         }
-
         const variant: VariantDay =
-            calendarDate?.clone().toDate().getMonth() !== day.getMonth()
+            calendarDate.month() !== day.month()
                 ? "nextMonth"
                 : dayjs().isSame(day, "day")
                 ? "today"
@@ -233,41 +217,11 @@ export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
     // =============================================================================
     // Calendar Generate
     // =============================================================================
-    const firstDayOfTheMonth = useMemo(
-        () => calendarDate.clone().startOf("month"),
+
+    const generateWeeksOfTheMonth = useMemo(
+        (): Dayjs[][] => generateCalendar(calendarDate),
         [calendarDate]
     );
-
-    const firstDayOfFirstWeekOfMonth = useMemo(
-        () => dayjs(firstDayOfTheMonth).startOf("week"),
-        [firstDayOfTheMonth]
-    );
-
-    const generateFirstDayOfEachWeek = useCallback((day: Dayjs): Dayjs[] => {
-        const dates: Dayjs[] = [day];
-        for (let i = 1; i < 6; i++) {
-            const date = day.clone().add(i, "week");
-            dates.push(date);
-        }
-        return dates;
-    }, []);
-
-    const generateWeek = useCallback((day: Dayjs): Date[] => {
-        const dates: Date[] = [];
-        for (let i = 0; i < 7; i++) {
-            const date = day.clone().add(i, "day").toDate();
-            dates.push(date);
-        }
-        return dates;
-    }, []);
-
-    const generateWeeksOfTheMonth = useMemo((): Date[][] => {
-        const firstDayOfEachWeek = generateFirstDayOfEachWeek(
-            firstDayOfFirstWeekOfMonth
-        );
-
-        return firstDayOfEachWeek.map((date) => generateWeek(date));
-    }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -302,11 +256,11 @@ export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
                     <Text.BodySmall>
                         {dayjs(calendarDate).format("MMM")}
                     </Text.BodySmall>
-                    <Icon type="chevron-down" />
+                    <ChevronDownIcon />
                 </DropdownMonth>
                 <DropdownYear onClick={() => handleView("Year")}>
                     {YearHeaderComponent()}
-                    <Icon type="chevron-down" />
+                    <ChevronDownIcon />
                 </DropdownYear>
             </HeaderDropdown>
             <Views show={showView}>
@@ -353,7 +307,7 @@ export const Calendar = ({ disabledDate, onChange, value }: CalendarProps) => {
                                             variant={variant}
                                             disabled={isDisabled}
                                         >
-                                            {day.getDate()}
+                                            {dayjs(day).format("DD")}
                                         </DayNumber>
                                         <InteractiveCircle
                                             data-day={dateStartWithYear}
