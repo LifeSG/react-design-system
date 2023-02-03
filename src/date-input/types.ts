@@ -46,4 +46,6 @@ export interface DateInputRangeProps extends WithDateInputProps {
     setIsOpenCalendar?: (boolean: boolean) => Promise<void>;
     setFocusTo?: React.Dispatch<React.SetStateAction<FocusToTypes>>;
     focusTo?: FocusToTypes;
+    calendarRootId?: string;
+    handleCancelButton?: () => Promise<void>;
 }

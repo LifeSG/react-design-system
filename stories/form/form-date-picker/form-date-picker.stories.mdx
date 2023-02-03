@@ -69,11 +69,18 @@ import { Form } from "@lifesg/react-design-system/form";
                     errorMessage="Field is required"
                 />
                 <Form.DatePicker
-                    label="Disabled range calendar"
+                    label="Disabled without value"
                     disabled
                     type="range"
                     value=""
                     rangeValue=""
+                />
+                <Form.DatePicker
+                    label="Disabled with value"
+                    disabled
+                    type="range"
+                    value="2023-01-20"
+                    rangeValue="2023-01-24"
                 />
                 <Form.DatePicker
                     label="ReadOnly range calendar"
