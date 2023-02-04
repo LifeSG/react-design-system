@@ -17,7 +17,7 @@ interface ContainerStyleProps {
 
 interface CalendarContainerProps {
     isOpen: boolean;
-    $isPainting: boolean;
+    $isHide: boolean;
 }
 
 interface CalendarViewProps {
@@ -152,7 +152,7 @@ export const CalendarContainer = styled.div<CalendarContainerProps>`
     }}
 
     ${(props) => {
-        if (!props.$isPainting) {
+        if (props.$isHide) {
             return css`
                 display: none;
             `;
