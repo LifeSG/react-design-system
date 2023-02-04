@@ -52,7 +52,6 @@ export const DateInput = ({
     const dayInputRef = useRef<HTMLInputElement>(null);
     const monthInputRef = useRef<HTMLInputElement>(null);
     const yearInputRef = useRef<HTMLInputElement>(null);
-
     const rangeNodeRef = useRef<HTMLDivElement | null>(null);
     /**
      * Have to use refs to allow the state values to be accessible
@@ -759,6 +758,7 @@ export const DateInput = ({
                     hoverValue={hoverValue}
                     focusTo={focusTo}
                     readOnly={readOnly}
+                    disabled={disabled}
                     handleCancelButton={handleCancelButton}
                     calendarRootId={calendarRootId}
                 />
