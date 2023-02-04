@@ -72,6 +72,10 @@ export const DatePicker = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const calendarRootId =
+        Date.now().toString(36) + Math.random().toString(36).substr(2);
+    const isHide = [disabled, readOnly].some(Boolean);
+
     const [isOpen, _setIsOpen] = useState<boolean>(false);
     const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
     const [transitionValue, setTransitionValue] = useState<TransitionValue>({
@@ -86,9 +90,6 @@ export const DatePicker = ({
         maxWidth: MediaWidths.mobileL,
     });
 
-    const [calendarRootId, setCalendarRootId] = useState<string>("");
-
-    const [mountCalendar, setMounCalendar] = useState<boolean>(true);
     const [showView, setShowView] = useState<View>("Day");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
     const [selectedRangeDate, setSelectedRangeDate] = useState<string>(""); // YYYY-MM-DD
@@ -103,18 +104,9 @@ export const DatePicker = ({
         range: true,
     });
     const containerRef = useRef<HTMLDivElement | null>(null);
-
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        /**
-         * Handle "Tab" would be selected calendar in disabled and readonly
-         */
-        isPainting();
-        uniqueId();
-    }, []);
-
     useEffect(() => {
         if (value === undefined || value === "") return;
         setSelectedStartDate(value);
@@ -314,14 +306,6 @@ export const DatePicker = ({
             start,
             range,
         };
-    };
-
-    const uniqueId = () => {
-        const dateString = Date.now().toString(36);
-        const randomness = Math.random().toString(36).substr(2);
-        const id = dateString + randomness;
-
-        setCalendarRootId(id);
     };
 
     const generateDayStatus = (day: Date): GenerateDayStatusValue => {
@@ -1101,19 +1085,6 @@ export const DatePicker = ({
         return firstDayOfEachWeek.map((date) => generateWeek(date));
     }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
 
-    const isPainting = (): boolean => {
-        if (disabled === true) {
-            setMounCalendar(false);
-            return;
-        }
-        if (readOnly === true) {
-            setMounCalendar(false);
-            return;
-        }
-
-        setMounCalendar(true);
-    };
-
     // =============================================================================
     // Render Function
     // =============================================================================
@@ -1176,7 +1147,7 @@ export const DatePicker = ({
                 handleCancelButton={handleCancelButton}
                 calendarRootId={calendarRootId}
             />
-            <CalendarContainer isOpen={isOpen} $isPainting={mountCalendar}>
+            <CalendarContainer isOpen={isOpen} $isHide={isHide}>
                 <CalendarHeaderWrapper>
                     <HeaderDropdown>
                         <DropdownMonth
