@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
-import { DatePickerType, FocusToTypes } from "src/date-picker";
+import { FocusToTypes } from "src/date-picker";
 import { StringHelper } from "src/util/string-helper";
 import {
     InputRangeArrow,
@@ -28,6 +28,7 @@ export const Component = (
         focusTo,
         hoverValue,
         readOnly,
+        disabled,
         onBlur,
         handleCancelButton,
         calendarRootId,
@@ -249,11 +250,12 @@ export const Component = (
     ): Promise<void> => {
         event.stopPropagation();
 
+        if (disabled || readOnly) return;
+
         setFocusTo((prev: FocusToTypes) => ({
             container: "range",
             countToEvenClose: prev.countToEvenClose,
         }));
-
         await setIsOpenCalendar(true);
     };
 
