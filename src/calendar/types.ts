@@ -13,13 +13,19 @@ export type VariantMonth =
 export type VariantYear =
     | "default"
     | "currentYear"
-    | "nextDecaded"
+    | "nextDecade"
     | "selectedYear";
 
 export interface CalendarProps {
     disabledDates?: string[] | undefined;
     onChange?: ((value: string) => void) | undefined;
     value?: string | undefined; // YYYY-MM-DD
+}
+
+export interface CalendarDayProps extends Pick<CalendarProps, "disabledDates"> {
+    selectedStartDate: string;
+    calendarDate: Dayjs;
+    handleDayClick: (value: string) => void;
 }
 
 export interface YearMonthBase {

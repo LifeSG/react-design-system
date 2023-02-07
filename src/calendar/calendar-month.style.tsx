@@ -10,16 +10,16 @@ interface MonthCellProps {
 
 export const MonthPickerContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, 216px);
-    grid-template-rows: repeat(6, 40px);
-    gap: 8px 16px;
+    grid-template-columns: repeat(2, 13.5rem);
+    grid-template-rows: repeat(6, 2.5rem);
+    gap: 0.5rem 1rem;
     align-items: center;
     justify-items: center;
     margin-left: auto;
     margin-right: auto;
     ${MediaQuery.MaxWidth.mobileL} {
-        grid-template-columns: repeat(2, 104px);
-        grid-template-rows: repeat(6, 34.67px);
+        grid-template-columns: repeat(2, 6.5rem);
+        grid-template-rows: repeat(6, 2.167rem);
     }
 `;
 
@@ -31,7 +31,7 @@ export const MonthCell = styled.div<MonthCellProps>`
     cursor: pointer;
     width: 100%;
     height: 100%;
-    border-radius: 80px;
+    border-radius: 5rem;
 
     &:hover {
         box-shadow: ${(props) =>
