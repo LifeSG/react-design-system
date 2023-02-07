@@ -9,16 +9,16 @@ interface YearCellProps {
 
 export const YearPickerContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, minmax(82.3px, 1fr));
-    grid-template-rows: repeat(4, 64px);
-    gap: 8px 16px;
+    grid-template-columns: repeat(3, minmax(5.144rem, 1fr));
+    grid-template-rows: repeat(4, 4rem);
+    gap: 0.5rem 1rem;
 `;
 
 export const YearCell = styled.div<YearCellProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     cursor: pointer;
     color: ${Color.Neutral[1]};
 
@@ -45,7 +45,7 @@ export const YearCell = styled.div<YearCellProps>`
                     color: ${Color.Primary};
                     border: 1px solid ${Color.Primary};
                 `;
-            case "nextDecaded":
+            case "nextDecade":
                 return css`
                     ${TextStyleHelper.getFontFamily("H5", "regular")}
                     color: ${Color.Neutral[4]}
