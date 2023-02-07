@@ -47,12 +47,12 @@ export namespace CalendarHelper {
 
             if (i === 0) {
                 year = dayjs(`${decade}-${mm}-${dd}`).subtract(1, "year");
+
                 years.push(year, dayjs(`${decade}-${mm}-${dd}`));
             }
 
             if (i !== 0) {
                 year = dayjs(`${decade}-${mm}-${dd}`).add(i, "year");
-
                 years.push(year);
             }
         }
