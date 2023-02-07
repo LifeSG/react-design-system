@@ -1,32 +1,23 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import {
     ArrowLeft,
     ArrowRight,
-    CalendarDaySection,
-    Circle,
     Container,
-    DayNumber,
     DayView,
     DropdownMonth,
     DropdownYear,
-    GrowDayCell,
     HeaderDropdown,
-    InteractiveCircle,
-    LeftCell,
     MonthView,
-    RightCell,
     Views,
-    WeekCell,
-    WeekDaysContainer,
     YearView,
 } from "./calendar.style";
-import { Text } from "src/text";
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { CalendarProps, VariantDay, View } from "./types";
+import { CalendarDay } from "./calendar-day";
 import { CalendarMonth } from "./calendar-month";
+import { CalendarProps, View } from "./types";
 import { CalendarYear } from "./calendar-year";
-import { generateCalendar } from "src/util/calendar-helper";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { Text } from "src/text";
 
 export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // =============================================================================
@@ -45,36 +36,6 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // =============================================================================
     // Helper Functions
     // =============================================================================
-    const generateDayClass = (date: string): string => {
-        const classes: string[] = [];
-
-        if (selectedStartDate === date) {
-            classes.push("selected-start");
-        }
-
-        return classes.join(" ");
-    };
-
-    const generateDayStatus = (day: Dayjs) => {
-        const dateStartWithYear = dayjs(day).format("YYYY-MM-DD");
-        let isDisabled = false;
-
-        if (disabledDates && disabledDates.length) {
-            isDisabled = disabledDates.includes(dateStartWithYear);
-        }
-        const variant: VariantDay =
-            calendarDate.month() !== day.month()
-                ? "nextMonth"
-                : dayjs().isSame(day, "day")
-                ? "today"
-                : "default";
-
-        return {
-            dateStartWithYear,
-            isDisabled,
-            variant,
-        };
-    };
 
     const performOnChangeHandler = (changeValue: string) => {
         if (onChange) {
@@ -169,7 +130,7 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
         let isYearDecaded = false;
         if (show === "Year") {
             isYearDecaded =
-                e.currentTarget.getAttribute("data-variant") === "nextDecaded"
+                e.currentTarget.getAttribute("data-variant") === "nextDecade"
                     ? true
                     : false;
         }
@@ -215,15 +176,6 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     };
 
     // =============================================================================
-    // Calendar Generate
-    // =============================================================================
-
-    const generateWeeksOfTheMonth = useMemo(
-        (): Dayjs[][] => generateCalendar(calendarDate),
-        [calendarDate]
-    );
-
-    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const YearHeaderComponent = () => {
@@ -265,64 +217,12 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
             </HeaderDropdown>
             <Views show={showView}>
                 <DayView>
-                    <WeekDaysContainer>
-                        {generateWeeksOfTheMonth[0].map((day, index) => (
-                            <WeekCell key={`week-day-${index}`}>
-                                {dayjs(day).format("ddd")}
-                            </WeekCell>
-                        ))}
-                    </WeekDaysContainer>
-                    {generateWeeksOfTheMonth.map((week, weekIndex) => (
-                        <CalendarDaySection key={`week-${weekIndex}`}>
-                            {week.map((day, dayIndex) => {
-                                const {
-                                    dateStartWithYear,
-                                    isDisabled,
-                                    variant,
-                                } = generateDayStatus(day);
-
-                                const classNames =
-                                    generateDayClass(dateStartWithYear);
-
-                                return (
-                                    <GrowDayCell
-                                        key={`day-${dayIndex}`}
-                                        className={classNames}
-                                    >
-                                        <LeftCell data-cell="left">
-                                            <Circle
-                                                data-circle="left"
-                                                position="left"
-                                                variant={variant}
-                                            />
-                                        </LeftCell>
-                                        <RightCell data-cell="right">
-                                            <Circle
-                                                data-circle="right"
-                                                position="right"
-                                                variant={variant}
-                                            />
-                                        </RightCell>
-                                        <DayNumber
-                                            variant={variant}
-                                            disabled={isDisabled}
-                                        >
-                                            {dayjs(day).format("DD")}
-                                        </DayNumber>
-                                        <InteractiveCircle
-                                            data-day={dateStartWithYear}
-                                            disabled={isDisabled}
-                                            onClick={() =>
-                                                handleDayClick(
-                                                    dateStartWithYear
-                                                )
-                                            }
-                                        />
-                                    </GrowDayCell>
-                                );
-                            })}
-                        </CalendarDaySection>
-                    ))}
+                    <CalendarDay
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        handleDayClick={handleDayClick}
+                        selectedStartDate={selectedStartDate}
+                    />
                 </DayView>
                 <MonthView>
                     <CalendarMonth
