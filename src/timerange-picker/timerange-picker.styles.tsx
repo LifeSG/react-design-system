@@ -22,39 +22,36 @@ interface StyleProps {
     disabled?: boolean;
     error?: boolean;
 }
+const BORDER_RADIUS = "4px";
+
 // =============================================================================
 // STYLING
 // =============================================================================
 export const TimeContainer = styled.div<ContainerStyleProps>`
-    /* Input */
-
     box-sizing: border-box;
-
-    /* Auto layout */
-
     display: flex;
     flex-direction: row !important;
     align-items: center;
     padding: 11px 16px;
     gap: 8px;
-
     width: 335px;
     height: 48px;
-
-    /* N8 #FFFFFF */
-
-    background: #ffffff;
-    /* N5 #E0E4E5 */
-
+    /* background: #ffffff;
     border: 1px solid #e0e4e5;
-    border-radius: 4px;
-
-    /* Inside auto layout */
-
-    //flex: none;
+    border-radius: 4px; */
     order: 1;
     align-self: stretch;
     flex-grow: 0;
+
+    //  position: absolute;
+    //top: 3.5rem;
+    //left: 0;
+    //width: 27rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    background: ${Color.Neutral[8]};
+    border-radius: ${BORDER_RADIUS};
+    overflow: hidden;
+    z-index: 1;
 
     :focus,
     :focus-within {
@@ -170,26 +167,16 @@ export const UnitNumberDivider = styled(Text.Body)<LabelStyleProps>`
 
 export const InputSelectorElement = styled.input<StyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    /* display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-
-    width: 134.5px;
-    height: 26px;
-
+    border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
-    //flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 1; */
+    display: block;
+    padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
+    height: 3rem;
+    width: 100%;
+    background: ${Color.Neutral[8]};
+    color: ${Color.Neutral[1]};
 
-    /* From */
-
-
-/* Auto layout */
-
-display: flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0px;

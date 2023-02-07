@@ -70,7 +70,7 @@ export const ControlSection = styled.div`
     margin-top: 1rem;
 
     ${MediaQuery.MaxWidth.mobileS} {
-        border-top: 1px solid ${Color.Neutral[5]};
+        border-top: 1px solid ${Color.Neutral[8]};
         margin-top: 2rem;
         padding-top: 1.5rem;
     }
