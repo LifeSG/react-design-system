@@ -1,121 +1,129 @@
 import React from "react";
-import {
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Section,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable } from "../storybook-common/api-table";
+import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
-export const PropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol mandatory>colorScheme</NameCol>
-            <DescriptionCol propTypes={[`"base"`, `"bookingsg"`]}>
-                Specifies the color scheme of the theme
-            </DescriptionCol>
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-        <tr>
-            <NameCol mandatory>textStyleScheme</NameCol>
-            <DescriptionCol propTypes={[`"base"`]}>
-                The text style of the theme that will affect headings, body and
-                hyperlinks
-            </DescriptionCol>
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>options</NameCol>
-            <DescriptionCol propTypes={[`ThemeSpecOptions`]}>
-                The options to customise the color scheme or the text style
-                scheme
-            </DescriptionCol>
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
+const DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "colorScheme",
+                mandatory: true,
+                description: <>Specifies the color scheme of the theme</>,
+                propTypes: [`"base"`, `"bookingsg"`],
+            },
+            {
+                name: "textStyleScheme",
+                mandatory: true,
+                description: (
+                    <>
+                        The text style of the theme that will affect headings,
+                        body and hyperlinks
+                    </>
+                ),
+                propTypes: ["base"],
+            },
+            {
+                name: "designTokenScheme",
+                mandatory: true,
+                description: (
+                    <>
+                        The design token scheme that will affect common style
+                        properties throughout components
+                    </>
+                ),
+                propTypes: [`"base"`],
+            },
+            {
+                name: "options",
+                description: (
+                    <>
+                        The options to customise the color scheme, the text
+                        style scheme or the design token scheme
+                    </>
+                ),
+                propTypes: ["ThemeSpecOptions"],
+            },
+        ],
+    },
+    {
+        name: "ThemeSpecOptions",
+        attributes: [
+            {
+                name: "options.color",
+                description: <>The modified color set values</>,
+                propTypes: ["ColorSetOptions"],
+            },
+            {
+                name: "options.textStyle",
+                description: <>The modified text style set values</>,
+                propTypes: ["TextStyleSetOptionsType"],
+            },
+            {
+                name: "options.designToken",
+                description: <>The modified design token values</>,
+                propTypes: ["DesignTokenSetOptions"],
+            },
+        ],
+    },
+    {
+        name: "ColorSetOptions",
+        attributes: [
+            {
+                name: "ColorSetOptions",
+                description: <>You may refer to the ColorSet specifications.</>,
+            },
+        ],
+    },
+    {
+        name: "TextStyleSetOptionsType",
+        attributes: [
+            {
+                name: "key in TextSizeType",
+                description: <>The attributes to modify the text style</>,
+            },
+        ],
+    },
+    {
+        name: "TextStyleSpec",
+        attributes: [
+            {
+                name: "key.fontFamily",
+                description: <></>,
+                propTypes: ["string"],
+            },
+            {
+                name: "key.fontSize",
+                description: <></>,
+                propTypes: ["number"],
+            },
+            {
+                name: "key.fontWeight",
+                description: <></>,
+                propTypes: ["number"],
+            },
+            {
+                name: "key.lineHeight",
+                description: <></>,
+                propTypes: ["number"],
+            },
+            {
+                name: "key.letterSpacing",
+                description: <></>,
+                propTypes: ["number"],
+            },
+        ],
+    },
+    {
+        name: "DesignTokenSetOptions",
+        attributes: [
+            {
+                name: "DesignTokenSetOptions",
+                description: (
+                    <>You may refer to the DesignTokenSet specifications.</>
+                ),
+            },
+        ],
+    },
+];
 
-        <Section>ThemeSpecOptions</Section>
-        <tr>
-            <NameCol>options.color</NameCol>
-            <DescriptionCol propTypes={[`ColorSetOptions`]}>
-                The modified color set values
-            </DescriptionCol>
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>options.textStyle</NameCol>
-            <DescriptionCol propTypes={[`TextStyleSetOptionsType`]}>
-                The modified text style set values
-            </DescriptionCol>
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-
-        <Section>ColorSetOptions</Section>
-        <tr>
-            <NameCol>ColorSetOptions</NameCol>
-            <DescriptionCol>
-                You may refer to the ColorSet specifications.
-            </DescriptionCol>
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-
-        <Section>TextStyleSetOptionsType</Section>
-        <tr>
-            <NameCol>key in TextSizeType</NameCol>
-            <DescriptionCol propTypes={[`TextStyleSpec`]}>
-                The attributes to modify the text style
-            </DescriptionCol>
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-
-        <Section>TextStyleSpec</Section>
-        <tr>
-            <NameCol>key.fontFamily</NameCol>
-            <DescriptionCol propTypes={[`string`]} />
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>key.fontSize</NameCol>
-            <DescriptionCol propTypes={[`number`]} />
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>key.fontWeight</NameCol>
-            <DescriptionCol propTypes={[`number`]} />
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>key.lineHeight</NameCol>
-            <DescriptionCol propTypes={[`number`]} />
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>key.letterSpacing</NameCol>
-            <DescriptionCol propTypes={[`number`]} />
-            <DefaultCol>
-                <span>-</span>
-            </DefaultCol>
-        </tr>
-    </Table>
-);
+export const PropsTable = () => <ApiTable sections={DATA} />;
