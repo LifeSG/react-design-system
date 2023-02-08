@@ -44,7 +44,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "disabledDate",
+                name: "disabledDates",
                 description: "Disable specific calendar date",
                 propTypes: ["YYYY-MM-DD"],
             },

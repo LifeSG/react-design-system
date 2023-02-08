@@ -200,6 +200,10 @@ export const DateInput = ({
             performOnBlurHandler();
         }
 
+        if (typeof setIsOpenCalendar === "function" && event.code === "Tab") {
+            setIsOpenCalendar(true);
+        }
+
         if (
             typeof setIsOpenCalendar === "function" &&
             (event.target as any).name === "year" &&
@@ -217,20 +221,14 @@ export const DateInput = ({
                 rangeNodeRef.current.click();
 
                 /* select DatePicker Root Container */
-                const datePickerRootContainer = rangeNodeRef.current
-                    .parentElement.parentElement as HTMLDivElement;
+                const datePickerRootContainer = document.querySelector(
+                    `#${calendarRootId}`
+                ) as HTMLDivElement;
 
-                /* Warning it if the DOM has changed */
                 const containerType: DatePickerType[] = ["start", "range"];
                 const isRootContainer = containerType.includes(
                     datePickerRootContainer.getAttribute("type") as any
                 );
-
-                if (!isRootContainer) {
-                    console.warn(
-                        "---------- The DatePicker/DateInput/DateRangeInput DOM has been changed. Please check ---------"
-                    );
-                }
 
                 if (isRootContainer) {
                     const rangePlaceholder =
@@ -256,7 +254,7 @@ export const DateInput = ({
                 ) as HTMLButtonElement;
 
                 /**
-                 * handleDoneButton been trigger here some how got some button
+                 * handleDoneButton been trigger here from the button, somehow unexpected return if called fn in here
                  * use click to the element
                  */
                 doneElm.click();
