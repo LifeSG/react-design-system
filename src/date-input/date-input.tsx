@@ -221,9 +221,8 @@ export const DateInput = ({
                 rangeNodeRef.current.click();
 
                 /* select DatePicker Root Container */
-                const datePickerRootContainer = document.querySelector(
-                    `#${calendarRootId}`
-                ) as HTMLDivElement;
+                const datePickerRootContainer = rangeNodeRef.current
+                    .parentElement.parentElement as HTMLDivElement;
 
                 const containerType: DatePickerType[] = ["start", "range"];
                 const isRootContainer = containerType.includes(
