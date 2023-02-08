@@ -16,7 +16,7 @@ export const CalendarMonth = ({
 
     useEffect(() => {
         if (showView === "Month") {
-            generateMonth();
+            generateMonths();
         }
     }, [showView, calendarDate]);
 
@@ -46,8 +46,8 @@ export const CalendarMonth = ({
         };
     };
 
-    const generateMonth = () => {
-        const months = CalendarHelper.generateMonth(calendarDate);
+    const generateMonths = () => {
+        const months = CalendarHelper.generateMonths(calendarDate);
 
         setMonthDate(months);
     };

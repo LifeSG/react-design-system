@@ -14,7 +14,7 @@ export const CalendarYear = ({
 
     useEffect(() => {
         if (showView === "Year") {
-            generateDecadeOfYear();
+            generateDecadeOfYears();
         }
     }, [showView, calendarDate]);
 
@@ -42,8 +42,8 @@ export const CalendarYear = ({
         };
     };
 
-    const generateDecadeOfYear = () => {
-        const years = CalendarHelper.generateDecadeOfYear(calendarDate);
+    const generateDecadeOfYears = () => {
+        const years = CalendarHelper.generateDecadeOfYears(calendarDate);
 
         setYearDate(years);
     };
