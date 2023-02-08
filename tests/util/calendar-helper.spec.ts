@@ -15,7 +15,7 @@ describe("CalendarHelper", () => {
             const dayjsObject = dayjs();
             const correctLength = 12;
 
-            expect(CalendarHelper.generateMonth(dayjsObject).length).toBe(
+            expect(CalendarHelper.generateMonths(dayjsObject).length).toBe(
                 correctLength
             );
         });
@@ -27,7 +27,7 @@ describe("CalendarHelper", () => {
             const correctLength = 12;
 
             expect(
-                CalendarHelper.generateDecadeOfYear(dayjsObject).length
+                CalendarHelper.generateDecadeOfYears(dayjsObject).length
             ).toBe(correctLength);
         });
 
@@ -35,7 +35,7 @@ describe("CalendarHelper", () => {
             const correctStarYear = 2019;
             const date = dayjs("2023-01-01");
 
-            const arrayDate = CalendarHelper.generateDecadeOfYear(date);
+            const arrayDate = CalendarHelper.generateDecadeOfYears(date);
             const result = +arrayDate[0].format("YYYY");
 
             expect(result).toEqual(correctStarYear);
@@ -45,7 +45,7 @@ describe("CalendarHelper", () => {
             const correctEndYear = 2030;
             const date = dayjs("2023-01-01");
 
-            const arrayDate = CalendarHelper.generateDecadeOfYear(date);
+            const arrayDate = CalendarHelper.generateDecadeOfYears(date);
 
             const result = +arrayDate[arrayDate.length - 1].format("YYYY");
 

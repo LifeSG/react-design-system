@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 
 export namespace CalendarHelper {
-    export const generateDay = (calendarDate: Dayjs) => {
+    export const generateDay = (calendarDate: Dayjs): Dayjs[][] => {
         const firstDayOfTheMonth = calendarDate.startOf("month");
 
         const firstDayOfFirstWeekOfMonth =
@@ -14,47 +14,29 @@ export namespace CalendarHelper {
         return firstDayOfEachWeek.map((date) => generateWeek(date));
     };
 
-    export const generateMonth = (calendarDate: Dayjs) => {
+    export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
         const months: Dayjs[] = [];
 
-        const [yyyy, , dd] = calendarDate.format("YYYY-MM-DD").split("-");
-
         for (let i = 0; i < 12; i++) {
-            let month: Dayjs;
-            month = dayjs(calendarDate).month(i);
-            const dayInMonth: number = month.daysInMonth();
+            const monthForSelectedDay = calendarDate.month(i);
 
-            if (+dd > dayInMonth) {
-                // get last day of the month
-                const mmmm = month.format("MMMM");
-                month = dayjs(`${yyyy}-${mmmm}-${dayInMonth}`);
-            }
-
-            months.push(dayjs(month));
+            months.push(dayjs(monthForSelectedDay));
         }
 
         return months;
     };
 
-    export const generateDecadeOfYear = (calendarDate: Dayjs) => {
-        const [yyyy, mm, dd] = calendarDate.format("YYYY-MM-DD").split("-");
+    export const generateDecadeOfYears = (calendarDate: Dayjs): Dayjs[] => {
+        const year = calendarDate.year();
+        const decade = Math.floor(year / 10) * 10;
 
-        const decade = Math.floor(+yyyy / 10) * 10;
-        const years: Dayjs[] = [];
+        const base = calendarDate.year(decade);
+        const prev = base.subtract(1, "year");
 
-        for (let i = 0; i <= 10; i++) {
-            let year: Dayjs;
+        const years = [prev, base];
 
-            if (i === 0) {
-                year = dayjs(`${decade}-${mm}-${dd}`).subtract(1, "year");
-
-                years.push(year, dayjs(`${decade}-${mm}-${dd}`));
-            }
-
-            if (i !== 0) {
-                year = dayjs(`${decade}-${mm}-${dd}`).add(i, "year");
-                years.push(year);
-            }
+        for (let i = 1; i < 11; i++) {
+            years.push(base.add(i, "year"));
         }
 
         return years;
