@@ -58,4 +58,7 @@ export const Color = {
             Background: getThemeColors("Validation.Red.Background"),
         },
     },
+    Shadow: {
+        Accent: getThemeColors("Shadow.Accent"),
+    },
 };

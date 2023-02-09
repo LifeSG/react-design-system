@@ -58,4 +58,7 @@ export const BaseColorSet: ColorSet = {
             Background: "#FDF7F7", // Validation Background
         },
     } as ValidationTypes,
+    Shadow: {
+        Accent: "#57A9FF80",
+    },
 };

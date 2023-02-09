@@ -50,6 +50,9 @@ export interface ColorSet {
         8: string;
     };
     Validation: ValidationTypes;
+    Shadow: {
+        Accent: string;
+    };
 }
 
 export type ColorSetOptions = Partial<ColorSet>;
