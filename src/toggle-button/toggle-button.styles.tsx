@@ -29,7 +29,7 @@ export const Container = styled.div<StyleProps>`
     cursor: pointer;
 
     :hover {
-        box-shadow: 0 0 4px 1px rgba(87, 169, 255, 0.5);
+        box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
     }
 
     ${(props) => {

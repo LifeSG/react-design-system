@@ -35,7 +35,7 @@ export const Element = styled.textarea<StyleProps>`
     :active {
         outline: none;
         border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px rgba(87, 169, 255, 0.5);
+        box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
     }
 
     ::placeholder,
@@ -75,7 +75,7 @@ export const Element = styled.textarea<StyleProps>`
                 :focus,
                 :active {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: inset 0 0 4px 1px rgba(221, 102, 102, 0.8);
+                    box-shadow: inset 0 0 4px 1px ${Color.Shadow.Red};
                 }
             `;
         }
