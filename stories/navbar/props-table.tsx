@@ -18,6 +18,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["LifeSG resources"],
             },
             {
+                name: "resourcesSecondaryBrand",
+                description:
+                    "Navbar partner secondary resources such as the brand name and logo source",
+                propTypes: ["LifeSG resources"],
+            },
+            {
                 name: "actionButtons",
                 description: "The navigation action buttons",
                 propTypes: ["NavbarActionButtonsProps"],
@@ -74,8 +80,26 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "children",
+                description: "The custom component to be rendered",
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "showSearch",
+                description: (
+                    <>Specifies to show search icon in desktop an search bar</>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onBrandClick",
                 description: "Called when the brand icon is clicked",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onSecondaryBrandClick",
+                description: "Called when the secondary brand icon is clicked",
                 propTypes: ["() => void"],
             },
             {

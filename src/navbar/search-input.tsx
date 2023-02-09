@@ -1,10 +1,12 @@
 import React, { Component, useEffect, useRef, useState } from "react";
-import { GearIcon } from "@lifesg/react-icons/";
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import { TextWeight } from "../text";
 import { Form } from "../form";
 import { IconButton } from "../icon-button/icon-button";
-import { Icon } from "../icon";
+
 import {
+    CloseIconContainer,
+    CrossIconClose,
     DropDownBar,
     Link,
     MenuItem,
@@ -12,8 +14,11 @@ import {
     SearchBarContainer,
     SearchBarDesktop,
     SearchBarInputContainer,
+    SearchIcon,
+    SearchInputContainer,
+    SearchMainBarContainer,
 } from "./search-input.styles";
-import { NavItemProps, NavSubItemProps } from "./types";
+import { NavSubItemProps } from "./types";
 
 interface Props<T> {
     items: NavSubItemProps<T>[];
@@ -90,7 +95,7 @@ export const SearchInput = <T,>({
 
     useEffect(() => {
         const filtered =
-            inputValue && inputValue.length >= 1
+            inputValue && inputValue.length >= 3
                 ? items.filter((data) =>
                       data.children
                           .toString()
@@ -160,7 +165,10 @@ export const SearchInput = <T,>({
             <>
                 {!toggleInput ? (
                     <IconButton onClick={handleToggleClick}>
-                        <Icon type="search" onClick={handleSearchIconClick} />
+                        <SearchIcon
+                            className="search-icon"
+                            onClick={handleSearchIconClick}
+                        />
                     </IconButton>
                 ) : (
                     <>{renderSearchComponent(isMobile)}</>
@@ -174,34 +182,44 @@ export const SearchInput = <T,>({
     // =============================================================================
     const renderSearchComponent = (isMobile = false) => {
         return (
-            <>
+            <SearchMainBarContainer>
                 <SearchBarContainer>
                     <SearchBarInputContainer>
-                        <Form.InputGroup
-                            label=""
-                            placeholder="Search"
-                            addon={{
-                                type: "custom",
-                                position: "right",
-                                attributes: {
-                                    children: (
-                                        <Icon
-                                            type="search"
-                                            onClick={handleSearchIconClick}
-                                        />
-                                    ),
-                                },
-                            }}
-                            value={inputValue}
-                            onChange={(event) => setInput4(event.target.value)}
-                            autoComplete="off"
-                        />
+                        <SearchInputContainer>
+                            <Form.InputGroup
+                                label=""
+                                placeholder="Search"
+                                addon={{
+                                    type: "custom",
+                                    position: "right",
+                                    attributes: {
+                                        children: (
+                                            <MagnifierIcon
+                                                type="search"
+                                                onClick={handleSearchIconClick}
+                                            />
+                                        ),
+                                    },
+                                }}
+                                value={inputValue}
+                                onChange={(event) =>
+                                    setInput4(event.target.value)
+                                }
+                                autoComplete="off"
+                            />
+                        </SearchInputContainer>
                     </SearchBarInputContainer>
+
                     {inputValue && inputValue.length >= 1 && toggleDropdown && (
                         <DropDownBar>{renderItems(mobile)}</DropDownBar>
                     )}
                 </SearchBarContainer>
-            </>
+                <CloseIconContainer>
+                    <IconButton onClick={handleToggleClick}>
+                        <CrossIconClose />
+                    </IconButton>
+                </CloseIconContainer>
+            </SearchMainBarContainer>
         );
     };
 

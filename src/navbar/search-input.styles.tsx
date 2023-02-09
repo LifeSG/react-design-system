@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
+import { CrossIcon } from "@lifesg/react-icons/cross";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -25,7 +27,7 @@ export const Wrapper = styled.ul`
     }
 `;
 
-export const MobileWrapper = styled.ul`
+export const MobileWrapper = styled.div`
     display: none;
     list-style: none;
 
@@ -136,7 +138,7 @@ export const DropDownBar = styled.ul`
     display: table;
     margin-top: 0rem;
     left: 0;
-    top: 102%;
+    top: 87%;
 
     /* N8 #FFFFFF */
     position: absolute;
@@ -145,6 +147,22 @@ export const DropDownBar = styled.ul`
     background: #ffffff;
     box-shadow: 0px 2px 8px rgba(75, 83, 159, 0.24);
     border-radius: 0px 0px 8px 8px;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        top: 102%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        top: 102%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        top: 102%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        top: 102%;
+    }
 `;
 
 export const SearchBarDesktop = styled.div`
@@ -207,12 +225,72 @@ export const LinkWrapper = styled.ul`
 `;
 
 export const SearchBarContainer = styled.div`
-    display: grid;
+    display: flex;
     position: relative;
+    justify-items: center;
 
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0px;
     }
 `;
 
-export const SearchBarInputContainer = styled.div``;
+export const SearchBarInputContainer = styled.div`
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+`;
+export const SearchInputContainer = styled.div`
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+`;
+
+export const CloseIconContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: none;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        display: none;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        display: none;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        display: none;
+    }
+`;
+
+export const SearchIcon = styled(MagnifierIcon)`
+    height: 17.59px !important;
+    width: 17.59px !important;
+`;
+
+export const CrossIconClose = styled(CrossIcon)`
+    height: 20px !important;
+    width: 20px !important;
+`;
+
+export const SearchMainBarContainer = styled.div`
+    display: flex;
+    position: relative;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    }
+`;

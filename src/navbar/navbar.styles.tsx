@@ -83,6 +83,7 @@ export const NavBrandContainer = styled.div`
 export const NavElementsRightContainer = styled.div`
     display: flex;
     height: 100%;
+
     margin-left: 64px;
     position: relative;
 

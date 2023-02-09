@@ -63,13 +63,14 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     align-items: left;
     text-align: left;
     color: ${Color.Neutral[1]};
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 2rem;
+    //  margin-bottom: 1rem;
+    margin-left: 16px;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 26px;
+    height: 26px;
+    padding-right: 16px;
 
     /* identical to box height, or 186% */
     letter-spacing: 0.12px;
@@ -91,7 +92,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         padding: 0.625rem 1rem;
         text-align: left;
         align-items: flex-start;
-        font-size: 16px !important;
+        font-size: 18px !important;
         line-height: 1rem !important;
     }
 `;
@@ -122,7 +123,7 @@ export const MenuBar = styled.ul`
     margin-top: 0rem;
     left: 0;
     top: 102%;
-
+    min-width: 250px;
     /* N8 #FFFFFF */
     position: absolute;
 
@@ -136,12 +137,26 @@ export const MenuBar = styled.ul`
 // =============================================================================
 export const MenuItem = styled.li`
     width: 100%;
-    height: 27px;
+    height: 40px;
     position: relative;
     display: table-row;
     align-items: left;
-    :not(:last-of-type) {
-        margin-right: 1rem;
+    margin-left: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    :first-child {
+        height: 40px;
+        margin-top: 16px;
+    }
+
+    :last-child {
+        height: 50px;
+        margin-bottom: 16px;
+    }
+    :not(:firt-of-type) {
+        margin-top: 8px;
+        margin-bottom: 8px;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
@@ -159,4 +174,8 @@ export const LinkWrapper = styled.ul`
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
     }
+`;
+export const MenuTopSpace = styled.div`
+    width: 100%;
+    height: 8px;
 `;
