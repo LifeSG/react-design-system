@@ -1,13 +1,6 @@
-import {
-    FlattenSimpleInterpolation,
-    Interpolation,
-    InterpolationValue,
-} from "styled-components";
+import { SimpleInterpolation, css } from "styled-components";
 
-export type CssValue =
-    | Interpolation<any>
-    | FlattenSimpleInterpolation
-    | InterpolationValue;
+export type CssValue = SimpleInterpolation | ReturnType<typeof css>;
 
 export interface DesignTokenSet {
     InputBoxShadow: CssValue;
