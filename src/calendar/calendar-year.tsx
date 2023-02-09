@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { CalendarYearProps, VariantYear } from "./types";
 import { YearCell, YearPickerContainer } from "./calendar-year.style";
-import { CalendarHelper } from "src/util/calendar-helper";
+import { CalendarHelper } from "../util/calendar-helper";
 
 export const CalendarYear = ({
     calendarDate,
     showView,
-    onClick,
     selectedStartDate,
+    onSelect,
+    onDecadeChange,
 }: CalendarYearProps) => {
     const [yearDate, setYearDate] = useState<Dayjs[]>([]);
 
@@ -25,10 +26,8 @@ export const CalendarYear = ({
         const fullDate = date.format("YYYY-MM-DD");
         const year = fullDate.split("-")[0];
 
-        let variant: VariantYear = "default";
-
-        variant = isDecadeYear
-            ? "nextDecade"
+        const variant: VariantYear = isDecadeYear
+            ? "otherDecade"
             : dayjs(selectedStartDate).isSame(fullDate, "year")
             ? "selectedYear"
             : dayjs().isSame(fullDate, "year")
@@ -48,6 +47,12 @@ export const CalendarYear = ({
         setYearDate(years);
     };
 
+    const handleYearClick = (value: Dayjs) => {
+        onSelect(value);
+
+        onDecadeChange(value);
+    };
+
     if (!yearDate.length) return null;
 
     return (
@@ -57,11 +62,10 @@ export const CalendarYear = ({
 
                 return (
                     <YearCell
-                        key={`${date}-${yearIndex}`}
-                        data-value={value}
+                        key={`${value}-${yearIndex}`}
                         data-variant={variant}
-                        onClick={onClick}
-                        variant={variant}
+                        $variant={variant}
+                        onClick={() => handleYearClick(date)}
                     >
                         {year}
                     </YearCell>
