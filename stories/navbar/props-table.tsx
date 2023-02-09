@@ -130,10 +130,49 @@ const DATA: ApiTableSectionProps[] = [
                     "The navigation items for the mobile viewport. Uses desktop's if not specified",
                 propTypes: ["NavItemProps<T>[]"],
             },
+            {
+                name: "searchMenuItems",
+                description:
+                    "The navigation items for the mobile viewport. Uses desktop's if not specified",
+                propTypes: ["NavSubItemProps<T>[]"],
+            },
         ],
     },
     {
         name: "NavItemProps",
+        attributes: [
+            {
+                name: "id",
+                description: (
+                    <>
+                        The unique identifier of the navigation item. Used for
+                        the&nbsp;
+                        <code>selectedId</code> property
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier of the navigation item",
+                propTypes: ["string"],
+            },
+            {
+                name: "options",
+                description:
+                    "Any additional props to be passed to the navigation item",
+                propTypes: ["T"],
+            },
+            {
+                name: "subMenu",
+                description:
+                    "The navigation items for the mobile viewport. Uses desktop's if not specified",
+                propTypes: ["NavItemProps<T>[]"],
+            },
+        ],
+    },
+    {
+        name: "NavSubItemProps",
         attributes: [
             {
                 name: "id",
