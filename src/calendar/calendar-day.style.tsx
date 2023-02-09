@@ -1,18 +1,18 @@
-import { Color } from "src/color";
-import { TextStyleHelper } from "src/text";
-import styled, { css } from "styled-components";
+import { Color } from "../color";
+import { TextStyleHelper } from "../text";
 import { VariantDay } from "./types";
+import styled, { css } from "styled-components";
 
-interface DayNumerProps {
-    variant: VariantDay;
-    disabled: boolean;
+interface DayNumberProps {
+    $variant: VariantDay;
+    $disabled: boolean;
 }
 
-interface CircleProps extends Pick<DayNumerProps, "variant"> {
-    position: "left" | "right";
+interface CircleProps extends Pick<DayNumberProps, "$variant"> {
+    $position: "left" | "right";
 }
 
-interface InteractiveCircleProps extends Omit<DayNumerProps, "variant"> {}
+interface InteractiveCircleProps extends Omit<DayNumberProps, "$variant"> {}
 
 // =============================================================================
 // STYLING
@@ -25,21 +25,14 @@ export const WeekDaysContainer = styled.div`
 `;
 
 export const WeekCell = styled.div`
-    ${TextStyleHelper.getFontFamily("H6", "semibold")}
+    ${TextStyleHelper.getTextStyle("H6", "semibold")}
     height: 1.625rem;
     width: 4.875rem;
     display: flex;
     align-items: center;
     justify-content: center;
     color: ${Color.Neutral[1]};
-    font-size: 0.875rem !important;
-
     pointer-events: none;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
 `;
 
@@ -81,19 +74,20 @@ export const LeftCell = styled(DayCellBasic)``;
 export const RightCell = styled(DayCellBasic)``;
 
 export const Circle = styled.div<CircleProps>`
-    ${TextStyleHelper.getFontFamily("H5", "regular")}
+    ${TextStyleHelper.getTextStyle("H5", "regular")}
     color: ${Color.Neutral[1]};
     position: absolute;
     border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
+
     ${(props) => {
-        switch (props.variant) {
+        switch (props.$variant) {
             case "default":
                 return css`
                     color: ${Color.Neutral[1]};
                 `;
-            case "nextMonth":
+            case "otherMonth":
                 return css`
                     color: ${Color.Neutral[4]};
                 `;
@@ -105,7 +99,7 @@ export const Circle = styled.div<CircleProps>`
         }
     }}
     ${(props) => {
-        switch (props.position) {
+        switch (props.$position) {
             case "left":
                 return css`
                     right: 0;
@@ -120,27 +114,22 @@ export const Circle = styled.div<CircleProps>`
     }}
 `;
 
-export const DayNumber = styled.div<DayNumerProps>`
-    ${TextStyleHelper.getFontFamily("H5", "regular")}
+export const DayNumber = styled.div<DayNumberProps>`
+    ${TextStyleHelper.getTextStyle("H5", "regular")}
     pointer-events: none;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
     position: absolute;
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$disabled) {
             return css`
                 color: ${Color.Neutral[4]};
                 pointer-events: none;
             `;
         }
 
-        switch (props.variant) {
-            case "nextMonth":
+        switch (props.$variant) {
+            case "otherMonth":
                 return css`
                     color: ${Color.Neutral[4]};
                 `;
@@ -161,15 +150,12 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
     &:hover {
         cursor: pointer;
-        box-shadow: ${(props) =>
-            props.theme.name === "BookingSG"
-                ? "0px 0px 4px 1px rgba(161, 87, 255, 0.5)"
-                : "0px 0px 4px 1px rgba(87, 169, 255, 0.5)"};
+        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
         border: 1px solid ${Color.Accent.Light[1]};
     }
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$disabled) {
             return css`
                 color: ${Color.Neutral[4]};
                 cursor: none;
