@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
+import { DesignToken } from "../design-token";
 import { TextStyleHelper } from "../text/helper";
 
 // =============================================================================
@@ -47,12 +48,12 @@ export const InputSelectorElement = styled.input<StyleProps>`
         } else if (props.error && props.focused) {
             return css`
                 border: 1px solid ${Color.Validation.Red.Border(props)};
-                box-shadow: inset 0 0 4px 1px ${Color.Shadow.Red};
+                box-shadow: ${DesignToken.InputErrorBoxShadow};
             `;
         } else if (props.focused) {
             return css`
                 border: 1px solid ${Color.Accent.Light[1]};
-                box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
+                box-shadow: ${DesignToken.InputBoxShadow};
             `;
         }
     }}

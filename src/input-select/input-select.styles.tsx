@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
 import { Color } from "../color";
+import { DesignToken } from "../design-token";
 import { MediaQuery } from "../media";
 import { TruncateType } from "../shared/dropdown-list/types";
 import { Text, TextStyle } from "../text";
@@ -78,7 +79,7 @@ export const ElementBoundary = styled.div<InputSelectStyleProps>`
 
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
+        box-shadow: ${DesignToken.InputBoxShadow};
     }
 
     ${(props) => {
@@ -131,7 +132,7 @@ export const ElementBoundary = styled.div<InputSelectStyleProps>`
 
                 :focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: inset 0 0 4px 1px ${Color.Shadow.Red};
+                    box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;
         }
