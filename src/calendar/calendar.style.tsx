@@ -1,4 +1,4 @@
-import { Color } from "src/color";
+import { Color } from "../color";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import styled, { css } from "styled-components";
 import { TextStyleHelper } from "../text/helper";
@@ -23,7 +23,7 @@ export const Container = styled.div`
     width: 41rem;
     background-color: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
-    height: 25.188rem;
+    height: 25.125rem;
     border-radius: 0.75rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -32,7 +32,7 @@ export const Container = styled.div`
 export const HeaderDropdown = styled.div<HeaderDropdownProps>`
     display: flex;
     justify-content: center;
-    margin-bottom: 0.938rem;
+    margin-bottom: 1rem;
 
     svg {
         margin-left: 0.625rem;
@@ -72,8 +72,7 @@ const DropdownMonthYearBase = styled.div`
     cursor: pointer;
 
     p {
-        ${TextStyleHelper.getFontFamily("H4", "regular")}
-        font-size: 1.125rem !important;
+        ${TextStyleHelper.getTextStyle("H4", "regular")}
     }
 `;
 

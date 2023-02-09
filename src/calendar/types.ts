@@ -2,18 +2,14 @@ import { Dayjs } from "dayjs";
 
 export type View = "Day" | "Month" | "Year";
 
-export type VariantDay = "default" | "nextMonth" | "today";
+export type VariantDay = "default" | "otherMonth" | "today";
 
-export type VariantMonth =
-    | "default"
-    | "currentMonth"
-    | "nextMonth"
-    | "selectedMonth";
+export type VariantMonth = "default" | "currentMonth" | "selectedMonth";
 
 export type VariantYear =
     | "default"
     | "currentYear"
-    | "nextDecade"
+    | "otherDecade"
     | "selectedYear";
 
 export interface CalendarProps {
@@ -25,15 +21,17 @@ export interface CalendarProps {
 export interface CalendarDayProps extends Pick<CalendarProps, "disabledDates"> {
     selectedStartDate: string;
     calendarDate: Dayjs;
-    handleDayClick: (value: string) => void;
+    onSelect: (value: Dayjs) => void;
 }
 
 export interface YearMonthBase {
     calendarDate: Dayjs;
-    onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
     showView: View;
     selectedStartDate: string;
+    onSelect: (value: Dayjs) => void;
 }
 
 export interface CalendarMonthProps extends YearMonthBase {}
-export interface CalendarYearProps extends YearMonthBase {}
+export interface CalendarYearProps extends YearMonthBase {
+    onDecadeChange: (value: Dayjs) => void;
+}

@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
-import { CalendarHelper } from "src/util/calendar-helper";
+import { CalendarHelper } from "../util/calendar-helper";
 import {
     CalendarDaySection,
     Circle,
@@ -17,8 +17,8 @@ import { CalendarDayProps, VariantDay } from "./types";
 export const CalendarDay = ({
     calendarDate,
     disabledDates,
-    handleDayClick,
     selectedStartDate,
+    onSelect,
 }: CalendarDayProps) => {
     const generateDayClass = (date: string): string => {
         const classes: string[] = [];
@@ -31,7 +31,7 @@ export const CalendarDay = ({
     };
 
     const generateDayStatus = (day: Dayjs) => {
-        const dateStartWithYear = dayjs(day).format("YYYY-MM-DD");
+        const dateStartWithYear = day.format("YYYY-MM-DD");
         let isDisabled = false;
 
         if (disabledDates && disabledDates.length) {
@@ -39,7 +39,7 @@ export const CalendarDay = ({
         }
         const variant: VariantDay =
             calendarDate.month() !== day.month()
-                ? "nextMonth"
+                ? "otherMonth"
                 : dayjs().isSame(day, "day")
                 ? "today"
                 : "default";
@@ -49,6 +49,10 @@ export const CalendarDay = ({
             isDisabled,
             variant,
         };
+    };
+
+    const handleDayClick = (value: Dayjs) => {
+        onSelect(value);
     };
 
     // =============================================================================
@@ -85,29 +89,26 @@ export const CalendarDay = ({
                                 <LeftCell data-cell="left">
                                     <Circle
                                         data-circle="left"
-                                        position="left"
-                                        variant={variant}
+                                        $position="left"
+                                        $variant={variant}
                                     />
                                 </LeftCell>
                                 <RightCell data-cell="right">
                                     <Circle
                                         data-circle="right"
-                                        position="right"
-                                        variant={variant}
+                                        $position="right"
+                                        $variant={variant}
                                     />
                                 </RightCell>
                                 <DayNumber
-                                    variant={variant}
-                                    disabled={isDisabled}
+                                    $variant={variant}
+                                    $disabled={isDisabled}
                                 >
-                                    {dayjs(day).format("DD")}
+                                    {day.format("DD")}
                                 </DayNumber>
                                 <InteractiveCircle
-                                    data-day={dateStartWithYear}
-                                    disabled={isDisabled}
-                                    onClick={() =>
-                                        handleDayClick(dateStartWithYear)
-                                    }
+                                    $disabled={isDisabled}
+                                    onClick={() => handleDayClick(day)}
                                 />
                             </GrowDayCell>
                         );

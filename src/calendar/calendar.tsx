@@ -75,110 +75,34 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
         }
     };
 
-    const handleView = (view: View) => {
-        const goTo = selectedStartDate.length && selectedStartDate;
-
-        switch (view) {
-            case "Day":
-                setShowView("Day");
-                break;
-            case "Month":
-                if (showView === "Month") {
-                    setShowView("Day");
-                    break;
-                }
-
-                setShowView("Month");
-                break;
-            case "Year":
-                if (showView === "Month") {
-                    if (goTo.length) setCalendarDate(dayjs(goTo));
-                    setShowView("Day");
-                    break;
-                }
-
-                if (showView === "Year") {
-                    if (goTo.length) setCalendarDate(dayjs(goTo));
-                    setShowView("Day");
-                    return;
-                }
-
-                setShowView("Year");
-                break;
-            default:
-                setShowView("Day");
-                break;
-        }
+    const toggleMonthView = () => {
+        setShowView("Month");
     };
 
-    const handleDayClick = (value: string) => {
-        const isNextMonthSelected =
-            calendarDate?.clone().toDate().getMonth() !== dayjs(value).month();
+    const toggleYearView = () => {
+        setShowView((prev) => {
+            if (prev === "Month") return "Day";
+            if (prev === "Year") return "Day";
 
-        if (isNextMonthSelected) setCalendarDate(dayjs(value));
-
-        setSelectedStartDate(value);
-
-        performOnChangeHandler(value);
+            return "Year";
+        });
     };
 
-    const handleMonthYearClick = (
-        e: React.MouseEvent<HTMLDivElement>,
-        show: View
-    ) => {
-        const value = e.currentTarget.getAttribute("data-value") || "";
-        let isYearDecaded = false;
-        if (show === "Year") {
-            isYearDecaded =
-                e.currentTarget.getAttribute("data-variant") === "nextDecade"
-                    ? true
-                    : false;
-        }
+    const handleDateChange = (value: Dayjs) => {
+        const isOtherMonthSelected = calendarDate.month() !== value.month();
+        const stringValue = value.format("YYYY-MM-DD");
 
-        if (!value.length) return;
-        const hasStartDate: string[] = selectedStartDate.split("-");
+        if (isOtherMonthSelected) setCalendarDate(value);
 
-        const [yyyy, mm, _dd] = hasStartDate;
-        const selectedMonth = value.split("-")[1];
-        const selectedYear = value.split("-")[0];
+        setSelectedStartDate(stringValue);
 
-        if (hasStartDate.length === 3) {
-            /**
-             * Handle last day check/validate
-             * user select 2023-01-30 and select month calendar which didn't exist 30 day in the month
-             * it will get the last day of the month
-             */
-            const lastDayInMonth: number = dayjs(
-                `${yyyy}-${selectedMonth}-01`
-            ).daysInMonth();
-            let dd: string = _dd;
-
-            if (+_dd > lastDayInMonth) {
-                dd = lastDayInMonth.toString();
-            }
-
-            // date already been selected
-            const fullDate =
-                show === "Month"
-                    ? `${selectedYear}-${selectedMonth}-${dd}`
-                    : showView === "Year"
-                    ? `${selectedYear}-${mm}-${dd}`
-                    : dayjs().format("YYYY-MM-DD");
-
-            if (isYearDecaded) setCalendarDate(dayjs(value));
-            setSelectedStartDate(fullDate);
-            return;
-        }
-
-        // wihtout selected date yet
-        if (isYearDecaded) setCalendarDate(dayjs(value));
-        setSelectedStartDate(value);
+        performOnChangeHandler(stringValue);
     };
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const YearHeaderComponent = () => {
+    const renderYearHeader = () => {
         if (showView === "Year") {
             const beginDecaded =
                 Math.floor(+calendarDate.format("YYYY") / 10) * 10;
@@ -204,14 +128,14 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     return (
         <Container>
             <HeaderDropdown view={showView}>
-                <DropdownMonth onClick={() => handleView("Month")}>
+                <DropdownMonth onClick={toggleMonthView}>
                     <Text.BodySmall>
                         {dayjs(calendarDate).format("MMM")}
                     </Text.BodySmall>
                     <ChevronDownIcon />
                 </DropdownMonth>
-                <DropdownYear onClick={() => handleView("Year")}>
-                    {YearHeaderComponent()}
+                <DropdownYear onClick={toggleYearView}>
+                    {renderYearHeader()}
                     <ChevronDownIcon />
                 </DropdownYear>
             </HeaderDropdown>
@@ -220,29 +144,30 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
                     <CalendarDay
                         calendarDate={calendarDate}
                         disabledDates={disabledDates}
-                        handleDayClick={handleDayClick}
                         selectedStartDate={selectedStartDate}
+                        onSelect={(date) => handleDateChange(date)}
                     />
                 </DayView>
                 <MonthView>
                     <CalendarMonth
                         calendarDate={calendarDate}
-                        onClick={(e) => handleMonthYearClick(e, "Month")}
                         showView={showView}
                         selectedStartDate={selectedStartDate}
+                        onSelect={(date) => handleDateChange(date)}
                     />
                 </MonthView>
                 <YearView>
                     <CalendarYear
                         calendarDate={calendarDate}
-                        onClick={(e) => handleMonthYearClick(e, "Year")}
                         showView={showView}
                         selectedStartDate={selectedStartDate}
+                        onSelect={(date) => handleDateChange(date)}
+                        onDecadeChange={(date) => setCalendarDate(date)}
                     />
                 </YearView>
             </Views>
-            <ArrowLeft type="chevron-left" onClick={handleLeftArrowClick} />
-            <ArrowRight type="chevron-right" onClick={handleRightArrowClick} />
+            <ArrowLeft onClick={handleLeftArrowClick} />
+            <ArrowRight onClick={handleRightArrowClick} />
         </Container>
     );
 };
