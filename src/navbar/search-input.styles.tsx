@@ -282,8 +282,8 @@ export const SearchIcon = styled(MagnifierIcon)`
 `;
 
 export const CrossIconClose = styled(CrossIcon)`
-    height: 20px !important;
-    width: 20px !important;
+    height: 1.5rem !important;
+    width: 1.5rem !important;
 `;
 
 export const SearchMainBarContainer = styled.div`

@@ -63,14 +63,12 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     align-items: left;
     text-align: left;
     color: ${Color.Neutral[1]};
-    //  margin-bottom: 1rem;
-    margin-left: 16px;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 26px;
-    height: 26px;
-    padding-right: 16px;
+    //height: 26px;
+    overflow-x: hidden;
 
     /* identical to box height, or 186% */
     letter-spacing: 0.12px;
@@ -119,13 +117,14 @@ export const LinkIndicator = styled.div`
 export const MenuBar = styled.ul`
     width: 100%;
     overflow: auto;
-    display: table;
+    display: grid;
     margin-top: 0rem;
     left: 0;
     top: 102%;
     min-width: 250px;
     /* N8 #FFFFFF */
     position: absolute;
+    overflow-x: hidden;
 
     /* N8 #FFFFFF */
     background: #ffffff;
@@ -137,21 +136,20 @@ export const MenuBar = styled.ul`
 // =============================================================================
 export const MenuItem = styled.li`
     width: 100%;
-    height: 40px;
+    height: 26px;
     position: relative;
-    display: table-row;
+    display: flex;
     align-items: left;
-    margin-left: 16px;
+    margin-left: 24px;
+
     margin-top: 8px;
     margin-bottom: 8px;
 
     :first-child {
-        height: 40px;
         margin-top: 16px;
     }
 
     :last-child {
-        height: 50px;
         margin-bottom: 16px;
     }
     :not(:firt-of-type) {
