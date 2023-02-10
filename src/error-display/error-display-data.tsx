@@ -30,9 +30,9 @@ const ImgPaths: Record<string, ImagePathAttributes> = {
         lg: "https://assets.life.gov.sg/react-design-system/img/error/404@3x.png",
     },
     "500": {
-        base: "https://assets.life.gov.sg/react-design-system/img/error/500.png",
-        md: "https://assets.life.gov.sg/react-design-system/img/error/500@2x.png",
-        lg: "https://assets.life.gov.sg/react-design-system/img/error/500@3x.png",
+        base: "https://assets.life.gov.sg/react-design-system/img/error/generic-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@3x.png",
     },
     "503": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/503.png",
@@ -40,13 +40,13 @@ const ImgPaths: Record<string, ImagePathAttributes> = {
         lg: "https://assets.life.gov.sg/react-design-system/img/error/503@3x.png",
     },
     "unsupported-browser": {
-        base: "https://assets.life.gov.sg/react-design-system/img/error/unsupported-browser.png",
-        md: "https://assets.life.gov.sg/react-design-system/img/error/unsupported-browser@2x.png",
-        lg: "https://assets.life.gov.sg/react-design-system/img/error/unsupported-browser@3x.png",
+        base: "https://assets.life.gov.sg/react-design-system/img/error/generic-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@3x.png",
     },
 };
 
-const imgAttributeHelper = (
+const oldImgAttributeHelper = (
     pathAttributes: ImagePathAttributes
 ): React.ImgHTMLAttributes<HTMLImageElement> => {
     const { base, md, lg } = pathAttributes;
@@ -54,6 +54,17 @@ const imgAttributeHelper = (
         srcSet: `${base} 416w, ${md} 832w, ${lg} 1248w`,
         src: lg,
         sizes: "(max-width: 480px) 416px, (max-width: 1199px) 832px, 1248px",
+    };
+};
+
+const imgAttributeHelper = (
+    pathAttributes: ImagePathAttributes
+): React.ImgHTMLAttributes<HTMLImageElement> => {
+    const { base, md, lg } = pathAttributes;
+    return {
+        srcSet: `${base} 400w, ${md} 800w, ${lg} 1200w`,
+        src: lg,
+        sizes: "(max-width: 480px) 400px, (max-width: 1199px) 800px, 1200px",
     };
 };
 
@@ -78,7 +89,7 @@ export const ERROR_DISPLAY_DATA = new Map<
     [
         "400",
         {
-            img: imgAttributeHelper(ImgPaths["400"]),
+            img: oldImgAttributeHelper(ImgPaths["400"]),
             title: "Something went wrong",
             description: (
                 <>
@@ -95,7 +106,7 @@ export const ERROR_DISPLAY_DATA = new Map<
     [
         "403",
         {
-            img: imgAttributeHelper(ImgPaths["403"]),
+            img: oldImgAttributeHelper(ImgPaths["403"]),
             title: "Error loading page",
             description: (
                 <>
@@ -112,7 +123,7 @@ export const ERROR_DISPLAY_DATA = new Map<
     [
         "404",
         {
-            img: imgAttributeHelper(ImgPaths["404"]),
+            img: oldImgAttributeHelper(ImgPaths["404"]),
             title: "Page not found",
             description: (
                 <>
@@ -129,7 +140,7 @@ export const ERROR_DISPLAY_DATA = new Map<
     [
         "408",
         {
-            img: imgAttributeHelper(ImgPaths["400"]),
+            img: oldImgAttributeHelper(ImgPaths["400"]),
             title: "Something went wrong",
             description: (
                 <>
@@ -182,7 +193,7 @@ export const ERROR_DISPLAY_DATA = new Map<
     [
         "503",
         {
-            img: imgAttributeHelper(ImgPaths["503"]),
+            img: oldImgAttributeHelper(ImgPaths["503"]),
             title: "Service under maintenance",
             description:
                 "This service is currently unavailable. Please try again later.",
@@ -191,7 +202,7 @@ export const ERROR_DISPLAY_DATA = new Map<
     [
         "maintenance",
         {
-            img: imgAttributeHelper(ImgPaths["503"]),
+            img: oldImgAttributeHelper(ImgPaths["503"]),
             title: "Service under maintenance",
             description:
                 "This service is currently unavailable. Please try again later.",
