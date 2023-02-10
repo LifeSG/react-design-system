@@ -1,3 +1,4 @@
+import { MediaWidths } from "../spec/media-spec";
 import {
     Error500AdditionalAttributes,
     ErrorDisplayType,
@@ -53,7 +54,7 @@ const oldImgAttributeHelper = (
     return {
         srcSet: `${base} 416w, ${md} 832w, ${lg} 1248w`,
         src: lg,
-        sizes: "(max-width: 480px) 416px, (max-width: 1199px) 832px, 1248px",
+        sizes: `(max-width: ${MediaWidths.mobileL}px) 416px, (max-width: ${MediaWidths.tablet}px) 832px, 1248px`,
     };
 };
 
@@ -64,7 +65,7 @@ const imgAttributeHelper = (
     return {
         srcSet: `${base} 400w, ${md} 800w, ${lg} 1200w`,
         src: lg,
-        sizes: "(max-width: 480px) 400px, (max-width: 1199px) 800px, 1200px",
+        sizes: `(max-width: ${MediaWidths.mobileL}px) 400px, (max-width: ${MediaWidths.tablet}px) 800px, 1200px`,
     };
 };
 
