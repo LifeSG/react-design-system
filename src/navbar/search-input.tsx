@@ -5,9 +5,11 @@ import { Form } from "../form";
 import { IconButton } from "../icon-button/icon-button";
 
 import {
+    CloseIconButton,
     CloseIconContainer,
     CrossIconClose,
     DropDownBar,
+    Input,
     Link,
     MenuItem,
     MobileWrapper,
@@ -16,7 +18,9 @@ import {
     SearchBarInputContainer,
     SearchIcon,
     SearchInputContainer,
+    SearchInputIcon,
     SearchMainBarContainer,
+    SearchSpan,
 } from "./search-input.styles";
 import { NavSubItemProps } from "./types";
 
@@ -112,6 +116,7 @@ export const SearchInput = <T,>({
     // =============================================================================
     const handleToggleClick = () => {
         setToggleInput(!toggleInput);
+        setInputValue("");
         onToggleHeaderClick();
     };
 
@@ -161,9 +166,9 @@ export const SearchInput = <T,>({
         // Split on highlight term and include term into parts, ignore case
         const parts = text.split(new RegExp(`(${highlight})`, "gi"));
         return (
-            <span>
+            <SearchSpan>
                 {parts.map((part, i) => (
-                    <span
+                    <SearchSpan
                         key={i}
                         style={
                             part.toLowerCase() === highlight.toLowerCase()
@@ -172,9 +177,9 @@ export const SearchInput = <T,>({
                         }
                     >
                         {part}
-                    </span>
+                    </SearchSpan>
                 ))}
-            </span>
+            </SearchSpan>
         );
     };
 
@@ -207,16 +212,16 @@ export const SearchInput = <T,>({
                 <SearchBarContainer>
                     <SearchBarInputContainer>
                         <SearchInputContainer>
-                            <Form.InputGroup
+                            <Input
                                 label=""
                                 placeholder="Search"
                                 addon={{
                                     type: "custom",
-                                    position: "right",
+                                    position: mobile ? "left" : "right",
                                     attributes: {
                                         children: (
-                                            <MagnifierIcon
-                                                type="search"
+                                            <SearchInputIcon
+                                                className="search-icon"
                                                 onClick={handleSearchIconClick}
                                             />
                                         ),
@@ -236,9 +241,9 @@ export const SearchInput = <T,>({
                     )}
                 </SearchBarContainer>
                 <CloseIconContainer>
-                    <IconButton onClick={handleToggleClick}>
+                    <CloseIconButton onClick={handleToggleClick}>
                         <CrossIconClose />
-                    </IconButton>
+                    </CloseIconButton>
                 </CloseIconContainer>
             </SearchMainBarContainer>
         );

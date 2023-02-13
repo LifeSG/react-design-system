@@ -65,10 +65,16 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     color: ${Color.Neutral[1]};
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 14px !important;
     line-height: 26px;
-    //height: 26px;
-    overflow-x: hidden;
+
+    margin-right: 16px;
+    padding-right: 16px;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
     /* identical to box height, or 186% */
     letter-spacing: 0.12px;
@@ -90,7 +96,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         padding: 0.625rem 1rem;
         text-align: left;
         align-items: flex-start;
-        font-size: 18px !important;
+        font-size: 16px !important;
         line-height: 1rem !important;
     }
 `;
@@ -136,11 +142,13 @@ export const MenuBar = styled.ul`
 // =============================================================================
 export const MenuItem = styled.li`
     width: 100%;
-    height: 26px;
+    min-height: 26px;
+    max-height: 52px;
     position: relative;
     display: flex;
     align-items: left;
-    margin-left: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
 
     margin-top: 8px;
     margin-bottom: 8px;
@@ -158,8 +166,17 @@ export const MenuItem = styled.li`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-top: 0rem;
-        margin-bottom: 1.4rem;
+        margin-top: 16px;
+        margin-bottom: 0px;
+        margin-left: 5px;
+
+        :first-child {
+            margin-top: 5px;
+        }
+
+        :last-child {
+            margin-bottom: 0px;
+        }
     }
 `;
 

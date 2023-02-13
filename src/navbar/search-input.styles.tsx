@@ -4,6 +4,8 @@ import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { IconButton } from "../icon-button/icon-button";
+import { Form } from "../form";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -30,6 +32,8 @@ export const Wrapper = styled.ul`
 export const MobileWrapper = styled.div`
     display: none;
     list-style: none;
+    margin-top: 18px;
+    width: 100% !important;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: flex;
@@ -80,13 +84,20 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     align-items: left;
     text-align: left;
     color: ${Color.Neutral[1]};
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 14px !important;
     line-height: 26px;
+
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
     /* identical to box height, or 186% */
     letter-spacing: 0.12px;
@@ -97,18 +108,13 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        /* ${(props) => {
-            return TextStyleHelper.getTextStyle(
-                "H4",
-                props.$selected ? "bold" : "regular"
-            );
-        }} */
-        font-weight: bold !important;
+        font-weight: normal !important;
         width: 100%;
+        height: 100%;
         padding: 0.625rem 1rem;
         text-align: left;
         align-items: flex-start;
-        font-size: 16px !important;
+        font-size: 14px !important;
         line-height: 1rem !important;
     }
 `;
@@ -135,10 +141,10 @@ export const LinkIndicator = styled.div`
 export const DropDownBar = styled.ul`
     width: 100%;
     overflow: auto;
-    display: table;
+    display: grid;
     margin-top: 0rem;
     left: 0;
-    top: 87%;
+    top: 95%;
 
     /* N8 #FFFFFF */
     position: absolute;
@@ -192,24 +198,30 @@ export const SearchBarDesktop = styled.div`
 // =============================================================================
 export const MenuItem = styled.li`
     width: 100%;
-    height: 27px;
+    min-height: 26px;
+    max-height: 52px;
     position: relative;
-    display: table-row;
+    display: flex;
     align-items: left;
-    :not(:last-of-type) {
-        margin-bottom: 1rem;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    :first-child {
+        margin-top: 16px !important;
+        margin-bottom: 8px !important;
     }
-    &:last-child {
-        margin-bottom: 1rem;
+
+    :last-child {
+        margin-top: 8px !important;
+        margin-bottom: 16px !important;
+    }
+    :not(:firt-of-type) {
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-top: 0rem;
-        margin-bottom: 1.4rem;
-
-        &:last-child {
-            height: 65px !important;
-        }
+        max-height: 44px;
     }
 `;
 
@@ -228,6 +240,7 @@ export const SearchBarContainer = styled.div`
     display: flex;
     position: relative;
     justify-items: center;
+    width: 100%;
 
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0px;
@@ -258,6 +271,7 @@ export const CloseIconContainer = styled.div`
     flex-direction: row;
     align-items: center;
     position: relative;
+    padding: 16px !important;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
@@ -279,18 +293,37 @@ export const CloseIconContainer = styled.div`
 export const SearchIcon = styled(MagnifierIcon)`
     height: 17.59px !important;
     width: 17.59px !important;
+    color: #686868 !important;
 `;
 
 export const CrossIconClose = styled(CrossIcon)`
     height: 1.5rem !important;
     width: 1.5rem !important;
+    color: #686868 !important;
+`;
+
+export const SearchInputIcon = styled(MagnifierIcon)`
+    color: #686868 !important;
 `;
 
 export const SearchMainBarContainer = styled.div`
     display: flex;
     position: relative;
+    width: 100%;
 
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0px;
     }
+`;
+
+export const SearchSpan = styled.span`
+    display: contents;
+`;
+
+export const CloseIconButton = styled(IconButton)`
+    padding: 0px !important;
+`;
+
+export const Input = styled(Form.InputGroup)`
+    width: 100% !important;
 `;
