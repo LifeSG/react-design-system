@@ -5,12 +5,12 @@ import { TextStyleHelper } from "../text/helper";
 import { View } from "./types";
 
 interface HeaderDropdownProps {
-    view: View;
+    $view: View;
 }
 
 interface CalendarViewProps {
     children: JSX.Element[];
-    show: View;
+    $show: View;
 }
 
 // =============================================================================
@@ -41,17 +41,8 @@ export const HeaderDropdown = styled.div<HeaderDropdownProps>`
     }
 
     ${(props) => {
-        switch (props.view) {
+        switch (props.$view) {
             case "Month":
-                return css`
-                    & > :first-child {
-                        display: none;
-                    }
-
-                    & > :last-child svg {
-                        transform: rotate(180deg);
-                    }
-                `;
             case "Year":
                 return css`
                     & > :first-child {
@@ -93,7 +84,9 @@ export const Views = styled.div<CalendarViewProps>`
         for (let i = 0; i < props.children.length; i++) {
             styles += `
                     > div:nth-child(${i + 1}) {
-                        display: ${props.show === _VIEWS[i] ? "flex" : "none"} ;
+                        display: ${
+                            props.$show === _VIEWS[i] ? "flex" : "none"
+                        } ;
                     }
                 `;
         }

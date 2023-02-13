@@ -12,7 +12,7 @@ import {
     WeekCell,
     WeekDaysContainer,
 } from "./calendar-day.style";
-import { CalendarDayProps, VariantDay } from "./types";
+import { CalendarDayProps, GenerateDayClass, VariantDay } from "./types";
 
 export const CalendarDay = ({
     calendarDate,
@@ -20,14 +20,15 @@ export const CalendarDay = ({
     selectedStartDate,
     onSelect,
 }: CalendarDayProps) => {
-    const generateDayClass = (date: string): string => {
-        const classes: string[] = [];
+    const generateDayClass = (day: Dayjs): GenerateDayClass => {
+        const dateStartWithYear = day.format("YYYY-MM-DD");
+        const classProps = {};
 
-        if (selectedStartDate === date) {
-            classes.push("selected-start");
+        if (selectedStartDate === dateStartWithYear) {
+            classProps["$selected"] = true;
         }
 
-        return classes.join(" ");
+        return classProps;
     };
 
     const generateDayStatus = (day: Dayjs) => {
@@ -45,7 +46,6 @@ export const CalendarDay = ({
                 : "default";
 
         return {
-            dateStartWithYear,
             isDisabled,
             variant,
         };
@@ -63,7 +63,6 @@ export const CalendarDay = ({
         (): Dayjs[][] => CalendarHelper.generateDay(calendarDate),
         [calendarDate]
     );
-
     return (
         <>
             <WeekDaysContainer>
@@ -76,26 +75,23 @@ export const CalendarDay = ({
             {generateWeeksOfTheMonth.map((week, weekIndex) => (
                 <CalendarDaySection key={`week-${weekIndex}`}>
                     {week.map((day, dayIndex) => {
-                        const { dateStartWithYear, isDisabled, variant } =
-                            generateDayStatus(day);
+                        const { isDisabled, variant } = generateDayStatus(day);
 
-                        const classNames = generateDayClass(dateStartWithYear);
+                        const classProps = generateDayClass(day);
 
                         return (
                             <GrowDayCell
                                 key={`day-${dayIndex}`}
-                                className={classNames}
+                                {...classProps}
                             >
-                                <LeftCell data-cell="left">
+                                <LeftCell>
                                     <Circle
-                                        data-circle="left"
                                         $position="left"
                                         $variant={variant}
                                     />
                                 </LeftCell>
-                                <RightCell data-cell="right">
+                                <RightCell>
                                     <Circle
-                                        data-circle="right"
                                         $position="right"
                                         $variant={variant}
                                     />
