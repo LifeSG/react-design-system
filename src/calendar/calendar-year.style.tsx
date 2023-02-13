@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
-import { VariantYear } from "./types";
+import { VariantYear } from "./calendar-year";
 
 interface YearCellProps {
     $variant: VariantYear;
@@ -29,20 +29,20 @@ export const YearCell = styled.div<YearCellProps>`
 
     ${(props) => {
         switch (props.$variant) {
-            case "currentYear":
+            case "current-year":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "regular")}
                     background: ${Color.Accent.Light[6]};
                     color: ${Color.Neutral[3]};
                 `;
-            case "selectedYear":
+            case "selected-year":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "semibold")}
                     background: ${Color.Accent.Light[5]};
                     color: ${Color.Primary};
                     border: 1px solid ${Color.Primary};
                 `;
-            case "otherDecade":
+            case "other-decade":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "regular")}
                     color: ${Color.Neutral[4]}

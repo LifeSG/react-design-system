@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
-import { VariantMonth } from "./types";
+import { VariantMonth } from "./calendar-month";
 
 interface MonthCellProps {
     $variant: VariantMonth;
@@ -38,13 +38,13 @@ export const MonthCell = styled.div<MonthCellProps>`
 
     ${(props) => {
         switch (props.$variant) {
-            case "currentMonth":
+            case "current-month":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "regular")}
                     background-color: ${Color.Accent.Light[6]};
                     color: ${Color.Neutral[3]};
                 `;
-            case "selectedMonth":
+            case "selected-month":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "semibold")}
                     background-color: ${Color.Accent.Light[5]};

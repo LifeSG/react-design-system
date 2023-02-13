@@ -1,14 +1,14 @@
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
-import { GenerateDayClass, VariantDay } from "./types";
 import styled, { css } from "styled-components";
+import { DayCellStyleProps, VariantDay } from "./calendar-day";
 
 interface DayNumberProps {
     $variant: VariantDay;
     $disabled: boolean;
 }
 
-interface GrowDayCellProps extends GenerateDayClass {}
+interface GrowDayCellProps extends DayCellStyleProps {}
 
 interface CircleProps extends Pick<DayNumberProps, "$variant"> {
     $position: "left" | "right";
@@ -95,7 +95,7 @@ export const Circle = styled.div<CircleProps>`
                 return css`
                     color: ${Color.Neutral[1]};
                 `;
-            case "otherMonth":
+            case "other-month":
                 return css`
                     color: ${Color.Neutral[4]};
                 `;
@@ -137,7 +137,7 @@ export const DayNumber = styled.div<DayNumberProps>`
         }
 
         switch (props.$variant) {
-            case "otherMonth":
+            case "other-month":
                 return css`
                     color: ${Color.Neutral[4]};
                 `;

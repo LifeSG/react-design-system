@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { MonthCell, MonthPickerContainer } from "./calendar-month.style";
-import { CalendarMonthProps, VariantMonth } from "./types";
 import { CalendarHelper } from "src/util/calendar-helper";
+import { View } from "./calendar";
+
+export type VariantMonth = "default" | "current-month" | "selected-month";
+
+export interface YearMonthBase {
+    calendarDate: Dayjs;
+    showView: View;
+    selectedStartDate: string;
+    onSelect: (value: Dayjs) => void;
+}
+
+interface CalendarMonthProps extends YearMonthBase {}
 
 export const CalendarMonth = ({
     calendarDate,
@@ -13,7 +24,7 @@ export const CalendarMonth = ({
     const [monthDate, setMonthDate] = useState<Dayjs[]>([]);
 
     useEffect(() => {
-        if (showView === "Month") {
+        if (showView === "month") {
             generateMonths();
         }
     }, [showView, calendarDate]);
@@ -24,9 +35,9 @@ export const CalendarMonth = ({
         let variant: VariantMonth = "default";
 
         variant = dayjs(selectedStartDate).isSame(value, "month")
-            ? "selectedMonth"
+            ? "selected-month"
             : dayjs().isSame(value, "month")
-            ? "currentMonth"
+            ? "current-month"
             : "default";
 
         return {

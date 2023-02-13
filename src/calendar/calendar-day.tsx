@@ -12,7 +12,22 @@ import {
     WeekCell,
     WeekDaysContainer,
 } from "./calendar-day.style";
-import { CalendarDayProps, GenerateDayClass, VariantDay } from "./types";
+import { CalendarProps } from "./types";
+
+export interface DayCellStyleProps {
+    $selected?: boolean;
+    $point?: "start" | "middle" | "end";
+    $hovered?: boolean;
+    $disabled?: boolean;
+}
+
+export type VariantDay = "default" | "other-month" | "today";
+
+interface CalendarDayProps extends Pick<CalendarProps, "disabledDates"> {
+    selectedStartDate: string;
+    calendarDate: Dayjs;
+    onSelect: (value: Dayjs) => void;
+}
 
 export const CalendarDay = ({
     calendarDate,
@@ -20,7 +35,7 @@ export const CalendarDay = ({
     selectedStartDate,
     onSelect,
 }: CalendarDayProps) => {
-    const generateDayClass = (day: Dayjs): GenerateDayClass => {
+    const generateDayClass = (day: Dayjs): DayCellStyleProps => {
         const dateStartWithYear = day.format("YYYY-MM-DD");
         const styleProps = {};
 
@@ -40,7 +55,7 @@ export const CalendarDay = ({
         }
         const variant: VariantDay =
             calendarDate.month() !== day.month()
-                ? "otherMonth"
+                ? "other-month"
                 : dayjs().isSame(day, "day")
                 ? "today"
                 : "default";
@@ -60,7 +75,7 @@ export const CalendarDay = ({
     // =============================================================================
 
     const generateWeeksOfTheMonth = useMemo(
-        (): Dayjs[][] => CalendarHelper.generateDay(calendarDate),
+        (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
         [calendarDate]
     );
     return (
