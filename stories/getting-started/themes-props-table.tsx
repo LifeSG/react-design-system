@@ -70,7 +70,15 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "ColorSetOptions",
-                description: <>You may refer to the ColorSet specifications.</>,
+                description: (
+                    <>
+                        You may refer to the{" "}
+                        <a href="https://github.com/LifeSG/react-design-system/blob/master/src/color/types.ts">
+                            ColorSet
+                        </a>{" "}
+                        specifications.
+                    </>
+                ),
             },
         ],
     },
@@ -119,7 +127,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "DesignTokenSetOptions",
                 description: (
-                    <>You may refer to the DesignTokenSet specifications.</>
+                    <>
+                        You may refer to the{" "}
+                        <a href="https://github.com/LifeSG/react-design-system/blob/master/src/design-token/types.ts">
+                            DesignTokenSet
+                        </a>{" "}
+                        specifications.
+                    </>
                 ),
             },
         ],
