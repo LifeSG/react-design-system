@@ -2,7 +2,7 @@ import { Color } from "../color";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import styled, { css } from "styled-components";
 import { TextStyleHelper } from "../text/helper";
-import { View } from "./types";
+import { View } from "./calendar";
 
 interface HeaderDropdownProps {
     $view: View;
@@ -10,7 +10,7 @@ interface HeaderDropdownProps {
 
 interface CalendarViewProps {
     children: JSX.Element[];
-    $show: View;
+    $view: View;
 }
 
 // =============================================================================
@@ -25,8 +25,7 @@ export const Container = styled.div`
     border: 1px solid ${Color.Neutral[5]};
     height: 25.125rem;
     border-radius: 0.75rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding: 2rem 0;
 `;
 
 export const HeaderDropdown = styled.div<HeaderDropdownProps>`
@@ -42,8 +41,8 @@ export const HeaderDropdown = styled.div<HeaderDropdownProps>`
 
     ${(props) => {
         switch (props.$view) {
-            case "Month":
-            case "Year":
+            case "month":
+            case "year":
                 return css`
                     & > :first-child {
                         display: none;
@@ -79,13 +78,13 @@ export const Views = styled.div<CalendarViewProps>`
     flex-direction: column;
 
     ${(props) => {
-        const _VIEWS = ["Day", "Month", "Year"] as View[];
+        const _VIEWS = ["day", "month", "year"] as View[];
         let styles = "";
         for (let i = 0; i < props.children.length; i++) {
             styles += `
                     > div:nth-child(${i + 1}) {
                         display: ${
-                            props.$show === _VIEWS[i] ? "flex" : "none"
+                            props.$view === _VIEWS[i] ? "flex" : "none"
                         } ;
                     }
                 `;
