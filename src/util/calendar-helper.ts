@@ -1,9 +1,9 @@
 import dayjs, { Dayjs } from "dayjs";
 
 export namespace CalendarHelper {
-    /**
-     * HELPER FUNCTIONS
-     */
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
         const firstDayOfTheMonth = calendarDate.startOf("month");
 
