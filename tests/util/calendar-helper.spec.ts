@@ -42,6 +42,40 @@ describe("CalendarHelper", () => {
 
             expect(result).toBeFalsy();
         });
+
+        it("should exist 29 day in Feb on leap year", () => {
+            const isExist = "2028-02-29";
+            const checkDate = dayjs("2028-02-29");
+
+            const nestedArray = CalendarHelper.generateDays(checkDate);
+
+            const values = nestedArray
+                .map((week) => {
+                    return week.map((day) => day.format("YYYY-MM-DD"));
+                })
+                .flat();
+
+            const result = values.includes(isExist);
+
+            expect(result).toBeTruthy();
+        });
+
+        it("should not exist 29 day in Feb in non leap year", () => {
+            const isExist = "2027-02-29";
+            const checkDate = dayjs("2027-02-29");
+
+            const nestedArray = CalendarHelper.generateDays(checkDate);
+
+            const values = nestedArray
+                .map((week) => {
+                    return week.map((day) => day.format("YYYY-MM-DD"));
+                })
+                .flat();
+
+            const result = values.includes(isExist);
+
+            expect(result).toBeFalsy();
+        });
     });
 
     describe("generateMonths", () => {
