@@ -21,7 +21,7 @@ export const CalendarYear = ({
     onSelect,
     onDecadeChange,
 }: CalendarYearProps) => {
-    const [yearDate, setYearDate] = useState<Dayjs[]>([]);
+    const [years, setYears] = useState<Dayjs[]>([]);
 
     useEffect(() => {
         if (showView === "year") {
@@ -30,13 +30,13 @@ export const CalendarYear = ({
     }, [showView, calendarDate]);
 
     const generateYearStatus = (date: Dayjs) => {
-        const grayYearIndex = [0, 11];
+        const otherDecadeIndexes = [0, 11];
 
-        const isDecadeYear = grayYearIndex.includes(yearDate.indexOf(date));
+        const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
         const fullDate = date.format("YYYY-MM-DD");
-        const year = fullDate.split("-")[0];
+        const year = date.year();
 
-        const variant: VariantYear = isDecadeYear
+        const variant: VariantYear = isOtherDecade
             ? "other-decade"
             : dayjs(selectedStartDate).isSame(fullDate, "year")
             ? "selected-year"
@@ -46,7 +46,6 @@ export const CalendarYear = ({
 
         return {
             year,
-            value: fullDate,
             variant: variant,
         };
     };
@@ -54,7 +53,7 @@ export const CalendarYear = ({
     const generateDecadeOfYears = () => {
         const years = CalendarHelper.generateDecadeOfYears(calendarDate);
 
-        setYearDate(years);
+        setYears(years);
     };
 
     const handleYearClick = (value: Dayjs) => {
@@ -63,17 +62,16 @@ export const CalendarYear = ({
         onDecadeChange(value);
     };
 
-    if (!yearDate.length) return null;
+    if (!years.length) return null;
 
     return (
         <YearPickerContainer>
-            {yearDate.map((date, yearIndex) => {
-                const { variant, year, value } = generateYearStatus(date);
+            {years.map((date) => {
+                const { variant, year } = generateYearStatus(date);
 
                 return (
                     <YearCell
-                        key={`${value}-${yearIndex}`}
-                        data-variant={variant}
+                        key={year}
                         $variant={variant}
                         onClick={() => handleYearClick(date)}
                     >

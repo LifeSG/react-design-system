@@ -22,7 +22,6 @@ export namespace CalendarHelper {
 
         for (let i = 0; i < 12; i++) {
             const monthForSelectedDay = calendarDate.month(i);
-
             months.push(dayjs(monthForSelectedDay));
         }
 
@@ -43,6 +42,16 @@ export namespace CalendarHelper {
         }
 
         return years;
+    };
+
+    export const getStartEndDecade = (calendarDate: Dayjs) => {
+        const beginDecade = Math.floor(+calendarDate.format("YYYY") / 10) * 10;
+        const endDecade = +dayjs(`${beginDecade + 9}-01-01`).format("YYYY");
+
+        return {
+            beginDecade,
+            endDecade,
+        };
     };
 }
 

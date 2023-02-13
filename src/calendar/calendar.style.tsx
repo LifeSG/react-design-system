@@ -3,6 +3,7 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import styled, { css } from "styled-components";
 import { TextStyleHelper } from "../text/helper";
 import { View } from "./calendar";
+import { Text } from "../text";
 
 interface HeaderDropdownProps {
     $view: View;
@@ -44,10 +45,10 @@ export const HeaderDropdown = styled.div<HeaderDropdownProps>`
             case "month":
             case "year":
                 return css`
-                    & > :first-child {
+                    ${DropdownMonth} {
                         display: none;
                     }
-                    & > :last-child svg {
+                    ${DropdownYear} svg {
                         transform: rotate(180deg);
                     }
                 `;
@@ -60,10 +61,10 @@ const DropdownMonthYearBase = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+`;
 
-    p {
-        ${TextStyleHelper.getTextStyle("H4", "regular")}
-    }
+export const DropdownText = styled(Text.BodySmall)`
+    ${TextStyleHelper.getTextStyle("H4", "regular")}
 `;
 
 export const DropdownMonth = styled(DropdownMonthYearBase)`
@@ -79,19 +80,14 @@ export const Views = styled.div<CalendarViewProps>`
 
     ${(props) => {
         const _VIEWS = ["day", "month", "year"] as View[];
-        let styles = "";
-        for (let i = 0; i < props.children.length; i++) {
-            styles += `
-                    > div:nth-child(${i + 1}) {
-                        display: ${
-                            props.$view === _VIEWS[i] ? "flex" : "none"
-                        } ;
-                    }
-                `;
-        }
-        return css`
-            ${styles}
-        `;
+
+        return _VIEWS.map(
+            (view, i) => `
+            > div:nth-child(${i + 1}) {
+                display: ${props.$view === view ? "flex" : "none"}
+            }
+        `
+        );
     }}
 `;
 

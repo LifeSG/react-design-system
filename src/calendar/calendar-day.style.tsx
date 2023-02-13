@@ -56,12 +56,12 @@ export const GrowDayCell = styled.div<GrowDayCellProps>`
 
         if ($selected) {
             return css`
-                ${LeftCell} ${Circle} {
+                ${LeftCell} ${LeftCircle} {
                     background-color: ${Color.Accent.Light[5]};
                     border: 1px solid ${Color.Primary};
                 }
 
-                ${RightCell} ${Circle} {
+                ${RightCell} ${RightCircle} {
                     background-color: ${Color.Accent.Light[5]};
                     border: 1px solid ${Color.Primary};
                 }
@@ -78,10 +78,7 @@ const DayCellBasic = styled.div`
     width: 1.25rem;
 `;
 
-export const LeftCell = styled(DayCellBasic)``;
-export const RightCell = styled(DayCellBasic)``;
-
-export const Circle = styled.div<CircleProps>`
+const Circle = styled.div<CircleProps>`
     ${TextStyleHelper.getTextStyle("H5", "regular")}
     color: ${Color.Neutral[1]};
     position: absolute;
@@ -121,6 +118,11 @@ export const Circle = styled.div<CircleProps>`
         }
     }}
 `;
+
+export const LeftCell = styled(DayCellBasic)``;
+export const RightCell = styled(DayCellBasic)``;
+export const LeftCircle = styled(Circle)``;
+export const RightCircle = styled(Circle)``;
 
 export const DayNumber = styled.div<DayNumberProps>`
     ${TextStyleHelper.getTextStyle("H5", "regular")}

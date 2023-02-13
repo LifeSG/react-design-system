@@ -3,12 +3,13 @@ import { useMemo } from "react";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
     CalendarDaySection,
-    Circle,
     DayNumber,
     GrowDayCell,
     InteractiveCircle,
     LeftCell,
+    LeftCircle,
     RightCell,
+    RightCircle,
     WeekCell,
     WeekDaysContainer,
 } from "./calendar-day.style";
@@ -74,20 +75,20 @@ export const CalendarDay = ({
     // Calendar Generate
     // =============================================================================
 
-    const generateWeeksOfTheMonth = useMemo(
+    const weeksOfTheMonth = useMemo(
         (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
         [calendarDate]
     );
     return (
         <>
             <WeekDaysContainer>
-                {generateWeeksOfTheMonth[0].map((day, index) => (
+                {weeksOfTheMonth[0].map((day, index) => (
                     <WeekCell key={`week-day-${index}`}>
                         {dayjs(day).format("ddd")}
                     </WeekCell>
                 ))}
             </WeekDaysContainer>
-            {generateWeeksOfTheMonth.map((week, weekIndex) => (
+            {weeksOfTheMonth.map((week, weekIndex) => (
                 <CalendarDaySection key={`week-${weekIndex}`}>
                     {week.map((day, dayIndex) => {
                         const { isDisabled, variant } = generateDayStatus(day);
@@ -100,13 +101,13 @@ export const CalendarDay = ({
                                 {...styleProps}
                             >
                                 <LeftCell>
-                                    <Circle
+                                    <LeftCircle
                                         $position="left"
                                         $variant={variant}
                                     />
                                 </LeftCell>
                                 <RightCell>
-                                    <Circle
+                                    <RightCircle
                                         $position="right"
                                         $variant={variant}
                                     />
