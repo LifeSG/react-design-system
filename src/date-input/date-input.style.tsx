@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
+import { DesignToken } from "../design-token";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
 
@@ -35,7 +36,7 @@ export const Container = styled.div<ContainerStyleProps>`
     :focus,
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px rgba(87, 169, 255, 0.5);
+        box-shadow: ${DesignToken.InputBoxShadow};
     }
 
     ${(props) => {
@@ -68,7 +69,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                 :focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: inset 0 0 4px 1px rgba(221, 102, 102, 0.8);
+                    box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;
         }
