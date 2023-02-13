@@ -6,6 +6,7 @@ import {
     Container,
     DayView,
     DropdownMonth,
+    DropdownText,
     DropdownYear,
     HeaderDropdown,
     MonthView,
@@ -17,7 +18,7 @@ import { CalendarMonth } from "./calendar-month";
 import { CalendarProps } from "./types";
 import { CalendarYear } from "./calendar-year";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { Text } from "src/text";
+import { CalendarHelper } from "../util/calendar-helper";
 
 export type View = "day" | "month" | "year";
 
@@ -25,7 +26,9 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
+    const [calendarDate, setCalendarDate] = useState<Dayjs>(
+        dayjs("2024-03-31")
+    );
     const [showView, setShowView] = useState<View>("day");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
 
@@ -106,24 +109,18 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // =============================================================================
     const renderYearHeader = () => {
         if (showView === "year") {
-            const beginDecaded =
-                Math.floor(+calendarDate.format("YYYY") / 10) * 10;
-
-            const endDecaded = dayjs(`${beginDecaded}-01-01`)
-                .add(9, "year")
-                .format("YYYY");
+            const { beginDecade, endDecade } =
+                CalendarHelper.getStartEndDecade(calendarDate);
 
             return (
-                <Text.BodySmall>
-                    {beginDecaded} to {endDecaded}
-                </Text.BodySmall>
+                <DropdownText>
+                    {beginDecade} to {endDecade}
+                </DropdownText>
             );
         }
 
         return (
-            <Text.BodySmall>
-                {dayjs(calendarDate).format("YYYY")}
-            </Text.BodySmall>
+            <DropdownText>{dayjs(calendarDate).format("YYYY")}</DropdownText>
         );
     };
 
@@ -131,9 +128,9 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
         <Container>
             <HeaderDropdown $view={showView}>
                 <DropdownMonth onClick={toggleMonthView}>
-                    <Text.BodySmall>
+                    <DropdownText>
                         {dayjs(calendarDate).format("MMM")}
-                    </Text.BodySmall>
+                    </DropdownText>
                     <ChevronDownIcon />
                 </DropdownMonth>
                 <DropdownYear onClick={toggleYearView}>

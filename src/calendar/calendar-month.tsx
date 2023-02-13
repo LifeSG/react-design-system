@@ -21,7 +21,7 @@ export const CalendarMonth = ({
     selectedStartDate,
     onSelect,
 }: CalendarMonthProps) => {
-    const [monthDate, setMonthDate] = useState<Dayjs[]>([]);
+    const [months, setMonths] = useState<Dayjs[]>([]);
 
     useEffect(() => {
         if (showView === "month") {
@@ -42,7 +42,6 @@ export const CalendarMonth = ({
 
         return {
             month,
-            value,
             variant,
         };
     };
@@ -54,18 +53,18 @@ export const CalendarMonth = ({
     const generateMonths = () => {
         const months = CalendarHelper.generateMonths(calendarDate);
 
-        setMonthDate(months);
+        setMonths(months);
     };
 
-    if (!monthDate.length) return null;
+    if (!months.length) return null;
 
     return (
         <MonthPickerContainer>
-            {monthDate.map((date, monthIndex) => {
-                const { variant, month, value } = generateMonthStatus(date);
+            {months.map((date) => {
+                const { variant, month } = generateMonthStatus(date);
                 return (
                     <MonthCell
-                        key={`${value}-${monthIndex}`}
+                        key={month}
                         onClick={() => handleMonthClick(date)}
                         $variant={variant}
                     >
