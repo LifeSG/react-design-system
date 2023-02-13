@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { CalendarYearProps, VariantYear } from "./types";
 import { YearCell, YearPickerContainer } from "./calendar-year.style";
 import { CalendarHelper } from "../util/calendar-helper";
+import { YearMonthBase } from "./calendar-month";
+
+export type VariantYear =
+    | "default"
+    | "current-year"
+    | "other-decade"
+    | "selected-year";
+
+interface CalendarYearProps extends YearMonthBase {
+    onDecadeChange: (value: Dayjs) => void;
+}
 
 export const CalendarYear = ({
     calendarDate,
@@ -14,7 +24,7 @@ export const CalendarYear = ({
     const [yearDate, setYearDate] = useState<Dayjs[]>([]);
 
     useEffect(() => {
-        if (showView === "Year") {
+        if (showView === "year") {
             generateDecadeOfYears();
         }
     }, [showView, calendarDate]);
@@ -27,11 +37,11 @@ export const CalendarYear = ({
         const year = fullDate.split("-")[0];
 
         const variant: VariantYear = isDecadeYear
-            ? "otherDecade"
+            ? "other-decade"
             : dayjs(selectedStartDate).isSame(fullDate, "year")
-            ? "selectedYear"
+            ? "selected-year"
             : dayjs().isSame(fullDate, "year")
-            ? "currentYear"
+            ? "current-year"
             : "default";
 
         return {

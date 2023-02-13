@@ -2,18 +2,18 @@ import dayjs from "dayjs";
 import { CalendarHelper } from "../../src/util/calendar-helper";
 
 describe("CalendarHelper", () => {
-    describe("generateDay", () => {
+    describe("generateDays", () => {
         it("should receive dayjs format value ", () => {
             const dayjsObject = dayjs();
 
-            expect(CalendarHelper.generateDay(dayjsObject)).toBeTruthy();
+            expect(CalendarHelper.generateDays(dayjsObject)).toBeTruthy();
         });
 
         it("should exist 29 day in Feb on leap year", () => {
             const isExist = "2028-02-29";
             const checkDate = dayjs("2028-02-29");
 
-            const nestedArray = CalendarHelper.generateDay(checkDate);
+            const nestedArray = CalendarHelper.generateDays(checkDate);
 
             const values = nestedArray
                 .map((week) => {
@@ -30,7 +30,7 @@ describe("CalendarHelper", () => {
             const isExist = "2027-02-29";
             const checkDate = dayjs("2027-02-29");
 
-            const nestedArray = CalendarHelper.generateDay(checkDate);
+            const nestedArray = CalendarHelper.generateDays(checkDate);
 
             const values = nestedArray
                 .map((week) => {
@@ -44,7 +44,7 @@ describe("CalendarHelper", () => {
         });
     });
 
-    describe("generateMonth", () => {
+    describe("generateMonths", () => {
         it("should receive twelve value in array", () => {
             const dayjsObject = dayjs();
             const correctLength = 12;
@@ -55,7 +55,7 @@ describe("CalendarHelper", () => {
         });
     });
 
-    describe("generateDecadeOfYear", () => {
+    describe("generateDecadeOfYears", () => {
         it("should receive twelve value in array", () => {
             const dayjsObject = dayjs();
             const correctLength = 12;

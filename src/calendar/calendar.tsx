@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import {
     ArrowLeft,
@@ -14,17 +14,19 @@ import {
 } from "./calendar.style";
 import { CalendarDay } from "./calendar-day";
 import { CalendarMonth } from "./calendar-month";
-import { CalendarProps, View } from "./types";
+import { CalendarProps } from "./types";
 import { CalendarYear } from "./calendar-year";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { Text } from "src/text";
+
+export type View = "day" | "month" | "year";
 
 export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
-    const [showView, setShowView] = useState<View>("Day");
+    const [showView, setShowView] = useState<View>("day");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
 
     useEffect(() => {
@@ -49,13 +51,13 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
 
     const handleLeftArrowClick = () => {
         switch (showView) {
-            case "Day":
+            case "day":
                 setCalendarDate((date) => date.subtract(1, "month"));
                 break;
-            case "Month":
+            case "month":
                 setCalendarDate((date) => date.subtract(1, "year"));
                 break;
-            case "Year":
+            case "year":
                 setCalendarDate((date) => date.subtract(10, "year"));
                 break;
         }
@@ -63,28 +65,28 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
 
     const handleRightArrowClick = () => {
         switch (showView) {
-            case "Day":
+            case "day":
                 setCalendarDate((date) => date.add(1, "month"));
                 break;
-            case "Month":
+            case "month":
                 setCalendarDate((date) => date.add(1, "year"));
                 break;
-            case "Year":
+            case "year":
                 setCalendarDate((date) => date.add(10, "year"));
                 break;
         }
     };
 
     const toggleMonthView = () => {
-        setShowView("Month");
+        setShowView("month");
     };
 
     const toggleYearView = () => {
         setShowView((prev) => {
-            if (prev === "Month") return "Day";
-            if (prev === "Year") return "Day";
+            if (prev === "month") return "day";
+            if (prev === "year") return "day";
 
-            return "Year";
+            return "year";
         });
     };
 
@@ -103,7 +105,7 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // RENDER FUNCTIONS
     // =============================================================================
     const renderYearHeader = () => {
-        if (showView === "Year") {
+        if (showView === "year") {
             const beginDecaded =
                 Math.floor(+calendarDate.format("YYYY") / 10) * 10;
 
@@ -139,7 +141,7 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
                     <ChevronDownIcon />
                 </DropdownYear>
             </HeaderDropdown>
-            <Views $show={showView}>
+            <Views $view={showView}>
                 <DayView>
                     <CalendarDay
                         calendarDate={calendarDate}
