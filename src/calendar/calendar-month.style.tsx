@@ -29,10 +29,7 @@ export const MonthCell = styled.div<MonthCellProps>`
     border-radius: 5rem;
 
     &:hover {
-        box-shadow: ${(props) =>
-            props.theme.name === "BookingSG"
-                ? "0px 0px 4px 1px rgba(161, 87, 255, 0.5)"
-                : "0px 0px 4px 1px rgba(87, 169, 255, 0.5)"};
+        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
         border: 1px solid ${Color.Accent.Light[1]};
     }
 
