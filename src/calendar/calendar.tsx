@@ -127,7 +127,7 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
 
     return (
         <Container>
-            <HeaderDropdown view={showView}>
+            <HeaderDropdown $view={showView}>
                 <DropdownMonth onClick={toggleMonthView}>
                     <Text.BodySmall>
                         {dayjs(calendarDate).format("MMM")}
@@ -139,7 +139,7 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
                     <ChevronDownIcon />
                 </DropdownYear>
             </HeaderDropdown>
-            <Views show={showView}>
+            <Views $show={showView}>
                 <DayView>
                     <CalendarDay
                         calendarDate={calendarDate}

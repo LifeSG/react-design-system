@@ -1,12 +1,14 @@
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
-import { VariantDay } from "./types";
+import { GenerateDayClass, VariantDay } from "./types";
 import styled, { css } from "styled-components";
 
 interface DayNumberProps {
     $variant: VariantDay;
     $disabled: boolean;
 }
+
+interface GrowDayCellProps extends GenerateDayClass {}
 
 interface CircleProps extends Pick<DayNumberProps, "$variant"> {
     $position: "left" | "right";
@@ -42,23 +44,30 @@ export const CalendarDaySection = styled.div`
     margin-bottom: 0.25rem;
 `;
 
-export const GrowDayCell = styled.div`
+export const GrowDayCell = styled.div<GrowDayCellProps>`
     display: flex;
     position: relative;
     height: 2.5rem;
     align-items: center;
     justify-content: center;
 
-    &.selected-start {
-        & [data-circle="left"] {
-            background-color: ${Color.Accent.Light[5]};
-            border: 1px solid ${Color.Primary};
+    ${(props) => {
+        const { $selected } = props;
+
+        if ($selected) {
+            return css`
+                ${LeftCell} ${Circle} {
+                    background-color: ${Color.Accent.Light[5]};
+                    border: 1px solid ${Color.Primary};
+                }
+
+                ${RightCell} ${Circle} {
+                    background-color: ${Color.Accent.Light[5]};
+                    border: 1px solid ${Color.Primary};
+                }
+            `;
         }
-        & [data-circle="right"] {
-            background-color: ${Color.Accent.Light[5]};
-            border: 1px solid ${Color.Primary};
-        }
-    }
+    }}
 `;
 
 const DayCellBasic = styled.div`
@@ -70,7 +79,6 @@ const DayCellBasic = styled.div`
 `;
 
 export const LeftCell = styled(DayCellBasic)``;
-
 export const RightCell = styled(DayCellBasic)``;
 
 export const Circle = styled.div<CircleProps>`

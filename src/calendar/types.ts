@@ -35,3 +35,10 @@ export interface CalendarMonthProps extends YearMonthBase {}
 export interface CalendarYearProps extends YearMonthBase {
     onDecadeChange: (value: Dayjs) => void;
 }
+
+export interface GenerateDayClass {
+    $selected?: boolean;
+    $point?: "start" | "middle" | "end";
+    $hovered?: boolean;
+    $disabled?: boolean;
+}
