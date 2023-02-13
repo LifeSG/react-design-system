@@ -22,13 +22,13 @@ export const CalendarDay = ({
 }: CalendarDayProps) => {
     const generateDayClass = (day: Dayjs): GenerateDayClass => {
         const dateStartWithYear = day.format("YYYY-MM-DD");
-        const classProps = {};
+        const styleProps = {};
 
         if (selectedStartDate === dateStartWithYear) {
-            classProps["$selected"] = true;
+            styleProps["$selected"] = true;
         }
 
-        return classProps;
+        return styleProps;
     };
 
     const generateDayStatus = (day: Dayjs) => {
@@ -77,12 +77,12 @@ export const CalendarDay = ({
                     {week.map((day, dayIndex) => {
                         const { isDisabled, variant } = generateDayStatus(day);
 
-                        const classProps = generateDayClass(day);
+                        const styleProps = generateDayClass(day);
 
                         return (
                             <GrowDayCell
                                 key={`day-${dayIndex}`}
-                                {...classProps}
+                                {...styleProps}
                             >
                                 <LeftCell>
                                     <Circle
