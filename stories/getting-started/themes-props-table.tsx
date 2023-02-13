@@ -20,7 +20,7 @@ const DATA: ApiTableSectionProps[] = [
                         body and hyperlinks
                     </>
                 ),
-                propTypes: ["base"],
+                propTypes: [`"base"`],
             },
             {
                 name: "designTokenScheme",
@@ -49,17 +49,17 @@ const DATA: ApiTableSectionProps[] = [
         name: "ThemeSpecOptions",
         attributes: [
             {
-                name: "options.color",
+                name: "color",
                 description: <>The modified color set values</>,
                 propTypes: ["ColorSetOptions"],
             },
             {
-                name: "options.textStyle",
+                name: "textStyle",
                 description: <>The modified text style set values</>,
                 propTypes: ["TextStyleSetOptionsType"],
             },
             {
-                name: "options.designToken",
+                name: "designToken",
                 description: <>The modified design token values</>,
                 propTypes: ["DesignTokenSetOptions"],
             },
@@ -87,27 +87,27 @@ const DATA: ApiTableSectionProps[] = [
         name: "TextStyleSpec",
         attributes: [
             {
-                name: "key.fontFamily",
+                name: "fontFamily",
                 description: <></>,
                 propTypes: ["string"],
             },
             {
-                name: "key.fontSize",
+                name: "fontSize",
                 description: <></>,
                 propTypes: ["number"],
             },
             {
-                name: "key.fontWeight",
+                name: "fontWeight",
                 description: <></>,
                 propTypes: ["number"],
             },
             {
-                name: "key.lineHeight",
+                name: "lineHeight",
                 description: <></>,
                 propTypes: ["number"],
             },
             {
-                name: "key.letterSpacing",
+                name: "letterSpacing",
                 description: <></>,
                 propTypes: ["number"],
             },
