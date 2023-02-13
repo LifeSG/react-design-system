@@ -78,7 +78,7 @@ export const ErrorDisplay = ({
 
     return (
         <Container {...otherProps} data-testid={testId}>
-            <Img {...updatedAssets.img} alt="error" />
+            <Img {...updatedAssets.img} alt="" />
             <TextContainer>
                 <Title data-testid={`${testId}--title`}>
                     {updatedAssets.title}
