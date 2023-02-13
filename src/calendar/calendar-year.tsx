@@ -57,7 +57,18 @@ export const CalendarYear = ({
     };
 
     const handleYearClick = (value: Dayjs) => {
-        onSelect(value);
+        let result = value;
+
+        if (selectedStartDate) {
+            const [, mm, dd] = dayjs(selectedStartDate)
+                .format("YYYY-MM-DD")
+                .split("-");
+            const selectedYear = value.format("YYYY");
+
+            result = dayjs(`${selectedYear}-${mm}-${dd}`);
+        }
+
+        onSelect(result);
 
         onDecadeChange(value);
     };

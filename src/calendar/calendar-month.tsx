@@ -47,7 +47,18 @@ export const CalendarMonth = ({
     };
 
     const handleMonthClick = (value: Dayjs) => {
-        onSelect(value);
+        let result = value;
+
+        if (selectedStartDate) {
+            const [yyyy, , dd] = dayjs(selectedStartDate)
+                .format("YYYY-MM-DD")
+                .split("-");
+            const selectedMonth = value.format("MM");
+
+            result = dayjs(`${yyyy}-${selectedMonth}-${dd}`);
+        }
+
+        onSelect(result);
     };
 
     const generateMonths = () => {
