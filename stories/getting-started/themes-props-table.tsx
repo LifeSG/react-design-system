@@ -87,7 +87,16 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "key in TextSizeType",
-                description: <>The attributes to modify the text style</>,
+                description: (
+                    <>
+                        The attributes to modify the text style. For the
+                        different keys available, refer to the text sizes&nbsp;
+                        <a href="/?path=/docs/general-text-base-style--page#text-styles">
+                            specification
+                        </a>
+                        .
+                    </>
+                ),
             },
         ],
     },
