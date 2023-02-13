@@ -90,7 +90,7 @@ const Component = (
             error={error}
             disabled={disabled}
             readOnly={readOnly}
-            {...otherProps}
+            className={otherProps.className}
         >
             <InputElement
                 data-testid="input"
