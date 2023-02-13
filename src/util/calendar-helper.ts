@@ -2,8 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 
 export namespace CalendarHelper {
     /**
-     * Ensures that the given value is transformed into a Dayjs format object (i.e. dayjs(2023-01-10))
-     * @param calendarDate input Dayjs object
+     * HELPER FUNCTIONS
      */
     export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
         const firstDayOfTheMonth = calendarDate.startOf("month");
@@ -18,10 +17,6 @@ export namespace CalendarHelper {
         return firstDayOfEachWeek.map((date) => generateWeek(date));
     };
 
-    /**
-     * Ensures that the given value is transformed into a Dayjs format object (i.e. dayjs(2023-01-10))
-     * @param calendarDate input Dayjs object
-     */
     export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
         const months: Dayjs[] = [];
 
@@ -34,10 +29,6 @@ export namespace CalendarHelper {
         return months;
     };
 
-    /**
-     * Ensures that the given value is transformed into a Dayjs format object (i.e. dayjs(2023-01-10))
-     * @param calendarDate input Dayjs object
-     */
     export const generateDecadeOfYears = (calendarDate: Dayjs): Dayjs[] => {
         const year = calendarDate.year();
         const decade = Math.floor(year / 10) * 10;
