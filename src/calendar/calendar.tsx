@@ -26,9 +26,7 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [calendarDate, setCalendarDate] = useState<Dayjs>(
-        dayjs("2024-03-31")
-    );
+    const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
     const [showView, setShowView] = useState<View>("day");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
 
