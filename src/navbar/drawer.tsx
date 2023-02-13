@@ -5,6 +5,9 @@ import {
     CloseIcon,
     Container,
     Content,
+    NavBrandContainer,
+    NavLogoContainer,
+    NavSeprator,
     TopBar,
     Wrapper,
 } from "./drawer.styles";
@@ -17,7 +20,15 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const { show, resources, children, onClose, onBrandClick } = props;
+    const {
+        show,
+        resources,
+        children,
+        resourcesSecondaryBrand,
+        onClose,
+        onBrandClick,
+        handleSecondaryBrandClick,
+    } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
 
     // =============================================================================
@@ -51,11 +62,25 @@ const Component = (
     // =============================================================================
     const renderTopBar = () => (
         <TopBar>
-            <Brand
-                resources={resources}
-                onClick={onBrandClick}
-                data-testid="drawer__brand"
-            />
+            <NavBrandContainer>
+                <Brand
+                    resources={resources}
+                    onClick={onBrandClick}
+                    data-testid="drawer__brand"
+                />
+                {resourcesSecondaryBrand && (
+                    <NavLogoContainer>
+                        <NavSeprator />
+                        <Brand
+                            resources={resourcesSecondaryBrand}
+                            compress={true}
+                            onClick={handleSecondaryBrandClick}
+                            data-testid="main__brand"
+                        />
+                    </NavLogoContainer>
+                )}
+            </NavBrandContainer>
+
             <CloseButton
                 onClick={onClose}
                 focusHighlight={false}

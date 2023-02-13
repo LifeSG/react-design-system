@@ -69,6 +69,10 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     show: boolean;
     children: JSX.Element | JSX.Element[];
     onClose?: () => void | undefined;
+    resourcesSecondaryBrand?: NavbarResourcesProps | undefined;
+    handleSecondaryBrandClick?: (
+        event: React.MouseEvent<HTMLAnchorElement>
+    ) => void | undefined;
 }
 
 export interface NavbarSecondarySharedProps {

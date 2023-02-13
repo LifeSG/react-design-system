@@ -102,3 +102,48 @@ export const CloseButton = styled(IconButton)`
         color: ${Color.Primary};
     }
 `;
+
+export const NavBrandContainer = styled.div`
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+`;
+
+export const NavLogoContainer = styled.div`
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+`;
+export const NavSeprator = styled.div`
+    display: flex;
+    background-color: ${Color.Neutral[5]};
+    height: 2.8125rem;
+    width: 0.05rem;
+    left: 13.435625rem;
+    margin-right: 1.504375rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        height: 24px;
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        height: 24px;
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        height: 24px;
+        margin-right: 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        height: 24px;
+        margin-right: 1rem;
+    }
+`;

@@ -172,6 +172,8 @@ const Component = <T,>(
                 onClose={handleDrawerClose}
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
+                resourcesSecondaryBrand={resourcesSecondaryBrand}
+                handleSecondaryBrandClick={handleBrandClick}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
