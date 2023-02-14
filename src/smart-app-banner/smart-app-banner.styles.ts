@@ -36,8 +36,8 @@ export const SmartAppBannerContainer = styled.div<{
     width: calc(100% - 2.5rem);
     min-height: 5.5rem;
     z-index: 9001;
-    background: #ffffff;
-    box-shadow: 0px 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
+    background: ${Color.Neutral[8]};
+    box-shadow: 0 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
     border-radius: 0.5rem;
     ${(props) => {
         if (props.$isAnimated)

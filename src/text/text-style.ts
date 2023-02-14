@@ -1,6 +1,11 @@
 import { getThemeTextStyles } from "../theme/text-theme-helper";
+import { PropertiesToType } from "../util/utility-types";
+import { TextStyleSetType } from "./types";
 
-export const TextStyle = {
+export const TextStyle: PropertiesToType<
+    TextStyleSetType,
+    ReturnType<typeof getThemeTextStyles>
+> = {
     D1: {
         fontFamily: getThemeTextStyles("D1.fontFamily"),
         fontSize: getThemeTextStyles("D1.fontSize"),
