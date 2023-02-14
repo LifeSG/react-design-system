@@ -51,24 +51,22 @@ export const CalendarYear = ({
     };
 
     const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(calendarDate);
+        let yearCalendarValue = calendarDate;
+        const year = yearCalendarValue.year();
+        const [, mm, dd] = selectedStartDate.split("-");
+
+        if (selectedStartDate) {
+            yearCalendarValue = dayjs(`${year}-${mm}-${dd}`);
+        }
+
+        const years = CalendarHelper.generateDecadeOfYears(yearCalendarValue);
 
         setYears(years);
     };
 
     const handleYearClick = (value: Dayjs) => {
-        let result = value;
-
-        if (selectedStartDate) {
-            const [, mm, dd] = dayjs(selectedStartDate)
-                .format("YYYY-MM-DD")
-                .split("-");
-            const selectedYear = value.format("YYYY");
-
-            result = dayjs(`${selectedYear}-${mm}-${dd}`);
-        }
-
-        onSelect(result);
+        console.log("value in yearClick :>> ", value);
+        onSelect(value);
 
         onDecadeChange(value);
     };
@@ -83,6 +81,7 @@ export const CalendarYear = ({
                 return (
                     <YearCell
                         key={year}
+                        data-value={date.format("YYYY-MM-DD")}
                         $variant={variant}
                         onClick={() => handleYearClick(date)}
                     >
