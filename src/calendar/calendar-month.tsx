@@ -47,22 +47,19 @@ export const CalendarMonth = ({
     };
 
     const handleMonthClick = (value: Dayjs) => {
-        let result = value;
-
-        if (selectedStartDate) {
-            const [yyyy, , dd] = dayjs(selectedStartDate)
-                .format("YYYY-MM-DD")
-                .split("-");
-            const selectedMonth = value.format("MM");
-
-            result = dayjs(`${yyyy}-${selectedMonth}-${dd}`);
-        }
-
-        onSelect(result);
+        onSelect(value);
     };
 
     const generateMonths = () => {
-        const months = CalendarHelper.generateMonths(calendarDate);
+        const selectedStartValue = dayjs(selectedStartDate);
+
+        const isSameYear = selectedStartValue.isSame(calendarDate, "year");
+
+        const monthCalendarValue = isSameYear
+            ? selectedStartValue
+            : calendarDate;
+
+        const months = CalendarHelper.generateMonths(monthCalendarValue);
 
         setMonths(months);
     };
@@ -71,11 +68,11 @@ export const CalendarMonth = ({
 
     return (
         <MonthPickerContainer>
-            {months.map((date) => {
+            {months.map((date, monthIndex) => {
                 const { variant, month } = generateMonthStatus(date);
                 return (
                     <MonthCell
-                        key={month}
+                        key={`${month}-${monthIndex}`}
                         onClick={() => handleMonthClick(date)}
                         $variant={variant}
                     >

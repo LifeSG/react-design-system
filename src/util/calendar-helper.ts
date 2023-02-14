@@ -35,7 +35,7 @@ export namespace CalendarHelper {
         const base = calendarDate.year(decade);
         const prev = base.subtract(1, "year");
 
-        const years = [prev, base];
+        const years: Dayjs[] = [prev, base];
 
         for (let i = 1; i < 11; i++) {
             years.push(base.add(i, "year"));

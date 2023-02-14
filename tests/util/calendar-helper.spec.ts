@@ -112,6 +112,32 @@ describe("CalendarHelper", () => {
             ).toHaveLength(correctLength);
         });
 
+        it("should exist 29 day in Feb on leap year", () => {
+            const date = dayjs("2024-03-31");
+            const isExistDate = "2024-02-29";
+
+            const values = CalendarHelper.generateMonths(date);
+            const formatDates = values.map((v) =>
+                dayjs(v).format("YYYY-MM-DD")
+            );
+            const isExist = formatDates.includes(isExistDate);
+
+            expect(isExist).toBeTruthy();
+        });
+
+        it("should not exist 29 day in Feb in non leap year", () => {
+            const date = dayjs("2023-03-31");
+            const isNotExistDate = "2023-02-29";
+
+            const values = CalendarHelper.generateMonths(date);
+            const formatDates = values.map((v) =>
+                dayjs(v).format("YYYY-MM-DD")
+            );
+            const isNotExist = formatDates.includes(isNotExistDate);
+
+            expect(isNotExist).toBeFalsy();
+        });
+
         it("should return 2019 for start decade of year", () => {
             const correctStarYear = 2019;
             const date = dayjs("2023-01-01");
