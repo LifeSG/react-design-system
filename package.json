@@ -13,6 +13,7 @@
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
         "test": "jest --coverage",
+        "test-watch": "jest --watch",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook"

@@ -1,5 +1,8 @@
 module.exports = {
+    rootDir: ".",
     moduleFileExtensions: ["tsx", "ts", "js"],
+    coverageDirectory: "<rootDir>/tests/coverage",
+    testEnvironment: "jsdom",
     testMatch: [
         "<rootDir>/src/**/__tests__/**/*.(js|ts)?(x)",
         "<rootDir>/tests/**/*.(ts)?(x)",
@@ -10,5 +13,6 @@ module.exports = {
             "<rootDir>/src/__mocks__/fileMock.js",
         "\\.(css|less)$": "identity-obj-proxy",
     },
-    setupFilesAfterEnv: ["jest-canvas-mock"],
+    moduleDirectories: ["node_modules", "."],
+    setupFilesAfterEnv: ["jest-canvas-mock", "@testing-library/jest-dom"],
 };
