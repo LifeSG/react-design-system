@@ -17,22 +17,43 @@ export namespace CalendarHelper {
         return firstDayOfEachWeek.map((date) => generateWeek(date));
     };
 
-    export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
+    export const generateMonths = (
+        calendarDate: Dayjs,
+        selectedStartDate: string
+    ): Dayjs[] => {
+        let monthCalendarValue = calendarDate;
         const months: Dayjs[] = [];
 
+        if (selectedStartDate) {
+            const [yyyy, , dd] = selectedStartDate.split("-");
+            const month = calendarDate.month();
+
+            monthCalendarValue = dayjs(`${yyyy}-${month + 1}-${dd}`);
+        }
+
         for (let i = 0; i < 12; i++) {
-            const monthForSelectedDay = calendarDate.month(i);
+            const monthForSelectedDay = monthCalendarValue.month(i);
             months.push(dayjs(monthForSelectedDay));
         }
 
         return months;
     };
 
-    export const generateDecadeOfYears = (calendarDate: Dayjs): Dayjs[] => {
-        const year = calendarDate.year();
+    export const generateDecadeOfYears = (
+        calendarDate: Dayjs,
+        selectedStartDate: string
+    ): Dayjs[] => {
+        let yearCalendarValue = calendarDate;
+
+        const year = yearCalendarValue.year();
         const decade = Math.floor(year / 10) * 10;
 
-        const base = calendarDate.year(decade);
+        if (selectedStartDate) {
+            const [, mm, dd] = selectedStartDate.split("-");
+            yearCalendarValue = dayjs(`${year}-${mm}-${dd}`);
+        }
+
+        const base = yearCalendarValue.year(decade);
         const prev = base.subtract(1, "year");
 
         const years: Dayjs[] = [prev, base];
