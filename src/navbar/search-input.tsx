@@ -124,7 +124,7 @@ export const SearchInput = <T,>({
     // EVENT HANDLERS
     // =============================================================================
     const handleSearchIconClick = () => {
-        setItemsLocalValue(items);
+        // setItemsLocalValue(items);
         setToggleDropdown(true);
     };
 

@@ -111,7 +111,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         font-weight: normal !important;
         width: 100%;
         height: 100%;
-        padding: 0.625rem 1rem;
+        padding: 0rem 16px;
         text-align: left;
         align-items: flex-start;
         font-size: 14px !important;
@@ -222,6 +222,11 @@ export const MenuItem = styled.li`
 
     ${MediaQuery.MaxWidth.tablet} {
         max-height: 44px;
+
+        :last-child {
+            margin-top: 8px !important;
+            margin-bottom: 8px !important;
+        }
     }
 `;
 
@@ -291,19 +296,27 @@ export const CloseIconContainer = styled.div`
 `;
 
 export const SearchIcon = styled(MagnifierIcon)`
-    height: 17.59px !important;
-    width: 17.59px !important;
-    color: #686868 !important;
+    height: 1.5rem !important;
+    width: 1.5rem !important;
+    color: ${Color.Neutral[3]} !important;
+
+    :hover {
+        color: ${Color.Primary} !important;
+    }
 `;
 
 export const CrossIconClose = styled(CrossIcon)`
     height: 1.5rem !important;
     width: 1.5rem !important;
-    color: #686868 !important;
+    color: ${Color.Neutral[3]} !important;
+
+    :hover {
+        color: ${Color.Primary} !important;
+    }
 `;
 
 export const SearchInputIcon = styled(MagnifierIcon)`
-    color: #686868 !important;
+    color: ${Color.Neutral[3]} !important;
 `;
 
 export const SearchMainBarContainer = styled.div`

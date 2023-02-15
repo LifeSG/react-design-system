@@ -228,23 +228,23 @@ const Component = <T,>(
                                             selectedId={selectedId}
                                         />
                                     )}
-                                    {showSearch && (
-                                        <SearchInput
-                                            items={items.searchMenuItems}
-                                            onItemClick={handleNavItemClick}
-                                            selectedId={selectedId}
-                                            toggleheaderClick={
-                                                toggleheaderClick
-                                            }
-                                            onToggleHeaderClick={
-                                                handleheaderClick
-                                            }
-                                            mobile={false}
-                                        />
-                                    )}
+
                                     <NavElementsRightContainer>
                                         {children}
-
+                                        {showSearch && (
+                                            <SearchInput
+                                                items={items.searchMenuItems}
+                                                onItemClick={handleNavItemClick}
+                                                selectedId={selectedId}
+                                                toggleheaderClick={
+                                                    toggleheaderClick
+                                                }
+                                                onToggleHeaderClick={
+                                                    handleheaderClick
+                                                }
+                                                mobile={false}
+                                            />
+                                        )}
                                         <NavbarActionButtons
                                             actionButtons={
                                                 actionButtons &&

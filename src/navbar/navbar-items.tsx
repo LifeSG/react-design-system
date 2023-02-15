@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
 import {
+    DownIcon,
     Link,
     LinkIndicator,
     LinkItem,
+    MenuItemContainer,
+    MenuItemRightContainer,
     MobileWrapper,
+    UpIcon,
     Wrapper,
 } from "./navbar-items.styles";
 import { NavItemProps, NavSubItemProps } from "./types";
@@ -104,17 +108,24 @@ export const NavbarItems = <T,>({
 
             return (
                 <LinkItem key={index}>
-                    <Link
-                        data-testid={testId}
-                        weight={textWeight}
-                        $selected={selected} /* for mobile */
-                        {...otherItemAttrs}
-                        onClick={handleLinkClick(item, index)}
-                        {...options}
-                    >
-                        {children}
-                        {selected && <LinkIndicator />}
-                    </Link>
+                    <MenuItemContainer>
+                        <Link
+                            data-testid={testId}
+                            weight={textWeight}
+                            $selected={selected} /* for mobile */
+                            {...otherItemAttrs}
+                            onClick={handleLinkClick(item, index)}
+                            {...options}
+                        >
+                            {children}
+                            {selected && <LinkIndicator />}
+                            {isMobile && item.subMenu && (
+                                <MenuItemRightContainer>
+                                    {selected ? <UpIcon /> : <DownIcon />}
+                                </MenuItemRightContainer>
+                            )}
+                        </Link>
+                    </MenuItemContainer>
 
                     {isMobile &&
                         selectedIndex >= 0 &&

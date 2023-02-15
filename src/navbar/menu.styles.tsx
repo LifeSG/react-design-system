@@ -81,7 +81,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
 
     :active,
     :focus {
-        color: ${Color.Neutral[1]};
+        color: ${Color.Primary} !important;
     }
 
     ${MediaQuery.MaxWidth.tablet} {

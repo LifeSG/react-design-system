@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -19,6 +21,7 @@ export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
     position: relative;
+    max-height: 20rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
@@ -40,7 +43,7 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 export const LinkItem = styled.li`
     position: relative;
-    display: grid;
+    display: contents;
     align-items: center;
     :not(:last-of-type) {
         margin-right: 1rem;
@@ -76,10 +79,14 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
                 props.$selected ? "bold" : "regular"
             );
         }}
+        color: ${Color.Neutral[1]};
         width: 100%;
         padding: 0.625rem 1rem;
         text-align: left;
         align-items: flex-start;
+        :hover {
+            color: ${Color.Neutral[1]} !important;
+        }
     }
 `;
 
@@ -127,4 +134,42 @@ export const LinkWrapper = styled.ul`
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
     }
+`;
+
+export const MenuItemContainer = styled.div`
+    position: relative;
+    display: flex;
+    width: 100%;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+`;
+export const MenuItemRightContainer = styled.div`
+    position: relative;
+    display: flex;
+    width: 100%;
+    float: right;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: flex;
+        align-items: center;
+        display: flex;
+        float: right;
+        justify-content: end;
+        align-items: center;
+        padding-right: 16px;
+    }
+`;
+
+export const DownIcon = styled(ChevronDownIcon)`
+    height: 20px;
+    width: 20px;
+`;
+
+export const UpIcon = styled(ChevronUpIcon)`
+    height: 20px;
+    width: 20px;
 `;
