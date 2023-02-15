@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useImperativeHandle, useRef } from "react";
 import { StringHelper } from "../util/string-helper";
 import {
     ClearContainer,
@@ -24,17 +24,29 @@ const Component = (
     ref: InputRef
 ): JSX.Element => {
     // =============================================================================
-    // CONST, STATE, REFS
+    // CONST, STATE, REF
     // =============================================================================
+    const elementRef = useRef<HTMLInputElement>();
+    useImperativeHandle(ref, () => elementRef.current, []);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (shouldAllowSpacing()) {
-            handleSpacingAndCaretPosition(event);
-            return;
+        if (onChange) {
+            if (shouldAllowSpacing()) {
+                handleSpacingAndCaretPosition(event);
+            } else {
+                onChange(event);
+            }
         }
-        onChange(event);
+    };
+
+    const handleClear = () => {
+        if (onClear) onClear();
+        if (elementRef && elementRef.current) {
+            elementRef.current.focus();
+        }
     };
 
     // =============================================================================
@@ -67,8 +79,8 @@ const Component = (
         element.value = currentValue;
     };
 
-    const handleClear = () => {
-        if (onClear) onClear();
+    const shouldShowClear = () => {
+        return allowClear && !disabled && !readOnly && !!value;
     };
 
     // =============================================================================
@@ -82,8 +94,6 @@ const Component = (
      * be set to empty string)
      */
     const updatedValue = value ? convertInputString(value) : value;
-    const onChangeFn = onChange ? handleChange : undefined;
-    const showClearButton = allowClear && !disabled && !readOnly && !error;
 
     return (
         <Container
@@ -94,16 +104,16 @@ const Component = (
         >
             <InputElement
                 data-testid="input"
-                ref={ref}
+                ref={elementRef}
                 disabled={disabled}
                 value={updatedValue}
                 error={error}
-                onChange={onChangeFn}
+                onChange={handleChange}
                 type={type}
                 readOnly={readOnly}
                 {...otherProps}
             />
-            {showClearButton && (
+            {shouldShowClear() && (
                 <ClearContainer onClick={handleClear}>
                     <ClearIcon />
                 </ClearContainer>
