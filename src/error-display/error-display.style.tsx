@@ -14,7 +14,7 @@ export const Container = styled.div`
 
 export const Img = styled.img`
     position: relative;
-    width: 26rem;
+    width: 25rem;
     height: auto;
 
     ${MediaQuery.MaxWidth.mobileL} {
