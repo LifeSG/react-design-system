@@ -29,8 +29,7 @@ export const ElementBoundary = styled(InputSelectElemBoundary)``;
 export const DisplayContainer = styled.div<StyleProps>`
     position: relative;
     display: flex;
-    height: 3rem;
-    margin-left: 0.5rem;
+    margin: 0 1rem;
     ${(props) => {
         if (props.$expanded) {
             return css`
@@ -45,8 +44,8 @@ export const Selector = styled.button`
     position: relative;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1rem 0 0.5rem;
     height: 3rem;
+    padding: 0;
     border-radius: ${BORDER_RADIUS};
     cursor: pointer;
     border: none;
@@ -61,7 +60,7 @@ export const Selector = styled.button`
 export const IconContainer = styled.div<StyleProps>`
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
     transition: ${Transition.Base};
-    margin-left: 1rem;
+    margin: 0 0.75rem;
 `;
 
 export const StyledChevronIcon = styled(ChevronDownIcon)`
@@ -91,8 +90,7 @@ export const PlaceholderLabel = styled(ValueLabel)`
 `;
 
 export const Divider = styled.div`
-    margin: 1rem 1rem 1rem 0;
+    margin: 1rem 0;
     width: 1px;
-    height: 1.25rem;
     background: ${Color.Neutral[5]};
 `;

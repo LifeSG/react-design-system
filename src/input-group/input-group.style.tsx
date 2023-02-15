@@ -29,8 +29,9 @@ export const Container = styled.div<AddonStyleProps>`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     background: ${Color.Neutral[8]};
-    height: 3rem;
+    height: max-content;
     width: 100%;
+    padding: 0 1rem;
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 
@@ -43,7 +44,7 @@ export const Container = styled.div<AddonStyleProps>`
         if (props.$readOnly) {
             return css`
                 border: none;
-                padding-left: 0rem;
+                padding: 0;
                 background: transparent !important;
 
                 :focus-within {
@@ -80,6 +81,7 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
     // overwrite default styles
     background: transparent;
     border: none;
+    padding: 0;
 
     :focus-within {
         outline: none;
@@ -92,15 +94,14 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
             case "right":
                 return css`
                     :not(:only-child) {
-                        padding-right: 0;
+                        margin-right: 0.75rem;
                     }
                 `;
             case "left":
             default:
                 return css`
-                    padding: unset;
                     :not(:only-child) {
-                        padding-left: 0;
+                        margin-left: 0.75rem;
                     }
                 `;
         }
@@ -111,9 +112,6 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
     position: relative;
     display: flex;
     align-items: center;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    padding: 0 0.6875rem 0 1rem;
 
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${Color.Neutral[1]};

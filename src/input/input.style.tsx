@@ -25,10 +25,11 @@ export const Container = styled.div<InputStyleProps>`
     display: flex;
     position: relative;
     flex-direction: row;
-    height: 100%;
+    height: max-content;
     width: 100%;
     background: ${Color.Neutral[8]};
     color: ${Color.Neutral[1]};
+    padding: 0 1rem;
 
     :focus-within {
         outline: none;
@@ -62,7 +63,7 @@ export const Container = styled.div<InputStyleProps>`
         if (props.readOnly) {
             return css`
                 border: none;
-                padding: 0.2rem 0 0.3rem;
+                padding: 0;
                 background: transparent !important;
                 :focus-within {
                     border: none;
@@ -96,14 +97,15 @@ export const Container = styled.div<InputStyleProps>`
 `;
 
 export const InputElement = styled.input<InputStyleProps>`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+
     // overwrite default styles
     background: transparent;
     border: none;
     height: 3rem;
     width: 100%;
 
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    padding: 0.2rem 1rem 0.3rem; // Somehow the input text appears lower
+    padding: 0 0 0.1rem; // Somehow the input text appears lower
 
     :focus,
     :active {
@@ -115,9 +117,10 @@ export const InputElement = styled.input<InputStyleProps>`
 
 export const ClearContainer = styled.button<InputStyleProps>`
     position: relative;
-    display: flex;
-    align-items: center;
-    padding: 0.875rem 1rem;
+    height: auto;
+    padding: 0 1rem;
+
+    margin-right: -1rem; // offset the padding
     cursor: pointer;
 
     color: ${Color.Neutral[3]};
