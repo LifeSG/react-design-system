@@ -10,16 +10,13 @@ export type VariantYear =
     | "other-decade"
     | "selected-year";
 
-interface CalendarYearProps extends YearMonthBase {
-    onDecadeChange: (value: Dayjs) => void;
-}
+interface CalendarYearProps extends YearMonthBase {}
 
 export const CalendarYear = ({
     calendarDate,
     showView,
     selectedStartDate,
     onSelect,
-    onDecadeChange,
 }: CalendarYearProps) => {
     const [years, setYears] = useState<Dayjs[]>([]);
 
@@ -51,18 +48,13 @@ export const CalendarYear = ({
     };
 
     const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(
-            calendarDate,
-            selectedStartDate
-        );
+        const years = CalendarHelper.generateDecadeOfYears(calendarDate);
 
         setYears(years);
     };
 
     const handleYearClick = (value: Dayjs) => {
         onSelect(value);
-
-        onDecadeChange(value);
     };
 
     if (!years.length) return null;

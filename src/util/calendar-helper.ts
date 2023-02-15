@@ -1,9 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 
 export namespace CalendarHelper {
-    // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
     export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
         const firstDayOfTheMonth = calendarDate.startOf("month");
 
@@ -17,46 +14,25 @@ export namespace CalendarHelper {
         return firstDayOfEachWeek.map((date) => generateWeek(date));
     };
 
-    export const generateMonths = (
-        calendarDate: Dayjs,
-        selectedStartDate: string
-    ): Dayjs[] => {
-        let monthCalendarValue = calendarDate;
+    export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
         const months: Dayjs[] = [];
 
-        if (selectedStartDate) {
-            const [yyyy, , dd] = selectedStartDate.split("-");
-            const month = calendarDate.month();
-
-            monthCalendarValue = dayjs(`${yyyy}-${month + 1}-${dd}`);
-        }
-
         for (let i = 0; i < 12; i++) {
-            const monthForSelectedDay = monthCalendarValue.month(i);
+            const monthForSelectedDay = calendarDate.month(i);
             months.push(dayjs(monthForSelectedDay));
         }
 
         return months;
     };
 
-    export const generateDecadeOfYears = (
-        calendarDate: Dayjs,
-        selectedStartDate: string
-    ): Dayjs[] => {
-        let yearCalendarValue = calendarDate;
-
-        const year = yearCalendarValue.year();
+    export const generateDecadeOfYears = (calendarDate: Dayjs): Dayjs[] => {
+        const year = calendarDate.year();
         const decade = Math.floor(year / 10) * 10;
 
-        if (selectedStartDate) {
-            const [, mm, dd] = selectedStartDate.split("-");
-            yearCalendarValue = dayjs(`${year}-${mm}-${dd}`);
-        }
-
-        const base = yearCalendarValue.year(decade);
+        const base = calendarDate.year(decade);
         const prev = base.subtract(1, "year");
 
-        const years: Dayjs[] = [prev, base];
+        const years = [prev, base];
 
         for (let i = 1; i < 11; i++) {
             years.push(base.add(i, "year"));

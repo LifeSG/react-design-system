@@ -56,12 +56,12 @@ export const GrowDayCell = styled.div<GrowDayCellProps>`
 
         if ($selected) {
             return css`
-                ${LeftCell} ${LeftCircle} {
+                ${LeftCircle} {
                     background-color: ${Color.Accent.Light[5]};
                     border: 1px solid ${Color.Primary};
                 }
 
-                ${RightCell} ${RightCircle} {
+                ${RightCircle} {
                     background-color: ${Color.Accent.Light[5]};
                     border: 1px solid ${Color.Primary};
                 }

@@ -116,7 +116,7 @@ export const CalendarDay = ({
                                     $variant={variant}
                                     $disabled={isDisabled}
                                 >
-                                    {day.format("DD")}
+                                    {parseInt(day.format("DD"))}
                                 </DayNumber>
                                 <InteractiveCircle
                                     $disabled={isDisabled}

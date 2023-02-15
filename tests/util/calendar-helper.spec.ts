@@ -81,93 +81,72 @@ describe("CalendarHelper", () => {
     describe("generateMonths", () => {
         it("should receive twelve value in array", () => {
             const dayjsObject = dayjs("2023-02-01");
-            const selectedStartValue = "";
             const correctLength = 12;
 
-            expect(
-                CalendarHelper.generateMonths(dayjsObject, selectedStartValue)
-            ).toHaveLength(correctLength);
+            expect(CalendarHelper.generateMonths(dayjsObject)).toHaveLength(
+                correctLength
+            );
         });
 
         it("should exist 29 day in Feb on leap year", () => {
             const date = dayjs("2024-03-31");
-            const selectedStartValue = "";
             const isExistDate = "2024-02-29";
 
-            const values = CalendarHelper.generateMonths(
-                date,
-                selectedStartValue
-            );
+            const values = CalendarHelper.generateMonths(date);
             const formatDates = values.map((v) =>
                 dayjs(v).format("YYYY-MM-DD")
             );
             const isExist = formatDates.includes(isExistDate);
 
             expect(isExist).toBeTruthy();
+        });
+
+        it("should return last day 28 day in Feb for non leap year if the previous selection date is not exist in selected month", () => {
+            const date = dayjs("2023-04-30");
+            const lastDayOfTheMonth = "2023-02-28";
+
+            const values = CalendarHelper.generateMonths(date);
+
+            const formatDates = values.map((v) =>
+                dayjs(v).format("YYYY-MM-DD")
+            );
+
+            const isSelectedLastDay = formatDates.includes(lastDayOfTheMonth);
+
+            expect(isSelectedLastDay).toBeTruthy();
         });
     });
 
     describe("generateDecadeOfYears", () => {
         it("should receive twelve value in array", () => {
             const dayjsObject = dayjs("2023-04-01");
-            const selectedStartValue = "2023-02-04";
             const correctLength = 12;
 
             expect(
-                CalendarHelper.generateDecadeOfYears(
-                    dayjsObject,
-                    selectedStartValue
-                )
+                CalendarHelper.generateDecadeOfYears(dayjsObject)
             ).toHaveLength(correctLength);
         });
 
-        it("should exist 29 day in Feb on leap year", () => {
-            const date = dayjs("2024-03-31");
-            const selectedStartValue = "2024-02-29";
-            const isExistDate = "2024-02-29";
+        it("should return 28 day in Feb on non leap year if the previous selection date is not exist in selected year", () => {
+            const date = dayjs("2024-02-29");
+            const lastDayOfTheMonth = "2023-02-28";
 
-            const values = CalendarHelper.generateDecadeOfYears(
-                date,
-                selectedStartValue
-            );
+            const values = CalendarHelper.generateDecadeOfYears(date);
 
             const formatDates = values.map((v) =>
                 dayjs(v).format("YYYY-MM-DD")
             );
 
-            const isExist = formatDates.includes(isExistDate);
+            const isSelectedLastDay = formatDates.includes(lastDayOfTheMonth);
 
-            expect(isExist).toBeTruthy();
-        });
-
-        it("should select last day of the month if prev selected value date is not exist in the selection", () => {
-            // 2024 is the leap year, 2023 is not
-            const date = dayjs("2024-02-29");
-            const selectedDate = "2023-02-28";
-
-            const dayInlastMonth = CalendarHelper.generateDecadeOfYears(
-                date,
-                selectedDate
-            );
-
-            const formatDates = dayInlastMonth.map((v) =>
-                dayjs(v).format("YYYY-MM-DD")
-            );
-
-            const isExistLastDay = formatDates.includes(selectedDate);
-
-            expect(isExistLastDay).toBeTruthy();
+            expect(isSelectedLastDay).toBeTruthy();
         });
 
         it("should return 2019 for start decade of year", () => {
             const correctStarYear = 2019;
-            const selectedStartValue = "2023-02-04";
             const date = dayjs("2023-01-01");
 
-            const arrayDate = CalendarHelper.generateDecadeOfYears(
-                date,
-                selectedStartValue
-            );
+            const arrayDate = CalendarHelper.generateDecadeOfYears(date);
             const result = +arrayDate[0].format("YYYY");
 
             expect(result).toEqual(correctStarYear);
@@ -175,13 +154,9 @@ describe("CalendarHelper", () => {
 
         it("should return 2030 for last decade of year", () => {
             const correctEndYear = 2030;
-            const selectedStartValue = "2023-02-04";
             const date = dayjs("2023-01-01");
 
-            const arrayDate = CalendarHelper.generateDecadeOfYears(
-                date,
-                selectedStartValue
-            );
+            const arrayDate = CalendarHelper.generateDecadeOfYears(date);
 
             const result = +arrayDate[arrayDate.length - 1].format("YYYY");
 

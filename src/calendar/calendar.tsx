@@ -84,18 +84,16 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
 
     const toggleYearView = () => {
         setShowView((prev) => {
-            if (prev === "month") return "day";
-            if (prev === "year") return "day";
+            if (prev !== "day") return "day";
 
             return "year";
         });
     };
 
     const handleDateChange = (value: Dayjs) => {
-        const isOtherMonthSelected = calendarDate.month() !== value.month();
         const stringValue = value.format("YYYY-MM-DD");
 
-        if (isOtherMonthSelected) setCalendarDate(value);
+        setCalendarDate(value);
 
         setSelectedStartDate(stringValue);
 
@@ -159,7 +157,6 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
                         showView={showView}
                         selectedStartDate={selectedStartDate}
                         onSelect={(date) => handleDateChange(date)}
-                        onDecadeChange={(date) => setCalendarDate(date)}
                     />
                 </YearView>
             </Views>

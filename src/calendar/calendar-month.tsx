@@ -51,10 +51,7 @@ export const CalendarMonth = ({
     };
 
     const generateMonths = () => {
-        const months = CalendarHelper.generateMonths(
-            calendarDate,
-            selectedStartDate
-        );
+        const months = CalendarHelper.generateMonths(calendarDate);
 
         setMonths(months);
     };
