@@ -5,11 +5,13 @@ import styled, { css } from "styled-components";
 import { TextStyleHelper } from "../text/helper";
 import { View } from "./calendar";
 import { Text } from "../text";
-import { CalendarProps } from "./types";
+import { calendarType } from "./types";
 import { MonthPickerContainer } from "./calendar-month.style";
 import { YearPickerContainer } from "./calendar-year.style";
 
-interface ContainerProps extends Pick<CalendarProps, "$type"> {}
+interface ContainerProps {
+    $type: calendarType;
+}
 
 interface HeaderDropdownProps {
     $view: View;

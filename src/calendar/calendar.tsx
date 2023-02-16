@@ -26,7 +26,7 @@ export const Calendar = ({
     disabledDates,
     onChange,
     value,
-    $type = "calendar",
+    type = "calendar",
 }: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -126,7 +126,7 @@ export const Calendar = ({
     };
 
     return (
-        <Container $type={$type}>
+        <Container $type={type}>
             <HeaderDropdown $view={showView}>
                 <DropdownMonth onClick={toggleMonthView}>
                     <DropdownText>
