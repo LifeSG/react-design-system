@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { Color } from "../color/color";
 import { TextStyleHelper } from "../text";
-import { NotificationToast } from "./types";
+import { Text } from "../text";
+import { NotificationType } from "./types";
 import { IconButton } from "../icon-button";
+import { CrossIcon } from "@lifesg/react-icons/cross";
+// import { Icon } from "src/icon";
 
 interface StyleProps {
-    $type: NotificationToast;
+    $type: NotificationType;
 }
 
 // =============================================================================
@@ -17,7 +20,7 @@ export const Wrapper = styled.div<StyleProps>`
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    ${TextStyleHelper.getTextStyle("XSmall", "light")}
+    // ${TextStyleHelper.getTextStyle("XSmall", "light")}
 
     ${(props) => {
         let backgroundColor: string;
@@ -48,30 +51,6 @@ export const Wrapper = styled.div<StyleProps>`
                 borderColor = Color.Validation.Blue.Border(props);
                 textColor = Color.Validation.Blue.Text(props);
                 break;
-            case "successDark":
-                backgroundColor = Color.Validation.DarkMode.Background(props);
-                borderColor = Color.Validation.DarkMode.Border(props);
-                textColor = Color.Validation.DarkMode.Text(props);
-                iconColor = Color.Validation.Green.Icon(props);
-                break;
-            case "errorDark":
-                backgroundColor = Color.Validation.DarkMode.Background(props);
-                borderColor = Color.Validation.DarkMode.Border(props);
-                textColor = Color.Validation.DarkMode.Text(props);
-                iconColor = Color.Validation.Red.Border(props);
-                break;
-            case "warningDark":
-                backgroundColor = Color.Validation.DarkMode.Background(props);
-                borderColor = Color.Validation.DarkMode.Border(props);
-                textColor = Color.Validation.DarkMode.Text(props);
-                iconColor = Color.Validation.Orange.Icon(props);
-                break;
-            case "infoDark":
-                backgroundColor = Color.Validation.DarkMode.Background(props);
-                borderColor = Color.Validation.DarkMode.Border(props);
-                textColor = Color.Validation.DarkMode.Text(props);
-                iconColor = Color.Validation.Blue.Icon(props);
-                break;
             default:
                 backgroundColor = Color.Validation.Green.Background(props);
                 borderColor = Color.Validation.Green.Border(props);
@@ -83,21 +62,39 @@ export const Wrapper = styled.div<StyleProps>`
         return `
 			background: ${backgroundColor};
 			border: 1pt solid ${borderColor};
-            color: ${textColor};    
+            color: ${textColor};
 
           svg {
             color: ${iconColor};
             font-size: 24px;
-            margin-right: 4px;  
+            margin-right: 4px;
         }
 
-        p {
+        span {
             ${TextStyleHelper.getTextStyle("Body", "regular")}
             margin-left: 30px;
-            margin-top: -34px;
+            margin-top: -32px;
             margin-right: 20px;
+            color: ${textColor};
         }
-        
+
+        message {
+            display: inline-block;
+            margin-top: -2px;
+            margin-left: 30px;
+            margin-right: 60px !important;
+            margin-top: -4rem;
+            color: ${textColor};
+        }
+
+        H4 {
+            ${TextStyleHelper.getTextStyle("Body", "semibold")}
+            margin-top: -33px;
+            margin-left: 30px;
+            margin-right: 8px;
+            color: ${textColor};
+        }
+
         :focus,
         :active {
             background: transparent;
@@ -106,37 +103,33 @@ export const Wrapper = styled.div<StyleProps>`
 `;
 
 export const Container = styled.div`
-    display: flex;
-    padding: 0;
-`;
-
-export const Content = styled.div`
     display: inline-block;
     width: 100%;
     padding: 0;
-
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
 `;
 
-export const Title = styled.div`
+export const Title = styled(Text.H4)`
     ${TextStyleHelper.getTextStyle("Body", "semibold")}
-    margin-top: -33px;
-    margin-left: 30px;
-    margin-bottom: 5px;
-    margin-right: 8px;
 `;
 
-export const Description = styled.div`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
-    margin-top: -6px;
-    margin-left: 30px;
-    margin-right: 60px;
+export const Description = styled(Text.BodySmall && Text.Body)<StyleProps>`
+    display: inline-block;
+    // margin-top: -6px;
+    // margin-left: 30px;
+    // margin-right: 60px !important;
+    // margin-top: -4rem;
+`;
+
+export const CloseIcon = styled(CrossIcon)`
+    height: 20px;
+    width: 20px;
+    margin-top: -2px;
 `;
 
 export const StyledIconButton = styled(IconButton)<StyleProps>`
     background: transparent;
     padding: 0;
-    padding-top: 5px;
+    padding-top: 3px;
     margin-right: -6px;
     margin-left: 8px;
     float: right;
@@ -156,12 +149,6 @@ export const StyledIconButton = styled(IconButton)<StyleProps>`
             case "info":
                 iconColor = Color.Validation.Blue.Text(props);
                 break;
-            case "successDark":
-            case "errorDark":
-            case "warningDark":
-            case "infoDark":
-                iconColor = Color.Validation.DarkMode.Text(props);
-                break;
             default:
                 iconColor = Color.Validation.Green.Text(props);
                 break;
@@ -170,6 +157,7 @@ export const StyledIconButton = styled(IconButton)<StyleProps>`
 
         svg {
             color: ${iconColor};
+            display: block;
         }
 
         :focus,

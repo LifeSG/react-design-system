@@ -57,13 +57,7 @@ export const BaseColorSet: ColorSet = {
             Border: "#DD6666",
             Background: "#FDF7F7", // Validation Background
         },
-        Blue: {
-            Text: "#064D70", // Validation Text
-            Icon: " #84B7DB",
-            Border: "#84B7DB",
-            Background: "#E8F4FA", // Validation Background
-        },
-        DarkMode: {
+        Dark: {
             Text: "#FFFFFF", // Validation Text
             Icon: "#FFFFFF",
             Border: "#424242",
