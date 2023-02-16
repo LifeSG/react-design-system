@@ -45,6 +45,27 @@ export const DisplayContainer = styled.div<StyleProps>`
             `;
         }
     }}
+
+    ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                border: 0;
+                margin: 0;
+            `;
+        } else {
+            switch (props.$position) {
+                case "right":
+                    return css`
+                        flex-direction: row-reverse;
+                        margin: 0 0 0 1rem;
+                    `;
+                default:
+                    return css`
+                        flex-direction: row;
+                    `;
+            }
+        }
+    }}
 `;
 
 export const Selector = styled.button`
@@ -63,6 +84,15 @@ export const Selector = styled.button`
     :active {
         outline-color: ${Color.Accent.Light[3]};
     }
+`;
+
+export const SelectorReadOnly = styled.div`
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    margin-right: 0.75rem;
 `;
 
 export const IconContainer = styled.div<StyleProps>`
@@ -97,8 +127,28 @@ export const PlaceholderLabel = styled(ValueLabel)`
     color: ${Color.Neutral[3]};
 `;
 
-export const Divider = styled.div`
-    margin: 1rem 0;
+export const Divider = styled.div<DividerStyleProps>`
     width: 1px;
     background: ${Color.Neutral[5]};
+
+    ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                display: none;
+            `;
+        }
+    }}
+
+    ${(props) => {
+        switch (props.$position) {
+            case "right":
+                return css`
+                    margin: 1rem 0.75rem;
+                `;
+            default:
+                return css`
+                    margin: 1rem 0.75rem 1rem 0;
+                `;
+        }
+    }}
 `;

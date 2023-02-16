@@ -89,24 +89,6 @@ export const MainInput = styled(Input)<MainInputStyleProps>`
         border: none;
         box-shadow: none;
     }
-
-    ${(props) => {
-        switch (props.$position) {
-            case "right":
-                return css`
-                    :not(:only-child) {
-                        margin-right: 0.75rem;
-                    }
-                `;
-            case "left":
-            default:
-                return css`
-                    :not(:only-child) {
-                        margin-left: 0.75rem;
-                    }
-                `;
-        }
-    }}
 `;
 
 export const AddOnContainer = styled.div<AddonStyleProps>`
@@ -142,4 +124,18 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
             `;
         }
     }}
+
+    ${(props) => {
+        switch (props.$position) {
+            case "right":
+                return css`
+                    margin-left: 0.75rem;
+                `;
+            case "left":
+            default:
+                return css`
+                    margin-right: 0.75rem;
+                `;
+        }
+    }};
 `;
