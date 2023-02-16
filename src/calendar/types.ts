@@ -7,7 +7,7 @@ export interface CalendarProps {
     disabledDates?: string[] | undefined;
     onChange?: ((value: string) => void) | undefined;
     value?: string | undefined;
-    type: CalendarType;
+    type?: CalendarType | undefined;
 }
 
 // =============================================================================
