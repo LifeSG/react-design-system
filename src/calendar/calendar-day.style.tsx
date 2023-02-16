@@ -10,10 +10,6 @@ interface DayNumberProps {
 
 interface GrowDayCellProps extends DayCellStyleProps {}
 
-interface CircleProps extends Pick<DayNumberProps, "$variant"> {
-    $position: "left" | "right";
-}
-
 interface InteractiveCircleProps extends Omit<DayNumberProps, "$variant"> {}
 
 // =============================================================================
@@ -65,6 +61,11 @@ export const GrowDayCell = styled.div<GrowDayCellProps>`
                     background-color: ${Color.Accent.Light[5]};
                     border: 1px solid ${Color.Primary};
                 }
+
+                ${DayNumber} {
+                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                    color: ${Color.Primary}
+                }
             `;
         }
     }}
@@ -78,51 +79,25 @@ const DayCellBasic = styled.div`
     width: 1.25rem;
 `;
 
-const Circle = styled.div<CircleProps>`
+const Circle = styled.div`
     ${TextStyleHelper.getTextStyle("H5", "regular")}
     color: ${Color.Neutral[1]};
     position: absolute;
     border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
-
-    ${(props) => {
-        switch (props.$variant) {
-            case "default":
-                return css`
-                    color: ${Color.Neutral[1]};
-                `;
-            case "other-month":
-                return css`
-                    color: ${Color.Neutral[4]};
-                `;
-            case "today":
-                return css`
-                    background-color: ${Color.Accent.Light[6]};
-                    color: ${Color.Neutral[3]};
-                `;
-        }
-    }}
-    ${(props) => {
-        switch (props.$position) {
-            case "left":
-                return css`
-                    right: 0;
-                    transform: translateX(50%);
-                `;
-            case "right":
-                return css`
-                    left: 0;
-                    transform: translateX(-50%);
-                `;
-        }
-    }}
 `;
 
 export const LeftCell = styled(DayCellBasic)``;
 export const RightCell = styled(DayCellBasic)``;
-export const LeftCircle = styled(Circle)``;
-export const RightCircle = styled(Circle)``;
+export const LeftCircle = styled(Circle)`
+    right: 0;
+    transform: translateX(50%);
+`;
+export const RightCircle = styled(Circle)`
+    left: 0;
+    transform: translateX(-50%);
+`;
 
 export const DayNumber = styled.div<DayNumberProps>`
     ${TextStyleHelper.getTextStyle("H5", "regular")}
@@ -142,6 +117,10 @@ export const DayNumber = styled.div<DayNumberProps>`
             case "other-month":
                 return css`
                     color: ${Color.Neutral[4]};
+                `;
+            case "today":
+                return css`
+                    color: ${Color.Neutral[3]};
                 `;
             case "default":
                 return css`

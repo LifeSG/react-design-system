@@ -52,6 +52,9 @@ export namespace CalendarHelper {
     };
 }
 
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
 const generateFirstDayOfEachWeek = (day: Dayjs): Dayjs[] => {
     const dates: Dayjs[] = [day];
 

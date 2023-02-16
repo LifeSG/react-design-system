@@ -101,22 +101,16 @@ export const CalendarDay = ({
                                 {...styleProps}
                             >
                                 <LeftCell>
-                                    <LeftCircle
-                                        $position="left"
-                                        $variant={variant}
-                                    />
+                                    <LeftCircle />
                                 </LeftCell>
                                 <RightCell>
-                                    <RightCircle
-                                        $position="right"
-                                        $variant={variant}
-                                    />
+                                    <RightCircle />
                                 </RightCell>
                                 <DayNumber
                                     $variant={variant}
                                     $disabled={isDisabled}
                                 >
-                                    {parseInt(day.format("DD"))}
+                                    {day.format("D")}
                                 </DayNumber>
                                 <InteractiveCircle
                                     $disabled={isDisabled}

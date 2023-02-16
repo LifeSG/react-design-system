@@ -1,9 +1,15 @@
 import { Color } from "../color";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { TextStyleHelper } from "../text/helper";
 import { View } from "./calendar";
 import { Text } from "../text";
+import { CalendarProps } from "./types";
+import { MonthPickerContainer } from "./calendar-month.style";
+import { YearPickerContainer } from "./calendar-year.style";
+
+interface ContainerProps extends Pick<CalendarProps, "$type"> {}
 
 interface HeaderDropdownProps {
     $view: View;
@@ -17,7 +23,7 @@ interface CalendarViewProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
+export const Container = styled.div<ContainerProps>`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -27,18 +33,41 @@ export const Container = styled.div`
     height: 25.125rem;
     border-radius: 0.75rem;
     padding: 2rem 0;
+
+    ${(props) => {
+        const { $type } = props;
+
+        switch ($type) {
+            // stand alone calender style control from here
+            // calendar with input with control inside the file
+            case "calendar":
+                return css`
+                    ${ArrowLeftRightBase} {
+                        width: 1.5rem;
+                        height: 1.5rem;
+                    }
+
+                    ${IconChevronDown} {
+                        width: 1.125rem;
+                        height: 1.125rem;
+                    }
+
+                    ${MonthPickerContainer} {
+                        gap: 0.5rem 2.5rem;
+                    }
+
+                    ${YearPickerContainer} {
+                        gap: 0.5rem 2rem;
+                    }
+                `;
+        }
+    }}
 `;
 
 export const HeaderDropdown = styled.div<HeaderDropdownProps>`
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
-
-    svg {
-        margin-left: 0.625rem;
-        color: ${Color.Neutral[3]};
-        transition: transform 250ms ease-in-out;
-    }
 
     ${(props) => {
         switch (props.$view) {
@@ -54,6 +83,15 @@ export const HeaderDropdown = styled.div<HeaderDropdownProps>`
                 `;
         }
     }}
+`;
+
+export const IconChevronDown = styled(ChevronDownIcon)`
+    margin-left: 0.625rem;
+    color: ${Color.Neutral[3]};
+    transition: transform 250ms ease-in-out;
+
+    width: 1rem;
+    height: 1rem;
 `;
 
 const DropdownMonthYearBase = styled.div`
@@ -108,6 +146,8 @@ const ArrowLeftRightBase = styled(ChevronLeftIcon)`
     transform: translateY(-50%);
     color: ${Color.Neutral[3]};
     cursor: pointer;
+    width: 1rem;
+    height: 1rem;
 `;
 
 export const ArrowLeft = styled(ArrowLeftRightBase)`

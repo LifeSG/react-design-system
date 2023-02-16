@@ -9,6 +9,7 @@ import {
     DropdownText,
     DropdownYear,
     HeaderDropdown,
+    IconChevronDown,
     MonthView,
     Views,
     YearView,
@@ -17,12 +18,16 @@ import { CalendarDay } from "./calendar-day";
 import { CalendarMonth } from "./calendar-month";
 import { CalendarProps } from "./types";
 import { CalendarYear } from "./calendar-year";
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { CalendarHelper } from "../util/calendar-helper";
 
 export type View = "day" | "month" | "year";
 
-export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
+export const Calendar = ({
+    disabledDates,
+    onChange,
+    value,
+    $type = "calendar",
+}: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -121,17 +126,17 @@ export const Calendar = ({ disabledDates, onChange, value }: CalendarProps) => {
     };
 
     return (
-        <Container>
+        <Container $type={$type}>
             <HeaderDropdown $view={showView}>
                 <DropdownMonth onClick={toggleMonthView}>
                     <DropdownText>
                         {dayjs(calendarDate).format("MMM")}
                     </DropdownText>
-                    <ChevronDownIcon />
+                    <IconChevronDown />
                 </DropdownMonth>
                 <DropdownYear onClick={toggleYearView}>
                     {renderYearHeader()}
-                    <ChevronDownIcon />
+                    <IconChevronDown />
                 </DropdownYear>
             </HeaderDropdown>
             <Views $view={showView}>
