@@ -1,16 +1,15 @@
 import { Color } from "../color";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
-import { TextStyleHelper } from "../text/helper";
 import { View } from "./calendar";
-import { Text } from "../text";
-import { calendarType } from "./types";
+import { CalendarType } from "./types";
 import { MonthPickerContainer } from "./calendar-month.style";
 import { YearPickerContainer } from "./calendar-year.style";
 
-interface ContainerProps {
-    $type: calendarType;
+interface ContainerStyleProps {
+    $type: CalendarType;
 }
 
 interface HeaderDropdownProps {
@@ -18,14 +17,13 @@ interface HeaderDropdownProps {
 }
 
 interface CalendarViewProps {
-    children: JSX.Element[];
     $view: View;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -44,7 +42,8 @@ export const Container = styled.div<ContainerProps>`
             // calendar with input with control inside the file
             case "calendar":
                 return css`
-                    ${ArrowLeftRightBase} {
+                    ${ArrowLeft},
+                    ${ArrowRight} {
                         width: 1.5rem;
                         height: 1.5rem;
                     }
@@ -103,10 +102,6 @@ const DropdownMonthYearBase = styled.div`
     cursor: pointer;
 `;
 
-export const DropdownText = styled(Text.BodySmall)`
-    ${TextStyleHelper.getTextStyle("H4", "regular")}
-`;
-
 export const DropdownMonth = styled(DropdownMonthYearBase)`
     margin-right: 1rem;
 `;
@@ -142,7 +137,7 @@ export const DayView = styled(ViewSectionBase)``;
 export const MonthView = styled(ViewSectionBase)``;
 export const YearView = styled(ViewSectionBase)``;
 
-const ArrowLeftRightBase = styled(ChevronLeftIcon)`
+export const ArrowLeft = styled(ChevronLeftIcon)`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -150,12 +145,15 @@ const ArrowLeftRightBase = styled(ChevronLeftIcon)`
     cursor: pointer;
     width: 1rem;
     height: 1rem;
-`;
-
-export const ArrowLeft = styled(ArrowLeftRightBase)`
     left: 1.25rem;
 `;
-export const ArrowRight = styled(ArrowLeftRightBase)`
+export const ArrowRight = styled(ChevronRightIcon)`
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: ${Color.Neutral[3]};
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
     right: 1.25rem;
-    transform: rotate(180deg) translateY(50%);
 `;

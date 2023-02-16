@@ -2,30 +2,51 @@ import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { YearCell, YearPickerContainer } from "./calendar-year.style";
 import { CalendarHelper } from "../util/calendar-helper";
-import { YearMonthBase } from "./calendar-month";
+import { View } from "./calendar";
 
-export type VariantYear =
+export type YearVariant =
     | "default"
     | "current-year"
     | "other-decade"
     | "selected-year";
 
-interface CalendarYearProps extends YearMonthBase {}
+interface CalendarYearProps {
+    calendarDate: Dayjs;
+    currentView: View;
+    selectedStartDate: string;
+    onSelect: (value: Dayjs) => void;
+}
 
 export const CalendarYear = ({
     calendarDate,
-    showView,
+    currentView,
     selectedStartDate,
     onSelect,
 }: CalendarYearProps) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
     const [years, setYears] = useState<Dayjs[]>([]);
 
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
     useEffect(() => {
-        if (showView === "year") {
+        if (currentView === "year") {
             generateDecadeOfYears();
         }
-    }, [showView, calendarDate]);
+    }, [currentView, calendarDate]);
 
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleYearClick = (value: Dayjs) => {
+        onSelect(value);
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     const generateYearStatus = (date: Dayjs) => {
         const otherDecadeIndexes = [0, 11];
 
@@ -33,7 +54,7 @@ export const CalendarYear = ({
         const fullDate = date.format("YYYY-MM-DD");
         const year = date.year();
 
-        const variant: VariantYear = isOtherDecade
+        const variant: YearVariant = isOtherDecade
             ? "other-decade"
             : dayjs(selectedStartDate).isSame(fullDate, "year")
             ? "selected-year"
@@ -53,10 +74,9 @@ export const CalendarYear = ({
         setYears(years);
     };
 
-    const handleYearClick = (value: Dayjs) => {
-        onSelect(value);
-    };
-
+    // =============================================================================
+    // RENDER FUNCTION
+    // =============================================================================
     if (!years.length) return null;
 
     return (

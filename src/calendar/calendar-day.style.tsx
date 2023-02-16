@@ -1,10 +1,17 @@
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
 import styled, { css } from "styled-components";
-import { DayCellStyleProps, VariantDay } from "./calendar-day";
+import { DayVariant } from "./calendar-day";
+
+export interface DayCellStyleProps {
+    $selected?: boolean;
+    $point?: "start" | "middle" | "end";
+    $hovered?: boolean;
+    $disabled?: boolean;
+}
 
 interface DayNumberProps {
-    $variant: VariantDay;
+    $variant: DayVariant;
     $disabled: boolean;
 }
 

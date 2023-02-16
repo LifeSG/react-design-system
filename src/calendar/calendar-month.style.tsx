@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
-import { VariantMonth } from "./calendar-month";
+import { MonthVariant } from "./calendar-month";
 
 interface MonthCellProps {
-    $variant: VariantMonth;
+    $variant: MonthVariant;
 }
 
 export const MonthPickerContainer = styled.div`

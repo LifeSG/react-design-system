@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
     CalendarDaySection,
+    DayCellStyleProps,
     DayNumber,
     GrowDayCell,
     InteractiveCircle,
@@ -15,14 +16,7 @@ import {
 } from "./calendar-day.style";
 import { CalendarProps } from "./types";
 
-export interface DayCellStyleProps {
-    $selected?: boolean;
-    $point?: "start" | "middle" | "end";
-    $hovered?: boolean;
-    $disabled?: boolean;
-}
-
-export type VariantDay = "default" | "other-month" | "today";
+export type DayVariant = "default" | "other-month" | "today";
 
 interface CalendarDayProps extends Pick<CalendarProps, "disabledDates"> {
     selectedStartDate: string;
@@ -36,6 +30,16 @@ export const CalendarDay = ({
     selectedStartDate,
     onSelect,
 }: CalendarDayProps) => {
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleDayClick = (value: Dayjs) => {
+        onSelect(value);
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     const generateDayClass = (day: Dayjs): DayCellStyleProps => {
         const dateStartWithYear = day.format("YYYY-MM-DD");
         const styleProps = {};
@@ -54,7 +58,7 @@ export const CalendarDay = ({
         if (disabledDates && disabledDates.length) {
             isDisabled = disabledDates.includes(dateStartWithYear);
         }
-        const variant: VariantDay =
+        const variant: DayVariant =
             calendarDate.month() !== day.month()
                 ? "other-month"
                 : dayjs().isSame(day, "day")
@@ -67,18 +71,11 @@ export const CalendarDay = ({
         };
     };
 
-    const handleDayClick = (value: Dayjs) => {
-        onSelect(value);
-    };
-
-    // =============================================================================
-    // Calendar Generate
-    // =============================================================================
-
     const weeksOfTheMonth = useMemo(
         (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
         [calendarDate]
     );
+
     return (
         <>
             <WeekDaysContainer>

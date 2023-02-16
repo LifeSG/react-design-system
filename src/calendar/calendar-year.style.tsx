@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
-import { VariantYear } from "./calendar-year";
+import { YearVariant } from "./calendar-year";
 
-interface YearCellProps {
-    $variant: VariantYear;
+interface StyleProps {
+    $variant: YearVariant;
 }
 
 export const YearPickerContainer = styled.div`
@@ -14,7 +14,7 @@ export const YearPickerContainer = styled.div`
     gap: 0.5rem 1rem;
 `;
 
-export const YearCell = styled.div<YearCellProps>`
+export const YearCell = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;

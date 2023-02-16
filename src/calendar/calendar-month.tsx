@@ -4,35 +4,49 @@ import { MonthCell, MonthPickerContainer } from "./calendar-month.style";
 import { CalendarHelper } from "src/util/calendar-helper";
 import { View } from "./calendar";
 
-export type VariantMonth = "default" | "current-month" | "selected-month";
+export type MonthVariant = "default" | "current-month" | "selected-month";
 
-export interface YearMonthBase {
+interface CalendarMonthProps {
     calendarDate: Dayjs;
-    showView: View;
+    currentView: View;
     selectedStartDate: string;
     onSelect: (value: Dayjs) => void;
 }
 
-interface CalendarMonthProps extends YearMonthBase {}
-
 export const CalendarMonth = ({
     calendarDate,
-    showView,
+    currentView,
     selectedStartDate,
     onSelect,
 }: CalendarMonthProps) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
     const [months, setMonths] = useState<Dayjs[]>([]);
 
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
     useEffect(() => {
-        if (showView === "month") {
+        if (currentView === "month") {
             generateMonths();
         }
-    }, [showView, calendarDate]);
+    }, [currentView, calendarDate]);
 
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleMonthClick = (value: Dayjs) => {
+        onSelect(value);
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     const generateMonthStatus = (date: Dayjs) => {
         const month = date.format("MMMM");
         const value = date.format("YYYY-MM-DD");
-        let variant: VariantMonth = "default";
+        let variant: MonthVariant = "default";
 
         variant = dayjs(selectedStartDate).isSame(value, "month")
             ? "selected-month"
@@ -46,16 +60,15 @@ export const CalendarMonth = ({
         };
     };
 
-    const handleMonthClick = (value: Dayjs) => {
-        onSelect(value);
-    };
-
     const generateMonths = () => {
         const months = CalendarHelper.generateMonths(calendarDate);
 
         setMonths(months);
     };
 
+    // =============================================================================
+    // RENDER FUNCTION
+    // =============================================================================
     if (!months.length) return null;
 
     return (

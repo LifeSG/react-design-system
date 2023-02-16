@@ -6,7 +6,6 @@ import {
     Container,
     DayView,
     DropdownMonth,
-    DropdownText,
     DropdownYear,
     HeaderDropdown,
     IconChevronDown,
@@ -19,6 +18,7 @@ import { CalendarMonth } from "./calendar-month";
 import { CalendarProps } from "./types";
 import { CalendarYear } from "./calendar-year";
 import { CalendarHelper } from "../util/calendar-helper";
+import { Text } from "../text";
 
 export type View = "day" | "month" | "year";
 
@@ -32,9 +32,12 @@ export const Calendar = ({
     // CONST, STATE, REF
     // =============================================================================
     const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
-    const [showView, setShowView] = useState<View>("day");
+    const [currentView, setCurrentView] = useState<View>("day");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
 
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
     useEffect(() => {
         if (!value) return;
 
@@ -42,21 +45,10 @@ export const Calendar = ({
     }, [value]);
 
     // =============================================================================
-    // Helper Functions
-    // =============================================================================
-
-    const performOnChangeHandler = (changeValue: string) => {
-        if (onChange) {
-            onChange(changeValue);
-        }
-    };
-
-    // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-
     const handleLeftArrowClick = () => {
-        switch (showView) {
+        switch (currentView) {
             case "day":
                 setCalendarDate((date) => date.subtract(1, "month"));
                 break;
@@ -70,7 +62,7 @@ export const Calendar = ({
     };
 
     const handleRightArrowClick = () => {
-        switch (showView) {
+        switch (currentView) {
             case "day":
                 setCalendarDate((date) => date.add(1, "month"));
                 break;
@@ -84,11 +76,11 @@ export const Calendar = ({
     };
 
     const toggleMonthView = () => {
-        setShowView("month");
+        setCurrentView("month");
     };
 
     const toggleYearView = () => {
-        setShowView((prev) => {
+        setCurrentView((prev) => {
             if (prev !== "day") return "day";
 
             return "year";
@@ -106,32 +98,44 @@ export const Calendar = ({
     };
 
     // =============================================================================
+    // Helper Functions
+    // =============================================================================
+
+    const performOnChangeHandler = (changeValue: string) => {
+        if (onChange) {
+            onChange(changeValue);
+        }
+    };
+
+    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderYearHeader = () => {
-        if (showView === "year") {
+        if (currentView === "year") {
             const { beginDecade, endDecade } =
                 CalendarHelper.getStartEndDecade(calendarDate);
 
             return (
-                <DropdownText>
+                <Text.H4 weight="regular">
                     {beginDecade} to {endDecade}
-                </DropdownText>
+                </Text.H4>
             );
         }
 
         return (
-            <DropdownText>{dayjs(calendarDate).format("YYYY")}</DropdownText>
+            <Text.H4 weight="regular">
+                {dayjs(calendarDate).format("YYYY")}{" "}
+            </Text.H4>
         );
     };
 
     return (
         <Container $type={type}>
-            <HeaderDropdown $view={showView}>
+            <HeaderDropdown $view={currentView}>
                 <DropdownMonth onClick={toggleMonthView}>
-                    <DropdownText>
+                    <Text.H4 weight="regular">
                         {dayjs(calendarDate).format("MMM")}
-                    </DropdownText>
+                    </Text.H4>
                     <IconChevronDown />
                 </DropdownMonth>
                 <DropdownYear onClick={toggleYearView}>
@@ -139,7 +143,7 @@ export const Calendar = ({
                     <IconChevronDown />
                 </DropdownYear>
             </HeaderDropdown>
-            <Views $view={showView}>
+            <Views $view={currentView}>
                 <DayView>
                     <CalendarDay
                         calendarDate={calendarDate}
@@ -151,7 +155,7 @@ export const Calendar = ({
                 <MonthView>
                     <CalendarMonth
                         calendarDate={calendarDate}
-                        showView={showView}
+                        currentView={currentView}
                         selectedStartDate={selectedStartDate}
                         onSelect={(date) => handleDateChange(date)}
                     />
@@ -159,7 +163,7 @@ export const Calendar = ({
                 <YearView>
                     <CalendarYear
                         calendarDate={calendarDate}
-                        showView={showView}
+                        currentView={currentView}
                         selectedStartDate={selectedStartDate}
                         onSelect={(date) => handleDateChange(date)}
                     />
