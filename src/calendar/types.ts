@@ -1,11 +1,9 @@
-/**
- * disabledDates: ["YYYY-MM-DD"]
- * onChange("YYYY-MM-DD")
- * value: YYYY-MM-DD
- */
 export interface CalendarProps {
+    /** disabledDates: ["2023-04-30"] */
     disabledDates?: string[] | undefined;
+    /** onChange("2023-03-30") */
     onChange?: ((value: string) => void) | undefined;
+    /** value: 2023-03-30 */
     value?: string | undefined;
     type?: CalendarType | undefined;
 }
