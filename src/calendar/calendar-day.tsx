@@ -31,6 +31,14 @@ export const CalendarDay = ({
     onSelect,
 }: CalendarDayProps) => {
     // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const weeksOfTheMonth = useMemo(
+        (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
+        [calendarDate]
+    );
+
+    // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleDayClick = (value: Dayjs) => {
@@ -70,11 +78,6 @@ export const CalendarDay = ({
             variant,
         };
     };
-
-    const weeksOfTheMonth = useMemo(
-        (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
-        [calendarDate]
-    );
 
     return (
         <>
