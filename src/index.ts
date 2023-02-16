@@ -13,7 +13,6 @@ export * from "./error-display";
 export * from "./feedback-rating";
 export * from "./footer";
 export * from "./form";
-export * from "./icon";
 export * from "./icon-button";
 export * from "./input";
 export * from "./input-group";
