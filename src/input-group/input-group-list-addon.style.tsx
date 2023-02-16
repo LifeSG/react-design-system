@@ -8,6 +8,7 @@ import {
 import { Text } from "../text/text";
 import { TextStyle } from "../text/text-style";
 import { Transition } from "../transition";
+import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -15,7 +16,14 @@ import { Transition } from "../transition";
 // =============================================================================
 interface StyleProps {
     disabled?: boolean;
+    $readOnly?: boolean;
     $expanded?: boolean;
+    $position?: InputGroupAddonPosition;
+}
+
+interface DividerStyleProps {
+    $readOnly?: boolean;
+    $position?: InputGroupAddonPosition;
 }
 
 // =============================================================================

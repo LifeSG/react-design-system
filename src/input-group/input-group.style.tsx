@@ -3,6 +3,7 @@ import { Color } from "../color";
 import { DesignToken } from "../design-token";
 import { Input } from "../input/input";
 import { TextStyleHelper } from "../text";
+import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -12,11 +13,11 @@ interface AddonStyleProps {
     disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
-    $position?: "left" | "right";
+    $position?: InputGroupAddonPosition;
 }
 
 interface MainInputStyleProps {
-    $position?: "left" | "right" | undefined;
+    $position?: InputGroupAddonPosition;
 }
 
 // =============================================================================
