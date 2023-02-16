@@ -124,7 +124,7 @@ export const Calendar = ({
 
         return (
             <Text.H4 weight="regular">
-                {dayjs(calendarDate).format("YYYY")}{" "}
+                {dayjs(calendarDate).format("YYYY")}
             </Text.H4>
         );
     };
