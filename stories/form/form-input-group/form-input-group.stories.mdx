@@ -201,6 +201,17 @@ You are able to specify attributes in the `addon` property to construct advanced
                         },
                     }}
                 />
+                <Form.InputGroup
+                    label="With a custom addon on the right"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "custom",
+                        attributes: {
+                            children: <MagnifierIcon />,
+                        },
+                        position: "right",
+                    }}
+                />
             </Container>
         </StoryContainer>
     </Story>

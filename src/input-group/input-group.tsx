@@ -52,6 +52,7 @@ const Component = <T, V>(
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
+                                $position={position}
                             >
                                 {customAddon.children}
                             </AddOnContainer>
@@ -83,6 +84,7 @@ const Component = <T, V>(
                                 data-testid="addon"
                                 disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
+                                $position={position}
                             >
                                 {labelAddon.value}
                             </AddOnContainer>
