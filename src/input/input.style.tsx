@@ -98,6 +98,7 @@ export const Container = styled.div<InputStyleProps>`
 
 export const InputElement = styled.input<InputStyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${Color.Neutral[1]};
 
     // overwrite default styles
     background: transparent;
