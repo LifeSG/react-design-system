@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Accordion, AccordionProps, Text } from "../../src";
-
-const DEFAULT_TITLE = "default title";
+import { DEFAULT_TEXT, DEFAULT_TITLE } from "./common";
 
 const renderComponent = (
     props?: Omit<AccordionProps, "children">,
@@ -13,7 +12,7 @@ const renderComponent = (
         if (!isOverrideDefault) {
             return (
                 <Accordion.Item title={DEFAULT_TITLE}>
-                    <Text.Body>Default text</Text.Body>
+                    <Text.Body>{DEFAULT_TEXT}</Text.Body>
                 </Accordion.Item>
             );
         }
@@ -98,9 +97,16 @@ describe("Accordion", () => {
 
         await waitFor(() => fireEvent.click(getExpandAllItemsButton()));
 
-        const content = screen
-            .getByTestId("accordion-item")
-            .getElementsByTagName("div")[1];
-        expect(content).toHaveStyle({ height: 0 });
+        /**
+         * NOTE: Accordion text is wrapped within a
+         * <div styles><div id="content-container"><p>{text}</p></div></div>
+         * hence, requires two traversals up to the div container that contains
+         * the styles
+         */
+        screen.getAllByText(DEFAULT_TEXT).forEach((element) =>
+            expect(element.parentElement.parentElement).toHaveStyle({
+                height: 0,
+            })
+        );
     });
 });
