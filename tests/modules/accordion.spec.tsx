@@ -108,8 +108,7 @@ describe("Accordion", () => {
             await waitFor(() => fireEvent.click(getExpandAllItemsButton()));
 
             /**
-             * NOTE: Accordion text is wrapped within a
-             * <div styles><div id="content-container"><p>{text}</p></div></div>
+             * NOTE: Accordion text is wrapped within two nested divs,
              * hence, requires two traversals up to the div container that contains
              * the styles
              */

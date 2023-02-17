@@ -3,11 +3,9 @@ import { Alert, AlertProps } from "../../src";
 import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
 import { DEFAULT_TEXT } from "../common";
 
-const TEST_ID = "alert-test";
-
 const renderComponent = (props?: Partial<AlertProps>) => {
     return render(
-        <Alert data-testid={TEST_ID} type="success" {...props}>
+        <Alert type="success" {...props}>
             {props?.children || DEFAULT_TEXT}
         </Alert>
     );
@@ -31,22 +29,24 @@ describe("Alert", () => {
         expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
     });
 
-    it.each`
-        type         | backgroundColor                              | borderColor
-        ${"success"} | ${BaseColorSet.Validation.Green.Background}  | ${BaseColorSet.Validation.Green.Border}
-        ${"warning"} | ${BaseColorSet.Validation.Orange.Background} | ${BaseColorSet.Validation.Orange.Background}
-        ${"error"}   | ${BaseColorSet.Validation.Red.Background}    | ${BaseColorSet.Validation.Red.Background}
-    `(
-        "should render background $backgroundColor with border $borderColor for $type type",
-        ({ type, backgroundColor, borderColor }) => {
-            renderComponent({ type });
+    describe("type", () => {
+        it.each`
+            type         | backgroundColor                              | borderColor
+            ${"success"} | ${BaseColorSet.Validation.Green.Background}  | ${BaseColorSet.Validation.Green.Border}
+            ${"warning"} | ${BaseColorSet.Validation.Orange.Background} | ${BaseColorSet.Validation.Orange.Background}
+            ${"error"}   | ${BaseColorSet.Validation.Red.Background}    | ${BaseColorSet.Validation.Red.Background}
+        `(
+            "should render background $backgroundColor with border $borderColor for $type type",
+            ({ type, backgroundColor, borderColor }) => {
+                renderComponent({ type });
 
-            expect(screen.getByText(DEFAULT_TEXT)).toHaveStyle({
-                backgroundColor,
-                borderColor: `2pt solid ${borderColor}`,
-            });
-        }
-    );
+                expect(screen.getByText(DEFAULT_TEXT)).toHaveStyle({
+                    backgroundColor,
+                    borderColor: `2pt solid ${borderColor}`,
+                });
+            }
+        );
+    });
 
     describe("actionLink", () => {
         it("should render action link if the prop is provided", () => {
