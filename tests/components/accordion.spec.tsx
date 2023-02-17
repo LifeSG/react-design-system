@@ -77,7 +77,13 @@ describe("Accordion", () => {
         expect(getExpandItemButton()).toBeInTheDocument();
     });
 
-    it("should be able to toggle the collapse button", async () => {
+    it("should not render expand all button if disabled", () => {
+        renderComponent({ enableExpandAll: false });
+
+        expect(getExpandAllItemsButton(true)).not.toBeInTheDocument();
+    });
+
+    it("should be able to toggle the collapse button for individual items", async () => {
         renderComponent();
 
         await waitFor(() => fireEvent.click(getExpandItemButton()));
@@ -87,9 +93,14 @@ describe("Accordion", () => {
         expect(getExpandItemButton()).toBeInTheDocument();
     });
 
-    it("should not render expand all button if disabled", () => {
-        renderComponent({ enableExpandAll: false });
+    it("should be able to toggle the collapse all button for entire accordion", async () => {
+        renderComponent();
 
-        expect(getExpandAllItemsButton(true)).not.toBeInTheDocument();
+        await waitFor(() => fireEvent.click(getExpandAllItemsButton()));
+
+        const content = screen
+            .getByTestId("accordion-item")
+            .getElementsByTagName("div")[1];
+        expect(content).toHaveStyle({ height: 0 });
     });
 });
