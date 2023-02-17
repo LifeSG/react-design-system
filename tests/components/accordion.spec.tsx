@@ -69,44 +69,55 @@ describe("Accordion", () => {
         ).not.toBeInTheDocument();
     });
 
-    it("should render the expand and collapse buttons", () => {
-        renderComponent();
+    describe("expand/collapse button for accordion item", () => {
+        it("should render the expand/collapse buttons", () => {
+            renderComponent();
 
-        expect(getExpandAllItemsButton()).toBeInTheDocument();
-        expect(getExpandItemButton()).toBeInTheDocument();
+            expect(getExpandItemButton()).toBeInTheDocument();
+        });
+
+        it("should be able to toggle the collapse button for individual accordion items", async () => {
+            renderComponent();
+
+            await waitFor(() => fireEvent.click(getExpandItemButton()));
+            expect(getExpandItemButton(false, false)).toBeInTheDocument();
+
+            await waitFor(() =>
+                fireEvent.click(getExpandItemButton(false, false))
+            );
+            expect(getExpandItemButton()).toBeInTheDocument();
+        });
     });
 
-    it("should not render expand all button if disabled", () => {
-        renderComponent({ enableExpandAll: false });
+    describe("expand/collapse button for entire accordion", () => {
+        it("should render the expand/collapse buttons", () => {
+            renderComponent();
 
-        expect(getExpandAllItemsButton(true)).not.toBeInTheDocument();
-    });
+            expect(getExpandAllItemsButton()).toBeInTheDocument();
+        });
 
-    it("should be able to toggle the collapse button for individual items", async () => {
-        renderComponent();
+        it("should not render expand/collapse button if disabled", () => {
+            renderComponent({ enableExpandAll: false });
 
-        await waitFor(() => fireEvent.click(getExpandItemButton()));
-        expect(getExpandItemButton(false, false)).toBeInTheDocument();
+            expect(getExpandAllItemsButton(true)).not.toBeInTheDocument();
+        });
 
-        await waitFor(() => fireEvent.click(getExpandItemButton(false, false)));
-        expect(getExpandItemButton()).toBeInTheDocument();
-    });
+        it("should be able to toggle the collapse all button for entire accordion", async () => {
+            renderComponent();
 
-    it("should be able to toggle the collapse all button for entire accordion", async () => {
-        renderComponent();
+            await waitFor(() => fireEvent.click(getExpandAllItemsButton()));
 
-        await waitFor(() => fireEvent.click(getExpandAllItemsButton()));
-
-        /**
-         * NOTE: Accordion text is wrapped within a
-         * <div styles><div id="content-container"><p>{text}</p></div></div>
-         * hence, requires two traversals up to the div container that contains
-         * the styles
-         */
-        screen.getAllByText(DEFAULT_TEXT).forEach((element) =>
-            expect(element.parentElement.parentElement).toHaveStyle({
-                height: 0,
-            })
-        );
+            /**
+             * NOTE: Accordion text is wrapped within a
+             * <div styles><div id="content-container"><p>{text}</p></div></div>
+             * hence, requires two traversals up to the div container that contains
+             * the styles
+             */
+            screen.getAllByText(DEFAULT_TEXT).forEach((element) =>
+                expect(element.parentElement.parentElement).toHaveStyle({
+                    height: 0,
+                })
+            );
+        });
     });
 });
