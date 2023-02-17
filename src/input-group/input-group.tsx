@@ -2,7 +2,7 @@ import React from "react";
 import { AddOnContainer, Container, MainInput } from "./input-group.style";
 import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
 import { InputGroupListAddon } from "./input-group-list-addon";
-import { InputContainer } from "../shared/input-container/input-container";
+import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 
 const Component = <T, V>(
     { addon, error, ...otherProps }: InputGroupProps<T, V>,
@@ -73,7 +73,7 @@ const Component = <T, V>(
                 const labelAddon = addon.attributes as LabelAddon;
                 if (labelAddon.value) {
                     return (
-                        <InputContainer
+                        <InputWrapper
                             disabled={otherProps.disabled}
                             $error={error}
                             $readOnly={otherProps.readOnly}
@@ -94,7 +94,7 @@ const Component = <T, V>(
                                 error={error}
                                 data-testid="input"
                             />
-                        </InputContainer>
+                        </InputWrapper>
                     );
                 } else {
                     return renderNoAddons();

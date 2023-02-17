@@ -16,7 +16,7 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const InputContainer = styled.div<StyleProps>`
+export const InputWrapper = styled.div<StyleProps>`
     display: flex;
     position: relative;
     border: 1px solid ${Color.Neutral[5]};

@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useRef } from "react";
-import { InputContainer } from "../shared/input-container/input-container";
+import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper } from "../util/string-helper";
 import { ClearContainer, ClearIcon, InputElement } from "./input.style";
 import { InputProps, InputRef } from "./types";
@@ -93,7 +93,7 @@ const Component = (
     const updatedValue = value ? convertInputString(value) : value;
 
     return (
-        <InputContainer
+        <InputWrapper
             disabled={disabled}
             $error={error}
             $readOnly={readOnly}
@@ -114,7 +114,7 @@ const Component = (
                     <ClearIcon />
                 </ClearContainer>
             )}
-        </InputContainer>
+        </InputWrapper>
     );
 };
 
