@@ -1,40 +1,35 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DesignToken } from "../design-token";
 import { TextStyleHelper } from "../text/helper";
 
 // =============================================================================
 // STYLE INTERFACe
 // =============================================================================
-interface InputStyleProps {
-    error?: boolean;
-    readOnly?: boolean;
-    disabled?: boolean;
+interface StyleProps {
     type?: React.HTMLInputTypeAttribute;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-
-export const Container = styled.div<InputStyleProps>`
+export const InputElement = styled.input<StyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    display: flex;
-    position: relative;
-    flex-direction: row;
-    height: max-content;
-    width: 100%;
-    background: ${Color.Neutral[8]};
     color: ${Color.Neutral[1]};
-    padding: 0 1rem;
 
-    :focus-within {
+    // overwrite default styles
+    background: transparent;
+    border: none;
+    height: 3rem;
+    width: 100%;
+
+    padding: 0 0 0.1rem; // Somehow the input text appears lower
+
+    :focus,
+    :active {
         outline: none;
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+        border: none;
+        box-shadow: none;
     }
 
     ::placeholder,
@@ -58,65 +53,9 @@ export const Container = styled.div<InputStyleProps>`
             `;
         }
     }}
-
-    ${(props) => {
-        if (props.readOnly) {
-            return css`
-                border: none;
-                padding: 0;
-                background: transparent !important;
-                :focus-within {
-                    border: none;
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.disabled) {
-            return css`
-                background: ${Color.Neutral[6](props)};
-                :hover {
-                    cursor: not-allowed;
-                }
-
-                :focus-within {
-                    outline: none;
-                    border: 1px solid ${Color.Neutral[5](props)};
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.error) {
-            return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
-
-                :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
-                }
-            `;
-        }
-    }}
 `;
 
-export const InputElement = styled.input<InputStyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
-
-    // overwrite default styles
-    background: transparent;
-    border: none;
-    height: 3rem;
-    width: 100%;
-
-    padding: 0 0 0.1rem; // Somehow the input text appears lower
-
-    :focus,
-    :active {
-        outline: none;
-        border: none;
-        box-shadow: none;
-    }
-`;
-
-export const ClearContainer = styled.button<InputStyleProps>`
+export const ClearContainer = styled.button<StyleProps>`
     position: relative;
     height: auto;
     padding: 0 1rem;

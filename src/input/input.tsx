@@ -1,11 +1,7 @@
 import React, { useImperativeHandle, useRef } from "react";
+import { InputContainer } from "../shared/input-container/input-container";
 import { StringHelper } from "../util/string-helper";
-import {
-    ClearContainer,
-    ClearIcon,
-    Container,
-    InputElement,
-} from "./input.style";
+import { ClearContainer, ClearIcon, InputElement } from "./input.style";
 import { InputProps, InputRef } from "./types";
 
 const Component = (
@@ -19,6 +15,7 @@ const Component = (
         onChange,
         onClear,
         allowClear = false,
+        className,
         ...otherProps
     }: InputProps,
     ref: InputRef
@@ -96,18 +93,17 @@ const Component = (
     const updatedValue = value ? convertInputString(value) : value;
 
     return (
-        <Container
-            error={error}
+        <InputContainer
             disabled={disabled}
-            readOnly={readOnly}
-            className={otherProps.className}
+            $error={error}
+            $readOnly={readOnly}
+            className={className}
         >
             <InputElement
                 data-testid="input"
                 ref={elementRef}
                 disabled={disabled}
                 value={updatedValue}
-                error={error}
                 onChange={handleChange}
                 type={type}
                 readOnly={readOnly}
@@ -118,7 +114,7 @@ const Component = (
                     <ClearIcon />
                 </ClearContainer>
             )}
-        </Container>
+        </InputContainer>
     );
 };
 
