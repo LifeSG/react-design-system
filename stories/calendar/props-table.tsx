@@ -40,6 +40,17 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["(value: string) => void"],
             },
+            {
+                name: "type",
+                description: (
+                    <>
+                        Specifies the calendar type which affects layout and
+                        styles
+                    </>
+                ),
+                propTypes: [`"calendar"`, `"input"`],
+                defaultValue: `"calendar"`,
+            },
         ],
     },
 ];
