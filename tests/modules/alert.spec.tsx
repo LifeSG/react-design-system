@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Alert, AlertProps } from "../../src";
 import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
-import { DEFAULT_TEXT } from "./common";
+import { DEFAULT_TEXT } from "../common";
 
 const TEST_ID = "alert-test";
 

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Accordion, AccordionProps, Text } from "../../src";
-import { DEFAULT_TEXT, DEFAULT_TITLE } from "./common";
+import { DEFAULT_TEXT, DEFAULT_TITLE } from "../common";
 
 const renderComponent = (
     props?: Omit<AccordionProps, "children">,
