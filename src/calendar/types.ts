@@ -1,9 +1,9 @@
 export interface CalendarProps {
-    /** ["2023-04-30"] */
+    /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
     disabledDates?: string[] | undefined;
-    /** 2023-03-30 */
+    /** Called when date is selected, returns value in `YYYY-MM-DD` format or `"Invalid date"` */
     onChange?: ((value: string) => void) | undefined;
-    /** 2023-03-30 */
+    /** Selected date in `YYYY-MM-DD` format */
     value?: string | undefined;
     type?: CalendarType | undefined;
 }

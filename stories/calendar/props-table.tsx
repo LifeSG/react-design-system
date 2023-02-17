@@ -10,7 +10,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "value",
                 description: (
                     <>
-                        The value of the start date in string based
+                        The value of the selected date in string based
                         format.&nbsp;
                         <code>YYYY-MM-DD</code>
                     </>
