@@ -42,7 +42,7 @@ const Component = <T, V>(
                 const customAddon = addon.attributes as CustomAddon;
                 if (customAddon.children) {
                     return (
-                        <Container
+                        <InputWrapper
                             $error={error}
                             disabled={otherProps.disabled}
                             $readOnly={otherProps.readOnly}
@@ -63,7 +63,7 @@ const Component = <T, V>(
                                 error={error}
                                 data-testid="input"
                             />
-                        </Container>
+                        </InputWrapper>
                     );
                 } else {
                     return renderNoAddons();

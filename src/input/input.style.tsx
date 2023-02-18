@@ -22,8 +22,7 @@ export const InputElement = styled.input<StyleProps>`
     border: none;
     height: 3rem;
     width: 100%;
-
-    padding: 0 0 0.1rem; // Somehow the input text appears lower
+    padding: 0;
 
     :focus,
     :active {
@@ -50,6 +49,12 @@ export const InputElement = styled.input<StyleProps>`
 
                 // Firefox
                 -moz-appearance: textfield;
+            `;
+        }
+
+        if (props.disabled) {
+            return css`
+                cursor: not-allowed;
             `;
         }
     }}
