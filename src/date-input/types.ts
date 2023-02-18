@@ -1,8 +1,3 @@
-import React from "react";
-import { DatePickerType, FocusToTypes, TransitionValue } from "src/date-picker";
-
-export type RangeElementRef = React.Ref<HTMLDivElement | null>;
-
 export interface DateInputProps extends React.AriaAttributes {
     // Standard HTML Attributes
     className?: string | undefined;
@@ -29,23 +24,4 @@ export interface DateInputProps extends React.AriaAttributes {
      * as such [day, month, year]
      */
     onBlurRaw?: ((value: string[]) => void) | undefined;
-}
-
-export interface DatePickerContainerProps
-    extends Pick<DateInputRangeProps, "type"> {}
-
-export interface WithDateInputProps
-    extends Omit<DateInputProps, "onChangeRaw"> {}
-
-export interface DateInputRangeProps extends WithDateInputProps {
-    type?: DatePickerType | undefined;
-    rangeValue?: string | undefined;
-    setTransitionValue?: React.Dispatch<React.SetStateAction<TransitionValue>>;
-    transitionValues?: TransitionValue;
-    hoverValue?: string;
-    setIsOpenCalendar?: (boolean: boolean) => Promise<void>;
-    setFocusTo?: React.Dispatch<React.SetStateAction<FocusToTypes>>;
-    focusTo?: FocusToTypes;
-    calendarRootId?: string;
-    handleCancelButton?: () => Promise<void>;
 }
