@@ -9,7 +9,9 @@ import { InputGroupAddonPosition } from "./types";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface AddonStyleProps {
+
+// Need to export since the component could be extended
+export interface AddonStyleProps {
     disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
@@ -106,11 +108,7 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
     }
 
     ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                padding-left: 0rem;
-            `;
-        } else if (props.disabled) {
+        if (props.disabled) {
             return css`
                 color: ${Color.Neutral[4](props)};
                 svg {
@@ -126,12 +124,12 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
         switch (props.$position) {
             case "right":
                 return css`
-                    margin-left: 0.75rem;
+                    margin-left: ${props.$readOnly ? "0.25rem" : "0.75rem"};
                 `;
             case "left":
             default:
                 return css`
-                    margin-right: 0.75rem;
+                    margin-right: ${props.$readOnly ? "0.25rem" : "0.75rem"};
                 `;
         }
     }};

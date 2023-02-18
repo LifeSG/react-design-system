@@ -1,134 +1,74 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DesignToken } from "../design-token";
-import { TextStyleHelper } from "../text/helper";
+import { AddOnContainer } from "../input-group/input-group.style";
+import { Input } from "../input/input";
 import { Text } from "../text/text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface ContainerStyleProps {
-    disabled?: boolean;
-    $error?: boolean;
-    $readOnly?: boolean;
-}
 interface LabelStyleProps {
-    $hide?: boolean;
-    $compress?: boolean;
-    $addGap?: boolean;
+    $inactive?: boolean;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<ContainerStyleProps>`
-    display: flex;
-    position: relative;
-    align-items: center;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    height: 3rem;
-    width: 100%;
-    padding: 0;
-
-    :focus,
-    :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
-    }
-
-    ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                border: none;
-                padding-left: 0rem;
-                background: transparent !important;
-
-                :focus-within {
-                    border: none;
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.disabled) {
-            return css`
-                background: ${Color.Neutral[6](props)};
-                :hover {
-                    cursor: not-allowed;
-                }
-
-                :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.$error) {
-            return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
-
-                :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
-                }
-            `;
-        }
-    }}
+export const HashContainer = styled(AddOnContainer)`
+    margin-right: 0.25rem;
 `;
 
-export const InputContainer = styled.div<ContainerStyleProps>`
-    position: absolute;
-    top: 0;
-    left: ${(props) => (props.$readOnly ? "1rem" : "2rem")};
-    height: 100%;
-    display: flex;
-    align-items: center;
-`;
-
-export const FloorInput = styled.input`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+export const FloorInput = styled(Input)`
+    // overwrite default styles
     background: transparent;
-    height: 100%;
-    width: 3rem;
     border: none;
-    text-align: center;
+    /* border: 1px dotted red; */
     padding: 0;
+    width: 2.5rem;
 
-    // Chrome, Safari, Edge, Opera
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    // Safari (remove top shadow)
-    --webkit-appearance: none;
-
-    // Firefox
-    --moz-appearance: textfield;
-
-    :focus,
-    :active {
+    :focus-within {
         outline: none;
+        border: none;
+        box-shadow: none;
     }
 
-    ${(props) => {
-        if (props.disabled) {
-            return css`
-                cursor: not-allowed;
-            `;
+    input {
+        text-align: center;
+        // Chrome, Safari, Edge, Opera
+        ::-webkit-outer-spin-button,
+        ::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
-    }}
+
+        // Firefox
+        -moz-appearance: textfield;
+    }
 `;
 
 export const UnitInput = styled(FloorInput)`
-    width: 4.5rem;
+    width: 4rem;
 `;
 
 export const UnitNumberDivider = styled(Text.Body)<LabelStyleProps>`
-    margin-left: 0.1rem;
+    margin: 0 0.25rem;
     ${(props) => {
-        if (props.$hide) {
+        if (props.$inactive) {
+            return css`
+                color: ${Color.Neutral[3]};
+            `;
+        }
+    }}
+`;
+
+export const ReadOnlyContainer = styled.div`
+    display: flex;
+`;
+
+export const ReadOnlyLabel = styled(Text.Body)<LabelStyleProps>`
+    ${(props) => {
+        if (props.$inactive) {
             return css`
                 color: ${Color.Neutral[3]};
             `;

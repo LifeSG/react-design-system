@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper } from "../util/string-helper";
+import { UnitNumberInputProps } from "./types";
 import {
-    Container,
     FloorInput,
-    InputContainer,
+    HashContainer,
+    ReadOnlyContainer,
+    ReadOnlyLabel,
     UnitInput,
     UnitNumberDivider,
 } from "./unit-number-input.style";
-import { AddOnContainer } from "../input-group/input-group.style";
-import { UnitNumberInputProps } from "./types";
 
 type FieldType = "floor" | "unit" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
@@ -272,8 +273,69 @@ export const UnitNumberInput = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+    const renderInputs = () => (
+        <>
+            <FloorInput
+                name="floor"
+                maxLength={3}
+                value={floorValue}
+                ref={floorInputRef}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                disabled={disabled}
+                readOnly={readOnly}
+                type="text"
+                pattern="[0-9A-Z]{2,3}"
+                data-testid="floor-input"
+                aria-label="floor-input"
+                placeholder={
+                    currentFocus === "floor" && !readOnly
+                        ? ""
+                        : getPlaceholder(placeholder)[0]
+                }
+            />
+            <UnitNumberDivider $inactive={floorValue.length === 0}>
+                -
+            </UnitNumberDivider>
+            <UnitInput
+                name="unit"
+                maxLength={5}
+                value={unitValue}
+                ref={unitInputRef}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                disabled={disabled}
+                readOnly={readOnly}
+                type="text"
+                pattern="[0-9A-Z]{2,5}"
+                data-testid="unit-input"
+                aria-label="unit-input"
+                placeholder={
+                    currentFocus === "unit" && !readOnly
+                        ? ""
+                        : getPlaceholder(placeholder)[1]
+                }
+            />
+        </>
+    );
+
+    const renderReadOnly = () => {
+        const displayValueArr = value.split("-");
+
+        return (
+            <ReadOnlyContainer>
+                <ReadOnlyLabel>{displayValueArr[0]}</ReadOnlyLabel>
+                <UnitNumberDivider>-</UnitNumberDivider>
+                <ReadOnlyLabel>{displayValueArr[1]}</ReadOnlyLabel>
+            </ReadOnlyContainer>
+        );
+    };
+
     return (
-        <Container
+        <InputWrapper
             ref={nodeRef}
             onClick={handleNodeClick}
             disabled={disabled}
@@ -281,60 +343,15 @@ export const UnitNumberInput = ({
             $readOnly={readOnly}
             data-testid={otherProps["data-testid"]}
         >
-            <AddOnContainer
+            <HashContainer
                 data-testid="addon"
                 disabled={disabled}
                 $readOnly={readOnly}
             >
                 #
-            </AddOnContainer>
-            <InputContainer $readOnly={readOnly}>
-                <FloorInput
-                    name="floor"
-                    maxLength={3}
-                    value={floorValue}
-                    ref={floorInputRef}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    type="text"
-                    pattern="[0-9A-Z]{2,3}"
-                    data-testid="floor-input"
-                    aria-label="floor-input"
-                    placeholder={
-                        currentFocus === "floor" && !readOnly
-                            ? ""
-                            : getPlaceholder(placeholder)[0]
-                    }
-                />
-                <UnitNumberDivider $hide={floorValue.length === 0}>
-                    -
-                </UnitNumberDivider>
-                <UnitInput
-                    name="unit"
-                    maxLength={5}
-                    value={unitValue}
-                    ref={unitInputRef}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    type="text"
-                    pattern="[0-9A-Z]{2,5}"
-                    data-testid="unit-input"
-                    aria-label="unit-input"
-                    placeholder={
-                        currentFocus === "unit" && !readOnly
-                            ? ""
-                            : getPlaceholder(placeholder)[1]
-                    }
-                />
-            </InputContainer>
-        </Container>
+            </HashContainer>
+            {readOnly && value ? renderReadOnly() : renderInputs()}
+        </InputWrapper>
     );
 };
 
