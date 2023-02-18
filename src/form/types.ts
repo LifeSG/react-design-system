@@ -7,7 +7,6 @@ import {
 import { TextareaPartialProps } from "../input-textarea/types";
 import { InputPartialProps } from "../input/types";
 import { PhoneNumberInputProps } from "../phone-number-input/types";
-import { DatePickerProps } from "../date-picker/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
 
@@ -85,8 +84,4 @@ export interface FormUnitNumberInputProps
 
 export interface FormPhoneNumberInputProps
     extends PhoneNumberInputProps,
-        BaseFormElementProps {}
-
-export interface FormDatePickerProps
-    extends DatePickerProps,
         BaseFormElementProps {}
