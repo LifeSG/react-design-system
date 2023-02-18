@@ -1,6 +1,5 @@
 import { FormCustomField } from "./form-custom-field";
 import { FormDateInput } from "./form-date-input";
-import { FormDatePicker } from "./form-date-picker";
 import { FormInput } from "./form-input";
 import { FormInputGroup } from "./form-input-group";
 import { FormLabel } from "./form-label";
@@ -13,7 +12,6 @@ import { FormPhoneNumberInput } from "./form-phone-number-input";
 
 export const Form = {
     DateInput: FormDateInput,
-    DatePicker: FormDatePicker,
     Input: FormInput,
     InputGroup: FormInputGroup,
     Label: FormLabel,
