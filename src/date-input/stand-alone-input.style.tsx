@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DesignToken } from "../design-token";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
 
@@ -22,59 +21,6 @@ interface LabelStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<ContainerStyleProps>`
-    display: flex;
-    position: relative;
-    align-items: center;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    height: 3rem;
-    width: 100%;
-    padding: 0.1rem 1rem 0;
-
-    :focus,
-    :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
-    }
-
-    ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                border: none;
-                padding-left: 0rem;
-                background: transparent !important;
-
-                :focus-within {
-                    border: none;
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.disabled) {
-            return css`
-                background: ${Color.Neutral[6](props)};
-                :hover {
-                    cursor: not-allowed;
-                }
-
-                :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.$error) {
-            return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
-
-                :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                }
-            `;
-        }
-    }}
-`;
-
 export const InputContainer = styled.div<ContainerStyleProps>`
     position: absolute;
     top: 0;
@@ -134,16 +80,6 @@ export const Divider = styled(Text.Body)<LabelStyleProps>`
         if (props.$hide) {
             return css`
                 color: ${Color.Neutral[3]};
-            `;
-        }
-    }}
-`;
-
-export const MonthDivider = styled(Divider)`
-    ${(props) => {
-        if (props.$compress) {
-            return css`
-                margin: 0.1rem 0.1rem 0 0.1rem;
             `;
         }
     }}
