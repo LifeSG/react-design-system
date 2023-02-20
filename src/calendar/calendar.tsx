@@ -76,18 +76,6 @@ export const Calendar = ({
         }
     };
 
-    const toggleMonthView = () => {
-        setCurrentView("month");
-    };
-
-    const toggleYearView = () => {
-        setCurrentView((prev) => {
-            if (prev !== "day") return "day";
-
-            return "year";
-        });
-    };
-
     const handleDateChange = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
 
@@ -99,13 +87,25 @@ export const Calendar = ({
     };
 
     // =============================================================================
-    // Helper Functions
+    // HELPER FUNCTIONS
     // =============================================================================
 
     const performOnChangeHandler = (changeValue: string) => {
         if (onChange) {
             onChange(changeValue);
         }
+    };
+
+    const toggleMonthView = () => {
+        setCurrentView("month");
+    };
+
+    const toggleYearView = () => {
+        setCurrentView((prev) => {
+            if (prev !== "day") return "day";
+
+            return "year";
+        });
     };
 
     // =============================================================================
