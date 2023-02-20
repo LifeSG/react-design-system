@@ -45,7 +45,7 @@ export namespace PhoneNumberInputHelper {
     );
 
     export const formatNumber = (
-        text: string,
+        text: string | undefined,
         country: CountryValue | undefined
     ): string => {
         if (!country) return text;
@@ -81,7 +81,7 @@ export namespace PhoneNumberInputHelper {
             },
             {
                 formattedText: "",
-                remainingText: text.split(""),
+                remainingText: text ? text.split("") : "",
             }
         );
 
