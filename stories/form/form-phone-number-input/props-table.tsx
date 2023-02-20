@@ -42,6 +42,19 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "fixedCountry",
+                description: (
+                    <>
+                        Fixes a country code to the input and will not display
+                        the country code options list. Relies on the
+                        <code>value.countryCode</code> prop to render the fixed
+                        country code
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "id",
                 description: "The unique identifier of the component",
                 propTypes: ["string"],

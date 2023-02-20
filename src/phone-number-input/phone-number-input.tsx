@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { InputGroup } from "../input-group/input-group";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import { Wrapper } from "./phone-number-input.styles";
@@ -14,6 +15,7 @@ export const PhoneNumberInput = ({
     allowClear,
     onClear,
     error,
+    fixedCountry = false,
     optionPlaceholder = "Select",
     optionSearchPlaceholder,
     enableSearch,
@@ -118,6 +120,40 @@ export const PhoneNumberInput = ({
         };
     };
 
+    const getAddonProps = (): AddonProps<CountryValue, string> => {
+        if (fixedCountry) {
+            return {
+                type: "label",
+                attributes: {
+                    value: selectedCountryCode,
+                } as LabelAddon,
+            };
+        } else {
+            return {
+                type: "list",
+                attributes: {
+                    value: selectedOption,
+                    placeholder: optionPlaceholder,
+                    options: PhoneNumberInputHelper.getCountries,
+                    selectedOption: selectedOption,
+                    enableSearch: enableSearch,
+                    searchPlaceholder: optionSearchPlaceholder,
+                    valueExtractor: (option) => `+${option.countryCode}`,
+                    listExtractor: (option) => ({
+                        title: option.name,
+                        secondaryLabel: `+${option.countryCode}`,
+                    }),
+                    onSelectOption: handleSelectOption,
+                    onHideOptions: onHideOptions,
+                    onShowOptions: onShowOptions,
+                } as ListAddon<CountryValue, string>,
+            };
+        }
+    };
+
+    // =========================================================================
+    // RENDER FUNCTIONS
+    // =========================================================================
     return (
         <Wrapper>
             <InputGroup
@@ -129,25 +165,7 @@ export const PhoneNumberInput = ({
                 onClear={handleOnClear}
                 error={error}
                 placeholder={placeholder}
-                addon={{
-                    type: "list",
-                    attributes: {
-                        value: selectedOption,
-                        placeholder: optionPlaceholder,
-                        options: PhoneNumberInputHelper.getCountries,
-                        selectedOption: selectedOption,
-                        enableSearch: enableSearch,
-                        searchPlaceholder: optionSearchPlaceholder,
-                        valueExtractor: (option) => `+${option.countryCode}`,
-                        listExtractor: (option) => ({
-                            title: option.name,
-                            secondaryLabel: `+${option.countryCode}`,
-                        }),
-                        onSelectOption: handleSelectOption,
-                        onHideOptions: onHideOptions,
-                        onShowOptions: onShowOptions,
-                    },
-                }}
+                addon={getAddonProps()}
                 {...otherProps}
             />
         </Wrapper>

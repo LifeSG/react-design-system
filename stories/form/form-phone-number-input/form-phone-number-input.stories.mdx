@@ -92,6 +92,26 @@ import { Form } from "@lifesg/react-design-system/form";
     </Story>
 </Canvas>
 
+<Heading3>Fixed country</Heading3>
+
+In the case where you do not wish to allow the user to select from the country options list,
+you can pass the prop `fixedCountry` to restrict input to only that country code.
+
+<Preview>
+    <Story name="Fixed country">
+        <StoryContainer>
+            <Form.PhoneNumberInput
+                label="This has a fixed country code"
+                placeholder="Enter phone number"
+                value={{
+                    countryCode: "+65",
+                }}
+                fixedCountry
+            />
+        </StoryContainer>
+    </Story>
+</Preview>
+
 <Heading3>Using the field as a standalone</Heading3>
 
 In the case that you require the phone number input field as a standalone, you can do this.
