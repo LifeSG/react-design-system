@@ -3,10 +3,6 @@ import { Notification } from "src/toast";
 import { Text } from "src/text";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
-import { IoMdAlert } from "react-icons/io";
-import { IoIosWarning } from "react-icons/io";
-import { IoMdCheckmarkCircle } from "react-icons/io";
-import { IoMdInformationCircle } from "react-icons/io";
 
 <Meta title="Modules/Toast" component={Notification} />
 
@@ -14,180 +10,142 @@ import { IoMdInformationCircle } from "react-icons/io";
 
 <Secondary>Overview</Secondary>
 
-A component that used to inform users of updates or changes to system status. Communicating with users and providing immediate feedback.
+<Text.BodySmall>
+    <code>Notification toast</code> are used to inform users of updates or
+    changes to system status. Communicating with users and providing immediate
+    feedback are important for building trust. While notifications are an
+    effective method of communicating with users, they are disruptive and should
+    be used sparingly.
+</Text.BodySmall>
 
 ```tsx
 import { Toast } from "@lifesg/react-design-system/toast";
 ```
 
+<Heading3>Light theme notification toast</Heading3>
+
+<Text.BodySmall>
+    Specifying the <code>light.theme</code> interfaces will have been optimized
+    for the standard light mode.
+</Text.BodySmall>
+
 <Preview>
-    <Story name="Toast">
-        <p>Success notification toast in context</p>
+    <Story name="Notification toast">
+        <Text.H4>Success notification toast in context</Text.H4>
+        <Text.BodySmall>
+            Use success toast to inform users that they action they input or
+            requested has been <code>successful</code>.
+        </Text.BodySmall>
+        <br />
         <Notification type="success">
-            Template successfully updated.
+            <Text.Body
+                style={{
+                    color: "#097123",
+                }}
+            >
+                Template successfully updated.
+            </Text.Body>
         </Notification>
         <br />
         <Notification type="success" title="Updated">
-            Template successfully updated.
+            <Text.BodySmall
+                style={{
+                    color: "#097123",
+                }}
+            >
+                Template successfully updated.
+            </Text.BodySmall>
         </Notification>
         <br />
         <br />
-        <p>Error notification toast in context</p>
-        <Notification type="error">
-            An internal system error had occured. Please log out and try again.
-        </Notification>
+        <Text.H4>Warning notification toast in context</Text.H4>
+        <Text.BodySmall>
+            Use warning toast when you want the user to take a
+            <code>specific action</code>
+            or to<code>warn</code> them that something is about to go wrong.
+        </Text.BodySmall>
         <br />
-        <Notification type="error" title="System error">
-            <p>
-                An internal system error had occured. Please log out and try
-                again.
-            </p>
-        </Notification>
-        <br />
-        <br />
-        <p>Warning notification toast in context</p>
         <Notification type="warning">
-            The template contains characters that cannot be updated. Please
-            remove the characters and try again.
+            <Text.Body
+                style={{
+                    color: "#B34E00",
+                }}
+            >
+                The template contains characters that cannot be updated. Please
+                remove the characters and try again.
+            </Text.Body>
         </Notification>
         <br />
         <Notification type="warning" title="Unknown characters">
-            <p>
+            <Text.BodySmall
+                style={{
+                    color: "#B34E00",
+                }}
+            >
                 The template contains characters that cannot be updated. Please
                 remove the characters and try again.
-            </p>
+            </Text.BodySmall>
         </Notification>
         <br />
         <br />
-        <p>Info notification toast in context</p>
+        <Text.H4>Error notification toast in context</Text.H4>
+        <Text.BodySmall>
+            Use error toast to inform users something <code>critical</code> has
+            happened and requires immediate attention.
+        </Text.BodySmall>
+        <br />
+        <Notification type="error">
+            <Text.Body
+                style={{
+                    color: "#C60000",
+                }}
+            >
+                An internal system error had occured. Please log out and try
+                again.
+            </Text.Body>
+        </Notification>
+        <br />
+        <Notification type="error" title="System error">
+            <Text.BodySmall
+                style={{
+                    color: "#C60000",
+                }}
+            >
+                An internal system error had occured. Please log out and try
+                again.
+            </Text.BodySmall>
+        </Notification>
+        <br />
+        <br />
+        <Text.H4>Info notification toast in context</Text.H4>
+        <Text.BodySmall>
+            An informational message that is used as a <code>reminder</code> or
+            <code>an information</code> for the user.
+        </Text.BodySmall>
+        <br />
         <Notification type="info">
-            The calendar will be automatically updated when you have done
-            editing the event information.
+            <Text.Body
+                style={{
+                    color: "#064D70",
+                }}
+            >
+                The calendar will be automatically updated when you have done
+                editing the event information.
+            </Text.Body>
         </Notification>
         <br />
         <Notification type="info" title="Updated automatically">
-            <p>
+            <Text.BodySmall
+                style={{
+                    color: "#064D70",
+                }}
+            >
                 The calendar will be automatically updated when you have done
                 editing the event information.
-            </p>
+            </Text.BodySmall>
         </Notification>
     </Story>
 </Preview>
-
-<Heading3>Light mode notification toast</Heading3>
-
-Specifying the type in the `NotificationToast.type` to animate into a screen by displaying near the content that returns its feedback.
-
-<Canvas>
-    <Story name="Light theme">
-        <>
-            <p>Success</p>
-            <strong>Default</strong>
-            <Notification type="success">Success Notification</Notification>
-            <br />
-            <strong>Title</strong>
-            <Notification type="success" title="Success notification">
-                <p>Your description goes here</p>
-            </Notification>
-            <br />
-            <br />
-            <p>Error</p>
-            <strong>Default</strong>
-            <Notification type="error">Error Notification</Notification>
-            <br />
-            <strong>Title</strong>
-            <Notification type="error" title="Error notification">
-                <p>Your description goes here</p>
-            </Notification>
-            <br />
-            <br />
-            <p>Warning</p>
-            <strong>Default</strong>
-            <Notification type="warning">Warning Notification</Notification>
-            <br />
-            <strong>Description</strong>
-            <Notification type="warning" title="Warning notification">
-                <p>Your description goes here</p>
-            </Notification>
-            <br />
-            <br />
-            <p>Info</p>
-            <strong>Default</strong>
-            <Notification type="info">Info Notification</Notification>
-            <br />
-            <strong>Title</strong>
-            <Notification type="info" title="Info notification">
-                <p>Your description goes here</p>
-            </Notification>
-            <br />
-        </>
-    </Story>
-</Canvas>
-
-<Heading3>Dark mode notification toast</Heading3>
-
-While `NotificationToast.Type` are an effective method of communicating with users, they are disruptive and should be used sparingly.
-
-<Canvas>
-    <Story name="Dark theme">
-        <>
-            <Text.H2>Success</Text.H2>
-            <strong>Default</strong>
-            <Notification type="success" theme="dark">
-                Success Notification
-            </Notification>
-            <br />
-            <strong>Title</strong>
-            <Notification
-                type="success"
-                theme="dark"
-                title="Success notification"
-            >
-                <p>Your description goes here</p>
-            </Notification>
-            <br />
-            <br />
-            <p>Error</p>
-            <strong>Default</strong>
-            <Notification type="error" theme="dark">
-                Error Notification
-            </Notification>
-            <br />
-            <strong>Title</strong>
-            <Notification type="error" theme="dark" title="Error notification">
-                <p>Your description goes here</p>
-            </Notification>
-            <br />
-            <br />
-            <p>Warning</p>
-            <strong>Default</strong>
-            <Notification type="warning" theme="dark">
-                Warning Notification
-            </Notification>
-            <br />
-            <strong>Title</strong>
-            <Notification
-                type="warning"
-                theme="dark"
-                title="Warning notification"
-            >
-                <p>Your description goes here</p>
-            </Notification>
-            <br />
-            <br />
-            <p>Info</p>
-            <strong>Default</strong>
-            <Notification type="info" theme="dark">
-                Info Notification
-            </Notification>
-            <br />
-            <strong>Title</strong>
-            <Notification type="info" theme="dark" title="Warning Notification">
-                <p>Your description goes here</p>
-            </Notification>
-        </>
-    </Story>
-</Canvas>
 
 <Secondary>Component API</Secondary>
 <PropsTable />

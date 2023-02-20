@@ -1,153 +1,259 @@
 import styled from "styled-components";
 import { Color } from "../color/color";
+import { NotificationTheme, NotificationType } from "./types";
+import { IconButton } from "../icon-button";
 import { TextStyleHelper } from "../text";
 import { Text } from "../text";
-import { NotificationType } from "./types";
-import { IconButton } from "../icon-button";
 import { CrossIcon } from "@lifesg/react-icons/cross";
-// import { Icon } from "src/icon";
 
 interface StyleProps {
     $type: NotificationType;
+    $theme: NotificationTheme;
 }
 
-// =============================================================================
-// STYLING
-// =============================================================================
-
 export const Wrapper = styled.div<StyleProps>`
+    width: 100%;
     padding: 16px;
-    display: flex;
-    flex-direction: column;
     border-radius: 8px;
-    // ${TextStyleHelper.getTextStyle("XSmall", "light")}
 
     ${(props) => {
-        let backgroundColor: string;
-        let borderColor: string;
-        let textColor: string;
-        let iconColor: string;
         switch (props.$type) {
             case "success":
-                backgroundColor = Color.Validation.Green.Background(props);
-                borderColor = Color.Validation.Green.Border(props);
-                textColor = Color.Validation.Green.Text(props);
-                iconColor = Color.Validation.Green.Icon(props);
-                break;
+                return `
+                    background: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Green.Background(props)
+                            : Color.Validation.Dark.Background(props)
+                    };
+                    border: ${
+                        props.$theme === "light"
+                            ? `1pt solid ${Color.Validation.Green.Border(
+                                  props
+                              )}`
+                            : Color.Validation.Dark.Border(props)
+                    }
+                    };
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Green.Text(props)
+                            : Color.Validation.Green.Text(props)
+                    };
+                    svg {
+                        font-size: 24px !important;
+                        color: ${Color.Validation.Green.Icon(props)}
+                    }
+                `;
             case "error":
-                backgroundColor = Color.Validation.Red.Background(props);
-                borderColor = Color.Validation.Red.Border(props);
-                textColor = Color.Validation.Red.Text(props);
-                iconColor = Color.Validation.Red.Icon(props);
-                break;
+                return `
+                    background: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Red.Background(props)
+                            : Color.Validation.Dark.Background(props)
+                    };
+                    border: ${
+                        props.$theme === "light"
+                            ? `1pt solid ${Color.Validation.Red.Border(props)}`
+                            : Color.Validation.Dark.Border(props)
+                    }
+                    };
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Red.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                    svg {
+                        font-size: 24px !important;
+                        color:${
+                            props.$theme === "light"
+                                ? Color.Validation.Red.Icon(props)
+                                : Color.Validation.Red.Border(props)
+                        }
+                    }   
+                `;
             case "warning":
-                backgroundColor = Color.Validation.Orange.Background(props);
-                borderColor = Color.Validation.Orange.Border(props);
-                textColor = Color.Validation.Orange.Text(props);
-                iconColor = Color.Validation.Orange.Icon(props);
-                break;
+                return `
+                    background: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Orange.Background(props)
+                            : Color.Validation.Dark.Background(props)
+                    };
+                    border: ${
+                        props.$theme === "light"
+                            ? `1pt solid ${Color.Validation.Orange.Border(
+                                  props
+                              )}`
+                            : Color.Validation.Dark.Border(props)
+                    }
+                    };
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Orange.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                    svg {
+                        color: ${Color.Validation.Orange.Icon(props)}
+                    }
+                `;
             case "info":
-                backgroundColor = Color.Validation.Blue.Background(props);
-                borderColor = Color.Validation.Blue.Border(props);
-                textColor = Color.Validation.Blue.Text(props);
-                break;
+                return `
+                        background: ${
+                            props.$theme === "light"
+                                ? Color.Validation.Blue.Background(props)
+                                : Color.Validation.Dark.Background(props)
+                        };
+                        border: ${
+                            props.$theme === "light"
+                                ? `1pt solid ${Color.Validation.Blue.Border(
+                                      props
+                                  )}`
+                                : Color.Validation.Dark.Border(props)
+                        }
+                        };
+                        color: ${
+                            props.$theme === "light"
+                                ? Color.Validation.Blue.Text(props)
+                                : Color.Validation.Dark.Text(props)
+                        };
+                        svg {
+                            color:${
+                                props.$theme === "light"
+                                    ? Color.Validation.Blue.Icon(props)
+                                    : Color.Validation.Blue.Border(props)
+                            }
+                        }
+                    `;
             default:
-                backgroundColor = Color.Validation.Green.Background(props);
-                borderColor = Color.Validation.Green.Border(props);
-                textColor = Color.Validation.Green.Text(props);
-                iconColor = Color.Validation.Green.Icon(props);
-                break;
+                return `
+                    background: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Green.Background(props)
+                            : Color.Validation.Dark.Background(props)
+                    };
+                    border: ${
+                        props.$theme === "light"
+                            ? `1pt solid ${Color.Validation.Green.Border(
+                                  props
+                              )}`
+                            : Color.Validation.Dark.Border(props)
+                    };
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Green.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                    svg {
+                        color: ${Color.Validation.Green.Icon(props)}
+                    }
+                `;
         }
-
-        return `
-			background: ${backgroundColor};
-			border: 1pt solid ${borderColor};
-            color: ${textColor};
-
-          svg {
-            color: ${iconColor};
-            font-size: 24px;
-            margin-right: 4px;
-        }
-
-        span {
-            ${TextStyleHelper.getTextStyle("Body", "regular")}
-            margin-left: 30px;
-            margin-top: -32px;
-            margin-right: 20px;
-            color: ${textColor};
-        }
-
-        message {
-            display: inline-block;
-            margin-top: -2px;
-            margin-left: 30px;
-            margin-right: 60px !important;
-            margin-top: -4rem;
-            color: ${textColor};
-        }
-
-        H4 {
-            ${TextStyleHelper.getTextStyle("Body", "semibold")}
-            margin-top: -33px;
-            margin-left: 30px;
-            margin-right: 8px;
-            color: ${textColor};
-        }
-
-        :focus,
-        :active {
-            background: transparent;
-        }`;
     }}
 `;
 
 export const Container = styled.div`
-    display: inline-block;
-    width: 100%;
-    padding: 0;
+    display: flex;
 `;
 
-export const Title = styled(Text.H4)`
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+export const IconContainer = styled.div`
+    max-width: 48px;
 `;
 
-export const Description = styled(Text.BodySmall && Text.Body)<StyleProps>`
-    display: inline-block;
-    // margin-top: -6px;
-    // margin-left: 30px;
-    // margin-right: 60px !important;
-    // margin-top: -4rem;
+export const TextContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 0px 8px;
+    flex-grow: 2;
 `;
 
+export const Title = styled(Text.H4)<StyleProps>`
+    display: flex;
+
+    ${TextStyleHelper.getTextStyle("Body", "semibold")};
+    ${(props) => {
+        switch (props.$type) {
+            case "success":
+                return `
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Green.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                `;
+            case "info":
+                return `
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Blue.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                `;
+            case "error":
+                return `
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Red.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                `;
+            case "warning":
+                return `
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Orange.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                `;
+            default:
+                return `
+                    color: ${
+                        props.$theme === "light"
+                            ? Color.Validation.Green.Text(props)
+                            : Color.Validation.Dark.Text(props)
+                    };
+                `;
+        }
+    }}
+`;
+
+export const Description = styled(Text.Body)<StyleProps>`
+    display: flex;
+`;
 export const CloseIcon = styled(CrossIcon)`
-    height: 20px;
-    width: 20px;
-    margin-top: -2px;
+    height: 18px;
+    width: 18px;
+    margin-top: 8px;
 `;
 
 export const StyledIconButton = styled(IconButton)<StyleProps>`
-    background: transparent;
     padding: 0;
-    padding-top: 3px;
-    margin-right: -6px;
-    margin-left: 8px;
-    float: right;
+    height: 20px;
+    width: 20px;
 
     ${(props) => {
         let iconColor: string;
         switch (props.$type) {
             case "success":
-                iconColor = Color.Validation.Green.Text(props);
+                iconColor =
+                    props.$theme === "light"
+                        ? Color.Validation.Green.Text(props)
+                        : Color.Validation.Dark.Text(props);
                 break;
             case "error":
-                iconColor = Color.Validation.Red.Text(props);
+                iconColor =
+                    props.$theme === "light"
+                        ? Color.Validation.Red.Text(props)
+                        : Color.Validation.Dark.Text(props);
                 break;
             case "warning":
-                iconColor = Color.Validation.Orange.Text(props);
+                iconColor =
+                    props.$theme === "light"
+                        ? Color.Validation.Orange.Text(props)
+                        : Color.Validation.Dark.Text(props);
                 break;
             case "info":
-                iconColor = Color.Validation.Blue.Text(props);
+                iconColor =
+                    props.$theme === "light"
+                        ? Color.Validation.Blue.Text(props)
+                        : Color.Validation.Dark.Text(props);
                 break;
             default:
                 iconColor = Color.Validation.Green.Text(props);
@@ -157,13 +263,6 @@ export const StyledIconButton = styled(IconButton)<StyleProps>`
 
         svg {
             color: ${iconColor};
-            display: block;
-        }
-
-        :focus,
-        :active {
-            background: transparent;
-
         }`;
     }}
 `;

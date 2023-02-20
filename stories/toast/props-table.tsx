@@ -13,7 +13,7 @@ const DATA: ApiTableSectionProps[] = [
                         Type of <code>Toast</code>
                     </>
                 ),
-                propTypes: [`success`, `error`, `warning`, `info`],
+                propTypes: [`success`, `warning`, `error`, `info`],
                 defaultValue: `success`,
             },
             {
@@ -24,7 +24,18 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: [`light`, `dark`],
-                defaultValue: ``,
+                defaultValue: `light`,
+            },
+            {
+                name: "icons",
+                description: (
+                    <>
+                        Type of <code>Icon</code>
+                    </>
+                ),
+
+                propTypes: [`SVGElement`],
+                defaultValue: `TickCircleFillIcon`,
             },
             {
                 name: "title",
@@ -44,7 +55,7 @@ const DATA: ApiTableSectionProps[] = [
                         The content of the <code>Toast</code>
                     </>
                 ),
-                propTypes: ["string"],
+                propTypes: [`string`],
                 defaultValue: "",
             },
             {
