@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DateHelper, StringHelper } from "../util";
+import { InputType } from "./date-input";
 import {
     BaseInput,
     Divider,
@@ -7,6 +8,7 @@ import {
     MonthInput,
     YearInput,
 } from "./stand-alone-input.style";
+import { ChangeValueTypes } from "./types";
 
 type StartInputNames = "start-day" | "start-month" | "start-year";
 type EndInputNames = "end-day" | "end-month" | "end-year";
@@ -16,10 +18,7 @@ type ValueFieldTypes = StartInputNames | EndInputNames;
 
 interface StandAloneInputProps {
     disabled?: boolean | undefined;
-    onBlur?: ((value: string) => void) | undefined;
-    onBlurRaw?: ((value: string[]) => void) | undefined;
-    onChange?: ((value: string) => void) | undefined;
-    onChangeRaw?: ((value: string[]) => void) | undefined;
+    onChange?: ((value: ChangeValueTypes) => void) | undefined;
     readOnly?: boolean | undefined;
     names:
         | ["start-day", "start-month", "start-year"]
@@ -29,10 +28,7 @@ interface StandAloneInputProps {
 
 export const StandAloneInput = ({
     disabled,
-    onBlur,
-    onBlurRaw,
     onChange,
-    onChangeRaw,
     readOnly,
     names,
     value,
@@ -149,7 +145,6 @@ export const StandAloneInput = ({
         // outside click
         if (currentFocusStateRef.current !== "none") {
             setCurrentFocus("none");
-            performOnBlurHandler();
         }
     };
 
@@ -157,7 +152,6 @@ export const StandAloneInput = ({
         if ((event.target as any).name === names[2] && event.code === "Tab") {
             // About to blur the entire input
             setCurrentFocus("none");
-            performOnBlurHandler();
         }
     };
 
@@ -212,7 +206,8 @@ export const StandAloneInput = ({
                 performOnChangeHandler(value, targetName);
                 break;
             case names[1]:
-                setMonthValue(value);
+                setMonthValue(DateHelper.clampMonth(value));
+
                 performOnChangeHandler(value, targetName);
                 break;
             case names[2]:
@@ -267,73 +262,22 @@ export const StandAloneInput = ({
         }
     };
 
-    const performOnChangeHandler = (changeValue: string, field: FieldType) => {
-        if (onChange) {
-            const values: Record<ValueFieldTypes[number], string> = {
-                [names[0]]: dayValue,
-                [names[1]]: monthValue,
-                [names[2]]: yearValue,
-            };
+    const performOnChangeHandler = (
+        changeValue: string,
+        field: ValueFieldTypes
+    ) => {
+        const values: Record<ValueFieldTypes[number], string> = {
+            [names[2]]: yearValue,
+            [names[1]]: monthValue,
+            [names[0]]: dayValue,
+        };
+        // Update the specific field value
+        values[field] = changeValue;
 
-            // Update the specific field value
-            values[field] = changeValue;
+        const changeType = field.split("-")[0] as InputType;
+        const returnValue = { [changeType]: values };
 
-            const returnValue = getFormattedValue(values);
-            onChange(returnValue);
-        }
-
-        if (onChangeRaw) {
-            const valuesArr = [
-                ...(field === names[0]
-                    ? [StringHelper.padValue(changeValue)]
-                    : [dayValue]),
-                ...(field === names[1]
-                    ? [StringHelper.padValue(changeValue)]
-                    : [monthValue]),
-                ...(field === names[2] ? [changeValue] : [yearValue]),
-            ];
-
-            onChangeRaw(valuesArr);
-        }
-    };
-
-    const performOnBlurHandler = () => {
-        if (onBlur) {
-            const values: Record<ValueFieldTypes[number], string> = {
-                [names[0]]: dayValueStateRef.current,
-                [names[1]]: monthValueStateRef.current,
-                [names[2]]: yearValueStateRef.current,
-            };
-
-            const returnValue = getFormattedValue(values);
-            onBlur(returnValue);
-        }
-
-        if (onBlurRaw) {
-            const valuesArr = [
-                StringHelper.padValue(dayValueStateRef.current.toString()),
-                StringHelper.padValue(monthValueStateRef.current.toString()),
-                yearValueStateRef.current,
-            ];
-
-            onBlurRaw(valuesArr);
-        }
-    };
-
-    const getFormattedValue = (values: Record<ValueFieldTypes, string>) => {
-        const valueArr = [values[names[2]], values[names[1]], values[names[0]]]; // eventual format YYYY-MM-DD
-
-        if (
-            values[names[0]].length >= 1 &&
-            values[names[1]].length >= 1 &&
-            values[names[2]].length === 4
-        ) {
-            return valueArr.join("-");
-        } else if (valueArr.every((value) => value === "")) {
-            return "";
-        } else {
-            return INVALID_VALUE;
-        }
+        onChange(returnValue);
     };
 
     return (
@@ -401,8 +345,3 @@ export const StandAloneInput = ({
         </InputContainer>
     );
 };
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const INVALID_VALUE = "Invalid date";
