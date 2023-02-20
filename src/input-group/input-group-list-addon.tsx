@@ -191,6 +191,7 @@ export const InputGroupListAddon = <T, V>({
                 <Selector
                     ref={selectorRef}
                     type="button"
+                    aria-readonly={readOnly}
                     data-testid={selectorTestId || "addon-selector"}
                     onClick={handleAddonSelectorClick}
                 >
