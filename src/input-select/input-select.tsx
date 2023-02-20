@@ -222,8 +222,8 @@ export const InputSelect = <T, V>({
             <Selector
                 ref={selectorRef}
                 type="button"
-                aria-readonly={otherProps.readOnly}
                 data-testid={id || "selector"}
+                disabled={disabled}
                 onClick={handleSelectorClick}
                 {...otherProps}
             >
