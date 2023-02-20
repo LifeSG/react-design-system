@@ -108,12 +108,12 @@ export const LabelContainer = styled.div`
 
 export const ValueLabel = styled(Text.Body)`
     text-align: left;
-    line-height: 1.375rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top: 1px; // align with input
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
