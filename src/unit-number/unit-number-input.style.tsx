@@ -48,7 +48,13 @@ export const FloorInput = styled(Input)`
 `;
 
 export const UnitInput = styled(FloorInput)`
-    width: 4rem;
+    // Cheat to balance the placeholder look while ensuring enough width
+    margin-left: 0.5rem;
+    width: 6rem;
+
+    input {
+        text-align: left;
+    }
 `;
 
 export const UnitNumberDivider = styled(Text.Body)<LabelStyleProps>`
