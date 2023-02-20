@@ -29,6 +29,7 @@ const BORDER_RADIUS = "4px";
 export const Wrapper = styled.div`
     position: relative;
     min-height: 3rem;
+    height: 3rem; // Need this to persist the height when expanding or collapsing list
     width: 100%;
 
     ${MediaQuery.MaxWidth.tablet} {
