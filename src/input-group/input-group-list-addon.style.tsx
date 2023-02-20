@@ -30,8 +30,6 @@ interface DividerStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const BORDER_RADIUS = "4px";
-
 export const Wrapper = InputSelectWrapper;
 export const ElementBoundary = styled(InputSelectElemBoundary)``;
 
