@@ -13,39 +13,51 @@ export interface DateInputProps extends React.AriaAttributes {
     endValue?: string | undefined;
     error?: boolean | undefined;
     disabled?: boolean | undefined;
+    /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
+    disabledDates?: string[] | undefined;
     /** The variant of the component. Values `single` | `range` */
     variant?: DateInputVariant | undefined;
+    /** The display cancel/done button inside calendar component. Defualt value as `true` */
+    withButton?: boolean | undefined;
+    /**
+     * Restrict selection to within this date range, in `YYYY-MM-DD` format.
+     * Example: `["2023-03-15", "2023-04-19"]
+     */
+    between?: [string, string] | undefined;
     /**
      * Function that returns the raw values in the DateInput on change in an object format
-     * as such { start: "DD-MM-YYYY", end: "DD-MM-YYYY"}
+     * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}
      */
     onChange?: ((value: ChangeValueTypes) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on change in an object format
-     * as such { start: {year: "", month: "", day: "" }}
+     * as such { start: {year: "", month: "", day: "", end: {year: "", month: "", day: ""} }}
      */
-    onChangeRaw?: ((value: ChangeValueTypes) => void) | undefined;
+    onChangeRaw?: ((value: RawInputValues) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on blur in an object format
-     * as such { start: "DD-MM-YYYY", end: "DD-MM-YYYY"}
+     * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}
      */
     onBlur?: ((value: ChangeValueTypes) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on blur in an object format
-     * as such { start: {year: "", month: "", day: "" }}
+     * as such { start: {year: "", month: "", day: "", end: {year: "", month: "", day: ""} }}
      */
-    onBlurRaw?: ((value: ChangeValueTypes) => void) | undefined;
+    onBlurRaw?: ((value: RawInputValues) => void) | undefined;
 }
 
 export type DateInputVariant = "single" | "range";
 
 export interface ChangeValueTypes {
-    start?: ChangeValue;
-    end?: ChangeValue;
+    start?: string | undefined;
+    end?: string | undefined;
 }
 
-interface ChangeValue {
-    day: string;
-    month: string;
-    year: string;
+export interface RawInputValues
+    extends Partial<Record<keyof ChangeValueTypes, RawInputValue>> {}
+
+interface RawInputValue {
+    year?: string;
+    month?: string;
+    day?: string;
 }
