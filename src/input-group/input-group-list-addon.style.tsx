@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import {
     ElementBoundary as InputSelectElemBoundary,
+    Selector as InputSelectSelector,
     Wrapper as InputSelectWrapper,
 } from "../input-select/input-select.styles";
 import { Text } from "../text/text";
@@ -68,17 +69,9 @@ export const DisplayContainer = styled.div<StyleProps>`
     }}
 `;
 
-export const Selector = styled.button`
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: space-between;
-    height: 3rem;
+export const Selector = styled(InputSelectSelector)`
     padding: 0;
-    border-radius: ${BORDER_RADIUS};
-    cursor: pointer;
-    border: none;
-    background: transparent;
+    width: auto;
 
     :focus,
     :active {

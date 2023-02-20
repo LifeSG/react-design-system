@@ -170,6 +170,54 @@ You are able to specify attributes in the `addon` property to construct advanced
                     readOnly
                 />
                 <Form.InputGroup
+                    label="This is the list addon disabled state"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                            value: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
+                        },
+                    }}
+                    disabled
+                />
+                <Form.InputGroup
+                    label="This is the list addon error state"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                            value: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
+                        },
+                    }}
+                    error
+                />
+                <Form.InputGroup
                     label="With a list addon on the right"
                     placeholder="Enter something"
                     addon={{

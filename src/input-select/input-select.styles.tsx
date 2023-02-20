@@ -29,7 +29,6 @@ const BORDER_RADIUS = "4px";
 export const Wrapper = styled.div`
     position: relative;
     min-height: 3rem;
-    height: 3rem;
     width: 100%;
 
     ${MediaQuery.MaxWidth.tablet} {
@@ -42,7 +41,8 @@ export const Selector = styled.button`
     position: relative;
     align-items: center;
     justify-content: space-between;
-    padding: 0.702rem 1rem; // To make it exactly 3rem height
+    padding: 0 1rem;
+    height: 3rem;
     width: 100%;
     border-radius: ${BORDER_RADIUS};
     cursor: pointer;
