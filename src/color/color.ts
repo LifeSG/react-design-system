@@ -68,12 +68,6 @@ export const Color: PropertiesToType<
             Border: getThemeColors("Validation.Blue.Border"),
             Background: getThemeColors("Validation.Blue.Background"),
         },
-        Dark: {
-            Text: getThemeColors("Validation.Dark.Text"),
-            Icon: getThemeColors("Validation.Dark.Icon"),
-            Border: getThemeColors("Validation.Dark.Border"),
-            Background: getThemeColors("Validation.Dark.Background"),
-        },
     },
     Shadow: {
         Accent: getThemeColors("Shadow.Accent"),

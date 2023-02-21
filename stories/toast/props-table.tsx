@@ -17,27 +17,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `success`,
             },
             {
-                name: "theme",
-                description: (
-                    <>
-                        Type of <code>Theme</code>
-                    </>
-                ),
-                propTypes: [`light`, `dark`],
-                defaultValue: `light`,
-            },
-            {
-                name: "icons",
-                description: (
-                    <>
-                        Type of <code>Icon</code>
-                    </>
-                ),
-
-                propTypes: [`SVGElement`],
-                defaultValue: `TickCircleFillIcon`,
-            },
-            {
                 name: "title",
                 description: (
                     <>

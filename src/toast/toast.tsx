@@ -16,7 +16,6 @@ import {
 } from "./toast.styles";
 
 export const Notification = ({
-    theme = "light",
     type = "success",
     title,
     children,
@@ -30,13 +29,13 @@ export const Notification = ({
     const showIcon = () => {
         switch (type) {
             case "success":
-                return <TickCircleFillIcon fontSize={24} />;
-            case "info":
-                return <ICircleFillIcon fontSize={24} />;
+                return <TickCircleFillIcon />;
             case "warning":
-                return <ExclamationTriangleFillIcon fontSize={24} />;
+                return <ExclamationTriangleFillIcon />;
             case "error":
-                return <ExclamationCircleFillIcon fontSize={24} />;
+                return <ExclamationCircleFillIcon />;
+            case "info":
+                return <ICircleFillIcon />;
             default:
                 return null;
         }
@@ -45,27 +44,17 @@ export const Notification = ({
     if (!isVisible) return null;
 
     return (
-        <Wrapper $type={type} $theme={theme}>
+        <Wrapper $type={type}>
             <Container>
                 <IconContainer>{showIcon()}</IconContainer>
                 <TextContainer>
-                    {title && (
-                        <Title $type={type} $theme={theme}>
-                            {title}
-                        </Title>
-                    )}
+                    {title && <Title $type={type}>{title}</Title>}
 
                     {children && (
-                        <Description $theme={theme} $type={type}>
-                            {children}
-                        </Description>
+                        <Description $type={type}>{children}</Description>
                     )}
                 </TextContainer>
-                <StyledIconButton
-                    $type={type}
-                    $theme={theme}
-                    onClick={handleDismiss}
-                >
+                <StyledIconButton $type={type} onClick={handleDismiss}>
                     <CloseIcon />
                 </StyledIconButton>
             </Container>
