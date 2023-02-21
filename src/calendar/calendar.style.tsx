@@ -107,6 +107,12 @@ export const DropdownMonth = styled(DropdownMonthYearBase)`
 `;
 export const DropdownYear = styled(DropdownMonthYearBase)``;
 
+export const ContentBody = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 0 1.25rem;
+`;
+
 export const Views = styled.div<CalendarViewProps>`
     margin-left: auto;
     margin-right: auto;
@@ -138,22 +144,17 @@ export const MonthView = styled(ViewSectionBase)``;
 export const YearView = styled(ViewSectionBase)``;
 
 export const ArrowLeft = styled(ChevronLeftIcon)`
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     color: ${Color.Neutral[3]};
     cursor: pointer;
     width: 1rem;
     height: 1rem;
-    left: 1.25rem;
+    margin: 0 0 3rem 0;
 `;
+
 export const ArrowRight = styled(ChevronRightIcon)`
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     color: ${Color.Neutral[3]};
     cursor: pointer;
     width: 1rem;
     height: 1rem;
-    right: 1.25rem;
+    margin: 0 0 3rem 0;
 `;

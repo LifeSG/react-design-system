@@ -4,6 +4,7 @@ import {
     ArrowLeft,
     ArrowRight,
     Container,
+    ContentBody,
     DayView,
     DropdownMonth,
     DropdownYear,
@@ -143,34 +144,36 @@ export const Calendar = ({
                     <IconChevronDown />
                 </DropdownYear>
             </HeaderDropdown>
-            <Views $view={currentView}>
-                <DayView>
-                    <CalendarDay
-                        calendarDate={calendarDate}
-                        disabledDates={disabledDates}
-                        selectedStartDate={selectedStartDate}
-                        onSelect={(date) => handleDateChange(date)}
-                    />
-                </DayView>
-                <MonthView>
-                    <CalendarMonth
-                        calendarDate={calendarDate}
-                        currentView={currentView}
-                        selectedStartDate={selectedStartDate}
-                        onSelect={(date) => handleDateChange(date)}
-                    />
-                </MonthView>
-                <YearView>
-                    <CalendarYear
-                        calendarDate={calendarDate}
-                        currentView={currentView}
-                        selectedStartDate={selectedStartDate}
-                        onSelect={(date) => handleDateChange(date)}
-                    />
-                </YearView>
-            </Views>
-            <ArrowLeft onClick={handleLeftArrowClick} />
-            <ArrowRight onClick={handleRightArrowClick} />
+            <ContentBody>
+                <ArrowLeft onClick={handleLeftArrowClick} />
+                <Views $view={currentView}>
+                    <DayView>
+                        <CalendarDay
+                            calendarDate={calendarDate}
+                            disabledDates={disabledDates}
+                            selectedStartDate={selectedStartDate}
+                            onSelect={(date) => handleDateChange(date)}
+                        />
+                    </DayView>
+                    <MonthView>
+                        <CalendarMonth
+                            calendarDate={calendarDate}
+                            currentView={currentView}
+                            selectedStartDate={selectedStartDate}
+                            onSelect={(date) => handleDateChange(date)}
+                        />
+                    </MonthView>
+                    <YearView>
+                        <CalendarYear
+                            calendarDate={calendarDate}
+                            currentView={currentView}
+                            selectedStartDate={selectedStartDate}
+                            onSelect={(date) => handleDateChange(date)}
+                        />
+                    </YearView>
+                </Views>
+                <ArrowRight onClick={handleRightArrowClick} />
+            </ContentBody>
         </Container>
     );
 };
