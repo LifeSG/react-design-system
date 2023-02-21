@@ -21,6 +21,10 @@ interface CalendarViewProps {
     $view: View;
 }
 
+interface ArrowButtonProps {
+    $type: "header" | "content";
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -87,10 +91,6 @@ export const HeaderDropdown = styled.div<HeaderDropdownProps>`
     }}
 `;
 
-export const HeaderIconButton = styled(IconButton)`
-    padding: 0;
-`;
-
 export const IconChevronDown = styled(ChevronDownIcon)`
     margin-left: 0.625rem;
     color: ${Color.Neutral[3]};
@@ -155,13 +155,20 @@ export const DayView = styled(ViewSectionBase)``;
 export const MonthView = styled(ViewSectionBase)``;
 export const YearView = styled(ViewSectionBase)``;
 
-export const ContentArrowButton = styled(IconButton)`
+export const ArrowButton = styled(IconButton)<ArrowButtonProps>`
     padding: 0;
-    margin: 0 0 3rem 0;
 
     &:focus {
         background-color: ${Color.Neutral[8]};
     }
+
+    ${(props) => {
+        if (props.$type === "content") {
+            return css`
+                margin: 0 0 3rem 0;
+            `;
+        }
+    }}
 `;
 
 export const ArrowLeft = styled(ChevronLeftIcon)`

@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import {
+    ArrowButton,
     ArrowLeft,
     ArrowRight,
     Container,
-    ContentArrowButton,
     ContentBody,
     DayView,
     DropdownMonth,
     DropdownYear,
     HeaderDropdown,
-    HeaderIconButton,
     IconChevronDown,
     MonthView,
     Views,
@@ -139,21 +138,21 @@ export const Calendar = ({
                     <Text.H4 weight="regular">
                         {dayjs(calendarDate).format("MMM")}
                     </Text.H4>
-                    <HeaderIconButton>
+                    <ArrowButton $type="header">
                         <IconChevronDown />
-                    </HeaderIconButton>
+                    </ArrowButton>
                 </DropdownMonth>
                 <DropdownYear onClick={toggleYearView}>
                     {renderYearHeader()}
-                    <HeaderIconButton>
+                    <ArrowButton $type="header">
                         <IconChevronDown />
-                    </HeaderIconButton>
+                    </ArrowButton>
                 </DropdownYear>
             </HeaderDropdown>
             <ContentBody>
-                <ContentArrowButton onClick={handleLeftArrowClick}>
+                <ArrowButton $type="content" onClick={handleLeftArrowClick}>
                     <ArrowLeft />
-                </ContentArrowButton>
+                </ArrowButton>
                 <Views $view={currentView}>
                     <DayView>
                         <CalendarDay
@@ -180,9 +179,9 @@ export const Calendar = ({
                         />
                     </YearView>
                 </Views>
-                <ContentArrowButton onClick={handleRightArrowClick}>
+                <ArrowButton $type="content" onClick={handleRightArrowClick}>
                     <ArrowRight />
-                </ContentArrowButton>
+                </ArrowButton>
             </ContentBody>
         </Container>
     );
