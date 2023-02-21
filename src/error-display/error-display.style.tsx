@@ -73,5 +73,6 @@ export const ActionButton = styled(Button.Default)`
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: 100%;
+        margin: 2rem auto 0;
     }
 `;
