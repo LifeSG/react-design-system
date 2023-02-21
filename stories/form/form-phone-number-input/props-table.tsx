@@ -8,33 +8,28 @@ const DATA: ApiTableSectionProps[] = [
         name: "PhoneNumberInput specific props",
         attributes: [
             {
-                name: "value",
-                description:
-                    "The value containing the country code and phone number",
-                propTypes: ["PhoneNumberInputValue"],
-            },
-            {
                 name: "allowClear",
                 description:
                     "Indicates if the clear icon button will be displayed in the input",
                 propTypes: ["boolean"],
             },
             {
-                name: "name",
-                description: "The name of the component",
+                name: "data-testid",
+                description: "The test identifier of the component",
                 propTypes: ["string"],
-            },
-            {
-                name: "placeholder",
-                description: "The placeholder for the input",
-                propTypes: ["string"],
-                defaultValue: "Select",
             },
             {
                 name: "disabled",
                 description:
                     "Indicates if the component is disabled and selection is not allowed",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "enableSearch",
+                description:
+                    "When specified, it will allow a text base search for the country code options",
+                propTypes: ["boolean"],
+                defaultValue: "false",
             },
             {
                 name: "error",
@@ -47,8 +42,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "data-testid",
-                description: "The test identifier of the component",
+                name: "id",
+                description: "The unique identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "name",
+                description: "The name of the component",
                 propTypes: ["string"],
             },
             {
@@ -68,11 +68,28 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "enableSearch",
+                name: "pattern",
                 description:
-                    "When specified, it will allow a text base search for the country code options",
+                    "The regular expression that the input value should match",
+                propTypes: ["string"],
+            },
+            {
+                name: "placeholder",
+                description: "The placeholder for the input",
+                propTypes: ["string"],
+                defaultValue: "Select",
+            },
+            {
+                name: "readOnly",
+                description:
+                    "Indicates if the component has a read only state and selection or input is not allowed",
                 propTypes: ["boolean"],
-                defaultValue: "false",
+            },
+            {
+                name: "value",
+                description:
+                    "The value containing the country code and phone number",
+                propTypes: ["PhoneNumberInputValue"],
             },
             {
                 name: "onChange",
