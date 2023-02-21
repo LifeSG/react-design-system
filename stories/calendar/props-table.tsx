@@ -10,7 +10,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "value",
                 description: (
                     <>
-                        The value of the start date in string based
+                        The value of the selected date in string based
                         format.&nbsp;
                         <code>YYYY-MM-DD</code>
                     </>
@@ -28,19 +28,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["YYYY-MM-DD"],
             },
             {
-                name: "onChange",
-                description: (
-                    <>
-                        Called when the user selected a value from the calendar.
-                        Returns value in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format. Should the value be
-                        invalid, the&nbsp; &lsquo;Invalid date&rsquo; value will
-                        be returned
-                    </>
-                ),
-                propTypes: ["(value: string) => void"],
-            },
-            {
                 name: "type",
                 description: (
                     <>
@@ -50,6 +37,19 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: [`"calendar"`, `"input"`],
                 defaultValue: `"calendar"`,
+            },
+            {
+                name: "onChange",
+                description: (
+                    <>
+                        Called when the user selected a value from the calendar.
+                        Returns value in&nbsp;
+                        <code>YYYY-MM-DD</code>&nbsp;format. Should the value be
+                        invalid, the&nbsp; &lsquo;Invalid Date&rsquo; value will
+                        be returned
+                    </>
+                ),
+                propTypes: ["(value: string) => void"],
             },
         ],
     },
