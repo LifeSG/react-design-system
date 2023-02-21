@@ -223,6 +223,7 @@ export const InputSelect = <T, V>({
                 ref={selectorRef}
                 type="button"
                 data-testid={id || "selector"}
+                disabled={disabled}
                 onClick={handleSelectorClick}
                 {...otherProps}
             >

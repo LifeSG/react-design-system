@@ -8,6 +8,7 @@ import {
     LabelContainer,
     PlaceholderLabel,
     Selector,
+    SelectorReadOnly,
     StyledChevronIcon,
     ValueLabel,
     Wrapper,
@@ -19,6 +20,7 @@ export const InputGroupListAddon = <T, V>({
     addon,
     error,
     onChange,
+    readOnly,
     ...otherProps
 }: InputGroupProps<T, V>) => {
     const {
@@ -37,6 +39,8 @@ export const InputGroupListAddon = <T, V>({
         onShowOptions,
         "data-selector-testid": selectorTestId,
     } = addon.attributes as ListAddon<T, V>;
+
+    const { position } = addon;
 
     // =============================================================================
     // CONST, STATE, REF
@@ -173,19 +177,41 @@ export const InputGroupListAddon = <T, V>({
         </>
     );
 
+    const renderSelector = () => {
+        if (readOnly) {
+            return selected ? (
+                <SelectorReadOnly>
+                    <ValueLabel data-testid="selector-label">
+                        {getDisplayValue()}
+                    </ValueLabel>
+                </SelectorReadOnly>
+            ) : null;
+        } else {
+            return (
+                <Selector
+                    ref={selectorRef}
+                    type="button"
+                    disabled={otherProps.disabled}
+                    data-testid={selectorTestId || "addon-selector"}
+                    onClick={handleAddonSelectorClick}
+                >
+                    {renderSelectorContent()}
+                </Selector>
+            );
+        }
+    };
+
     const renderDisplay = () => (
-        <DisplayContainer $expanded={showOptions}>
-            <Selector
-                ref={selectorRef}
-                type="button"
-                data-testid={selectorTestId || "addon-selector"}
-                onClick={handleAddonSelectorClick}
-            >
-                {renderSelectorContent()}
-            </Selector>
-            <Divider />
+        <DisplayContainer
+            $expanded={showOptions}
+            $readOnly={readOnly}
+            $position={position}
+        >
+            {renderSelector()}
+            <Divider $readOnly={readOnly} $position={position} />
             <MainInput
                 {...otherProps}
+                readOnly={readOnly}
                 error={error}
                 onChange={handleInputChange}
                 data-testid={otherProps["data-testid"] || "input"}
@@ -200,6 +226,7 @@ export const InputGroupListAddon = <T, V>({
                 disabled={otherProps.disabled}
                 error={error && !showOptions}
                 expanded={showOptions}
+                $readOnly={readOnly}
             >
                 {renderDisplay()}
                 {renderOptionList()}
