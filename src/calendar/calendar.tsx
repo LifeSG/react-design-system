@@ -4,11 +4,13 @@ import {
     ArrowLeft,
     ArrowRight,
     Container,
+    ContentArrowButton,
     ContentBody,
     DayView,
     DropdownMonth,
     DropdownYear,
     HeaderDropdown,
+    HeaderIconButton,
     IconChevronDown,
     MonthView,
     Views,
@@ -137,15 +139,21 @@ export const Calendar = ({
                     <Text.H4 weight="regular">
                         {dayjs(calendarDate).format("MMM")}
                     </Text.H4>
-                    <IconChevronDown />
+                    <HeaderIconButton>
+                        <IconChevronDown />
+                    </HeaderIconButton>
                 </DropdownMonth>
                 <DropdownYear onClick={toggleYearView}>
                     {renderYearHeader()}
-                    <IconChevronDown />
+                    <HeaderIconButton>
+                        <IconChevronDown />
+                    </HeaderIconButton>
                 </DropdownYear>
             </HeaderDropdown>
             <ContentBody>
-                <ArrowLeft onClick={handleLeftArrowClick} />
+                <ContentArrowButton onClick={handleLeftArrowClick}>
+                    <ArrowLeft />
+                </ContentArrowButton>
                 <Views $view={currentView}>
                     <DayView>
                         <CalendarDay
@@ -172,7 +180,9 @@ export const Calendar = ({
                         />
                     </YearView>
                 </Views>
-                <ArrowRight onClick={handleRightArrowClick} />
+                <ContentArrowButton onClick={handleRightArrowClick}>
+                    <ArrowRight />
+                </ContentArrowButton>
             </ContentBody>
         </Container>
     );

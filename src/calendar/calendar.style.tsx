@@ -7,6 +7,7 @@ import { View } from "./calendar";
 import { CalendarType } from "./types";
 import { MonthPickerContainer } from "./calendar-month.style";
 import { YearPickerContainer } from "./calendar-year.style";
+import { IconButton } from "../icon-button";
 
 interface ContainerStyleProps {
     $type: CalendarType;
@@ -86,6 +87,10 @@ export const HeaderDropdown = styled.div<HeaderDropdownProps>`
     }}
 `;
 
+export const HeaderIconButton = styled(IconButton)`
+    padding: 0;
+`;
+
 export const IconChevronDown = styled(ChevronDownIcon)`
     margin-left: 0.625rem;
     color: ${Color.Neutral[3]};
@@ -139,22 +144,30 @@ const ViewSectionBase = styled.div`
     width: 34rem;
 `;
 
+const ArrowChevronBase = css`
+    color: ${Color.Neutral[3]};
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+`;
+
 export const DayView = styled(ViewSectionBase)``;
 export const MonthView = styled(ViewSectionBase)``;
 export const YearView = styled(ViewSectionBase)``;
 
-export const ArrowLeft = styled(ChevronLeftIcon)`
-    color: ${Color.Neutral[3]};
-    cursor: pointer;
-    width: 1rem;
-    height: 1rem;
+export const ContentArrowButton = styled(IconButton)`
+    padding: 0;
     margin: 0 0 3rem 0;
+
+    &:focus {
+        background-color: ${Color.Neutral[8]};
+    }
+`;
+
+export const ArrowLeft = styled(ChevronLeftIcon)`
+    ${ArrowChevronBase}
 `;
 
 export const ArrowRight = styled(ChevronRightIcon)`
-    color: ${Color.Neutral[3]};
-    cursor: pointer;
-    width: 1rem;
-    height: 1rem;
-    margin: 0 0 3rem 0;
+    ${ArrowChevronBase}
 `;

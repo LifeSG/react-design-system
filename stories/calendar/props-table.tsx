@@ -21,8 +21,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "disabledDates",
                 description: (
                     <>
-                        Date value will be disabled, unselectable.&nbsp;
-                        <code>YYYY-MM-DD</code>
+                        The dates to be disabled. E.g. &nbsp;
+                        <code>[YYYY-MM-DD, YYYY-MM-DD]</code>
                     </>
                 ),
                 propTypes: ["YYYY-MM-DD"],
