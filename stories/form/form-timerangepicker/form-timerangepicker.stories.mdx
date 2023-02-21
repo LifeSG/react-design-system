@@ -1,0 +1,93 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Timerangepicker } from "src/timerangepicker";
+import { Form } from "src/form";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="Form/Timerangepicker" component={Form.Timerangepicker} />
+
+<Title>Form.Timerangepicker</Title>
+
+<Secondary>Overview</Secondary>
+
+The field that allows a user to enter a time value.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas>
+    <Story name="Timerangepicker">
+        {() => {
+            const [time1, setTime1] = useState("");
+            const [time2, setTime2] = useState("");
+            const [time3, setTime3] = useState("");
+            const [time4, setTime4] = useState("");
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.Timerangepicker
+                            label="This is a timerangepicker"
+                            value={time1}
+                            onChange={(value) => setTime1(value)}
+                        />
+                        <Form.Timerangepicker
+                            label="This is the disabled state"
+                            disabled
+                        />
+                        <Form.Timerangepicker
+                            label="This is the error state"
+                            value={time3}
+                            onChange={(value) => setTime3(value)}
+                            errorMessage="Time input required"
+                        />
+                        <Form.Timerangepicker
+                            label="This is the 12 hour format timepicker"
+                            value={time4}
+                            onChange={(value) => setTime4(value)}
+                            format="12hr"
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the timepicker field as a standalone, you can do this.
+
+```tsx
+import { Timerangepicker } from "@lifesg/react-design-system/timerangepicker";
+```
+
+<Preview>
+    <Story name="Standalone usage">
+        {() => {
+            const [time, setTime] = useState("");
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Timerangepicker
+                            value={time}
+                            onChange={(value) => setTime(value)}
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

@@ -38,6 +38,7 @@ export * from "./text-list";
 export * from "./theme";
 export * from "./timeline";
 export * from "./timepicker";
+export * from "./timerangepicker";
 export * from "./toggle-button";
 export * from "./tooltip";
 export * from "./transition";
