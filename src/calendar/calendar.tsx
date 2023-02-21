@@ -25,7 +25,7 @@ export type View = "day" | "month" | "year";
 
 export const Calendar = ({
     disabledDates,
-    onChange,
+    onSelect,
     value,
     type = "calendar",
 }: CalendarProps) => {
@@ -76,23 +76,23 @@ export const Calendar = ({
         }
     };
 
-    const handleDateChange = (value: Dayjs) => {
+    const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
 
         setCalendarDate(value);
 
         setSelectedStartDate(stringValue);
 
-        performOnChangeHandler(stringValue);
+        performOnSelectHandler(stringValue);
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
 
-    const performOnChangeHandler = (changeValue: string) => {
-        if (onChange) {
-            onChange(changeValue);
+    const performOnSelectHandler = (changeValue: string) => {
+        if (onSelect) {
+            onSelect(changeValue);
         }
     };
 
@@ -152,7 +152,7 @@ export const Calendar = ({
                             calendarDate={calendarDate}
                             disabledDates={disabledDates}
                             selectedStartDate={selectedStartDate}
-                            onSelect={(date) => handleDateChange(date)}
+                            onSelect={handleDateSelect}
                         />
                     </DayView>
                     <MonthView>
@@ -160,7 +160,7 @@ export const Calendar = ({
                             calendarDate={calendarDate}
                             currentView={currentView}
                             selectedStartDate={selectedStartDate}
-                            onSelect={(date) => handleDateChange(date)}
+                            onSelect={handleDateSelect}
                         />
                     </MonthView>
                     <YearView>
@@ -168,7 +168,7 @@ export const Calendar = ({
                             calendarDate={calendarDate}
                             currentView={currentView}
                             selectedStartDate={selectedStartDate}
-                            onSelect={(date) => handleDateChange(date)}
+                            onSelect={handleDateSelect}
                         />
                     </YearView>
                 </Views>
