@@ -1,13 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { InputGroup } from "../input-group/input-group";
+import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import { Wrapper } from "./phone-number-input.styles";
-import {
-    CountryValue,
-    PhoneNumberInputProps,
-    PhoneNumberInputValue,
-} from "./types";
+import { CountryValue, PhoneNumberInputProps } from "./types";
 
 export const PhoneNumberInput = ({
     onChange,
@@ -27,16 +23,11 @@ export const PhoneNumberInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [inputNumber, setInputNumber] = useState<string>(value?.number || "");
-    const [selectedCountryCode, setSelectedCountryCode] = useState<string>(
-        normaliseCountryCode(value?.countryCode)
-    );
-
-    const selectedOption: CountryValue =
-        PhoneNumberInputHelper.getCountries.filter(
-            (country: CountryValue) =>
-                country.countryCode === normaliseCountryCode(value?.countryCode)
-        )[0];
+    const [options, setOptions] = useState<CountryValue[]>([]);
+    const [selectedCountry, setSelectedCountry] = useState<
+        CountryValue | undefined
+    >(undefined);
+    const [inputValue, setInputValue] = useState<string>("");
 
     const nodeRef = useRef();
 
@@ -44,9 +35,20 @@ export const PhoneNumberInput = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        const formattedNumber = getFormattedNumber(value?.number);
-        setInputNumber(formattedNumber);
-    }, [value]);
+        const selectedOption = options.filter(
+            (country) =>
+                country.countryCode === normaliseCountryCode(value?.countryCode)
+        )[0];
+
+        setSelectedCountry(selectedOption);
+        setInputValue(
+            PhoneNumberInputHelper.formatNumber(value?.number, selectedOption)
+        );
+    }, [options, value]);
+
+    useEffect(() => {
+        setOptions(PhoneNumberInputHelper.getCountries);
+    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -58,63 +60,55 @@ export const PhoneNumberInput = ({
         }
     };
 
+    const handleClear = () => {
+        if (onClear) {
+            onClear();
+        } else {
+            setInputValue("");
+        }
+    };
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const currentValue = event.target.value;
+
         if (onChange) {
-            performOnChangeHandler(currentValue, selectedCountryCode);
+            performOnChangeHandler(currentValue, selectedCountry);
         } else {
-            performLocalChangeHandler(currentValue, selectedOption);
+            performLocalChangeHandler(currentValue, selectedCountry);
         }
     };
 
-    const handleSelectOption = (
-        country: CountryValue,
-        extractedValue: string
-    ) => {
-        setSelectedCountryCode(extractedValue);
+    const handleSelectOption = (country: CountryValue) => {
         if (onChange) {
-            performOnChangeHandler(inputNumber, extractedValue);
+            performOnChangeHandler(inputValue, country);
         } else {
-            performLocalChangeHandler(inputNumber, country);
+            performLocalChangeHandler(inputValue, country);
         }
-    };
-
-    const handleOnClear = () => {
-        if (onClear) onClear();
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const getFormattedNumber = (
-        number: string,
-        country: CountryValue = selectedOption
-    ): string => {
-        const formattedNumber = PhoneNumberInputHelper.formatNumber(
-            number,
-            country
-        );
-        return formattedNumber;
-    };
-
-    const performOnChangeHandler = (value: string, countryCode: string) => {
-        const number = value.replace(/[\s()]+/g, ""); // strip formatted spaces
+    const performOnChangeHandler = (
+        inputValue: string,
+        selectedCountry: CountryValue | undefined
+    ) => {
         onChange({
-            number,
-            countryCode: addPlusPrefix(countryCode),
+            number: inputValue.replace(/[\s()]+/g, ""), // strip formatted spaces
+            countryCode:
+                selectedCountry && addPlusPrefix(selectedCountry.countryCode),
         });
     };
 
     const performLocalChangeHandler = (
-        value: string,
-        country?: CountryValue
+        inputValue: string,
+        selectedCountry: CountryValue | undefined
     ) => {
-        const formattedNumber = PhoneNumberInputHelper.formatNumber(
-            value,
-            country
+        setInputValue(
+            PhoneNumberInputHelper.formatNumber(inputValue, selectedCountry)
         );
 
-        setInputNumber(formattedNumber);
+        setSelectedCountry(selectedCountry);
     };
 
     const getAddonProps = (): AddonProps<CountryValue, string> => {
@@ -122,17 +116,16 @@ export const PhoneNumberInput = ({
             return {
                 type: "label",
                 attributes: {
-                    value: addPlusPrefix(selectedCountryCode),
+                    value: addPlusPrefix(selectedCountry?.countryCode),
                 } as LabelAddon,
             };
         } else {
             return {
                 type: "list",
                 attributes: {
-                    value: selectedOption,
                     placeholder: optionPlaceholder,
-                    options: PhoneNumberInputHelper.getCountries,
-                    selectedOption: selectedOption,
+                    options,
+                    selectedOption: selectedCountry,
                     enableSearch: enableSearch,
                     searchPlaceholder: optionSearchPlaceholder,
                     valueExtractor: (option) => `+${option.countryCode}`,
@@ -156,10 +149,10 @@ export const PhoneNumberInput = ({
             <InputGroup
                 ref={nodeRef}
                 onKeyDown={handleKeyDown}
-                value={inputNumber}
+                value={inputValue}
                 onChange={handleInputChange}
-                allowClear={allowClear && !!inputNumber}
-                onClear={handleOnClear}
+                allowClear={allowClear && !!inputValue}
+                onClear={handleClear}
                 error={error}
                 placeholder={placeholder}
                 addon={getAddonProps()}
@@ -180,17 +173,7 @@ const normaliseCountryCode = (countryCode: string): string => {
     return countryCode ? countryCode.replace("+", "") : "";
 };
 
-const addPlusPrefix = (countryCode: string): string => {
+const addPlusPrefix = (countryCode?: string): string => {
+    if (!countryCode) return "";
     return countryCode.includes("+") ? countryCode : `+${countryCode}`;
-};
-
-const getReturnValue = (
-    number = "",
-    countryCode = ""
-): PhoneNumberInputValue => {
-    const numberWithoutSpace = number?.replace(/[\s()]+/g, "");
-    return {
-        number: numberWithoutSpace,
-        countryCode: addPlusPrefix(countryCode),
-    };
 };
