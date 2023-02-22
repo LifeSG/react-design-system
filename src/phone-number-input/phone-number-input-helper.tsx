@@ -45,14 +45,22 @@ export namespace PhoneNumberInputHelper {
     );
 
     export const formatNumber = (
-        text: string | undefined,
-        country: CountryValue | undefined
+        numberText?: string,
+        country?: CountryValue
     ): string => {
-        if (!country) return text;
+        if (!country) return numberText;
+
+        const numberTextWithoutSpace = numberText
+            ? numberText.replace(/[\s()]+/g, "")
+            : "";
 
         const { format } = country;
 
-        // Remove Prefix
+        /**
+         * Strip the prefix. The format usually contains
+         * the prefix (e.g. +.. .... ....). And we are
+         * only concerned about the actual number format
+         */
         const removedPrefix = format.split(" ");
         removedPrefix.shift();
 
@@ -81,7 +89,7 @@ export namespace PhoneNumberInputHelper {
             },
             {
                 formattedText: "",
-                remainingText: text ? text.split("") : "",
+                remainingText: numberTextWithoutSpace,
             }
         );
 

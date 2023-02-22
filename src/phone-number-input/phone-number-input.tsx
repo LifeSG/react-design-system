@@ -27,15 +27,15 @@ export const PhoneNumberInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [inputNumber, setInputNumber] = useState(value?.number || "");
-    const [selectedCountryCode, setSelectedCountryCode] = useState(
-        value?.countryCode || ""
+    const [inputNumber, setInputNumber] = useState<string>(value?.number || "");
+    const [selectedCountryCode, setSelectedCountryCode] = useState<string>(
+        normaliseCountryCode(value?.countryCode)
     );
 
     const selectedOption: CountryValue =
         PhoneNumberInputHelper.getCountries.filter(
             (country: CountryValue) =>
-                country.countryCode === selectedCountryCode.replace("+", "")
+                country.countryCode === normaliseCountryCode(value?.countryCode)
         )[0];
 
     const nodeRef = useRef();
@@ -61,11 +61,9 @@ export const PhoneNumberInput = ({
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const currentValue = event.target.value;
         if (onChange) {
-            const returnValue = getReturnValue(currentValue);
-            onChange(returnValue);
+            performOnChangeHandler(currentValue, selectedCountryCode);
         } else {
-            const formattedNumber = getFormattedNumber(currentValue);
-            setInputNumber(formattedNumber);
+            performLocalChangeHandler(currentValue, selectedOption);
         }
     };
 
@@ -75,16 +73,9 @@ export const PhoneNumberInput = ({
     ) => {
         setSelectedCountryCode(extractedValue);
         if (onChange) {
-            const returnValue = getReturnValue(inputNumber, extractedValue);
-            onChange(returnValue);
+            performOnChangeHandler(inputNumber, extractedValue);
         } else {
-            if (inputNumber && typeof inputNumber === "string") {
-                const formattedNumber = getFormattedNumber(
-                    inputNumber,
-                    country
-                );
-                setInputNumber(formattedNumber);
-            }
+            performLocalChangeHandler(inputNumber, country);
         }
     };
 
@@ -99,25 +90,31 @@ export const PhoneNumberInput = ({
         number: string,
         country: CountryValue = selectedOption
     ): string => {
-        const numberWithoutSpace = number?.replace(/[\s()]+/g, "");
         const formattedNumber = PhoneNumberInputHelper.formatNumber(
-            numberWithoutSpace,
+            number,
             country
         );
         return formattedNumber;
     };
 
-    const getReturnValue = (
-        number: string = inputNumber,
-        countryCode: string = selectedCountryCode
-    ): PhoneNumberInputValue => {
-        const numberWithoutSpace = number?.replace(/[\s()]+/g, "");
-        return {
-            number: numberWithoutSpace,
-            countryCode: countryCode.includes("+")
-                ? countryCode
-                : `+${countryCode}`,
-        };
+    const performOnChangeHandler = (value: string, countryCode: string) => {
+        const number = value.replace(/[\s()]+/g, ""); // strip formatted spaces
+        onChange({
+            number,
+            countryCode: addPlusPrefix(countryCode),
+        });
+    };
+
+    const performLocalChangeHandler = (
+        value: string,
+        country?: CountryValue
+    ) => {
+        const formattedNumber = PhoneNumberInputHelper.formatNumber(
+            value,
+            country
+        );
+
+        setInputNumber(formattedNumber);
     };
 
     const getAddonProps = (): AddonProps<CountryValue, string> => {
@@ -125,7 +122,7 @@ export const PhoneNumberInput = ({
             return {
                 type: "label",
                 attributes: {
-                    value: selectedCountryCode,
+                    value: addPlusPrefix(selectedCountryCode),
                 } as LabelAddon,
             };
         } else {
@@ -141,7 +138,7 @@ export const PhoneNumberInput = ({
                     valueExtractor: (option) => `+${option.countryCode}`,
                     listExtractor: (option) => ({
                         title: option.name,
-                        secondaryLabel: `+${option.countryCode}`,
+                        secondaryLabel: addPlusPrefix(option.countryCode),
                     }),
                     onSelectOption: handleSelectOption,
                     onHideOptions: onHideOptions,
@@ -170,4 +167,30 @@ export const PhoneNumberInput = ({
             />
         </Wrapper>
     );
+};
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+/**
+ * This strips the + off the specified country code if it
+ * is present.
+ */
+const normaliseCountryCode = (countryCode: string): string => {
+    return countryCode ? countryCode.replace("+", "") : "";
+};
+
+const addPlusPrefix = (countryCode: string): string => {
+    return countryCode.includes("+") ? countryCode : `+${countryCode}`;
+};
+
+const getReturnValue = (
+    number = "",
+    countryCode = ""
+): PhoneNumberInputValue => {
+    const numberWithoutSpace = number?.replace(/[\s()]+/g, "");
+    return {
+        number: numberWithoutSpace,
+        countryCode: addPlusPrefix(countryCode),
+    };
 };

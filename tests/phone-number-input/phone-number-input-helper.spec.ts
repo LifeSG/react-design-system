@@ -30,26 +30,44 @@ describe("PhoneNumberInputHelper", () => {
                 regions: ["asia"],
             };
             const expected = "9555 4314";
-            expect(
-                PhoneNumberInputHelper.formatNumber(number, country)
-            ).toEqual(expected);
 
             expect(
                 PhoneNumberInputHelper.formatNumber(number, country)
-            ).not.toEqual(number);
+            ).toEqual(expected);
+        });
+
+        it("should return phone number format correctly even if number has spaces", () => {
+            const number = "95 55 4314";
+            const country = {
+                countryCode: "65",
+                format: "+.. .... ....",
+                iso2: "sg",
+                name: "Singapore",
+                regions: ["asia"],
+            };
+            const expected = "9555 4314";
+
+            expect(
+                PhoneNumberInputHelper.formatNumber(number, country)
+            ).toEqual(expected);
         });
 
         it("should return phone number without format", () => {
             const number = "95554314";
-            const expected = "9555 4314";
+            const expected = "95554314";
 
             expect(
                 PhoneNumberInputHelper.formatNumber(number, undefined)
-            ).not.toEqual(expected);
+            ).toEqual(expected);
+        });
+
+        it("should return an empty string if the phone number is not provided", () => {
+            const number = "";
+            const expected = "";
 
             expect(
                 PhoneNumberInputHelper.formatNumber(number, undefined)
-            ).toEqual(number);
+            ).toEqual(expected);
         });
     });
 });
