@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper } from "../util/string-helper";
 import { ClearContainer, ClearIcon, InputElement } from "./input.style";
@@ -23,8 +23,23 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    /**
+     * We need this due to the clear button. To remain consistent if onChange
+     * is not handled
+     */
+    const [inputValue, setInputValue] = useState<
+        string | readonly string[] | number
+    >(value);
+
     const elementRef = useRef<HTMLInputElement>();
     useImperativeHandle(ref, () => elementRef.current, []);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        setInputValue(value);
+    }, [value]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -36,11 +51,18 @@ const Component = (
             } else {
                 onChange(event);
             }
+        } else {
+            setInputValue(event.target.value);
         }
     };
 
     const handleClear = () => {
-        if (onClear) onClear();
+        if (onClear) {
+            onClear();
+        } else {
+            setInputValue("");
+        }
+
         if (elementRef && elementRef.current) {
             elementRef.current.focus();
         }
@@ -77,7 +99,7 @@ const Component = (
     };
 
     const shouldShowClear = () => {
-        return allowClear && !disabled && !readOnly && !!value;
+        return allowClear && !disabled && !readOnly && !!inputValue;
     };
 
     // =============================================================================
@@ -90,7 +112,9 @@ const Component = (
      * user is free to edit the field. (else the value of the InputElement will
      * be set to empty string)
      */
-    const updatedValue = value ? convertInputString(value) : value;
+    const updatedValue = inputValue
+        ? convertInputString(inputValue)
+        : inputValue;
 
     return (
         <InputWrapper
