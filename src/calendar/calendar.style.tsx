@@ -45,7 +45,7 @@ export const Container = styled.div<ContainerStyleProps>`
         switch ($type) {
             // stand alone calender style control from here
             // calendar with input with control inside the file
-            case "calendar":
+            case "standalone":
                 return css`
                     ${ArrowLeft},
                     ${ArrowRight} {
@@ -66,6 +66,8 @@ export const Container = styled.div<ContainerStyleProps>`
                         gap: 0.5rem 2rem;
                     }
                 `;
+            default:
+                break;
         }
     }}
 `;

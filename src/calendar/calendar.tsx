@@ -28,7 +28,7 @@ export const Calendar = ({
     disabledDates,
     onSelect,
     value,
-    type = "calendar",
+    type = "standalone",
 }: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF

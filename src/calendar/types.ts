@@ -5,10 +5,11 @@ export interface CalendarProps {
     onSelect?: ((value: string) => void) | undefined;
     /** Selected date in `YYYY-MM-DD` format */
     value?: string | undefined;
+    /** The display type of the component. Values `standalone` | `input` */
     type?: CalendarType | undefined;
 }
 
 // =============================================================================
 // CalendarType - this props use in internal
 // =============================================================================
-export type CalendarType = "calendar" | "input";
+export type CalendarType = "standalone" | "input";
