@@ -7,7 +7,7 @@ import {
     MenuItem,
     MobileWrapper,
 } from "./menu.styles";
-import { NavItemProps, NavSubItemProps } from "./types";
+import { NavSubItemProps } from "./types";
 
 interface Props<T> {
     items: NavSubItemProps<T>[];

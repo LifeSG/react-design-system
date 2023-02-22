@@ -102,6 +102,7 @@ export interface NavbarProps<T = void>
     children?: JSX.Element | JSX.Element[] | undefined;
     showSearch?: boolean | undefined;
     onBrandClick?: () => void | undefined; // override
+    onSecondaryBrandClick?: () => void | undefined; // override
     onItemClick?: (item: NavItemProps<T>) => void | undefined;
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)

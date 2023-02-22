@@ -1,15 +1,14 @@
-import React, { Component, useEffect, useRef, useState } from "react";
-import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
+import React, { useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
-import { Form } from "../form";
 import { IconButton } from "../icon-button/icon-button";
 
 import {
     CloseIconButton,
     CloseIconContainer,
+    Container,
     CrossIconClose,
+    Divider,
     DropDownBar,
-    Input,
     Link,
     MenuItem,
     MobileWrapper,
@@ -17,8 +16,8 @@ import {
     SearchBarDesktop,
     SearchBarInputContainer,
     SearchIcon,
+    SearchInputComponent,
     SearchInputContainer,
-    SearchInputIcon,
     SearchMainBarContainer,
     SearchSpan,
 } from "./search-input.styles";
@@ -52,6 +51,14 @@ export const SearchInput = <T,>({
     const [inputValue, setInputValue] = useState<string>("");
     const [itemsLocal, setItemsLocalValue] = useState<NavSubItemProps<T>[]>([]);
     const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+    const [toggleInputFocus, setToggleInputFocus] = useState<boolean>(false);
+    const [showDropdown, setShowDropdown] = useState<number>(0);
+    /***
+     * showDropdown state
+     * 0 - default state
+     * 1 - focus state
+     * 2 - focus state with dropdown
+     */
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
@@ -61,6 +68,7 @@ export const SearchInput = <T,>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
+        setShowDropdown(0);
         const handleClickOutside = (event) => {
             if (ref.current && !ref.current.contains(event.target)) {
                 onBlur();
@@ -72,13 +80,52 @@ export const SearchInput = <T,>({
         };
     }, []);
 
+    useEffect(() => {
+        const filtered =
+            inputValue && inputValue.length >= 3
+                ? items.filter((data) =>
+                      data.children
+                          .toString()
+                          .toLocaleLowerCase()
+                          .includes(inputValue?.toString()?.toLocaleLowerCase())
+                  )
+                : [];
+
+        if (filtered && filtered.length >= 1) {
+            setItemsLocalValue(filtered);
+            setShowDropdown(2);
+            setToggleDropdown(true);
+        } else {
+            setToggleDropdown(false);
+            if (inputValue && inputValue.length < 3) {
+                setShowDropdown(1);
+            } else {
+                setShowDropdown(0);
+            }
+        }
+    }, [inputValue]);
+
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
     const onBlur = () => {
+        setShowDropdown(0);
         setToggleDropdown(false);
     };
 
+    const onInputFocus = () => {
+        setToggleInputFocus(true);
+        if (showDropdown !== 2) {
+            setShowDropdown(1);
+        }
+    };
+
+    const onInputBlur = () => {
+        setToggleInputFocus(false);
+        if (showDropdown !== 2) {
+            setShowDropdown(0);
+        }
+    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -97,20 +144,6 @@ export const SearchInput = <T,>({
         setInputValue(value);
     };
 
-    useEffect(() => {
-        const filtered =
-            inputValue && inputValue.length >= 3
-                ? items.filter((data) =>
-                      data.children
-                          .toString()
-                          .toLocaleLowerCase()
-                          .includes(inputValue?.toString()?.toLocaleLowerCase())
-                  )
-                : [];
-        setItemsLocalValue(filtered);
-        setToggleDropdown(true);
-    }, [inputValue]);
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -124,7 +157,6 @@ export const SearchInput = <T,>({
     // EVENT HANDLERS
     // =============================================================================
     const handleSearchIconClick = () => {
-        // setItemsLocalValue(items);
         setToggleDropdown(true);
     };
 
@@ -161,7 +193,9 @@ export const SearchInput = <T,>({
             );
         });
     };
-
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     const getHighlightedText = (text, highlight) => {
         // Split on highlight term and include term into parts, ignore case
         const parts = text.split(new RegExp(`(${highlight})`, "gi"));
@@ -202,6 +236,28 @@ export const SearchInput = <T,>({
             </>
         );
     };
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+    const renderSearchinput = () => {
+        return (
+            <Container key="search">
+                {mobile && <SearchIcon />}
+
+                <SearchInputComponent
+                    ref={ref}
+                    placeholder="Search"
+                    value={inputValue}
+                    onChange={(event) => setInput4(event.target.value)}
+                    autoComplete="off"
+                    onBlur={onInputBlur}
+                    onFocus={onInputFocus}
+                />
+
+                {!mobile && <SearchIcon />}
+            </Container>
+        );
+    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -209,31 +265,12 @@ export const SearchInput = <T,>({
     const renderSearchComponent = (isMobile = false) => {
         return (
             <SearchMainBarContainer>
-                <SearchBarContainer>
+                <SearchBarContainer $dropdown={showDropdown}>
                     <SearchBarInputContainer>
                         <SearchInputContainer>
-                            <Input
-                                label=""
-                                placeholder="Search"
-                                addon={{
-                                    type: "custom",
-                                    position: mobile ? "left" : "right",
-                                    attributes: {
-                                        children: (
-                                            <SearchInputIcon
-                                                className="search-icon"
-                                                onClick={handleSearchIconClick}
-                                            />
-                                        ),
-                                    },
-                                }}
-                                value={inputValue}
-                                onChange={(event) =>
-                                    setInput4(event.target.value)
-                                }
-                                autoComplete="off"
-                            />
+                            {renderSearchinput()}
                         </SearchInputContainer>
+                        {showDropdown === 2 && <Divider />}
                     </SearchBarInputContainer>
 
                     {inputValue && inputValue.length >= 1 && toggleDropdown && (

@@ -147,7 +147,6 @@ export const NavbarItems = <T,>({
     };
 
     if (items && items.length > 0) {
-        //const ContentWrapper = mobile ? MobileWrapper : Wrapper;
         return (
             <>
                 {mobile ? (

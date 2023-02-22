@@ -45,6 +45,7 @@ const Component = <T,>(
         children,
         showSearch = false,
         onItemClick,
+        onSecondaryBrandClick,
         onActionButtonClick,
         onBrandClick,
         ...otherProps
@@ -100,6 +101,19 @@ const Component = <T,>(
         if (onBrandClick) {
             event.preventDefault();
             onBrandClick();
+        }
+
+        if (shouldDismissDrawer("brand-click")) {
+            dismissDrawer();
+        }
+    };
+
+    const handleSecondaryBrandClick = (
+        event: React.MouseEvent<HTMLAnchorElement>
+    ) => {
+        if (onSecondaryBrandClick) {
+            event.preventDefault();
+            onSecondaryBrandClick();
         }
 
         if (shouldDismissDrawer("brand-click")) {
@@ -211,7 +225,7 @@ const Component = <T,>(
                                     <Brand
                                         resources={resourcesSecondaryBrand}
                                         compress={compress}
-                                        onClick={handleBrandClick}
+                                        onClick={handleSecondaryBrandClick}
                                         data-testid="main__brand"
                                     />
                                 </NavLogoContainer>
