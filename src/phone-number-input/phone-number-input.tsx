@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { InputGroup } from "../input-group/input-group";
 import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
@@ -23,7 +23,8 @@ export const PhoneNumberInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [options, setOptions] = useState<CountryValue[]>([]);
+    const options = useMemo(() => PhoneNumberInputHelper.getCountries, []);
+
     const [selectedCountry, setSelectedCountry] = useState<
         CountryValue | undefined
     >(undefined);
@@ -45,10 +46,6 @@ export const PhoneNumberInput = ({
             PhoneNumberInputHelper.formatNumber(value?.number, selectedOption)
         );
     }, [options, value]);
-
-    useEffect(() => {
-        setOptions(PhoneNumberInputHelper.getCountries);
-    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
