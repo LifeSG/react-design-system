@@ -7,36 +7,55 @@ const DATA: ApiTableSectionProps[] = [
         name: "Calendar specific props",
         attributes: [
             {
-                name: "value",
-                description: (
-                    <>
-                        The value of the selected date in string based
-                        format.&nbsp;
-                        <code>YYYY-MM-DD</code>
-                    </>
-                ),
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
                 propTypes: ["string"],
             },
             {
                 name: "disabledDates",
                 description: (
                     <>
-                        The dates to be disabled. E.g. &nbsp;
-                        <code>[YYYY-MM-DD, YYYY-MM-DD]</code>
+                        The dates to be disabled. To specify in a format as such
+                        (e.g. <code>[2022-01-01, 2022-02-02]</code>)
                     </>
                 ),
-                propTypes: ["YYYY-MM-DD"],
+                propTypes: ["string[]"],
+            },
+            {
+                name: "id",
+                description: "The unique identifier for the component",
+                propTypes: ["string"],
             },
             {
                 name: "type",
                 description: (
                     <>
                         Specifies the calendar type which affects layout and
-                        styles
+                        styles. <br />
+                        When the <code>standalone</code> type is specified, the
+                        component is rendered individually. While if
+                        <code>input</code> is specified, the controls interfaces
+                        are scaled down. It is usually used when rendering
+                        within an input component
                     </>
                 ),
-                propTypes: [`"calendar"`, `"input"`],
-                defaultValue: `"calendar"`,
+                propTypes: [`"standalone"`, `"input"`],
+                defaultValue: `"standalone"`,
+            },
+            {
+                name: "value",
+                description: (
+                    <>
+                        The value of the selected date in&nbsp;
+                        <code>YYYY-MM-DD</code> format
+                    </>
+                ),
+                propTypes: ["string"],
             },
             {
                 name: "onChange",
