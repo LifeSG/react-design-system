@@ -29,6 +29,7 @@ export const Calendar = ({
     onSelect,
     value,
     type = "standalone",
+    ...otherProps
 }: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -127,7 +128,7 @@ export const Calendar = ({
     };
 
     return (
-        <Container $type={type}>
+        <Container $type={type} {...otherProps}>
             <HeaderDropdown $view={currentView}>
                 <DropdownMonth onClick={toggleMonthView}>
                     <Text.H4 weight="regular">

@@ -7,6 +7,12 @@ export interface CalendarProps {
     value?: string | undefined;
     /** The display type of the component. Values `standalone` | `input` */
     type?: CalendarType | undefined;
+
+    // Basic component props
+    /** The class selector */
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
+    id?: string | undefined;
 }
 
 // =============================================================================
