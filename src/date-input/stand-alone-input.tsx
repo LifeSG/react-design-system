@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { DateHelper, StringHelper } from "../util";
 import { InputType } from "./date-input";
 import {
-    BaseInput,
+    DayInput,
     Divider,
     InputContainer,
     MonthInput,
+    VariantStyleProps,
     YearInput,
 } from "./stand-alone-input.style";
 import { ChangeValueTypes } from "./types";
@@ -13,8 +14,8 @@ import { ChangeValueTypes } from "./types";
 type StartInputNames = "start-day" | "start-month" | "start-year";
 type EndInputNames = "end-day" | "end-month" | "end-year";
 
-type FieldType = StartInputNames | "none";
-type ValueFieldTypes = StartInputNames | EndInputNames;
+type FieldType = StartInputNames | EndInputNames | "none";
+type FieldName = "day" | "month" | "year";
 
 interface StandAloneInputProps {
     disabled?: boolean | undefined;
@@ -24,6 +25,7 @@ interface StandAloneInputProps {
         | ["start-day", "start-month", "start-year"]
         | ["end-day", "end-month", "end-year"];
     value?: string | undefined;
+    variant?: VariantStyleProps;
 }
 
 export const StandAloneInput = ({
@@ -32,6 +34,7 @@ export const StandAloneInput = ({
     readOnly,
     names,
     value,
+    variant,
 }: StandAloneInputProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -206,7 +209,7 @@ export const StandAloneInput = ({
                 performOnChangeHandler(value, targetName);
                 break;
             case names[1]:
-                setMonthValue(DateHelper.clampMonth(value));
+                setMonthValue(value);
 
                 performOnChangeHandler(value, targetName);
                 break;
@@ -264,25 +267,27 @@ export const StandAloneInput = ({
 
     const performOnChangeHandler = (
         changeValue: string,
-        field: ValueFieldTypes
+        name: StartInputNames | EndInputNames
     ) => {
-        const values: Record<ValueFieldTypes[number], string> = {
-            [names[2]]: yearValue,
-            [names[1]]: monthValue,
-            [names[0]]: dayValue,
+        const inputType = name.split("-")[0] as InputType;
+        const field = name.split("-")[1] as FieldName;
+
+        const values: Record<FieldName, string> = {
+            year: yearValue,
+            month: monthValue,
+            day: dayValue,
         };
         // Update the specific field value
         values[field] = changeValue;
 
-        const changeType = field.split("-")[0] as InputType;
-        const returnValue = { [changeType]: values };
+        const returnValue = { [inputType]: values };
 
         onChange(returnValue);
     };
 
     return (
-        <InputContainer ref={nodeRef} $readOnly={readOnly}>
-            <BaseInput
+        <InputContainer ref={nodeRef} $readOnly={readOnly} $variant={variant}>
+            <DayInput
                 name={names[0]}
                 maxLength={2}
                 value={dayValue}

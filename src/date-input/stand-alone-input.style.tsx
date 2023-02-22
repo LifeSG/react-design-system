@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
+import { DateInputVariant } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -11,6 +12,7 @@ interface ContainerStyleProps {
     disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
+    $variant?: VariantStyleProps;
 }
 interface LabelStyleProps {
     $hide?: boolean;
@@ -18,9 +20,18 @@ interface LabelStyleProps {
     $addGap?: boolean;
 }
 
+/**
+ * input elements selector
+ * @param single default as only return one input element
+ * @param start start date input element in range calendar
+ * @param range end date input element in range calendar
+ */
+export type VariantStyleProps = DateInputVariant | "start";
+
 // =============================================================================
 // STYLING
 // =============================================================================
+
 export const InputContainer = styled.div<ContainerStyleProps>`
     position: absolute;
     top: 0;
@@ -28,13 +39,45 @@ export const InputContainer = styled.div<ContainerStyleProps>`
     height: 100%;
     display: flex;
     align-items: center;
+
+    ${(props) => {
+        if (props.$variant === "start") {
+            return css`
+                ${InputInRangeStyle}
+            `;
+        } else if (props.$variant === "range") {
+            return css`
+                ${InputInRangeStyle}
+                left: auto;
+                right: 1rem;
+            `;
+        }
+    }}
+
+    @media screen and (max-width: 374px) {
+        ${(props) => {
+            if (props.$variant === "start") {
+                return css`
+                    top: 0.75rem;
+                    height: 26px;
+                `;
+            } else if (props.$variant === "range") {
+                return css`
+                    right: unset;
+                    top: unset;
+                    left: ${props.$readOnly ? "-0.5rem" : "1rem"};
+                    bottom: 0.75rem;
+                    height: 26px;
+                `;
+            }
+        }}
+    }
 `;
 
-export const BaseInput = styled.input`
+const BaseInput = styled.input`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     background: transparent;
     height: 100%;
-    width: 2.5rem;
     border: none;
     text-align: center;
     padding: 0;
@@ -66,6 +109,10 @@ export const BaseInput = styled.input`
     }}
 `;
 
+export const DayInput = styled(BaseInput)`
+    width: 2.5rem;
+`;
+
 export const MonthInput = styled(BaseInput)`
     width: 2.6rem;
 `;
@@ -83,4 +130,22 @@ export const Divider = styled(Text.Body)<LabelStyleProps>`
             `;
         }
     }}
+`;
+
+const InputInRangeStyle = css`
+    ${DayInput} {
+        width: 1.75rem;
+    }
+    ${DayInput} + ${Divider} {
+        margin: 0.1rem 0 0 0.25rem;
+    }
+    ${MonthInput} {
+        width: 2.5rem;
+    }
+    ${MonthInput} + ${Divider} {
+        margin: 0.1rem 0.25rem 0 0;
+    }
+    ${YearInput} {
+        width: 3rem;
+    }
 `;
