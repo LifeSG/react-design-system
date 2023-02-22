@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { Container } from "./date-input.style";
+import { ArrowRangeIcon, ArrowRight, Container } from "./date-input.style";
 import { StandAloneInput } from "./stand-alone-input";
 import { ChangeValueTypes, DateInputProps } from "./types";
 
@@ -10,12 +10,14 @@ export const DateInput = ({
     disabled,
     error,
     value,
+    endValue,
     onChange,
     onBlur,
     onChangeRaw,
     onBlurRaw,
     readOnly,
     id,
+    variant = "single",
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -114,7 +116,9 @@ export const DateInput = ({
             id={id}
             data-testid={otherProps["data-testid"]}
             $readOnly={readOnly}
+            $variant={variant}
             onBlur={handleBlur}
+            {...otherProps}
         >
             <StandAloneInput
                 disabled={disabled}
@@ -122,7 +126,23 @@ export const DateInput = ({
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
                 value={value}
+                variant={variant === "range" ? "start" : "single"}
             />
+            {variant === "range" && (
+                <>
+                    <ArrowRangeIcon tabIndex={-1}>
+                        <ArrowRight />
+                    </ArrowRangeIcon>
+                    <StandAloneInput
+                        disabled={disabled}
+                        onChange={handleChange}
+                        readOnly={readOnly}
+                        names={["end-day", "end-month", "end-year"]}
+                        value={endValue}
+                        variant={variant}
+                    />
+                </>
+            )}
         </Container>
     );
 };
