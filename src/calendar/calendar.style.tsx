@@ -30,9 +30,8 @@ interface ArrowButtonProps {
 // =============================================================================
 export const Container = styled.div<ContainerStyleProps>`
     position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 41rem;
+    display: grid;
+    grid-template-columns: minmax(28rem, 41rem);
     background-color: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
     height: 25.125rem;
@@ -43,10 +42,14 @@ export const Container = styled.div<ContainerStyleProps>`
         const { $type } = props;
 
         switch ($type) {
-            // stand alone calender style control from here
-            // calendar with input with control inside the file
+            // control standalone calender style
+            // element style itself that use in input calendar
             case "standalone":
                 return css`
+                    ${ArrowButton} {
+                        align-self: center;
+                    }
+
                     ${ArrowLeft},
                     ${ArrowRight} {
                         width: 1.5rem;
@@ -97,7 +100,6 @@ export const IconChevronDown = styled(ChevronDownIcon)`
     margin-left: 0.625rem;
     color: ${Color.Neutral[3]};
     transition: transform 250ms ease-in-out;
-
     width: 1rem;
     height: 1rem;
 `;
@@ -115,16 +117,16 @@ export const DropdownMonth = styled(DropdownMonthYearBase)`
 export const DropdownYear = styled(DropdownMonthYearBase)``;
 
 export const ContentBody = styled.div`
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1.5rem 1fr 1.5rem;
     padding: 0 1.25rem;
 `;
 
 export const Views = styled.div<CalendarViewProps>`
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    height: 19rem;
 
     ${(props) => {
         const _VIEWS = ["day", "month", "year"] as View[];
@@ -132,7 +134,7 @@ export const Views = styled.div<CalendarViewProps>`
         return _VIEWS.map(
             (view, i) => `
             > div:nth-child(${i + 1}) {
-                display: ${props.$view === view ? "flex" : "none"}
+                display: ${props.$view === view ? "grid" : "none"}
             }
         `
         );
@@ -141,9 +143,9 @@ export const Views = styled.div<CalendarViewProps>`
 
 const ViewSectionBase = styled.div`
     position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 34rem;
+    display: grid;
+    grid-template-columns: minmax(20.5rem, 33.5rem);
+    height: 100%;
 `;
 
 const ArrowChevronBase = css`

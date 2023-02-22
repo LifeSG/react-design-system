@@ -22,6 +22,7 @@ interface InteractiveCircleProps extends Omit<DayNumberProps, "$variant"> {}
 // =============================================================================
 // STYLING
 // =============================================================================
+
 export const WeekDaysContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -32,7 +33,8 @@ export const WeekDaysContainer = styled.div`
 export const WeekCell = styled.div`
     ${TextStyleHelper.getTextStyle("H6", "semibold")}
     height: 1.625rem;
-    width: 4.875rem;
+    width: 100%;
+    max-width: 4.875rem;
     display: flex;
     align-items: center;
     justify-content: center;

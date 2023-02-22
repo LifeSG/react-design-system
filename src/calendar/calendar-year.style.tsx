@@ -12,6 +12,7 @@ export const YearPickerContainer = styled.div`
     grid-template-columns: repeat(3, minmax(5.15rem, 1fr));
     grid-template-rows: repeat(4, 4rem);
     gap: 0.5rem 1rem;
+    align-content: center;
 `;
 
 export const YearCell = styled.div<StyleProps>`
