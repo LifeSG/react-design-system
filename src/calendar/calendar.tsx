@@ -113,22 +113,17 @@ export const Calendar = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderYearHeader = () => {
+        let displayText: string;
         if (currentView === "year") {
             const { beginDecade, endDecade } =
                 CalendarHelper.getStartEndDecade(calendarDate);
 
-            return (
-                <Text.H4 weight="regular">
-                    {beginDecade} to {endDecade}
-                </Text.H4>
-            );
+            displayText = `${beginDecade} to ${endDecade}`;
+        } else {
+            displayText = dayjs(calendarDate).format("YYYY");
         }
 
-        return (
-            <Text.H4 weight="regular">
-                {dayjs(calendarDate).format("YYYY")}
-            </Text.H4>
-        );
+        return <Text.H4 weight="regular">{displayText}</Text.H4>;
     };
 
     return (
