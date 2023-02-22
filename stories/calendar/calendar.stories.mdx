@@ -1,0 +1,26 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Calendar } from "src/calendar";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Calendar" component={Calendar} />
+
+<Title>Calendar</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays a calendar component.
+
+```tsx
+import { Calendar } from "@lifesg/react-design-system/calendar";
+```
+
+<Canvas>
+    <Story name="Calendar">
+        <Calendar disabledDates={["2023-02-15"]} />
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
