@@ -27,7 +27,8 @@ import { Form } from "@lifesg/react-design-system/form";
 <Canvas>
     <Story name="Field">
         {() => {
-            const [input4, setInput4] = useState("91234567");
+            const [input4, setInput4] = useState(undefined);
+            const [input5, setInput5] = useState(undefined);
             return (
                 <StoryContainer>
                     <Container>
@@ -48,17 +49,24 @@ import { Form } from "@lifesg/react-design-system/form";
                         <Form.Input
                             label="This is the readonly state"
                             placeholder="Enter here..."
+                            value="My input value"
                             readOnly
                         />
                         <Form.Input
                             label="This has text spacing properties (works with tel type only)"
                             placeholder="Enter here..."
-                            value={input4}
                             spacing={4}
-                            type="tel"
+                            value={input4}
                             onChange={(event) => setInput4(event.target.value)}
-                            allowClear={true}
-                            onClear={() => setInput4("")}
+                            type="tel"
+                        />
+                        <Form.Input
+                            label="This has clearing enabled"
+                            placeholder="Enter here..."
+                            value={input5}
+                            onChange={(event) => setInput5(event.target.value)}
+                            onClear={() => setInput5("")}
+                            allowClear
                         />
                     </Container>
                 </StoryContainer>
