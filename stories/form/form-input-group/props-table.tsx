@@ -13,10 +13,10 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         This also inherits props from&nbsp;
                         <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement"
+                            href="/?path=/docs/form-input--field#component-api"
                             rel="noreferrer"
                         >
-                            HTMLInputElement
+                            Input
                         </a>
                     </>
                 ),
