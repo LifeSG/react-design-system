@@ -16,12 +16,13 @@ import { ChangeValueTypes } from "./types";
 type StartInputNames = "start-day" | "start-month" | "start-year";
 type EndInputNames = "end-day" | "end-month" | "end-year";
 
-type FieldType = StartInputNames | EndInputNames | "none";
+export type FieldType = StartInputNames | EndInputNames | "none";
 type FieldName = "day" | "month" | "year";
 
 interface StandAloneInputProps {
     disabled?: boolean | undefined;
     onChange?: ((value: ChangeValueTypes) => void) | undefined;
+    onFocus?: ((value: FieldType) => void) | undefined;
     readOnly?: boolean | undefined;
     names:
         | ["start-day", "start-month", "start-year"]
@@ -33,6 +34,7 @@ interface StandAloneInputProps {
 export const StandAloneInput = ({
     disabled,
     onChange,
+    onFocus,
     readOnly,
     names,
     value,
@@ -172,10 +174,13 @@ export const StandAloneInput = ({
         const name = event.target.name as FieldType;
         setCurrentFocus(name);
         event.target.select();
+
+        onFocus(name);
     };
 
     const handleNodeFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         const name = event.target.name as FieldType;
+
         // To remove overlay placeholder once user 'Tab' from startDate
         if (name === "end-day") setIsDirty(true);
     };

@@ -16,6 +16,10 @@ interface ContainerStyleProps {
     $variant?: DateInputVariant;
 }
 
+interface IndicateBarStyleProps {
+    $position: "start" | "end" | "none";
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -120,4 +124,34 @@ export const ArrowRight = styled(ArrowRightIcon)`
     cursor: pointer;
     width: 1.125rem;
     height: 1.125rem;
+`;
+
+export const IndicateBar = styled.div<IndicateBarStyleProps>`
+    position: absolute;
+    background-color: ${Color.Primary};
+    height: 0.125rem;
+    width: calc(100% - 50% - 2rem); // 2rem is paddingX,
+    transition: left 350ms ease-in-out;
+    left: 1rem;
+    bottom: -0.1rem;
+
+    ${(props) => {
+        switch (props.$position) {
+            case "start":
+                return css`
+                    left: 1rem;
+                    opacity: 1;
+                `;
+            case "end":
+                return css`
+                    left: calc(50% + 1rem);
+                    opacity: 1;
+                `;
+            case "none":
+                return css`
+                    left: 1rem;
+                    opacity: 0;
+                `;
+        }
+    }}
 `;
