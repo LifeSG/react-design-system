@@ -35,6 +35,7 @@ export const StandAloneInput = ({
     names,
     value,
     variant,
+    ...otherProps
 }: StandAloneInputProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -286,7 +287,12 @@ export const StandAloneInput = ({
     };
 
     return (
-        <InputContainer ref={nodeRef} $readOnly={readOnly} $variant={variant}>
+        <InputContainer
+            ref={nodeRef}
+            $readOnly={readOnly}
+            $variant={variant}
+            {...otherProps}
+        >
             <DayInput
                 name={names[0]}
                 maxLength={2}
