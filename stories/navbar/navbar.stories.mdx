@@ -315,7 +315,7 @@ This is a common use case among web apps where it requires a Logout button on th
 <Preview>
     <Story name="Double logo with Menu">
         {() => {
-            const [selected, setSelected] = useState("home");
+            const [selected, setSelected] = useState("lifesg1");
             return (
                 <Navbar
                     items={{
@@ -339,16 +339,25 @@ This is a common use case among web apps where it requires a Logout button on th
                                         children:
                                             "Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1",
                                         href: "https://www.life.gov.sg",
+                                        onClick: () => {
+                                            setSelected("guides1");
+                                        },
                                     },
                                     {
                                         id: "guides2",
                                         children: "Sub Guides 2",
                                         href: "https://www.life.gov.sg",
+                                        onClick: () => {
+                                            setSelected("guides2");
+                                        },
                                     },
                                     {
                                         id: "guides3",
                                         children: "Sub Guides 3",
                                         href: "https://www.life.gov.sg",
+                                        onClick: () => {
+                                            setSelected("guides3");
+                                        },
                                     },
                                 ],
                             },
@@ -421,33 +430,33 @@ This is a common use case among web apps where it requires a Logout button on th
                                 id: "home-mobile",
                                 children: "Home",
                                 onClick: () => {
-                                    setSelected("home");
+                                    setSelected("home-mobile");
                                 },
                             },
                             {
                                 id: "guides-mobile",
                                 children: "Guides",
                                 onClick: () => {
-                                    setSelected("guides-app");
+                                    setSelected("guides-mobile");
                                 },
                                 subMenu: [
                                     {
-                                        id: "lifesg1",
+                                        id: "guides-mobile1",
                                         children: "Sub Guides 1",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "lifesg2",
+                                        id: "guides-mobile2",
                                         children: "Sub Guides 2",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "lifesg3",
+                                        id: "guides-mobile3",
                                         children: "Sub Guides 3",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "lifesg4",
+                                        id: "guides-mobile4",
                                         children: "Sub Guides 4",
                                         href: "https://www.life.gov.sg",
                                     },
@@ -457,26 +466,26 @@ This is a common use case among web apps where it requires a Logout button on th
                                 id: "lifesg-app-mobile",
                                 children: "LifeSG",
                                 onClick: () => {
-                                    setSelected("lifesg-app");
+                                    setSelected("lifesg-app-mobile");
                                 },
                                 subMenu: [
                                     {
-                                        id: "lifesg1",
+                                        id: "lifesg-mobile1",
                                         children: "Sub LifeSG 1",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "lifesg2",
+                                        id: "lifesg-mobile2",
                                         children: "Sub LifeSG 2",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "lifesg3",
+                                        id: "lifesg-mobile3",
                                         children: "Sub LifeSG 3",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "lifesg4",
+                                        id: "lifesg-mobile4",
                                         children: "Sub LifeSG 4",
                                         href: "https://www.life.gov.sg",
                                     },
@@ -486,32 +495,32 @@ This is a common use case among web apps where it requires a Logout button on th
                                 id: "blog-mobile",
                                 children: "Blog",
                                 onClick: () => {
-                                    setSelected("blog");
+                                    setSelected("blog-mobile");
                                 },
                                 subMenu: [
                                     {
-                                        id: "blogsg1",
+                                        id: "blogsg-mobile1",
                                         children:
                                             "Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1 Sub Blog 1",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "blogsg2",
+                                        id: "blogsg-mobile2",
                                         children: "Sub Blog 2",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "blogsg3",
+                                        id: "blogsg-mobile3",
                                         children: "Sub Blog 3",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "blogsg4",
+                                        id: "blogsg-mobile4",
                                         children: "Sub Blog 4",
                                         href: "https://www.life.gov.sg",
                                     },
                                     {
-                                        id: "blogsg5",
+                                        id: "blogsg-mobile5",
                                         children: "Sub Blog 5",
                                         href: "https://www.life.gov.sg",
                                     },
@@ -631,6 +640,13 @@ This is a common use case among web apps where it requires a Logout button on th
                         brandName: "Skillsfuture",
                         logoSrc:
                             "https://www.hdb.gov.sg/html/Dashboard/Foundation/Theming/images/site-logo-small.png",
+                    }}
+                    onItemClick={(item) => {
+                        if (typeof item === "object" && item !== null) {
+                            setSelected(item.id);
+                        } else {
+                            setSelected(item);
+                        }
                     }}
                 ></Navbar>
             );

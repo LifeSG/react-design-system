@@ -64,6 +64,22 @@ export const NavbarItems = <T,>({
         setToggleDropdown(false);
     };
 
+    const checkSelected = (item: NavItemProps<T>, id) => {
+        const foundItem = items.find((i) => item.id === id);
+        if (foundItem) {
+            return true;
+        } else if (!foundItem && item && item.subMenu?.length >= 1) {
+            const foundSubItem = item.subMenu.find(
+                (dataS) => dataS.id === selectedId
+            );
+            if (foundSubItem) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -72,9 +88,7 @@ export const NavbarItems = <T,>({
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             setShowDrawer(index);
             setToggleDropdown(true);
-            if (item && !item.subMenu) {
-                onItemClick(event, item);
-            }
+            onItemClick(event, item);
         };
     };
 
@@ -86,6 +100,7 @@ export const NavbarItems = <T,>({
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             setShowDrawer(index);
             onItemClick(event, item[index]);
+            setToggleDropdown(false);
         };
     };
 
@@ -94,7 +109,8 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderItems = (isMobile = false) => {
         return items.map((item, index) => {
-            const selected = selectedIndex === index;
+            //const selected = selectedIndex === index;
+            const selected = checkSelected(item, selectedId);
             const { children, options, ...otherItemAttrs } = item;
 
             const textWeight: TextWeight = selected
@@ -105,7 +121,6 @@ export const NavbarItems = <T,>({
             const testId = isMobile
                 ? `link__mobile-${index + 1}`
                 : `link__${index + 1}`;
-
             return (
                 <LinkItem key={index}>
                     <MenuItemContainer>

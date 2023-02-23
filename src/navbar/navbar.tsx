@@ -132,7 +132,7 @@ const Component = <T,>(
             onItemClick(item);
         }
 
-        if (shouldDismissDrawer("item-click")) {
+        if (!item?.subMenu && shouldDismissDrawer("item-click")) {
             dismissDrawer();
         }
     };
