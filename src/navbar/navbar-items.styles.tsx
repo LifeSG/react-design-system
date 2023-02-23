@@ -167,9 +167,17 @@ export const MenuItemRightContainer = styled.div`
 export const DownIcon = styled(ChevronDownIcon)`
     height: 20px;
     width: 20px;
+
+    :hover {
+        color: ${Color.Accent.Light[1]};
+    }
 `;
 
 export const UpIcon = styled(ChevronUpIcon)`
     height: 20px;
     width: 20px;
+
+    :hover {
+        color: ${Color.Accent.Light[1]};
+    }
 `;

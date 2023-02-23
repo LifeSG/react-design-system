@@ -66,7 +66,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     font-style: normal;
     font-weight: 400;
     font-size: 14px !important;
-    line-height: 26px;
+    line-height: 22px;
 
     margin-right: 16px;
     padding-right: 16px;
@@ -82,6 +82,9 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     :active,
     :focus {
         color: ${Color.Primary} !important;
+    }
+    :hover {
+        color: ${Color.Accent.Light[1]};
     }
 
     ${MediaQuery.MaxWidth.tablet} {
