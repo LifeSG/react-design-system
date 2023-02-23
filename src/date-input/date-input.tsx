@@ -1,7 +1,12 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { ArrowRangeIcon, ArrowRight, Container } from "./date-input.style";
-import { StandAloneInput } from "./stand-alone-input";
+import {
+    ArrowRangeIcon,
+    ArrowRight,
+    Container,
+    IndicateBar,
+} from "./date-input.style";
+import { FieldType, StandAloneInput } from "./stand-alone-input";
 import { ChangeValueTypes, DateInputProps } from "./types";
 
 export type InputType = "start" | "end";
@@ -24,6 +29,7 @@ export const DateInput = ({
     // CONST, STATE, REF
     // =============================================================================
     const [inputValues, setInputValues] = useState<ChangeValueTypes>({});
+    const [currentFocus, setCurrentFocus] = useState<FieldType>("none");
 
     // =============================================================================
     // REF FUNCTIONS
@@ -45,6 +51,10 @@ export const DateInput = ({
 
     const handleBlur = () => {
         performOnBlurHandler();
+    };
+
+    const handleFocus = (value: FieldType) => {
+        setCurrentFocus(value);
     };
 
     // =============================================================================
@@ -101,6 +111,15 @@ export const DateInput = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+
+    const RenderIndicatedBar = () => {
+        if (disabled || readOnly) return;
+
+        const position = currentFocus.split("-")[0] as InputType | "none";
+
+        return <IndicateBar $position={position} />;
+    };
+
     return (
         <Container
             disabled={disabled}
@@ -115,6 +134,7 @@ export const DateInput = ({
             <StandAloneInput
                 disabled={disabled}
                 onChange={handleChange}
+                onFocus={handleFocus}
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
                 value={value}
@@ -128,6 +148,7 @@ export const DateInput = ({
                     <StandAloneInput
                         disabled={disabled}
                         onChange={handleChange}
+                        onFocus={handleFocus}
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
                         value={endValue}
@@ -135,6 +156,7 @@ export const DateInput = ({
                     />
                 </>
             )}
+            {RenderIndicatedBar()}
         </Container>
     );
 };
