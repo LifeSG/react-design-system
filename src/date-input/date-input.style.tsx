@@ -38,6 +38,16 @@ export const Container = styled.div<ContainerStyleProps>`
         box-shadow: ${DesignToken.InputBoxShadow};
     }
 
+    ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                ${ArrowRangeIcon} {
+                    left: 41%;
+                }
+            `;
+        }
+    }}
+
     ${MediaQuery.MaxWidth.mobileM} {
         ${(props) => {
             if (props.$variant === "range") {
@@ -48,7 +58,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                     ${ArrowRangeIcon} {
                         transform: unset;
-                        left: 57%;
+                        left: ${props.$readOnly ? "48%" : "57%"};
                         top: 1rem;
                     }
                 `;
