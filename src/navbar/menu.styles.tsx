@@ -100,7 +100,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         text-align: left;
         align-items: flex-start;
         font-size: 16px !important;
-        line-height: 26px !important;
+        line-height: 21px !important;
     }
 `;
 
@@ -146,7 +146,7 @@ export const MenuBar = styled.ul`
 export const MenuItem = styled.li`
     width: 100%;
     min-height: 26px;
-    max-height: 62px;
+    max-height: 55px;
     position: relative;
     display: flex;
     align-items: left;
@@ -172,6 +172,7 @@ export const MenuItem = styled.li`
         margin-top: 16px;
         margin-bottom: 0px;
         margin-left: 5px;
+        max-height: 53px;
 
         :first-child {
             margin-top: 5px;
