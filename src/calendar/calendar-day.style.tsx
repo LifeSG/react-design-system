@@ -59,16 +59,6 @@ export const GrowDayCell = styled.div<DayCellStyleProps>`
 
         if ($selected) {
             return css`
-                /* ${LeftCircle} {
-                    background-color: ${Color.Accent.Light[5]};
-                    border: 1px solid ${Color.Primary};
-                }
-
-                ${RightCircle} {
-                    background-color: ${Color.Accent.Light[5]};
-                    border: 1px solid ${Color.Primary};
-                } */
-
                 ${DayLabel} {
                     ${TextStyleHelper.getTextStyle("H5", "semibold")}
                     color: ${Color.Primary}
