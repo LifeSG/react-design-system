@@ -26,10 +26,10 @@ export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     align-items: center;
     border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
+    border-radius: 0.25rem;
     background: ${Color.Neutral[8]};
     height: 3rem;
-    width: 21rem;
+    min-width: 20.75rem;
     padding: 0.1rem 1rem 0;
 
     :focus,
@@ -38,13 +38,13 @@ export const Container = styled.div<ContainerStyleProps>`
         box-shadow: ${DesignToken.InputBoxShadow};
     }
 
-    @media screen and (max-width: 374px) {
+    ${MediaQuery.MaxWidth.mobileM} {
         ${(props) => {
             if (props.$variant === "range") {
                 return css`
-                    width: unset;
-                    max-width: 374px;
-                    height: 82px;
+                    min-width: unset;
+                    max-width: 23.25rem;
+                    height: 5.125rem;
 
                     ${ArrowRangeIcon} {
                         transform: unset;
@@ -54,7 +54,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 `;
             } else if (props.$variant === "single") {
                 return css`
-                    width: unset;
+                    min-width: unset;
                 `;
             }
         }}
@@ -98,9 +98,8 @@ export const Container = styled.div<ContainerStyleProps>`
 
 export const ArrowRangeIcon = styled(IconButton)`
     position: absolute;
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     padding: 0;
 
     ${MediaQuery.MaxWidth.mobileS} {

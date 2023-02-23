@@ -1,3 +1,4 @@
+import { MediaQuery } from "src/media";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
@@ -43,18 +44,17 @@ export const InputContainer = styled.div<ContainerStyleProps>`
     ${(props) => {
         if (props.$variant === "start") {
             return css`
-                ${InputInRangeStyle}
+                ${VariantInputStyle}
             `;
         } else if (props.$variant === "range") {
             return css`
-                ${InputInRangeStyle}
-                left: auto;
-                right: 1rem;
+                ${VariantInputStyle}
+                left: calc(50% + 1rem);
             `;
         }
     }}
 
-    @media screen and (max-width: 374px) {
+    ${MediaQuery.MaxWidth.mobileM} {
         ${(props) => {
             if (props.$variant === "start") {
                 return css`
@@ -132,7 +132,7 @@ export const Divider = styled(Text.Body)<LabelStyleProps>`
     }}
 `;
 
-const InputInRangeStyle = css`
+const VariantInputStyle = css`
     ${DayInput} {
         width: 1.75rem;
     }
