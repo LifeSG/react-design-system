@@ -42,7 +42,7 @@ export const Container = styled.div<ContainerStyleProps>`
         if (props.$readOnly) {
             return css`
                 ${ArrowRangeIcon} {
-                    left: 41%;
+                    left: 43%;
                 }
             `;
         }

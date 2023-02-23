@@ -87,14 +87,6 @@ export const DateInput = ({
                     "DD-MM-YYYY"
                 );
 
-                /**
-                    Buggy (do it once calendar rebase)
-                    user type 10 / 20 / 2023 ->
-                    dayjs transform to 10 / 08 / 2024
-                    issue the StandAlone handle itself for this
-                    so the return value to user and on view are different
-                 */
-
                 return { [cur]: formatted };
             } else if (valueArr.every((value) => value === "")) {
                 return { [cur]: "" };

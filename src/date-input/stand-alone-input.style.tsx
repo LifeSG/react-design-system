@@ -16,6 +16,7 @@ interface SectionStyleProps {
 
 interface PlaceholderStyleProps {
     $isDirty?: boolean;
+    $disabled?: boolean;
 }
 interface LabelStyleProps {
     $hide?: boolean;
@@ -44,11 +45,12 @@ export const InputSection = styled.div<SectionStyleProps>`
         if (props.$variant === "start") {
             return css`
                 ${VariantInputStyle}
+                left: ${props.$readOnly ? "0" : ""};
             `;
         } else if (props.$variant === "range") {
             return css`
                 ${VariantInputStyle}
-                left: ${props.$readOnly ? "-0.5rem" : "1rem"};
+                left: ${props.$readOnly ? "0" : "1rem"};
             `;
         }
     }}
@@ -149,7 +151,11 @@ export const Placeholder = styled.div<PlaceholderStyleProps>`
     height: 100%;
 
     ${(props) => {
-        if (props.$isDirty) {
+        if (props.$disabled) {
+            return css`
+                background-color: ${Color.Neutral[6]};
+            `;
+        } else if (props.$isDirty) {
             return css`
                 display: none;
             `;
