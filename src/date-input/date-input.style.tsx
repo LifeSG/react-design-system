@@ -36,6 +36,16 @@ export const Container = styled.div<ContainerStyleProps>`
         border: 1px solid ${Color.Accent.Light[1]};
     }
 
+    ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                ${ArrowRangeIcon} {
+                    left: 41%;
+                }
+            `;
+        }
+    }}
+
     ${MediaQuery.MaxWidth.mobileM} {
         ${(props) => {
             if (props.$variant === "range") {
@@ -46,7 +56,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                     ${ArrowRangeIcon} {
                         transform: unset;
-                        left: 57%;
+                        left: ${props.$readOnly ? "48%" : "57%"};
                         top: 1rem;
                     }
                 `;

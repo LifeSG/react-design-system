@@ -9,11 +9,13 @@ import { DateInputVariant } from "./types";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface ContainerStyleProps {
-    disabled?: boolean;
-    $error?: boolean;
+interface SectionStyleProps {
     $readOnly?: boolean;
     $variant?: VariantStyleProps;
+}
+
+interface PlaceholderStyleProps {
+    $isDirty?: boolean;
 }
 interface LabelStyleProps {
     $hide?: boolean;
@@ -23,7 +25,7 @@ interface LabelStyleProps {
 
 /**
  * input elements selector
- * @param single default as only return one input element
+ * @param single only render one input element
  * @param start start date input element in range calendar
  * @param range end date input element in range calendar
  */
@@ -32,14 +34,11 @@ export type VariantStyleProps = DateInputVariant | "start";
 // =============================================================================
 // STYLING
 // =============================================================================
-
-export const InputContainer = styled.div<ContainerStyleProps>`
-    position: absolute;
-    top: 0;
-    left: ${(props) => (props.$readOnly ? "-0.5rem" : "1rem")};
+export const InputSection = styled.div<SectionStyleProps>`
+    position: relative;
+    flex: 1;
     height: 100%;
-    display: flex;
-    align-items: center;
+    left: ${(props) => (props.$readOnly ? "-0.5rem" : "")};
 
     ${(props) => {
         if (props.$variant === "start") {
@@ -49,12 +48,15 @@ export const InputContainer = styled.div<ContainerStyleProps>`
         } else if (props.$variant === "range") {
             return css`
                 ${VariantInputStyle}
-                left: calc(50% + 1rem);
+                left: ${props.$readOnly ? "-0.5rem" : "1rem"};
             `;
         }
     }}
 
     ${MediaQuery.MaxWidth.mobileM} {
+        position: absolute;
+        height: 26px;
+
         ${(props) => {
             if (props.$variant === "start") {
                 return css`
@@ -63,15 +65,19 @@ export const InputContainer = styled.div<ContainerStyleProps>`
                 `;
             } else if (props.$variant === "range") {
                 return css`
-                    right: unset;
-                    top: unset;
-                    left: ${props.$readOnly ? "-0.5rem" : "1rem"};
                     bottom: 0.75rem;
                     height: 26px;
                 `;
             }
         }}
     }
+`;
+
+export const InputContainer = styled.div`
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
 `;
 
 const BaseInput = styled.input`
@@ -127,6 +133,25 @@ export const Divider = styled(Text.Body)<LabelStyleProps>`
         if (props.$hide) {
             return css`
                 color: ${Color.Neutral[3]};
+            `;
+        }
+    }}
+`;
+
+export const Placeholder = styled.div<PlaceholderStyleProps>`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    background-color: ${Color.Neutral[8]};
+    color: ${Color.Neutral[3]};
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    ${(props) => {
+        if (props.$isDirty) {
+            return css`
+                display: none;
             `;
         }
     }}
