@@ -37,7 +37,6 @@ export const StandAloneInput = ({
     names,
     value,
     variant,
-    ...otherProps
 }: StandAloneInputProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -140,7 +139,6 @@ export const StandAloneInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-
     const handleMouseDown = (event: MouseEvent) => {
         if (disabled || readOnly) {
             return;
@@ -158,7 +156,6 @@ export const StandAloneInput = ({
     };
 
     const handleNodeClick = () => {
-        console.log(currentFocus);
         if (currentFocus === "none" && dayInputRef.current) {
             dayInputRef.current.focus();
         }
@@ -172,8 +169,15 @@ export const StandAloneInput = ({
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        setCurrentFocus(event.target.name as FieldType);
+        const name = event.target.name as FieldType;
+        setCurrentFocus(name);
         event.target.select();
+    };
+
+    const handleNodeFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        const name = event.target.name as FieldType;
+        // To remove overlay placeholder once user 'Tab' from startDate
+        if (name === "end-day") setIsDirty(true);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -306,7 +310,7 @@ export const StandAloneInput = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const RenderPlaceholder = () => {
-        if (value) return;
+        if (value || readOnly) return;
 
         switch (variant) {
             case "start":
@@ -314,6 +318,7 @@ export const StandAloneInput = ({
                 return (
                     <Placeholder
                         $isDirty={isDirty}
+                        $disabled={disabled}
                         onClick={handleClickPlaceholder}
                     >
                         {variant === "start" ? "From" : "To"}
@@ -329,7 +334,7 @@ export const StandAloneInput = ({
             $readOnly={readOnly}
             $variant={variant}
             onClick={handleNodeClick}
-            {...otherProps}
+            onFocus={handleNodeFocus}
         >
             <InputContainer ref={nodeRef}>
                 <DayInput
