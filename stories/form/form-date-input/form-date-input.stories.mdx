@@ -32,11 +32,31 @@ import { Form } from "@lifesg/react-design-system/form";
         <StoryContainer>
             <Container>
                 <Form.DateInput label="This is the date input" />
-                <Form.DateInput label="This is the disabled state" disabled />
-                <Form.DateInput label="This is the readonly state" readOnly />
+                <Form.DateInput
+                    label="This is the date input"
+                    variant="range"
+                />
+                <Form.DateInput
+                    label="This is the disabled state"
+                    disabled
+                    variant="range"
+                />
+                <Form.DateInput
+                    label="This is the disabled state with value"
+                    disabled
+                    variant="range"
+                    value="2023-02-10"
+                    endValue="2023-04-20"
+                />
+                <Form.DateInput
+                    label="This is the readonly state"
+                    readOnly
+                    variant="range"
+                />
                 <Form.DateInput
                     label="This is the error state"
                     errorMessage="Date is required"
+                    variant="range"
                 />
             </Container>
         </StoryContainer>
