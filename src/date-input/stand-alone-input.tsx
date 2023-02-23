@@ -175,7 +175,7 @@ export const StandAloneInput = ({
         setCurrentFocus(name);
         event.target.select();
 
-        onFocus(name);
+        performOnFocusHandler(name);
     };
 
     const handleNodeFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -309,6 +309,10 @@ export const StandAloneInput = ({
         const returnValue = { [inputType]: values };
 
         onChange(returnValue);
+    };
+
+    const performOnFocusHandler = (field: FieldType) => {
+        onFocus(field);
     };
 
     // =============================================================================
