@@ -51,6 +51,8 @@ export const DateInput = ({
 
     const handleBlur = () => {
         performOnBlurHandler();
+
+        setCurrentFocus("none");
     };
 
     const handleFocus = (value: FieldType) => {

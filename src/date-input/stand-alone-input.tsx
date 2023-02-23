@@ -181,8 +181,8 @@ export const StandAloneInput = ({
     const handleNodeFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         const name = event.target.name as FieldType;
 
-        // To remove overlay placeholder once user 'Tab' from startDate
-        if (name === "end-day") setIsDirty(true);
+        // Remove overlay placeholder once 'Tab' into this element
+        if (name === "start-day" || name === "end-day") setIsDirty(true);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
