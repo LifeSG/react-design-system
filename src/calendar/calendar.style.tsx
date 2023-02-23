@@ -13,6 +13,10 @@ interface ContainerStyleProps {
     $type: CalendarType;
 }
 
+interface CommonStyleProps {
+    $view: View;
+}
+
 interface HeaderDropdownProps {
     $view: View;
 }
@@ -25,18 +29,31 @@ interface ArrowButtonProps {
     $type: "header" | "content";
 }
 
+interface SideArrowButtonStyleProps {
+    $direction: "left" | "right";
+}
+
+interface DropdownButtonStyleProps {
+    $expandedDisplay: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// MAIN
+// -----------------------------------------------------------------------------
+
 export const Container = styled.div<ContainerStyleProps>`
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(28rem, 41rem);
-    background-color: ${Color.Neutral[8]};
+    display: flex;
+    min-width: 28rem;
+    max-width: 41rem;
+    padding: 2rem 0.25rem;
+    background: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
-    height: 25.125rem;
-    border-radius: 0.75rem;
-    padding: 2rem 0;
+    border-radius: 12px;
 
     ${(props) => {
         const { $type } = props;
@@ -46,9 +63,7 @@ export const Container = styled.div<ContainerStyleProps>`
             // element style itself that use in input calendar
             case "standalone":
                 return css`
-                    ${ArrowButton} {
-                        align-self: center;
-                    }
+                    width: 41rem;
 
                     ${ArrowLeft},
                     ${ArrowRight} {
@@ -75,52 +90,58 @@ export const Container = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const HeaderDropdown = styled.div<HeaderDropdownProps>`
+export const ContentBody = styled.div`
     display: flex;
-    justify-content: center;
+    flex: 1;
+    flex-direction: column;
+`;
+
+export const HeaderDropdown = styled.div`
+    display: flex;
+    margin: 0 auto;
     margin-bottom: 1rem;
+`;
+
+export const DropdownButton = styled.button<DropdownButtonStyleProps>`
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background: transparent;
+    cursor: pointer;
+
+    :not(:last-of-type) {
+        margin-right: 0.5rem;
+    }
 
     ${(props) => {
-        switch (props.$view) {
-            case "month":
-            case "year":
-                return css`
-                    ${DropdownMonth} {
-                        display: none;
-                    }
-                    ${DropdownYear} svg {
-                        transform: rotate(180deg);
-                    }
-                `;
+        if (props.$expandedDisplay) {
+            return css`
+                ${IconChevronDown} {
+                    transform: rotate(180deg);
+                }
+            `;
         }
     }}
 `;
 
-export const IconChevronDown = styled(ChevronDownIcon)`
-    margin-left: 0.625rem;
-    color: ${Color.Neutral[3]};
-    transition: transform 250ms ease-in-out;
-    width: 1rem;
-    height: 1rem;
-`;
+// const DropdownMonthYearBase = styled.div`
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     cursor: pointer;
+// `;
 
-const DropdownMonthYearBase = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-`;
+// export const DropdownMonth = styled(DropdownMonthYearBase)`
+//     margin-right: 1rem;
+// `;
+// export const DropdownYear = styled(DropdownMonthYearBase)``;
 
-export const DropdownMonth = styled(DropdownMonthYearBase)`
-    margin-right: 1rem;
-`;
-export const DropdownYear = styled(DropdownMonthYearBase)``;
-
-export const ContentBody = styled.div`
-    display: grid;
-    grid-template-columns: 1.5rem 1fr 1.5rem;
-    padding: 0 1.25rem;
-`;
+// export const ContentBody = styled.div`
+//     display: flex;
+//     padding: 0 1.25rem;
+//     border: 1px solid green;
+// `;
 
 export const Views = styled.div<CalendarViewProps>`
     margin: 0 auto;
@@ -129,7 +150,7 @@ export const Views = styled.div<CalendarViewProps>`
     height: 19rem;
 
     ${(props) => {
-        const _VIEWS = ["day", "month", "year"] as View[];
+        const _VIEWS = ["default", "month-options", "year-options"] as View[];
 
         return _VIEWS.map(
             (view, i) => `
@@ -148,37 +169,62 @@ const ViewSectionBase = styled.div`
     height: 100%;
 `;
 
-const ArrowChevronBase = css`
-    color: ${Color.Neutral[3]};
-    cursor: pointer;
-    width: 1rem;
-    height: 1rem;
-`;
-
 export const DayView = styled(ViewSectionBase)``;
 export const MonthView = styled(ViewSectionBase)``;
 export const YearView = styled(ViewSectionBase)``;
 
-export const ArrowButton = styled(IconButton)<ArrowButtonProps>`
-    padding: 0;
+export const TopArrowButton = styled(IconButton)`
+    padding: 0.625rem;
+    background: transparent;
 
-    &:focus {
-        background-color: ${Color.Neutral[8]};
+    :focus,
+    :active {
+        background: transparent;
+    }
+`;
+
+export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
+    padding: 1rem;
+    background: transparent;
+    margin: auto 0;
+
+    :focus,
+    :active {
+        background: transparent;
     }
 
     ${(props) => {
-        if (props.$type === "content") {
-            return css`
-                margin: 0 0 3rem 0;
-            `;
+        switch (props.$direction) {
+            case "left":
+                return css`
+                    margin: auto 0.625rem auto 0; // to counter the padding
+                `;
+            case "right":
+            default:
+                return css`
+                    margin: auto 0 auto 0.625rem; // to counter the padding
+                `;
         }
     }}
 `;
 
+// -----------------------------------------------------------------------------
+// ICONS
+// -----------------------------------------------------------------------------
+const DirectionalIconBase = css`
+    color: ${Color.Neutral[3]};
+`;
+
 export const ArrowLeft = styled(ChevronLeftIcon)`
-    ${ArrowChevronBase}
+    ${DirectionalIconBase}
 `;
 
 export const ArrowRight = styled(ChevronRightIcon)`
-    ${ArrowChevronBase}
+    ${DirectionalIconBase}
+`;
+
+export const IconChevronDown = styled(ChevronDownIcon)`
+    color: ${Color.Neutral[3]};
+    transition: transform 250ms ease-in-out;
+    margin-left: 0.625rem;
 `;

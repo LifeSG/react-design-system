@@ -28,7 +28,7 @@ export const CalendarMonth = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (currentView === "month") {
+        if (currentView === "month-options") {
             generateMonths();
         }
     }, [currentView, calendarDate]);

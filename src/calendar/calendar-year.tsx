@@ -32,7 +32,7 @@ export const CalendarYear = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (currentView === "year") {
+        if (currentView === "year-options") {
             generateDecadeOfYears();
         }
     }, [currentView, calendarDate]);
