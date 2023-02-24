@@ -19,14 +19,7 @@ interface OverflowDisplayProps {
     $position: "left" | "right";
 }
 
-interface InteractiveCircleProps extends Omit<DayLabelStyleProps, "$variant"> {}
-
-// interface DayNumberProps {
-//     $variant: DayVariant;
-//     $disabled: boolean;
-// }
-
-// interface GrowDayCellProps extends DayCellStyleProps {}
+interface InteractiveCircleProps extends DayLabelStyleProps {}
 
 // =============================================================================
 // STYLING
@@ -89,6 +82,14 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }
 
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[4](props)};
+                cursor: not-allowed;
+                pointer-events: none;
+            `;
+        }
+
         if (props.$selected) {
             return css`
                 background: ${Color.Accent.Light[5](props)};
@@ -96,12 +97,13 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
 
-        if (props.$disabled) {
-            return css`
-                color: ${Color.Neutral[4](props)};
-                cursor: not-allowed;
-                pointer-events: none;
-            `;
+        switch (props.$variant) {
+            case "today":
+                return css`
+                    background: ${Color.Accent.Light[5](props)};
+                `;
+            default:
+                break;
         }
     }}
 `;

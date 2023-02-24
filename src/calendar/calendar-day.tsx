@@ -86,6 +86,7 @@ export const CalendarDay = ({
                         <OverflowDisplay $position="left" />
                         <OverflowDisplay $position="right" />
                         <InteractiveCircle
+                            $variant={variant}
                             $selected={selectedStartDate === formattedDay}
                             $disabled={isDisabled}
                             onClick={() => handleDayClick(day)}
