@@ -34,12 +34,12 @@ export const MonthCell = styled.div<StyleProps>`
         switch (props.$variant) {
             case "current-month":
                 return css`
-                    background-color: ${Color.Accent.Light[6]};
+                    background-color: ${Color.Accent.Light[6](props)};
                 `;
             case "selected-month":
                 return css`
-                    background-color: ${Color.Accent.Light[5]};
-                    border: 1px solid ${Color.Primary};
+                    background-color: ${Color.Accent.Light[5](props)};
+                    border: 1px solid ${Color.Primary(props)};
                 `;
             case "default":
                 break;
@@ -52,12 +52,12 @@ export const CellLabel = styled(Text.H5)<StyleProps>`
         switch (props.$variant) {
             case "current-month":
                 return css`
-                    color: ${Color.Neutral[3]};
+                    color: ${Color.Neutral[3](props)};
                 `;
             case "selected-month":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${Color.Primary};
+                    color: ${Color.Primary(props)};
                 `;
             case "default":
                 break;
