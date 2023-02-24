@@ -50,7 +50,7 @@ export const Container = styled.div<ContainerStyleProps>`
         }
     }}
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    @media screen and (max-width: 374px) {
         ${(props) => {
             if (props.$variant === "range") {
                 return css`
@@ -130,7 +130,7 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
     position: absolute;
     background-color: ${Color.Primary};
     height: 0.125rem;
-    width: calc(100% - 50% - 2rem); // 2rem is paddingX,
+    width: calc(100% - 50% - 2rem); // paddingX is 2rem,
     transition: left 350ms ease-in-out;
     left: 1rem;
     bottom: -0.1rem;
@@ -154,4 +154,8 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
                 `;
         }
     }}
+
+    @media screen and (max-width: 374px) {
+        display: none;
+    }
 `;
