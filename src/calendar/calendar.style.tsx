@@ -4,8 +4,6 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { CalendarType } from "./types";
-import { MonthPickerContainer } from "./calendar-month.style";
-import { Wrapper } from "./calendar-year.style";
 import { IconButton } from "../icon-button";
 
 interface ContainerStyleProps {
@@ -63,14 +61,6 @@ export const Container = styled.div<ContainerStyleProps>`
                     ${IconChevronDown} {
                         width: 1.125rem;
                         height: 1.125rem;
-                    }
-
-                    ${MonthPickerContainer} {
-                        gap: 0.5rem 2.5rem;
-                    }
-
-                    ${Wrapper} {
-                        gap: 0.5rem 2rem;
                     }
                 `;
             default:

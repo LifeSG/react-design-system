@@ -3,19 +3,39 @@ import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
 import { MonthVariant } from "./calendar-month";
+import { CalendarType } from "./types";
 
 interface StyleProps {
     $variant: MonthVariant;
 }
 
-export const MonthPickerContainer = styled.div`
+interface WrapperStyleProps {
+    $type: CalendarType;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 2.5rem);
-    gap: 0.5rem 1rem;
     align-content: center;
     justify-content: center;
+
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    gap: 0.5rem 2.5rem;
+                `;
+            case "input":
+                return css`
+                    gap: 0.5rem 2rem;
+                `;
+        }
+    }}
 `;
 
 export const MonthCell = styled.div<StyleProps>`

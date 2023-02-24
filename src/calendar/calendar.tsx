@@ -135,6 +135,7 @@ export const Calendar = ({
             case "month-options":
                 return (
                     <CalendarMonth
+                        type={type}
                         calendarDate={calendarDate}
                         selectedStartDate={selectedStartDate}
                         onSelect={handleDateSelect}
@@ -143,6 +144,7 @@ export const Calendar = ({
             case "year-options":
                 return (
                     <CalendarYear
+                        type={type}
                         calendarDate={calendarDate}
                         selectedStartDate={selectedStartDate}
                         onSelect={handleDateSelect}

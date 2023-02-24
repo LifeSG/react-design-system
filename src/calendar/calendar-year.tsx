@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { CalendarHelper } from "../util/calendar-helper";
 import { CellLabel, Wrapper, YearCell } from "./calendar-year.style";
+import { CalendarType } from "./types";
 
 export type YearVariant =
     | "default"
@@ -12,12 +13,14 @@ export type YearVariant =
 interface Props {
     calendarDate: Dayjs;
     selectedStartDate: string;
+    type: CalendarType;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarYear = ({
     calendarDate,
     selectedStartDate,
+    type,
     onSelect,
 }: Props) => {
     // =============================================================================
@@ -74,7 +77,7 @@ export const CalendarYear = ({
     if (!years.length) return null;
 
     return (
-        <Wrapper>
+        <Wrapper $type={type}>
             {years.map((date) => {
                 const { variant, year } = generateYearStatus(date);
 

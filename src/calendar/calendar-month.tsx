@@ -1,23 +1,22 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { CalendarHelper } from "src/util/calendar-helper";
-import {
-    CellLabel,
-    MonthCell,
-    MonthPickerContainer,
-} from "./calendar-month.style";
+import { CellLabel, MonthCell, Wrapper } from "./calendar-month.style";
+import { CalendarType } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
 interface Props {
     calendarDate: Dayjs;
     selectedStartDate: string;
+    type: CalendarType;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarMonth = ({
     calendarDate,
     selectedStartDate,
+    type,
     onSelect,
 }: Props) => {
     // =============================================================================
@@ -70,7 +69,7 @@ export const CalendarMonth = ({
     if (!months.length) return null;
 
     return (
-        <MonthPickerContainer>
+        <Wrapper $type={type}>
             {months.map((date) => {
                 const { variant, month } = generateMonthStatus(date);
                 return (
@@ -85,6 +84,6 @@ export const CalendarMonth = ({
                     </MonthCell>
                 );
             })}
-        </MonthPickerContainer>
+        </Wrapper>
     );
 };

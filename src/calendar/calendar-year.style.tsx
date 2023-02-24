@@ -3,18 +3,38 @@ import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
 import { YearVariant } from "./calendar-year";
+import { CalendarType } from "./types";
 
 interface StyleProps {
     $variant: YearVariant;
 }
 
-export const Wrapper = styled.div`
+interface WrapperStyleProps {
+    $type: CalendarType;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 4rem);
-    gap: 0.5rem 1rem;
     align-content: center;
+
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    gap: 0.5rem 2rem;
+                `;
+            case "input":
+                return css`
+                    gap: 0.5rem 1rem;
+                `;
+        }
+    }}
 `;
 
 export const YearCell = styled.div<StyleProps>`
