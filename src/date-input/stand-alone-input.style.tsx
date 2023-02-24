@@ -55,20 +55,24 @@ export const InputSection = styled.div<SectionStyleProps>`
         }
     }}
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    @media screen and (max-width: 374px) {
         position: absolute;
-        height: 26px;
+        height: 1.625rem;
 
         ${(props) => {
             if (props.$variant === "start") {
                 return css`
                     top: 0.75rem;
-                    height: 26px;
+                    height: 1.625rem;
+                    width: 50%;
+                    border: 1px solid cyan;
                 `;
             } else if (props.$variant === "range") {
                 return css`
                     bottom: 0.75rem;
-                    height: 26px;
+                    height: 1.625rem;
+                    width: calc(100% - 1rem); // paddingLeft is 1rem
+                    border: 1px solid blue;
                 `;
             }
         }}
@@ -149,11 +153,13 @@ export const Placeholder = styled.div<PlaceholderStyleProps>`
     align-items: center;
     width: 100%;
     height: 100%;
+    cursor: pointer;
 
     ${(props) => {
         if (props.$disabled) {
             return css`
                 background-color: ${Color.Neutral[6]};
+                cursor: not-allowed;
             `;
         } else if (props.$isDirty) {
             return css`
