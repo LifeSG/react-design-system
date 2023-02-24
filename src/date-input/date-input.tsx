@@ -122,6 +122,27 @@ export const DateInput = ({
         return <IndicateBar $position={position} />;
     };
 
+    const RenderRangeInput = () => {
+        if (variant === "range") {
+            return (
+                <>
+                    <ArrowRangeIcon tabIndex={-1}>
+                        <ArrowRight />
+                    </ArrowRangeIcon>
+                    <StandAloneInput
+                        disabled={disabled}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        readOnly={readOnly}
+                        names={["end-day", "end-month", "end-year"]}
+                        value={endValue}
+                        variant={variant}
+                    />
+                </>
+            );
+        }
+    };
+
     return (
         <Container
             disabled={disabled}
@@ -142,22 +163,7 @@ export const DateInput = ({
                 value={value}
                 variant={variant === "range" ? "start" : "single"}
             />
-            {variant === "range" && (
-                <>
-                    <ArrowRangeIcon tabIndex={-1}>
-                        <ArrowRight />
-                    </ArrowRangeIcon>
-                    <StandAloneInput
-                        disabled={disabled}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        readOnly={readOnly}
-                        names={["end-day", "end-month", "end-year"]}
-                        value={endValue}
-                        variant={variant}
-                    />
-                </>
-            )}
+            {RenderRangeInput()}
             {RenderIndicatedBar()}
         </Container>
     );
