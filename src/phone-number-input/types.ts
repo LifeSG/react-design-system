@@ -23,6 +23,7 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     /** Specifies if the clear button should be present in the input */
     allowClear?: boolean | undefined;
     "data-testid"?: string | undefined;
+    className?: string | undefined;
     /**
      * Specifies if the country code is a fixed value and the user
      * cannot select another option

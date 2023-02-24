@@ -21,6 +21,7 @@ export const InputGroupListAddon = <T, V>({
     error,
     onChange,
     readOnly,
+    className,
     ...otherProps
 }: InputGroupProps<T, V>) => {
     const {
@@ -219,7 +220,7 @@ export const InputGroupListAddon = <T, V>({
     );
 
     return (
-        <Wrapper>
+        <Wrapper className={className}>
             <ElementBoundary
                 ref={nodeRef}
                 disabled={otherProps.disabled}

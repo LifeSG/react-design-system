@@ -142,20 +142,18 @@ export const PhoneNumberInput = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Wrapper>
-            <InputGroup
-                ref={nodeRef}
-                onKeyDown={handleKeyDown}
-                value={inputValue}
-                onChange={handleInputChange}
-                allowClear={allowClear && !!inputValue}
-                onClear={handleClear}
-                error={error}
-                placeholder={placeholder}
-                addon={getAddonProps()}
-                {...otherProps}
-            />
-        </Wrapper>
+        <InputGroup
+            ref={nodeRef}
+            onKeyDown={handleKeyDown}
+            value={inputValue}
+            onChange={handleInputChange}
+            allowClear={allowClear && !!inputValue}
+            onClear={handleClear}
+            error={error}
+            placeholder={placeholder}
+            addon={getAddonProps()}
+            {...otherProps}
+        />
     );
 };
 

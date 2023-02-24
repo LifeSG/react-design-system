@@ -14,6 +14,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],
