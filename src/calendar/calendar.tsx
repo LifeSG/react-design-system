@@ -100,7 +100,7 @@ export const Calendar = ({
         }
     };
 
-    const toggleMonthView = () => {
+    const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
             setCurrentView("month-options");
         } else {
@@ -108,11 +108,16 @@ export const Calendar = ({
         }
     };
 
-    const toggleYearView = () => {
-        if (currentView !== "year-options") {
-            setCurrentView("year-options");
-        } else {
+    const handleYearDropdownClick = () => {
+        /**
+         * If the view is in the month options view,
+         * then clicking will send the view back to
+         * default
+         */
+        if (currentView !== "default") {
             setCurrentView("default");
+        } else {
+            setCurrentView("year-options");
         }
     };
 
@@ -158,8 +163,9 @@ export const Calendar = ({
                     <DropdownButton
                         type="button"
                         $expandedDisplay={currentView === "month-options"}
+                        $visible={currentView === "default"}
                         id="month-dropdown"
-                        onClick={toggleMonthView}
+                        onClick={handleMonthDropdownClick}
                     >
                         <Text.H4 weight="regular">
                             {dayjs(calendarDate).format("MMM")}
@@ -168,9 +174,9 @@ export const Calendar = ({
                     </DropdownButton>
                     <DropdownButton
                         type="button"
-                        $expandedDisplay={currentView === "year-options"}
+                        $expandedDisplay={currentView !== "default"}
                         id="year-dropdown"
-                        onClick={toggleYearView}
+                        onClick={handleYearDropdownClick}
                     >
                         <Text.H4 weight="regular">
                             {getYearHeaderText()}
@@ -180,6 +186,9 @@ export const Calendar = ({
                 </HeaderDropdown>
                 {renderCalendarContent()}
             </ContentBody>
+            <SideArrowButton $direction="right" onClick={handleRightArrowClick}>
+                <ArrowRight />
+            </SideArrowButton>
             {/* <HeaderDropdown $view={currentView}>
                 <DropdownMonth onClick={toggleMonthView}>
                     <Text.H4 weight="regular">
@@ -231,9 +240,6 @@ export const Calendar = ({
                 </Views>
                 
             </ContentBody> */}
-            <SideArrowButton $direction="right" onClick={handleRightArrowClick}>
-                <ArrowRight />
-            </SideArrowButton>
         </Container>
     );
 };

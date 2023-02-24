@@ -82,20 +82,23 @@ export const CalendarDay = ({
                 const formattedDay = day.format("YYYY-MM-DD");
 
                 return (
-                    <GrowDayCell
-                        key={`day-${dayIndex}`}
-                        $disabled={selectedStartDate === formattedDay}
-                    >
+                    <GrowDayCell key={`day-${dayIndex}`}>
                         <OverflowDisplay $position="left" />
                         <OverflowDisplay $position="right" />
                         <InteractiveCircle
+                            $selected={selectedStartDate === formattedDay}
                             $disabled={isDisabled}
                             onClick={() => handleDayClick(day)}
                         >
                             <DayLabel
-                                weight="regular"
+                                weight={
+                                    selectedStartDate === formattedDay
+                                        ? "semibold"
+                                        : "regular"
+                                }
                                 $variant={variant}
                                 $disabled={isDisabled}
+                                $selected={selectedStartDate === formattedDay}
                             >
                                 {day.format("D")}
                             </DayLabel>

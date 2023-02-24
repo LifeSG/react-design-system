@@ -1,10 +1,9 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { Text, TextStyleHelper } from "../text";
+import { Text } from "../text";
 import { DayVariant } from "./calendar-day";
 
 export interface DayCellStyleProps {
-    $selected?: boolean;
     $point?: "start" | "middle" | "end";
     $hovered?: boolean;
     $disabled?: boolean;
@@ -13,11 +12,14 @@ export interface DayCellStyleProps {
 interface DayLabelStyleProps {
     $variant: DayVariant;
     $disabled: boolean;
+    $selected: boolean;
 }
 
 interface OverflowDisplayProps {
     $position: "left" | "right";
 }
+
+interface InteractiveCircleProps extends Omit<DayLabelStyleProps, "$variant"> {}
 
 // interface DayNumberProps {
 //     $variant: DayVariant;
@@ -25,8 +27,6 @@ interface OverflowDisplayProps {
 // }
 
 // interface GrowDayCellProps extends DayCellStyleProps {}
-
-interface InteractiveCircleProps extends Omit<DayLabelStyleProps, "$variant"> {}
 
 // =============================================================================
 // STYLING
@@ -53,19 +53,6 @@ export const GrowDayCell = styled.div<DayCellStyleProps>`
     height: 2.5rem;
     align-items: center;
     justify-content: center;
-
-    ${(props) => {
-        const { $selected } = props;
-
-        if ($selected) {
-            return css`
-                ${DayLabel} {
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${Color.Primary}
-                }
-            `;
-        }
-    }}
 `;
 
 export const OverflowDisplay = styled.div<OverflowDisplayProps>`
@@ -105,9 +92,16 @@ export const InteractiveCircle = styled(Circle)<InteractiveCircleProps>`
     }
 
     ${(props) => {
+        if (props.$selected) {
+            return css`
+                background: ${Color.Accent.Light[5](props)};
+                border: 1px solid ${Color.Primary(props)};
+            `;
+        }
+
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${Color.Neutral[4](props)};
                 cursor: not-allowed;
                 pointer-events: none;
             `;
@@ -119,22 +113,28 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${Color.Neutral[4](props)};
+            `;
+        }
+
+        if (props.$selected) {
+            return css`
+                color: ${Color.Primary(props)};
             `;
         }
 
         switch (props.$variant) {
             case "other-month":
                 return css`
-                    color: ${Color.Neutral[4]};
+                    color: ${Color.Neutral[4](props)};
                 `;
             case "today":
                 return css`
-                    color: ${Color.Neutral[3]};
+                    color: ${Color.Neutral[3](props)};
                 `;
             case "default":
                 return css`
-                    color: ${Color.Neutral[1]};
+                    color: ${Color.Neutral[1](props)};
                 `;
         }
     }}

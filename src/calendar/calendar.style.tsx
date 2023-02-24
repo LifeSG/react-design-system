@@ -35,6 +35,7 @@ interface SideArrowButtonStyleProps {
 
 interface DropdownButtonStyleProps {
     $expandedDisplay: boolean;
+    $visible?: boolean;
 }
 
 // =============================================================================
@@ -115,6 +116,12 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     }
 
     ${(props) => {
+        if (props.$visible === false) {
+            return css`
+                display: none;
+            `;
+        }
+
         if (props.$expandedDisplay) {
             return css`
                 ${IconChevronDown} {
