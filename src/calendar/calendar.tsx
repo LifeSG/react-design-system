@@ -1,28 +1,23 @@
-import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import { useEffect, useState } from "react";
+import { Text } from "../text";
+import { CalendarHelper } from "../util/calendar-helper";
+import { CalendarDay } from "./calendar-day";
+import { CalendarMonth } from "./calendar-month";
+import { CalendarYear } from "./calendar-year";
 import {
     ArrowLeft,
     ArrowRight,
     Container,
     ContentBody,
-    DayView,
     DropdownButton,
-    // DropdownMonth,
-    // DropdownYear,
     HeaderDropdown,
     IconChevronDown,
-    MonthView,
+    OptionsOverlay,
     SideArrowButton,
-    TopArrowButton,
-    Views,
-    YearView,
+    ToggleZone,
 } from "./calendar.style";
-import { CalendarDay } from "./calendar-day";
-import { CalendarMonth } from "./calendar-month";
 import { CalendarProps } from "./types";
-import { CalendarYear } from "./calendar-year";
-import { CalendarHelper } from "../util/calendar-helper";
-import { Text } from "../text";
 
 export type View = "default" | "month-options" | "year-options";
 
@@ -135,21 +130,26 @@ export const Calendar = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCalendarContent = () => {
+    const renderOptionsOverlay = () => {
         switch (currentView) {
             case "month-options":
-                return null;
-            case "year-options":
-                return null;
-            default:
                 return (
-                    <CalendarDay
+                    <CalendarMonth
                         calendarDate={calendarDate}
-                        disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
                         onSelect={handleDateSelect}
                     />
                 );
+            case "year-options":
+                return (
+                    <CalendarYear
+                        calendarDate={calendarDate}
+                        selectedStartDate={selectedStartDate}
+                        onSelect={handleDateSelect}
+                    />
+                );
+            default:
+                return null;
         }
     };
 
@@ -184,62 +184,21 @@ export const Calendar = ({
                         <IconChevronDown />
                     </DropdownButton>
                 </HeaderDropdown>
-                {renderCalendarContent()}
+                <ToggleZone>
+                    <CalendarDay
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        onSelect={handleDateSelect}
+                    />
+                    <OptionsOverlay $visible={currentView !== "default"}>
+                        {renderOptionsOverlay()}
+                    </OptionsOverlay>
+                </ToggleZone>
             </ContentBody>
             <SideArrowButton $direction="right" onClick={handleRightArrowClick}>
                 <ArrowRight />
             </SideArrowButton>
-            {/* <HeaderDropdown $view={currentView}>
-                <DropdownMonth onClick={toggleMonthView}>
-                    <Text.H4 weight="regular">
-                        {dayjs(calendarDate).format("MMM")}
-                    </Text.H4>
-                    <TopArrowButton>
-                        <IconChevronDown />
-                    </TopArrowButton>
-                </DropdownMonth>
-                <DropdownYear onClick={toggleYearView}>
-                    {renderYearHeader()}
-                    <TopArrowButton>
-                        <IconChevronDown />
-                    </TopArrowButton>
-                </DropdownYear>
-            </HeaderDropdown> */}
-            {/* <ContentBody>
-                <SideArrowButton
-                    $direction="left"
-                    onClick={handleLeftArrowClick}
-                >
-                    <ArrowLeft />
-                </SideArrowButton>
-                <Views $view={currentView}>
-                    <DayView>
-                        <CalendarDay
-                            calendarDate={calendarDate}
-                            disabledDates={disabledDates}
-                            selectedStartDate={selectedStartDate}
-                            onSelect={handleDateSelect}
-                        />
-                    </DayView>
-                    <MonthView>
-                        <CalendarMonth
-                            calendarDate={calendarDate}
-                            currentView={currentView}
-                            selectedStartDate={selectedStartDate}
-                            onSelect={handleDateSelect}
-                        />
-                    </MonthView>
-                    <YearView>
-                        <CalendarYear
-                            calendarDate={calendarDate}
-                            currentView={currentView}
-                            selectedStartDate={selectedStartDate}
-                            onSelect={handleDateSelect}
-                        />
-                    </YearView>
-                </Views>
-                
-            </ContentBody> */}
         </Container>
     );
 };
