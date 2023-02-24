@@ -15,10 +15,9 @@ import { ChangeValueTypes } from "./types";
 
 type StartInputNames = "start-day" | "start-month" | "start-year";
 type EndInputNames = "end-day" | "end-month" | "end-year";
-
-export type FieldType = StartInputNames | EndInputNames | "none";
 type FieldName = "day" | "month" | "year";
 
+export type FieldType = StartInputNames | EndInputNames | "none";
 interface StandAloneInputProps {
     disabled?: boolean | undefined;
     onChange?: ((value: ChangeValueTypes) => void) | undefined;
@@ -28,7 +27,7 @@ interface StandAloneInputProps {
         | ["start-day", "start-month", "start-year"]
         | ["end-day", "end-month", "end-year"];
     value?: string | undefined;
-    variant?: VariantStyleProps;
+    variant?: VariantStyleProps | undefined;
 }
 
 export const StandAloneInput = ({
@@ -170,19 +169,19 @@ export const StandAloneInput = ({
         }
     };
 
+    const handleNodeFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        const name = event.target.name as FieldType;
+
+        // Remove overlay placeholder once 'Tab' into this element
+        if (name === "start-day" || name === "end-day") setIsDirty(true);
+    };
+
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         const name = event.target.name as FieldType;
         setCurrentFocus(name);
         event.target.select();
 
         performOnFocusHandler(name);
-    };
-
-    const handleNodeFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        const name = event.target.name as FieldType;
-
-        // Remove overlay placeholder once 'Tab' into this element
-        if (name === "start-day" || name === "end-day") setIsDirty(true);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -244,6 +243,10 @@ export const StandAloneInput = ({
         }
     };
 
+    const handleClickPlaceholder = () => {
+        setIsDirty(true);
+    };
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         /**
          * Allow going to the field before if user presses Backspace
@@ -258,10 +261,6 @@ export const StandAloneInput = ({
                 monthInputRef.current.focus();
             }
         }
-    };
-
-    const handleClickPlaceholder = () => {
-        setIsDirty(true);
     };
 
     // =============================================================================
@@ -293,7 +292,7 @@ export const StandAloneInput = ({
 
     const performOnChangeHandler = (
         changeValue: string,
-        name: StartInputNames | EndInputNames
+        name: Omit<FieldType, "none">
     ) => {
         const inputType = name.split("-")[0] as InputType;
         const field = name.split("-")[1] as FieldName;
