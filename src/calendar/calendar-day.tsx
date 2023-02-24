@@ -111,11 +111,9 @@ export const CalendarDay = ({
     };
 
     return (
-        <>
-            <Wrapper>
-                {renderHeader()}
-                {renderDayCells()}
-            </Wrapper>
-        </>
+        <Wrapper>
+            {renderHeader()}
+            {renderDayCells()}
+        </Wrapper>
     );
 };
