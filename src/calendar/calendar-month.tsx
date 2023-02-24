@@ -1,8 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { CalendarHelper } from "src/util/calendar-helper";
-import { Text } from "../text/text";
-import { View } from "./calendar";
 import {
     CellLabel,
     MonthCell,

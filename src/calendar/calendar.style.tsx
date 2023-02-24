@@ -3,7 +3,6 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
-import { View } from "./calendar";
 import { CalendarType } from "./types";
 import { MonthPickerContainer } from "./calendar-month.style";
 import { Wrapper } from "./calendar-year.style";
