@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { MonthCell, MonthPickerContainer } from "./calendar-month.style";
+import { useEffect, useState } from "react";
 import { CalendarHelper } from "src/util/calendar-helper";
+import { Text } from "../text/text";
 import { View } from "./calendar";
+import {
+    CellLabel,
+    MonthCell,
+    MonthPickerContainer,
+} from "./calendar-month.style";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
-interface CalendarMonthProps {
+interface Props {
     calendarDate: Dayjs;
-    currentView: View;
     selectedStartDate: string;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarMonth = ({
     calendarDate,
-    currentView,
     selectedStartDate,
     onSelect,
-}: CalendarMonthProps) => {
+}: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -28,10 +31,8 @@ export const CalendarMonth = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (currentView === "month-options") {
-            generateMonths();
-        }
-    }, [currentView, calendarDate]);
+        generateMonths();
+    }, [calendarDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -62,7 +63,6 @@ export const CalendarMonth = ({
 
     const generateMonths = () => {
         const months = CalendarHelper.generateMonths(calendarDate);
-
         setMonths(months);
     };
 
@@ -81,7 +81,9 @@ export const CalendarMonth = ({
                         onClick={() => handleMonthClick(date)}
                         $variant={variant}
                     >
-                        {month}
+                        <CellLabel weight="regular" $variant={variant}>
+                            {month}
+                        </CellLabel>
                     </MonthCell>
                 );
             })}

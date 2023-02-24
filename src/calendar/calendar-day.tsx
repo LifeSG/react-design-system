@@ -115,46 +115,6 @@ export const CalendarDay = ({
                 {renderHeader()}
                 {renderDayCells()}
             </Wrapper>
-            {/* <WeekDaysContainer>
-                {weeksOfTheMonth[0].map((day, index) => (
-                    <WeekCell key={`week-day-${index}`}>
-                        {dayjs(day).format("ddd")}
-                    </WeekCell>
-                ))}
-            </WeekDaysContainer>
-            {daysOfAWeek.map((week, weekIndex) => (
-                <CalendarDaySection key={`week-${weekIndex}`}>
-                    {week.map((day, dayIndex) => {
-                        const { isDisabled, variant } = generateDayStatus(day);
-
-                        const styleProps = generateDayClass(day);
-
-                        return (
-                            <GrowDayCell
-                                key={`day-${dayIndex}`}
-                                {...styleProps}
-                            >
-                                <OverflowCell>
-                                    <LeftCircle />
-                                </OverflowCell>
-                                <RightCell>
-                                    <RightCircle />
-                                </RightCell>
-                                <DayNumber
-                                    $variant={variant}
-                                    $disabled={isDisabled}
-                                >
-                                    {day.format("D")}
-                                </DayNumber>
-                                <InteractiveCircle
-                                    $disabled={isDisabled}
-                                    onClick={() => handleDayClick(day)}
-                                />
-                            </GrowDayCell>
-                        );
-                    })}
-                </CalendarDaySection>
-            ))} */}
         </>
     );
 };
