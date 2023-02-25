@@ -65,11 +65,6 @@ const DATA: ApiTableSectionProps[] = [
         name: "ListAddon<T, V>",
         attributes: [
             {
-                name: "value",
-                description: "The value of the addon list",
-                propTypes: ["T"],
-            },
-            {
                 name: "placeholder",
                 description: (
                     <>
