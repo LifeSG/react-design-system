@@ -35,6 +35,7 @@ export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     display: flex;
     min-width: 28rem;
+    width: 100%;
     max-width: 41rem;
     padding: 2rem 0.25rem;
     align-items: center;
@@ -50,8 +51,6 @@ export const Container = styled.div<ContainerStyleProps>`
             // element style itself that use in input calendar
             case "standalone":
                 return css`
-                    width: 41rem;
-
                     ${ArrowLeft},
                     ${ArrowRight} {
                         width: 1.5rem;
