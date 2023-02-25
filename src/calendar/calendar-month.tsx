@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { MonthCell, MonthPickerContainer } from "./calendar-month.style";
+import { useEffect, useState } from "react";
 import { CalendarHelper } from "src/util/calendar-helper";
-import { View } from "./calendar";
+import { CellLabel, MonthCell, Wrapper } from "./calendar-month.style";
+import { CalendarType } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
-interface CalendarMonthProps {
+interface Props {
     calendarDate: Dayjs;
-    currentView: View;
     selectedStartDate: string;
+    type: CalendarType;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarMonth = ({
     calendarDate,
-    currentView,
     selectedStartDate,
+    type,
     onSelect,
-}: CalendarMonthProps) => {
+}: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -28,10 +28,8 @@ export const CalendarMonth = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (currentView === "month") {
-            generateMonths();
-        }
-    }, [currentView, calendarDate]);
+        generateMonths();
+    }, [calendarDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -62,7 +60,6 @@ export const CalendarMonth = ({
 
     const generateMonths = () => {
         const months = CalendarHelper.generateMonths(calendarDate);
-
         setMonths(months);
     };
 
@@ -72,7 +69,7 @@ export const CalendarMonth = ({
     if (!months.length) return null;
 
     return (
-        <MonthPickerContainer>
+        <Wrapper $type={type}>
             {months.map((date) => {
                 const { variant, month } = generateMonthStatus(date);
                 return (
@@ -81,10 +78,12 @@ export const CalendarMonth = ({
                         onClick={() => handleMonthClick(date)}
                         $variant={variant}
                     >
-                        {month}
+                        <CellLabel weight="regular" $variant={variant}>
+                            {month}
+                        </CellLabel>
                     </MonthCell>
                 );
             })}
-        </MonthPickerContainer>
+        </Wrapper>
     );
 };

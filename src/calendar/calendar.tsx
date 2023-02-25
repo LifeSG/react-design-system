@@ -1,28 +1,25 @@
-import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import { useEffect, useState } from "react";
+import { Text } from "../text";
+import { CalendarHelper } from "../util/calendar-helper";
+import { CalendarDay } from "./calendar-day";
+import { CalendarMonth } from "./calendar-month";
+import { CalendarYear } from "./calendar-year";
 import {
-    ArrowButton,
     ArrowLeft,
     ArrowRight,
     Container,
     ContentBody,
-    DayView,
-    DropdownMonth,
-    DropdownYear,
+    DropdownButton,
     HeaderDropdown,
     IconChevronDown,
-    MonthView,
-    Views,
-    YearView,
+    OptionsOverlay,
+    SideArrowButton,
+    ToggleZone,
 } from "./calendar.style";
-import { CalendarDay } from "./calendar-day";
-import { CalendarMonth } from "./calendar-month";
 import { CalendarProps } from "./types";
-import { CalendarYear } from "./calendar-year";
-import { CalendarHelper } from "../util/calendar-helper";
-import { Text } from "../text";
 
-export type View = "day" | "month" | "year";
+export type View = "default" | "month-options" | "year-options";
 
 export const Calendar = ({
     disabledDates,
@@ -35,7 +32,7 @@ export const Calendar = ({
     // CONST, STATE, REF
     // =============================================================================
     const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
-    const [currentView, setCurrentView] = useState<View>("day");
+    const [currentView, setCurrentView] = useState<View>("default");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
 
     // =============================================================================
@@ -52,13 +49,13 @@ export const Calendar = ({
     // =============================================================================
     const handleLeftArrowClick = () => {
         switch (currentView) {
-            case "day":
+            case "default":
                 setCalendarDate((date) => date.subtract(1, "month"));
                 break;
-            case "month":
+            case "month-options":
                 setCalendarDate((date) => date.subtract(1, "year"));
                 break;
-            case "year":
+            case "year-options":
                 setCalendarDate((date) => date.subtract(10, "year"));
                 break;
         }
@@ -66,13 +63,13 @@ export const Calendar = ({
 
     const handleRightArrowClick = () => {
         switch (currentView) {
-            case "day":
+            case "default":
                 setCalendarDate((date) => date.add(1, "month"));
                 break;
-            case "month":
+            case "month-options":
                 setCalendarDate((date) => date.add(1, "year"));
                 break;
-            case "year":
+            case "year-options":
                 setCalendarDate((date) => date.add(10, "year"));
                 break;
         }
@@ -98,87 +95,112 @@ export const Calendar = ({
         }
     };
 
-    const toggleMonthView = () => {
-        setCurrentView("month");
+    const handleMonthDropdownClick = () => {
+        if (currentView !== "month-options") {
+            setCurrentView("month-options");
+        } else {
+            setCurrentView("default");
+        }
     };
 
-    const toggleYearView = () => {
-        setCurrentView((prev) => {
-            if (prev !== "day") return "day";
+    const handleYearDropdownClick = () => {
+        /**
+         * If the view is in the month options view,
+         * then clicking will send the view back to
+         * default
+         */
+        if (currentView !== "default") {
+            setCurrentView("default");
+        } else {
+            setCurrentView("year-options");
+        }
+    };
 
-            return "year";
-        });
+    const getYearHeaderText = (): string => {
+        if (currentView === "year-options") {
+            const { beginDecade, endDecade } =
+                CalendarHelper.getStartEndDecade(calendarDate);
+
+            return `${beginDecade} to ${endDecade}`;
+        } else {
+            return dayjs(calendarDate).format("YYYY");
+        }
     };
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderYearHeader = () => {
-        let displayText: string;
-        if (currentView === "year") {
-            const { beginDecade, endDecade } =
-                CalendarHelper.getStartEndDecade(calendarDate);
-
-            displayText = `${beginDecade} to ${endDecade}`;
-        } else {
-            displayText = dayjs(calendarDate).format("YYYY");
+    const renderOptionsOverlay = () => {
+        switch (currentView) {
+            case "month-options":
+                return (
+                    <CalendarMonth
+                        type={type}
+                        calendarDate={calendarDate}
+                        selectedStartDate={selectedStartDate}
+                        onSelect={handleDateSelect}
+                    />
+                );
+            case "year-options":
+                return (
+                    <CalendarYear
+                        type={type}
+                        calendarDate={calendarDate}
+                        selectedStartDate={selectedStartDate}
+                        onSelect={handleDateSelect}
+                    />
+                );
+            default:
+                return null;
         }
-
-        return <Text.H4 weight="regular">{displayText}</Text.H4>;
     };
 
     return (
         <Container $type={type} {...otherProps}>
-            <HeaderDropdown $view={currentView}>
-                <DropdownMonth onClick={toggleMonthView}>
-                    <Text.H4 weight="regular">
-                        {dayjs(calendarDate).format("MMM")}
-                    </Text.H4>
-                    <ArrowButton $type="header">
-                        <IconChevronDown />
-                    </ArrowButton>
-                </DropdownMonth>
-                <DropdownYear onClick={toggleYearView}>
-                    {renderYearHeader()}
-                    <ArrowButton $type="header">
-                        <IconChevronDown />
-                    </ArrowButton>
-                </DropdownYear>
-            </HeaderDropdown>
+            <SideArrowButton $direction="left" onClick={handleLeftArrowClick}>
+                <ArrowLeft />
+            </SideArrowButton>
             <ContentBody>
-                <ArrowButton $type="content" onClick={handleLeftArrowClick}>
-                    <ArrowLeft />
-                </ArrowButton>
-                <Views $view={currentView}>
-                    <DayView>
-                        <CalendarDay
-                            calendarDate={calendarDate}
-                            disabledDates={disabledDates}
-                            selectedStartDate={selectedStartDate}
-                            onSelect={handleDateSelect}
-                        />
-                    </DayView>
-                    <MonthView>
-                        <CalendarMonth
-                            calendarDate={calendarDate}
-                            currentView={currentView}
-                            selectedStartDate={selectedStartDate}
-                            onSelect={handleDateSelect}
-                        />
-                    </MonthView>
-                    <YearView>
-                        <CalendarYear
-                            calendarDate={calendarDate}
-                            currentView={currentView}
-                            selectedStartDate={selectedStartDate}
-                            onSelect={handleDateSelect}
-                        />
-                    </YearView>
-                </Views>
-                <ArrowButton $type="content" onClick={handleRightArrowClick}>
-                    <ArrowRight />
-                </ArrowButton>
+                <HeaderDropdown>
+                    <DropdownButton
+                        type="button"
+                        $expandedDisplay={currentView === "month-options"}
+                        $visible={currentView === "default"}
+                        id="month-dropdown"
+                        onClick={handleMonthDropdownClick}
+                    >
+                        <Text.H4 weight="regular">
+                            {dayjs(calendarDate).format("MMM")}
+                        </Text.H4>
+                        <IconChevronDown />
+                    </DropdownButton>
+                    <DropdownButton
+                        type="button"
+                        $expandedDisplay={currentView !== "default"}
+                        id="year-dropdown"
+                        onClick={handleYearDropdownClick}
+                    >
+                        <Text.H4 weight="regular">
+                            {getYearHeaderText()}
+                        </Text.H4>
+                        <IconChevronDown />
+                    </DropdownButton>
+                </HeaderDropdown>
+                <ToggleZone>
+                    <CalendarDay
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        onSelect={handleDateSelect}
+                    />
+                    <OptionsOverlay $visible={currentView !== "default"}>
+                        {renderOptionsOverlay()}
+                    </OptionsOverlay>
+                </ToggleZone>
             </ContentBody>
+            <SideArrowButton $direction="right" onClick={handleRightArrowClick}>
+                <ArrowRight />
+            </SideArrowButton>
         </Container>
     );
 };

@@ -1,9 +1,20 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import {
+    Heading3,
+    Heading4,
+    FullWidthStoryContainer,
+    Secondary,
+    Title,
+} from "../storybook-common";
 import { Calendar } from "src/calendar";
+import { Layout } from "src/layout";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Calendar" component={Calendar} />
+<Meta
+    title="Modules/Calendar"
+    component={Calendar}
+    parameters={{ layout: "padded" }}
+/>
 
 <Title>Calendar</Title>
 
@@ -17,7 +28,9 @@ import { Calendar } from "@lifesg/react-design-system/calendar";
 
 <Canvas>
     <Story name="Calendar">
-        <Calendar disabledDates={["2023-02-15"]} />
+        <FullWidthStoryContainer>
+            <Calendar disabledDates={["2023-02-15"]} />
+        </FullWidthStoryContainer>
     </Story>
 </Canvas>
 

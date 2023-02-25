@@ -1,18 +1,40 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
+import { Text } from "../text/text";
 import { YearVariant } from "./calendar-year";
+import { CalendarType } from "./types";
 
 interface StyleProps {
     $variant: YearVariant;
 }
 
-export const YearPickerContainer = styled.div`
+interface WrapperStyleProps {
+    $type: CalendarType;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const Wrapper = styled.div<WrapperStyleProps>`
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(5.15rem, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 4rem);
-    gap: 0.5rem 1rem;
     align-content: center;
+
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    gap: 0.5rem 2rem;
+                `;
+            case "input":
+                return css`
+                    gap: 0.5rem 1rem;
+                `;
+        }
+    }}
 `;
 
 export const YearCell = styled.div<StyleProps>`
@@ -21,7 +43,6 @@ export const YearCell = styled.div<StyleProps>`
     align-items: center;
     border-radius: 0.5rem;
     cursor: pointer;
-    color: ${Color.Neutral[1]};
 
     &:hover {
         box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
@@ -32,26 +53,38 @@ export const YearCell = styled.div<StyleProps>`
         switch (props.$variant) {
             case "current-year":
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "regular")}
-                    background: ${Color.Accent.Light[6]};
-                    color: ${Color.Neutral[3]};
+                    background: ${Color.Accent.Light[6](props)};
+                `;
+            case "selected-year":
+                return css`
+                    background: ${Color.Accent.Light[5](props)};
+                    border: 1px solid ${Color.Primary(props)};
+                `;
+            case "other-decade":
+            case "default":
+                break;
+        }
+    }};
+`;
+
+export const CellLabel = styled(Text.H5)<StyleProps>`
+    ${(props) => {
+        switch (props.$variant) {
+            case "current-year":
+                return css`
+                    color: ${Color.Neutral[3](props)};
                 `;
             case "selected-year":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    background: ${Color.Accent.Light[5]};
-                    color: ${Color.Primary};
-                    border: 1px solid ${Color.Primary};
+                    color: ${Color.Primary(props)};
                 `;
             case "other-decade":
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "regular")}
-                    color: ${Color.Neutral[4]}
+                    color: ${Color.Neutral[4](props)};
                 `;
             case "default":
-                return css`
-                    ${TextStyleHelper.getTextStyle("H5", "regular")}
-                `;
+                break;
         }
-    }};
+    }}
 `;

@@ -1,153 +1,82 @@
-import { Color } from "../color";
-import { TextStyleHelper } from "../text";
 import styled, { css } from "styled-components";
+import { Color } from "../color";
+import { Text } from "../text";
 import { DayVariant } from "./calendar-day";
 
 export interface DayCellStyleProps {
-    $selected?: boolean;
     $point?: "start" | "middle" | "end";
     $hovered?: boolean;
     $disabled?: boolean;
 }
 
-interface DayNumberProps {
+interface DayLabelStyleProps {
     $variant: DayVariant;
     $disabled: boolean;
+    $selected: boolean;
 }
 
-interface GrowDayCellProps extends DayCellStyleProps {}
+interface OverflowDisplayProps {
+    $position: "left" | "right";
+}
 
-interface InteractiveCircleProps extends Omit<DayNumberProps, "$variant"> {}
+interface InteractiveCircleProps extends DayLabelStyleProps {}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-
-export const WeekDaysContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-bottom: 0.5rem;
-`;
-
-export const WeekCell = styled.div`
-    ${TextStyleHelper.getTextStyle("H6", "semibold")}
-    height: 1.625rem;
+export const Wrapper = styled.div`
     width: 100%;
-    max-width: 4.875rem;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: 0.5rem;
+`;
+
+export const HeaderCell = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${Color.Neutral[1]};
     pointer-events: none;
     user-select: none;
+    margin-bottom: 0.625rem;
 `;
 
-export const CalendarDaySection = styled.div`
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 0.25rem;
-`;
-
-export const GrowDayCell = styled.div<GrowDayCellProps>`
+export const GrowDayCell = styled.div<DayCellStyleProps>`
     display: flex;
     position: relative;
     height: 2.5rem;
     align-items: center;
     justify-content: center;
-
-    ${(props) => {
-        const { $selected } = props;
-
-        if ($selected) {
-            return css`
-                ${LeftCircle} {
-                    background-color: ${Color.Accent.Light[5]};
-                    border: 1px solid ${Color.Primary};
-                }
-
-                ${RightCircle} {
-                    background-color: ${Color.Accent.Light[5]};
-                    border: 1px solid ${Color.Primary};
-                }
-
-                ${DayNumber} {
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${Color.Primary}
-                }
-            `;
-        }
-    }}
 `;
 
-const DayCellBasic = styled.div`
-    position: relative;
+export const OverflowDisplay = styled.div<OverflowDisplayProps>`
+    position: absolute;
+    width: 50%;
     height: 100%;
-    display: flex;
-    overflow: hidden;
-    width: 1.25rem;
-`;
-
-const Circle = styled.div`
-    ${TextStyleHelper.getTextStyle("H5", "regular")}
-    color: ${Color.Neutral[1]};
-    position: absolute;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-`;
-
-export const LeftCell = styled(DayCellBasic)``;
-export const RightCell = styled(DayCellBasic)``;
-export const LeftCircle = styled(Circle)`
-    right: 0;
-    transform: translateX(50%);
-`;
-export const RightCircle = styled(Circle)`
-    left: 0;
-    transform: translateX(-50%);
-`;
-
-export const DayNumber = styled.div<DayNumberProps>`
-    ${TextStyleHelper.getTextStyle("H5", "regular")}
-    pointer-events: none;
-    user-select: none;
-    position: absolute;
-
     ${(props) => {
-        if (props.$disabled) {
-            return css`
-                color: ${Color.Neutral[4]};
-                pointer-events: none;
-            `;
-        }
-
-        switch (props.$variant) {
-            case "other-month":
+        switch (props.$position) {
+            case "left":
                 return css`
-                    color: ${Color.Neutral[4]};
+                    left: 0;
                 `;
-            case "today":
+            case "right":
                 return css`
-                    color: ${Color.Neutral[3]};
-                `;
-            case "default":
-                return css`
-                    color: ${Color.Neutral[1]};
+                    right: 0;
                 `;
         }
     }}
 `;
 
 export const InteractiveCircle = styled.div<InteractiveCircleProps>`
-    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 50%;
     cursor: pointer;
+    position: absolute;
 
-    &:hover {
-        cursor: pointer;
+    :hover {
         box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
         border: 1px solid ${Color.Accent.Light[1]};
     }
@@ -155,10 +84,57 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[4]};
-                cursor: none;
+                color: ${Color.Neutral[4](props)};
+                cursor: not-allowed;
                 pointer-events: none;
             `;
+        }
+
+        if (props.$selected) {
+            return css`
+                background: ${Color.Accent.Light[5](props)};
+                border: 1px solid ${Color.Primary(props)};
+            `;
+        }
+
+        switch (props.$variant) {
+            case "today":
+                return css`
+                    background: ${Color.Accent.Light[5](props)};
+                `;
+            default:
+                break;
+        }
+    }}
+`;
+
+export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[4](props)};
+            `;
+        }
+
+        if (props.$selected) {
+            return css`
+                color: ${Color.Primary(props)};
+            `;
+        }
+
+        switch (props.$variant) {
+            case "other-month":
+                return css`
+                    color: ${Color.Neutral[4](props)};
+                `;
+            case "today":
+                return css`
+                    color: ${Color.Neutral[3](props)};
+                `;
+            case "default":
+                return css`
+                    color: ${Color.Neutral[1](props)};
+                `;
         }
     }}
 `;

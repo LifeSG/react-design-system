@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { YearCell, YearPickerContainer } from "./calendar-year.style";
+import { useEffect, useState } from "react";
 import { CalendarHelper } from "../util/calendar-helper";
-import { View } from "./calendar";
+import { CellLabel, Wrapper, YearCell } from "./calendar-year.style";
+import { CalendarType } from "./types";
 
 export type YearVariant =
     | "default"
@@ -10,19 +10,19 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface CalendarYearProps {
+interface Props {
     calendarDate: Dayjs;
-    currentView: View;
     selectedStartDate: string;
+    type: CalendarType;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarYear = ({
     calendarDate,
-    currentView,
     selectedStartDate,
+    type,
     onSelect,
-}: CalendarYearProps) => {
+}: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -32,10 +32,8 @@ export const CalendarYear = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (currentView === "year") {
-            generateDecadeOfYears();
-        }
-    }, [currentView, calendarDate]);
+        generateDecadeOfYears();
+    }, [calendarDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -70,7 +68,6 @@ export const CalendarYear = ({
 
     const generateDecadeOfYears = () => {
         const years = CalendarHelper.generateDecadeOfYears(calendarDate);
-
         setYears(years);
     };
 
@@ -80,7 +77,7 @@ export const CalendarYear = ({
     if (!years.length) return null;
 
     return (
-        <YearPickerContainer>
+        <Wrapper $type={type}>
             {years.map((date) => {
                 const { variant, year } = generateYearStatus(date);
 
@@ -90,10 +87,12 @@ export const CalendarYear = ({
                         $variant={variant}
                         onClick={() => handleYearClick(date)}
                     >
-                        {year}
+                        <CellLabel weight="regular" $variant={variant}>
+                            {year}
+                        </CellLabel>
                     </YearCell>
                 );
             })}
-        </YearPickerContainer>
+        </Wrapper>
     );
 };

@@ -1,18 +1,14 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
+import { Text } from "../text/text";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
-    CalendarDaySection,
-    DayCellStyleProps,
-    DayNumber,
+    DayLabel,
     GrowDayCell,
+    HeaderCell,
     InteractiveCircle,
-    LeftCell,
-    LeftCircle,
-    RightCell,
-    RightCircle,
-    WeekCell,
-    WeekDaysContainer,
+    OverflowDisplay,
+    Wrapper,
 } from "./calendar-day.style";
 import { CalendarProps } from "./types";
 
@@ -48,17 +44,6 @@ export const CalendarDay = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const generateDayClass = (day: Dayjs): DayCellStyleProps => {
-        const dateStartWithYear = day.format("YYYY-MM-DD");
-        const styleProps = {};
-
-        if (selectedStartDate === dateStartWithYear) {
-            styleProps["$selected"] = true;
-        }
-
-        return styleProps;
-    };
-
     const generateDayStatus = (day: Dayjs) => {
         const dateStartWithYear = day.format("YYYY-MM-DD");
         let isDisabled = false;
@@ -79,48 +64,56 @@ export const CalendarDay = ({
         };
     };
 
-    return (
-        <>
-            <WeekDaysContainer>
-                {weeksOfTheMonth[0].map((day, index) => (
-                    <WeekCell key={`week-day-${index}`}>
-                        {dayjs(day).format("ddd")}
-                    </WeekCell>
-                ))}
-            </WeekDaysContainer>
-            {weeksOfTheMonth.map((week, weekIndex) => (
-                <CalendarDaySection key={`week-${weekIndex}`}>
-                    {week.map((day, dayIndex) => {
-                        const { isDisabled, variant } = generateDayStatus(day);
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+    const renderHeader = () => {
+        return weeksOfTheMonth[0].map((day, index) => (
+            <HeaderCell key={`week-day-${index}`}>
+                <Text.H6 weight="semibold">{dayjs(day).format("ddd")}</Text.H6>
+            </HeaderCell>
+        ));
+    };
 
-                        const styleProps = generateDayClass(day);
+    const renderDayCells = () => {
+        return weeksOfTheMonth.map((week) => {
+            return week.map((day, dayIndex) => {
+                const { isDisabled, variant } = generateDayStatus(day);
+                const formattedDay = day.format("YYYY-MM-DD");
 
-                        return (
-                            <GrowDayCell
-                                key={`day-${dayIndex}`}
-                                {...styleProps}
+                return (
+                    <GrowDayCell key={`day-${dayIndex}`}>
+                        <OverflowDisplay $position="left" />
+                        <OverflowDisplay $position="right" />
+                        <InteractiveCircle
+                            $variant={variant}
+                            $selected={selectedStartDate === formattedDay}
+                            $disabled={isDisabled}
+                            onClick={() => handleDayClick(day)}
+                        >
+                            <DayLabel
+                                weight={
+                                    selectedStartDate === formattedDay
+                                        ? "semibold"
+                                        : "regular"
+                                }
+                                $variant={variant}
+                                $disabled={isDisabled}
+                                $selected={selectedStartDate === formattedDay}
                             >
-                                <LeftCell>
-                                    <LeftCircle />
-                                </LeftCell>
-                                <RightCell>
-                                    <RightCircle />
-                                </RightCell>
-                                <DayNumber
-                                    $variant={variant}
-                                    $disabled={isDisabled}
-                                >
-                                    {day.format("D")}
-                                </DayNumber>
-                                <InteractiveCircle
-                                    $disabled={isDisabled}
-                                    onClick={() => handleDayClick(day)}
-                                />
-                            </GrowDayCell>
-                        );
-                    })}
-                </CalendarDaySection>
-            ))}
-        </>
+                                {day.format("D")}
+                            </DayLabel>
+                        </InteractiveCircle>
+                    </GrowDayCell>
+                );
+            });
+        });
+    };
+
+    return (
+        <Wrapper>
+            {renderHeader()}
+            {renderDayCells()}
+        </Wrapper>
     );
 };
