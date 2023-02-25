@@ -45,14 +45,12 @@ export namespace PhoneNumberInputHelper {
     );
 
     export const formatNumber = (
-        numberText?: string,
+        numberText = "",
         country?: CountryValue
     ): string => {
         if (!country) return numberText;
 
-        const numberTextWithoutSpace = numberText
-            ? numberText.replace(/[\s()]+/g, "")
-            : "";
+        const numberTextWithoutSpace = numberText.replace(/[\s()]+/g, "");
 
         const { format } = country;
 
