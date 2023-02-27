@@ -5,6 +5,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { CalendarType } from "./types";
 import { IconButton } from "../icon-button";
+import { TextStyleHelper } from "../text";
 
 interface ContainerStyleProps {
     $type: CalendarType;
@@ -12,11 +13,17 @@ interface ContainerStyleProps {
 
 interface SideArrowButtonStyleProps {
     $direction: "left" | "right";
+    $type: CalendarType;
 }
 
 interface DropdownButtonStyleProps {
     $expandedDisplay: boolean;
     $visible?: boolean;
+    $type: CalendarType;
+}
+
+interface DropdownTextStyleProps {
+    $type: CalendarType;
 }
 
 interface OverlayStyleProps {
@@ -47,8 +54,6 @@ export const Container = styled.div<ContainerStyleProps>`
         const { $type } = props;
 
         switch ($type) {
-            // control standalone calender style
-            // element style itself that use in input calendar
             case "standalone":
                 return css`
                     ${ArrowLeft},
@@ -60,6 +65,20 @@ export const Container = styled.div<ContainerStyleProps>`
                     ${IconChevronDown} {
                         width: 1.125rem;
                         height: 1.125rem;
+                    }
+                `;
+            case "input":
+                return css`
+                    min-width: unset;
+                    position: absolute;
+                    padding: 1.5rem 1.25rem;
+                    left: 0;
+                    top: calc(100% + 0.5rem);
+
+                    ${ArrowLeft},
+                    ${ArrowRight} {
+                        width: 1rem;
+                        height: 1rem;
                     }
                 `;
             default:
@@ -97,6 +116,16 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
     }}
 `;
 
+export const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+`;
+
+export const HeaderInputDropdown = styled.div`
+    display: flex;
+`;
+
 export const HeaderDropdown = styled.div`
     display: flex;
     margin: 0 auto;
@@ -116,6 +145,17 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     }
 
     ${(props) => {
+        switch (props.$type) {
+            case "input":
+                return css`
+                    :not(:last-of-type) {
+                        margin-right: 0;
+                    }
+                `;
+        }
+    }}
+
+    ${(props) => {
         if (props.$visible === false) {
             return css`
                 display: none;
@@ -132,7 +172,38 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     }}
 `;
 
+export const DropdownText = styled.p<DropdownTextStyleProps>`
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    ${TextStyleHelper.getTextStyle("H4", "regular")}
+                `;
+            case "input":
+                return css`
+                    ${TextStyleHelper.getTextStyle("H5", "regular")}
+                `;
+        }
+    }}
+`;
+
+export const HeaderArrows = styled.div`
+    display: flex;
+`;
+
+export const HeaderArrowButton = styled(IconButton)`
+    background: transparent;
+    margin: auto 0;
+    padding: 0.5rem;
+
+    :focus,
+    :active {
+        background: transparent;
+    }
+`;
+
 export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
+    display: block;
     padding: 1rem;
     background: transparent;
     margin: auto 0;
@@ -141,6 +212,15 @@ export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
     :active {
         background: transparent;
     }
+
+    ${(props) => {
+        switch (props.$type) {
+            case "input":
+                return css`
+                    display: none;
+                `;
+        }
+    }}
 
     ${(props) => {
         switch (props.$direction) {
@@ -176,4 +256,5 @@ export const IconChevronDown = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
     transition: transform 250ms ease-in-out;
     margin-left: 0.625rem;
+    width: 1rem;
 `;

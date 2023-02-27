@@ -1,4 +1,3 @@
-import { MediaQuery } from "src/media";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
@@ -65,14 +64,12 @@ export const InputSection = styled.div<SectionStyleProps>`
                     top: 0.75rem;
                     height: 1.625rem;
                     width: 50%;
-                    border: 1px solid cyan;
                 `;
             } else if (props.$variant === "range") {
                 return css`
                     bottom: 0.75rem;
                     height: 1.625rem;
                     width: calc(100% - 1rem); // paddingLeft is 1rem
-                    border: 1px solid blue;
                 `;
             }
         }}

@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { Text } from "../text";
 import { DayVariant } from "./calendar-day";
+import { CalendarType } from "./types";
 
 export interface DayCellStyleProps {
     $point?: "start" | "middle" | "end";
@@ -19,16 +20,32 @@ interface OverflowDisplayProps {
     $position: "left" | "right";
 }
 
+interface WrapperStyleProps {
+    $type: CalendarType;
+}
+
 interface InteractiveCircleProps extends DayLabelStyleProps {}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    row-gap: 0.5rem;
+
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    row-gap: 0.5rem;
+                `;
+            case "input":
+                return css`
+                    row-gap: 0.25rem;
+                `;
+        }
+    }}
 `;
 
 export const HeaderCell = styled.div`

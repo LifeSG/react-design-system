@@ -10,7 +10,7 @@ import {
     OverflowDisplay,
     Wrapper,
 } from "./calendar-day.style";
-import { CalendarProps } from "./types";
+import { CalendarProps, CalendarType } from "./types";
 
 export type DayVariant = "default" | "other-month" | "today";
 
@@ -18,6 +18,7 @@ interface CalendarDayProps extends Pick<CalendarProps, "disabledDates"> {
     selectedStartDate: string;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
+    type: CalendarType;
 }
 
 export const CalendarDay = ({
@@ -25,6 +26,7 @@ export const CalendarDay = ({
     disabledDates,
     selectedStartDate,
     onSelect,
+    type,
 }: CalendarDayProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -111,7 +113,7 @@ export const CalendarDay = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper $type={type}>
             {renderHeader()}
             {renderDayCells()}
         </Wrapper>

@@ -1,6 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
-import { Text } from "../text";
 import { CalendarHelper } from "../util/calendar-helper";
 import { CalendarDay } from "./calendar-day";
 import { CalendarMonth } from "./calendar-month";
@@ -11,7 +10,12 @@ import {
     Container,
     ContentBody,
     DropdownButton,
+    DropdownText,
+    Header,
+    HeaderArrowButton,
+    HeaderArrows,
     HeaderDropdown,
+    HeaderInputDropdown,
     IconChevronDown,
     OptionsOverlay,
     SideArrowButton,
@@ -130,6 +134,38 @@ export const Calendar = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const _renderDropdownButtons = () => {
+        return (
+            <>
+                <DropdownButton
+                    type="button"
+                    $type={type}
+                    $expandedDisplay={currentView === "month-options"}
+                    $visible={currentView === "default"}
+                    id="month-dropdown"
+                    onClick={handleMonthDropdownClick}
+                >
+                    <DropdownText $type={type}>
+                        {dayjs(calendarDate).format("MMM")}
+                    </DropdownText>
+                    <IconChevronDown />
+                </DropdownButton>
+                <DropdownButton
+                    type="button"
+                    $type={type}
+                    $expandedDisplay={currentView !== "default"}
+                    id="year-dropdown"
+                    onClick={handleYearDropdownClick}
+                >
+                    <DropdownText $type={type}>
+                        {getYearHeaderText()}
+                    </DropdownText>
+                    <IconChevronDown />
+                </DropdownButton>
+            </>
+        );
+    };
+
     const renderOptionsOverlay = () => {
         switch (currentView) {
             case "month-options":
@@ -155,39 +191,49 @@ export const Calendar = ({
         }
     };
 
+    const renderHeader = () => {
+        switch (type) {
+            case "standalone":
+                return (
+                    <HeaderDropdown>{_renderDropdownButtons()}</HeaderDropdown>
+                );
+            case "input":
+                return (
+                    <Header>
+                        <HeaderInputDropdown>
+                            {_renderDropdownButtons()}
+                        </HeaderInputDropdown>
+                        <HeaderArrows>
+                            <HeaderArrowButton onClick={handleLeftArrowClick}>
+                                <ArrowLeft />
+                            </HeaderArrowButton>
+                            <HeaderArrowButton onClick={handleRightArrowClick}>
+                                <ArrowRight />
+                            </HeaderArrowButton>
+                        </HeaderArrows>
+                    </Header>
+                );
+            default:
+                return (
+                    <HeaderDropdown>{_renderDropdownButtons()}</HeaderDropdown>
+                );
+        }
+    };
+
     return (
         <Container $type={type} {...otherProps}>
-            <SideArrowButton $direction="left" onClick={handleLeftArrowClick}>
+            <SideArrowButton
+                $direction="left"
+                $type={type}
+                onClick={handleLeftArrowClick}
+            >
                 <ArrowLeft />
             </SideArrowButton>
             <ContentBody>
-                <HeaderDropdown>
-                    <DropdownButton
-                        type="button"
-                        $expandedDisplay={currentView === "month-options"}
-                        $visible={currentView === "default"}
-                        id="month-dropdown"
-                        onClick={handleMonthDropdownClick}
-                    >
-                        <Text.H4 weight="regular">
-                            {dayjs(calendarDate).format("MMM")}
-                        </Text.H4>
-                        <IconChevronDown />
-                    </DropdownButton>
-                    <DropdownButton
-                        type="button"
-                        $expandedDisplay={currentView !== "default"}
-                        id="year-dropdown"
-                        onClick={handleYearDropdownClick}
-                    >
-                        <Text.H4 weight="regular">
-                            {getYearHeaderText()}
-                        </Text.H4>
-                        <IconChevronDown />
-                    </DropdownButton>
-                </HeaderDropdown>
+                {renderHeader()}
                 <ToggleZone>
                     <CalendarDay
+                        type={type}
                         calendarDate={calendarDate}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
@@ -198,7 +244,11 @@ export const Calendar = ({
                     </OptionsOverlay>
                 </ToggleZone>
             </ContentBody>
-            <SideArrowButton $direction="right" onClick={handleRightArrowClick}>
+            <SideArrowButton
+                $direction="right"
+                $type={type}
+                onClick={handleRightArrowClick}
+            >
                 <ArrowRight />
             </SideArrowButton>
         </Container>
