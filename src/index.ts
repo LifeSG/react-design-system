@@ -5,6 +5,7 @@ export * from "./animations";
 export * from "./box-container";
 export * from "./breadcrumb";
 export * from "./button";
+export * from "./calendar";
 export * from "./card";
 export * from "./checkbox";
 export * from "./color";
