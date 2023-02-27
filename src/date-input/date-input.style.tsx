@@ -104,6 +104,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                 :focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
+                    box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;
         }
