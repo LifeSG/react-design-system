@@ -19,18 +19,19 @@ interface WrapperStyleProps {
 export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 4rem);
     align-content: center;
+    grid-template-columns: repeat(3, 1fr);
 
     ${(props) => {
         switch (props.$type) {
             case "standalone":
                 return css`
+                    grid-template-rows: repeat(4, 4rem);
                     gap: 0.5rem 2rem;
                 `;
             case "input":
                 return css`
+                    grid-template-rows: repeat(4, 4.375rem);
                     gap: 0.5rem 1rem;
                 `;
         }
