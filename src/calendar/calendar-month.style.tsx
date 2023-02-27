@@ -18,6 +18,7 @@ interface WrapperStyleProps {
 // =============================================================================
 export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 2.5rem);
