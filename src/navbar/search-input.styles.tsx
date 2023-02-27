@@ -373,6 +373,23 @@ export const SearchIcon = styled(MagnifierIcon)`
     :hover {
         color: ${Color.Primary} !important;
     }
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-right: 16px;
+        margin-left: 0px;
+    }
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-right: 0px;
+        margin-left: 10px;
+    }
 `;
 
 export const CrossIconClose = styled(CrossIcon)`
@@ -421,8 +438,22 @@ export const Divider = styled.div`
     margin-left: 1%;
 
     ${MediaQuery.MaxWidth.tablet} {
-        width: 138% !important;
-        margin-left: -19%;
+        width: 116% !important;
+        margin-left: -8%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 120% !important;
+        margin-left: -10%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 116% !important;
+        margin-left: -8%;
+    }
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 98% !important;
+        margin-left: 1%;
     }
 `;
 
@@ -430,6 +461,22 @@ export const Container = styled.div`
     display: flex;
     margin-left: -27px;
     align-items: center;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-left: 0px;
+    }
 `;
 
 export const SearchInputComponent = styled.input`
@@ -443,6 +490,15 @@ export const SearchInputComponent = styled.input`
 
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 3px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-left: 0px;
+        padding-left: 2px;
     }
 
     :focus,

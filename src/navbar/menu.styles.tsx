@@ -66,7 +66,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     font-style: normal;
     font-weight: 400;
     font-size: 14px !important;
-    line-height: 22px;
+    line-height: 20px;
 
     margin-right: 16px;
     padding-right: 16px;
@@ -100,7 +100,11 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         text-align: left;
         align-items: flex-start;
         font-size: 16px !important;
-        line-height: 21px !important;
+        line-height: 18px !important;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 `;
 
@@ -146,7 +150,7 @@ export const MenuBar = styled.ul`
 export const MenuItem = styled.li`
     width: 100%;
     min-height: 26px;
-    max-height: 55px;
+    max-height: 46px !important;
     position: relative;
     display: flex;
     align-items: left;
@@ -172,7 +176,7 @@ export const MenuItem = styled.li`
         margin-top: 16px;
         margin-bottom: 0px;
         margin-left: 5px;
-        max-height: 53px;
+        max-height: 47px !important;
 
         :first-child {
             margin-top: 5px;
