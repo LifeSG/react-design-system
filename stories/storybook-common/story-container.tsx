@@ -38,3 +38,10 @@ export const StoryContainer = styled.div`
         width: calc(${MediaWidths.mobileS}px - ${MINIMUM_SIDE_PADDING}px);
     }
 `;
+
+export const FullWidthStoryContainer = styled.div`
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1.25rem;
+`;
