@@ -9,6 +9,7 @@ import { TextStyleHelper } from "../text";
 
 interface ContainerStyleProps {
     $type: CalendarType;
+    $isOpen: boolean | undefined;
 }
 
 interface SideArrowButtonStyleProps {
@@ -73,7 +74,9 @@ export const Container = styled.div<ContainerStyleProps>`
                     position: absolute;
                     padding: 1.5rem 1.25rem;
                     left: 0;
-                    top: calc(100% + 0.5rem);
+                    top: 100%;
+                    opacity: 0;
+                    transition: top 350ms ease-in-out, opacity 350ms ease-in-out;
 
                     ${ArrowLeft},
                     ${ArrowRight} {
@@ -83,6 +86,15 @@ export const Container = styled.div<ContainerStyleProps>`
                 `;
             default:
                 break;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$type === "input" && props.$isOpen) {
+            return css`
+                top: calc(100% + 0.5rem);
+                opacity: 1;
+            `;
         }
     }}
 `;

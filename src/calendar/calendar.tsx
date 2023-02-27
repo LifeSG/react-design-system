@@ -28,6 +28,7 @@ export type View = "default" | "month-options" | "year-options";
 export const Calendar = ({
     disabledDates,
     onSelect,
+    isOpen,
     value,
     type = "standalone",
     ...otherProps
@@ -93,7 +94,6 @@ export const Calendar = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-
     const performOnSelectHandler = (changeValue: string) => {
         if (onSelect) {
             onSelect(changeValue);
@@ -222,7 +222,7 @@ export const Calendar = ({
     };
 
     return (
-        <Container $type={type} {...otherProps}>
+        <Container $type={type} $isOpen={isOpen} {...otherProps}>
             <SideArrowButton
                 $direction="left"
                 $type={type}
