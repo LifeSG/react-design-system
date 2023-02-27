@@ -3,6 +3,8 @@ export interface CalendarProps {
     disabledDates?: string[] | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format or `"Invalid Date"` */
     onSelect?: ((value: string) => void) | undefined;
+    /** Use in input with calendar. Values `true` | `false`  */
+    isOpen?: boolean | undefined;
     /** Selected date in `YYYY-MM-DD` format */
     value?: string | undefined;
     /** The display type of the component. Values `standalone` | `input` */

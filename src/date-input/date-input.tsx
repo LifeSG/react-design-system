@@ -31,6 +31,7 @@ export const DateInput = ({
     // =============================================================================
     const [inputValues, setInputValues] = useState<ChangeValueTypes>({});
     const [currentFocus, setCurrentFocus] = useState<FieldType>("none");
+    const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -50,6 +51,12 @@ export const DateInput = ({
 
     const handleFocus = (value: FieldType) => {
         setCurrentFocus(value);
+
+        handleIsOpenCalendar(true);
+    };
+
+    const handleIsOpenCalendar = (value: boolean) => {
+        setCalendarOpen(value);
     };
 
     // =============================================================================
@@ -112,7 +119,6 @@ export const DateInput = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-
     const RenderIndicatedBar = () => {
         if (disabled || readOnly) return;
 
@@ -164,7 +170,7 @@ export const DateInput = ({
             />
             {RenderRangeInput()}
             {RenderIndicatedBar()}
-            <Calendar type="input" />
+            <Calendar type="input" isOpen={calendarOpen} />
         </Container>
     );
 };
