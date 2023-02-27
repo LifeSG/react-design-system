@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { MediaQuery } from "../media";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
@@ -16,6 +17,7 @@ interface SectionStyleProps {
 interface PlaceholderStyleProps {
     $isDirty?: boolean;
     $disabled?: boolean;
+    $variant?: VariantStyleProps;
 }
 interface LabelStyleProps {
     $hide?: boolean;
@@ -36,6 +38,8 @@ export type VariantStyleProps = DateInputVariant | "start";
 // =============================================================================
 export const InputSection = styled.div<SectionStyleProps>`
     position: relative;
+    display: flex;
+    align-items: center;
     flex: 1;
     height: 100%;
     left: ${(props) => (props.$readOnly ? "-0.5rem" : "")};
@@ -70,6 +74,16 @@ export const InputSection = styled.div<SectionStyleProps>`
                     bottom: 0.75rem;
                     height: 1.625rem;
                     width: calc(100% - 1rem); // paddingLeft is 1rem
+                `;
+            }
+        }}
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        ${(props) => {
+            if (props.$variant === "start") {
+                return css`
+                    width: 75%;
                 `;
             }
         }}
@@ -135,7 +149,7 @@ export const Divider = styled(Text.Body)<LabelStyleProps>`
     ${(props) => {
         if (props.$hide) {
             return css`
-                color: ${Color.Neutral[3]};
+                color: ${Color.Neutral[3](props)};
             `;
         }
     }}
@@ -148,14 +162,27 @@ export const Placeholder = styled.div<PlaceholderStyleProps>`
     position: absolute;
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: calc(100% - 0.5rem); // 0.5rem is the focus blur shadow area
+    height: calc(100% - 0.5rem); // 0.5rem is the focus blur shadow area
     cursor: pointer;
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 100%;
+
+        ${(props) => {
+            switch (props.$variant) {
+                case "range":
+                    return css`
+                        width: calc(100% - 0.5rem);
+                    `;
+            }
+        }}
+    }
 
     ${(props) => {
         if (props.$disabled) {
             return css`
-                background-color: ${Color.Neutral[6]};
+                background-color: ${Color.Neutral[6](props)};
                 cursor: not-allowed;
             `;
         } else if (props.$isDirty) {

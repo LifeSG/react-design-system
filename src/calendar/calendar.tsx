@@ -5,10 +5,13 @@ import { CalendarDay } from "./calendar-day";
 import { CalendarMonth } from "./calendar-month";
 import { CalendarYear } from "./calendar-year";
 import {
+    ActionButtonSection,
     ArrowLeft,
     ArrowRight,
+    CancelButton,
     Container,
     ContentBody,
+    DoneButton,
     DropdownButton,
     DropdownText,
     Header,
@@ -30,6 +33,7 @@ export const Calendar = ({
     onSelect,
     isOpen,
     value,
+    withButton,
     type = "standalone",
     ...otherProps
 }: CalendarProps) => {
@@ -88,6 +92,14 @@ export const Calendar = ({
         setSelectedStartDate(stringValue);
 
         performOnSelectHandler(stringValue);
+    };
+
+    const handleCancelButton = () => {
+        // close calendar and use confirm value if exist
+    };
+
+    const handleDoneButton = () => {
+        // close calendar and confirm the value
     };
 
     // =============================================================================
@@ -220,6 +232,20 @@ export const Calendar = ({
         }
     };
 
+    const renderCancelDoneButton = () => {
+        if (type === "standalone" || !withButton) return;
+
+        return (
+            <ActionButtonSection>
+                <CancelButton onClick={handleCancelButton}>Cancel</CancelButton>
+                <DoneButton onClick={handleDoneButton}>Done</DoneButton>
+            </ActionButtonSection>
+        );
+    };
+
+    // handle the transition
+    if (type === "input" && !isOpen) return <Container $type={type} />;
+
     return (
         <Container $type={type} $isOpen={isOpen} {...otherProps}>
             <SideArrowButton
@@ -243,6 +269,7 @@ export const Calendar = ({
                         {renderOptionsOverlay()}
                     </OptionsOverlay>
                 </ToggleZone>
+                {renderCancelDoneButton()}
             </ContentBody>
             <SideArrowButton
                 $direction="right"

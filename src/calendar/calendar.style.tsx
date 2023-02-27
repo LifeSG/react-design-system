@@ -9,7 +9,7 @@ import { TextStyleHelper } from "../text";
 
 interface ContainerStyleProps {
     $type: CalendarType;
-    $isOpen: boolean | undefined;
+    $isOpen?: boolean | undefined;
 }
 
 interface SideArrowButtonStyleProps {
@@ -49,7 +49,7 @@ export const Container = styled.div<ContainerStyleProps>`
     align-items: center;
     background: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
-    border-radius: 12px;
+    border-radius: 0.75rem;
 
     ${(props) => {
         const { $type } = props;
@@ -77,6 +77,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     top: 100%;
                     opacity: 0;
                     transition: top 350ms ease-in-out, opacity 350ms ease-in-out;
+                    z-index: 1;
 
                     ${ArrowLeft},
                     ${ArrowRight} {
@@ -94,6 +95,12 @@ export const Container = styled.div<ContainerStyleProps>`
             return css`
                 top: calc(100% + 0.5rem);
                 opacity: 1;
+            `;
+        } else if (props.$type === "input" && !props.$isOpen) {
+            return css`
+                height: 24.8rem; // fake height for animation
+                opacity: 0;
+                pointer-events: none;
             `;
         }
     }}
@@ -212,6 +219,33 @@ export const HeaderArrowButton = styled(IconButton)`
     :active {
         background: transparent;
     }
+`;
+
+export const ActionButtonSection = styled.div`
+    display: flex;
+    gap: 8px;
+    margin-top: 1.5rem;
+`;
+
+const BaseActionButton = styled(IconButton)`
+    ${TextStyleHelper.getTextStyle("H5", "semibold")};
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+`;
+
+export const CancelButton = styled(BaseActionButton)`
+    background-color: ${Color.Neutral[8]};
+    color: ${Color.Primary};
+    border: 1px solid ${Color.Neutral[5]};
+`;
+
+export const DoneButton = styled(BaseActionButton)`
+    background-color: ${Color.Primary};
+    color: ${Color.Neutral[8]};
 `;
 
 export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`

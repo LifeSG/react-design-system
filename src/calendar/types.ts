@@ -3,13 +3,14 @@ export interface CalendarProps {
     disabledDates?: string[] | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format or `"Invalid Date"` */
     onSelect?: ((value: string) => void) | undefined;
-    /** Use in input with calendar. Values `true` | `false`  */
+    /** Use in input with calendar. */
     isOpen?: boolean | undefined;
     /** Selected date in `YYYY-MM-DD` format */
     value?: string | undefined;
     /** The display type of the component. Values `standalone` | `input` */
     type?: CalendarType | undefined;
-
+    /** The display cancel/done button inside component.*/
+    withButton?: boolean | undefined;
     // Basic component props
     /** The class selector */
     className?: string | undefined;

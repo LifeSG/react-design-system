@@ -15,6 +15,8 @@ export interface DateInputProps extends React.AriaAttributes {
     disabled?: boolean | undefined;
     /** The variant of the component. Values `single` | `range` */
     variant?: DateInputVariant | undefined;
+    /** The display cancel/done button inside component.*/
+    withButton?: boolean | undefined;
     /**
      * Function that returns the raw values in the DateInput on change in an object format
      * as such { start: "DD-MM-YYYY", end: "DD-MM-YYYY"}

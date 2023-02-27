@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Calendar } from "../calendar";
 import { DateHelper, StringHelper } from "../util";
 import {
@@ -21,6 +21,7 @@ export const DateInput = ({
     onBlur,
     onChangeRaw,
     onBlurRaw,
+    withButton,
     readOnly,
     id,
     variant = "single",
@@ -33,20 +34,48 @@ export const DateInput = ({
     const [currentFocus, setCurrentFocus] = useState<FieldType>("none");
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
+    const nodeRef = useRef<HTMLDivElement>(null);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        document.addEventListener("mousedown", handleMouseDown);
+
+        return () => {
+            document.removeEventListener("mousedown", handleMouseDown);
+        };
+    }, []);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleChange = (value: ChangeValueTypes) => {
-        const updatedValue = { ...inputValues, ...value };
+    const handleMouseDown = (event: MouseEvent) => {
+        if (disabled || readOnly) return;
 
-        setInputValues(updatedValue);
-        performOnChangeHandler(updatedValue);
+        const target = event.target as Element;
+
+        if (nodeRef.current && !nodeRef.current.contains(target)) {
+            // outside click
+            setCalendarOpen(false);
+            // await handleCancelButton();
+        }
+    };
+
+    const handleChange = (value: string) => {
+        const inputType = currentFocus.split("-")[0] as InputType;
+
+        const returnValue = { ...inputValues, [inputType]: value };
+
+        setInputValues(returnValue);
+
+        performOnChangeHandler(returnValue);
     };
 
     const handleBlur = () => {
+        // buggy here, if selected date from calendar;
         performOnBlurHandler();
-
-        setCurrentFocus("none");
+        console.log("handleBlur container");
     };
 
     const handleFocus = (value: FieldType) => {
@@ -150,6 +179,7 @@ export const DateInput = ({
 
     return (
         <Container
+            ref={nodeRef}
             disabled={disabled}
             $error={error}
             id={id}
@@ -170,7 +200,12 @@ export const DateInput = ({
             />
             {RenderRangeInput()}
             {RenderIndicatedBar()}
-            <Calendar type="input" isOpen={calendarOpen} />
+            <Calendar
+                type="input"
+                isOpen={calendarOpen}
+                withButton={withButton}
+                onSelect={handleChange}
+            />
         </Container>
     );
 };

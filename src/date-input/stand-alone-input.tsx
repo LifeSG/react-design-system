@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DateHelper, StringHelper } from "../util";
-import { InputType } from "./date-input";
 import {
     DayInput,
     Divider,
@@ -11,7 +10,6 @@ import {
     VariantStyleProps,
     YearInput,
 } from "./stand-alone-input.style";
-import { ChangeValueTypes } from "./types";
 
 type StartInputNames = "start-day" | "start-month" | "start-year";
 type EndInputNames = "end-day" | "end-month" | "end-year";
@@ -20,7 +18,7 @@ type FieldName = "day" | "month" | "year";
 export type FieldType = StartInputNames | EndInputNames | "none";
 interface StandAloneInputProps {
     disabled?: boolean | undefined;
-    onChange?: ((value: ChangeValueTypes) => void) | undefined;
+    onChange?: ((value: string) => void) | undefined;
     onFocus?: ((value: FieldType) => void) | undefined;
     readOnly?: boolean | undefined;
     names:
@@ -294,7 +292,6 @@ export const StandAloneInput = ({
         changeValue: string,
         name: Omit<FieldType, "none">
     ) => {
-        const inputType = name.split("-")[0] as InputType;
         const field = name.split("-")[1] as FieldName;
 
         const values: Record<FieldName, string> = {
@@ -305,7 +302,7 @@ export const StandAloneInput = ({
         // Update the specific field value
         values[field] = changeValue;
 
-        const returnValue = { [inputType]: values };
+        const returnValue = Object.values(values).join("-");
 
         onChange(returnValue);
     };
@@ -327,6 +324,7 @@ export const StandAloneInput = ({
                     <Placeholder
                         $isDirty={isDirty}
                         $disabled={disabled}
+                        $variant={variant}
                         onClick={handleClickPlaceholder}
                     >
                         {variant === "start" ? "From" : "To"}
