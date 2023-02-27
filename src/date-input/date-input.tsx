@@ -1,5 +1,6 @@
-import dayjs from "dayjs";
 import { useState } from "react";
+import { Calendar } from "../calendar";
+import { DateHelper, StringHelper } from "../util";
 import {
     ArrowRangeIcon,
     ArrowRight,
@@ -87,11 +88,17 @@ export const DateInput = ({
                 valueArr[1].length >= 1 &&
                 valueArr[2].length >= 1
             ) {
-                const formatted = dayjs(valueArr.join("-")).format(
-                    "DD-MM-YYYY"
+                const clampedMonth = DateHelper.clampMonth(valueArr[1]);
+
+                const day = StringHelper.padValue(
+                    DateHelper.clampDay(valueArr[2], clampedMonth, valueArr[0])
                 );
 
-                return { [cur]: formatted };
+                const month = StringHelper.padValue(clampedMonth);
+
+                const value = `${day}-${month}-${valueArr[0]}`;
+
+                return { [cur]: value };
             } else if (valueArr.every((value) => value === "")) {
                 return { [cur]: "" };
             } else {
@@ -157,6 +164,7 @@ export const DateInput = ({
             />
             {RenderRangeInput()}
             {RenderIndicatedBar()}
+            <Calendar type="input" />
         </Container>
     );
 };
