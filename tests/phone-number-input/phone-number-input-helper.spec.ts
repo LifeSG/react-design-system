@@ -10,12 +10,12 @@ describe("PhoneNumberInputHelper", () => {
                 countryCode: "93",
                 format: "+.. ... ... ... ... ..",
             };
-            expect(PhoneNumberInputHelper.getCountries[0]).toEqual(expected);
+            expect(PhoneNumberInputHelper.getCountries()[0]).toEqual(expected);
         });
 
         it("should not return empty list", () => {
             const expected = [];
-            expect(PhoneNumberInputHelper.getCountries).not.toEqual(expected);
+            expect(PhoneNumberInputHelper.getCountries()).not.toEqual(expected);
         });
     });
 

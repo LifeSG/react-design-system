@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { InputGroup } from "../input-group/input-group";
 import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
-import { Wrapper } from "./phone-number-input.styles";
 import { CountryValue, PhoneNumberInputProps } from "./types";
 
 export const PhoneNumberInput = ({
@@ -23,7 +22,9 @@ export const PhoneNumberInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const options = useMemo(() => PhoneNumberInputHelper.getCountries, []);
+    const [options] = useState<readonly CountryValue[]>(
+        PhoneNumberInputHelper.getCountries()
+    );
 
     const [selectedCountry, setSelectedCountry] = useState<
         CountryValue | undefined
@@ -45,7 +46,7 @@ export const PhoneNumberInput = ({
         setInputValue(
             PhoneNumberInputHelper.formatNumber(value?.number, selectedOption)
         );
-    }, [options, value]);
+    }, [value]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -133,7 +134,7 @@ export const PhoneNumberInput = ({
                     onSelectOption: handleSelectOption,
                     onHideOptions: onHideOptions,
                     onShowOptions: onShowOptions,
-                } as ListAddon<CountryValue, string>,
+                } as unknown as ListAddon<CountryValue, string>,
             };
         }
     };

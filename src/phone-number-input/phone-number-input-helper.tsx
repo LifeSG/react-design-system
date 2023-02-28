@@ -25,24 +25,25 @@ const getMask = (
 };
 
 export namespace PhoneNumberInputHelper {
-    export const getCountries: CountryValue[] = [].concat(
-        ...CountryData.map((country): CountryValue => {
-            const countryItem = {
-                name: country[0] as string,
-                regions: country[1] as string[],
-                iso2: country[2] as string,
-                countryCode: country[3] as string,
-                format: getMask(
-                    prefix,
-                    country[3] as string,
-                    country[4] as string,
-                    defaultMask
-                ),
-            };
+    export const getCountries = (): readonly CountryValue[] =>
+        [].concat(
+            ...CountryData.map((country): CountryValue => {
+                const countryItem = {
+                    name: country[0] as string,
+                    regions: country[1] as string[],
+                    iso2: country[2] as string,
+                    countryCode: country[3] as string,
+                    format: getMask(
+                        prefix,
+                        country[3] as string,
+                        country[4] as string,
+                        defaultMask
+                    ),
+                };
 
-            return countryItem;
-        })
-    );
+                return countryItem;
+            })
+        );
 
     export const formatNumber = (
         numberText = "",
