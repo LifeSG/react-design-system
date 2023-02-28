@@ -19,35 +19,38 @@ export interface DateInputProps extends React.AriaAttributes {
     withButton?: boolean | undefined;
     /**
      * Function that returns the raw values in the DateInput on change in an object format
-     * as such { start: "DD-MM-YYYY", end: "DD-MM-YYYY"}
+     * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}
      */
     onChange?: ((value: ChangeValueTypes) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on change in an object format
-     * as such { start: {year: "", month: "", day: "" }}
+     * as such { start: {year: "", month: "", day: "", end: {year: "", month: "", day: ""} }}
      */
-    onChangeRaw?: ((value: ChangeValueTypes) => void) | undefined;
+    onChangeRaw?: ((value: RawInputValues) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on blur in an object format
-     * as such { start: "DD-MM-YYYY", end: "DD-MM-YYYY"}
+     * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}
      */
     onBlur?: ((value: ChangeValueTypes) => void) | undefined;
     /**
      * Function that returns the raw values in the DateInput on blur in an object format
-     * as such { start: {year: "", month: "", day: "" }}
+     * as such { start: {year: "", month: "", day: "", end: {year: "", month: "", day: ""} }}
      */
-    onBlurRaw?: ((value: ChangeValueTypes) => void) | undefined;
+    onBlurRaw?: ((value: RawInputValues) => void) | undefined;
 }
 
 export type DateInputVariant = "single" | "range";
 
 export interface ChangeValueTypes {
-    start?: ChangeValue;
-    end?: ChangeValue;
+    start?: string | undefined;
+    end?: string | undefined;
 }
 
-interface ChangeValue {
-    day: string;
-    month: string;
-    year: string;
+export interface RawInputValues
+    extends Partial<Record<keyof ChangeValueTypes, RawInputValue>> {}
+
+interface RawInputValue {
+    year?: string;
+    month?: string;
+    day?: string;
 }

@@ -8,7 +8,7 @@ import {
     IndicateBar,
 } from "./date-input.style";
 import { FieldType, StandAloneInput } from "./stand-alone-input";
-import { ChangeValueTypes, DateInputProps } from "./types";
+import { ChangeValueTypes, DateInputProps, RawInputValues } from "./types";
 
 export type InputType = "start" | "end";
 
@@ -35,7 +35,7 @@ export const DateInput = ({
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-
+    console.log("inputValues:", inputValues);
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -46,6 +46,13 @@ export const DateInput = ({
             document.removeEventListener("mousedown", handleMouseDown);
         };
     }, []);
+
+    useEffect(() => {
+        setInputValues({
+            start: value,
+            end: endValue,
+        });
+    }, [value, endValue]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -99,7 +106,9 @@ export const DateInput = ({
         }
 
         if (onChangeRaw) {
-            onChangeRaw(values);
+            const rawInputValues = getFormattedRawValue();
+
+            onChangeRaw(rawInputValues);
         }
     };
 
@@ -111,7 +120,9 @@ export const DateInput = ({
         }
 
         if (onBlurRaw) {
-            onBlurRaw(inputValues);
+            const rawInputValues = getFormattedRawValue();
+
+            onBlurRaw(rawInputValues);
         }
     };
 
@@ -132,7 +143,7 @@ export const DateInput = ({
 
                 const month = StringHelper.padValue(clampedMonth);
 
-                const value = `${day}-${month}-${valueArr[0]}`;
+                const value = `${valueArr[0]}-${month}-${day}`;
 
                 return { [cur]: value };
             } else if (valueArr.every((value) => value === "")) {
@@ -140,6 +151,31 @@ export const DateInput = ({
             } else {
                 return { [cur]: INVALID_VALUE };
             }
+        }, {});
+
+        return result;
+    };
+
+    const getFormattedRawValue = (): RawInputValues => {
+        const arrayValues = Object.entries(inputValues);
+
+        const result = arrayValues.reduce((acc, cur) => {
+            const key = cur[0];
+            const value = cur[1];
+
+            if (acc[key] === null) acc[key] = {};
+
+            if (value) {
+                const [year, month, day] = value.split("-");
+
+                acc[key] = {
+                    year,
+                    month,
+                    day,
+                };
+            }
+
+            return acc;
         }, {});
 
         return result;
