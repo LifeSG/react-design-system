@@ -32,6 +32,7 @@ const Component = <T, V>(
                         <InputGroupListAddon
                             addon={addon}
                             error={error}
+                            className={className}
                             {...otherProps}
                         />
                     );
