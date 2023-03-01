@@ -25,6 +25,10 @@ interface LabelStyleProps {
     $addGap?: boolean;
 }
 
+interface InputContainerStyleProps {
+    $isHover?: boolean;
+}
+
 /**
  * input elements selector
  * @param single only render one input element
@@ -90,11 +94,21 @@ export const InputSection = styled.div<SectionStyleProps>`
     }
 `;
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<InputContainerStyleProps>`
     position: absolute;
     height: 100%;
     display: flex;
     align-items: center;
+
+    ${(props) => {
+        if (props.$isHover) {
+            return css`
+                ${BaseInput}, ${Divider} {
+                    color: ${Color.Neutral[4]};
+                }
+            `;
+        }
+    }}
 `;
 
 const BaseInput = styled.input`

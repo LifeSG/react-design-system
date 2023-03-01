@@ -10,7 +10,28 @@ import {
 import { FieldType, StandAloneInput } from "./stand-alone-input";
 import { ChangeValueTypes, DateInputProps, RawInputValues } from "./types";
 
-export type InputType = "start" | "end";
+export type InputType = keyof ChangeValueTypes;
+type Action = "hover" | "selected" | "confirmed" | undefined;
+export type ComponentTypes = "input" | "calendar";
+
+interface DisplayActionTypes {
+    start?: Action;
+    end?: Action;
+}
+
+interface ShowValuesTypes {
+    input?: ChangeValueTypes;
+    calendar?: ChangeValueTypes;
+    action?: DisplayActionTypes;
+}
+
+interface InputValueTypes {
+    selected?: ChangeValueTypes;
+    hover?: ChangeValueTypes;
+    confirmed?: ChangeValueTypes;
+}
+
+type CurrentFocusElement = "start" | "end" | "none";
 
 export const DateInput = ({
     disabled,
@@ -30,12 +51,14 @@ export const DateInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [inputValues, setInputValues] = useState<ChangeValueTypes>({});
-    const [currentFocus, setCurrentFocus] = useState<FieldType>("none");
+    const [inputValues, setInputValues] = useState<InputValueTypes>({});
+    const [showValues, setShowValues] = useState<ShowValuesTypes>({});
+    const [currentElement, setCurrentElement] =
+        useState<CurrentFocusElement>("none");
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    console.log("inputValues:", inputValues);
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -48,10 +71,15 @@ export const DateInput = ({
     }, []);
 
     useEffect(() => {
-        setInputValues({
-            start: value,
-            end: endValue,
-        });
+        const data = { start: value, end: endValue };
+        const returnValues = { input: data };
+        const result = {
+            confirmed: data,
+            selected: data,
+        };
+
+        setInputValues(result);
+        setShowValues(returnValues);
     }, [value, endValue]);
 
     // =============================================================================
@@ -65,30 +93,67 @@ export const DateInput = ({
         if (nodeRef.current && !nodeRef.current.contains(target)) {
             // outside click
             setCalendarOpen(false);
-            // await handleCancelButton();
         }
     };
 
-    const handleChange = (value: string) => {
-        const inputType = currentFocus.split("-")[0] as InputType;
+    const handleChange = (value: string, from: ComponentTypes = "calendar") => {
+        const type = currentElement.split("-")[0] as InputType;
 
-        const returnValue = { ...inputValues, [inputType]: value };
+        const selectedValues = { ...inputValues.selected, [type]: value };
 
-        setInputValues(returnValue);
+        setInputValues({ ...inputValues, selected: selectedValues });
 
-        performOnChangeHandler(returnValue);
+        /**
+         *  hover value won't update calendar selected value
+         */
+        switch (from) {
+            case "input":
+                setShowValues({ ...showValues, input: selectedValues });
+                break;
+            case "calendar":
+                setShowValues({
+                    ...showValues,
+                    input: selectedValues,
+                    calendar: selectedValues,
+                });
+                break;
+            default:
+                setShowValues({
+                    ...showValues,
+                    input: selectedValues,
+                    calendar: selectedValues,
+                });
+        }
+
+        performOnChangeHandler(selectedValues);
+
+        handleFocusElement();
     };
 
     const handleBlur = () => {
-        // buggy here, if selected date from calendar;
+        // buggy here, if selected date from calendar, need to think how to set to "none" after blur;
         performOnBlurHandler();
         console.log("handleBlur container");
     };
 
     const handleFocus = (value: FieldType) => {
-        setCurrentFocus(value);
+        const currentElement = value.split("-")[0] as InputType | "none";
+
+        setCurrentElement(currentElement);
 
         handleIsOpenCalendar(true);
+    };
+
+    const handleHoverDayCell = (value: string) => {
+        setInputValues({
+            ...inputValues,
+            hover: {
+                ...inputValues.hover,
+                [currentElement]: value,
+            },
+        });
+
+        updateShowValue(value);
     };
 
     const handleIsOpenCalendar = (value: boolean) => {
@@ -114,7 +179,7 @@ export const DateInput = ({
 
     const performOnBlurHandler = () => {
         if (onBlur) {
-            const returnValue = getFormattedValue(inputValues);
+            const returnValue = getFormattedValue(inputValues.confirmed);
 
             onBlur(returnValue);
         }
@@ -123,6 +188,32 @@ export const DateInput = ({
             const rawInputValues = getFormattedRawValue();
 
             onBlurRaw(rawInputValues);
+        }
+    };
+
+    const handleFocusElement = () => {
+        if (variant !== "range") return;
+
+        if (currentElement === "start") {
+            setCurrentElement("end");
+
+            // reset action value
+            setShowValues({
+                ...showValues,
+                action: {
+                    start: undefined,
+                },
+            });
+        } else if (currentElement === "end" && !inputValues.selected?.start) {
+            setCurrentElement("start");
+
+            // reset action value
+            setShowValues({
+                ...showValues,
+                action: {
+                    end: undefined,
+                },
+            });
         }
     };
 
@@ -157,7 +248,7 @@ export const DateInput = ({
     };
 
     const getFormattedRawValue = (): RawInputValues => {
-        const arrayValues = Object.entries(inputValues);
+        const arrayValues = Object.entries(inputValues.selected);
 
         const result = arrayValues.reduce((acc, cur) => {
             const key = cur[0];
@@ -181,15 +272,61 @@ export const DateInput = ({
         return result;
     };
 
+    const updateShowValue = (value: string) => {
+        const otherField = currentElement === "start" ? "end" : "start";
+
+        const result = {
+            start: "",
+            end: "",
+        };
+
+        const action = {
+            start: undefined,
+            end: undefined,
+        };
+
+        const { selected, confirmed } = inputValues;
+
+        /**
+         *  highest to lowest order in display value
+         *  1. hover
+         *  2. selected value
+         *  3. confirmed value if selected value null
+         */
+        const currentFieldValue = selected[currentElement]?.length
+            ? selected[currentElement]
+            : confirmed[currentElement];
+
+        const otherFieldValue = selected[otherField]?.length
+            ? selected[otherField]
+            : confirmed[otherField];
+
+        if (value.length) {
+            // on hover
+            result[currentElement] = value;
+            action[currentElement] = "hover";
+        } else if (value === "" || !value) {
+            // hover out container
+            result[currentElement] = currentFieldValue;
+            action[currentElement] = "selected";
+        }
+
+        result[otherField] = otherFieldValue;
+
+        setShowValues({
+            ...showValues,
+            input: result,
+            action,
+        });
+    };
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
     const RenderIndicatedBar = () => {
-        if (disabled || readOnly) return;
+        if (variant === "single" || disabled || readOnly) return;
 
-        const position = currentFocus.split("-")[0] as InputType | "none";
-
-        return <IndicateBar $position={position} />;
+        return <IndicateBar $position={currentElement} />;
     };
 
     const RenderRangeInput = () => {
@@ -205,8 +342,9 @@ export const DateInput = ({
                         onFocus={handleFocus}
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
-                        value={endValue}
+                        value={showValues.input?.end}
                         variant={variant}
+                        action={showValues?.action?.end}
                     />
                 </>
             );
@@ -231,8 +369,9 @@ export const DateInput = ({
                 onFocus={handleFocus}
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
-                value={value}
+                value={showValues.input?.start}
                 variant={variant === "range" ? "start" : "single"}
+                action={showValues?.action?.start}
             />
             {RenderRangeInput()}
             {RenderIndicatedBar()}
@@ -240,7 +379,11 @@ export const DateInput = ({
                 type="input"
                 isOpen={calendarOpen}
                 withButton={withButton}
+                currentFocus={currentElement}
+                value={showValues.calendar?.start}
+                endValue={showValues.calendar?.end}
                 onSelect={handleChange}
+                onHover={handleHoverDayCell}
             />
         </Container>
     );

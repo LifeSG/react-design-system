@@ -31,8 +31,11 @@ export type View = "default" | "month-options" | "year-options";
 export const Calendar = ({
     disabledDates,
     onSelect,
+    onHover,
     isOpen,
     value,
+    endValue,
+    currentFocus,
     withButton,
     type = "standalone",
     ...otherProps
@@ -43,6 +46,7 @@ export const Calendar = ({
     const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
     const [currentView, setCurrentView] = useState<View>("default");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
+    const [selectedEndDate, setSelectedEndDate] = useState<string>(""); // YYYY-MM-DD
 
     // =============================================================================
     // EFFECTS
@@ -51,7 +55,15 @@ export const Calendar = ({
         if (!value) return;
 
         setSelectedStartDate(value);
+        // performOnSelectHandler(value); // cause render 2 times
     }, [value]);
+
+    useEffect(() => {
+        if (!endValue) return;
+
+        setSelectedEndDate(endValue);
+        // performOnSelectHandler(endValue);
+    }, [endValue]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -89,7 +101,7 @@ export const Calendar = ({
 
         setCalendarDate(value);
 
-        setSelectedStartDate(stringValue);
+        handleDateSelectedType(stringValue);
 
         performOnSelectHandler(stringValue);
     };
@@ -102,12 +114,42 @@ export const Calendar = ({
         // close calendar and confirm the value
     };
 
+    const handleHover = (value: string) => {
+        performOnHoverHandler(value);
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
     const performOnSelectHandler = (changeValue: string) => {
         if (onSelect) {
-            onSelect(changeValue);
+            onSelect(changeValue, "calendar");
+        }
+    };
+
+    const performOnHoverHandler = (value: string) => {
+        if (onHover) {
+            onHover(value);
+        }
+    };
+
+    const handleDateSelectedType = (value: string) => {
+        if (!currentFocus) {
+            // standalone calendar
+            setSelectedStartDate(value);
+
+            return;
+        }
+
+        switch (currentFocus) {
+            case "start":
+                setSelectedStartDate(value);
+                break;
+            case "end":
+                setSelectedEndDate(value);
+                break;
+            default:
+                setSelectedStartDate(value);
         }
     };
 
@@ -244,7 +286,8 @@ export const Calendar = ({
     };
 
     // handle the transition
-    if (type === "input" && !isOpen) return <Container $type={type} />;
+    if (type === "input" && !isOpen)
+        return <Container $type={type} tabIndex={-1} />;
 
     return (
         <Container $type={type} $isOpen={isOpen} {...otherProps}>
@@ -263,7 +306,9 @@ export const Calendar = ({
                         calendarDate={calendarDate}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
+                        selectedEndDate={selectedEndDate}
                         onSelect={handleDateSelect}
+                        onHover={handleHover}
                     />
                     <OptionsOverlay $visible={currentView !== "default"}>
                         {renderOptionsOverlay()}

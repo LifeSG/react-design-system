@@ -26,9 +26,11 @@ interface StandAloneInputProps {
         | ["end-day", "end-month", "end-year"];
     value?: string | undefined;
     variant?: VariantStyleProps | undefined;
+    action?: "hover" | "selected" | "confirmed" | undefined;
 }
 
 export const StandAloneInput = ({
+    action,
     disabled,
     onChange,
     onFocus,
@@ -175,6 +177,10 @@ export const StandAloneInput = ({
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        if (action === "hover") {
+            return;
+        }
+
         const name = event.target.name as FieldType;
         setCurrentFocus(name);
         event.target.select();
@@ -197,6 +203,14 @@ export const StandAloneInput = ({
             default:
                 break;
         }
+
+        // const values = { year: yearValue, month: monthValue, day: dayValue };
+        // const { month, day, isFullyFormedDate } = clampDate(values);
+
+        // if (isFullyFormedDate) {
+        //     setDayValue(day);
+        //     setMonthValue(month);
+        // }
 
         const isFullyFormedDate =
             dayValue.length && monthValue.length && yearValue.length === 4;
@@ -225,20 +239,18 @@ export const StandAloneInput = ({
         switch (targetName) {
             case names[0]:
                 setDayValue(value);
-                performOnChangeHandler(value, targetName);
                 break;
             case names[1]:
                 setMonthValue(value);
-
-                performOnChangeHandler(value, targetName);
                 break;
             case names[2]:
                 setYearValue(value);
-                performOnChangeHandler(value, targetName);
                 break;
             default:
                 break;
         }
+
+        performOnChangeHandler(value, targetName);
     };
 
     const handleClickPlaceholder = () => {
@@ -269,6 +281,7 @@ export const StandAloneInput = ({
             setDayValue("");
             setMonthValue("");
             setYearValue("");
+            console.log("set to null string");
         } else {
             const date = new Date(value);
             if (!isNaN(date.getTime())) {
@@ -288,23 +301,59 @@ export const StandAloneInput = ({
         }
     };
 
+    const clampDate = ({ year, month, day }) => {
+        const isFullyFormedDate =
+            day.length && month.length && year.length === 4;
+        const isDayTarget = currentFocus === names[0];
+        const clampedMonth = DateHelper.clampMonth(monthValue);
+
+        let formattedDay = null,
+            formattedMonth = null;
+
+        if (isFullyFormedDate) {
+            formattedDay = StringHelper.padValue(
+                DateHelper.clampDay(
+                    isDayTarget ? day : dayValue,
+                    clampedMonth,
+                    yearValue
+                )
+            );
+
+            formattedMonth = StringHelper.padValue(clampedMonth);
+        }
+
+        return {
+            month: formattedMonth,
+            day: formattedDay,
+            isFullyFormedDate,
+        };
+    };
+
     const performOnChangeHandler = (
         changeValue: string,
         name: Omit<FieldType, "none">
     ) => {
         const field = name.split("-")[1] as FieldName;
-
         const values: Record<FieldName, string> = {
             year: yearValue,
             month: monthValue,
             day: dayValue,
         };
+
         // Update the specific field value
         values[field] = changeValue;
 
-        const returnValue = Object.values(values).join("-");
+        if (
+            values["year"].length === 4 &&
+            values["month"].length >= 1 &&
+            values["day"].length >= 1
+        ) {
+            const { month, day } = clampDate(values);
 
-        onChange(returnValue);
+            const returnValue = `${values.year}-${month}-${day}`;
+
+            onChange(returnValue);
+        }
     };
 
     const performOnFocusHandler = (field: FieldType) => {
@@ -342,7 +391,10 @@ export const StandAloneInput = ({
             onClick={handleNodeClick}
             onFocus={handleNodeFocus}
         >
-            <InputContainer ref={nodeRef}>
+            <InputContainer
+                ref={nodeRef}
+                $isHover={action === "hover" ? true : false}
+            >
                 <DayInput
                     name={names[0]}
                     maxLength={2}
