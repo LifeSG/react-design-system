@@ -31,6 +31,7 @@ export const Wrapper = styled.ul`
 export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
+    max-height: 20rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: flex;

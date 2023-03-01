@@ -162,12 +162,15 @@ export const DropDownBar = styled.ul`
     top: 99% !important;
     margin-left: -1 !important;
     position: absolute;
+    max-height: 20rem;
+    overflow-y: hidden;
 
     /* N8 #FFFFFF */
     background: ${Color.Neutral[8]};
     border-radius: 0px 0px 8px 8px;
 
-    box-shadow: 0px 3px 3px 1px rgb(87 169 255 / 50%);
+    box-shadow: inset 0 -5px 5px -5px #57a9ff, inset 5px 0 5px -5px #57a9ff,
+        inset -5px 0 5px -5px #57a9ff;
 
     border-right: 1px solid #57a9ff;
     border-left: 1px solid #57a9ff;
@@ -289,7 +292,7 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
             border-left: 1px solid #57A9FF;
             border-top: 1px solid #57A9FF;
             border-bottom: 0px;
-            box-shadow: 0px 3px 3px 1.5px rgb(87 169 255 / 50%);
+            box-shadow: inset 0px 1px 1px 1px rgb(87 169 255 / 50%);
     `;
         } else {
             return `
