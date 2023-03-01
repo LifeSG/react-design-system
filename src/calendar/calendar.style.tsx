@@ -241,11 +241,21 @@ export const CancelButton = styled(BaseActionButton)`
     background-color: ${Color.Neutral[8]};
     color: ${Color.Primary};
     border: 1px solid ${Color.Neutral[5]};
+
+    :focus,
+    :focus-within {
+        background-color: ${Color.Neutral[8]};
+    }
 `;
 
 export const DoneButton = styled(BaseActionButton)`
     background-color: ${Color.Primary};
     color: ${Color.Neutral[8]};
+
+    :focus,
+    :focus-within {
+        background-color: ${Color.Primary};
+    }
 `;
 
 export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
