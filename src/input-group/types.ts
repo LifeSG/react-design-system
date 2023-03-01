@@ -20,7 +20,6 @@ export interface LabelAddon {
 export interface ListAddon<T, V>
     extends DropdownDisplayProps<T, V>,
         DropdownSearchProps<T> {
-    value?: T | undefined;
     placeholder?: string | undefined;
     displayValueExtractor?: ((item: T) => string) | undefined;
     "data-selector-testid"?: string | undefined;
