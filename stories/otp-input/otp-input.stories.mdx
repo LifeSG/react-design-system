@@ -1,0 +1,47 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { OtpInput } from "src/otp-input";
+import {
+    Heading3,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { Container } from "./doc-elements";
+
+<Meta title="Modules/OtpInput" component={OtpInput} />
+
+<Title>OtpInput</Title>
+
+<Secondary>Overview</Secondary>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the otp input field as a standalone, you can do this.
+
+```tsx
+import { OtpInput } from "@lifesg/react-design-system/otp-input";
+```
+
+<Canvas>
+    <Story name="Standalone usage">
+        {() => {
+            return (
+                <Container>
+                    <OtpInput
+                        numOfInput={6}
+                        cooldownDuration={60}
+                        onChange={(value) =>
+                            console.log("Entered OTP Value: ", value)
+                        }
+                        ctaProps={{
+                            styleType: "Secondary",
+                            onClick: () => {
+                                console.log("Resend OTP Clicked!");
+                            },
+                        }}
+                    />
+                </Container>
+            );
+        }}
+    </Story>
+</Canvas>
