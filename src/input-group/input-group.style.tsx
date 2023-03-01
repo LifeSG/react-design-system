@@ -80,7 +80,7 @@ export const MainInput = styled(Input)`
     &&& {
         background: transparent;
         border: none;
-        padding: 0;
+        padding: 0 0 1px 0;
 
         :focus-within {
             outline: none;

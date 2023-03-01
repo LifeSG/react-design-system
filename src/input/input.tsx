@@ -41,6 +41,7 @@ const Component = (
 
     const handleClear = () => {
         if (onClear) onClear();
+
         if (elementRef && elementRef.current) {
             elementRef.current.focus();
         }
