@@ -48,6 +48,23 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     }}
 `;
 
+export const DayContainer = styled(Wrapper)`
+    grid-column: 1 / -1;
+
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    row-gap: 0.5rem;
+                `;
+            case "input":
+                return css`
+                    row-gap: 0.25rem;
+                `;
+        }
+    }}
+`;
+
 export const HeaderCell = styled.div`
     display: flex;
     align-items: center;
@@ -69,6 +86,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
     position: absolute;
     width: 50%;
     height: 100%;
+
     ${(props) => {
         switch (props.$position) {
             case "left":
