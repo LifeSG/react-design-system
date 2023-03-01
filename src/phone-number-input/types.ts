@@ -17,11 +17,18 @@ export interface PhoneNumberInputValue {
 }
 
 export interface PhoneNumberInputProps extends React.AriaAttributes {
+    /** The value of the input */
     value?: PhoneNumberInputValue | undefined;
     error?: boolean | undefined;
     /** Specifies if the clear button should be present in the input */
     allowClear?: boolean | undefined;
     "data-testid"?: string | undefined;
+    className?: string | undefined;
+    /**
+     * Specifies if the country code is a fixed value and the user
+     * cannot select another option
+     */
+    fixedCountry?: boolean | undefined;
     onChange?: ((value: PhoneNumberInputValue) => void) | undefined;
     /** Called when the clear button in the input field is clicked */
     onClear?: () => void | undefined;

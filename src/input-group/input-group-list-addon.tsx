@@ -21,10 +21,10 @@ export const InputGroupListAddon = <T, V>({
     error,
     onChange,
     readOnly,
+    className,
     ...otherProps
 }: InputGroupProps<T, V>) => {
     const {
-        value,
         placeholder,
         options,
         enableSearch,
@@ -45,7 +45,7 @@ export const InputGroupListAddon = <T, V>({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selected, setSelected] = useState<T>(value);
+    const [selected, setSelected] = useState<T>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
     const nodeRef = useRef();
@@ -55,8 +55,8 @@ export const InputGroupListAddon = <T, V>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setSelected(value);
-    }, [value]);
+        setSelected(selectedOption);
+    }, [selectedOption]);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClick);
@@ -220,7 +220,7 @@ export const InputGroupListAddon = <T, V>({
     );
 
     return (
-        <Wrapper>
+        <Wrapper className={className}>
             <ElementBoundary
                 ref={nodeRef}
                 disabled={otherProps.disabled}
