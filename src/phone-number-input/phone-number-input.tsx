@@ -22,7 +22,7 @@ export const PhoneNumberInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [options] = useState<readonly CountryValue[]>(
+    const [options] = useState<CountryValue[]>(
         PhoneNumberInputHelper.getCountries()
     );
 
@@ -134,7 +134,7 @@ export const PhoneNumberInput = ({
                     onSelectOption: handleSelectOption,
                     onHideOptions: onHideOptions,
                     onShowOptions: onShowOptions,
-                } as unknown as ListAddon<CountryValue, string>,
+                } as ListAddon<CountryValue, string>,
             };
         }
     };

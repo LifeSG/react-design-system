@@ -25,7 +25,7 @@ const getMask = (
 };
 
 export namespace PhoneNumberInputHelper {
-    export const getCountries = (): readonly CountryValue[] =>
+    export const getCountries = (): CountryValue[] =>
         [].concat(
             ...CountryData.map((country): CountryValue => {
                 const countryItem = {
