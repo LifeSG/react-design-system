@@ -15,4 +15,5 @@ export const LoadingDotsSpinner = () => {
 // =============================================================================
 const Container = styled.div`
     margin: 0 auto;
+    padding-top: 1rem;
 `;
