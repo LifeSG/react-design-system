@@ -123,7 +123,7 @@ export const NavSeprator = styled.div`
     display: flex;
     background-color: ${Color.Neutral[5]};
     height: 2.8125rem;
-    width: 0.05rem;
+    width: 1px;
     left: 13.435625rem;
     margin-right: 1.504375rem;
 
