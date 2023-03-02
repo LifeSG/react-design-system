@@ -52,12 +52,12 @@ export const SearchInput = <T,>({
     const [itemsLocal, setItemsLocalValue] = useState<NavSubItemProps<T>[]>([]);
     const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
     const [toggleInputFocus, setToggleInputFocus] = useState<boolean>(false);
-    const [showDropdown, setShowDropdown] = useState<number>(0);
+    const [showDropdown, setShowDropdown] = useState<string>("on-blur");
     /***
      * showDropdown state
-     * 0 - default state
-     * 1 - focus state
-     * 2 - focus state with dropdown
+     * on-blur - default state
+     * on-focus - focus state
+     * on-dropdown-focus - focus state with dropdown
      */
     // =============================================================================
     // CONST, STATE, REFS
@@ -68,7 +68,7 @@ export const SearchInput = <T,>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setShowDropdown(0);
+        setShowDropdown("on-blur");
         const handleClickOutside = (event) => {
             if (ref.current && !ref.current.contains(event.target)) {
                 onBlur();
@@ -93,14 +93,14 @@ export const SearchInput = <T,>({
 
         if (filtered && filtered.length >= 1) {
             setItemsLocalValue(filtered);
-            setShowDropdown(2);
+            setShowDropdown("on-dropdown-focus");
             setToggleDropdown(true);
         } else {
             setToggleDropdown(false);
             if (inputValue && inputValue.length < 3) {
-                setShowDropdown(1);
+                setShowDropdown("on-focus");
             } else {
-                setShowDropdown(0);
+                setShowDropdown("on-blur");
             }
         }
     }, [inputValue]);
@@ -109,21 +109,21 @@ export const SearchInput = <T,>({
     // HELPER FUNCTION
     // =============================================================================
     const onBlur = () => {
-        setShowDropdown(0);
+        setShowDropdown("on-blur");
         setToggleDropdown(false);
     };
 
     const onInputFocus = () => {
         setToggleInputFocus(true);
-        if (showDropdown !== 2) {
-            setShowDropdown(1);
+        if (showDropdown !== "on-dropdown-focus") {
+            setShowDropdown("on-focus");
         }
     };
 
     const onInputBlur = () => {
         setToggleInputFocus(false);
-        if (showDropdown !== 2) {
-            setShowDropdown(0);
+        if (showDropdown !== "on-dropdown-focus") {
+            setShowDropdown("on-blur");
         }
     };
     // =============================================================================
@@ -270,7 +270,7 @@ export const SearchInput = <T,>({
                         <SearchInputContainer>
                             {renderSearchinput()}
                         </SearchInputContainer>
-                        {showDropdown === 2 && <Divider />}
+                        {showDropdown === "on-dropdown-focus" && <Divider />}
                     </SearchBarInputContainer>
 
                     {inputValue && inputValue.length >= 1 && toggleDropdown && (

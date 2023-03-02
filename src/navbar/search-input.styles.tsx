@@ -14,7 +14,7 @@ import { DesignToken } from "../design-token";
 interface ListContainerProps {
     width?: string;
     focusing?: false;
-    $dropdown?: number;
+    $dropdown?: string;
 }
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -273,18 +273,18 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
         margin-left: 0px;
     }
     ${(props) => {
-        if (props.$dropdown === 0) {
+        if (props.$dropdown === "on-blur") {
             return `
             border: 1px solid #E0E4E5;
             border-radius: 4px; 
     `;
-        } else if (props.$dropdown === 1) {
+        } else if (props.$dropdown === "on-focus") {
             return `
             border: 1px solid  #57A9FF;
             border-radius: 8px 8px 8px 8px;
             box-shadow: inset 0 0 6px 1px rgb(87 169 255 / 50%);
     `;
-        } else if (props.$dropdown === 2) {
+        } else if (props.$dropdown === "on-dropdown-focus") {
             return `
             border-top-right-radius: 8px;
             border-top-left-radius: 8px;
