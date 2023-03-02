@@ -16,7 +16,7 @@ interface StyleProps {
 export const Clickable = styled.a<StyleProps>`
     display: flex;
     justify-content: center;
-    margin-right: 2rem;
+    margin-right: 29.8px;
 
     img {
         width: auto;
@@ -29,6 +29,18 @@ export const Clickable = styled.a<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-right: 1rem;
+        margin-right: 23.86px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-right: 23.86px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-right: 18.59px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-right: 18.59px;
     }
 `;

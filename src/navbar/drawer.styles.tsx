@@ -122,28 +122,28 @@ export const NavLogoContainer = styled.div`
 export const NavSeprator = styled.div`
     display: flex;
     background-color: ${Color.Neutral[5]};
-    height: 2.8125rem;
+    height: 56px;
     width: 1px;
-    left: 13.435625rem;
-    margin-right: 1.504375rem;
+    left: 29.8px;
+    margin-right: 29.8px;
 
     ${MediaQuery.MaxWidth.tablet} {
         height: 24px;
-        margin-right: 1rem;
+        margin-right: 23.86px;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
         height: 24px;
-        margin-right: 1rem;
+        margin-right: 23.86px;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
         height: 24px;
-        margin-right: 1rem;
+        margin-right: 18.59px;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        height: 24px;
-        margin-right: 1rem;
+        height: 18.59px;
+        margin-right: 18.59px;
     }
 `;
