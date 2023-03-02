@@ -292,7 +292,8 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
             border-left: 1px solid #57A9FF;
             border-top: 1px solid #57A9FF;
             border-bottom: 0px;
-            box-shadow: inset 0px 1px 1px 1px rgb(87 169 255 / 50%);
+            box-shadow: inset 0 5px 5px -5px #57a9ff, inset 5px 0 5px -5px #57a9ff,
+        inset -5px 0 5px -5px #57a9ff;
     `;
         } else {
             return `
@@ -342,6 +343,22 @@ export const SearchInputContainer = styled.div`
     flex-direction: row;
     align-items: center;
     position: relative;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: -8px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-left: -9px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-left: -4px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-left: 0px;
+    }
 `;
 
 export const CloseIconContainer = styled.div`
