@@ -99,18 +99,21 @@ Here are some guidelines on prop specification:
 
 -   For callbacks, denote with `on` and the action. E.g. `onClick`, `onDismiss`
 -   For optional props, use a Union type and add `undefined` to it
--   Avoid usage of enums to ease developer use. Opt for string literals instead and
-    do them in kebab-case. E.g. `"default" | "light" | "dark"`
--   Make sure you specify common props like `id`, `className`, `data-testid` if you
-    are not extending from a standard HTML element props
-
 ```
 interface MyInterface {
     show?: boolean | undefined;
     onChange?: ((param) => void) | undefined;
 }
 ```
-
+-   Avoid usage of enums to ease developer use. Opt for string literals instead and
+    do them in kebab-case
+```
+interface MyInterface {
+    someType: "default" | "light" | "dark";
+}
+```
+-   Make sure you specify common props like `id`, `className`, `data-testid` if you
+    are not extending from a standard HTML element props
 -   Breakdown complex props into their own types too
 -   Extend props whenever possible to avoid rewriting similar props
 
