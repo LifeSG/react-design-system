@@ -75,7 +75,7 @@ const Component = (
                             resources={resourcesSecondaryBrand}
                             compress={true}
                             onClick={handleSecondaryBrandClick}
-                            data-testid="main__brand"
+                            data-testid="drawer__brand-secondary"
                         />
                     </NavLogoContainer>
                 )}
