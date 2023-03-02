@@ -60,6 +60,13 @@ Tests files will sit in the `tests` folder bearing the same folder name as the c
 
 > File and folder structure are in `kebab-case`
 
+<br />
+
+#### **Common Conventions**
+
+Here are some of the [common conventions](/CONVENTIONS.md#agreed-conventions) we recommend you to follow when developing
+in this repository.
+
 <a id="previewing-components"></a>
 <br />
 
