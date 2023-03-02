@@ -25,24 +25,22 @@ import { NavSubItemProps } from "./types";
 
 interface Props<T> {
     items: NavSubItemProps<T>[];
-    selectedId?: string | undefined;
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
-    toggleheaderClick?: boolean | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavSubItemProps<T>
     ) => void;
     onToggleHeaderClick: () => void;
+    onSearchButtonClick?: (searchInput: string) => void;
 }
 
 export const SearchInput = <T,>({
     items,
-    selectedId,
     mobile = false,
-    toggleheaderClick = false,
     onItemClick,
     onToggleHeaderClick,
+    onSearchButtonClick,
 }: Props<T>): JSX.Element => {
     // =============================================================================
     // STATE DECLARATIONS
@@ -51,7 +49,6 @@ export const SearchInput = <T,>({
     const [inputValue, setInputValue] = useState<string>("");
     const [itemsLocal, setItemsLocalValue] = useState<NavSubItemProps<T>[]>([]);
     const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
-    const [toggleInputFocus, setToggleInputFocus] = useState<boolean>(false);
     const [showDropdown, setShowDropdown] = useState<string>("on-blur");
     /***
      * showDropdown state
@@ -114,14 +111,12 @@ export const SearchInput = <T,>({
     };
 
     const onInputFocus = () => {
-        setToggleInputFocus(true);
         if (showDropdown !== "on-dropdown-focus") {
             setShowDropdown("on-focus");
         }
     };
 
     const onInputBlur = () => {
-        setToggleInputFocus(false);
         if (showDropdown !== "on-dropdown-focus") {
             setShowDropdown("on-blur");
         }
@@ -161,18 +156,20 @@ export const SearchInput = <T,>({
     };
 
     // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleSearchButtonClick = () => {
+        onSearchButtonClick(inputValue);
+    };
+
+    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderItems = (isMobile = false) => {
         return itemsLocal.map((item, index) => {
-            const selected = item.id === selectedId;
             const { children, options, ...otherItemAttrs } = item;
 
-            const textWeight: TextWeight = selected
-                ? isMobile
-                    ? "bold"
-                    : "semibold"
-                : "regular";
+            const textWeight: TextWeight = "regular";
             const testId = isMobile
                 ? `link__mobile-${index + 1}`
                 : `link__${index + 1}`;
@@ -182,7 +179,6 @@ export const SearchInput = <T,>({
                     <Link
                         data-testid={testId}
                         weight={textWeight}
-                        $selected={selected} /* for mobile */
                         {...otherItemAttrs}
                         onClick={handleLinkClick(item, index)}
                         {...options}
@@ -242,7 +238,7 @@ export const SearchInput = <T,>({
     const renderSearchinput = () => {
         return (
             <Container key="search">
-                {mobile && <SearchIcon />}
+                {mobile && <SearchIcon onClick={handleSearchButtonClick} />}
 
                 <SearchInputComponent
                     ref={ref}
@@ -254,7 +250,7 @@ export const SearchInput = <T,>({
                     onFocus={onInputFocus}
                 />
 
-                {!mobile && <SearchIcon />}
+                {!mobile && <SearchIcon onClick={handleSearchButtonClick} />}
             </Container>
         );
     };

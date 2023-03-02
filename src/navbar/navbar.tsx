@@ -249,10 +249,6 @@ const Component = <T,>(
                                             <SearchInput
                                                 items={items.searchMenuItems}
                                                 onItemClick={handleNavItemClick}
-                                                selectedId={selectedId}
-                                                toggleheaderClick={
-                                                    toggleheaderClick
-                                                }
                                                 onToggleHeaderClick={
                                                     handleheaderClick
                                                 }
@@ -286,8 +282,6 @@ const Component = <T,>(
                         <SearchInput
                             items={items.searchMenuItems}
                             onItemClick={handleNavItemClick}
-                            selectedId={selectedId}
-                            toggleheaderClick={toggleheaderClick}
                             onToggleHeaderClick={handleheaderClick}
                             mobile={true}
                         />

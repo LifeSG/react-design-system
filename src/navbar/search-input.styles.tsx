@@ -16,13 +16,6 @@ interface ListContainerProps {
     focusing?: false;
     $dropdown?: string;
 }
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $selected: boolean;
-}
 
 // =============================================================================
 // STYLING
@@ -93,7 +86,7 @@ export const LinkItem = styled.li`
     }
 `;
 
-export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
+export const Link = styled(Text.Hyperlink.Small)`
     display: flex;
     position: relative;
     align-items: left;
