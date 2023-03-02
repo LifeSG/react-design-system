@@ -117,6 +117,7 @@ export const OtpInput = ({
     };
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setOtpValues(new Array(numOfInput).fill(""));
         setEnableCountDownTimer(true);
         if (onClick) {
             onClick(event);
