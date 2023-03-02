@@ -10,7 +10,7 @@ import {
 
 export const OtpInput = ({
     cooldownDuration,
-    ctaProps,
+    actionButtonProps,
     errorMessage,
     numOfInput,
     onChange,
@@ -24,10 +24,10 @@ export const OtpInput = ({
         onClick,
         styleType = "secondary",
         ...otherCtaProps
-    } = ctaProps ?? {};
+    } = actionButtonProps ?? {};
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-    const [otpValues, setOTPValues] = useState<string[]>(
+    const [otpValues, setOtpValues] = useState<string[]>(
         new Array(numOfInput).fill("")
     );
     const [countDown, setCountDown] = useState<number>(cooldownDuration);
@@ -39,17 +39,12 @@ export const OtpInput = ({
     // =============================================================================
     useEffect(() => {
         inputRefs?.current[0]?.focus();
-        document.addEventListener("paste", handleOnPaste);
-        return () => document.removeEventListener("paste", handleOnPaste);
+        document.addEventListener("paste", handlePaste);
+        return () => document.removeEventListener("paste", handlePaste);
     }, []);
 
     useEffect(() => {
-        if (
-            !enableCountDownTimer ||
-            disabled ||
-            otherProps.disabled ||
-            otherProps.readOnly
-        ) {
+        if (!enableCountDownTimer || disabled) {
             return;
         }
         let timer = cooldownDuration;
@@ -68,21 +63,31 @@ export const OtpInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleOnKeyDown = (
-        event:
-            | React.KeyboardEvent<HTMLInputElement>
-            | React.ChangeEvent<HTMLInputElement>,
+    const handleKeyDown = (
+        event: React.KeyboardEvent<HTMLInputElement>,
         index: number
     ) => {
-        const { key } = event as React.KeyboardEvent<HTMLInputElement>;
-        const invalidKeys = ["E", "e", "+", "-", "."];
-        if (invalidKeys.includes(key)) {
-            event.preventDefault();
+        const { key, code } = event;
+        const validKey = [
+            "Backspace",
+            "Tab",
+            "ShiftLeft",
+            "ShiftRight",
+            "Shift",
+        ];
+        if (!validKey.includes(code) || !validKey.includes(key)) {
+            if (!RegExp(/^[0-9]+$/).test(key)) {
+                event.preventDefault();
+            }
         }
+
         const newOtpValues = [...otpValues];
-        if (key === "Backspace" && newOtpValues[index] !== "") {
+        if (
+            (code === "Backspace" || key === "Backspace") &&
+            newOtpValues[index] !== ""
+        ) {
             newOtpValues[index] = "";
-        } else if (key === "Backspace") {
+        } else if (code === "Backspace" || key === "Backspace") {
             newOtpValues[index - 1] = "";
             inputRefs.current[index - 1]?.focus();
         }
@@ -92,17 +97,17 @@ export const OtpInput = ({
             inputRefs.current[index + 1]?.focus();
         }
 
-        setOTPValues(newOtpValues);
+        setOtpValues(newOtpValues);
 
         if (onChange) {
             onChange(newOtpValues.join(""));
         }
     };
 
-    const handleOnPaste = (event: ClipboardEvent): void => {
+    const handlePaste = (event: ClipboardEvent): void => {
         const pastedValue = event.clipboardData.getData("text");
         if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
-            setOTPValues(pastedValue.split(""));
+            setOtpValues(pastedValue.split(""));
             if (onChange) {
                 onChange(pastedValue);
             }
@@ -111,7 +116,7 @@ export const OtpInput = ({
         }
     };
 
-    const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setEnableCountDownTimer(true);
         if (onClick) {
             onClick(event);
@@ -148,7 +153,7 @@ export const OtpInput = ({
                             id={"otpValues-input"}
                             data-testid={"otpValues-input"}
                             ref={(el) => (inputRefs.current[index] = el)}
-                            onKeyDown={(e) => handleOnKeyDown(e, index)}
+                            onKeyDown={(e) => handleKeyDown(e, index)}
                             type={"number"}
                             value={data}
                             error={!!errorMessage}
@@ -166,7 +171,7 @@ export const OtpInput = ({
             <CTAButton
                 styleType={styleType}
                 disabled={disabled || countDown > 0}
-                onClick={handleOnClick}
+                onClick={handleClick}
                 {...otherCtaProps}
             >
                 {renderCTALabel()}
