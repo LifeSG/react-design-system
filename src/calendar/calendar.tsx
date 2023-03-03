@@ -24,7 +24,7 @@ import {
     SideArrowButton,
     ToggleZone,
 } from "./calendar.style";
-import { CalendarProps } from "./types";
+import { CalendarAction, CalendarProps } from "./types";
 
 export type View = "default" | "month-options" | "year-options";
 
@@ -32,6 +32,7 @@ export const Calendar = ({
     disabledDates,
     onSelect,
     onHover,
+    onWithButton,
     isOpen,
     value,
     endValue,
@@ -52,17 +53,23 @@ export const Calendar = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!value) return;
+        if (!value) {
+            setSelectedStartDate("");
+            return;
+        }
 
         setSelectedStartDate(value);
-        // performOnSelectHandler(value); // cause render 2 times
+        setCalendarDate(dayjs(value));
     }, [value]);
 
     useEffect(() => {
-        if (!endValue) return;
+        if (!endValue) {
+            setSelectedEndDate("");
+            return;
+        }
 
         setSelectedEndDate(endValue);
-        // performOnSelectHandler(endValue);
+        setCalendarDate(dayjs(endValue));
     }, [endValue]);
 
     // =============================================================================
@@ -101,17 +108,19 @@ export const Calendar = ({
 
         setCalendarDate(value);
 
-        handleDateSelectedType(stringValue);
+        handleSelectedType(stringValue);
 
         performOnSelectHandler(stringValue);
     };
 
     const handleCancelButton = () => {
         // close calendar and use confirm value if exist
+        performOnWithButtonHandler("cancel");
     };
 
     const handleDoneButton = () => {
         // close calendar and confirm the value
+        performOnWithButtonHandler("done");
     };
 
     const handleHover = (value: string) => {
@@ -123,7 +132,7 @@ export const Calendar = ({
     // =============================================================================
     const performOnSelectHandler = (changeValue: string) => {
         if (onSelect) {
-            onSelect(changeValue, "calendar");
+            onSelect(changeValue);
         }
     };
 
@@ -133,7 +142,13 @@ export const Calendar = ({
         }
     };
 
-    const handleDateSelectedType = (value: string) => {
+    const performOnWithButtonHandler = (action: CalendarAction) => {
+        if (onWithButton) {
+            onWithButton(action);
+        }
+    };
+
+    const handleSelectedType = (value: string) => {
         if (!currentFocus) {
             // standalone calendar
             setSelectedStartDate(value);
@@ -155,6 +170,10 @@ export const Calendar = ({
 
     const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
+            const targetValue =
+                currentFocus === "start" || !currentFocus ? value : endValue;
+
+            setCalendarDate(dayjs(targetValue));
             setCurrentView("month-options");
         } else {
             setCurrentView("default");
@@ -170,6 +189,10 @@ export const Calendar = ({
         if (currentView !== "default") {
             setCurrentView("default");
         } else {
+            const targetValue =
+                currentFocus === "start" || !currentFocus ? value : endValue;
+
+            setCalendarDate(dayjs(targetValue));
             setCurrentView("year-options");
         }
     };
@@ -188,7 +211,7 @@ export const Calendar = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const _renderDropdownButtons = () => {
+    const renderDropdownButtons = () => {
         return (
             <>
                 <DropdownButton
@@ -221,13 +244,24 @@ export const Calendar = ({
     };
 
     const renderOptionsOverlay = () => {
+        /**
+         * apply selectedStartDate if currentFocus undefined
+         * apply selectedEndDate if currentFocus 'end'
+         * apply selectedStartDate if currentFocus is not undefined or 'end'
+         */
+        const selectedDate = !currentFocus
+            ? selectedStartDate
+            : currentFocus === "end"
+            ? selectedEndDate
+            : selectedStartDate;
+
         switch (currentView) {
             case "month-options":
                 return (
                     <CalendarMonth
                         type={type}
                         calendarDate={calendarDate}
-                        selectedStartDate={selectedStartDate}
+                        selectedDate={selectedDate}
                         onSelect={handleDateSelect}
                     />
                 );
@@ -236,7 +270,7 @@ export const Calendar = ({
                     <CalendarYear
                         type={type}
                         calendarDate={calendarDate}
-                        selectedStartDate={selectedStartDate}
+                        selectedDate={selectedDate}
                         onSelect={handleDateSelect}
                     />
                 );
@@ -249,13 +283,13 @@ export const Calendar = ({
         switch (type) {
             case "standalone":
                 return (
-                    <HeaderDropdown>{_renderDropdownButtons()}</HeaderDropdown>
+                    <HeaderDropdown>{renderDropdownButtons()}</HeaderDropdown>
                 );
             case "input":
                 return (
                     <Header>
                         <HeaderInputDropdown>
-                            {_renderDropdownButtons()}
+                            {renderDropdownButtons()}
                         </HeaderInputDropdown>
                         <HeaderArrows>
                             <HeaderArrowButton onClick={handleLeftArrowClick}>
@@ -269,7 +303,7 @@ export const Calendar = ({
                 );
             default:
                 return (
-                    <HeaderDropdown>{_renderDropdownButtons()}</HeaderDropdown>
+                    <HeaderDropdown>{renderDropdownButtons()}</HeaderDropdown>
                 );
         }
     };

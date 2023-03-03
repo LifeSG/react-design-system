@@ -134,7 +134,7 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
     background-color: ${Color.Primary};
     height: 0.125rem;
     width: calc(100% - 50% - 2rem); // paddingX is 2rem,
-    transition: left 350ms ease-in-out;
+    transition: left 350ms ease-in-out, opacity 350ms ease-in-out;
     left: 1rem;
     bottom: -0.1rem;
 

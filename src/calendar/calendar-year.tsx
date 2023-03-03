@@ -12,14 +12,14 @@ export type YearVariant =
 
 interface Props {
     calendarDate: Dayjs;
-    selectedStartDate: string;
+    selectedDate: string;
     type: CalendarType;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarYear = ({
     calendarDate,
-    selectedStartDate,
+    selectedDate,
     type,
     onSelect,
 }: Props) => {
@@ -54,7 +54,7 @@ export const CalendarYear = ({
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
-            : dayjs(selectedStartDate).isSame(fullDate, "year")
+            : dayjs(selectedDate).isSame(fullDate, "year")
             ? "selected-year"
             : dayjs().isSame(fullDate, "year")
             ? "current-year"

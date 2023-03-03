@@ -16,17 +16,18 @@ type EndInputNames = "end-day" | "end-month" | "end-year";
 type FieldName = "day" | "month" | "year";
 
 export type FieldType = StartInputNames | EndInputNames | "none";
-interface StandAloneInputProps {
+interface Props {
     disabled?: boolean | undefined;
-    onChange?: ((value: string) => void) | undefined;
-    onFocus?: ((value: FieldType) => void) | undefined;
+    onChange?: (value: string) => void;
+    onFocus?: (value: FieldType) => void;
     readOnly?: boolean | undefined;
     names:
         | ["start-day", "start-month", "start-year"]
         | ["end-day", "end-month", "end-year"];
     value?: string | undefined;
-    variant?: VariantStyleProps | undefined;
+    variant?: VariantStyleProps;
     action?: "hover" | "selected" | "confirmed" | undefined;
+    isActive?: boolean;
 }
 
 export const StandAloneInput = ({
@@ -38,7 +39,8 @@ export const StandAloneInput = ({
     names,
     value,
     variant,
-}: StandAloneInputProps) => {
+    isActive,
+}: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -134,8 +136,13 @@ export const StandAloneInput = ({
     }, [monthValue]);
 
     useEffect(() => {
+        if (!value && !isActive) {
+            // reset once cancel or blur called
+            setIsDirty(false);
+        }
+
         formatDisplayValues(value);
-    }, [value]);
+    }, [value, isActive]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -173,11 +180,13 @@ export const StandAloneInput = ({
         const name = event.target.name as FieldType;
 
         // Remove overlay placeholder once 'Tab' into this element
-        if (name === "start-day" || name === "end-day") setIsDirty(true);
+        if (["start-day", "end-day"].includes(name)) setIsDirty(true);
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         if (action === "hover") {
+            setCurrentFocus(names[0]);
+            dayInputRef.current.focus();
             return;
         }
 
@@ -189,7 +198,10 @@ export const StandAloneInput = ({
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        if (action === "hover") return;
+
         const targetName = event.target.name as FieldType;
+        const targetField = targetName.split("-")[1] as FieldName;
         const targetValue = StringHelper.padValue(event.target.value, true);
 
         switch (targetName) {
@@ -204,30 +216,27 @@ export const StandAloneInput = ({
                 break;
         }
 
-        // const values = { year: yearValue, month: monthValue, day: dayValue };
-        // const { month, day, isFullyFormedDate } = clampDate(values);
-
-        // if (isFullyFormedDate) {
-        //     setDayValue(day);
-        //     setMonthValue(month);
-        // }
-
         const isFullyFormedDate =
             dayValue.length && monthValue.length && yearValue.length === 4;
         const isDayTarget = targetName === names[0];
         const clampedMonth = DateHelper.clampMonth(monthValue);
 
         if (isFullyFormedDate) {
-            setDayValue(
-                StringHelper.padValue(
-                    DateHelper.clampDay(
-                        isDayTarget ? targetValue : dayValue,
-                        clampedMonth,
-                        yearValue
-                    )
+            const day = StringHelper.padValue(
+                DateHelper.clampDay(
+                    isDayTarget ? targetValue : dayValue,
+                    clampedMonth,
+                    yearValue
                 )
             );
-            setMonthValue(StringHelper.padValue(clampedMonth));
+            const month = StringHelper.padValue(clampedMonth);
+
+            setDayValue(day);
+            setMonthValue(month);
+
+            // calendar value been updated once manual input and blur current field element
+            const changeValue = targetField == "day" ? day : month;
+            performOnChangeHandler(changeValue, targetName);
         }
     };
 
@@ -249,8 +258,6 @@ export const StandAloneInput = ({
             default:
                 break;
         }
-
-        performOnChangeHandler(value, targetName);
     };
 
     const handleClickPlaceholder = () => {
@@ -301,34 +308,6 @@ export const StandAloneInput = ({
         }
     };
 
-    const clampDate = ({ year, month, day }) => {
-        const isFullyFormedDate =
-            day.length && month.length && year.length === 4;
-        const isDayTarget = currentFocus === names[0];
-        const clampedMonth = DateHelper.clampMonth(monthValue);
-
-        let formattedDay = null,
-            formattedMonth = null;
-
-        if (isFullyFormedDate) {
-            formattedDay = StringHelper.padValue(
-                DateHelper.clampDay(
-                    isDayTarget ? day : dayValue,
-                    clampedMonth,
-                    yearValue
-                )
-            );
-
-            formattedMonth = StringHelper.padValue(clampedMonth);
-        }
-
-        return {
-            month: formattedMonth,
-            day: formattedDay,
-            isFullyFormedDate,
-        };
-    };
-
     const performOnChangeHandler = (
         changeValue: string,
         name: Omit<FieldType, "none">
@@ -343,14 +322,13 @@ export const StandAloneInput = ({
         // Update the specific field value
         values[field] = changeValue;
 
+        // i need to know manual input behavoir
         if (
             values["year"].length === 4 &&
             values["month"].length >= 1 &&
             values["day"].length >= 1
         ) {
-            const { month, day } = clampDate(values);
-
-            const returnValue = `${values.year}-${month}-${day}`;
+            const returnValue = Object.values(values).join("-");
 
             onChange(returnValue);
         }
@@ -364,8 +342,11 @@ export const StandAloneInput = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const RenderPlaceholder = () => {
-        if (value || readOnly) return;
+        if (value || readOnly) {
+            return;
+        }
 
+        // how can i reset this to no dirty after cancel
         switch (variant) {
             case "start":
             case "range":
