@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useEventListener } from "../hook/useEventListener";
 import { Calendar, CalendarAction } from "../calendar";
 import { DateHelper, StringHelper } from "../util";
@@ -10,28 +10,15 @@ import {
 } from "./date-input.style";
 import { FieldType, StandAloneInput } from "./stand-alone-input";
 import { ChangeValueTypes, DateInputProps, RawInputValues } from "./types";
+import {
+    ActionType,
+    INITIAL_INPUT_VALUES,
+    dateInputReducer,
+} from "./dateInputReducer";
 
 export type InputType = keyof ChangeValueTypes;
 export type ComponentTypes = "input" | "calendar";
-type Action = "hover" | "selected" | "confirmed" | undefined;
 type CurrentType = "start" | "end" | "none";
-
-interface DisplayActionTypes {
-    start?: Action;
-    end?: Action;
-}
-
-interface ShowValuesTypes {
-    input?: ChangeValueTypes;
-    calendar?: ChangeValueTypes;
-    action?: DisplayActionTypes;
-}
-
-interface InputValueTypes {
-    selected?: ChangeValueTypes;
-    hover?: ChangeValueTypes;
-    confirmed?: ChangeValueTypes;
-}
 
 interface CurrentFocusTypes {
     field?: FieldType;
@@ -56,18 +43,23 @@ export const DateInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [inputValues, setInputValues] =
-        useState<InputValueTypes>(INITIAL_INPUT_VALUES);
-    const [showValues, setShowValues] = useState<ShowValuesTypes>({});
-
     const [currentElement, setCurrentElement] = useState<CurrentFocusTypes>({});
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
-    // EFFECTS
+    // HOOKS
     // =============================================================================
+    const [valueStart, dispatchStart] = useReducer(
+        dateInputReducer,
+        INITIAL_INPUT_VALUES
+    );
+
+    const [valueEnd, dispatchEnd] = useReducer(
+        dateInputReducer,
+        INITIAL_INPUT_VALUES
+    );
 
     /**
      * Add handler function as dependencies of useEffect
@@ -77,21 +69,12 @@ export const DateInput = ({
      */
     useEventListener("mousedown", handleInitEventListener);
 
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
     useEffect(() => {
-        const data = { start: value, end: endValue };
-        const returnShowValue = {
-            ...INITIAL_SHOW_VALUES,
-            input: data,
-            calendar: data,
-        };
-        const returnInputValue = {
-            ...INITIAL_INPUT_VALUES,
-            confirmed: data,
-            selected: data,
-        };
-
-        setInputValues(returnInputValue);
-        setShowValues(returnShowValue);
+        dispatchStart({ type: "confirmed", value: value });
+        dispatchEnd({ type: "confirmed", value: endValue });
     }, [value, endValue]);
 
     // =============================================================================
@@ -117,28 +100,17 @@ export const DateInput = ({
     }
 
     const handleChange = (value: string) => {
-        const selectedValues = {
-            ...inputValues.selected,
-            [currentElement.type]: value,
-        };
+        // const selectedValues = {
+        //     ...inputValues.selected,
+        //     [currentElement.type]: value,
+        // };
 
-        setShowValues({
-            ...INITIAL_SHOW_VALUES,
-            input: selectedValues,
-            calendar: selectedValues,
-        });
+        handleReducer(currentElement.type, "selected", value);
 
-        setInputValues({ ...inputValues, selected: selectedValues });
-
-        performOnChangeHandler(selectedValues);
-
-        console.log("called handleChange", selectedValues);
+        // performOnChangeHandler(selectedValues);
 
         // handleFocusElement();
     };
-
-    // console.log("input :>> ", inputValues);
-    // console.log("show :>> ", showValues);
 
     const handleBlur = () => {
         performOnBlurHandler();
@@ -154,46 +126,30 @@ export const DateInput = ({
     };
 
     const handleHoverDayCell = (value: string) => {
-        setInputValues({
-            ...inputValues,
-            hover: {
-                ...inputValues.hover,
-                [currentElement.type]: value,
-            },
-        });
+        if (!value) {
+            handleReducer(currentElement.type, "unhover");
+            return;
+        }
 
-        updateShowValue(value);
+        handleReducer(currentElement.type, "hover", value);
     };
 
     const handleCalendarAction = (action: CalendarAction) => {
         setCalendarOpen(false);
 
-        const { confirmed, selected } = inputValues;
-
         switch (action) {
             case "cancel":
-                // restore confirmed value
-                setShowValues({
-                    ...INITIAL_SHOW_VALUES,
-                    input: confirmed,
-                    calendar: confirmed,
-                });
-
-                setInputValues({
-                    ...INITIAL_INPUT_VALUES,
-                    confirmed: confirmed,
-                    selected: confirmed,
-                });
+                handleReducer("none", "reset");
 
                 // update the indicate bar
                 setCurrentElement({ field: "none", type: "none" });
 
                 break;
             case "done":
-                setInputValues({
-                    ...inputValues,
-                    confirmed: selected,
-                });
+                handleReducer("none", "confirmed");
+
+                if (variant === "range") handleReducer("none", "confirmed");
+
                 break;
         }
     };
@@ -229,32 +185,57 @@ export const DateInput = ({
         }
     };
 
+    const handleReducer = (
+        field: CurrentType,
+        type: ActionType,
+        value?: string
+    ) => {
+        switch (field) {
+            case "start":
+                dispatchStart({ type, value });
+                break;
+            case "end":
+                dispatchEnd({ type, value });
+                break;
+            case "none":
+                dispatchStart({ type, value });
+
+                if (variant === "range") dispatchEnd({ type, value });
+                break;
+            default:
+                dispatchStart({ type, value });
+
+                if (variant === "range") dispatchEnd({ type, value });
+                break;
+        }
+    };
+
     const handleFocusElement = () => {
         if (variant !== "range") return;
 
         const currentType = currentElement.type;
 
-        if (currentType === "start") {
-            setCurrentElement({ field: "end-day", type: "end" });
+        // if (currentType === "start") {
+        //     setCurrentElement({ field: "end-day", type: "end" });
 
-            // reset action value
-            setShowValues({
-                ...showValues,
-                action: {
-                    start: undefined,
-                },
-            });
-        } else if (currentType === "end" && !inputValues.selected?.start) {
-            setCurrentElement({ field: "end-day", type: "end" });
+        //     // reset action value
+        //     setShowValues({
+        //         ...showValues,
+        //         action: {
+        //             start: undefined,
+        //         },
+        //     });
+        // } else if (currentType === "end" && !inputValues.selected?.start) {
+        //     setCurrentElement({ field: "end-day", type: "end" });
 
-            // reset action value
-            setShowValues({
-                ...showValues,
-                action: {
-                    end: undefined,
-                },
-            });
-        }
+        //     // reset action value
+        //     setShowValues({
+        //         ...showValues,
+        //         action: {
+        //             end: undefined,
+        //         },
+        //     });
+        // }
     };
 
     const getFormattedValue = (values: ChangeValueTypes) => {
@@ -307,58 +288,6 @@ export const DateInput = ({
         return result;
     };
 
-    const updateShowValue = (value: string) => {
-        const currentField = currentElement.type;
-        const otherField = currentField === "start" ? "end" : "start";
-
-        const result = {
-            start: "",
-            end: "",
-        };
-
-        const action = {
-            start: undefined,
-            end: undefined,
-        };
-
-        const { selected, confirmed } = inputValues;
-
-        /**
-         *  highest to lowest order in the date input value
-         *  1. hover
-         *  2. selected value
-         *  3. confirmed value if selected value null
-         */
-        const currentFieldValue = selected[currentField]?.length
-            ? selected[currentField]
-            : confirmed[currentField];
-
-        const otherFieldValue = selected[otherField]?.length
-            ? selected[otherField]
-            : confirmed[otherField];
-
-        if (value.length) {
-            // on hover
-            result[currentField] = value;
-            action[currentField] = "hover";
-        } else if (value === "" || !value) {
-            // hover out container
-            result[currentField] = currentFieldValue;
-            action[currentField] = undefined;
-        }
-
-        result[otherField] = otherFieldValue;
-
-        setShowValues({
-            ...showValues,
-            input: result,
-            action,
-        });
-    };
-
-    // console.log("show ", showValues);
-    // console.log("input ", inputValues);
-
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -381,9 +310,9 @@ export const DateInput = ({
                         onFocus={handleFocus}
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
-                        value={showValues.input?.end}
+                        value={valueEnd.input}
                         variant={variant}
-                        action={showValues?.action?.end}
+                        action={valueEnd.currentType}
                         isActive={calendarOpen}
                     />
                 </>
@@ -392,41 +321,46 @@ export const DateInput = ({
     };
 
     return (
-        <Container
-            ref={nodeRef}
-            disabled={disabled}
-            $error={error}
-            id={id}
-            data-testid={otherProps["data-testid"]}
-            $readOnly={readOnly}
-            $variant={variant}
-            {...otherProps}
-        >
-            <StandAloneInput
+        <>
+            <button onClick={() => handleReducer("none", "reset")}>
+                reset
+            </button>
+            <Container
+                ref={nodeRef}
                 disabled={disabled}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                readOnly={readOnly}
-                names={["start-day", "start-month", "start-year"]}
-                value={showValues.input?.start}
-                variant={variant === "range" ? "start" : "single"}
-                action={showValues?.action?.start}
-                isActive={calendarOpen}
-            />
-            {RenderRangeInput()}
-            {RenderIndicatedBar()}
-            <Calendar
-                type="input"
-                isOpen={calendarOpen}
-                withButton={withButton}
-                currentFocus={currentElement.type}
-                value={showValues.calendar?.start}
-                endValue={showValues.calendar?.end}
-                onSelect={handleChange}
-                onHover={handleHoverDayCell}
-                onWithButton={handleCalendarAction}
-            />
-        </Container>
+                $error={error}
+                id={id}
+                data-testid={otherProps["data-testid"]}
+                $readOnly={readOnly}
+                $variant={variant}
+                {...otherProps}
+            >
+                <StandAloneInput
+                    disabled={disabled}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    readOnly={readOnly}
+                    names={["start-day", "start-month", "start-year"]}
+                    value={valueStart.input}
+                    variant={variant === "range" ? "start" : "single"}
+                    action={valueStart.currentType}
+                    isActive={calendarOpen}
+                />
+                {RenderRangeInput()}
+                {RenderIndicatedBar()}
+                <Calendar
+                    type="input"
+                    isOpen={calendarOpen}
+                    withButton={withButton}
+                    currentFocus={currentElement.type}
+                    value={valueStart.calendar}
+                    endValue={valueEnd.calendar}
+                    onSelect={handleChange}
+                    onHover={handleHoverDayCell}
+                    onWithButton={handleCalendarAction}
+                />
+            </Container>
+        </>
     );
 };
 
@@ -434,16 +368,3 @@ export const DateInput = ({
 // CONSTANTS
 // =============================================================================
 const INVALID_VALUE = "Invalid Date";
-const BASE_VALUES = { start: "", end: "" };
-
-const INITIAL_INPUT_VALUES: InputValueTypes = {
-    selected: BASE_VALUES,
-    hover: BASE_VALUES,
-    confirmed: BASE_VALUES,
-};
-
-const INITIAL_SHOW_VALUES: ShowValuesTypes = {
-    input: BASE_VALUES,
-    calendar: BASE_VALUES,
-    action: { start: undefined, end: undefined },
-};

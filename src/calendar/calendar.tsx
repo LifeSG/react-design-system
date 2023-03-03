@@ -173,6 +173,10 @@ export const Calendar = ({
             const targetValue =
                 currentFocus === "start" || !currentFocus ? value : endValue;
 
+            /**
+             * Buggy here if swap to next the value didn't render to the focus type
+             */
+
             setCalendarDate(dayjs(targetValue));
             setCurrentView("month-options");
         } else {
