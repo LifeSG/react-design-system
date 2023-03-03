@@ -2,13 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { OtpInputProps } from "./types";
 import {
     CTAButton,
-    ErrorContainer,
     InputContainer,
     InputField,
     Wrapper,
 } from "./otp-input.styles";
 
+import { FormErrorMessage } from "src/form/form-label";
+
 export const OtpInput = ({
+    id,
+    "data-testid": dataTestId,
+    className,
     cooldownDuration,
     actionButtonProps,
     errorMessage,
@@ -53,46 +57,45 @@ export const OtpInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleKeyDown = (
-        event: React.KeyboardEvent<HTMLInputElement>,
-        index: number
-    ) => {
-        const { key, code } = event;
-        const validKey = [
-            "Backspace",
-            "Tab",
-            "ShiftLeft",
-            "ShiftRight",
-            "Shift",
-        ];
-        if (!validKey.includes(code) || !validKey.includes(key)) {
-            if (!RegExp(/^[0-9]+$/).test(key)) {
-                event.preventDefault();
+
+    const handleChange =
+        (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            const value = event.target.value.replace(/[^0-9]/g, "");
+            if (validateUserInput(value)) {
+                const newOtpValues = [...otpValues];
+
+                newOtpValues[index] = value.substring(value.length - 1);
+                inputRefs.current[index + 1]?.focus();
+
+                setOtpValues(newOtpValues);
+
+                if (onChange) {
+                    onChange(newOtpValues.join(""));
+                }
             }
-        }
+        };
 
-        const newOtpValues = [...otpValues];
-        if (
-            (code === "Backspace" || key === "Backspace") &&
-            newOtpValues[index] !== ""
-        ) {
-            newOtpValues[index] = "";
-        } else if (code === "Backspace" || key === "Backspace") {
-            newOtpValues[index - 1] = "";
-            inputRefs.current[index - 1]?.focus();
-        }
+    const handleKeyDown =
+        (index: number) => (event: React.KeyboardEvent<HTMLInputElement>) => {
+            const { key, code } = event;
 
-        if (validateUserInput(key)) {
-            newOtpValues[index] = key;
-            inputRefs.current[index + 1]?.focus();
-        }
+            const newOtpValues = [...otpValues];
+            if (
+                (code === "Backspace" || key === "Backspace") &&
+                newOtpValues[index] !== ""
+            ) {
+                newOtpValues[index] = "";
+            } else if (code === "Backspace" || key === "Backspace") {
+                newOtpValues[index - 1] = "";
+                inputRefs.current[index - 1]?.focus();
+            }
 
-        setOtpValues(newOtpValues);
+            setOtpValues(newOtpValues);
 
-        if (onChange) {
-            onChange(newOtpValues.join(""));
-        }
-    };
+            if (onChange) {
+                onChange(newOtpValues.join(""));
+            }
+        };
 
     const handlePaste = (event: ClipboardEvent): void => {
         const pastedValue = event.clipboardData.getData("text");
@@ -122,6 +125,9 @@ export const OtpInput = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
+    const validateUserInput = (value: string, length = 1) =>
+        !value ? false : RegExp(`^[0-9]{${length}}$`).test(value);
+
     const isWithinCooldown = (): boolean => {
         const currentTime = Date.now();
         const coolDownInMilliseconds = cooldownDuration * 1000;
@@ -145,47 +151,47 @@ export const OtpInput = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const validateUserInput = (value: string, length = 1) => {
-        if (!value) {
-            return false;
-        }
-        return RegExp(`^[0-9]{${length}}$`).test(value);
-    };
-
     const renderCTALabel = () => {
         return otherCtaProps.children
             ? `${otherCtaProps.children}`
-            : `Resend OTP ${
+            : `Resend OTP${
                   countDown
-                      ? `in ${countDown} second${countDown > 1 ? "s" : ""}`
+                      ? ` in ${countDown} second${countDown > 1 ? "s" : ""}`
                       : ""
               }`;
     };
 
+    const inputId = (index: number) =>
+        id ? `${id}-otp-input-${index + 1}` : `otp-input-${index + 1}`;
+
+    const inputDataTestId = (index: number) =>
+        dataTestId
+            ? `${dataTestId}-otpValues-input-${index + 1}`
+            : `otpValues-input-${index + 1}`;
+
     return (
-        <Wrapper>
+        <Wrapper id={id} data-testid={dataTestId} className={className}>
             <InputContainer>
                 {otpValues.map((data, index) => {
                     return (
                         <InputField
+                            id={inputId(index)}
+                            data-testid={inputDataTestId(index)}
                             key={index}
-                            id={"otpValues-input"}
-                            data-testid={"otpValues-input"}
                             ref={(el) => (inputRefs.current[index] = el)}
-                            onKeyDown={(e) => handleKeyDown(e, index)}
-                            type={"number"}
+                            type="text"
+                            inputMode="numeric"
                             value={data}
                             error={!!errorMessage}
-                            inputMode={"decimal"}
+                            onChange={handleChange(index)}
+                            onKeyDown={handleKeyDown(index)}
                             {...otherProps}
                         />
                     );
                 })}
             </InputContainer>
             {errorMessage && (
-                <ErrorContainer weight="semibold">
-                    {errorMessage}
-                </ErrorContainer>
+                <FormErrorMessage>{errorMessage}</FormErrorMessage>
             )}
             <CTAButton
                 styleType={styleType}

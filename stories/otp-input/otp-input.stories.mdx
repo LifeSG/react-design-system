@@ -24,24 +24,21 @@ import { OtpInput } from "@lifesg/react-design-system/otp-input";
 
 <Canvas>
     <Story name="Standalone usage">
-        {() => {
-            return (
-                <Container>
-                    <OtpInput
-                        numOfInput={6}
-                        cooldownDuration={60}
-                        onChange={(value) =>
-                            console.log("Entered OTP Value: ", value)
-                        }
-                        actionButtonProps={{
-                            styleType: "Secondary",
-                            onClick: () => {
-                                console.log("Resend OTP Clicked!");
-                            },
-                        }}
-                    />
-                </Container>
-            );
-        }}
+        <StoryContainer>
+            <Container>
+                <OtpInput
+                    numOfInput={6}
+                    cooldownDuration={60}
+                    onChange={(value) =>
+                        console.log("Entered OTP Value: ", value)
+                    }
+                    actionButtonProps={{
+                        onClick: () => {
+                            console.log("Resend OTP Clicked!");
+                        },
+                    }}
+                />
+            </Container>
+        </StoryContainer>
     </Story>
 </Canvas>

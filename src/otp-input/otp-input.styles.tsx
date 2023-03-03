@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { Input } from "src/input";
-import { Text } from "src/text";
-import { Color } from "src/color";
 import { Button } from "src/button";
 
 export const Wrapper = styled.div`
@@ -27,15 +25,10 @@ export const InputField = styled(Input)`
     }
 
     /* Firefox */
-    input[type="number"] {
+    input[type="text"] {
         text-align: center;
         -moz-appearance: textfield;
     }
-`;
-
-export const ErrorContainer = styled(Text.H6)`
-    color: ${Color.Validation.Red.Text};
-    margin-top: 0.5rem;
 `;
 
 export const CTAButton = styled(Button.Small)`
