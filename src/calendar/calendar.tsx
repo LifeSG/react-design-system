@@ -115,12 +115,12 @@ export const Calendar = ({
 
     const handleCancelButton = () => {
         // close calendar and use confirm value if exist
-        performOnWithButtonHandler("cancel");
+        performOnWithButtonHandler("reset");
     };
 
     const handleDoneButton = () => {
         // close calendar and confirm the value
-        performOnWithButtonHandler("done");
+        performOnWithButtonHandler("confirmed");
     };
 
     const handleHover = (value: string) => {
@@ -264,7 +264,7 @@ export const Calendar = ({
                 return (
                     <CalendarMonth
                         type={type}
-                        calendarDate={calendarDate}
+                        calendarDate={dayjs(selectedDate)}
                         selectedDate={selectedDate}
                         onSelect={handleDateSelect}
                     />
@@ -273,7 +273,7 @@ export const Calendar = ({
                 return (
                     <CalendarYear
                         type={type}
-                        calendarDate={calendarDate}
+                        calendarDate={dayjs(selectedDate)}
                         selectedDate={selectedDate}
                         onSelect={handleDateSelect}
                     />
@@ -323,7 +323,7 @@ export const Calendar = ({
         );
     };
 
-    // handle the transition
+    // handle the animation transition
     if (type === "input" && !isOpen)
         return <Container $type={type} tabIndex={-1} />;
 
