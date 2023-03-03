@@ -148,6 +148,12 @@ export const OtpInput = ({
         }, 1000);
     };
 
+    const generateId = (index: number, name: string, prefix?: string) => {
+        return prefix
+            ? `${prefix}-${name}-${index + 1}`
+            : `${name}-${index + 1}`;
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -161,22 +167,18 @@ export const OtpInput = ({
               }`;
     };
 
-    const inputId = (index: number) =>
-        id ? `${id}-otp-input-${index + 1}` : `otp-input-${index + 1}`;
-
-    const inputDataTestId = (index: number) =>
-        dataTestId
-            ? `${dataTestId}-otpValues-input-${index + 1}`
-            : `otpValues-input-${index + 1}`;
-
     return (
         <Wrapper id={id} data-testid={dataTestId} className={className}>
             <InputContainer>
                 {otpValues.map((data, index) => {
                     return (
                         <InputField
-                            id={inputId(index)}
-                            data-testid={inputDataTestId(index)}
+                            id={generateId(index, "otp-input", id)}
+                            data-testid={generateId(
+                                index,
+                                "otpValues-input",
+                                dataTestId
+                            )}
                             key={index}
                             ref={(el) => (inputRefs.current[index] = el)}
                             type="text"
