@@ -31,8 +31,9 @@ export const OtpInput = ({
         new Array(numOfInput).fill("")
     );
     const [countDown, setCountDown] = useState<number>(cooldownDuration);
-    const [enableCountDownTimer, setEnableCountDownTimer] =
-        useState<boolean>(true);
+    const [lastCtaTimestamp, setLastCtaTimestamp] = useState<Date | undefined>(
+        new Date()
+    );
 
     // =============================================================================
     // EFFECTS
@@ -44,21 +45,10 @@ export const OtpInput = ({
     }, []);
 
     useEffect(() => {
-        if (!enableCountDownTimer || disabled) {
-            return;
+        if (countDown === cooldownDuration) {
+            beginCountdown();
         }
-        let timer = cooldownDuration;
-        setCountDown(timer);
-        const interval = setInterval(() => {
-            timer--;
-            setCountDown(timer);
-            if (timer === 0) {
-                clearInterval(interval);
-                setEnableCountDownTimer(false);
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [enableCountDownTimer]);
+    }, [countDown]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -118,10 +108,38 @@ export const OtpInput = ({
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setOtpValues(new Array(numOfInput).fill(""));
-        setEnableCountDownTimer(true);
+
+        if (!isWithinCooldown()) {
+            setLastCtaTimestamp(new Date());
+            setCountDown(cooldownDuration);
+        }
+
         if (onClick) {
             onClick(event);
         }
+    };
+
+    // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const isWithinCooldown = (): boolean => {
+        const currentTime = Date.now();
+        const coolDownInMilliseconds = cooldownDuration * 1000;
+
+        return (
+            currentTime < lastCtaTimestamp.valueOf() + coolDownInMilliseconds
+        );
+    };
+
+    const beginCountdown = () => {
+        let timer = cooldownDuration;
+        const interval = setInterval(() => {
+            timer--;
+            setCountDown(timer);
+            if (timer === 0) {
+                clearInterval(interval);
+            }
+        }, 1000);
     };
 
     // =============================================================================
@@ -171,7 +189,7 @@ export const OtpInput = ({
             )}
             <CTAButton
                 styleType={styleType}
-                disabled={disabled || countDown > 0}
+                disabled={disabled || isWithinCooldown()}
                 onClick={handleClick}
                 {...otherCtaProps}
             >
