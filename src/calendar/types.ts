@@ -21,7 +21,7 @@ export interface CalendarProps {
     /** Function to handle cancel/done .*/
     onWithButton?: ((action: CalendarAction) => void) | undefined;
     /** Coloring in multiple date selection. */
-    currentFocus?: CalendarCurrentFocus;
+    currentFocus?: FocusType | undefined;
 
     // Basic component props
     /** The class selector */
@@ -38,5 +38,5 @@ export type CalendarType = "standalone" | "input";
 // =============================================================================
 // Types use in date input with calendar
 // =============================================================================
-export type CalendarAction = "cancel" | "done";
-type CalendarCurrentFocus = "start" | "end" | "none";
+export type CalendarAction = "reset" | "confirmed";
+export type FocusType = "start" | "end" | "none";
