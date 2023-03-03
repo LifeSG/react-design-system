@@ -8,14 +8,14 @@ export type MonthVariant = "default" | "current-month" | "selected-month";
 
 interface Props {
     calendarDate: Dayjs;
-    selectedStartDate: string;
+    selectedDate: string;
     type: CalendarType;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarMonth = ({
     calendarDate,
-    selectedStartDate,
+    selectedDate,
     type,
     onSelect,
 }: Props) => {
@@ -46,7 +46,7 @@ export const CalendarMonth = ({
         const value = date.format("YYYY-MM-DD");
         let variant: MonthVariant = "default";
 
-        variant = dayjs(selectedStartDate).isSame(value, "month")
+        variant = dayjs(selectedDate).isSame(value, "month")
             ? "selected-month"
             : dayjs().isSame(value, "month")
             ? "current-month"

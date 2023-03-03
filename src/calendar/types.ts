@@ -1,24 +1,27 @@
 export interface CalendarProps {
+    // DateInput component props
     /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
     disabledDates?: string[] | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format or `"Invalid Date"` */
-    onSelect?: ((value: string, from?: "calendar") => void) | undefined;
+    onSelect?: ((value: string) => void) | undefined;
     /** Called when day cell is hover, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;
     /** Use in input with calendar. */
     isOpen?: boolean | undefined;
     /** Selected start date in `YYYY-MM-DD` format */
     value?: string | undefined;
-    /** Selected end date in `YYYY-MM-DD` format */
-    endValue?: string | undefined;
     /** The display type of the component. Values `standalone` | `input` */
     type?: CalendarType | undefined;
 
-    // Integrate with date-input component
+    // DateInput with calendar component props
+    /** Selected end date in `YYYY-MM-DD` format */
+    endValue?: string | undefined;
     /** The display cancel/done button inside component.*/
     withButton?: boolean | undefined;
+    /** Function to handle cancel/done .*/
+    onWithButton?: ((action: CalendarAction) => void) | undefined;
     /** Coloring in multiple date selection. */
-    currentFocus?: "start" | "end" | "none" | undefined;
+    currentFocus?: CalendarCurrentFocus;
 
     // Basic component props
     /** The class selector */
@@ -31,3 +34,9 @@ export interface CalendarProps {
 // CalendarType - this props use in internal
 // =============================================================================
 export type CalendarType = "standalone" | "input";
+
+// =============================================================================
+// Types use in date input with calendar
+// =============================================================================
+export type CalendarAction = "cancel" | "done";
+type CalendarCurrentFocus = "start" | "end" | "none";
