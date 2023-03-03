@@ -6,7 +6,8 @@ import {
     StoryContainer,
     Title,
 } from "../storybook-common";
-import { Container } from "./doc-elements";
+import { Container, Label } from "./doc-elements";
+import { PropsTable } from "./props-table";
 
 <Meta title="Modules/OtpInput" component={OtpInput} />
 
@@ -14,21 +15,36 @@ import { Container } from "./doc-elements";
 
 <Secondary>Overview</Secondary>
 
-<Heading3>Using the field as a standalone</Heading3>
-
-In the case that you require the otp input field as a standalone, you can do this.
+An otp input component for multifactor authentication display.
 
 ```tsx
 import { OtpInput } from "@lifesg/react-design-system/otp-input";
 ```
 
 <Canvas>
-    <Story name="Standalone usage">
+    <Story name="OtpInput">
         <StoryContainer>
             <Container>
+                <Label weight="semibold">This is the default state</Label>
                 <OtpInput
                     numOfInput={6}
                     cooldownDuration={60}
+                    onChange={(value) =>
+                        console.log("Entered OTP Value: ", value)
+                    }
+                    actionButtonProps={{
+                        onClick: () => {
+                            console.log("Resend OTP Clicked!");
+                        },
+                    }}
+                />
+                <br />
+                <br />
+                <Label weight="semibold">This is the error state</Label>
+                <OtpInput
+                    numOfInput={6}
+                    cooldownDuration={60}
+                    errorMessage="Invalid otp. Try again."
                     onChange={(value) =>
                         console.log("Entered OTP Value: ", value)
                     }
@@ -42,3 +58,38 @@ import { OtpInput } from "@lifesg/react-design-system/otp-input";
         </StoryContainer>
     </Story>
 </Canvas>
+
+<Secondary>Other usages</Secondary>
+
+<Heading3>Custom Action Button</Heading3>
+
+You can also specify a custom action button that will appear on OtpInput.
+
+<Preview>
+    <Story name="With custom action button">
+        <StoryContainer>
+            <Container>
+                <OtpInput
+                    numOfInput={4}
+                    cooldownDuration={0}
+                    onChange={(value) =>
+                        console.log("Entered OTP Value: ", value)
+                    }
+                    actionButtonProps={{
+                        styleType: "light",
+                        children: "with custom label",
+                        onClick: () => {
+                            console.log("Resend OTP Clicked!");
+                        },
+                    }}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<br />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
