@@ -4,6 +4,7 @@ export type ActionType =
     | "reset"
     | "selected"
     | "unhover"
+    | "default"
     | any;
 
 interface Action {
@@ -39,6 +40,11 @@ export const dateInputReducer = (state: State, action: Action): State => {
         : state.confirmed;
 
     switch (type) {
+        case "default":
+            return {
+                ...state,
+                currentType: "default",
+            };
         case "hover":
             return {
                 ...state,
@@ -77,7 +83,7 @@ export const dateInputReducer = (state: State, action: Action): State => {
                 calendar: state.confirmed,
                 confirmed: state.confirmed,
                 input: state.confirmed,
-                selected: "",
+                selected: state.confirmed,
                 currentType: "reset",
             };
         default:
