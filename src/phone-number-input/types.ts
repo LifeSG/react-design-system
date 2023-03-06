@@ -32,7 +32,7 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     onChange?: ((value: PhoneNumberInputValue) => void) | undefined;
     /** Called when the clear button in the input field is clicked */
     onClear?: () => void | undefined;
-    /** Called when focusing out the input field */
+    /** Called when a defocus happens */
     onBlur?: (() => void) | undefined;
 
     // Dropdown option props
