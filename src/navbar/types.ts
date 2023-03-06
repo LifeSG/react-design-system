@@ -4,14 +4,11 @@ import { TextLinkProps } from "../text";
 // =============================================================================
 // NAV ITEM TYPES
 // =============================================================================
-export interface NavItemProps<T> extends TextLinkProps {
-    id: string;
-    "data-testid"?: string | undefined;
-    options?: T | undefined;
-    subMenu?: NavSubItemProps<T>[] | undefined;
+export interface NavItemProps<T> extends NavItemCommonProps<T> {
+    subMenu?: NavItemCommonProps<T>[] | undefined;
 }
 
-export interface NavSubItemProps<T> extends TextLinkProps {
+export interface NavItemCommonProps<T> extends TextLinkProps {
     id: string;
     "data-testid"?: string | undefined;
     options?: T | undefined;
@@ -21,7 +18,7 @@ export interface NavItemsProps<T> {
     desktop: NavItemProps<T>[];
     /* The items for mobile drawer. Takes desktop if not specified */
     mobile?: NavItemProps<T>[] | undefined;
-    searchMenuItems?: NavSubItemProps<T>[] | undefined;
+    searchMenuItems?: NavItemCommonProps<T>[] | undefined;
 }
 
 // =============================================================================
@@ -55,9 +52,9 @@ export interface NavbarSharedProps {
     resources?: NavbarResourcesProps | undefined;
     actionButtons?: NavbarActionButtonsProps | undefined;
     /** Triggered when the brand icon is being clicked */
-    onBrandClick?: (
-        event: React.MouseEvent<HTMLAnchorElement>
-    ) => void | undefined;
+    onBrandClick?:
+        | ((event: React.MouseEvent<HTMLAnchorElement>) => void)
+        | undefined;
 }
 
 export type DrawerDismissalMethod =
@@ -68,7 +65,7 @@ export type DrawerDismissalMethod =
 export interface NavbarDrawerProps extends NavbarSharedProps {
     show: boolean;
     children: JSX.Element | JSX.Element[];
-    onClose?: () => void | undefined;
+    onClose?: (() => void) | undefined;
     resourcesSecondaryBrand?: NavbarResourcesProps | undefined;
     handleSecondaryBrandClick?: (
         event: React.MouseEvent<HTMLAnchorElement>
@@ -99,7 +96,6 @@ export interface NavbarProps<T = void>
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
-    children?: JSX.Element | JSX.Element[] | undefined;
     showSearch?: boolean | undefined;
     onBrandClick?: () => void | undefined; // override
     onSecondaryBrandClick?: () => void | undefined; // override

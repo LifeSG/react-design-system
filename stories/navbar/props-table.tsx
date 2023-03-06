@@ -134,7 +134,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "searchMenuItems",
                 description:
                     "The navigation items for the mobile viewport. Uses desktop's if not specified",
-                propTypes: ["NavSubItemProps<T>[]"],
+                propTypes: ["NavItemCommonProps<T>[]"],
             },
         ],
     },
@@ -172,7 +172,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "NavSubItemProps",
+        name: "NavItemCommonProps",
         attributes: [
             {
                 name: "id",

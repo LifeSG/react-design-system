@@ -119,7 +119,7 @@ export const NavLogoContainer = styled.div`
     align-items: center;
     position: relative;
 `;
-export const NavSeprator = styled.div`
+export const NavSeparator = styled.div`
     display: flex;
     background-color: ${Color.Neutral[5]};
     height: 56px;
@@ -128,12 +128,12 @@ export const NavSeprator = styled.div`
     margin-right: 29.8px;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 24px;
-        margin-right: 23.86px;
+        height: 56px;
+        margin-right: 29.8px;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        height: 24px;
+        height: 40px;
         margin-right: 23.86px;
     }
 
@@ -143,7 +143,7 @@ export const NavSeprator = styled.div`
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        height: 18.59px;
+        height: 32px;
         margin-right: 18.59px;
     }
 `;

@@ -7,7 +7,7 @@ import {
     Content,
     NavBrandContainer,
     NavLogoContainer,
-    NavSeprator,
+    NavSeparator,
     TopBar,
     Wrapper,
 } from "./drawer.styles";
@@ -70,7 +70,7 @@ const Component = (
                 />
                 {resourcesSecondaryBrand && (
                     <NavLogoContainer>
-                        <NavSeprator />
+                        <NavSeparator />
                         <Brand
                             resources={resourcesSecondaryBrand}
                             compress={true}

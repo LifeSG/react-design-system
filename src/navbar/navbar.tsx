@@ -15,9 +15,9 @@ import {
     Nav,
     NavBrandContainer,
     NavElementsContainer,
+    NavElementsInnerContainer,
     NavElementsLeftContainer,
     NavElementsMobileContainer,
-    NavElementsRightContainer,
     NavLogoContainer,
     NavSeprator,
     Wrapper,
@@ -42,7 +42,6 @@ const Component = <T,>(
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
         resourcesSecondaryBrand,
-        children,
         showSearch = false,
         onItemClick,
         onSecondaryBrandClick,
@@ -269,10 +268,10 @@ const Component = <T,>(
             <NavElementsContainer>
                 {!toggleheaderClick && renderDesktopNavItems()}
 
-                <NavElementsRightContainer>
+                <NavElementsInnerContainer>
                     {showSearch && renderSearchInput(false)}
                     {renderNavbarActionButtons()}
-                </NavElementsRightContainer>
+                </NavElementsInnerContainer>
                 {renderMobileMenuButton()}
             </NavElementsContainer>
         </NavElementsLeftContainer>

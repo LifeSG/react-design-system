@@ -11,7 +11,7 @@ import {
     UpIcon,
     Wrapper,
 } from "./navbar-items.styles";
-import { NavItemProps, NavSubItemProps } from "./types";
+import { NavItemCommonProps, NavItemProps } from "./types";
 import { Menu } from "./menu";
 
 interface Props<T> {
@@ -23,7 +23,7 @@ interface Props<T> {
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavItemProps<T>
     ) => void;
-    subMenu?: NavSubItemProps<T>[] | undefined;
+    subMenu?: NavItemCommonProps<T>[] | undefined;
 }
 
 export const NavbarItems = <T,>({
@@ -95,7 +95,7 @@ export const NavbarItems = <T,>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleSubLinkClick = (item: NavSubItemProps<T>[], index) => {
+    const handleSubLinkClick = (item: NavItemCommonProps<T>[], index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             setShowDrawer(index);

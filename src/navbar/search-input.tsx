@@ -21,15 +21,15 @@ import {
     SearchMainBarContainer,
     SearchSpan,
 } from "./search-input.styles";
-import { NavSubItemProps } from "./types";
+import { NavItemCommonProps } from "./types";
 
 interface Props<T> {
-    items: NavSubItemProps<T>[];
+    items: NavItemCommonProps<T>[];
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavSubItemProps<T>
+        item: NavItemCommonProps<T>
     ) => void;
     onToggleHeaderClick: () => void;
     onSearchButtonClick?: (searchInput: string) => void;
@@ -47,7 +47,9 @@ export const SearchInput = <T,>({
     // =============================================================================
     const [toggleInput, setToggleInput] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
-    const [itemsLocal, setItemsLocalValue] = useState<NavSubItemProps<T>[]>([]);
+    const [itemsLocal, setItemsLocalValue] = useState<NavItemCommonProps<T>[]>(
+        []
+    );
     const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
     const [showDropdown, setShowDropdown] = useState<string>("on-blur");
     /***
@@ -124,7 +126,7 @@ export const SearchInput = <T,>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleLinkClick = (item: NavSubItemProps<T>, index) => {
+    const handleLinkClick = (item: NavItemCommonProps<T>, index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             setInputValue("");
@@ -132,32 +134,20 @@ export const SearchInput = <T,>({
         };
     };
 
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
     const setInput4 = (value) => {
         setInputValue(value);
     };
 
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
     const handleToggleClick = () => {
         setToggleInput(!toggleInput);
         setInputValue("");
         onToggleHeaderClick();
     };
 
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
     const handleSearchIconClick = () => {
         setToggleDropdown(true);
     };
 
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
     const handleSearchButtonClick = () => {
         onSearchButtonClick(inputValue);
     };
@@ -189,9 +179,7 @@ export const SearchInput = <T,>({
             );
         });
     };
-    // =============================================================================
-    // RENDER FUNCTIONS
-    // =============================================================================
+
     const getHighlightedText = (text, highlight) => {
         // Split on highlight term and include term into parts, ignore case
         const parts = text.split(new RegExp(`(${highlight})`, "gi"));
@@ -213,9 +201,6 @@ export const SearchInput = <T,>({
         );
     };
 
-    // =============================================================================
-    // RENDER FUNCTIONS
-    // =============================================================================
     const renderComponent = (isMobile = false) => {
         return (
             <>
@@ -232,9 +217,7 @@ export const SearchInput = <T,>({
             </>
         );
     };
-    // =============================================================================
-    // RENDER FUNCTIONS
-    // =============================================================================
+
     const renderSearchinput = () => {
         return (
             <Container key="search">
@@ -255,9 +238,6 @@ export const SearchInput = <T,>({
         );
     };
 
-    // =============================================================================
-    // RENDER FUNCTIONS
-    // =============================================================================
     const renderSearchComponent = (isMobile = false) => {
         return (
             <SearchMainBarContainer>

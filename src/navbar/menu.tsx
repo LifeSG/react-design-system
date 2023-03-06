@@ -7,16 +7,16 @@ import {
     MenuItem,
     MobileWrapper,
 } from "./menu.styles";
-import { NavSubItemProps } from "./types";
+import { NavItemCommonProps } from "./types";
 
 interface Props<T> {
-    items: NavSubItemProps<T>[];
+    items: NavItemCommonProps<T>[];
     selectedId?: string | undefined;
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavSubItemProps<T>
+        item: NavItemCommonProps<T>
     ) => void;
 }
 
@@ -35,7 +35,7 @@ export const Menu = <T,>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleLinkClick = (item: NavSubItemProps<T>, index) => {
+    const handleLinkClick = (item: NavItemCommonProps<T>, index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             setShowDrawer(index);

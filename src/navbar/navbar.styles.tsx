@@ -23,6 +23,9 @@ interface StyleProps {
     fixed?: boolean;
 }
 
+interface StyleProps {
+    $compress?: boolean | undefined;
+}
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -80,7 +83,7 @@ export const NavBrandContainer = styled.div`
     align-items: center;
     position: relative;
 `;
-export const NavElementsRightContainer = styled.div`
+export const NavElementsInnerContainer = styled.div`
     display: flex;
     height: 100%;
 
@@ -120,32 +123,31 @@ export const NavLogoContainer = styled.div`
     align-items: center;
     position: relative;
 `;
-export const NavSeprator = styled.div`
+export const NavSeprator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Color.Neutral[5]};
-    height: 2.8125rem;
-    width: 0.05rem;
-    left: 13.435625rem;
-    margin-right: 1.504375rem;
+    height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
+    width: 1px;
+    margin-right: 29.8px;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 24px;
-        margin-right: 1rem;
+        height: 40px;
+        margin-right: 29.8px;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        height: 24px;
-        margin-right: 1rem;
+        height: 40px;
+        margin-right: 23.86px;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
         height: 24px;
-        margin-right: 1rem;
+        margin-right: 18.59px;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        height: 24px;
-        margin-right: 1rem;
+        height: 32px;
+        margin-right: 18.59px;
     }
 `;
 
