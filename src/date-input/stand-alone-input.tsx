@@ -184,8 +184,8 @@ export const StandAloneInput = ({
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        // remove selected value in field on 'hover' | 'unhover' action
-        if (["hover", "unhover"].includes(action)) {
+        // remove selected value in field on 'hover' action
+        if ("hover" === action) {
             setCurrentFocus(names[0]);
             dayInputRef.current.focus();
 
@@ -295,7 +295,6 @@ export const StandAloneInput = ({
             setDayValue("");
             setMonthValue("");
             setYearValue("");
-            console.log("set to null string");
         } else {
             const date = new Date(value);
             if (!isNaN(date.getTime())) {
@@ -307,7 +306,6 @@ export const StandAloneInput = ({
                     month,
                     year
                 );
-
                 setDayValue(StringHelper.padValue(day));
                 setMonthValue(StringHelper.padValue(month));
                 setYearValue(year);

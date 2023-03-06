@@ -14,7 +14,6 @@ import {
     INITIAL_INPUT_VALUES,
     dateInputReducer,
 } from "./dateInputReducer";
-import delay from "lodash/delay";
 
 interface CurrentFocusTypes {
     field: FieldType;
@@ -40,7 +39,7 @@ export const DateInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+    const [calendarOpen, _setCalendarOpen] = useState<boolean>(false);
     const [currentElement, setCurrentElement] = useState<CurrentFocusTypes>({
         field: "none",
         type: "none",
@@ -81,22 +80,20 @@ export const DateInput = ({
     }, [value, endValue]);
 
     useEffect(() => {
-        // reset currentType from 'unhover' to 'default'
-        // for remove auto selected input value
-        if (
-            "unhover" === startDate.currentType ||
-            "unhover" === endDate.currentType
-        ) {
-            const resetFn = async () => {
-                delay(handleReducer, 150, "default");
-            };
+        if (!calendarOpen) return;
 
-            resetFn();
-        }
+        handleFocusElement();
     }, [startDate, endDate]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const setCalendarOpen = async (boolean: boolean) => {
+        if (!boolean) await sleep(350);
+
+        _setCalendarOpen(boolean);
+    };
+
     const handleMouseDown = (event: MouseEvent) => {
         if (disabled || readOnly) return;
 
@@ -117,13 +114,8 @@ export const DateInput = ({
     }
 
     const handleChange = (value: string) => {
+        // standAloneInput on blur then trigger this
         handleReducer("selected", value);
-    };
-
-    const handleSelect = (value: string) => {
-        handleReducer("selected", value);
-
-        handleFocusElement();
     };
 
     const handleBlur = () => {
@@ -140,7 +132,7 @@ export const DateInput = ({
 
     const handleHoverDayCell = (value: string) => {
         if (!value) {
-            handleReducer("unhover");
+            handleReducer("default");
             return;
         }
 
@@ -161,8 +153,7 @@ export const DateInput = ({
 
         // update the indicate bar
         setTimeout(() => {
-            // buggy side effect in mousedown, trigger handleChange
-            // getting back current focus element value to another field
+            // buggy side effect in mousedown, trigger useEffect startDate && endDate
             setCurrentElement({ field: "none", type: "none", count: 0 });
         }, 1);
     };
@@ -174,6 +165,8 @@ export const DateInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
     const performOnChangeHandler = (values: ChangeValueTypes) => {
         if (onChange) {
             onChange(values);
@@ -223,9 +216,9 @@ export const DateInput = ({
         }
     };
 
-    const handleFocusElement = () => {
+    const handleFocusElementWithButton = () => {
         // closed calendar in without buttons mode for single selection
-        if (variant === "single") {
+        if (!withButton && variant === "single") {
             setCalendarOpen(false);
             handleReducer("confirmed");
             setCurrentElement({ field: "none", type: "none", count: 0 });
@@ -241,6 +234,20 @@ export const DateInput = ({
 
             return;
         }
+    };
+
+    const handleFocusElement = () => {
+        // stop switching the element if action was "hover" || "default"
+        if (["hover", "default"].includes(startDate.currentType)) {
+            return;
+        }
+
+        // stop switching the element if action was "hover" || "default"
+        if (["hover", "default"].includes(endDate.currentType)) {
+            return;
+        }
+
+        handleFocusElementWithButton();
 
         // stop to switch element
         if (currentElement.count >= 1) return;
@@ -347,7 +354,7 @@ export const DateInput = ({
                 currentFocus={currentElement.type}
                 value={startDate.calendar}
                 endValue={endDate.calendar}
-                onSelect={handleSelect}
+                onSelect={handleChange}
                 onHover={handleHoverDayCell}
                 onWithButton={handleCalendarAction}
             />
