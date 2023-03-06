@@ -52,13 +52,6 @@ export const PhoneNumberInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-        const re = /^[0-9\b]+$/;
-        if (!re.test(event.key) && event.key !== "Backspace") {
-            event.preventDefault();
-        }
-    };
-
     const handleClear = () => {
         if (onClear) {
             onClear();
@@ -74,7 +67,7 @@ export const PhoneNumberInput = ({
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const currentValue = event.target.value;
+        const currentValue = event.target.value.replace(/[^0-9]/g, "");
 
         if (onChange) {
             performOnChangeHandler(currentValue, selectedCountry);
@@ -156,7 +149,6 @@ export const PhoneNumberInput = ({
     return (
         <InputGroup
             ref={nodeRef}
-            onKeyDown={handleKeyDown}
             value={inputValue}
             onChange={handleInputChange}
             allowClear={allowClear && !!inputValue}
