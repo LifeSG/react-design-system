@@ -180,7 +180,7 @@ export const OtpInput = ({
                             id={generateId(index, "otp-input", id)}
                             data-testid={generateId(
                                 index,
-                                "otpValues-input",
+                                "otp-input",
                                 dataTestId
                             )}
                             key={index}
