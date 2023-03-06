@@ -9,6 +9,7 @@ export const PhoneNumberInput = ({
     value,
     allowClear,
     onClear,
+    onBlur,
     error,
     fixedCountry = false,
     optionPlaceholder = "Select",
@@ -66,6 +67,12 @@ export const PhoneNumberInput = ({
         }
     };
 
+    const handleBlur = () => {
+        if (onBlur) {
+            onBlur();
+        }
+    };
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const currentValue = event.target.value;
 
@@ -91,8 +98,12 @@ export const PhoneNumberInput = ({
         inputValue: string,
         selectedCountry: CountryValue | undefined
     ) => {
+        const formatedInputValue = PhoneNumberInputHelper.formatNumber(
+            inputValue,
+            selectedCountry
+        );
         onChange({
-            number: inputValue.replace(/[\s()]+/g, ""), // strip formatted spaces
+            number: formatedInputValue.replace(/[\s()]+/g, ""), // strip formatted spaces
             countryCode:
                 selectedCountry && addPlusPrefix(selectedCountry.countryCode),
         });
@@ -150,6 +161,7 @@ export const PhoneNumberInput = ({
             onChange={handleInputChange}
             allowClear={allowClear && !!inputValue}
             onClear={handleClear}
+            onBlur={handleBlur}
             error={error}
             placeholder={placeholder}
             addon={getAddonProps()}
