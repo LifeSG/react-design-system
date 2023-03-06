@@ -15,4 +15,8 @@ export interface OtpInputProps extends React.AriaAttributes {
     numOfInput: number;
     /** Called when one of the input is changed. Returns the combined value of all Otp inputs */
     onChange?: ((value: string) => void) | undefined;
+    /** Called when the cooldown begins */
+    onCooldownStart?: () => void;
+    /** Called when the cooldown ends */
+    onCooldownEnd?: () => void;
 }

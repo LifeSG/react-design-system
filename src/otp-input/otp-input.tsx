@@ -18,6 +18,8 @@ export const OtpInput = ({
     errorMessage,
     numOfInput,
     onChange,
+    onCooldownStart,
+    onCooldownEnd,
     ...otherProps
 }: OtpInputProps) => {
     // =============================================================================
@@ -50,6 +52,7 @@ export const OtpInput = ({
 
     useEffect(() => {
         if (countDown === cooldownDuration) {
+            if (onCooldownStart) onCooldownStart();
             beginCountdown();
         }
     }, [countDown]);
@@ -143,6 +146,7 @@ export const OtpInput = ({
             timer--;
             setCountDown(timer);
             if (timer === 0) {
+                if (onCooldownEnd) onCooldownEnd();
                 clearInterval(interval);
             }
         }, 1000);
@@ -197,9 +201,9 @@ export const OtpInput = ({
             )}
             <CTAButton
                 styleType={styleType}
-                disabled={disabled || isWithinCooldown()}
-                onClick={handleClick}
                 {...otherCtaProps}
+                onClick={handleClick}
+                disabled={disabled || isWithinCooldown()}
             >
                 {renderCTALabel()}
             </CTAButton>

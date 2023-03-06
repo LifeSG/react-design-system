@@ -4,11 +4,26 @@ import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
 const DATA: ApiTableSectionProps[] = [
     {
-        name: "OTPInput specific props",
         attributes: [
             {
-                name: "id",
-                description: "The unique identifier of the component",
+                name: "actionButtonProps",
+                description: "The call to action custom button props",
+                propTypes: (
+                    <a href="/?path=/docs/general-button--button#component-api">
+                        ButtonProps
+                    </a>
+                ),
+            },
+            {
+                name: "cooldownDuration",
+                description:
+                    "The cooldown duration before the call to action button can be enabled",
+                propTypes: ["number"],
+                mandatory: true,
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
                 propTypes: ["string"],
             },
             {
@@ -22,30 +37,35 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "value",
-                description: "The OTP input value",
+                name: "id",
+                description: "The unique identifier of the component",
                 propTypes: ["string"],
             },
             {
-                name: "cooldownDuration",
-                description:
-                    "The count down duration value before the next OTP request can be made",
-                propTypes: ["number"],
-            },
-            {
                 name: "numOfInput",
-                description: "The number of input field box",
+                description: "The number of input fields to display",
                 propTypes: ["number"],
+                mandatory: true,
             },
             {
-                name: "actionButtonProps",
-                description: "The call to action custom button props",
-                propTypes: ["ButtonProps"],
+                name: "value",
+                description: "The combined value of the input fields",
+                propTypes: ["string"],
             },
-
             {
                 name: "onChange",
-                description: "Called when a change is made on the input field",
+                description:
+                    "Called when a change is made on the input field. Returns the combined value of the inputs",
+                propTypes: ["(value: string) => void"],
+            },
+            {
+                name: "onCooldownStart",
+                description: "Called when the cooldown begins",
+                propTypes: ["(value: string) => void"],
+            },
+            {
+                name: "onCooldownEnd",
+                description: "Called when the cooldown ends",
                 propTypes: ["(value: string) => void"],
             },
         ],
