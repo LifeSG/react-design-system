@@ -140,6 +140,15 @@ export const InputGroupListAddon = <T, V>({
         if (onBlur) onBlur();
     };
 
+    const handleDismiss = () => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+
+        if (selectorRef) {
+            selectorRef.current.focus();
+        }
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -158,6 +167,7 @@ export const InputGroupListAddon = <T, V>({
                     searchPlaceholder={searchPlaceholder}
                     data-testid="dropdown-list"
                     onBlur={handleBlur}
+                    onDismiss={handleDismiss}
                 />
             );
         }
