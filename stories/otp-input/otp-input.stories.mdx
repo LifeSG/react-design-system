@@ -7,7 +7,6 @@ import {
     StoryContainer,
     Title,
 } from "../storybook-common";
-import { Container, Label } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta title="Modules/OtpInput" component={OtpInput} />
@@ -26,9 +25,7 @@ import { OtpInput } from "@lifesg/react-design-system/otp-input";
 <Canvas>
     <Story name="OtpInput">
         <StoryContainer>
-            <Container>
-                <OtpInput numOfInput={6} cooldownDuration={60} />
-            </Container>
+            <OtpInput numOfInput={6} cooldownDuration={60} />
         </StoryContainer>
     </Story>
 </Canvas>
@@ -38,13 +35,11 @@ import { OtpInput } from "@lifesg/react-design-system/otp-input";
 <Preview>
     <Story name="with error message">
         <StoryContainer>
-            <Container>
-                <OtpInput
-                    numOfInput={6}
-                    cooldownDuration={60}
-                    errorMessage="Invalid otp. Try again."
-                />
-            </Container>
+            <OtpInput
+                numOfInput={6}
+                cooldownDuration={60}
+                errorMessage="Invalid otp. Try again."
+            />
         </StoryContainer>
     </Story>
 </Preview>
@@ -69,20 +64,18 @@ you with it.
             const [isInCooldown, setIsInCooldown] = useState(true);
             return (
                 <StoryContainer>
-                    <Container>
-                        <OtpInput
-                            numOfInput={4}
-                            cooldownDuration={5}
-                            onCooldownStart={() => setIsInCooldown(true)}
-                            onCooldownEnd={() => setIsInCooldown(false)}
-                            actionButtonProps={{
-                                styleType: "light",
-                                children: isInCooldown
-                                    ? "Cooling down..."
-                                    : "My custom button label",
-                            }}
-                        />
-                    </Container>
+                    <OtpInput
+                        numOfInput={4}
+                        cooldownDuration={5}
+                        onCooldownStart={() => setIsInCooldown(true)}
+                        onCooldownEnd={() => setIsInCooldown(false)}
+                        actionButtonProps={{
+                            styleType: "light",
+                            children: isInCooldown
+                                ? "Cooling down..."
+                                : "My custom button label",
+                        }}
+                    />
                 </StoryContainer>
             );
         }}
@@ -112,22 +105,20 @@ use a simple `setTimeout` to handle the change in label.
             }, [isInCooldown]);
             return (
                 <StoryContainer>
-                    <Container>
-                        <OtpInput
-                            numOfInput={6}
-                            cooldownDuration={0}
-                            actionButtonProps={{
-                                styleType: "light",
-                                children: isInCooldown
-                                    ? "Cooling down..."
-                                    : "My custom button label",
-                                disabled: isInCooldown,
-                                onClick: () => {
-                                    setIsInCooldown(true);
-                                },
-                            }}
-                        />
-                    </Container>
+                    <OtpInput
+                        numOfInput={6}
+                        cooldownDuration={0}
+                        actionButtonProps={{
+                            styleType: "light",
+                            children: isInCooldown
+                                ? "Cooling down..."
+                                : "My custom button label",
+                            disabled: isInCooldown,
+                            onClick: () => {
+                                setIsInCooldown(true);
+                            },
+                        }}
+                    />
                 </StoryContainer>
             );
         }}
