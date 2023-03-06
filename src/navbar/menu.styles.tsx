@@ -58,15 +58,16 @@ export const LinkItem = styled.li`
 `;
 
 export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
+    ${TextStyleHelper.getTextStyle("H6", 400)}
     display: flex;
     position: relative;
     align-items: left;
     text-align: left;
     color: ${Color.Neutral[1]};
 
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px !important;
+    /* font-style: normal;
+    //font-weight: 400; */
+    font-size: 14px;
     line-height: 20px;
 
     margin-right: 16px;
@@ -91,11 +92,12 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     ${MediaQuery.MaxWidth.tablet} {
         ${(props) => {
             return TextStyleHelper.getTextStyle(
-                "H4",
+                "H6",
                 props.$selected ? "bold" : "regular"
             );
         }}
-        font-weight: bold !important;
+        ${TextStyleHelper.getTextStyle("H6", "bold")}
+        /* font-weight: bold !important; */
         width: 100%;
         padding: 0.625rem 1rem;
         text-align: left;
