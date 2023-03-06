@@ -226,6 +226,7 @@ export const Calendar = ({
             <>
                 <DropdownButton
                     type="button"
+                    tabIndex={-1}
                     $type={type}
                     $expandedDisplay={currentView === "month-options"}
                     $visible={currentView === "default"}
@@ -239,6 +240,7 @@ export const Calendar = ({
                 </DropdownButton>
                 <DropdownButton
                     type="button"
+                    tabIndex={-1}
                     $type={type}
                     $expandedDisplay={currentView !== "default"}
                     id="year-dropdown"
@@ -302,10 +304,16 @@ export const Calendar = ({
                             {renderDropdownButtons()}
                         </HeaderInputDropdown>
                         <HeaderArrows>
-                            <HeaderArrowButton onClick={handleLeftArrowClick}>
+                            <HeaderArrowButton
+                                tabIndex={-1}
+                                onClick={handleLeftArrowClick}
+                            >
                                 <ArrowLeft />
                             </HeaderArrowButton>
-                            <HeaderArrowButton onClick={handleRightArrowClick}>
+                            <HeaderArrowButton
+                                tabIndex={-1}
+                                onClick={handleRightArrowClick}
+                            >
                                 <ArrowRight />
                             </HeaderArrowButton>
                         </HeaderArrows>

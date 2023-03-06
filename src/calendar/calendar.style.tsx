@@ -210,11 +210,10 @@ export const HeaderArrows = styled.div`
     display: flex;
 `;
 
-export const HeaderArrowButton = styled.button`
+export const HeaderArrowButton = styled(IconButton)`
     background: transparent;
     margin: auto 0;
     padding: 0.5rem;
-    border: 0;
 
     :focus,
     :active {
