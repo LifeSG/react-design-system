@@ -1,5 +1,9 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
-import { LoadingDots, LoadingSpinner } from "src/animations";
+import {
+    LoadingDots,
+    LoadingSpinner,
+    LoadingDotsSpinner,
+} from "src/animations";
 import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
 import {
     AnimationDisplay,
@@ -33,6 +37,18 @@ import {
         </AnimationPane>
         <Content>
             <code>{"<LoadingDots />"}</code>
+            <p>
+                An animation that can be shown in between page transitions or
+                while waiting for fetching of data.
+            </p>
+        </Content>
+    </AnimationItem>
+    <AnimationItem>
+        <AnimationPane>
+            <LoadingDotsSpinner />
+        </AnimationPane>
+        <Content>
+            <code>{"<LoadingDotsSpinner />"}</code>
             <p>
                 An animation that can be shown in between page transitions or
                 while waiting for fetching of data.
