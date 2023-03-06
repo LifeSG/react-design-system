@@ -210,10 +210,11 @@ export const HeaderArrows = styled.div`
     display: flex;
 `;
 
-export const HeaderArrowButton = styled(IconButton)`
+export const HeaderArrowButton = styled.button`
     background: transparent;
     margin: auto 0;
     padding: 0.5rem;
+    border: 0;
 
     :focus,
     :active {
@@ -227,7 +228,7 @@ export const ActionButtonSection = styled.div`
     margin-top: 1.5rem;
 `;
 
-const BaseActionButton = styled(IconButton)`
+const BaseActionButton = styled.button`
     ${TextStyleHelper.getTextStyle("H5", "semibold")};
     flex: 1;
     align-items: center;
