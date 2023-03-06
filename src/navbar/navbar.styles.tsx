@@ -131,22 +131,22 @@ export const NavSeprator = styled.div<StyleProps>`
     margin-right: 29.8px;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 40px;
-        margin-right: 29.8px;
+        height: 1.375rem;
+        margin-right: 23.86px;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        height: 40px;
+        height: 1.375rem;
         margin-right: 23.86px;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        height: 24px;
+        height: 1.375rem;
         margin-right: 18.59px;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        height: 32px;
+        height: 1.375rem;
         margin-right: 18.59px;
     }
 `;

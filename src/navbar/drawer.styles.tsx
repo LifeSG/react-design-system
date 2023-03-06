@@ -12,7 +12,9 @@ interface IStyleProps {
     $show: boolean;
     $viewHeight?: number | undefined;
 }
-
+interface StyleProps {
+    $compress?: boolean | undefined;
+}
 // =============================================================================
 // STYLING HELPERS
 // =============================================================================
@@ -119,31 +121,31 @@ export const NavLogoContainer = styled.div`
     align-items: center;
     position: relative;
 `;
-export const NavSeparator = styled.div`
+export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Color.Neutral[5]};
-    height: 56px;
+    height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
     width: 1px;
     left: 29.8px;
     margin-right: 29.8px;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 56px;
-        margin-right: 29.8px;
+        height: 1.375rem;
+        margin-right: 23.86px;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        height: 40px;
+        height: 1.375rem;
         margin-right: 23.86px;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        height: 24px;
+        height: 1.375rem;
         margin-right: 18.59px;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        height: 32px;
+        height: 1.375rem;
         margin-right: 18.59px;
     }
 `;

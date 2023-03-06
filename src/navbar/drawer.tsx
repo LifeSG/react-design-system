@@ -65,6 +65,7 @@ const Component = (
             <NavBrandContainer>
                 <Brand
                     resources={resources}
+                    compress={true}
                     onClick={onBrandClick}
                     data-testid="drawer__brand"
                 />
