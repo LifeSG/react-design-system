@@ -3,7 +3,6 @@ export type ActionType =
     | "hover"
     | "reset"
     | "selected"
-    | "unhover"
     | "default"
     | any;
 
@@ -43,6 +42,8 @@ export const dateInputReducer = (state: State, action: Action): State => {
         case "default":
             return {
                 ...state,
+                hover: "",
+                input: state.selected,
                 currentType: "default",
             };
         case "hover":
@@ -51,13 +52,6 @@ export const dateInputReducer = (state: State, action: Action): State => {
                 hover: value,
                 input: value,
                 currentType: "hover",
-            };
-        case "unhover":
-            return {
-                ...state,
-                hover: "",
-                input: state.selected,
-                currentType: "unhover",
             };
         case "selected":
             return {
