@@ -207,85 +207,87 @@ const Component = <T,>(
         </Overlay>
     );
 
+    const renderBrand = () => (
+        <NavBrandContainer>
+            <Brand
+                resources={resources}
+                compress={compress}
+                onClick={handleBrandClick}
+                data-testid="main__brand"
+            />
+            {resourcesSecondaryBrand && (
+                <NavLogoContainer>
+                    <NavSeprator compress={compress} />
+                    <Brand
+                        resources={resourcesSecondaryBrand}
+                        compress={compress}
+                        onClick={handleSecondaryBrandClick}
+                        data-testid="main__brand"
+                    />
+                </NavLogoContainer>
+            )}
+        </NavBrandContainer>
+    );
+
+    const renderDesktopNavItems = () => (
+        <NavbarItems
+            items={items.desktop}
+            onItemClick={handleNavItemClick}
+            selectedId={selectedId}
+        />
+    );
+
+    const renderMobileMenuButton = () => (
+        <MobileMenuButton
+            aria-label="Open nav menu"
+            data-testid="button__mobile-menu"
+            onClick={handleMobileMenuButtonClick}
+            focusHighlight={false}
+        >
+            <MobileMenuIcon />
+        </MobileMenuButton>
+    );
+
+    const renderSearchInput = (mobile = false) => (
+        <SearchInput
+            items={items.searchMenuItems}
+            onItemClick={handleNavItemClick}
+            onToggleHeaderClick={handleheaderClick}
+            mobile={mobile}
+        />
+    );
+
+    const renderNavbarActionButtons = () => (
+        <NavbarActionButtons
+            actionButtons={actionButtons && actionButtons.desktop}
+            onActionButtonClick={handleActionButtonClick}
+        />
+    );
+
+    const renderElementsLeftContainer = () => (
+        <NavElementsLeftContainer>
+            <NavElementsContainer>
+                {!toggleheaderClick && renderDesktopNavItems()}
+
+                <NavElementsRightContainer>
+                    {showSearch && renderSearchInput(false)}
+                    {renderNavbarActionButtons()}
+                </NavElementsRightContainer>
+                {renderMobileMenuButton()}
+            </NavElementsContainer>
+        </NavElementsLeftContainer>
+    );
+
     const renderNavbar = () => {
         return (
             <Layout.Content>
                 <NavElementsMobileContainer>
                     <Nav compress={compress}>
-                        <NavBrandContainer>
-                            <Brand
-                                resources={resources}
-                                compress={compress}
-                                onClick={handleBrandClick}
-                                data-testid="main__brand"
-                            />
-                            {resourcesSecondaryBrand && (
-                                <NavLogoContainer>
-                                    <NavSeprator />
-                                    <Brand
-                                        resources={resourcesSecondaryBrand}
-                                        compress={compress}
-                                        onClick={handleSecondaryBrandClick}
-                                        data-testid="main__brand"
-                                    />
-                                </NavLogoContainer>
-                            )}
-                        </NavBrandContainer>
-
-                        {!hideNavElements && (
-                            <NavElementsLeftContainer>
-                                <NavElementsContainer>
-                                    {!toggleheaderClick && (
-                                        <NavbarItems
-                                            items={items.desktop}
-                                            onItemClick={handleNavItemClick}
-                                            selectedId={selectedId}
-                                        />
-                                    )}
-
-                                    <NavElementsRightContainer>
-                                        {children}
-                                        {showSearch && (
-                                            <SearchInput
-                                                items={items.searchMenuItems}
-                                                onItemClick={handleNavItemClick}
-                                                onToggleHeaderClick={
-                                                    handleheaderClick
-                                                }
-                                                mobile={false}
-                                            />
-                                        )}
-                                        <NavbarActionButtons
-                                            actionButtons={
-                                                actionButtons &&
-                                                actionButtons.desktop
-                                            }
-                                            onActionButtonClick={
-                                                handleActionButtonClick
-                                            }
-                                        />
-                                    </NavElementsRightContainer>
-                                    <MobileMenuButton
-                                        aria-label="Open nav menu"
-                                        data-testid="button__mobile-menu"
-                                        onClick={handleMobileMenuButtonClick}
-                                        focusHighlight={false}
-                                    >
-                                        <MobileMenuIcon />
-                                    </MobileMenuButton>
-                                </NavElementsContainer>
-                            </NavElementsLeftContainer>
-                        )}
+                        {renderBrand()}
+                        {!hideNavElements && renderElementsLeftContainer()}
                     </Nav>
 
-                    {showSearch && (
-                        <SearchInput
-                            items={items.searchMenuItems}
-                            onItemClick={handleNavItemClick}
-                            onToggleHeaderClick={handleheaderClick}
-                            mobile={true}
-                        />
-                    )}
+                    {showSearch && renderSearchInput(true)}
 
                     {!hideNavElements && renderDrawer()}
                 </NavElementsMobileContainer>

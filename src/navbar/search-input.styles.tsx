@@ -160,7 +160,7 @@ export const DropDownBar = styled.ul`
 
     /* N8 #FFFFFF */
     background: ${Color.Neutral[8]};
-    border-radius: 0px 0px 8px 8px;
+    border-radius: 0px 0px 4px 4px;
 
     box-shadow: inset 0 -5px 5px -5px #57a9ff, inset 5px 0 5px -5px #57a9ff,
         inset -5px 0 5px -5px #57a9ff;
@@ -274,13 +274,13 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
         } else if (props.$dropdown === "on-focus") {
             return `
             border: 1px solid  #57A9FF;
-            border-radius: 8px 8px 8px 8px;
+            border-radius: 4px 4px 4px 4px;
             box-shadow: inset 0 0 6px 1px rgb(87 169 255 / 50%);
     `;
         } else if (props.$dropdown === "on-dropdown-focus") {
             return `
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 4px;
             border-right: 1px solid #57A9FF;
             border-left: 1px solid #57A9FF;
             border-top: 1px solid #57A9FF;

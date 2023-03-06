@@ -63,6 +63,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     align-items: left;
     text-align: left;
     color: ${Color.Neutral[1]};
+
     font-style: normal;
     font-weight: 400;
     font-size: 14px !important;
