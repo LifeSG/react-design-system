@@ -53,13 +53,20 @@ export const Calendar = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
+        if (!isOpen || !value.length || !endValue.length) return;
+
+        const initCalendar = currentFocus === "end" ? endValue : value;
+
+        setCalendarDate(dayjs(initCalendar));
+    }, [isOpen]);
+
+    useEffect(() => {
         if (!value) {
             setSelectedStartDate("");
             return;
         }
 
         setSelectedStartDate(value);
-        setCalendarDate(dayjs(value));
     }, [value]);
 
     useEffect(() => {
@@ -69,7 +76,6 @@ export const Calendar = ({
         }
 
         setSelectedEndDate(endValue);
-        setCalendarDate(dayjs(endValue));
     }, [endValue]);
 
     // =============================================================================

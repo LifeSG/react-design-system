@@ -11,7 +11,7 @@ import { IconButton } from "../icon-button";
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface ContainerStyleProps {
-    disabled?: boolean;
+    $disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
     $variant?: DateInputVariant;
@@ -86,7 +86,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     box-shadow: none;
                 }
             `;
-        } else if (props.disabled) {
+        } else if (props.$disabled) {
             return css`
                 background: ${Color.Neutral[6](props)};
                 :hover {

@@ -18,16 +18,16 @@ type FieldName = "day" | "month" | "year";
 export type FieldType = StartInputNames | EndInputNames | "none";
 interface Props {
     disabled?: boolean | undefined;
-    onChange?: (value: string) => void;
-    onFocus?: (value: FieldType) => void;
     readOnly?: boolean | undefined;
     names:
         | ["start-day", "start-month", "start-year"]
         | ["end-day", "end-month", "end-year"];
     value?: string | undefined;
-    variant?: VariantStyleProps;
-    action?: "hover" | "selected" | "confirmed" | undefined;
-    isActive?: boolean;
+    variant: VariantStyleProps;
+    action: "hover" | "selected" | "confirmed";
+    isActive: boolean;
+    onChange: (value: string) => void;
+    onFocus: (value: FieldType) => void;
 }
 
 export const StandAloneInput = ({
@@ -184,9 +184,11 @@ export const StandAloneInput = ({
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        if (action === "hover") {
+        // remove selected value in field on 'hover' | 'unhover' action
+        if (["hover", "unhover"].includes(action)) {
             setCurrentFocus(names[0]);
             dayInputRef.current.focus();
+
             return;
         }
 
@@ -234,7 +236,7 @@ export const StandAloneInput = ({
             setDayValue(day);
             setMonthValue(month);
 
-            // calendar value been updated once manual input and blur current field element
+            // updated calendar once blur action is triggered
             const changeValue = targetField == "day" ? day : month;
             performOnChangeHandler(changeValue, targetName);
         }
@@ -257,6 +259,11 @@ export const StandAloneInput = ({
                 break;
             default:
                 break;
+        }
+
+        // update calendar via munual input value in last field
+        if (value.length === 4 && targetName === names[2]) {
+            performOnChangeHandler(value, targetName);
         }
     };
 
