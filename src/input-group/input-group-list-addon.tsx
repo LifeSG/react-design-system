@@ -22,6 +22,7 @@ export const InputGroupListAddon = <T, V>({
     onChange,
     readOnly,
     className,
+    onBlur,
     ...otherProps
 }: InputGroupProps<T, V>) => {
     const {
@@ -135,6 +136,10 @@ export const InputGroupListAddon = <T, V>({
         if (onChange) onChange(event);
     };
 
+    const handleBlur = () => {
+        if (onBlur) onBlur();
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -152,6 +157,7 @@ export const InputGroupListAddon = <T, V>({
                     searchFunction={searchFunction}
                     searchPlaceholder={searchPlaceholder}
                     data-testid="dropdown-list"
+                    onBlur={handleBlur}
                 />
             );
         }
@@ -215,6 +221,7 @@ export const InputGroupListAddon = <T, V>({
                 error={error}
                 onChange={handleInputChange}
                 data-testid={otherProps["data-testid"] || "input"}
+                onBlur={handleBlur}
             />
         </DisplayContainer>
     );
