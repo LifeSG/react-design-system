@@ -22,6 +22,8 @@ interface CurrentFocusTypes {
     count: number;
 }
 
+type ChangeAction = "calendar" | "input";
+
 export const DateInput = ({
     disabled,
     error,
@@ -40,7 +42,8 @@ export const DateInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [calendarOpen, _setCalendarOpen] = useState<boolean>(false);
+    const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+    const [changeAction, setChangeAction] = useState<ChangeAction>("calendar");
     const [currentElement, setCurrentElement] = useState<CurrentFocusTypes>({
         field: "none",
         type: "none",
@@ -89,22 +92,6 @@ export const DateInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const setCalendarOpen = async (boolean: boolean) => {
-        if (!boolean) await DateInputHelper.sleep(150);
-
-        _setCalendarOpen(boolean);
-
-        // handle action state during closing via user hover action.
-        // to reset back to initial 'confirmed'
-        if (!boolean) {
-            dispatchStart({ type: "confirmed" });
-
-            setCurrentElement({ field: "none", type: "none", count: 0 });
-
-            if (variant === "range") dispatchEnd({ type: "confirmed" });
-        }
-    };
-
     const handleMouseDown = (event: MouseEvent) => {
         if (disabled || readOnly) return;
 
@@ -124,8 +111,10 @@ export const DateInput = ({
         };
     }
 
-    const handleChange = (value: string) => {
+    const handleChange = (value: string, from: ChangeAction) => {
         let isValid = false;
+
+        setChangeAction(from);
 
         switch (currentElement.type) {
             case "start":
@@ -180,6 +169,13 @@ export const DateInput = ({
                 handleReducer("confirmed");
                 break;
         }
+
+        // buggy in mousedown side effect
+        // another field value updated after confirmed both value
+        // click outside component
+        setTimeout(() => {
+            setCurrentElement({ field: "none", type: "none", count: 0 });
+        }, 1);
     };
 
     const handleIsOpenCalendar = (value: boolean) => {
@@ -225,7 +221,7 @@ export const DateInput = ({
             );
         }
 
-        // reset both
+        // error, reset both
         if (!isValid) {
             dispatchStart({ type: "invalid" });
             dispatchEnd({ type: "invalid" });
@@ -256,7 +252,6 @@ export const DateInput = ({
                 break;
             case "none":
                 dispatchStart({ type, value });
-
                 if (variant === "range") dispatchEnd({ type, value });
                 break;
             default:
@@ -298,6 +293,10 @@ export const DateInput = ({
             return;
         }
 
+        // stop switching if detect manual input
+        if (changeAction === "input") return;
+
+        // handle without button
         handleFocusElementWithButton();
 
         // stop to switch element
@@ -360,7 +359,7 @@ export const DateInput = ({
                     </ArrowRangeIcon>
                     <StandAloneInput
                         disabled={disabled}
-                        onChange={handleChange}
+                        onChange={(event) => handleChange(event, "input")}
                         onFocus={handleFocus}
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
@@ -387,7 +386,7 @@ export const DateInput = ({
         >
             <StandAloneInput
                 disabled={disabled}
-                onChange={handleChange}
+                onChange={(event) => handleChange(event, "input")}
                 onFocus={handleFocus}
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
@@ -405,7 +404,7 @@ export const DateInput = ({
                 currentFocus={currentElement.type}
                 value={startDate.calendar}
                 endValue={endDate.calendar}
-                onSelect={handleChange}
+                onSelect={(event) => handleChange(event, "calendar")}
                 onHover={handleHoverDayCell}
                 onWithButton={handleCalendarAction}
             />

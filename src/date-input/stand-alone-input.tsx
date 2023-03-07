@@ -201,9 +201,6 @@ export const StandAloneInput = ({
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        // prevent return back into onChangeHandler
-        if (action === "hover" || action === "default") return;
-
         const targetName = event.target.name as FieldType;
         const targetField = targetName.split("-")[1] as FieldName;
         const targetValue = StringHelper.padValue(event.target.value, true);
@@ -238,6 +235,9 @@ export const StandAloneInput = ({
             setDayValue(day);
             setMonthValue(month);
 
+            // prevent return back into onChangeHandler
+            if (action === "hover" || action === "default") return;
+
             // updated calendar once blur action is triggered
             const changeValue = targetField == "day" ? day : month;
             performOnChangeHandler(changeValue, targetName);
@@ -264,6 +264,7 @@ export const StandAloneInput = ({
         }
 
         // update calendar via munual input value in last field
+        // for day and month those handle by handleBlur
         if (value.length === 4 && targetName === names[2]) {
             performOnChangeHandler(value, targetName);
         }

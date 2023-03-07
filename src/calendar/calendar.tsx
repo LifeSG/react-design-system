@@ -53,12 +53,21 @@ export const Calendar = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!isOpen || !value.length || !endValue.length) return;
+        // use in date input with calendar only
+        // open 'confirmed' value calendar in first mounted
+        if (!isOpen) return;
 
-        const initCalendar = currentFocus === "end" ? endValue : value;
+        let initCalendar = currentFocus === "end" ? endValue : value;
 
+        if (!initCalendar.length) initCalendar = undefined;
         setCalendarDate(dayjs(initCalendar));
     }, [isOpen]);
+
+    useEffect(() => {
+        if (type === "standalone") {
+            setCalendarDate(dayjs(value));
+        }
+    }, [type]);
 
     useEffect(() => {
         if (!value) {
