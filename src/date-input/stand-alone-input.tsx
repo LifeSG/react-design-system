@@ -235,7 +235,7 @@ export const StandAloneInput = ({
             setDayValue(day);
             setMonthValue(month);
 
-            // prevent return back into onChangeHandler
+            // prevent return back into onChangeHandler during action below
             if (action === "hover" || action === "default") return;
 
             // updated calendar once blur action is triggered

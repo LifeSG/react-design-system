@@ -4,6 +4,7 @@ export type ActionType =
     | "reset"
     | "selected"
     | "default"
+    | "transition"
     | "invalid"
     | "error"
     | any;
@@ -14,12 +15,14 @@ interface Action {
 }
 
 /**
+ * State
  * 'calendar'       return back value in calendar
  * 'confirmed'      to 'reset' back the value if value been 'selected'
  * 'currentType'    return back current user action
  * 'hover'          return back current hover value
  * 'input'          return back current input element value
  * 'selected'       return back current value been selected
+ * 'transition'     use to temporary store value
  */
 interface State {
     calendar: string;
@@ -28,12 +31,14 @@ interface State {
     hover: string;
     input: string;
     selected: string;
+    transition: string;
 }
 
 export const dateInputReducer = (state: State, action: Action): State => {
     const { type, value } = action;
 
     // 'value' use for initial load value if exist
+    // use in 'selected' value update to 'confirmed'
     const confirmedValue = value?.length
         ? value
         : state.selected.length
@@ -71,8 +76,22 @@ export const dateInputReducer = (state: State, action: Action): State => {
                 confirmed: confirmedValue,
                 input: confirmedValue,
                 selected: confirmedValue,
+                transition: confirmedValue,
                 currentType: "confirmed",
             };
+        case "transition":
+            // use in month/year calendar view
+            // restore back 'confirmed' value
+            return {
+                ...state,
+                calendar: state.confirmed,
+                confirmed: state.confirmed,
+                input: state.confirmed,
+                selected: state.confirmed,
+                transition: state.confirmed,
+                currentType: "transition",
+            };
+            break;
         case "reset":
             return {
                 ...state,
@@ -112,5 +131,6 @@ export const INITIAL_INPUT_VALUES = {
     hover: "",
     input: "",
     selected: "",
+    transition: "",
     currentType: "confirmed",
 };

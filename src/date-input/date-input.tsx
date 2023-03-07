@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useEventListener } from "../hook/useEventListener";
-import { Calendar, CalendarAction, FocusType } from "../calendar";
+import { Calendar, CalendarAction, FocusType, View } from "../calendar";
 import {
     ArrowRangeIcon,
     ArrowRight,
@@ -44,6 +44,7 @@ export const DateInput = ({
     // =============================================================================
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
     const [changeAction, setChangeAction] = useState<ChangeAction>("calendar");
+    const [calendarView, setCalendarView] = useState<View>("default");
     const [currentElement, setCurrentElement] = useState<CurrentFocusTypes>({
         field: "none",
         type: "none",
@@ -72,6 +73,11 @@ export const DateInput = ({
      * https://stackoverflow.com/questions/65125665/new-event-doesnt-have-latest-state-value-updated-by-previous-event
      */
     useEventListener("mousedown", handleInitEventListener);
+
+    // =============================================================================
+    // REF FUNCTIONS
+    // =============================================================================
+    const calendarRef = useRef(null);
 
     // =============================================================================
     // EFFECTS
@@ -103,18 +109,31 @@ export const DateInput = ({
         }
     };
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.code === "Escape") {
+            handleCalendarAction("reset");
+            handleBlur();
+        }
+    };
+
     function handleInitEventListener() {
         document.addEventListener("mousedown", handleMouseDown);
 
+        if (nodeRef.current) {
+            nodeRef.current.addEventListener("keydown", handleKeyDown);
+        }
+
         return () => {
             document.removeEventListener("mousedown", handleMouseDown);
+
+            if (nodeRef.current) {
+                nodeRef.current.removeEventListener("keydown", handleKeyDown);
+            }
         };
     }
 
     const handleChange = (value: string, from: ChangeAction) => {
         let isValid = false;
-
-        setChangeAction(from);
 
         switch (currentElement.type) {
             case "start":
@@ -133,6 +152,7 @@ export const DateInput = ({
             handleReducer("invalid");
         }
 
+        setChangeAction(from);
         handleReducer("selected", value);
     };
 
@@ -143,7 +163,7 @@ export const DateInput = ({
     const handleFocus = (value: FieldType) => {
         const type = value.split("-")[0] as FocusType;
 
-        handleIsOpenCalendar(true);
+        setCalendarOpen(true);
 
         setCurrentElement({ ...currentElement, field: value, type });
     };
@@ -158,7 +178,29 @@ export const DateInput = ({
         handleReducer("hover", value);
     };
 
+    const handleCalendarMonthYear = (action: CalendarAction) => {
+        if (["month-options", "year-options"].includes(calendarView)) {
+            switch (action) {
+                case "reset":
+                    handleReducer("transition");
+                    calendarRef.current.defaultView();
+                    // handleFocusElement();
+                    // need to refresh calendar view
+                    break;
+                case "confirmed":
+                    calendarRef.current.defaultView();
+                    break;
+            }
+        }
+    };
+
     const handleCalendarAction = (action: CalendarAction) => {
+        // month/year view (month/year calendar)
+        handleCalendarMonthYear(action);
+
+        if (["month-options", "year-options"].includes(calendarView)) return;
+
+        // default view (day calendar)
         setCalendarOpen(false);
 
         switch (action) {
@@ -178,8 +220,8 @@ export const DateInput = ({
         }, 1);
     };
 
-    const handleIsOpenCalendar = (value: boolean) => {
-        setCalendarOpen(value);
+    const handleCalendarView = (calendarView: View) => {
+        setCalendarView(calendarView);
     };
 
     // =============================================================================
@@ -229,6 +271,14 @@ export const DateInput = ({
             return;
         }
 
+        // handle month/year view cancel button
+        if (type === "transition") {
+            dispatchStart({ type: "transition" });
+            dispatchEnd({ type: "transition" });
+
+            return;
+        }
+
         switch (field) {
             case "start":
                 if (type === "invalid") {
@@ -252,6 +302,7 @@ export const DateInput = ({
                 break;
             case "none":
                 dispatchStart({ type, value });
+
                 if (variant === "range") dispatchEnd({ type, value });
                 break;
             default:
@@ -262,7 +313,30 @@ export const DateInput = ({
         }
     };
 
-    const handleFocusElementWithButton = () => {
+    const handleFocusElement = () => {
+        // stop switching the element if action was "hover" || "default"
+        if (
+            ["hover", "default"].includes(startDate.currentType) ||
+            ["hover", "default"].includes(endDate.currentType)
+        )
+            return;
+
+        // transtion set for both
+        // updated another one element, not skip below logics
+        if (
+            [startDate.currentType, endDate.currentType].every(
+                (name) => name === "transition"
+            )
+        ) {
+            return;
+        }
+
+        // stop switching if detect manual input
+        if (changeAction === "input") return;
+
+        // stop switching in month/year calendar view
+        if (["month-options", "year-options"].includes(calendarView)) return;
+
         // closed calendar in without buttons mode for single selection
         if (!withButton && variant === "single") {
             setCalendarOpen(false);
@@ -280,24 +354,6 @@ export const DateInput = ({
 
             return;
         }
-    };
-
-    const handleFocusElement = () => {
-        // stop switching the element if action was "hover" || "default"
-        if (["hover", "default"].includes(startDate.currentType)) {
-            return;
-        }
-
-        // stop switching the element if action was "hover" || "default"
-        if (["hover", "default"].includes(endDate.currentType)) {
-            return;
-        }
-
-        // stop switching if detect manual input
-        if (changeAction === "input") return;
-
-        // handle without button
-        handleFocusElementWithButton();
 
         // stop to switch element
         if (currentElement.count >= 1) return;
@@ -398,14 +454,16 @@ export const DateInput = ({
             {RenderRangeInput()}
             {RenderIndicatedBar()}
             <Calendar
+                ref={calendarRef}
                 type="input"
                 isOpen={calendarOpen}
                 withButton={withButton}
                 currentFocus={currentElement.type}
                 value={startDate.calendar}
                 endValue={endDate.calendar}
-                onSelect={(event) => handleChange(event, "calendar")}
+                onCalendarView={handleCalendarView}
                 onHover={handleHoverDayCell}
+                onSelect={(event) => handleChange(event, "calendar")}
                 onWithButton={handleCalendarAction}
             />
         </Container>

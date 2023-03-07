@@ -20,6 +20,8 @@ export interface CalendarProps {
     withButton?: boolean | undefined;
     /** Function to handle cancel/done .*/
     onWithButton?: ((action: CalendarAction) => void) | undefined;
+    /** Current calendar view inform to date input. .*/
+    onCalendarView?: ((view: View) => void) | undefined;
     /** Coloring in multiple date selection. */
     currentFocus?: FocusType | undefined;
 
@@ -30,10 +32,13 @@ export interface CalendarProps {
     id?: string | undefined;
 }
 
+export type CalendarRef = React.Ref<HTMLDivElement>;
+
 // =============================================================================
 // CalendarType - this props use in internal
 // =============================================================================
 export type CalendarType = "standalone" | "input";
+export type View = "default" | "month-options" | "year-options";
 
 // =============================================================================
 // Types use in date input with calendar

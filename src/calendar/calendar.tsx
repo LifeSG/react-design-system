@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { CalendarHelper } from "../util/calendar-helper";
 import { CalendarDay } from "./calendar-day";
 import { CalendarMonth } from "./calendar-month";
@@ -24,23 +24,25 @@ import {
     SideArrowButton,
     ToggleZone,
 } from "./calendar.style";
-import { CalendarAction, CalendarProps } from "./types";
+import { CalendarAction, CalendarProps, CalendarRef, View } from "./types";
 
-export type View = "default" | "month-options" | "year-options";
-
-export const Calendar = ({
-    disabledDates,
-    onSelect,
-    onHover,
-    onWithButton,
-    isOpen,
-    value,
-    endValue,
-    currentFocus,
-    withButton,
-    type = "standalone",
-    ...otherProps
-}: CalendarProps) => {
+export const Component = (
+    {
+        disabledDates,
+        onCalendarView,
+        onSelect,
+        onHover,
+        onWithButton,
+        isOpen,
+        value,
+        endValue,
+        currentFocus,
+        withButton,
+        type = "standalone",
+        ...otherProps
+    }: CalendarProps,
+    ref: CalendarRef
+) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -50,17 +52,35 @@ export const Calendar = ({
     const [selectedEndDate, setSelectedEndDate] = useState<string>(""); // YYYY-MM-DD
 
     // =============================================================================
+    // HOOKS
+    // =============================================================================
+    useImperativeHandle(
+        ref,
+        (): any => {
+            return {
+                defaultView() {
+                    setCurrentView("default");
+                    onCalendarView("default");
+                },
+            };
+        },
+        []
+    );
+
+    // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        // use in date input with calendar only
-        // open 'confirmed' value calendar in first mounted
+        // use in date input with calendar
+        // open with 'confirmed' value calendar in first mounted
         if (!isOpen) return;
 
         let initCalendar = currentFocus === "end" ? endValue : value;
 
         if (!initCalendar.length) initCalendar = undefined;
+
         setCalendarDate(dayjs(initCalendar));
+        setCurrentView("default");
     }, [isOpen]);
 
     useEffect(() => {
@@ -129,12 +149,12 @@ export const Calendar = ({
     };
 
     const handleCancelButton = () => {
-        // close calendar and use confirm value if exist
+        // close calendar and use 'confirmed' value if exist
         performOnWithButtonHandler("reset");
     };
 
     const handleDoneButton = () => {
-        // close calendar and confirm the value
+        // close calendar and 'confirmed' the value
         performOnWithButtonHandler("confirmed");
     };
 
@@ -194,8 +214,10 @@ export const Calendar = ({
 
             setCalendarDate(dayjs(targetValue));
             setCurrentView("month-options");
+            performOnCalendarView("month-options");
         } else {
             setCurrentView("default");
+            performOnCalendarView("default");
         }
     };
 
@@ -207,12 +229,14 @@ export const Calendar = ({
          */
         if (currentView !== "default") {
             setCurrentView("default");
+            performOnCalendarView("default");
         } else {
             const targetValue =
                 currentFocus === "start" || !currentFocus ? value : endValue;
 
             setCalendarDate(dayjs(targetValue));
             setCurrentView("year-options");
+            performOnCalendarView("year-options");
         }
     };
 
@@ -224,6 +248,12 @@ export const Calendar = ({
             return `${beginDecade} to ${endDecade}`;
         } else {
             return dayjs(calendarDate).format("YYYY");
+        }
+    };
+
+    const performOnCalendarView = (view: View) => {
+        if (onCalendarView) {
+            onCalendarView(view);
         }
     };
 
@@ -270,11 +300,13 @@ export const Calendar = ({
          * apply selectedEndDate if currentFocus 'end'
          * apply selectedStartDate if currentFocus is not undefined or 'end'
          */
-        const selectedDate = !currentFocus
+        let selectedDate = !currentFocus
             ? selectedStartDate
             : currentFocus === "end"
             ? selectedEndDate
             : selectedStartDate;
+
+        if (!selectedDate.length) selectedDate = undefined;
 
         switch (currentView) {
             case "month-options":
@@ -387,3 +419,5 @@ export const Calendar = ({
         </Container>
     );
 };
+
+export const Calendar = React.forwardRef(Component);
