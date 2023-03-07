@@ -504,7 +504,6 @@ export const Container = styled.div`
 export const SearchInputComponent = styled.input`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     height: 26px;
-    width: 20rem;
     border: none;
     background: transparent;
     flex: 1;
