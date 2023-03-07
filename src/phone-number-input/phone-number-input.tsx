@@ -60,12 +60,6 @@ export const PhoneNumberInput = ({
         }
     };
 
-    const handleBlur = () => {
-        if (onBlur) {
-            onBlur();
-        }
-    };
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const currentValue = event.target.value.replace(/[^0-9]/g, "");
 
@@ -153,7 +147,7 @@ export const PhoneNumberInput = ({
             onChange={handleInputChange}
             allowClear={allowClear && !!inputValue}
             onClear={handleClear}
-            onBlur={handleBlur}
+            onBlur={onBlur}
             error={error}
             placeholder={placeholder}
             addon={getAddonProps()}

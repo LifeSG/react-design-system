@@ -104,6 +104,7 @@ export const InputGroupListAddon = <T, V>({
             // outside click
             setShowOptions(false);
             triggerOptionDisplayCallback(false);
+            handleBlur();
         }
     };
 
