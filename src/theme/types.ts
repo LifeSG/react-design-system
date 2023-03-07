@@ -1,4 +1,5 @@
 import { ColorSet, ColorSetOptions } from "../color/types";
+import { DesignTokenSet, DesignTokenSetOptions } from "../design-token/types";
 import { TextStyleSetOptionsType, TextStyleSetType } from "../text/types";
 
 export type ThemeLayout = "normal";
@@ -20,18 +21,28 @@ export type FontStyleCollectionsMap = {
 };
 
 // =============================================================================
+// DESIGN TOKEN THEMES
+// =============================================================================
+export type DesignTokenScheme = "base";
+export type DesignTokenCollectionsMap = {
+    [key in DesignTokenScheme]: DesignTokenSet;
+};
+
+// =============================================================================
 // GENERAL
 // =============================================================================
 export enum ThemeContextKeys {
     colorScheme = "colorScheme",
     layout = "layout",
     textStyleScheme = "textStyleScheme",
+    designTokenScheme = "designTokenScheme",
 }
 
 export interface ThemeSpecOptions {
     /** for color customisation, can specify subset of set */
     color?: ColorSetOptions | undefined;
     textStyle?: TextStyleSetOptionsType | undefined;
+    designToken?: DesignTokenSetOptions | undefined;
 }
 
 export interface ThemeSpec {
@@ -39,6 +50,8 @@ export interface ThemeSpec {
     [ThemeContextKeys.colorScheme]: ColorScheme;
     /** Sets the text style scheme of the theme */
     [ThemeContextKeys.textStyleScheme]: TextStyleScheme;
+    /** Sets the design token scheme of the theme */
+    [ThemeContextKeys.designTokenScheme]: DesignTokenScheme;
     /** Sets the layout scheme of the theme */
     [ThemeContextKeys.layout]?: ThemeLayout | undefined;
     /** For specific customisations to any schemes */

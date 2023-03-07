@@ -1,6 +1,11 @@
 import { getThemeColors } from "../theme/color-theme-helper";
+import { PropertiesToType } from "../util/utility-types";
+import { ColorSet } from "./types";
 
-export const Color = {
+export const Color: PropertiesToType<
+    ColorSet,
+    ReturnType<typeof getThemeColors>
+> = {
     Brand: {
         1: getThemeColors("Brand.1"),
         2: getThemeColors("Brand.2"),
@@ -57,5 +62,9 @@ export const Color = {
             Border: getThemeColors("Validation.Red.Border"),
             Background: getThemeColors("Validation.Red.Background"),
         },
+    },
+    Shadow: {
+        Accent: getThemeColors("Shadow.Accent"),
+        Red: getThemeColors("Shadow.Red"),
     },
 };

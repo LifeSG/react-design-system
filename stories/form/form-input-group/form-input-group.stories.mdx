@@ -3,6 +3,7 @@ import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { InputGroup } from "src/input-group";
 import { Form } from "src/form";
+import { Text } from "src/text";
 import {
     Heading3,
     Heading4,
@@ -81,6 +82,8 @@ You are able to specify attributes in the `addon` property to construct advanced
     <Story name="With different addons">
         <StoryContainer>
             <Container>
+                <Text.H3>Static addon</Text.H3>
+                <br />
                 <Form.InputGroup
                     label="With a static addon"
                     placeholder="Enter an amount"
@@ -90,6 +93,18 @@ You are able to specify attributes in the `addon` property to construct advanced
                         },
                     }}
                 />
+                <Form.InputGroup
+                    label="With a static addon on the right"
+                    placeholder="Enter an amount"
+                    addon={{
+                        position: "right",
+                        attributes: {
+                            value: "kg",
+                        },
+                    }}
+                />
+                <Text.H3>List addon</Text.H3>
+                <br />
                 <Form.InputGroup
                     label="With a list addon"
                     placeholder="Enter something"
@@ -110,7 +125,7 @@ You are able to specify attributes in the `addon` property to construct advanced
                     }}
                 />
                 <Form.InputGroup
-                    label="With a list addon"
+                    label="This is the list addon readonly state (pristine)"
                     placeholder="Enter something"
                     addon={{
                         type: "list",
@@ -130,15 +145,100 @@ You are able to specify attributes in the `addon` property to construct advanced
                     readOnly
                 />
                 <Form.InputGroup
-                    label="With a static addon on the right"
-                    placeholder="Enter an amount"
+                    label="This is the list addon readonly state (selected)"
+                    placeholder="Enter something"
                     addon={{
-                        position: "right",
+                        type: "list",
                         attributes: {
-                            value: "kg",
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                            value: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
                         },
                     }}
+                    value="Some value"
+                    readOnly
                 />
+                <Form.InputGroup
+                    label="This is the list addon disabled state"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                            value: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
+                        },
+                    }}
+                    disabled
+                />
+                <Form.InputGroup
+                    label="This is the list addon error state"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                            value: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
+                        },
+                    }}
+                    error
+                />
+                <Form.InputGroup
+                    label="With a list addon on the right"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            placeholder: "Select",
+                            type: "list",
+                            options: [
+                                { value: "SG", display: "Singapore" },
+                                { value: "US", display: "United States" },
+                                { value: "UK", display: "United Kingdom" },
+                                { value: "JP", display: "Japan" },
+                            ],
+                            valueExtractor: (option) => option.value,
+                            listExtractor: (option) => option.display,
+                        },
+                        position: "right",
+                    }}
+                />
+                <Text.H3>Custom addon</Text.H3>
+                <br />
                 <Form.InputGroup
                     label="With a custom addon"
                     placeholder="Enter something"
@@ -147,6 +247,17 @@ You are able to specify attributes in the `addon` property to construct advanced
                         attributes: {
                             children: <MagnifierIcon />,
                         },
+                    }}
+                />
+                <Form.InputGroup
+                    label="With a custom addon on the right"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "custom",
+                        attributes: {
+                            children: <MagnifierIcon />,
+                        },
+                        position: "right",
                     }}
                 />
             </Container>

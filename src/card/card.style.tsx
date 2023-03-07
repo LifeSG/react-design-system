@@ -5,8 +5,8 @@ import { Color } from "../color/color";
 // STYLING
 // =============================================================================
 export const StyledCard = styled.div`
-    border-radius: 8px;
+    border-radius: 0.5rem;
     background: ${Color.Neutral[8]};
     padding: 1rem 2rem;
-    box-shadow: 0 2px 8px 0 rgba(104, 104, 104, 0.24);
+    box-shadow: 0 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
 `;

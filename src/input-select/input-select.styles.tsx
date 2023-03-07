@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
 import { Color } from "../color";
+import { DesignToken } from "../design-token";
 import { MediaQuery } from "../media";
 import { TruncateType } from "../shared/dropdown-list/types";
 import { Text, TextStyle } from "../text";
@@ -28,7 +29,7 @@ const BORDER_RADIUS = "4px";
 export const Wrapper = styled.div`
     position: relative;
     min-height: 3rem;
-    height: 3rem;
+    height: 3rem; // Need this to persist the height when expanding or collapsing list
     width: 100%;
 
     ${MediaQuery.MaxWidth.tablet} {
@@ -41,7 +42,8 @@ export const Selector = styled.button`
     position: relative;
     align-items: center;
     justify-content: space-between;
-    padding: 0.702rem 1rem; // To make it exactly 3rem height
+    padding: 0 1rem;
+    height: 3rem;
     width: 100%;
     border-radius: ${BORDER_RADIUS};
     cursor: pointer;
@@ -78,7 +80,7 @@ export const ElementBoundary = styled.div<InputSelectStyleProps>`
 
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px rgba(87, 169, 255, 0.5);
+        box-shadow: ${DesignToken.InputBoxShadow};
     }
 
     ${(props) => {
@@ -131,7 +133,7 @@ export const ElementBoundary = styled.div<InputSelectStyleProps>`
 
                 :focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: inset 0 0 4px 1px rgba(221, 102, 102, 0.8);
+                    box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;
         }

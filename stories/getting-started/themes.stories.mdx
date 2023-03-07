@@ -26,7 +26,8 @@ A theme object is composed as such:
 ```tsx
 {
 	colorScheme: "base",
-	textStyleScheme: "base"
+	textStyleScheme: "base",
+	designTokenScheme: "base",
 }
 ```
 
@@ -50,6 +51,7 @@ import { Component } from "./index";
 const myTheme: ThemeSpec = {
     colorScheme: "base",
     textStyleScheme: "base",
+    designTokenScheme: "base",
 };
 
 const App = () => {
@@ -63,7 +65,7 @@ const App = () => {
 export default App;
 ```
 
-<Heading4>Modified props on invidual elements</Heading4>
+<Heading4>Modified props on individual elements</Heading4>
 
 If you are using this, you are attempting to change the theme on an element specific level. Note that this does not
 change all the other components in your UI.
@@ -150,6 +152,9 @@ const myCustomTheme: ThemeSpec = {
             D1: {
                 fontSize: 5, // in rem
             },
+        },
+        designToken: {
+            InputBoxShadow: "inset 0 0 6px 1px blue",
         },
     },
 };
