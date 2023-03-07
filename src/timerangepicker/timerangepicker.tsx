@@ -10,7 +10,7 @@ import {
     Wrapper,
 } from "./timerangepicker.styles";
 import { TimerangepickerProps } from "./types";
-import { Icon } from "../icon";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 
 export const Timerangepicker = ({
     id,
@@ -195,7 +195,7 @@ export const Timerangepicker = ({
                     onChange={handleStartTime}
                 />
 
-                <Icon type="arrow-right" />
+                <ArrowRightIcon type="arrow-right" />
 
                 {showSelector && <BottomHighlightEndTime />}
 
