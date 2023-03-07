@@ -46,11 +46,14 @@ export const CalendarMonth = ({
         const value = date.format("YYYY-MM-DD");
         let variant: MonthVariant = "default";
 
-        variant = dayjs(selectedDate).isSame(value, "month")
-            ? "selected-month"
-            : dayjs().isSame(value, "month")
-            ? "current-month"
-            : "default";
+        variant =
+            selectedDate &&
+            selectedDate.length &&
+            dayjs(selectedDate).isSame(value, "month")
+                ? "selected-month"
+                : dayjs().isSame(value, "month")
+                ? "current-month"
+                : "default";
 
         return {
             month,

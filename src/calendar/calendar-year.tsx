@@ -27,7 +27,6 @@ export const CalendarYear = ({
     // CONST, STATE, REF
     // =============================================================================
     const [years, setYears] = useState<Dayjs[]>([]);
-
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -54,7 +53,9 @@ export const CalendarYear = ({
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
-            : dayjs(selectedDate).isSame(fullDate, "year")
+            : selectedDate &&
+              selectedDate.length &&
+              dayjs(selectedDate).isSame(fullDate, "year")
             ? "selected-year"
             : dayjs().isSame(fullDate, "year")
             ? "current-year"
