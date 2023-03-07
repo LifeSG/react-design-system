@@ -19,17 +19,35 @@ const BORDER_RADIUS = "4px";
 export const AnimatedDiv = styled(animated.div)`
     position: absolute;
     top: 3.5rem;
-    left: 20px;
+    left: 0px;
     width: 432px;
     height: 232px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     background: ${Color.Neutral[8]};
     border-radius: ${BORDER_RADIUS};
-    overflow: hidden;
+
     z-index: 1;
+    /* :focus,
+    :focus-within {
+        border: 1px solid ${Color.Accent.Light[1]};
+        box-shadow: inset 0 0 5px 1px rgba(87, 169, 255, 0.5);
+    } */
+    overflow: hidden;
 
     ${MediaQuery.MaxWidth.tablet} {
-        width: 100%;
+        width: 335px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 335px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 309px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 280px;
     }
 `;
 

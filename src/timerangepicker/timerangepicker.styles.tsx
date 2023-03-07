@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
+import { BookingSGColorSet } from "../spec/color-spec/bookingsg-color-set";
 import { TextStyleHelper } from "../text/helper";
+import { MediaQuery } from "../media";
 
 // =============================================================================
 // STYLE INTERFACe
@@ -36,8 +38,8 @@ export const InputSelectorElement = styled.input<StyleProps>`
     padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
     width: 134.5px;
     height: 26px;
-    background: ${Color.Neutral[8]};
-    color: ${Color.Neutral[1]};
+    background: ${BookingSGColorSet.Neutral[8]};
+    color: ${BookingSGColorSet.Neutral[1]};
     border: 0px;
     :focus,
     :active {
@@ -58,10 +60,17 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
     align-self: stretch;
     flex-grow: 0;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    background: ${Color.Neutral[8]};
+    background: ${BookingSGColorSet.Primary[""]};
     border-radius: 4px;
     overflow: hidden;
     z-index: 1;
+
+    /* position: absolute;
+    bottom: 0;
+    height: 4px;
+    left: 0.5rem;
+    right: 0.5rem;
+    background-color: #1c76d5; */
 
     :focus,
     :focus-within {
@@ -100,6 +109,22 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
             `;
         }
     }}
+
+    ${MediaQuery.MaxWidth.tablet} {
+        width: 335px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 335px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 309px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 280px;
+    }
 `;
 
 export const RangeArrow = styled.div`
@@ -108,4 +133,24 @@ export const RangeArrow = styled.div`
     right: 18.44%;
     top: 18.33%;
     bottom: 18.34%;
+`;
+
+export const BottomHighlightStartTime = styled.div`
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    left: 1rem;
+    right: 23rem;
+    background: ${BookingSGColorSet.Neutral[8]};
+    background-color: ${Color.Accent.Light[1]};
+`;
+
+export const BottomHighlightEndTime = styled.div`
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    left: 12rem;
+    right: 11rem;
+    background: ${BookingSGColorSet.Neutral[8]};
+    background-color: ${Color.Accent.Light[1]};
 `;
