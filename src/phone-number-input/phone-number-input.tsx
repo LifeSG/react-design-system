@@ -151,6 +151,7 @@ export const PhoneNumberInput = ({
             error={error}
             placeholder={placeholder}
             addon={getAddonProps()}
+            inputMode="numeric"
             {...otherProps}
         />
     );
