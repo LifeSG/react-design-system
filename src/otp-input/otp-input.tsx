@@ -32,6 +32,7 @@ export const OtpInput = ({
         ...otherCtaProps
     } = actionButtonProps ?? {};
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+    const onChangeRef = useRef(onChange);
 
     const [otpValues, setOtpValues] = useState<string[]>(
         new Array(numOfInput).fill("")
@@ -51,11 +52,17 @@ export const OtpInput = ({
     }, []);
 
     useEffect(() => {
-        if (countDown === cooldownDuration) {
+        if (cooldownDuration !== 0) {
             if (onCooldownStart) onCooldownStart();
-            beginCountdown();
+            const cleanup = beginCountdown();
+
+            return () => cleanup();
         }
-    }, [countDown]);
+    }, [lastCtaTimestamp]);
+
+    useEffect(() => {
+        onChangeRef.current = onChange;
+    }, [onChange]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -81,14 +88,14 @@ export const OtpInput = ({
     const handleKeyDown =
         (index: number) => (event: React.KeyboardEvent<HTMLInputElement>) => {
             const { key, code } = event;
+            if (code !== "Backspace" || key !== "Backspace") {
+                return;
+            }
 
             const newOtpValues = [...otpValues];
-            if (
-                (code === "Backspace" || key === "Backspace") &&
-                newOtpValues[index] !== ""
-            ) {
+            if (newOtpValues[index] !== "") {
                 newOtpValues[index] = "";
-            } else if (code === "Backspace" || key === "Backspace") {
+            } else {
                 newOtpValues[index - 1] = "";
                 inputRefs.current[index - 1]?.focus();
             }
@@ -104,8 +111,8 @@ export const OtpInput = ({
         const pastedValue = event.clipboardData.getData("text");
         if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
             setOtpValues(pastedValue.split(""));
-            if (onChange) {
-                onChange(pastedValue);
+            if (onChangeRef.current) {
+                onChangeRef.current(pastedValue);
             }
         } else {
             event.preventDefault();
@@ -141,15 +148,26 @@ export const OtpInput = ({
     };
 
     const beginCountdown = () => {
-        let timer = cooldownDuration;
         const interval = setInterval(() => {
-            timer--;
+            const currentTime = Date.now();
+            const coolDownInMilliseconds = cooldownDuration * 1000;
+
+            const timer = Math.ceil(
+                (lastCtaTimestamp.valueOf() +
+                    coolDownInMilliseconds -
+                    currentTime) /
+                    1000
+            );
             setCountDown(timer);
-            if (timer === 0) {
+            if (timer <= 0) {
                 if (onCooldownEnd) onCooldownEnd();
                 clearInterval(interval);
             }
         }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
     };
 
     const generateId = (index: number, name: string, prefix?: string) => {
@@ -163,7 +181,7 @@ export const OtpInput = ({
     // =============================================================================
     const renderCTALabel = () => {
         return otherCtaProps.children
-            ? `${otherCtaProps.children}`
+            ? otherCtaProps.children
             : `Resend OTP${
                   countDown
                       ? ` in ${countDown} second${countDown > 1 ? "s" : ""}`
