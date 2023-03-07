@@ -235,6 +235,8 @@ const BaseActionButton = styled.button`
     padding: 0.5rem;
     height: 2.5rem;
     border-radius: 0.25rem;
+    cursor: pointer;
+    border: 0;
 `;
 
 export const CancelButton = styled(BaseActionButton)`

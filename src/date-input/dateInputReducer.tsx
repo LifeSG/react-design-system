@@ -4,6 +4,8 @@ export type ActionType =
     | "reset"
     | "selected"
     | "default"
+    | "invalid"
+    | "error"
     | any;
 
 interface Action {
@@ -79,6 +81,15 @@ export const dateInputReducer = (state: State, action: Action): State => {
                 input: state.confirmed,
                 selected: state.confirmed,
                 currentType: "reset",
+            };
+        case "invalid":
+            return {
+                ...state,
+                calendar: "",
+                confirmed: state.confirmed,
+                input: "",
+                selected: "",
+                currentType: "invalid",
             };
         default:
             return {
