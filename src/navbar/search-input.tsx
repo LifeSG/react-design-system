@@ -147,7 +147,12 @@ export const SearchInput = <T,>({
     };
 
     const handleSearchButtonClick = () => {
-        if (itemsLocal && itemsLocal.length >= 1) {
+        if (
+            itemsLocal &&
+            itemsLocal.length >= 1 &&
+            inputValue &&
+            inputValue.length >= 3
+        ) {
             setShowDropdown("on-dropdown-focus");
             setToggleDropdown(true);
         } else if (inputValue && inputValue.length >= 1) {
