@@ -47,6 +47,7 @@ const Component = <T,>(
         onSecondaryBrandClick,
         onActionButtonClick,
         onBrandClick,
+        onSearchButtonClick,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<HTMLDivElement>
@@ -169,6 +170,12 @@ const Component = <T,>(
         setToggleHeaderClick(!toggleheaderClick);
     };
 
+    const handleSearchButtonClick = (searchInput: string) => {
+        if (onSearchButtonClick) {
+            onSearchButtonClick(searchInput);
+        }
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -253,6 +260,7 @@ const Component = <T,>(
             onItemClick={handleNavItemClick}
             onToggleHeaderClick={handleheaderClick}
             mobile={mobile}
+            onSearchButtonClick={handleSearchButtonClick}
         />
     );
 

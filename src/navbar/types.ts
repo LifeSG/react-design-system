@@ -103,4 +103,5 @@ export interface NavbarProps<T = void>
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)
         | undefined;
+    onSearchButtonClick?: ((searchInput: string) => void) | undefined;
 }

@@ -162,12 +162,13 @@ export const DropDownBar = styled.ul`
     background: ${Color.Neutral[8]};
     border-radius: 0px 0px 4px 4px;
 
-    box-shadow: inset 0 -5px 5px -5px #57a9ff, inset 5px 0 5px -5px #57a9ff,
-        inset -5px 0 5px -5px #57a9ff;
+    box-shadow: inset 0 -5px 5px -5px rgb(87 169 255 / 50%),
+        inset 5px 0 5px -5px rgb(87 169 255 / 50%),
+        inset -5px 0 5px -5px rgb(87 169 255 / 50%);
 
-    border-right: 1px solid #57a9ff;
-    border-left: 1px solid #57a9ff;
-    border-bottom: 1px solid #57a9ff;
+    border-right: 1px solid ${Color.Accent.Light[1]};
+    border-left: 1px solid ${Color.Accent.Light[1]};
+    border-bottom: 1px solid ${Color.Accent.Light[1]};
 
     ${MediaQuery.MaxWidth.tablet} {
         top: 102%;
@@ -265,6 +266,7 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0px;
     }
+
     ${(props) => {
         if (props.$dropdown === "on-blur") {
             return `
@@ -273,7 +275,7 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
     `;
         } else if (props.$dropdown === "on-focus") {
             return `
-            border: 1px solid  #57A9FF;
+            border: 1px solid  rgba(87, 169, 255, 1);
             border-radius: 4px 4px 4px 4px;
             box-shadow: inset 0 0 6px 1px rgb(87 169 255 / 50%);
     `;
@@ -281,12 +283,12 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
             return `
             border-top-right-radius: 4px;
             border-top-left-radius: 4px;
-            border-right: 1px solid #57A9FF;
-            border-left: 1px solid #57A9FF;
-            border-top: 1px solid #57A9FF;
+            border-right: 1px solid rgba(87, 169, 255, 1);
+            border-left: 1px solid rgba(87, 169, 255, 1);
+            border-top: 1px solid rgba(87, 169, 255, 1);
             border-bottom: 0px;
-            box-shadow: inset 0 5px 5px -5px #57a9ff, inset 5px 0 5px -5px #57a9ff,
-        inset -5px 0 5px -5px #57a9ff;
+            box-shadow: inset 0 5px 5px -5px rgb(87 169 255 / 50%), inset 5px 0 5px -5px rgb(87 169 255 / 50%),
+        inset -5px 0 5px -5px rgb(87 169 255 / 50%);
     `;
         } else {
             return `
@@ -552,5 +554,17 @@ export const DividerInput = styled.div`
         width: 1px !important;
         margin-top: 1%;
         margin-bottom: 1%;
+    }
+`;
+
+export const DividerVertical = styled.div`
+    height: 1.25rem;
+    width: 1px;
+    background: ${Color.Neutral[5]};
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        height: 1.25rem !important;
     }
 `;

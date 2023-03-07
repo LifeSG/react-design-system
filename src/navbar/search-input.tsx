@@ -8,6 +8,7 @@ import {
     Container,
     CrossIconClose,
     Divider,
+    DividerVertical,
     DropDownBar,
     Link,
     MenuItem,
@@ -96,11 +97,7 @@ export const SearchInput = <T,>({
             setToggleDropdown(true);
         } else {
             setToggleDropdown(false);
-            if (inputValue && inputValue.length < 3) {
-                setShowDropdown("on-focus");
-            } else {
-                setShowDropdown("on-blur");
-            }
+            setShowDropdown("on-focus");
         }
     }, [inputValue]);
 
@@ -146,10 +143,23 @@ export const SearchInput = <T,>({
 
     const handleSearchIconClick = () => {
         setToggleDropdown(true);
+        setShowDropdown("on-blur");
     };
 
     const handleSearchButtonClick = () => {
-        onSearchButtonClick(inputValue);
+        if (itemsLocal && itemsLocal.length >= 1) {
+            setShowDropdown("on-dropdown-focus");
+            setToggleDropdown(true);
+        } else if (inputValue && inputValue.length >= 1) {
+            setShowDropdown("on-focus");
+            setToggleDropdown(false);
+        } else {
+            setToggleDropdown(false);
+            setShowDropdown("on-blur");
+        }
+        if (onSearchButtonClick) {
+            onSearchButtonClick(inputValue);
+        }
     };
 
     // =============================================================================
@@ -233,7 +243,12 @@ export const SearchInput = <T,>({
                     onFocus={onInputFocus}
                 />
 
-                {!mobile && <SearchIcon onClick={handleSearchButtonClick} />}
+                {!mobile && (
+                    <>
+                        <DividerVertical />
+                        <SearchIcon onClick={handleSearchButtonClick} />
+                    </>
+                )}
             </Container>
         );
     };

@@ -113,6 +113,11 @@ const DATA: ApiTableSectionProps[] = [
                     "Called when a navigation action button is clicked",
                 propTypes: ["(actionButton: NavbarButtonProps) => void"],
             },
+            {
+                name: "onSearchButtonClick",
+                description: "Called when a serach input search iscon clicked",
+                propTypes: ["(searchInput: string) => void"],
+            },
         ],
     },
     {
