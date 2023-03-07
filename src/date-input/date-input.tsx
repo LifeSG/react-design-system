@@ -14,6 +14,7 @@ import {
     INITIAL_INPUT_VALUES,
     dateInputReducer,
 } from "./dateInputReducer";
+import { DateInputHelper } from "../util/date-input-helper";
 
 interface CurrentFocusTypes {
     field: FieldType;
@@ -89,9 +90,19 @@ export const DateInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const setCalendarOpen = async (boolean: boolean) => {
-        if (!boolean) await sleep(350);
+        if (!boolean) await DateInputHelper.sleep(150);
 
         _setCalendarOpen(boolean);
+
+        // handle action state during closing via user hover action.
+        // to reset back to initial 'confirmed'
+        if (!boolean) {
+            dispatchStart({ type: "confirmed" });
+
+            setCurrentElement({ field: "none", type: "none", count: 0 });
+
+            if (variant === "range") dispatchEnd({ type: "confirmed" });
+        }
     };
 
     const handleMouseDown = (event: MouseEvent) => {
@@ -114,7 +125,25 @@ export const DateInput = ({
     }
 
     const handleChange = (value: string) => {
-        // standAloneInput on blur then trigger this
+        let isValid = false;
+
+        switch (currentElement.type) {
+            case "start":
+                isValid = DateInputHelper.validate(value, endDate.selected);
+                break;
+            case "end":
+                isValid = DateInputHelper.validate(startDate.selected, value);
+                break;
+            default:
+                isValid = false;
+        }
+
+        // call another reducer to reset the selected value
+        if (!isValid) {
+            setCurrentElement({ ...currentElement, count: 0 });
+            handleReducer("invalid");
+        }
+
         handleReducer("selected", value);
     };
 
@@ -133,6 +162,7 @@ export const DateInput = ({
     const handleHoverDayCell = (value: string) => {
         if (!value) {
             handleReducer("default");
+
             return;
         }
 
@@ -150,12 +180,6 @@ export const DateInput = ({
                 handleReducer("confirmed");
                 break;
         }
-
-        // update the indicate bar
-        setTimeout(() => {
-            // buggy side effect in mousedown, trigger useEffect startDate && endDate
-            setCurrentElement({ field: "none", type: "none", count: 0 });
-        }, 1);
     };
 
     const handleIsOpenCalendar = (value: boolean) => {
@@ -165,8 +189,6 @@ export const DateInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
     const performOnChangeHandler = (values: ChangeValueTypes) => {
         if (onChange) {
             onChange(values);
@@ -191,17 +213,46 @@ export const DateInput = ({
     const handleReducer = (type: ActionType, value?: string) => {
         let field = currentElement.type as FocusType;
 
+        let isValid = true;
+
         // closed calendar
         if (["confirmed", "reset"].includes(type)) {
             field = "none";
+
+            isValid = DateInputHelper.validate(
+                startDate.selected,
+                endDate.selected
+            );
+        }
+
+        // reset both
+        if (!isValid) {
+            dispatchStart({ type: "invalid" });
+            dispatchEnd({ type: "invalid" });
+
+            return;
         }
 
         switch (field) {
             case "start":
+                if (type === "invalid") {
+                    dispatchEnd({ type });
+
+                    return;
+                }
+
                 dispatchStart({ type, value });
+
                 break;
             case "end":
+                if (type === "invalid") {
+                    dispatchStart({ type });
+
+                    return;
+                }
+
                 dispatchEnd({ type, value });
+
                 break;
             case "none":
                 dispatchStart({ type, value });

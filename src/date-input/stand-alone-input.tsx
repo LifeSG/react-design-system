@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DateHelper, StringHelper } from "../util";
+import { ActionType } from "./dateInputReducer";
 import {
     DayInput,
     Divider,
@@ -24,7 +25,7 @@ interface Props {
         | ["end-day", "end-month", "end-year"];
     value?: string | undefined;
     variant: VariantStyleProps;
-    action: "hover" | "selected" | "confirmed";
+    action: ActionType;
     isActive: boolean;
     onChange: (value: string) => void;
     onFocus: (value: FieldType) => void;
@@ -200,7 +201,8 @@ export const StandAloneInput = ({
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        if (action === "hover") return;
+        // prevent return back into onChangeHandler
+        if (action === "hover" || action === "default") return;
 
         const targetName = event.target.name as FieldType;
         const targetField = targetName.split("-")[1] as FieldName;
