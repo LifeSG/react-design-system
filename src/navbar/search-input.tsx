@@ -9,6 +9,7 @@ import {
     CrossIconClose,
     Divider,
     DividerVertical,
+    DividerVerticalMobile,
     DropDownBar,
     Link,
     MenuItem,
@@ -17,9 +18,11 @@ import {
     SearchBarDesktop,
     SearchBarInputContainer,
     SearchIcon,
+    SearchIconButton,
     SearchInputComponent,
     SearchInputContainer,
     SearchMainBarContainer,
+    SearchMobileIcon,
     SearchSpan,
 } from "./search-input.styles";
 import { NavItemCommonProps } from "./types";
@@ -96,6 +99,7 @@ export const SearchInput = <T,>({
             setShowDropdown("on-dropdown-focus");
             setToggleDropdown(true);
         } else {
+            setItemsLocalValue([]);
             setToggleDropdown(false);
             setShowDropdown("on-focus");
         }
@@ -220,12 +224,12 @@ export const SearchInput = <T,>({
         return (
             <>
                 {!toggleInput ? (
-                    <IconButton onClick={handleToggleClick}>
+                    <SearchIconButton onClick={handleToggleClick}>
                         <SearchIcon
                             className="search-icon"
                             onClick={handleSearchIconClick}
                         />
-                    </IconButton>
+                    </SearchIconButton>
                 ) : (
                     <>{renderSearchComponent(isMobile)}</>
                 )}
@@ -236,7 +240,12 @@ export const SearchInput = <T,>({
     const renderSearchinput = () => {
         return (
             <Container key="search">
-                {mobile && <SearchIcon onClick={handleSearchButtonClick} />}
+                {mobile && (
+                    <>
+                        <SearchMobileIcon onClick={handleSearchButtonClick} />{" "}
+                        <DividerVerticalMobile />
+                    </>
+                )}
 
                 <SearchInputComponent
                     ref={ref}

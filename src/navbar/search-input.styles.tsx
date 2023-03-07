@@ -6,7 +6,6 @@ import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { IconButton } from "../icon-button/icon-button";
 import { Form } from "../form";
-import { DesignToken } from "../design-token";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -260,8 +259,10 @@ export const LinkWrapper = styled.ul`
 export const SearchBarContainer = styled.div<ListContainerProps>`
     display: flex;
     position: relative;
-    justify-items: center;
+    justify-items: right;
     width: 100%;
+    height: 48px;
+    background: transparent;
 
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0px;
@@ -297,35 +298,13 @@ export const SearchBarContainer = styled.div<ListContainerProps>`
     `;
         }
     }}
-
-    background: transparent;
-    max-height: 20rem;
-
-    ::-webkit-scrollbar {
-        width: 9px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: ${Color.Neutral[4]};
-        border-right: 5px solid ${Color.Neutral[8]};
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        max-height: 15rem;
-    }
 `;
 
 export const SearchBarInputContainer = styled.div`
     display: grid;
     height: 100%;
     width: 100%;
-    justify-content: space-around;
+    justify-content: start;
     flex-direction: row;
     align-items: center;
     position: relative;
@@ -340,15 +319,15 @@ export const SearchInputContainer = styled.div`
     position: relative;
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-left: -8px;
+        margin-left: 0px;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        margin-left: -9px;
+        margin-left: 0px;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        margin-left: -4px;
+        margin-left: 0px;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
@@ -361,7 +340,8 @@ export const CloseIconContainer = styled.div`
     flex-direction: row;
     align-items: center;
     position: relative;
-    padding: 16px !important;
+    padding: 4px !important;
+    margin-left: 16px;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
@@ -383,8 +363,8 @@ export const CloseIconContainer = styled.div`
 export const SearchIcon = styled(MagnifierIcon)`
     height: 1.5rem !important;
     width: 1.5rem !important;
+    margin-right: 12px;
     color: ${Color.Neutral[3]} !important;
-    margin-right: 16px;
     :hover {
         color: ${Color.Primary} !important;
     }
@@ -398,13 +378,37 @@ export const SearchIcon = styled(MagnifierIcon)`
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        margin-right: 16px;
         margin-left: 0px;
     }
     ${MediaQuery.MaxWidth.mobileS} {
         margin-right: 0px;
-        margin-left: 10px;
     }
+`;
+
+export const SearchMobileIcon = styled(MagnifierIcon)`
+    height: 1.5rem !important;
+    width: 1.5rem !important;
+    margin-right: 12px;
+    margin-left: 12px;
+    color: ${Color.Neutral[3]} !important;
+    :hover {
+        color: ${Color.Primary} !important;
+    }
+
+    /* ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    } */
+
+    /* ${MediaQuery.MaxWidth.mobileL} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-left: 0px;
+    }
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-right: 0px;
+    } */
 `;
 
 export const CrossIconClose = styled(CrossIcon)`
@@ -448,33 +452,36 @@ export const Input = styled(Form.InputGroup)`
 export const Divider = styled.div`
     height: 1px;
     background: ${Color.Neutral[5]};
-    margin: 0 0.5rem;
-    width: 98% !important;
+    //margin: 0 1px;
+    width: 97% !important;
     margin-left: 1%;
+    margin-top: -4px;
 
     ${MediaQuery.MaxWidth.tablet} {
-        width: 116% !important;
-        margin-left: -8%;
+        width: 97% !important;
+        margin-left: 2%;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        width: 120% !important;
-        margin-left: -10%;
+        width: 97% !important;
+        margin-left: 2%;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        width: 116% !important;
-        margin-left: -8%;
+        width: 97% !important;
+        margin-left: 2%;
     }
     ${MediaQuery.MaxWidth.mobileS} {
-        width: 98% !important;
-        margin-left: 1%;
+        width: 97% !important;
+        margin-left: 2%;
     }
 `;
 
 export const Container = styled.div`
     display: flex;
-    margin-left: -27px;
+    height: 48px;
+    width: 100% !important;
+    margin-left: 0px;
     align-items: center;
 
     ${MediaQuery.MaxWidth.tablet} {
@@ -496,24 +503,33 @@ export const Container = styled.div`
 
 export const SearchInputComponent = styled.input`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    height: 3rem;
+    height: 26px;
+    width: 20rem;
     border: none;
     background: transparent;
     flex: 1;
-    padding: 0 0.5rem 0 0;
-    margin-left: 45px;
+    //padding: 0 0.5rem 0 0;
+    margin-left: 16px;
+    margin-top: 11px;
+    margin-bottom: 11px;
 
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 3px;
+        margin-right: 16px;
+        width: 15rem;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        margin-left: 0px;
+        margin-right: 16px;
+        width: 13.5rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 12rem;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        margin-left: 0px;
-        padding-left: 2px;
+        width: 9rem;
     }
 
     :focus,
@@ -566,5 +582,40 @@ export const DividerVertical = styled.div`
 
     ${MediaQuery.MaxWidth.tablet} {
         height: 1.25rem !important;
+    }
+`;
+
+export const DividerVerticalMobile = styled.div`
+    height: 1.25rem;
+    width: 1px;
+    background: ${Color.Neutral[5]};
+    margin-left: 0rem;
+    margin-right: 1rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        height: 1.25rem;
+    }
+`;
+
+export const SearchIconButton = styled(IconButton)`
+    padding: 1rem !important;
+
+    margin-right: 16px;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-left: 0px;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-right: 16px;
+        margin-left: 0px;
+    }
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-right: 0px;
+        margin-left: 10px;
     }
 `;
