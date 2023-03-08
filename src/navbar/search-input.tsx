@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
-import { IconButton } from "../icon-button/icon-button";
 
 import {
     CloseIconButton,
