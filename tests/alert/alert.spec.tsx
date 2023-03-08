@@ -36,13 +36,22 @@ describe("Alert", () => {
     });
 
     describe("actionLink", () => {
-        it("should render action link if the prop is provided", () => {
+        it("should render if the prop is provided", () => {
             renderComponent({ actionLink: { href: "www.google.com" } });
 
             expect(getActionLink()).toBeInTheDocument();
         });
 
-        it("should not render action link if the prop is not provided", () => {
+        it("should render custom children if the prop is specified", () => {
+            const customText = "custom text";
+            renderComponent({
+                actionLink: { href: "www.google.com", children: customText },
+            });
+
+            expect(getActionLink(false, customText)).toBeInTheDocument();
+        });
+
+        it("should not render if the prop is not provided", () => {
             renderComponent();
 
             expect(getActionLink(true)).not.toBeInTheDocument();
@@ -65,11 +74,11 @@ const DEFAULT_TEXT = "default text";
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-const getActionLink = (isQuery = false) => {
+const getActionLink = (isQuery = false, children?: string) => {
     if (isQuery) {
-        return screen.queryByRole("link");
+        return screen.queryByRole("link", children && { name: children });
     }
-    return screen.getByRole("link");
+    return screen.getByRole("link", children && { name: children });
 };
 
 // =============================================================================
