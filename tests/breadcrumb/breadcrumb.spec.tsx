@@ -24,15 +24,16 @@ describe("Breadcrumb", () => {
     it("should render the url props", () => {
         renderComponent();
 
-        DEFAULT_LINKS.forEach((metadata) => {
+        DEFAULT_LINKS.forEach((metadata, index) => {
+            const isLastBreadcrumb = index + 1 === DEFAULT_LINKS.length;
             const label = metadata.children as string;
-            const hasUrl = metadata.href;
 
-            expect(
-                hasUrl
-                    ? screen.getByRole("link", { name: label })
-                    : screen.getByText(label)
-            ).toBeInTheDocument();
+            if (!isLastBreadcrumb) {
+                expect(getBreadcrumb(label)).toBeInTheDocument();
+            } else {
+                expect(getBreadcrumb(label, true)).not.toBeInTheDocument();
+                expect(screen.getByText(label)).toBeInTheDocument();
+            }
         });
     });
 });
@@ -55,12 +56,21 @@ const DEFAULT_LINKS: React.AnchorHTMLAttributes<HTMLAnchorElement>[] = [
     },
     {
         children: "Last breadcrumb",
+        href: "https://google.com/",
+        target: "_blank",
+        rel: "noreferrer",
     },
 ];
 
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
+const getBreadcrumb = (label: string, isQuery = false) => {
+    if (isQuery) {
+        return screen.queryByRole("link", { name: label });
+    }
+    return screen.getByRole("link", { name: label });
+};
 
 // =============================================================================
 // RENDER FUNCTIONS
