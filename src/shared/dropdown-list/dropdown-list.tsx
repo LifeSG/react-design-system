@@ -46,6 +46,7 @@ export const DropdownList = <T, V>({
     itemsLoadState = "success",
     itemTruncationType = "end",
     renderListItem,
+    onBlur,
     ...otherProps
 }: DropdownListProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -277,6 +278,10 @@ export const DropdownList = <T, V>({
         if (onRetry) onRetry();
     };
 
+    const handleBlur = () => {
+        if (onBlur) onBlur();
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -326,6 +331,7 @@ export const DropdownList = <T, V>({
                             type="button"
                             tabIndex={visible ? 0 : -1}
                             multiSelect={multiSelect}
+                            onBlur={handleBlur}
                         >
                             {multiSelect && (
                                 <ListCheckbox

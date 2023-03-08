@@ -60,6 +60,7 @@ export interface DropdownListProps<T, V>
     onDismiss?: (() => void) | undefined;
     onSelectAll?: (() => void) | undefined;
     onRetry?: (() => void) | undefined;
+    onBlur?: (() => void) | undefined;
 }
 
 export interface ListItemSelectorProps {

@@ -54,6 +54,10 @@ export const Selector = styled.button`
     :active {
         outline: none;
     }
+
+    :focus-visible {
+        outline: 2px solid ${Color.Accent.Light[3]};
+    }
 `;
 
 // Note: Need this to only switch back after

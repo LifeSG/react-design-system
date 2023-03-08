@@ -19,6 +19,7 @@ export const SearchInput = styled.input`
     background: transparent;
     flex: 1;
     padding: 0 0.5rem 0 0;
+    width: 100%;
 
     :focus,
     :active {
