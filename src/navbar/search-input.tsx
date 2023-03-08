@@ -49,12 +49,12 @@ export const SearchInput = <T,>({
     // =============================================================================
     // STATE DECLARATIONS
     // =============================================================================
-    const [toggleInput, setToggleInput] = useState<boolean>(false);
+    const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
     const [itemsLocal, setItemsLocalValue] = useState<NavItemCommonProps<T>[]>(
         []
     );
-    const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+    const [showDropdownMenu, setShowDropdownMenu] = useState<boolean>(false);
     const [showDropdown, setShowDropdown] = useState<string>("on-blur");
     /***
      * showDropdown state
@@ -97,10 +97,10 @@ export const SearchInput = <T,>({
         if (filtered && filtered.length >= 1) {
             setItemsLocalValue(filtered);
             setShowDropdown("on-dropdown-focus");
-            setToggleDropdown(true);
+            setShowDropdownMenu(true);
         } else {
             setItemsLocalValue([]);
-            setToggleDropdown(false);
+            setShowDropdownMenu(false);
             setShowDropdown("on-focus");
         }
     }, [inputValue]);
@@ -110,7 +110,7 @@ export const SearchInput = <T,>({
     // =============================================================================
     const onBlur = () => {
         setShowDropdown("on-blur");
-        setToggleDropdown(false);
+        setShowDropdownMenu(false);
     };
 
     const onInputFocus = () => {
@@ -123,6 +123,27 @@ export const SearchInput = <T,>({
         if (showDropdown !== "on-dropdown-focus") {
             setShowDropdown("on-blur");
         }
+    };
+
+    const getHighlightedText = (text, highlight) => {
+        // Split on highlight term and include term into parts, ignore case
+        const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+        return (
+            <SearchSpan>
+                {parts.map((part, i) => (
+                    <SearchSpan
+                        key={i}
+                        style={
+                            part.toLowerCase() === highlight.toLowerCase()
+                                ? { fontWeight: "bold" }
+                                : {}
+                        }
+                    >
+                        {part}
+                    </SearchSpan>
+                ))}
+            </SearchSpan>
+        );
     };
     // =============================================================================
     // EVENT HANDLERS
@@ -140,13 +161,13 @@ export const SearchInput = <T,>({
     };
 
     const handleToggleClick = () => {
-        setToggleInput(!toggleInput);
+        setShowSearchbar(!showSearchbar);
         setInputValue("");
         onToggleHeaderClick();
     };
 
     const handleSearchIconClick = () => {
-        setToggleDropdown(true);
+        setShowDropdownMenu(true);
         setShowDropdown("on-blur");
     };
 
@@ -158,12 +179,12 @@ export const SearchInput = <T,>({
             inputValue.length >= 3
         ) {
             setShowDropdown("on-dropdown-focus");
-            setToggleDropdown(true);
+            setShowDropdownMenu(true);
         } else if (inputValue && inputValue.length >= 1) {
             setShowDropdown("on-focus");
-            setToggleDropdown(false);
+            setShowDropdownMenu(false);
         } else {
-            setToggleDropdown(false);
+            setShowDropdownMenu(false);
             setShowDropdown("on-blur");
         }
         if (onSearchButtonClick) {
@@ -199,31 +220,10 @@ export const SearchInput = <T,>({
         });
     };
 
-    const getHighlightedText = (text, highlight) => {
-        // Split on highlight term and include term into parts, ignore case
-        const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-        return (
-            <SearchSpan>
-                {parts.map((part, i) => (
-                    <SearchSpan
-                        key={i}
-                        style={
-                            part.toLowerCase() === highlight.toLowerCase()
-                                ? { fontWeight: "bold" }
-                                : {}
-                        }
-                    >
-                        {part}
-                    </SearchSpan>
-                ))}
-            </SearchSpan>
-        );
-    };
-
     const renderComponent = (isMobile = false) => {
         return (
             <>
-                {!toggleInput ? (
+                {!showSearchbar ? (
                     <SearchIconButton onClick={handleToggleClick}>
                         <SearchIcon
                             className="search-icon"
@@ -278,9 +278,11 @@ export const SearchInput = <T,>({
                         {showDropdown === "on-dropdown-focus" && <Divider />}
                     </SearchBarInputContainer>
 
-                    {inputValue && inputValue.length >= 1 && toggleDropdown && (
-                        <DropDownBar>{renderItems(mobile)}</DropDownBar>
-                    )}
+                    {inputValue &&
+                        inputValue.length >= 1 &&
+                        showDropdownMenu && (
+                            <DropDownBar>{renderItems(mobile)}</DropDownBar>
+                        )}
                 </SearchBarContainer>
                 <CloseIconContainer>
                     <CloseIconButton onClick={handleToggleClick}>
