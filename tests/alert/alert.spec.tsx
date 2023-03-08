@@ -1,23 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { Alert, AlertProps } from "../../src";
 import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
-import { DEFAULT_TEXT } from "../common";
 
-const renderComponent = (props?: Partial<AlertProps>) => {
-    return render(
-        <Alert type="success" {...props}>
-            {props?.children || DEFAULT_TEXT}
-        </Alert>
-    );
-};
-
-const getActionLink = (isQuery = false) => {
-    if (isQuery) {
-        return screen.queryByRole("link");
-    }
-    return screen.getByRole("link");
-};
-
+// =============================================================================
+// UNIT TESTS
+// =============================================================================
 describe("Alert", () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -69,3 +56,29 @@ describe("Alert", () => {
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
     });
 });
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+const DEFAULT_TEXT = "default text";
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+const getActionLink = (isQuery = false) => {
+    if (isQuery) {
+        return screen.queryByRole("link");
+    }
+    return screen.getByRole("link");
+};
+
+// =============================================================================
+// RENDER FUNCTIONS
+// =============================================================================
+const renderComponent = (props?: Partial<AlertProps>) => {
+    return render(
+        <Alert type="success" {...props}>
+            {props?.children || DEFAULT_TEXT}
+        </Alert>
+    );
+};

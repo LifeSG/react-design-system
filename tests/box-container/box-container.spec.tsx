@@ -1,23 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { BoxContainer, BoxContainerProps } from "../../src";
 import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
-import { DEFAULT_TEXT, DEFAULT_TITLE } from "../common";
 
-const renderComponent = (props?: Partial<BoxContainerProps>) => {
-    return render(
-        <BoxContainer title={DEFAULT_TITLE} {...props}>
-            {props?.children || <p>{DEFAULT_TEXT}</p>}
-        </BoxContainer>
-    );
-};
-
-const getExpandButton = (isQuery?: boolean) => {
-    if (isQuery) {
-        return screen.queryByRole("button");
-    }
-    return screen.getByRole("button");
-};
-
+// =============================================================================
+// UNIT TESTS
+// =============================================================================
 describe("BoxContainer", () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -91,3 +78,30 @@ describe("BoxContainer", () => {
         ).toBeInTheDocument();
     });
 });
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+const DEFAULT_TEXT = "default text";
+const DEFAULT_TITLE = "default title";
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+const getExpandButton = (isQuery?: boolean) => {
+    if (isQuery) {
+        return screen.queryByRole("button");
+    }
+    return screen.getByRole("button");
+};
+
+// =============================================================================
+// RENDER FUNCTIONS
+// =============================================================================
+const renderComponent = (props?: Partial<BoxContainerProps>) => {
+    return render(
+        <BoxContainer title={DEFAULT_TITLE} {...props}>
+            {props?.children || <p>{DEFAULT_TEXT}</p>}
+        </BoxContainer>
+    );
+};

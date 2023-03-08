@@ -1,27 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { Breadcrumb, BreadcrumbProps } from "../../src";
 
-const defaultLinks: React.AnchorHTMLAttributes<HTMLAnchorElement>[] = [
-    {
-        children: "LifeSG",
-        href: "https://life.gov.sg",
-        target: "_blank",
-        rel: "noreferrer",
-    },
-    {
-        children: "Google",
-        href: "https://google.com/",
-        target: "_blank",
-        rel: "noreferrer",
-    },
-    {
-        children: "Last breadcrumb",
-    },
-];
-const renderComponent = (props?: Partial<BreadcrumbProps>) => {
-    return render(<Breadcrumb links={defaultLinks} {...props} />);
-};
-
+// =============================================================================
+// UNIT TESTS
+// =============================================================================
 describe("Breadcrumb", () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -42,7 +24,7 @@ describe("Breadcrumb", () => {
     it("should render the url props", () => {
         renderComponent();
 
-        defaultLinks.forEach((metadata) => {
+        DEFAULT_LINKS.forEach((metadata) => {
             const label = metadata.children as string;
             const hasUrl = metadata.href;
 
@@ -54,3 +36,35 @@ describe("Breadcrumb", () => {
         });
     });
 });
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+const DEFAULT_LINKS: React.AnchorHTMLAttributes<HTMLAnchorElement>[] = [
+    {
+        children: "LifeSG",
+        href: "https://life.gov.sg",
+        target: "_blank",
+        rel: "noreferrer",
+    },
+    {
+        children: "Google",
+        href: "https://google.com/",
+        target: "_blank",
+        rel: "noreferrer",
+    },
+    {
+        children: "Last breadcrumb",
+    },
+];
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+
+// =============================================================================
+// RENDER FUNCTIONS
+// =============================================================================
+const renderComponent = (props?: Partial<BreadcrumbProps>) => {
+    return render(<Breadcrumb links={DEFAULT_LINKS} {...props} />);
+};

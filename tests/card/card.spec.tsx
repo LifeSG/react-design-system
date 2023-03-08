@@ -1,12 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { Card } from "../../src";
 import { CardProps } from "../../src/card/types";
-import { DEFAULT_TEXT } from "../common";
 
-const renderComponent = (props?: CardProps) => {
-    return render(<Card {...props}>{props?.children || DEFAULT_TEXT}</Card>);
-};
-
+// =============================================================================
+// UNIT TESTS
+// =============================================================================
 describe("Card", () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -25,3 +23,19 @@ describe("Card", () => {
         expect(screen.getByText(customText)).toBeInTheDocument();
     });
 });
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+const DEFAULT_TEXT = "default text";
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+
+// =============================================================================
+// RENDER FUNCTIONS
+// =============================================================================
+const renderComponent = (props?: CardProps) => {
+    return render(<Card {...props}>{props?.children || DEFAULT_TEXT}</Card>);
+};
