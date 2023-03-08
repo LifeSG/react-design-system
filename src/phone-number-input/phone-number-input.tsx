@@ -9,6 +9,7 @@ export const PhoneNumberInput = ({
     value,
     allowClear,
     onClear,
+    onBlur,
     error,
     fixedCountry = false,
     optionPlaceholder = "Select",
@@ -51,13 +52,6 @@ export const PhoneNumberInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-        const re = /^[0-9\b]+$/;
-        if (!re.test(event.key) && event.key !== "Backspace") {
-            event.preventDefault();
-        }
-    };
-
     const handleClear = () => {
         if (onClear) {
             onClear();
@@ -67,7 +61,7 @@ export const PhoneNumberInput = ({
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const currentValue = event.target.value;
+        const currentValue = event.target.value.replace(/[^0-9]/g, "");
 
         if (onChange) {
             performOnChangeHandler(currentValue, selectedCountry);
@@ -91,8 +85,12 @@ export const PhoneNumberInput = ({
         inputValue: string,
         selectedCountry: CountryValue | undefined
     ) => {
+        const formatedInputValue = PhoneNumberInputHelper.formatNumber(
+            inputValue,
+            selectedCountry
+        );
         onChange({
-            number: inputValue.replace(/[\s()]+/g, ""), // strip formatted spaces
+            number: formatedInputValue.replace(/[\s()]+/g, ""), // strip formatted spaces
             countryCode:
                 selectedCountry && addPlusPrefix(selectedCountry.countryCode),
         });
@@ -145,14 +143,15 @@ export const PhoneNumberInput = ({
     return (
         <InputGroup
             ref={nodeRef}
-            onKeyDown={handleKeyDown}
             value={inputValue}
             onChange={handleInputChange}
             allowClear={allowClear && !!inputValue}
             onClear={handleClear}
+            onBlur={onBlur}
             error={error}
             placeholder={placeholder}
             addon={getAddonProps()}
+            inputMode="numeric"
             {...otherProps}
         />
     );

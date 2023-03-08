@@ -122,6 +122,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
+                name: "onBlur",
+                description: "Called when a defocus happens",
+                propTypes: ["() => void"],
+            },
+            {
                 name: "onShowOptions",
                 description: "Called when the country code options is expanded",
                 propTypes: ["() => void"],

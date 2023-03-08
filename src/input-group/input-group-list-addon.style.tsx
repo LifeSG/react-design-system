@@ -70,11 +70,6 @@ export const DisplayContainer = styled.div<StyleProps>`
 export const Selector = styled(InputSelectSelector)`
     padding: 0;
     width: auto;
-
-    :focus,
-    :active {
-        outline-color: ${Color.Accent.Light[3]};
-    }
 `;
 
 export const SelectorReadOnly = styled.div`

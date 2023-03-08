@@ -49,6 +49,7 @@ export interface AddonProps<T, V> {
 
 export interface InputGroupProps<T, V> extends InputProps {
     addon?: AddonProps<T, V> | undefined;
+    onBlur?: (() => void) | undefined;
 }
 
 /** To be exposed for Form component inheritance */
