@@ -248,7 +248,6 @@ export const SearchInput = <T,>({
                 )}
 
                 <SearchInputComponent
-                    ref={ref}
                     placeholder="Search"
                     value={inputValue}
                     onChange={(event) => setInput4(event.target.value)}
@@ -302,7 +301,7 @@ export const SearchInput = <T,>({
                     </MobileWrapper>
                 ) : (
                     <SearchBarDesktop ref={ref}>
-                        {renderComponent(mobile)}{" "}
+                        {renderComponent(mobile)}
                     </SearchBarDesktop>
                 )}
             </>

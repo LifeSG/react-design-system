@@ -29,18 +29,10 @@ export const Clickable = styled.a<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-right: 23.86px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        margin-right: 23.86px;
+        margin-right: 1.5rem;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        margin-right: 18.59px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        margin-right: 18.59px;
+        margin-right: 1.16rem;
     }
 `;
