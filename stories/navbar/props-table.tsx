@@ -84,14 +84,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The custom component to be rendered",
                 propTypes: ["JSX.Element"],
             },
-            {
-                name: "showSearch",
-                description: (
-                    <>Specifies to show search icon in desktop an search bar</>
-                ),
-                propTypes: ["boolean"],
-                defaultValue: "false",
-            },
+
             {
                 name: "onBrandClick",
                 description: "Called when the brand icon is clicked",
@@ -113,11 +106,6 @@ const DATA: ApiTableSectionProps[] = [
                     "Called when a navigation action button is clicked",
                 propTypes: ["(actionButton: NavbarButtonProps) => void"],
             },
-            {
-                name: "onSearchButtonClick",
-                description: "Called when a serach input search iscon clicked",
-                propTypes: ["(searchInput: string) => void"],
-            },
         ],
     },
     {
@@ -134,12 +122,6 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "The navigation items for the mobile viewport. Uses desktop's if not specified",
                 propTypes: ["NavItemProps<T>[]"],
-            },
-            {
-                name: "searchMenuItems",
-                description:
-                    "The navigation items for the mobile viewport. Uses desktop's if not specified",
-                propTypes: ["NavItemCommonProps<T>[]"],
             },
         ],
     },

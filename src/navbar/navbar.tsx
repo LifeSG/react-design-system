@@ -8,7 +8,6 @@ import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import { NavbarActionButtons } from "./navbar-action-buttons";
 import { NavbarItems } from "./navbar-items";
-import { SearchInput } from "./search-input";
 import {
     MobileMenuButton,
     MobileMenuIcon,
@@ -42,12 +41,10 @@ const Component = <T,>(
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
         resourcesSecondaryBrand,
-        showSearch = false,
         onItemClick,
         onSecondaryBrandClick,
         onActionButtonClick,
         onBrandClick,
-        onSearchButtonClick,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<HTMLDivElement>
@@ -166,16 +163,6 @@ const Component = <T,>(
         }
     };
 
-    const handleheaderClick = () => {
-        setToggleHeaderClick(!toggleheaderClick);
-    };
-
-    const handleSearchButtonClick = (searchInput: string) => {
-        if (onSearchButtonClick) {
-            onSearchButtonClick(searchInput);
-        }
-    };
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -254,16 +241,6 @@ const Component = <T,>(
         </MobileMenuButton>
     );
 
-    const renderSearchInput = (mobile = false) => (
-        <SearchInput
-            items={items.searchMenuItems}
-            onItemClick={handleNavItemClick}
-            onToggleHeaderClick={handleheaderClick}
-            mobile={mobile}
-            onSearchButtonClick={handleSearchButtonClick}
-        />
-    );
-
     const renderNavbarActionButtons = () => (
         <NavbarActionButtons
             actionButtons={actionButtons && actionButtons.desktop}
@@ -277,7 +254,6 @@ const Component = <T,>(
                 {!toggleheaderClick && renderDesktopNavItems()}
 
                 <NavElementsInnerContainer>
-                    {showSearch && renderSearchInput(false)}
                     {renderNavbarActionButtons()}
                 </NavElementsInnerContainer>
                 {renderMobileMenuButton()}
@@ -293,8 +269,6 @@ const Component = <T,>(
                         {renderBrand()}
                         {!hideNavElements && renderElementsLeftContainer()}
                     </Nav>
-
-                    {showSearch && renderSearchInput(true)}
 
                     {!hideNavElements && renderDrawer()}
                 </NavElementsMobileContainer>

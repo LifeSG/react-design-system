@@ -96,12 +96,10 @@ export interface NavbarProps<T = void>
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
-    showSearch?: boolean | undefined;
     onBrandClick?: () => void | undefined; // override
     onSecondaryBrandClick?: () => void | undefined; // override
     onItemClick?: (item: NavItemProps<T>) => void | undefined;
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)
         | undefined;
-    onSearchButtonClick?: ((searchInput: string) => void) | undefined;
 }
