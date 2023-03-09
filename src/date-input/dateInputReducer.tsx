@@ -1,12 +1,13 @@
 export type ActionType =
     | "confirmed"
+    | "default"
+    | "error"
     | "hover"
+    | "invalid"
     | "reset"
     | "selected"
-    | "default"
     | "transition"
-    | "invalid"
-    | "error"
+    | "unhover"
     | any;
 
 interface Action {
@@ -49,8 +50,6 @@ export const dateInputReducer = (state: State, action: Action): State => {
         case "default":
             return {
                 ...state,
-                hover: "",
-                input: state.selected,
                 currentType: "default",
             };
         case "hover":
@@ -59,6 +58,13 @@ export const dateInputReducer = (state: State, action: Action): State => {
                 hover: value,
                 input: value,
                 currentType: "hover",
+            };
+        case "unhover":
+            return {
+                ...state,
+                hover: "",
+                input: state.selected,
+                currentType: "unhover",
             };
         case "selected":
             return {
@@ -111,14 +117,7 @@ export const dateInputReducer = (state: State, action: Action): State => {
                 currentType: "invalid",
             };
         default:
-            return {
-                ...state,
-                calendar: confirmedValue,
-                confirmed: confirmedValue,
-                input: confirmedValue,
-                selected: confirmedValue,
-                currentType: "confirmed",
-            };
+            return state;
     }
 };
 

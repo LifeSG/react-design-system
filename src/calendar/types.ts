@@ -1,3 +1,6 @@
+import { DateInputVariant } from "../date-input";
+import { ActionType } from "../date-input/dateInputReducer";
+
 export interface CalendarProps {
     // DateInput component props
     /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
@@ -22,8 +25,12 @@ export interface CalendarProps {
     onWithButton?: ((action: CalendarAction) => void) | undefined;
     /** Current calendar view inform to date input. .*/
     onCalendarView?: ((view: View) => void) | undefined;
-    /** Coloring in multiple date selection. */
+    /** Indicate current focus in the date-input component. */
     currentFocus?: FocusType | undefined;
+    /** Indicate current action in the date-input component. */
+    currentType?: ActionType | undefined;
+    /** Indicate calendar variant from the date input component. */
+    variant?: DateInputVariant | undefined;
 
     // Basic component props
     /** The class selector */
