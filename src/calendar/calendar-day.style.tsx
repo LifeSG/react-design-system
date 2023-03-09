@@ -14,7 +14,6 @@ interface StyleProps {
 interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
     $disabled?: boolean;
-    $selectedDate?: boolean;
 }
 
 interface OverflowDisplayProps extends StyleProps {
@@ -114,7 +113,7 @@ export const GrowDayCell = styled.div<DayCellStyleProps>`
             `;
         }
 
-        if ($point === "middle" && $selected) {
+        if (!$hovered && $point === "middle" && $selected) {
             return css`
                 border-top: 1px solid ${Color.Accent.Light[4](props)};
                 border-bottom: 1px solid ${Color.Accent.Light[4](props)};
@@ -165,13 +164,19 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
             return css`
                 border-top: 1px solid ${Color.Accent.Light[4](props)};
                 border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[5](props)};
+                background-color: ${Color.Accent.Light[4](props)};
             `;
         }
 
         if ($hovered && $point === "start" && $selected) {
             return css`
-                background-color: ${Color.Accent.Light[4]};
+                background-color: transparent;
+            `;
+        }
+
+        if ($hovered && $point === "end" && $selected) {
+            return css`
+                background-color: ${Color.Accent.Light[4](props)};
             `;
         }
 
@@ -197,7 +202,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
             `;
         }
 
-        if ($hovered && $point === "end") {
+        if ($hovered && $point === "end" && !$selected) {
             return css`
                 border-top: 1px dashed ${Color.Accent.Light[4](props)};
                 border-bottom: 1px dashed ${Color.Accent.Light[4](props)};
@@ -232,7 +237,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
 
-        if (props.$selectedDate) {
+        if (props.$selected) {
             return css`
                 background: ${Color.Accent.Light[5](props)};
                 border: 1px solid ${Color.Primary(props)};
@@ -284,7 +289,7 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
             `;
         }
 
-        if (props.$selectedDate) {
+        if (props.$selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
                 color: ${Color.Primary(props)};
@@ -308,7 +313,20 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     }}
 
     ${(props) => {
-        const { $hovered, $point, $selected } = props;
+        const { $hovered, $point, $selected, $disabled } = props;
+
+        if ($disabled && $hovered && !$selected) {
+            return css`
+                ${TextStyleHelper.getTextStyle("H5", "semibold")};
+                color: ${Color.Accent.Light[2](props)};
+            `;
+        }
+
+        if ($disabled && !$hovered && $selected) {
+            return css`
+                color: ${Color.Accent.Light[2](props)};
+            `;
+        }
 
         if ($hovered && $point === "end" && !$selected) {
             return css`
