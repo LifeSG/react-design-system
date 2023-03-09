@@ -103,18 +103,15 @@ export const CalendarDay = ({
         }
 
         if ([selectedStartDate, selectedEndDate].includes(dateStartWithYear)) {
-            styleCircleProps["$selectedDate"] = true;
-            styleLabelProps["$selectedDate"] = true;
+            styleCircleProps["$selected"] = true;
+            styleLabelProps["$selected"] = true;
         }
 
         if (variant === "range" && currentFocus === "start") {
-            // disabled before selected end date in current focus in 'start'
-            if (day.isAfter(selectedEndDate) && selectedEndDate !== undefined) {
-                styleCircleProps["$disabled"] = true;
-                styleLabelProps["$disabled"] = true;
-            }
+            //
         } else if (variant === "range" && currentFocus === "end") {
-            // disabled before selected start date in current focus in 'end'
+            // exist start date
+            // get before selected start date
             if (
                 day.isBefore(selectedStartDate) &&
                 selectedStartDate !== undefined
@@ -128,6 +125,7 @@ export const CalendarDay = ({
             if (day.isBetween(selectedStartDate, hoverValue, "day", "()")) {
                 styleDayCellProps["$point"] = "middle";
                 styleDayCellProps["$hovered"] = true;
+                styleDayCellProps["$selected"] = false;
 
                 styleLabelProps["$hovered"] = true;
                 styleLabelProps["$point"] = "end";
@@ -144,6 +142,7 @@ export const CalendarDay = ({
             ) {
                 styleRightProps["$hovered"] = true;
                 styleRightProps["$point"] = "end";
+                styleRightProps["$selected"] = false;
             }
 
             // exist selected start and hovering
@@ -156,6 +155,7 @@ export const CalendarDay = ({
             ) {
                 styleLeftProps["$hovered"] = true;
                 styleLeftProps["$point"] = "end";
+                styleLeftProps["$selected"] = false;
 
                 styleLabelProps["$hovered"] = true;
                 styleLabelProps["$point"] = "end";
@@ -176,13 +176,14 @@ export const CalendarDay = ({
             }
 
             // exist selected start and end cell without hover
-            // get selected cell beween start & end
+            // get selected cell between start & end
             if (
                 selectedStartDate &&
                 selectedEndDate &&
                 !hoverValue.length &&
                 day.isBetween(selectedStartDate, selectedEndDate, "day", "()")
             ) {
+                styleDayCellProps["$hovered"] = false;
                 styleDayCellProps["$point"] = "middle";
                 styleDayCellProps["$selected"] = true;
             }
@@ -231,12 +232,12 @@ export const CalendarDay = ({
                 day.isSame(selectedEndDate)
             ) {
                 styleLeftProps["$hovered"] = false;
-                styleLeftProps["$selected"] = true;
                 styleLeftProps["$point"] = "after-end";
+                styleLeftProps["$selected"] = true;
 
                 styleRightProps["$hovered"] = true;
-                styleRightProps["$selected"] = true;
                 styleRightProps["$point"] = "after-end";
+                styleRightProps["$selected"] = true;
 
                 styleDayCellProps["$hovered"] = true;
                 styleDayCellProps["$point"] = "after-end";
@@ -269,11 +270,16 @@ export const CalendarDay = ({
                     styleRightProps["$point"] = "start";
                     styleRightProps["$selected"] = true;
 
+                    styleRightProps["$hovered"] = false;
+                    styleRightProps["$point"] = "after-end";
+                    styleRightProps["$selected"] = true;
+
                     styleCircleProps["$hovered"] = false;
                     styleCircleProps["$point"] = "selected";
                     styleCircleProps["$selected"] = true;
                 }
 
+                // get end
                 if (day.isSame(selectedEndDate)) {
                     styleLeftProps["$hovered"] = true;
                     styleLeftProps["$point"] = "end";
@@ -291,6 +297,7 @@ export const CalendarDay = ({
                 hoverValue.length &&
                 selectedStartDate &&
                 selectedEndDate &&
+                hoverValue !== selectedStartDate &&
                 day.isBetween(selectedStartDate, hoverValue, "day", "[]") &&
                 dayjs(hoverValue).isBefore(selectedEndDate)
             ) {
@@ -307,8 +314,12 @@ export const CalendarDay = ({
 
                 // get start
                 if (day.isSame(selectedStartDate)) {
+                    styleLeftProps["$hovered"] = true;
+                    styleLeftProps["$point"] = "start";
+                    styleLeftProps["$selected"] = true;
+
                     styleRightProps["$hovered"] = true;
-                    styleRightProps["$point"] = "start";
+                    styleRightProps["$point"] = "end";
                     styleRightProps["$selected"] = true;
 
                     styleCircleProps["$hovered"] = false;
