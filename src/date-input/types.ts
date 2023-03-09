@@ -13,10 +13,17 @@ export interface DateInputProps extends React.AriaAttributes {
     endValue?: string | undefined;
     error?: boolean | undefined;
     disabled?: boolean | undefined;
+    /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
+    disabledDates?: string[] | undefined;
     /** The variant of the component. Values `single` | `range` */
     variant?: DateInputVariant | undefined;
-    /** The display cancel/done button inside component.*/
+    /** The display cancel/done button inside calendar component. Defualt value as `true` */
     withButton?: boolean | undefined;
+    /**
+     * Actively between selection. Only accepted two values in an array format
+     * as such ["2023-03-15", "2023-05-21"] or ["2023-05-21", "2023-03-15"]
+     */
+    between?: [string, string] | undefined;
     /**
      * Function that returns the raw values in the DateInput on change in an object format
      * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}

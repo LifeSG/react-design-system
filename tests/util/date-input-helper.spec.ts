@@ -2,22 +2,22 @@ import { DateInputHelper } from "../../src/util/date-input-helper";
 
 describe("DateInputHelper", () => {
     describe("validate", () => {
-        it("should pass if exist begin date only", () => {
+        it("should falsy if lost missed another date value", () => {
             const beginDate = "2023-03-01";
             const afterDate = "";
 
             const result = DateInputHelper.validate(beginDate, afterDate);
 
-            expect(result).toBeTruthy();
+            expect(result).toBeFalsy();
         });
 
-        it("should pass if exist after date only", () => {
+        it("should falsy if exist after date only", () => {
             const beginDate = "";
             const afterDate = "2023-03-15";
 
             const result = DateInputHelper.validate(beginDate, afterDate);
 
-            expect(result).toBeTruthy();
+            expect(result).toBeFalsy();
         });
 
         it("should validate the begin date and after date", () => {

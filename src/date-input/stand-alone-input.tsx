@@ -181,12 +181,14 @@ export const StandAloneInput = ({
         const name = event.target.name as FieldType;
 
         // Remove overlay placeholder once 'Tab' into this element
-        if (["start-day", "end-day"].includes(name)) setIsDirty(true);
+        if (["start-day", "end-day"].includes(name)) {
+            setIsDirty(true);
+        }
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        // remove selected value in field on 'hover' action
-        if ("hover" === action) {
+        // remove target.select during 'hover' action
+        if (["hover", "unhover"].includes(action)) {
             setCurrentFocus(names[0]);
             dayInputRef.current.focus();
 
@@ -236,7 +238,16 @@ export const StandAloneInput = ({
             setMonthValue(month);
 
             // prevent return back into onChangeHandler during action below
-            if (action === "hover" || action === "default") return;
+            // 'default' trigger from 'unhover' side effect after 100ms
+            // 'unhover' || 'hover' during hovering and unhover
+            // 'confirmed' trigger after confirmed and go to month/year view
+            // 'reset' trigger after confirmed and click outside component
+            if (
+                ["default", "unhover", "hover", "confirmed", "reset"].includes(
+                    action
+                )
+            )
+                return;
 
             // updated calendar once blur action is triggered
             const changeValue = targetField == "day" ? day : month;

@@ -25,7 +25,9 @@ interface CurrentFocusTypes {
 type ChangeAction = "calendar" | "input";
 
 export const DateInput = ({
+    between,
     disabled,
+    disabledDates,
     error,
     value,
     endValue,
@@ -33,7 +35,7 @@ export const DateInput = ({
     onBlur,
     onChangeRaw,
     onBlurRaw,
-    withButton,
+    withButton = true,
     readOnly,
     id,
     variant = "single",
@@ -90,9 +92,10 @@ export const DateInput = ({
     }, [value, endValue]);
 
     useEffect(() => {
-        if (!calendarOpen) return;
-
-        handleFocusElement();
+        // reset back 'default' action from unhover
+        if ([startDate.currentType, endDate.currentType].includes("unhover")) {
+            handleDefaultReducer();
+        }
     }, [startDate, endDate]);
 
     // =============================================================================
@@ -133,20 +136,25 @@ export const DateInput = ({
     }
 
     const handleChange = (value: string, from: ChangeAction) => {
-        let isValid = false;
+        let isValid = true;
 
-        switch (currentElement.type) {
-            case "start":
-                isValid = DateInputHelper.validate(value, endDate.selected);
-                break;
-            case "end":
-                isValid = DateInputHelper.validate(startDate.selected, value);
-                break;
-            default:
-                isValid = false;
+        if (variant === "range") {
+            switch (currentElement.type) {
+                case "start":
+                    isValid = DateInputHelper.validate(value, endDate.selected);
+                    break;
+                case "end":
+                    isValid = DateInputHelper.validate(
+                        startDate.selected,
+                        value
+                    );
+                    break;
+                default:
+                    isValid = false;
+            }
         }
 
-        // call another reducer to reset the selected value
+        // call another reducer to reset other selected value
         if (!isValid) {
             setCurrentElement({ ...currentElement, count: 0 });
             handleReducer("invalid");
@@ -154,6 +162,8 @@ export const DateInput = ({
 
         setChangeAction(from);
         handleReducer("selected", value);
+
+        handleFocusElement();
     };
 
     const handleBlur = () => {
@@ -164,41 +174,45 @@ export const DateInput = ({
         const type = value.split("-")[0] as FocusType;
 
         setCalendarOpen(true);
-
         setCurrentElement({ ...currentElement, field: value, type });
     };
 
     const handleHoverDayCell = (value: string) => {
         if (!value) {
-            handleReducer("default");
-
+            handleReducer("unhover");
             return;
         }
 
         handleReducer("hover", value);
     };
 
-    const handleCalendarMonthYear = (action: CalendarAction) => {
+    const handleCalendarAction = (action: CalendarAction) => {
         if (["month-options", "year-options"].includes(calendarView)) {
             switch (action) {
                 case "reset":
                     handleReducer("transition");
                     calendarRef.current.defaultView();
-                    // handleFocusElement();
-                    // need to refresh calendar view
                     break;
                 case "confirmed":
                     calendarRef.current.defaultView();
+
+                    setCurrentElement((prev): CurrentFocusTypes => {
+                        const otherType =
+                            currentElement.type === "start" ? "end" : "start";
+                        const otherField = `${otherType}-day` as FieldType;
+
+                        return {
+                            ...prev,
+                            field: otherField,
+                            type: otherType,
+                            count: 1,
+                        };
+                    });
+
                     break;
             }
+            return;
         }
-    };
-
-    const handleCalendarAction = (action: CalendarAction) => {
-        // month/year view (month/year calendar)
-        handleCalendarMonthYear(action);
-
-        if (["month-options", "year-options"].includes(calendarView)) return;
 
         // default view (day calendar)
         setCalendarOpen(false);
@@ -212,12 +226,25 @@ export const DateInput = ({
                 break;
         }
 
-        // buggy in mousedown side effect
-        // another field value updated after confirmed both value
-        // click outside component
-        setTimeout(() => {
-            setCurrentElement({ field: "none", type: "none", count: 0 });
-        }, 1);
+        setCurrentElement({
+            field: "none",
+            type: "none",
+            count: 0,
+        });
+    };
+
+    const handleContainerBlur = async (event: KeyboardEvent | any) => {
+        if (withButton) return;
+
+        const name = (event.target as any).name as Omit<FieldType, "none">;
+
+        if (variant === "single" && name === "start-year") {
+            handleReducer("confirmed");
+        }
+
+        if (variant === "range" && name === "end-year") {
+            handleReducer("confirmed");
+        }
     };
 
     const handleCalendarView = (calendarView: View) => {
@@ -253,17 +280,19 @@ export const DateInput = ({
 
         let isValid = true;
 
-        // closed calendar
+        // 'type' for closed calendar
         if (["confirmed", "reset"].includes(type)) {
             field = "none";
 
-            isValid = DateInputHelper.validate(
-                startDate.selected,
-                endDate.selected
-            );
+            if (variant === "range" && withButton) {
+                isValid = DateInputHelper.validate(
+                    startDate.selected,
+                    endDate.selected
+                );
+            }
         }
 
-        // error, reset both
+        // error status, reset both
         if (!isValid) {
             dispatchStart({ type: "invalid" });
             dispatchEnd({ type: "invalid" });
@@ -314,46 +343,39 @@ export const DateInput = ({
     };
 
     const handleFocusElement = () => {
-        // stop switching the element if action was "hover" || "default"
-        if (
-            ["hover", "default"].includes(startDate.currentType) ||
-            ["hover", "default"].includes(endDate.currentType)
-        )
-            return;
-
-        // transtion set for both
-        // updated another one element, not skip below logics
-        if (
-            [startDate.currentType, endDate.currentType].every(
-                (name) => name === "transition"
-            )
-        ) {
-            return;
-        }
-
-        // stop switching if detect manual input
+        // stop switch if detect manual input
         if (changeAction === "input") return;
 
-        // stop switching in month/year calendar view
+        // stop switch if detech selected in month/year view
         if (["month-options", "year-options"].includes(calendarView)) return;
 
         // closed calendar in without buttons mode for single selection
         if (!withButton && variant === "single") {
             setCalendarOpen(false);
             handleReducer("confirmed");
-            setCurrentElement({ field: "none", type: "none", count: 0 });
+            setCurrentElement({
+                field: "none",
+                type: "none",
+                count: 0,
+            });
 
             return;
         }
 
-        // closed calendar in without Buttons mode for range selection
         if (!withButton && currentElement.count >= 1) {
             setCalendarOpen(false);
             handleReducer("confirmed");
-            setCurrentElement({ field: "none", type: "none", count: 0 });
+            setCurrentElement({
+                field: "none",
+                type: "none",
+                count: 0,
+            });
 
             return;
         }
+
+        // handle single calendar
+        if (variant === "single" && withButton) return;
 
         // stop to switch element
         if (currentElement.count >= 1) return;
@@ -363,6 +385,7 @@ export const DateInput = ({
         const otherField = `${otherType}-day` as FieldType;
 
         setCurrentElement((prev) => ({
+            ...prev,
             field: otherField,
             type: otherType,
             count: prev.count + 1,
@@ -395,6 +418,11 @@ export const DateInput = ({
         }, {});
 
         return result;
+    };
+
+    const handleDefaultReducer = async () => {
+        await DateInputHelper.sleep(100);
+        handleReducer("default");
     };
 
     // =============================================================================
@@ -438,6 +466,7 @@ export const DateInput = ({
             data-testid={otherProps["data-testid"]}
             $readOnly={readOnly}
             $variant={variant}
+            onBlur={handleContainerBlur}
             {...otherProps}
         >
             <StandAloneInput
@@ -456,11 +485,18 @@ export const DateInput = ({
             <Calendar
                 ref={calendarRef}
                 type="input"
+                disabledDates={disabledDates}
                 isOpen={calendarOpen}
                 withButton={withButton}
                 currentFocus={currentElement.type}
+                currentType={
+                    currentElement.type === "start"
+                        ? startDate.currentType
+                        : endDate.currentType
+                }
                 value={startDate.calendar}
                 endValue={endDate.calendar}
+                variant={variant}
                 onCalendarView={handleCalendarView}
                 onHover={handleHoverDayCell}
                 onSelect={(event) => handleChange(event, "calendar")}

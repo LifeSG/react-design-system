@@ -37,7 +37,9 @@ export const Component = (
         value,
         endValue,
         currentFocus,
+        currentType,
         withButton,
+        variant,
         type = "standalone",
         ...otherProps
     }: CalendarProps,
@@ -48,8 +50,8 @@ export const Component = (
     // =============================================================================
     const [calendarDate, setCalendarDate] = useState<Dayjs>(dayjs());
     const [currentView, setCurrentView] = useState<View>("default");
-    const [selectedStartDate, setSelectedStartDate] = useState<string>(""); // YYYY-MM-DD
-    const [selectedEndDate, setSelectedEndDate] = useState<string>(""); // YYYY-MM-DD
+    const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
+    const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
 
     // =============================================================================
     // HOOKS
@@ -66,13 +68,11 @@ export const Component = (
         },
         []
     );
-
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        // use in date input with calendar
-        // open with 'confirmed' value calendar in first mounted
+        // open with 'confirmed' value for day calendar in first mounted
         if (!isOpen) return;
 
         let initCalendar = currentFocus === "end" ? endValue : value;
@@ -84,14 +84,21 @@ export const Component = (
     }, [isOpen]);
 
     useEffect(() => {
-        if (type === "standalone") {
-            setCalendarDate(dayjs(value));
-        }
+        if (type !== "standalone") return;
+
+        setCalendarDate(dayjs(value));
     }, [type]);
 
     useEffect(() => {
+        if (!currentType) return;
+
+        handleSelectedDayView();
+    }, [currentType]);
+
+    useEffect(() => {
         if (!value) {
-            setSelectedStartDate("");
+            // prevent value as "" to cause error
+            setSelectedStartDate(undefined);
             return;
         }
 
@@ -100,7 +107,7 @@ export const Component = (
 
     useEffect(() => {
         if (!endValue) {
-            setSelectedEndDate("");
+            setSelectedEndDate(undefined);
             return;
         }
 
@@ -142,7 +149,6 @@ export const Component = (
         const stringValue = value.format("YYYY-MM-DD");
 
         setCalendarDate(value);
-
         handleSelectedType(stringValue);
 
         performOnSelectHandler(stringValue);
@@ -160,6 +166,20 @@ export const Component = (
 
     const handleHover = (value: string) => {
         performOnHoverHandler(value);
+    };
+
+    const handleSelectedDayView = () => {
+        if (currentType !== "transition") return;
+
+        // handle day calendar view after reset inside month/year calendar
+        switch (currentFocus) {
+            case "start":
+                setCalendarDate(dayjs(value));
+                break;
+            case "end":
+                setCalendarDate(dayjs(endValue));
+                break;
+        }
     };
 
     // =============================================================================
@@ -206,12 +226,13 @@ export const Component = (
     const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
             const targetValue =
-                currentFocus === "start" || !currentFocus ? value : endValue;
+                currentFocus === "start" || !currentFocus
+                    ? selectedStartDate
+                    : selectedEndDate;
 
             /**
              * Buggy here if swap to next the value didn't render to the focus type
              */
-
             setCalendarDate(dayjs(targetValue));
             setCurrentView("month-options");
             performOnCalendarView("month-options");
@@ -232,7 +253,9 @@ export const Component = (
             performOnCalendarView("default");
         } else {
             const targetValue =
-                currentFocus === "start" || !currentFocus ? value : endValue;
+                currentFocus === "start" || !currentFocus
+                    ? selectedStartDate
+                    : selectedEndDate;
 
             setCalendarDate(dayjs(targetValue));
             setCurrentView("year-options");
@@ -296,24 +319,23 @@ export const Component = (
 
     const renderOptionsOverlay = () => {
         /**
+         * get the 'selectedDate' from below order
          * apply selectedStartDate if currentFocus undefined
          * apply selectedEndDate if currentFocus 'end'
          * apply selectedStartDate if currentFocus is not undefined or 'end'
          */
-        let selectedDate = !currentFocus
+        const selectedDate = !currentFocus
             ? selectedStartDate
             : currentFocus === "end"
             ? selectedEndDate
             : selectedStartDate;
-
-        if (!selectedDate.length) selectedDate = undefined;
 
         switch (currentView) {
             case "month-options":
                 return (
                     <CalendarMonth
                         type={type}
-                        calendarDate={dayjs(selectedDate)}
+                        calendarDate={calendarDate}
                         selectedDate={selectedDate}
                         onSelect={handleDateSelect}
                     />
@@ -322,7 +344,7 @@ export const Component = (
                 return (
                     <CalendarYear
                         type={type}
-                        calendarDate={dayjs(selectedDate)}
+                        calendarDate={calendarDate}
                         selectedDate={selectedDate}
                         onSelect={handleDateSelect}
                     />
@@ -397,9 +419,11 @@ export const Component = (
                     <CalendarDay
                         type={type}
                         calendarDate={calendarDate}
+                        currentFocus={currentFocus}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
+                        variant={variant}
                         onSelect={handleDateSelect}
                         onHover={handleHover}
                     />
