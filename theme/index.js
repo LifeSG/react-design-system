@@ -1,0 +1,2 @@
+var e;!function(e){e.colorScheme="colorScheme",e.layout="layout",e.textStyleScheme="textStyleScheme",e.designTokenScheme="designTokenScheme"}(e||(e={}));const o={[e.colorScheme]:"base",[e.textStyleScheme]:"base",[e.designTokenScheme]:"base"},c={[e.colorScheme]:"bookingsg",[e.textStyleScheme]:"base",[e.designTokenScheme]:"base"};export{o as BaseTheme,c as BookingSGTheme,e as ThemeContextKeys};
+//# sourceMappingURL=index.js.map
