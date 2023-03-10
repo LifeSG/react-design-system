@@ -88,22 +88,21 @@ export const OtpInput = ({
     const handleKeyDown =
         (index: number) => (event: React.KeyboardEvent<HTMLInputElement>) => {
             const { key, code } = event;
-            if (code !== "Backspace" || key !== "Backspace") {
-                return;
-            }
 
-            const newOtpValues = [...otpValues];
-            if (newOtpValues[index] !== "") {
-                newOtpValues[index] = "";
-            } else {
-                newOtpValues[index - 1] = "";
-                inputRefs.current[index - 1]?.focus();
-            }
+            if (key === "Backspace" || code === "Backspace") {
+                const newOtpValues = [...otpValues];
+                if (newOtpValues[index] !== "") {
+                    newOtpValues[index] = "";
+                } else {
+                    newOtpValues[index - 1] = "";
+                    inputRefs.current[index - 1]?.focus();
+                }
 
-            setOtpValues(newOtpValues);
+                setOtpValues(newOtpValues);
 
-            if (onChange) {
-                onChange(newOtpValues.join(""));
+                if (onChange) {
+                    onChange(newOtpValues.join(""));
+                }
             }
         };
 
