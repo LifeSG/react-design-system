@@ -30,7 +30,7 @@ export const MobileWrapper = styled.ul`
     list-style: none;
 
     ${MediaQuery.MaxWidth.tablet} {
-        border-left: 4px solid ${Color.Primary};
+        border-left: 0.25rem solid ${Color.Primary};
         display: flex;
         flex-direction: column;
         padding-bottom: 1rem;
@@ -65,13 +65,11 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     text-align: left;
     color: ${Color.Neutral[1]};
 
-    /* font-style: normal;
-    //font-weight: 400; */
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
 
-    margin-right: 16px;
-    padding-right: 16px;
+    margin-right: 1rem;
+    padding-right: 1rem;
 
     overflow: hidden;
     display: -webkit-box;
@@ -79,7 +77,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     -webkit-box-orient: vertical;
 
     /* identical to box height, or 186% */
-    letter-spacing: 0.12px;
+    letter-spacing: 0.0075rem;
 
     :active,
     :focus {
@@ -90,31 +88,21 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        ${(props) => {
-            return TextStyleHelper.getTextStyle(
-                "H6",
-                props.$selected ? "bold" : "regular"
-            );
-        }}
         ${TextStyleHelper.getTextStyle("H6", "bold")}
-        /* font-weight: bold !important; */
         width: 100%;
         padding: 0.625rem 1rem;
         text-align: left;
         align-items: flex-start;
-        font-size: 16px !important;
-        line-height: 18px !important;
+        line-height: 1.125rem !important;
         overflow: hidden;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
     }
 `;
 
 export const LinkIndicator = styled.div`
     position: absolute;
     bottom: 0;
-    height: 4px;
+    height: 0.25rem;
     left: 0.5rem;
     right: 0.5rem;
     background-color: ${Color.Primary};
@@ -125,7 +113,7 @@ export const LinkIndicator = styled.div`
         top: 0;
         bottom: 0;
         height: 100%;
-        width: 4px;
+        width: 0.25rem;
         background-color: ${Color.Accent.Light[1]};
     }
 `;
@@ -137,56 +125,56 @@ export const MenuBar = styled.ul`
     margin-top: 0rem;
     left: 0;
     top: 102%;
-    min-width: 250px;
+    min-width: 15.62rem;
     /* N8 #FFFFFF */
     position: absolute;
     overflow-x: hidden;
 
     /* N8 #FFFFFF */
     background: #ffffff;
-    box-shadow: 0px 2px 8px rgba(75, 83, 159, 0.24);
-    border-radius: 0px 0px 8px 8px;
+    box-shadow: 0rem 0.125rem 0.5rem rgba(75, 83, 159, 0.24);
+    border-radius: 0rem 0rem 0.5rem 0.5rem;
 `;
 // =============================================================================
 // LINK ITEMS
 // =============================================================================
 export const MenuItem = styled.li`
     width: 100%;
-    min-height: 26px;
-    max-height: 46px !important;
+    min-height: 1.7rem;
+    max-height: 3rem !important;
     position: relative;
     display: flex;
     align-items: left;
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 1rem;
+    margin-right: 1rem;
 
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 
     :first-child {
-        margin-top: 16px;
+        margin-top: 1rem;
     }
 
     :last-child {
-        margin-bottom: 16px;
+        margin-bottom: 1rem;
     }
     :not(:firt-of-type) {
-        margin-top: 8px;
-        margin-bottom: 8px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-top: 16px;
-        margin-bottom: 0px;
-        margin-left: 5px;
-        max-height: 47px !important;
+        margin-top: 1rem;
+        margin-bottom: 0rem;
+        margin-left: 0.25rem;
+        max-height: 3rem !important;
 
         :first-child {
-            margin-top: 5px;
+            margin-top: 0.25rem;
         }
 
         :last-child {
-            margin-bottom: 0px;
+            margin-bottom: 0rem;
         }
     }
 `;
@@ -203,5 +191,5 @@ export const LinkWrapper = styled.ul`
 `;
 export const MenuTopSpace = styled.div`
     width: 100%;
-    height: 8px;
+    height: 0.5rem;
 `;

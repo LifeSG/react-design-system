@@ -59,6 +59,15 @@ export const Nav = styled.nav<StyleProps>`
 export const NavElementsContainer = styled.div`
     display: flex;
     height: 100%;
+    margin-left: 5rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-left: 0rem;
+    }
 `;
 
 export const MobileMenuButton = styled(IconButton)`
@@ -87,34 +96,14 @@ export const NavElementsInnerContainer = styled.div`
     display: flex;
     height: 100%;
 
-    margin-left: 64px;
+    margin-left: 4rem;
     position: relative;
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0px;
+        margin-left: 0rem;
     }
 `;
-export const NavElementsLeftContainer = styled.div`
-    display: flex;
-    height: 100%;
-    margin-left: 80px;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        margin-left: 0px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
-        margin-left: 0px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        margin-left: 0px;
-    }
-`;
 export const NavLogoContainer = styled.div`
     display: flex;
     height: 100%;
@@ -128,35 +117,15 @@ export const NavSeprator = styled.div<StyleProps>`
     background-color: ${Color.Neutral[5]};
     height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
     width: 1px;
-    margin-right: 29.8px;
+    margin-right: 1.86rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         height: 1.375rem;
-        margin-right: 23.86px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        height: 1.375rem;
-        margin-right: 23.86px;
+        margin-right: 1.49rem;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
         height: 1.375rem;
-        margin-right: 18.59px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        height: 1.375rem;
-        margin-right: 18.59px;
-    }
-`;
-
-export const NavElementsMobileContainer = styled.div`
-    display: flex;
-    height: 100%;
-    width: 100%;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: grid;
+        margin-right: 1.16rem;
     }
 `;

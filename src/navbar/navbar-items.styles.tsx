@@ -31,11 +31,12 @@ export const Wrapper = styled.ul`
 export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
-    max-height: 20rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overflow-x: hidden;
     }
 `;
 
@@ -94,7 +95,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
 export const LinkIndicator = styled.div`
     position: absolute;
     bottom: 0;
-    height: 4px;
+    height: 0.25rem;
     left: 0.5rem;
     right: 0.5rem;
     background-color: ${Color.Primary};
@@ -105,14 +106,14 @@ export const LinkIndicator = styled.div`
         top: 0;
         bottom: 0;
         height: 100%;
-        width: 4px;
+        width: 0.25rem;
         background-color: ${Color.Primary};
     }
 `;
 
 export const Menu = styled.div`
     width: 100%;
-    height: 160px;
+    height: 10rem;
     margin-top: 0rem;
     left: 0;
     top: 102%;
@@ -122,8 +123,8 @@ export const Menu = styled.div`
 
     /* N8 #FFFFFF */
     background: #ffffff;
-    box-shadow: 0px 2px 8px rgba(75, 83, 159, 0.24);
-    border-radius: 0px 0px 8px 8px;
+    box-shadow: 0rem 0.125rem 0.5rem rgba(75, 83, 159, 0.24);
+    border-radius: 0rem 0rem 0.5rem 0.5rem;
 `;
 
 export const LinkWrapper = styled.ul`
@@ -161,13 +162,13 @@ export const MenuItemRightContainer = styled.div`
         float: right;
         justify-content: end;
         align-items: center;
-        padding-right: 16px;
+        padding-right: 1rem;
     }
 `;
 
 export const DownIcon = styled(ChevronDownIcon)`
-    height: 20px;
-    width: 20px;
+    height: 1.25rem;
+    width: 1.25rem;
 
     :hover {
         color: ${Color.Accent.Light[1]};
@@ -175,8 +176,8 @@ export const DownIcon = styled(ChevronDownIcon)`
 `;
 
 export const UpIcon = styled(ChevronUpIcon)`
-    height: 20px;
-    width: 20px;
+    height: 1.25rem;
+    width: 1.25rem;
 
     :hover {
         color: ${Color.Accent.Light[1]};

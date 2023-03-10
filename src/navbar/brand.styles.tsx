@@ -16,7 +16,7 @@ interface StyleProps {
 export const Clickable = styled.a<StyleProps>`
     display: flex;
     justify-content: center;
-    margin-right: 29.8px;
+    margin-right: 1.86rem;
 
     img {
         width: auto;

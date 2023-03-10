@@ -126,26 +126,16 @@ export const NavSeparator = styled.div<StyleProps>`
     background-color: ${Color.Neutral[5]};
     height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
     width: 1px;
-    left: 29.8px;
-    margin-right: 29.8px;
+    left: 1.86rem;
+    margin-right: 1.86rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         height: 1.375rem;
-        margin-right: 23.86px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        height: 1.375rem;
-        margin-right: 23.86px;
+        margin-right: 1.49rem;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
         height: 1.375rem;
-        margin-right: 18.59px;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        height: 1.375rem;
-        margin-right: 18.59px;
+        margin-right: 1.16rem;
     }
 `;
