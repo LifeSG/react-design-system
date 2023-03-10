@@ -18,7 +18,6 @@ export interface NavItemsProps<T> {
     desktop: NavItemProps<T>[];
     /* The items for mobile drawer. Takes desktop if not specified */
     mobile?: NavItemProps<T>[] | undefined;
-    searchMenuItems?: NavItemCommonProps<T>[] | undefined;
 }
 
 // =============================================================================

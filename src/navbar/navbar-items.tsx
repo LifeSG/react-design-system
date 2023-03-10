@@ -35,8 +35,8 @@ export const NavbarItems = <T,>({
     // =============================================================================
     // STATE DECLARATIONS
     // =============================================================================
-    const [selectedIndex, setShowDrawer] = useState<number>(-1);
-    const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+    const [selectedNavElement, setSelectedNavElement] = useState<number>(-1);
+    const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
@@ -61,7 +61,7 @@ export const NavbarItems = <T,>({
     // HELPER FUNCTION
     // =============================================================================
     const onBlur = () => {
-        setToggleDropdown(false);
+        setShowSubMenu(false);
     };
 
     const checkSelected = (item: NavItemProps<T>, id) => {
@@ -86,8 +86,8 @@ export const NavbarItems = <T,>({
     const handleLinkClick = (item: NavItemProps<T>, index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
-            setShowDrawer(index);
-            setToggleDropdown(true);
+            setSelectedNavElement(index);
+            setShowSubMenu(true);
             onItemClick(event, item);
         };
     };
@@ -98,29 +98,23 @@ export const NavbarItems = <T,>({
     const handleSubLinkClick = (item: NavItemCommonProps<T>[], index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
-            setShowDrawer(index);
+            setSelectedNavElement(index);
             onItemClick(event, item[index]);
-            setToggleDropdown(false);
+            setShowSubMenu(false);
         };
     };
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderItems = (isMobile = false) => {
+    const renderItems = () => {
         return items.map((item, index) => {
-            //const selected = selectedIndex === index;
+            //const selected = selectedNavElement === index;
             const selected = checkSelected(item, selectedId);
             const { children, options, ...otherItemAttrs } = item;
 
-            const textWeight: TextWeight = selected
-                ? isMobile
-                    ? "bold"
-                    : "semibold"
-                : "regular";
-            const testId = isMobile
-                ? `link__mobile-${index + 1}`
-                : `link__${index + 1}`;
+            const textWeight: TextWeight = selected ? "semibold" : "regular";
+            const testId = `link__${index + 1}`;
             return (
                 <LinkItem key={index}>
                     <MenuItemContainer>
@@ -134,7 +128,35 @@ export const NavbarItems = <T,>({
                         >
                             {children}
                             {selected && <LinkIndicator />}
-                            {isMobile && item.subMenu && (
+                        </Link>
+                    </MenuItemContainer>
+                </LinkItem>
+            );
+        });
+    };
+
+    const renderItemsMobile = () => {
+        return items.map((item, index) => {
+            //const selected = selectedNavElement === index;
+            const selected = checkSelected(item, selectedId);
+            const { children, options, ...otherItemAttrs } = item;
+
+            const textWeight: TextWeight = selected ? "bold" : "regular";
+            const testId = `link__mobile-${index + 1}`;
+            return (
+                <LinkItem key={index}>
+                    <MenuItemContainer>
+                        <Link
+                            data-testid={testId}
+                            weight={textWeight}
+                            $selected={selected} /* for mobile */
+                            {...otherItemAttrs}
+                            onClick={handleLinkClick(item, index)}
+                            {...options}
+                        >
+                            {children}
+                            {selected && <LinkIndicator />}
+                            {item.subMenu && (
                                 <MenuItemRightContainer>
                                     {selected ? <UpIcon /> : <DownIcon />}
                                 </MenuItemRightContainer>
@@ -142,17 +164,16 @@ export const NavbarItems = <T,>({
                         </Link>
                     </MenuItemContainer>
 
-                    {isMobile &&
-                        selectedIndex >= 0 &&
-                        selectedIndex === index &&
-                        toggleDropdown && (
+                    {selectedNavElement >= 0 &&
+                        selectedNavElement === index &&
+                        showSubMenu && (
                             <Menu
                                 items={item.subMenu}
                                 selectedId={selectedId}
-                                mobile={isMobile}
+                                mobile={true}
                                 onItemClick={handleSubLinkClick(
                                     item?.subMenu,
-                                    0
+                                    index
                                 )}
                             ></Menu>
                         )}
@@ -166,22 +187,22 @@ export const NavbarItems = <T,>({
             <>
                 {mobile ? (
                     <MobileWrapper ref={ref}>
-                        {renderItems(mobile)}
+                        {renderItemsMobile()}
                     </MobileWrapper>
                 ) : (
                     <Wrapper ref={ref}>
-                        {renderItems(mobile)}
+                        {renderItems()}
                         {items &&
-                            selectedIndex >= 0 &&
-                            items[selectedIndex] &&
-                            toggleDropdown && (
+                            selectedNavElement >= 0 &&
+                            items[selectedNavElement] &&
+                            showSubMenu && (
                                 <Menu
-                                    items={items[selectedIndex].subMenu}
+                                    items={items[selectedNavElement].subMenu}
                                     selectedId={selectedId}
                                     mobile={false}
                                     onItemClick={handleSubLinkClick(
-                                        items[selectedIndex]?.subMenu,
-                                        selectedIndex
+                                        items[selectedNavElement]?.subMenu,
+                                        selectedNavElement
                                     )}
                                 ></Menu>
                             )}

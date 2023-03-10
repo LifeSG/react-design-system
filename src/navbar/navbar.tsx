@@ -15,8 +15,6 @@ import {
     NavBrandContainer,
     NavElementsContainer,
     NavElementsInnerContainer,
-    NavElementsLeftContainer,
-    NavElementsMobileContainer,
     NavLogoContainer,
     NavSeprator,
     Wrapper,
@@ -54,7 +52,6 @@ const Component = <T,>(
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
-    const [toggleheaderClick, setToggleHeaderClick] = useState<boolean>(false);
 
     // =============================================================================
     // EFFECTS
@@ -248,30 +245,26 @@ const Component = <T,>(
         />
     );
 
-    const renderElementsLeftContainer = () => (
-        <NavElementsLeftContainer>
-            <NavElementsContainer>
-                {!toggleheaderClick && renderDesktopNavItems()}
+    const renderNavElements = () => (
+        <NavElementsContainer>
+            {renderDesktopNavItems()}
 
-                <NavElementsInnerContainer>
-                    {renderNavbarActionButtons()}
-                </NavElementsInnerContainer>
-                {renderMobileMenuButton()}
-            </NavElementsContainer>
-        </NavElementsLeftContainer>
+            <NavElementsInnerContainer>
+                {renderNavbarActionButtons()}
+            </NavElementsInnerContainer>
+            {renderMobileMenuButton()}
+        </NavElementsContainer>
     );
 
     const renderNavbar = () => {
         return (
             <Layout.Content>
-                <NavElementsMobileContainer>
-                    <Nav compress={compress}>
-                        {renderBrand()}
-                        {!hideNavElements && renderElementsLeftContainer()}
-                    </Nav>
+                <Nav compress={compress}>
+                    {renderBrand()}
+                    {!hideNavElements && renderNavElements()}
+                </Nav>
 
-                    {!hideNavElements && renderDrawer()}
-                </NavElementsMobileContainer>
+                {!hideNavElements && renderDrawer()}
             </Layout.Content>
         );
     };
