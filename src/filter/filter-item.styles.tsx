@@ -6,6 +6,10 @@ import { IconButton } from "../icon-button/icon-button";
 import { MediaQuery } from "../media/media";
 import { Text, TextStyleHelper } from "../text";
 
+// =============================================================================
+// FILTER ITEM STYLES
+// =============================================================================
+
 export const FilterItemWrapper = styled.div<{ $collapsible: boolean }>`
     background-color: ${(props) =>
         props.$collapsible ? Color.Neutral[7](props) : Color.Neutral[8](props)};
@@ -63,4 +67,16 @@ export const FilterItemTitle = styled(Text.H4)`
 
 export const Expandable = styled(animated.div)`
     overflow: hidden;
+`;
+
+// =============================================================================
+// FULLSCREEN STYLES
+// =============================================================================
+
+export const FullscreenContainer = styled.div`
+    background-color: ${Color.Neutral[8]};
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 `;

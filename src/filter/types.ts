@@ -15,4 +15,6 @@ export interface FilterItemProps {
     collapsible?: boolean | undefined;
     title?: string | undefined;
     render: (mode: Mode) => React.ReactNode;
+    onItemDismiss?: (() => void) | undefined;
+    onItemDone?: (() => void) | undefined;
 }
