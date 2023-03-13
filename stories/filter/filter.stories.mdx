@@ -1,7 +1,7 @@
-import { MagnifierIcon } from "@lifesg/react-icons";
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
-import { Filter } from "../../src/filter/filter";
+import { Filter } from "../../src/filter";
 import { Form } from "../../src/form";
 import { Overlay } from "../../src/overlay";
 import { Heading3, Secondary, Title } from "../storybook-common";
@@ -93,6 +93,10 @@ import { Filter } from "@lifesg/react-design-system/filter";
     </Story>
 </Canvas>
 
+<Heading3>Configuring behaviour</Heading3>
+
+You may configure the behaviour of each section with the `collapsible` and `allowFullscreen` props.
+
 <Canvas>
     <Story name="Configuring behaviour">
         {() => {
@@ -135,6 +139,79 @@ import { Filter } from "@lifesg/react-design-system/filter";
                                 collapsible: false,
                                 render: () => {
                                     return <>Not collapsible</>;
+                                },
+                            },
+                        ]}
+                    />
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Floating content</Heading3>
+
+If some child elements are positioned absolutely, content may be clipped if they exceed the parent's boundaries.
+For such scenarios, you may increase the height of the container by adding some padding.
+
+In the example below, extra padding is applied when the dropdown list is expanded.
+
+<Canvas>
+    <Story name="With floating content">
+        {() => {
+            const [showOptions, setShowOptions] = useState(false);
+            return (
+                <div style={{ maxWidth: "500px", width: "100vw" }}>
+                    <Filter
+                        items={[
+                            {
+                                title: "Category 1",
+                                render: () => {
+                                    return (
+                                        <Wrapper
+                                            style={{
+                                                paddingBottom: showOptions
+                                                    ? "16rem"
+                                                    : "1rem",
+                                            }}
+                                        >
+                                            <Form.Select
+                                                options={[
+                                                    {
+                                                        value: "A",
+                                                        label: "Option A",
+                                                    },
+                                                    {
+                                                        value: "B",
+                                                        label: "Option B",
+                                                    },
+                                                    {
+                                                        value: "C",
+                                                        label: "Option C",
+                                                    },
+                                                    {
+                                                        value: "D",
+                                                        label: "Option D",
+                                                    },
+                                                ]}
+                                                valueExtractor={(item) =>
+                                                    item.value
+                                                }
+                                                listExtractor={(item) =>
+                                                    item.label
+                                                }
+                                                displayValueExtractor={(item) =>
+                                                    item.label
+                                                }
+                                                onShowOptions={() =>
+                                                    setShowOptions(true)
+                                                }
+                                                onHideOptions={() =>
+                                                    setShowOptions(false)
+                                                }
+                                            />
+                                        </Wrapper>
+                                    );
                                 },
                             },
                         ]}

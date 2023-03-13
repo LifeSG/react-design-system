@@ -6,7 +6,7 @@ import { Checkbox } from "../../src/checkbox";
 import { Mode } from "../../src/filter";
 import { Form } from "../../src/form";
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
     padding: 1rem;
 `;
 
@@ -46,7 +46,7 @@ interface Props<T> {
 
 export const SearchFilter = ({ mode, value, onChange }: Props<string>) => {
     return (
-        <Wrapper>
+        <Wrapper style={{ paddingTop: mode === "default" ? 0 : undefined }}>
             <Form.InputGroup
                 autoFocus={mode === "fullscreen"}
                 placeholder="Search with keyword"
