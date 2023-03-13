@@ -18,7 +18,7 @@ import {
 } from "./filter.styles";
 import { FilterProps } from "./types";
 
-export const Filter = ({ items }: FilterProps) => {
+export const Filter = ({ items, onDismiss, onDone, onClear }: FilterProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -34,8 +34,24 @@ export const Filter = ({ items }: FilterProps) => {
         setVisible(true);
     };
 
+    const handleDismissFilter = () => {
+        setVisible(false);
+        if (onDismiss) {
+            onDismiss();
+        }
+    };
+
     const handleDoneClick = () => {
         setVisible(false);
+        if (onDone) {
+            onDone();
+        }
+    };
+
+    const handleClearClick = () => {
+        if (onClear) {
+            onClear();
+        }
     };
 
     // =========================================================================
@@ -65,13 +81,18 @@ export const Filter = ({ items }: FilterProps) => {
                     <Overlay show>
                         <MobileContainer>
                             <FilterHeader>
-                                <FilterHeaderButton>
+                                <FilterHeaderButton
+                                    onClick={handleDismissFilter}
+                                >
                                     <CrossIcon />
                                 </FilterHeaderButton>
                                 <FilterTitle weight="semibold">
                                     Filters
                                 </FilterTitle>
-                                <FilterClearButton styleType="link">
+                                <FilterClearButton
+                                    styleType="link"
+                                    onClick={handleClearClick}
+                                >
                                     Clear
                                 </FilterClearButton>
                             </FilterHeader>
@@ -93,7 +114,10 @@ export const Filter = ({ items }: FilterProps) => {
             <DesktopContainer>
                 <FilterHeader>
                     <FilterTitle weight="semibold">Filters</FilterTitle>
-                    <FilterClearButton styleType="link">
+                    <FilterClearButton
+                        styleType="link"
+                        onClick={handleClearClick}
+                    >
                         Clear
                     </FilterClearButton>
                 </FilterHeader>
