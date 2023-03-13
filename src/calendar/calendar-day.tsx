@@ -183,7 +183,6 @@ export const CalendarDay = ({
 
     const generateStyleProps = (day: Dayjs) => {
         const dateStartWithYear = day.format("YYYY-MM-DD");
-        const a = day.format("YYYY-MM-DD");
         const hoverDirection = getHoverDirection(day);
 
         const styleLeftProps: StyleLeftProps = {},
