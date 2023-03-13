@@ -68,7 +68,9 @@ export const Filter = ({ items }: FilterProps) => {
                                 <FilterHeaderButton>
                                     <CrossIcon />
                                 </FilterHeaderButton>
-                                <FilterTitle>Filters</FilterTitle>
+                                <FilterTitle weight="semibold">
+                                    Filters
+                                </FilterTitle>
                                 <FilterClearButton styleType="link">
                                     Clear
                                 </FilterClearButton>
@@ -90,7 +92,7 @@ export const Filter = ({ items }: FilterProps) => {
         return (
             <DesktopContainer>
                 <FilterHeader>
-                    <FilterTitle>Filters</FilterTitle>
+                    <FilterTitle weight="semibold">Filters</FilterTitle>
                     <FilterClearButton styleType="link">
                         Clear
                     </FilterClearButton>

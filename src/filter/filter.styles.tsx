@@ -32,6 +32,7 @@ export const FilterBody = styled.div`
 `;
 
 export const FilterFooter = styled.div`
+    padding: 1.5rem 1.125rem;
     background-color: ${Color.Neutral[8]};
     border-top: 1px solid ${Color.Neutral[5]};
 `;
@@ -53,16 +54,35 @@ export const FilterHeader = styled.div`
 
 export const FilterTitle = styled(Text.H4)`
     flex: 1;
+    margin: 1.5rem 0 1rem 1.25rem;
 
     ${MediaQuery.MaxWidth.mobileL} {
         text-align: center;
+        margin: 1.5rem 0;
     }
 `;
 
 export const FilterHeaderButton = styled(IconButton)`
+    padding: 1.5rem 1.25rem;
+    margin-right: auto;
     color: ${Color.Neutral[3]};
+
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    &:hover {
+        color: ${Color.Neutral[2]};
+    }
 `;
 
 export const FilterClearButton = styled(Button.Small)`
     background-color: transparent;
+    padding: 1.5rem 1.25rem 1rem 1.25rem;
+    height: auto;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        padding: 1.5rem 1.25rem;
+    }
 `;

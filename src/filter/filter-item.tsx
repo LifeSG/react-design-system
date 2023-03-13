@@ -1,8 +1,9 @@
-import { ChevronDownIcon } from "@lifesg/react-icons";
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import {
+    ChevronIcon,
+    Divider,
     Expandable,
     FilterItemBody,
     FilterItemExpandButton,
@@ -30,26 +31,32 @@ export const FilterItem = ({
     const resizeDetector = useResizeDetector();
     const expandableStyles = useSpring({
         height: expanded ? resizeDetector.height : 0,
-        overflow: "hidden",
     });
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <FilterItemWrapper>
-            <FilterItemHeader>
-                {title && <FilterItemTitle>{title}</FilterItemTitle>}
-                {collapsible && (
-                    <FilterItemExpandButton
-                        onClick={() => {
-                            setExpanded(!expanded);
-                        }}
-                    >
-                        <ChevronDownIcon />
-                    </FilterItemExpandButton>
-                )}
-            </FilterItemHeader>
+        <FilterItemWrapper $collapsible={collapsible}>
+            {(title || collapsible) && <Divider />}
+            {(title || collapsible) && (
+                <FilterItemHeader>
+                    {title && (
+                        <FilterItemTitle weight="semibold">
+                            {title}
+                        </FilterItemTitle>
+                    )}
+                    {collapsible && (
+                        <FilterItemExpandButton
+                            onClick={() => {
+                                setExpanded(!expanded);
+                            }}
+                        >
+                            <ChevronIcon $expanded={expanded} />
+                        </FilterItemExpandButton>
+                    )}
+                </FilterItemHeader>
+            )}
             <Expandable style={expandableStyles}>
                 <FilterItemBody ref={resizeDetector.ref}>
                     {render(mode)}
