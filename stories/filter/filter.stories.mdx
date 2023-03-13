@@ -1,0 +1,47 @@
+import { MagnifierIcon } from "@lifesg/react-icons";
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Filter } from "../../src/filter/filter";
+import { Form } from "../../src/form";
+import { Overlay } from "../../src/overlay";
+import { Heading3, Secondary, Title } from "../storybook-common";
+
+<Meta title="Modules/Filter" component={Filter} />
+
+<Title>Filter</Title>
+
+<Secondary>Overview</Secondary>
+
+Filter description
+
+```tsx
+import { Filter } from "@lifesg/react-design-system/filter";
+```
+
+<Canvas>
+    <Story name="Filter">
+        {() => {
+            return (
+                <div style={{ maxWidth: "500px", width: "100vw" }}>
+                    <Filter
+                        items={[
+                            {
+                                collapsible: false,
+                                allowFullscreen: true,
+                                render: (mode) => {
+                                    return "not collapsible";
+                                },
+                            },
+                            {
+                                title: "Category 1",
+                                render: (mode) => {
+                                    return "collapsible";
+                                },
+                            },
+                        ]}
+                    />
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
