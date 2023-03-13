@@ -18,7 +18,15 @@ import {
 } from "./filter.styles";
 import { FilterProps } from "./types";
 
-export const Filter = ({ items, onDismiss, onDone, onClear }: FilterProps) => {
+export const Filter = ({
+    items,
+    toggleFilterButtonLabel = "Filters",
+    headerTitle = "Filters",
+    clearButtonDisabled = false,
+    onDismiss,
+    onDone,
+    onClear,
+}: FilterProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -75,7 +83,7 @@ export const Filter = ({ items, onDismiss, onDone, onClear }: FilterProps) => {
         return (
             <>
                 <Button.Default styleType="light" onClick={handleShowFilter}>
-                    <FilterIcon /> Sort & Filters
+                    <FilterIcon /> {toggleFilterButtonLabel}
                 </Button.Default>
                 {visible && (
                     <Overlay show>
@@ -87,11 +95,12 @@ export const Filter = ({ items, onDismiss, onDone, onClear }: FilterProps) => {
                                     <CrossIcon />
                                 </FilterHeaderButton>
                                 <FilterTitle weight="semibold">
-                                    Filters
+                                    {headerTitle}
                                 </FilterTitle>
                                 <FilterClearButton
                                     styleType="link"
                                     onClick={handleClearClick}
+                                    disabled={clearButtonDisabled}
                                 >
                                     Clear
                                 </FilterClearButton>
@@ -117,6 +126,7 @@ export const Filter = ({ items, onDismiss, onDone, onClear }: FilterProps) => {
                     <FilterClearButton
                         styleType="link"
                         onClick={handleClearClick}
+                        disabled={clearButtonDisabled}
                     >
                         Clear
                     </FilterClearButton>
