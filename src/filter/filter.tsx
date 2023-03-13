@@ -1,5 +1,4 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import { FilterIcon } from "@lifesg/react-icons/filter";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Button } from "../button/button";
@@ -9,12 +8,14 @@ import { FilterItem } from "./filter-item";
 import {
     DesktopContainer,
     FilterBody,
+    FilterButton,
     FilterClearButton,
     FilterFooter,
     FilterHeader,
     FilterHeaderButton,
     FilterTitle,
     MobileContainer,
+    StyledFilterIcon,
 } from "./filter.styles";
 import { FilterProps } from "./types";
 
@@ -83,15 +84,17 @@ export const Filter = ({
     const renderMobile = () => {
         return (
             <>
-                <Button.Default styleType="light" onClick={handleShowFilter}>
-                    <FilterIcon /> {toggleFilterButtonLabel}
-                </Button.Default>
+                <FilterButton styleType="light" onClick={handleShowFilter}>
+                    <StyledFilterIcon /> {toggleFilterButtonLabel}
+                </FilterButton>
                 {visible && (
                     <Overlay show>
                         <MobileContainer>
                             <FilterHeader>
                                 <FilterHeaderButton
                                     onClick={handleDismissFilter}
+                                    focusOutline="browser"
+                                    focusHighlight={false}
                                 >
                                     <CrossIcon />
                                 </FilterHeaderButton>
@@ -132,7 +135,7 @@ export const Filter = ({
                         Clear
                     </FilterClearButton>
                 </FilterHeader>
-                <FilterBody>{renderFilterItems()}</FilterBody>
+                {renderFilterItems()}
             </DesktopContainer>
         );
     };

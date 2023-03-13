@@ -1,3 +1,4 @@
+import { FilterIcon } from "@lifesg/react-icons/filter";
 import styled from "styled-components";
 import { Button } from "../button/button";
 import { Color } from "../color/color";
@@ -32,7 +33,7 @@ export const FilterBody = styled.div`
 `;
 
 export const FilterFooter = styled.div`
-    padding: 1.5rem 1.125rem;
+    padding: 1.5rem 1.25rem;
     background-color: ${Color.Neutral[8]};
     border-top: 1px solid ${Color.Neutral[5]};
 `;
@@ -85,4 +86,19 @@ export const FilterClearButton = styled(Button.Small)`
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 1.5rem 1.25rem;
     }
+`;
+
+// =============================================================================
+// COMPONENT STYLES
+// =============================================================================
+
+export const FilterButton = styled(Button.Default)`
+    span {
+        display: flex;
+        align-items: center;
+    }
+`;
+
+export const StyledFilterIcon = styled(FilterIcon)`
+    margin-right: 0.625rem;
 `;

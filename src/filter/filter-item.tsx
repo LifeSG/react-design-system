@@ -109,6 +109,8 @@ export const FilterItem = ({
                     )}
                     {collapsible && (
                         <FilterItemExpandButton
+                            focusHighlight={false}
+                            focusOutline="browser"
                             onClick={() => {
                                 setExpanded(!expanded);
                             }}

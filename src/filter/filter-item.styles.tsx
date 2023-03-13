@@ -55,6 +55,10 @@ export const ChevronIcon = styled(ChevronDownIcon)<{ $expanded: boolean }>`
 
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
     transition: transform 300ms ease-in-out;
+
+    &:hover {
+        color: ${Color.Neutral[2]};
+    }
 `;
 
 export const FilterItemTitle = styled(Text.H4)`
