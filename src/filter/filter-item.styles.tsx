@@ -28,8 +28,9 @@ export const Divider = styled.div`
     }
 `;
 
-export const FilterItemBody = styled.div`
+export const FilterItemBody = styled.div<{ $interactive: boolean }>`
     padding: 0;
+    ${(props) => !props.$interactive && "pointer-events: none;"}
 `;
 
 export const FilterItemHeader = styled(Text.H5)`
@@ -65,8 +66,9 @@ export const FilterItemTitle = styled(Text.H4)`
     }
 `;
 
-export const Expandable = styled(animated.div)`
+export const Expandable = styled(animated.div)<{ $interactive: boolean }>`
     overflow: hidden;
+    ${(props) => !props.$interactive && "cursor: pointer;"}
 `;
 
 // =============================================================================

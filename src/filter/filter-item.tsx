@@ -41,6 +41,7 @@ export const FilterItem = ({
     );
     const [active, setActive] = useState(false);
     const collapsible = mode === "default" && desktopCollapsible;
+    const interactive = !(mode === "mobile" && allowFullscreen);
     const showDivider = !first || collapsible;
 
     const resizeDetector = useResizeDetector();
@@ -117,9 +118,14 @@ export const FilterItem = ({
                     )}
                 </FilterItemHeader>
             )}
-            <Expandable style={expandableStyles} onClick={handleInteraction}>
+            <Expandable
+                style={expandableStyles}
+                $interactive={interactive}
+                onClick={handleInteraction}
+            >
                 <FilterItemBody
                     ref={resizeDetector.ref}
+                    $interactive={interactive}
                     tabIndex={-1}
                     onFocus={handleInteraction}
                 >
