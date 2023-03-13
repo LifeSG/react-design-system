@@ -5,6 +5,7 @@ import { Filter } from "../../src/filter/filter";
 import { Form } from "../../src/form";
 import { Overlay } from "../../src/overlay";
 import { Heading3, Secondary, Title } from "../storybook-common";
+import { Wrapper, CheckboxFilter, SearchFilter } from "./doc-elements.tsx";
 
 <Meta title="Modules/Filter" component={Filter} />
 
@@ -21,21 +22,119 @@ import { Filter } from "@lifesg/react-design-system/filter";
 <Canvas>
     <Story name="Filter">
         {() => {
+            const [currentFilters, setCurrentFilters] = useState({
+                search: "",
+                cat1: {},
+            });
+            const [draftFilters, setDraftFilters] = useState(currentFilters);
+            const clearButtonDisabled = Object.entries(currentFilters).every(
+                (filter) => !filter
+            );
+            const updateFilter = (mode, filterKey) => (val) => {
+                if (mode === "default") {
+                    setCurrentFilters((filters) => ({
+                        ...filters,
+                        [filterKey]: val,
+                    }));
+                }
+                setDraftFilters((filters) => {
+                    return {
+                        ...filters,
+                        [filterKey]: val,
+                    };
+                });
+            };
+            const saveFilters = () => {
+                setCurrentFilters(draftFilters);
+            };
+            console.log(currentFilters);
             return (
                 <div style={{ maxWidth: "500px", width: "100vw" }}>
                     <Filter
+                        clearButtonDisabled={clearButtonDisabled}
+                        onDone={saveFilters}
                         items={[
                             {
                                 collapsible: false,
                                 allowFullscreen: true,
                                 render: (mode) => {
-                                    return "not collapsible";
+                                    return (
+                                        <SearchFilter
+                                            mode={mode}
+                                            value={draftFilters.search}
+                                            onChange={updateFilter(
+                                                mode,
+                                                "search"
+                                            )}
+                                        />
+                                    );
                                 },
                             },
                             {
                                 title: "Category 1",
                                 render: (mode) => {
-                                    return "collapsible";
+                                    return (
+                                        <CheckboxFilter
+                                            mode={mode}
+                                            value={draftFilters.cat1}
+                                            onChange={updateFilter(
+                                                mode,
+                                                "cat1"
+                                            )}
+                                        />
+                                    );
+                                },
+                            },
+                        ]}
+                    />
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Canvas>
+    <Story name="Configuring behaviour">
+        {() => {
+            return (
+                <div style={{ maxWidth: "500px", width: "100vw" }}>
+                    <Filter
+                        items={[
+                            {
+                                title: "Default",
+                                render: () => {
+                                    return <>Collapsible</>;
+                                },
+                            },
+                            {
+                                render: () => {
+                                    return <>No title, collapsible</>;
+                                },
+                            },
+                            {
+                                collapsible: false,
+                                render: () => {
+                                    return <>No title, not collapsible</>;
+                                },
+                            },
+                            {
+                                title: "Switch to fullscreen",
+                                allowFullscreen: true,
+                                render: (mode) => {
+                                    if (mode === "fullscreen") {
+                                        return "Fullscreen mode";
+                                    } else if (mode === "mobile") {
+                                        return "Click to toggle fullscreen mode";
+                                    } else {
+                                        return "Switch to a mobile viewport to test fullscreen behaviour";
+                                    }
+                                },
+                            },
+                            {
+                                title: "Title",
+                                collapsible: false,
+                                render: () => {
+                                    return <>Not collapsible</>;
                                 },
                             },
                         ]}
