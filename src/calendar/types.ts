@@ -19,6 +19,8 @@ export interface CalendarProps {
     // DateInput with calendar component props
     /** Selected end date in `YYYY-MM-DD` format */
     endValue?: string | undefined;
+    /** Actively between selection. Values as ["2023-03-15", "2023-04-19"] */
+    between?: [string, string] | undefined;
     /** The display cancel/done button inside component.*/
     withButton?: boolean | undefined;
     /** Function to handle cancel/done .*/

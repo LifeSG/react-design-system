@@ -496,6 +496,7 @@ export const DateInput = ({
                 }
                 value={startDate.calendar}
                 endValue={endDate.calendar}
+                between={between}
                 variant={variant}
                 onCalendarView={handleCalendarView}
                 onHover={handleHoverDayCell}
