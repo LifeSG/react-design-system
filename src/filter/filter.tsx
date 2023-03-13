@@ -1,11 +1,21 @@
-import { FilterIcon } from "@lifesg/react-icons/filter";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { FilterIcon } from "@lifesg/react-icons/filter";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Button } from "../button/button";
 import { Overlay } from "../overlay/overlay";
 import { MediaWidths } from "../spec/media-spec";
 import { FilterItem } from "./filter-item";
+import {
+    DesktopContainer,
+    FilterBody,
+    FilterClearButton,
+    FilterFooter,
+    FilterHeader,
+    FilterHeaderButton,
+    FilterTitle,
+    MobileContainer,
+} from "./filter.styles";
 import { FilterProps } from "./types";
 
 export const Filter = ({ items }: FilterProps) => {
@@ -25,10 +35,6 @@ export const Filter = ({ items }: FilterProps) => {
     };
 
     const handleDoneClick = () => {
-        setVisible(false);
-    };
-
-    const handleDismissClick = () => {
         setVisible(false);
     };
 
@@ -57,19 +63,23 @@ export const Filter = ({ items }: FilterProps) => {
                 </Button.Default>
                 {visible && (
                     <Overlay show>
-                        <div style={{ background: "#fff" }}>
-                            <Button.Default onClick={handleDismissClick}>
-                                <CrossIcon />
-                            </Button.Default>
-                            <div>Filters</div>
-                            <Button.Default styleType="link">
-                                Clear
-                            </Button.Default>
-                            <div>{renderFilterItems()}</div>
-                            <Button.Default onClick={handleDoneClick}>
-                                Done
-                            </Button.Default>
-                        </div>
+                        <MobileContainer>
+                            <FilterHeader>
+                                <FilterHeaderButton>
+                                    <CrossIcon />
+                                </FilterHeaderButton>
+                                <FilterTitle>Filters</FilterTitle>
+                                <FilterClearButton styleType="link">
+                                    Clear
+                                </FilterClearButton>
+                            </FilterHeader>
+                            <FilterBody>{renderFilterItems()}</FilterBody>
+                            <FilterFooter>
+                                <Button.Default onClick={handleDoneClick}>
+                                    Done
+                                </Button.Default>
+                            </FilterFooter>
+                        </MobileContainer>
                     </Overlay>
                 )}
             </>
@@ -78,11 +88,15 @@ export const Filter = ({ items }: FilterProps) => {
 
     const renderDesktop = () => {
         return (
-            <div>
-                <div>Filters</div>
-                <Button.Default styleType="link">Clear</Button.Default>
-                {renderFilterItems()}
-            </div>
+            <DesktopContainer>
+                <FilterHeader>
+                    <FilterTitle>Filters</FilterTitle>
+                    <FilterClearButton styleType="link">
+                        Clear
+                    </FilterClearButton>
+                </FilterHeader>
+                <FilterBody>{renderFilterItems()}</FilterBody>
+            </DesktopContainer>
         );
     };
 

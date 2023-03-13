@@ -1,8 +1,15 @@
 import { ChevronDownIcon } from "@lifesg/react-icons";
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { animated, useSpring } from "react-spring";
-import { Button } from "../button/button";
+import { useSpring } from "react-spring";
+import {
+    Expandable,
+    FilterItemBody,
+    FilterItemExpandButton,
+    FilterItemHeader,
+    FilterItemTitle,
+    FilterItemWrapper,
+} from "./filter-item.styles";
 import { FilterItemProps } from "./types";
 
 interface FilterItemComponentProps extends FilterItemProps {
@@ -30,20 +37,24 @@ export const FilterItem = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <div>
-            {title && <div>{title}</div>}
-            {collapsible && (
-                <Button.Default
-                    onClick={() => {
-                        setExpanded(!expanded);
-                    }}
-                >
-                    <ChevronDownIcon />
-                </Button.Default>
-            )}
-            <animated.div style={expandableStyles}>
-                <div ref={resizeDetector.ref}>{render(mode)}</div>
-            </animated.div>
-        </div>
+        <FilterItemWrapper>
+            <FilterItemHeader>
+                {title && <FilterItemTitle>{title}</FilterItemTitle>}
+                {collapsible && (
+                    <FilterItemExpandButton
+                        onClick={() => {
+                            setExpanded(!expanded);
+                        }}
+                    >
+                        <ChevronDownIcon />
+                    </FilterItemExpandButton>
+                )}
+            </FilterItemHeader>
+            <Expandable style={expandableStyles}>
+                <FilterItemBody ref={resizeDetector.ref}>
+                    {render(mode)}
+                </FilterItemBody>
+            </Expandable>
+        </FilterItemWrapper>
     );
 };
