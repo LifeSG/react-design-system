@@ -17,7 +17,6 @@ interface StyleProps {
     $overlap?: boolean;
     $hovered?: boolean;
     $selected?: boolean;
-    $value?: string;
 }
 
 interface DayLabelStyleProps extends StyleProps {
@@ -192,20 +191,29 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        if (props.$disabled) {
+        const { $disabled, $selected, $variant } = props;
+
+        if ($disabled && $selected) {
+            return css`
+                ${TextStyleHelper.getTextStyle("H5", "semibold")};
+                color: ${Color.Accent.Light[2](props)};
+            `;
+        }
+
+        if ($disabled) {
             return css`
                 color: ${Color.Neutral[4](props)};
             `;
         }
 
-        if (props.$selected) {
+        if ($selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
                 color: ${Color.Primary(props)};
             `;
         }
 
-        switch (props.$variant) {
+        switch ($variant) {
             case "other-month":
                 return css`
                     color: ${Color.Neutral[4](props)};
@@ -218,17 +226,6 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
                 return css`
                     color: ${Color.Neutral[1](props)};
                 `;
-        }
-    }}
-
-    ${(props) => {
-        const { $hovered, $selected } = props;
-
-        if ($hovered || $selected) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Primary(props)};
-            `;
         }
     }}
 `;

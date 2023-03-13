@@ -1,6 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { DateInputVariant } from "../date-input";
 import { Text } from "../text/text";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
@@ -31,7 +30,7 @@ type HoverDirection =
     | "full-end-overlap";
 
 interface CalendarDayProps
-    extends Pick<CalendarProps, "disabledDates" | "variant"> {
+    extends Pick<CalendarProps, "disabledDates" | "variant" | "between"> {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
@@ -50,6 +49,7 @@ export const CalendarDay = ({
     onSelect,
     onHover,
     type,
+    between,
     variant,
 }: CalendarDayProps) => {
     // =============================================================================
@@ -196,6 +196,15 @@ export const CalendarDay = ({
             styleLabelProps.$disabled = isDisabled;
         }
 
+        if (
+            (between && !day.isBetween(between[0], between[1], "day", "[]")) ||
+            (disabledDates && disabledDates.includes(dateStartWithYear))
+        ) {
+            // get not include between date
+            styleCircleProps["$disabled"] = true;
+            styleLabelProps["$disabled"] = true;
+        }
+
         if ([selectedStartDate, selectedEndDate].includes(dateStartWithYear)) {
             styleCircleProps.$selected = true;
             styleLabelProps.$selected = true;
@@ -226,7 +235,7 @@ export const CalendarDay = ({
         }
 
         if (hoverDirection === "hover-start") {
-            styleLabelProps.$hovered = true;
+            styleLabelProps.$selected = true;
 
             if (![selectedEndDate, hoverValue].includes(dateStartWithYear)) {
                 styleLeftProps.$hovered = true;
@@ -239,7 +248,7 @@ export const CalendarDay = ({
         }
 
         if (hoverDirection === "hover-end") {
-            styleLabelProps.$hovered = true;
+            styleLabelProps.$selected = true;
 
             if (![selectedStartDate, hoverValue].includes(dateStartWithYear)) {
                 styleLeftProps.$hovered = true;
@@ -252,7 +261,7 @@ export const CalendarDay = ({
         }
 
         if (hoverDirection === "start-overlap") {
-            styleLabelProps.$hovered = true;
+            styleLabelProps.$selected = true;
 
             if (![hoverValue, selectedEndDate].includes(dateStartWithYear)) {
                 styleLeftProps.$selected = true;
