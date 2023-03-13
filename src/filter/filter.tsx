@@ -73,6 +73,7 @@ export const Filter = ({
                         key={index}
                         {...item}
                         mode={isMobile ? "mobile" : "default"}
+                        first={index === 0}
                     />
                 );
             })}

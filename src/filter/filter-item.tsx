@@ -15,18 +15,24 @@ import { FilterItemProps } from "./types";
 
 interface FilterItemComponentProps extends FilterItemProps {
     mode: "default" | "mobile";
+    first?: boolean | undefined;
 }
 
 export const FilterItem = ({
-    collapsible = true,
+    collapsible: desktopCollapsible = true,
     mode,
     title,
+    first = false,
     render,
 }: FilterItemComponentProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [expanded, setExpanded] = useState(!collapsible);
+    const [expanded, setExpanded] = useState(
+        mode === "default" ? !desktopCollapsible : true
+    );
+    const collapsible = mode === "default" && desktopCollapsible;
+    const showDivider = !first || collapsible;
 
     const resizeDetector = useResizeDetector();
     const expandableStyles = useSpring({
@@ -38,7 +44,7 @@ export const FilterItem = ({
     // =========================================================================
     return (
         <FilterItemWrapper $collapsible={collapsible}>
-            {(title || collapsible) && <Divider />}
+            {showDivider && <Divider />}
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
