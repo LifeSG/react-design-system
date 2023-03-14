@@ -19,6 +19,7 @@ export const FilterItemPage = ({
                 onClick={onDismiss}
                 focusOutline="browser"
                 focusHighlight={false}
+                aria-label="Dismiss"
             >
                 <ChevronLeftIcon />
             </FilterHeaderButton>

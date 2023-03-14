@@ -60,6 +60,7 @@ export const FilterItem = ({
                             onClick={() => {
                                 setExpanded(!expanded);
                             }}
+                            aria-label={expanded ? "Collapse" : "Expand"}
                         >
                             <ChevronIcon $expanded={expanded} />
                         </FilterItemExpandButton>

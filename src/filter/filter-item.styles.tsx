@@ -41,7 +41,7 @@ export const FilterItemBody = styled.div`
     }
 `;
 
-export const FilterItemHeader = styled(Text.H5)`
+export const FilterItemHeader = styled.div`
     display: flex;
     align-items: center;
 

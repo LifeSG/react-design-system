@@ -87,6 +87,31 @@ const FilterBase = ({
         return typeof children === "function" ? children(mode) : children;
     };
 
+    const renderHeader = (mode: Mode) => {
+        return (
+            <FilterHeader>
+                {mode === "mobile" && (
+                    <FilterHeaderButton
+                        onClick={handleDismissFilter}
+                        focusOutline="browser"
+                        focusHighlight={false}
+                        aria-label="Dismiss"
+                    >
+                        <CrossIcon />
+                    </FilterHeaderButton>
+                )}
+                <FilterTitle weight="semibold">{headerTitle}</FilterTitle>
+                <FilterClearButton
+                    styleType="link"
+                    onClick={handleClearClick}
+                    disabled={clearButtonDisabled}
+                >
+                    Clear
+                </FilterClearButton>
+            </FilterHeader>
+        );
+    };
+
     const renderMobile = () => {
         return (
             <>
@@ -96,25 +121,7 @@ const FilterBase = ({
                 {
                     <Overlay show={visible} disableTransition>
                         <MobileContainer>
-                            <FilterHeader>
-                                <FilterHeaderButton
-                                    onClick={handleDismissFilter}
-                                    focusOutline="browser"
-                                    focusHighlight={false}
-                                >
-                                    <CrossIcon />
-                                </FilterHeaderButton>
-                                <FilterTitle weight="semibold">
-                                    {headerTitle}
-                                </FilterTitle>
-                                <FilterClearButton
-                                    styleType="link"
-                                    onClick={handleClearClick}
-                                    disabled={clearButtonDisabled}
-                                >
-                                    Clear
-                                </FilterClearButton>
-                            </FilterHeader>
+                            {renderHeader("mobile")}
                             <FilterBody>{renderChildren("mobile")}</FilterBody>
                             <FilterFooter>
                                 <FilterDoneButton onClick={handleDoneClick}>
@@ -131,16 +138,7 @@ const FilterBase = ({
     const renderDesktop = () => {
         return (
             <DesktopContainer>
-                <FilterHeader>
-                    <FilterTitle weight="semibold">{headerTitle}</FilterTitle>
-                    <FilterClearButton
-                        styleType="link"
-                        onClick={handleClearClick}
-                        disabled={clearButtonDisabled}
-                    >
-                        Clear
-                    </FilterClearButton>
-                </FilterHeader>
+                {renderHeader("default")}
                 {renderChildren("default")}
             </DesktopContainer>
         );
