@@ -62,13 +62,16 @@ you with it.
     <Story name="With custom action button">
         {() => {
             const [isInCooldown, setIsInCooldown] = useState(true);
+            const [otpValues, setOtpValues] = useState(new Array(4).fill(""));
             return (
                 <StoryContainer>
                     <OtpInput
                         numOfInput={4}
+                        value={otpValues}
                         cooldownDuration={5}
                         onCooldownStart={() => setIsInCooldown(true)}
                         onCooldownEnd={() => setIsInCooldown(false)}
+                        onChange={(value) => setOtpValues(value)}
                         actionButtonProps={{
                             styleType: "light",
                             children: isInCooldown

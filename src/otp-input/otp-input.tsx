@@ -11,6 +11,7 @@ import { FormErrorMessage } from "src/form/form-label";
 
 export const OtpInput = ({
     id,
+    value,
     "data-testid": dataTestId,
     className,
     cooldownDuration,
@@ -64,6 +65,12 @@ export const OtpInput = ({
         onChangeRef.current = onChange;
     }, [onChange]);
 
+    useEffect(() => {
+        if (value) {
+            setOtpValues(value);
+        }
+    }, [value]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -80,7 +87,7 @@ export const OtpInput = ({
                 setOtpValues(newOtpValues);
 
                 if (onChange) {
-                    onChange(newOtpValues.join(""));
+                    onChange(newOtpValues);
                 }
             }
         };
@@ -94,14 +101,16 @@ export const OtpInput = ({
                 if (newOtpValues[index] !== "") {
                     newOtpValues[index] = "";
                 } else {
-                    newOtpValues[index - 1] = "";
-                    inputRefs.current[index - 1]?.focus();
+                    if (index !== 0) {
+                        newOtpValues[index - 1] = "";
+                        inputRefs.current[index - 1]?.focus();
+                    }
                 }
 
                 setOtpValues(newOtpValues);
 
                 if (onChange) {
-                    onChange(newOtpValues.join(""));
+                    onChange(newOtpValues);
                 }
             }
         };
@@ -111,7 +120,7 @@ export const OtpInput = ({
         if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
             setOtpValues(pastedValue.split(""));
             if (onChangeRef.current) {
-                onChangeRef.current(pastedValue);
+                onChangeRef.current(pastedValue.split(""));
             }
         } else {
             event.preventDefault();
