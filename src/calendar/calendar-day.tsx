@@ -98,82 +98,43 @@ export const CalendarDay = ({
         };
     };
 
-    const getHoverDirection = (day: Dayjs): HoverDirection => {
+    const getHoverDirection = (): HoverDirection => {
         if (!hoverValue || variant === "single") {
             return null;
         }
 
         if (selectedStartDate && selectedEndDate) {
-            if (
-                day.isBetween(
-                    selectedStartDate,
-                    selectedEndDate,
-                    "day",
-                    "[]"
-                ) &&
-                (dayjs(hoverValue).isAfter(selectedEndDate) ||
-                    dayjs(hoverValue).isBefore(selectedStartDate))
-            ) {
-                if (
-                    currentFocus === "start" &&
-                    dayjs(hoverValue).isBefore(selectedStartDate)
-                ) {
-                    return "full-start-overlap";
-                } else if (
-                    currentFocus === "end" &&
-                    dayjs(hoverValue).isAfter(selectedEndDate)
-                ) {
-                    return "full-end-overlap";
-                }
-            } else if (
-                dayjs(hoverValue).isBefore(selectedStartDate) &&
-                day.isBetween(selectedStartDate, hoverValue, "day", "[]")
-            ) {
+            if (dayjs(hoverValue).isBefore(selectedStartDate)) {
                 if (currentFocus === "start") {
-                    return "hover-start";
+                    return "full-start-overlap";
                 }
-            } else if (
-                dayjs(hoverValue).isAfter(selectedEndDate) &&
-                day.isBetween(selectedEndDate, hoverValue, "day", "[]")
-            ) {
+            } else if (dayjs(hoverValue).isAfter(selectedEndDate)) {
                 if (currentFocus === "end") {
-                    return "hover-end";
+                    return "full-end-overlap";
                 }
             } else if (
                 dayjs(hoverValue).isBetween(
                     selectedStartDate,
                     selectedEndDate,
                     "day",
-                    "()"
+                    "[]"
                 )
             ) {
-                if (
-                    currentFocus === "start" &&
-                    day.isBetween(selectedEndDate, hoverValue, "day", "[]")
-                ) {
+                if (currentFocus === "start") {
                     return "start-overlap";
-                } else if (
-                    currentFocus === "end" &&
-                    day.isBetween(selectedStartDate, hoverValue, "day", "[]")
-                ) {
+                } else if (currentFocus === "end") {
                     return "end-overlap";
                 }
             }
         }
 
-        // handle hovering to start/end if didn't exist other selected value
+        // handle hovering to start/end if didn't exist another selected value
         if (selectedStartDate && !selectedEndDate) {
-            if (
-                dayjs(hoverValue).isAfter(selectedStartDate) &&
-                day.isBetween(selectedStartDate, hoverValue, "day", "[]")
-            ) {
+            if (dayjs(hoverValue).isAfter(selectedStartDate)) {
                 return "hover-end";
             }
         } else if (!selectedStartDate && selectedEndDate) {
-            if (
-                dayjs(hoverValue).isBefore(selectedEndDate) &&
-                day.isBetween(selectedEndDate, hoverValue, "day", "[]")
-            ) {
+            if (dayjs(hoverValue).isBefore(selectedEndDate)) {
                 return "hover-start";
             }
         }
@@ -181,9 +142,10 @@ export const CalendarDay = ({
         return null;
     };
 
+    const hoverDirection: HoverDirection = getHoverDirection();
+
     const generateStyleProps = (day: Dayjs) => {
         const dateStartWithYear = day.format("YYYY-MM-DD");
-        const hoverDirection = getHoverDirection(day);
 
         const styleLeftProps: StyleLeftProps = {},
             styleRightProps: StyleRightProps = {},
@@ -234,7 +196,10 @@ export const CalendarDay = ({
             }
         }
 
-        if (hoverDirection === "hover-start") {
+        if (
+            hoverDirection === "hover-start" &&
+            day.isBetween(selectedEndDate, hoverValue, "day", "[]")
+        ) {
             styleLabelProps.$selected = true;
 
             if (![selectedEndDate, hoverValue].includes(dateStartWithYear)) {
@@ -247,7 +212,10 @@ export const CalendarDay = ({
             }
         }
 
-        if (hoverDirection === "hover-end") {
+        if (
+            hoverDirection === "hover-end" &&
+            day.isBetween(selectedStartDate, hoverValue, "day", "[]")
+        ) {
             styleLabelProps.$selected = true;
 
             if (![selectedStartDate, hoverValue].includes(dateStartWithYear)) {
@@ -260,7 +228,11 @@ export const CalendarDay = ({
             }
         }
 
-        if (hoverDirection === "start-overlap") {
+        if (
+            hoverDirection === "start-overlap" &&
+            day.isBetween(selectedEndDate, hoverValue, "day", "[]") &&
+            ![selectedStartDate, selectedEndDate].includes(hoverValue)
+        ) {
             styleLabelProps.$selected = true;
 
             if (![hoverValue, selectedEndDate].includes(dateStartWithYear)) {
@@ -279,7 +251,11 @@ export const CalendarDay = ({
             }
         }
 
-        if (hoverDirection === "end-overlap") {
+        if (
+            hoverDirection === "end-overlap" &&
+            day.isBetween(selectedStartDate, hoverValue, "day", "[]") &&
+            ![selectedStartDate, selectedEndDate].includes(hoverValue)
+        ) {
             if (![hoverValue, selectedStartDate].includes(dateStartWithYear)) {
                 styleLeftProps.$selected = true;
                 styleLeftProps.$overlap = true;
@@ -297,45 +273,61 @@ export const CalendarDay = ({
         }
 
         if (hoverDirection === "full-start-overlap") {
-            if (
-                ![selectedStartDate, selectedEndDate].includes(
-                    dateStartWithYear
-                )
-            ) {
-                styleLeftProps.$selected = true;
-                styleLeftProps.$overlap = true;
-                styleRightProps.$selected = true;
-                styleRightProps.$overlap = true;
-            } else if (selectedStartDate === dateStartWithYear) {
-                styleLeftProps.$hovered = true;
-                styleRightProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedEndDate === dateStartWithYear) {
-                styleLeftProps.$overlap = true;
-                styleCircleProps.$overlap = true;
+            if (day.isBetween(selectedEndDate, hoverValue, "day", "[]")) {
+                styleLabelProps.$selected = true;
+
+                if (selectedStartDate === dateStartWithYear) {
+                    styleLeftProps.$hovered = true;
+                    styleRightProps.$overlap = true;
+                    styleCircleProps.$overlap = true;
+                } else if (selectedEndDate === dateStartWithYear) {
+                    styleLeftProps.$overlap = true;
+                    styleCircleProps.$overlap = true;
+                } else if (day.isSame(hoverValue)) {
+                    styleRightProps.$hovered = true;
+                } else if (
+                    day.isBetween(selectedStartDate, hoverValue, "day", "()")
+                ) {
+                    styleLeftProps.$hovered = true;
+                    styleRightProps.$hovered = true;
+                }
             }
         }
 
         if (hoverDirection === "full-end-overlap") {
-            if (
-                ![selectedStartDate, selectedEndDate].includes(
-                    dateStartWithYear
-                )
-            ) {
-                styleLeftProps.$selected = true;
-                styleLeftProps.$overlap = true;
-                styleRightProps.$selected = true;
-                styleRightProps.$overlap = true;
-            } else if (selectedStartDate === dateStartWithYear) {
-                styleRightProps.$overlap = true;
-
+            if (day.isBetween(selectedStartDate, hoverValue, "day", "[]")) {
                 styleLabelProps.$selected = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedEndDate === dateStartWithYear) {
-                styleLeftProps.$overlap = true;
-                styleRightProps.$hovered = true;
-                styleCircleProps.$overlap = true;
+
+                if (selectedEndDate === dateStartWithYear) {
+                    styleLeftProps.$overlap = true;
+                    styleRightProps.$hovered = true;
+                    styleCircleProps.$overlap = true;
+                } else if (selectedStartDate === dateStartWithYear) {
+                    styleRightProps.$overlap = true;
+
+                    styleLabelProps.$selected = true;
+                    styleCircleProps.$overlap = true;
+                } else if (day.isSame(hoverValue)) {
+                    styleLeftProps.$hovered = true;
+                } else if (
+                    day.isBetween(selectedEndDate, hoverValue, "day", "()")
+                ) {
+                    styleLeftProps.$hovered = true;
+                    styleRightProps.$hovered = true;
+                }
             }
+        }
+
+        if (
+            ["full-end-overlap", "full-start-overlap"].includes(
+                hoverDirection
+            ) &&
+            day.isBetween(selectedStartDate, selectedEndDate, "day", "()")
+        ) {
+            styleLeftProps.$selected = true;
+            styleLeftProps.$overlap = true;
+            styleRightProps.$selected = true;
+            styleRightProps.$overlap = true;
         }
 
         // disabled date
