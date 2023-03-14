@@ -36,12 +36,13 @@ export const FilterItem = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const isMobile = mode === "mobile";
     const [expanded, setExpanded] = useState(
-        mode === "default" ? !desktopCollapsible : true
+        isMobile ? true : !desktopCollapsible
     );
     const [active, setActive] = useState(false);
-    const collapsible = mode === "default" && desktopCollapsible;
-    const interactive = !(mode === "mobile" && allowFullscreen);
+    const collapsible = !isMobile && desktopCollapsible;
+    const interactive = !(isMobile && allowFullscreen);
     const showDivider = !first || collapsible;
 
     const resizeDetector = useResizeDetector();
@@ -53,7 +54,7 @@ export const FilterItem = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleInteraction = () => {
-        if (mode === "mobile" && allowFullscreen) {
+        if (!interactive) {
             setActive(true);
         }
     };
@@ -121,7 +122,7 @@ export const FilterItem = ({
                 </FilterItemHeader>
             )}
             <Expandable
-                style={expandableStyles}
+                style={mode === "default" ? expandableStyles : undefined}
                 $interactive={interactive}
                 onClick={handleInteraction}
             >

@@ -7,6 +7,7 @@ import { MediaWidths } from "../spec/media-spec";
 import { FilterItem } from "./filter-item";
 import {
     DesktopContainer,
+    DesktopView,
     FilterBody,
     FilterButton,
     FilterClearButton,
@@ -15,11 +16,12 @@ import {
     FilterHeaderButton,
     FilterTitle,
     MobileContainer,
+    MobileView,
     StyledFilterIcon,
 } from "./filter.styles";
 import { FilterProps } from "./types";
 
-export const Filter = ({
+export const FilterBase = ({
     items,
     toggleFilterButtonLabel = "Filters",
     headerTitle = "Filters",
@@ -66,20 +68,17 @@ export const Filter = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderFilterItems = () => (
-        <div>
-            {items.map((item, index) => {
-                return (
-                    <FilterItem
-                        key={index}
-                        {...item}
-                        mode={isMobile ? "mobile" : "default"}
-                        first={index === 0}
-                    />
-                );
-            })}
-        </div>
-    );
+    const renderFilterItems = (mode: "default" | "mobile") =>
+        items.map((item, index) => {
+            return (
+                <FilterItem
+                    key={index}
+                    {...item}
+                    mode={mode}
+                    first={index === 0}
+                />
+            );
+        });
 
     const renderMobile = () => {
         return (
@@ -87,8 +86,8 @@ export const Filter = ({
                 <FilterButton styleType="light" onClick={handleShowFilter}>
                     <StyledFilterIcon /> {toggleFilterButtonLabel}
                 </FilterButton>
-                {visible && (
-                    <Overlay show>
+                {
+                    <Overlay show={isMobile && visible} disableTransition>
                         <MobileContainer>
                             <FilterHeader>
                                 <FilterHeaderButton
@@ -109,7 +108,9 @@ export const Filter = ({
                                     Clear
                                 </FilterClearButton>
                             </FilterHeader>
-                            <FilterBody>{renderFilterItems()}</FilterBody>
+                            <FilterBody>
+                                {renderFilterItems("mobile")}
+                            </FilterBody>
                             <FilterFooter>
                                 <Button.Default onClick={handleDoneClick}>
                                     Done
@@ -117,7 +118,7 @@ export const Filter = ({
                             </FilterFooter>
                         </MobileContainer>
                     </Overlay>
-                )}
+                }
             </>
         );
     };
@@ -135,10 +136,17 @@ export const Filter = ({
                         Clear
                     </FilterClearButton>
                 </FilterHeader>
-                {renderFilterItems()}
+                {renderFilterItems("default")}
             </DesktopContainer>
         );
     };
 
-    return isMobile ? renderMobile() : renderDesktop();
+    return (
+        <>
+            <MobileView>{renderMobile()}</MobileView>
+            <DesktopView>{renderDesktop()}</DesktopView>
+        </>
+    );
 };
+
+export const Filter = Object.assign(FilterBase, {});

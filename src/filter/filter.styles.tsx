@@ -10,6 +10,19 @@ import { Text } from "../text/text";
 // CONTAINER STYLES
 // =============================================================================
 
+export const DesktopView = styled.div`
+    ${MediaQuery.MaxWidth.mobileL} {
+        display: none;
+    }
+`;
+
+export const MobileView = styled.div`
+    display: none;
+    ${MediaQuery.MaxWidth.mobileL} {
+        display: block;
+    }
+`;
+
 export const DesktopContainer = styled.div`
     background-color: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
