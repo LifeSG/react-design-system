@@ -10,7 +10,7 @@ export interface OtpInputProps extends React.AriaAttributes {
     /** The duration (in seconds) to disable the submit button after a click is made */
     cooldownDuration: number;
     /** The props for the submit button */
-    actionButtonProps: ButtonProps;
+    actionButtonProps?: ButtonProps | undefined;
     /** The number of characters for the Otp */
     numOfInput: number;
     /** Called when one of the input is changed. Returns the combined value of all Otp inputs */
