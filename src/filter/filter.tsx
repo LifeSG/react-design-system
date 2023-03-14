@@ -118,19 +118,17 @@ const FilterBase = ({
                 <FilterButton styleType="light" onClick={handleShowFilter}>
                     <StyledFilterIcon /> {toggleFilterButtonLabel}
                 </FilterButton>
-                {
-                    <Overlay show={visible} disableTransition>
-                        <MobileContainer>
-                            {renderHeader("mobile")}
-                            <FilterBody>{renderChildren("mobile")}</FilterBody>
-                            <FilterFooter>
-                                <FilterDoneButton onClick={handleDoneClick}>
-                                    Done
-                                </FilterDoneButton>
-                            </FilterFooter>
-                        </MobileContainer>
-                    </Overlay>
-                }
+                <Overlay show={visible} disableTransition>
+                    <MobileContainer>
+                        {renderHeader("mobile")}
+                        <FilterBody>{renderChildren("mobile")}</FilterBody>
+                        <FilterFooter>
+                            <FilterDoneButton onClick={handleDoneClick}>
+                                Done
+                            </FilterDoneButton>
+                        </FilterFooter>
+                    </MobileContainer>
+                </Overlay>
             </>
         );
     };
