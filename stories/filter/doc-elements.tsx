@@ -97,3 +97,75 @@ export const CheckboxFilter = ({
         </Wrapper>
     );
 };
+
+export const useFilters = () => {
+    const INITIAL_STATE = {
+        search: "",
+        cat1: {
+            opt1: false,
+            opt2: false,
+            opt3: false,
+            opt4: false,
+            opt5: false,
+            opt6: false,
+            opt7: false,
+            opt8: false,
+        },
+    };
+
+    const [currentFilters, setCurrentFilters] = useState(INITIAL_STATE);
+    const [draftFilters, setDraftFilters] = useState(INITIAL_STATE);
+    const [predraftFilters, setPredraftFilters] = useState(INITIAL_STATE);
+    const clearButtonDisabled = Object.entries(draftFilters).every(
+        (filter) => !filter
+    );
+
+    const updateFilter = (mode: Mode, filterKey) => (val) => {
+        if (mode === "default") {
+            setCurrentFilters((filters) => ({
+                ...filters,
+                [filterKey]: val,
+            }));
+        }
+        setDraftFilters((filters) => {
+            return {
+                ...filters,
+                [filterKey]: val,
+            };
+        });
+    };
+
+    const saveFilters = () => {
+        setCurrentFilters(draftFilters);
+        setPredraftFilters(draftFilters);
+    };
+
+    const dismissFilters = () => {
+        setDraftFilters(currentFilters);
+    };
+
+    const clearFilters = () => {
+        setCurrentFilters(INITIAL_STATE);
+        setDraftFilters(INITIAL_STATE);
+    };
+
+    const dismissItemFilter = () => {
+        setDraftFilters(predraftFilters);
+    };
+
+    const saveItemFilter = () => {
+        setPredraftFilters(draftFilters);
+    };
+
+    return {
+        currentFilters,
+        draftFilters,
+        clearButtonDisabled,
+        updateFilter,
+        saveFilters,
+        dismissFilters,
+        clearFilters,
+        dismissItemFilter,
+        saveItemFilter,
+    };
+};

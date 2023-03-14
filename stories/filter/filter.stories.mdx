@@ -5,7 +5,12 @@ import { Filter } from "../../src/filter";
 import { Form } from "../../src/form";
 import { Overlay } from "../../src/overlay";
 import { Heading3, Secondary, Title } from "../storybook-common";
-import { Wrapper, CheckboxFilter, SearchFilter } from "./doc-elements.tsx";
+import {
+    Wrapper,
+    CheckboxFilter,
+    SearchFilter,
+    useFilters,
+} from "./doc-elements.tsx";
 
 <Meta title="Modules/Filter" component={Filter} />
 
@@ -22,41 +27,30 @@ import { Filter } from "@lifesg/react-design-system/filter";
 <Canvas>
     <Story name="Filter">
         {() => {
-            const [currentFilters, setCurrentFilters] = useState({
-                search: "",
-                cat1: {},
-            });
-            const [draftFilters, setDraftFilters] = useState(currentFilters);
-            const clearButtonDisabled = Object.entries(currentFilters).every(
-                (filter) => !filter
-            );
-            const updateFilter = (mode, filterKey) => (val) => {
-                if (mode === "default") {
-                    setCurrentFilters((filters) => ({
-                        ...filters,
-                        [filterKey]: val,
-                    }));
-                }
-                setDraftFilters((filters) => {
-                    return {
-                        ...filters,
-                        [filterKey]: val,
-                    };
-                });
-            };
-            const saveFilters = () => {
-                setCurrentFilters(draftFilters);
-            };
-            console.log(currentFilters);
+            const {
+                currentFilters,
+                draftFilters,
+                clearButtonDisabled,
+                updateFilter,
+                saveFilters,
+                dismissFilters,
+                clearFilters,
+                dismissItemFilter,
+                saveItemFilter,
+            } = useFilters(); // custom filter state management hook
             return (
                 <div style={{ maxWidth: "500px", width: "100vw" }}>
                     <Filter
                         clearButtonDisabled={clearButtonDisabled}
                         onDone={saveFilters}
+                        onClear={clearFilters}
+                        onDismiss={dismissFilters}
                         items={[
                             {
                                 collapsible: false,
                                 allowFullscreen: true,
+                                onItemDismiss: dismissItemFilter,
+                                onItemDone: saveItemFilter,
                                 render: (mode) => {
                                     return (
                                         <SearchFilter
@@ -72,6 +66,8 @@ import { Filter } from "@lifesg/react-design-system/filter";
                             },
                             {
                                 title: "Category 1",
+                                onItemDismiss: dismissItemFilter,
+                                onItemDone: saveItemFilter,
                                 render: (mode) => {
                                     return (
                                         <CheckboxFilter
@@ -139,6 +135,12 @@ You may configure the behaviour of each section with the `collapsible` and `allo
                                 collapsible: false,
                                 render: () => {
                                     return <>Not collapsible</>;
+                                },
+                            },
+                            {
+                                title: "Just an example of long content that may wrap to the next line",
+                                render: () => {
+                                    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis neque felis, ac tempor erat iaculis et. Nam elementum at lectus et dapibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer aliquam placerat ullamcorper. Sed ut pulvinar felis. Praesent vulputate ex quis tellus dictum laoreet. Aliquam condimentum libero ut sagittis interdum. Fusce auctor pharetra lorem eu rhoncus. Integer consectetur in odio sed vestibulum. Nunc imperdiet ligula non eros faucibus, non aliquam dui aliquet.";
                                 },
                             },
                         ]}
