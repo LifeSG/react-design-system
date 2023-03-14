@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
-
+import { DesignToken } from "src/design-token";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -58,23 +58,22 @@ export const LinkItem = styled.li`
 `;
 
 export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
-    ${TextStyleHelper.getTextStyle("H6", 400)}
+    ${TextStyleHelper.getTextStyle("H6", 400)};
+    width: 100%;
     display: flex;
     position: relative;
     align-items: left;
     text-align: left;
     color: ${Color.Neutral[1]};
 
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-
     margin-right: 1rem;
     padding-right: 1rem;
 
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* start showing ellipsis when 2rd line is reached */
+    white-space: pre-wrap; /* let the text wrap preserving spaces */
 
     /* identical to box height, or 186% */
     letter-spacing: 0.0075rem;
@@ -88,14 +87,10 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        ${TextStyleHelper.getTextStyle("H6", "bold")}
+        ${TextStyleHelper.getTextStyle("H5", "bold")}
         width: 100%;
         padding: 0.625rem 1rem;
-        text-align: left;
-        align-items: flex-start;
         line-height: 1.125rem !important;
-        overflow: hidden;
-        display: -webkit-box;
     }
 `;
 
@@ -126,14 +121,12 @@ export const MenuBar = styled.ul`
     left: 0;
     top: 102%;
     min-width: 15.62rem;
-    /* N8 #FFFFFF */
     position: absolute;
     overflow-x: hidden;
 
-    /* N8 #FFFFFF */
-    background: #ffffff;
-    box-shadow: 0rem 0.125rem 0.5rem rgba(75, 83, 159, 0.24);
+    background: ${Color.Neutral[8]};
     border-radius: 0rem 0rem 0.5rem 0.5rem;
+    box-shadow: ${DesignToken.ElevationBoxShadow};
 `;
 // =============================================================================
 // LINK ITEMS

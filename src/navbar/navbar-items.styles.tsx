@@ -4,6 +4,7 @@ import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { DesignToken } from "src/design-token";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -118,12 +119,10 @@ export const Menu = styled.div`
     left: 0;
     top: 102%;
 
-    /* N8 #FFFFFF */
     position: absolute;
 
-    /* N8 #FFFFFF */
-    background: #ffffff;
-    box-shadow: 0rem 0.125rem 0.5rem rgba(75, 83, 159, 0.24);
+    background: ${Color.Neutral[8]};
+    box-shadow: ${DesignToken.ElevationBoxShadow};
     border-radius: 0rem 0rem 0.5rem 0.5rem;
 `;
 
