@@ -5,12 +5,7 @@ import { Filter } from "../../src/filter";
 import { Form } from "../../src/form";
 import { Overlay } from "../../src/overlay";
 import { Heading3, Secondary, Title } from "../storybook-common";
-import {
-    Wrapper,
-    CheckboxFilter,
-    SearchFilter,
-    useFilters,
-} from "./doc-elements.tsx";
+import { CheckboxFilter, SearchFilter, useFilters } from "./doc-elements.tsx";
 
 <Meta title="Modules/Filter" component={Filter} />
 
@@ -37,52 +32,55 @@ import { Filter } from "@lifesg/react-design-system/filter";
                 clearFilters,
                 dismissItemFilter,
                 saveItemFilter,
-            } = useFilters(); // custom filter state management hook
+            } = useFilters(); // your custom filter state management here
             return (
                 <div style={{ maxWidth: "500px", width: "100vw" }}>
                     <Filter
                         clearButtonDisabled={clearButtonDisabled}
-                        onDone={saveFilters}
                         onClear={clearFilters}
                         onDismiss={dismissFilters}
-                        items={[
-                            {
-                                collapsible: false,
-                                allowFullscreen: true,
-                                onItemDismiss: dismissItemFilter,
-                                onItemDone: saveItemFilter,
-                                render: (mode) => {
-                                    return (
-                                        <SearchFilter
-                                            mode={mode}
-                                            value={draftFilters.search}
-                                            onChange={updateFilter(
-                                                mode,
-                                                "search"
-                                            )}
-                                        />
-                                    );
-                                },
-                            },
-                            {
-                                title: "Category 1",
-                                onItemDismiss: dismissItemFilter,
-                                onItemDone: saveItemFilter,
-                                render: (mode) => {
-                                    return (
-                                        <CheckboxFilter
-                                            mode={mode}
-                                            value={draftFilters.cat1}
-                                            onChange={updateFilter(
-                                                mode,
-                                                "cat1"
-                                            )}
-                                        />
-                                    );
-                                },
-                            },
-                        ]}
-                    />
+                        onDone={saveFilters}
+                    >
+                        {(mode) => (
+                            <>
+                                <Filter.Item
+                                    title=""
+                                    collapsible={false}
+                                    showMobileDivider={false}
+                                    showDivider={false}
+                                >
+                                    <SearchFilter
+                                        mode={mode}
+                                        value={draftFilters.search}
+                                        onChange={updateFilter(mode, "search")}
+                                    />
+                                </Filter.Item>
+                                <Filter.Item title="Category 1">
+                                    <CheckboxFilter
+                                        mode={mode}
+                                        value={draftFilters.cat1}
+                                        onChange={updateFilter(mode, "cat1")}
+                                    />
+                                </Filter.Item>
+                                <Filter.Item title="Just an example of long content that may wrap to the next line">
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipiscing elit. Morbi venenatis neque
+                                    felis, ac tempor erat iaculis et. Nam
+                                    elementum at lectus et dapibus. Orci varius
+                                    natoque penatibus et magnis dis parturient
+                                    montes, nascetur ridiculus mus. Integer
+                                    aliquam placerat ullamcorper. Sed ut
+                                    pulvinar felis. Praesent vulputate ex quis
+                                    tellus dictum laoreet. Aliquam condimentum
+                                    libero ut sagittis interdum. Fusce auctor
+                                    pharetra lorem eu rhoncus. Integer
+                                    consectetur in odio sed vestibulum. Nunc
+                                    imperdiet ligula non eros faucibus, non
+                                    aliquam dui aliquet.
+                                </Filter.Item>
+                            </>
+                        )}
+                    </Filter>
                 </div>
             );
         }}
@@ -91,60 +89,61 @@ import { Filter } from "@lifesg/react-design-system/filter";
 
 <Heading3>Configuring behaviour</Heading3>
 
-You may configure the behaviour of each section with the `collapsible` and `allowFullscreen` props.
+You may configure the expand/collapse behaviour of each section with the `collapsible` prop.
 
 <Canvas>
     <Story name="Configuring behaviour">
         {() => {
+            const mode = "default";
             return (
                 <div style={{ maxWidth: "500px", width: "100vw" }}>
-                    <Filter
-                        items={[
-                            {
-                                title: "Default",
-                                render: () => {
-                                    return <>Collapsible</>;
-                                },
-                            },
-                            {
-                                render: () => {
-                                    return <>No title, collapsible</>;
-                                },
-                            },
-                            {
-                                collapsible: false,
-                                render: () => {
-                                    return <>No title, not collapsible</>;
-                                },
-                            },
-                            {
-                                title: "Switch to fullscreen",
-                                allowFullscreen: true,
-                                render: (mode) => {
-                                    if (mode === "fullscreen") {
-                                        return "Fullscreen mode";
-                                    } else if (mode === "mobile") {
-                                        return "Click to toggle fullscreen mode";
-                                    } else {
-                                        return "Switch to a mobile viewport to test fullscreen behaviour";
-                                    }
-                                },
-                            },
-                            {
-                                title: "Title",
-                                collapsible: false,
-                                render: () => {
-                                    return <>Not collapsible</>;
-                                },
-                            },
-                            {
-                                title: "Just an example of long content that may wrap to the next line",
-                                render: () => {
-                                    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis neque felis, ac tempor erat iaculis et. Nam elementum at lectus et dapibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer aliquam placerat ullamcorper. Sed ut pulvinar felis. Praesent vulputate ex quis tellus dictum laoreet. Aliquam condimentum libero ut sagittis interdum. Fusce auctor pharetra lorem eu rhoncus. Integer consectetur in odio sed vestibulum. Nunc imperdiet ligula non eros faucibus, non aliquam dui aliquet.";
-                                },
-                            },
-                        ]}
-                    />
+                    <Filter>
+                        <Filter.Item title="With divider">
+                            With divider
+                        </Filter.Item>
+                        <Filter.Item
+                            title="No divider"
+                            showMobileDivider={false}
+                            showDivider={false}
+                        >
+                            Without divider
+                        </Filter.Item>
+                        <Filter.Item title="Default">Collapsible</Filter.Item>
+                        <Filter.Item>No title, collapsible</Filter.Item>
+                        <Filter.Item collapsible={false}>
+                            No title, not collapsible
+                        </Filter.Item>
+                        <Filter.Item
+                            title="Not collapsible"
+                            collapsible={false}
+                        >
+                            Always visible
+                        </Filter.Item>
+                    </Filter>
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Accessing mode</Heading3>
+
+If you need the current visible mode, you may pass in a render prop as a child of `Filter` or `Filter.Item`.
+
+<Canvas>
+    <Story name="Accessing mode">
+        {() => {
+            return (
+                <div style={{ maxWidth: "500px", width: "100vw" }}>
+                    <Filter>
+                        <Filter.Item title="Mode" showMobileDivider={false}>
+                            {(mode) =>
+                                mode === "mobile"
+                                    ? "Mobile view. Switch to a larger viewport to see default view."
+                                    : "Default view. Switch to a smaller viewport to see mobile view."
+                            }
+                        </Filter.Item>
+                    </Filter>
                 </div>
             );
         }}
@@ -164,60 +163,40 @@ In the example below, extra padding is applied when the dropdown list is expande
             const [showOptions, setShowOptions] = useState(false);
             return (
                 <div style={{ maxWidth: "500px", width: "100vw" }}>
-                    <Filter
-                        items={[
-                            {
-                                title: "Category 1",
-                                render: () => {
-                                    return (
-                                        <Wrapper
-                                            style={{
-                                                paddingBottom: showOptions
-                                                    ? "16rem"
-                                                    : "1rem",
-                                            }}
-                                        >
-                                            <Form.Select
-                                                options={[
-                                                    {
-                                                        value: "A",
-                                                        label: "Option A",
-                                                    },
-                                                    {
-                                                        value: "B",
-                                                        label: "Option B",
-                                                    },
-                                                    {
-                                                        value: "C",
-                                                        label: "Option C",
-                                                    },
-                                                    {
-                                                        value: "D",
-                                                        label: "Option D",
-                                                    },
-                                                ]}
-                                                valueExtractor={(item) =>
-                                                    item.value
-                                                }
-                                                listExtractor={(item) =>
-                                                    item.label
-                                                }
-                                                displayValueExtractor={(item) =>
-                                                    item.label
-                                                }
-                                                onShowOptions={() =>
-                                                    setShowOptions(true)
-                                                }
-                                                onHideOptions={() =>
-                                                    setShowOptions(false)
-                                                }
-                                            />
-                                        </Wrapper>
-                                    );
-                                },
-                            },
-                        ]}
-                    />
+                    <Filter>
+                        <Filter.Item
+                            title="Category 1"
+                            style={{
+                                paddingBottom: showOptions ? "17rem" : "1rem",
+                            }}
+                        >
+                            <Form.Select
+                                options={[
+                                    {
+                                        value: "A",
+                                        label: "Option A",
+                                    },
+                                    {
+                                        value: "B",
+                                        label: "Option B",
+                                    },
+                                    {
+                                        value: "C",
+                                        label: "Option C",
+                                    },
+                                    {
+                                        value: "D",
+                                        label: "Option D",
+                                    },
+                                ]}
+                                valueExtractor={(item) => item.value}
+                                listExtractor={(item) => item.label}
+                                displayValueExtractor={(item) => item.label}
+                                onShowOptions={() => setShowOptions(true)}
+                                onHideOptions={() => setShowOptions(false)}
+                            />
+                        </Filter.Item>
+                    </Filter>
                 </div>
             );
         }}

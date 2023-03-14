@@ -1,16 +1,18 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Button } from "../button/button";
 import { Overlay } from "../overlay/overlay";
 import { MediaWidths } from "../spec/media-spec";
+import { FilterContext } from "./filter-context";
 import { FilterItem } from "./filter-item";
+import { FilterItemPage } from "./filter-item-page";
 import {
     DesktopContainer,
     DesktopView,
     FilterBody,
     FilterButton,
     FilterClearButton,
+    FilterDoneButton,
     FilterFooter,
     FilterHeader,
     FilterHeaderButton,
@@ -19,24 +21,36 @@ import {
     MobileView,
     StyledFilterIcon,
 } from "./filter.styles";
-import { FilterProps } from "./types";
+import { FilterProps, Mode } from "./types";
 
-export const FilterBase = ({
-    items,
+const FilterBase = ({
     toggleFilterButtonLabel = "Filters",
     headerTitle = "Filters",
     clearButtonDisabled = false,
     onDismiss,
     onDone,
     onClear,
+    children,
 }: FilterProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
     const [visible, setVisible] = useState(false);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useMediaQuery(
+        {
+            maxWidth: MediaWidths.mobileL,
+        },
+        undefined,
+        (isMobile) => {
+            if (!isMobile) {
+                handleDoneClick();
+            }
+        }
+    );
 
     // =========================================================================
     // EVENT HANDLERS
@@ -68,17 +82,9 @@ export const FilterBase = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderFilterItems = (mode: "default" | "mobile") =>
-        items.map((item, index) => {
-            return (
-                <FilterItem
-                    key={index}
-                    {...item}
-                    mode={mode}
-                    first={index === 0}
-                />
-            );
-        });
+    const renderChildren = (mode: Mode) => {
+        return typeof children === "function" ? children(mode) : children;
+    };
 
     const renderMobile = () => {
         return (
@@ -87,7 +93,7 @@ export const FilterBase = ({
                     <StyledFilterIcon /> {toggleFilterButtonLabel}
                 </FilterButton>
                 {
-                    <Overlay show={isMobile && visible} disableTransition>
+                    <Overlay show={visible} disableTransition>
                         <MobileContainer>
                             <FilterHeader>
                                 <FilterHeaderButton
@@ -108,13 +114,11 @@ export const FilterBase = ({
                                     Clear
                                 </FilterClearButton>
                             </FilterHeader>
-                            <FilterBody>
-                                {renderFilterItems("mobile")}
-                            </FilterBody>
+                            <FilterBody>{renderChildren("mobile")}</FilterBody>
                             <FilterFooter>
-                                <Button.Default onClick={handleDoneClick}>
+                                <FilterDoneButton onClick={handleDoneClick}>
                                     Done
-                                </Button.Default>
+                                </FilterDoneButton>
                             </FilterFooter>
                         </MobileContainer>
                     </Overlay>
@@ -136,17 +140,28 @@ export const FilterBase = ({
                         Clear
                     </FilterClearButton>
                 </FilterHeader>
-                {renderFilterItems("default")}
+                {renderChildren("default")}
             </DesktopContainer>
         );
     };
 
     return (
         <>
-            <MobileView>{renderMobile()}</MobileView>
-            <DesktopView>{renderDesktop()}</DesktopView>
+            <MobileView>
+                <FilterContext.Provider value={{ mode: "mobile" }}>
+                    {renderMobile()}
+                </FilterContext.Provider>
+            </MobileView>
+            <DesktopView>
+                <FilterContext.Provider value={{ mode: "default" }}>
+                    {renderDesktop()}
+                </FilterContext.Provider>
+            </DesktopView>
         </>
     );
 };
 
-export const Filter = Object.assign(FilterBase, {});
+export const Filter = Object.assign(FilterBase, {
+    Item: FilterItem,
+    Page: FilterItemPage,
+});

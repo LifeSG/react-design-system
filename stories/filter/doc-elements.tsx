@@ -1,14 +1,9 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Button } from "../../src/button";
 import { Checkbox } from "../../src/checkbox";
 import { Mode } from "../../src/filter";
 import { Form } from "../../src/form";
-
-export const Wrapper = styled.div`
-    padding: 1rem;
-`;
 
 const CheckboxWithLabel = ({
     checked,
@@ -46,22 +41,19 @@ interface Props<T> {
 
 export const SearchFilter = ({ mode, value, onChange }: Props<string>) => {
     return (
-        <Wrapper style={{ paddingTop: mode === "default" ? 0 : undefined }}>
-            <Form.InputGroup
-                autoFocus={mode === "fullscreen"}
-                placeholder="Search with keyword"
-                addon={{
-                    type: "custom",
-                    attributes: {
-                        children: <MagnifierIcon />,
-                    },
-                }}
-                value={value}
-                onChange={(e) => {
-                    onChange(e.target.value);
-                }}
-            />
-        </Wrapper>
+        <Form.InputGroup
+            placeholder="Search with keyword"
+            addon={{
+                type: "custom",
+                attributes: {
+                    children: <MagnifierIcon />,
+                },
+            }}
+            value={value}
+            onChange={(e) => {
+                onChange(e.target.value);
+            }}
+        />
     );
 };
 
@@ -71,7 +63,7 @@ export const CheckboxFilter = ({
 }: Props<Record<string, boolean>>) => {
     const [expanded, setExpanded] = useState(false);
     return (
-        <Wrapper>
+        <>
             {Array(expanded ? 8 : 5)
                 .fill(null)
                 .map((_, i) => {
@@ -94,7 +86,7 @@ export const CheckboxFilter = ({
             >
                 View {expanded ? "less" : "more"}
             </Button.Small>
-        </Wrapper>
+        </>
     );
 };
 
@@ -120,7 +112,7 @@ export const useFilters = () => {
         (filter) => !filter
     );
 
-    const updateFilter = (mode: Mode, filterKey) => (val) => {
+    const updateFilter = (mode: Mode, filterKey: string) => (val) => {
         if (mode === "default") {
             setCurrentFilters((filters) => ({
                 ...filters,

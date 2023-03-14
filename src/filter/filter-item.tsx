@@ -1,9 +1,7 @@
-import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
-import { Button } from "../button/button";
-import { Overlay } from "../overlay/overlay";
+import { FilterContext } from "./filter-context";
 import {
     ChevronIcon,
     Divider,
@@ -13,94 +11,41 @@ import {
     FilterItemHeader,
     FilterItemTitle,
     FilterItemWrapper,
-    FullscreenContainer,
 } from "./filter-item.styles";
-import { FilterBody, FilterFooter, FilterHeaderButton } from "./filter.styles";
 import { FilterItemProps } from "./types";
 
-interface FilterItemComponentProps extends FilterItemProps {
-    mode: "default" | "mobile";
-    first?: boolean | undefined;
-}
-
 export const FilterItem = ({
-    allowFullscreen = false,
     collapsible: desktopCollapsible = true,
-    mode,
+    showDivider = true,
+    showMobileDivider = true,
     title,
-    first = false,
-    render,
-    onItemDismiss,
-    onItemDone,
-}: FilterItemComponentProps) => {
+    children,
+    ...otherProps
+}: FilterItemProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const { mode } = useContext(FilterContext);
     const isMobile = mode === "mobile";
     const [expanded, setExpanded] = useState(
         isMobile ? true : !desktopCollapsible
     );
-    const [active, setActive] = useState(false);
     const collapsible = !isMobile && desktopCollapsible;
-    const interactive = !(isMobile && allowFullscreen);
-    const showDivider = !first || collapsible;
 
     const resizeDetector = useResizeDetector();
     const expandableStyles = useSpring({
         height: expanded ? resizeDetector.height : 0,
     });
 
-    // =========================================================================
-    // EVENT HANDLERS
-    // =========================================================================
-    const handleInteraction = () => {
-        if (!interactive) {
-            setActive(true);
-        }
-    };
-
-    const handleItemDismiss = () => {
-        if (onItemDismiss) {
-            onItemDismiss();
-        }
-        setActive(false);
-    };
-
-    const handleItemDone = () => {
-        if (onItemDone) {
-            onItemDone();
-        }
-        setActive(false);
-    };
-
-    // =========================================================================
-    // RENDER FUNCTIONS
-    // =========================================================================
-    const renderFullscreen = () => {
-        return (
-            <Overlay show>
-                <FullscreenContainer>
-                    <FilterHeaderButton
-                        onClick={handleItemDismiss}
-                        focusOutline="browser"
-                        focusHighlight={false}
-                    >
-                        <ChevronLeftIcon />
-                    </FilterHeaderButton>
-                    <FilterBody>{render("fullscreen")}</FilterBody>
-                    <FilterFooter>
-                        <Button.Default onClick={handleItemDone}>
-                            Done
-                        </Button.Default>
-                    </FilterFooter>
-                </FullscreenContainer>
-            </Overlay>
-        );
-    };
-
+    // =============================================================================
+    // RENDER
+    // =============================================================================
     return (
         <FilterItemWrapper $collapsible={collapsible}>
-            {showDivider && <Divider />}
+            <Divider
+                $showDivider={showDivider}
+                $showMobileDivider={showMobileDivider}
+            />
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
@@ -121,21 +66,15 @@ export const FilterItem = ({
                     )}
                 </FilterItemHeader>
             )}
-            <Expandable
-                style={mode === "default" ? expandableStyles : undefined}
-                $interactive={interactive}
-                onClick={handleInteraction}
-            >
-                <FilterItemBody
-                    ref={resizeDetector.ref}
-                    $interactive={interactive}
-                    tabIndex={-1}
-                    onFocus={handleInteraction}
-                >
-                    {render(mode)}
-                </FilterItemBody>
+            <Expandable style={isMobile ? undefined : expandableStyles}>
+                <div ref={resizeDetector.ref}>
+                    <FilterItemBody {...otherProps}>
+                        {typeof children === "function"
+                            ? children(mode)
+                            : children}
+                    </FilterItemBody>
+                </div>
             </Expandable>
-            {active && renderFullscreen()}
         </FilterItemWrapper>
     );
 };

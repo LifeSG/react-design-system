@@ -19,18 +19,26 @@ export const FilterItemWrapper = styled.div<{ $collapsible: boolean }>`
     }
 `;
 
-export const Divider = styled.div`
+export const Divider = styled.div<{
+    $showDivider: boolean;
+    $showMobileDivider: boolean;
+}>`
+    display: ${(props) => (props.$showDivider ? "block" : "none")};
     height: 1px;
     background-color: ${Color.Neutral[5]};
 
     ${MediaQuery.MaxWidth.mobileL} {
+        display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
         margin: 0 1rem;
     }
 `;
 
-export const FilterItemBody = styled.div<{ $interactive: boolean }>`
-    padding: 0;
-    ${(props) => !props.$interactive && "pointer-events: none;"}
+export const FilterItemBody = styled.div`
+    padding: 1.5rem 1.25rem;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        padding: 1rem 1.25rem;
+    }
 `;
 
 export const FilterItemHeader = styled(Text.H5)`
@@ -70,19 +78,6 @@ export const FilterItemTitle = styled(Text.H4)`
     }
 `;
 
-export const Expandable = styled(animated.div)<{ $interactive: boolean }>`
+export const Expandable = styled(animated.div)`
     overflow: hidden;
-    ${(props) => !props.$interactive && "cursor: pointer;"}
-`;
-
-// =============================================================================
-// FULLSCREEN STYLES
-// =============================================================================
-
-export const FullscreenContainer = styled.div`
-    background-color: ${Color.Neutral[8]};
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
 `;
