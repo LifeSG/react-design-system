@@ -102,35 +102,27 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
 
         if ($selected) {
             return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[5](props)};
+                border-top: 1px solid ${Color.Accent.Light[4]};
+                border-bottom: 1px solid ${Color.Accent.Light[4]};
+                background-color: ${Color.Accent.Light[5]};
             `;
         }
     }}
     
     ${(props) => {
-        const { $hovered, $overlap, $selected } = props;
-
-        if ($overlap && $selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[4](props)};
-            `;
-        }
+        const { $hovered, $overlap } = props;
 
         if ($hovered) {
             return css`
-                border-top: 1px dashed ${Color.Accent.Light[4](props)};
-                border-bottom: 1px dashed ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[6](props)};
+                border-top: 1px dashed ${Color.Accent.Light[4]};
+                border-bottom: 1px dashed ${Color.Accent.Light[4]};
+                background-color: ${Color.Accent.Light[6]};
             `;
         }
 
         if ($overlap) {
             return css`
-                background-color: ${Color.Accent.Light[4](props)};
+                background-color: ${Color.Accent.Light[4]};
             `;
         }
     }}
@@ -158,17 +150,17 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
         if ($overlap) {
             return css`
                 border: 1px solid ${Color.Accent.Light[1]};
-                background: ${Color.Accent.Light[4](props)};
+                background: ${Color.Accent.Light[4]};
 
                 :hover {
-                    background: ${Color.Accent.Light[4](props)};
+                    background: ${Color.Accent.Light[4]};
                 }
             `;
         }
 
         if ($disabled) {
             return css`
-                color: ${Color.Neutral[4](props)};
+                color: ${Color.Neutral[4]};
                 cursor: not-allowed;
                 pointer-events: none;
             `;
@@ -176,15 +168,15 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
         if ($selected) {
             return css`
-                background: ${Color.Accent.Light[5](props)};
-                border: 1px solid ${Color.Primary(props)};
+                background: ${Color.Accent.Light[5]};
+                border: 1px solid ${Color.Primary};
             `;
         }
 
         switch ($variant) {
             case "today":
                 return css`
-                    background: ${Color.Accent.Light[5](props)};
+                    background: ${Color.Accent.Light[5]};
                 `;
             default:
                 break;
@@ -199,35 +191,35 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
         if ($disabled && $selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Accent.Light[2](props)};
+                color: ${Color.Accent.Light[2]};
             `;
         }
 
         if ($disabled) {
             return css`
-                color: ${Color.Neutral[4](props)};
+                color: ${Color.Neutral[4]};
             `;
         }
 
         if ($selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Primary(props)};
+                color: ${Color.Primary};
             `;
         }
 
         switch ($variant) {
             case "other-month":
                 return css`
-                    color: ${Color.Neutral[4](props)};
+                    color: ${Color.Neutral[4]};
                 `;
             case "today":
                 return css`
-                    color: ${Color.Neutral[3](props)};
+                    color: ${Color.Neutral[3]};
                 `;
             case "default":
                 return css`
-                    color: ${Color.Neutral[1](props)};
+                    color: ${Color.Neutral[1]};
                 `;
         }
     }}
