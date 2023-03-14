@@ -53,6 +53,7 @@ export interface ColorSet {
     Shadow: {
         Accent: string;
         Red: string;
+        Elevation: string;
     };
 }
 
