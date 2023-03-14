@@ -98,22 +98,25 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
     }}
 
     ${(props) => {
-        const { $hovered, $overlap, $selected } = props;
-
-        if ($overlap && $selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                // background-color: ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[4](props)} !important;
-            `;
-        }
+        const { $selected } = props;
 
         if ($selected) {
             return css`
                 border-top: 1px solid ${Color.Accent.Light[4](props)};
                 border-bottom: 1px solid ${Color.Accent.Light[4](props)};
                 background-color: ${Color.Accent.Light[5](props)};
+            `;
+        }
+    }}
+    
+    ${(props) => {
+        const { $hovered, $overlap, $selected } = props;
+
+        if ($overlap && $selected) {
+            return css`
+                border-top: 1px solid ${Color.Accent.Light[4](props)};
+                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
+                background-color: ${Color.Accent.Light[4](props)};
             `;
         }
 
