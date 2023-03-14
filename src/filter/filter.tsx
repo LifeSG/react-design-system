@@ -31,6 +31,7 @@ const FilterBase = ({
     onDismiss,
     onDone,
     children,
+    ...otherProps
 }: FilterProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -131,7 +132,7 @@ const FilterBase = ({
         return (
             <DesktopContainer>
                 <FilterHeader>
-                    <FilterTitle weight="semibold">Filters</FilterTitle>
+                    <FilterTitle weight="semibold">{headerTitle}</FilterTitle>
                     <FilterClearButton
                         styleType="link"
                         onClick={handleClearClick}
@@ -146,7 +147,7 @@ const FilterBase = ({
     };
 
     return (
-        <>
+        <div {...otherProps}>
             <MobileView>
                 <FilterContext.Provider value={{ mode: "mobile" }}>
                     {renderMobile()}
@@ -157,7 +158,7 @@ const FilterBase = ({
                     {renderDesktop()}
                 </FilterContext.Provider>
             </DesktopView>
-        </>
+        </div>
     );
 };
 

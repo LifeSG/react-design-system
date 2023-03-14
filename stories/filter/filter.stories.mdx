@@ -5,7 +5,8 @@ import { Filter } from "../../src/filter";
 import { Form } from "../../src/form";
 import { Overlay } from "../../src/overlay";
 import { Heading3, Secondary, Title } from "../storybook-common";
-import { CheckboxFilter, SearchFilter, useFilters } from "./doc-elements.tsx";
+import { CheckboxFilter, SearchFilter, useFilters } from "./doc-elements";
+import { PropsTable } from "./props-table";
 
 <Meta title="Modules/Filter" component={Filter} />
 
@@ -13,7 +14,7 @@ import { CheckboxFilter, SearchFilter, useFilters } from "./doc-elements.tsx";
 
 <Secondary>Overview</Secondary>
 
-Filter description
+Displays widgets under collapsible panels to filter data results.
 
 ```tsx
 import { Filter } from "@lifesg/react-design-system/filter";
@@ -87,12 +88,12 @@ import { Filter } from "@lifesg/react-design-system/filter";
     </Story>
 </Canvas>
 
-<Heading3>Configuring behaviour</Heading3>
+<Heading3>Configuring filter item</Heading3>
 
-You may configure the expand/collapse behaviour of each section with the `collapsible` prop.
+Each item can be configured with `collapsible`, `showDivider` and `showMobileDivider` props.
 
 <Canvas>
-    <Story name="Configuring behaviour">
+    <Story name="Configuring filter item">
         {() => {
             const mode = "default";
             return (
@@ -169,6 +170,7 @@ In the example below, extra padding is applied when the dropdown list is expande
                             style={{
                                 paddingBottom: showOptions ? "17rem" : "1rem",
                             }}
+                            showMobileDivider={false}
                         >
                             <Form.Select
                                 options={[
@@ -202,3 +204,31 @@ In the example below, extra padding is applied when the dropdown list is expande
         }}
     </Story>
 </Canvas>
+
+<Heading3>Displaying filter in fullscreen</Heading3>
+
+Some filters may need to rendered as a fullscreen page while editing. A display component is provided for this purpose and can be combined with the `Overlay` component.
+
+<Canvas>
+    <Story name="Display filter in fullscreen">
+        {() => {
+            return (
+                <div
+                    style={{
+                        maxWidth: "500px",
+                        width: "80vw",
+                        height: "80vh",
+                        border: "1px solid grey",
+                        margin: "auto",
+                    }}
+                >
+                    <Filter.Page>
+                        <div style={{ margin: "1rem" }}>Custom content</div>
+                    </Filter.Page>
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<PropsTable />

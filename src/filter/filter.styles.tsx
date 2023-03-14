@@ -100,6 +100,7 @@ export const FilterClearButton = styled(Button.Small)`
 // =============================================================================
 
 export const FilterButton = styled(Button.Default)`
+    width: 100%;
     span {
         display: flex;
         align-items: center;

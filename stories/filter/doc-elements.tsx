@@ -34,26 +34,27 @@ const CheckboxWithLabel = ({
 };
 
 interface Props<T> {
-    mode: Mode;
     value: T;
     onChange: (val: T) => void;
 }
 
-export const SearchFilter = ({ mode, value, onChange }: Props<string>) => {
+export const SearchFilter = ({ value, onChange }: Props<string>) => {
     return (
-        <Form.InputGroup
-            placeholder="Search with keyword"
-            addon={{
-                type: "custom",
-                attributes: {
-                    children: <MagnifierIcon />,
-                },
-            }}
-            value={value}
-            onChange={(e) => {
-                onChange(e.target.value);
-            }}
-        />
+        <div style={{ marginTop: "-1rem" }}>
+            <Form.InputGroup
+                placeholder="Search with keyword"
+                addon={{
+                    type: "custom",
+                    attributes: {
+                        children: <MagnifierIcon />,
+                    },
+                }}
+                value={value}
+                onChange={(e) => {
+                    onChange(e.target.value);
+                }}
+            />
+        </div>
     );
 };
 
