@@ -27,9 +27,9 @@ const FilterBase = ({
     toggleFilterButtonLabel = "Filters",
     headerTitle = "Filters",
     clearButtonDisabled = false,
+    onClear,
     onDismiss,
     onDone,
-    onClear,
     children,
 }: FilterProps) => {
     // =============================================================================
@@ -47,7 +47,7 @@ const FilterBase = ({
         undefined,
         (isMobile) => {
             if (!isMobile) {
-                handleDoneClick();
+                handleDismissFilter();
             }
         }
     );
