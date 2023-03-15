@@ -20,16 +20,10 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const {
-        show,
-        resources,
-        children,
-        resourcesSecondaryBrand,
-        onClose,
-        onBrandClick,
-        handleSecondaryBrandClick,
-    } = props;
+    const { show, resources, children, onClose, onBrandClick } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
+
+    const { primary, secondary } = resources;
 
     // =============================================================================
     // EFFECTS
@@ -64,19 +58,21 @@ const Component = (
         <TopBar>
             <NavBrandContainer>
                 <Brand
-                    resources={resources}
+                    resources={primary}
                     compress={true}
                     onClick={onBrandClick}
                     data-testid="drawer__brand"
+                    type="primary"
                 />
-                {resourcesSecondaryBrand && (
+                {secondary && (
                     <NavLogoContainer>
                         <NavSeparator />
                         <Brand
-                            resources={resourcesSecondaryBrand}
+                            resources={secondary}
                             compress={true}
-                            onClick={handleSecondaryBrandClick}
+                            onClick={onBrandClick}
                             data-testid="drawer__brand-secondary"
+                            type="secondary"
                         />
                     </NavLogoContainer>
                 )}

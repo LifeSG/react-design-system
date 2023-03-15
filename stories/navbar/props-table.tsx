@@ -13,15 +13,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "resources",
-                description:
-                    "Navbar resources such as the brand name and logo source",
-                propTypes: ["LifeSG resources"],
-            },
-            {
-                name: "resourcesSecondaryBrand",
-                description:
-                    "Navbar partner secondary resources such as the brand name and logo source",
-                propTypes: ["LifeSG resources"],
+                description: "Navbar resources as objects",
+                propTypes: ["NavbarResourcesProps"],
             },
             {
                 name: "actionButtons",
@@ -88,12 +81,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onBrandClick",
                 description: "Called when the brand icon is clicked",
-                propTypes: ["() => void"],
-            },
-            {
-                name: "onSecondaryBrandClick",
-                description: "Called when the secondary brand icon is clicked",
-                propTypes: ["() => void"],
+                propTypes: ["(value: string) => void"],
             },
             {
                 name: "onItemClick",
@@ -248,7 +236,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "NavResourcesProps",
+        name: "NavbarBrandingProps",
         attributes: [
             {
                 name: "brandName",
@@ -259,6 +247,24 @@ const DATA: ApiTableSectionProps[] = [
                 name: "logoSrc",
                 description: "The image source of the brand logo",
                 propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "NavbarResourcesProps",
+        attributes: [
+            {
+                name: "primary",
+                mandatory: true,
+                description:
+                    "Navbar resources such as the brand name and logo source",
+                propTypes: ["NavbarBrandingProps"],
+            },
+            {
+                name: "secondary",
+                description:
+                    "Navbar resources such as the brand name and logo source",
+                propTypes: ["NavbarBrandingProps"],
             },
         ],
     },

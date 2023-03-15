@@ -133,6 +133,14 @@ This is a common use case among web apps where it requires a Logout button on th
                     },
                 ],
             }}
+            resources={{
+                primary: {
+                    brandName: "BookingSG",
+                    logoSrc:
+                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+                    type: "primary",
+                },
+            }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
         />
@@ -206,6 +214,14 @@ This is a common use case among web apps where it requires a Logout button on th
                     },
                 ],
             }}
+            resources={{
+                primary: {
+                    brandName: "BookingSG",
+                    logoSrc:
+                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+                    type: "primary",
+                },
+            }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
         />
@@ -258,6 +274,14 @@ You can also choose to render a custom component of your choice as an action but
                     },
                 ],
             }}
+            resources={{
+                primary: {
+                    brandName: "BookingSG",
+                    logoSrc:
+                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+                    type: "primary",
+                },
+            }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
         />
@@ -300,6 +324,14 @@ the `blockDrawerDismissalMethods` prop to do just that.
                         type: "download",
                     },
                 ],
+            }}
+            resources={{
+                primary: {
+                    brandName: "BookingSG",
+                    logoSrc:
+                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+                    type: "primary",
+                },
             }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
@@ -568,14 +600,27 @@ This is a common use case among web apps where it requires a Logout button on th
                     selectedId={selected}
                     fixed={false} /* For storybook purposes */
                     resources={{
-                        brandName: "BookingSG",
-                        logoSrc:
-                            "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+                        primary: {
+                            brandName: "BookingSG",
+                            logoSrc:
+                                "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+                            type: "primary",
+                        },
+                        secondary: {
+                            brandName: "Skillsfuture",
+                            logoSrc:
+                                "https://www.hdb.gov.sg/html/Dashboard/Foundation/Theming/images/site-logo-small.png",
+                            type: "secondary",
+                        },
                     }}
+                    onBrandClick
                     resourcesSecondaryBrand={{
                         brandName: "Skillsfuture",
                         logoSrc:
                             "https://www.hdb.gov.sg/html/Dashboard/Foundation/Theming/images/site-logo-small.png",
+                    }}
+                    onBrandClick={(event, type) => {
+                        console.log("onBrandClick :: ", type);
                     }}
                     onItemClick={(item) => {
                         if (typeof item === "object" && item !== null) {

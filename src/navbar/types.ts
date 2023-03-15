@@ -42,17 +42,21 @@ export interface NavbarActionButtonsProps {
 // =============================================================================
 // NAVBAR TYPES
 // =============================================================================
-export interface NavbarResourcesProps {
+export interface NavbarBrandingProps {
     brandName: string;
     logoSrc: string;
 }
 
+export interface NavbarResourcesProps {
+    primary: NavbarBrandingProps;
+    secondary?: NavbarBrandingProps;
+}
 export interface NavbarSharedProps {
     resources?: NavbarResourcesProps | undefined;
     actionButtons?: NavbarActionButtonsProps | undefined;
     /** Triggered when the brand icon is being clicked */
     onBrandClick?:
-        | ((event: React.MouseEvent<HTMLAnchorElement>) => void)
+        | ((event: React.MouseEvent<HTMLAnchorElement>, value: string) => void)
         | undefined;
 }
 
@@ -65,24 +69,9 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     show: boolean;
     children: JSX.Element | JSX.Element[];
     onClose?: (() => void) | undefined;
-    resourcesSecondaryBrand?: NavbarResourcesProps | undefined;
-    handleSecondaryBrandClick?: (
-        event: React.MouseEvent<HTMLAnchorElement>
-    ) => void | undefined;
 }
 
-export interface NavbarSecondarySharedProps {
-    resourcesSecondaryBrand?: NavbarResourcesProps | undefined;
-    actionButtons?: NavbarActionButtonsProps | undefined;
-    /** Triggered when the brand icon is being clicked */
-    onBrandClick?: (
-        event: React.MouseEvent<HTMLAnchorElement>
-    ) => void | undefined;
-}
-
-export interface NavbarProps<T = void>
-    extends NavbarSharedProps,
-        NavbarSecondarySharedProps {
+export interface NavbarProps<T = void> extends NavbarSharedProps {
     items: NavItemsProps<T>;
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -95,8 +84,10 @@ export interface NavbarProps<T = void>
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
-    onBrandClick?: () => void | undefined; // override
-    onSecondaryBrandClick?: () => void | undefined; // override
+    onBrandClick?: (
+        event: React.MouseEvent<HTMLAnchorElement>,
+        value: string
+    ) => void | undefined; // override
     onItemClick?: (item: NavItemProps<T>) => void | undefined;
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)

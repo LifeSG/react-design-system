@@ -38,9 +38,7 @@ const Component = <T,>(
         hideNavElements = false,
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
-        resourcesSecondaryBrand,
         onItemClick,
-        onSecondaryBrandClick,
         onActionButtonClick,
         onBrandClick,
         ...otherProps
@@ -48,10 +46,12 @@ const Component = <T,>(
     ref: React.Ref<HTMLDivElement>
 ) => {
     // =============================================================================
-    // STATE DECLARATIONS
+    // CONST, STATE, REFS
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
+
+    const { primary, secondary } = resources;
 
     // =============================================================================
     // EFFECTS
@@ -91,23 +91,13 @@ const Component = <T,>(
         }
     };
 
-    const handleBrandClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleBrandClick = (
+        event: React.MouseEvent<HTMLAnchorElement>,
+        type: string
+    ) => {
         if (onBrandClick) {
             event.preventDefault();
-            onBrandClick();
-        }
-
-        if (shouldDismissDrawer("brand-click")) {
-            dismissDrawer();
-        }
-    };
-
-    const handleSecondaryBrandClick = (
-        event: React.MouseEvent<HTMLAnchorElement>
-    ) => {
-        if (onSecondaryBrandClick) {
-            event.preventDefault();
-            onSecondaryBrandClick();
+            onBrandClick(event, type);
         }
 
         if (shouldDismissDrawer("brand-click")) {
@@ -176,8 +166,6 @@ const Component = <T,>(
                 onClose={handleDrawerClose}
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
-                resourcesSecondaryBrand={resourcesSecondaryBrand}
-                handleSecondaryBrandClick={handleBrandClick}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -200,19 +188,21 @@ const Component = <T,>(
     const renderBrand = () => (
         <NavBrandContainer>
             <Brand
-                resources={resources}
+                resources={primary}
                 compress={compress}
                 onClick={handleBrandClick}
                 data-testid="main__brand"
+                type="primary"
             />
-            {resourcesSecondaryBrand && (
+            {secondary && (
                 <NavLogoContainer>
                     <NavSeprator compress={compress} />
                     <Brand
-                        resources={resourcesSecondaryBrand}
+                        resources={secondary}
                         compress={compress}
-                        onClick={handleSecondaryBrandClick}
+                        onClick={handleBrandClick}
                         data-testid="main__brand"
+                        type="secondary"
                     />
                 </NavLogoContainer>
             )}
@@ -290,6 +280,8 @@ export const Navbar = React.forwardRef(Component);
 // CONSTANTS
 // =============================================================================
 const DEFAULT_RESOURCES: NavbarResourcesProps = {
-    brandName: "LifeSG",
-    logoSrc: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+    primary: {
+        brandName: "BookingSG",
+        logoSrc: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+    },
 };
