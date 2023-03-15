@@ -1,23 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { Alert, AlertProps } from "../../src";
 import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
-import { DEFAULT_TEXT } from "../common";
 
-const renderComponent = (props?: Partial<AlertProps>) => {
-    return render(
-        <Alert type="success" {...props}>
-            {props?.children || DEFAULT_TEXT}
-        </Alert>
-    );
-};
-
-const getActionLink = (isQuery = false) => {
-    if (isQuery) {
-        return screen.queryByRole("link");
-    }
-    return screen.getByRole("link");
-};
-
+// =============================================================================
+// UNIT TESTS
+// =============================================================================
 describe("Alert", () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -49,13 +36,22 @@ describe("Alert", () => {
     });
 
     describe("actionLink", () => {
-        it("should render action link if the prop is provided", () => {
+        it("should render if the prop is provided", () => {
             renderComponent({ actionLink: { href: "www.google.com" } });
 
             expect(getActionLink()).toBeInTheDocument();
         });
 
-        it("should not render action link if the prop is not provided", () => {
+        it("should render custom children if the prop is specified", () => {
+            const customText = "custom text";
+            renderComponent({
+                actionLink: { href: "www.google.com", children: customText },
+            });
+
+            expect(getActionLink(false, customText)).toBeInTheDocument();
+        });
+
+        it("should not render if the prop is not provided", () => {
             renderComponent();
 
             expect(getActionLink(true)).not.toBeInTheDocument();
@@ -69,3 +65,29 @@ describe("Alert", () => {
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
     });
 });
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+const DEFAULT_TEXT = "default text";
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+const getActionLink = (isQuery = false, children?: string) => {
+    if (isQuery) {
+        return screen.queryByRole("link", children && { name: children });
+    }
+    return screen.getByRole("link", children && { name: children });
+};
+
+// =============================================================================
+// RENDER FUNCTIONS
+// =============================================================================
+const renderComponent = (props?: Partial<AlertProps>) => {
+    return render(
+        <Alert type="success" {...props}>
+            {props?.children || DEFAULT_TEXT}
+        </Alert>
+    );
+};
