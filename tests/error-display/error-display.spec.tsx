@@ -44,7 +44,7 @@ describe("ErrorDisplay", () => {
     });
 
     describe("description", () => {
-        it("should able to render custom description", () => {
+        it("should be able to render custom description", () => {
             renderComponent({
                 description: CUSTOM_DESCRIPTION,
             });
@@ -61,23 +61,12 @@ describe("ErrorDisplay", () => {
         });
     });
 
-    describe("errorType", () => {
-        it.each`
-            type
-            ${"400"}
-            ${"403"}
-            ${"404"}
-            ${"408"}
-            ${"500"}
-            ${"503"}
-            ${"maintenance"}
-            ${"unsupported-browser"}
-            ${"partially-supported-browser"}
-        `("should support error display for $type error", ({ type }) => {
+    describe("400 error", () => {
+        it("should be able to render", () => {
+            const type = "400";
             renderComponent({ type });
 
             const error = ERROR_DISPLAY_DATA.get(type);
-
             expect(
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
@@ -86,29 +75,111 @@ describe("ErrorDisplay", () => {
                 "src",
                 error.img.src
             );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(
+                transformJSXElementToString(error.description as JSX.Element)
+            );
+        });
+    });
 
-            if (typeof error.description === "string") {
-                expect(
-                    screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-                ).toBe(error.description);
-            } else {
-                expect(
-                    screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-                ).toBe(transformJSXElementToString(error.description));
-            }
+    describe("403 error", () => {
+        it("should be able to render", () => {
+            const type = "403";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(
+                transformJSXElementToString(error.description as JSX.Element)
+            );
+        });
+    });
+
+    describe("404 error", () => {
+        it("should be able to render", () => {
+            const type = "404";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(
+                transformJSXElementToString(error.description as JSX.Element)
+            );
+        });
+    });
+
+    describe("408 error", () => {
+        it("should be able to render", () => {
+            const type = "408";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(
+                transformJSXElementToString(error.description as JSX.Element)
+            );
         });
     });
 
     describe("500 error", () => {
+        it("should be able to render", () => {
+            const type = "500";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(
+                transformJSXElementToString(error.description as JSX.Element)
+            );
+        });
+
         it("should be able to render reference ID", () => {
+            const type = "500";
             const additionalProps = { referenceId: "123" };
 
             renderComponent({
-                type: "500",
+                type,
                 additionalProps,
             });
 
-            const error = ERROR_DISPLAY_DATA.get("500");
+            const error = ERROR_DISPLAY_DATA.get(type);
             const errorDescription = transformJSXElementToString(
                 error.renderDescription(additionalProps) as JSX.Element
             );
@@ -119,16 +190,55 @@ describe("ErrorDisplay", () => {
         });
     });
 
+    describe("503 error", () => {
+        it("should be able to render", () => {
+            const type = "503";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
     describe("maintenance error", () => {
+        it("should be able to render", () => {
+            const type = "maintenance";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+
         it("should be able to render custom date string", () => {
+            const type = "maintenance";
             const additionalProps = { dateString: "01/01/2023" };
 
             renderComponent({
-                type: "maintenance",
+                type,
                 additionalProps,
             });
 
-            const error = ERROR_DISPLAY_DATA.get("maintenance");
+            const error = ERROR_DISPLAY_DATA.get(type);
             const errorDescription = transformJSXElementToString(
                 error.renderDescription(additionalProps) as JSX.Element
             );
@@ -136,6 +246,46 @@ describe("ErrorDisplay", () => {
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
             ).toBe(errorDescription);
+        });
+    });
+
+    describe("unsupported browser error", () => {
+        it("should be able to render", () => {
+            const type = "unsupported-browser";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("partially supported browser error", () => {
+        it("should be able to render", () => {
+            const type = "partially-supported-browser";
+            renderComponent({ type });
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
         });
     });
 });
