@@ -112,6 +112,24 @@ describe("Footer", () => {
                 expect(anchor.href).toBe(disclaimerLinks[link].href);
             }
         });
+
+        it("should not allow overriding of link text", () => {
+            const disclaimerLinks = {
+                privacy: {
+                    children: "Test",
+                    href: "https://www.abc.com/one",
+                    target: "_blank",
+                    rel: "noopener",
+                },
+            };
+
+            renderComponent({ disclaimerLinks });
+
+            const defaultPrivacyText = screen.getByText("Privacy Statement");
+            const overridenPrivacyText = screen.queryByText("Test");
+            expect(defaultPrivacyText).toBeInTheDocument();
+            expect(overridenPrivacyText).not.toBeInTheDocument();
+        });
     });
 
     describe("copyrightInfo", () => {
