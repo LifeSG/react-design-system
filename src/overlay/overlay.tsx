@@ -153,12 +153,11 @@ export const Overlay = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleWrapperClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        event.preventDefault();
-
         const modal = childRef.current?.firstChild;
         if (modal && (modal as any).contains(event.target)) {
             return;
         } else if (onOverlayClick && enableOverlayClick) {
+            event.preventDefault();
             onOverlayClick();
         }
     };
