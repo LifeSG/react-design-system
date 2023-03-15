@@ -61,12 +61,15 @@ you with it.
 <Preview>
     <Story name="With custom action button">
         {() => {
+            const numOfInput = 4;
             const [isInCooldown, setIsInCooldown] = useState(true);
-            const [otpValues, setOtpValues] = useState(new Array(4).fill(""));
+            const [otpValues, setOtpValues] = useState(
+                new Array(numOfInput).fill("")
+            );
             return (
                 <StoryContainer>
                     <OtpInput
-                        numOfInput={4}
+                        numOfInput={numOfInput}
                         value={otpValues}
                         cooldownDuration={5}
                         onCooldownStart={() => setIsInCooldown(true)}

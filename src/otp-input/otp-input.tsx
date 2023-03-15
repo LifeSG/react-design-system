@@ -11,7 +11,7 @@ import { FormErrorMessage } from "src/form/form-label";
 
 export const OtpInput = ({
     id,
-    value,
+    value = [],
     "data-testid": dataTestId,
     className,
     cooldownDuration,
@@ -66,7 +66,7 @@ export const OtpInput = ({
     }, [onChange]);
 
     useEffect(() => {
-        if (value) {
+        if (value.length === numOfInput) {
             setOtpValues(value);
         }
     }, [value]);
@@ -100,11 +100,9 @@ export const OtpInput = ({
                 const newOtpValues = [...otpValues];
                 if (newOtpValues[index] !== "") {
                     newOtpValues[index] = "";
-                } else {
-                    if (index !== 0) {
-                        newOtpValues[index - 1] = "";
-                        inputRefs.current[index - 1]?.focus();
-                    }
+                } else if (index !== 0) {
+                    newOtpValues[index - 1] = "";
+                    inputRefs.current[index - 1]?.focus();
                 }
 
                 setOtpValues(newOtpValues);
@@ -117,10 +115,11 @@ export const OtpInput = ({
 
     const handlePaste = (event: ClipboardEvent): void => {
         const pastedValue = event.clipboardData.getData("text");
+        const pastedOtpValues = pastedValue.split("");
         if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
-            setOtpValues(pastedValue.split(""));
+            setOtpValues(pastedOtpValues);
             if (onChangeRef.current) {
-                onChangeRef.current(pastedValue.split(""));
+                onChangeRef.current(pastedOtpValues);
             }
         } else {
             event.preventDefault();
