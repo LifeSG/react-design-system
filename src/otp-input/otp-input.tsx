@@ -115,11 +115,11 @@ export const OtpInput = ({
 
     const handlePaste = (event: ClipboardEvent): void => {
         const pastedValue = event.clipboardData.getData("text");
-        const pastedOtpValues = pastedValue.split("");
+        const pastedValueArr = pastedValue.split("");
         if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
-            setOtpValues(pastedOtpValues);
+            setOtpValues(pastedValueArr);
             if (onChangeRef.current) {
-                onChangeRef.current(pastedOtpValues);
+                onChangeRef.current(pastedValueArr);
             }
         } else {
             event.preventDefault();
