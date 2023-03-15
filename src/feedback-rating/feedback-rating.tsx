@@ -1,12 +1,12 @@
-import { FeedbackRatingData } from "./feedback-rating-data";
 import { Text } from "../text";
+import { FeedbackRatingData } from "./feedback-rating-data";
+import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import {
     ChildContainer,
     Image,
     MainContainer,
     SubmitButton,
 } from "./feedback-rating.styles";
-import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import { FeedbackRatingProps } from "./types";
 
 export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
@@ -32,10 +32,11 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 <Image
                     src={bannerSrc}
                     alt=""
+                    aria-label="banner image"
                     onError={(event) =>
                         (event.currentTarget.style.display = "none")
                     }
-                ></Image>
+                />
             )}
             <ChildContainer>
                 <Text.H3 weight={"semibold"}>{componentDescription}</Text.H3>
@@ -43,7 +44,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                     description={componentDescription}
                     rating={rating}
                     onRatingChange={onRatingChange}
-                ></FeedbackRatingStarsContainer>
+                />
                 <SubmitButton disabled={!rating} onClick={onSubmit}>
                     {buttonLabel ?? FeedbackRatingData.DEFAULT_BUTTON_LABEL}
                 </SubmitButton>
