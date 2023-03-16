@@ -158,10 +158,12 @@ export const CalendarDay = ({
             styleCircleProps: StyleCircleProps = {},
             styleLabelProps: StyleLabelProps = {};
 
-        // disabled other date than between range
-        // disabled date which includes disabledDates
-        // disabled after selected end date in currentFocus 'start'
-        // disabled before selected start date in currentFocus 'end'
+        // day is disabled if it
+        // - falls outside of `between` range
+        // - is specified in `disabledDates`
+        // - results in a start date that is after end date
+        // - results in an end date that is before start date
+
         if (
             (between && !day.isBetween(between[0], between[1], "day", "[]")) ||
             (disabledDates && disabledDates.includes(dateStartWithYear)) ||
@@ -176,12 +178,13 @@ export const CalendarDay = ({
             styleLabelProps.$disabled = true;
         }
 
+        // apply selected styles
+
         if ([selectedStartDate, selectedEndDate].includes(dateStartWithYear)) {
             styleCircleProps.$selected = true;
             styleLabelProps.$selected = true;
         }
 
-        // get between
         if (
             selectedStartDate &&
             selectedEndDate &&
@@ -198,6 +201,8 @@ export const CalendarDay = ({
                 styleRightProps.$selected = true;
             }
         }
+
+        // apply hovered styles
 
         if (
             hoverDirection === "hover-start" &&
@@ -237,7 +242,6 @@ export const CalendarDay = ({
         ) {
             if (hoverValue === dateStartWithYear) {
                 styleRightProps.$overlap = true;
-
                 styleCircleProps.$overlap = true;
             } else if (selectedEndDate === dateStartWithYear) {
                 styleLeftProps.$overlap = true;
@@ -254,7 +258,6 @@ export const CalendarDay = ({
         ) {
             if (hoverValue === dateStartWithYear) {
                 styleLeftProps.$overlap = true;
-
                 styleCircleProps.$overlap = true;
             } else if (selectedStartDate === dateStartWithYear) {
                 styleRightProps.$overlap = true;
@@ -265,47 +268,49 @@ export const CalendarDay = ({
             }
         }
 
-        if (hoverDirection === "full-overlap-start") {
-            if (day.isBetween(selectedEndDate, hoverValue, "day", "[]")) {
-                if (selectedStartDate === dateStartWithYear) {
-                    styleLeftProps.$hovered = true;
-                    styleRightProps.$overlap = true;
-                    styleCircleProps.$overlap = true;
-                } else if (selectedEndDate === dateStartWithYear) {
-                    styleLeftProps.$overlap = true;
-                    styleCircleProps.$overlap = true;
-                } else if (day.isSame(hoverValue)) {
-                    styleRightProps.$hovered = true;
-                    styleLabelProps.$selected = true;
-                } else if (
-                    day.isBetween(selectedStartDate, hoverValue, "day", "()")
-                ) {
-                    styleLeftProps.$hovered = true;
-                    styleRightProps.$hovered = true;
-                    styleLabelProps.$selected = true;
-                }
+        if (
+            hoverDirection === "full-overlap-start" &&
+            day.isBetween(selectedEndDate, hoverValue, "day", "[]")
+        ) {
+            if (selectedStartDate === dateStartWithYear) {
+                styleLeftProps.$hovered = true;
+                styleRightProps.$overlap = true;
+                styleCircleProps.$overlap = true;
+            } else if (selectedEndDate === dateStartWithYear) {
+                styleLeftProps.$overlap = true;
+                styleCircleProps.$overlap = true;
+            } else if (day.isSame(hoverValue)) {
+                styleRightProps.$hovered = true;
+                styleLabelProps.$selected = true;
+            } else if (
+                day.isBetween(selectedStartDate, hoverValue, "day", "()")
+            ) {
+                styleLeftProps.$hovered = true;
+                styleRightProps.$hovered = true;
+                styleLabelProps.$selected = true;
             }
         }
 
-        if (hoverDirection === "full-overlap-end") {
-            if (day.isBetween(selectedStartDate, hoverValue, "day", "[]")) {
-                if (selectedEndDate === dateStartWithYear) {
-                    styleLeftProps.$overlap = true;
-                    styleRightProps.$hovered = true;
-                    styleCircleProps.$overlap = true;
-                } else if (selectedStartDate === dateStartWithYear) {
-                    styleRightProps.$overlap = true;
-                    styleCircleProps.$overlap = true;
-                } else if (day.isSame(hoverValue)) {
-                    styleLeftProps.$hovered = true;
-                    styleLabelProps.$selected = true;
-                } else if (
-                    day.isBetween(selectedEndDate, hoverValue, "day", "()")
-                ) {
-                    styleLeftProps.$hovered = true;
-                    styleRightProps.$hovered = true;
-                    styleLabelProps.$selected = true;
-                }
+        if (
+            hoverDirection === "full-overlap-end" &&
+            day.isBetween(selectedStartDate, hoverValue, "day", "[]")
+        ) {
+            if (selectedEndDate === dateStartWithYear) {
+                styleLeftProps.$overlap = true;
+                styleRightProps.$hovered = true;
+                styleCircleProps.$overlap = true;
+            } else if (selectedStartDate === dateStartWithYear) {
+                styleRightProps.$overlap = true;
+                styleCircleProps.$overlap = true;
+            } else if (day.isSame(hoverValue)) {
+                styleLeftProps.$hovered = true;
+                styleLabelProps.$selected = true;
+            } else if (
+                day.isBetween(selectedEndDate, hoverValue, "day", "()")
+            ) {
+                styleLeftProps.$hovered = true;
+                styleRightProps.$hovered = true;
+                styleLabelProps.$selected = true;
             }
         }
 
