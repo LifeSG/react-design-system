@@ -1,0 +1,46 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useEffect, useState } from "react";
+import { Pagination } from "src/pagination";
+import {
+    Heading3,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Pagination" component={Pagination} />
+
+<Title>Pagination</Title>
+
+<Secondary>Overview</Secondary>
+
+A component to handle the Pagination for pages.
+
+```tsx
+import { Pagination } from "@lifesg/react-design-system/pagination-input";
+```
+
+<Canvas>
+    <Story name="Pagination">
+        <StoryContainer>
+            <Pagination />
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With an error message</Heading3>
+
+<Preview>
+    <Story name="with error message">
+        <StoryContainer>
+            <Pagination />
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<br />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
