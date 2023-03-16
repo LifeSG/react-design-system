@@ -11,8 +11,7 @@ import {
     RowDayCell,
     StyleCircleProps,
     StyleLabelProps,
-    StyleLeftProps,
-    StyleRightProps,
+    StyleProps,
     Wrapper,
 } from "./calendar-day.style";
 import { CalendarProps, CalendarType, FocusType } from "./types";
@@ -103,27 +102,27 @@ export const CalendarDay = ({
             return null;
         }
 
+        const hoverDay = dayjs(hoverValue);
+
         if (selectedStartDate && selectedEndDate) {
-            if (dayjs(hoverValue).isBefore(selectedStartDate)) {
+            if (hoverDay.isBefore(selectedStartDate)) {
                 if (currentFocus === "start") {
                     return "full-overlap-start";
                 }
-            } else if (dayjs(hoverValue).isAfter(selectedEndDate)) {
+            } else if (hoverDay.isAfter(selectedEndDate)) {
                 if (currentFocus === "end") {
                     return "full-overlap-end";
                 }
             } else if (
-                dayjs(hoverValue).isBetween(
+                hoverDay.isBetween(
                     selectedStartDate,
                     selectedEndDate,
                     "day",
                     "[]"
-                )
+                ) &&
+                ![selectedStartDate, selectedEndDate].includes(hoverValue)
             ) {
-                if (
-                    currentFocus === "start" &&
-                    ![selectedStartDate, selectedEndDate].includes(hoverValue)
-                ) {
+                if (currentFocus === "start") {
                     return "overlap-start";
                 } else if (currentFocus === "end") {
                     return "overlap-end";
@@ -133,13 +132,13 @@ export const CalendarDay = ({
 
         // handle hovering to start/end if didn't exist another selected value
         if (selectedStartDate && !selectedEndDate) {
-            if (dayjs(hoverValue).isAfter(selectedStartDate)) {
+            if (hoverDay.isAfter(selectedStartDate)) {
                 if (currentFocus === "end") {
                     return "hover-end";
                 }
             }
         } else if (!selectedStartDate && selectedEndDate) {
-            if (dayjs(hoverValue).isBefore(selectedEndDate)) {
+            if (hoverDay.isBefore(selectedEndDate)) {
                 if (currentFocus === "start") {
                     return "hover-start";
                 }
@@ -154,8 +153,8 @@ export const CalendarDay = ({
     const generateStyleProps = (day: Dayjs) => {
         const dateStartWithYear = day.format("YYYY-MM-DD");
 
-        const styleLeftProps: StyleLeftProps = {},
-            styleRightProps: StyleRightProps = {},
+        const styleLeftProps: StyleProps = {},
+            styleRightProps: StyleProps = {},
             styleCircleProps: StyleCircleProps = {},
             styleLabelProps: StyleLabelProps = {};
 
