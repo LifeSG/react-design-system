@@ -49,14 +49,14 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "value",
-                description: "The combined value of the input fields",
-                propTypes: ["string"],
+                description: "The value of the input fields",
+                propTypes: ["string[]"],
             },
             {
                 name: "onChange",
                 description:
-                    "Called when a change is made on the input field. Returns the combined value of the inputs",
-                propTypes: ["(value: string) => void"],
+                    "Called when a change is made on the input field. Returns the value of the inputs",
+                propTypes: ["(value: string[]) => void"],
             },
             {
                 name: "onCooldownStart",

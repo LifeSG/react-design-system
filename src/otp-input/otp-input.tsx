@@ -11,6 +11,7 @@ import { FormErrorMessage } from "src/form/form-label";
 
 export const OtpInput = ({
     id,
+    value = [],
     "data-testid": dataTestId,
     className,
     cooldownDuration,
@@ -64,6 +65,12 @@ export const OtpInput = ({
         onChangeRef.current = onChange;
     }, [onChange]);
 
+    useEffect(() => {
+        if (value.length === numOfInput) {
+            setOtpValues(value);
+        }
+    }, [value]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -80,7 +87,7 @@ export const OtpInput = ({
                 setOtpValues(newOtpValues);
 
                 if (onChange) {
-                    onChange(newOtpValues.join(""));
+                    onChange(newOtpValues);
                 }
             }
         };
@@ -93,7 +100,7 @@ export const OtpInput = ({
                 const newOtpValues = [...otpValues];
                 if (newOtpValues[index] !== "") {
                     newOtpValues[index] = "";
-                } else {
+                } else if (index !== 0) {
                     newOtpValues[index - 1] = "";
                     inputRefs.current[index - 1]?.focus();
                 }
@@ -101,17 +108,18 @@ export const OtpInput = ({
                 setOtpValues(newOtpValues);
 
                 if (onChange) {
-                    onChange(newOtpValues.join(""));
+                    onChange(newOtpValues);
                 }
             }
         };
 
     const handlePaste = (event: ClipboardEvent): void => {
         const pastedValue = event.clipboardData.getData("text");
+        const pastedValueArr = pastedValue.split("");
         if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
-            setOtpValues(pastedValue.split(""));
+            setOtpValues(pastedValueArr);
             if (onChangeRef.current) {
-                onChangeRef.current(pastedValue);
+                onChangeRef.current(pastedValueArr);
             }
         } else {
             event.preventDefault();
