@@ -81,7 +81,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onBrandClick",
                 description: "Called when the brand icon is clicked",
-                propTypes: ["(value: string) => void"],
+                propTypes: ["(value: BrandType) => void"],
             },
             {
                 name: "onItemClick",
@@ -265,6 +265,17 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Navbar resources such as the brand name and logo source",
                 propTypes: ["NavbarBrandingProps"],
+            },
+        ],
+    },
+    {
+        name: "BrandType",
+        attributes: [
+            {
+                name: "type",
+                mandatory: true,
+                description: "The type of logo click",
+                propTypes: [`"primary"`, `"secondary"`],
             },
         ],
     },
