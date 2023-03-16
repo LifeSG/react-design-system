@@ -5,7 +5,7 @@ import { Filter } from "../../src/filter";
 import { Form } from "../../src/form";
 import { Overlay } from "../../src/overlay";
 import { Heading3, Secondary, Title } from "../storybook-common";
-import { CheckboxFilter, SearchFilter, useFilters } from "./doc-elements";
+import { DateFilter, SearchFilter, useFilters } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta title="Modules/Filter" component={Filter} />
@@ -31,8 +31,6 @@ import { Filter } from "@lifesg/react-design-system/filter";
                 saveFilters,
                 dismissFilters,
                 clearFilters,
-                dismissItemFilter,
-                saveItemFilter,
             } = useFilters(); // your custom filter state management here
             return (
                 <div style={{ maxWidth: "500px", width: "100vw" }}>
@@ -57,7 +55,7 @@ import { Filter } from "@lifesg/react-design-system/filter";
                                     />
                                 </Filter.Item>
                                 <Filter.Item title="Category 1">
-                                    <CheckboxFilter
+                                    <DateFilter
                                         mode={mode}
                                         value={draftFilters.cat1}
                                         onChange={updateFilter(mode, "cat1")}
@@ -95,19 +93,18 @@ Each item can be configured with `collapsible`, `showDivider` and `showMobileDiv
 <Canvas>
     <Story name="Configuring filter item">
         {() => {
-            const mode = "default";
             return (
                 <div style={{ maxWidth: "500px", width: "100vw" }}>
                     <Filter>
-                        <Filter.Item title="With divider">
-                            With divider
-                        </Filter.Item>
                         <Filter.Item
                             title="No divider"
                             showMobileDivider={false}
                             showDivider={false}
                         >
                             Without divider
+                        </Filter.Item>
+                        <Filter.Item title="With divider">
+                            With divider
                         </Filter.Item>
                         <Filter.Item title="Default">Collapsible</Filter.Item>
                         <Filter.Item>No title, collapsible</Filter.Item>

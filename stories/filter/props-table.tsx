@@ -91,6 +91,13 @@ const FILTER_ITEM_DATA: ApiTableSectionProps[] = [
                 ],
             },
             {
+                name: "collapsible",
+                description:
+                    "Specifies if the contents can be collapsed or expanded",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
                 name: "showDivider",
                 description:
                     "Specifies if header divider is visible in default mode",

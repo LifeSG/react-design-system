@@ -1,52 +1,29 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import React, { useState } from "react";
-import { Button } from "../../src/button";
-import { Checkbox } from "../../src/checkbox";
+import styled from "styled-components";
+import { Color } from "../../src/color";
 import { Mode } from "../../src/filter";
 import { Form } from "../../src/form";
 
-const CheckboxWithLabel = ({
-    checked,
-    children,
-    onChange,
-}: {
-    checked: boolean;
-    children: React.ReactNode;
-    onChange: () => void;
-}) => {
-    return (
-        <label
-            style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "0.5rem",
-                padding: "0 0.5rem",
-            }}
-        >
-            <Checkbox
-                displaySize="small"
-                checked={checked}
-                onChange={onChange}
-            />
-            <span style={{ marginLeft: "0.5rem" }}>{children}</span>
-        </label>
-    );
-};
-
 interface Props<T> {
+    mode: Mode;
     value: T;
     onChange: (val: T) => void;
 }
 
-export const SearchFilter = ({ value, onChange }: Props<string>) => {
+const SearchIcon = styled(MagnifierIcon)`
+    color: ${Color.Neutral[3]};
+`;
+
+export const SearchFilter = ({ mode, value, onChange }: Props<string>) => {
     return (
-        <div style={{ marginTop: "-1rem" }}>
+        <div style={{ marginTop: mode === "default" ? "-1rem" : undefined }}>
             <Form.InputGroup
                 placeholder="Search with keyword"
                 addon={{
                     type: "custom",
                     attributes: {
-                        children: <MagnifierIcon />,
+                        children: <SearchIcon />,
                     },
                 }}
                 value={value}
@@ -58,58 +35,19 @@ export const SearchFilter = ({ value, onChange }: Props<string>) => {
     );
 };
 
-export const CheckboxFilter = ({
-    value,
-    onChange,
-}: Props<Record<string, boolean>>) => {
-    const [expanded, setExpanded] = useState(false);
-    return (
-        <>
-            {Array(expanded ? 8 : 5)
-                .fill(null)
-                .map((_, i) => {
-                    const opt = `opt${i + 1}`;
-                    return (
-                        <CheckboxWithLabel
-                            key={i}
-                            checked={value[opt]}
-                            onChange={() =>
-                                onChange({ ...value, [opt]: !value[opt] })
-                            }
-                        >
-                            Label {i + 1}
-                        </CheckboxWithLabel>
-                    );
-                })}
-            <Button.Small
-                styleType="link"
-                onClick={() => setExpanded(!expanded)}
-            >
-                View {expanded ? "less" : "more"}
-            </Button.Small>
-        </>
-    );
+export const DateFilter = ({ value, onChange }: Props<string>) => {
+    return <Form.DateInput value={value} onChange={(date) => onChange(date)} />;
 };
 
 export const useFilters = () => {
     const INITIAL_STATE = {
         search: "",
-        cat1: {
-            opt1: false,
-            opt2: false,
-            opt3: false,
-            opt4: false,
-            opt5: false,
-            opt6: false,
-            opt7: false,
-            opt8: false,
-        },
+        cat1: "",
     };
 
     const [currentFilters, setCurrentFilters] = useState(INITIAL_STATE);
     const [draftFilters, setDraftFilters] = useState(INITIAL_STATE);
-    const [predraftFilters, setPredraftFilters] = useState(INITIAL_STATE);
-    const clearButtonDisabled = Object.entries(draftFilters).every(
+    const clearButtonDisabled = Object.values(draftFilters).every(
         (filter) => !filter
     );
 
@@ -130,7 +68,6 @@ export const useFilters = () => {
 
     const saveFilters = () => {
         setCurrentFilters(draftFilters);
-        setPredraftFilters(draftFilters);
     };
 
     const dismissFilters = () => {
@@ -142,14 +79,6 @@ export const useFilters = () => {
         setDraftFilters(INITIAL_STATE);
     };
 
-    const dismissItemFilter = () => {
-        setDraftFilters(predraftFilters);
-    };
-
-    const saveItemFilter = () => {
-        setPredraftFilters(draftFilters);
-    };
-
     return {
         currentFilters,
         draftFilters,
@@ -158,7 +87,5 @@ export const useFilters = () => {
         saveFilters,
         dismissFilters,
         clearFilters,
-        dismissItemFilter,
-        saveItemFilter,
     };
 };
