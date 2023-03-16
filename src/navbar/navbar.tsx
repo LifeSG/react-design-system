@@ -16,10 +16,11 @@ import {
     NavElementsContainer,
     NavElementsInnerContainer,
     NavLogoContainer,
-    NavSeprator,
+    NavSeparator,
     Wrapper,
 } from "./navbar.styles";
 import {
+    BrandType,
     DrawerDismissalMethod,
     NavItemProps,
     NavbarButtonProps,
@@ -93,11 +94,11 @@ const Component = <T,>(
 
     const handleBrandClick = (
         event: React.MouseEvent<HTMLAnchorElement>,
-        type: string
+        type: BrandType
     ) => {
         if (onBrandClick) {
             event.preventDefault();
-            onBrandClick(event, type);
+            onBrandClick(type);
         }
 
         if (shouldDismissDrawer("brand-click")) {
@@ -195,8 +196,8 @@ const Component = <T,>(
                 type="primary"
             />
             {secondary && (
-                <NavLogoContainer>
-                    <NavSeprator compress={compress} />
+                <>
+                    <NavSeparator $compress={compress} />
                     <Brand
                         resources={secondary}
                         compress={compress}
@@ -204,7 +205,7 @@ const Component = <T,>(
                         data-testid="main__brand"
                         type="secondary"
                     />
-                </NavLogoContainer>
+                </>
             )}
         </NavBrandContainer>
     );
@@ -249,7 +250,7 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content>
-                <Nav compress={compress}>
+                <Nav $compress={compress}>
                     {renderBrand()}
                     {!hideNavElements && renderNavElements()}
                 </Nav>
@@ -260,17 +261,15 @@ const Component = <T,>(
     };
 
     return (
-        <div>
-            <Wrapper
-                ref={ref}
-                fixed={fixed}
-                id={id || "navbar-wrapper"}
-                data-testid={otherProps["data-testid"] || "navbar-wrapper"}
-            >
-                <Masthead />
-                {renderNavbar()}
-            </Wrapper>
-        </div>
+        <Wrapper
+            ref={ref}
+            $fixed={fixed}
+            id={id || "navbar-wrapper"}
+            data-testid={otherProps["data-testid"] || "navbar-wrapper"}
+        >
+            <Masthead />
+            {renderNavbar()}
+        </Wrapper>
     );
 };
 
@@ -281,7 +280,7 @@ export const Navbar = React.forwardRef(Component);
 // =============================================================================
 const DEFAULT_RESOURCES: NavbarResourcesProps = {
     primary: {
-        brandName: "BookingSG",
+        brandName: "LifeSG",
         logoSrc: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
     },
 };

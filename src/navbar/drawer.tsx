@@ -5,12 +5,14 @@ import {
     CloseIcon,
     Container,
     Content,
-    NavBrandContainer,
-    NavLogoContainer,
-    NavSeparator,
     TopBar,
     Wrapper,
 } from "./drawer.styles";
+import {
+    NavBrandContainer,
+    NavLogoContainer,
+    NavSeparator,
+} from "./navbar.styles";
 import { NavbarDrawerProps } from "./types";
 
 const Component = (
@@ -59,7 +61,7 @@ const Component = (
             <NavBrandContainer>
                 <Brand
                     resources={primary}
-                    compress={true}
+                    compress
                     onClick={onBrandClick}
                     data-testid="drawer__brand"
                     type="primary"
@@ -69,7 +71,7 @@ const Component = (
                         <NavSeparator />
                         <Brand
                             resources={secondary}
-                            compress={true}
+                            compress
                             onClick={onBrandClick}
                             data-testid="drawer__brand-secondary"
                             type="secondary"

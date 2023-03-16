@@ -104,38 +104,3 @@ export const CloseButton = styled(IconButton)`
         color: ${Color.Primary};
     }
 `;
-
-export const NavBrandContainer = styled.div`
-    display: flex;
-    height: 100%;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-`;
-
-export const NavLogoContainer = styled.div`
-    display: flex;
-    height: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-`;
-export const NavSeparator = styled.div<StyleProps>`
-    display: flex;
-    background-color: ${Color.Neutral[5]};
-    height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
-    width: 1px;
-    left: 1.86rem;
-    margin-right: 1.86rem;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        height: 1.375rem;
-        margin-right: 1.49rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
-        height: 1.375rem;
-        margin-right: 1.16rem;
-    }
-`;

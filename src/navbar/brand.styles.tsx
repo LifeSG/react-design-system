@@ -24,7 +24,7 @@ export const Clickable = styled.a<StyleProps>`
         transition: ${Transition.Base};
 
         ${MediaQuery.MaxWidth.tablet} {
-            height: 1.375rem;
+            height: 1.4rem;
         }
     }
 

@@ -19,18 +19,14 @@ export const NAVBAR_MOBILE_HEIGHT = 3.5;
 // STYLE INTERFACE
 // =============================================================================
 interface StyleProps {
-    compress?: boolean;
-    fixed?: boolean;
-}
-
-interface StyleProps {
-    $compress?: boolean | undefined;
+    $compress?: boolean;
+    $fixed?: boolean;
 }
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Wrapper = styled.div<StyleProps>`
-    position: ${(props) => (props.fixed ? "fixed" : "relative")};
+    position: ${(props) => (props.$fixed ? "fixed" : "relative")};
     background-color: white;
     z-index: 30;
     top: 0;
@@ -42,7 +38,9 @@ export const Wrapper = styled.div<StyleProps>`
 
 export const Nav = styled.nav<StyleProps>`
     height: ${(props) =>
-        props.compress ? NAVBAR_HEIGHT.compress : NAVBAR_HEIGHT.notCompress}rem;
+        props.$compress
+            ? NAVBAR_HEIGHT.compress
+            : NAVBAR_HEIGHT.notCompress}rem;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -62,10 +60,6 @@ export const NavElementsContainer = styled.div`
     margin-left: 5rem;
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
         margin-left: 0rem;
     }
 `;
@@ -112,7 +106,7 @@ export const NavLogoContainer = styled.div`
     align-items: center;
     position: relative;
 `;
-export const NavSeprator = styled.div<StyleProps>`
+export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Color.Neutral[5]};
     height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
@@ -120,12 +114,12 @@ export const NavSeprator = styled.div<StyleProps>`
     margin-right: 1.86rem;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 1.375rem;
-        margin-right: 1.49rem;
+        height: 1.4rem;
+        margin-right: 1.5rem;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        height: 1.375rem;
+        height: 1.4rem;
         margin-right: 1.16rem;
     }
 `;

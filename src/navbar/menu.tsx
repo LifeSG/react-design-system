@@ -27,10 +27,8 @@ export const Menu = <T,>({
     onItemClick,
 }: Props<T>): JSX.Element => {
     // =============================================================================
-    // STATE DECLARATIONS
+    // CONST, STATE, REFS
     // =============================================================================
-    const [selectedIndex, setShowDrawer] = useState<number>(-1);
-    //let selectedIndex = -1;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -38,7 +36,6 @@ export const Menu = <T,>({
     const handleLinkClick = (item: NavItemCommonProps<T>, index) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
-            setShowDrawer(index);
             onItemClick(event, item);
         };
     };

@@ -120,7 +120,7 @@ export const MenuBar = styled.ul`
     margin-top: 0rem;
     left: 0;
     top: 102%;
-    min-width: 15.62rem;
+    min-width: 15.625rem;
     position: absolute;
     overflow-x: hidden;
 
@@ -151,7 +151,7 @@ export const MenuItem = styled.li`
     :last-child {
         margin-bottom: 1rem;
     }
-    :not(:firt-of-type) {
+    :not(:first-of-type) {
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
