@@ -66,8 +66,10 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     text-align: left;
     color: ${Color.Neutral[1]};
 
-    margin-right: 1rem;
+    padding-left: 1.75rem;
     padding-right: 1rem;
+    padding-top: 1px;
+    padding-bottom: 1px;
 
     overflow: hidden;
     display: -webkit-box;
@@ -89,7 +91,8 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     ${MediaQuery.MaxWidth.tablet} {
         ${TextStyleHelper.getTextStyle("H5", "bold")}
         width: 100%;
-        padding: 0.625rem 1rem;
+        padding-left: 1.5rem;
+        padding-right: 1rem;
         line-height: 1.125rem !important;
     }
 `;
@@ -133,41 +136,43 @@ export const MenuBar = styled.ul`
 // =============================================================================
 export const MenuItem = styled.li`
     width: 100%;
-    min-height: 1.7rem;
-    max-height: 3rem !important;
     position: relative;
     display: flex;
     align-items: left;
-    margin-left: 1rem;
-    margin-right: 1rem;
-
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-left: 0rem;
+    margin-right: 0rem;
 
     :first-child {
-        margin-top: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    :not(:first-of-type) {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
 
     :last-child {
-        margin-bottom: 1rem;
-    }
-    :not(:first-of-type) {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 1rem;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-top: 1rem;
-        margin-bottom: 0rem;
-        margin-left: 0.25rem;
-        max-height: 3rem !important;
+        margin-left: 0rem;
 
         :first-child {
-            margin-top: 0.25rem;
+            padding-top: 1rem;
+            padding-bottom: 0rem;
+        }
+
+        :not(:first-of-type) {
+            padding-top: 1.25rem;
+            padding-bottom: 0rem;
         }
 
         :last-child {
-            margin-bottom: 0rem;
+            padding-top: 1.25rem;
+            padding-bottom: 0rem;
         }
     }
 `;
