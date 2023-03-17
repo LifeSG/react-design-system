@@ -109,17 +109,12 @@ export const NavLogoContainer = styled.div`
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Color.Neutral[5]};
-    height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
+    height: ${(props) => (props.$compress ? 2 : 2.5)}rem;
     width: 1px;
-    margin-right: 1.86rem;
+    margin: 0 ${(props) => (props.$compress ? 1.5 : 1.125)}rem;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 1.4rem;
-        margin-right: 1.5rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
-        height: 1.4rem;
-        margin-right: 1.16rem;
+        height: 1.5rem;
+        margin: 0 1rem;
     }
 `;

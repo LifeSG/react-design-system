@@ -1,14 +1,17 @@
 import React from "react";
 import { Clickable } from "./brand.styles";
 import { NavbarBrandingProps } from "./types";
-
+import { BrandType } from "./types";
 interface Props {
     resources: NavbarBrandingProps;
     compress?: boolean | undefined;
     "data-testid"?: string | undefined;
-    type: string | undefined;
+    type: BrandType | undefined;
     onClick?:
-        | ((event: React.MouseEvent<HTMLAnchorElement>, value: string) => void)
+        | ((
+              event: React.MouseEvent<HTMLAnchorElement>,
+              value: BrandType
+          ) => void)
         | undefined;
 }
 
@@ -35,6 +38,7 @@ export const Brand = ({
             $compress={compress}
             tabIndex={0}
             data-testid={testId}
+            $type={type}
         >
             <img
                 src={resources.logoSrc}
