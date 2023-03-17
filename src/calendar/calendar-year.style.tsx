@@ -6,6 +6,7 @@ import { YearVariant } from "./calendar-year";
 import { CalendarType } from "./types";
 
 interface StyleProps {
+    $disabled: boolean;
     $variant: YearVariant;
 }
 
@@ -52,6 +53,17 @@ export const YearCell = styled.div<StyleProps>`
     }
 
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                cursor: not-allowed;
+
+                :hover {
+                    box-shadow: unset;
+                    border: unset;
+                }
+            `;
+        }
+
         switch (props.$variant) {
             case "current-year":
                 return css`
@@ -71,6 +83,12 @@ export const YearCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[4]};
+            `;
+        }
+
         switch (props.$variant) {
             case "current-year":
                 return css`

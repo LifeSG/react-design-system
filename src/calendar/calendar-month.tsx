@@ -2,27 +2,39 @@ import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { CalendarHelper } from "src/util/calendar-helper";
 import { CellLabel, MonthCell, Wrapper } from "./calendar-month.style";
-import { CalendarType } from "./types";
+import { CalendarProps, FocusType } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
-interface Props {
+interface Props extends Pick<CalendarProps, "type" | "variant"> {
     calendarDate: Dayjs;
-    selectedDate: string;
-    type: CalendarType;
+    currentFocus?: FocusType | undefined;
+    selectedStartDate: string;
+    selectedEndDate?: string | undefined;
+    isDirty: boolean;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarMonth = ({
     calendarDate,
-    selectedDate,
+    currentFocus,
+    selectedStartDate,
+    selectedEndDate,
     type,
+    isDirty,
+    variant: inputVariant,
     onSelect,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [months, setMonths] = useState<Dayjs[]>([]);
+
+    const selectedDate = !currentFocus
+        ? selectedStartDate
+        : currentFocus === "end"
+        ? selectedEndDate
+        : selectedStartDate;
 
     // =============================================================================
     // EFFECTS
@@ -34,7 +46,9 @@ export const CalendarMonth = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleMonthClick = (value: Dayjs) => {
+    const handleMonthClick = (value: Dayjs, isDisabled: boolean) => {
+        if (isDisabled) return;
+
         onSelect(value);
     };
 
@@ -45,6 +59,15 @@ export const CalendarMonth = ({
         const month = date.format("MMMM");
         const value = date.format("YYYY-MM-DD");
         let variant: MonthVariant = "default";
+        let disabled = false;
+
+        if (inputVariant === "range" && !isDirty) {
+            if (currentFocus === "start" && selectedEndDate) {
+                disabled = date.isAfter(selectedEndDate, "month");
+            } else if (currentFocus === "end" && selectedStartDate) {
+                disabled = date.isBefore(selectedStartDate, "month");
+            }
+        }
 
         variant =
             selectedDate &&
@@ -56,6 +79,7 @@ export const CalendarMonth = ({
                 : "default";
 
         return {
+            disabled,
             month,
             variant,
         };
@@ -74,14 +98,19 @@ export const CalendarMonth = ({
     return (
         <Wrapper $type={type}>
             {months.map((date) => {
-                const { variant, month } = generateMonthStatus(date);
+                const { disabled, variant, month } = generateMonthStatus(date);
                 return (
                     <MonthCell
                         key={month}
-                        onClick={() => handleMonthClick(date)}
                         $variant={variant}
+                        $disabled={disabled}
+                        onClick={() => handleMonthClick(date, disabled)}
                     >
-                        <CellLabel weight="regular" $variant={variant}>
+                        <CellLabel
+                            weight="regular"
+                            $variant={variant}
+                            $disabled={disabled}
+                        >
                             {month}
                         </CellLabel>
                     </MonthCell>
