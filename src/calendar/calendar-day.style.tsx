@@ -4,17 +4,22 @@ import { Text, TextStyleHelper } from "../text";
 import { DayVariant } from "./calendar-day";
 import { CalendarType } from "./types";
 
-interface StyleProps {
-    $point?: "start" | "middle" | "end" | "after-end" | "selected" | "none";
+export interface StyleCircleProps extends StyleProps {
+    $disabled?: boolean;
+}
+export interface StyleLabelProps extends StyleProps {
+    $disabled?: boolean;
+}
+
+export interface StyleProps {
+    $overlap?: boolean;
     $hovered?: boolean;
     $selected?: boolean;
-    $clear?: boolean;
 }
 
 interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
     $disabled?: boolean;
-    $selectedDate?: boolean;
 }
 
 interface OverflowDisplayProps extends StyleProps {
@@ -26,10 +31,6 @@ interface WrapperStyleProps {
 }
 
 interface InteractiveCircleProps extends DayLabelStyleProps {}
-
-export interface DayCellStyleProps extends StyleProps {
-    $disabled?: boolean;
-}
 
 // =============================================================================
 // STYLING
@@ -67,69 +68,13 @@ export const RowDayCell = styled.div`
     display: flex;
 `;
 
-export const GrowDayCell = styled.div<DayCellStyleProps>`
+export const GrowDayCell = styled.div`
     display: flex;
     position: relative;
     height: 2.5rem;
     align-items: center;
     justify-content: center;
     flex: 1;
-
-    ${(props) => {
-        const { $hovered, $point, $selected, $clear } = props;
-
-        if ($clear) {
-            return css`
-                border-top: unset;
-                border-bottom: unset;
-                background-color: unset;
-            `;
-        }
-
-        if ($hovered && $point === "middle" && !$selected) {
-            return css`
-                border-top: 1px dashed ${Color.Accent.Light[4](props)};
-                border-bottom: 1px dashed ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[6](props)};
-            `;
-        }
-
-        if ($hovered && $point === "middle" && $selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[4](props)};
-            `;
-        }
-
-        if ($hovered && $point === "after-end" && !$selected) {
-            return css`
-                background-color: ${Color.Accent.Light[6](props)};
-            `;
-        }
-
-        if ($hovered && $point === "after-end" && $selected) {
-            return css`
-                background-color: ${Color.Accent.Light[4](props)};
-            `;
-        }
-
-        if ($point === "middle" && $selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[5](props)};
-            `;
-        }
-
-        if ($selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[5](props)};
-            `;
-        }
-    }}
 `;
 
 export const OverflowDisplay = styled.div<OverflowDisplayProps>`
@@ -151,57 +96,31 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
     }}
 
     ${(props) => {
-        const { $hovered, $point, $selected } = props;
+        const { $selected } = props;
 
-        if (!$hovered && $point === "none" && $selected) {
+        if ($selected) {
             return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[5](props)};
+                border-top: 1px solid ${Color.Accent.Light[4]};
+                border-bottom: 1px solid ${Color.Accent.Light[4]};
+                background-color: ${Color.Accent.Light[5]};
+            `;
+        }
+    }}
+    
+    ${(props) => {
+        const { $hovered, $overlap } = props;
+
+        if ($hovered) {
+            return css`
+                border-top: 1px dashed ${Color.Accent.Light[4]};
+                border-bottom: 1px dashed ${Color.Accent.Light[4]};
+                background-color: ${Color.Accent.Light[6]};
             `;
         }
 
-        if (!$hovered && $point === "after-end" && $selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[5](props)};
-            `;
-        }
-
-        if ($hovered && $point === "start" && $selected) {
+        if ($overlap) {
             return css`
                 background-color: ${Color.Accent.Light[4]};
-            `;
-        }
-
-        if ($hovered && $point === "selected" && $selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4](props)};
-                border-bottom: 1px solid ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[5](props)};
-            `;
-        }
-
-        if ($hovered && $point === "end" && $selected) {
-            return css`
-                background-color: ${Color.Accent.Light[4]};
-            `;
-        }
-
-        if ($hovered && $point === "after-end" && $selected) {
-            return css`
-                border-top: 1px dashed ${Color.Accent.Light[4](props)};
-                border-bottom: 1px dashed ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[6](props)};
-            `;
-        }
-
-        if ($hovered && $point === "end") {
-            return css`
-                border-top: 1px dashed ${Color.Accent.Light[4](props)};
-                border-bottom: 1px dashed ${Color.Accent.Light[4](props)};
-                background-color: ${Color.Accent.Light[6](props)};
             `;
         }
     }}
@@ -224,103 +143,82 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }
 
     ${(props) => {
-        if (props.$disabled) {
+        const { $disabled, $selected, $overlap, $variant } = props;
+
+        if ($overlap) {
             return css`
-                color: ${Color.Neutral[4](props)};
+                border: 1px solid ${Color.Accent.Light[1]};
+                background: ${Color.Accent.Light[4]};
+
+                :hover {
+                    background: ${Color.Accent.Light[4]};
+                }
+            `;
+        }
+
+        if ($disabled) {
+            return css`
+                color: ${Color.Neutral[4]};
                 cursor: not-allowed;
                 pointer-events: none;
             `;
         }
 
-        if (props.$selectedDate) {
+        if ($selected) {
             return css`
-                background: ${Color.Accent.Light[5](props)};
-                border: 1px solid ${Color.Primary(props)};
+                background: ${Color.Accent.Light[5]};
+                border: 1px solid ${Color.Primary};
             `;
         }
 
-        switch (props.$variant) {
+        switch ($variant) {
             case "today":
                 return css`
-                    background: ${Color.Accent.Light[5](props)};
+                    background: ${Color.Accent.Light[5]};
                 `;
             default:
                 break;
-        }
-    }}
-
-    ${(props) => {
-        const { $hovered, $point, $selected } = props;
-
-        if (!$hovered && $point === "selected" && $selected) {
-            return css`
-                background: ${Color.Accent.Light[4](props)};
-
-                :hover {
-                    background: ${Color.Accent.Light[4](props)};
-                }
-            `;
-        }
-
-        if ($hovered && $point === "start" && $selected) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                background-color: ${Color.Accent.Light[5](props)};
-
-                :hover {
-                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                    background-color: ${Color.Accent.Light[5](props)};
-                }
-            `;
         }
     }}
 `;
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        if (props.$disabled) {
-            return css`
-                color: ${Color.Neutral[4](props)};
-            `;
-        }
+        const { $disabled, $selected, $variant } = props;
 
-        if (props.$selectedDate) {
+        if ($disabled && $selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Primary(props)};
+                color: ${Color.Accent.Light[2]};
             `;
         }
 
-        switch (props.$variant) {
+        if ($disabled) {
+            return css`
+                color: ${Color.Neutral[4]};
+            `;
+        }
+
+        if ($selected) {
+            return css`
+                ${TextStyleHelper.getTextStyle("H5", "semibold")};
+                color: ${Color.Primary};
+            `;
+        }
+
+        switch ($variant) {
             case "other-month":
                 return css`
-                    color: ${Color.Neutral[4](props)};
+                    color: ${Color.Neutral[4]};
                 `;
             case "today":
                 return css`
-                    color: ${Color.Neutral[3](props)};
+                    color: ${Color.Neutral[3]};
                 `;
             case "default":
                 return css`
-                    color: ${Color.Neutral[1](props)};
+                    color: ${Color.Neutral[1]};
                 `;
-        }
-    }}
-
-    ${(props) => {
-        const { $hovered, $point, $selected } = props;
-
-        if ($hovered && $point === "end" && !$selected) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Primary(props)};
-            `;
-        }
-
-        if (!$hovered && $point === "none" && $selected) {
-            return css`
-                color: ${Color.Primary(props)};
-            `;
         }
     }}
 `;

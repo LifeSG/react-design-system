@@ -40,6 +40,7 @@ export const Component = (
         currentType,
         withButton,
         variant,
+        between,
         type = "standalone",
         ...otherProps
     }: CalendarProps,
@@ -424,6 +425,7 @@ export const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         variant={variant}
+                        between={between}
                         onSelect={handleDateSelect}
                         onHover={handleHover}
                     />
