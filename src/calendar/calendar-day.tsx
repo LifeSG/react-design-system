@@ -26,7 +26,9 @@ type HoverDirection =
     | "overlap-start"
     | "overlap-end"
     | "full-overlap-start"
-    | "full-overlap-end";
+    | "full-overlap-end"
+    | "reset-start"
+    | "reset-end";
 
 interface CalendarDayProps
     extends Pick<CalendarProps, "disabledDates" | "variant" | "between"> {
@@ -34,9 +36,10 @@ interface CalendarDayProps
     selectedEndDate: string;
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
+    type: CalendarType;
+    isDirty: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    type: CalendarType;
 }
 
 export const CalendarDay = ({
@@ -48,6 +51,7 @@ export const CalendarDay = ({
     onSelect,
     onHover,
     type,
+    isDirty,
     between,
     variant,
 }: CalendarDayProps) => {
@@ -108,10 +112,14 @@ export const CalendarDay = ({
             if (hoverDay.isBefore(selectedStartDate)) {
                 if (currentFocus === "start") {
                     return "full-overlap-start";
+                } else if (currentFocus === "end") {
+                    return "reset-end";
                 }
             } else if (hoverDay.isAfter(selectedEndDate)) {
                 if (currentFocus === "end") {
                     return "full-overlap-end";
+                } else if (currentFocus === "start") {
+                    return "reset-start";
                 }
             } else if (
                 hoverDay.isBetween(
@@ -158,6 +166,14 @@ export const CalendarDay = ({
             styleCircleProps: StyleCircleProps = {},
             styleLabelProps: StyleLabelProps = {};
 
+        if (
+            isDirty &&
+            ["reset-start", "reset-end"].includes(hoverDirection) &&
+            [selectedStartDate, selectedEndDate].includes(dateStartWithYear)
+        ) {
+            styleCircleProps.$overlap = true;
+        }
+
         // day is disabled if it
         // - falls outside of `between` range
         // - is specified in `disabledDates`
@@ -169,10 +185,12 @@ export const CalendarDay = ({
             (disabledDates && disabledDates.includes(dateStartWithYear)) ||
             (currentFocus === "start" &&
                 selectedEndDate &&
-                day.isAfter(selectedEndDate)) ||
+                day.isAfter(selectedEndDate) &&
+                !isDirty) ||
             (currentFocus === "end" &&
                 selectedStartDate &&
-                day.isBefore(selectedStartDate))
+                day.isBefore(selectedStartDate) &&
+                !isDirty)
         ) {
             styleCircleProps.$disabled = true;
             styleLabelProps.$disabled = true;
@@ -214,6 +232,7 @@ export const CalendarDay = ({
                 styleLeftProps.$hovered = true;
             } else if (hoverValue === dateStartWithYear) {
                 styleRightProps.$hovered = true;
+                styleCircleProps.$hovered = true;
             } else {
                 styleLeftProps.$hovered = true;
                 styleRightProps.$hovered = true;
@@ -230,6 +249,7 @@ export const CalendarDay = ({
                 styleRightProps.$hovered = true;
             } else if (hoverValue === dateStartWithYear) {
                 styleLeftProps.$hovered = true;
+                styleCircleProps.$hovered = true;
             } else {
                 styleLeftProps.$hovered = true;
                 styleRightProps.$hovered = true;
@@ -246,6 +266,7 @@ export const CalendarDay = ({
             } else if (selectedEndDate === dateStartWithYear) {
                 styleLeftProps.$overlap = true;
                 styleCircleProps.$overlap = true;
+                styleCircleProps.$hovered = true;
             } else {
                 styleLeftProps.$overlap = true;
                 styleRightProps.$overlap = true;
@@ -262,6 +283,7 @@ export const CalendarDay = ({
             } else if (selectedStartDate === dateStartWithYear) {
                 styleRightProps.$overlap = true;
                 styleCircleProps.$overlap = true;
+                styleCircleProps.$hovered = true;
             } else {
                 styleLeftProps.$overlap = true;
                 styleRightProps.$overlap = true;
@@ -282,6 +304,7 @@ export const CalendarDay = ({
             } else if (day.isSame(hoverValue)) {
                 styleRightProps.$hovered = true;
                 styleLabelProps.$selected = true;
+                styleCircleProps.$hovered = true;
             } else if (
                 day.isBetween(selectedStartDate, hoverValue, "day", "()")
             ) {
@@ -305,6 +328,7 @@ export const CalendarDay = ({
             } else if (day.isSame(hoverValue)) {
                 styleLeftProps.$hovered = true;
                 styleLabelProps.$selected = true;
+                styleCircleProps.$hovered = true;
             } else if (
                 day.isBetween(selectedEndDate, hoverValue, "day", "()")
             ) {

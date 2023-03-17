@@ -54,6 +54,8 @@ export const Component = (
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
 
+    const [isDirty, setIsDirty] = useState<boolean>(false);
+
     // =============================================================================
     // HOOKS
     // =============================================================================
@@ -82,6 +84,10 @@ export const Component = (
 
         setCalendarDate(dayjs(initCalendar));
         setCurrentView("default");
+
+        if (variant === "range" && value?.length && endValue?.length) {
+            setIsDirty(true);
+        }
     }, [isOpen]);
 
     useEffect(() => {
@@ -98,8 +104,9 @@ export const Component = (
 
     useEffect(() => {
         if (!value) {
-            // prevent value as "" to cause error
             setSelectedStartDate(undefined);
+            // reset dirty if invalid
+            setIsDirty(false);
             return;
         }
 
@@ -109,6 +116,8 @@ export const Component = (
     useEffect(() => {
         if (!endValue) {
             setSelectedEndDate(undefined);
+            // reset dirty if invalid
+            setIsDirty(false);
             return;
         }
 
@@ -319,25 +328,17 @@ export const Component = (
     };
 
     const renderOptionsOverlay = () => {
-        /**
-         * get the 'selectedDate' from below order
-         * apply selectedStartDate if currentFocus undefined
-         * apply selectedEndDate if currentFocus 'end'
-         * apply selectedStartDate if currentFocus is not undefined or 'end'
-         */
-        const selectedDate = !currentFocus
-            ? selectedStartDate
-            : currentFocus === "end"
-            ? selectedEndDate
-            : selectedStartDate;
-
         switch (currentView) {
             case "month-options":
                 return (
                     <CalendarMonth
                         type={type}
                         calendarDate={calendarDate}
-                        selectedDate={selectedDate}
+                        currentFocus={currentFocus}
+                        selectedStartDate={selectedStartDate}
+                        selectedEndDate={selectedEndDate}
+                        variant={variant}
+                        isDirty={isDirty}
                         onSelect={handleDateSelect}
                     />
                 );
@@ -346,7 +347,11 @@ export const Component = (
                     <CalendarYear
                         type={type}
                         calendarDate={calendarDate}
-                        selectedDate={selectedDate}
+                        currentFocus={currentFocus}
+                        selectedStartDate={selectedStartDate}
+                        selectedEndDate={selectedEndDate}
+                        variant={variant}
+                        isDirty={isDirty}
                         onSelect={handleDateSelect}
                     />
                 );
@@ -426,6 +431,7 @@ export const Component = (
                         selectedEndDate={selectedEndDate}
                         variant={variant}
                         between={between}
+                        isDirty={isDirty}
                         onSelect={handleDateSelect}
                         onHover={handleHover}
                     />
