@@ -11,7 +11,7 @@ interface Props extends Pick<CalendarProps, "type" | "variant"> {
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
     selectedEndDate?: string | undefined;
-    isDirty: boolean;
+    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
 }
 
@@ -21,7 +21,7 @@ export const CalendarMonth = ({
     selectedStartDate,
     selectedEndDate,
     type,
-    isDirty,
+    isNewSelection,
     variant: inputVariant,
     onSelect,
 }: Props) => {
@@ -30,11 +30,8 @@ export const CalendarMonth = ({
     // =============================================================================
     const [months, setMonths] = useState<Dayjs[]>([]);
 
-    const selectedDate = !currentFocus
-        ? selectedStartDate
-        : currentFocus === "end"
-        ? selectedEndDate
-        : selectedStartDate;
+    const selectedDate =
+        currentFocus === "end" ? selectedEndDate : selectedStartDate;
 
     // =============================================================================
     // EFFECTS
@@ -61,7 +58,7 @@ export const CalendarMonth = ({
         let variant: MonthVariant = "default";
         let disabled = false;
 
-        if (inputVariant === "range" && !isDirty) {
+        if (inputVariant === "range" && !isNewSelection) {
             if (currentFocus === "start" && selectedEndDate) {
                 disabled = date.isAfter(selectedEndDate, "month");
             } else if (currentFocus === "end" && selectedStartDate) {

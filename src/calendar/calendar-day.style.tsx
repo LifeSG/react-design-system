@@ -179,7 +179,12 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             return css`
                 color: ${Color.Neutral[4]};
                 cursor: not-allowed;
-                pointer-events: none;
+
+                :hover {
+                    box-shadow: unset;
+                    border: unset;
+                    background-color: unset;
+                }
             `;
         }
 
