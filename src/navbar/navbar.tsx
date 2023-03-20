@@ -51,7 +51,7 @@ const Component = <T,>(
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
 
-    const { primary, secondary } = resources;
+    const { primary = DEFAULT_RESOURCES.primary, secondary } = resources;
 
     // =============================================================================
     // EFFECTS

@@ -23,7 +23,6 @@ interface Props<T> {
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavItemProps<T>
     ) => void;
-    subMenu?: NavItemCommonProps<T>[] | undefined;
 }
 
 export const NavbarItems = <T,>({

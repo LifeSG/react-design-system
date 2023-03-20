@@ -48,9 +48,10 @@ export interface NavbarBrandingProps {
 }
 
 export interface NavbarResourcesProps {
-    primary: NavbarBrandingProps;
-    secondary?: NavbarBrandingProps;
+    primary?: NavbarBrandingProps | undefined;
+    secondary?: NavbarBrandingProps | undefined;
 }
+
 export interface NavbarSharedProps {
     resources?: NavbarResourcesProps | undefined;
     actionButtons?: NavbarActionButtonsProps | undefined;
@@ -69,7 +70,7 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     onBrandClick?:
         | ((
               event: React.MouseEvent<HTMLAnchorElement>,
-              value: BrandType
+              type: BrandType
           ) => void)
         | undefined;
 }
@@ -89,8 +90,8 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
-    onBrandClick?: (value: BrandType) => void | undefined; // override
-    onItemClick?: (item: NavItemProps<T>) => void | undefined;
+    onBrandClick?: ((type: BrandType) => void) | undefined; // override
+    onItemClick?: ((item: NavItemProps<T>) => void) | undefined;
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)
         | undefined;

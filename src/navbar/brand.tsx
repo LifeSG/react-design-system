@@ -10,7 +10,7 @@ interface Props {
     onClick?:
         | ((
               event: React.MouseEvent<HTMLAnchorElement>,
-              value: BrandType
+              type: BrandType
           ) => void)
         | undefined;
 }
