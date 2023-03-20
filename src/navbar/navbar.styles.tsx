@@ -22,6 +22,7 @@ interface StyleProps {
     $compress?: boolean;
     $fixed?: boolean;
 }
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -79,23 +80,12 @@ export const MobileMenuIcon = styled(MenuIcon)`
     width: 1.5rem;
     color: ${Color.Neutral[1]};
 `;
+
 export const NavBrandContainer = styled.div`
     display: flex;
     height: 100%;
     flex-direction: row;
     align-items: center;
-    position: relative;
-`;
-export const NavElementsInnerContainer = styled.div`
-    display: flex;
-    height: 100%;
-
-    margin-left: 4rem;
-    position: relative;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0rem;
-    }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`

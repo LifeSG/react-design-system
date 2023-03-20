@@ -14,7 +14,6 @@ import {
     Nav,
     NavBrandContainer,
     NavElementsContainer,
-    NavElementsInnerContainer,
     NavSeparator,
     Wrapper,
 } from "./navbar.styles";
@@ -216,12 +215,10 @@ const Component = <T,>(
                 onItemClick={handleNavItemClick}
                 selectedId={selectedId}
             />
-            <NavElementsInnerContainer>
-                <NavbarActionButtons
-                    actionButtons={actionButtons && actionButtons.desktop}
-                    onActionButtonClick={handleActionButtonClick}
-                />
-            </NavElementsInnerContainer>
+            <NavbarActionButtons
+                actionButtons={actionButtons && actionButtons.desktop}
+                onActionButtonClick={handleActionButtonClick}
+            />
             <MobileMenuButton
                 aria-label="Open nav menu"
                 data-testid="button__mobile-menu"
