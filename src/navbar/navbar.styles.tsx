@@ -98,14 +98,6 @@ export const NavElementsInnerContainer = styled.div`
     }
 `;
 
-export const NavLogoContainer = styled.div`
-    display: flex;
-    height: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-`;
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Color.Neutral[5]};

@@ -66,7 +66,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     text-align: left;
     color: ${Color.Neutral[1]};
 
-    padding-left: 1.75rem;
+    padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 1px;
     padding-bottom: 1px;
@@ -120,7 +120,7 @@ export const MenuBar = styled.ul`
     width: 100%;
     overflow: auto;
     display: grid;
-    margin-top: 0rem;
+    margin-top: 0;
     left: 0;
     top: 102%;
     min-width: 15.625rem;
@@ -128,7 +128,7 @@ export const MenuBar = styled.ul`
     overflow-x: hidden;
 
     background: ${Color.Neutral[8]};
-    border-radius: 0rem 0rem 0.5rem 0.5rem;
+    border-radius: 0 0 0.5rem 0.5rem;
     box-shadow: ${DesignToken.ElevationBoxShadow};
 `;
 // =============================================================================
@@ -139,8 +139,8 @@ export const MenuItem = styled.li`
     position: relative;
     display: flex;
     align-items: left;
-    margin-left: 0rem;
-    margin-right: 0rem;
+    margin-left: 0;
+    margin-right: 0;
 
     :first-child {
         padding-top: 1rem;
@@ -158,21 +158,21 @@ export const MenuItem = styled.li`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0rem;
+        margin-left: 0;
 
         :first-child {
             padding-top: 1rem;
-            padding-bottom: 0rem;
+            padding-bottom: 0;
         }
 
         :not(:first-of-type) {
             padding-top: 1.25rem;
-            padding-bottom: 0rem;
+            padding-bottom: 0;
         }
 
         :last-child {
             padding-top: 1.25rem;
-            padding-bottom: 0rem;
+            padding-bottom: 0;
         }
     }
 `;

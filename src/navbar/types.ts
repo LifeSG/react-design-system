@@ -67,7 +67,10 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     onClose?: (() => void) | undefined;
     /** Triggered when the brand icon is being clicked */
     onBrandClick?:
-        | ((event: React.MouseEvent<HTMLAnchorElement>, value: string) => void)
+        | ((
+              event: React.MouseEvent<HTMLAnchorElement>,
+              value: BrandType
+          ) => void)
         | undefined;
 }
 

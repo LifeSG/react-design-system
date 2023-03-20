@@ -15,7 +15,6 @@ import {
     NavBrandContainer,
     NavElementsContainer,
     NavElementsInnerContainer,
-    NavLogoContainer,
     NavSeparator,
     Wrapper,
 } from "./navbar.styles";
@@ -202,7 +201,7 @@ const Component = <T,>(
                         resources={secondary}
                         compress={compress}
                         onClick={handleBrandClick}
-                        data-testid="main__brand"
+                        data-testid="main__brand-secondary"
                         type="secondary"
                     />
                 </>

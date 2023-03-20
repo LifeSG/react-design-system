@@ -8,11 +8,7 @@ import {
     TopBar,
     Wrapper,
 } from "./drawer.styles";
-import {
-    NavBrandContainer,
-    NavLogoContainer,
-    NavSeparator,
-} from "./navbar.styles";
+import { NavBrandContainer, NavSeparator } from "./navbar.styles";
 import { NavbarDrawerProps } from "./types";
 
 const Component = (
@@ -67,7 +63,7 @@ const Component = (
                     type="primary"
                 />
                 {secondary && (
-                    <NavLogoContainer>
+                    <>
                         <NavSeparator />
                         <Brand
                             resources={secondary}
@@ -76,7 +72,7 @@ const Component = (
                             data-testid="drawer__brand-secondary"
                             type="secondary"
                         />
-                    </NavLogoContainer>
+                    </>
                 )}
             </NavBrandContainer>
 

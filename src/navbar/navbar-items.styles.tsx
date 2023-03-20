@@ -47,6 +47,7 @@ export const MobileWrapper = styled.ul`
 export const LinkItem = styled.li`
     position: relative;
     display: contents;
+    height: 100%;
     align-items: center;
     :not(:last-of-type) {
         margin-right: 1rem;
@@ -137,7 +138,7 @@ export const LinkWrapper = styled.ul`
     }
 `;
 
-export const MenuItemContainer = styled.div`
+export const ItemContainer = styled.li`
     position: relative;
     display: flex;
     width: 100%;

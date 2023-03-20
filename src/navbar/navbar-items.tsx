@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
 import {
     DownIcon,
+    ItemContainer,
     Link,
     LinkIndicator,
     LinkItem,
-    MenuItemContainer,
     MenuItemRightContainer,
     MobileWrapper,
     UpIcon,
@@ -116,21 +116,19 @@ export const NavbarItems = <T,>({
             const textWeight: TextWeight = selected ? "semibold" : "regular";
             const testId = `link__${index + 1}`;
             return (
-                <LinkItem key={index}>
-                    <MenuItemContainer>
-                        <Link
-                            data-testid={testId}
-                            weight={textWeight}
-                            $selected={selected} /* for mobile */
-                            {...otherItemAttrs}
-                            onClick={handleLinkClick(item, index)}
-                            {...options}
-                        >
-                            {children}
-                            {selected && <LinkIndicator />}
-                        </Link>
-                    </MenuItemContainer>
-                </LinkItem>
+                <ItemContainer key={index}>
+                    <Link
+                        data-testid={testId}
+                        weight={textWeight}
+                        $selected={selected} /* for mobile */
+                        {...otherItemAttrs}
+                        onClick={handleLinkClick(item, index)}
+                        {...options}
+                    >
+                        {children}
+                        {selected && <LinkIndicator />}
+                    </Link>
+                </ItemContainer>
             );
         });
     };
@@ -144,8 +142,8 @@ export const NavbarItems = <T,>({
             const textWeight: TextWeight = selected ? "bold" : "regular";
             const testId = `link__mobile-${index + 1}`;
             return (
-                <LinkItem key={index}>
-                    <MenuItemContainer>
+                <>
+                    <ItemContainer key={index}>
                         <Link
                             data-testid={testId}
                             weight={textWeight}
@@ -162,7 +160,7 @@ export const NavbarItems = <T,>({
                                 </MenuItemRightContainer>
                             )}
                         </Link>
-                    </MenuItemContainer>
+                    </ItemContainer>
 
                     {selectedNavElement >= 0 &&
                         selectedNavElement === index &&
@@ -177,7 +175,7 @@ export const NavbarItems = <T,>({
                                 )}
                             ></Menu>
                         )}
-                </LinkItem>
+                </>
             );
         });
     };

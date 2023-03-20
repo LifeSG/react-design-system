@@ -12,9 +12,6 @@ interface IStyleProps {
     $show: boolean;
     $viewHeight?: number | undefined;
 }
-interface StyleProps {
-    $compress?: boolean | undefined;
-}
 // =============================================================================
 // STYLING HELPERS
 // =============================================================================
