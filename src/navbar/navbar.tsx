@@ -209,40 +209,27 @@ const Component = <T,>(
         </NavBrandContainer>
     );
 
-    const renderDesktopNavItems = () => (
-        <NavbarItems
-            items={items.desktop}
-            onItemClick={handleNavItemClick}
-            selectedId={selectedId}
-        />
-    );
-
-    const renderMobileMenuButton = () => (
-        <MobileMenuButton
-            aria-label="Open nav menu"
-            data-testid="button__mobile-menu"
-            onClick={handleMobileMenuButtonClick}
-            focusHighlight={false}
-        >
-            <MobileMenuIcon />
-        </MobileMenuButton>
-    );
-
-    const renderNavbarActionButtons = () => (
-        <NavbarActionButtons
-            actionButtons={actionButtons && actionButtons.desktop}
-            onActionButtonClick={handleActionButtonClick}
-        />
-    );
-
     const renderNavElements = () => (
         <NavElementsContainer>
-            {renderDesktopNavItems()}
-
+            <NavbarItems
+                items={items.desktop}
+                onItemClick={handleNavItemClick}
+                selectedId={selectedId}
+            />
             <NavElementsInnerContainer>
-                {renderNavbarActionButtons()}
+                <NavbarActionButtons
+                    actionButtons={actionButtons && actionButtons.desktop}
+                    onActionButtonClick={handleActionButtonClick}
+                />
             </NavElementsInnerContainer>
-            {renderMobileMenuButton()}
+            <MobileMenuButton
+                aria-label="Open nav menu"
+                data-testid="button__mobile-menu"
+                onClick={handleMobileMenuButtonClick}
+                focusHighlight={false}
+            >
+                <MobileMenuIcon />
+            </MobileMenuButton>
         </NavElementsContainer>
     );
 
