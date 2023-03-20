@@ -1,10 +1,10 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { FilterItemPageContainer } from "./filter-item-page.styles";
 import {
     FilterBody,
     FilterDoneButton,
     FilterFooter,
     FilterHeaderButton,
-    FilterItemPageContainer,
 } from "./filter.styles";
 import { FilterPageProps } from "./types";
 
