@@ -54,7 +54,7 @@ export const Component = (
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
 
-    const [isDirty, setIsDirty] = useState<boolean>(false);
+    const [isNewSelection, setIsNewSelection] = useState<boolean>(false);
 
     // =============================================================================
     // HOOKS
@@ -86,7 +86,7 @@ export const Component = (
         setCurrentView("default");
 
         if (variant === "range" && value?.length && endValue?.length) {
-            setIsDirty(true);
+            setIsNewSelection(true);
         }
     }, [isOpen]);
 
@@ -103,10 +103,10 @@ export const Component = (
     }, [currentType]);
 
     useEffect(() => {
+        setIsNewSelection(false);
+
         if (!value) {
             setSelectedStartDate(undefined);
-            // reset dirty if invalid
-            setIsDirty(false);
             return;
         }
 
@@ -114,10 +114,10 @@ export const Component = (
     }, [value]);
 
     useEffect(() => {
+        setIsNewSelection(false);
+
         if (!endValue) {
             setSelectedEndDate(undefined);
-            // reset dirty if invalid
-            setIsDirty(false);
             return;
         }
 
@@ -338,7 +338,7 @@ export const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         variant={variant}
-                        isDirty={isDirty}
+                        isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                     />
                 );
@@ -351,7 +351,7 @@ export const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         variant={variant}
-                        isDirty={isDirty}
+                        isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                     />
                 );
@@ -431,7 +431,7 @@ export const Component = (
                         selectedEndDate={selectedEndDate}
                         variant={variant}
                         between={between}
-                        isDirty={isDirty}
+                        isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                         onHover={handleHover}
                     />

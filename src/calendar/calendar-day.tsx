@@ -37,7 +37,7 @@ interface CalendarDayProps
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     type: CalendarType;
-    isDirty: boolean;
+    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
 }
@@ -51,7 +51,7 @@ export const CalendarDay = ({
     onSelect,
     onHover,
     type,
-    isDirty,
+    isNewSelection,
     between,
     variant,
 }: CalendarDayProps) => {
@@ -67,7 +67,9 @@ export const CalendarDay = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleDayClick = (value: Dayjs) => {
+    const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
+        if (isDisabled) return;
+
         onSelect(value);
     };
 
@@ -99,6 +101,39 @@ export const CalendarDay = ({
         return {
             variant,
         };
+    };
+
+    const isDisabled = (day: Dayjs): boolean => {
+        // day is disabled if it
+        // - falls outside of `between` range
+        // - is specified in `disabledDates`
+        // - results in a start date that is after end date
+        // - results in an end date that is before start date
+
+        const isOutsideBetweenRange =
+            between && !day.isBetween(between[0], between[1], "day", "[]");
+
+        const isDisabledDate =
+            disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
+
+        const isStartAfterEnd =
+            currentFocus === "start" &&
+            selectedEndDate &&
+            day.isAfter(selectedEndDate) &&
+            !isNewSelection;
+
+        const isEndBeforeStart =
+            currentFocus === "end" &&
+            selectedStartDate &&
+            day.isBefore(selectedStartDate) &&
+            !isNewSelection;
+
+        return (
+            isOutsideBetweenRange ||
+            isDisabledDate ||
+            isStartAfterEnd ||
+            isEndBeforeStart
+        );
     };
 
     const getHoverDirection = (): HoverDirection => {
@@ -167,31 +202,14 @@ export const CalendarDay = ({
             styleLabelProps: StyleLabelProps = {};
 
         if (
-            isDirty &&
+            isNewSelection &&
             ["reset-start", "reset-end"].includes(hoverDirection) &&
             [selectedStartDate, selectedEndDate].includes(dateStartWithYear)
         ) {
             styleCircleProps.$overlap = true;
         }
 
-        // day is disabled if it
-        // - falls outside of `between` range
-        // - is specified in `disabledDates`
-        // - results in a start date that is after end date
-        // - results in an end date that is before start date
-
-        if (
-            (between && !day.isBetween(between[0], between[1], "day", "[]")) ||
-            (disabledDates && disabledDates.includes(dateStartWithYear)) ||
-            (currentFocus === "start" &&
-                selectedEndDate &&
-                day.isAfter(selectedEndDate) &&
-                !isDirty) ||
-            (currentFocus === "end" &&
-                selectedStartDate &&
-                day.isBefore(selectedStartDate) &&
-                !isDirty)
-        ) {
+        if (isDisabled(day)) {
             styleCircleProps.$disabled = true;
             styleLabelProps.$disabled = true;
         }
@@ -393,7 +411,12 @@ export const CalendarDay = ({
                                 />
                                 <InteractiveCircle
                                     $variant={variant}
-                                    onClick={() => handleDayClick(day)}
+                                    onClick={() =>
+                                        handleDayClick(
+                                            day,
+                                            styleCircleProps.$disabled
+                                        )
+                                    }
                                     onMouseEnter={() =>
                                         handleHoverCell(formattedDay)
                                     }

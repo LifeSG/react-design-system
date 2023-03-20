@@ -15,7 +15,7 @@ interface Props extends Pick<CalendarProps, "type" | "variant"> {
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
     selectedEndDate?: string | undefined;
-    isDirty: boolean;
+    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
 }
 
@@ -25,7 +25,7 @@ export const CalendarYear = ({
     selectedStartDate,
     selectedEndDate,
     type,
-    isDirty,
+    isNewSelection,
     variant: inputVariant,
     onSelect,
 }: Props) => {
@@ -66,10 +66,10 @@ export const CalendarYear = ({
         const year = date.year();
         let disabled = false;
 
-        if (inputVariant === "range" && !isDirty) {
-            if (currentFocus === "start") {
+        if (inputVariant === "range" && !isNewSelection) {
+            if (currentFocus === "start" && selectedEndDate) {
                 disabled = date.isAfter(selectedEndDate, "year");
-            } else if (currentFocus === "end") {
+            } else if (currentFocus === "end" && selectedStartDate) {
                 disabled = date.isBefore(selectedStartDate, "year");
             }
         }
