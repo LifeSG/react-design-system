@@ -4,7 +4,12 @@ import { useState } from "react";
 import { Filter } from "../../src/filter";
 import { Form } from "../../src/form";
 import { Overlay } from "../../src/overlay";
-import { Heading3, Secondary, Title } from "../storybook-common";
+import {
+    Heading3,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
 import { DateFilter, SearchFilter, useFilters } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
@@ -33,7 +38,7 @@ import { Filter } from "@lifesg/react-design-system/filter";
                 clearFilters,
             } = useFilters(); // your custom filter state management here
             return (
-                <div style={{ maxWidth: "500px", width: "100vw" }}>
+                <StoryContainer>
                     <Filter
                         clearButtonDisabled={clearButtonDisabled}
                         onClear={clearFilters}
@@ -80,7 +85,7 @@ import { Filter } from "@lifesg/react-design-system/filter";
                             </>
                         )}
                     </Filter>
-                </div>
+                </StoryContainer>
             );
         }}
     </Story>
@@ -92,35 +97,26 @@ Each item can be configured with `collapsible`, `showDivider` and `showMobileDiv
 
 <Canvas>
     <Story name="Configuring filter item">
-        {() => {
-            return (
-                <div style={{ maxWidth: "500px", width: "100vw" }}>
-                    <Filter>
-                        <Filter.Item
-                            title="No divider"
-                            showMobileDivider={false}
-                            showDivider={false}
-                        >
-                            Without divider
-                        </Filter.Item>
-                        <Filter.Item title="With divider">
-                            With divider
-                        </Filter.Item>
-                        <Filter.Item title="Default">Collapsible</Filter.Item>
-                        <Filter.Item>No title, collapsible</Filter.Item>
-                        <Filter.Item collapsible={false}>
-                            No title, not collapsible
-                        </Filter.Item>
-                        <Filter.Item
-                            title="Not collapsible"
-                            collapsible={false}
-                        >
-                            Always visible
-                        </Filter.Item>
-                    </Filter>
-                </div>
-            );
-        }}
+        <StoryContainer>
+            <Filter>
+                <Filter.Item
+                    title="No divider"
+                    showMobileDivider={false}
+                    showDivider={false}
+                >
+                    Without divider
+                </Filter.Item>
+                <Filter.Item title="With divider">With divider</Filter.Item>
+                <Filter.Item title="Default">Collapsible</Filter.Item>
+                <Filter.Item>No title, collapsible</Filter.Item>
+                <Filter.Item collapsible={false}>
+                    No title, not collapsible
+                </Filter.Item>
+                <Filter.Item title="Not collapsible" collapsible={false}>
+                    Always visible
+                </Filter.Item>
+            </Filter>
+        </StoryContainer>
     </Story>
 </Canvas>
 
@@ -130,21 +126,17 @@ If you need the current visible mode, you may pass in a render prop as a child o
 
 <Canvas>
     <Story name="Accessing mode">
-        {() => {
-            return (
-                <div style={{ maxWidth: "500px", width: "100vw" }}>
-                    <Filter>
-                        <Filter.Item title="Mode" showMobileDivider={false}>
-                            {(mode) =>
-                                mode === "mobile"
-                                    ? "Mobile view. Switch to a larger viewport to see default view."
-                                    : "Default view. Switch to a smaller viewport to see mobile view."
-                            }
-                        </Filter.Item>
-                    </Filter>
-                </div>
-            );
-        }}
+        <StoryContainer>
+            <Filter>
+                <Filter.Item title="Mode" showMobileDivider={false}>
+                    {(mode) =>
+                        mode === "mobile"
+                            ? "Mobile view. Switch to a larger viewport to see default view."
+                            : "Default view. Switch to a smaller viewport to see mobile view."
+                    }
+                </Filter.Item>
+            </Filter>
+        </StoryContainer>
     </Story>
 </Canvas>
 
@@ -160,7 +152,7 @@ In the example below, extra padding is applied when the dropdown list is expande
         {() => {
             const [showOptions, setShowOptions] = useState(false);
             return (
-                <div style={{ maxWidth: "500px", width: "100vw" }}>
+                <StoryContainer>
                     <Filter>
                         <Filter.Item
                             title="Category 1"
@@ -196,7 +188,7 @@ In the example below, extra padding is applied when the dropdown list is expande
                             />
                         </Filter.Item>
                     </Filter>
-                </div>
+                </StoryContainer>
             );
         }}
     </Story>
@@ -208,23 +200,16 @@ Some filters may need to rendered as a fullscreen page while editing. A display 
 
 <Canvas>
     <Story name="Display filter in fullscreen">
-        {() => {
-            return (
-                <div
-                    style={{
-                        maxWidth: "500px",
-                        width: "80vw",
-                        height: "80vh",
-                        border: "1px solid grey",
-                        margin: "auto",
-                    }}
-                >
-                    <Filter.Page>
-                        <div style={{ margin: "1rem" }}>Custom content</div>
-                    </Filter.Page>
-                </div>
-            );
-        }}
+        <StoryContainer
+            style={{
+                height: "80vh",
+                border: "1px solid grey",
+            }}
+        >
+            <Filter.Page>
+                <div style={{ margin: "1rem" }}>Custom content</div>
+            </Filter.Page>
+        </StoryContainer>
     </Story>
 </Canvas>
 
