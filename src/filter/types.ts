@@ -36,3 +36,15 @@ export interface FilterPageProps {
     /** Called when done button is pressed */
     onDone?: (() => void) | undefined;
 }
+
+interface Option {
+    label: string;
+    value: string;
+}
+
+export interface FilterItemCheckboxProps extends FilterItemProps {
+    // TODO: value extractor?
+    options: Option[];
+    value?: string[] | undefined;
+    onChange?: ((value: string[]) => void) | undefined;
+}
