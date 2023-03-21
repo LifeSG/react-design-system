@@ -11,7 +11,6 @@ export * from "./checkbox";
 export * from "./color";
 export * from "./date-input";
 export * from "./error-display";
-export * from "./hook";
 export * from "./feedback-rating";
 export * from "./filter";
 export * from "./footer";

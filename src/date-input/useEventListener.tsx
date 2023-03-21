@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 
+type Target = Window | HTMLElement | Document | null;
+
 export const useEventListener = <K extends keyof WindowEventMap>(
     eventName: K,
     handler: (event: WindowEventMap[K]) => void,
-    element = window
+    element: Target = window
 ) => {
     // Create a ref that stores handler
     const savedHandler = useRef() as React.MutableRefObject<
@@ -19,6 +21,7 @@ export const useEventListener = <K extends keyof WindowEventMap>(
         () => {
             // Make sure element supports addEventListener
             const isSupported = element && element.addEventListener;
+
             if (!isSupported) return;
             // Create event listener that calls handler function stored in ref
             const eventListener = (event: WindowEventMap[K]) =>

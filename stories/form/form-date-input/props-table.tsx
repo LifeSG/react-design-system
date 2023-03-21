@@ -8,10 +8,48 @@ const DATA: ApiTableSectionProps[] = [
         name: "DateInput specific props",
         attributes: [
             {
-                name: "value",
+                name: "between",
                 description: (
                     <>
-                        The value of the date in string based format.&nbsp;
+                        Only selectable the date between the range. To specify
+                        in a format as such &nbsp; (e.g.{" "}
+                        <code>[2023-02-10, 2023-04-12]</code>)
+                    </>
+                ),
+                propTypes: ["string[]"],
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "disabledDates",
+                description: (
+                    <>
+                        The dates to be disabled. To specify in a format as such
+                        (e.g. <code>[2022-01-01, 2022-02-02]</code>)
+                    </>
+                ),
+                propTypes: ["string[]"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "disabled",
+                description:
+                    "Indicates if the component is disabled and entry is not allowed",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "endValue",
+                description: (
+                    <>
+                        The value of end date in string based format. Available
+                        only in variant props is range.&nbsp;
                         <code>YYYY-MM-DD</code> or <code>YYYY-M-D</code>
                     </>
                 ),
@@ -28,19 +66,14 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "className",
-                description: "The class selector of the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "id",
                 description: "The unique identifier of the component",
                 propTypes: ["string"],
             },
             {
-                name: "disabled",
+                name: "readOnly",
                 description:
-                    "Indicates if the component is disabled and entry is not allowed",
+                    "Indicates if the component has a read only state and selection or input is not allowed",
                 propTypes: ["boolean"],
             },
             {
@@ -49,57 +82,95 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["React.AriaRole"],
             },
             {
-                name: "data-testid",
-                description: "The test identifier of the component",
+                name: "value",
+                description: (
+                    <>
+                        The value of begin date in string based format.&nbsp;
+                        <code>YYYY-MM-DD</code> or <code>YYYY-M-D</code>
+                    </>
+                ),
                 propTypes: ["string"],
+            },
+            {
+                name: "variant",
+                description: (
+                    <>
+                        Specifies the input variant which affects layout and
+                        styles. <br />
+                        When the <code>single</code> variant is specified, the
+                        component is rendered one input element. While if
+                        <code>range</code> is specified, the component is
+                        rendered two input element for range selection.
+                    </>
+                ),
+                propTypes: [`"single"`, `"range"`],
+                defaultValue: `"single"`,
+            },
+            {
+                name: "withButton",
+                description:
+                    "Indicates to display Cancel/Done button inside the component.",
+                propTypes: ["boolean"],
+                defaultValue: `"true"`,
             },
             {
                 name: "onChange",
                 description: (
                     <>
-                        Called when the user enters a value in the field.
-                        Returns value in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format. Should the value be
-                        invalid, the&nbsp; &lsquo;Invalid date&rsquo; value will
-                        be returned
+                        Called when the user enters the set of value in the
+                        field. Returns value in an object &nbsp;
+                        <code>
+                            &#123;start: 2023-03-10, end: 2023-04-05&#125;
+                        </code>
+                        format. Should the value be invalid, the&nbsp;
+                        &lsquo;Invalid date&rsquo; value will be returned
                     </>
                 ),
-                propTypes: ["(value: string) => void"],
+                propTypes: ["(value: {start: string, end: string}) => void"],
             },
             {
                 name: "onChangeRaw",
                 description: (
                     <>
                         Called when the user enters a value in the field.
-                        Returns actual values in an array format as such [
-                        <code>day</code>, <code>month</code>, <code>year</code>]
+                        Returns actual values in an array format as such
+                        <code>
+                            &#123;start: &#123;year, month, day&#125;, end:
+                            &#123;year, month, day&#125;&#125;
+                        </code>
                         &nbsp;regardless if it is invalid
                     </>
                 ),
-                propTypes: ["(value: string[]) => void"],
+                propTypes: ["(value: {start: {}}, end: {}}) => void"],
             },
             {
                 name: "onBlur",
                 description: (
                     <>
-                        Called when a defocus happens. Returns the existing
-                        value in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format
+                        Called when a defocus happens from input field. Returns
+                        the existing value in&nbsp;
+                        <code>
+                            &#123;start: 2023-03-10, end: 2023-04-05&#125;
+                        </code>
+                        &nbsp; format
                     </>
                 ),
-                propTypes: ["(value: string) => void"],
+                propTypes: ["(value: {start: string, end: string}) => void"],
             },
             {
                 name: "onBlurRaw",
                 description: (
                     <>
                         Called when a defocus happens. Returns values in an
-                        array format as such [<code>day</code>,{" "}
-                        <code>month</code>, <code>year</code>] &nbsp;regardless
-                        if it is invalid
+                        array format as such
+                        <code>
+                            &#123;start: &#123;year, month, day&#125;, end:
+                            &#123;year, month, day&#125;&#125;
+                        </code>
+                        &nbsp;regardless if it is invalid
                     </>
                 ),
-                propTypes: ["(value: string[]) => void"],
+                propTypes: ["(value: {start: {}}, end: {}}) => void"],
             },
         ],
     },
