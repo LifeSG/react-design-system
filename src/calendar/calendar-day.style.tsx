@@ -143,7 +143,26 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }
 
     ${(props) => {
-        const { $disabled, $selected, $overlap, $variant } = props;
+        const { $hovered, $selected } = props;
+
+        if ($selected) {
+            return css`
+                background: ${Color.Accent.Light[5]};
+                border: 1px solid ${Color.Primary};
+            `;
+        }
+
+        if ($hovered) {
+            return css`
+                box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
+                border: 1px solid ${Color.Accent.Light[1]};
+                background-color: ${Color.Neutral[8]};
+            `;
+        }
+    }}
+
+    ${(props) => {
+        const { $disabled, $overlap, $variant } = props;
 
         if ($overlap) {
             return css`
@@ -160,14 +179,12 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             return css`
                 color: ${Color.Neutral[4]};
                 cursor: not-allowed;
-                pointer-events: none;
-            `;
-        }
 
-        if ($selected) {
-            return css`
-                background: ${Color.Accent.Light[5]};
-                border: 1px solid ${Color.Primary};
+                :hover {
+                    box-shadow: unset;
+                    border: unset;
+                    background-color: unset;
+                }
             `;
         }
 

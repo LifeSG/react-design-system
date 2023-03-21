@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { CalendarHelper } from "../util/calendar-helper";
 import { CellLabel, Wrapper, YearCell } from "./calendar-year.style";
-import { CalendarType } from "./types";
+import { CalendarProps, FocusType } from "./types";
 
 export type YearVariant =
     | "default"
@@ -10,23 +10,35 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface Props {
+interface Props extends Pick<CalendarProps, "type" | "variant"> {
     calendarDate: Dayjs;
-    selectedDate: string;
-    type: CalendarType;
+    currentFocus?: FocusType | undefined;
+    selectedStartDate: string;
+    selectedEndDate?: string | undefined;
+    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
 }
 
 export const CalendarYear = ({
     calendarDate,
-    selectedDate,
+    currentFocus,
+    selectedStartDate,
+    selectedEndDate,
     type,
+    isNewSelection,
+    variant: inputVariant,
     onSelect,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [years, setYears] = useState<Dayjs[]>([]);
+    const selectedDate = !currentFocus
+        ? selectedStartDate
+        : currentFocus === "end"
+        ? selectedEndDate
+        : selectedStartDate;
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -37,7 +49,9 @@ export const CalendarYear = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleYearClick = (value: Dayjs) => {
+    const handleYearClick = (value: Dayjs, isDisabled: boolean) => {
+        if (isDisabled) return;
+
         onSelect(value);
     };
 
@@ -50,6 +64,15 @@ export const CalendarYear = ({
         const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
         const fullDate = date.format("YYYY-MM-DD");
         const year = date.year();
+        let disabled = false;
+
+        if (inputVariant === "range" && isNewSelection) {
+            if (currentFocus === "start" && selectedEndDate) {
+                disabled = date.isAfter(selectedEndDate, "year");
+            } else if (currentFocus === "end" && selectedStartDate) {
+                disabled = date.isBefore(selectedStartDate, "year");
+            }
+        }
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
@@ -62,6 +85,7 @@ export const CalendarYear = ({
             : "default";
 
         return {
+            disabled,
             year,
             variant: variant,
         };
@@ -80,15 +104,20 @@ export const CalendarYear = ({
     return (
         <Wrapper $type={type}>
             {years.map((date) => {
-                const { variant, year } = generateYearStatus(date);
+                const { disabled, variant, year } = generateYearStatus(date);
 
                 return (
                     <YearCell
                         key={year}
                         $variant={variant}
-                        onClick={() => handleYearClick(date)}
+                        $disabled={disabled}
+                        onClick={() => handleYearClick(date, disabled)}
                     >
-                        <CellLabel weight="regular" $variant={variant}>
+                        <CellLabel
+                            weight="regular"
+                            $variant={variant}
+                            $disabled={disabled}
+                        >
                             {year}
                         </CellLabel>
                     </YearCell>
