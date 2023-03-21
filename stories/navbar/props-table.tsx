@@ -273,7 +273,6 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "type",
-                mandatory: true,
                 description: "The type of logo click",
                 propTypes: [`"primary"`, `"secondary"`],
             },

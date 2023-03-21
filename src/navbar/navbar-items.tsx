@@ -104,43 +104,14 @@ export const NavbarItems = <T,>({
             const selected = checkSelected(item, selectedId);
             const { children, options, ...otherItemAttrs } = item;
 
-            const textWeight: TextWeight = selected ? "semibold" : "regular";
-            const testId = `link__${index + 1}`;
-            return (
-                <LinkItem key={index}>
-                    <Link
-                        data-testid={testId}
-                        weight={textWeight}
-                        $selected={selected} /* for mobile */
-                        {...otherItemAttrs}
-                        onClick={handleLinkClick(item, index)}
-                        {...options}
-                    >
-                        {children}
-                        {selected && <LinkIndicator />}
-                    </Link>
-                    {selectedIndex >= 0 &&
-                        index === selectedIndex &&
-                        showSubMenu && (
-                            <Menu
-                                items={item.subMenu}
-                                selectedId={selectedId}
-                                mobile={false}
-                                onItemClick={handleSubLinkClick}
-                            />
-                        )}
-                </LinkItem>
-            );
-        });
-    };
-
-    const renderItemsMobile = () => {
-        return items.map((item, index) => {
-            const selected = checkSelected(item, selectedId);
-            const { children, options, ...otherItemAttrs } = item;
-
-            const textWeight: TextWeight = selected ? "bold" : "regular";
-            const testId = `link__mobile-${index + 1}`;
+            const textWeight: TextWeight = selected
+                ? mobile
+                    ? "bold"
+                    : "semibold"
+                : "regular";
+            const testId = mobile
+                ? `link__mobile-${index + 1}`
+                : `link__${index + 1}`;
             const expanded =
                 selectedIndex >= 0 && selectedIndex === index && showSubMenu;
             return (
@@ -155,7 +126,7 @@ export const NavbarItems = <T,>({
                     >
                         {children}
                         {selected && <LinkIndicator />}
-                        {item.subMenu && (
+                        {mobile && item.subMenu && (
                             <MenuItemRightContainer>
                                 {expanded ? <UpIcon /> : <DownIcon />}
                             </MenuItemRightContainer>
@@ -165,7 +136,7 @@ export const NavbarItems = <T,>({
                         <Menu
                             items={item.subMenu}
                             selectedId={selectedId}
-                            mobile={true}
+                            mobile={mobile}
                             onItemClick={handleSubLinkClick}
                         />
                     )}
@@ -175,11 +146,8 @@ export const NavbarItems = <T,>({
     };
 
     if (items && items.length > 0) {
-        return mobile ? (
-            <MobileWrapper ref={ref}>{renderItemsMobile()}</MobileWrapper>
-        ) : (
-            <Wrapper ref={ref}>{renderItems()}</Wrapper>
-        );
+        const ContentWrapper = mobile ? MobileWrapper : Wrapper;
+        return <ContentWrapper ref={ref}>{renderItems()}</ContentWrapper>;
     }
 
     return <></>;

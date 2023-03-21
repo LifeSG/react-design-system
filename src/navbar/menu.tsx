@@ -72,14 +72,10 @@ export const Menu = <T,>({
     };
 
     if (items && items.length > 0) {
-        //const ContentWrapper = mobile ? MobileWrapper : Wrapper;
+        const ContentWrapper = mobile ? MobileWrapper : MenuBar;
         return (
             <>
-                {mobile ? (
-                    <MobileWrapper>{renderItems(mobile)}</MobileWrapper>
-                ) : (
-                    <MenuBar>{renderItems(mobile)}</MenuBar>
-                )}
+                <ContentWrapper>{renderItems(mobile)}</ContentWrapper>
             </>
         );
     }

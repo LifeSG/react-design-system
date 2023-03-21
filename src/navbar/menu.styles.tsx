@@ -40,22 +40,6 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 // LINK ITEMS
 // =============================================================================
-export const LinkItem = styled.li`
-    position: relative;
-    display: flex;
-    align-items: center;
-    :not(:last-of-type) {
-        margin-right: 1rem;
-    }
-
-    ${MediaQuery.MaxWidth.tablet} {
-        width: 100%;
-
-        :not(:last-of-type) {
-            margin-right: 0;
-        }
-    }
-`;
 
 export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     ${TextStyleHelper.getTextStyle("H6", 400)};
@@ -175,19 +159,4 @@ export const MenuItem = styled.li`
             padding-bottom: 0;
         }
     }
-`;
-
-export const LinkWrapper = styled.ul`
-    display: flex;
-    list-style: none;
-    position: relative;
-    width: 100%;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: none;
-    }
-`;
-export const MenuTopSpace = styled.div`
-    width: 100%;
-    height: 0.5rem;
 `;

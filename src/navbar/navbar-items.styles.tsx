@@ -123,17 +123,6 @@ export const Menu = styled.div`
     border-radius: 0rem 0rem 0.5rem 0.5rem;
 `;
 
-export const LinkWrapper = styled.ul`
-    display: flex;
-    list-style: none;
-    position: relative;
-    width: 100%;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: none;
-    }
-`;
-
 export const MenuItemRightContainer = styled.div`
     position: relative;
     display: flex;
