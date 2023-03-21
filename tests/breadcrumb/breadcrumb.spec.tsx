@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Breadcrumb, BreadcrumbProps } from "../../src";
+import { Breadcrumb } from "../../src";
 
 // =============================================================================
 // UNIT TESTS
@@ -16,13 +16,13 @@ describe("Breadcrumb", () => {
     });
 
     it("should render the component", () => {
-        renderComponent();
+        render(<Breadcrumb links={DEFAULT_LINKS} />);
 
         expect(screen.getAllByRole("listitem").length).toBe(3);
     });
 
     it("should render the url props", () => {
-        renderComponent();
+        render(<Breadcrumb links={DEFAULT_LINKS} />);
 
         DEFAULT_LINKS.forEach((metadata, index) => {
             const isLastBreadcrumb = index + 1 === DEFAULT_LINKS.length;
@@ -70,11 +70,4 @@ const getBreadcrumb = (label: string, isQuery = false) => {
         return screen.queryByRole("link", { name: label });
     }
     return screen.getByRole("link", { name: label });
-};
-
-// =============================================================================
-// RENDER FUNCTIONS
-// =============================================================================
-const renderComponent = (props?: Partial<BreadcrumbProps>) => {
-    return render(<Breadcrumb links={DEFAULT_LINKS} {...props} />);
 };
