@@ -58,7 +58,7 @@ export const CalendarMonth = ({
         let variant: MonthVariant = "default";
         let disabled = false;
 
-        if (inputVariant === "range" && !isNewSelection) {
+        if (inputVariant === "range" && isNewSelection) {
             if (currentFocus === "start" && selectedEndDate) {
                 disabled = date.isAfter(selectedEndDate, "month");
             } else if (currentFocus === "end" && selectedStartDate) {
