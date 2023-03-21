@@ -31,6 +31,10 @@ interface OverlayStyleProps {
     $visible?: boolean;
 }
 
+interface DoneButtonProps {
+    $disabled?: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -250,14 +254,31 @@ export const CancelButton = styled(BaseActionButton)`
     }
 `;
 
-export const DoneButton = styled(BaseActionButton)`
+export const DoneButton = styled(BaseActionButton)<DoneButtonProps>`
     background-color: ${Color.Primary};
     color: ${Color.Neutral[8]};
 
     :focus,
     :focus-within {
         background-color: ${Color.Primary};
+        color: ${Color.Neutral[8]};
     }
+
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                pointer-events: none;
+                background-color: ${Color.Neutral[6]};
+                color: ${Color.Neutral[3]};
+
+                :focus,
+                :focus-within {
+                    background-color: ${Color.Neutral[6]};
+                    color: ${Color.Neutral[3]};
+                }
+            `;
+        }
+    }}
 `;
 
 export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`

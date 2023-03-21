@@ -20,8 +20,8 @@ export interface DateInputProps extends React.AriaAttributes {
     /** The display cancel/done button inside calendar component. Defualt value as `true` */
     withButton?: boolean | undefined;
     /**
-     * Actively between selection. Only accepted two values in an array format
-     * as such ["2023-03-15", "2023-05-21"] or ["2023-05-21", "2023-03-15"]
+     * Restrict selection to within this date range, in `YYYY-MM-DD` format.
+     * Example: `["2023-03-15", "2023-04-19"]
      */
     between?: [string, string] | undefined;
     /**

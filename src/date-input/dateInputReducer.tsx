@@ -7,6 +7,7 @@ export type ActionType =
     | "reset"
     | "selected"
     | "transition"
+    | "restore"
     | "unhover"
     | any;
 
@@ -23,10 +24,11 @@ interface Action {
  * 'hover'          return back current hover value
  * 'input'          return back current input element value
  * 'selected'       return back current value been selected
- * 'transition'     use to temporary store value
+ * 'transition'     temporary store the value
+ * 'restore'        use the temporary value
  */
-interface State {
-    calendar: string;
+export interface ReducerState {
+    calendar: string | undefined;
     confirmed: string;
     currentType: ActionType;
     hover: string;
@@ -34,12 +36,15 @@ interface State {
     selected: string;
     transition: string;
 }
+const calendarValue = (value: string) => (value?.length ? value : undefined);
 
-export const dateInputReducer = (state: State, action: Action): State => {
+export const dateInputReducer = (
+    state: ReducerState,
+    action: Action
+): ReducerState => {
     const { type, value } = action;
 
-    // 'value' use for initial load value if exist
-    // use in 'selected' value update to 'confirmed'
+    // initial load value if exist
     const confirmedValue = value?.length
         ? value
         : state.selected.length
@@ -69,16 +74,17 @@ export const dateInputReducer = (state: State, action: Action): State => {
         case "selected":
             return {
                 ...state,
-                calendar: value,
+                calendar: calendarValue(value),
                 hover: "",
                 input: value,
                 selected: value,
+                transition: value,
                 currentType: "selected",
             };
         case "confirmed":
             return {
                 ...state,
-                calendar: confirmedValue,
+                calendar: calendarValue(confirmedValue),
                 confirmed: confirmedValue,
                 input: confirmedValue,
                 selected: confirmedValue,
@@ -86,22 +92,26 @@ export const dateInputReducer = (state: State, action: Action): State => {
                 currentType: "confirmed",
             };
         case "transition":
-            // use in month/year calendar view
-            // restore back 'confirmed' value
             return {
                 ...state,
-                calendar: state.confirmed,
-                confirmed: state.confirmed,
-                input: state.confirmed,
-                selected: state.confirmed,
-                transition: state.confirmed,
+                calendar: calendarValue(value),
+                input: value,
+                selected: value,
+                transition: state.selected,
                 currentType: "transition",
             };
-            break;
+        case "restore":
+            return {
+                ...state,
+                calendar: calendarValue(state.transition),
+                input: state.transition,
+                selected: state.transition,
+                currentType: "restore",
+            };
         case "reset":
             return {
                 ...state,
-                calendar: state.confirmed,
+                calendar: calendarValue(state.confirmed),
                 confirmed: state.confirmed,
                 input: state.confirmed,
                 selected: state.confirmed,
@@ -110,7 +120,7 @@ export const dateInputReducer = (state: State, action: Action): State => {
         case "invalid":
             return {
                 ...state,
-                calendar: "",
+                calendar: undefined,
                 confirmed: state.confirmed,
                 input: "",
                 selected: "",
@@ -125,7 +135,7 @@ export const dateInputReducer = (state: State, action: Action): State => {
 // CONSTANTS
 // =============================================================================
 export const INITIAL_INPUT_VALUES = {
-    calendar: "",
+    calendar: undefined,
     confirmed: "",
     hover: "",
     input: "",
