@@ -73,8 +73,8 @@ export const CalendarDay = ({
         onSelect(value);
     };
 
-    const handleHoverCell = (value: string) => {
-        if (type !== "input") return;
+    const handleHoverCell = (value: string, isDisabled: boolean) => {
+        if (type !== "input" || isDisabled) return;
 
         setHoverValue(value);
         onHover(value);
@@ -412,7 +412,10 @@ export const CalendarDay = ({
                                         )
                                     }
                                     onMouseEnter={() =>
-                                        handleHoverCell(formattedDay)
+                                        handleHoverCell(
+                                            formattedDay,
+                                            styleCircleProps.$disabled
+                                        )
                                     }
                                     {...styleCircleProps}
                                 >
