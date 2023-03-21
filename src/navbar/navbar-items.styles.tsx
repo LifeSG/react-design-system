@@ -45,20 +45,16 @@ export const MobileWrapper = styled.ul`
 // LINK ITEMS
 // =============================================================================
 export const LinkItem = styled.li`
-    position: relative;
-    display: contents;
-    height: 100%;
-    align-items: center;
+    display: flex;
+    width: 100%;
+
     :not(:last-of-type) {
         margin-right: 1rem;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        width: 100%;
-
-        :not(:last-of-type) {
-            margin-right: 0;
-        }
+        flex-direction: column;
+        align-items: stretch;
     }
 `;
 
@@ -138,17 +134,6 @@ export const LinkWrapper = styled.ul`
     }
 `;
 
-export const ItemContainer = styled.li`
-    position: relative;
-    display: flex;
-    width: 100%;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-`;
 export const MenuItemRightContainer = styled.div`
     position: relative;
     display: flex;

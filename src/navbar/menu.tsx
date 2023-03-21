@@ -27,13 +27,9 @@ export const Menu = <T,>({
     onItemClick,
 }: Props<T>): JSX.Element => {
     // =============================================================================
-    // CONST, STATE, REFS
-    // =============================================================================
-
-    // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleLinkClick = (item: NavItemCommonProps<T>, index) => {
+    const handleLinkClick = (item: NavItemCommonProps<T>) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             onItemClick(event, item);
@@ -64,7 +60,7 @@ export const Menu = <T,>({
                         weight={textWeight}
                         $selected={selected} /* for mobile */
                         {...otherItemAttrs}
-                        onClick={handleLinkClick(item, index)}
+                        onClick={handleLinkClick(item)}
                         {...options}
                     >
                         {children}
