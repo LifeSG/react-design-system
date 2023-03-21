@@ -208,34 +208,34 @@ const Component = <T,>(
         </NavBrandContainer>
     );
 
-    const renderNavElements = () => (
-        <NavElementsContainer>
-            <NavbarItems
-                items={items.desktop}
-                onItemClick={handleNavItemClick}
-                selectedId={selectedId}
-            />
-            <NavbarActionButtons
-                actionButtons={actionButtons && actionButtons.desktop}
-                onActionButtonClick={handleActionButtonClick}
-            />
-            <MobileMenuButton
-                aria-label="Open nav menu"
-                data-testid="button__mobile-menu"
-                onClick={handleMobileMenuButtonClick}
-                focusHighlight={false}
-            >
-                <MobileMenuIcon />
-            </MobileMenuButton>
-        </NavElementsContainer>
-    );
-
     const renderNavbar = () => {
         return (
             <Layout.Content>
                 <Nav $compress={compress}>
                     {renderBrand()}
-                    {!hideNavElements && renderNavElements()}
+                    {!hideNavElements && (
+                        <NavElementsContainer>
+                            <NavbarItems
+                                items={items.desktop}
+                                onItemClick={handleNavItemClick}
+                                selectedId={selectedId}
+                            />
+                            <NavbarActionButtons
+                                actionButtons={
+                                    actionButtons && actionButtons.desktop
+                                }
+                                onActionButtonClick={handleActionButtonClick}
+                            />
+                            <MobileMenuButton
+                                aria-label="Open nav menu"
+                                data-testid="button__mobile-menu"
+                                onClick={handleMobileMenuButtonClick}
+                                focusHighlight={false}
+                            >
+                                <MobileMenuIcon />
+                            </MobileMenuButton>
+                        </NavElementsContainer>
+                    )}
                 </Nav>
 
                 {!hideNavElements && renderDrawer()}
