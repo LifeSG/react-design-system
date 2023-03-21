@@ -54,7 +54,7 @@ export const Component = (
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
 
-    const [isNewSelection, setIsNewSelection] = useState<boolean>(false);
+    const [isNewSelection, setIsNewSelection] = useState<boolean>(true);
 
     // =============================================================================
     // HOOKS
@@ -86,7 +86,7 @@ export const Component = (
         setCurrentView("default");
 
         if (variant === "range" && value?.length && endValue?.length) {
-            setIsNewSelection(true);
+            setIsNewSelection(false);
         }
     }, [isOpen]);
 
@@ -103,7 +103,7 @@ export const Component = (
     }, [currentType]);
 
     useEffect(() => {
-        setIsNewSelection(false);
+        setIsNewSelection(true);
 
         if (!value) {
             setSelectedStartDate(undefined);
@@ -114,7 +114,7 @@ export const Component = (
     }, [value]);
 
     useEffect(() => {
-        setIsNewSelection(false);
+        setIsNewSelection(true);
 
         if (!endValue) {
             setSelectedEndDate(undefined);

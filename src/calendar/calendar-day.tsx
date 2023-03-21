@@ -104,12 +104,6 @@ export const CalendarDay = ({
     };
 
     const isDisabled = (day: Dayjs): boolean => {
-        // day is disabled if it
-        // - falls outside of `between` range
-        // - is specified in `disabledDates`
-        // - results in a start date that is after end date
-        // - results in an end date that is before start date
-
         const isOutsideBetweenRange =
             between && !day.isBetween(between[0], between[1], "day", "[]");
 
@@ -120,13 +114,13 @@ export const CalendarDay = ({
             currentFocus === "start" &&
             selectedEndDate &&
             day.isAfter(selectedEndDate) &&
-            !isNewSelection;
+            isNewSelection;
 
         const isEndBeforeStart =
             currentFocus === "end" &&
             selectedStartDate &&
             day.isBefore(selectedStartDate) &&
-            !isNewSelection;
+            isNewSelection;
 
         return (
             isOutsideBetweenRange ||
@@ -202,7 +196,7 @@ export const CalendarDay = ({
             styleLabelProps: StyleLabelProps = {};
 
         if (
-            isNewSelection &&
+            !isNewSelection &&
             ["reset-start", "reset-end"].includes(hoverDirection) &&
             [selectedStartDate, selectedEndDate].includes(dateStartWithYear)
         ) {

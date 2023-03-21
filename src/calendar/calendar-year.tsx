@@ -66,7 +66,7 @@ export const CalendarYear = ({
         const year = date.year();
         let disabled = false;
 
-        if (inputVariant === "range" && !isNewSelection) {
+        if (inputVariant === "range" && isNewSelection) {
             if (currentFocus === "start" && selectedEndDate) {
                 disabled = date.isAfter(selectedEndDate, "year");
             } else if (currentFocus === "end" && selectedStartDate) {
