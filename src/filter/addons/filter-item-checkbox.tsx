@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FilterItem } from "../filter-item";
 import { FilterItemCheckboxProps } from "../types";
-import { Group } from "./filter-item-checkbox.styles";
+import { Group, Item } from "./filter-item-checkbox.styles";
 
 export const FilterItemCheckbox = ({
     value,
@@ -33,26 +33,32 @@ export const FilterItemCheckbox = ({
     };
 
     return (
-        <FilterItem {...filterItemProps}>
-            <Group role="group" aria-label={filterItemProps.title}>
-                {options.map(({ label, value: optionValue }) => {
-                    return (
-                        // TODO: this should be the toggle button
-                        <div key={optionValue}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name={filterItemProps.title}
-                                    checked={selected.includes(optionValue)}
-                                    onChange={handleItemClick(optionValue)}
-                                    value={optionValue}
-                                />
-                                {label}
-                            </label>
-                        </div>
-                    );
-                })}
-            </Group>
+        <FilterItem minimisable {...filterItemProps}>
+            {(mode, { minimised }) => (
+                <Group role="group" aria-label={filterItemProps.title}>
+                    {options.map(({ label, value: optionValue }, i) => {
+                        return (
+                            // TODO: this should be the toggle button
+                            <Item
+                                key={optionValue}
+                                $visible={!minimised || i < 5}
+                            >
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id={optionValue}
+                                        name={filterItemProps.title}
+                                        checked={selected.includes(optionValue)}
+                                        onChange={handleItemClick(optionValue)}
+                                        value={optionValue}
+                                    />
+                                    {label} {mode}
+                                </label>
+                            </Item>
+                        );
+                    })}
+                </Group>
+            )}
         </FilterItem>
     );
 };

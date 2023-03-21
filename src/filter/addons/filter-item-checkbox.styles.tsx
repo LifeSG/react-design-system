@@ -10,3 +10,7 @@ export const Group = styled.div`
         flex-wrap: wrap;
     }
 `;
+
+export const Item = styled.div<{ $visible: boolean }>`
+    ${(props) => !props.$visible && "display: none;"}
+`;

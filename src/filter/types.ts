@@ -17,7 +17,9 @@ export interface FilterProps {
 }
 
 export interface FilterItemProps {
-    children: React.ReactNode | ((mode: Mode) => React.ReactNode);
+    children:
+        | React.ReactNode
+        | ((mode: Mode, state: { minimised: boolean }) => React.ReactNode);
     /** Specifies if header divider is visible in default mode */
     showDivider?: boolean | undefined;
     /** Specifies if divider is visible in mobile mode */
@@ -27,6 +29,7 @@ export interface FilterItemProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     collapsible?: boolean | undefined;
+    minimisable?: boolean | undefined;
 }
 
 export interface FilterPageProps {
