@@ -166,9 +166,7 @@ export const DateInput = ({
         const target = event.target as Element;
         if (nodeRef.current && !nodeRef.current.contains(target)) {
             // outside click
-            // cannot use reset it will assume is cancel button
-            // handleCalendarAction("reset");
-            handleReducer("reset");
+            handleBlurContainer();
         }
     }
 
@@ -238,6 +236,14 @@ export const DateInput = ({
                 handleReducer("confirmed");
                 break;
         }
+
+        setCurrentElement({
+            field: "none",
+            type: "none",
+            count: 0,
+        });
+
+        setCalendarOpen(false);
     };
 
     const handleMonthYearCalendarAction = (action: CalendarAction) => {
@@ -307,8 +313,16 @@ export const DateInput = ({
         }
     };
 
-    const handleTabBlur = () => {
-        handleCalendarAction("reset");
+    const handleBlurContainer = () => {
+        handleReducer("reset");
+
+        setCurrentElement({
+            field: "none",
+            type: "none",
+            count: 0,
+        });
+
+        setCalendarOpen(false);
     };
 
     const handleRangeValueCheck = (value: string): boolean => {
@@ -366,16 +380,6 @@ export const DateInput = ({
                     disabledDates,
                     between
                 );
-
-                if (isValid) {
-                    setCurrentElement({
-                        field: "none",
-                        type: "none",
-                        count: 0,
-                    });
-
-                    setCalendarOpen(false);
-                }
             }
         }
 
@@ -525,7 +529,7 @@ export const DateInput = ({
                         disabled={disabled}
                         onChange={(value) => handleChange(value, "input")}
                         onFocus={handleFocus}
-                        onTabBlur={handleTabBlur}
+                        onTabBlur={handleBlurContainer}
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
                         value={endDate.input}
@@ -556,7 +560,7 @@ export const DateInput = ({
                 disabled={disabled}
                 onChange={(value) => handleChange(value, "input")}
                 onFocus={handleFocus}
-                onTabBlur={handleTabBlur}
+                onTabBlur={handleBlurContainer}
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
                 value={startDate.input}
