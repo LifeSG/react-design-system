@@ -1,10 +1,10 @@
-import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
-import { SquareIcon } from "@lifesg/react-icons/square";
-import { Wrapper } from "./toggle-icon.styles";
-import { CircleDotIcon } from "@lifesg/react-icons/circle-dot";
 import { CircleIcon } from "@lifesg/react-icons/circle";
-import { TickIcon } from "@lifesg/react-icons/tick";
+import { CircleDotIcon } from "@lifesg/react-icons/circle-dot";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { SquareIcon } from "@lifesg/react-icons/square";
+import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
+import { TickIcon } from "@lifesg/react-icons/tick";
+import { Wrapper } from "./toggle-icon.styles";
 
 interface Props {
     type: "checkbox" | "radio" | "tick" | "cross";
