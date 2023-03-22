@@ -1,0 +1,110 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Toggle } from "src/toggle";
+import { Secondary, Heading3, Heading4 } from "../storybook-common";
+import { Headings, Wrapper } from "./doc-elements";
+
+<Meta title="Data Input/Toggle/With indicator" component={Toggle} />
+
+[Back to main](?path=/docs/data-input-toggle--toggle#variants)
+
+<Secondary>With indicator</Secondary>
+
+<Canvas>
+    <Story name="Checkbox type">
+        <Wrapper>
+            <Headings />
+            <div>
+                <Toggle indicator>Hello</Toggle>
+                <Toggle indicator checked>
+                    Hello
+                </Toggle>
+                <Toggle indicator disabled>
+                    Hello
+                </Toggle>
+                <Toggle indicator disabled checked>
+                    Hello
+                </Toggle>
+                <Toggle indicator error>
+                    Hello
+                </Toggle>
+            </div>
+        </Wrapper>
+    </Story>
+</Canvas>
+
+<Canvas>
+    <Story name="Radio type">
+        <Wrapper>
+            <Headings />
+            <div>
+                <Toggle type="radio" indicator>
+                    Hello
+                </Toggle>
+                <Toggle type="radio" indicator checked>
+                    Hello
+                </Toggle>
+                <Toggle type="radio" indicator disabled>
+                    Hello
+                </Toggle>
+                <Toggle type="radio" indicator disabled checked>
+                    Hello
+                </Toggle>
+                <Toggle type="radio" indicator error>
+                    Hello
+                </Toggle>
+            </div>
+        </Wrapper>
+    </Story>
+</Canvas>
+
+<Canvas>
+    <Story name="Yes type">
+        <Wrapper>
+            <Headings />
+            <div>
+                <Toggle type="yes" indicator>
+                    Hello
+                </Toggle>
+                <Toggle type="yes" indicator checked>
+                    Hello
+                </Toggle>
+                <Toggle type="yes" indicator disabled>
+                    Hello
+                </Toggle>
+                <Toggle type="yes" indicator disabled checked>
+                    Hello
+                </Toggle>
+                <Toggle type="yes" indicator error>
+                    Hello
+                </Toggle>
+            </div>
+        </Wrapper>
+    </Story>
+</Canvas>
+
+<Canvas>
+    <Story name="No type">
+        <Wrapper>
+            <Headings />
+            <div>
+                <Toggle type="no" indicator>
+                    Hello
+                </Toggle>
+                <Toggle type="no" indicator checked>
+                    Hello
+                </Toggle>
+                <Toggle type="no" indicator disabled>
+                    Hello
+                </Toggle>
+                <Toggle type="no" indicator disabled checked>
+                    Hello
+                </Toggle>
+                <Toggle type="no" indicator error>
+                    Hello
+                </Toggle>
+            </div>
+        </Wrapper>
+    </Story>
+</Canvas>
+
+[Back to main](?path=/docs/data-input-toggle--toggle#variants)
