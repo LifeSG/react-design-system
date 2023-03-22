@@ -90,6 +90,7 @@ export const FilterItem = ({
                         </Expandable>
                         {minimisable && (
                             <FilterItemMinimiseButton
+                                data-id="minimise-button"
                                 styleType="link"
                                 onClick={() => {
                                     setMinimised(!minimised);

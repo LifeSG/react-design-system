@@ -8,7 +8,7 @@ import { Wrapper } from "./toggle-icon.styles";
 
 export type ToggleIconType = "checkbox" | "radio" | "tick" | "cross";
 
-interface Props {
+export interface Props {
     type: ToggleIconType;
     active?: boolean | undefined;
     disabled?: boolean | undefined;
