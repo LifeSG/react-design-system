@@ -59,20 +59,16 @@ export const NavbarItems = <T,>({
         setShowSubMenu(false);
     };
 
-    const checkSelected = (item: NavItemProps<T>, id) => {
-        const foundItem = items.find((i) => item.id === id);
-        if (foundItem) {
+    const checkSelected = (item: NavItemProps<T>): boolean => {
+        if (item.id === selectedId) {
             return true;
-        } else if (!foundItem && item && item.subMenu?.length >= 1) {
+        } else if (item?.subMenu && item.subMenu.length >= 1) {
             const foundSubItem = item.subMenu.find(
                 (dataS) => dataS.id === selectedId
             );
-            if (foundSubItem) {
-                return true;
-            } else {
-                return false;
-            }
+            return !!foundSubItem;
         }
+        return false;
     };
 
     // =============================================================================
@@ -101,7 +97,7 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderItems = () => {
         return items.map((item, index) => {
-            const selected = checkSelected(item, selectedId);
+            const selected = checkSelected(item);
             const { children, options, ...otherItemAttrs } = item;
 
             const textWeight: TextWeight = selected
