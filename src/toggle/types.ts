@@ -29,5 +29,7 @@ export interface ToggleProps
     className?: string | undefined;
     id?: string | undefined;
     "data-testid": string | undefined;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?:
+        | ((event: React.ChangeEvent<HTMLInputElement>) => void)
+        | undefined;
 }
