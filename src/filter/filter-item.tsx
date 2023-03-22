@@ -18,6 +18,7 @@ import { FilterItemProps } from "./types";
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
     minimisable = false,
+    minimisedHeight,
     showDivider = true,
     showMobileDivider = true,
     title,
@@ -42,7 +43,8 @@ export const FilterItem = ({
     });
     const contentAnimationStyles = useSpring({
         height: minimised
-            ? Math.min(contentResizeDetector.height * 0.5, 216)
+            ? minimisedHeight ??
+              Math.min(contentResizeDetector.height * 0.5, 216)
             : contentResizeDetector.height,
     });
 

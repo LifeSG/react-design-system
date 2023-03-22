@@ -30,6 +30,7 @@ export interface FilterItemProps {
     "data-testid"?: string | undefined;
     collapsible?: boolean | undefined;
     minimisable?: boolean | undefined;
+    minimisedHeight?: number | undefined;
 }
 
 export interface FilterPageProps {

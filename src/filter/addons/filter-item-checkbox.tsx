@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FilterItem } from "../filter-item";
 import { FilterItemCheckboxProps } from "../types";
 import { Group, Item } from "./filter-item-checkbox.styles";
@@ -12,14 +12,29 @@ export const FilterItemCheckbox = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selected, setSelected] = useState(value || []);
+    const [selected, setSelected] = useState<FilterItemCheckboxProps["value"]>(
+        value || []
+    );
+    const [minimisedHeight, setMinimisedHeight] = useState<number>();
+    const lastVisibleElement = useRef<HTMLDivElement>();
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setSelected(value || []);
+        if (value !== selected) {
+            setSelected(value || []);
+        }
     }, [value]);
+
+    useEffect(() => {
+        const elementBottom = lastVisibleElement.current
+            ? lastVisibleElement.current.offsetTop +
+              lastVisibleElement.current.clientHeight
+            : undefined;
+
+        setMinimisedHeight(elementBottom);
+    }, [options]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -33,7 +48,11 @@ export const FilterItemCheckbox = ({
     };
 
     return (
-        <FilterItem minimisable {...filterItemProps}>
+        <FilterItem
+            minimisable={options.length > 5}
+            minimisedHeight={minimisedHeight}
+            {...filterItemProps}
+        >
             {(mode, { minimised }) => (
                 <Group role="group" aria-label={filterItemProps.title}>
                     {options.map(({ label, value: optionValue }, i) => {
@@ -42,6 +61,7 @@ export const FilterItemCheckbox = ({
                             <Item
                                 key={optionValue}
                                 $visible={!minimised || i < 5}
+                                ref={i === 4 ? lastVisibleElement : undefined}
                             >
                                 <label>
                                     <input
@@ -52,7 +72,7 @@ export const FilterItemCheckbox = ({
                                         onChange={handleItemClick(optionValue)}
                                         value={optionValue}
                                     />
-                                    {label} {mode}
+                                    {label}
                                 </label>
                             </Item>
                         );
