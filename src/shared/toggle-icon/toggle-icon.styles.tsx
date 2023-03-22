@@ -3,6 +3,7 @@ import { Color } from "../../color";
 
 interface StyleProps {
     $active?: boolean;
+    disabled?: boolean;
 }
 
 // =============================================================================
@@ -18,7 +19,7 @@ export const Wrapper = styled.div<StyleProps>`
         width: 100%;
 
         ${(props) => {
-            if (props.$active) {
+            if (props.$active && !props.disabled) {
                 return css`
                     color: ${Color.Primary};
                 `;
