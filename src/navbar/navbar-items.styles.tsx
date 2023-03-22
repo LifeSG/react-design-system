@@ -3,7 +3,7 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
+import { Text } from "../text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -53,7 +53,6 @@ export const LinkItem = styled.li`
 
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
-        align-items: stretch;
         padding: 0.125rem 0.25rem;
     }
 `;
@@ -73,19 +72,13 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        ${(props) => {
-            return TextStyleHelper.getTextStyle(
-                "H4",
-                props.$selected ? "bold" : "regular"
-            );
-        }}
         color: ${Color.Neutral[1]};
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
         :hover {
-            color: ${Color.Neutral[1]} !important;
+            color: ${Color.Neutral[1]};
         }
     }
 `;

@@ -1,12 +1,12 @@
 import React from "react";
 import { Clickable } from "./brand.styles";
-import { NavbarBrandingProps } from "./types";
-import { BrandType } from "./types";
+import { BrandType, NavbarBrandingProps } from "./types";
+
 interface Props {
     resources: NavbarBrandingProps;
     compress?: boolean | undefined;
     "data-testid"?: string | undefined;
-    type: BrandType | undefined;
+    type: BrandType;
     onClick?:
         | ((
               event: React.MouseEvent<HTMLAnchorElement>,
