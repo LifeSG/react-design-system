@@ -4,9 +4,10 @@ import { Menu } from "./menu";
 import {
     DownIcon,
     Link,
+    LinkIconContainer,
     LinkIndicator,
     LinkItem,
-    MenuItemRightContainer,
+    LinkLabel,
     MobileWrapper,
     UpIcon,
     Wrapper,
@@ -120,12 +121,12 @@ export const NavbarItems = <T,>({
                         onClick={handleLinkClick(item, index)}
                         {...options}
                     >
-                        {children}
+                        <LinkLabel>{children}</LinkLabel>
                         {selected && <LinkIndicator />}
                         {mobile && item.subMenu && (
-                            <MenuItemRightContainer>
+                            <LinkIconContainer>
                                 {expanded ? <UpIcon /> : <DownIcon />}
-                            </MenuItemRightContainer>
+                            </LinkIconContainer>
                         )}
                     </Link>
                     {expanded && (

@@ -1,10 +1,9 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
-import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { DesignToken } from "src/design-token";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -55,6 +54,7 @@ export const LinkItem = styled.li`
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
         align-items: stretch;
+        padding: 0.125rem 0.25rem;
     }
 `;
 
@@ -81,13 +81,17 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         }}
         color: ${Color.Neutral[1]};
         width: 100%;
-        padding: 0.625rem 1rem;
+        padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
         :hover {
             color: ${Color.Neutral[1]} !important;
         }
     }
+`;
+
+export const LinkLabel = styled.div`
+    flex: 1;
 `;
 
 export const LinkIndicator = styled.div`
@@ -109,35 +113,8 @@ export const LinkIndicator = styled.div`
     }
 `;
 
-export const Menu = styled.div`
-    width: 100%;
-    height: 10rem;
-    margin-top: 0rem;
-    left: 0;
-    top: 102%;
-
-    position: absolute;
-
-    background: ${Color.Neutral[8]};
-    box-shadow: ${DesignToken.ElevationBoxShadow};
-    border-radius: 0rem 0rem 0.5rem 0.5rem;
-`;
-
-export const MenuItemRightContainer = styled.div`
-    position: relative;
-    display: flex;
-    width: 100%;
-    float: right;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: flex;
-        align-items: center;
-        display: flex;
-        float: right;
-        justify-content: end;
-        align-items: center;
-        padding-right: 1rem;
-    }
+export const LinkIconContainer = styled.div`
+    padding-left: 1rem;
 `;
 
 export const DownIcon = styled(ChevronDownIcon)`

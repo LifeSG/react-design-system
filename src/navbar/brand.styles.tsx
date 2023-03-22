@@ -30,6 +30,7 @@ export const Clickable = styled.a<StyleProps>`
                 ? 2
                 : 2.5}rem;
         transition: ${Transition.Base};
+        object-fit: contain;
 
         ${MediaQuery.MaxWidth.tablet} {
             height: ${(props) => (props.$type === "primary" ? 1 : 1.5)}rem;
