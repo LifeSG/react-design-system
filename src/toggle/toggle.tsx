@@ -12,7 +12,7 @@ import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
 export const Toggle = ({
     type = "checkbox",
     indicator,
-    checked = false,
+    checked,
     styleType = "default",
     children,
     // subLabel,
