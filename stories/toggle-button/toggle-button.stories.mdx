@@ -1,13 +1,21 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Alert } from "src/alert";
 import { ToggleButton } from "src/toggle-button";
 import { Text } from "src/text";
 import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
 import { Container } from "./doc-elements";
 
-<Meta title="Data Input/ToggleButton" component={ToggleButton} />
+<Meta title="Data Input/ToggleButton (deprecated)" component={ToggleButton} />
 
 <Title>ToggleButton</Title>
+<Alert type="warning">
+    <p>
+        This component will be deprecated in <strong>v1.0.0</strong>. Use{" "}
+        <a href="/docs/data-input-toggle--toggle">Toggle</a> instead.
+    </p>
+</Alert>
+<br />
 
 <Secondary>Overview</Secondary>
 

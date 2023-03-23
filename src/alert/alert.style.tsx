@@ -52,9 +52,9 @@ export const Wrapper = styled.div<StyleProps>`
 
 	p {
         ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
-        /* display: inline-block; */
+        margin: 0;
 
-		strong {
+        strong {
             ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
         }
 
