@@ -24,20 +24,6 @@ interface LabelStyleProps extends StyleProps {}
 // =============================================================================
 // STYLING
 // =============================================================================
-
-const getPadding = (styleType: ToggleStyleType) => {
-    switch (styleType) {
-        case "no-border":
-            return css`
-                padding: 0.75rem 1.0625rem; // compensate the 1px border
-            `;
-        default:
-            return css`
-                padding: 0.6875rem 1rem;
-            `;
-    }
-};
-
 export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     display: inline-flex;
@@ -46,7 +32,7 @@ export const Container = styled.div<ContainerStyleProps>`
     border-width: 1px;
     border-style: solid;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-    ${(props) => getPadding(props.$styleType)}
+    padding: 0.6875rem 1rem;
 
     // Content positioning style
     ${(props) => {
@@ -71,7 +57,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     `;
                 } else if (!props.$disabled) {
                     return css`
-                        border: none;
+                        border-color: transparent;
 
                         :hover {
                             background: ${Color.Accent.Light[6]};
@@ -79,7 +65,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     `;
                 } else {
                     return css`
-                        border: none;
+                        border-color: transparent;
                     `;
                 }
             }
