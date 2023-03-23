@@ -28,7 +28,8 @@ interface Props {
     names:
         | ["start-day", "start-month", "start-year"]
         | ["end-day", "end-month", "end-year"];
-    value?: string | undefined;
+    value: string | undefined;
+    confirmedValue: string | undefined;
     variant: VariantStyleProps;
     action: ActionType;
     focusType: FocusType;
@@ -43,6 +44,7 @@ interface Props {
 export const StandAloneInput = ({
     action,
     disabled,
+    confirmedValue,
     onTabBlur,
     onChange,
     onFocus,
@@ -265,15 +267,21 @@ export const StandAloneInput = ({
         const isDayTarget = targetName === names[0];
 
         if (isFullyFormedDate) {
+            const value = `${yearValue}-${monthValue}-${dayValue}`;
+            const isValid = dayjs(value, "YYYY-MM-DD", true).isValid();
+
             const dayTargetValue = isDayTarget ? targetValue : dayValue;
-            const { month, day } = validateDate(
+
+            const { year, month, day } = dateValidation(
                 yearValue,
                 monthValue,
-                dayTargetValue
+                dayTargetValue,
+                isValid
             );
 
             setDayValue(day);
             setMonthValue(month);
+            if (!isValid) setYearValue(year);
         }
     };
 
@@ -346,16 +354,33 @@ export const StandAloneInput = ({
         }
     };
 
-    const validateDate = (year: string, month: string, day: string) => {
-        const clampedMonth = DateHelper.clampMonth(month);
-        const _day = StringHelper.padValue(
-            DateHelper.clampDay(day, clampedMonth, year)
-        );
-        const _month = StringHelper.padValue(clampedMonth);
+    const dateValidation = (
+        _year: string,
+        _month: string,
+        _day: string,
+        isValid: boolean
+    ) => {
+        let year = "",
+            month = "",
+            day = "";
+
+        if (isValid) {
+            const clampedMonth = DateHelper.clampMonth(_month);
+            month = StringHelper.padValue(clampedMonth);
+            day = StringHelper.padValue(
+                DateHelper.clampDay(_day, clampedMonth, _year)
+            );
+        } else if (!isValid && dayjs(confirmedValue).isValid()) {
+            const [yyyy, mm, dd] = confirmedValue.split("-") as any;
+            year = yyyy;
+            month = mm;
+            day = dd;
+        }
 
         return {
-            month: _month,
-            day: _day,
+            year,
+            month,
+            day,
         };
     };
 
@@ -392,21 +417,23 @@ export const StandAloneInput = ({
             returnValue = valueArr.join("-");
             const isValid = dayjs(returnValue, "YYYY-MM-DD", true).isValid();
 
-            // transform invalid date - 35-03-2023 -> 31-03-2023
+            /**
+             * transform invalid date to previous state value
+             */
             if (!isValid) {
-                const { month, day } = validateDate(
+                const date = dateValidation(
                     values.year,
                     values.month,
-                    values.day
+                    values.day,
+                    isValid
                 );
 
-                setDayValue(day);
-                setMonthValue(month);
-
-                returnValue = `${values.year}-${month}-${day}`;
+                returnValue = Object.values(date).join("-");
             }
 
-            return returnValue;
+            const isDateFormat = dayjs(returnValue).isValid();
+
+            return isDateFormat ? returnValue : INVALID_VALUE;
         } else if (valueArr.every((value) => value === "")) {
             return "";
         } else {

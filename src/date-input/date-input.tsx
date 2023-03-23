@@ -512,7 +512,7 @@ export const DateInput = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-    const RenderIndicatedBar = () => {
+    const RenderIndicateBar = () => {
         if (variant === "single" || disabled || readOnly) return;
 
         return <IndicateBar $position={currentElement.type || "none"} />;
@@ -533,6 +533,7 @@ export const DateInput = ({
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
                         value={endDate.input}
+                        confirmedValue={endDate.confirmed}
                         variant={variant}
                         action={endDate.currentType}
                         focusType={currentElement.type}
@@ -564,6 +565,7 @@ export const DateInput = ({
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
                 value={startDate.input}
+                confirmedValue={startDate.confirmed}
                 variant={variant === "range" ? "start" : "single"}
                 action={startDate.currentType}
                 focusType={currentElement.type}
@@ -572,7 +574,7 @@ export const DateInput = ({
                 withButton={withButton}
             />
             {RenderRangeInput()}
-            {RenderIndicatedBar()}
+            {RenderIndicateBar()}
             <Calendar
                 ref={calendarRef}
                 type="input"
