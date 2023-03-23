@@ -41,14 +41,12 @@ export interface FilterPageProps {
     onDone?: (() => void) | undefined;
 }
 
-interface Option {
-    label: string;
-    value: string;
-}
-
-export interface FilterItemCheckboxProps extends FilterItemProps {
-    // TODO: value extractor?
-    options: Option[];
-    value?: string[] | undefined;
-    onChange?: ((value: string[]) => void) | undefined;
+export interface FilterItemCheckboxProps<T> extends FilterItemProps {
+    options: T[];
+    selectedOptions?: T[] | undefined;
+    onSelect?: ((options: T[]) => void) | undefined;
+    /** Function to derive display value from an item. If not set, checks `item.label`. */
+    labelExtractor?: ((item: T) => string) | undefined;
+    /** Function to derive value from an item. If not set, checks `item.value`. */
+    valueExtractor?: ((item: T) => string) | undefined;
 }

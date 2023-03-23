@@ -11,19 +11,19 @@ import {
     StyledToggle,
 } from "./filter-item-checkbox.styles";
 
-export const FilterItemCheckbox = ({
-    value,
+export const FilterItemCheckbox = <T,>({
+    selectedOptions,
     options,
-    onChange,
+    onSelect,
+    labelExtractor,
+    valueExtractor,
     ...filterItemProps
-}: FilterItemCheckboxProps) => {
+}: FilterItemCheckboxProps<T>) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const { mode } = useContext(FilterContext);
-    const [selected, setSelected] = useState<FilterItemCheckboxProps["value"]>(
-        value || []
-    );
+    const [selected, setSelected] = useState<T[]>(selectedOptions || []);
     const [minimisedHeight, setMinimisedHeight] = useState<number>();
     const [lastVisibleElementIndex, setLastVisibleElementIndex] =
         useState<number>(options.length);
@@ -33,17 +33,36 @@ export const FilterItemCheckbox = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleItemClick = (item: string) => () => {
-        const newSelection = !selected.includes(item)
-            ? selected.concat(item)
-            : selected.filter((v) => v !== item);
+    const handleItemClick = (item: T) => () => {
+        const newSelection = [...selected];
+        const selectedIndex = selected.findIndex(
+            (s) => getValue(s) === getValue(item)
+        );
+
+        if (selectedIndex >= 0) {
+            newSelection.splice(selectedIndex, 1);
+        } else {
+            newSelection.push(item);
+        }
         setSelected(newSelection);
-        onChange?.(newSelection);
+        onSelect?.(newSelection);
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const getLabel = (item: T): string => {
+        return labelExtractor
+            ? labelExtractor(item)
+            : (item as any).label ?? item.toString();
+    };
+
+    const getValue = (item: T): string => {
+        return valueExtractor
+            ? valueExtractor(item)
+            : (item as any).value ?? item.toString();
+    };
+
     const setVisibleItemsWhenMinimised = () => {
         const elementBottom = lastVisibleElement.current
             ? lastVisibleElement.current.offsetTop +
@@ -91,10 +110,10 @@ export const FilterItemCheckbox = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (value !== selected) {
-            setSelected(value || []);
+        if (selectedOptions !== selected) {
+            setSelected(selectedOptions || []);
         }
-    }, [value]);
+    }, [selectedOptions]);
 
     useEffect(() => {
         if (mode === "default") {
@@ -129,8 +148,12 @@ export const FilterItemCheckbox = ({
                     aria-label={filterItemProps.title}
                     ref={parentRef}
                 >
-                    {options.map(({ label, value: optionValue }, i) => {
-                        const checked = selected.includes(optionValue);
+                    {options.map((option, i) => {
+                        const optionLabel = getLabel(option);
+                        const optionValue = getValue(option);
+                        const checked = !!selected.find(
+                            (s) => getValue(s) === optionValue
+                        );
 
                         return mode === "default" ? (
                             <Item
@@ -141,12 +164,11 @@ export const FilterItemCheckbox = ({
                             >
                                 <Input
                                     type="checkbox"
-                                    id={optionValue}
                                     checked={checked}
-                                    onChange={handleItemClick(optionValue)}
+                                    onChange={handleItemClick(option)}
                                 />
                                 <Icon type="checkbox" active={checked} />
-                                {label}
+                                {optionLabel}
                             </Item>
                         ) : (
                             <StyledToggle
@@ -157,9 +179,9 @@ export const FilterItemCheckbox = ({
                                     (minimisedHeight &&
                                         i <= lastVisibleElementIndex)
                                 }
-                                onChange={handleItemClick(optionValue)}
+                                onChange={handleItemClick(option)}
                             >
-                                {label}
+                                {optionLabel}
                             </StyledToggle>
                         );
                     })}
