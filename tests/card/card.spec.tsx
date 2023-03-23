@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import { Card } from "../../src";
-import { CardProps } from "../../src/card/types";
 
 // =============================================================================
 // UNIT TESTS
@@ -11,16 +10,20 @@ describe("Card", () => {
     });
 
     it("should render the component", () => {
-        renderComponent();
+        render(<Card>{DEFAULT_TEXT}</Card>);
 
         expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
     });
 
-    it("should be able to render JSX.Element as children", () => {
-        const customText = "custom element";
-        renderComponent({ children: <div>{customText}</div> });
+    it("should be able to render a custom JSX.Element as children", () => {
+        const CUSTOM_TEXT = "custom element";
+        render(
+            <Card>
+                <div>{CUSTOM_TEXT}</div>
+            </Card>
+        );
 
-        expect(screen.getByText(customText)).toBeInTheDocument();
+        expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
     });
 });
 
@@ -28,14 +31,3 @@ describe("Card", () => {
 // CONSTANTS
 // =============================================================================
 const DEFAULT_TEXT = "default text";
-
-// =============================================================================
-// HELPER FUNCTIONS
-// =============================================================================
-
-// =============================================================================
-// RENDER FUNCTIONS
-// =============================================================================
-const renderComponent = (props?: CardProps) => {
-    return render(<Card {...props}>{props?.children || DEFAULT_TEXT}</Card>);
-};
