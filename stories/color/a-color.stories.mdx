@@ -26,17 +26,24 @@ You can use the `Color` component to declare colours within style declarations.
 
 ```tsx
 import { Color } from "@lifesg/react-design-system/color";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Container = styled.div`
     background: ${Color.Primary};
 
-	${props} => {
-		// If you extract props, remember to pass it back
-		return css`
+    // If you extract props, remember to wrap nested interpolations with the css helper
+    ${(props) => {
+        return css`
+            color: ${Color.Secondary};
+        `;
+    }}
+
+    // Otherwise, you have to pass the props down manually (not recommended)
+	${(props) => {
+        return `
 			color: ${Color.Secondary(props)};
 		`;
-	}
+    }}
 `;
 ```
 

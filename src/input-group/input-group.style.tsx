@@ -3,34 +3,33 @@ import { Color } from "../color";
 import { DesignToken } from "../design-token";
 import { Input } from "../input/input";
 import { TextStyleHelper } from "../text";
+import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface AddonStyleProps {
+
+// Need to export since the component could be extended
+export interface AddonStyleProps {
     disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
-    $position?: "left" | "right";
-}
-
-interface MainInputStyleProps {
-    $position?: "left" | "right" | undefined;
+    $position?: InputGroupAddonPosition;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-
 export const Container = styled.div<AddonStyleProps>`
     display: flex;
     position: relative;
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     background: ${Color.Neutral[8]};
-    height: 3rem;
+    height: max-content;
     width: 100%;
+    padding: 0 1rem;
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 
@@ -43,7 +42,7 @@ export const Container = styled.div<AddonStyleProps>`
         if (props.$readOnly) {
             return css`
                 border: none;
-                padding-left: 0rem;
+                padding: 0;
                 background: transparent !important;
 
                 :focus-within {
@@ -76,44 +75,25 @@ export const Container = styled.div<AddonStyleProps>`
     }}
 `;
 
-export const MainInput = styled(Input)<MainInputStyleProps>`
+export const MainInput = styled(Input)`
     // overwrite default styles
-    background: transparent;
-    border: none;
-
-    :focus-within {
-        outline: none;
+    &&& {
+        background: transparent;
         border: none;
-        box-shadow: none;
-    }
+        padding: 0 0 1px 0;
 
-    ${(props) => {
-        switch (props.$position) {
-            case "right":
-                return css`
-                    :not(:only-child) {
-                        padding-right: 0;
-                    }
-                `;
-            case "left":
-            default:
-                return css`
-                    padding: unset;
-                    :not(:only-child) {
-                        padding-left: 0;
-                    }
-                `;
+        :focus-within {
+            outline: none;
+            border: none;
+            box-shadow: none;
         }
-    }}
+    }
 `;
 
 export const AddOnContainer = styled.div<AddonStyleProps>`
     position: relative;
     display: flex;
     align-items: center;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    padding: 0 0.6875rem 0 1rem;
 
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${Color.Neutral[1]};
@@ -128,11 +108,7 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
     }
 
     ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                padding-left: 0rem;
-            `;
-        } else if (props.disabled) {
+        if (props.disabled) {
             return css`
                 color: ${Color.Neutral[4](props)};
                 svg {
@@ -143,4 +119,18 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
             `;
         }
     }}
+
+    ${(props) => {
+        switch (props.$position) {
+            case "right":
+                return css`
+                    margin-left: ${props.$readOnly ? "0.25rem" : "0.75rem"};
+                `;
+            case "left":
+            default:
+                return css`
+                    margin-right: ${props.$readOnly ? "0.25rem" : "0.75rem"};
+                `;
+        }
+    }};
 `;

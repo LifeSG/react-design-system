@@ -8,6 +8,7 @@ import {
     LabelContainer,
     PlaceholderLabel,
     Selector,
+    SelectorReadOnly,
     StyledChevronIcon,
     ValueLabel,
     Wrapper,
@@ -19,10 +20,12 @@ export const InputGroupListAddon = <T, V>({
     addon,
     error,
     onChange,
+    readOnly,
+    className,
+    onBlur,
     ...otherProps
 }: InputGroupProps<T, V>) => {
     const {
-        value,
         placeholder,
         options,
         enableSearch,
@@ -38,10 +41,12 @@ export const InputGroupListAddon = <T, V>({
         "data-selector-testid": selectorTestId,
     } = addon.attributes as ListAddon<T, V>;
 
+    const { position } = addon;
+
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selected, setSelected] = useState<T>(value);
+    const [selected, setSelected] = useState<T>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
     const nodeRef = useRef();
@@ -51,8 +56,8 @@ export const InputGroupListAddon = <T, V>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setSelected(value);
-    }, [value]);
+        setSelected(selectedOption);
+    }, [selectedOption]);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClick);
@@ -99,6 +104,7 @@ export const InputGroupListAddon = <T, V>({
             // outside click
             setShowOptions(false);
             triggerOptionDisplayCallback(false);
+            handleBlur();
         }
     };
 
@@ -131,6 +137,19 @@ export const InputGroupListAddon = <T, V>({
         if (onChange) onChange(event);
     };
 
+    const handleBlur = () => {
+        if (onBlur) onBlur();
+    };
+
+    const handleDismiss = () => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+
+        if (selectorRef) {
+            selectorRef.current.focus();
+        }
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -148,6 +167,8 @@ export const InputGroupListAddon = <T, V>({
                     searchFunction={searchFunction}
                     searchPlaceholder={searchPlaceholder}
                     data-testid="dropdown-list"
+                    onBlur={handleBlur}
+                    onDismiss={handleDismiss}
                 />
             );
         }
@@ -173,33 +194,57 @@ export const InputGroupListAddon = <T, V>({
         </>
     );
 
+    const renderSelector = () => {
+        if (readOnly) {
+            return selected ? (
+                <SelectorReadOnly>
+                    <ValueLabel data-testid="selector-label">
+                        {getDisplayValue()}
+                    </ValueLabel>
+                </SelectorReadOnly>
+            ) : null;
+        } else {
+            return (
+                <Selector
+                    ref={selectorRef}
+                    type="button"
+                    disabled={otherProps.disabled}
+                    data-testid={selectorTestId || "addon-selector"}
+                    onClick={handleAddonSelectorClick}
+                >
+                    {renderSelectorContent()}
+                </Selector>
+            );
+        }
+    };
+
     const renderDisplay = () => (
-        <DisplayContainer $expanded={showOptions}>
-            <Selector
-                ref={selectorRef}
-                type="button"
-                data-testid={selectorTestId || "addon-selector"}
-                onClick={handleAddonSelectorClick}
-            >
-                {renderSelectorContent()}
-            </Selector>
-            <Divider />
+        <DisplayContainer
+            $expanded={showOptions}
+            $readOnly={readOnly}
+            $position={position}
+        >
+            {renderSelector()}
+            <Divider $readOnly={readOnly} $position={position} />
             <MainInput
                 {...otherProps}
+                readOnly={readOnly}
                 error={error}
                 onChange={handleInputChange}
                 data-testid={otherProps["data-testid"] || "input"}
+                onBlur={handleBlur}
             />
         </DisplayContainer>
     );
 
     return (
-        <Wrapper>
+        <Wrapper className={className}>
             <ElementBoundary
                 ref={nodeRef}
                 disabled={otherProps.disabled}
                 error={error && !showOptions}
                 expanded={showOptions}
+                $readOnly={readOnly}
             >
                 {renderDisplay()}
                 {renderOptionList()}

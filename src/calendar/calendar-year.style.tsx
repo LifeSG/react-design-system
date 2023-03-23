@@ -1,0 +1,90 @@
+import styled, { css } from "styled-components";
+import { Color } from "../color";
+import { TextStyleHelper } from "../text/helper";
+import { Text } from "../text/text";
+import { YearVariant } from "./calendar-year";
+import { CalendarType } from "./types";
+
+interface StyleProps {
+    $variant: YearVariant;
+}
+
+interface WrapperStyleProps {
+    $type: CalendarType;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const Wrapper = styled.div<WrapperStyleProps>`
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 4rem);
+    align-content: center;
+
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    gap: 0.5rem 2rem;
+                `;
+            case "input":
+                return css`
+                    gap: 0.5rem 1rem;
+                `;
+        }
+    }}
+`;
+
+export const YearCell = styled.div<StyleProps>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
+        border: 1px solid ${Color.Accent.Light[1]};
+    }
+
+    ${(props) => {
+        switch (props.$variant) {
+            case "current-year":
+                return css`
+                    background: ${Color.Accent.Light[6](props)};
+                `;
+            case "selected-year":
+                return css`
+                    background: ${Color.Accent.Light[5](props)};
+                    border: 1px solid ${Color.Primary(props)};
+                `;
+            case "other-decade":
+            case "default":
+                break;
+        }
+    }};
+`;
+
+export const CellLabel = styled(Text.H5)<StyleProps>`
+    ${(props) => {
+        switch (props.$variant) {
+            case "current-year":
+                return css`
+                    color: ${Color.Neutral[3](props)};
+                `;
+            case "selected-year":
+                return css`
+                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                    color: ${Color.Primary(props)};
+                `;
+            case "other-decade":
+                return css`
+                    color: ${Color.Neutral[4](props)};
+                `;
+            case "default":
+                break;
+        }
+    }}
+`;

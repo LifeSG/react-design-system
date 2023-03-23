@@ -7,6 +7,7 @@ import {
 } from "../shared/dropdown-list/types";
 
 export type InputGroupAddonType = "label" | "list" | "custom";
+export type InputGroupAddonPosition = "left" | "right" | undefined;
 
 export interface CustomAddon {
     children?: JSX.Element | undefined;
@@ -19,7 +20,6 @@ export interface LabelAddon {
 export interface ListAddon<T, V>
     extends DropdownDisplayProps<T, V>,
         DropdownSearchProps<T> {
-    value?: T | undefined;
     placeholder?: string | undefined;
     displayValueExtractor?: ((item: T) => string) | undefined;
     "data-selector-testid"?: string | undefined;
@@ -44,11 +44,12 @@ export interface ListAddon<T, V>
 export interface AddonProps<T, V> {
     type?: InputGroupAddonType | undefined;
     attributes: ListAddon<T, V> | LabelAddon | CustomAddon;
-    position?: "left" | "right" | undefined;
+    position?: InputGroupAddonPosition;
 }
 
 export interface InputGroupProps<T, V> extends InputProps {
     addon?: AddonProps<T, V> | undefined;
+    onBlur?: (() => void) | undefined;
 }
 
 /** To be exposed for Form component inheritance */

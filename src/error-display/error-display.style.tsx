@@ -14,7 +14,7 @@ export const Container = styled.div`
 
 export const Img = styled.img`
     position: relative;
-    width: 26rem;
+    width: 25rem;
     height: auto;
 
     ${MediaQuery.MaxWidth.mobileL} {
@@ -73,5 +73,6 @@ export const ActionButton = styled(Button.Default)`
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: 100%;
+        margin: 2rem auto 0;
     }
 `;

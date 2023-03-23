@@ -27,56 +27,46 @@ import { Form } from "@lifesg/react-design-system/form";
 **Important note**: This component currently does not do phone number value validation
 
 <Canvas>
-    <Story name="Phone Number Input">
+    <Story name="PhoneNumberInput">
         {() => {
             const [value1, setValue1] = useState({
                 number: "",
                 countryCode: "",
             });
-            const [value2, setValue2] = useState({
-                number: "",
-                countryCode: "+60",
-            });
-            const handlClear1 = () => {
-                setValue1((prevState) => {
-                    return { ...prevState, number: "" };
-                });
-            };
-            const handlClear2 = () => {
-                setValue2((prevState) => {
-                    return { ...prevState, number: "" };
-                });
+            const handleClear = () => {
+                setValue1((prevState) => ({ ...prevState, number: "" }));
             };
             return (
                 <StoryContainer>
                     <Container>
                         <Form.PhoneNumberInput
-                            label="This is the default state"
+                            label="This is the default state (allow clear enabled)"
                             placeholder="Enter phone number"
-                            allowClear={true}
+                            allowClear
                             value={value1}
-                            onClear={handlClear1}
+                            onChange={(value) => setValue1(value)}
+                            onClear={handleClear}
                         />
                         <Form.PhoneNumberInput
                             label="This has searchable option"
                             placeholder="Enter phone number"
-                            allowClear={true}
-                            enableSearch={true}
-                            value={value2}
-                            onChange={(value) => setValue2(value)}
-                            onClear={handlClear2}
+                            enableSearch
                         />
                         <Form.PhoneNumberInput
                             label="This is the disabled state"
                             disabled
                             placeholder="Enter phone number"
-                            allowClear={true}
+                        />
+                        <Form.PhoneNumberInput
+                            label="This is the readonly state"
+                            placeholder="Enter phone number"
+                            value={{ number: "91234567", countryCode: "+65" }}
+                            readOnly
                         />
                         <Form.PhoneNumberInput
                             label="This is the error state"
                             errorMessage="Mobile number is required"
                             placeholder="Enter phone number"
-                            allowClear={true}
                         />
                     </Container>
                 </StoryContainer>
@@ -84,6 +74,26 @@ import { Form } from "@lifesg/react-design-system/form";
         }}
     </Story>
 </Canvas>
+
+<Heading3>Fixed country</Heading3>
+
+In the case where you do not wish to allow the user to select from the country options list,
+you can pass the prop `fixedCountry` to restrict input to only that country code.
+
+<Preview>
+    <Story name="Fixed country">
+        <StoryContainer>
+            <Form.PhoneNumberInput
+                label="This has a fixed country code"
+                placeholder="Enter phone number"
+                value={{
+                    countryCode: "+65",
+                }}
+                fixedCountry
+            />
+        </StoryContainer>
+    </Story>
+</Preview>
 
 <Heading3>Using the field as a standalone</Heading3>
 
@@ -100,10 +110,8 @@ import { PhoneNumberInput } from "@lifesg/react-design-system/phone-number-input
                 number: "",
                 countryCode: "65",
             });
-            const handlClear = () => {
-                setValue((prevState) => {
-                    return { ...prevState, number: "" };
-                });
+            const handleClear = () => {
+                setValue((prevState) => ({ ...prevState, number: "" }));
             };
             return (
                 <StoryContainer>
@@ -115,7 +123,7 @@ import { PhoneNumberInput } from "@lifesg/react-design-system/phone-number-input
                             enableSearch={true}
                             value={value}
                             onChange={(value) => setValue(value)}
-                            onClear={handlClear}
+                            onClear={handleClear}
                         />
                     </Container>
                 </StoryContainer>
