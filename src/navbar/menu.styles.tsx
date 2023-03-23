@@ -56,7 +56,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         ${TextStyleHelper.getTextStyle("H5", "bold")}
         width: 100%;
         padding-left: 1.5rem;
-        padding-right: 1rem;
+        padding-right: 1.5rem;
         line-height: 1.125rem;
     }
 `;
@@ -120,5 +120,9 @@ export const MenuItem = styled.li`
 
     ${MediaQuery.MaxWidth.tablet} {
         padding: 1rem 0;
+
+        :first-child {
+            padding-top: 0.25rem;
+        }
     }
 `;

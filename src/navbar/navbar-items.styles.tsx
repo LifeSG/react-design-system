@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
+import { IconButton } from "../icon-button";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -45,10 +46,6 @@ export const LinkItem = styled.li`
     display: flex;
     width: 100%;
 
-    :not(:last-of-type) {
-        margin-right: 1rem;
-    }
-
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
         padding: 0.125rem 0;
@@ -83,6 +80,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
 
 export const LinkLabel = styled.div`
     flex: 1;
+    margin-top: 0.25rem;
 `;
 
 export const LinkIndicator = styled.div`
@@ -108,19 +106,17 @@ export const LinkIconContainer = styled.div`
     padding-left: 1rem;
 `;
 
-export const DownIcon = styled(ChevronDownIcon)`
-    height: 1.25rem;
-    width: 1.25rem;
-
-    :hover {
-        color: ${Color.Accent.Light[1]};
-    }
+export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
+    padding: 0.5rem;
+    transform: rotate(${(props) => (props.$selected ? 0 : 180)}deg);
+    transition: transform 300ms ease-in-out;
+    margin: auto 0.25rem auto 0;
 `;
 
-export const UpIcon = styled(ChevronUpIcon)`
-    height: 1.25rem;
-    width: 1.25rem;
-
+export const ChevronIcon = styled(ChevronUpIcon)`
+    height: 1rem;
+    width: 1rem;
+    color: ${Color.Neutral[3]};
     :hover {
         color: ${Color.Accent.Light[1]};
     }

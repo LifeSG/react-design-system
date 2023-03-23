@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
 import { Menu } from "./menu";
 import {
-    DownIcon,
+    ChevronIcon,
+    ExpandCollapseButton,
     Link,
     LinkIconContainer,
     LinkIndicator,
     LinkItem,
     LinkLabel,
     MobileWrapper,
-    UpIcon,
     Wrapper,
 } from "./navbar-items.styles";
 import { NavItemCommonProps, NavItemProps } from "./types";
@@ -92,7 +92,6 @@ export const NavbarItems = <T,>({
         onItemClick(event, item);
         setShowSubMenu(false);
     };
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -125,7 +124,18 @@ export const NavbarItems = <T,>({
                         {selected && <LinkIndicator />}
                         {mobile && item.subMenu && (
                             <LinkIconContainer>
-                                {expanded ? <UpIcon /> : <DownIcon />}
+                                {/* {expanded ? <UpIcon /> : <DownIcon />} */}
+                                <ExpandCollapseButton
+                                    data-testid={`${testId}-expand-collapse-button`}
+                                    $selected={expanded}
+                                    focusHighlight={false}
+                                    focusOutline="browser"
+                                    aria-label={
+                                        expanded ? "Collapse" : "Expand"
+                                    }
+                                >
+                                    <ChevronIcon />
+                                </ExpandCollapseButton>
                             </LinkIconContainer>
                         )}
                     </Link>
