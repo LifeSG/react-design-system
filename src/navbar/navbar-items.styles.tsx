@@ -21,7 +21,6 @@ export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
     position: relative;
-    max-height: 20rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
@@ -35,8 +34,7 @@ export const MobileWrapper = styled.ul`
     ${MediaQuery.MaxWidth.tablet} {
         display: flex;
         flex-direction: column;
-        overflow-y: hidden;
-        overflow-x: hidden;
+        overflow: hidden;
     }
 `;
 
@@ -53,7 +51,7 @@ export const LinkItem = styled.li`
 
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
-        padding: 0.125rem 0.25rem;
+        padding: 0.125rem 0;
     }
 `;
 

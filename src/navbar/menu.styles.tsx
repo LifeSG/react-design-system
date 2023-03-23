@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
-import { DesignToken } from "src/design-token";
+import { DesignToken } from "../design-token";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -10,20 +10,6 @@ import { DesignToken } from "src/design-token";
 interface StyleProps {
     $selected: boolean;
 }
-
-// =============================================================================
-// WRAPPER
-// =============================================================================
-
-export const Wrapper = styled.ul`
-    display: flex;
-    list-style: none;
-    position: relative;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: none;
-    }
-`;
 
 export const MobileWrapper = styled.ul`
     display: none;
@@ -33,7 +19,6 @@ export const MobileWrapper = styled.ul`
         border-left: 0.25rem solid ${Color.Primary};
         display: flex;
         flex-direction: column;
-        padding-bottom: 1rem;
     }
 `;
 
@@ -42,31 +27,26 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 
 export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
-    ${TextStyleHelper.getTextStyle("H6", 400)};
+    ${TextStyleHelper.getTextStyle("H6", "regular")};
     width: 100%;
     display: flex;
     position: relative;
-    align-items: left;
+    align-items: flex-start;
     text-align: left;
     color: ${Color.Neutral[1]};
 
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding: 1px 1rem;
 
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* start showing ellipsis when 2rd line is reached */
-    white-space: pre-wrap; /* let the text wrap preserving spaces */
-
-    /* identical to box height, or 186% */
+    -webkit-line-clamp: 2;
+    white-space: pre-wrap;
     letter-spacing: 0.0075rem;
 
     :active,
     :focus {
-        color: ${Color.Primary} !important;
+        color: ${Color.Primary};
     }
     :hover {
         color: ${Color.Accent.Light[1]};
@@ -77,7 +57,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         width: 100%;
         padding-left: 1.5rem;
         padding-right: 1rem;
-        line-height: 1.125rem !important;
+        line-height: 1.125rem;
     }
 `;
 
@@ -99,17 +79,22 @@ export const LinkIndicator = styled.div`
         background-color: ${Color.Accent.Light[1]};
     }
 `;
+// =============================================================================
+// WRAPPER
+// =============================================================================
 
-export const MenuBar = styled.ul`
+export const Wrapper = styled.ul`
     width: 100%;
     overflow: auto;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     margin-top: 0;
     left: 0;
     top: 102%;
     min-width: 15.625rem;
     position: absolute;
-    overflow-x: hidden;
+    overflow: hidden;
+    max-height: 20rem;
 
     background: ${Color.Neutral[8]};
     border-radius: 0 0 0.5rem 0.5rem;
@@ -122,41 +107,18 @@ export const MenuItem = styled.li`
     width: 100%;
     position: relative;
     display: flex;
-    align-items: left;
-    margin-left: 0;
-    margin-right: 0;
+    align-items: flex-start;
+    padding: 0.5rem 0;
 
     :first-child {
         padding-top: 1rem;
-        padding-bottom: 0.5rem;
-    }
-
-    :not(:first-of-type) {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
     }
 
     :last-child {
-        padding-top: 0.5rem;
         padding-bottom: 1rem;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 0;
-
-        :first-child {
-            padding-top: 1rem;
-            padding-bottom: 0;
-        }
-
-        :not(:first-of-type) {
-            padding-top: 1.25rem;
-            padding-bottom: 0;
-        }
-
-        :last-child {
-            padding-top: 1.25rem;
-            padding-bottom: 0;
-        }
+        padding: 1rem 0;
     }
 `;

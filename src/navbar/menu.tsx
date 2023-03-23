@@ -3,9 +3,9 @@ import { TextWeight } from "../text";
 import {
     Link,
     LinkIndicator,
-    MenuBar,
     MenuItem,
     MobileWrapper,
+    Wrapper,
 } from "./menu.styles";
 import { NavItemCommonProps } from "./types";
 
@@ -72,12 +72,8 @@ export const Menu = <T,>({
     };
 
     if (items && items.length > 0) {
-        const ContentWrapper = mobile ? MobileWrapper : MenuBar;
-        return (
-            <>
-                <ContentWrapper>{renderItems(mobile)}</ContentWrapper>
-            </>
-        );
+        const ContentWrapper = mobile ? MobileWrapper : Wrapper;
+        return <ContentWrapper>{renderItems(mobile)}</ContentWrapper>;
     }
 
     return <></>;
