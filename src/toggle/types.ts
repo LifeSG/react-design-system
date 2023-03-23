@@ -18,7 +18,7 @@ export interface ToggleProps
     /** Indicates if the element is checked */
     checked?: boolean | undefined;
     /** The style type of the Toggle. Values: "default" | "no-border" */
-    styleType?: ToggleStyleType;
+    styleType?: ToggleStyleType | undefined;
     /** The Toggle label */
     children: string;
     /** The description label displayed below the main label */
