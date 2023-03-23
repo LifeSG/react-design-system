@@ -17,19 +17,31 @@ describe("BoxContainer", () => {
     });
 
     it("should render the component", () => {
-        renderComponent();
+        render(
+            <BoxContainer title={DEFAULT_TITLE}>
+                <p>{DEFAULT_TEXT}</p>
+            </BoxContainer>
+        );
 
         expect(screen.getByText(DEFAULT_TITLE)).toBeInTheDocument();
     });
 
     it("should not render the expand/collapse button if disabled", () => {
-        renderComponent({ collapsible: false });
+        render(
+            <BoxContainer title={DEFAULT_TITLE} collapsible={false}>
+                <p>{DEFAULT_TEXT}</p>
+            </BoxContainer>
+        );
 
         expect(getExpandButton(true)).not.toBeInTheDocument();
     });
 
     it("should not be expanded if specified", () => {
-        renderComponent({ expanded: false });
+        render(
+            <BoxContainer title={DEFAULT_TITLE} expanded={false}>
+                <p>{DEFAULT_TEXT}</p>
+            </BoxContainer>
+        );
 
         /**
          * NOTE: Text is wrapped within two nested divs, hence requires
@@ -42,7 +54,7 @@ describe("BoxContainer", () => {
         });
     });
 
-    describe("displayStates", () => {
+    describe("Display state rendering", () => {
         it.each`
             state        | color
             ${"default"} | ${"no"}
@@ -52,7 +64,12 @@ describe("BoxContainer", () => {
             "should render $state state with $color color icon",
             ({ state, color }) => {
                 const iconTestId = `${state}-icon`;
-                renderComponent({ displayState: state });
+
+                render(
+                    <BoxContainer title={DEFAULT_TITLE} displayState={state}>
+                        <p>{DEFAULT_TEXT}</p>
+                    </BoxContainer>
+                );
 
                 if (color === "no") {
                     expect(
@@ -69,9 +86,15 @@ describe("BoxContainer", () => {
 
     it("should render a custom call to action component if specified", () => {
         const buttonLabel = "custom button";
-        renderComponent({
-            callToActionComponent: <button>{buttonLabel}</button>,
-        });
+
+        render(
+            <BoxContainer
+                title={DEFAULT_TITLE}
+                callToActionComponent={<button>{buttonLabel}</button>}
+            >
+                <p>{DEFAULT_TEXT}</p>
+            </BoxContainer>
+        );
 
         expect(
             screen.getByRole("button", { name: buttonLabel })
@@ -93,15 +116,4 @@ const getExpandButton = (isQuery?: boolean) => {
         return screen.queryByRole("button");
     }
     return screen.getByRole("button");
-};
-
-// =============================================================================
-// RENDER FUNCTIONS
-// =============================================================================
-const renderComponent = (props?: Partial<BoxContainerProps>) => {
-    return render(
-        <BoxContainer title={DEFAULT_TITLE} {...props}>
-            {props?.children || <p>{DEFAULT_TEXT}</p>}
-        </BoxContainer>
-    );
 };
