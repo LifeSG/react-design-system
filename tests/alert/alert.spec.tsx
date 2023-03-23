@@ -11,7 +11,7 @@ describe("Alert", () => {
     });
 
     it("should render the component", () => {
-        renderComponent();
+        render(<Alert type="success">{DEFAULT_TEXT}</Alert>);
 
         expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
     });
@@ -25,7 +25,7 @@ describe("Alert", () => {
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {
-                renderComponent({ type });
+                render(<Alert type={type}>{DEFAULT_TEXT}</Alert>);
 
                 expect(screen.getByText(DEFAULT_TEXT)).toHaveStyle({
                     backgroundColor,
@@ -37,22 +37,35 @@ describe("Alert", () => {
 
     describe("actionLink", () => {
         it("should render if the prop is provided", () => {
-            renderComponent({ actionLink: { href: "www.google.com" } });
+            render(
+                <Alert type="success" actionLink={{ href: "www.google.com" }}>
+                    {DEFAULT_TEXT}
+                </Alert>
+            );
 
             expect(getActionLink()).toBeInTheDocument();
         });
 
         it("should render custom children if the prop is specified", () => {
             const customText = "custom text";
-            renderComponent({
-                actionLink: { href: "www.google.com", children: customText },
-            });
+
+            render(
+                <Alert
+                    type="success"
+                    actionLink={{
+                        href: "www.google.com",
+                        children: customText,
+                    }}
+                >
+                    {DEFAULT_TEXT}
+                </Alert>
+            );
 
             expect(getActionLink(false, customText)).toBeInTheDocument();
         });
 
         it("should not render if the prop is not provided", () => {
-            renderComponent();
+            render(<Alert type="success" />);
 
             expect(getActionLink(true)).not.toBeInTheDocument();
         });
@@ -60,7 +73,8 @@ describe("Alert", () => {
 
     it("should render custom display if required", () => {
         const CUSTOM_TEXT = "this is a custom component";
-        renderComponent({ children: <div>{CUSTOM_TEXT}</div> });
+
+        render(<Alert type="success">{CUSTOM_TEXT}</Alert>);
 
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
     });
@@ -79,15 +93,4 @@ const getActionLink = (isQuery = false, children?: string) => {
         return screen.queryByRole("link", children && { name: children });
     }
     return screen.getByRole("link", children && { name: children });
-};
-
-// =============================================================================
-// RENDER FUNCTIONS
-// =============================================================================
-const renderComponent = (props?: Partial<AlertProps>) => {
-    return render(
-        <Alert type="success" {...props}>
-            {props?.children || DEFAULT_TEXT}
-        </Alert>
-    );
 };
