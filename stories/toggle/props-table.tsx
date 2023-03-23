@@ -61,6 +61,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "name",
+                description: "The name of the element",
+                propTypes: ["string"],
+            },
+            {
                 name: "id",
                 description: "The unique identifier of the element",
                 propTypes: ["string"],

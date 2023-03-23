@@ -27,6 +27,7 @@ export interface ToggleProps
     /** Specifies if the error display should be present */
     error?: boolean | undefined;
     className?: string | undefined;
+    name?: string | undefined;
     id?: string | undefined;
     "data-testid": string | undefined;
     onChange?:

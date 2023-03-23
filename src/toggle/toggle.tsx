@@ -18,6 +18,7 @@ export const Toggle = ({
     // subLabel,
     disabled,
     error,
+    name,
     id,
     className,
     "data-testid": testId,
@@ -123,7 +124,6 @@ export const Toggle = ({
             $selected={selected}
             $disabled={disabled}
             role={type === "checkbox" ? "checkbox" : "radio"}
-            aria-checked={selected}
             className={className}
             $styleType={styleType}
             $error={error}
@@ -135,6 +135,7 @@ export const Toggle = ({
             {indicator && renderIndicator()}
             <Input
                 ref={inputRef}
+                name={name}
                 type={type === "checkbox" ? "checkbox" : "radio"}
                 data-testid="toggle-input"
                 disabled={disabled}
