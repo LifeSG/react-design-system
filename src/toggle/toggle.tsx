@@ -121,7 +121,7 @@ export const Toggle = ({
     return (
         <Container
             $selected={selected}
-            disabled={disabled}
+            $disabled={disabled}
             role={type === "checkbox" ? "checkbox" : "radio"}
             aria-checked={selected}
             className={className}
@@ -145,7 +145,7 @@ export const Toggle = ({
                 <Label
                     $selected={selected}
                     $indicator={indicator}
-                    disabled={disabled}
+                    $disabled={disabled}
                     data-testid="toggle-label"
                 >
                     {children}

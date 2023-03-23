@@ -9,7 +9,7 @@ import { ToggleStyleType } from "./types";
 // =============================================================================
 interface StyleProps {
     $selected?: boolean;
-    disabled?: boolean;
+    $disabled?: boolean;
     $indicator?: boolean;
 }
 
@@ -45,7 +45,7 @@ export const Container = styled.div<ContainerStyleProps>`
     border-radius: 4px;
     border-width: 1px;
     border-style: solid;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     ${(props) => getPadding(props.$styleType)}
 
     // Content positioning style
@@ -69,7 +69,7 @@ export const Container = styled.div<ContainerStyleProps>`
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
                         }
                     `;
-                } else if (!props.disabled) {
+                } else if (!props.$disabled) {
                     return css`
                         border: none;
 
@@ -85,12 +85,12 @@ export const Container = styled.div<ContainerStyleProps>`
             }
 
             default: {
-                if (props.disabled && !props.$selected) {
+                if (props.$disabled && !props.$selected) {
                     return css`
                         background: ${Color.Neutral[6]};
                         border-color: ${Color.Neutral[5]};
                     `;
-                } else if (props.disabled && props.$selected) {
+                } else if (props.$disabled && props.$selected) {
                     return css`
                         background: ${Color.Neutral[6]};
                         border-color: ${Color.Neutral[4]};
@@ -162,7 +162,7 @@ export const Label = styled.span<LabelStyleProps>`
     color: ${Color.Neutral[1]};
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$disabled) {
             return css`
                 color: ${Color.Neutral[3](props)};
             `;
