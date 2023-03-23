@@ -41,12 +41,9 @@ export const FilterItem = ({
     const itemAnimationStyles = useSpring({
         height: collapsed ? 0 : itemResizeDetector.height,
     });
-    const contentAnimationStyles = useSpring({
-        height: minimised
-            ? minimisedHeight ??
-              Math.min(contentResizeDetector.height * 0.5, 216)
-            : contentResizeDetector.height,
-    });
+    const contentHeight = minimised
+        ? minimisedHeight ?? Math.min(contentResizeDetector.height * 0.5, 216)
+        : contentResizeDetector.height;
 
     // =============================================================================
     // RENDER
@@ -81,7 +78,7 @@ export const FilterItem = ({
             <Expandable style={isMobile ? undefined : itemAnimationStyles}>
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>
-                        <Expandable style={contentAnimationStyles}>
+                        <Expandable $height={contentHeight}>
                             <div ref={contentResizeDetector.ref}>
                                 <div data-id="content-container">
                                     {typeof children === "function"

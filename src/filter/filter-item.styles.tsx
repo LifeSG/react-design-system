@@ -89,8 +89,9 @@ export const FilterItemTitle = styled(Text.H4)`
 // CONTENT STYLES
 // -----------------------------------------------------------------------------
 
-export const Expandable = styled(animated.div)`
+export const Expandable = styled(animated.div)<{ $height?: number }>`
     overflow: hidden;
+    ${(props) => props.$height && `height: ${props.$height}px;`}
 `;
 
 export const FilterItemBody = styled.div`
