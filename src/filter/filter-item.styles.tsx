@@ -105,4 +105,10 @@ export const FilterItemMinimiseButton = styled(Button.Small)`
     height: fit-content;
     padding: 0;
     margin: 1rem 0 0 0;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        span {
+            ${TextStyleHelper.getTextStyle("H6", "semibold")}
+        }
+    }
 `;

@@ -83,9 +83,11 @@ export const FilterItem = ({
                     <FilterItemBody {...otherProps}>
                         <Expandable style={contentAnimationStyles}>
                             <div ref={contentResizeDetector.ref}>
-                                {typeof children === "function"
-                                    ? children(mode, { minimised })
-                                    : children}
+                                <div data-id="content-container">
+                                    {typeof children === "function"
+                                        ? children(mode, { minimised })
+                                        : children}
+                                </div>
                             </div>
                         </Expandable>
                         {minimisable && (

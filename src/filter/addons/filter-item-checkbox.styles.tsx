@@ -6,15 +6,19 @@ import { ToggleIcon } from "../../shared/toggle-icon/toggle-icon";
 import { FilterItem } from "../filter-item";
 
 export const StyledFilterItem = styled(FilterItem)`
-    padding: 0.5rem;
+    padding: 0 0 1rem;
+
+    [data-id="content-container"] {
+        position: relative; // to get the item position relative to this parent
+        padding: 0.5rem 0.5rem 0;
+    }
 
     [data-id="minimise-button"] {
-        margin: 0.5rem;
+        margin: 0.5rem 1.25rem 0;
     }
 `;
 
 export const Group = styled.div`
-    position: relative; // to get the item position relative to this parent
     display: flex;
     flex-direction: column;
 
@@ -26,7 +30,7 @@ export const Group = styled.div`
 
 export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     ${(props) => !props.$visible && "display: none;"}
 
     position: relative;
@@ -40,7 +44,6 @@ export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
         props.$selected &&
         css`
             color: ${Color.Primary};
-            ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
         `}
 `;
 
@@ -51,6 +54,7 @@ export const Input = styled.input`
 export const Icon = styled(ToggleIcon)`
     height: 1.5rem;
     width: 1.5rem;
+    flex-shrink: 0;
 
     ${Input}:focus-visible + & {
         outline: 2px solid ${Color.Primary};
