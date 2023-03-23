@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { Toggle } from "../../toggle";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import { FilterContext } from "../filter-context";
 import { FilterItemCheckboxProps } from "../types";
 import {
@@ -31,23 +31,6 @@ export const FilterItemCheckbox = ({
     const lastVisibleElement = useRef<HTMLLabelElement>();
 
     // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        if (value !== selected) {
-            setSelected(value || []);
-        }
-    }, [value]);
-
-    useEffect(() => {
-        if (mode === "default") {
-            setVisibleItemsWhenMinimised();
-        } else {
-            setVisibleMobileItemsWhenMinimised();
-        }
-    }, [options, mode]);
-
-    // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleItemClick = (item: string) => () => {
@@ -70,7 +53,7 @@ export const FilterItemCheckbox = ({
         setMinimisedHeight(elementBottom);
     };
 
-    const setVisibleMobileItemsWhenMinimised = () => {
+    const setVisibleMobileItemsWhenMinimised = useCallback(() => {
         if (!parentRef.current) {
             setMinimisedHeight(undefined);
             return;
@@ -102,7 +85,33 @@ export const FilterItemCheckbox = ({
         } else {
             setMinimisedHeight(undefined);
         }
-    };
+    }, []);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        if (value !== selected) {
+            setSelected(value || []);
+        }
+    }, [value]);
+
+    useEffect(() => {
+        if (mode === "default") {
+            setVisibleItemsWhenMinimised();
+        } else {
+            setVisibleMobileItemsWhenMinimised();
+        }
+    }, [options]);
+
+    useResizeDetector({
+        handleWidth: mode === "mobile",
+        handleHeight: false,
+        skipOnMount: true,
+        refreshMode: "throttle",
+        targetRef: parentRef,
+        onResize: setVisibleMobileItemsWhenMinimised,
+    });
 
     // =============================================================================
     // RENDER FUNCTIONS
