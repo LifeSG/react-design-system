@@ -132,7 +132,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Label = styled.span<LabelStyleProps>`
+export const Label = styled.label<LabelStyleProps>`
     ${(props) => {
         if (props.$selected && !props.$indicator) {
             return css`
