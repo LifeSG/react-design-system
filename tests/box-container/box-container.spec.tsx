@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BoxContainer, BoxContainerProps } from "../../src";
+import { BoxContainer } from "../../src";
 import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
 
 // =============================================================================

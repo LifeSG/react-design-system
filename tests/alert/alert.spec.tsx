@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Alert, AlertProps } from "../../src";
+import { Alert } from "../../src";
 import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
 
 // =============================================================================
