@@ -6,6 +6,21 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            HTMLDivElement
+                        </a>
+                    </>
+                ),
+            },
+            {
                 name: "type",
                 mandatory: true,
                 description: (
@@ -13,8 +28,8 @@ const DATA: ApiTableSectionProps[] = [
                         Type of <code>Toast</code>
                     </>
                 ),
-                propTypes: [`success`, `warning`, `error`, `info`],
-                defaultValue: `success`,
+                propTypes: [`"success"`, `"warning"`, `"error"`, `"info"`],
+                defaultValue: `"success"`,
             },
             {
                 name: "title",
@@ -24,24 +39,25 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: [`string`],
-                defaultValue: ``,
+                defaultValue: "",
             },
             {
-                name: "children",
+                name: "description",
                 description: (
                     <>
-                        {" "}
                         The content of the <code>Toast</code>
                     </>
                 ),
                 propTypes: [`string`],
                 defaultValue: "",
+                mandatory: true,
             },
             {
-                name: "handleDismiss",
+                name: "autoDismiss",
                 description: (
                     <>
-                        Dismiss when <code>Toast</code> is shown
+                        An optional duration the <code>toast</code> should be
+                        closed
                     </>
                 ),
                 propTypes: ["boolean"],

@@ -106,7 +106,6 @@
         ]
     },
     "dependencies": {
-        "@lifesg/react-icons": "^1.2.0",
-        "react-icons": "^4.7.1"
+        "@lifesg/react-icons": "^1.2.0"
     }
 }

@@ -1,32 +1,44 @@
-import React, { useState } from "react";
-import { NotificationToastProps } from "./types";
-import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
-import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
+import React, { useEffect, useState } from "react";
+import { ToastProps } from "./types";
+import { animated, easings, useSpring } from "react-spring";
+import { useMediaQuery } from "react-responsive";
+import { MediaWidths } from "../spec/media-spec";
+import { Text } from "../text";
+import {
+    ExclamationCircleFillIcon,
+    ExclamationTriangleFillIcon,
+    ICircleFillIcon,
+    TickCircleFillIcon,
+} from "@lifesg/react-icons";
 import {
     CloseIcon,
-    Container,
     Description,
+    DismissButton,
     IconContainer,
-    StyledIconButton,
     TextContainer,
     Title,
     Wrapper,
 } from "./toast.styles";
 
-export const Notification = ({
+export const Toast: React.FC = ({
     type = "success",
     title,
-    children,
-}: NotificationToastProps): JSX.Element => {
-    const [isVisible, setVisible] = useState<boolean>(true);
+    description,
+    autoDismiss,
+    ...otherProps
+}: ToastProps): JSX.Element => {
+    // =============================================================================
+    // CONST, STATE
+    // =============================================================================
+    const [isVisible, setVisible] = useState<boolean>(false);
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
 
-    const handleDismiss = () => {
-        setVisible(false);
-    };
-
-    const showIcon = () => {
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+    const renderIcon = () => {
         switch (type) {
             case "success":
                 return <TickCircleFillIcon />;
@@ -41,23 +53,79 @@ export const Notification = ({
         }
     };
 
-    if (!isVisible) return null;
+    const transitions = useSpring({
+        transform: isVisible
+            ? isMobile
+                ? `translateY(0%)`
+                : `translateX(0%)`
+            : isMobile
+            ? `translateY(-1500%)`
+            : `translateX(150%)`,
+        config: {
+            easing: easings.easeInOutQuart,
+            duration: 1000,
+        },
+    });
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        setVisible(true);
+    }, []);
+
+    useEffect(() => {
+        if (!autoDismiss) return;
+
+        let timer = 4;
+
+        const interval = setInterval(() => {
+            timer--;
+            if (timer === 0) {
+                clearInterval(interval);
+                setVisible(false);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [autoDismiss]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleDismiss = () => {
+        setVisible(false);
+    };
 
     return (
-        <Wrapper $type={type}>
-            <Container>
-                <IconContainer>{showIcon()}</IconContainer>
+        <animated.div>
+            <Wrapper
+                style={transitions}
+                $type={type}
+                $autoDismiss={autoDismiss}
+                {...otherProps}
+            >
+                <IconContainer>{renderIcon()}</IconContainer>
                 <TextContainer>
-                    {title && <Title $type={type}>{title}</Title>}
-
-                    {children && (
-                        <Description $type={type}>{children}</Description>
+                    {title && (
+                        <Title $type={type} weight={"semibold"}>
+                            {title}
+                        </Title>
+                    )}
+                    {description && (
+                        <Description $type={type}>
+                            {!title ? (
+                                <Text.Body>{description}</Text.Body>
+                            ) : (
+                                <Text.BodySmall>{description}</Text.BodySmall>
+                            )}
+                        </Description>
                     )}
                 </TextContainer>
-                <StyledIconButton $type={type} onClick={handleDismiss}>
+                <DismissButton $type={type} onClick={handleDismiss}>
                     <CloseIcon />
-                </StyledIconButton>
-            </Container>
-        </Wrapper>
+                </DismissButton>
+            </Wrapper>
+        </animated.div>
     );
 };

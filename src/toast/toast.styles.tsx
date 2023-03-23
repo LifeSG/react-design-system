@@ -1,159 +1,114 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { NotificationType } from "./types";
+import { ToastType } from "./types";
 import { IconButton } from "../icon-button";
-import { TextStyleHelper } from "../text";
 import { Text } from "../text";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { ValidationElementAttributes } from "src/color";
+import { PropertiesToType } from "src/util/utility-types";
+import { animated } from "react-spring";
 
+//=============================================================================
+// STYLE INTERFACE
+//=============================================================================
 interface StyleProps {
-    $type: NotificationType;
+    $type: ToastType;
+}
+interface StylePropsWrapper {
+    $type: ToastType;
+    $autoDismiss: boolean;
 }
 
-export const Wrapper = styled.div<StyleProps>`
-    width: 100%;
-    padding: 16px;
-    border-radius: 8px;
+const getValidationColorAttributes = (
+    props: any
+): PropertiesToType<ValidationElementAttributes, (props) => string> => {
+    switch (props.$type) {
+        case "success":
+            return Color.Validation.Green;
+        case "warning":
+            return Color.Validation.Orange;
+        case "error":
+            return Color.Validation.Red;
+        case "info":
+            return Color.Validation.Blue;
+        default:
+            return;
+    }
+};
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const Wrapper = styled(animated.div)<StylePropsWrapper>`
+    display: flex;
+    position: relative;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    line-height: 0;
+    z-index: 10;
 
     ${(props) => {
-        switch (props.$type) {
-            case "success":
-                return `
-                    background: ${Color.Validation.Green.Background(props)};
-                    border: 1pt solid ${Color.Validation.Green.Border(props)};
-                    color: ${Color.Validation.Green.Text(props)};
-                    svg {
-                        font-size: 24px !important;
-                        color: ${Color.Validation.Green.Icon(props)}
-                    }
-                `;
-            case "warning":
-                return `
-                    background: ${Color.Validation.Orange.Background(props)};
-                    border: 1pt solid ${Color.Validation.Orange.Border(props)};
-                    color: ${Color.Validation.Orange.Text(props)};
-                    svg {
-                        font-size: 24px !important;
-                        color: ${Color.Validation.Orange.Icon(props)}
-                    }
-                `;
-            case "error":
-                return `
-                background: ${Color.Validation.Red.Background(props)};
-                border: 1pt solid ${Color.Validation.Red.Border(props)};
-                color: ${Color.Validation.Red.Text(props)};
-                svg {
-                    font-size: 24px !important;
-                    color: ${Color.Validation.Red.Icon(props)}
-                }
-            `;
-            case "info":
-                return `
-                background: ${Color.Validation.Blue.Background(props)};
-                border: 1pt solid ${Color.Validation.Blue.Border(props)};
-                color: ${Color.Validation.Blue.Text(props)};
-                svg {
-                    font-size: 24px !important;
-                    color: ${Color.Validation.Blue.Icon(props)}
-                }
-            `;
-            default:
-                return `
-                    background: ${Color.Validation.Green.Background(props)};
-                    border: 1pt solid ${Color.Validation.Green.Border(props)};
-                    color: ${Color.Validation.Green.Text(props)};
-                    svg {
-                        font-size: 24px !important;
-                        color: ${Color.Validation.Green.Icon(props)}
-                    }
-                `;
-        }
-    }}
-`;
-
-export const Container = styled.div`
-    display: flex;
+        return css`
+            background: ${getValidationColorAttributes(props)["Background"]};
+            border: 1px solid ${getValidationColorAttributes(props)["Border"]};
+            color: ${getValidationColorAttributes(props)["Text"]};
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
+                color: ${getValidationColorAttributes(props)["Icon"]};
+            }
+        `;
+    }};
 `;
 
 export const IconContainer = styled.div`
-    max-width: 48px;
+    max-width: 3rem;
 `;
 
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0px 8px;
+    padding: 0 2rem 0 0.5rem;
     flex-grow: 2;
 `;
 
 export const Title = styled(Text.H4)<StyleProps>`
     display: flex;
 
-    ${TextStyleHelper.getTextStyle("Body", "semibold")};
     ${(props) => {
-        switch (props.$type) {
-            case "success":
-                return `
-                color: ${Color.Validation.Green.Text(props)};
-                `;
-            case "warning":
-                return `
-                color: ${Color.Validation.Orange.Text(props)};
-                `;
-            case "error":
-                return `
-                color: ${Color.Validation.Red.Text(props)};
-                `;
-            case "info":
-                return `
-                color: ${Color.Validation.Blue.Text(props)};
-                `;
-            default:
-                return `
-                color: ${Color.Validation.Green.Text(props)};
-                `;
-        }
+        return css`
+            color: ${getValidationColorAttributes(props)["Text"]};
+        `;
     }}
 `;
 
-export const Description = styled(Text.Body)<StyleProps>`
+export const Description = styled.div<StyleProps>`
     display: flex;
+
+    ${(props) => {
+        return css`
+            p {
+                color: ${getValidationColorAttributes(props)["Text"]};
+            }
+        `;
+    }}
 `;
 
 export const CloseIcon = styled(CrossIcon)`
-    height: 18px;
-    width: 18px;
-    margin-top: 8px;
+    margin-top: 0.2rem;
 `;
 
-export const StyledIconButton = styled(IconButton)<StyleProps>`
+export const DismissButton = styled(IconButton)<StyleProps>`
     padding: 0;
-    height: 20px;
-    width: 20px;
+    height: 1.5rem;
+    width: 1.5rem;
+    cursor: pointer;
 
     ${(props) => {
-        let iconColor: string;
-        switch (props.$type) {
-            case "success":
-                iconColor = Color.Validation.Green.Text(props);
-                break;
-            case "warning":
-                iconColor = Color.Validation.Orange.Text(props);
-                break;
-            case "error":
-                iconColor = Color.Validation.Red.Text(props);
-                break;
-            case "info":
-                iconColor = Color.Validation.Blue.Text(props);
-                break;
-            default:
-                iconColor = Color.Validation.Green.Text(props);
-                break;
-        }
-        return `
-
-        svg {
-            color: ${iconColor};
-        }`;
-    }}
+        return css`
+            svg {
+                color: ${getValidationColorAttributes(props)["Text"]};
+            }
+        `;
+    }};
 `;

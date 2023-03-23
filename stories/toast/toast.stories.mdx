@@ -1,149 +1,114 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
-import { Notification } from "src/toast";
+import { useState } from "react";
+import { Preview, Story } from "@storybook/addon-docs";
+import { Toast } from "src/toast";
 import { Text } from "src/text";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Toast" component={Notification} />
+<Meta title="Modules/Toast" component={Toast} />
 
-<Title>Notification Toast</Title>
+<Title>Toast</Title>
 
 <Secondary>Overview</Secondary>
 
-<Text.BodySmall>
-    <code>Notification toast</code> are used to inform users of updates or
-    changes to system status. Communicating with users and providing immediate
-    feedback are important for building trust. While notifications are an
-    effective method of communicating with users, they are disruptive and should
-    be used sparingly.
-</Text.BodySmall>
+<code>Toast</code> are used to inform users of updates or changes to system status.
+Communicating with users and providing immediate feedback are important for building
+trust. While notifications are an effective method of communicating with users, they
+are disruptive and should be used sparingly.
 
 ```tsx
 import { Toast } from "@lifesg/react-design-system/toast";
 ```
 
-<Heading3>Light theme notification toast</Heading3>
+<!--Non Auto Dismiss-->
 
-<Text.BodySmall>
-    Specifying the <code>light.theme</code> interfaces will have been optimized
-    for the standard light mode.
-</Text.BodySmall>
+Toast should appear one at a time and they are dismissible and animate into
+a screen by displaying near the content that returns its feedback.
+
+There is a four type of status:-
+
+<code>Successful - Green</code>
+<br />
+<code>Warning - Orange</code>
+<br />
+<code>Error - Red</code>
+<br />
+<code>Info - Blue</code>
+<br />
+
+non-auto dismiss if the context of the banner is longer or required user’s
+action.
 
 <Preview>
-    <Story name="Notification toast">
-        <Text.H4>Success notification toast in context</Text.H4>
-        <Text.BodySmall>
-            Use success toast to inform users that they action they input or
-            requested has been <code>successful</code>.
-        </Text.BodySmall>
+    <Story name="Toast">
+        <Toast
+            type="success"
+            description="Template successfully updated."
+        ></Toast>
         <br />
-        <Notification type="success">
-            <Text.Body
-                style={{
-                    color: "#097123",
-                }}
-            >
-                Template successfully updated.
-            </Text.Body>
-        </Notification>
-        <br />
-        <Notification type="success" title="Updated">
-            <Text.BodySmall
-                style={{
-                    color: "#097123",
-                }}
-            >
-                Template successfully updated.
-            </Text.BodySmall>
-        </Notification>
+        <Toast
+            type="success"
+            title="Template successfully updated"
+            description="Your bookings has been updated and received by the service provider."
+        ></Toast>
         <br />
         <br />
-        <Text.H4>Warning notification toast in context</Text.H4>
-        <Text.BodySmall>
-            Use warning toast when you want the user to take a
-            <code>specific action</code>
-            or to<code>warn</code> them that something is about to go wrong.
-        </Text.BodySmall>
+        <Toast
+            type="warning"
+            description="The template contains characters that cannot be updated. Please
+                remove the characters and try again."
+        ></Toast>
         <br />
-        <Notification type="warning">
-            <Text.Body
-                style={{
-                    color: "#B34E00",
-                }}
-            >
-                The template contains characters that cannot be updated. Please
-                remove the characters and try again.
-            </Text.Body>
-        </Notification>
-        <br />
-        <Notification type="warning" title="Unknown characters">
-            <Text.BodySmall
-                style={{
-                    color: "#B34E00",
-                }}
-            >
-                The template contains characters that cannot be updated. Please
-                remove the characters and try again.
-            </Text.BodySmall>
-        </Notification>
+        <Toast
+            type="warning"
+            title="Unknown characters"
+            description="The template contains characters that cannot be updated. Please
+                remove the characters and try again."
+        ></Toast>
         <br />
         <br />
-        <Text.H4>Error notification toast in context</Text.H4>
-        <Text.BodySmall>
-            Use error toast to inform users something <code>critical</code> has
-            happened and requires immediate attention.
-        </Text.BodySmall>
+        <Toast
+            type="error"
+            description="An internal system error had occured. Please log out and try
+                again."
+        ></Toast>
         <br />
-        <Notification type="error">
-            <Text.Body
-                style={{
-                    color: "#C60000",
-                }}
-            >
-                An internal system error had occured. Please log out and try
-                again.
-            </Text.Body>
-        </Notification>
-        <br />
-        <Notification type="error" title="System error">
-            <Text.BodySmall
-                style={{
-                    color: "#C60000",
-                }}
-            >
-                An internal system error had occured. Please log out and try
-                again.
-            </Text.BodySmall>
-        </Notification>
+        <Toast
+            type="error"
+            title="System error"
+            description="An internal system error had occured. Please log out and try
+                again."
+        ></Toast>
         <br />
         <br />
-        <Text.H4>Info notification toast in context</Text.H4>
-        <Text.BodySmall>
-            An informational message that is used as a <code>reminder</code> or
-            <code>an information</code> for the user.
-        </Text.BodySmall>
+        <Toast
+            type="info"
+            description="The calendar will be automatically updated when you have done
+                editing the event information."
+        ></Toast>
         <br />
-        <Notification type="info">
-            <Text.Body
-                style={{
-                    color: "#064D70",
-                }}
-            >
-                The calendar will be automatically updated when you have done
-                editing the event information.
-            </Text.Body>
-        </Notification>
-        <br />
-        <Notification type="info" title="Updated automatically">
-            <Text.BodySmall
-                style={{
-                    color: "#064D70",
-                }}
-            >
-                The calendar will be automatically updated when you have done
-                editing the event information.
-            </Text.BodySmall>
-        </Notification>
+        <Toast
+            type="info"
+            title="Updated automatically"
+            description="The calendar will be automatically updated when you have done
+                editing the event information."
+        ></Toast>
+    </Story>
+</Preview>
+
+<!--Auto Dismiss-->
+
+Auto dismiss after 4 seconds, when the context of the banner is short and/or does not required user's action (i.e Reject, Updated, Error).
+We recommend to use `autoDismiss = "true"`
+
+<Preview>
+    <Story name="Auto Dismiss">
+        <Toast
+            type="warning"
+            description="The template contains characters that cannot be updated. Please
+                remove the characters and try again."
+            autoDismiss="true"
+        ></Toast>
     </Story>
 </Preview>
 
