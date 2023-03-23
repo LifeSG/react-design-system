@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Toggle } from "../../toggle";
+import { FilterContext } from "../filter-context";
 import { FilterItemCheckboxProps } from "../types";
 import {
     Group,
@@ -6,6 +8,7 @@ import {
     Input,
     Item,
     StyledFilterItem,
+    StyledToggle,
 } from "./filter-item-checkbox.styles";
 
 export const FilterItemCheckbox = ({
@@ -17,10 +20,14 @@ export const FilterItemCheckbox = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const { mode } = useContext(FilterContext);
     const [selected, setSelected] = useState<FilterItemCheckboxProps["value"]>(
         value || []
     );
     const [minimisedHeight, setMinimisedHeight] = useState<number>();
+    const [lastVisibleElementIndex, setLastVisibleElementIndex] =
+        useState<number>(options.length);
+    const parentRef = useRef<HTMLDivElement>();
     const lastVisibleElement = useRef<HTMLLabelElement>();
 
     // =============================================================================
@@ -33,24 +40,73 @@ export const FilterItemCheckbox = ({
     }, [value]);
 
     useEffect(() => {
+        if (mode === "default") {
+            setVisibleItemsWhenMinimised();
+        } else {
+            setVisibleMobileItemsWhenMinimised();
+        }
+    }, [options, mode]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleItemClick = (item: string) => () => {
+        const newSelection = !selected.includes(item)
+            ? selected.concat(item)
+            : selected.filter((v) => v !== item);
+        setSelected(newSelection);
+        onChange?.(newSelection);
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const setVisibleItemsWhenMinimised = () => {
         const elementBottom = lastVisibleElement.current
             ? lastVisibleElement.current.offsetTop +
               lastVisibleElement.current.clientHeight
             : undefined;
 
         setMinimisedHeight(elementBottom);
-    }, [options]);
+    };
+
+    const setVisibleMobileItemsWhenMinimised = () => {
+        if (!parentRef.current) {
+            setMinimisedHeight(undefined);
+            return;
+        }
+
+        const children = Array.from(parentRef.current.children);
+
+        let lastElementInRow = 0;
+        let rowCount = 0;
+        let rowTop = -1;
+
+        for (let i = 0; i < children.length; i++) {
+            const childTop = (children[i] as HTMLDivElement).offsetTop;
+            if (childTop > rowTop) {
+                rowCount++;
+                rowTop = childTop;
+                // show only the first 2 rows
+                if (rowCount > 2) {
+                    break;
+                }
+            }
+            lastElementInRow = i;
+        }
+
+        setLastVisibleElementIndex(lastElementInRow);
+
+        if (rowCount > 2) {
+            setMinimisedHeight(rowTop - 8); // gap from next row
+        } else {
+            setMinimisedHeight(undefined);
+        }
+    };
 
     // =============================================================================
-    // EVENT HANDLERS
+    // RENDER FUNCTIONS
     // =============================================================================
-    const handleItemClick = (item) => (e) => {
-        const newSelection = e.target.checked
-            ? selected.concat(item)
-            : selected.filter((v) => v !== item);
-        setSelected(newSelection);
-        onChange?.(newSelection);
-    };
 
     return (
         <StyledFilterItem
@@ -59,12 +115,15 @@ export const FilterItemCheckbox = ({
             {...filterItemProps}
         >
             {(mode, { minimised }) => (
-                <Group role="group" aria-label={filterItemProps.title}>
+                <Group
+                    role="group"
+                    aria-label={filterItemProps.title}
+                    ref={parentRef}
+                >
                     {options.map(({ label, value: optionValue }, i) => {
                         const checked = selected.includes(optionValue);
 
-                        return (
-                            // TODO: this should be the toggle button on mobile
+                        return mode === "default" ? (
                             <Item
                                 key={optionValue}
                                 $visible={!minimised || i < 5}
@@ -80,6 +139,19 @@ export const FilterItemCheckbox = ({
                                 <Icon type="checkbox" active={checked} />
                                 {label}
                             </Item>
+                        ) : (
+                            <StyledToggle
+                                type="checkbox"
+                                checked={checked}
+                                $visible={
+                                    !minimised ||
+                                    (minimisedHeight &&
+                                        i <= lastVisibleElementIndex)
+                                }
+                                onChange={handleItemClick(optionValue)}
+                            >
+                                {label}
+                            </StyledToggle>
                         );
                     })}
                 </Group>
