@@ -364,6 +364,7 @@ export const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         variant={variant}
+                        between={between}
                         isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                     />
@@ -377,6 +378,7 @@ export const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         variant={variant}
+                        between={between}
                         isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                     />

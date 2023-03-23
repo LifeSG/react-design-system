@@ -10,7 +10,7 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface Props extends Pick<CalendarProps, "type" | "variant"> {
+interface Props extends Pick<CalendarProps, "type" | "variant" | "between"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -26,6 +26,7 @@ export const CalendarYear = ({
     selectedEndDate,
     type,
     isNewSelection,
+    between,
     variant: inputVariant,
     onSelect,
 }: Props) => {
@@ -58,21 +59,32 @@ export const CalendarYear = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const isDisabled = (day: Dayjs): boolean => {
+        const isOutsideBetweenRange =
+            between && !day.isBetween(between[0], between[1], "year", "[]");
+
+        const isStartAfterEnd =
+            currentFocus === "start" &&
+            selectedEndDate &&
+            day.isAfter(selectedEndDate, "year") &&
+            isNewSelection;
+
+        const isEndBeforeStart =
+            currentFocus === "end" &&
+            selectedStartDate &&
+            day.isBefore(selectedStartDate, "year") &&
+            isNewSelection;
+
+        return isOutsideBetweenRange || isStartAfterEnd || isEndBeforeStart;
+    };
+
     const generateYearStatus = (date: Dayjs) => {
         const otherDecadeIndexes = [0, 11];
 
         const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
         const fullDate = date.format("YYYY-MM-DD");
         const year = date.year();
-        let disabled = false;
-
-        if (inputVariant === "range" && isNewSelection) {
-            if (currentFocus === "start" && selectedEndDate) {
-                disabled = date.isAfter(selectedEndDate, "year");
-            } else if (currentFocus === "end" && selectedStartDate) {
-                disabled = date.isBefore(selectedStartDate, "year");
-            }
-        }
+        const disabled = isDisabled(date);
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
