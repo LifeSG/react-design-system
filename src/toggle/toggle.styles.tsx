@@ -50,6 +50,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 if (props.$error) {
                     return css`
                         border-color: ${Color.Validation.Red.Icon};
+                        background: ${Color.Neutral[8]};
 
                         :hover {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
