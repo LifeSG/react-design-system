@@ -23,18 +23,21 @@ export const FilterItem = ({
     showMobileDivider = true,
     title,
     children,
+    id,
     ...otherProps
 }: FilterItemProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const { mode } = useContext(FilterContext);
+    const [uuid] = useState(() => crypto.randomUUID());
     const isMobile = mode === "mobile";
     const [collapsed, setCollapsed] = useState(
         isMobile ? false : desktopCollapsible
     );
     const [minimised, setMinimised] = useState(minimisable);
     const collapsible = !isMobile && desktopCollapsible;
+    const contentId = (id ?? uuid) + "-content";
 
     const itemResizeDetector = useResizeDetector();
     const contentResizeDetector = useResizeDetector();
@@ -68,16 +71,24 @@ export const FilterItem = ({
                             onClick={() => {
                                 setCollapsed(!collapsed);
                             }}
-                            aria-label={collapsed ? "Expand" : "Collapse"}
+                            aria-label={title}
+                            aria-expanded={!collapsed}
+                            aria-controls={contentId}
                         >
                             <ChevronIcon $expanded={!collapsed} />
                         </FilterItemExpandButton>
                     )}
                 </FilterItemHeader>
             )}
-            <Expandable style={isMobile ? undefined : itemAnimationStyles}>
-                <div ref={itemResizeDetector.ref}>
-                    <FilterItemBody {...otherProps}>
+            <Expandable
+                id={contentId}
+                style={isMobile ? undefined : itemAnimationStyles}
+            >
+                <div
+                    ref={itemResizeDetector.ref}
+                    inert={collapsed ? "" : undefined}
+                >
+                    <FilterItemBody id={id} {...otherProps}>
                         <Expandable $height={contentHeight}>
                             <div ref={contentResizeDetector.ref}>
                                 <div data-id="content-container">
