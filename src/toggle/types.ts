@@ -21,7 +21,7 @@ export interface ToggleProps
     styleType?: ToggleStyleType | undefined;
     /** The Toggle label */
     children: string;
-    /** The description label displayed below the main label */
+    // /** The description label displayed below the main label */
     // subLabel?: (() => JSX.Element) | string | undefined;
     disabled?: boolean | undefined;
     /** Specifies if the error display should be present */
@@ -29,7 +29,7 @@ export interface ToggleProps
     className?: string | undefined;
     name?: string | undefined;
     id?: string | undefined;
-    "data-testid": string | undefined;
+    "data-testid"?: string | undefined;
     onChange?:
         | ((event: React.ChangeEvent<HTMLInputElement>) => void)
         | undefined;
