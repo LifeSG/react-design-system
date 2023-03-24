@@ -107,6 +107,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                         :hover {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                            border-color: ${Color.Accent.Light[1]};
                         }
                     `;
                 }
