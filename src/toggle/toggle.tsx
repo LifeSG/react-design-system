@@ -28,9 +28,9 @@ export const Toggle = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selected, setSelected] = useState<boolean>(checked);
-    const [inputId] = useState<string>(
-        id ? `${id}-input` : crypto.randomUUID()
-    );
+    const [uuid] = useState(() => crypto.randomUUID());
+    const generatedInputId = id ? `${id}-input` : uuid;
+
     const inputRef = useRef<HTMLInputElement>();
 
     // =============================================================================
@@ -123,7 +123,6 @@ export const Toggle = ({
         <Container
             $selected={selected}
             $disabled={disabled}
-            role={type === "checkbox" ? "checkbox" : "radio"}
             className={className}
             $styleType={styleType}
             $error={error}
@@ -136,7 +135,7 @@ export const Toggle = ({
             <Input
                 ref={inputRef}
                 name={name}
-                id={inputId}
+                id={generatedInputId}
                 type={type === "checkbox" ? "checkbox" : "radio"}
                 data-testid="toggle-input"
                 disabled={disabled}
@@ -145,7 +144,7 @@ export const Toggle = ({
             />
             <TextContainer>
                 <Label
-                    htmlFor={inputId}
+                    htmlFor={generatedInputId}
                     $selected={selected}
                     $indicator={indicator}
                     $disabled={disabled}
