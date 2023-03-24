@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     Container,
     Input,
@@ -43,35 +43,32 @@ export const Toggle = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleOnChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            if (!disabled) {
-                switch (type) {
-                    case "checkbox":
-                        {
-                            if (!selected) {
-                                setSelected((prevSelected) => {
-                                    return !prevSelected;
-                                });
-                            }
+    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (!disabled) {
+            switch (type) {
+                case "checkbox":
+                    {
+                        if (!selected) {
+                            setSelected((prevSelected) => {
+                                return !prevSelected;
+                            });
                         }
-                        break;
-                    case "radio":
-                    case "yes":
-                    case "no":
-                        {
-                            if (!selected) {
-                                setSelected(true);
-                            }
+                    }
+                    break;
+                case "radio":
+                case "yes":
+                case "no":
+                    {
+                        if (!selected) {
+                            setSelected(true);
                         }
-                        break;
-                }
-
-                if (onChange) onChange(event);
+                    }
+                    break;
             }
-        },
-        []
-    );
+
+            if (onChange) onChange(event);
+        }
+    };
 
     // =============================================================================
     // RENDER FUNCTIONS
