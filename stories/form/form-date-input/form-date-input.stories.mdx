@@ -5,6 +5,7 @@ import { Form } from "src/form";
 import {
     Heading3,
     Heading4,
+    FullWidthStoryContainer,
     Secondary,
     StoryContainer,
     Title,
@@ -88,23 +89,23 @@ import { DateInput } from "@lifesg/react-design-system/date-input";
 <Preview>
     <Story name="Standalone usage">
         <StoryContainer>
-            <Container>
+            <FullWidthStoryContainer>
                 <DateInput withButton={false} />
-            </Container>
-            <Container>
+            </FullWidthStoryContainer>
+            <FullWidthStoryContainer>
                 <DateInput
                     withButton={true}
                     variant="range"
                     disabledDates={["2023-03-17", "2023-03-02"]}
                 />
-            </Container>
-            <Container>
+            </FullWidthStoryContainer>
+            <FullWidthStoryContainer>
                 <DateInput
                     withButton={false}
                     variant="range"
                     disabledDates={["2023-03-17", "2023-03-02"]}
                 />
-            </Container>
+            </FullWidthStoryContainer>
         </StoryContainer>
     </Story>
 </Preview>
