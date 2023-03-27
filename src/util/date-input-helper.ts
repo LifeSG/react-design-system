@@ -47,6 +47,12 @@ export namespace DateInputHelper {
             if (!pass) return false;
         }
 
+        if (dayjs(beginDate).isAfter(afterDate)) {
+            pass = false;
+
+            return pass;
+        }
+
         return pass;
     };
 
