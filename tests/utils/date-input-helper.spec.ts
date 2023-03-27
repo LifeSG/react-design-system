@@ -2,22 +2,12 @@ import { DateInputHelper } from "../../src/util/date-input-helper";
 
 describe("DateInputHelper", () => {
     describe("validate", () => {
-        it("should falsy if exist begin date only", () => {
-            const beginDate = "2023-03-01";
-            const afterDate = "";
+        it("should falsy if only exist one date in range selection", () => {
+            const resultOne = DateInputHelper.validate("2023-03-01", "");
+            const resultTwo = DateInputHelper.validate("", "2023-03-01");
 
-            const result = DateInputHelper.validate(beginDate, afterDate);
-
-            expect(result).toBeFalsy();
-        });
-
-        it("should falsy if exist after date only", () => {
-            const beginDate = "";
-            const afterDate = "2023-03-15";
-
-            const result = DateInputHelper.validate(beginDate, afterDate);
-
-            expect(result).toBeFalsy();
+            expect(resultOne).toBeFalsy();
+            expect(resultTwo).toBeFalsy();
         });
 
         it("should validate the begin date and after date", () => {
@@ -31,7 +21,7 @@ describe("DateInputHelper", () => {
             expect(resultFalsy).toBeFalsy();
         });
 
-        it("should not matching disabled dates", () => {
+        it("should return truthy if not matching disabled dates", () => {
             const beginDate = "2023-03-01";
             const afterDate = "2023-03-15";
             const disabledDates = ["2023-03-10"];
@@ -45,7 +35,7 @@ describe("DateInputHelper", () => {
             expect(result).toBeTruthy();
         });
 
-        it("should falsy if matching disabled dates", () => {
+        it("should return falsy if matching disabled dates", () => {
             const beginDate = "2023-03-01";
             const afterDate = "2023-03-15";
             const disabledDates = ["2023-03-15"];
@@ -59,7 +49,7 @@ describe("DateInputHelper", () => {
             expect(result).toBeFalsy();
         });
 
-        it("should selected between actively date", () => {
+        it("should return truthy if selected within restrict selection", () => {
             const beginDate = "2023-03-10";
             const afterDate = "2023-03-17";
             const between = ["2023-03-10", "2023-03-28"];
@@ -75,7 +65,7 @@ describe("DateInputHelper", () => {
             expect(result).toBeTruthy();
         });
 
-        it("should return falsy if selected date is not between actively date", () => {
+        it("should return falsy if selected date is out of restrict selection", () => {
             const beginDate = "2023-02-12";
             const afterDate = "2023-03-17";
             const between = ["2023-03-10", "2023-03-28"];
@@ -119,6 +109,60 @@ describe("DateInputHelper", () => {
             );
 
             expect(result).toBeTruthy();
+        });
+    });
+
+    describe("single validation", () => {
+        it("should return truthy if selected within restrict selection", () => {
+            const value = "2023-03-10";
+            const between = ["2023-03-10", "2023-03-28"];
+            const disabledDates = undefined;
+
+            const result = DateInputHelper.singleValidation(
+                value,
+                disabledDates,
+                between
+            );
+
+            expect(result).toBeTruthy();
+        });
+
+        it("should return truthy if not matching disabled dates", () => {
+            const value = "2023-03-01";
+            const disabledDates = ["2023-03-10"];
+
+            const result = DateInputHelper.singleValidation(
+                value,
+                disabledDates
+            );
+
+            expect(result).toBeTruthy();
+        });
+
+        it("should falsy if matching disabled dates", () => {
+            const value = "2023-03-01";
+            const disabledDates = ["2023-03-01"];
+
+            const result = DateInputHelper.singleValidation(
+                value,
+                disabledDates
+            );
+
+            expect(result).toBeFalsy();
+        });
+
+        it("should return falsy if selected date is not between actively date", () => {
+            const value = "2023-02-12";
+            const between = ["2023-03-10", "2023-03-28"];
+            const disabledDates = undefined;
+
+            const result = DateInputHelper.singleValidation(
+                value,
+                disabledDates,
+                between
+            );
+
+            expect(result).toBeFalsy();
         });
     });
 

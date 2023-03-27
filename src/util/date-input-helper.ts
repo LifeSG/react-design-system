@@ -10,7 +10,7 @@ export namespace DateInputHelper {
         beginDate: string,
         afterDate: string,
         disabledDates?: string[] | undefined,
-        between?: string[]
+        between?: string[] | undefined
     ): boolean => {
         let pass = false;
 
@@ -28,6 +28,8 @@ export namespace DateInputHelper {
             pass = !disabledDates.some((value) =>
                 [beginDate, afterDate].includes(value)
             );
+
+            if (!pass) return false;
         }
 
         if (between && between.length) {
@@ -41,12 +43,33 @@ export namespace DateInputHelper {
             );
 
             pass = result.every(Boolean);
+
+            if (!pass) return false;
         }
 
-        if (dayjs(beginDate).isAfter(afterDate)) {
-            pass = false;
+        return pass;
+    };
 
-            return pass;
+    export const singleValidation = (
+        value: string,
+        disabledDates?: string[] | undefined,
+        between?: string[] | undefined
+    ) => {
+        let pass = true;
+
+        if (!value || value === "") return false;
+
+        if (disabledDates && disabledDates.length) {
+            pass = !disabledDates.some(
+                (disabledDate) => value === disabledDate
+            );
+            if (!pass) return false;
+        }
+
+        if (between && between.length) {
+            pass = dayjs(value).isBetween(between[0], between[1], "day", "[]");
+
+            if (!pass) return false;
         }
 
         return pass;
