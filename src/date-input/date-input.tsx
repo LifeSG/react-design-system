@@ -171,7 +171,7 @@ export const DateInput = ({
     }
 
     const handleChange = (value: string, from: ActionComponent) => {
-        // handle invalid update
+        // isValid always 'true' in range selection if invalid from stand alone input
         if (value === INVALID_VALUE || value === "") {
             performOnChangeHandler(value, true);
 
@@ -183,10 +183,7 @@ export const DateInput = ({
             return;
         }
 
-        const isValid = handleRangeValueCheck(value);
-
-        setIsError(!isValid);
-        setActionComponent(from);
+        const isValid = handleValidation(value);
 
         if (["month-options", "year-options"].includes(calendarView)) {
             handleReducer("transition", value);
@@ -195,6 +192,8 @@ export const DateInput = ({
             handleReducer("selected", value);
         }
 
+        setIsError(!isValid);
+        setActionComponent(from);
         handleFocusElement(isValid, from);
         performOnChangeHandler(value, isValid);
     };
@@ -325,7 +324,7 @@ export const DateInput = ({
         setCalendarOpen(false);
     };
 
-    const handleRangeValueCheck = (value: string): boolean => {
+    const handleValidation = (value: string): boolean => {
         let isValid = true;
 
         const values = {
@@ -339,25 +338,28 @@ export const DateInput = ({
         if (variant === "range") {
             switch (currentElement.type) {
                 case "start":
-                    isValid = DateInputHelper.validate(value, values.end);
+                    isValid = DateInputHelper.validate(
+                        value,
+                        values.end,
+                        disabledDates,
+                        between
+                    );
                     break;
                 case "end":
-                    isValid = DateInputHelper.validate(values.start, value);
+                    isValid = DateInputHelper.validate(
+                        values.start,
+                        value,
+                        disabledDates,
+                        between
+                    );
                     break;
             }
-        }
-
-        if (!isValid) {
-            const { field: otherField, type: otherType } = getAnotherElement();
-
-            setCurrentElement({
-                field: otherField,
-                type: otherType,
-                count: 1,
-            });
-
-            // blank other element input value
-            handleReducer("invalid");
+        } else if (variant === "single") {
+            isValid = DateInputHelper.singleValidation(
+                value,
+                disabledDates,
+                between
+            );
         }
 
         return isValid;
@@ -433,6 +435,20 @@ export const DateInput = ({
     };
 
     const handleFocusElement = (isValid: boolean, from: ActionComponent) => {
+        // input invalid value
+        if (variant === "range" && !isValid) {
+            const { field: otherField, type: otherType } = getAnotherElement();
+
+            setCurrentElement({
+                field: otherField,
+                type: otherType,
+                count: 1,
+            });
+
+            // blank other element input value
+            handleReducer("invalid");
+        }
+
         // stop switch if detect selected in calendar month/year view
         if (["month-options", "year-options"].includes(calendarView)) return;
 
@@ -440,7 +456,7 @@ export const DateInput = ({
         // - after selection in single value calendar
         // - both valid value in range selection
         if (
-            (!withButton && variant === "single") ||
+            (!withButton && variant === "single" && isValid) ||
             (!withButton &&
                 variant === "range" &&
                 currentElement.count >= 2 &&
@@ -453,7 +469,6 @@ export const DateInput = ({
                 type: "none",
                 count: 0,
             });
-
             return;
         }
 
@@ -488,23 +503,27 @@ export const DateInput = ({
 
         let values: ChangeValueTypes = {};
 
-        switch (focusType) {
-            case "start":
-                values = {
-                    start: value,
-                    end: isValid ? endDate.selected : INVALID_VALUE,
-                };
+        if (variant === "range") {
+            switch (focusType) {
+                case "start":
+                    values = {
+                        start: value,
+                        end: isValid ? endDate.selected : INVALID_VALUE,
+                    };
 
-                break;
-            case "end":
-                values = {
-                    start: isValid ? startDate.selected : INVALID_VALUE,
-                    end: value,
-                };
-                break;
+                    break;
+                case "end":
+                    values = {
+                        start: isValid ? startDate.selected : INVALID_VALUE,
+                        end: value,
+                    };
+                    break;
+            }
+        } else if (variant === "single") {
+            values = {
+                start: isValid ? value : INVALID_VALUE,
+            };
         }
-
-        if (variant === "single") delete values.end;
 
         return values;
     };
