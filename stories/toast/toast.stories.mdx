@@ -1,116 +1,89 @@
 import { useState } from "react";
-import { Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Story } from "@storybook/addon-docs";
 import { Toast } from "src/toast";
-import { Text } from "src/text";
 import { Secondary, Heading3, Title } from "../storybook-common";
+import { Text } from "src/text";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Toast" component={Toast} />
+<Meta
+    title="Modules/Toast"
+    component={Toast}
+    parameters={{ layout: "padded" }}
+/>
 
 <Title>Toast</Title>
 
 <Secondary>Overview</Secondary>
 
-<code>Toast</code> are used to inform users of updates or changes to system status.
-Communicating with users and providing immediate feedback are important for building
-trust. While notifications are an effective method of communicating with users, they
-are disruptive and should be used sparingly.
+Component used to inform users of updates or changes in system status.
 
 ```tsx
 import { Toast } from "@lifesg/react-design-system/toast";
 ```
 
-<!--Non Auto Dismiss-->
-
-Toast should appear one at a time and they are dismissible and animate into
-a screen by displaying near the content that returns its feedback.
-
-There is a four type of status:-
-
-<code>Successful - Green</code>
-<br />
-<code>Warning - Orange</code>
-<br />
-<code>Error - Red</code>
-<br />
-<code>Info - Blue</code>
-<br />
-
-non-auto dismiss if the context of the banner is longer or required user’s
-action.
-
-<Preview>
+<Canvas>
     <Story name="Toast">
         <Toast
             type="success"
-            description="Template successfully updated."
-        ></Toast>
+            description="This is a successful toast message"
+        />
         <br />
+        <Toast type="warning" description="This is a warning toast message" />
+        <br />
+        <Toast type="error" description="This is a error toast message" />
+        <br />
+        <Toast type="info" description="This is a info toast message" />
+    </Story>
+</Canvas>
+
+<Heading3>With sub label</Heading3>
+
+<Canvas>
+    <Story name="With sub label">
         <Toast
             type="success"
             title="Template successfully updated"
             description="Your bookings has been updated and received by the service provider."
-        ></Toast>
-        <br />
-        <br />
-        <Toast
-            type="warning"
-            description="The template contains characters that cannot be updated. Please
-                remove the characters and try again."
-        ></Toast>
+        />
         <br />
         <Toast
             type="warning"
             title="Unknown characters"
             description="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
-        ></Toast>
-        <br />
-        <br />
-        <Toast
-            type="error"
-            description="An internal system error had occured. Please log out and try
-                again."
-        ></Toast>
+        />
         <br />
         <Toast
             type="error"
             title="System error"
             description="An internal system error had occured. Please log out and try
                 again."
-        ></Toast>
-        <br />
-        <br />
-        <Toast
-            type="info"
-            description="The calendar will be automatically updated when you have done
-                editing the event information."
-        ></Toast>
+        />
         <br />
         <Toast
             type="info"
             title="Updated automatically"
             description="The calendar will be automatically updated when you have done
                 editing the event information."
-        ></Toast>
+        />
     </Story>
-</Preview>
+</Canvas>
 
-<!--Auto Dismiss-->
+<Heading3>Auto dismissal</Heading3>
 
-Auto dismiss after 4 seconds, when the context of the banner is short and/or does not required user's action (i.e Reject, Updated, Error).
-We recommend to use `autoDismiss = "true"`
+You can also specify an auto dismissal for the `Toast` component. The preset duration
+is **4 seconds** and you can specify using the `autoDismiss` property.
 
-<Preview>
-    <Story name="Auto Dismiss">
+<Canvas>
+    <Story name="Auto dismissal">
         <Toast
             type="warning"
             description="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
-            autoDismiss="true"
-        ></Toast>
+            autoDismiss
+        />
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 <PropsTable />
