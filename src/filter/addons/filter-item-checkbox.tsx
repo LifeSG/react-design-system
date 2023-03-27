@@ -135,6 +135,48 @@ export const FilterItemCheckbox = <T,>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const renderCheckbox = (option: T, index: number, minimised: boolean) => {
+        const optionLabel = getLabel(option);
+        const optionValue = getValue(option);
+        const checked = !!selected.find((s) => getValue(s) === optionValue);
+
+        return (
+            <Item
+                key={optionValue}
+                $visible={!minimised || index < 5}
+                $selected={checked}
+                ref={index === 4 ? lastVisibleElement : undefined}
+            >
+                <Input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={handleItemClick(option)}
+                />
+                <Icon type="checkbox" active={checked} />
+                {optionLabel}
+            </Item>
+        );
+    };
+
+    const renderToggle = (option: T, index: number, minimised: boolean) => {
+        const optionLabel = getLabel(option);
+        const optionValue = getValue(option);
+        const checked = !!selected.find((s) => getValue(s) === optionValue);
+
+        return (
+            <StyledToggle
+                type="checkbox"
+                checked={checked}
+                $visible={
+                    !minimised ||
+                    (minimisedHeight && index <= lastVisibleElementIndex)
+                }
+                onChange={handleItemClick(option)}
+            >
+                {optionLabel}
+            </StyledToggle>
+        );
+    };
 
     return (
         <StyledFilterItem
@@ -148,43 +190,11 @@ export const FilterItemCheckbox = <T,>({
                     aria-label={filterItemProps.title}
                     ref={parentRef}
                 >
-                    {options.map((option, i) => {
-                        const optionLabel = getLabel(option);
-                        const optionValue = getValue(option);
-                        const checked = !!selected.find(
-                            (s) => getValue(s) === optionValue
-                        );
-
-                        return mode === "default" ? (
-                            <Item
-                                key={optionValue}
-                                $visible={!minimised || i < 5}
-                                $selected={checked}
-                                ref={i === 4 ? lastVisibleElement : undefined}
-                            >
-                                <Input
-                                    type="checkbox"
-                                    checked={checked}
-                                    onChange={handleItemClick(option)}
-                                />
-                                <Icon type="checkbox" active={checked} />
-                                {optionLabel}
-                            </Item>
-                        ) : (
-                            <StyledToggle
-                                type="checkbox"
-                                checked={checked}
-                                $visible={
-                                    !minimised ||
-                                    (minimisedHeight &&
-                                        i <= lastVisibleElementIndex)
-                                }
-                                onChange={handleItemClick(option)}
-                            >
-                                {optionLabel}
-                            </StyledToggle>
-                        );
-                    })}
+                    {options.map((option, i) =>
+                        mode === "default"
+                            ? renderCheckbox(option, i, minimised)
+                            : renderToggle(option, i, minimised)
+                    )}
                 </Group>
             )}
         </StyledFilterItem>
