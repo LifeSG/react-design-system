@@ -336,7 +336,7 @@ export const DateInput = ({
         // Update the specific field value
         values[currentElement.type] = value;
 
-        if (values.start.length && values.end.length && variant === "range") {
+        if (variant === "range") {
             switch (currentElement.type) {
                 case "start":
                     isValid = DateInputHelper.validate(value, values.end);
