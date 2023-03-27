@@ -10,6 +10,26 @@ import { DesignToken } from "../design-token";
 interface StyleProps {
     $selected: boolean;
 }
+// =============================================================================
+// WRAPPER
+// =============================================================================
+
+export const Wrapper = styled.ul`
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    left: 0;
+    top: 102%;
+    min-width: 15.625rem;
+    position: absolute;
+    max-height: 20rem;
+
+    background: ${Color.Neutral[8]};
+    border-radius: 0 0 0.5rem 0.5rem;
+    box-shadow: ${DesignToken.ElevationBoxShadow};
+`;
 
 export const MobileWrapper = styled.ul`
     display: none;
@@ -42,7 +62,6 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     white-space: pre-wrap;
-    letter-spacing: 0.0075rem;
 
     :active,
     :focus {
@@ -68,6 +87,7 @@ export const LinkIndicator = styled.div`
     left: 0.5rem;
     right: 0.5rem;
     background-color: ${Color.Primary};
+    display: none;
 
     ${MediaQuery.MaxWidth.tablet} {
         left: 0;
@@ -79,27 +99,7 @@ export const LinkIndicator = styled.div`
         background-color: ${Color.Accent.Light[1]};
     }
 `;
-// =============================================================================
-// WRAPPER
-// =============================================================================
 
-export const Wrapper = styled.ul`
-    width: 100%;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    margin-top: 0;
-    left: 0;
-    top: 102%;
-    min-width: 15.625rem;
-    position: absolute;
-    overflow: hidden;
-    max-height: 20rem;
-
-    background: ${Color.Neutral[8]};
-    border-radius: 0 0 0.5rem 0.5rem;
-    box-shadow: ${DesignToken.ElevationBoxShadow};
-`;
 // =============================================================================
 // LINK ITEMS
 // =============================================================================
@@ -119,10 +119,14 @@ export const MenuItem = styled.li`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        padding: 1rem 0;
+        padding: 0.625rem 0;
 
         :first-child {
             padding-top: 0.25rem;
+        }
+
+        :last-child {
+            padding-bottom: 0.625rem;
         }
     }
 `;

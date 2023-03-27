@@ -64,7 +64,7 @@ export const Menu = <T,>({
                         {...options}
                     >
                         {children}
-                        {selected && <LinkIndicator />}
+                        {isMobile && selected && <LinkIndicator />}
                     </Link>
                 </MenuItem>
             );
