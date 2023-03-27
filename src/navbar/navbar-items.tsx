@@ -124,7 +124,6 @@ export const NavbarItems = <T,>({
                         {selected && <LinkIndicator />}
                         {mobile && item.subMenu && (
                             <LinkIconContainer>
-                                {/* {expanded ? <UpIcon /> : <DownIcon />} */}
                                 <ExpandCollapseButton
                                     data-testid={`${testId}-expand-collapse-button`}
                                     $selected={expanded}
