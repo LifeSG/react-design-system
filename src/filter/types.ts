@@ -41,7 +41,8 @@ export interface FilterPageProps {
     onDone?: (() => void) | undefined;
 }
 
-export interface FilterItemCheckboxProps<T> extends FilterItemProps {
+export interface FilterItemCheckboxProps<T>
+    extends Omit<FilterItemProps, "children"> {
     options: T[];
     selectedOptions?: T[] | undefined;
     onSelect?: ((options: T[]) => void) | undefined;
