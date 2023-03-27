@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Container, Input, Label } from "./toggle-button.styles";
 import { ToggleButtonProps } from "./types";
 
+/**
+ * @deprecated since v1.0.0-alpha.22
+ */
 export const ToggleButton = ({
     disabled,
     checked,

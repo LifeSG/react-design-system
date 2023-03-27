@@ -6,13 +6,21 @@ import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import { Wrapper } from "./toggle-icon.styles";
 
+export type ToggleIconType = "checkbox" | "radio" | "tick" | "cross";
+
 interface Props {
-    type: "checkbox" | "radio" | "tick" | "cross";
+    type: ToggleIconType;
     active?: boolean | undefined;
+    disabled?: boolean | undefined;
     className?: string | undefined;
 }
 
-export const ToggleIcon = ({ type, active = false, className }: Props) => {
+export const ToggleIcon = ({
+    type,
+    active = false,
+    disabled,
+    className,
+}: Props) => {
     let component: JSX.Element;
 
     switch (type) {
@@ -34,7 +42,7 @@ export const ToggleIcon = ({ type, active = false, className }: Props) => {
     }
 
     return (
-        <Wrapper className={className} $active={active}>
+        <Wrapper className={className} $active={active} disabled={disabled}>
             {component}
         </Wrapper>
     );
