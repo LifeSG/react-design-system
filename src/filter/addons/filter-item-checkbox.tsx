@@ -4,11 +4,11 @@ import { FilterContext } from "../filter-context";
 import { FilterItemCheckboxProps } from "../types";
 import {
     Group,
-    Icon,
     Input,
     Item,
     StyledFilterItem,
     StyledToggle,
+    StyledToggleIcon,
 } from "./filter-item-checkbox.styles";
 
 export const FilterItemCheckbox = <T,>({
@@ -152,7 +152,7 @@ export const FilterItemCheckbox = <T,>({
                     checked={checked}
                     onChange={handleItemClick(option)}
                 />
-                <Icon type="checkbox" active={checked} />
+                <StyledToggleIcon type="checkbox" active={checked} />
                 {optionLabel}
             </Item>
         );

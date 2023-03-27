@@ -61,7 +61,7 @@ export const Input = styled.input`
     appearance: none;
 `;
 
-export const Icon = styled(ToggleIcon)`
+export const StyledToggleIcon = styled(ToggleIcon)`
     height: 1.5rem;
     width: 1.5rem;
     flex-shrink: 0;
