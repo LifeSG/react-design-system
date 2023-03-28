@@ -11,6 +11,9 @@ import {
     AnimationPane,
     Content,
 } from "./doc-elements";
+import { Color } from "src/color";
+import { BaseTheme } from "src/theme";
+import { PropsTable } from "./props-table";
 
 <Meta title="General/Animations" />
 
@@ -57,6 +60,43 @@ import {
     </AnimationItem>
 </AnimationDisplay>
 <br />
+
+<Secondary>Replace lottie color with color props</Secondary>
+
+You can made use of color props in `LoadingDotsSpinner` to replace the default lottie color.
+
+<Preview>
+    <Story name="With color props">
+        <AnimationDisplay>
+            <AnimationItem>
+                <AnimationPane>
+                    <LoadingDotsSpinner
+                        color={Color.Primary({ theme: BaseTheme })}
+                        data-testid={"loading-spinner"}
+                    />
+                </AnimationPane>
+            </AnimationItem>
+            <AnimationItem>
+                <AnimationPane>
+                    <LoadingDotsSpinner
+                        color={"#EF413D"}
+                        data-testid={"loading-spinner"}
+                    />
+                </AnimationPane>
+            </AnimationItem>
+            <AnimationItem>
+                <AnimationPane>
+                    <LoadingDotsSpinner
+                        color={"#FEAB10"}
+                        data-testid={"loading-spinner"}
+                    />
+                </AnimationPane>
+            </AnimationItem>
+        </AnimationDisplay>
+    </Story>
+</Preview>
+
+<br />
 <Secondary>Usage</Secondary>
 
 ```tsx
@@ -70,3 +110,5 @@ export const SomeComponent = () => {
     );
 };
 ```
+
+<PropsTable />

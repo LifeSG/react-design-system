@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { LottieLoadingDotsSpinner } from "./lottie-animation";
+import { LoadingDotsSpinnerProps } from "./types";
 
-export const LoadingDotsSpinner = () => {
+export const LoadingDotsSpinner = ({
+    color,
+    "data-testid": testId,
+}: LoadingDotsSpinnerProps) => {
     return (
-        <Container>
-            <LottieLoadingDotsSpinner />
+        <Container data-testid={testId}>
+            <LottieLoadingDotsSpinner color={color} />
         </Container>
     );
 };
