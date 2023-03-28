@@ -41,6 +41,7 @@ export * from "./theme";
 export * from "./timeline";
 export * from "./timepicker";
 export * from "./toggle-button";
+export * from "./toggle";
 export * from "./tooltip";
 export * from "./transition";
 export * from "./toast";
