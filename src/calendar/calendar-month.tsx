@@ -6,7 +6,7 @@ import { CalendarProps, FocusType } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
-interface Props extends Pick<CalendarProps, "type" | "variant" | "between"> {
+interface Props extends Pick<CalendarProps, "type" | "between"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -23,7 +23,6 @@ export const CalendarMonth = ({
     type,
     isNewSelection,
     between,
-    variant: inputVariant,
     onSelect,
 }: Props) => {
     // =============================================================================

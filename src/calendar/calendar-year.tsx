@@ -10,7 +10,7 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface Props extends Pick<CalendarProps, "type" | "variant" | "between"> {
+interface Props extends Pick<CalendarProps, "type" | "between"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -27,7 +27,6 @@ export const CalendarYear = ({
     type,
     isNewSelection,
     between,
-    variant: inputVariant,
     onSelect,
 }: Props) => {
     // =============================================================================
