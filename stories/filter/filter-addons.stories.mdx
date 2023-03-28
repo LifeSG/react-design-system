@@ -15,9 +15,15 @@ import { PropsTable } from "./addon-props-table";
 
 <Meta title="Modules/Filter/Addons" component={Filter} />
 
-<Title>Filter Checkbox</Title>
+<Title>Filter.Checkbox</Title>
+
+<Secondary>Overview</Secondary>
 
 Widget to select multiple options
+
+```tsx
+import { Filter } from "@lifesg/react-design-system/filter";
+```
 
 <Canvas>
     <Story name="Filter Checkbox">
@@ -44,8 +50,8 @@ Widget to select multiple options
                                 <Filter.Checkbox
                                     showMobileDivider={false}
                                     title="With 5 or less items"
-                                    selectedOptions={draftFilters.cat2}
-                                    onSelect={updateFilter(mode, "cat2")}
+                                    selectedOptions={draftFilters.cat1}
+                                    onSelect={updateFilter(mode, "cat1")}
                                     options={[
                                         {
                                             value: "1",
