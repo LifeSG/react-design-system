@@ -48,7 +48,7 @@ import { Navbar } from "@lifesg/react-design-system/navbar";
                             },
                             {
                                 id: "lifesg-app",
-                                children: "LifeSG",
+                                children: "LifeSG app",
                                 onClick: () => {
                                     setSelected("lifesg-app");
                                 },
@@ -74,7 +74,7 @@ import { Navbar } from "@lifesg/react-design-system/navbar";
                             },
                             {
                                 id: "lifesg-app-mobile",
-                                children: "LifeSG",
+                                children: "LifeSG app",
                                 href: "https://www.life.gov.sg",
                             },
                             {
@@ -133,14 +133,6 @@ This is a common use case among web apps where it requires a Logout button on th
                     },
                 ],
             }}
-            resources={{
-                primary: {
-                    brandName: "BookingSG",
-                    logoSrc:
-                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-                    type: "primary",
-                },
-            }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
         />
@@ -169,7 +161,7 @@ This is a common use case among web apps where it requires a Logout button on th
                     },
                     {
                         id: "lifesg-app",
-                        children: "LifeSG",
+                        children: "LifeSG app",
                         href: "https://www.life.gov.sg",
                     },
                 ],
@@ -214,14 +206,6 @@ This is a common use case among web apps where it requires a Logout button on th
                     },
                 ],
             }}
-            resources={{
-                primary: {
-                    brandName: "BookingSG",
-                    logoSrc:
-                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-                    type: "primary",
-                },
-            }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
         />
@@ -250,7 +234,7 @@ You can also choose to render a custom component of your choice as an action but
                     },
                     {
                         id: "lifesg-app",
-                        children: "LifeSG",
+                        children: "LifeSG app",
                         href: "https://www.life.gov.sg",
                     },
                 ],
@@ -273,14 +257,6 @@ You can also choose to render a custom component of your choice as an action but
                         },
                     },
                 ],
-            }}
-            resources={{
-                primary: {
-                    brandName: "BookingSG",
-                    logoSrc:
-                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-                    type: "primary",
-                },
             }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
@@ -313,7 +289,7 @@ the `blockDrawerDismissalMethods` prop to do just that.
                     },
                     {
                         id: "lifesg-app",
-                        children: "LifeSG",
+                        children: "LifeSG app",
                         href: "https://www.life.gov.sg",
                     },
                 ],
@@ -324,14 +300,6 @@ the `blockDrawerDismissalMethods` prop to do just that.
                         type: "download",
                     },
                 ],
-            }}
-            resources={{
-                primary: {
-                    brandName: "BookingSG",
-                    logoSrc:
-                        "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-                    type: "primary",
-                },
             }}
             selectedId="home"
             fixed={false} /* For storybook purposes */
@@ -380,7 +348,7 @@ A sub menu is shown if the selected nav item has sublinks.
                             },
                             {
                                 id: "lifesg-app",
-                                children: "LifeSG",
+                                children: "LifeSG app",
                                 subMenu: [
                                     {
                                         id: "lifesg1",
@@ -427,14 +395,6 @@ A sub menu is shown if the selected nav item has sublinks.
                             },
                         ],
                     }}
-                    resources={{
-                        primary: {
-                            brandName: "BookingSG",
-                            logoSrc:
-                                "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-                            type: "primary",
-                        },
-                    }}
                     selectedId={selected}
                     fixed={false} /* For storybook purposes */
                     onItemClick={(item) => {
@@ -452,78 +412,65 @@ In this example, a co-brand is displayed next to the primary brand.
 
 <Canvas>
     <Story name="Secondary branding">
-        {() => {
-            const [selected, setSelected] = useState("lifesg1");
-            return (
-                <Navbar
-                    items={{
-                        desktop: [
-                            {
-                                id: "home",
-                                children: "Home",
-                                onClick: () => {
-                                    setSelected("home");
-                                },
-                            },
-                            {
-                                id: "guides",
-                                children: "Guides",
-                                onClick: () => {
-                                    setSelected("guides");
-                                },
-                            },
-                            {
-                                id: "lifesg-app",
-                                children: "LifeSG",
-                                onClick: () => {
-                                    setSelected("lifesg-app");
-                                },
-                            },
-                            {
-                                id: "blog",
-                                children: "Blog",
-                                onClick: () => {
-                                    setSelected("blog");
-                                },
-                            },
-                        ],
-                    }}
-                    actionButtons={{
-                        desktop: [
-                            {
-                                type: "button",
-                                args: {
-                                    styleType: "link",
-                                    children: "FAQ",
-                                },
-                            },
-                            {
-                                type: "button",
-                                args: {
-                                    styleType: "secondary",
-                                    children: "Logout",
-                                },
-                            },
-                        ],
-                    }}
-                    selectedId={selected}
-                    fixed={false} /* For storybook purposes */
-                    resources={{
-                        secondary: {
-                            brandName: "OneService",
-                            logoSrc:
-                                "https://www.life.gov.sg/img/one-service/os-logo.png",
+        <Navbar
+            items={{
+                desktop: [
+                    {
+                        id: "home",
+                        children: "Home",
+                        onClick: () => {
+                            setSelected("home");
                         },
-                    }}
-                    onBrandClick={(type) => {
-                        alert("Clicked on " + type + " brand");
-                    }}
-                    onItemClick={(item) => {
-                        setSelected(item.id);
-                    }}
-                />
-            );
-        }}
+                    },
+                    {
+                        id: "guides",
+                        children: "Guides",
+                        onClick: () => {
+                            setSelected("guides");
+                        },
+                    },
+                    {
+                        id: "lifesg-app",
+                        children: "LifeSG app",
+                        onClick: () => {
+                            setSelected("lifesg-app");
+                        },
+                    },
+                ],
+            }}
+            actionButtons={{
+                desktop: [
+                    {
+                        type: "button",
+                        args: {
+                            styleType: "link",
+                            children: "FAQ",
+                        },
+                    },
+                    {
+                        type: "button",
+                        args: {
+                            styleType: "secondary",
+                            children: "Logout",
+                        },
+                    },
+                    {
+                        type: "download",
+                    },
+                ],
+            }}
+            fixed={false} /* For storybook purposes */
+            resources={{
+                secondary: {
+                    brandName: "OneService",
+                    logoSrc:
+                        "https://www.life.gov.sg/img/one-service/os-logo.png",
+                },
+            }}
+            onBrandClick={(type) => {
+                alert("Clicked on " + type + " brand");
+            }}
+        />
     </Story>
 </Canvas>
 
