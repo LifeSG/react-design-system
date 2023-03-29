@@ -7,9 +7,7 @@ import { DesignToken } from "../design-token";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface StyleProps {
-    $selected: boolean;
-}
+
 // =============================================================================
 // WRAPPER
 // =============================================================================
@@ -46,7 +44,7 @@ export const MobileWrapper = styled.ul`
 // LINK ITEMS
 // =============================================================================
 
-export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
+export const Link = styled(Text.Hyperlink.Small)`
     ${TextStyleHelper.getTextStyle("H6", "regular")};
     width: 100%;
     display: flex;

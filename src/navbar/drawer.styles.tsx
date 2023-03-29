@@ -93,7 +93,7 @@ export const CloseIcon = styled(CrossIcon)`
 
 export const CloseButton = styled(IconButton)`
     position: absolute;
-    right: -0.5rem;
+    right: -0.25rem;
     bottom: 0.65rem;
     color: ${Color.Neutral[1]};
 

@@ -141,7 +141,6 @@ export const NavbarItems = <T,>({
                     {expanded && (
                         <Menu
                             items={item.subMenu}
-                            selectedId={selectedId}
                             mobile={mobile}
                             onItemClick={handleSubLinkClick}
                         />

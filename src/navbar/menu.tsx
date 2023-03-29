@@ -16,7 +16,6 @@ interface Props<T> {
 
 export const Menu = <T,>({
     items,
-    selectedId,
     mobile = false,
     onItemClick,
 }: Props<T>): JSX.Element => {
@@ -35,14 +34,8 @@ export const Menu = <T,>({
     // =============================================================================
     const renderItems = (isMobile = false) => {
         return items.map((item, index) => {
-            const selected = item.id === selectedId;
             const { children, options, ...otherItemAttrs } = item;
 
-            const textWeight: TextWeight = selected
-                ? isMobile
-                    ? "bold"
-                    : "semibold"
-                : "regular";
             const testId = isMobile
                 ? `link__mobile-${index + 1}`
                 : `link__${index + 1}`;
@@ -51,8 +44,7 @@ export const Menu = <T,>({
                 <MenuItem key={index}>
                     <Link
                         data-testid={testId}
-                        weight={textWeight}
-                        $selected={selected} /* for mobile */
+                        weight="bold"
                         {...otherItemAttrs}
                         onClick={handleLinkClick(item)}
                         {...options}
