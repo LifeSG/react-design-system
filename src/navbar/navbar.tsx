@@ -161,7 +161,7 @@ const Component = <T,>(
         >
             <Drawer
                 show={showDrawer}
-                resources={resources}
+                resources={{ primary, secondary }}
                 onClose={handleDrawerClose}
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
