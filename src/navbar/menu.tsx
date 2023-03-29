@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { TextWeight } from "../text";
+import React from "react";
 import { Link, MenuItem, MobileWrapper, Wrapper } from "./menu.styles";
 import { NavItemCommonProps } from "./types";
 
 interface Props<T> {
     items: NavItemCommonProps<T>[];
-    selectedId?: string | undefined;
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
     onItemClick: (

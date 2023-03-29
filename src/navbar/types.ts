@@ -89,7 +89,6 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     /** Specifies which methods will not dismiss the drawer */
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
-    /** Custom component. This overrides the logo, links and download section */
     onBrandClick?: ((type: BrandType) => void) | undefined; // override
     onItemClick?: ((item: NavItemProps<T>) => void) | undefined;
     onActionButtonClick?:
