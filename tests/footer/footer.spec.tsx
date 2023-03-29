@@ -1,10 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import {
-    DisclaimerLinks,
-    Footer,
-    FooterLinkProps,
-    FooterProps,
-} from "../../src";
+import { DisclaimerLinks, Footer, FooterLinkProps } from "../../src";
 import { FooterHelper } from "../../src/footer/footer-helper";
 
 // =============================================================================
@@ -22,7 +17,7 @@ describe("Footer", () => {
     });
 
     it("should be able to render the component", () => {
-        renderComponent();
+        render(<Footer />);
 
         const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks();
 
@@ -36,7 +31,11 @@ describe("Footer", () => {
     describe("children", () => {
         it("should be able to render custom JSX.Element", () => {
             const customText = "custom text";
-            renderComponent({ children: <div>{customText}</div> });
+            render(
+                <Footer>
+                    <div>{customText}</div>
+                </Footer>
+            );
 
             expect(screen.getByText(customText)).toBeInTheDocument();
         });
@@ -44,12 +43,13 @@ describe("Footer", () => {
         it("should be able to render custom JSX.Element[]", () => {
             const customTextOne = "custom text one";
             const customTextTwo = "custom text two";
-            renderComponent({
-                children: [
-                    <div key={customTextOne}>{customTextOne}</div>,
-                    <div key={customTextTwo}>{customTextTwo}</div>,
-                ],
-            });
+
+            render(
+                <Footer>
+                    <div>{customTextOne}</div>
+                    <div>{customTextTwo}</div>
+                </Footer>
+            );
 
             expect(screen.getByText(customTextOne)).toBeInTheDocument();
             expect(screen.getByText(customTextTwo)).toBeInTheDocument();
@@ -58,7 +58,7 @@ describe("Footer", () => {
 
     describe("showDownloadAddon", () => {
         it("should not render add ons by default", () => {
-            renderComponent();
+            render(<Footer />);
 
             expect(
                 screen.queryByRole("link", { name: "apple-app-store" })
@@ -69,7 +69,7 @@ describe("Footer", () => {
         });
 
         it("should render add ons if enabled", () => {
-            renderComponent({ showDownloadAddon: true });
+            render(<Footer showDownloadAddon />);
 
             expect(
                 screen.getByRole("link", { name: "apple-app-store" })
@@ -100,7 +100,7 @@ describe("Footer", () => {
                 },
             };
 
-            renderComponent({ disclaimerLinks });
+            render(<Footer disclaimerLinks={disclaimerLinks} />);
 
             const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks();
 
@@ -123,7 +123,7 @@ describe("Footer", () => {
                 },
             };
 
-            renderComponent({ disclaimerLinks });
+            render(<Footer disclaimerLinks={disclaimerLinks} />);
 
             const defaultPrivacyText = screen.getByText("Privacy Statement");
             const overridenPrivacyText = screen.queryByText("Test");
@@ -134,7 +134,7 @@ describe("Footer", () => {
 
     describe("copyrightInfo", () => {
         it("should render the copyright information by default", () => {
-            renderComponent();
+            render(<Footer />);
 
             expect(
                 screen.getByText(
@@ -145,14 +145,14 @@ describe("Footer", () => {
 
         it("should allow custom copyright information", () => {
             const copyrightInfo = "custom copyright info";
-            renderComponent({ copyrightInfo });
+            render(<Footer copyrightInfo={copyrightInfo} />);
 
             expect(screen.getByText(copyrightInfo)).toBeInTheDocument();
         });
 
         it("should not render lastUpdated if custom copyright information is provided", () => {
             const copyrightInfo = "custom copyright info";
-            renderComponent({ copyrightInfo });
+            render(<Footer copyrightInfo={copyrightInfo} />);
 
             const copyrightText = screen.getByTestId("copyright-text");
             expect(copyrightText.textContent).not.toContain("Last Updated");
@@ -161,7 +161,7 @@ describe("Footer", () => {
 
     describe("logoSrc", () => {
         it("should render a logo by default", () => {
-            renderComponent({ links: CUSTOM_LINKS });
+            render(<Footer links={CUSTOM_LINKS} />);
 
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
@@ -171,7 +171,7 @@ describe("Footer", () => {
 
         it("should be able to render a custom logo", () => {
             const customLogo = "https://www.abc.com/test.png";
-            renderComponent({ links: CUSTOM_LINKS, logoSrc: customLogo });
+            render(<Footer links={CUSTOM_LINKS} logoSrc={customLogo} />);
 
             expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
         });
@@ -180,7 +180,7 @@ describe("Footer", () => {
     describe("lastUpdated", () => {
         it("should be able to render custom last updated date", () => {
             const lastUpdated = new Date(2023, 0, 15);
-            renderComponent({ lastUpdated });
+            render(<Footer lastUpdated={lastUpdated} />);
 
             expect(
                 screen.getByText(
@@ -192,7 +192,7 @@ describe("Footer", () => {
 
     describe("footerLinks", () => {
         it("should be able to render custom links on the top section", () => {
-            renderComponent({ links: CUSTOM_LINKS });
+            render(<Footer links={CUSTOM_LINKS} />);
 
             for (const link of CUSTOM_LINKS[0]) {
                 const anchor = getAnchorElement(link.children as string);
@@ -204,7 +204,7 @@ describe("Footer", () => {
 
         it("should be support onFooterLinkClick", () => {
             const spy = jest.fn();
-            renderComponent({ links: CUSTOM_LINKS, onFooterLinkClick: spy });
+            render(<Footer links={CUSTOM_LINKS} onFooterLinkClick={spy} />);
 
             const anchor = getAnchorElement("Test one");
             act(() => {
@@ -239,11 +239,4 @@ const CUSTOM_LINKS: FooterLinkProps[][] = [
 // =============================================================================
 const getAnchorElement = (name: string): HTMLAnchorElement => {
     return screen.getByRole("link", { name });
-};
-
-// =============================================================================
-// RENDER FUNCTIONS
-// =============================================================================
-const renderComponent = (props?: Partial<FooterProps>) => {
-    return render(<Footer {...props} />);
 };

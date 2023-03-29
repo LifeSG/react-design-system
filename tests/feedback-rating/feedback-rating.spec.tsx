@@ -2,7 +2,6 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 
 import { FeedbackRating, FeedbackRatingProps } from "../../src";
-import { ERROR_DISPLAY_DATA } from "../../src/error-display/error-display-data";
 import { FeedbackRatingData } from "../../src/feedback-rating/feedback-rating-data";
 
 // =============================================================================
@@ -14,21 +13,41 @@ describe("FeedbackRating", () => {
     });
 
     it("should be able to render the component", () => {
-        renderComponent();
+        render(
+            <FeedbackRating
+                rating={0}
+                onRatingChange={NO_OP}
+                onSubmit={NO_OP}
+            />
+        );
 
         expect(screen.getByText(DEFAULT_DESCRIPTION)).toBeInTheDocument();
     });
 
     it("should be able to render custom description", () => {
         const description = "custom description";
-        renderComponent({ description });
+        render(
+            <FeedbackRating
+                rating={0}
+                description={description}
+                onRatingChange={NO_OP}
+                onSubmit={NO_OP}
+            />
+        );
 
         expect(screen.getByText(description)).toBeInTheDocument();
     });
 
     it("should be able to render custom button label", () => {
         const buttonLabel = "custom label";
-        renderComponent({ buttonLabel });
+        render(
+            <FeedbackRating
+                rating={0}
+                buttonLabel={buttonLabel}
+                onRatingChange={NO_OP}
+                onSubmit={NO_OP}
+            />
+        );
 
         expect(
             screen.getByRole("button", { name: buttonLabel })
@@ -38,7 +57,13 @@ describe("FeedbackRating", () => {
     describe("rating", () => {
         it("should be able to render custom rating", () => {
             const rating = 3;
-            renderComponent({ rating });
+            render(
+                <FeedbackRating
+                    rating={rating}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
 
             for (const label of RATING_BUTTON_ARIA_LABELS) {
                 if (label.includes(rating.toString())) {
@@ -50,7 +75,13 @@ describe("FeedbackRating", () => {
         });
 
         it("should be able to change rating", () => {
-            renderComponent();
+            render(
+                <FeedbackRatingWithState
+                    rating={0}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
 
             const button = getRatingButton("1 star");
             act(() => {
@@ -61,7 +92,13 @@ describe("FeedbackRating", () => {
         });
 
         it("should be able to reduce rating after selection", () => {
-            renderComponent();
+            render(
+                <FeedbackRatingWithState
+                    rating={0}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
 
             const fiveStarButton = getRatingButton("5 stars");
             act(() => {
@@ -94,7 +131,13 @@ describe("FeedbackRating", () => {
 
         it("should be able to support onRatingChange callback", () => {
             const spy = jest.fn();
-            renderComponent({ onRatingChange: spy });
+            render(
+                <FeedbackRating
+                    rating={0}
+                    onRatingChange={spy}
+                    onSubmit={NO_OP}
+                />
+            );
 
             const button = getRatingButton("1 star");
             act(() => {
@@ -107,14 +150,26 @@ describe("FeedbackRating", () => {
 
     describe("submit", () => {
         it("should be disabled if rating is not selected", () => {
-            renderComponent();
+            render(
+                <FeedbackRating
+                    rating={0}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
 
             const button = getSubmitButton();
             expect(button).toBeDisabled();
         });
 
         it("should not be disabled if rating is provided", () => {
-            renderComponent({ rating: 1 });
+            render(
+                <FeedbackRating
+                    rating={1}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
 
             const button = getSubmitButton();
             expect(button).not.toBeDisabled();
@@ -122,7 +177,13 @@ describe("FeedbackRating", () => {
 
         it("should be able to support onSubmit callback", () => {
             const spy = jest.fn();
-            renderComponent({ rating: 1, onSubmit: spy });
+            render(
+                <FeedbackRating
+                    rating={1}
+                    onRatingChange={NO_OP}
+                    onSubmit={spy}
+                />
+            );
 
             const button = getSubmitButton();
             act(() => {
@@ -135,15 +196,28 @@ describe("FeedbackRating", () => {
 
     describe("imgSrc", () => {
         it("should be able to render a default banner image", () => {
-            renderComponent();
+            render(
+                <FeedbackRating
+                    rating={0}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
 
             const image = getBannerImg();
             expect(image).toHaveAttribute("src", FeedbackRatingData.IMG);
         });
 
         it("should be able to render custom banner images", () => {
-            const alternateImg = ERROR_DISPLAY_DATA.get("400").imgSrc;
-            renderComponent({ imgSrc: alternateImg });
+            const alternateImg = "https://www.abc.com/image.png";
+            render(
+                <FeedbackRating
+                    rating={0}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                    imgSrc={alternateImg}
+                />
+            );
 
             const image = getBannerImg();
             expect(image).toHaveAttribute("src", alternateImg);
@@ -183,24 +257,20 @@ const getBannerImg = (): HTMLElement => {
 // =============================================================================
 // RENDER FUNCTIONS
 // =============================================================================
-const renderComponent = (props?: Partial<FeedbackRatingProps>) => {
-    const Wrapper = (props?: Partial<FeedbackRatingProps>) => {
-        const [rating, setRating] = useState<number>(props?.rating || 0);
+const FeedbackRatingWithState = (props?: Partial<FeedbackRatingProps>) => {
+    const [rating, setRating] = useState<number>(props?.rating || 0);
 
-        const handleOnChange = (value: number) => {
-            props?.onRatingChange && props?.onRatingChange(value);
-            setRating(value);
-        };
-
-        return (
-            <FeedbackRating
-                {...props}
-                rating={rating}
-                onRatingChange={handleOnChange}
-                onSubmit={props?.onSubmit || NO_OP}
-            />
-        );
+    const handleOnChange = (value: number) => {
+        props?.onRatingChange && props?.onRatingChange(value);
+        setRating(value);
     };
 
-    return render(<Wrapper {...props} />);
+    return (
+        <FeedbackRating
+            {...props}
+            rating={rating}
+            onRatingChange={handleOnChange}
+            onSubmit={props?.onSubmit || NO_OP}
+        />
+    );
 };

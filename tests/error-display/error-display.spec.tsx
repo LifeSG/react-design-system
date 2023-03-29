@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import { ErrorDisplay, ErrorDisplayProps } from "../../src";
+import { ErrorDisplay } from "../../src";
 import { ERROR_DISPLAY_DATA } from "../../src/error-display/error-display-data";
 
 // =============================================================================
@@ -12,7 +12,7 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the component", () => {
-        renderComponent();
+        render(<ErrorDisplay type="404" />);
 
         const title = ERROR_DISPLAY_DATA.get("404").title;
         expect(screen.getByRole("heading", { level: 1, name: title }));
@@ -26,7 +26,7 @@ describe("ErrorDisplay", () => {
             onClick: () => {},
         };
 
-        renderComponent({ actionButton });
+        render(<ErrorDisplay type="404" actionButton={actionButton} />);
 
         expect(
             screen.getByRole("button", { name: buttonLabel })
@@ -34,9 +34,7 @@ describe("ErrorDisplay", () => {
     });
 
     it("should be able to render custom title if specified", () => {
-        renderComponent({
-            title: CUSTOM_TITLE,
-        });
+        render(<ErrorDisplay type="404" title={CUSTOM_TITLE} />);
 
         expect(
             screen.getByRole("heading", { level: 1, name: CUSTOM_TITLE })
@@ -45,17 +43,20 @@ describe("ErrorDisplay", () => {
 
     describe("description", () => {
         it("should be able to render custom description", () => {
-            renderComponent({
-                description: CUSTOM_DESCRIPTION,
-            });
+            render(
+                <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
+            );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
         });
 
         it("should be able to render JSX.Element", () => {
-            renderComponent({
-                description: <div>{CUSTOM_DESCRIPTION}</div>,
-            });
+            render(
+                <ErrorDisplay
+                    type="404"
+                    description={<div>{CUSTOM_DESCRIPTION}</div>}
+                />
+            );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
         });
@@ -64,7 +65,7 @@ describe("ErrorDisplay", () => {
     describe("400 error", () => {
         it("should be able to render", () => {
             const type = "400";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -86,7 +87,7 @@ describe("ErrorDisplay", () => {
     describe("403 error", () => {
         it("should be able to render", () => {
             const type = "403";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -108,7 +109,7 @@ describe("ErrorDisplay", () => {
     describe("404 error", () => {
         it("should be able to render", () => {
             const type = "404";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -130,7 +131,7 @@ describe("ErrorDisplay", () => {
     describe("408 error", () => {
         it("should be able to render", () => {
             const type = "408";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -152,7 +153,7 @@ describe("ErrorDisplay", () => {
     describe("500 error", () => {
         it("should be able to render", () => {
             const type = "500";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -174,10 +175,9 @@ describe("ErrorDisplay", () => {
             const type = "500";
             const additionalProps = { referenceId: "123" };
 
-            renderComponent({
-                type,
-                additionalProps,
-            });
+            render(
+                <ErrorDisplay type={type} additionalProps={additionalProps} />
+            );
 
             const error = ERROR_DISPLAY_DATA.get(type);
             const errorDescription = transformJSXElementToString(
@@ -193,7 +193,7 @@ describe("ErrorDisplay", () => {
     describe("503 error", () => {
         it("should be able to render", () => {
             const type = "503";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -213,7 +213,7 @@ describe("ErrorDisplay", () => {
     describe("maintenance error", () => {
         it("should be able to render", () => {
             const type = "maintenance";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -233,10 +233,9 @@ describe("ErrorDisplay", () => {
             const type = "maintenance";
             const additionalProps = { dateString: "01/01/2023" };
 
-            renderComponent({
-                type,
-                additionalProps,
-            });
+            render(
+                <ErrorDisplay type={type} additionalProps={additionalProps} />
+            );
 
             const error = ERROR_DISPLAY_DATA.get(type);
             const errorDescription = transformJSXElementToString(
@@ -252,7 +251,7 @@ describe("ErrorDisplay", () => {
     describe("unsupported browser error", () => {
         it("should be able to render", () => {
             const type = "unsupported-browser";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -272,7 +271,7 @@ describe("ErrorDisplay", () => {
     describe("partially supported browser error", () => {
         it("should be able to render", () => {
             const type = "partially-supported-browser";
-            renderComponent({ type });
+            render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
             expect(
@@ -312,11 +311,4 @@ const transformJSXElementToString = (element: JSX.Element): string => {
     });
 
     return text;
-};
-
-// =============================================================================
-// RENDER FUNCTIONS
-// =============================================================================
-const renderComponent = (props?: Partial<ErrorDisplayProps>) => {
-    return render(<ErrorDisplay {...props} type={props?.type || "404"} />);
 };
