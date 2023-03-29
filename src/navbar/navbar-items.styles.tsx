@@ -103,7 +103,7 @@ export const LinkIndicator = styled.div`
 `;
 
 export const LinkIconContainer = styled.div`
-    padding-left: 1rem;
+    padding-left: 1.375rem;
 `;
 
 export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
@@ -114,8 +114,8 @@ export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
 `;
 
 export const ChevronIcon = styled(ChevronUpIcon)`
-    height: 1rem;
-    width: 1rem;
+    height: 1.25rem;
+    width: 1.25rem;
     color: ${Color.Neutral[3]};
     :hover {
         color: ${Color.Accent.Light[1]};

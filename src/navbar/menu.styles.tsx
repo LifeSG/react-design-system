@@ -80,26 +80,6 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 `;
 
-export const LinkIndicator = styled.div`
-    position: absolute;
-    bottom: 0;
-    height: 0.25rem;
-    left: 0.5rem;
-    right: 0.5rem;
-    background-color: ${Color.Primary};
-    display: none;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        left: 0;
-        right: unset;
-        top: 0;
-        bottom: 0;
-        height: 100%;
-        width: 0.25rem;
-        background-color: ${Color.Accent.Light[1]};
-    }
-`;
-
 // =============================================================================
 // LINK ITEMS
 // =============================================================================

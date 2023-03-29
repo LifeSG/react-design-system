@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { TextWeight } from "../text";
-import {
-    Link,
-    LinkIndicator,
-    MenuItem,
-    MobileWrapper,
-    Wrapper,
-} from "./menu.styles";
+import { Link, MenuItem, MobileWrapper, Wrapper } from "./menu.styles";
 import { NavItemCommonProps } from "./types";
 
 interface Props<T> {
@@ -64,7 +58,6 @@ export const Menu = <T,>({
                         {...options}
                     >
                         {children}
-                        {isMobile && selected && <LinkIndicator />}
                     </Link>
                 </MenuItem>
             );
