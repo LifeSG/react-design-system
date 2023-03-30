@@ -1,4 +1,5 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
+import isEmpty from "lodash/isEmpty";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Color } from "../../src/color";
@@ -68,8 +69,8 @@ export const useFilters = () => {
 
     const [currentFilters, setCurrentFilters] = useState(INITIAL_STATE);
     const [draftFilters, setDraftFilters] = useState(INITIAL_STATE);
-    const clearButtonDisabled = Object.values(draftFilters).every(
-        (filter) => !filter
+    const clearButtonDisabled = Object.values(draftFilters).every((filter) =>
+        isEmpty(filter)
     );
 
     const updateFilter = (mode: Mode, filterKey: string) => (val) => {
