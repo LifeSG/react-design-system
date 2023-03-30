@@ -44,6 +44,7 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 export const LinkItem = styled.li`
     display: flex;
+    margin-left: 1rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
