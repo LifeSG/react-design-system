@@ -12,5 +12,3 @@ coverage
 .vscode/launch.json
 
 storybook-static
-.history/
-.history/*
