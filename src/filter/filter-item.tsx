@@ -5,13 +5,14 @@ import { FilterContext } from "./filter-context";
 import {
     ChevronIcon,
     Divider,
-    Expandable,
+    ExpandableItem,
     FilterItemBody,
     FilterItemExpandButton,
     FilterItemHeader,
     FilterItemMinimiseButton,
     FilterItemTitle,
     FilterItemWrapper,
+    MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
 
@@ -33,7 +34,7 @@ export const FilterItem = ({
     const [collapsed, setCollapsed] = useState(
         isMobile ? false : desktopCollapsible
     );
-    const [minimised, setMinimised] = useState(minimisable);
+    const [contentMinimised, setContentMinimised] = useState(minimisable);
     const collapsible = !isMobile && desktopCollapsible;
 
     const itemResizeDetector = useResizeDetector();
@@ -41,7 +42,7 @@ export const FilterItem = ({
     const itemAnimationStyles = useSpring({
         height: collapsed ? 0 : itemResizeDetector.height,
     });
-    const contentHeight = minimised
+    const contentHeight = contentMinimised
         ? minimisedHeight ?? Math.min(contentResizeDetector.height * 0.5, 216)
         : contentResizeDetector.height;
 
@@ -75,32 +76,37 @@ export const FilterItem = ({
                     )}
                 </FilterItemHeader>
             )}
-            <Expandable style={isMobile ? undefined : itemAnimationStyles}>
+            <ExpandableItem style={isMobile ? undefined : itemAnimationStyles}>
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>
-                        <Expandable $height={contentHeight}>
+                        <MinimisableContent
+                            $height={contentHeight}
+                            $minimisable={minimisable}
+                        >
                             <div ref={contentResizeDetector.ref}>
                                 <div data-id="content-container">
                                     {typeof children === "function"
-                                        ? children(mode, { minimised })
+                                        ? children(mode, {
+                                              minimised: contentMinimised,
+                                          })
                                         : children}
                                 </div>
                             </div>
-                        </Expandable>
+                        </MinimisableContent>
                         {minimisable && (
                             <FilterItemMinimiseButton
                                 data-id="minimise-button"
                                 styleType="link"
                                 onClick={() => {
-                                    setMinimised(!minimised);
+                                    setContentMinimised(!contentMinimised);
                                 }}
                             >
-                                View {minimised ? "more" : "less"}
+                                View {contentMinimised ? "more" : "less"}
                             </FilterItemMinimiseButton>
                         )}
                     </FilterItemBody>
                 </div>
-            </Expandable>
+            </ExpandableItem>
         </FilterItemWrapper>
     );
 };

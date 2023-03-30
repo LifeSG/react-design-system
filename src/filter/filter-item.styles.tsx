@@ -89,9 +89,8 @@ export const FilterItemTitle = styled(Text.H4)`
 // CONTENT STYLES
 // -----------------------------------------------------------------------------
 
-export const Expandable = styled(animated.div)<{ $height?: number }>`
+export const ExpandableItem = styled(animated.div)`
     overflow: hidden;
-    ${(props) => props.$height && `height: ${props.$height}px;`}
 `;
 
 export const FilterItemBody = styled.div`
@@ -100,6 +99,14 @@ export const FilterItemBody = styled.div`
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 1.5rem 1.25rem;
     }
+`;
+
+export const MinimisableContent = styled(animated.div)<{
+    $height?: number;
+    $minimisable: boolean;
+}>`
+    ${(props) => props.$minimisable && "overflow: hidden;"}
+    ${(props) => props.$height && `height: ${props.$height}px;`}
 `;
 
 export const FilterItemMinimiseButton = styled(Button.Small)`
