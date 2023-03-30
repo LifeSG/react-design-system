@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextWeight } from "../text";
+import { Menu } from "./menu";
 import {
+    ChevronIcon,
+    ExpandCollapseButton,
     Link,
+    LinkIconContainer,
     LinkIndicator,
     LinkItem,
+    LinkLabel,
     MobileWrapper,
     Wrapper,
 } from "./navbar-items.styles";
-import { NavItemProps } from "./types";
+import { NavItemCommonProps, NavItemProps } from "./types";
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -27,32 +32,84 @@ export const NavbarItems = <T,>({
     onItemClick,
 }: Props<T>): JSX.Element => {
     // =============================================================================
+    // CONST, STATE, REFS
+    // =============================================================================
+    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+    const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
+    const ref = useRef<HTMLUListElement>(null);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                onBlur();
+            }
+        };
+        document.addEventListener("click", handleClickOutside, true);
+        return () => {
+            document.removeEventListener("click", handleClickOutside, true);
+        };
+    }, []);
+
+    // =============================================================================
+    // HELPER FUNCTION
+    // =============================================================================
+    const onBlur = () => {
+        setShowSubMenu(false);
+    };
+
+    const checkSelected = (item: NavItemProps<T>): boolean => {
+        if (item.id === selectedId) {
+            return true;
+        } else if (item?.subMenu && item.subMenu.length >= 1) {
+            const foundSubItem = item.subMenu.find(
+                (dataS) => dataS.id === selectedId
+            );
+            return !!foundSubItem;
+        }
+        return false;
+    };
+
+    // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleLinkClick = (item: NavItemProps<T>) => {
+    const handleLinkClick = (item: NavItemProps<T>, index: number) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
+            setSelectedIndex(index);
+            setShowSubMenu(true);
             onItemClick(event, item);
         };
     };
 
+    const handleSubLinkClick = (
+        event: React.MouseEvent<HTMLAnchorElement>,
+        item: NavItemCommonProps<T>
+    ) => {
+        event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
+        onItemClick(event, item);
+        setShowSubMenu(false);
+    };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderItems = (isMobile = false) => {
+    const renderItems = () => {
         return items.map((item, index) => {
-            const selected = item.id === selectedId;
+            const selected = checkSelected(item);
             const { children, options, ...otherItemAttrs } = item;
 
             const textWeight: TextWeight = selected
-                ? isMobile
+                ? mobile
                     ? "bold"
                     : "semibold"
                 : "regular";
-            const testId = isMobile
+            const testId = mobile
                 ? `link__mobile-${index + 1}`
                 : `link__${index + 1}`;
-
+            const expanded =
+                selectedIndex >= 0 && selectedIndex === index && showSubMenu;
             return (
                 <LinkItem key={index}>
                     <Link
@@ -60,12 +117,34 @@ export const NavbarItems = <T,>({
                         weight={textWeight}
                         $selected={selected} /* for mobile */
                         {...otherItemAttrs}
-                        onClick={handleLinkClick(item)}
+                        onClick={handleLinkClick(item, index)}
                         {...options}
                     >
-                        {children}
+                        <LinkLabel>{children}</LinkLabel>
                         {selected && <LinkIndicator />}
+                        {mobile && item.subMenu && (
+                            <LinkIconContainer>
+                                <ExpandCollapseButton
+                                    data-testid={`${testId}-expand-collapse-button`}
+                                    $selected={expanded}
+                                    focusHighlight={false}
+                                    focusOutline="browser"
+                                    aria-label={
+                                        expanded ? "Collapse" : "Expand"
+                                    }
+                                >
+                                    <ChevronIcon />
+                                </ExpandCollapseButton>
+                            </LinkIconContainer>
+                        )}
                     </Link>
+                    {expanded && (
+                        <Menu
+                            items={item.subMenu}
+                            mobile={mobile}
+                            onItemClick={handleSubLinkClick}
+                        />
+                    )}
                 </LinkItem>
             );
         });
@@ -73,11 +152,7 @@ export const NavbarItems = <T,>({
 
     if (items && items.length > 0) {
         const ContentWrapper = mobile ? MobileWrapper : Wrapper;
-        return (
-            <>
-                <ContentWrapper>{renderItems(mobile)}</ContentWrapper>
-            </>
-        );
+        return <ContentWrapper ref={ref}>{renderItems()}</ContentWrapper>;
     }
 
     return <></>;

@@ -4,7 +4,11 @@ import { TextLinkProps } from "../text";
 // =============================================================================
 // NAV ITEM TYPES
 // =============================================================================
-export interface NavItemProps<T> extends TextLinkProps {
+export interface NavItemProps<T> extends NavItemCommonProps<T> {
+    subMenu?: NavItemCommonProps<T>[] | undefined;
+}
+
+export interface NavItemCommonProps<T> extends TextLinkProps {
     id: string;
     "data-testid"?: string | undefined;
     options?: T | undefined;
@@ -38,18 +42,19 @@ export interface NavbarActionButtonsProps {
 // =============================================================================
 // NAVBAR TYPES
 // =============================================================================
-export interface NavbarResourcesProps {
+export interface NavbarBrandingProps {
     brandName: string;
     logoSrc: string;
+}
+
+export interface NavbarResourcesProps {
+    primary?: NavbarBrandingProps | undefined;
+    secondary?: NavbarBrandingProps | undefined;
 }
 
 export interface NavbarSharedProps {
     resources?: NavbarResourcesProps | undefined;
     actionButtons?: NavbarActionButtonsProps | undefined;
-    /** Triggered when the brand icon is being clicked */
-    onBrandClick?:
-        | ((event: React.MouseEvent<HTMLAnchorElement>) => void)
-        | undefined;
 }
 
 export type DrawerDismissalMethod =
@@ -61,7 +66,16 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     show: boolean;
     children: JSX.Element | JSX.Element[];
     onClose?: (() => void) | undefined;
+    /** Triggered when the brand icon is being clicked */
+    onBrandClick?:
+        | ((
+              event: React.MouseEvent<HTMLAnchorElement>,
+              type: BrandType
+          ) => void)
+        | undefined;
 }
+
+export type BrandType = "primary" | "secondary";
 
 export interface NavbarProps<T = void> extends NavbarSharedProps {
     items: NavItemsProps<T>;
@@ -75,8 +89,7 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     /** Specifies which methods will not dismiss the drawer */
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
-
-    onBrandClick?: (() => void) | undefined; // override
+    onBrandClick?: ((type: BrandType) => void) | undefined; // override
     onItemClick?: ((item: NavItemProps<T>) => void) | undefined;
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)

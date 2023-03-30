@@ -82,7 +82,7 @@ export const TopBar = styled.div`
     display: flex;
     justify-content: space-between;
     position: relative;
-    padding: 2.5rem 1rem 2rem;
+    padding: 2.5rem 1.25rem 2rem;
 `;
 
 export const CloseIcon = styled(CrossIcon)`
@@ -93,7 +93,7 @@ export const CloseIcon = styled(CrossIcon)`
 
 export const CloseButton = styled(IconButton)`
     position: absolute;
-    right: -0.5rem;
+    right: -0.25rem;
     bottom: 0.65rem;
     color: ${Color.Neutral[1]};
 

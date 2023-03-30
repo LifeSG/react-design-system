@@ -8,6 +8,7 @@ import {
     TopBar,
     Wrapper,
 } from "./drawer.styles";
+import { NavBrandContainer, NavSeparator } from "./navbar.styles";
 import { NavbarDrawerProps } from "./types";
 
 const Component = (
@@ -19,6 +20,8 @@ const Component = (
     // =============================================================================
     const { show, resources, children, onClose, onBrandClick } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
+
+    const { primary, secondary } = resources;
 
     // =============================================================================
     // EFFECTS
@@ -51,11 +54,28 @@ const Component = (
     // =============================================================================
     const renderTopBar = () => (
         <TopBar>
-            <Brand
-                resources={resources}
-                onClick={onBrandClick}
-                data-testid="drawer__brand"
-            />
+            <NavBrandContainer>
+                <Brand
+                    resources={primary}
+                    compress
+                    onClick={onBrandClick}
+                    data-testid="drawer__brand"
+                    type="primary"
+                />
+                {secondary && (
+                    <>
+                        <NavSeparator />
+                        <Brand
+                            resources={secondary}
+                            compress
+                            onClick={onBrandClick}
+                            data-testid="drawer__brand-secondary"
+                            type="secondary"
+                        />
+                    </>
+                )}
+            </NavBrandContainer>
+
             <CloseButton
                 onClick={onClose}
                 focusHighlight={false}

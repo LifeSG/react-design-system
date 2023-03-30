@@ -61,5 +61,6 @@ export const BaseColorSet: ColorSet = {
     Shadow: {
         Accent: "rgba(87, 169, 255, 0.5)",
         Red: "rgba(221, 102, 102, 0.8)",
+        Elevation: "rgba(75, 83, 159, 0.24)",
     },
 };

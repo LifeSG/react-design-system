@@ -13,9 +13,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "resources",
-                description:
-                    "Navbar resources such as the brand name and logo source",
-                propTypes: ["LifeSG resources"],
+                description: "Navbar resources as objects",
+                propTypes: ["NavbarResourcesProps"],
             },
             {
                 name: "actionButtons",
@@ -74,9 +73,15 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "hideNavElements",
+                description: "Specifies if links and buttons are hidden",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onBrandClick",
                 description: "Called when the brand icon is clicked",
-                propTypes: ["() => void"],
+                propTypes: ["(type: BrandType) => void"],
             },
             {
                 name: "onItemClick",
@@ -111,6 +116,69 @@ const DATA: ApiTableSectionProps[] = [
     {
         name: "NavItemProps",
         attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        This also inherits props from&nbsp;
+                        <a
+                            href="/?path=/docs/general-text-introduction--introduction#component-api"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            TextLinkProps
+                        </a>
+                    </>
+                ),
+            },
+            {
+                name: "id",
+                description: (
+                    <>
+                        The unique identifier of the navigation item. Used for
+                        the&nbsp;
+                        <code>selectedId</code> property
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier of the navigation item",
+                propTypes: ["string"],
+            },
+            {
+                name: "options",
+                description:
+                    "Any additional props to be passed to the navigation item",
+                propTypes: ["T"],
+            },
+            {
+                name: "subMenu",
+                description:
+                    "The navigation items for the mobile viewport. Uses desktop's if not specified",
+                propTypes: ["NavItemCommonProps<T>[]"],
+            },
+        ],
+    },
+    {
+        name: "NavItemCommonProps",
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        This also inherits props from&nbsp;
+                        <a
+                            href="/?path=/docs/general-text-introduction--introduction#component-api"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            TextLinkProps
+                        </a>
+                    </>
+                ),
+            },
             {
                 name: "id",
                 description: (
@@ -198,7 +266,23 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "NavResourcesProps",
+        name: "NavbarResourcesProps",
+        attributes: [
+            {
+                name: "primary",
+                description: "The primary branding",
+                propTypes: ["NavbarBrandingProps"],
+                defaultValue: "<LifeSG branding>",
+            },
+            {
+                name: "secondary",
+                description: "The secondary branding",
+                propTypes: ["NavbarBrandingProps"],
+            },
+        ],
+    },
+    {
+        name: "NavbarBrandingProps",
         attributes: [
             {
                 name: "brandName",
@@ -209,6 +293,16 @@ const DATA: ApiTableSectionProps[] = [
                 name: "logoSrc",
                 description: "The image source of the brand logo",
                 propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "BrandType",
+        attributes: [
+            {
+                name: "",
+                description: "The type of brand icon click",
+                propTypes: [`"primary"`, `"secondary"`],
             },
         ],
     },
