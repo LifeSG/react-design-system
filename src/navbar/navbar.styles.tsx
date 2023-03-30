@@ -59,7 +59,8 @@ export const NavElementsContainer = styled.div`
     display: flex;
     height: 100%;
     margin-left: 5rem;
-
+    flex: 1;
+    justify-content: flex-end;
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0rem;
     }
@@ -86,6 +87,7 @@ export const NavBrandContainer = styled.div`
     height: 100%;
     flex-direction: row;
     align-items: center;
+    flex-shrink: 0;
 `;
 
 export const NavSeparator = styled.div<StyleProps>`

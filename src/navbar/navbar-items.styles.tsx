@@ -44,11 +44,11 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 export const LinkItem = styled.li`
     display: flex;
-    width: 100%;
 
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
         padding: 0.125rem 0;
+        width: 100%;
     }
 `;
 
@@ -81,6 +81,12 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
 export const LinkLabel = styled.div`
     flex: 1;
     margin-top: 0.25rem;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    white-space: pre-wrap;
 `;
 
 export const LinkIndicator = styled.div`
