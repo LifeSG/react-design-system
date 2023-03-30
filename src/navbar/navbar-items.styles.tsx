@@ -46,10 +46,14 @@ export const LinkItem = styled.li`
     display: flex;
     margin-left: 1rem;
 
+    :first-child {
+        margin-left: 0;
+    }
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
         padding: 0.125rem 0;
         width: 100%;
+        margin-left: 0rem;
     }
 `;
 
