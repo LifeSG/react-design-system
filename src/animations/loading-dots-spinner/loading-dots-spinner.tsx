@@ -1,15 +1,20 @@
-import React from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
+import { Color } from "../../color";
+import { BaseTheme } from "../../theme";
+import { CustomisableAnimationProps } from "../types";
 import { LottieLoadingDotsSpinner } from "./lottie-animation";
-import { LoadingDotsSpinnerProps } from "./types";
 
 export const LoadingDotsSpinner = ({
     color,
+    id,
     "data-testid": testId,
-}: LoadingDotsSpinnerProps) => {
+}: CustomisableAnimationProps) => {
+    const theme = useTheme();
+    const animationColor =
+        color || Color.Primary({ theme: theme || BaseTheme });
     return (
-        <Container data-testid={testId}>
-            <LottieLoadingDotsSpinner color={color} />
+        <Container data-testid={testId} id={id}>
+            <LottieLoadingDotsSpinner color={animationColor} />
         </Container>
     );
 };
@@ -19,5 +24,4 @@ export const LoadingDotsSpinner = ({
 // =============================================================================
 const Container = styled.div`
     margin: 0 auto;
-    padding-top: 1rem;
 `;
