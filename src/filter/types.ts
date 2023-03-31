@@ -17,7 +17,9 @@ export interface FilterProps {
 }
 
 export interface FilterItemProps {
-    children: React.ReactNode | ((mode: Mode) => React.ReactNode);
+    children:
+        | React.ReactNode
+        | ((mode: Mode, state: { minimised: boolean }) => React.ReactNode);
     /** Specifies if header divider is visible in default mode */
     showDivider?: boolean | undefined;
     /** Specifies if divider is visible in mobile mode */
@@ -27,6 +29,8 @@ export interface FilterItemProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     collapsible?: boolean | undefined;
+    minimisable?: boolean | undefined;
+    minimisedHeight?: number | undefined;
 }
 
 export interface FilterPageProps {
@@ -35,4 +39,15 @@ export interface FilterPageProps {
     onDismiss?: (() => void) | undefined;
     /** Called when done button is pressed */
     onDone?: (() => void) | undefined;
+}
+
+export interface FilterItemCheckboxProps<T>
+    extends Omit<FilterItemProps, "children"> {
+    options: T[];
+    selectedOptions?: T[] | undefined;
+    onSelect?: ((options: T[]) => void) | undefined;
+    /** Function to derive display value from an item. If not set, checks `item.label`. */
+    labelExtractor?: ((item: T) => string) | undefined;
+    /** Function to derive value from an item. If not set, checks `item.value`. */
+    valueExtractor?: ((item: T) => string) | undefined;
 }

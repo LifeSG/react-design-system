@@ -10,7 +10,13 @@ import {
     StoryContainer,
     Title,
 } from "../storybook-common";
-import { DateFilter, SearchFilter, useFilters } from "./doc-elements";
+import {
+    DateFilter,
+    SearchFilter,
+    StyledFilterItem,
+    TextFilter,
+    useFilters,
+} from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta title="Modules/Filter" component={Filter} />
@@ -47,8 +53,8 @@ import { Filter } from "@lifesg/react-design-system/filter";
                     >
                         {(mode) => (
                             <>
-                                <Filter.Item
-                                    title=""
+                                <StyledFilterItem
+                                    $mode={mode}
                                     collapsible={false}
                                     showMobileDivider={false}
                                     showDivider={false}
@@ -58,8 +64,8 @@ import { Filter } from "@lifesg/react-design-system/filter";
                                         value={draftFilters.search}
                                         onChange={updateFilter(mode, "search")}
                                     />
-                                </Filter.Item>
-                                <Filter.Item title="Category 1">
+                                </StyledFilterItem>
+                                <Filter.Item title="Date">
                                     <DateFilter
                                         mode={mode}
                                         value={draftFilters.cat1}
@@ -67,20 +73,7 @@ import { Filter } from "@lifesg/react-design-system/filter";
                                     />
                                 </Filter.Item>
                                 <Filter.Item title="Just an example of long content that may wrap to the next line">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Morbi venenatis neque
-                                    felis, ac tempor erat iaculis et. Nam
-                                    elementum at lectus et dapibus. Orci varius
-                                    natoque penatibus et magnis dis parturient
-                                    montes, nascetur ridiculus mus. Integer
-                                    aliquam placerat ullamcorper. Sed ut
-                                    pulvinar felis. Praesent vulputate ex quis
-                                    tellus dictum laoreet. Aliquam condimentum
-                                    libero ut sagittis interdum. Fusce auctor
-                                    pharetra lorem eu rhoncus. Integer
-                                    consectetur in odio sed vestibulum. Nunc
-                                    imperdiet ligula non eros faucibus, non
-                                    aliquam dui aliquet.
+                                    <TextFilter />
                                 </Filter.Item>
                             </>
                         )}
@@ -114,6 +107,33 @@ Each item can be configured with `collapsible`, `showDivider` and `showMobileDiv
                 </Filter.Item>
                 <Filter.Item title="Not collapsible" collapsible={false}>
                     Always visible
+                </Filter.Item>
+            </Filter>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Minimising content</Heading3>
+
+For longer filter items, content can be minimised with the `minimisable` prop.
+
+<Canvas>
+    <Story name="Minimised">
+        <StoryContainer>
+            <Filter>
+                <Filter.Item
+                    title="Minimised"
+                    minimisable
+                    showMobileDivider={false}
+                >
+                    <TextFilter />
+                </Filter.Item>
+                <Filter.Item
+                    title="With custom minimised height"
+                    minimisable
+                    minimisedHeight={100}
+                >
+                    <TextFilter />
                 </Filter.Item>
             </Filter>
         </StoryContainer>

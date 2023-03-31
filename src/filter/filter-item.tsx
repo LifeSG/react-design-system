@@ -5,17 +5,21 @@ import { FilterContext } from "./filter-context";
 import {
     ChevronIcon,
     Divider,
-    Expandable,
+    ExpandableItem,
     FilterItemBody,
     FilterItemExpandButton,
     FilterItemHeader,
+    FilterItemMinimiseButton,
     FilterItemTitle,
     FilterItemWrapper,
+    MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
+    minimisable = false,
+    minimisedHeight,
     showDivider = true,
     showMobileDivider = true,
     title,
@@ -27,15 +31,20 @@ export const FilterItem = ({
     // =============================================================================
     const { mode } = useContext(FilterContext);
     const isMobile = mode === "mobile";
-    const [expanded, setExpanded] = useState(
-        isMobile ? true : !desktopCollapsible
+    const [collapsed, setCollapsed] = useState(
+        isMobile ? false : desktopCollapsible
     );
+    const [contentMinimised, setContentMinimised] = useState(minimisable);
     const collapsible = !isMobile && desktopCollapsible;
 
-    const resizeDetector = useResizeDetector();
-    const expandableStyles = useSpring({
-        height: expanded ? resizeDetector.height : 0,
+    const itemResizeDetector = useResizeDetector();
+    const contentResizeDetector = useResizeDetector();
+    const itemAnimationStyles = useSpring({
+        height: collapsed ? 0 : itemResizeDetector.height,
     });
+    const contentHeight = contentMinimised
+        ? minimisedHeight ?? Math.min(contentResizeDetector.height * 0.5, 216)
+        : contentResizeDetector.height;
 
     // =============================================================================
     // RENDER
@@ -58,24 +67,46 @@ export const FilterItem = ({
                             focusHighlight={false}
                             focusOutline="browser"
                             onClick={() => {
-                                setExpanded(!expanded);
+                                setCollapsed(!collapsed);
                             }}
-                            aria-label={expanded ? "Collapse" : "Expand"}
+                            aria-label={collapsed ? "Expand" : "Collapse"}
                         >
-                            <ChevronIcon $expanded={expanded} />
+                            <ChevronIcon $expanded={!collapsed} />
                         </FilterItemExpandButton>
                     )}
                 </FilterItemHeader>
             )}
-            <Expandable style={isMobile ? undefined : expandableStyles}>
-                <div ref={resizeDetector.ref}>
+            <ExpandableItem style={isMobile ? undefined : itemAnimationStyles}>
+                <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>
-                        {typeof children === "function"
-                            ? children(mode)
-                            : children}
+                        <MinimisableContent
+                            $height={contentHeight}
+                            $minimisable={minimisable}
+                        >
+                            <div ref={contentResizeDetector.ref}>
+                                <div data-id="content-container">
+                                    {typeof children === "function"
+                                        ? children(mode, {
+                                              minimised: contentMinimised,
+                                          })
+                                        : children}
+                                </div>
+                            </div>
+                        </MinimisableContent>
+                        {minimisable && (
+                            <FilterItemMinimiseButton
+                                data-id="minimise-button"
+                                styleType="link"
+                                onClick={() => {
+                                    setContentMinimised(!contentMinimised);
+                                }}
+                            >
+                                View {contentMinimised ? "more" : "less"}
+                            </FilterItemMinimiseButton>
+                        )}
                     </FilterItemBody>
                 </div>
-            </Expandable>
+            </ExpandableItem>
         </FilterItemWrapper>
     );
 };

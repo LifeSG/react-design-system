@@ -8,7 +8,7 @@ import { Wrapper } from "./toggle-icon.styles";
 
 export type ToggleIconType = "checkbox" | "radio" | "tick" | "cross";
 
-interface Props {
+export interface ToggleIconProps {
     type: ToggleIconType;
     active?: boolean | undefined;
     disabled?: boolean | undefined;
@@ -20,7 +20,7 @@ export const ToggleIcon = ({
     active = false,
     disabled,
     className,
-}: Props) => {
+}: ToggleIconProps) => {
     let component: JSX.Element;
 
     switch (type) {
