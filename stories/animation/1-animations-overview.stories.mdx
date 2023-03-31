@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 import {
     LoadingDots,
     LoadingSpinner,
@@ -11,15 +11,21 @@ import {
     AnimationPane,
     Content,
 } from "./doc-elements";
-import { Color } from "src/color";
-import { BaseTheme } from "src/theme";
 import { PropsTable } from "./props-table";
 
-<Meta title="General/Animations" />
+<Meta title="General/Animations/Overview" />
 
 <Title>Animations</Title>
 
 <Secondary>Overview</Secondary>
+
+A component that renders an animation on the UI.
+
+```tsx
+import { <Component_name> } from "@lifesg/react-design-system/animations";
+```
+
+<Secondary>Collection</Secondary>
 
 <AnimationDisplay>
     <AnimationItem>
@@ -55,48 +61,16 @@ import { PropsTable } from "./props-table";
             <p>
                 An animation that can be shown in between page transitions or
                 while waiting for fetching of data.
+                <br />
+                <br />
+                This is a customisable animation. <a href="/docs/general-animations-customisable-animations--loading-dots-spinner">
+                    See here
+                </a>&nbsp;to find out more.
             </p>
         </Content>
     </AnimationItem>
 </AnimationDisplay>
-<br />
 
-<Secondary>Replace lottie color with color props</Secondary>
-
-You can made use of color props in `LoadingDotsSpinner` to replace the default lottie color.
-
-<Preview>
-    <Story name="With color props">
-        <AnimationDisplay>
-            <AnimationItem>
-                <AnimationPane>
-                    <LoadingDotsSpinner
-                        color={Color.Primary({ theme: BaseTheme })}
-                        data-testid={"loading-spinner"}
-                    />
-                </AnimationPane>
-            </AnimationItem>
-            <AnimationItem>
-                <AnimationPane>
-                    <LoadingDotsSpinner
-                        color={"#EF413D"}
-                        data-testid={"loading-spinner"}
-                    />
-                </AnimationPane>
-            </AnimationItem>
-            <AnimationItem>
-                <AnimationPane>
-                    <LoadingDotsSpinner
-                        color={"#FEAB10"}
-                        data-testid={"loading-spinner"}
-                    />
-                </AnimationPane>
-            </AnimationItem>
-        </AnimationDisplay>
-    </Story>
-</Preview>
-
-<br />
 <Secondary>Usage</Secondary>
 
 ```tsx
@@ -110,5 +84,7 @@ export const SomeComponent = () => {
     );
 };
 ```
+
+<Secondary>Component API</Secondary>
 
 <PropsTable />
