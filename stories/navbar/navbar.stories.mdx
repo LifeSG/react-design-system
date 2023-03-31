@@ -1,5 +1,5 @@
 import { GearIcon } from "@lifesg/react-icons/gear";
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { IconButton } from "src/icon-button";
 import { Navbar } from "src/navbar";
@@ -115,7 +115,7 @@ In the mobile viewports, the navigation links are presented in a drawer and is t
 
 This is a common use case among web apps where it requires a Logout button on the navigation bar.
 
-<Preview>
+<Canvas>
     <Story name="Single action button">
         <Navbar
             items={{
@@ -137,13 +137,13 @@ This is a common use case among web apps where it requires a Logout button on th
             fixed={false} /* For storybook purposes */
         />
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Multiple action buttons</Heading3>
 
 > **Note**: In the mobile view, the `download` action button will always be positioned last
 
-<Preview>
+<Canvas>
     <Story name="Multiple action buttons">
         <Navbar
             items={{
@@ -210,13 +210,13 @@ This is a common use case among web apps where it requires a Logout button on th
             fixed={false} /* For storybook purposes */
         />
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Custom component action buttons</Heading3>
 
 You can also choose to render a custom component of your choice as an action button.
 
-<Preview>
+<Canvas>
     <Story name="Custom action buttons">
         <Navbar
             items={{
@@ -262,7 +262,7 @@ You can also choose to render a custom component of your choice as an action but
             fixed={false} /* For storybook purposes */
         />
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Prevent dismissal of drawer on specific actions</Heading3>
 
@@ -271,7 +271,7 @@ the `blockDrawerDismissalMethods` prop to do just that.
 
 > **Note**: You will need to view this in a mobile or tablet viewport to see the interaction
 
-<Preview>
+<Canvas>
     <Story name="Prevent drawer dismissal">
         <Navbar
             items={{
@@ -306,7 +306,173 @@ the `blockDrawerDismissalMethods` prop to do just that.
             blockDrawerDismissalMethods={["brand-click"]}
         />
     </Story>
-</Preview>
+</Canvas>
+
+<Heading3>Sub menu</Heading3>
+
+A sub menu is shown if the selected nav item has sublinks.
+
+<Canvas>
+    <Story name="Sub menu">
+        {() => {
+            const [selected, setSelected] = useState("lifesg1");
+            return (
+                <Navbar
+                    items={{
+                        desktop: [
+                            {
+                                id: "home",
+                                children: "Home",
+                            },
+                            {
+                                id: "guides",
+                                children: "Guides",
+                                subMenu: [
+                                    {
+                                        id: "guides1",
+                                        children:
+                                            "Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "guides2",
+                                        children: "Sub Guides 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "guides3",
+                                        children: "Sub Guides 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                            {
+                                id: "lifesg-app",
+                                children: "LifeSG app",
+                                subMenu: [
+                                    {
+                                        id: "lifesg1",
+                                        children: "Sub LifeSG 1",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg2",
+                                        children: "Sub LifeSG 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg3",
+                                        children: "Sub LifeSG 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        id: "lifesg4",
+                                        children: "Sub LifeSG 4",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                        ],
+                    }}
+                    actionButtons={{
+                        desktop: [
+                            {
+                                type: "button",
+                                args: {
+                                    styleType: "link",
+                                    children: "FAQ",
+                                },
+                            },
+                            {
+                                type: "button",
+                                args: {
+                                    styleType: "secondary",
+                                    children: "Logout",
+                                },
+                            },
+                            {
+                                type: "download",
+                            },
+                        ],
+                    }}
+                    selectedId={selected}
+                    fixed={false} /* For storybook purposes */
+                    onItemClick={(item) => {
+                        setSelected(item.id);
+                    }}
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Secondary branding</Heading3>
+
+In this example, a co-brand is displayed next to the primary brand.
+
+<Canvas>
+    <Story name="Secondary branding">
+        <Navbar
+            items={{
+                desktop: [
+                    {
+                        id: "home",
+                        children: "Home",
+                        onClick: () => {
+                            setSelected("home");
+                        },
+                    },
+                    {
+                        id: "guides",
+                        children: "Guides",
+                        onClick: () => {
+                            setSelected("guides");
+                        },
+                    },
+                    {
+                        id: "lifesg-app",
+                        children: "LifeSG app",
+                        onClick: () => {
+                            setSelected("lifesg-app");
+                        },
+                    },
+                ],
+            }}
+            actionButtons={{
+                desktop: [
+                    {
+                        type: "button",
+                        args: {
+                            styleType: "link",
+                            children: "FAQ",
+                        },
+                    },
+                    {
+                        type: "button",
+                        args: {
+                            styleType: "secondary",
+                            children: "Logout",
+                        },
+                    },
+                    {
+                        type: "download",
+                    },
+                ],
+            }}
+            fixed={false} /* For storybook purposes */
+            resources={{
+                secondary: {
+                    brandName: "OneService",
+                    logoSrc:
+                        "https://www.life.gov.sg/img/one-service/os-logo.png",
+                },
+            }}
+            onBrandClick={(type) => {
+                alert("Clicked on " + type + " brand");
+            }}
+        />
+    </Story>
+</Canvas>
 
 <Secondary>Troubleshooting</Secondary>
 

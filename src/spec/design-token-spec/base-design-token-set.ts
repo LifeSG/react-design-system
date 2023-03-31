@@ -9,4 +9,7 @@ export const BaseDesignTokenSet: DesignTokenSet = {
     InputErrorBoxShadow: css`
         inset 0 0 6px 1px ${Color.Shadow.Red}
     `,
+    ElevationBoxShadow: css`
+      0px 2px 8px ${Color.Shadow.Elevation}
+ `,
 };

@@ -19,15 +19,15 @@ export const NAVBAR_MOBILE_HEIGHT = 3.5;
 // STYLE INTERFACE
 // =============================================================================
 interface StyleProps {
-    compress?: boolean;
-    fixed?: boolean;
+    $compress?: boolean;
+    $fixed?: boolean;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Wrapper = styled.div<StyleProps>`
-    position: ${(props) => (props.fixed ? "fixed" : "relative")};
+    position: ${(props) => (props.$fixed ? "fixed" : "relative")};
     background-color: white;
     z-index: 30;
     top: 0;
@@ -39,7 +39,9 @@ export const Wrapper = styled.div<StyleProps>`
 
 export const Nav = styled.nav<StyleProps>`
     height: ${(props) =>
-        props.compress ? NAVBAR_HEIGHT.compress : NAVBAR_HEIGHT.notCompress}rem;
+        props.$compress
+            ? NAVBAR_HEIGHT.compress
+            : NAVBAR_HEIGHT.notCompress}rem;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -56,6 +58,12 @@ export const Nav = styled.nav<StyleProps>`
 export const NavElementsContainer = styled.div`
     display: flex;
     height: 100%;
+    margin-left: 5rem;
+    flex: 1;
+    justify-content: flex-end;
+    ${MediaQuery.MaxWidth.tablet} {
+        margin-left: 0rem;
+    }
 `;
 
 export const MobileMenuButton = styled(IconButton)`
@@ -72,4 +80,25 @@ export const MobileMenuIcon = styled(MenuIcon)`
     height: 1.5rem;
     width: 1.5rem;
     color: ${Color.Neutral[1]};
+`;
+
+export const NavBrandContainer = styled.div`
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+`;
+
+export const NavSeparator = styled.div<StyleProps>`
+    display: flex;
+    background-color: ${Color.Neutral[5]};
+    height: ${(props) => (props.$compress ? 2 : 2.5)}rem;
+    width: 1px;
+    margin: 0 ${(props) => (props.$compress ? 1.5 : 1.125)}rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        height: 1.5rem;
+        margin: 0 1rem;
+    }
 `;

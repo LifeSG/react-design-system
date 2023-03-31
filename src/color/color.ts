@@ -72,5 +72,6 @@ export const Color: PropertiesToType<
     Shadow: {
         Accent: getThemeColors("Shadow.Accent"),
         Red: getThemeColors("Shadow.Red"),
+        Elevation: getThemeColors("Shadow.Elevation"),
     },
 };
