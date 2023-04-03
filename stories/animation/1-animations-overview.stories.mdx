@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 import {
     LoadingDots,
     LoadingSpinner,
@@ -11,12 +11,21 @@ import {
     AnimationPane,
     Content,
 } from "./doc-elements";
+import { PropsTable } from "./props-table";
 
-<Meta title="General/Animations" />
+<Meta title="General/Animations/Overview" />
 
 <Title>Animations</Title>
 
 <Secondary>Overview</Secondary>
+
+A component that renders an animation on the UI.
+
+```tsx
+import { <Component_name> } from "@lifesg/react-design-system/animations";
+```
+
+<Secondary>Collection</Secondary>
 
 <AnimationDisplay>
     <AnimationItem>
@@ -52,11 +61,16 @@ import {
             <p>
                 An animation that can be shown in between page transitions or
                 while waiting for fetching of data.
+                <br />
+                <br />
+                This is a customisable animation. <a href="/docs/general-animations-customisable-animations--loading-dots-spinner">
+                    See here
+                </a>&nbsp;to find out more.
             </p>
         </Content>
     </AnimationItem>
 </AnimationDisplay>
-<br />
+
 <Secondary>Usage</Secondary>
 
 ```tsx
@@ -70,3 +84,7 @@ export const SomeComponent = () => {
     );
 };
 ```
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
