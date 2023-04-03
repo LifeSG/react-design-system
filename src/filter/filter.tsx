@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Overlay } from "../overlay/overlay";
 import { MediaWidths } from "../spec/media-spec";
+import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterContext } from "./filter-context";
 import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";
@@ -161,4 +162,5 @@ const FilterBase = ({
 export const Filter = Object.assign(FilterBase, {
     Item: FilterItem,
     Page: FilterItemPage,
+    Checkbox: FilterItemCheckbox,
 });

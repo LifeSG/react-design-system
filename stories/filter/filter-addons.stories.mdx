@@ -1,0 +1,118 @@
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Filter } from "../../src/filter";
+import { Form } from "../../src/form";
+import { Overlay } from "../../src/overlay";
+import {
+    Heading3,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { SearchFilter, TextFilter, useFilters } from "./doc-elements";
+import { PropsTable } from "./addon-props-table";
+
+<Meta title="Modules/Filter/Addons" component={Filter} />
+
+<Title>Filter.Checkbox</Title>
+
+<Secondary>Overview</Secondary>
+
+Widget to select multiple options
+
+```tsx
+import { Filter } from "@lifesg/react-design-system/filter";
+```
+
+<Canvas>
+    <Story name="Filter Checkbox">
+        {() => {
+            const {
+                currentFilters,
+                draftFilters,
+                clearButtonDisabled,
+                updateFilter,
+                saveFilters,
+                dismissFilters,
+                clearFilters,
+            } = useFilters(); // your custom filter state management here
+            return (
+                <StoryContainer>
+                    <Filter
+                        clearButtonDisabled={clearButtonDisabled}
+                        onClear={clearFilters}
+                        onDismiss={dismissFilters}
+                        onDone={saveFilters}
+                    >
+                        {(mode) => (
+                            <>
+                                <Filter.Checkbox
+                                    showMobileDivider={false}
+                                    title="With 5 or less items"
+                                    selectedOptions={draftFilters.cat1}
+                                    onSelect={updateFilter(mode, "cat1")}
+                                    options={[
+                                        {
+                                            value: "1",
+                                            label: "Sample text",
+                                        },
+                                        {
+                                            value: "2",
+                                            label: "Sample teeext",
+                                        },
+                                        {
+                                            value: "3",
+                                            label: "Sample teeeeeeeeext",
+                                        },
+                                    ]}
+                                />
+                                <Filter.Checkbox
+                                    title="With more than 5 items"
+                                    selectedOptions={draftFilters.cat2}
+                                    onSelect={updateFilter(mode, "cat2")}
+                                    options={[
+                                        {
+                                            value: "1",
+                                            label: "Label 1",
+                                        },
+                                        {
+                                            value: "2",
+                                            label: "Label 2",
+                                        },
+                                        {
+                                            value: "3",
+                                            label: "Label 3",
+                                        },
+                                        {
+                                            value: "4",
+                                            label: "Label 4",
+                                        },
+                                        {
+                                            value: "5",
+                                            label: "Label 5, which is much longer than other labels for some mysterious reason",
+                                        },
+                                        {
+                                            value: "6",
+                                            label: "Label 6",
+                                        },
+                                        {
+                                            value: "7",
+                                            label: "Label 7",
+                                        },
+                                        {
+                                            value: "8",
+                                            label: "Label 8",
+                                        },
+                                    ]}
+                                />
+                            </>
+                        )}
+                    </Filter>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<PropsTable />
