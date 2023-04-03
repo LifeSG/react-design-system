@@ -1,22 +1,18 @@
-import styled, { css } from "styled-components";
-import { Color } from "../color/color";
-import { ToastType } from "./types";
-import { IconButton } from "../icon-button";
-import { Text } from "../text";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { animated } from "react-spring";
 import { ValidationElementAttributes } from "src/color";
 import { PropertiesToType } from "src/util/utility-types";
-import { animated } from "react-spring";
+import styled, { css } from "styled-components";
+import { Color } from "../color/color";
+import { IconButton } from "../icon-button";
+import { Text } from "../text";
+import { toastType } from "./types";
 
 //=============================================================================
 // STYLE INTERFACE
 //=============================================================================
 interface StyleProps {
-    $type: ToastType;
-}
-interface StylePropsWrapper {
-    $type: ToastType;
-    $autoDismiss: boolean;
+    $type: toastType;
 }
 
 const getValidationColorAttributes = (
@@ -39,7 +35,7 @@ const getValidationColorAttributes = (
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled(animated.div)<StylePropsWrapper>`
+export const Wrapper = styled(animated.div)<StyleProps>`
     display: flex;
     position: relative;
     padding: 1rem;
@@ -49,27 +45,25 @@ export const Wrapper = styled(animated.div)<StylePropsWrapper>`
 
     ${(props) => {
         return css`
-            background: ${getValidationColorAttributes(props)["Background"]};
-            border: 1px solid ${getValidationColorAttributes(props)["Border"]};
-            color: ${getValidationColorAttributes(props)["Text"]};
+            background: ${getValidationColorAttributes(props).Background};
+            border: 1px solid ${getValidationColorAttributes(props).Border};
+            color: ${getValidationColorAttributes(props).Text};
             svg {
                 width: 1.5rem;
                 height: 1.5rem;
-                color: ${getValidationColorAttributes(props)["Icon"]};
+                margin-right: 0.5rem;
+                color: ${getValidationColorAttributes(props).Icon};
             }
         `;
     }};
 `;
 
-export const IconContainer = styled.div`
-    max-width: 3rem;
-`;
-
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0 2rem 0 0.5rem;
-    flex-grow: 2;
+    padding: 0 2rem 0 0;
+    padding-right: 2rem;
+    flex: 1;
 `;
 
 export const Title = styled(Text.H4)<StyleProps>`
@@ -77,7 +71,7 @@ export const Title = styled(Text.H4)<StyleProps>`
 
     ${(props) => {
         return css`
-            color: ${getValidationColorAttributes(props)["Text"]};
+            color: ${getValidationColorAttributes(props).Text};
         `;
     }}
 `;
@@ -88,7 +82,7 @@ export const Description = styled.div<StyleProps>`
     ${(props) => {
         return css`
             p {
-                color: ${getValidationColorAttributes(props)["Text"]};
+                color: ${getValidationColorAttributes(props).Text};
             }
         `;
     }}
@@ -99,15 +93,19 @@ export const CloseIcon = styled(CrossIcon)`
 `;
 
 export const DismissButton = styled(IconButton)<StyleProps>`
-    padding: 0;
-    height: 1.5rem;
-    width: 1.5rem;
-    cursor: pointer;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-left: 5px;
+    margin-right: -1rem;
+    height: max-content;
 
     ${(props) => {
         return css`
             svg {
-                color: ${getValidationColorAttributes(props)["Text"]};
+                color: ${getValidationColorAttributes(props).Text};
+            }
+            :hover {
+                background: transparent;
             }
         `;
     }};
