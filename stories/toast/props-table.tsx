@@ -25,14 +25,14 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        Type of <code>Toast</code>
+                        Status type of <code>Toast</code>
                     </>
                 ),
                 propTypes: [`"success"`, `"warning"`, `"error"`, `"info"`],
                 defaultValue: `"success"`,
             },
             {
-                name: "title",
+                name: "label",
                 description: (
                     <>
                         The title of the <code>Toast</code>
@@ -42,7 +42,7 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "",
             },
             {
-                name: "description",
+                name: "secondaryLabel",
                 description: (
                     <>
                         The content of the <code>Toast</code>
@@ -56,8 +56,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "autoDismiss",
                 description: (
                     <>
-                        An optional duration the <code>toast</code> should be
-                        closed
+                        Specifies if the <code>Toast</code> will be
+                        automatically dismiss after <strong>4 seconds</strong>
                     </>
                 ),
                 propTypes: ["boolean"],

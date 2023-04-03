@@ -25,14 +25,17 @@ import { Toast } from "@lifesg/react-design-system/toast";
     <Story name="Toast">
         <Toast
             type="success"
-            description="This is a successful toast message"
+            secondaryLabel="This is a success toast message"
         />
         <br />
-        <Toast type="warning" description="This is a warning toast message" />
+        <Toast
+            type="warning"
+            secondaryLabel="This is a warning toast message"
+        />
         <br />
-        <Toast type="error" description="This is a error toast message" />
+        <Toast type="error" secondaryLabel="This is an error toast message" />
         <br />
-        <Toast type="info" description="This is a info toast message" />
+        <Toast type="info" secondaryLabel="This is an info toast message" />
     </Story>
 </Canvas>
 
@@ -42,28 +45,54 @@ import { Toast } from "@lifesg/react-design-system/toast";
     <Story name="With sub label">
         <Toast
             type="success"
-            title="Template successfully updated"
-            description="Your bookings has been updated and received by the service provider."
+            secondaryLabel="Your bookings has been updated and received by the service provider."
         />
         <br />
         <Toast
+            type="success"
+            label="Template successfully updated"
+            secondaryLabel="Your bookings has been updated and received by the service provider."
+        />
+        <br />
+        <br />
+        <Toast
             type="warning"
-            title="Unknown characters"
-            description="The template contains characters that cannot be updated. Please
+            secondaryLabel="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
         />
         <br />
         <Toast
+            type="warning"
+            label="Unknown characters"
+            secondaryLabel="The template contains characters that cannot be updated. Please
+                remove the characters and try again."
+        />
+        <br />
+        <br />
+        <Toast
             type="error"
-            title="System error"
-            description="An internal system error had occured. Please log out and try
+            secondaryLabel="An internal system error had occured. Please log out and try
                 again."
         />
         <br />
         <Toast
+            type="error"
+            label="System error"
+            secondaryLabel="An internal system error had occured. Please log out and try
+                again."
+        />
+        <br />
+        <br />
+        <Toast
             type="info"
-            title="Updated automatically"
-            description="The calendar will be automatically updated when you have done
+            secondaryLabel="The calendar will be automatically updated when you have done
+                editing the event information."
+        />
+        <br />
+        <Toast
+            type="info"
+            label="Updated automatically"
+            secondaryLabel="The calendar will be automatically updated when you have done
                 editing the event information."
         />
     </Story>
@@ -78,7 +107,7 @@ is **4 seconds** and you can specify using the `autoDismiss` property.
     <Story name="Auto dismissal">
         <Toast
             type="warning"
-            description="The template contains characters that cannot be updated. Please
+            secondaryLabel="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
             autoDismiss
         />
