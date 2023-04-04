@@ -15,6 +15,46 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The unique identifier of the component",
                 propTypes: ["string"],
             },
+            {
+                name: "totalPages",
+                description: "The unique identifier of the component",
+                propTypes: ["number"],
+                mandatory: true,
+            },
+            {
+                name: "activePage",
+                description: "The unique identifier of the component",
+                propTypes: ["number"],
+                mandatory: true,
+            },
+            {
+                name: "boundaryRange",
+                description: "The unique identifier of the component",
+                propTypes: ["number"],
+            },
+            {
+                name: "siblingRange",
+                description: "The unique identifier of the component",
+                propTypes: ["number"],
+            },
+
+            {
+                name: "showFirstAndLastNav",
+                description: "show first and last nav",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "showJumper",
+                description: "show showJumper nav",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "onPageChange",
+                description: "Called when every item in pagination clicked",
+                propTypes: ["(page: number) => void"],
+            },
         ],
     },
 ];

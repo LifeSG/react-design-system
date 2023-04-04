@@ -23,23 +23,107 @@ import { Pagination } from "@lifesg/react-design-system/pagination-input";
 
 <Canvas>
     <Story name="Pagination">
-        <StoryContainer>
-            <Pagination />
-        </StoryContainer>
+        {() => {
+            const [selectedPage, setSelected] = useState(1);
+            return (
+                <StoryContainer>
+                    <Pagination
+                        onPageChange={(selected) => setSelected(selected)}
+                        activePage={selectedPage}
+                        selectedPage={selectedPage}
+                        totalPages={100}
+                        boundaryRange={1}
+                        itemsPerPage={1}
+                        renderItem={() => {}}
+                        siblingRange={0}
+                    />
+                </StoryContainer>
+            );
+        }}
     </Story>
 </Canvas>
 
-<Heading3>With an error message</Heading3>
+<br />
+<Secondary>Usage examples</Secondary>
 
-<Preview>
-    <Story name="with error message">
-        <StoryContainer>
-            <Pagination />
-        </StoryContainer>
+<Heading3>Simple Pagination</Heading3>
+
+This is a common use case among web apps where it requires a Pagination bar.
+
+<Canvas>
+    <Story name="Simple Pagination">
+        {() => {
+            const [selectedPage, setSelected] = useState(1);
+            return (
+                <StoryContainer>
+                    <Pagination
+                        onPageChange={(selected) => setSelected(selected)}
+                        activePage={selectedPage}
+                        selectedPage={selectedPage}
+                        totalPages={100}
+                    />
+                </StoryContainer>
+            );
+        }}
     </Story>
-</Preview>
+</Canvas>
 
 <br />
+<Heading3>With First And Last Nav</Heading3>
+
+This is a common use case among web apps where it requires a Pagination bar.
+
+<Canvas>
+    <Story name="With First And Last Nav">
+        {() => {
+            const [selectedPage, setSelected] = useState(1);
+            return (
+                <StoryContainer>
+                    <Pagination
+                        onPageChange={(selected) => setSelected(selected)}
+                        activePage={selectedPage}
+                        selectedPage={selectedPage}
+                        totalPages={100}
+                        showFirstAndLastNav
+                        boundaryRange={1}
+                        itemsPerPage={1}
+                        renderItem={() => {}}
+                        siblingRange={0}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<br />
+
+<Heading3>With Jumper</Heading3>
+
+This is a common use case among web apps where it requires a Pagination bar.
+
+<Canvas>
+    <Story name="With Jumper">
+        {() => {
+            const [selectedPage, setSelected] = useState(1);
+            return (
+                <StoryContainer>
+                    <Pagination
+                        onPageChange={(selected) => setSelected(selected)}
+                        activePage={selectedPage}
+                        selectedPage={selectedPage}
+                        totalPages={100}
+                        boundaryRange={1}
+                        itemsPerPage={1}
+                        renderItem={() => {}}
+                        siblingRange={0}
+                        showJumper
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 
