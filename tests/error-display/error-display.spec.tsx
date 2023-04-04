@@ -72,7 +72,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -94,7 +94,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -116,7 +116,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -138,7 +138,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -160,7 +160,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -200,7 +200,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -220,7 +220,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -258,7 +258,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );
@@ -278,7 +278,7 @@ describe("ErrorDisplay", () => {
                 screen.getByRole("heading", { level: 1, name: error.title })
             ).toBeInTheDocument();
 
-            expect(screen.getByRole("img", { name: "error" })).toHaveAttribute(
+            expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img.src
             );

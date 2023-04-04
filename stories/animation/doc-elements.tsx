@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, MediaQuery } from "../../src";
+import { MediaQuery } from "../../src/media";
+import { StoryContainer } from "../storybook-common";
 
 export const AnimationDisplay = styled.div`
     display: grid;
@@ -21,7 +22,7 @@ export const AnimationPane = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: ${Color.Accent.Light[6]};
+    background: #fbfcfe;
     height: 18rem;
 `;
 
@@ -35,4 +36,14 @@ export const Content = styled.div`
         padding: 0.5rem;
         margin-bottom: 1rem;
     }
+`;
+
+export const StoryWrapper = styled(StoryContainer)`
+    display: flex;
+    justify-content: center;
+`;
+
+export const StoryAnimationItem = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
