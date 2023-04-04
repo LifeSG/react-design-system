@@ -1,3 +1,4 @@
+import { ColorScheme } from "src/theme/types";
 import { MediaWidths } from "../spec/media-spec";
 import {
     Error500AdditionalAttributes,
@@ -235,3 +236,133 @@ export const ERROR_DISPLAY_DATA = new Map<
         },
     ],
 ]);
+
+export const ERROR_DISPLAY_DATA_BSG = new Map<
+    ErrorDisplayType,
+    ErrorDisplayDataAttrs
+>([
+    [
+        "400",
+        {
+            img: oldImgAttributeHelper(ImgPaths["400"]),
+            title: "Something went wrong",
+            description: (
+                <>
+                    This could be a temporary problem, so please refresh the
+                    page or try again later.
+                </>
+            ),
+        },
+    ],
+    [
+        "403",
+        {
+            img: oldImgAttributeHelper(ImgPaths["403"]),
+            title: "Error loading page",
+            description: <>You may not have permission to view this page.</>,
+        },
+    ],
+    [
+        "404",
+        {
+            img: oldImgAttributeHelper(ImgPaths["404"]),
+            title: "Page not found",
+            description: (
+                <>
+                    If you entered or pasted the URL, check that it&rsquo;s
+                    correct.
+                </>
+            ),
+        },
+    ],
+    [
+        "408",
+        {
+            img: oldImgAttributeHelper(ImgPaths["400"]),
+            title: "Something went wrong",
+            description: (
+                <>
+                    Please refresh the page or try again later. If it&rsquo;s
+                    still not working, email{" "}
+                    <a href="mailto:helpdesk@life.gov.sg">
+                        helpdesk@life.gov.sg
+                    </a>{" "}
+                    and let us know you received a HTTP 408 error.
+                </>
+            ),
+        },
+    ],
+    [
+        "500",
+        {
+            img: imgAttributeHelper(ImgPaths["500"]),
+            title: "Something went wrong",
+            description: (
+                <>
+                    This could be a temporary problem, so please refresh the
+                    page or try again later.
+                </>
+            ),
+            renderDescription: (attrs: Error500AdditionalAttributes) => (
+                <>
+                    This could be a temporary problem, so please refresh the
+                    page or try again later.
+                </>
+            ),
+        },
+    ],
+    [
+        "503",
+        {
+            img: oldImgAttributeHelper(ImgPaths["503"]),
+            title: "Service under maintenance",
+            description:
+                "This service is currently unavailable. Please try again later.",
+        },
+    ],
+    [
+        "maintenance",
+        {
+            img: oldImgAttributeHelper(ImgPaths["503"]),
+            title: "Service under maintenance",
+            description:
+                "This service is currently unavailable. Please try again later.",
+            renderDescription: (attrs: MaintenanceAdditionalAttributes) => (
+                <>
+                    This service is currently unavailable. Please try again
+                    after&nbsp;
+                    <strong>{attrs.dateString}</strong>.
+                </>
+            ),
+        },
+    ],
+    [
+        "unsupported-browser",
+        {
+            img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
+            title: "Browser not supported",
+            description:
+                "To use BookingSG, download the latest version of Chrome, Edge, Firefox or Safari.",
+        },
+    ],
+    [
+        "partially-supported-browser",
+        {
+            img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
+            title: "Browser not supported",
+            description:
+                "BookingSG works best with the latest version of Chrome, Edge, Firefox or Safari. If you continue with your browser, you may run into problems.",
+        },
+    ],
+]);
+
+export const errorDisplayData = (
+    type: ErrorDisplayType,
+    colorScheme: ColorScheme = "base"
+) => {
+    if (colorScheme === "base") {
+        return ERROR_DISPLAY_DATA.get(type);
+    } else if (colorScheme === "bookingsg") {
+        return ERROR_DISPLAY_DATA_BSG.get(type);
+    }
+};

@@ -1,5 +1,7 @@
 import React from "react";
-import { ERROR_DISPLAY_DATA } from "./error-display-data";
+import { ThemeSpec } from "src/theme";
+import { useTheme } from "styled-components";
+import { errorDisplayData } from "./error-display-data";
 import {
     ActionButton,
     Container,
@@ -26,7 +28,12 @@ export const ErrorDisplay = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const defaultAssets = ERROR_DISPLAY_DATA.get(type);
+    const theme = useTheme();
+    console.log(theme);
+    const defaultAssets = errorDisplayData(
+        type,
+        (theme as unknown as ThemeSpec).colorScheme
+    );
     const testId = otherProps["data-testid"] || "error-display";
 
     // =============================================================================

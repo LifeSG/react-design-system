@@ -1,11 +1,18 @@
 import { render, screen } from "@testing-library/react";
-
+import * as styledComponents from "styled-components";
 import { ErrorDisplay } from "../../src";
 import { ERROR_DISPLAY_DATA } from "../../src/error-display/error-display-data";
 
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
+
+jest.mock("styled-components", () => {
+    const actual = jest.requireActual("styled-components");
+    actual.useTheme = () => ({ colorScheme: "base" });
+    return actual;
+});
+
 describe("ErrorDisplay", () => {
     beforeEach(() => {
         jest.resetAllMocks();
