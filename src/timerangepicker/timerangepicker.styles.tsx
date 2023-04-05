@@ -3,6 +3,9 @@ import { Color } from "../color";
 import { BookingSGColorSet } from "../spec/color-spec/bookingsg-color-set";
 import { TextStyleHelper } from "../text/helper";
 import { MediaQuery } from "../media";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { DesignToken } from "src/design-token";
+import { IconButton } from "src/icon-button";
 
 // =============================================================================
 // STYLE INTERFACe
@@ -35,8 +38,8 @@ export const InputSelectorElement = styled.input<StyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
 
     display: block;
-    padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
-    width: 134.5px;
+    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
+    width: 100%;
     height: 26px;
     background: ${BookingSGColorSet.Neutral[8]};
     color: ${BookingSGColorSet.Neutral[1]};
@@ -47,46 +50,41 @@ export const InputSelectorElement = styled.input<StyleProps>`
     }
 `;
 
+export const InputSelectorRightElement = styled.input<StyleProps>`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+
+    display: block;
+    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
+    width: 100%;
+    height: 26px;
+    margin-left: 1rem;
+    background: ${BookingSGColorSet.Neutral[8]};
+    color: ${BookingSGColorSet.Neutral[1]};
+    border: 0px;
+    :focus,
+    :active {
+        outline: none;
+    }
+`;
+
 export const TimeContainer = styled.div<ContainerStyleProps>`
-    box-sizing: border-box;
     display: flex;
-    flex-direction: row !important;
     align-items: center;
     padding: 11px 16px;
     gap: 8px;
-    width: 335px;
+    width: 100%;
     height: 48px;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    background: ${BookingSGColorSet.Primary[""]};
     border-radius: 4px;
-    overflow: hidden;
-    z-index: 1;
-
-    /* position: absolute;
-    bottom: 0;
-    height: 4px;
-    left: 0.5rem;
-    right: 0.5rem;
-    background-color: #1c76d5; */
-
+    border: 1px solid ${Color.Neutral[5]};
     :focus,
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px rgba(87, 169, 255, 0.5);
+        box-shadow: ${DesignToken.InputBoxShadow};
     }
     ${(props) => {
         if (props.$readOnly) {
             return css`
                 border: none;
-                padding-left: 0rem;
-                background: transparent !important;
-                :focus-within {
-                    border: none;
-                    box-shadow: none;
-                }
             `;
         } else if (props.disabled) {
             return css`
@@ -96,7 +94,6 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
                 }
                 :focus-within {
                     border: 1px solid ${Color.Neutral[5](props)};
-                    box-shadow: none;
                 }
             `;
         } else if (props.$error) {
@@ -104,41 +101,58 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
                 border: 1px solid ${Color.Validation.Red.Border(props)};
                 :focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: inset 0 0 4px 1px rgba(221, 102, 102, 0.8);
+                    box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;
         }
     }}
 
-    ${MediaQuery.MaxWidth.tablet} {
+    /* ${MediaQuery.MaxWidth.tablet} {
         width: 335px;
-    }
+    } */
 
     ${MediaQuery.MaxWidth.mobileL} {
-        width: 335px;
+        /* width: 335px; */
     }
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    /* ${MediaQuery.MaxWidth.mobileM} {
         width: 309px;
-    }
+    }*/
 
     ${MediaQuery.MaxWidth.mobileS} {
-        width: 280px;
+        width: 275px;
     }
 `;
 
-export const RangeArrow = styled.div`
+export const ArrowRangeIcon = styled(IconButton)`
     position: absolute;
-    left: 16.67%;
-    right: 18.44%;
-    top: 18.33%;
-    bottom: 18.34%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0;
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        left: 71% !important;
+    }
 `;
+
+export const ArrowRight = styled(ArrowRightIcon)`
+    color: ${Color.Neutral[3]};
+    cursor: pointer;
+    width: 1.125rem;
+    height: 1.125rem;
+`;
+
+// export const ArrowRight = styled(ArrowRightIcon)`
+//     width: 3.25rem;
+//     height: 1.25rem;
+
+//     color: ${Color.Neutral[3]} !important;
+// `;
 
 export const BottomHighlightStartTime = styled.div`
     position: absolute;
     bottom: 0;
-    height: 4px;
+    height: 2px;
     left: 1rem;
     right: 23rem;
     background: ${BookingSGColorSet.Neutral[8]};
@@ -148,9 +162,9 @@ export const BottomHighlightStartTime = styled.div`
 export const BottomHighlightEndTime = styled.div`
     position: absolute;
     bottom: 0;
-    height: 4px;
-    left: 12rem;
-    right: 11rem;
+    height: 2px;
+    left: 14rem;
+    right: 9rem;
     background: ${BookingSGColorSet.Neutral[8]};
     background-color: ${Color.Accent.Light[1]};
 `;
