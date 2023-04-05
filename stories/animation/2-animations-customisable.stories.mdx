@@ -1,0 +1,49 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { LoadingDotsSpinner } from "src/animations";
+import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
+import { AnimationDisplay, AnimationItem, AnimationPane } from "./doc-elements";
+import { Color } from "src/color";
+import { BaseTheme } from "src/theme";
+import { CustomisedPropsTable } from "./props-table";
+
+<Meta title="General/Animations/Customisable Animations" />
+
+<Title>Customisable Animations</Title>
+
+> Not all animations
+> are able to do that at the moment and only these animations support the
+> customisations.
+
+<br />
+
+<Heading3>LoadingDotsSpinner</Heading3>
+
+```tsx
+import { LoadingDotsSpinner } from "@lifesg/react-design-system/animations";
+```
+
+For this component, if no color is specified, it will use the `Primary` color of
+the theme.
+
+<Canvas>
+    <Story name="LoadingDotsSpinner">
+        <AnimationDisplay>
+            <AnimationItem>
+                <LoadingDotsSpinner id="default" />
+            </AnimationItem>
+            <AnimationItem>
+                <LoadingDotsSpinner id="custom-1" color="#EF413D" />
+            </AnimationItem>
+            <AnimationItem>
+                <LoadingDotsSpinner
+                    id="custom-1"
+                    color={Color.Accent.Light[2]({ theme: BaseTheme })}
+                />
+            </AnimationItem>
+        </AnimationDisplay>
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<CustomisedPropsTable />

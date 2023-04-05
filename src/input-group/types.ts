@@ -20,7 +20,6 @@ export interface LabelAddon {
 export interface ListAddon<T, V>
     extends DropdownDisplayProps<T, V>,
         DropdownSearchProps<T> {
-    value?: T | undefined;
     placeholder?: string | undefined;
     displayValueExtractor?: ((item: T) => string) | undefined;
     "data-selector-testid"?: string | undefined;
@@ -50,6 +49,7 @@ export interface AddonProps<T, V> {
 
 export interface InputGroupProps<T, V> extends InputProps {
     addon?: AddonProps<T, V> | undefined;
+    onBlur?: (() => void) | undefined;
 }
 
 /** To be exposed for Form component inheritance */

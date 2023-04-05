@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MediaQuery } from "../media";
 import { Transition } from "../transition";
+import { BrandType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -8,6 +9,7 @@ import { Transition } from "../transition";
 // =============================================================================
 interface StyleProps {
     $compress?: boolean | undefined;
+    $type?: BrandType | undefined;
 }
 
 // =============================================================================
@@ -16,15 +18,22 @@ interface StyleProps {
 export const Clickable = styled.a<StyleProps>`
     display: flex;
     justify-content: center;
-    margin-right: 2rem;
 
     img {
         width: auto;
-        height: ${(props) => (props.$compress ? 1.375 : 2)}rem;
+        height: ${(props) =>
+            props.$type === "primary"
+                ? props.$compress
+                    ? 1.25
+                    : 1.625
+                : props.$compress
+                ? 2
+                : 2.5}rem;
         transition: ${Transition.Base};
+        object-fit: contain;
 
         ${MediaQuery.MaxWidth.tablet} {
-            height: 1.375rem;
+            height: ${(props) => (props.$type === "primary" ? 1 : 1.5)}rem;
         }
     }
 `;

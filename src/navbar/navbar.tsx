@@ -12,10 +12,13 @@ import {
     MobileMenuButton,
     MobileMenuIcon,
     Nav,
+    NavBrandContainer,
     NavElementsContainer,
+    NavSeparator,
     Wrapper,
 } from "./navbar.styles";
 import {
+    BrandType,
     DrawerDismissalMethod,
     NavItemProps,
     NavbarButtonProps,
@@ -42,10 +45,12 @@ const Component = <T,>(
     ref: React.Ref<HTMLDivElement>
 ) => {
     // =============================================================================
-    // STATE DECLARATIONS
+    // CONST, STATE, REFS
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
+
+    const { primary = DEFAULT_RESOURCES.primary, secondary } = resources;
 
     // =============================================================================
     // EFFECTS
@@ -85,10 +90,13 @@ const Component = <T,>(
         }
     };
 
-    const handleBrandClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleBrandClick = (
+        event: React.MouseEvent<HTMLAnchorElement>,
+        type: BrandType
+    ) => {
         if (onBrandClick) {
             event.preventDefault();
-            onBrandClick();
+            onBrandClick(type);
         }
 
         if (shouldDismissDrawer("brand-click")) {
@@ -107,7 +115,7 @@ const Component = <T,>(
             onItemClick(item);
         }
 
-        if (shouldDismissDrawer("item-click")) {
+        if (!item?.subMenu && shouldDismissDrawer("item-click")) {
             dismissDrawer();
         }
     };
@@ -153,7 +161,7 @@ const Component = <T,>(
         >
             <Drawer
                 show={showDrawer}
-                resources={resources}
+                resources={{ primary, secondary }}
                 onClose={handleDrawerClose}
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
@@ -176,16 +184,35 @@ const Component = <T,>(
         </Overlay>
     );
 
+    const renderBrand = () => (
+        <NavBrandContainer>
+            <Brand
+                resources={primary}
+                compress={compress}
+                onClick={handleBrandClick}
+                data-testid="main__brand"
+                type="primary"
+            />
+            {secondary && (
+                <>
+                    <NavSeparator $compress={compress} />
+                    <Brand
+                        resources={secondary}
+                        compress={compress}
+                        onClick={handleBrandClick}
+                        data-testid="main__brand-secondary"
+                        type="secondary"
+                    />
+                </>
+            )}
+        </NavBrandContainer>
+    );
+
     const renderNavbar = () => {
         return (
             <Layout.Content>
-                <Nav compress={compress}>
-                    <Brand
-                        resources={resources}
-                        compress={compress}
-                        onClick={handleBrandClick}
-                        data-testid="main__brand"
-                    />
+                <Nav $compress={compress}>
+                    {renderBrand()}
                     {!hideNavElements && (
                         <NavElementsContainer>
                             <NavbarItems
@@ -210,6 +237,7 @@ const Component = <T,>(
                         </NavElementsContainer>
                     )}
                 </Nav>
+
                 {!hideNavElements && renderDrawer()}
             </Layout.Content>
         );
@@ -218,7 +246,7 @@ const Component = <T,>(
     return (
         <Wrapper
             ref={ref}
-            fixed={fixed}
+            $fixed={fixed}
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
@@ -234,6 +262,8 @@ export const Navbar = React.forwardRef(Component);
 // CONSTANTS
 // =============================================================================
 const DEFAULT_RESOURCES: NavbarResourcesProps = {
-    brandName: "LifeSG",
-    logoSrc: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+    primary: {
+        brandName: "LifeSG",
+        logoSrc: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
+    },
 };

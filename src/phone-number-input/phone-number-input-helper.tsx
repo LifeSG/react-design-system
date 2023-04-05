@@ -25,34 +25,41 @@ const getMask = (
 };
 
 export namespace PhoneNumberInputHelper {
-    export const getCountries: CountryValue[] = [].concat(
-        ...CountryData.map((country): CountryValue => {
-            const countryItem = {
-                name: country[0] as string,
-                regions: country[1] as string[],
-                iso2: country[2] as string,
-                countryCode: country[3] as string,
-                format: getMask(
-                    prefix,
-                    country[3] as string,
-                    country[4] as string,
-                    defaultMask
-                ),
-            };
+    export const getCountries = (): CountryValue[] =>
+        [].concat(
+            ...CountryData.map((country): CountryValue => {
+                const countryItem = {
+                    name: country[0] as string,
+                    regions: country[1] as string[],
+                    iso2: country[2] as string,
+                    countryCode: country[3] as string,
+                    format: getMask(
+                        prefix,
+                        country[3] as string,
+                        country[4] as string,
+                        defaultMask
+                    ),
+                };
 
-            return countryItem;
-        })
-    );
+                return countryItem;
+            })
+        );
 
     export const formatNumber = (
-        text: string,
-        country: CountryValue | undefined
+        numberText = "",
+        country?: CountryValue
     ): string => {
-        if (!country) return text;
+        if (!country) return numberText;
+
+        const numberTextWithoutSpace = numberText.replace(/[\s()]+/g, "");
 
         const { format } = country;
 
-        // Remove Prefix
+        /**
+         * Strip the prefix. The format usually contains
+         * the prefix (e.g. +.. .... ....). And we are
+         * only concerned about the actual number format
+         */
         const removedPrefix = format.split(" ");
         removedPrefix.shift();
 
@@ -81,7 +88,7 @@ export namespace PhoneNumberInputHelper {
             },
             {
                 formattedText: "",
-                remainingText: text.split(""),
+                remainingText: numberTextWithoutSpace,
             }
         );
 

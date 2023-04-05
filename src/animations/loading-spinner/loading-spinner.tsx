@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { BaseAnimationProps } from "../types";
 import { LottieSpinner } from "./lottie-animation";
 
-export const LoadingSpinner = () => {
+export const LoadingSpinner = (props: BaseAnimationProps) => {
     return (
-        <Container>
+        <Container {...props}>
             <LottieSpinner />
         </Container>
     );

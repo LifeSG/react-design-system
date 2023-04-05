@@ -28,11 +28,10 @@ export const FeedbackRatingStarsContainer = (
     // =========================================================================
     const renderStar = (starIndex: number) => {
         const ariaLabel = `${starIndex} star${starIndex === 1 ? "" : "s"}`;
-
         if (starIndex <= rating) {
-            return <StarFilled aria-label={ariaLabel}></StarFilled>;
+            return <StarFilled aria-label={ariaLabel} />;
         } else {
-            return <StarUnfilled aria-label={ariaLabel}></StarUnfilled>;
+            return <StarUnfilled aria-label={ariaLabel} />;
         }
     };
 

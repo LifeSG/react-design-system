@@ -1,7 +1,10 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
+import { Text } from "../text";
+import { IconButton } from "../icon-button";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -18,6 +21,7 @@ interface StyleProps {
 export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
+    position: relative;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
@@ -31,6 +35,7 @@ export const MobileWrapper = styled.ul`
     ${MediaQuery.MaxWidth.tablet} {
         display: flex;
         flex-direction: column;
+        overflow: hidden;
     }
 `;
 
@@ -38,20 +43,17 @@ export const MobileWrapper = styled.ul`
 // LINK ITEMS
 // =============================================================================
 export const LinkItem = styled.li`
-    position: relative;
     display: flex;
-    align-items: center;
+    margin-left: 1rem;
 
-    :not(:last-of-type) {
-        margin-right: 1rem;
+    :first-child {
+        margin-left: 0;
     }
-
     ${MediaQuery.MaxWidth.tablet} {
+        flex-direction: column;
+        padding: 0.125rem 0;
         width: 100%;
-
-        :not(:last-of-type) {
-            margin-right: 0;
-        }
+        margin-left: 0rem;
     }
 `;
 
@@ -70,23 +72,32 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.tablet} {
-        ${(props) => {
-            return TextStyleHelper.getTextStyle(
-                "H4",
-                props.$selected ? "bold" : "regular"
-            );
-        }}
+        color: ${Color.Neutral[1]};
         width: 100%;
-        padding: 0.625rem 1rem;
+        padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
+        :hover {
+            color: ${Color.Neutral[1]};
+        }
     }
+`;
+
+export const LinkLabel = styled.div`
+    flex: 1;
+    margin-top: 0.25rem;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    white-space: pre-wrap;
 `;
 
 export const LinkIndicator = styled.div`
     position: absolute;
     bottom: 0;
-    height: 4px;
+    height: 0.25rem;
     left: 0.5rem;
     right: 0.5rem;
     background-color: ${Color.Primary};
@@ -97,7 +108,28 @@ export const LinkIndicator = styled.div`
         top: 0;
         bottom: 0;
         height: 100%;
-        width: 4px;
-        background-color: ${Color.Accent.Light[1]};
+        width: 0.25rem;
+        background-color: ${Color.Primary};
+    }
+`;
+
+export const LinkIconContainer = styled.div`
+    padding-left: 0.5rem;
+    margin-right: -0.5rem;
+`;
+
+export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
+    padding: 0.5rem;
+    transform: rotate(${(props) => (props.$selected ? 0 : 180)}deg);
+    transition: transform 300ms ease-in-out;
+    margin: auto 0.25rem auto 0;
+`;
+
+export const ChevronIcon = styled(ChevronUpIcon)`
+    height: 1.25rem;
+    width: 1.25rem;
+    color: ${Color.Neutral[3]};
+    :hover {
+        color: ${Color.Neutral[1]};
     }
 `;

@@ -5,7 +5,7 @@ import { InputGroupListAddon } from "./input-group-list-addon";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 
 const Component = <T, V>(
-    { addon, error, ...otherProps }: InputGroupProps<T, V>,
+    { addon, error, className, ...otherProps }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
     const renderNoAddons = () => (
@@ -14,6 +14,7 @@ const Component = <T, V>(
             $error={error}
             $readOnly={otherProps.readOnly}
             data-testid={otherProps["data-testid"]}
+            className={className}
         >
             <MainInput ref={ref} {...otherProps} data-testid="input" />
         </Container>
@@ -31,6 +32,7 @@ const Component = <T, V>(
                         <InputGroupListAddon
                             addon={addon}
                             error={error}
+                            className={className}
                             {...otherProps}
                         />
                     );
@@ -48,6 +50,7 @@ const Component = <T, V>(
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
+                            className={className}
                         >
                             <AddOnContainer
                                 data-testid="addon"
@@ -79,6 +82,7 @@ const Component = <T, V>(
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
+                            className={className}
                         >
                             <AddOnContainer
                                 data-testid="addon"

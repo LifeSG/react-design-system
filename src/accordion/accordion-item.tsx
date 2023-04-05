@@ -61,7 +61,11 @@ export const AccordionItem = ({
 
     const renderContent = () => {
         return (
-            <Expandable style={expandableStyles} $isCollapsed={expand}>
+            <Expandable
+                style={expandableStyles}
+                $isCollapsed={expand}
+                data-testid={`${testId}-expandable-container`}
+            >
                 <DescriptionContainer ref={childRef} id="content-container">
                     {children}
                 </DescriptionContainer>

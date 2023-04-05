@@ -8,4 +8,5 @@ export const DesignToken: PropertiesToType<
 > = {
     InputBoxShadow: getThemeDesignToken("InputBoxShadow"),
     InputErrorBoxShadow: getThemeDesignToken("InputErrorBoxShadow"),
+    ElevationBoxShadow: getThemeDesignToken("ElevationBoxShadow"),
 };

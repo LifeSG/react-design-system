@@ -10,6 +10,7 @@ export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
     margin-left: 4rem;
+    flex-shrink: 0;
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
