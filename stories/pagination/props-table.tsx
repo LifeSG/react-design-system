@@ -6,6 +6,12 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "className",
+                description:
+                    "The className of the component for custom styling.",
+                propTypes: ["string"],
+            },
+            {
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],
@@ -17,24 +23,24 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "totalPages",
-                description: "The unique identifier of the component",
+                description: "The totoal number of pages",
                 propTypes: ["number"],
                 mandatory: true,
             },
             {
                 name: "activePage",
-                description: "The unique identifier of the component",
+                description: "The active page number",
                 propTypes: ["number"],
                 mandatory: true,
             },
             {
                 name: "boundaryRange",
-                description: "The unique identifier of the component",
+                description: "The boundary range of the component",
                 propTypes: ["number"],
             },
             {
                 name: "siblingRange",
-                description: "The unique identifier of the component",
+                description: "The sibling range of the component",
                 propTypes: ["number"],
             },
 
@@ -52,7 +58,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "onPageChange",
-                description: "Called when every item in pagination clicked",
+                description: "Called when every item clicked",
                 propTypes: ["(page: number) => void"],
             },
         ],

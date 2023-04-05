@@ -68,18 +68,18 @@ export const PaginationJumper = styled.div`
 `;
 
 export const Label = styled(Text.XSmall)`
-    ${TextStyleHelper.getTextStyle("H4", 400)};
+    ${TextStyleHelper.getTextStyle("Body", 400)};
     white-space: nowrap;
 `;
 
 export const InputView = styled(Input)`
-    ${TextStyleHelper.getTextStyle("H4", 400)};
+    ${TextStyleHelper.getTextStyle("Body", 400)};
 
     margin: 0 0.5rem;
     width: 3.125rem;
     height: 2.5rem;
     border-radius: 0.5rem;
-    border: 1px solid ${Color.Neutral[1]};
+    border: 1px solid ${Color.Neutral[5]};
     padding: 0.5rem 0.5rem;
     text-align: center;
 `;
@@ -88,11 +88,11 @@ export const Item = styled(Text.Hyperlink.Default)<StyleProps>`
     ${(props) => {
         if (props.$selected) {
             return css`
-                ${TextStyleHelper.getTextStyle("H4", 700)};
+                ${TextStyleHelper.getTextStyle("Body", 700)};
             `;
         } else {
             return css`
-                ${TextStyleHelper.getTextStyle("H4", 400)};
+                ${TextStyleHelper.getTextStyle("Body", 400)};
             `;
         }
     }}
@@ -120,7 +120,7 @@ export const Item = styled(Text.Hyperlink.Default)<StyleProps>`
 `;
 
 export const EllipsisItem = styled(Text.Hyperlink.Small)`
-    ${TextStyleHelper.getTextStyle("H4", 400)};
+    ${TextStyleHelper.getTextStyle("Body", 400)};
     min-width: 2.5rem;
     height: 2.5rem;
     text-align: center;

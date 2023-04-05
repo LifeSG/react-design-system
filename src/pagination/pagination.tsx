@@ -1,3 +1,12 @@
+import React from "react";
+import {
+    ChevronLeftIcon,
+    ChevronLineLeftIcon,
+    ChevronLineRightIcon,
+    ChevronRightIcon,
+    EllipsisHorizontalIcon,
+} from "@lifesg/react-icons";
+
 import { PaginationsProps } from "./types";
 import {
     EllipsisItem,
@@ -11,30 +20,26 @@ import {
     PaginationMenu,
     PaginationWrapper,
 } from "./pagination.styles";
-import {
-    ChevronLeftIcon,
-    ChevronLineLeftIcon,
-    ChevronLineRightIcon,
-    ChevronRightIcon,
-    EllipsisHorizontalIcon,
-} from "@lifesg/react-icons";
 
-export const Pagination = ({
-    id,
-    "data-testid": dataTestId,
-    totalPages,
-    activePage,
-    boundaryRange,
-    siblingRange,
-    showFirstAndLastNav,
-    showJumper,
-    onPageChange,
-    ...otherProps
-}: PaginationsProps) => {
+const Component = <T,>(
+    {
+        id,
+        "data-testid": dataTestId,
+        className,
+        totalPages,
+        activePage,
+        boundaryRange,
+        siblingRange,
+        showFirstAndLastNav,
+        showJumper,
+        onPageChange,
+        ...otherProps
+    }: PaginationsProps,
+    ref: React.Ref<HTMLDivElement>
+) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
     const lastPaginationItem =
@@ -49,24 +54,20 @@ export const Pagination = ({
         activePage < totalPages
             ? () => handlePaginationItemOnClick(activePage + 1)
             : undefined;
-    const prevChevronClass = prevPaginationItem ? "" : "disabled";
-    const nextChevronClass = nextPaginationItem ? "" : "disabled";
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
+    // const prevChevronClass = prevPaginationItem ? "" : "disabled";
+    // const nextChevronClass = nextPaginationItem ? "" : "disabled";
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handlePaginationItemOnClick = (pageIndex: number) => {
         if (onPageChange) {
-            const resultsHeading = document.getElementsByClassName(
-                "paginated-list-results"
-            )[0];
-            if (resultsHeading) {
-                resultsHeading.scrollIntoView();
-            }
+            // const resultsHeading = document.getElementsByClassName(
+            //     "paginated-list-results"
+            // )[0];
+            // if (resultsHeading) {
+            //     resultsHeading.scrollIntoView();
+            // }
             onPageChange(pageIndex);
         }
     };
@@ -89,17 +90,11 @@ export const Pagination = ({
             event.target.value = "";
         }
     };
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const paginationItemList = [...Array(totalPages)].map((e, i) => {
         const pageIndex = i + 1;
-        const paginationItemClass =
-            activePage === pageIndex ? "item active" : "item";
         const boundaryRangeLocal =
             boundaryRange && boundaryRange > 0 ? boundaryRange : 1;
         const siblingRangeLocal =
@@ -112,11 +107,7 @@ export const Pagination = ({
             return (
                 <Item
                     key={pageIndex}
-                    type="pageItem"
-                    className={paginationItemClass}
-                    aria-label="Pagination Item"
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
-                    data-value={pageIndex}
                     $selected={active}
                 >
                     {pageIndex}
@@ -133,12 +124,8 @@ export const Pagination = ({
 
         if (ellipsisStart || ellipsisEnd) {
             return (
-                <EllipsisItem
-                    aria-label="Ellipsis"
-                    key={pageIndex}
-                    className="ellipsis-item"
-                >
-                    <EllipsisHorizontalIcon className="pagination-ellipsisH" />
+                <EllipsisItem key={pageIndex}>
+                    <EllipsisHorizontalIcon />
                 </EllipsisItem>
             );
         }
@@ -159,11 +146,7 @@ export const Pagination = ({
             return (
                 <Item
                     key={pageIndex}
-                    type="pageItem"
-                    className={paginationItemClass}
-                    aria-label="Pagination Item"
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
-                    data-value={pageIndex}
                     $selected={active}
                 >
                     {pageIndex}
@@ -176,65 +159,45 @@ export const Pagination = ({
 
     return (
         <PaginationWrapper
-            data-testid="pagination"
-            className="sgds-pagination is-centered"
-            role="navigation"
-            aria-label="pagination"
+            className={className}
+            ref={ref}
+            id={id || "pagination-wrapper"}
+            data-testid={otherProps["data-testid"] || "pagination"}
         >
             <Page>
                 <PaginationList>
-                    <PaginationMenu
-                        aria-label="Pagination Navigation"
-                        role="navigation"
-                        className="ui pagination-menu"
-                    >
-                        {showFirstAndLastNav ? (
-                            <Link
-                                className={`pagination-chevron push ${prevChevronClass}`}
-                                aria-label="First Item"
-                                onClick={firstPaginationItem}
-                            >
+                    <PaginationMenu>
+                        {showFirstAndLastNav && (
+                            <Link onClick={firstPaginationItem}>
                                 <ChevronLineLeftIcon />
                             </Link>
-                        ) : null}
-                        <Link
-                            className={`pagination-chevron ${prevChevronClass}`}
-                            aria-label="Previous Item"
-                            onClick={prevPaginationItem}
-                        >
+                        )}
+                        <Link onClick={prevPaginationItem}>
                             <ChevronLeftIcon />
                         </Link>
                         {paginationItemList}
-                        <Link
-                            className={`pagination-chevron ${nextChevronClass}`}
-                            aria-label="Next Item"
-                            onClick={nextPaginationItem}
-                        >
+                        <Link onClick={nextPaginationItem}>
                             <ChevronRightIcon />
                         </Link>
-                        {showFirstAndLastNav ? (
-                            <Link
-                                className={`pagination-chevron push ${nextChevronClass}`}
-                                aria-label="Last Item"
-                                onClick={lastPaginationItem}
-                            >
+                        {showFirstAndLastNav && (
+                            <Link onClick={lastPaginationItem}>
                                 <ChevronLineRightIcon />
                             </Link>
-                        ) : null}
-                        {showJumper ? (
-                            <PaginationJumper className="pagination-jumper">
+                        )}
+                        {showJumper && (
+                            <PaginationJumper>
                                 <Label>Go to </Label>
                                 <InputView
-                                    aria-label="Jumper Input"
                                     onKeyPress={handleJumperInput}
                                     onBlur={handleJumperInput}
                                 />
                                 <Label>Page</Label>
                             </PaginationJumper>
-                        ) : null}
+                        )}
                     </PaginationMenu>
                 </PaginationList>
             </Page>
         </PaginationWrapper>
     );
 };
+export const Pagination = React.forwardRef(Component);

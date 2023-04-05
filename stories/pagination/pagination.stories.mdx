@@ -125,6 +125,62 @@ This is a common use case among web apps where it requires a Pagination bar.
     </Story>
 </Canvas>
 
+<br />
+
+<Heading3>With Boundary Range</Heading3>
+
+This is a common use case among web apps where it requires a Pagination bar.
+
+<Canvas>
+    <Story name="With Boundary Range">
+        {() => {
+            const [selectedPage, setSelected] = useState(1);
+            return (
+                <StoryContainer>
+                    <Pagination
+                        onPageChange={(selected) => setSelected(selected)}
+                        activePage={selectedPage}
+                        selectedPage={selectedPage}
+                        totalPages={100}
+                        boundaryRange={2}
+                        itemsPerPage={1}
+                        renderItem={() => {}}
+                        siblingRange={0}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<br />
+
+<Heading3>With Sibling Range</Heading3>
+
+This is a common use case among web apps where it requires a Pagination bar.
+
+<Canvas>
+    <Story name="With Sibling Range">
+        {() => {
+            const [selectedPage, setSelected] = useState(1);
+            return (
+                <StoryContainer>
+                    <Pagination
+                        onPageChange={(selected) => setSelected(selected)}
+                        activePage={selectedPage}
+                        selectedPage={selectedPage}
+                        totalPages={100}
+                        boundaryRange={0}
+                        itemsPerPage={1}
+                        renderItem={() => {}}
+                        siblingRange={2}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Secondary>Component API</Secondary>
 
 <PropsTable />

@@ -1,6 +1,7 @@
-export interface PaginationsProps extends React.AriaAttributes {
+export interface PaginationsProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
+    className?: string;
     totalPages: number;
     activePage: number;
     boundaryRange?: number;
