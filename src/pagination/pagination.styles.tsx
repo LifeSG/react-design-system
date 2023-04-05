@@ -42,7 +42,6 @@ export const PaginationList = styled.div`
 export const PaginationMenu = styled.div`
     display: inline-flex;
     align-items: center;
-    gap: 1rem;
 `;
 
 export const Link = styled(Text.Hyperlink.Small)`
@@ -110,6 +109,7 @@ export const Item = styled(Text.Hyperlink.Default)<StyleProps>`
     border: 1px solid
         ${(props) => (props.$selected ? Color.Primary : Color.Neutral[5])};
     border-radius: 0.5rem;
+    margin: 0.25rem;
 
     cursor: pointer;
 
