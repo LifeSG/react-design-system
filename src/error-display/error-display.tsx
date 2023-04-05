@@ -29,7 +29,6 @@ export const ErrorDisplay = ({
     // CONST, STATE, REF
     // =============================================================================
     const theme = useTheme();
-    console.log(theme);
     const defaultAssets = errorDisplayData(
         type,
         (theme as unknown as ThemeSpec).colorScheme
