@@ -94,6 +94,7 @@ const Component = <T,>(
                     Math.min(totalPages, Number(jumperInputVal))
                 );
                 onPageChange(redirectPageIndex);
+                checkIconsState(redirectPageIndex);
             }
             event.target.value = "";
         }

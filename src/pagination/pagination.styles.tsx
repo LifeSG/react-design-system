@@ -122,19 +122,18 @@ export const Item = styled(Text.Hyperlink.Default)<StyleProps>`
             `;
         }
     }}
+    background: ${(props) =>
+        props.$selected ? Color.Primary : Color.Neutral[8]};
+    border: 1px solid
+        ${(props) => (props.$selected ? Color.Primary : Color.Neutral[5])};
+    color: ${(props) =>
+        props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
 
     min-width: 2.5rem;
     height: 2.5rem;
     text-align: center;
-    color: ${(props) =>
-        props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
     padding: 0.4rem 0.5rem;
 
-    background: ${(props) =>
-        props.$selected ? Color.Primary : Color.Neutral[8]};
-
-    border: 1px solid
-        ${(props) => (props.$selected ? Color.Primary : Color.Neutral[5])};
     border-radius: 0.5rem;
     margin: 0.25rem;
 
