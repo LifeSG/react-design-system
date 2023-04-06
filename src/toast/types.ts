@@ -3,12 +3,12 @@ import React from "react";
 export type ToastType = "success" | "warning" | "error" | "info";
 
 export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
-    /** Specify the type of status */
+    /** The type of Toast. Control the display */
     type: ToastType;
-    /** Specify the title of toast.  */
-    title: string | undefined;
-    /** Specify the content of toast.  */
-    label?: string;
-    /** Specify action if toast will be automatically dismissed */
+    /** The content of the Toast. If a `title` is provided, this will act as a description label  */
+    label: string;
+    /** The title of the Toast  */
+    title?: string | undefined;
+    /** If specified, the Toast will be automatically dismissed after 4 seconds */
     autoDismiss?: boolean | undefined;
 }
