@@ -1,19 +1,18 @@
-import React from "react";
-import {
-    ChevronLeftIcon,
-    ChevronLineLeftIcon,
-    ChevronLineRightIcon,
-    ChevronRightIcon,
-    EllipsisHorizontalIcon,
-} from "@lifesg/react-icons";
+import React, { useEffect, useState } from "react";
 
 import { PaginationsProps } from "./types";
 import {
+    ArrowChevron2LeftIcon,
+    ArrowChevron2RightIcon,
+    ArrowChevronLeftIcon,
+    ArrowChevronRightIcon,
+    EllipsisHorizontal,
     EllipsisItem,
     InputView,
     Item,
     Label,
     Link,
+    LinkIcon,
     Page,
     PaginationJumper,
     PaginationList,
@@ -40,6 +39,9 @@ const Component = <T,>(
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [activeLeftArrows, setActiveLeftArrows] = useState<boolean>(true);
+    const [activeRightArrows, setActiveRightArrows] = useState<boolean>(true);
+
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
     const lastPaginationItem =
@@ -54,21 +56,27 @@ const Component = <T,>(
         activePage < totalPages
             ? () => handlePaginationItemOnClick(activePage + 1)
             : undefined;
-    // const prevChevronClass = prevPaginationItem ? "" : "disabled";
-    // const nextChevronClass = nextPaginationItem ? "" : "disabled";
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        checkIconsState(activePage);
+    }, []);
 
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const checkIconsState = (pageIndex: number) => {
+        setActiveLeftArrows(pageIndex === 1);
+        setActiveRightArrows(pageIndex === totalPages);
+    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handlePaginationItemOnClick = (pageIndex: number) => {
         if (onPageChange) {
-            // const resultsHeading = document.getElementsByClassName(
-            //     "paginated-list-results"
-            // )[0];
-            // if (resultsHeading) {
-            //     resultsHeading.scrollIntoView();
-            // }
             onPageChange(pageIndex);
+            checkIconsState(pageIndex);
         }
     };
 
@@ -125,7 +133,7 @@ const Component = <T,>(
         if (ellipsisStart || ellipsisEnd) {
             return (
                 <EllipsisItem key={pageIndex}>
-                    <EllipsisHorizontalIcon />
+                    <EllipsisHorizontal $disabled={false} />
                 </EllipsisItem>
             );
         }
@@ -169,19 +177,27 @@ const Component = <T,>(
                     <PaginationMenu>
                         {showFirstAndLastNav && (
                             <Link onClick={firstPaginationItem}>
-                                <ChevronLineLeftIcon />
+                                <ArrowChevron2LeftIcon
+                                    $disabled={activeLeftArrows}
+                                />
                             </Link>
                         )}
-                        <Link onClick={prevPaginationItem}>
-                            <ChevronLeftIcon />
-                        </Link>
+                        <LinkIcon onClick={prevPaginationItem}>
+                            <ArrowChevronLeftIcon
+                                $disabled={activeLeftArrows}
+                            />
+                        </LinkIcon>
                         {paginationItemList}
-                        <Link onClick={nextPaginationItem}>
-                            <ChevronRightIcon />
-                        </Link>
+                        <LinkIcon onClick={nextPaginationItem}>
+                            <ArrowChevronRightIcon
+                                $disabled={activeRightArrows}
+                            />
+                        </LinkIcon>
                         {showFirstAndLastNav && (
                             <Link onClick={lastPaginationItem}>
-                                <ChevronLineRightIcon />
+                                <ArrowChevron2RightIcon
+                                    $disabled={activeRightArrows}
+                                />
                             </Link>
                         )}
                         {showJumper && (

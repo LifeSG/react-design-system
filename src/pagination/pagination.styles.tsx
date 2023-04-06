@@ -1,14 +1,29 @@
 import styled, { css } from "styled-components";
+
+import {
+    ChevronLeftIcon,
+    ChevronLineLeftIcon,
+    ChevronLineRightIcon,
+    ChevronRightIcon,
+    EllipsisHorizontalIcon,
+} from "@lifesg/react-icons";
+import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
+import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
+
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Input } from "../input/input";
 import { Text, TextStyleHelper } from "../text";
+
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
     $selected: boolean;
+}
+interface StylePropsIcon {
+    $disabled: boolean;
 }
 
 export const PaginationWrapper = styled.div`
@@ -50,6 +65,18 @@ export const Link = styled(Text.Hyperlink.Small)`
     display: flex;
     min-width: 2rem;
     height: 2rem;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+`;
+
+export const LinkIcon = styled(Text.Hyperlink.Small)`
+    color: ${Color.Neutral[1]};
+
+    display: flex;
+    min-width: 2rem;
+    height: 2rem;
+    margin: 0 0.5rem;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -115,7 +142,7 @@ export const Item = styled(Text.Hyperlink.Default)<StyleProps>`
 
     :hover {
         color: ${(props) =>
-            props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
+            props.$selected ? Color.Neutral[8] : Color.Primary};
     }
 `;
 
@@ -129,4 +156,106 @@ export const EllipsisItem = styled(Text.Hyperlink.Small)`
     padding: 0.4rem 0.5rem;
     border-radius: 0.5rem;
     white-space: nowrap;
+`;
+export const ArrowChevronLeftIcon = styled(ChevronLeftIcon)<StylePropsIcon>`
+    height: 1.25rem;
+    width: 1.25rem;
+    color: ${(props) =>
+        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+
+    :hover {
+        color: ${(props) =>
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    }
+`;
+
+export const ArrowChevronLineLeftIcon = styled(
+    ChevronLineLeftIcon
+)<StylePropsIcon>`
+    height: 1.25rem;
+    width: 1.25rem;
+    color: ${(props) =>
+        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+
+    :hover {
+        color: ${(props) =>
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    }
+`;
+export const ArrowChevronLineRightIcon = styled(
+    ChevronLineRightIcon
+)<StylePropsIcon>`
+    height: 1.25rem;
+    width: 1.25rem;
+
+    color: ${(props) =>
+        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+
+    :hover {
+        color: ${(props) =>
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    }
+`;
+
+export const ArrowChevronRightIcon = styled(ChevronRightIcon)<StylePropsIcon>`
+    height: 1.25rem;
+    width: 1.25rem;
+
+    color: ${(props) =>
+        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+
+    :hover {
+        color: ${(props) =>
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    }
+`;
+
+export const ArrowChevron2LeftIcon = styled(Chevron2LeftIcon)<StylePropsIcon>`
+    height: 1.25rem;
+    width: 1.25rem;
+
+    color: ${(props) =>
+        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+
+    :hover {
+        color: ${(props) =>
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    }
+`;
+
+export const ArrowChevron2RightIcon = styled(Chevron2RightIcon)<StylePropsIcon>`
+    height: 1.25rem;
+    width: 1.25rem;
+
+    color: ${(props) =>
+        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+
+    :hover {
+        color: ${(props) =>
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    }
+`;
+
+export const EllipsisHorizontal = styled(
+    EllipsisHorizontalIcon
+)<StylePropsIcon>`
+    height: 1.25rem;
+    width: 1.25rem;
+
+    color: ${(props) =>
+        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+
+    :hover {
+        color: ${(props) =>
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    }
 `;
