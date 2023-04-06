@@ -23,19 +23,13 @@ import { Toast } from "@lifesg/react-design-system/toast";
 
 <Canvas>
     <Story name="Toast">
-        <Toast
-            type="success"
-            secondaryLabel="This is a success toast message"
-        />
+        <Toast type="success" label="This is a success toast message" />
         <br />
-        <Toast
-            type="warning"
-            secondaryLabel="This is a warning toast message"
-        />
+        <Toast type="warning" label="This is a warning toast message" />
         <br />
-        <Toast type="error" secondaryLabel="This is an error toast message" />
+        <Toast type="error" label="This is an error toast message" />
         <br />
-        <Toast type="info" secondaryLabel="This is an info toast message" />
+        <Toast type="info" label="This is an info toast message" />
     </Story>
 </Canvas>
 
@@ -45,54 +39,54 @@ import { Toast } from "@lifesg/react-design-system/toast";
     <Story name="With sub label">
         <Toast
             type="success"
-            secondaryLabel="Your bookings has been updated and received by the service provider."
+            label="Your bookings has been updated and received by the service provider."
         />
         <br />
         <Toast
             type="success"
-            label="Template successfully updated"
-            secondaryLabel="Your bookings has been updated and received by the service provider."
+            title="Template successfully updated"
+            label="Your bookings has been updated and received by the service provider."
         />
         <br />
         <br />
         <Toast
             type="warning"
-            secondaryLabel="The template contains characters that cannot be updated. Please
+            label="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
         />
         <br />
         <Toast
             type="warning"
-            label="Unknown characters"
-            secondaryLabel="The template contains characters that cannot be updated. Please
+            title="Unknown characters"
+            label="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
         />
         <br />
         <br />
         <Toast
             type="error"
-            secondaryLabel="An internal system error had occured. Please log out and try
+            label="An internal system error had occured. Please log out and try
                 again."
         />
         <br />
         <Toast
             type="error"
-            label="System error"
-            secondaryLabel="An internal system error had occured. Please log out and try
+            title="System error"
+            label="An internal system error had occured. Please log out and try
                 again."
         />
         <br />
         <br />
         <Toast
             type="info"
-            secondaryLabel="The calendar will be automatically updated when you have done
+            label="The calendar will be automatically updated when you have done
                 editing the event information."
         />
         <br />
         <Toast
             type="info"
-            label="Updated automatically"
-            secondaryLabel="The calendar will be automatically updated when you have done
+            title="Updated automatically"
+            label="The calendar will be automatically updated when you have done
                 editing the event information."
         />
     </Story>
@@ -106,9 +100,8 @@ is **4 seconds** and you can specify using the `autoDismiss` property.
 <Canvas>
     <Story name="Auto dismissal">
         <Toast
-            type="warning"
-            secondaryLabel="The template contains characters that cannot be updated. Please
-                remove the characters and try again."
+            type="success"
+            label="Your bookings has been updated and received by the service provider."
             autoDismiss
         />
     </Story>

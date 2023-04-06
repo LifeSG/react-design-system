@@ -21,8 +21,8 @@ import { ToastProps } from "./types";
 
 export const Toast: React.FC = ({
     type = "success",
+    title,
     label,
-    secondaryLabel,
     autoDismiss,
     ...otherProps
 }: ToastProps): JSX.Element => {
@@ -98,17 +98,17 @@ export const Toast: React.FC = ({
         <Wrapper style={transitions} $type={type} {...otherProps}>
             {renderIcon()}
             <TextContainer>
-                {label && (
+                {title && (
                     <Title $type={type} weight="semibold">
-                        {label}
+                        {title}
                     </Title>
                 )}
-                {secondaryLabel && (
+                {label && (
                     <Description $type={type}>
-                        {!label ? (
-                            <Text.Body>{secondaryLabel}</Text.Body>
+                        {!title ? (
+                            <Text.Body>{label}</Text.Body>
                         ) : (
-                            <Text.BodySmall>{secondaryLabel}</Text.BodySmall>
+                            <Text.BodySmall>{label}</Text.BodySmall>
                         )}
                     </Description>
                 )}

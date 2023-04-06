@@ -6,13 +6,13 @@ import styled, { css } from "styled-components";
 import { Color } from "../color/color";
 import { IconButton } from "../icon-button";
 import { Text } from "../text";
-import { toastType } from "./types";
+import { ToastType } from "./types";
 
 //=============================================================================
 // STYLE INTERFACE
 //=============================================================================
 interface StyleProps {
-    $type: toastType;
+    $type: ToastType;
 }
 
 const getValidationColorAttributes = (
@@ -103,6 +103,7 @@ export const DismissButton = styled(IconButton)<StyleProps>`
         return css`
             svg {
                 color: ${getValidationColorAttributes(props).Text};
+                margin-right: -0.5rem !important;
             }
             :hover {
                 background: transparent;

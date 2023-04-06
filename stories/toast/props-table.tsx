@@ -32,7 +32,7 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"success"`,
             },
             {
-                name: "label",
+                name: "title",
                 description: (
                     <>
                         The title of the <code>Toast</code>
@@ -42,10 +42,11 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "",
             },
             {
-                name: "secondaryLabel",
+                name: "label",
                 description: (
                     <>
-                        The content of the <code>Toast</code>
+                        The label of the <code>Toast</code>. Can be used to
+                        display the content information.
                     </>
                 ),
                 propTypes: [`string`],
