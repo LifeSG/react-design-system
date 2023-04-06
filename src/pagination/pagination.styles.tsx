@@ -133,10 +133,8 @@ export const Item = styled(Text.Hyperlink.Default)<StyleProps>`
     height: 2.5rem;
     text-align: center;
     padding: 0.4rem 0.5rem;
-
     border-radius: 0.5rem;
     margin: 0.25rem;
-
     cursor: pointer;
 
     :hover {
@@ -247,7 +245,7 @@ export const EllipsisHorizontal = styled(
 )<StylePropsIcon>`
     height: 1.25rem;
     width: 1.25rem;
-
+    margin-top: 0.25rem;
     color: ${(props) =>
         props.$disabled ? Color.Accent.Light[2] : Color.Primary};
 
