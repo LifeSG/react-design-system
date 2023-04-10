@@ -38,6 +38,7 @@ export * from "./smart-app-banner";
 export * from "./text";
 export * from "./text-list";
 export * from "./theme";
+export * from "./time-slot-bar";
 export * from "./timeline";
 export * from "./timepicker";
 export * from "./toggle-button";
