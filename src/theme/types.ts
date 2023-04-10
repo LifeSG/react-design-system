@@ -29,6 +29,11 @@ export type DesignTokenCollectionsMap = {
 };
 
 // =============================================================================
+// RESOURCE THEMES
+// =============================================================================
+export type ResourceScheme = "base" | "bookingsg";
+
+// =============================================================================
 // GENERAL
 // =============================================================================
 export enum ThemeContextKeys {
@@ -36,6 +41,7 @@ export enum ThemeContextKeys {
     layout = "layout",
     textStyleScheme = "textStyleScheme",
     designTokenScheme = "designTokenScheme",
+    resourceScheme = "resourceScheme",
 }
 
 export interface ThemeSpecOptions {
@@ -54,6 +60,8 @@ export interface ThemeSpec {
     [ThemeContextKeys.designTokenScheme]: DesignTokenScheme;
     /** Sets the layout scheme of the theme */
     [ThemeContextKeys.layout]?: ThemeLayout | undefined;
+    /** Sets the resource scheme (e.g. images, text) of the theme */
+    [ThemeContextKeys.resourceScheme]: ResourceScheme | undefined;
     /** For specific customisations to any schemes */
     options?: ThemeSpecOptions | undefined;
 }

@@ -34,6 +34,17 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"base"`],
             },
             {
+                name: "resourceScheme",
+                mandatory: true,
+                description: (
+                    <>
+                        The resource scheme that will affect certain images or
+                        text values in certain components
+                    </>
+                ),
+                propTypes: [`"base"`, `"bookingsg"`],
+            },
+            {
                 name: "options",
                 description: (
                     <>
