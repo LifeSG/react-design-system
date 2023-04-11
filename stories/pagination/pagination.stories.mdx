@@ -18,13 +18,13 @@ import { PropsTable } from "./props-table";
 A component to handle the Pagination for pages.
 
 ```tsx
-import { Pagination } from "@lifesg/react-design-system/pagination-input";
+import { Pagination } from "@lifesg/react-design-system/pagination";
 ```
 
 <Canvas>
     <Story name="Pagination">
         {() => {
-            const [selectedPage, setSelected] = useState(1);
+            const [selectedPage, setSelected] = useState(5);
             return (
                 <StoryContainer>
                     <Pagination
@@ -49,7 +49,7 @@ This is a common use case among web apps where it requires a Pagination bar.
 <Canvas>
     <Story name="Simple Pagination">
         {() => {
-            const [selectedPage, setSelected] = useState(1);
+            const [selectedPage, setSelected] = useState(5);
             return (
                 <StoryContainer>
                     <Pagination
@@ -72,7 +72,7 @@ This is a common use case among web apps where it requires a Pagination bar.
 <Canvas>
     <Story name="With First And Last Nav">
         {() => {
-            const [selectedPage, setSelected] = useState(1);
+            const [selectedPage, setSelected] = useState(5);
             return (
                 <StoryContainer>
                     <Pagination
@@ -81,7 +81,6 @@ This is a common use case among web apps where it requires a Pagination bar.
                         selectedPage={selectedPage}
                         totalPages={50}
                         showFirstAndLastNav
-                        siblingRange={0}
                     />
                 </StoryContainer>
             );
@@ -90,83 +89,6 @@ This is a common use case among web apps where it requires a Pagination bar.
 </Canvas>
 
 <br />
-
-<Heading3>With Jumper</Heading3>
-
-This is a common use case among web apps where it requires a Pagination bar.
-
-<Canvas>
-    <Story name="With Jumper">
-        {() => {
-            const [selectedPage, setSelected] = useState(1);
-            return (
-                <StoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        activePage={selectedPage}
-                        selectedPage={selectedPage}
-                        totalPages={50}
-                        showJumper
-                    />
-                </StoryContainer>
-            );
-        }}
-    </Story>
-</Canvas>
-
-<br />
-
-<Heading3>With Boundary Range</Heading3>
-
-This is a common use case among web apps where it requires a Pagination bar.
-
-<Canvas>
-    <Story name="With Boundary Range">
-        {() => {
-            const [selectedPage, setSelected] = useState(1);
-            return (
-                <StoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        activePage={selectedPage}
-                        selectedPage={selectedPage}
-                        totalPages={50}
-                        boundaryRange={2}
-                        itemsPerPage={1}
-                        renderItem={() => {}}
-                        siblingRange={0}
-                    />
-                </StoryContainer>
-            );
-        }}
-    </Story>
-</Canvas>
-
-<br />
-
-<Heading3>With Sibling Range</Heading3>
-
-This is a common use case among web apps where it requires a Pagination bar.
-
-<Canvas>
-    <Story name="With Sibling Range">
-        {() => {
-            const [selectedPage, setSelected] = useState(1);
-            return (
-                <StoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        activePage={selectedPage}
-                        selectedPage={selectedPage}
-                        totalPages={50}
-                        itemsPerPage={1}
-                        siblingRange={2}
-                    />
-                </StoryContainer>
-            );
-        }}
-    </Story>
-</Canvas>
 
 <Secondary>Component API</Secondary>
 
