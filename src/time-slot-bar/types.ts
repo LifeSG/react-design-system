@@ -1,28 +1,35 @@
 export type SlotStyle = "default" | "stripes";
 
+export type TDirection = "right" | "left";
+
 export interface TimeSlotBarProps {
-    testId?: string;
+    "data-testid"?: string;
+    /** The start time of time slot bar. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     startTime: string;
+    /** The end time of time slot bar. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     endTime: string;
     slots: TimeSlot[];
-    onClickSlot: (slotId: string) => void;
+    onClickSlot: (timeSlot: TimeSlot) => void;
     defaultTimeSlot?: DefaultTimeSlot;
 }
 
-export interface DefaultTimeSlot {
+interface BaseTimeSlot {
     color: string;
     styleType?: SlotStyle;
     secondaryColor?: string;
+}
+
+export interface DefaultTimeSlot extends BaseTimeSlot {
     onClick?: () => void;
 }
 
-export interface TimeSlot {
+export interface TimeSlot extends BaseTimeSlot {
     id: string;
+    /** The start time of time slot. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     startTime: string;
+    /** The end time of time slot. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     endTime: string;
-    color: string;
-    styleType?: SlotStyle;
-    secondaryColor?: string;
+    /** The text inside slot cell. */
     text?: string;
     clickable?: boolean;
 }

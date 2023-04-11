@@ -53,7 +53,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onClickSlot",
                 description:
                     "The callback function when user clicks on the time slot",
-                propTypes: ["(slotId: string) => void"],
+                propTypes: ["(timeSlot: TimeSlot) => void"],
             },
         ],
     },

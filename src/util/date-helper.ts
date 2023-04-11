@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 const MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
 const MONTHS_WITH_30_DAYS = [4, 6, 9, 11];
 
@@ -61,5 +63,15 @@ export namespace DateHelper {
      */
     export const isLeapYear = (year: number): boolean => {
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    };
+
+    /**
+     * Calculate the difference in minutes between two times
+     * @param start the start time in HH:mm format
+     */
+    export const getTimeDiffInMinutes = (start: string, end: string) => {
+        const startTime = dayjs(start, "HH:mm");
+        const endTime = dayjs(end, "HH:mm");
+        return endTime.diff(startTime, "minute");
     };
 }
