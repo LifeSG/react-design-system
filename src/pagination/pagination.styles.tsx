@@ -1,14 +1,10 @@
 import styled, { css } from "styled-components";
 
-import {
-    ChevronLeftIcon,
-    ChevronLineLeftIcon,
-    ChevronLineRightIcon,
-    ChevronRightIcon,
-    EllipsisHorizontalIcon,
-} from "@lifesg/react-icons";
 import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
 import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
 
 import { Color } from "../color";
 import { MediaQuery } from "../media";
@@ -22,25 +18,12 @@ import { Text, TextStyleHelper } from "../text";
 interface StyleProps {
     $selected: boolean;
 }
-interface StylePropsIcon {
+interface IconStyleProps {
     $disabled: boolean;
 }
 
 export const PaginationWrapper = styled.div`
     display: flex;
-`;
-
-export const StyledButton = styled.button`
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    outline: inherit;
-`;
-
-export const Page = styled.div`
-    background: none;
 `;
 
 export const PaginationList = styled.div`
@@ -59,7 +42,7 @@ export const PaginationMenu = styled.div`
     align-items: center;
 `;
 
-export const Link = styled(Text.Hyperlink.Small)`
+export const Link = styled(Text.Hyperlink.Small)<IconStyleProps>`
     color: ${Color.Neutral[1]};
 
     display: flex;
@@ -68,11 +51,15 @@ export const Link = styled(Text.Hyperlink.Small)`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
+    &:hover {
+        color: ${(props) =>
+            props.$disabled ? "black" : Color.Neutral[1]} !important;
+        cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    }
 `;
 
-export const LinkIcon = styled(Text.Hyperlink.Small)`
-    color: ${Color.Neutral[1]};
-
+export const LinkIcon = styled(Text.Hyperlink.Small)<IconStyleProps>`
     display: flex;
     min-width: 2rem;
     height: 2rem;
@@ -93,8 +80,7 @@ export const PaginationJumper = styled.div`
     justify-content: center;
 `;
 
-export const Label = styled(Text.XSmall)`
-    ${TextStyleHelper.getTextStyle("Body", 400)};
+export const Label = styled(Text.Body)`
     white-space: nowrap;
 `;
 
@@ -137,14 +123,13 @@ export const Item = styled(Text.Hyperlink.Default)<StyleProps>`
     margin: 0.25rem;
     cursor: pointer;
 
-    :hover {
+    &:hover {
         color: ${(props) =>
             props.$selected ? Color.Neutral[8] : Color.Primary};
     }
 `;
 
-export const EllipsisItem = styled(Text.Hyperlink.Small)`
-    ${TextStyleHelper.getTextStyle("Body", 400)};
+export const EllipsisItem = styled(Text.Hyperlink.Default)`
     min-width: 2.5rem;
     height: 2.5rem;
     text-align: center;
@@ -153,51 +138,24 @@ export const EllipsisItem = styled(Text.Hyperlink.Small)`
     padding: 0.4rem 0.5rem;
     border-radius: 0.5rem;
     white-space: nowrap;
+    &:hover {
+        cursor: not-allowed !important;
+    }
 `;
-export const ArrowChevronLeftIcon = styled(ChevronLeftIcon)<StylePropsIcon>`
+export const ArrowChevronLeftIcon = styled(ChevronLeftIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
     color: ${(props) =>
         props.$disabled ? Color.Accent.Light[2] : Color.Primary};
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 
-    :hover {
+    &:hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
     }
 `;
 
-export const ArrowChevronLineLeftIcon = styled(
-    ChevronLineLeftIcon
-)<StylePropsIcon>`
-    height: 1.25rem;
-    width: 1.25rem;
-    color: ${(props) =>
-        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-
-    :hover {
-        color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
-    }
-`;
-export const ArrowChevronLineRightIcon = styled(
-    ChevronLineRightIcon
-)<StylePropsIcon>`
-    height: 1.25rem;
-    width: 1.25rem;
-
-    color: ${(props) =>
-        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-
-    :hover {
-        color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
-    }
-`;
-
-export const ArrowChevronRightIcon = styled(ChevronRightIcon)<StylePropsIcon>`
+export const ArrowChevronRightIcon = styled(ChevronRightIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
 
@@ -206,11 +164,12 @@ export const ArrowChevronRightIcon = styled(ChevronRightIcon)<StylePropsIcon>`
 
     :hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
+        cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     }
 `;
 
-export const ArrowChevron2LeftIcon = styled(Chevron2LeftIcon)<StylePropsIcon>`
+export const ArrowChevron2LeftIcon = styled(Chevron2LeftIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
 
@@ -219,13 +178,14 @@ export const ArrowChevron2LeftIcon = styled(Chevron2LeftIcon)<StylePropsIcon>`
 
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 
-    :hover {
+    &:hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
+        cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     }
 `;
 
-export const ArrowChevron2RightIcon = styled(Chevron2RightIcon)<StylePropsIcon>`
+export const ArrowChevron2RightIcon = styled(Chevron2RightIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
 
@@ -234,25 +194,25 @@ export const ArrowChevron2RightIcon = styled(Chevron2RightIcon)<StylePropsIcon>`
 
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 
-    :hover {
+    &:hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
+        cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     }
 `;
 
 export const EllipsisHorizontal = styled(
     EllipsisHorizontalIcon
-)<StylePropsIcon>`
+)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
     margin-top: 0.25rem;
     color: ${(props) =>
         props.$disabled ? Color.Accent.Light[2] : Color.Primary};
 
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    cursor: not-allowed;
 
-    :hover {
-        color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    &:hover {
+        cursor: not-allowed;
     }
 `;

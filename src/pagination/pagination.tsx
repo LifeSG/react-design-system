@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { PaginationsProps } from "./types";
 import {
@@ -13,7 +13,6 @@ import {
     Label,
     Link,
     LinkIcon,
-    Page,
     PaginationJumper,
     PaginationList,
     PaginationMenu,
@@ -27,21 +26,16 @@ const Component = <T,>(
         className,
         totalPages,
         activePage,
-        boundaryRange,
-        siblingRange,
         showFirstAndLastNav,
-        showJumper,
         onPageChange,
-        ...otherProps
     }: PaginationsProps,
     ref: React.Ref<HTMLDivElement>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [activeLeftArrows, setActiveLeftArrows] = useState<boolean>(true);
-    const [activeRightArrows, setActiveRightArrows] = useState<boolean>(true);
-
+    const boundaryRange = 1;
+    const siblingRange = 1;
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
     const lastPaginationItem =
@@ -59,24 +53,17 @@ const Component = <T,>(
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        checkIconsState(activePage);
-    }, []);
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const checkIconsState = (pageIndex: number) => {
-        setActiveLeftArrows(pageIndex === 1);
-        setActiveRightArrows(pageIndex === totalPages);
-    };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handlePaginationItemOnClick = (pageIndex: number) => {
         if (onPageChange) {
             onPageChange(pageIndex);
-            checkIconsState(pageIndex);
         }
     };
 
@@ -94,7 +81,6 @@ const Component = <T,>(
                     Math.min(totalPages, Number(jumperInputVal))
                 );
                 onPageChange(redirectPageIndex);
-                checkIconsState(redirectPageIndex);
             }
             event.target.value = "";
         }
@@ -171,37 +157,46 @@ const Component = <T,>(
             className={className}
             ref={ref}
             id={id || "pagination-wrapper"}
-            data-testid={otherProps["data-testid"] || "pagination"}
+            data-testid={dataTestId || "pagination"}
         >
-            <Page>
-                <PaginationList>
-                    <PaginationMenu>
-                        {showFirstAndLastNav && (
-                            <Link onClick={firstPaginationItem}>
-                                <ArrowChevron2LeftIcon
-                                    $disabled={activeLeftArrows}
-                                />
-                            </Link>
-                        )}
-                        <LinkIcon onClick={prevPaginationItem}>
-                            <ArrowChevronLeftIcon
-                                $disabled={activeLeftArrows}
+            <PaginationList>
+                <PaginationMenu>
+                    {showFirstAndLastNav && (
+                        <LinkIcon
+                            onClick={firstPaginationItem}
+                            $disabled={activePage === 1}
+                        >
+                            <ArrowChevron2LeftIcon
+                                $disabled={activePage === 1}
                             />
                         </LinkIcon>
-                        {paginationItemList}
-                        <LinkIcon onClick={nextPaginationItem}>
-                            <ArrowChevronRightIcon
-                                $disabled={activeRightArrows}
+                    )}
+                    <LinkIcon
+                        onClick={prevPaginationItem}
+                        $disabled={activePage === 1}
+                    >
+                        <ArrowChevronLeftIcon $disabled={activePage === 1} />
+                    </LinkIcon>
+                    {paginationItemList}
+                    <LinkIcon
+                        onClick={nextPaginationItem}
+                        $disabled={activePage === totalPages}
+                    >
+                        <ArrowChevronRightIcon
+                            $disabled={activePage === totalPages}
+                        />
+                    </LinkIcon>
+                    {showFirstAndLastNav && (
+                        <LinkIcon
+                            onClick={lastPaginationItem}
+                            $disabled={activePage === totalPages}
+                        >
+                            <ArrowChevron2RightIcon
+                                $disabled={activePage === totalPages}
                             />
                         </LinkIcon>
-                        {showFirstAndLastNav && (
-                            <Link onClick={lastPaginationItem}>
-                                <ArrowChevron2RightIcon
-                                    $disabled={activeRightArrows}
-                                />
-                            </Link>
-                        )}
-                        {showJumper && (
+                    )}
+                    {/* {showJumper && (
                             <PaginationJumper>
                                 <Label>Go to </Label>
                                 <InputView
@@ -210,10 +205,9 @@ const Component = <T,>(
                                 />
                                 <Label>Page</Label>
                             </PaginationJumper>
-                        )}
-                    </PaginationMenu>
-                </PaginationList>
-            </Page>
+                        )} */}
+                </PaginationMenu>
+            </PaginationList>
         </PaginationWrapper>
     );
 };

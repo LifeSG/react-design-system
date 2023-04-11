@@ -1,12 +1,9 @@
 export interface PaginationsProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
-    className?: string;
+    className?: string | undefined;
     totalPages: number;
     activePage: number;
-    boundaryRange?: number;
-    siblingRange?: number;
-    showFirstAndLastNav?: boolean;
-    showJumper?: boolean;
+    showFirstAndLastNav?: boolean | undefined;
     onPageChange?: (page: number) => void;
 }
