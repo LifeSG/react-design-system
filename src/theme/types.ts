@@ -61,7 +61,7 @@ export interface ThemeSpec {
     /** Sets the layout scheme of the theme */
     [ThemeContextKeys.layout]?: ThemeLayout | undefined;
     /** Sets the resource scheme (e.g. images, text) of the theme */
-    [ThemeContextKeys.resourceScheme]: ResourceScheme | undefined;
+    [ThemeContextKeys.resourceScheme]: ResourceScheme;
     /** For specific customisations to any schemes */
     options?: ThemeSpecOptions | undefined;
 }
