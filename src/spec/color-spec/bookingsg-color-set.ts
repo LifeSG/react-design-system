@@ -57,6 +57,12 @@ export const BookingSGColorSet: ColorSet = {
             Border: "#DD6666",
             Background: "#FDF7F7", // Validation Background
         },
+        Blue: {
+            Text: "#064D70", // Validation Text
+            Icon: " #066391",
+            Border: "#84B7DB",
+            Background: "#E8F4FA", // Validation Background
+        },
     } as ValidationTypes,
     Shadow: {
         Accent: "rgba(161, 87, 255, 0.5)",
