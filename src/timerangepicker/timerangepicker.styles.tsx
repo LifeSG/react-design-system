@@ -163,8 +163,8 @@ export const BottomHighlightEndTime = styled.div`
     position: absolute;
     bottom: 0;
     height: 2px;
-    left: 14rem;
-    right: 9rem;
+    left: 16rem;
+    right: 7rem;
     background: ${BookingSGColorSet.Neutral[8]};
     background-color: ${Color.Accent.Light[1]};
 `;
