@@ -67,24 +67,24 @@ const Component = <T,>(
         }
     };
 
-    const handleJumperInput = (event) => {
-        if (
-            ((event.type === "keypress" && event.key === "Enter") ||
-                event.type === "blur") &&
-            onPageChange
-        ) {
-            const jumperInputVal = event.target.value;
-            const numericPattern = /^-?\d+$/;
-            if (numericPattern.test(jumperInputVal)) {
-                const redirectPageIndex: number = Math.max(
-                    1,
-                    Math.min(totalPages, Number(jumperInputVal))
-                );
-                onPageChange(redirectPageIndex);
-            }
-            event.target.value = "";
-        }
-    };
+    // const handleJumperInput = (event) => {
+    //     if (
+    //         ((event.type === "keypress" && event.key === "Enter") ||
+    //             event.type === "blur") &&
+    //         onPageChange
+    //     ) {
+    //         const jumperInputVal = event.target.value;
+    //         const numericPattern = /^-?\d+$/;
+    //         if (numericPattern.test(jumperInputVal)) {
+    //             const redirectPageIndex: number = Math.max(
+    //                 1,
+    //                 Math.min(totalPages, Number(jumperInputVal))
+    //             );
+    //             onPageChange(redirectPageIndex);
+    //         }
+    //         event.target.value = "";
+    //     }
+    // };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================

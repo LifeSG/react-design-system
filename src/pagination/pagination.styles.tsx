@@ -90,7 +90,7 @@ export const InputView = styled(Input)`
     margin: 0 0.5rem;
     width: 3.125rem;
     height: 2.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     border: 1px solid ${Color.Neutral[5]};
     padding: 0.5rem 0.5rem;
     text-align: center;
@@ -145,13 +145,12 @@ export const EllipsisItem = styled(Text.Hyperlink.Default)`
 export const ArrowChevronLeftIcon = styled(ChevronLeftIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
-    color: ${(props) =>
-        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    color: ${(props) => (props.$disabled ? Color.Neutral[4] : Color.Primary)};
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 
     &:hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
+            props.$disabled ? Color.Neutral[4] : Color.Primary} !important;
     }
 `;
 
@@ -159,12 +158,11 @@ export const ArrowChevronRightIcon = styled(ChevronRightIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
 
-    color: ${(props) =>
-        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    color: ${(props) => (props.$disabled ? Color.Neutral[4] : Color.Primary)};
 
     :hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
+            props.$disabled ? Color.Neutral[4] : Color.Primary} !important;
         cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     }
 `;
@@ -173,14 +171,13 @@ export const ArrowChevron2LeftIcon = styled(Chevron2LeftIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
 
-    color: ${(props) =>
-        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    color: ${(props) => (props.$disabled ? Color.Neutral[4] : Color.Primary)};
 
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 
     &:hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
+            props.$disabled ? Color.Neutral[4] : Color.Primary} !important;
         cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     }
 `;
@@ -189,14 +186,13 @@ export const ArrowChevron2RightIcon = styled(Chevron2RightIcon)<IconStyleProps>`
     height: 1.25rem;
     width: 1.25rem;
 
-    color: ${(props) =>
-        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    color: ${(props) => (props.$disabled ? Color.Neutral[4] : Color.Primary)};
 
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 
     &:hover {
         color: ${(props) =>
-            props.$disabled ? Color.Accent.Light[2] : Color.Primary} !important;
+            props.$disabled ? Color.Neutral[4] : Color.Primary} !important;
         cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     }
 `;
@@ -207,8 +203,7 @@ export const EllipsisHorizontal = styled(
     height: 1.25rem;
     width: 1.25rem;
     margin-top: 0.25rem;
-    color: ${(props) =>
-        props.$disabled ? Color.Accent.Light[2] : Color.Primary};
+    color: ${(props) => (props.$disabled ? Color.Neutral[4] : Color.Primary)};
 
     cursor: not-allowed;
 
