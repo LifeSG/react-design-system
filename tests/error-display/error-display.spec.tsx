@@ -8,7 +8,7 @@ import { ERROR_DISPLAY_DATA } from "../../src/error-display/error-display-data";
 
 jest.mock("styled-components", () => {
     const actual = jest.requireActual("styled-components");
-    actual.useTheme = () => ({ colorScheme: "base" });
+    actual.useTheme = () => ({ resourceScheme: "base" });
     return actual;
 });
 

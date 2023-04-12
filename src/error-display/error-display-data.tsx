@@ -358,11 +358,11 @@ export const ERROR_DISPLAY_DATA_BSG = new Map<
 
 export const errorDisplayData = (
     type: ErrorDisplayType,
-    colorScheme: ColorScheme = "base"
+    resourceScheme: ColorScheme = "base"
 ) => {
-    if (colorScheme === "base") {
+    if (resourceScheme === "base") {
         return ERROR_DISPLAY_DATA.get(type);
-    } else if (colorScheme === "bookingsg") {
+    } else if (resourceScheme === "bookingsg") {
         return ERROR_DISPLAY_DATA_BSG.get(type);
     }
 };

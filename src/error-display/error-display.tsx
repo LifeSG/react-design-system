@@ -31,7 +31,7 @@ export const ErrorDisplay = ({
     const theme = useTheme();
     const defaultAssets = errorDisplayData(
         type,
-        (theme as unknown as ThemeSpec).colorScheme
+        (theme as unknown as ThemeSpec).resourceScheme
     );
     const testId = otherProps["data-testid"] || "error-display";
 
