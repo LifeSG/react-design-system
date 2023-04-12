@@ -1,5 +1,4 @@
 import { withThemes } from "@react-theming/storybook-addon";
-import { withA11y } from "@storybook/addon-a11y";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { addDecorator } from "@storybook/react";
 import pretty from "pretty";
@@ -37,4 +36,3 @@ const themes = [
 ];
 
 addDecorator(withThemes(ThemeProvider, themes));
-addDecorator(withA11y);
