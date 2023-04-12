@@ -45,3 +45,4 @@ export * from "./toggle-button";
 export * from "./toggle";
 export * from "./tooltip";
 export * from "./transition";
+export * from "./toast";
