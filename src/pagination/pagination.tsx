@@ -8,12 +8,8 @@ import {
     ArrowChevronRightIcon,
     EllipsisHorizontal,
     EllipsisItem,
-    InputView,
-    Item,
-    Label,
-    Link,
     LinkIcon,
-    PaginationJumper,
+    NavigationItem,
     PaginationList,
     PaginationMenu,
     PaginationWrapper,
@@ -36,6 +32,9 @@ const Component = <T,>(
     // =============================================================================
     const boundaryRange = 1;
     const siblingRange = 1;
+    const isFirstPage = activePage === 1;
+    const isLastPage = activePage === totalPages;
+
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
     const lastPaginationItem =
@@ -50,13 +49,6 @@ const Component = <T,>(
         activePage < totalPages
             ? () => handlePaginationItemOnClick(activePage + 1)
             : undefined;
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-
-    // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
 
     // =============================================================================
     // EVENT HANDLERS
@@ -67,55 +59,36 @@ const Component = <T,>(
         }
     };
 
-    // const handleJumperInput = (event) => {
-    //     if (
-    //         ((event.type === "keypress" && event.key === "Enter") ||
-    //             event.type === "blur") &&
-    //         onPageChange
-    //     ) {
-    //         const jumperInputVal = event.target.value;
-    //         const numericPattern = /^-?\d+$/;
-    //         if (numericPattern.test(jumperInputVal)) {
-    //             const redirectPageIndex: number = Math.max(
-    //                 1,
-    //                 Math.min(totalPages, Number(jumperInputVal))
-    //             );
-    //             onPageChange(redirectPageIndex);
-    //         }
-    //         event.target.value = "";
-    //     }
-    // };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const paginationItemList = [...Array(totalPages)].map((e, i) => {
         const pageIndex = i + 1;
-        const boundaryRangeLocal =
-            boundaryRange && boundaryRange > 0 ? boundaryRange : 1;
-        const siblingRangeLocal =
-            siblingRange && siblingRange >= 0 ? siblingRange : 0;
-        const startRangeLocal = boundaryRangeLocal + 2 + siblingRangeLocal * 2;
+        const startRangeLocal = boundaryRange + 2 + siblingRange * 2;
         const endRange = totalPages - startRangeLocal;
-        const totalRange = (boundaryRangeLocal + siblingRangeLocal) * 2 + 3;
+        const totalRange = (boundaryRange + siblingRange) * 2 + 3;
         const active = activePage === pageIndex;
         if (totalPages <= totalRange) {
             return (
-                <Item
+                <NavigationItem
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
+                    weight={active ? "bold" : "regular"}
+                    aria-label={pageIndex + " Page"}
+                    tabIndex={0}
                 >
                     {pageIndex}
-                </Item>
+                </NavigationItem>
             );
         }
 
         const ellipsisStart =
-            activePage + siblingRangeLocal > startRangeLocal &&
-            pageIndex === boundaryRangeLocal + 1;
+            activePage + siblingRange > startRangeLocal &&
+            pageIndex === boundaryRange + 1;
         const ellipsisEnd =
-            activePage - siblingRangeLocal <= endRange &&
-            pageIndex === totalPages - boundaryRangeLocal - 1;
+            activePage - siblingRange <= endRange &&
+            pageIndex === totalPages - boundaryRange - 1;
 
         if (ellipsisStart || ellipsisEnd) {
             return (
@@ -127,25 +100,27 @@ const Component = <T,>(
 
         const paginationStart =
             (pageIndex <= startRangeLocal &&
-                activePage + siblingRangeLocal <= startRangeLocal) ||
-            pageIndex <= boundaryRangeLocal;
+                activePage + siblingRange <= startRangeLocal) ||
+            pageIndex <= boundaryRange;
         const paginationMiddle =
             pageIndex === activePage ||
-            (pageIndex <= activePage + siblingRangeLocal &&
-                pageIndex >= activePage - siblingRangeLocal);
+            (pageIndex <= activePage + siblingRange &&
+                pageIndex >= activePage - siblingRange);
         const paginationEnd =
-            (pageIndex > endRange &&
-                activePage - siblingRangeLocal > endRange) ||
-            pageIndex > totalPages - boundaryRangeLocal;
+            (pageIndex > endRange && activePage - siblingRange > endRange) ||
+            pageIndex > totalPages - boundaryRange;
         if (paginationStart || paginationMiddle || paginationEnd) {
             return (
-                <Item
+                <NavigationItem
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
+                    weight={active ? "bold" : "regular"}
+                    aria-label={pageIndex + " Page"}
+                    tabIndex={0}
                 >
                     {pageIndex}
-                </Item>
+                </NavigationItem>
             );
         }
 
@@ -164,48 +139,40 @@ const Component = <T,>(
                     {showFirstAndLastNav && (
                         <LinkIcon
                             onClick={firstPaginationItem}
-                            $disabled={activePage === 1}
+                            $disabled={isFirstPage}
+                            aria-label="First page"
+                            tabIndex={isFirstPage ? -1 : 0}
                         >
-                            <ArrowChevron2LeftIcon
-                                $disabled={activePage === 1}
-                            />
+                            <ArrowChevron2LeftIcon $disabled={isFirstPage} />
                         </LinkIcon>
                     )}
                     <LinkIcon
                         onClick={prevPaginationItem}
-                        $disabled={activePage === 1}
+                        $disabled={isFirstPage}
+                        aria-label="Previous Page"
+                        tabIndex={isFirstPage ? -1 : 0}
                     >
-                        <ArrowChevronLeftIcon $disabled={activePage === 1} />
+                        <ArrowChevronLeftIcon $disabled={isFirstPage} />
                     </LinkIcon>
                     {paginationItemList}
                     <LinkIcon
                         onClick={nextPaginationItem}
-                        $disabled={activePage === totalPages}
+                        $disabled={isLastPage}
+                        aria-label="Next Page"
+                        tabIndex={isLastPage ? -1 : 0}
                     >
-                        <ArrowChevronRightIcon
-                            $disabled={activePage === totalPages}
-                        />
+                        <ArrowChevronRightIcon $disabled={isLastPage} />
                     </LinkIcon>
                     {showFirstAndLastNav && (
                         <LinkIcon
                             onClick={lastPaginationItem}
-                            $disabled={activePage === totalPages}
+                            $disabled={isLastPage}
+                            aria-label="last page"
+                            tabIndex={isLastPage ? -1 : 0}
                         >
-                            <ArrowChevron2RightIcon
-                                $disabled={activePage === totalPages}
-                            />
+                            <ArrowChevron2RightIcon $disabled={isLastPage} />
                         </LinkIcon>
                     )}
-                    {/* {showJumper && (
-                            <PaginationJumper>
-                                <Label>Go to </Label>
-                                <InputView
-                                    onKeyPress={handleJumperInput}
-                                    onBlur={handleJumperInput}
-                                />
-                                <Label>Page</Label>
-                            </PaginationJumper>
-                        )} */}
                 </PaginationMenu>
             </PaginationList>
         </PaginationWrapper>

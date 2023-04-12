@@ -5,5 +5,5 @@ export interface PaginationsProps {
     totalPages: number;
     activePage: number;
     showFirstAndLastNav?: boolean | undefined;
-    onPageChange?: (page: number) => void;
+    onPageChange?: ((page: number) => void) | undefined;
 }
