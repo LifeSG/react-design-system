@@ -29,10 +29,7 @@ export const ErrorDisplay = ({
     // CONST, STATE, REF
     // =============================================================================
     const theme = useTheme();
-    const defaultAssets = errorDisplayData(
-        type,
-        (theme as unknown as ThemeSpec).resourceScheme
-    );
+    const defaultAssets = errorDisplayData(type, theme.resourceScheme);
     const testId = otherProps["data-testid"] || "error-display";
 
     // =============================================================================
