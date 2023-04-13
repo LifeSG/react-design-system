@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";

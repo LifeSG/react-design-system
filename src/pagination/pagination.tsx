@@ -1,9 +1,10 @@
-import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
-import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
+import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
 import React from "react";
+
 import {
     EllipsisItem,
     NavigationItem,
@@ -19,7 +20,7 @@ const Component = (
         id,
         "data-testid": dataTestId,
         className,
-        totalSize = 10,
+        pageSize = 10,
         totalItems,
         activePage,
         showFirstAndLastNav,
@@ -32,7 +33,7 @@ const Component = (
     // =============================================================================
     const boundaryRange = 1;
     const siblingRange = 1;
-    const totalPages = Math.round(Math.ceil(totalItems / totalSize));
+    const totalPages = Math.ceil(totalItems / pageSize);
     const isFirstPage = activePage === 1;
     const isLastPage = activePage === totalPages;
 
@@ -76,7 +77,7 @@ const Component = (
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
                     weight={active ? "bold" : "regular"}
-                    aria-label={pageIndex + " Page"}
+                    aria-label={"Page " + pageIndex}
                     tabIndex={0}
                 >
                     {pageIndex}
@@ -117,7 +118,7 @@ const Component = (
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
                     weight={active ? "bold" : "regular"}
-                    aria-label={pageIndex + " Page"}
+                    aria-label={"Page " + pageIndex}
                     tabIndex={0}
                 >
                     {pageIndex}
@@ -144,7 +145,7 @@ const Component = (
                             aria-label="First page"
                             tabIndex={isFirstPage ? -1 : 0}
                         >
-                            <Chevron2LeftIcon />
+                            <ChevronLineLeftIcon aria-hidden />
                         </NavigationItem>
                     )}
                     <NavigationItem
@@ -153,7 +154,7 @@ const Component = (
                         aria-label="Previous Page"
                         tabIndex={isFirstPage ? -1 : 0}
                     >
-                        <ChevronLeftIcon />
+                        <ChevronLeftIcon aria-hidden />
                     </NavigationItem>
                     {paginationItemList}
                     <NavigationItem
@@ -162,7 +163,7 @@ const Component = (
                         aria-label="Next Page"
                         tabIndex={isLastPage ? -1 : 0}
                     >
-                        <ChevronRightIcon />
+                        <ChevronRightIcon aria-hidden />
                     </NavigationItem>
                     {showFirstAndLastNav && (
                         <NavigationItem
@@ -171,7 +172,7 @@ const Component = (
                             aria-label="last page"
                             tabIndex={isLastPage ? -1 : 0}
                         >
-                            <Chevron2RightIcon />
+                            <ChevronLineRightIcon aria-hidden />
                         </NavigationItem>
                     )}
                 </PaginationMenu>

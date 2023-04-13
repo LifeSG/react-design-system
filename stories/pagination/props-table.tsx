@@ -22,7 +22,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "totalSize",
+                name: "pageSize",
                 description: "The number of items per page",
                 propTypes: ["number"],
                 defaultValue: "10",
