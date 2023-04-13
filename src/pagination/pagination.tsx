@@ -1,21 +1,20 @@
+import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
+import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
 import React from "react";
-
-import { PaginationsProps } from "./types";
 import {
-    ArrowChevron2LeftIcon,
-    ArrowChevron2RightIcon,
-    ArrowChevronLeftIcon,
-    ArrowChevronRightIcon,
-    EllipsisHorizontal,
     EllipsisItem,
-    LinkIcon,
     NavigationItem,
+    PageItem,
     PaginationList,
     PaginationMenu,
     PaginationWrapper,
 } from "./pagination.styles";
+import { PaginationsProps } from "./types";
 
-const Component = <T,>(
+const Component = (
     {
         id,
         "data-testid": dataTestId,
@@ -72,7 +71,7 @@ const Component = <T,>(
         const active = activePage === pageIndex;
         if (totalPages <= totalRange) {
             return (
-                <NavigationItem
+                <PageItem
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
@@ -81,7 +80,7 @@ const Component = <T,>(
                     tabIndex={0}
                 >
                     {pageIndex}
-                </NavigationItem>
+                </PageItem>
             );
         }
 
@@ -95,7 +94,7 @@ const Component = <T,>(
         if (ellipsisStart || ellipsisEnd) {
             return (
                 <EllipsisItem key={pageIndex}>
-                    <EllipsisHorizontal $disabled={false} />
+                    <EllipsisHorizontalIcon />
                 </EllipsisItem>
             );
         }
@@ -113,7 +112,7 @@ const Component = <T,>(
             pageIndex > totalPages - boundaryRange;
         if (paginationStart || paginationMiddle || paginationEnd) {
             return (
-                <NavigationItem
+                <PageItem
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
@@ -122,7 +121,7 @@ const Component = <T,>(
                     tabIndex={0}
                 >
                     {pageIndex}
-                </NavigationItem>
+                </PageItem>
             );
         }
 
@@ -139,41 +138,41 @@ const Component = <T,>(
             <PaginationList>
                 <PaginationMenu>
                     {showFirstAndLastNav && (
-                        <LinkIcon
+                        <NavigationItem
                             onClick={firstPaginationItem}
                             $disabled={isFirstPage}
                             aria-label="First page"
                             tabIndex={isFirstPage ? -1 : 0}
                         >
-                            <ArrowChevron2LeftIcon $disabled={isFirstPage} />
-                        </LinkIcon>
+                            <Chevron2LeftIcon />
+                        </NavigationItem>
                     )}
-                    <LinkIcon
+                    <NavigationItem
                         onClick={prevPaginationItem}
                         $disabled={isFirstPage}
                         aria-label="Previous Page"
                         tabIndex={isFirstPage ? -1 : 0}
                     >
-                        <ArrowChevronLeftIcon $disabled={isFirstPage} />
-                    </LinkIcon>
+                        <ChevronLeftIcon />
+                    </NavigationItem>
                     {paginationItemList}
-                    <LinkIcon
+                    <NavigationItem
                         onClick={nextPaginationItem}
                         $disabled={isLastPage}
                         aria-label="Next Page"
                         tabIndex={isLastPage ? -1 : 0}
                     >
-                        <ArrowChevronRightIcon $disabled={isLastPage} />
-                    </LinkIcon>
+                        <ChevronRightIcon />
+                    </NavigationItem>
                     {showFirstAndLastNav && (
-                        <LinkIcon
+                        <NavigationItem
                             onClick={lastPaginationItem}
                             $disabled={isLastPage}
                             aria-label="last page"
                             tabIndex={isLastPage ? -1 : 0}
                         >
-                            <ArrowChevron2RightIcon $disabled={isLastPage} />
-                        </LinkIcon>
+                            <Chevron2RightIcon />
+                        </NavigationItem>
                     )}
                 </PaginationMenu>
             </PaginationList>
