@@ -66,8 +66,8 @@ const Component = (
     // =============================================================================
     const paginationItemList = [...Array(totalPages)].map((e, i) => {
         const pageIndex = i + 1;
-        const startRangeLocal = boundaryRange + 2 + siblingRange * 2;
-        const endRange = totalPages - startRangeLocal;
+        const startRange = boundaryRange + 2 + siblingRange * 2;
+        const endRange = totalPages - startRange;
         const totalRange = (boundaryRange + siblingRange) * 2 + 3;
         const active = activePage === pageIndex;
         if (totalPages <= totalRange) {
@@ -86,7 +86,7 @@ const Component = (
         }
 
         const ellipsisStart =
-            activePage + siblingRange > startRangeLocal &&
+            activePage + siblingRange > startRange &&
             pageIndex === boundaryRange + 1;
         const ellipsisEnd =
             activePage - siblingRange <= endRange &&
@@ -101,8 +101,8 @@ const Component = (
         }
 
         const paginationStart =
-            (pageIndex <= startRangeLocal &&
-                activePage + siblingRange <= startRangeLocal) ||
+            (pageIndex <= startRange &&
+                activePage + siblingRange <= startRange) ||
             pageIndex <= boundaryRange;
         const paginationMiddle =
             pageIndex === activePage ||
