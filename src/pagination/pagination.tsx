@@ -33,9 +33,9 @@ const Component = <T,>(
     // =============================================================================
     const boundaryRange = 1;
     const siblingRange = 1;
-    const isFirstPage = activePage === 1;
-    const isLastPage = activePage === totalItems;
     const totalPages = Math.round(Math.ceil(totalItems / totalSize));
+    const isFirstPage = activePage === 1;
+    const isLastPage = activePage === totalPages;
 
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
