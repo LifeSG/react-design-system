@@ -67,11 +67,17 @@ export namespace DateHelper {
 
     /**
      * Calculate the difference in minutes between two times
-     * @param start the start time in HH:mm format
+     * @param start input start string
+     * @param end input end string
+     * @param format the time format, defaults to "HH:mm"
      */
-    export const getTimeDiffInMinutes = (start: string, end: string) => {
-        const startTime = dayjs(start, "HH:mm");
-        const endTime = dayjs(end, "HH:mm");
+    export const getTimeDiffInMinutes = (
+        start: string,
+        end: string,
+        format = "HH:mm"
+    ) => {
+        const startTime = dayjs(start, format);
+        const endTime = dayjs(end, format);
         return endTime.diff(startTime, "minute");
     };
 }

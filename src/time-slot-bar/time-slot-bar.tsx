@@ -17,7 +17,7 @@ import {
     TimeSlotBarContainer,
     TimeSlotWrapper,
 } from "./time-slot-bar.styles";
-import { TDirection, TimeSlotBarProps } from "./types";
+import { Direction, TimeSlotBarProps } from "./types";
 
 const CELL_DURATION = 30; // In minutes
 const SCROLL_INCREMENT = CELL_WIDTH * 2.5; // In px. Each scroll increment corresponds to 75mins
@@ -64,7 +64,7 @@ export const TimeSlotBar = ({
         }
     };
 
-    const handleArrowButtonClick = (direction: TDirection) => {
+    const handleArrowButtonClick = (direction: Direction) => {
         if (barRef.current) {
             barRef.current.scrollBy({
                 left:

@@ -1,6 +1,6 @@
 export type SlotStyle = "default" | "stripes";
 
-export type TDirection = "right" | "left";
+export type Direction = "right" | "left";
 
 export interface TimeSlotBarProps {
     "data-testid"?: string;

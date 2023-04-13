@@ -4,7 +4,7 @@ import { Color } from "src/color";
 import { IconButton } from "src/icon-button";
 import { Text } from "src/text";
 import styled, { css } from "styled-components";
-import { SlotStyle, TDirection } from "./types";
+import { Direction, SlotStyle } from "./types";
 
 export const CELL_WIDTH = 44; // NOTE in px
 
@@ -14,7 +14,7 @@ export const CELL_WIDTH = 44; // NOTE in px
 // =============================================================================
 
 interface ArrowStyleProps {
-    $direction?: TDirection;
+    $direction?: Direction;
 }
 
 interface TimeSlotStyleProps {
