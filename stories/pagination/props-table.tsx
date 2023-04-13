@@ -22,8 +22,14 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "totalPages",
-                description: "The totoal number of pages",
+                name: "totalSize",
+                description: "The number of items per page",
+                propTypes: ["number"],
+                defaultValue: "10",
+            },
+            {
+                name: "totalItems",
+                description: "The total number of items",
                 propTypes: ["number"],
                 mandatory: true,
             },
@@ -33,16 +39,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
                 mandatory: true,
             },
-            // {
-            //     name: "boundaryRange",
-            //     description: "The boundary range of the component",
-            //     propTypes: ["number"],
-            // },
-            // {
-            //     name: "siblingRange",
-            //     description: "The sibling range of the component",
-            //     propTypes: ["number"],
-            // },
 
             {
                 name: "showFirstAndLastNav",
@@ -50,12 +46,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
-            // {
-            //     name: "showJumper",
-            //     description: "show showJumper nav",
-            //     propTypes: ["boolean"],
-            //     defaultValue: "false",
-            // },
+
             {
                 name: "onPageChange",
                 description: "Called when every item clicked",

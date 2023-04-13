@@ -30,8 +30,7 @@ import { Pagination } from "@lifesg/react-design-system/pagination";
                     <Pagination
                         onPageChange={(selected) => setSelected(selected)}
                         activePage={selectedPage}
-                        selectedPage={selectedPage}
-                        totalPages={50}
+                        totalItems={100}
                     />
                 </StoryContainer>
             );
@@ -55,8 +54,7 @@ This is a common use case among web apps where it requires a Pagination bar.
                     <Pagination
                         onPageChange={(selected) => setSelected(selected)}
                         activePage={selectedPage}
-                        selectedPage={selectedPage}
-                        totalPages={50}
+                        totalItems={500}
                     />
                 </StoryContainer>
             );
@@ -78,8 +76,8 @@ This is a common use case among web apps where it requires a Pagination bar.
                     <Pagination
                         onPageChange={(selected) => setSelected(selected)}
                         activePage={selectedPage}
-                        selectedPage={selectedPage}
-                        totalPages={50}
+                        totalItems={500}
+                        totalSize={25}
                         showFirstAndLastNav
                     />
                 </StoryContainer>
