@@ -13,9 +13,9 @@ import {
     INITIAL_INPUT_VALUES,
     ReducerState,
     dateInputReducer,
-} from "./dateInputReducer";
+} from "./date-input-reducer";
 import { DateInputHelper } from "../util/date-input-helper";
-import { useEventListener } from "./useEventListener";
+import { useEventListener } from "../util/use-event-listener";
 
 interface CurrentFocusTypes {
     field: FieldType;
