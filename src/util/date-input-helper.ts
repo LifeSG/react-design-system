@@ -7,33 +7,29 @@ dayjs.extend(isBetween);
 
 export namespace DateInputHelper {
     export const validate = (
-        beginDate: string,
-        afterDate: string,
+        startDate: string,
+        endDate: string,
         disabledDates?: string[] | undefined,
         between?: string[] | undefined
     ): boolean => {
         let pass = false;
 
-        if (!beginDate?.length || !afterDate?.length) return false;
+        if (startDate.length === 0 || endDate.length === 0) return false;
 
-        if (dayjs(beginDate).isBefore(afterDate)) {
-            pass = true;
-        }
-
-        if (dayjs(afterDate).isAfter(beginDate)) {
+        if (dayjs(startDate).isBefore(endDate)) {
             pass = true;
         }
 
         if (disabledDates && disabledDates.length) {
             pass = !disabledDates.some((value) =>
-                [beginDate, afterDate].includes(value)
+                [startDate, endDate].includes(value)
             );
 
             if (!pass) return false;
         }
 
         if (between && between.length) {
-            const result = [beginDate, afterDate].map((selectedDate) =>
+            const result = [startDate, endDate].map((selectedDate) =>
                 dayjs(selectedDate).isBetween(
                     between[0],
                     between[1],
@@ -47,7 +43,7 @@ export namespace DateInputHelper {
             if (!pass) return false;
         }
 
-        if (dayjs(beginDate).isAfter(afterDate)) {
+        if (dayjs(startDate).isAfter(endDate)) {
             pass = false;
 
             return pass;
@@ -63,7 +59,7 @@ export namespace DateInputHelper {
     ) => {
         let pass = true;
 
-        if (!value || value === "") return false;
+        if (value.length === 0) return false;
 
         if (disabledDates && disabledDates.length) {
             pass = !disabledDates.some(
