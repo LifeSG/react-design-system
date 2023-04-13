@@ -4,7 +4,7 @@ import { Pagination } from "src/pagination";
 import {
     Heading3,
     Secondary,
-    StoryContainer,
+    FullWidthStoryContainer,
     Title,
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
@@ -15,7 +15,7 @@ import { PropsTable } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-A component to handle the Pagination for pages.
+A component to provide navigation between pages.
 
 ```tsx
 import { Pagination } from "@lifesg/react-design-system/pagination";
@@ -24,69 +24,64 @@ import { Pagination } from "@lifesg/react-design-system/pagination";
 <Canvas>
     <Story name="Pagination">
         {() => {
-            const [selectedPage, setSelected] = useState(5);
+            const [selectedPage, setSelected] = useState(1);
             return (
-                <StoryContainer>
+                <FullWidthStoryContainer>
                     <Pagination
                         onPageChange={(selected) => setSelected(selected)}
                         activePage={selectedPage}
-                        totalItems={100}
+                        totalItems={45}
                     />
-                </StoryContainer>
+                </FullWidthStoryContainer>
             );
         }}
     </Story>
 </Canvas>
 
-<br />
 <Secondary>Usage examples</Secondary>
 
-<Heading3>Simple Pagination</Heading3>
+<Heading3>With many pages</Heading3>
 
-This is a common use case among web apps where it requires a Pagination bar.
+When there are more items to display, only some pages are visible.
 
 <Canvas>
-    <Story name="Simple Pagination">
+    <Story name="With many pages">
         {() => {
             const [selectedPage, setSelected] = useState(5);
             return (
-                <StoryContainer>
+                <FullWidthStoryContainer>
                     <Pagination
                         onPageChange={(selected) => setSelected(selected)}
                         activePage={selectedPage}
                         totalItems={500}
                     />
-                </StoryContainer>
+                </FullWidthStoryContainer>
             );
         }}
     </Story>
 </Canvas>
 
-<br />
-<Heading3>With First And Last Nav</Heading3>
+<Heading3>With first and last nav</Heading3>
 
-This is a common use case among web apps where it requires a Pagination bar.
+The `showFirstAndLastNav` prop allows the user to jump directly to the first and last page.
 
 <Canvas>
-    <Story name="With First And Last Nav">
+    <Story name="With first and last nav">
         {() => {
             const [selectedPage, setSelected] = useState(5);
             return (
-                <StoryContainer>
+                <FullWidthStoryContainer>
                     <Pagination
                         onPageChange={(selected) => setSelected(selected)}
                         activePage={selectedPage}
                         totalItems={500}
-                        totalSize={25}
                         showFirstAndLastNav
                     />
-                </StoryContainer>
+                </FullWidthStoryContainer>
             );
         }}
     </Story>
 </Canvas>
-
-<br />
 
 <Secondary>Component API</Secondary>
 

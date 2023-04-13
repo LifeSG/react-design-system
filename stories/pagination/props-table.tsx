@@ -39,17 +39,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
                 mandatory: true,
             },
-
             {
                 name: "showFirstAndLastNav",
-                description: "show first and last nav",
+                description:
+                    "Specifies if the buttons to jump to the first and last pages are visible",
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
-
             {
                 name: "onPageChange",
-                description: "Called when every item clicked",
+                description: "Called when a page is selected",
                 propTypes: ["(page: number) => void"],
             },
         ],
