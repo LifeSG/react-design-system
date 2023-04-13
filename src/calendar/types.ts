@@ -1,5 +1,5 @@
 import { ActionComponent, DateInputVariant } from "../date-input";
-import { ActionType } from "../date-input/dateInputReducer";
+import { ActionType } from "../date-input/date-input-reducer";
 
 export interface CalendarProps {
     // DateInput component props
