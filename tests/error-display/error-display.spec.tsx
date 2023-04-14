@@ -170,29 +170,151 @@ describe("ErrorDisplay", () => {
                 transformJSXElementToString(error.description as JSX.Element)
             );
         });
-
-        it("should be able to render reference ID", () => {
-            const type = "500";
-            const additionalProps = { referenceId: "123" };
-
-            render(
-                <ErrorDisplay type={type} additionalProps={additionalProps} />
-            );
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            const errorDescription = transformJSXElementToString(
-                error.renderDescription(additionalProps) as JSX.Element
-            );
-
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(errorDescription);
-        });
     });
 
     describe("503 error", () => {
         it("should be able to render", () => {
             const type = "503";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("504 error", () => {
+        it("should be able to render", () => {
+            const type = "504";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("confirmation", () => {
+        it("should be able to render", () => {
+            const type = "confirmation";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("inactivity error", () => {
+        it("should be able to render", () => {
+            const type = "inactivity";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("insufficient credit error", () => {
+        it("should be able to render", () => {
+            const type = "insufficient-credit";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("link error", () => {
+        it("should be able to render", () => {
+            const type = "link-error";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("logout error", () => {
+        it("should be able to render", () => {
+            const type = "logout";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("warning error", () => {
+        it("should be able to render", () => {
+            const type = "warning";
             render(<ErrorDisplay type={type} />);
 
             const error = ERROR_DISPLAY_DATA.get(type);
@@ -245,6 +367,66 @@ describe("ErrorDisplay", () => {
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
             ).toBe(errorDescription);
+        });
+    });
+
+    describe("no-item-found error", () => {
+        it("should be able to render", () => {
+            const type = "no-item-found";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("payment unsuccessful error", () => {
+        it("should be able to render", () => {
+            const type = "payment-unsuccessful";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
+    });
+
+    describe("transfer unsuccessful error", () => {
+        it("should be able to render", () => {
+            const type = "transfer-unsuccessful";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
         });
     });
 
