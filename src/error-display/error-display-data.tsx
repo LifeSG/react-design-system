@@ -1,9 +1,5 @@
 import { MediaWidths } from "../spec/media-spec";
-import {
-    Error500AdditionalAttributes,
-    ErrorDisplayType,
-    MaintenanceAdditionalAttributes,
-} from "./types";
+import { ErrorDisplayType, MaintenanceAdditionalAttributes } from "./types";
 
 // =============================================================================
 // IMAGE PATHS
@@ -30,32 +26,81 @@ const ImgPaths: Record<string, ImagePathAttributes> = {
         md: "https://assets.life.gov.sg/react-design-system/img/error/404@2x.png",
         lg: "https://assets.life.gov.sg/react-design-system/img/error/404@3x.png",
     },
+    "408": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/408.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/408@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/408@3x.png",
+    },
     "500": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/generic-error.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@2x.png",
         lg: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@3x.png",
+    },
+    "502": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/502.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/502@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/502@3x.png",
     },
     "503": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/503.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/503@2x.png",
         lg: "https://assets.life.gov.sg/react-design-system/img/error/503@3x.png",
     },
+    "504": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/504.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/504@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/504@3x.png",
+    },
+    confirmation: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/confirmation.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/confirmation@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/confirmation@3x.png",
+    },
+    "insufficient-credit": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/insuffcient-credit.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/insuffcient-credit@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/insuffcient-credit@3x.png",
+    },
+    inactivity: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/inactivity.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/inactivity@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/inactivity@3x.png",
+    },
+    "link-error": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/link-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/link-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/link-error@3x.png",
+    },
+    logout: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/logout.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/logout@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/logout@3x.png",
+    },
+    "no-item-found": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/no-item-found.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/no-item-found@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/no-item-found@3x.png",
+    },
+    "payment-unsuccessful": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/payment-unsuccessful.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/payment-unsuccessful@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/payment-unsuccessful@3x.png",
+    },
+    "transfer-unsuccessful": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/transfer-unsuccessful.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/transfer-unsuccessful@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/transfer-unsuccessful@3x.png",
+    },
     "unsupported-browser": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/generic-error.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@2x.png",
         lg: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@3x.png",
     },
-};
-
-const oldImgAttributeHelper = (
-    pathAttributes: ImagePathAttributes
-): React.ImgHTMLAttributes<HTMLImageElement> => {
-    const { base, md, lg } = pathAttributes;
-    return {
-        srcSet: `${base} 416w, ${md} 832w, ${lg} 1248w`,
-        src: lg,
-        sizes: `(max-width: ${MediaWidths.mobileL}px) 416px, (max-width: ${MediaWidths.tablet}px) 832px, 1248px`,
-    };
+    warning: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/warning.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/warning@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/warning@3x.png",
+    },
 };
 
 const imgAttributeHelper = (
@@ -79,7 +124,7 @@ interface ErrorDisplayDataAttrs {
     title?: string | undefined;
     description?: string | JSX.Element | undefined;
     renderDescription?: (
-        attrs?: MaintenanceAdditionalAttributes | Error500AdditionalAttributes
+        attrs?: MaintenanceAdditionalAttributes
     ) => JSX.Element | string | undefined;
 }
 
@@ -90,120 +135,115 @@ export const ERROR_DISPLAY_DATA = new Map<
     [
         "400",
         {
-            img: oldImgAttributeHelper(ImgPaths["400"]),
-            title: "Something went wrong",
-            description: (
-                <>
-                    Please refresh the page or try again later. If it&rsquo;s
-                    still not working, email{" "}
-                    <a href="mailto:helpdesk@life.gov.sg">
-                        helpdesk@life.gov.sg
-                    </a>{" "}
-                    and let us know you received a HTTP 400 error.
-                </>
-            ),
+            img: imgAttributeHelper(ImgPaths["400"]),
+            title: "400 Bad Request",
+            description: <>A generic error state illustration.</>,
         },
     ],
     [
         "403",
         {
-            img: oldImgAttributeHelper(ImgPaths["403"]),
-            title: "Error loading page",
-            description: (
-                <>
-                    You may not have permission to view this page. If you
-                    believe this is a mistake, email{" "}
-                    <a href="mailto:helpdesk@life.gov.sg">
-                        helpdesk@life.gov.sg
-                    </a>
-                    .
-                </>
-            ),
+            img: imgAttributeHelper(ImgPaths["403"]),
+            title: "403 Forbidden",
+            description: <>A generic error state illustration.</>,
         },
     ],
     [
         "404",
         {
-            img: oldImgAttributeHelper(ImgPaths["404"]),
-            title: "Page not found",
-            description: (
-                <>
-                    If you entered or pasted the URL, check that it&rsquo;s
-                    correct. If you followed a link on LifeSG, email{" "}
-                    <a href="mailto:helpdesk@life.gov.sg">
-                        helpdesk@life.gov.sg
-                    </a>{" "}
-                    to let us know.
-                </>
-            ),
+            img: imgAttributeHelper(ImgPaths["404"]),
+            title: "404 No page found",
+            description: <>No page found</>,
         },
     ],
     [
         "408",
         {
-            img: oldImgAttributeHelper(ImgPaths["400"]),
-            title: "Something went wrong",
-            description: (
-                <>
-                    Please refresh the page or try again later. If it&rsquo;s
-                    still not working, email{" "}
-                    <a href="mailto:helpdesk@life.gov.sg">
-                        helpdesk@life.gov.sg
-                    </a>{" "}
-                    and let us know you received a HTTP 408 error.
-                </>
-            ),
+            img: imgAttributeHelper(ImgPaths["408"]),
+            title: "408 Request Timeout",
+            description: <>A generic error state illustration.</>,
         },
     ],
     [
         "500",
         {
             img: imgAttributeHelper(ImgPaths["500"]),
-            title: "Something went wrong",
-            description: (
-                <>
-                    Please try again later. If it&rsquo;s still not working,
-                    email{" "}
-                    <a
-                        href="mailto:helpdesk@life.gov.sg"
-                        data-testid="link--helpdesk"
-                    >
-                        helpdesk@life.gov.sg
-                    </a>
-                    &nbsp;and let us know you received a HTTP 500 error. Do
-                    include a screenshot of this page in your email.
-                </>
-            ),
-            renderDescription: (attrs: Error500AdditionalAttributes) => (
-                <>
-                    Please try again later. If it&rsquo;s still not working,
-                    email{" "}
-                    <a
-                        href="mailto:helpdesk@life.gov.sg"
-                        data-testid="link--helpdesk"
-                    >
-                        helpdesk@life.gov.sg
-                    </a>
-                    &nbsp;and let us know you received a HTTP 500 error. Do
-                    include a screenshot of this page or this reference ID in
-                    your email: <strong>{attrs.referenceId}</strong>.
-                </>
-            ),
+            title: "Error state",
+            description: <>A generic error state illustration.</>,
+        },
+    ],
+    [
+        "502",
+        {
+            img: imgAttributeHelper(ImgPaths["502"]),
+            title: "502 Bad Gateway",
+            description: "An error state illustration.",
         },
     ],
     [
         "503",
         {
-            img: oldImgAttributeHelper(ImgPaths["503"]),
-            title: "Service under maintenance",
+            img: imgAttributeHelper(ImgPaths["503"]),
+            title: "503 Service Unavailable",
+            description: "A generic error state illustration.",
+        },
+    ],
+    [
+        "504",
+        {
+            img: imgAttributeHelper(ImgPaths["504"]),
+            title: "504 Gateway Timeout",
+            description: "A generic error state illustration.",
+        },
+    ],
+    [
+        "confirmation",
+        {
+            img: imgAttributeHelper(ImgPaths["confirmation"]),
+            title: "Confirmation modal",
             description:
-                "This service is currently unavailable. Please try again later.",
+                "For form-filling instances, to confirm with the user that they want to exit the form and lose their edits.",
+        },
+    ],
+    [
+        "link-error",
+        {
+            img: imgAttributeHelper(ImgPaths["link-error"]),
+            title: "Link Error",
+            description: "When a link is expired.",
+        },
+    ],
+    [
+        "logout",
+        {
+            img: imgAttributeHelper(ImgPaths["logout"]),
+            title: "Logged-out",
+            description:
+                "When the user has been inactive for a certain period of time, and has been logged out after X minutes.",
+        },
+    ],
+    [
+        "insufficient-credit",
+        {
+            img: imgAttributeHelper(ImgPaths["insufficient-credit"]),
+            title: "Insufficient credits",
+            description:
+                "When the user has insufficient credits for a transaction.",
+        },
+    ],
+    [
+        "inactivity",
+        {
+            img: imgAttributeHelper(ImgPaths["inactivity"]),
+            title: "Inactive state",
+            description:
+                "When the user has been inactive for a certain period of time, and will be logged out after X minutes.",
         },
     ],
     [
         "maintenance",
         {
-            img: oldImgAttributeHelper(ImgPaths["503"]),
+            img: imgAttributeHelper(ImgPaths["503"]),
             title: "Service under maintenance",
             description:
                 "This service is currently unavailable. Please try again later.",
@@ -217,21 +257,53 @@ export const ERROR_DISPLAY_DATA = new Map<
         },
     ],
     [
+        "no-item-found",
+        {
+            img: imgAttributeHelper(ImgPaths["no-item-found"]),
+            title: "No items found",
+            description:
+                "For instances where the no items can be found for a particular feature.",
+        },
+    ],
+    [
+        "payment-unsuccessful",
+        {
+            img: imgAttributeHelper(ImgPaths["payment-unsuccessful"]),
+            title: "Payment unseccessful",
+            description: "When the user’s payment transaction is unsuccessful.",
+        },
+    ],
+    [
+        "transfer-unsuccessful",
+        {
+            img: imgAttributeHelper(ImgPaths["transfer-unsuccessful"]),
+            title: "Transfer unsuccessful",
+            description:
+                "For instances where the user is unsuccessful in transferring credits.",
+        },
+    ],
+    [
         "unsupported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Browser not supported",
-            description:
-                "To use LifeSG, download the latest version of Chrome, Edge, Firefox or Safari.",
+            title: "Error state",
+            description: "A generic error state illustration.",
         },
     ],
     [
         "partially-supported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Browser not supported",
-            description:
-                "LifeSG works best with the latest version of Chrome, Edge, Firefox or Safari. If you continue with your browser, you may run into problems.",
+            title: "Error state",
+            description: "A generic error state illustration.",
+        },
+    ],
+    [
+        "warning",
+        {
+            img: imgAttributeHelper(ImgPaths["warning"]),
+            title: "Warning states",
+            description: "Generic warning and error state illustrations.",
         },
     ],
 ]);

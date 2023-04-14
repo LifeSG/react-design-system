@@ -80,19 +80,30 @@ The `ErrorDisplay` component is customisable according to your project's needs. 
 
 <br />
 
-<a id="variants"></a>
+<a id="variants-top"></a>
 
 <Secondary>Variants</Secondary>
 
 [400 Bad request](#error-400) |
 [403 Forbidden](#error-403) |
-[404 Not Found](#error-404) |
+[404 Not found](#error-404) |
 [408 Request timeout](#error-408)<br />
 [500 Internal server error](#error-500) |
-[503 Service unavailable](#error-503)<br />
+[502 Bad gateway](#error-502) |
+[503 Service unavailable](#error-503) |
+[504 Gateway timeout](#error-504)<br />
+[Confirmation](#confirmation) |
+[Inactivity](#inactivity) |
+[Insufficient credit](#insufficient-credit) |
+[Link error](#link-error) |
+[Logout](#logout) |
 [Maintenance](#maintenance) |
+[No Item Found](#no-item-found) |
+[Partially supported browser](#partially-supported-browser) |
+[Payment unsuccessful](#payment-unsuccessful) |
+[Transfer unsuccessful](#transfer-unsuccessful) |
 [Unsupported browser](#unsupported-browser) |
-[Partially supported browser](#partially-supported-browser)
+[Warning](#warning) |
 
 <!-- 400 -->
 
@@ -164,17 +175,29 @@ This is used to display when the page request has timeout.
 
 <Heading3>500 Internal server error</Heading3>
 
-This is used to display when an internal server error is encountered. This component accepts an
-additional prop `referenceId` which allows rendering the reference id. If the prop is not provided,
-it will default to a general message
-
-> Note: the additional props will take precedence over `description` for this error type
+This is used to display when an internal server error is encountered.
 
 [Back to see all variants](#variants-top)
 
 <Preview>
     <Story name="500 Error">
-        <ErrorDisplay type="500" additionalProps={{ referenceId: "123ABC" }} />
+        <ErrorDisplay type="500" />
+    </Story>
+</Preview>
+
+<!-- 502 -->
+
+<a id="error-502"></a>
+
+<Heading3>502 Bad Gateway</Heading3>
+
+This is used to display when an internal server error is encountered.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="502 Error">
+        <ErrorDisplay type="502" />
     </Story>
 </Preview>
 
@@ -191,6 +214,118 @@ This is used to display when the service is unavailable/unreachable.
 <Preview>
     <Story name="503 Error">
         <ErrorDisplay type="503" />
+    </Story>
+</Preview>
+
+<!-- 504 -->
+
+<a id="error-504"></a>
+
+<Heading3>504 Gateway Timeout</Heading3>
+
+This is used to display when the server is unavailable/unreachable.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="504 Error">
+        <ErrorDisplay type="504" />
+    </Story>
+</Preview>
+
+<!-- CONFIRMATION -->
+
+<a id="confirmation"></a>
+
+<Heading3>Confirmation</Heading3>
+
+This is used to display when the user want to exit the form and lost their updates.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Confirmation">
+        <ErrorDisplay type="confirmation" />
+    </Story>
+</Preview>
+
+<!-- INACTIVITY STATE -->
+
+<a id="inactivity"></a>
+
+<Heading3>Inactivity State</Heading3>
+
+This is used to display when user has been inactive for a certain period of time.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Inactivity State">
+        <ErrorDisplay type="inactivity" />
+    </Story>
+</Preview>
+
+<!-- INSUFFICIENT CREDIT -->
+
+<a id="insufficient-credit"></a>
+
+<Heading3>Insufficient Credit</Heading3>
+
+This is used to display when user has insufficient credits for a transaction.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Insufficient Credit">
+        <ErrorDisplay type="insufficient-credit" />
+    </Story>
+</Preview>
+
+<!-- LINK ERROR -->
+
+<a id="link-error"></a>
+
+<Heading3>Link Error</Heading3>
+
+This is used to display when a link is expired.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Link Error">
+        <ErrorDisplay type="link-error" />
+    </Story>
+</Preview>
+
+<!-- LOGOUT -->
+
+<a id="logout"></a>
+
+<Heading3>Logout</Heading3>
+
+This is used to display when user has been inactive for a certain period of time.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Logout">
+        <ErrorDisplay type="logout" />
+    </Story>
+</Preview>
+
+<!-- WARNING -->
+
+<a id="warning"></a>
+
+<Heading3>Warning</Heading3>
+
+This is shown when the browser getting generic warning and error state.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Warning">
+        <ErrorDisplay type="warning" />
     </Story>
 </Preview>
 
@@ -214,6 +349,54 @@ end date of the maintenance. If the prop is not provided, it will default to a g
             type="maintenance"
             additionalProps={{ dateString: "12 July 2022" }}
         />
+    </Story>
+</Preview>
+
+<!-- NO ITEM FOUND -->
+
+<a id="no-item-found"></a>
+
+<Heading3>No Item Found </Heading3>
+
+This is used to display when no items can be found for a particular feature.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="No Item Found ">
+        <ErrorDisplay type="no-item-found" />
+    </Story>
+</Preview>
+
+<!-- PAYMENT UNSUCCESSFUL -->
+
+<a id="payment-unsuccessful"></a>
+
+<Heading3>Payment Unsuccessful</Heading3>
+
+This is used to display when user’s payment transaction is unsuccessful.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Payment Unsuccessful">
+        <ErrorDisplay type="payment-unsuccessful" />
+    </Story>
+</Preview>
+
+<!-- TRANSFER UNSUCCESSFUL -->
+
+<a id="transfer-unsuccessful"></a>
+
+<Heading3>Transfer Unsuccessful</Heading3>
+
+This is shown when user is unsuccessful in transferring credits.
+
+[Back to see all variants](#variants-top)
+
+<Preview>
+    <Story name="Transfer Unsuccessful">
+        <ErrorDisplay type="transfer-unsuccessful" />
     </Story>
 </Preview>
 

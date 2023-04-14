@@ -4,17 +4,24 @@ export type ErrorDisplayType =
     | "404"
     | "408"
     | "500"
+    | "502"
     | "503"
+    | "504"
+    | "confirmation"
+    | "inactivity"
+    | "insufficient-credit"
+    | "link-error"
+    | "logout"
+    | "warning"
     | "maintenance"
+    | "no-item-found"
+    | "payment-unsuccessful"
+    | "transfer-unsuccessful"
     | "unsupported-browser"
     | "partially-supported-browser";
 
 export interface MaintenanceAdditionalAttributes {
     dateString: string;
-}
-
-export interface Error500AdditionalAttributes {
-    referenceId: string;
 }
 
 export interface ErrorDisplayAttributes {
@@ -24,10 +31,7 @@ export interface ErrorDisplayAttributes {
     description?: string | JSX.Element | undefined;
     /** The action button displayed at the bottom of the Error Display */
     actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
-    additionalProps?:
-        | MaintenanceAdditionalAttributes
-        | Error500AdditionalAttributes
-        | undefined;
+    additionalProps?: MaintenanceAdditionalAttributes | undefined;
 }
 
 export interface ErrorDisplayProps
