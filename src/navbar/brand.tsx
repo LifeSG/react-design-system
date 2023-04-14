@@ -1,7 +1,6 @@
 import React from "react";
 import { Clickable } from "./brand.styles";
 import { BrandType, NavbarBrandingProps } from "./types";
-import defaultImage from "./img/default.png";
 
 interface Props {
     resources: NavbarBrandingProps;
@@ -36,7 +35,7 @@ export const Brand = ({
         event: React.SyntheticEvent<HTMLImageElement, Event>
     ) => {
         (event.target as HTMLImageElement).onerror = null;
-        (event.target as HTMLImageElement).src = defaultImage;
+        (event.target as HTMLImageElement).src = require("./img/default.png");
     };
 
     return (
