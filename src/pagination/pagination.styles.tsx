@@ -1,7 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
+import { IconButton } from "../icon-button";
+import { Button } from "../button/button";
+import { TextStyleHelper } from "../text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -38,36 +41,27 @@ export const PaginationMenu = styled.div`
     align-items: center;
 `;
 
-export const NavigationItem = styled(Text.Hyperlink.Small)<IconStyleProps>`
+export const NavigationItem = styled(IconButton)`
     display: flex;
-    min-width: 2rem;
-    height: 2rem;
-    margin: 0 0.25rem;
+    /* margin: 0 0.25rem; */
+    padding: 0.625rem;
     justify-content: center;
     align-items: center;
 
-    color: ${(props) => (props.$disabled ? Color.Neutral[4] : Color.Primary)};
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    color: ${Color.Primary};
 
     svg {
         height: 1.25rem;
         width: 1.25rem;
     }
 
-    :hover,
-    :active,
-    :focus {
-        color: ${(props) =>
-            props.$disabled ? Color.Neutral[4] : Color.Primary};
-
-        svg {
-            color: ${(props) =>
-                props.$disabled ? Color.Neutral[4] : Color.Primary};
-        }
+    &:disabled {
+        color: ${Color.Neutral[4]};
+        cursor: not-allowed;
     }
 `;
 
-export const PageItem = styled(Text.Hyperlink.Default)<StyleProps>`
+export const PageItem = styled(Button.Default)<StyleProps>`
     background: ${(props) =>
         props.$selected ? Color.Primary : Color.Neutral[8]};
     border: 1px solid
@@ -83,20 +77,34 @@ export const PageItem = styled(Text.Hyperlink.Default)<StyleProps>`
     margin: 0.25rem;
     cursor: pointer;
 
+    span {
+        color: ${(props) =>
+            props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
+        ${(props) => {
+            if (props.$selected) {
+                return css`
+                    ${TextStyleHelper.getTextStyle("Body", 700)};
+                `;
+            } else {
+                return css`
+                    ${TextStyleHelper.getTextStyle("Body", 400)};
+                `;
+            }
+        }}
+    }
     :hover,
     :active,
     :focus {
         color: ${(props) =>
             props.$selected ? Color.Neutral[8] : Color.Primary};
+        box-shadow: none;
     }
 `;
 
-export const EllipsisItem = styled(Text.Hyperlink.Default)`
+export const EllipsisItem = styled(IconButton)`
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 2.5rem;
-    height: 2.5rem;
     cursor: not-allowed;
     color: ${Color.Neutral[3]};
     padding: 0.4rem 0.5rem;

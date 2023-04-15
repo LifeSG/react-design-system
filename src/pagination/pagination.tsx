@@ -76,9 +76,6 @@ const Component = (
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
-                    weight={active ? "bold" : "regular"}
-                    aria-label={"Page " + pageIndex}
-                    tabIndex={0}
                 >
                     {pageIndex}
                 </PageItem>
@@ -94,7 +91,7 @@ const Component = (
 
         if (ellipsisStart || ellipsisEnd) {
             return (
-                <EllipsisItem key={pageIndex}>
+                <EllipsisItem key={pageIndex} focusHighlight={false}>
                     <EllipsisHorizontalIcon />
                 </EllipsisItem>
             );
@@ -117,9 +114,6 @@ const Component = (
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
-                    weight={active ? "bold" : "regular"}
-                    aria-label={"Page " + pageIndex}
-                    tabIndex={0}
                 >
                     {pageIndex}
                 </PageItem>
@@ -141,36 +135,32 @@ const Component = (
                     {showFirstAndLastNav && (
                         <NavigationItem
                             onClick={firstPaginationItem}
-                            $disabled={isFirstPage}
-                            aria-label="First page"
-                            tabIndex={isFirstPage ? -1 : 0}
+                            disabled={isFirstPage}
+                            focusHighlight={false}
                         >
                             <ChevronLineLeftIcon aria-hidden />
                         </NavigationItem>
                     )}
                     <NavigationItem
                         onClick={prevPaginationItem}
-                        $disabled={isFirstPage}
-                        aria-label="Previous Page"
-                        tabIndex={isFirstPage ? -1 : 0}
+                        disabled={isFirstPage}
+                        focusHighlight={false}
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationItem>
                     {paginationItemList}
                     <NavigationItem
                         onClick={nextPaginationItem}
-                        $disabled={isLastPage}
-                        aria-label="Next Page"
-                        tabIndex={isLastPage ? -1 : 0}
+                        disabled={isLastPage}
+                        focusHighlight={false}
                     >
                         <ChevronRightIcon aria-hidden />
                     </NavigationItem>
                     {showFirstAndLastNav && (
                         <NavigationItem
                             onClick={lastPaginationItem}
-                            $disabled={isLastPage}
-                            aria-label="last page"
-                            tabIndex={isLastPage ? -1 : 0}
+                            disabled={isLastPage}
+                            focusHighlight={false}
                         >
                             <ChevronLineRightIcon aria-hidden />
                         </NavigationItem>
