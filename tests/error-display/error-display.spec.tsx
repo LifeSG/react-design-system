@@ -78,9 +78,7 @@ describe("ErrorDisplay", () => {
             );
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(
-                transformJSXElementToString(error.description as JSX.Element)
-            );
+            ).toBe(error.description);
         });
     });
 
@@ -100,9 +98,7 @@ describe("ErrorDisplay", () => {
             );
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(
-                transformJSXElementToString(error.description as JSX.Element)
-            );
+            ).toBe(error.description);
         });
     });
 
@@ -122,9 +118,7 @@ describe("ErrorDisplay", () => {
             );
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(
-                transformJSXElementToString(error.description as JSX.Element)
-            );
+            ).toBe(error.description);
         });
     });
 
@@ -144,9 +138,7 @@ describe("ErrorDisplay", () => {
             );
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(
-                transformJSXElementToString(error.description as JSX.Element)
-            );
+            ).toBe(error.description);
         });
     });
 
@@ -166,9 +158,27 @@ describe("ErrorDisplay", () => {
             );
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(
-                transformJSXElementToString(error.description as JSX.Element)
+            ).toBe(error.description);
+        });
+    });
+
+    describe("502 error", () => {
+        it("should be able to render", () => {
+            const type = "502";
+            render(<ErrorDisplay type={type} />);
+
+            const error = ERROR_DISPLAY_DATA.get(type);
+            expect(
+                screen.getByRole("heading", { level: 1, name: error.title })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
             );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
         });
     });
 
@@ -370,7 +380,7 @@ describe("ErrorDisplay", () => {
         });
     });
 
-    describe("no-item-found error", () => {
+    describe("no item found error", () => {
         it("should be able to render", () => {
             const type = "no-item-found";
             render(<ErrorDisplay type={type} />);

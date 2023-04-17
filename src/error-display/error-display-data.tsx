@@ -137,7 +137,7 @@ export const ERROR_DISPLAY_DATA = new Map<
         {
             img: imgAttributeHelper(ImgPaths["400"]),
             title: "400 Bad Request",
-            description: <>A generic error state illustration.</>,
+            description: "A generic error state illustration.",
         },
     ],
     [
@@ -145,7 +145,7 @@ export const ERROR_DISPLAY_DATA = new Map<
         {
             img: imgAttributeHelper(ImgPaths["403"]),
             title: "403 Forbidden",
-            description: <>A generic error state illustration.</>,
+            description: "A generic error state illustration.",
         },
     ],
     [
@@ -153,7 +153,7 @@ export const ERROR_DISPLAY_DATA = new Map<
         {
             img: imgAttributeHelper(ImgPaths["404"]),
             title: "404 No page found",
-            description: <>No page found</>,
+            description: "No page found",
         },
     ],
     [
@@ -161,7 +161,7 @@ export const ERROR_DISPLAY_DATA = new Map<
         {
             img: imgAttributeHelper(ImgPaths["408"]),
             title: "408 Request Timeout",
-            description: <>A generic error state illustration.</>,
+            description: "A generic error state illustration.",
         },
     ],
     [
@@ -169,7 +169,7 @@ export const ERROR_DISPLAY_DATA = new Map<
         {
             img: imgAttributeHelper(ImgPaths["500"]),
             title: "Error state",
-            description: <>A generic error state illustration.</>,
+            description: "A generic error state illustration.",
         },
     ],
     [
