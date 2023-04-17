@@ -1,11 +1,9 @@
-import React from "react";
-
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
-import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-
+import React from "react";
 import {
     EllipsisItem,
     NavigationItem,

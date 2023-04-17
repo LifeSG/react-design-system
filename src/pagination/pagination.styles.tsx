@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
-
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { IconButton } from "../icon-button";
 import { Button } from "../button/button";
+import { Color } from "../color";
+import { IconButton } from "../icon-button";
+import { MediaQuery } from "../media";
 import { TextStyleHelper } from "../text";
 
 // =============================================================================
