@@ -24,11 +24,13 @@ const SCROLL_INCREMENT = CELL_WIDTH * 2.5; // In px. Each scroll increment corre
 
 export const TimeSlotBar = ({
     "data-testid": testId,
+    className,
     startTime,
     endTime,
     slots,
-    onClickSlot,
-    defaultTimeSlot,
+    onSlotClick,
+    onClick,
+    styleAttributes,
 }: TimeSlotBarProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -134,14 +136,12 @@ export const TimeSlotBar = ({
 
     // Render default time slot (aka background)
     const renderDefaultTimeSlots = () => {
-        if (!defaultTimeSlot) return;
-
         const {
             color,
             secondaryColor,
             styleType = "default",
-            onClick,
-        } = defaultTimeSlot;
+        } = styleAttributes;
+
         const slotWidth = TimeSlotBarHelper.calculateWidth(
             startTime,
             endTime,
@@ -177,12 +177,16 @@ export const TimeSlotBar = ({
                 id,
                 startTime: slotStartTime,
                 endTime: slotEndTime,
+                text,
+                clickable = true,
+                styleAttributes,
+            } = slot;
+
+            const {
                 color,
                 styleType = "default",
                 secondaryColor,
-                text,
-                clickable = true,
-            } = slot;
+            } = styleAttributes;
 
             const slotWidth = TimeSlotBarHelper.calculateWidth(
                 slotStartTime,
@@ -211,7 +215,7 @@ export const TimeSlotBar = ({
                         $styleType={styleType}
                         $secondaryColor={secondaryColor}
                         $clickable={clickable}
-                        onClick={() => clickable && onClickSlot(slot)}
+                        onClick={() => clickable && onSlotClick(slot)}
                     >
                         {text && (
                             <CellText slotWidth={slotWidth} weight={"semibold"}>
@@ -275,11 +279,19 @@ export const TimeSlotBar = ({
     };
 
     return (
-        <Container>
+        <Container className={className}>
             <TimeSlotBarContainer data-testid={testId} ref={barRef}>
-                <TimeMarkerWrapper>{renderTimeMarkers()}</TimeMarkerWrapper>
-                <TimeSlotWrapper>
-                    {defaultTimeSlot && renderDefaultTimeSlots()}
+                <TimeMarkerWrapper
+                    data-testid={getDataTestId("time-marker-wrapper")}
+                    data-id="marker-wrapper"
+                >
+                    {renderTimeMarkers()}
+                </TimeMarkerWrapper>
+                <TimeSlotWrapper
+                    data-testid={getDataTestId("time-slot-wrapper")}
+                    data-id="slot-wrapper"
+                >
+                    {styleAttributes && renderDefaultTimeSlots()}
                     {renderTimeSlots()}
                 </TimeSlotWrapper>
             </TimeSlotBarContainer>

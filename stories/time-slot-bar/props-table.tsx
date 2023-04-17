@@ -11,6 +11,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "className",
+                description: "className",
+                propTypes: ["string"],
+            },
+            {
                 name: "slots",
                 mandatory: true,
                 description: (
@@ -43,17 +48,27 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "defaultTimeSlot",
+                name: "styleAttributes",
                 description: (
-                    <>The default time slot if no time slot is specified</>
+                    <>
+                        The default styling attributes when no time slot is
+                        specified for the time period
+                    </>
                 ),
-                propTypes: ["DefaultTimeSlot"],
+                propTypes: ["TimeSlotBarStyleAttributes"],
             },
             {
-                name: "onClickSlot",
+                name: "onSlotClick",
+                mandatory: true,
                 description:
                     "The callback function when user clicks on the time slot",
                 propTypes: ["(timeSlot: TimeSlot) => void"],
+            },
+            {
+                name: "onClick",
+                description:
+                    "The default on click behaviour when no time slot is specified for the time period",
+                propTypes: ["() => void"],
             },
         ],
     },
@@ -89,6 +104,26 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "styleAttributes",
+                description: <>The styling attributes for the time slot</>,
+                propTypes: ["TimeSlotBarStyleAttributes"],
+            },
+            {
+                name: "text",
+                description: <>The text inside slot cell.</>,
+                propTypes: ["string"],
+            },
+            {
+                name: "clickable",
+                description: <>Specify if the time slot cell is clickable</>,
+                propTypes: ["boolean"],
+            },
+        ],
+    },
+    {
+        name: "TimeSlotBarStyleAttributes",
+        attributes: [
+            {
                 name: "color",
                 mandatory: true,
                 description: <>The color of the slot.</>,
@@ -110,50 +145,6 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["string"],
-            },
-            {
-                name: "text",
-                description: <>The text inside slot cell.</>,
-                propTypes: ["string"],
-            },
-            {
-                name: "clickable",
-                description: <>Specify if the time slot cell is clickable</>,
-                propTypes: ["boolean"],
-            },
-        ],
-    },
-    {
-        name: "DefaultTimeSlot",
-        attributes: [
-            {
-                name: "color",
-                mandatory: true,
-                description: <>The color of the default slot.</>,
-                propTypes: ["string"],
-            },
-            {
-                name: "styleType",
-                description: <>The styleType of the default slot.</>,
-                propTypes: [`"default"`, `"stripes"`],
-                defaultValue: "default",
-            },
-            {
-                name: "secondaryColor",
-                description: (
-                    <>
-                        The secondary color of the default slot. Used in
-                        conjuction with&nbsp;
-                        <strong>styleType</strong>
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "onClick",
-                description:
-                    "The callback function when user clicks on the time slot",
-                propTypes: ["() => void"],
             },
         ],
     },
