@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
+
 import { Color } from "../color";
 import { MediaQuery } from "../media";
-import { Text } from "../text";
 import { IconButton } from "../icon-button";
 import { Button } from "../button/button";
 import { TextStyleHelper } from "../text";
@@ -12,9 +12,6 @@ import { TextStyleHelper } from "../text";
 // =============================================================================
 interface StyleProps {
     $selected: boolean;
-}
-interface IconStyleProps {
-    $disabled: boolean;
 }
 
 // =============================================================================
@@ -43,7 +40,6 @@ export const PaginationMenu = styled.div`
 
 export const NavigationItem = styled(IconButton)`
     display: flex;
-    /* margin: 0 0.25rem; */
     padding: 0.625rem;
     justify-content: center;
     align-items: center;

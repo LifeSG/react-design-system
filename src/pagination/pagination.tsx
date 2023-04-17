@@ -1,9 +1,10 @@
+import React from "react";
+
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React from "react";
 
 import {
     EllipsisItem,
@@ -76,6 +77,7 @@ const Component = (
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
+                    aria-label={"Page " + pageIndex}
                 >
                     {pageIndex}
                 </PageItem>
@@ -114,6 +116,7 @@ const Component = (
                     key={pageIndex}
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
+                    aria-label={"Page " + pageIndex}
                 >
                     {pageIndex}
                 </PageItem>
@@ -137,6 +140,7 @@ const Component = (
                             onClick={firstPaginationItem}
                             disabled={isFirstPage}
                             focusHighlight={false}
+                            aria-label="First page"
                         >
                             <ChevronLineLeftIcon aria-hidden />
                         </NavigationItem>
@@ -145,6 +149,7 @@ const Component = (
                         onClick={prevPaginationItem}
                         disabled={isFirstPage}
                         focusHighlight={false}
+                        aria-label="Previous Page"
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationItem>
@@ -153,6 +158,7 @@ const Component = (
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
                         focusHighlight={false}
+                        aria-label="Next Page"
                     >
                         <ChevronRightIcon aria-hidden />
                     </NavigationItem>
@@ -161,6 +167,7 @@ const Component = (
                             onClick={lastPaginationItem}
                             disabled={isLastPage}
                             focusHighlight={false}
+                            aria-label="last page"
                         >
                             <ChevronLineRightIcon aria-hidden />
                         </NavigationItem>
