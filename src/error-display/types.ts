@@ -9,7 +9,7 @@ export type ErrorDisplayType =
     | "504"
     | "confirmation"
     | "inactivity"
-    | "insufficient-credit"
+    | "insufficient-credits"
     | "link-error"
     | "logout"
     | "warning"

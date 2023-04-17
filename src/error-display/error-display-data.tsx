@@ -56,7 +56,7 @@ const ImgPaths: Record<string, ImagePathAttributes> = {
         md: "https://assets.life.gov.sg/react-design-system/img/error/confirmation@2x.png",
         lg: "https://assets.life.gov.sg/react-design-system/img/error/confirmation@3x.png",
     },
-    "insufficient-credit": {
+    "insufficient-credits": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/insuffcient-credit.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/insuffcient-credit@2x.png",
         lg: "https://assets.life.gov.sg/react-design-system/img/error/insuffcient-credit@3x.png",
@@ -118,7 +118,7 @@ const imgAttributeHelper = (
 // ERROR DISPLAY ATTRIBUTES
 // =============================================================================
 
-interface ErrorDisplayDataAttrs {
+export interface ErrorDisplayDataAttrs {
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
     imgSrc?: string | undefined;
     title?: string | undefined;
@@ -152,8 +152,8 @@ export const ERROR_DISPLAY_DATA = new Map<
         "404",
         {
             img: imgAttributeHelper(ImgPaths["404"]),
-            title: "404 No page found",
-            description: "No page found",
+            title: "404 No Page Found",
+            description: "No page found.",
         },
     ],
     [
@@ -223,9 +223,9 @@ export const ERROR_DISPLAY_DATA = new Map<
         },
     ],
     [
-        "insufficient-credit",
+        "insufficient-credits",
         {
-            img: imgAttributeHelper(ImgPaths["insufficient-credit"]),
+            img: imgAttributeHelper(ImgPaths["insufficient-credits"]),
             title: "Insufficient credits",
             description:
                 "When the user has insufficient credits for a transaction.",
@@ -269,7 +269,7 @@ export const ERROR_DISPLAY_DATA = new Map<
         "payment-unsuccessful",
         {
             img: imgAttributeHelper(ImgPaths["payment-unsuccessful"]),
-            title: "Payment unseccessful",
+            title: "Payment unsuccessful",
             description: "When the user’s payment transaction is unsuccessful.",
         },
     ],

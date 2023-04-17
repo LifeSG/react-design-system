@@ -1,7 +1,10 @@
 import { render, screen } from "@testing-library/react";
 
-import { ErrorDisplay } from "../../src";
-import { ERROR_DISPLAY_DATA } from "../../src/error-display/error-display-data";
+import { ErrorDisplay, ErrorDisplayType } from "../../src";
+import {
+    ERROR_DISPLAY_DATA,
+    ErrorDisplayDataAttrs,
+} from "../../src/error-display/error-display-data";
 
 // =============================================================================
 // UNIT TESTS
@@ -62,305 +65,67 @@ describe("ErrorDisplay", () => {
         });
     });
 
-    describe("400 error", () => {
-        it("should be able to render", () => {
-            const type = "400";
-            render(<ErrorDisplay type={type} />);
+    describe("ErrorDisplay components", () => {
+        const testData = [
+            ["400", ERROR_DISPLAY_DATA.get("400")],
+            ["403", ERROR_DISPLAY_DATA.get("403")],
+            ["404", ERROR_DISPLAY_DATA.get("404")],
+            ["408", ERROR_DISPLAY_DATA.get("408")],
+            ["500", ERROR_DISPLAY_DATA.get("500")],
+            ["502", ERROR_DISPLAY_DATA.get("502")],
+            ["503", ERROR_DISPLAY_DATA.get("503")],
+            ["504", ERROR_DISPLAY_DATA.get("504")],
+            ["confirmation", ERROR_DISPLAY_DATA.get("confirmation")],
+            ["inactivity", ERROR_DISPLAY_DATA.get("inactivity")],
+            [
+                "insufficient-credits",
+                ERROR_DISPLAY_DATA.get("insufficient-credits"),
+            ],
+            ["link-error", ERROR_DISPLAY_DATA.get("link-error")],
+            ["logout", ERROR_DISPLAY_DATA.get("logout")],
+            ["warning", ERROR_DISPLAY_DATA.get("warning")],
+            ["maintenance", ERROR_DISPLAY_DATA.get("maintenance")],
+            ["no-item-found", ERROR_DISPLAY_DATA.get("no-item-found")],
+            [
+                "payment-unsuccessful",
+                ERROR_DISPLAY_DATA.get("payment-unsuccessful"),
+            ],
+            [
+                "transfer-unsuccessful",
+                ERROR_DISPLAY_DATA.get("transfer-unsuccessful"),
+            ],
+            [
+                "unsupported-browser",
+                ERROR_DISPLAY_DATA.get("unsupported-browser"),
+            ],
+            [
+                "partially-supported-browser",
+                ERROR_DISPLAY_DATA.get("partially-supported-browser"),
+            ],
+        ];
 
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
+        test.each(testData)(
+            "renders %s error correctly",
+            (type: ErrorDisplayType, error: ErrorDisplayDataAttrs) => {
+                render(<ErrorDisplay type={type} />);
 
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
+                expect(
+                    screen.getByRole("heading", { level: 1, name: error.title })
+                ).toBeInTheDocument();
 
-    describe("403 error", () => {
-        it("should be able to render", () => {
-            const type = "403";
-            render(<ErrorDisplay type={type} />);
+                expect(screen.getByRole("img")).toHaveAttribute(
+                    "src",
+                    error.img.src
+                );
 
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("404 error", () => {
-        it("should be able to render", () => {
-            const type = "404";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("408 error", () => {
-        it("should be able to render", () => {
-            const type = "408";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("500 error", () => {
-        it("should be able to render", () => {
-            const type = "500";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("502 error", () => {
-        it("should be able to render", () => {
-            const type = "502";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("503 error", () => {
-        it("should be able to render", () => {
-            const type = "503";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("504 error", () => {
-        it("should be able to render", () => {
-            const type = "504";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("confirmation", () => {
-        it("should be able to render", () => {
-            const type = "confirmation";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("inactivity error", () => {
-        it("should be able to render", () => {
-            const type = "inactivity";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("insufficient credit error", () => {
-        it("should be able to render", () => {
-            const type = "insufficient-credit";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("link error", () => {
-        it("should be able to render", () => {
-            const type = "link-error";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("logout error", () => {
-        it("should be able to render", () => {
-            const type = "logout";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("warning error", () => {
-        it("should be able to render", () => {
-            const type = "warning";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
+                expect(
+                    screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+                ).toBe(error.description);
+            }
+        );
     });
 
     describe("maintenance error", () => {
-        it("should be able to render", () => {
-            const type = "maintenance";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-
         it("should be able to render custom date string", () => {
             const type = "maintenance";
             const additionalProps = { dateString: "01/01/2023" };
@@ -377,106 +142,6 @@ describe("ErrorDisplay", () => {
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
             ).toBe(errorDescription);
-        });
-    });
-
-    describe("no item found error", () => {
-        it("should be able to render", () => {
-            const type = "no-item-found";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("payment unsuccessful error", () => {
-        it("should be able to render", () => {
-            const type = "payment-unsuccessful";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("transfer unsuccessful error", () => {
-        it("should be able to render", () => {
-            const type = "transfer-unsuccessful";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("unsupported browser error", () => {
-        it("should be able to render", () => {
-            const type = "unsupported-browser";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
-        });
-    });
-
-    describe("partially supported browser error", () => {
-        it("should be able to render", () => {
-            const type = "partially-supported-browser";
-            render(<ErrorDisplay type={type} />);
-
-            const error = ERROR_DISPLAY_DATA.get(type);
-            expect(
-                screen.getByRole("heading", { level: 1, name: error.title })
-            ).toBeInTheDocument();
-
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                error.img.src
-            );
-            expect(
-                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-            ).toBe(error.description);
         });
     });
 });
