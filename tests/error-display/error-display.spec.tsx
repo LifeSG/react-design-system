@@ -1,10 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import { ErrorDisplay, ErrorDisplayType } from "../../src";
-import {
-    ERROR_DISPLAY_DATA,
-    ErrorDisplayDataAttrs,
-} from "../../src/error-display/error-display-data";
+import { ERROR_DISPLAY_DATA } from "../../src/error-display/error-display-data";
 
 // =============================================================================
 // UNIT TESTS
@@ -67,47 +64,34 @@ describe("ErrorDisplay", () => {
 
     describe("ErrorDisplay components", () => {
         const testData = [
-            ["400", ERROR_DISPLAY_DATA.get("400")],
-            ["403", ERROR_DISPLAY_DATA.get("403")],
-            ["404", ERROR_DISPLAY_DATA.get("404")],
-            ["408", ERROR_DISPLAY_DATA.get("408")],
-            ["500", ERROR_DISPLAY_DATA.get("500")],
-            ["502", ERROR_DISPLAY_DATA.get("502")],
-            ["503", ERROR_DISPLAY_DATA.get("503")],
-            ["504", ERROR_DISPLAY_DATA.get("504")],
-            ["confirmation", ERROR_DISPLAY_DATA.get("confirmation")],
-            ["inactivity", ERROR_DISPLAY_DATA.get("inactivity")],
-            [
-                "insufficient-credits",
-                ERROR_DISPLAY_DATA.get("insufficient-credits"),
-            ],
-            ["link-error", ERROR_DISPLAY_DATA.get("link-error")],
-            ["logout", ERROR_DISPLAY_DATA.get("logout")],
-            ["warning", ERROR_DISPLAY_DATA.get("warning")],
-            ["maintenance", ERROR_DISPLAY_DATA.get("maintenance")],
-            ["no-item-found", ERROR_DISPLAY_DATA.get("no-item-found")],
-            [
-                "payment-unsuccessful",
-                ERROR_DISPLAY_DATA.get("payment-unsuccessful"),
-            ],
-            [
-                "transfer-unsuccessful",
-                ERROR_DISPLAY_DATA.get("transfer-unsuccessful"),
-            ],
-            [
-                "unsupported-browser",
-                ERROR_DISPLAY_DATA.get("unsupported-browser"),
-            ],
-            [
-                "partially-supported-browser",
-                ERROR_DISPLAY_DATA.get("partially-supported-browser"),
-            ],
+            ["400"],
+            ["403"],
+            ["404"],
+            ["408"],
+            ["500"],
+            ["502"],
+            ["503"],
+            ["504"],
+            ["confirmation"],
+            ["inactivity"],
+            ["insufficient-credits"],
+            ["link-error"],
+            ["logout"],
+            ["warning"],
+            ["maintenance"],
+            ["no-item-found"],
+            ["payment-unsuccessful"],
+            ["transfer-unsuccessful"],
+            ["unsupported-browser"],
+            ["partially-supported-browser"],
         ];
 
         test.each(testData)(
-            "renders %s error correctly",
-            (type: ErrorDisplayType, error: ErrorDisplayDataAttrs) => {
+            "should render %s error correctly",
+            (type: ErrorDisplayType) => {
                 render(<ErrorDisplay type={type} />);
+
+                const error = ERROR_DISPLAY_DATA.get(type);
 
                 expect(
                     screen.getByRole("heading", { level: 1, name: error.title })

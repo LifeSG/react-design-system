@@ -118,7 +118,7 @@ const imgAttributeHelper = (
 // ERROR DISPLAY ATTRIBUTES
 // =============================================================================
 
-export interface ErrorDisplayDataAttrs {
+interface ErrorDisplayDataAttrs {
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
     imgSrc?: string | undefined;
     title?: string | undefined;
