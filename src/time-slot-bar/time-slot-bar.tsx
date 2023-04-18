@@ -92,8 +92,11 @@ export const TimeSlotBar = ({
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
-
-    // Speical Condition: Show only Ellipsis if the slotWidth is smaller or equal to a 15min interval
+    /**
+     * NOTE: Special condition
+     * Show ellipsis only if the slotWidth is smaller or equal to
+     * 15min interval
+     */
     const showFullEllipsis = (slotWidth: number) => {
         return slotWidth <= CELL_WIDTH / 2;
     };
@@ -137,8 +140,8 @@ export const TimeSlotBar = ({
     // Render default time slot (aka background)
     const renderDefaultTimeSlots = () => {
         const {
-            color,
-            secondaryColor,
+            backgroundColor,
+            backgroundColor2,
             styleType = "default",
         } = styleAttributes;
 
@@ -155,9 +158,9 @@ export const TimeSlotBar = ({
                     data-testid={getDataTestId("default-timeslot")}
                     $width={slotWidth}
                     $left={0}
-                    $color={color}
                     $styleType={styleType}
-                    $secondaryColor={secondaryColor}
+                    $bgColor={backgroundColor}
+                    $bgColor2={backgroundColor2}
                     $clickable={!!onClick}
                     onClick={onClick}
                 />
@@ -177,7 +180,7 @@ export const TimeSlotBar = ({
                 id,
                 startTime: slotStartTime,
                 endTime: slotEndTime,
-                text,
+                label,
                 clickable = true,
                 styleAttributes,
             } = slot;
@@ -185,7 +188,8 @@ export const TimeSlotBar = ({
             const {
                 color,
                 styleType = "default",
-                secondaryColor,
+                backgroundColor,
+                backgroundColor2,
             } = styleAttributes;
 
             const slotWidth = TimeSlotBarHelper.calculateWidth(
@@ -211,15 +215,19 @@ export const TimeSlotBar = ({
                         data-testid={getDataTestId(`${id}-timeslot`)}
                         $width={slotWidth}
                         $left={slotOffset}
-                        $color={color}
                         $styleType={styleType}
-                        $secondaryColor={secondaryColor}
+                        $bgColor={backgroundColor}
+                        $bgColor2={backgroundColor2}
                         $clickable={clickable}
                         onClick={() => clickable && onSlotClick(slot)}
                     >
-                        {text && (
-                            <CellText slotWidth={slotWidth} weight={"semibold"}>
-                                {showFullEllipsis(slotWidth) ? "..." : text}
+                        {label && (
+                            <CellText
+                                $slotWidth={slotWidth}
+                                $color={color}
+                                weight={"semibold"}
+                            >
+                                {showFullEllipsis(slotWidth) ? "..." : label}
                             </CellText>
                         )}
                     </TimeSlot>

@@ -3,9 +3,14 @@ export type SlotStyle = "default" | "stripes";
 export type Direction = "right" | "left";
 
 interface TimeSlotBarStyleAttributes {
-    color: string;
+    /** The type of style of the time slot. Values: "default" | "stripes"  */
     styleType?: SlotStyle;
-    secondaryColor?: string;
+    /** The label color */
+    color?: string;
+    /** The background color */
+    backgroundColor: string;
+    /** The secondary background color. Used in conjunction if styleType is "stripes" */
+    backgroundColor2?: string;
 }
 
 export interface TimeSlotBarProps {
@@ -16,9 +21,9 @@ export interface TimeSlotBarProps {
     /** The end time of time slot bar. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     endTime: string;
     slots: TimeSlot[];
-    /** The callback function when user clicks on the time slot */
+    /** Callback function when user clicks on the time slot */
     onSlotClick: (timeSlot: TimeSlot) => void;
-    /** The default on click behaviour when no time slot is specified for the time period */
+    /** The default click behaviour when no time slot is specified for the time period */
     onClick?: () => void;
     /** The default styling attributes when no time slot is specified for the time period */
     styleAttributes?: TimeSlotBarStyleAttributes;
@@ -30,8 +35,9 @@ export interface TimeSlot {
     startTime: string;
     /** The end time of time slot. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     endTime: string;
-    /** The text inside slot cell. */
-    text?: string;
+    /** The slot cell label */
+    label?: string;
+    /** Specifies if the slot cell is clickable */
     clickable?: boolean;
     styleAttributes: TimeSlotBarStyleAttributes;
 }

@@ -20,12 +20,20 @@ interface ArrowStyleProps {
 interface TimeSlotStyleProps {
     $width: number;
     $left: number;
-    $color: string;
     $styleType: SlotStyle;
-    $secondaryColor?: string;
+    $bgColor: string;
+    $bgColor2?: string;
     $clickable?: boolean;
 }
 
+interface CellTextStyleProps {
+    $slotWidth: number;
+    $color?: string;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const Container = styled.div`
     position: relative;
     display: flex;
@@ -112,7 +120,7 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
     height: 3.375rem;
     width: ${({ $width }) => `${$width}px`};
     left: ${({ $left }) => `${$left}px`};
-    background-color: ${({ $color }) => $color};
+    background-color: ${({ $bgColor }) => $bgColor};
     cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
 
     ${(props) =>
@@ -120,10 +128,10 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
         css`
             background: repeating-linear-gradient(
                 135deg,
-                ${props.$secondaryColor || Color.Neutral[5]} 0px,
-                ${props.$secondaryColor || Color.Neutral[5]} 10px,
-                ${props.$color} 10px,
-                ${props.$color} 20px
+                ${props.$bgColor2 || Color.Neutral[5]} 0px,
+                ${props.$bgColor2 || Color.Neutral[5]} 10px,
+                ${props.$bgColor} 10px,
+                ${props.$bgColor} 20px
             );
         `}
 `;
@@ -136,13 +144,13 @@ export const Border = styled.div`
     border-right: 1px solid ${Color.Neutral[4]};
 `;
 
-export const CellText = styled(Text.XSmall)<{ slotWidth: number }>`
-    color: ${Color.Neutral[3]};
+export const CellText = styled(Text.XSmall)<CellTextStyleProps>`
+    color: ${(props) => props.$color || Color.Neutral[3](props)};
     position: absolute;
     bottom: 0;
     padding-left: 4px;
     padding-bottom: 4px;
-    max-width: ${({ slotWidth }) => `calc(${slotWidth}px - 8px)`};
+    max-width: ${({ $slotWidth }) => `calc(${$slotWidth}px - 8px)`};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
