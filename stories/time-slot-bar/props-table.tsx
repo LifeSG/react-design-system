@@ -6,13 +6,13 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "testId",
-                description: "data-testid",
+                name: "data-testid",
+                description: "The test identifier of the component",
                 propTypes: ["string"],
             },
             {
                 name: "className",
-                description: "className",
+                description: "The class selector of the component",
                 propTypes: ["string"],
             },
             {
@@ -30,8 +30,10 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The start time of time slot bar. Format in HH:mm.&nbsp;
-                        <strong>Note: Minutes can be 00, 15, 30, 45</strong>
+                        The start time of time slot bar. Format in&nbsp;
+                        <code>HH:mm</code>&nbsp;
+                        <br />(<strong>Note</strong>: Minutes to be specified in
+                        15 minute blocks. E.g. 00, 15, 30, 45)
                     </>
                 ),
                 propTypes: ["string"],
@@ -41,8 +43,10 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The end time of time slot bar. Format in HH:mm.&nbsp;
-                        <strong>Note: Minutes can be 00, 15, 30, 45</strong>
+                        The end time of time slot bar. Format in&nbsp;
+                        <code>HH:mm</code>&nbsp;
+                        <br />(<strong>Note</strong>: Minutes to be specified in
+                        15 minute blocks. E.g. 00, 15, 30, 45)
                     </>
                 ),
                 propTypes: ["string"],
@@ -51,7 +55,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "styleAttributes",
                 description: (
                     <>
-                        The default styling attributes when no time slot is
+                        The default style attributes when no time slot is
                         specified for the time period
                     </>
                 ),
@@ -60,14 +64,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onSlotClick",
                 mandatory: true,
-                description:
-                    "The callback function when user clicks on the time slot",
+                description: "Called when the user selects a time slot",
                 propTypes: ["(timeSlot: TimeSlot) => void"],
             },
             {
                 name: "onClick",
                 description:
-                    "The default on click behaviour when no time slot is specified for the time period",
+                    "Called when the user selects the time slot bar. Useful if there are no specified slots",
                 propTypes: ["() => void"],
             },
         ],
@@ -78,7 +81,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "id",
                 mandatory: true,
-                description: "The id of the slot",
+                description: "The unique identifier of the slot",
                 propTypes: ["string"],
             },
             {
@@ -86,8 +89,10 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The start time of slot. Format in HH:mm.&nbsp;
-                        <strong>Note: Minutes can be 00, 15, 30, 45</strong>
+                        The start time of time slot bar. Format in&nbsp;
+                        <code>HH:mm</code>&nbsp;
+                        <br />(<strong>Note</strong>: Minutes to be specified in
+                        15 minute blocks. E.g. 00, 15, 30, 45)
                     </>
                 ),
                 propTypes: ["string"],
@@ -97,8 +102,10 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The end time of slot. Format in HH:mm.&nbsp;
-                        <strong>Note: Minutes can be 00, 15, 30, 45</strong>
+                        The end time of time slot bar. Format in&nbsp;
+                        <code>HH:mm</code>&nbsp;
+                        <br />(<strong>Note</strong>: Minutes to be specified in
+                        15 minute blocks. E.g. 00, 15, 30, 45)
                     </>
                 ),
                 propTypes: ["string"],
@@ -109,13 +116,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["TimeSlotBarStyleAttributes"],
             },
             {
-                name: "text",
-                description: <>The text inside slot cell.</>,
+                name: "label",
+                description: <>The text content within the slot cell</>,
                 propTypes: ["string"],
             },
             {
                 name: "clickable",
-                description: <>Specify if the time slot cell is clickable</>,
+                description: <>Specifies if the time slot cell is clickable</>,
                 propTypes: ["boolean"],
             },
         ],
@@ -126,12 +133,12 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "color",
                 mandatory: true,
-                description: <>The color of the slot.</>,
+                description: <>The color of the slot</>,
                 propTypes: ["string"],
             },
             {
                 name: "styleType",
-                description: <>The styleType of the slot.</>,
+                description: <>The style type of the slot</>,
                 propTypes: [`"default"`, `"stripes"`],
                 defaultValue: "default",
             },
@@ -141,7 +148,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The secondary color of the slot. Used in conjuction
                         with&nbsp;
-                        <strong>styleType</strong>
+                        <code>styleType</code> of <code>{`"stripes"`}</code>
                     </>
                 ),
                 propTypes: ["string"],
