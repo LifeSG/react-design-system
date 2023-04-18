@@ -14,6 +14,29 @@ const StyledCode = styled.code`
 // DATA
 // =============================================================================
 
+const codes = [
+    "400",
+    "403",
+    "404",
+    "408",
+    "500",
+    "502",
+    "503",
+    "504",
+    "confirmation",
+    "inactivity",
+    "insufficient-credits",
+    "link-error",
+    "logout",
+    "warning",
+    "maintenance",
+    "no-item-found",
+    "payment-unsuccessful",
+    "transfer-unsuccessful",
+    "unsupported-browser",
+    "partially-supported-browser",
+];
+
 const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
@@ -25,21 +48,16 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         <div
                             style={{
-                                display: "block",
+                                display: "flex",
+                                flexWrap: "wrap",
                                 marginBottom: "0.25rem",
                             }}
                         >
-                            <StyledCode>{`"400"`}</StyledCode>
-                            <StyledCode>{`"403"`}</StyledCode>
-                            <StyledCode>{`"404"`}</StyledCode>
-                            <StyledCode>{`"408"`}</StyledCode>
-                            <StyledCode>{`"500"`}</StyledCode>
-                            <code>{`"503"`}</code>
-                        </div>
-                        <div style={{ display: "block" }}>
-                            <StyledCode>{`"maintenance"`}</StyledCode>
-                            <StyledCode>{`"unsupported-browser"`}</StyledCode>
-                            <code>{`"partially-supported-browser"`}</code>
+                            {codes.map((code) => (
+                                <StyledCode
+                                    key={code}
+                                >{`"${code}"`}</StyledCode>
+                            ))}
                         </div>
                     </>
                 ),
