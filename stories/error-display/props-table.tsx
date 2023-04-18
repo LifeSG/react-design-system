@@ -103,10 +103,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "additionalProps",
                 description: "Additional properties for certain error types",
-                propTypes: [
-                    "MaintenanceAdditionalAttributes",
-                    "Error500AdditionalAttributes",
-                ],
+                propTypes: ["MaintenanceAdditionalAttributes"],
             },
         ],
     },
@@ -117,18 +114,6 @@ const DATA: ApiTableSectionProps[] = [
                 name: "dateString",
                 mandatory: true,
                 description: "The date display for the maintenance display",
-                propTypes: ["string"],
-            },
-        ],
-    },
-    {
-        name: "Error500AdditionalAttributes",
-        attributes: [
-            {
-                name: "referenceId",
-                mandatory: true,
-                description:
-                    "A reference id to be display and appended to the 500 error description",
                 propTypes: ["string"],
             },
         ],
