@@ -81,6 +81,7 @@ You may refer to the storybook documentation for more details.
 ### ErrorDisplay
 
 -   The components now takes in `img` so you can configure all image attributes instead of just `imgSrc`
+-   **[v1.0.0-alpha.24]** The default titles and descriptions have been replaced with placeholders. Specify the props based on your use case. Otherwise, if you were using the default messages in previous versions, refer to [this commit](https://github.com/LifeSG/react-design-system/blob/a2d707a1125b0fe3ad4f14a1585d55959c269396/src/error-display/error-display-data.tsx#L86-L237) for the original copy.
 
 <br />
 
