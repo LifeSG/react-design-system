@@ -11,7 +11,7 @@ import {
     TimeContainer,
     Wrapper,
 } from "./timerangepicker.styles";
-import { TimeRangePickerProps } from "./types";
+import { TimeRangePickerProps, Value } from "./types";
 
 export const TimeRangePicker = ({
     id,
@@ -57,7 +57,6 @@ export const TimeRangePicker = ({
     const handleStartTimeFocus = useCallback(() => {
         if (!disabled && !showStartTimeSelector) {
             setShowEndTimeSelector(false);
-
             setShowStartTimeSelector(true);
         }
     }, [showStartTimeSelector]);
@@ -100,8 +99,12 @@ export const TimeRangePicker = ({
             setStartTimeVal(endTimeVal);
             setEndTimeVal(value);
         }
+        const timeValue: Value = {
+            startValue: startTimeVal,
+            endValue: endTimeVal,
+        };
 
-        onChange && onChange(value);
+        onChange && onChange(timeValue);
     };
 
     const handleEndTime = (value: string) => {
@@ -114,7 +117,13 @@ export const TimeRangePicker = ({
             handleStartTime(value);
         }
         setShowEndTimeSelector(false);
-        onChange && onChange(value);
+
+        const timeValue: Value = {
+            startValue: startTimeVal,
+            endValue: endTimeVal,
+        };
+
+        onChange && onChange(timeValue);
     };
 
     // =============================================================================
@@ -136,16 +145,6 @@ export const TimeRangePicker = ({
             }
         }
     };
-
-    const getPlaceholderValue = useCallback((): string => {
-        switch (format) {
-            case "12hr":
-                return "HH:MMam";
-            case "24hr":
-            default:
-                return "HH:MM";
-        }
-    }, [format, placeholder]);
 
     return (
         <Wrapper ref={nodeRef} id={id} {...otherProps}>

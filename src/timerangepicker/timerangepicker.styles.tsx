@@ -22,11 +22,6 @@ interface ContainerStyleProps {
     $readOnly?: boolean;
 }
 
-interface LabelStyleProps {
-    $hide?: boolean;
-    $compress?: boolean;
-    $addGap?: boolean;
-}
 // =============================================================================
 // STYLING
 // =============================================================================
