@@ -74,180 +74,30 @@ The `ErrorDisplay` component is customisable according to your project's needs. 
     </Story>
 </Preview>
 
-<Heading3>See also</Heading3>
-
-[Variants](#variants) | [Component API](#component-api)
-
-<br />
-
-<a id="variants"></a>
-
 <Secondary>Variants</Secondary>
 
-[400 Bad request](#error-400) |
-[403 Forbidden](#error-403) |
-[404 Not Found](#error-404) |
-[408 Request timeout](#error-408)<br />
-[500 Internal server error](#error-500) |
-[503 Service unavailable](#error-503)<br />
-[Maintenance](#maintenance) |
-[Unsupported browser](#unsupported-browser) |
-[Partially supported browser](#partially-supported-browser)
+> **Note**: Switch to the Canvas tab and use the Controls add-on to view the different error types
 
-<!-- 400 -->
-
-<a id="error-400"></a>
-
-<Heading3>400 Bad request</Heading3>
-
-This is used to display when the page received a bad request.
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="400 Error">
-        <ErrorDisplay type="400" />
+<Canvas>
+    <Story
+        name="Variants"
+        parameters={{
+            controls: {
+                disabled: false,
+                exclude: /^((?!(type)).)*$/,
+            },
+        }}
+        argTypes={{
+            type: {
+                defaultValue: "400",
+            },
+        }}
+    >
+        {(args) => {
+            return <ErrorDisplay {...args} />;
+        }}
     </Story>
-</Preview>
-
-<!-- 403 -->
-
-<a id="error-403"></a>
-
-<Heading3>403 Forbidden</Heading3>
-
-This is used to display when the page is forbidden to the user.
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="403 Error">
-        <ErrorDisplay type="403" />
-    </Story>
-</Preview>
-
-<!-- 404 -->
-
-<a id="error-404"></a>
-
-<Heading3>404 Not found</Heading3>
-
-This is used to display when the page is not found.
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="404 Error">
-        <ErrorDisplay type="404" />
-    </Story>
-</Preview>
-
-<!-- 408 -->
-
-<a id="error-408"></a>
-
-<Heading3>408 Request timeout</Heading3>
-
-This is used to display when the page request has timeout.
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="408 Error">
-        <ErrorDisplay type="408" />
-    </Story>
-</Preview>
-
-<!-- 500 -->
-
-<a id="error-500"></a>
-
-<Heading3>500 Internal server error</Heading3>
-
-This is used to display when an internal server error is encountered. This component accepts an
-additional prop `referenceId` which allows rendering the reference id. If the prop is not provided,
-it will default to a general message
-
-> Note: the additional props will take precedence over `description` for this error type
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="500 Error">
-        <ErrorDisplay type="500" additionalProps={{ referenceId: "123ABC" }} />
-    </Story>
-</Preview>
-
-<!-- 503 -->
-
-<a id="error-503"></a>
-
-<Heading3>503 Service unavailable</Heading3>
-
-This is used to display when the service is unavailable/unreachable.
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="503 Error">
-        <ErrorDisplay type="503" />
-    </Story>
-</Preview>
-
-<!-- MAINTENANCE -->
-
-<a id="maintenance"></a>
-
-<Heading3>Maintenance</Heading3>
-
-The maintenance error accepts an additional prop `dateString` which allows the rendering of the
-end date of the maintenance. If the prop is not provided, it will default to a general message
-(similar to a [503 error](#error-503))
-
-> Note: the additional props will take precedence over `description` for this error type
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="Maintenance">
-        <ErrorDisplay
-            type="maintenance"
-            additionalProps={{ dateString: "12 July 2022" }}
-        />
-    </Story>
-</Preview>
-
-<!-- UNSUPPORTED BROWSER -->
-
-<a id="unsupported-browser"></a>
-
-<Heading3>Unsupported browser</Heading3>
-
-This is shown when the browser is of an unsupported version.
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="Unsupported Browser">
-        <ErrorDisplay type="unsupported-browser" />
-    </Story>
-</Preview>
-
-<!-- PARTIALLY SUPPORTED BROWSER -->
-
-<a id="partially-supported-browser"></a>
-
-<Heading3>Partially supported browser</Heading3>
-
-This is shown when the browser is of a partially supported version.
-
-[Back to see all variants](#variants-top)
-
-<Preview>
-    <Story name="Partially supported Browser">
-        <ErrorDisplay type="partially-supported-browser" />
-    </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

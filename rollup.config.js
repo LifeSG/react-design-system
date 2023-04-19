@@ -26,7 +26,6 @@ const plugins = [
                 "**/custom-types/css.d.ts",
                 "**/custom-types/jpg.d.ts",
                 "**/custom-types/mdx.d.ts",
-                "**/custom-types/png.d.ts",
                 "**/custom-types/svg.d.ts",
             ],
         },
