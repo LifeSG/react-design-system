@@ -1,6 +1,6 @@
-export type TimerangepickerFormat = "12hr" | "24hr";
+export type TimeRangePickerFormat = "12hr" | "24hr";
 
-export interface TimerangepickerProps extends React.AriaAttributes {
+export interface TimeRangePickerProps extends React.AriaAttributes {
     // Standard HTML Attributes
     className?: string | undefined;
     id?: string | undefined;
@@ -13,7 +13,7 @@ export interface TimerangepickerProps extends React.AriaAttributes {
     value?: string | undefined;
     placeholder?: string | undefined;
     defaultValue?: string | undefined;
-    format?: TimerangepickerFormat | undefined;
+    format?: TimeRangePickerFormat | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;
     onChange?: ((value: string) => void) | undefined;

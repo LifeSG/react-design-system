@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TimerangepickerHelper } from "./helper";
-import { TimerangepickerDropdown } from "./timerangepicker-dropdown";
+import { TimeRangePickerHelper } from "./helper";
+import { TimeRangePickerDropdown } from "./timerangepicker-dropdown";
 import {
     ArrowRangeIcon,
     ArrowRight,
@@ -11,9 +11,9 @@ import {
     TimeContainer,
     Wrapper,
 } from "./timerangepicker.styles";
-import { TimerangepickerProps } from "./types";
+import { TimeRangePickerProps } from "./types";
 
-export const Timerangepicker = ({
+export const TimeRangePicker = ({
     id,
     disabled = false,
     error,
@@ -25,7 +25,7 @@ export const Timerangepicker = ({
     onBlur,
     onSelectionCancel,
     ...otherProps
-}: TimerangepickerProps) => {
+}: TimeRangePickerProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -155,7 +155,7 @@ export const Timerangepicker = ({
                     $focused={showStartTimeSelector}
                     readOnly={true}
                     placeholder={"From"}
-                    value={TimerangepickerHelper.formatValue(
+                    value={TimeRangePickerHelper.formatValue(
                         startTimeVal,
                         format
                     )}
@@ -168,7 +168,7 @@ export const Timerangepicker = ({
                 />
                 {showStartTimeSelector && <BottomHighlightStartTime />}
 
-                <TimerangepickerDropdown
+                <TimeRangePickerDropdown
                     id={id}
                     show={showStartTimeSelector}
                     value={startTimeVal || defaultValue}
@@ -188,7 +188,7 @@ export const Timerangepicker = ({
                     $focused={showEndTimeSelector}
                     readOnly={true}
                     placeholder={"To"}
-                    value={TimerangepickerHelper.formatValue(
+                    value={TimeRangePickerHelper.formatValue(
                         endTimeVal,
                         format
                     )}
@@ -199,7 +199,7 @@ export const Timerangepicker = ({
                         id ? `${id}-timepicker-selector` : "timepicker-selector"
                     }
                 />
-                <TimerangepickerDropdown
+                <TimeRangePickerDropdown
                     id={id}
                     show={showEndTimeSelector}
                     value={endTimeVal || defaultValue}

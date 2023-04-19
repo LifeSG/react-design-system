@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { StringHelper } from "../util/string-helper";
-import { Period, TimerangepickerHelper } from "./helper";
+import { Period, TimeRangePickerHelper } from "./helper";
 import {
     AnimatedDiv,
     Container,
@@ -19,7 +19,7 @@ import {
     TimePeriodSection,
     TimePeriodToggle,
 } from "./timerangepicker-dropdown.styles";
-import { TimerangepickerFormat } from "./types";
+import { TimeRangePickerFormat } from "./types";
 
 enum EInputButtonName {
     HOUR_UP = "hour-up",
@@ -42,12 +42,12 @@ interface IProps {
     id?: string;
     value: string;
     show: boolean;
-    format: TimerangepickerFormat;
+    format: TimeRangePickerFormat;
     onChange: (value: string) => void;
     onCancel: () => void;
 }
 
-export const TimerangepickerDropdown = ({
+export const TimeRangePickerDropdown = ({
     id,
     value,
     show,
@@ -58,7 +58,7 @@ export const TimerangepickerDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const timeValues = TimerangepickerHelper.getTimeValues(format, value);
+    const timeValues = TimeRangePickerHelper.getTimeValues(format, value);
 
     const [hourValue, setHourValue] = useState<string>(timeValues.hour);
     const [minuteValue, setMinuteValue] = useState<string>(timeValues.minute);
@@ -80,7 +80,7 @@ export const TimerangepickerDropdown = ({
         if (show) {
             // reset time values especially when a Cancel or blur event happened
             const { hour, minute, period } =
-                TimerangepickerHelper.getTimeValues(format, value);
+                TimeRangePickerHelper.getTimeValues(format, value);
             setHourValue(hour);
             setMinuteValue(minute);
             setTimePeriod(period);
@@ -160,12 +160,12 @@ export const TimerangepickerDropdown = ({
             switch (event.currentTarget.name) {
                 case EInputButtonName.MINUTE_UP:
                     setMinuteValue(
-                        TimerangepickerHelper.updateMinutes(minuteValue, "add")
+                        TimeRangePickerHelper.updateMinutes(minuteValue, "add")
                     );
                     break;
                 case EInputButtonName.MINUTE_DOWN:
                     setMinuteValue(
-                        TimerangepickerHelper.updateMinutes(
+                        TimeRangePickerHelper.updateMinutes(
                             minuteValue,
                             "minus"
                         )
@@ -173,12 +173,12 @@ export const TimerangepickerDropdown = ({
                     break;
                 case EInputButtonName.HOUR_UP:
                     setHourValue(
-                        TimerangepickerHelper.updateHours(hourValue, "add")
+                        TimeRangePickerHelper.updateHours(hourValue, "add")
                     );
                     break;
                 case EInputButtonName.HOUR_DOWN:
                     setHourValue(
-                        TimerangepickerHelper.updateHours(hourValue, "minus")
+                        TimeRangePickerHelper.updateHours(hourValue, "minus")
                     );
                     break;
                 default:
@@ -217,7 +217,7 @@ export const TimerangepickerDropdown = ({
                 const valueToSet =
                     value > 23 || value < 0
                         ? timeValues.hour
-                        : TimerangepickerHelper.convertHourTo12HourFormat(
+                        : TimeRangePickerHelper.convertHourTo12HourFormat(
                               event.target.value
                           );
 
@@ -257,7 +257,7 @@ export const TimerangepickerDropdown = ({
         let formattedValue: string;
 
         if (format === "24hr") {
-            formattedValue = TimerangepickerHelper.convertTo24HourFormat({
+            formattedValue = TimeRangePickerHelper.convertTo24HourFormat({
                 hour: hourValue,
                 minute: minuteValue,
                 period: timePeriod,

@@ -1,5 +1,5 @@
 import { StringHelper } from "../util/string-helper";
-import { TimerangepickerFormat } from "./types";
+import { TimeRangePickerFormat } from "./types";
 
 // =============================================================================
 // INTERFACES
@@ -22,9 +22,9 @@ interface TimeValuesPlain {
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-export namespace TimerangepickerHelper {
+export namespace TimeRangePickerHelper {
     export const getTimeValues = (
-        format: TimerangepickerFormat,
+        format: TimeRangePickerFormat,
         value?: string
     ): TimeValues => {
         // Default value
@@ -156,7 +156,7 @@ export namespace TimerangepickerHelper {
 
     export const formatValue = (
         value: string,
-        format: TimerangepickerFormat
+        format: TimeRangePickerFormat
     ): string => {
         try {
             const plain = convertToPlain(value, format);
@@ -184,7 +184,7 @@ export namespace TimerangepickerHelper {
 // =============================================================================
 const isValidHour = (
     hourString: string,
-    format: TimerangepickerFormat
+    format: TimeRangePickerFormat
 ): boolean => {
     const numValue = parseInt(hourString);
     return format === "24hr"
@@ -206,7 +206,7 @@ const isValidTimePeriod = (timePeriodString: string): boolean => {
 
 const convertToPlain = (
     value: string,
-    format: TimerangepickerFormat
+    format: TimeRangePickerFormat
 ): TimeValuesPlain => {
     const timeArr = value.split(":");
     const error = new Error("Invalid format");

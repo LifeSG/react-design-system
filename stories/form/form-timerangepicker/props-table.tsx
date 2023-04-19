@@ -5,7 +5,7 @@ import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
     {
-        name: "Timerangepicker specific props",
+        name: "TimeRangePicker specific props",
         attributes: [
             {
                 name: "value",

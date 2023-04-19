@@ -1,6 +1,6 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
-import { Timerangepicker } from "src/timerangepicker";
+import { TimeRangePicker } from "src/timeRangePicker";
 import { Form } from "src/form";
 import {
     Heading3,
@@ -12,9 +12,9 @@ import {
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
 
-<Meta title="Form/Timerangepicker" component={Form.Timerangepicker} />
+<Meta title="Form/TimeRangePicker" component={Form.TimeRangePicker} />
 
-<Title>Form.Timerangepicker</Title>
+<Title>Form.TimeRangePicker</Title>
 
 <Secondary>Overview</Secondary>
 
@@ -25,7 +25,7 @@ import { Form } from "@lifesg/react-design-system/form";
 ```
 
 <Canvas>
-    <Story name="Timerangepicker">
+    <Story name="TimeRangePicker">
         {() => {
             const [time1, setTime1] = useState("");
             const [time2, setTime2] = useState("");
@@ -34,23 +34,23 @@ import { Form } from "@lifesg/react-design-system/form";
             return (
                 <StoryContainer>
                     <Container>
-                        <Form.Timerangepicker
-                            label="This is a timerangepicker"
+                        <Form.TimeRangePicker
+                            label="This is a TimeRangePicker"
                             value={time1}
                             onChange={(value) => setTime1(value)}
                         />
-                        <Form.Timerangepicker
+                        <Form.TimeRangePicker
                             label="This is the disabled state"
                             disabled={true}
                         />
-                        <Form.Timerangepicker
+                        <Form.TimeRangePicker
                             label="This is the error state"
                             value={time3}
                             onChange={(value) => setTime3(value)}
                             error={true}
                             errorMessage="Time input required"
                         />
-                        <Form.Timerangepicker
+                        <Form.TimeRangePicker
                             label="This is the 12 hour format timepicker"
                             value={time4}
                             onChange={(value) => setTime4(value)}
@@ -68,7 +68,7 @@ import { Form } from "@lifesg/react-design-system/form";
 In the case that you require the timepicker field as a standalone, you can do this.
 
 ```tsx
-import { Timerangepicker } from "@lifesg/react-design-system/timerangepicker";
+import { TimeRangePicker } from "@lifesg/react-design-system/TimeRangePicker";
 ```
 
 <Preview>
@@ -78,7 +78,7 @@ import { Timerangepicker } from "@lifesg/react-design-system/timerangepicker";
             return (
                 <StoryContainer>
                     <Container>
-                        <Timerangepicker
+                        <TimeRangePicker
                             value={time}
                             onChange={(value) => setTime(value)}
                         />

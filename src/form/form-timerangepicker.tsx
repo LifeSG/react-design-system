@@ -1,15 +1,15 @@
-import { Timerangepicker } from "../timerangepicker";
+import { TimeRangePicker } from "../timeRangePicker";
 import { FormWrapper } from "./form-wrapper";
-import { FormTimerangepickerProps } from "./types";
+import { FormTimeRangePickerProps } from "./types";
 
-export const FormTimerangepicker = ({
+export const FormTimeRangePicker = ({
     label,
     errorMessage,
     id = "form-timepicker",
     "data-error-testid": errorTestId,
     "data-testid": testId,
     ...otherProps
-}: FormTimerangepickerProps): JSX.Element => {
+}: FormTimeRangePickerProps): JSX.Element => {
     return (
         <FormWrapper
             id={id}
@@ -18,7 +18,7 @@ export const FormTimerangepicker = ({
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
         >
-            <Timerangepicker
+            <TimeRangePicker
                 id={`${id}-base`}
                 data-testid={testId || id}
                 error={!!errorMessage}
