@@ -48,6 +48,7 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 -   [Modal](#modal)
 -   [Navbar](#navbar)
 -   [NotificationBanner](#notif-banner)
+-   [ToggleButton](#toggle-button)
 
 <br />
 
@@ -219,6 +220,15 @@ You can refer to the Storybook documentation for the amended names of the types
     just specify the content plainly
 
 <br />
+
+<a id="toggle-button"></a>
+
+### ToggleButton
+
+-   `ToggleButton` has been deprecated in favour of `Toggle`
+-   The states of a `Toggle` has also been simplified to either checked or not checked as opposed to the previous where there was a non selected default state
+
+---
 
 ## Other issues
 
