@@ -120,7 +120,7 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
     }*/
 
     ${MediaQuery.MaxWidth.mobileS} {
-        width: 275px;
+        width: 235px;
     }
 `;
 
@@ -130,9 +130,9 @@ export const ArrowRangeIcon = styled(IconButton)`
     transform: translateX(-50%);
     padding: 0;
 
-    ${MediaQuery.MaxWidth.mobileS} {
-        left: 71% !important;
-    }
+    /* ${MediaQuery.MaxWidth.mobileS} {
+        left: % !important;
+    } */
 `;
 
 export const ArrowRight = styled(ArrowRightIcon)`
@@ -141,13 +141,6 @@ export const ArrowRight = styled(ArrowRightIcon)`
     width: 1.125rem;
     height: 1.125rem;
 `;
-
-// export const ArrowRight = styled(ArrowRightIcon)`
-//     width: 3.25rem;
-//     height: 1.25rem;
-
-//     color: ${Color.Neutral[3]} !important;
-// `;
 
 export const BottomHighlightStartTime = styled.div`
     position: absolute;

@@ -19,9 +19,9 @@ const BORDER_RADIUS = "4px";
 export const AnimatedDiv = styled(animated.div)`
     position: absolute;
     top: 3.5rem;
-    left: 0px;
-    width: 432px;
-    height: 232px;
+    left: 0;
+    width: 27rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     background: ${Color.Neutral[8]};
     border-radius: ${BORDER_RADIUS};
@@ -35,19 +35,19 @@ export const AnimatedDiv = styled(animated.div)`
     overflow: hidden;
 
     ${MediaQuery.MaxWidth.tablet} {
-        width: 335px;
+        width: 100%;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        width: 335px;
+        width: 20rem;
     }
 
     ${MediaQuery.MaxWidth.mobileM} {
-        width: 309px;
+        width: 19rem;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        width: 280px;
+        width: 15rem;
     }
 `;
 
@@ -75,7 +75,8 @@ export const ControlSection = styled.div`
     margin-top: 1rem;
 
     ${MediaQuery.MaxWidth.mobileS} {
-        border-top: 1px solid ${Color.Neutral[5]};
+        // border-top: 1px solid ${Color.Neutral[5]};
+        flex-direction: column;
         margin-top: 2rem;
         padding-top: 1.5rem;
     }
@@ -203,5 +204,9 @@ export const ControlButton = styled(Button.Small)`
 
     ${MediaQuery.MaxWidth.tablet} {
         width: 50%;
+    }
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 100%;
+        margin-bottom: 1rem;
     }
 `;

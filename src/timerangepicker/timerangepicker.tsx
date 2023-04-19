@@ -12,7 +12,6 @@ import {
     Wrapper,
 } from "./timerangepicker.styles";
 import { TimerangepickerProps } from "./types";
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 
 export const Timerangepicker = ({
     id,
@@ -96,8 +95,12 @@ export const Timerangepicker = ({
         setShowStartTimeSelector(false);
         if (endTimeVal == "") {
             setShowEndTimeSelector(true);
+            setStartTimeVal(value);
+        } else if (value > endTimeVal) {
+            setStartTimeVal(endTimeVal);
+            setEndTimeVal(value);
         }
-        setStartTimeVal(value);
+
         onChange && onChange(value);
     };
 
@@ -133,14 +136,6 @@ export const Timerangepicker = ({
             }
         }
     };
-
-    // const runOutsideFocusHandlerEndTime = (
-    //     event: MouseEvent | KeyboardEvent
-    // ) => {
-    //     if (nodeRef && !nodeRef.current.contains(event.target as any)) {
-    //         showStartTimeSelector && runOnBlurHandler();
-    //     }
-    // };
 
     const getPlaceholderValue = useCallback((): string => {
         switch (format) {
@@ -182,11 +177,9 @@ export const Timerangepicker = ({
                     onChange={handleStartTime}
                 />
 
-                {/* <ArrowRightIcon type="arrow-right" /> */}
                 <ArrowRangeIcon>
                     <ArrowRight />
                 </ArrowRangeIcon>
-                {/* <ArrowRight /> */}
 
                 {showEndTimeSelector && <BottomHighlightEndTime />}
 
