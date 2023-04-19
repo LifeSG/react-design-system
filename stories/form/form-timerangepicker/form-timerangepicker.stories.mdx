@@ -27,24 +27,43 @@ import { Form } from "@lifesg/react-design-system/form";
 <Canvas>
     <Story name="TimeRangePicker">
         {() => {
-            const [time1, setTime1] = useState("");
-            const [time2, setTime2] = useState("");
-            const [time3, setTime3] = useState("");
-            const [time4, setTime4] = useState("");
+            const [time1, setTime1] = useState({
+                startValue: "",
+                endValue: "",
+            });
+            const timeVal = {
+                startValue: "12:00am",
+                endValue: "12:30am",
+            };
+            const [time2, setTime2] = useState({
+                startValue: "",
+                endValue: "",
+            });
+            const [time3, setTime3] = useState({
+                startValue: "",
+                endValue: "",
+            });
+            const [time4, setTime4] = useState({
+                startValue: "",
+                endValue: "",
+            });
             return (
                 <StoryContainer>
                     <Container>
                         <Form.TimeRangePicker
                             label="This is a TimeRangePicker"
                             value={time1}
+                            placeholder="From"
                             onChange={(value) => setTime1(value)}
                         />
                         <Form.TimeRangePicker
                             label="This is the disabled state"
+                            placeholder="From"
                             disabled={true}
                         />
                         <Form.TimeRangePicker
                             label="This is the error state"
+                            placeholder="From"
                             value={time3}
                             onChange={(value) => setTime3(value)}
                             error={true}
@@ -52,9 +71,15 @@ import { Form } from "@lifesg/react-design-system/form";
                         />
                         <Form.TimeRangePicker
                             label="This is the 12 hour format timepicker"
+                            placeholder="From"
                             value={time4}
                             onChange={(value) => setTime4(value)}
                             format="12hr"
+                        />
+                        <Form.TimeRangePicker
+                            label="This is read only state for timepicker"
+                            value={timeVal}
+                            readOnly={true}
                         />
                     </Container>
                 </StoryContainer>

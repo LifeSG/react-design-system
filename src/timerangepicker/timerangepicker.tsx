@@ -21,6 +21,7 @@ export const TimeRangePicker = ({
     defaultValue,
     placeholder,
     format = "24hr",
+    readOnly,
     onChange,
     onBlur,
     onSelectionCancel,
@@ -41,6 +42,13 @@ export const TimeRangePicker = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
+
+    useEffect(() => {
+        if (value) {
+            setStartTimeVal(value.startValue);
+            setEndTimeVal(value.endValue);
+        }
+    }, []);
     useEffect(() => {
         document.addEventListener("mousedown", handleMouseDownEvent);
         document.addEventListener("keyup", handleKeyUpEvent);
@@ -55,14 +63,14 @@ export const TimeRangePicker = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleStartTimeFocus = useCallback(() => {
-        if (!disabled && !showStartTimeSelector) {
+        if (!disabled && !readOnly && !showStartTimeSelector) {
             setShowEndTimeSelector(false);
             setShowStartTimeSelector(true);
         }
     }, [showStartTimeSelector]);
 
     const handleEndTimeFocus = useCallback(() => {
-        if (!disabled && !showEndTimeSelector) {
+        if (!disabled && !readOnly && !showEndTimeSelector) {
             setShowStartTimeSelector(false);
             setShowEndTimeSelector(true);
         }
@@ -148,11 +156,15 @@ export const TimeRangePicker = ({
 
     return (
         <Wrapper ref={nodeRef} id={id} {...otherProps}>
-            <TimeContainer $disabled={disabled} $error={error}>
+            <TimeContainer
+                $disabled={disabled}
+                $error={error}
+                $readOnly={readOnly}
+            >
                 <InputSelectorElement
                     onFocus={handleStartTimeFocus}
                     $focused={showStartTimeSelector}
-                    readOnly={true}
+                    readOnly={readOnly}
                     placeholder={"From"}
                     value={TimeRangePickerHelper.formatValue(
                         startTimeVal,
@@ -185,7 +197,7 @@ export const TimeRangePicker = ({
                 <InputSelectorRightElement
                     onFocus={handleEndTimeFocus}
                     $focused={showEndTimeSelector}
-                    readOnly={true}
+                    readOnly={readOnly}
                     placeholder={"To"}
                     value={TimeRangePickerHelper.formatValue(
                         endTimeVal,

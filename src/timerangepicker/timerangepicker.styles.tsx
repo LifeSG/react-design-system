@@ -14,6 +14,7 @@ interface StyleProps {
     $focused?: boolean;
     $disabled?: boolean;
     $error?: boolean;
+    $readOnly?: boolean;
 }
 
 interface ContainerStyleProps {
@@ -46,7 +47,13 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                border: none;
+                border: 0;
+                cursor: none;
+                :focus,
+                :focus-within {
+                    border: 0px;
+                    box-shadow: none;
+                }
             `;
         } else if (props.$disabled) {
             return css`
@@ -114,6 +121,23 @@ export const BottomHighlightStartTime = styled.div`
     right: 23rem;
     background: ${BookingSGColorSet.Neutral[8]};
     background-color: ${Color.Accent.Light[1]};
+
+    ${MediaQuery.MaxWidth.tablet} {
+        width: 40%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        /* width: 335px; */
+        width: 40%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 40%;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 40%;
+    }
 `;
 
 export const BottomHighlightEndTime = styled.div`
@@ -124,6 +148,27 @@ export const BottomHighlightEndTime = styled.div`
     right: 7rem;
     background: ${BookingSGColorSet.Neutral[8]};
     background-color: ${Color.Accent.Light[1]};
+
+    ${MediaQuery.MaxWidth.tablet} {
+        width: 8rem;
+        left: 12rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        /* width: 335px; */
+        width: 8rem;
+        left: 10rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 6rem;
+        left: 10rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 5rem;
+        left: 8rem;
+    }
 `;
 
 export const InputSelectorElement = styled.input<StyleProps>`
@@ -141,6 +186,12 @@ export const InputSelectorElement = styled.input<StyleProps>`
         outline: none;
     }
     ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                border: none;
+                cursor: none;
+            `;
+        }
         if (props.$disabled) {
             return css`
                 background: ${Color.Neutral[6](props)} !important;
@@ -172,6 +223,12 @@ export const InputSelectorRightElement = styled.input<StyleProps>`
     }
 
     ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                border: none;
+                cursor: none;
+            `;
+        }
         if (props.$disabled) {
             return css`
                 background: ${Color.Neutral[6](props)} !important;

@@ -12,11 +12,12 @@ export interface TimeRangePickerProps extends React.AriaAttributes {
     name?: string | undefined;
     style?: React.CSSProperties | undefined;
     tabIndex?: number | undefined;
+    readOnly?: boolean | undefined;
     "data-testid"?: string | undefined;
 
     // Input-specific attributes
 
-    value?: string | undefined;
+    value?: Value | undefined;
     placeholder?: string | undefined;
     defaultValue?: string | undefined;
     format?: TimeRangePickerFormat | undefined;
