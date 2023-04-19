@@ -41,12 +41,13 @@ import { Form } from "@lifesg/react-design-system/form";
                         />
                         <Form.Timerangepicker
                             label="This is the disabled state"
-                            disabled
+                            disabled={true}
                         />
                         <Form.Timerangepicker
                             label="This is the error state"
                             value={time3}
                             onChange={(value) => setTime3(value)}
+                            error={true}
                             errorMessage="Time input required"
                         />
                         <Form.Timerangepicker

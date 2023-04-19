@@ -11,13 +11,13 @@ import { IconButton } from "src/icon-button";
 // STYLE INTERFACe
 // =============================================================================
 interface StyleProps {
-    focused?: boolean;
-    disabled?: boolean;
-    error?: boolean;
+    $focused?: boolean;
+    $disabled?: boolean;
+    $error?: boolean;
 }
 
 interface ContainerStyleProps {
-    disabled?: boolean;
+    $disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
 }
@@ -32,39 +32,6 @@ interface LabelStyleProps {
 // =============================================================================
 export const Wrapper = styled.div`
     position: relative;
-`;
-
-export const InputSelectorElement = styled.input<StyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-
-    display: block;
-    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
-    width: 100%;
-    height: 26px;
-    background: ${BookingSGColorSet.Neutral[8]};
-    color: ${BookingSGColorSet.Neutral[1]};
-    border: 0px;
-    :focus,
-    :active {
-        outline: none;
-    }
-`;
-
-export const InputSelectorRightElement = styled.input<StyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-
-    display: block;
-    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
-    width: 100%;
-    height: 26px;
-    margin-left: 1rem;
-    background: ${BookingSGColorSet.Neutral[8]};
-    color: ${BookingSGColorSet.Neutral[1]};
-    border: 0px;
-    :focus,
-    :active {
-        outline: none;
-    }
 `;
 
 export const TimeContainer = styled.div<ContainerStyleProps>`
@@ -86,14 +53,16 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
             return css`
                 border: none;
             `;
-        } else if (props.disabled) {
+        } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${Color.Neutral[6](props)} !important;
                 :hover {
                     cursor: not-allowed;
                 }
                 :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    border: 0px;
+                    box-shadow: none;
+                    //    border: 1px solid ${Color.Neutral[5](props)};
                 }
             `;
         } else if (props.$error) {
@@ -160,4 +129,64 @@ export const BottomHighlightEndTime = styled.div`
     right: 7rem;
     background: ${BookingSGColorSet.Neutral[8]};
     background-color: ${Color.Accent.Light[1]};
+`;
+
+export const InputSelectorElement = styled.input<StyleProps>`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+
+    display: block;
+    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
+    width: 100%;
+    height: 26px;
+    background: ${BookingSGColorSet.Neutral[8]};
+    color: ${BookingSGColorSet.Neutral[1]};
+    border: 0px;
+    :focus,
+    :active {
+        outline: none;
+    }
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                background: ${Color.Neutral[6](props)} !important;
+                :hover {
+                    cursor: not-allowed;
+                }
+                :focus-within {
+                    // border: 1px solid ${Color.Neutral[5](props)};
+                }
+            `;
+        }
+    }}
+`;
+
+export const InputSelectorRightElement = styled.input<StyleProps>`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+
+    display: block;
+    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
+    width: 100%;
+    height: 26px;
+    margin-left: 1rem;
+    background: ${BookingSGColorSet.Neutral[8]};
+    color: ${BookingSGColorSet.Neutral[1]};
+    border: 0px;
+    :focus,
+    :active {
+        outline: none;
+    }
+
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                background: ${Color.Neutral[6](props)} !important;
+                :hover {
+                    cursor: not-allowed;
+                }
+                :focus-within {
+                    //  border: 1px solid ${Color.Neutral[5](props)};
+                }
+            `;
+        }
+    }}
 `;

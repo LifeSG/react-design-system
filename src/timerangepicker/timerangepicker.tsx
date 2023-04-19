@@ -149,10 +149,10 @@ export const Timerangepicker = ({
 
     return (
         <Wrapper ref={nodeRef} id={id} {...otherProps}>
-            <TimeContainer>
+            <TimeContainer $disabled={disabled} $error={error}>
                 <InputSelectorElement
                     onFocus={handleStartTimeFocus}
-                    focused={showStartTimeSelector}
+                    $focused={showStartTimeSelector}
                     readOnly={true}
                     placeholder={"From"}
                     value={TimerangepickerHelper.formatValue(
@@ -160,8 +160,8 @@ export const Timerangepicker = ({
                         format
                     )}
                     defaultValue={defaultValue}
-                    disabled={disabled}
-                    error={error}
+                    $disabled={disabled}
+                    $error={error}
                     data-testid={
                         id ? `${id}-timepicker-selector` : "timepicker-selector"
                     }
@@ -185,7 +185,7 @@ export const Timerangepicker = ({
 
                 <InputSelectorRightElement
                     onFocus={handleEndTimeFocus}
-                    focused={showEndTimeSelector}
+                    $focused={showEndTimeSelector}
                     readOnly={true}
                     placeholder={"To"}
                     value={TimerangepickerHelper.formatValue(
@@ -193,8 +193,8 @@ export const Timerangepicker = ({
                         format
                     )}
                     defaultValue={defaultValue}
-                    disabled={disabled}
-                    error={error}
+                    $disabled={disabled}
+                    $error={error}
                     data-testid={
                         id ? `${id}-timepicker-selector` : "timepicker-selector"
                     }
