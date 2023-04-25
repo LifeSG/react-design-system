@@ -531,7 +531,8 @@ export const DateInput = ({
     /**
      * Transform the output value for the user
      * @param isValid is to indicate another value status in range varaint
-     * As example: both value been selected and selected invalid date in start, endDate will be INVALID
+     * As example: both value been selected and selected a new startDate after endDate,
+     * endDate will become INVALID
      */
     const getFormattedValue = (value: string, isValid: boolean) => {
         const focusType = currentElement.type as FocusType;
