@@ -38,6 +38,7 @@ interface Props {
     withButton: boolean;
     onTabBlur: () => void;
     onChange: (value: string) => void;
+    onChangeRaw: (value: string) => void;
     onFocus: (value: FieldType) => void;
 }
 
@@ -47,6 +48,7 @@ export const StandAloneInput = ({
     confirmedValue,
     onTabBlur,
     onChange,
+    onChangeRaw,
     onFocus,
     readOnly,
     names,
@@ -396,8 +398,10 @@ export const StandAloneInput = ({
         values[field] = changeValue;
 
         const returnValue = getFormattedValue(values);
+        const returnRawValue = Object.values(values).join("-");
 
         onChange(returnValue);
+        onChangeRaw(returnRawValue);
     };
 
     const performOnFocusHandler = (field: FieldType) => {

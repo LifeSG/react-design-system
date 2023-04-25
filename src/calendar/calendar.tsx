@@ -57,7 +57,6 @@ export const Component = (
 
     const [isNewSelection, setIsNewSelection] = useState<boolean>(true);
 
-    const doneButtonRef = useRef<HTMLButtonElement>(null);
     // =============================================================================
     // HOOKS
     // =============================================================================
@@ -89,21 +88,6 @@ export const Component = (
         if (variant === "range" && value?.length && endValue?.length) {
             setIsNewSelection(false);
         }
-    }, [isOpen]);
-
-    useEffect(() => {
-        if (doneButtonRef.current) {
-            doneButtonRef.current.addEventListener("keydown", handleKeyDown);
-        }
-
-        return () => {
-            if (doneButtonRef.current) {
-                doneButtonRef.current.removeEventListener(
-                    "keydown",
-                    handleKeyDown
-                );
-            }
-        };
     }, [isOpen]);
 
     useEffect(() => {
@@ -429,12 +413,10 @@ export const Component = (
 
         switch (variant) {
             case "single":
-                isDisabled = selectedStartDate?.length ? false : true;
+                isDisabled = selectedStartDate ? false : true;
                 break;
             case "range":
-                isDisabled = ![selectedStartDate, selectedEndDate].every(
-                    Boolean
-                );
+                isDisabled = !selectedStartDate || !selectedEndDate;
                 break;
         }
 
@@ -442,11 +424,14 @@ export const Component = (
 
         return (
             <ActionButtonSection>
-                <CancelButton onClick={handleCancelButton}>Cancel</CancelButton>
+                {/* NOTE: "aria-label" will be used in date-input component */}
+                <CancelButton aria-label="cancel" onClick={handleCancelButton}>
+                    Cancel
+                </CancelButton>
                 <DoneButton
-                    ref={doneButtonRef}
+                    aria-label="done"
                     onClick={() => handleDoneButton(disabled)}
-                    $disabled={disabled}
+                    disabled={disabled}
                 >
                     Done
                 </DoneButton>

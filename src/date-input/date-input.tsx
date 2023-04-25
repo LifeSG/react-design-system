@@ -158,6 +158,26 @@ export const DateInput = ({
                 handleCalendarAction("confirmed");
             }
         }
+
+        if (
+            event.code === "Tab" &&
+            (event.target as any) &&
+            ["cancel", "done"].includes((event.target as any).ariaLabel)
+        ) {
+            const element = event.target as any;
+            const isCancelButton = element.ariaLabel === "cancel";
+            const isDoneButton = element.ariaLabel === "done";
+            const isDoneDisabled =
+                isCancelButton && element.nextElementSibling.disabled;
+
+            if (isDoneDisabled && isCancelButton) {
+                // close calendar after blur from cancel button
+                handleCalendarAction("reset");
+            } else if (!isDoneDisabled && isDoneButton) {
+                // close calendar after blur from done button
+                handleCalendarAction("reset");
+            }
+        }
     }
 
     function handleMouseDown(event: MouseEvent) {
@@ -171,7 +191,6 @@ export const DateInput = ({
     }
 
     const handleChange = (value: string, from: ActionComponent) => {
-        // isValid always 'true' in range selection if invalid from stand alone input
         if (value === INVALID_VALUE || value === "") {
             performOnChangeHandler(value, true);
 
@@ -182,7 +201,6 @@ export const DateInput = ({
 
             return;
         }
-
         const isValid = handleValidation(value);
 
         if (["month-options", "year-options"].includes(calendarView)) {
@@ -232,6 +250,11 @@ export const DateInput = ({
                 handleReducer("reset");
                 break;
             case "confirmed":
+                if (isError) {
+                    handleReducer("reset");
+                    break;
+                }
+
                 handleReducer("confirmed");
                 break;
         }
@@ -274,14 +297,21 @@ export const DateInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnChangeHandler = (value: string, isValid: boolean) => {
-        const returnValue = getFormattedValue(value, isValid);
+    const performOnChangeHandler = (
+        value: string,
+        isOtherValueValid: boolean
+    ) => {
+        const returnValue = getFormattedValue(value, isOtherValueValid);
 
         if (onChange) {
             onChange(returnValue);
         }
+    };
 
+    const performOnChangeRawHandler = (value: string) => {
         if (onChangeRaw) {
+            const returnValue = getFormattedValue(value, true);
+
             const returnRawValue =
                 DateInputHelper.getFormattedRawValue(returnValue);
 
@@ -355,7 +385,7 @@ export const DateInput = ({
                     break;
             }
         } else if (variant === "single") {
-            isValid = DateInputHelper.singleValidation(
+            isValid = DateInputHelper.validateSingle(
                 value,
                 disabledDates,
                 between
@@ -498,6 +528,11 @@ export const DateInput = ({
         };
     };
 
+    /**
+     * Transform the output value for the user
+     * @param isValid is to indicate another value status in range varaint
+     * As example: both value been selected and selected invalid date in start, endDate will be INVALID
+     */
     const getFormattedValue = (value: string, isValid: boolean) => {
         const focusType = currentElement.type as FocusType;
 
@@ -531,13 +566,13 @@ export const DateInput = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-    const RenderIndicateBar = () => {
+    const renderIndicateBar = () => {
         if (variant === "single" || disabled || readOnly) return;
 
         return <IndicateBar $position={currentElement.type || "none"} />;
     };
 
-    const RenderRangeInput = () => {
+    const renderRangeInput = () => {
         if (variant === "range") {
             return (
                 <>
@@ -547,6 +582,9 @@ export const DateInput = ({
                     <StandAloneInput
                         disabled={disabled}
                         onChange={(value) => handleChange(value, "input")}
+                        onChangeRaw={(value) =>
+                            performOnChangeRawHandler(value)
+                        }
                         onFocus={handleFocus}
                         onTabBlur={handleBlurContainer}
                         readOnly={readOnly}
@@ -579,6 +617,7 @@ export const DateInput = ({
             <StandAloneInput
                 disabled={disabled}
                 onChange={(value) => handleChange(value, "input")}
+                onChangeRaw={(value) => performOnChangeRawHandler(value)}
                 onFocus={handleFocus}
                 onTabBlur={handleBlurContainer}
                 readOnly={readOnly}
@@ -592,8 +631,8 @@ export const DateInput = ({
                 isError={isError}
                 withButton={withButton}
             />
-            {RenderRangeInput()}
-            {RenderIndicateBar()}
+            {renderRangeInput()}
+            {renderIndicateBar()}
             <Calendar
                 ref={calendarRef}
                 type="input"
