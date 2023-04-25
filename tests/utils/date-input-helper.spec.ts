@@ -118,7 +118,7 @@ describe("DateInputHelper", () => {
             const between = ["2023-03-10", "2023-03-28"];
             const disabledDates = undefined;
 
-            const result = DateInputHelper.singleValidation(
+            const result = DateInputHelper.validateSingle(
                 value,
                 disabledDates,
                 between
@@ -131,10 +131,7 @@ describe("DateInputHelper", () => {
             const value = "2023-03-01";
             const disabledDates = ["2023-03-10"];
 
-            const result = DateInputHelper.singleValidation(
-                value,
-                disabledDates
-            );
+            const result = DateInputHelper.validateSingle(value, disabledDates);
 
             expect(result).toBeTruthy();
         });
@@ -143,10 +140,7 @@ describe("DateInputHelper", () => {
             const value = "2023-03-01";
             const disabledDates = ["2023-03-01"];
 
-            const result = DateInputHelper.singleValidation(
-                value,
-                disabledDates
-            );
+            const result = DateInputHelper.validateSingle(value, disabledDates);
 
             expect(result).toBeFalsy();
         });
@@ -156,7 +150,7 @@ describe("DateInputHelper", () => {
             const between = ["2023-03-10", "2023-03-28"];
             const disabledDates = undefined;
 
-            const result = DateInputHelper.singleValidation(
+            const result = DateInputHelper.validateSingle(
                 value,
                 disabledDates,
                 between
