@@ -16,6 +16,8 @@ import {
 } from "./date-input-reducer";
 import { DateInputHelper } from "../util/date-input-helper";
 import { useEventListener } from "../util/use-event-listener";
+import { useMediaQuery } from "react-responsive";
+import { MediaWidths } from "../spec/media-spec";
 
 interface CurrentFocusTypes {
     field: FieldType;
@@ -36,7 +38,7 @@ export const DateInput = ({
     onBlur,
     onChangeRaw,
     onBlurRaw,
-    withButton = true,
+    withButton: _withButton = true,
     readOnly,
     id,
     variant = "single",
@@ -59,6 +61,12 @@ export const DateInput = ({
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef(null);
     const isMouted = useRef(false);
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
+
+    // show button if it is mobile view
+    const withButton = _withButton || isMobile;
 
     // =============================================================================
     // HOOKS
