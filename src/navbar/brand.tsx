@@ -1,6 +1,7 @@
 import React from "react";
 import { Clickable } from "./brand.styles";
 import { BrandType, NavbarBrandingProps } from "./types";
+import image from "./img/default.png";
 
 interface Props {
     resources: NavbarBrandingProps;
@@ -30,6 +31,14 @@ export const Brand = ({
             onClick(event, type);
         }
     };
+
+    const handleError = (
+        event: React.SyntheticEvent<HTMLImageElement, Event>
+    ) => {
+        (event.target as HTMLImageElement).onerror = null;
+        (event.target as HTMLImageElement).src = image;
+    };
+
     return (
         <Clickable
             role="link"
@@ -43,6 +52,7 @@ export const Brand = ({
             <img
                 src={resources.logoSrc}
                 alt={resources.brandName + "-app-logo"}
+                onError={handleError}
             />
         </Clickable>
     );
