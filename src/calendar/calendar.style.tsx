@@ -230,20 +230,10 @@ export const ActionButtonSection = styled.div`
 
 export const CancelButton = styled(Button.Small)`
     flex: 1;
-    background-color: ${Color.Neutral[8]};
-    border: 1px solid ${Color.Neutral[5]};
-
-    span {
-        color: ${Color.Primary};
-    }
 `;
 
 export const DoneButton = styled(Button.Small)`
     flex: 1;
-
-    span {
-        color: ${Color.Neutral[8]};
-    }
 `;
 
 export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
