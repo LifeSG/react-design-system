@@ -6,24 +6,17 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
 import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 
-import React, { useState } from "react";
+import React from "react";
 import {
     EllipsisContainer,
     EllipsisItem,
-    Hover,
-    InputView,
-    Label,
-    LabelDivider,
     NavigationItem,
     PageItem,
     PaginationList,
     PaginationMenu,
-    PaginationMobileInput,
     PaginationWrapper,
 } from "./pagination.styles";
 import { PaginationsProps } from "./types";
-import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../spec/media-spec";
 
 const Component = (
     {
@@ -41,16 +34,11 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [hoverRightButton, setHoverRightButton] = useState(false);
-    const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const boundaryRange = 1;
     const siblingRange = 1;
     const totalPages = Math.ceil(totalItems / pageSize);
     const isFirstPage = activePage === 1;
     const isLastPage = activePage === totalPages;
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
 
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
@@ -64,10 +52,7 @@ const Component = (
             : undefined;
     const nextPaginationItem =
         activePage < totalPages
-            ? () =>
-                  handlePaginationItemOnClick(
-                      parseInt(activePage.toString()) + 1
-                  )
+            ? () => handlePaginationItemOnClick(activePage + 1)
             : undefined;
 
     // =============================================================================
@@ -81,41 +66,12 @@ const Component = (
 
     const handleFastForwardOnClick = () => {
         handlePaginationItemOnClick(activePage - 5);
-        setHoverRightButton(false);
-        setHoverLeftButton(false);
     };
 
     const handleFastBackwardsOnClick = () => {
         handlePaginationItemOnClick(activePage + 5);
-        setHoverRightButton(false);
-        setHoverLeftButton(false);
     };
 
-    const setInput4 = (value) => {
-        if (value < totalPages && value > 0) {
-            onPageChange(value);
-        } else if (value > totalPages) {
-            onPageChange(totalPages);
-        } else {
-            onPageChange(1);
-        }
-    };
-
-    const onHoverRightButton = () => {
-        setHoverRightButton(true);
-    };
-
-    const onLeaveRightButton = () => {
-        setHoverRightButton(false);
-    };
-
-    const onHoverLeftButton = () => {
-        setHoverLeftButton(true);
-    };
-
-    const onLeaveLeftButton = () => {
-        setHoverLeftButton(false);
-    };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -153,35 +109,25 @@ const Component = (
                     </EllipsisItem>
 
                     {ellipsisStart && (
-                        <>
-                            <NavigationItem
-                                onClick={handleFastForwardOnClick}
-                                disabled={false}
-                                focusHighlight={false}
-                                aria-label="Fast Forward"
-                                onMouseOver={onHoverLeftButton}
-                                onMouseOut={onLeaveLeftButton}
-                            >
-                                <Chevron2LeftIcon />
-                            </NavigationItem>
-                            {hoverLeftButton && <Hover>Previous 5 Pages</Hover>}
-                        </>
+                        <NavigationItem
+                            onClick={handleFastForwardOnClick}
+                            disabled={false}
+                            focusHighlight={false}
+                            aria-label="Fast Forward"
+                        >
+                            <Chevron2LeftIcon />
+                        </NavigationItem>
                     )}
 
                     {ellipsisEnd && (
-                        <>
-                            <NavigationItem
-                                onClick={handleFastBackwardsOnClick}
-                                disabled={false}
-                                focusHighlight={false}
-                                aria-label="Fast Backward"
-                                onMouseOver={onHoverRightButton}
-                                onMouseOut={onLeaveRightButton}
-                            >
-                                <Chevron2RightIcon />
-                            </NavigationItem>
-                            {hoverRightButton && <Hover>Next 5 Pages</Hover>}
-                        </>
+                        <NavigationItem
+                            onClick={handleFastBackwardsOnClick}
+                            disabled={false}
+                            focusHighlight={false}
+                            aria-label="Fast Backward"
+                        >
+                            <Chevron2RightIcon />
+                        </NavigationItem>
                     )}
                 </EllipsisContainer>
             );
@@ -214,22 +160,6 @@ const Component = (
         return null;
     });
 
-    const renderMobile = () => (
-        <PaginationMobileInput>
-            <InputView
-                placeholder="Page"
-                value={activePage}
-                onChange={(event) => setInput4(event.target.value)}
-                autoComplete="off"
-                type="number"
-                id={(id || "pagination") + "-input"}
-                data-testid={(dataTestId || "pagination") + "-input"}
-            />
-            <LabelDivider>/</LabelDivider>
-            <Label>{totalPages}</Label>
-        </PaginationMobileInput>
-    );
-
     return (
         <PaginationWrapper
             className={className}
@@ -257,7 +187,7 @@ const Component = (
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationItem>
-                    {isMobile ? renderMobile() : paginationItemList}
+                    {paginationItemList}
                     <NavigationItem
                         onClick={nextPaginationItem}
                         disabled={isLastPage}

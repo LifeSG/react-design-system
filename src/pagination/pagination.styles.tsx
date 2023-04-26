@@ -3,8 +3,7 @@ import { Button } from "../button/button";
 import { Color } from "../color";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
-import { Input } from "../input";
+import { TextStyleHelper } from "../text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -124,14 +123,12 @@ export const EllipsisItem = styled(IconButton)`
 `;
 
 export const EllipsisContainer = styled.div`
-    display: flex;
     cursor: pointer;
+    display: flex;
     min-width: 2.5rem;
     height: 2.5rem;
     border-radius: 0.25rem;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    //border: 1px solid ${Color.Neutral[5]};
 
     button:nth-child(1) {
         opacity: 1;
@@ -155,56 +152,4 @@ export const EllipsisContainer = styled.div`
             display: block;
         }
     }
-`;
-
-export const PaginationMobileInput = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: 0.625rem;
-    align-items: center;
-    color: ${Color.Neutral[1]};
-
-    display: flex;
-    justify-content: center;
-`;
-
-export const Label = styled(Text.Body)`
-    white-space: nowrap;
-    ${TextStyleHelper.getTextStyle("Body", 400)};
-`;
-
-export const LabelDivider = styled(Text.Body)`
-    white-space: nowrap;
-    margin: 0 1rem;
-    ${TextStyleHelper.getTextStyle("Body", 400)};
-`;
-
-export const InputView = styled(Input)`
-    ${TextStyleHelper.getTextStyle("Body", 400)};
-    justify-content: center;
-    //margin: 0 0.5rem;
-    width: 3.5rem;
-    height: 2.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid ${Color.Neutral[5]};
-    padding: 0.5rem 0.5rem;
-
-    input {
-        text-align: center;
-    }
-`;
-
-export const Hover = styled.div`
-    ${TextStyleHelper.getTextStyle("BodySmall", 400)};
-
-    background-color: ${Color.Primary};
-    border: none;
-    border-radius: 0.25rem;
-    color: ${Color.Neutral[8]};
-    align-items: center;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    margin-top: 6rem;
-    padding: 0.25rem 0.5rem;
 `;
