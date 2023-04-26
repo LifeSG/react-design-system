@@ -54,10 +54,11 @@ export const DateInput = ({
         type: "none",
         count: 0,
     });
-
     const [isError, setIsError] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
+    const calendarRef = useRef(null);
+    const isMouted = useRef(false);
 
     // =============================================================================
     // HOOKS
@@ -80,12 +81,6 @@ export const DateInput = ({
 
     useEventListener("keydown", handleKeyDown, nodeRef.current);
     useEventListener("mousedown", handleMouseDown, document);
-
-    // =============================================================================
-    // REF FUNCTIONS
-    // =============================================================================
-    const calendarRef = useRef(null);
-    const isMouted = useRef(false);
 
     // =============================================================================
     // EFFECTS
@@ -156,26 +151,6 @@ export const DateInput = ({
                 handleCalendarAction("reset");
             } else {
                 handleCalendarAction("confirmed");
-            }
-        }
-
-        if (
-            event.code === "Tab" &&
-            (event.target as any) &&
-            ["cancel", "done"].includes((event.target as any).ariaLabel)
-        ) {
-            const element = event.target as any;
-            const isCancelButton = element.ariaLabel === "cancel";
-            const isDoneButton = element.ariaLabel === "done";
-            const isDoneDisabled =
-                isCancelButton && element.nextElementSibling.disabled;
-
-            if (isDoneDisabled && isCancelButton) {
-                // close calendar after blur from cancel button
-                handleCalendarAction("reset");
-            } else if (!isDoneDisabled && isDoneButton) {
-                // close calendar after blur from done button
-                handleCalendarAction("reset");
             }
         }
     }
