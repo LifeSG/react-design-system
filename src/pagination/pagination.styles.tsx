@@ -68,7 +68,7 @@ export const PageItem = styled(Button.Default)<StyleProps>`
     height: 2.5rem;
     text-align: center;
     padding: 0.4rem 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin: 0.25rem;
     cursor: pointer;
 
@@ -103,7 +103,7 @@ export const EllipsisItem = styled(IconButton)`
     cursor: not-allowed;
     color: ${Color.Neutral[3]};
     padding: 0.4rem 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     white-space: nowrap;
 
     svg {
@@ -116,6 +116,40 @@ export const EllipsisItem = styled(IconButton)`
     :focus {
         svg {
             color: ${Color.Neutral[3]};
+        }
+    }
+
+    :
+`;
+
+export const EllipsisContainer = styled.div`
+    cursor: pointer;
+    display: flex;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    //border: 1px solid ${Color.Neutral[5]};
+
+    button:nth-child(1) {
+        opacity: 1;
+        display: block;
+    }
+
+    button:nth-child(2) {
+        opacity: 0;
+        display: none;
+    }
+    :hover,
+    :active,
+    :focus {
+        button:nth-child(1) {
+            opacity: 0;
+            display: none;
+        }
+
+        button:nth-child(2) {
+            opacity: 1;
+            display: block;
         }
     }
 `;
