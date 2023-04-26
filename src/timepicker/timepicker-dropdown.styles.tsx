@@ -5,7 +5,7 @@ import { Color } from "../color";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
-import { ToggleButton } from "../toggle-button";
+import { Toggle } from "../toggle";
 
 // =============================================================================
 // STYLING
@@ -151,7 +151,9 @@ export const TimeInput = styled.input`
     }
 `;
 
-export const TimePeriodToggle = styled(ToggleButton)`
+export const TimePeriodToggle = styled(Toggle)`
+    min-width: 5rem;
+
     :not(:last-of-type) {
         margin-right: 0.5rem;
     }
