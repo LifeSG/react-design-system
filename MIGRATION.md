@@ -121,6 +121,18 @@ The corresponding type names have also been changed.
 
 ### Icon
 
+-   Icons have been moved to [@lifesg/react-icons](https://designsystem.life.gov.sg/reacticons/index.html?path=/story/getting-started--page) and each icon is now a named export
+
+```tsx
+// Old
+import { Icon } from "@lifesg/icon";
+<Icon type="cross" />;
+
+// New
+import { CrossIcon } from "@lifesg/react-icons/cross";
+<CrossIcon />;
+```
+
 -   Use height and width with `styled(Icon)` to resize icons; `font-size` is no longer needed
 
 <br />
@@ -208,6 +220,8 @@ Here is the full list of changes
 -   `blockDrawerDismissalMethods` in `NavbarProps` has been renamed to `drawerDismissalExclusions` for clarity
 
 You can refer to the Storybook documentation for the amended names of the types
+
+-   The `resources` prop has been amended to support customisation of additional assets. You may specify the main brand logo via `resources.primary`.
 
 <br />
 
