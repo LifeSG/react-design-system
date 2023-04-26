@@ -3,8 +3,12 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
+import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
+import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
+
 import React from "react";
 import {
+    EllipsisContainer,
     EllipsisItem,
     NavigationItem,
     PageItem,
@@ -60,6 +64,14 @@ const Component = (
         }
     };
 
+    const handleFastForwardOnClick = () => {
+        handlePaginationItemOnClick(activePage - 5);
+    };
+
+    const handleFastBackwardsOnClick = () => {
+        handlePaginationItemOnClick(activePage + 5);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -91,9 +103,33 @@ const Component = (
 
         if (ellipsisStart || ellipsisEnd) {
             return (
-                <EllipsisItem key={pageIndex} focusHighlight={false}>
-                    <EllipsisHorizontalIcon />
-                </EllipsisItem>
+                <EllipsisContainer key={pageIndex}>
+                    <EllipsisItem key={pageIndex} focusHighlight={false}>
+                        <EllipsisHorizontalIcon />
+                    </EllipsisItem>
+
+                    {ellipsisStart && (
+                        <NavigationItem
+                            onClick={handleFastForwardOnClick}
+                            disabled={false}
+                            focusHighlight={false}
+                            aria-label="Fast Forward"
+                        >
+                            <Chevron2LeftIcon />
+                        </NavigationItem>
+                    )}
+
+                    {ellipsisEnd && (
+                        <NavigationItem
+                            onClick={handleFastBackwardsOnClick}
+                            disabled={false}
+                            focusHighlight={false}
+                            aria-label="Fast Backward"
+                        >
+                            <Chevron2RightIcon />
+                        </NavigationItem>
+                    )}
+                </EllipsisContainer>
             );
         }
 
