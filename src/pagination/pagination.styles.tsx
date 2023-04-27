@@ -3,7 +3,8 @@ import { Button } from "../button/button";
 import { Color } from "../color";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
-import { TextStyleHelper } from "../text";
+import { Text, TextStyleHelper } from "../text";
+import { Input } from "../input";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -123,12 +124,14 @@ export const EllipsisItem = styled(IconButton)`
 `;
 
 export const EllipsisContainer = styled.div`
-    cursor: pointer;
     display: flex;
+    cursor: pointer;
     min-width: 2.5rem;
     height: 2.5rem;
     border-radius: 0.25rem;
-    //border: 1px solid ${Color.Neutral[5]};
+    justify-content: center;
+    align-items: center;
+    position: relative;
 
     button:nth-child(1) {
         opacity: 1;
@@ -151,5 +154,42 @@ export const EllipsisContainer = styled.div`
             opacity: 1;
             display: block;
         }
+    }
+`;
+
+export const PaginationMobileInput = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 0.625rem;
+    align-items: center;
+    color: ${Color.Neutral[1]};
+
+    display: flex;
+    justify-content: center;
+`;
+
+export const Label = styled(Text.Body)`
+    white-space: nowrap;
+    ${TextStyleHelper.getTextStyle("Body", 400)};
+`;
+
+export const LabelDivider = styled(Text.Body)`
+    white-space: nowrap;
+    margin: 0 1rem;
+    ${TextStyleHelper.getTextStyle("Body", 400)};
+`;
+
+export const InputView = styled(Input)`
+    ${TextStyleHelper.getTextStyle("Body", 400)};
+    justify-content: center;
+    //margin: 0 0.5rem;
+    width: 3.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid ${Color.Neutral[5]};
+    padding: 0.5rem 0.5rem;
+
+    input {
+        text-align: center;
     }
 `;
