@@ -189,8 +189,8 @@ const Component = (
                 onChange={(event) => setInput4(event.target.value)}
                 autoComplete="off"
                 type="number"
-                id={id + "-input" || "pagination-input"}
-                data-testid={dataTestId + "-input" || "pagination-input"}
+                id={(id || "pagination") + "-input"}
+                data-testid={(dataTestId || "pagination") + "-input"}
             />
             <LabelDivider>/</LabelDivider>
             <Label>{totalPages}</Label>
