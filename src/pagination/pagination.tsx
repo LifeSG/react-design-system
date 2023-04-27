@@ -10,13 +10,19 @@ import React from "react";
 import {
     EllipsisContainer,
     EllipsisItem,
+    InputView,
+    Label,
+    LabelDivider,
     NavigationItem,
     PageItem,
     PaginationList,
     PaginationMenu,
+    PaginationMobileInput,
     PaginationWrapper,
 } from "./pagination.styles";
 import { PaginationsProps } from "./types";
+import { useMediaQuery } from "react-responsive";
+import { MediaWidths } from "../spec/media-spec";
 
 const Component = (
     {
@@ -39,6 +45,9 @@ const Component = (
     const totalPages = Math.ceil(totalItems / pageSize);
     const isFirstPage = activePage === 1;
     const isLastPage = activePage === totalPages;
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
 
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
@@ -52,7 +61,10 @@ const Component = (
             : undefined;
     const nextPaginationItem =
         activePage < totalPages
-            ? () => handlePaginationItemOnClick(activePage + 1)
+            ? () =>
+                  handlePaginationItemOnClick(
+                      parseInt(activePage.toString()) + 1
+                  )
             : undefined;
 
     // =============================================================================
@@ -72,6 +84,15 @@ const Component = (
         handlePaginationItemOnClick(activePage + 5);
     };
 
+    const setInput4 = (value) => {
+        if (value < totalPages && value > 0) {
+            onPageChange(value);
+        } else if (value > totalPages) {
+            onPageChange(totalPages);
+        } else {
+            onPageChange(1);
+        }
+    };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -160,6 +181,20 @@ const Component = (
         return null;
     });
 
+    const renderMobile = () => (
+        <PaginationMobileInput>
+            <InputView
+                placeholder="Page"
+                value={activePage}
+                onChange={(event) => setInput4(event.target.value)}
+                autoComplete="off"
+                type="number"
+            />
+            <LabelDivider>/</LabelDivider>
+            <Label>{totalPages}</Label>
+        </PaginationMobileInput>
+    );
+
     return (
         <PaginationWrapper
             className={className}
@@ -187,7 +222,7 @@ const Component = (
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationItem>
-                    {paginationItemList}
+                    {isMobile ? renderMobile() : paginationItemList}
                     <NavigationItem
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
