@@ -4,7 +4,13 @@ export const getFolders = (entry) => {
     const dirs = fs.readdirSync(entry);
 
     // folders without an index.ts
-    const dirsToIgnore = ["custom-types", "shared", "spec", "util"];
+    const dirsToIgnore = [
+        "custom-types",
+        "shared",
+        "spec",
+        "util",
+        "__mocks__",
+    ];
 
     const dirsToUse = dirs
         .filter((dirName) => path.extname(dirName) === "") // exclude non-folders

@@ -48,6 +48,7 @@ import { TextStyleHelper } from "@lifesg/react-design-system/text";
 -   [Modal](#modal)
 -   [Navbar](#navbar)
 -   [NotificationBanner](#notif-banner)
+-   [ToggleButton](#toggle-button)
 
 <br />
 
@@ -81,6 +82,7 @@ You may refer to the storybook documentation for more details.
 ### ErrorDisplay
 
 -   The components now takes in `img` so you can configure all image attributes instead of just `imgSrc`
+-   **[v1.0.0-alpha.24]** The default titles and descriptions have been replaced with placeholders. Specify the props based on your use case. Otherwise, if you were using the default messages in previous versions, refer to [this commit](https://github.com/LifeSG/react-design-system/blob/a2d707a1125b0fe3ad4f14a1585d55959c269396/src/error-display/error-display-data.tsx#L86-L237) for the original copy.
 
 <br />
 
@@ -118,6 +120,18 @@ The corresponding type names have also been changed.
 <a id="icon"></a>
 
 ### Icon
+
+-   Icons have been moved to [@lifesg/react-icons](https://designsystem.life.gov.sg/reacticons/index.html?path=/story/getting-started--page) and each icon is now a named export
+
+```tsx
+// Old
+import { Icon } from "@lifesg/icon";
+<Icon type="cross" />;
+
+// New
+import { CrossIcon } from "@lifesg/react-icons/cross";
+<CrossIcon />;
+```
 
 -   Use height and width with `styled(Icon)` to resize icons; `font-size` is no longer needed
 
@@ -207,6 +221,8 @@ Here is the full list of changes
 
 You can refer to the Storybook documentation for the amended names of the types
 
+-   The `resources` prop has been amended to support customisation of additional assets. You may specify the main brand logo via `resources.primary`.
+
 <br />
 
 <a id="notif-banner"></a>
@@ -218,6 +234,15 @@ You can refer to the Storybook documentation for the amended names of the types
     just specify the content plainly
 
 <br />
+
+<a id="toggle-button"></a>
+
+### ToggleButton
+
+-   `ToggleButton` has been deprecated in favour of `Toggle`
+-   The states of a `Toggle` has also been simplified to either checked or not checked as opposed to the previous where there was a non selected default state
+
+---
 
 ## Other issues
 
