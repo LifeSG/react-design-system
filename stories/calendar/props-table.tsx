@@ -58,7 +58,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "onChange",
+                name: "onSelect",
                 description: (
                     <>
                         Called when the user selected a value from the calendar.
