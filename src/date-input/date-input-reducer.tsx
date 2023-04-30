@@ -1,3 +1,5 @@
+import { INVALID_VALUE } from "./stand-alone-input";
+
 export type ActionType =
     | "confirmed"
     | "default"
@@ -24,8 +26,8 @@ interface Action {
  * 'hover'          return back current hover value
  * 'input'          return back current input element value
  * 'selected'       return back current value been selected
- * 'transition'     temporary store the value
- * 'restore'        use the temporary value
+ * 'transition'     temporary store the value (store value before go to month/year calendar)
+ * 'restore'        use the restore value in transiton (trigger cancel button in month/year calendar)
  */
 export interface ReducerState {
     calendar: string | undefined;
@@ -36,20 +38,34 @@ export interface ReducerState {
     selected: string;
     transition: string;
 }
-const calendarValue = (value: string) => (value?.length ? value : undefined);
+const calendarValue = (value: string, state: ReducerState) => {
+    if (value === INVALID_VALUE) {
+        return state.calendar;
+    }
+
+    if (value && value.length) {
+        return value;
+    }
+
+    return undefined;
+};
 
 export const dateInputReducer = (
     state: ReducerState,
     action: Action
 ): ReducerState => {
     const { type, value } = action;
+    let confirmedValue = "";
 
-    // initial load value if exist
-    const confirmedValue = value?.length
-        ? value
-        : state.selected.length
-        ? state.selected
-        : state.confirmed;
+    // Priority of confirmed value
+    // - value which is initial mounted value
+    if (value && value.length) {
+        confirmedValue = value;
+    } else if (state.selected && state.selected.length) {
+        confirmedValue = state.selected;
+    } else if (state.confirmed) {
+        confirmedValue = state.confirmed;
+    }
 
     switch (type) {
         case "default":
@@ -74,7 +90,7 @@ export const dateInputReducer = (
         case "selected":
             return {
                 ...state,
-                calendar: calendarValue(value),
+                calendar: calendarValue(value, state),
                 hover: "",
                 input: value,
                 selected: value,
@@ -84,7 +100,7 @@ export const dateInputReducer = (
         case "confirmed":
             return {
                 ...state,
-                calendar: calendarValue(confirmedValue),
+                calendar: calendarValue(confirmedValue, state),
                 confirmed: confirmedValue,
                 input: confirmedValue,
                 selected: confirmedValue,
@@ -94,7 +110,7 @@ export const dateInputReducer = (
         case "transition":
             return {
                 ...state,
-                calendar: calendarValue(value),
+                calendar: calendarValue(value, state),
                 input: value,
                 selected: value,
                 transition: state.selected,
@@ -103,7 +119,7 @@ export const dateInputReducer = (
         case "restore":
             return {
                 ...state,
-                calendar: calendarValue(state.transition),
+                calendar: calendarValue(state.transition, state),
                 input: state.transition,
                 selected: state.transition,
                 currentType: "restore",
@@ -111,7 +127,7 @@ export const dateInputReducer = (
         case "reset":
             return {
                 ...state,
-                calendar: calendarValue(state.confirmed),
+                calendar: calendarValue(state.confirmed, state),
                 confirmed: state.confirmed,
                 input: state.confirmed,
                 selected: state.confirmed,
