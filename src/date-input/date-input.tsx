@@ -60,7 +60,6 @@ export const DateInput = ({
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef(null);
-    const isMouted = useRef(false);
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -94,23 +93,18 @@ export const DateInput = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        // avoid to run in first mounted
-        if (!isMouted.current) {
-            isMouted.current = true;
-            return;
-        }
-
-        if (!calendarOpen) {
-            handleBlur(startDate, endDate);
-            setIsError(false);
-        }
-    }, [calendarOpen]);
-
-    useEffect(() => {
+        // inital mounted value
         dispatchStart({ type: "confirmed", value: value });
 
         if (variant === "range")
             dispatchEnd({ type: "confirmed", value: endValue });
+    }, []);
+
+    useEffect(() => {
+        dispatchStart({ type: "selected", value: value });
+
+        if (variant === "range")
+            dispatchEnd({ type: "selected", value: endValue });
     }, [value, endValue]);
 
     useEffect(() => {
@@ -177,8 +171,8 @@ export const DateInput = ({
         if (value === INVALID_VALUE || value === "") {
             performOnChangeHandler(value, true);
 
+            // update state/calendar
             if (value === "") {
-                // update state/calendar
                 handleReducer("selected", value);
             }
 
@@ -197,10 +191,6 @@ export const DateInput = ({
         setActionComponent(from);
         handleFocusElement(isValid, from);
         performOnChangeHandler(value, isValid);
-    };
-
-    const handleBlur = (startDate: ReducerState, endDate: ReducerState) => {
-        performOnBlurHandler(startDate, endDate);
     };
 
     const handleFocus = (value: FieldType) => {
@@ -334,7 +324,9 @@ export const DateInput = ({
             count: 0,
         });
 
+        performOnBlurHandler(startDate, endDate);
         setCalendarOpen(false);
+        setIsError(false);
     };
 
     const handleValidation = (value: string): boolean => {
@@ -402,11 +394,10 @@ export const DateInput = ({
         if (!isValid) {
             dispatchStart({ type: "reset" });
             dispatchEnd({ type: "reset" });
-            return;
         }
 
         if (type === "restore") {
-            // restore both value
+            // restore both value when click month/year view cancel button
             dispatchStart({ type });
             dispatchEnd({ type });
 

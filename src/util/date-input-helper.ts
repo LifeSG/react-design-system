@@ -1,18 +1,17 @@
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { INVALID_VALUE } from "../date-input/stand-alone-input";
 import { ChangeValueTypes, RawInputValues } from "../date-input";
 
 dayjs.extend(isBetween);
 
 export namespace DateInputHelper {
     export const validate = (
-        startDate: string,
-        endDate: string,
+        startDate: string | undefined,
+        endDate: string | undefined,
         disabledDates?: string[] | undefined,
         between?: string[] | undefined
     ): boolean => {
-        if (startDate.length === 0 || endDate.length === 0) {
+        if (!startDate || !endDate) {
             return false;
         }
 
