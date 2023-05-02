@@ -195,15 +195,16 @@ export const InputView = styled(Input)`
 `;
 
 export const Hover = styled.div`
-    ${TextStyleHelper.getTextStyle("XSmall", "semibold")};
+    ${TextStyleHelper.getTextStyle("BodySmall", 400)};
 
-    background-color: ${Color.Neutral[2]};
-    border: 2px solid ${Color.Neutral[3]};
+    background-color: ${Color.Primary};
+    border: none;
+    border-radius: 0.25rem;
     color: ${Color.Neutral[8]};
     align-items: center;
     position: fixed;
     display: flex;
     justify-content: center;
     margin-top: 6rem;
-    padding: 0.125rem 0.25rem;
+    padding: 0.25rem 0.5rem;
 `;
