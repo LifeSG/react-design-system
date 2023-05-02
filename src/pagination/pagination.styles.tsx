@@ -20,6 +20,10 @@ interface StyleProps {
 
 export const PaginationWrapper = styled.div`
     display: flex;
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-left: -1.5rem;
+    }
 `;
 
 export const PaginationList = styled.div`
