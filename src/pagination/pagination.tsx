@@ -6,10 +6,11 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
 import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 
-import React from "react";
+import React, { useState } from "react";
 import {
     EllipsisContainer,
     EllipsisItem,
+    Hover,
     InputView,
     Label,
     LabelDivider,
@@ -40,6 +41,8 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [hoverRightButton, setHoverRightButton] = useState(false);
+    const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const boundaryRange = 1;
     const siblingRange = 1;
     const totalPages = Math.ceil(totalItems / pageSize);
@@ -78,10 +81,14 @@ const Component = (
 
     const handleFastForwardOnClick = () => {
         handlePaginationItemOnClick(activePage - 5);
+        setHoverRightButton(false);
+        setHoverLeftButton(false);
     };
 
     const handleFastBackwardsOnClick = () => {
         handlePaginationItemOnClick(activePage + 5);
+        setHoverRightButton(false);
+        setHoverLeftButton(false);
     };
 
     const setInput4 = (value) => {
@@ -92,6 +99,22 @@ const Component = (
         } else {
             onPageChange(1);
         }
+    };
+
+    const onHoverRightButton = () => {
+        setHoverRightButton(true);
+    };
+
+    const onLeaveRightButton = () => {
+        setHoverRightButton(false);
+    };
+
+    const onHoverLeftButton = () => {
+        setHoverLeftButton(true);
+    };
+
+    const onLeaveLeftButton = () => {
+        setHoverLeftButton(false);
     };
     // =============================================================================
     // RENDER FUNCTIONS
@@ -130,25 +153,35 @@ const Component = (
                     </EllipsisItem>
 
                     {ellipsisStart && (
-                        <NavigationItem
-                            onClick={handleFastForwardOnClick}
-                            disabled={false}
-                            focusHighlight={false}
-                            aria-label="Fast Forward"
-                        >
-                            <Chevron2LeftIcon />
-                        </NavigationItem>
+                        <>
+                            <NavigationItem
+                                onClick={handleFastForwardOnClick}
+                                disabled={false}
+                                focusHighlight={false}
+                                aria-label="Fast Forward"
+                                onMouseOver={onHoverLeftButton}
+                                onMouseOut={onLeaveLeftButton}
+                            >
+                                <Chevron2LeftIcon />
+                            </NavigationItem>
+                            {hoverLeftButton && <Hover>Previous 5 Pages</Hover>}
+                        </>
                     )}
 
                     {ellipsisEnd && (
-                        <NavigationItem
-                            onClick={handleFastBackwardsOnClick}
-                            disabled={false}
-                            focusHighlight={false}
-                            aria-label="Fast Backward"
-                        >
-                            <Chevron2RightIcon />
-                        </NavigationItem>
+                        <>
+                            <NavigationItem
+                                onClick={handleFastBackwardsOnClick}
+                                disabled={false}
+                                focusHighlight={false}
+                                aria-label="Fast Backward"
+                                onMouseOver={onHoverRightButton}
+                                onMouseOut={onLeaveRightButton}
+                            >
+                                <Chevron2RightIcon />
+                            </NavigationItem>
+                            {hoverRightButton && <Hover>Next 5 Pages</Hover>}
+                        </>
                     )}
                 </EllipsisContainer>
             );
