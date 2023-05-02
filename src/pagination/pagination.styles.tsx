@@ -193,3 +193,17 @@ export const InputView = styled(Input)`
         text-align: center;
     }
 `;
+
+export const Hover = styled.div`
+    ${TextStyleHelper.getTextStyle("XSmall", "semibold")};
+
+    background-color: ${Color.Neutral[2]};
+    border: 2px solid ${Color.Neutral[3]};
+    color: ${Color.Neutral[8]};
+    align-items: center;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    margin-top: 6rem;
+    padding: 0.125rem 0.25rem;
+`;
