@@ -42,6 +42,7 @@ export const Calendar = ({
         if (!value) return;
 
         setSelectedStartDate(value);
+        setCalendarDate(dayjs(value));
     }, [value]);
 
     // =============================================================================
