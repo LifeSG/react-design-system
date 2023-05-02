@@ -151,7 +151,6 @@ const Component = (
                     <EllipsisItem key={pageIndex} focusHighlight={false}>
                         <EllipsisHorizontalIcon />
                     </EllipsisItem>
-
                     {ellipsisStart && (
                         <>
                             <NavigationItem
@@ -167,7 +166,6 @@ const Component = (
                             {hoverLeftButton && <Hover>Previous 5 Pages</Hover>}
                         </>
                     )}
-
                     {ellipsisEnd && (
                         <>
                             <NavigationItem
@@ -194,7 +192,7 @@ const Component = (
         const paginationMiddle =
             pageIndex === activePage ||
             (pageIndex <= activePage + siblingRange &&
-                pageIndex >= activePage - siblingRange);
+                pageIndex >= activePage - siblingRange - 1);
         const paginationEnd =
             (pageIndex > endRange && activePage - siblingRange > endRange) ||
             pageIndex > totalPages - boundaryRange;
