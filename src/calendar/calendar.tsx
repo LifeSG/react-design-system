@@ -112,6 +112,7 @@ export const Component = (
         }
 
         setSelectedStartDate(value);
+        setCalendarDate(dayjs(value));
     }, [value]);
 
     useEffect(() => {
