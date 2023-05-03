@@ -1,5 +1,11 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import { Calendar, CalendarAction, FocusType, View } from "../calendar";
+import {
+    Calendar,
+    CalendarAction,
+    CalendarRef,
+    FocusType,
+    View,
+} from "../calendar";
 import {
     ArrowRangeIcon,
     ArrowRight,
@@ -59,7 +65,7 @@ export const DateInput = ({
     const [isError, setIsError] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const calendarRef = useRef(null);
+    const calendarRef = useRef<CalendarRef>();
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });

@@ -45,7 +45,7 @@ export const Component = (
         type = "standalone",
         ...otherProps
     }: CalendarProps,
-    ref: CalendarRef
+    ref: React.ForwardedRef<CalendarRef>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
