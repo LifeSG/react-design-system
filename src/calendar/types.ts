@@ -44,7 +44,9 @@ export interface CalendarProps {
     id?: string | undefined;
 }
 
-export type CalendarRef = React.Ref<HTMLDivElement>;
+export interface CalendarRef {
+    defaultView: () => void;
+}
 
 // =============================================================================
 // CalendarType - this props use in internal
