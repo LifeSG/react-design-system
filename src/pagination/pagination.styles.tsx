@@ -61,6 +61,54 @@ export const NavigationItem = styled(IconButton)`
     }
 `;
 
+export const NavigationItemLeft = styled(IconButton)`
+    display: flex;
+    padding: 0.625rem;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.625rem;
+
+    color: ${Color.Primary};
+
+    svg {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+
+    &:disabled {
+        color: ${Color.Neutral[4]};
+        cursor: not-allowed;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-right: 0rem;
+    }
+`;
+
+export const NavigationItemRight = styled(IconButton)`
+    display: flex;
+    padding: 0.625rem;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.625rem;
+
+    color: ${Color.Primary};
+
+    svg {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+
+    &:disabled {
+        color: ${Color.Neutral[4]};
+        cursor: not-allowed;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-left: 0rem;
+    }
+`;
+
 export const PageItem = styled(Button.Default)<StyleProps>`
     background: ${(props) =>
         props.$selected ? Color.Primary : Color.Neutral[8]};

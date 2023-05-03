@@ -15,6 +15,8 @@ import {
     Label,
     LabelDivider,
     NavigationItem,
+    NavigationItemLeft,
+    NavigationItemRight,
     PageItem,
     PaginationList,
     PaginationMenu,
@@ -238,41 +240,41 @@ const Component = (
             <PaginationList>
                 <PaginationMenu>
                     {showFirstAndLastNav && (
-                        <NavigationItem
+                        <NavigationItemLeft
                             onClick={firstPaginationItem}
                             disabled={isFirstPage}
                             focusHighlight={false}
                             aria-label="First page"
                         >
                             <ChevronLineLeftIcon aria-hidden />
-                        </NavigationItem>
+                        </NavigationItemLeft>
                     )}
-                    <NavigationItem
+                    <NavigationItemLeft
                         onClick={prevPaginationItem}
                         disabled={isFirstPage}
                         focusHighlight={false}
                         aria-label="Previous Page"
                     >
                         <ChevronLeftIcon aria-hidden />
-                    </NavigationItem>
+                    </NavigationItemLeft>
                     {isMobile ? renderMobile() : paginationItemList}
-                    <NavigationItem
+                    <NavigationItemRight
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
                         focusHighlight={false}
                         aria-label="Next Page"
                     >
                         <ChevronRightIcon aria-hidden />
-                    </NavigationItem>
+                    </NavigationItemRight>
                     {showFirstAndLastNav && (
-                        <NavigationItem
+                        <NavigationItemRight
                             onClick={lastPaginationItem}
                             disabled={isLastPage}
                             focusHighlight={false}
                             aria-label="last page"
                         >
                             <ChevronLineRightIcon aria-hidden />
-                        </NavigationItem>
+                        </NavigationItemRight>
                     )}
                 </PaginationMenu>
             </PaginationList>
