@@ -13,7 +13,9 @@ import { Input } from "../input";
 interface StyleProps {
     $selected: boolean;
 }
-
+interface ButtonProps {
+    $position: string;
+}
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -61,12 +63,11 @@ export const NavigationItem = styled(IconButton)`
     }
 `;
 
-export const NavigationItemLeft = styled(IconButton)`
+export const NavigationButton = styled(IconButton)<ButtonProps>`
     display: flex;
     padding: 0.625rem;
     justify-content: center;
     align-items: center;
-    margin-right: 0.625rem;
 
     color: ${Color.Primary};
 
@@ -79,32 +80,22 @@ export const NavigationItemLeft = styled(IconButton)`
         color: ${Color.Neutral[4]};
         cursor: not-allowed;
     }
+    ${(props) => {
+        if (props.$position === "left") {
+            return css`
+                margin-right: 0.625rem;
+                margin-left: 0rem;
+            `;
+        } else {
+            return css`
+                margin-right: 0rem;
+                margin-left: 0.625rem;
+            `;
+        }
+    }}
 
     ${MediaQuery.MaxWidth.mobileS} {
         margin-right: 0rem;
-    }
-`;
-
-export const NavigationItemRight = styled(IconButton)`
-    display: flex;
-    padding: 0.625rem;
-    justify-content: center;
-    align-items: center;
-    margin-left: 0.625rem;
-
-    color: ${Color.Primary};
-
-    svg {
-        height: 1.25rem;
-        width: 1.25rem;
-    }
-
-    &:disabled {
-        color: ${Color.Neutral[4]};
-        cursor: not-allowed;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
         margin-left: 0rem;
     }
 `;
