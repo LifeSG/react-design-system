@@ -47,6 +47,7 @@ export const InputSection = styled.div<SectionStyleProps>`
     flex: 1;
     height: 100%;
     left: ${(props) => (props.$readOnly ? "-0.5rem" : "")};
+    pointer-events: ${(props) => (props.$readOnly ? "none;" : "")};
 
     ${(props) => {
         if (props.$variant === "start") {

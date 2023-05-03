@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { FocusType } from "../calendar";
 import { DateHelper, StringHelper } from "../util";
-import { ActionType } from "./dateInputReducer";
+import { ActionType } from "./date-input-reducer";
 import {
     DayInput,
     Divider,
@@ -11,6 +12,10 @@ import {
     VariantStyleProps,
     YearInput,
 } from "./stand-alone-input.style";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 type StartInputNames = "start-day" | "start-month" | "start-year";
 type EndInputNames = "end-day" | "end-month" | "end-year";
@@ -23,24 +28,36 @@ interface Props {
     names:
         | ["start-day", "start-month", "start-year"]
         | ["end-day", "end-month", "end-year"];
-    value?: string | undefined;
+    value: string | undefined;
+    confirmedValue: string | undefined;
     variant: VariantStyleProps;
     action: ActionType;
-    isActive: boolean;
+    focusType: FocusType;
+    isOpen: boolean;
+    isError: boolean;
+    withButton: boolean;
+    onTabBlur: () => void;
     onChange: (value: string) => void;
+    onChangeRaw: (value: string) => void;
     onFocus: (value: FieldType) => void;
 }
 
 export const StandAloneInput = ({
     action,
     disabled,
+    confirmedValue,
+    onTabBlur,
     onChange,
+    onChangeRaw,
     onFocus,
     readOnly,
     names,
     value,
     variant,
-    isActive,
+    focusType,
+    isOpen,
+    isError,
+    withButton,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -137,13 +154,24 @@ export const StandAloneInput = ({
     }, [monthValue]);
 
     useEffect(() => {
-        if (!value && !isActive) {
+        if (!value && !isOpen) {
             // reset once cancel or blur called
             setIsDirty(false);
         }
 
         formatDisplayValues(value);
-    }, [value, isActive]);
+    }, [value, isOpen]);
+
+    useEffect(() => {
+        // remove the cursor if it
+        // - field is 'none'
+        // - error happened from range value check
+        if (focusType === "none" || isError) {
+            dayInputRef.current.blur();
+            monthInputRef.current.blur();
+            yearInputRef.current.blur();
+        }
+    }, [focusType, isError]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -175,6 +203,23 @@ export const StandAloneInput = ({
             // About to blur the entire input
             setCurrentFocus("none");
         }
+
+        // close calendar if it keyboard 'Tab' leaving from
+        // - 'start-year' field in single calendar without button
+        // - 'end-year' field in range selection without button
+        if (
+            (variant === "single" &&
+                (event.target as any).name === "start-year" &&
+                event.code === "Tab" &&
+                !withButton) ||
+            (variant === "range" &&
+                (event.target as any).name === "end-year" &&
+                event.code === "Tab" &&
+                !withButton)
+        ) {
+            // close calendar and reset
+            onTabBlur();
+        }
     };
 
     const handleNodeFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -187,7 +232,8 @@ export const StandAloneInput = ({
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        // remove target.select during 'hover' action
+        // remove target.select during 'hover' and unhover action
+        // side effect triggered from auto focus feature useEffect above
         if (["hover", "unhover"].includes(action)) {
             setCurrentFocus(names[0]);
             dayInputRef.current.focus();
@@ -204,7 +250,6 @@ export const StandAloneInput = ({
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
-        const targetField = targetName.split("-")[1] as FieldName;
         const targetValue = StringHelper.padValue(event.target.value, true);
 
         switch (targetName) {
@@ -222,36 +267,23 @@ export const StandAloneInput = ({
         const isFullyFormedDate =
             dayValue.length && monthValue.length && yearValue.length === 4;
         const isDayTarget = targetName === names[0];
-        const clampedMonth = DateHelper.clampMonth(monthValue);
 
         if (isFullyFormedDate) {
-            const day = StringHelper.padValue(
-                DateHelper.clampDay(
-                    isDayTarget ? targetValue : dayValue,
-                    clampedMonth,
-                    yearValue
-                )
+            const value = `${yearValue}-${monthValue}-${dayValue}`;
+            const isValid = dayjs(value, "YYYY-MM-DD", true).isValid();
+
+            const dayTargetValue = isDayTarget ? targetValue : dayValue;
+
+            const { year, month, day } = dateValidation(
+                yearValue,
+                monthValue,
+                dayTargetValue,
+                isValid
             );
-            const month = StringHelper.padValue(clampedMonth);
 
             setDayValue(day);
             setMonthValue(month);
-
-            // prevent return back into onChangeHandler during action below
-            // 'default' trigger from 'unhover' side effect after 100ms
-            // 'unhover' || 'hover' during hovering and unhover
-            // 'confirmed' trigger after confirmed and go to month/year view
-            // 'reset' trigger after confirmed and click outside component
-            if (
-                ["default", "unhover", "hover", "confirmed", "reset"].includes(
-                    action
-                )
-            )
-                return;
-
-            // updated calendar once blur action is triggered
-            const changeValue = targetField == "day" ? day : month;
-            performOnChangeHandler(changeValue, targetName);
+            if (!isValid) setYearValue(year);
         }
     };
 
@@ -263,21 +295,18 @@ export const StandAloneInput = ({
         switch (targetName) {
             case names[0]:
                 setDayValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             case names[1]:
                 setMonthValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             case names[2]:
                 setYearValue(value);
+                performOnChangeHandler(value, targetName);
                 break;
             default:
                 break;
-        }
-
-        // update calendar via munual input value in last field
-        // for day and month those handle by handleBlur
-        if (value.length === 4 && targetName === names[2]) {
-            performOnChangeHandler(value, targetName);
         }
     };
 
@@ -327,10 +356,37 @@ export const StandAloneInput = ({
         }
     };
 
-    const performOnChangeHandler = (
-        changeValue: string,
-        name: Omit<FieldType, "none">
+    const dateValidation = (
+        _year: string,
+        _month: string,
+        _day: string,
+        isValid: boolean
     ) => {
+        let year = "",
+            month = "",
+            day = "";
+
+        if (isValid) {
+            const clampedMonth = DateHelper.clampMonth(_month);
+            month = StringHelper.padValue(clampedMonth);
+            day = StringHelper.padValue(
+                DateHelper.clampDay(_day, clampedMonth, _year)
+            );
+        } else if (!isValid && dayjs(confirmedValue).isValid()) {
+            const [yyyy, mm, dd] = confirmedValue.split("-") as any;
+            year = yyyy;
+            month = mm;
+            day = dd;
+        }
+
+        return {
+            year,
+            month,
+            day,
+        };
+    };
+
+    const performOnChangeHandler = (changeValue: string, name: FieldType) => {
         const field = name.split("-")[1] as FieldName;
         const values: Record<FieldName, string> = {
             year: yearValue,
@@ -341,20 +397,52 @@ export const StandAloneInput = ({
         // Update the specific field value
         values[field] = changeValue;
 
-        // i need to know manual input behavoir
-        if (
-            values["year"].length === 4 &&
-            values["month"].length >= 1 &&
-            values["day"].length >= 1
-        ) {
-            const returnValue = Object.values(values).join("-");
+        const returnValue = getFormattedValue(values);
+        const returnRawValue = Object.values(values).join("-");
 
-            onChange(returnValue);
-        }
+        onChange(returnValue);
+        onChangeRaw(returnRawValue);
     };
 
     const performOnFocusHandler = (field: FieldType) => {
         onFocus(field);
+    };
+
+    const getFormattedValue = (values: Record<FieldName, string>) => {
+        const valueArr = [values.year, values.month, values.day]; // eventual format YYYY-MM-DD
+
+        if (
+            values["year"].length === 4 &&
+            values["month"].length == 2 &&
+            values["day"].length == 2
+        ) {
+            let returnValue = "";
+
+            returnValue = valueArr.join("-");
+            const isValid = dayjs(returnValue, "YYYY-MM-DD", true).isValid();
+
+            /**
+             * transform invalid date to previous state value
+             */
+            if (!isValid) {
+                const date = dateValidation(
+                    values.year,
+                    values.month,
+                    values.day,
+                    isValid
+                );
+
+                returnValue = Object.values(date).join("-");
+            }
+
+            const isDateFormat = dayjs(returnValue).isValid();
+
+            return isDateFormat ? returnValue : INVALID_VALUE;
+        } else if (valueArr.every((value) => value === "")) {
+            return "";
+        } else {
+            return INVALID_VALUE;
+        }
     };
 
     // =============================================================================
@@ -365,7 +453,10 @@ export const StandAloneInput = ({
             return;
         }
 
-        // how can i reset this to no dirty after cancel
+        // remove placeholder
+        if (variant === "start" && focusType === "start") return;
+        if (variant === "range" && focusType === "end") return;
+
         switch (variant) {
             case "start":
             case "range":
@@ -410,6 +501,7 @@ export const StandAloneInput = ({
                     data-testid={`${names[0]}-input`}
                     aria-label={`${names[0]}-input`}
                     readOnly={readOnly}
+                    tabIndex={readOnly ? -1 : 0}
                     autoComplete={"off"}
                     placeholder={
                         currentFocus === names[0] && !readOnly ? "" : "DD"
@@ -432,6 +524,7 @@ export const StandAloneInput = ({
                     data-testid={`${names[1]}-input`}
                     aria-label={`${names[1]}-input`}
                     readOnly={readOnly}
+                    tabIndex={readOnly ? -1 : 0}
                     autoComplete={"off"}
                     placeholder={
                         currentFocus === names[1] && !readOnly ? "" : "MM"
@@ -454,6 +547,7 @@ export const StandAloneInput = ({
                     data-testid={`${names[2]}-input`}
                     aria-label={`${names[2]}-input`}
                     readOnly={readOnly}
+                    tabIndex={readOnly ? -1 : 0}
                     autoComplete={"off"}
                     placeholder={
                         currentFocus === names[2] && !readOnly ? "" : "YYYY"
@@ -464,3 +558,8 @@ export const StandAloneInput = ({
         </InputSection>
     );
 };
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+export const INVALID_VALUE = "Invalid Date" as const;

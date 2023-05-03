@@ -1,34 +1,110 @@
 import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+import { ChangeValueTypes, RawInputValues } from "../date-input";
+
+dayjs.extend(isBetween);
 
 export namespace DateInputHelper {
-    export const validate = (beginDate: string, afterDate: string): boolean => {
-        let pass = false;
-
-        if (!beginDate.length || !afterDate.length) return false;
-
-        if (dayjs(beginDate).isAfter(afterDate)) {
-            pass = false;
-
-            return pass;
+    export const validate = (
+        startDate: string | undefined,
+        endDate: string | undefined,
+        disabledDates?: string[] | undefined,
+        between?: string[] | undefined
+    ): boolean => {
+        if (!startDate || !endDate) {
+            return false;
         }
 
-        if (dayjs(afterDate).isBefore(beginDate)) {
-            pass = false;
-
-            return pass;
+        if (dayjs(startDate).isAfter(endDate)) {
+            return false;
         }
 
-        if (dayjs(beginDate).isBefore(afterDate)) {
-            pass = true;
+        if (
+            disabledDates &&
+            disabledDates.length &&
+            disabledDates.some((value) => [startDate, endDate].includes(value))
+        ) {
+            return false;
         }
 
-        if (dayjs(afterDate).isAfter(afterDate)) {
-            pass = true;
+        if (
+            between &&
+            between.length &&
+            ![startDate, endDate].every((selectedDate) =>
+                dayjs(selectedDate).isBetween(
+                    between[0],
+                    between[1],
+                    "day",
+                    "[]"
+                )
+            )
+        ) {
+            return false;
         }
 
-        return pass;
+        return true;
     };
 
-    export const sleep = (ms) =>
-        new Promise((resolve) => setTimeout(resolve, ms));
+    export const validateSingle = (
+        value: string,
+        disabledDates?: string[] | undefined,
+        between?: string[] | undefined
+    ) => {
+        if (value.length === 0) {
+            return false;
+        }
+
+        if (
+            disabledDates &&
+            disabledDates.length &&
+            disabledDates.some((disabledDate) => value === disabledDate)
+        ) {
+            return false;
+        }
+
+        if (
+            between &&
+            between.length &&
+            !dayjs(value).isBetween(between[0], between[1], "day", "[]")
+        ) {
+            return false;
+        }
+
+        return true;
+    };
+
+    export const getFormattedRawValue = (
+        values: ChangeValueTypes
+    ): RawInputValues => {
+        const returnValue = Object.keys(values).reduce((acc, key) => {
+            if (acc[key] == null) acc[key] = {};
+
+            if (!values[key]) {
+                acc[key] = { year: "", month: "", day: "" };
+
+                return acc;
+            }
+
+            const [year, month, day] = values[key].split("-");
+
+            acc[key] = {
+                year,
+                month,
+                day,
+            };
+
+            return acc;
+        }, {});
+
+        return returnValue;
+    };
+
+    export const sleep = (ms: number, controller: AbortController) =>
+        new Promise((resolve) => {
+            const timeoutId = setTimeout(resolve, ms);
+
+            controller.signal.addEventListener("abort", () => {
+                clearTimeout(timeoutId);
+            });
+        });
 }

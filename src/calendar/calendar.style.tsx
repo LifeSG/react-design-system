@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import { CalendarType } from "./types";
 import { IconButton } from "../icon-button";
 import { TextStyleHelper } from "../text";
+import { Button } from "../button";
 
 interface ContainerStyleProps {
     $type: CalendarType;
@@ -227,37 +228,12 @@ export const ActionButtonSection = styled.div`
     margin-top: 1.5rem;
 `;
 
-const BaseActionButton = styled.button`
-    ${TextStyleHelper.getTextStyle("H5", "semibold")};
+export const CancelButton = styled(Button.Small)`
     flex: 1;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    height: 2.5rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    border: 0;
 `;
 
-export const CancelButton = styled(BaseActionButton)`
-    background-color: ${Color.Neutral[8]};
-    color: ${Color.Primary};
-    border: 1px solid ${Color.Neutral[5]};
-
-    :focus,
-    :focus-within {
-        background-color: ${Color.Neutral[8]};
-    }
-`;
-
-export const DoneButton = styled(BaseActionButton)`
-    background-color: ${Color.Primary};
-    color: ${Color.Neutral[8]};
-
-    :focus,
-    :focus-within {
-        background-color: ${Color.Primary};
-    }
+export const DoneButton = styled(Button.Small)`
+    flex: 1;
 `;
 
 export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`

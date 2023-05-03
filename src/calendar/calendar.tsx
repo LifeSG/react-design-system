@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import React, { useEffect, useImperativeHandle, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { CalendarHelper } from "../util/calendar-helper";
 import { CalendarDay } from "./calendar-day";
 import { CalendarMonth } from "./calendar-month";
@@ -33,6 +33,7 @@ export const Component = (
         onSelect,
         onHover,
         onWithButton,
+        actionComponent,
         isOpen,
         value,
         endValue,
@@ -44,7 +45,7 @@ export const Component = (
         type = "standalone",
         ...otherProps
     }: CalendarProps,
-    ref: CalendarRef
+    ref: React.ForwardedRef<CalendarRef>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -53,8 +54,10 @@ export const Component = (
     const [currentView, setCurrentView] = useState<View>("default");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
-
     const [isNewSelection, setIsNewSelection] = useState<boolean>(true);
+
+    const doneButtonRef = useRef<HTMLButtonElement>(null);
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // HOOKS
@@ -71,6 +74,7 @@ export const Component = (
         },
         []
     );
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -78,9 +82,7 @@ export const Component = (
         // open with 'confirmed' value for day calendar in first mounted
         if (!isOpen) return;
 
-        let initCalendar = currentFocus === "end" ? endValue : value;
-
-        if (!initCalendar.length) initCalendar = undefined;
+        const initCalendar = currentFocus === "end" ? endValue : value;
 
         setCalendarDate(dayjs(initCalendar));
         setCurrentView("default");
@@ -91,14 +93,9 @@ export const Component = (
     }, [isOpen]);
 
     useEffect(() => {
-        if (type !== "standalone") return;
-
-        setCalendarDate(dayjs(value));
-    }, [type]);
-
-    useEffect(() => {
         if (!currentType) return;
 
+        // go back selected day calendar
         handleSelectedDayView();
     }, [currentType]);
 
@@ -110,6 +107,10 @@ export const Component = (
             return;
         }
 
+        if (actionComponent === "input") {
+            setCalendarDate(dayjs(value));
+        }
+
         setSelectedStartDate(value);
     }, [value]);
 
@@ -119,6 +120,10 @@ export const Component = (
         if (!endValue) {
             setSelectedEndDate(undefined);
             return;
+        }
+
+        if (actionComponent === "input") {
+            setCalendarDate(dayjs(endValue));
         }
 
         setSelectedEndDate(endValue);
@@ -155,6 +160,29 @@ export const Component = (
         }
     };
 
+    function handleKeyDown(
+        event: React.KeyboardEvent<HTMLButtonElement>,
+        isDoneDisabled: boolean
+    ) {
+        const target = event.target as HTMLButtonElement;
+
+        if (
+            cancelButtonRef.current.contains(target) &&
+            event.code === "Tab" &&
+            isDoneDisabled
+        ) {
+            // 'Tab' away from cancel button if done button is disabled
+            performOnWithButtonHandler("reset");
+        } else if (
+            doneButtonRef.current.contains(target) &&
+            event.code === "Tab" &&
+            !isDoneDisabled
+        ) {
+            // 'Tab' away from done button if done button is active
+            performOnWithButtonHandler("reset");
+        }
+    }
+
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
 
@@ -169,7 +197,8 @@ export const Component = (
         performOnWithButtonHandler("reset");
     };
 
-    const handleDoneButton = () => {
+    const handleDoneButton = (isDisabled: boolean) => {
+        if (isDisabled) return;
         // close calendar and 'confirmed' the value
         performOnWithButtonHandler("confirmed");
     };
@@ -179,9 +208,8 @@ export const Component = (
     };
 
     const handleSelectedDayView = () => {
-        if (currentType !== "transition") return;
+        if (currentType !== "restore") return;
 
-        // handle day calendar view after reset inside month/year calendar
         switch (currentFocus) {
             case "start":
                 setCalendarDate(dayjs(value));
@@ -337,7 +365,7 @@ export const Component = (
                         currentFocus={currentFocus}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
-                        variant={variant}
+                        between={between}
                         isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                     />
@@ -350,7 +378,7 @@ export const Component = (
                         currentFocus={currentFocus}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
-                        variant={variant}
+                        between={between}
                         isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                     />
@@ -398,10 +426,38 @@ export const Component = (
     const renderCancelDoneButton = () => {
         if (type === "standalone" || !withButton) return;
 
+        let isDisabled = true;
+        const isDayView = ["default"].includes(currentView);
+
+        switch (variant) {
+            case "single":
+                isDisabled = selectedStartDate ? false : true;
+                break;
+            case "range":
+                isDisabled = !selectedStartDate || !selectedEndDate;
+                break;
+        }
+
+        const disabled = !isDayView ? false : isDisabled;
+
         return (
             <ActionButtonSection>
-                <CancelButton onClick={handleCancelButton}>Cancel</CancelButton>
-                <DoneButton onClick={handleDoneButton}>Done</DoneButton>
+                <CancelButton
+                    styleType="light"
+                    ref={cancelButtonRef}
+                    onClick={handleCancelButton}
+                    onKeyDown={(event) => handleKeyDown(event, disabled)}
+                >
+                    Cancel
+                </CancelButton>
+                <DoneButton
+                    ref={doneButtonRef}
+                    onClick={() => handleDoneButton(disabled)}
+                    onKeyDown={(event) => handleKeyDown(event, disabled)}
+                    disabled={disabled}
+                >
+                    Done
+                </DoneButton>
             </ActionButtonSection>
         );
     };

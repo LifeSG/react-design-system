@@ -33,6 +33,7 @@ export const Container = styled.div<ContainerStyleProps>`
     border-radius: 0.25rem;
     background: ${Color.Neutral[8]};
     height: 3rem;
+    width: 100%;
     min-width: 20.75rem;
     padding: 0.1rem 1rem 0;
 
@@ -56,8 +57,7 @@ export const Container = styled.div<ContainerStyleProps>`
         ${(props) => {
             if (props.$variant === "range") {
                 return css`
-                    min-width: unset;
-                    max-width: 23.25rem;
+                    width: 100%;
                     height: 5.125rem;
 
                     ${ArrowRangeIcon} {
@@ -68,7 +68,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 `;
             } else if (props.$variant === "single") {
                 return css`
-                    min-width: unset;
+                    width: 100%;
                 `;
             }
         }}

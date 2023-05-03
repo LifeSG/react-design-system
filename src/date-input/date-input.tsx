@@ -1,20 +1,29 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import { useEventListener } from "../hook/useEventListener";
-import { Calendar, CalendarAction, FocusType, View } from "../calendar";
+import {
+    Calendar,
+    CalendarAction,
+    CalendarRef,
+    FocusType,
+    View,
+} from "../calendar";
 import {
     ArrowRangeIcon,
     ArrowRight,
     Container,
     IndicateBar,
 } from "./date-input.style";
-import { FieldType, StandAloneInput } from "./stand-alone-input";
-import { ChangeValueTypes, DateInputProps, RawInputValues } from "./types";
+import { FieldType, INVALID_VALUE, StandAloneInput } from "./stand-alone-input";
+import { ChangeValueTypes, DateInputProps } from "./types";
 import {
     ActionType,
     INITIAL_INPUT_VALUES,
+    ReducerState,
     dateInputReducer,
-} from "./dateInputReducer";
+} from "./date-input-reducer";
 import { DateInputHelper } from "../util/date-input-helper";
+import { useEventListener } from "../util/use-event-listener";
+import { useMediaQuery } from "react-responsive";
+import { MediaWidths } from "../spec/media-spec";
 
 interface CurrentFocusTypes {
     field: FieldType;
@@ -22,7 +31,7 @@ interface CurrentFocusTypes {
     count: number;
 }
 
-type ChangeAction = "calendar" | "input";
+export type ActionComponent = "calendar" | "input";
 
 export const DateInput = ({
     between,
@@ -35,7 +44,7 @@ export const DateInput = ({
     onBlur,
     onChangeRaw,
     onBlurRaw,
-    withButton = true,
+    withButton: _withButton = true,
     readOnly,
     id,
     variant = "single",
@@ -45,15 +54,24 @@ export const DateInput = ({
     // CONST, STATE, REF
     // =============================================================================
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
-    const [changeAction, setChangeAction] = useState<ChangeAction>("calendar");
+    const [actionComponent, setActionComponent] =
+        useState<ActionComponent>("calendar");
     const [calendarView, setCalendarView] = useState<View>("default");
     const [currentElement, setCurrentElement] = useState<CurrentFocusTypes>({
         field: "none",
         type: "none",
         count: 0,
     });
+    const [isError, setIsError] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
+    const calendarRef = useRef<CalendarRef>();
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
+
+    // show button if it is mobile view
+    const withButton = _withButton || isMobile;
 
     // =============================================================================
     // HOOKS
@@ -69,105 +87,116 @@ export const DateInput = ({
     );
 
     /**
-     * Add handler function as dependencies of useEffect
-     * Allows our effect below to always get latest state value
+     * Allows effect below to always get latest state value
      * Reference:
      * https://stackoverflow.com/questions/65125665/new-event-doesnt-have-latest-state-value-updated-by-previous-event
      */
-    useEventListener("mousedown", handleInitEventListener);
 
-    // =============================================================================
-    // REF FUNCTIONS
-    // =============================================================================
-    const calendarRef = useRef(null);
+    useEventListener("keydown", handleKeyDown, nodeRef.current);
+    useEventListener("mousedown", handleMouseDown, document);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
+        // inital mounted value
         dispatchStart({ type: "confirmed", value: value });
 
         if (variant === "range")
             dispatchEnd({ type: "confirmed", value: endValue });
+    }, []);
+
+    useEffect(() => {
+        dispatchStart({ type: "selected", value: value });
+
+        if (variant === "range")
+            dispatchEnd({ type: "selected", value: endValue });
     }, [value, endValue]);
 
     useEffect(() => {
+        const controller = new AbortController();
+
         // reset back 'default' action from unhover
         if ([startDate.currentType, endDate.currentType].includes("unhover")) {
+            const handleDefaultReducer = async () => {
+                await DateInputHelper.sleep(250, controller);
+                handleReducer("default");
+            };
+
             handleDefaultReducer();
         }
-    }, [startDate, endDate]);
+
+        return () => {
+            controller.abort();
+        };
+    }, [startDate.currentType, endDate.currentType]);
+
+    useEffect(() => {
+        if (variant === "single") return;
+        if (currentElement.type === "none") return;
+
+        // update count via manual input
+        setCurrentElement((prev) => ({
+            ...currentElement,
+            count: prev.count + 1,
+        }));
+    }, [currentElement.type]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleMouseDown = (event: MouseEvent) => {
+    function handleKeyDown(event: KeyboardEvent) {
+        if (event.code === "Escape") {
+            handleCalendarAction("reset");
+        }
+
+        if (event.code === "Enter" && variant === "range" && !withButton) {
+            const hasValue = [startDate.selected, endDate.selected].every(
+                Boolean
+            );
+
+            if (!hasValue) {
+                handleCalendarAction("reset");
+            } else {
+                handleCalendarAction("confirmed");
+            }
+        }
+    }
+
+    function handleMouseDown(event: MouseEvent) {
         if (disabled || readOnly) return;
 
         const target = event.target as Element;
         if (nodeRef.current && !nodeRef.current.contains(target)) {
             // outside click
-            handleCalendarAction("reset");
-            handleBlur();
+            handleBlurContainer();
         }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.code === "Escape") {
-            handleCalendarAction("reset");
-            handleBlur();
-        }
-    };
-
-    function handleInitEventListener() {
-        document.addEventListener("mousedown", handleMouseDown);
-
-        if (nodeRef.current) {
-            nodeRef.current.addEventListener("keydown", handleKeyDown);
-        }
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDown);
-
-            if (nodeRef.current) {
-                nodeRef.current.removeEventListener("keydown", handleKeyDown);
-            }
-        };
     }
 
-    const handleChange = (value: string, from: ChangeAction) => {
-        let isValid = true;
+    const handleChange = (value: string, from: ActionComponent) => {
+        if (value === INVALID_VALUE || value === "") {
+            performOnChangeHandler(value, true);
 
-        if (variant === "range") {
-            switch (currentElement.type) {
-                case "start":
-                    isValid = DateInputHelper.validate(value, endDate.selected);
-                    break;
-                case "end":
-                    isValid = DateInputHelper.validate(
-                        startDate.selected,
-                        value
-                    );
-                    break;
-                default:
-                    isValid = false;
+            // update state/calendar
+            if (value === "") {
+                handleReducer("selected", value);
             }
+
+            return;
+        }
+        const isValid = handleValidation(value);
+
+        if (["month-options", "year-options"].includes(calendarView)) {
+            handleReducer("transition", value);
+        } else {
+            // day calendar view
+            handleReducer("selected", value);
         }
 
-        // call another reducer to reset other selected value
-        if (!isValid) {
-            setCurrentElement({ ...currentElement, count: 0 });
-            handleReducer("invalid");
-        }
-
-        setChangeAction(from);
-        handleReducer("selected", value);
-
-        handleFocusElement();
-    };
-
-    const handleBlur = () => {
-        performOnBlurHandler();
+        setIsError(!isValid);
+        setActionComponent(from);
+        handleFocusElement(isValid, from);
+        performOnChangeHandler(value, isValid);
     };
 
     const handleFocus = (value: FieldType) => {
@@ -186,42 +215,25 @@ export const DateInput = ({
         handleReducer("hover", value);
     };
 
-    const handleCalendarAction = (action: CalendarAction) => {
+    const handleCalendarAction = (buttonAction: CalendarAction) => {
         if (["month-options", "year-options"].includes(calendarView)) {
-            switch (action) {
-                case "reset":
-                    handleReducer("transition");
-                    calendarRef.current.defaultView();
-                    break;
-                case "confirmed":
-                    calendarRef.current.defaultView();
+            // handle button in month/year calendar view
+            handleMonthYearCalendarAction(buttonAction);
 
-                    setCurrentElement((prev): CurrentFocusTypes => {
-                        const otherType =
-                            currentElement.type === "start" ? "end" : "start";
-                        const otherField = `${otherType}-day` as FieldType;
-
-                        return {
-                            ...prev,
-                            field: otherField,
-                            type: otherType,
-                            count: 1,
-                        };
-                    });
-
-                    break;
-            }
             return;
         }
 
-        // default view (day calendar)
-        setCalendarOpen(false);
-
-        switch (action) {
+        // handle button in day calendar view
+        switch (buttonAction) {
             case "reset":
                 handleReducer("reset");
                 break;
             case "confirmed":
+                if (isError) {
+                    handleReducer("reset");
+                    break;
+                }
+
                 handleReducer("confirmed");
                 break;
         }
@@ -231,19 +243,29 @@ export const DateInput = ({
             type: "none",
             count: 0,
         });
+
+        setCalendarOpen(false);
     };
 
-    const handleContainerBlur = async (event: KeyboardEvent | any) => {
-        if (withButton) return;
+    const handleMonthYearCalendarAction = (action: CalendarAction) => {
+        const { field: otherField, type: otherType } = getAnotherElement();
 
-        const name = (event.target as any).name as Omit<FieldType, "none">;
+        switch (action) {
+            case "reset":
+                handleReducer("restore");
+                calendarRef.current.defaultView();
+                break;
+            case "confirmed":
+                calendarRef.current.defaultView();
 
-        if (variant === "single" && name === "start-year") {
-            handleReducer("confirmed");
-        }
-
-        if (variant === "range" && name === "end-year") {
-            handleReducer("confirmed");
+                setCurrentElement((prev) => {
+                    return {
+                        field: otherField,
+                        type: otherType,
+                        count: prev.count + 1,
+                    };
+                });
+                break;
         }
     };
 
@@ -254,25 +276,104 @@ export const DateInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnChangeHandler = (values: ChangeValueTypes) => {
+    const performOnChangeHandler = (
+        value: string,
+        isOtherValueValid: boolean
+    ) => {
+        const returnValue = getFormattedValue(value, isOtherValueValid);
+
         if (onChange) {
-            onChange(values);
-        }
-
-        if (onChangeRaw) {
-            const rawInputValues = getFormattedRawValue(values);
-
-            onChangeRaw(rawInputValues);
+            onChange(returnValue);
         }
     };
 
-    const performOnBlurHandler = () => {
-        // buggy in getFormattedValue fn return invalid
+    const performOnChangeRawHandler = (value: string) => {
+        if (onChangeRaw) {
+            const returnValue = getFormattedValue(value, true);
+
+            const returnRawValue =
+                DateInputHelper.getFormattedRawValue(returnValue);
+
+            onChangeRaw(returnRawValue);
+        }
+    };
+
+    const performOnBlurHandler = (
+        startDate: ReducerState,
+        endDate: ReducerState
+    ) => {
+        const returnValue = {
+            start: startDate.confirmed,
+            end: endDate.confirmed,
+        };
+
+        if (variant === "single") delete returnValue.end;
+
         if (onBlur) {
+            onBlur(returnValue);
         }
 
         if (onBlurRaw) {
+            const returnRawValue =
+                DateInputHelper.getFormattedRawValue(returnValue);
+
+            onBlurRaw(returnRawValue);
         }
+    };
+
+    const handleBlurContainer = () => {
+        handleReducer("reset");
+
+        setCurrentElement({
+            field: "none",
+            type: "none",
+            count: 0,
+        });
+
+        performOnBlurHandler(startDate, endDate);
+        setCalendarOpen(false);
+        setIsError(false);
+    };
+
+    const handleValidation = (value: string): boolean => {
+        let isValid = true;
+
+        const values = {
+            start: startDate.selected,
+            end: endDate.selected,
+        };
+
+        // Update the specific field value
+        values[currentElement.type] = value;
+
+        if (variant === "range") {
+            switch (currentElement.type) {
+                case "start":
+                    isValid = DateInputHelper.validate(
+                        value,
+                        values.end,
+                        disabledDates,
+                        between
+                    );
+                    break;
+                case "end":
+                    isValid = DateInputHelper.validate(
+                        values.start,
+                        value,
+                        disabledDates,
+                        between
+                    );
+                    break;
+            }
+        } else if (variant === "single") {
+            isValid = DateInputHelper.validateSingle(
+                value,
+                disabledDates,
+                between
+            );
+        }
+
+        return isValid;
     };
 
     const handleReducer = (type: ActionType, value?: string) => {
@@ -280,30 +381,31 @@ export const DateInput = ({
 
         let isValid = true;
 
-        // 'type' for closed calendar
+        // closed calendar action
         if (["confirmed", "reset"].includes(type)) {
-            field = "none";
+            field = "none"; // set to default
 
-            if (variant === "range" && withButton) {
+            // validation
+            if (withButton && variant === "range") {
                 isValid = DateInputHelper.validate(
                     startDate.selected,
-                    endDate.selected
+                    endDate.selected,
+                    disabledDates,
+                    between
                 );
             }
         }
 
         // error status, reset both
         if (!isValid) {
-            dispatchStart({ type: "invalid" });
-            dispatchEnd({ type: "invalid" });
-
-            return;
+            dispatchStart({ type: "reset" });
+            dispatchEnd({ type: "reset" });
         }
 
-        // handle month/year view cancel button
-        if (type === "transition") {
-            dispatchStart({ type: "transition" });
-            dispatchEnd({ type: "transition" });
+        if (type === "restore") {
+            // restore both value when click month/year view cancel button
+            dispatchStart({ type });
+            dispatchEnd({ type });
 
             return;
         }
@@ -342,15 +444,34 @@ export const DateInput = ({
         }
     };
 
-    const handleFocusElement = () => {
-        // stop switch if detect manual input
-        if (changeAction === "input") return;
+    const handleFocusElement = (isValid: boolean, from: ActionComponent) => {
+        // input invalid value
+        if (variant === "range" && !isValid) {
+            const { field: otherField, type: otherType } = getAnotherElement();
 
-        // stop switch if detech selected in month/year view
+            setCurrentElement({
+                field: otherField,
+                type: otherType,
+                count: 1,
+            });
+
+            // blank other element input value
+            handleReducer("invalid");
+        }
+
+        // stop switch if detect selected in calendar month/year view
         if (["month-options", "year-options"].includes(calendarView)) return;
 
-        // closed calendar in without buttons mode for single selection
-        if (!withButton && variant === "single") {
+        // closed calendar in without button calendar if it
+        // - after selection in single value calendar
+        // - both valid value in range selection
+        if (
+            (!withButton && variant === "single" && isValid) ||
+            (!withButton &&
+                variant === "range" &&
+                currentElement.count >= 2 &&
+                isValid)
+        ) {
             setCalendarOpen(false);
             handleReducer("confirmed");
             setCurrentElement({
@@ -358,83 +479,81 @@ export const DateInput = ({
                 type: "none",
                 count: 0,
             });
-
             return;
         }
 
-        if (!withButton && currentElement.count >= 1) {
-            setCalendarOpen(false);
-            handleReducer("confirmed");
-            setCurrentElement({
-                field: "none",
-                type: "none",
-                count: 0,
-            });
+        // stop to switch element in with button
+        if (currentElement.count >= 2) return;
 
-            return;
+        // calendar selection swap to another element
+        if (from === "calendar" && variant === "range") {
+            const { field: otherField, type: otherType } = getAnotherElement();
+
+            setCurrentElement((prev) => ({
+                field: otherField,
+                type: otherType,
+                count: prev.count + 1,
+            }));
         }
+    };
 
-        // handle single calendar
-        if (variant === "single" && withButton) return;
-
-        // stop to switch element
-        if (currentElement.count >= 1) return;
-
+    const getAnotherElement = (): Omit<CurrentFocusTypes, "count"> => {
         const currentFocus = currentElement.type as FocusType;
         const otherType = currentFocus === "start" ? "end" : "start";
         const otherField = `${otherType}-day` as FieldType;
 
-        setCurrentElement((prev) => ({
-            ...prev,
+        return {
             field: otherField,
             type: otherType,
-            count: prev.count + 1,
-        }));
+        };
     };
 
-    // const getFormattedValue = (values: ChangeValueTypes) => {};
+    /**
+     * Transform the output value for the user
+     * @param isValid is to indicate another value status in range varaint
+     * As example: both value been selected and selected a new startDate after endDate,
+     * endDate will become INVALID
+     */
+    const getFormattedValue = (value: string, isValid: boolean) => {
+        const focusType = currentElement.type as FocusType;
 
-    const getFormattedRawValue = (values: ChangeValueTypes): RawInputValues => {
-        const keys = Object.keys(values);
+        let values: ChangeValueTypes = {};
 
-        const result = keys.reduce((acc, key) => {
-            if (acc[key] == null) acc[key] = {};
+        if (variant === "range") {
+            switch (focusType) {
+                case "start":
+                    values = {
+                        start: value,
+                        end: isValid ? endDate.selected : INVALID_VALUE,
+                    };
 
-            if (!values[key]) {
-                acc[key] = { year: "", month: "", day: "" };
-
-                return acc;
+                    break;
+                case "end":
+                    values = {
+                        start: isValid ? startDate.selected : INVALID_VALUE,
+                        end: value,
+                    };
+                    break;
             }
-
-            const [year, month, day] = values[key].split("-");
-
-            acc[key] = {
-                year,
-                month,
-                day,
+        } else if (variant === "single") {
+            values = {
+                start: isValid ? value : INVALID_VALUE,
             };
+        }
 
-            return acc;
-        }, {});
-
-        return result;
-    };
-
-    const handleDefaultReducer = async () => {
-        await DateInputHelper.sleep(100);
-        handleReducer("default");
+        return values;
     };
 
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-    const RenderIndicatedBar = () => {
+    const renderIndicateBar = () => {
         if (variant === "single" || disabled || readOnly) return;
 
         return <IndicateBar $position={currentElement.type || "none"} />;
     };
 
-    const RenderRangeInput = () => {
+    const renderRangeInput = () => {
         if (variant === "range") {
             return (
                 <>
@@ -443,14 +562,22 @@ export const DateInput = ({
                     </ArrowRangeIcon>
                     <StandAloneInput
                         disabled={disabled}
-                        onChange={(event) => handleChange(event, "input")}
+                        onChange={(value) => handleChange(value, "input")}
+                        onChangeRaw={(value) =>
+                            performOnChangeRawHandler(value)
+                        }
                         onFocus={handleFocus}
+                        onTabBlur={handleBlurContainer}
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
                         value={endDate.input}
+                        confirmedValue={endDate.confirmed}
                         variant={variant}
                         action={endDate.currentType}
-                        isActive={calendarOpen}
+                        focusType={currentElement.type}
+                        isOpen={calendarOpen}
+                        isError={isError}
+                        withButton={withButton}
                     />
                 </>
             );
@@ -466,28 +593,34 @@ export const DateInput = ({
             data-testid={otherProps["data-testid"]}
             $readOnly={readOnly}
             $variant={variant}
-            onBlur={handleContainerBlur}
             {...otherProps}
         >
             <StandAloneInput
                 disabled={disabled}
-                onChange={(event) => handleChange(event, "input")}
+                onChange={(value) => handleChange(value, "input")}
+                onChangeRaw={(value) => performOnChangeRawHandler(value)}
                 onFocus={handleFocus}
+                onTabBlur={handleBlurContainer}
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
                 value={startDate.input}
+                confirmedValue={startDate.confirmed}
                 variant={variant === "range" ? "start" : "single"}
                 action={startDate.currentType}
-                isActive={calendarOpen}
+                focusType={currentElement.type}
+                isOpen={calendarOpen}
+                isError={isError}
+                withButton={withButton}
             />
-            {RenderRangeInput()}
-            {RenderIndicatedBar()}
+            {renderRangeInput()}
+            {renderIndicateBar()}
             <Calendar
                 ref={calendarRef}
                 type="input"
                 disabledDates={disabledDates}
                 isOpen={calendarOpen}
                 withButton={withButton}
+                actionComponent={actionComponent}
                 currentFocus={currentElement.type}
                 currentType={
                     currentElement.type === "start"
@@ -500,14 +633,9 @@ export const DateInput = ({
                 variant={variant}
                 onCalendarView={handleCalendarView}
                 onHover={handleHoverDayCell}
-                onSelect={(event) => handleChange(event, "calendar")}
+                onSelect={(value) => handleChange(value, "calendar")}
                 onWithButton={handleCalendarAction}
             />
         </Container>
     );
 };
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const INVALID_VALUE = "Invalid Date";

@@ -6,7 +6,7 @@ import { CalendarProps, FocusType } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
-interface Props extends Pick<CalendarProps, "type" | "variant"> {
+interface Props extends Pick<CalendarProps, "type" | "between"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -22,7 +22,7 @@ export const CalendarMonth = ({
     selectedEndDate,
     type,
     isNewSelection,
-    variant: inputVariant,
+    between,
     onSelect,
 }: Props) => {
     // =============================================================================
@@ -52,19 +52,31 @@ export const CalendarMonth = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const isDisabled = (day: Dayjs): boolean => {
+        const isOutsideBetweenRange =
+            between && !day.isBetween(between[0], between[1], "month", "[]");
+
+        const isStartAfterEnd =
+            currentFocus === "start" &&
+            selectedEndDate &&
+            day.isAfter(selectedEndDate, "month") &&
+            isNewSelection;
+
+        const isEndBeforeStart =
+            currentFocus === "end" &&
+            selectedStartDate &&
+            day.isBefore(selectedStartDate, "month") &&
+            isNewSelection;
+
+        return isOutsideBetweenRange || isStartAfterEnd || isEndBeforeStart;
+    };
+
     const generateMonthStatus = (date: Dayjs) => {
         const month = date.format("MMMM");
         const value = date.format("YYYY-MM-DD");
-        let variant: MonthVariant = "default";
-        let disabled = false;
+        const disabled = isDisabled(date);
 
-        if (inputVariant === "range" && isNewSelection) {
-            if (currentFocus === "start" && selectedEndDate) {
-                disabled = date.isAfter(selectedEndDate, "month");
-            } else if (currentFocus === "end" && selectedStartDate) {
-                disabled = date.isBefore(selectedStartDate, "month");
-            }
-        }
+        let variant: MonthVariant = "default";
 
         variant =
             selectedDate &&
