@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
     Container,
     Input,
@@ -28,7 +29,7 @@ export const Toggle = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selected, setSelected] = useState<boolean>(checked);
-    const [uuid] = useState(() => crypto.randomUUID());
+    const [uuid] = useState(() => uuidv4());
     const generatedInputId = id ? `${id}-input` : uuid;
 
     const inputRef = useRef<HTMLInputElement>();
