@@ -107,10 +107,13 @@ export const DateInput = ({
     }, []);
 
     useEffect(() => {
-        dispatchStart({ type: "selected", value: value });
+        const _value = value !== INVALID_VALUE ? value : "";
+        dispatchStart({ type: "selected", value: _value });
 
-        if (variant === "range")
-            dispatchEnd({ type: "selected", value: endValue });
+        if (variant === "range") {
+            const _endValue = endValue !== INVALID_VALUE ? endValue : "";
+            dispatchEnd({ type: "selected", value: _endValue });
+        }
     }, [value, endValue]);
 
     useEffect(() => {
