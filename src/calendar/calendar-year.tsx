@@ -33,11 +33,8 @@ export const CalendarYear = ({
     // CONST, STATE, REF
     // =============================================================================
     const [years, setYears] = useState<Dayjs[]>([]);
-    const selectedDate = !currentFocus
-        ? selectedStartDate
-        : currentFocus === "end"
-        ? selectedEndDate
-        : selectedStartDate;
+    const selectedDate =
+        currentFocus === "end" ? selectedEndDate : selectedStartDate;
 
     // =============================================================================
     // EFFECTS
@@ -81,17 +78,14 @@ export const CalendarYear = ({
         const otherDecadeIndexes = [0, 11];
 
         const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
-        const fullDate = date.format("YYYY-MM-DD");
         const year = date.year();
         const disabled = isDisabled(date);
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
-            : selectedDate &&
-              selectedDate.length &&
-              dayjs(selectedDate).isSame(fullDate, "year")
+            : selectedDate && dayjs(selectedDate).isSame(date)
             ? "selected-year"
-            : dayjs().isSame(fullDate, "year")
+            : dayjs().isSame(date)
             ? "current-year"
             : "default";
 
@@ -103,7 +97,7 @@ export const CalendarYear = ({
     };
 
     const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(calendarDate);
+        const years = CalendarHelper.generateDecadeOfYears(dayjs(selectedDate));
         setYears(years);
     };
 

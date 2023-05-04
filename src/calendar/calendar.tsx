@@ -64,7 +64,7 @@ export const Component = (
     // =============================================================================
     useImperativeHandle(
         ref,
-        (): any => {
+        () => {
             return {
                 defaultView() {
                     setCurrentView("default");
@@ -468,7 +468,7 @@ export const Component = (
         return <Container $type={type} tabIndex={-1} />;
 
     return (
-        <Container $type={type} $isOpen={isOpen} {...otherProps}>
+        <Container $type={type} $isOpen={isOpen} {...otherProps} tabIndex={-1}>
             <SideArrowButton
                 $direction="left"
                 $type={type}

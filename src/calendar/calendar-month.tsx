@@ -38,7 +38,7 @@ export const CalendarMonth = ({
     // =============================================================================
     useEffect(() => {
         generateMonths();
-    }, [calendarDate]);
+    }, [calendarDate, selectedDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -73,17 +73,12 @@ export const CalendarMonth = ({
 
     const generateMonthStatus = (date: Dayjs) => {
         const month = date.format("MMMM");
-        const value = date.format("YYYY-MM-DD");
         const disabled = isDisabled(date);
 
-        let variant: MonthVariant = "default";
-
-        variant =
-            selectedDate &&
-            selectedDate.length &&
-            dayjs(selectedDate).isSame(value, "month")
+        const variant: MonthVariant =
+            selectedDate && dayjs(selectedDate).isSame(date)
                 ? "selected-month"
-                : dayjs().isSame(value, "month")
+                : dayjs().isSame(date)
                 ? "current-month"
                 : "default";
 
@@ -95,7 +90,7 @@ export const CalendarMonth = ({
     };
 
     const generateMonths = () => {
-        const months = CalendarHelper.generateMonths(calendarDate);
+        const months = CalendarHelper.generateMonths(dayjs(selectedDate));
         setMonths(months);
     };
 
@@ -108,6 +103,7 @@ export const CalendarMonth = ({
         <Wrapper $type={type}>
             {months.map((date) => {
                 const { disabled, variant, month } = generateMonthStatus(date);
+
                 return (
                     <MonthCell
                         key={month}
