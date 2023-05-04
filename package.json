@@ -94,7 +94,8 @@
         "rollup-plugin-typescript2": "^0.31.2",
         "style-loader": "^2.0.0",
         "styled-components": "^5.3.5",
-        "typescript": "^4.8.2"
+        "typescript": "^4.8.2",
+        "uuid": "^9.0.0"
     },
     "peerDependencies": {
         "react": "^17.0.2 || ^18.0.0",
