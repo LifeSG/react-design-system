@@ -8,9 +8,7 @@ export const useEventListener = <K extends keyof WindowEventMap>(
     element: Target = window
 ) => {
     // Create a ref that stores handler
-    const savedHandler = useRef() as React.MutableRefObject<
-        (event: WindowEventMap[K]) => void
-    >;
+    const savedHandler = useRef<(event: WindowEventMap[K]) => void>();
     // Update ref.current value if handler changes.
     // This allows our effect below to always get latest handler ...
     useEffect(() => {
