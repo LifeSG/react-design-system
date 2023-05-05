@@ -10,12 +10,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "between",
                 description: (
                     <>
-                        Only selectable the date between the range. To specify
-                        in a format as such &nbsp; (e.g.{" "}
-                        <code>[2023-02-10, 2023-04-12]</code>)
+                        Restrict selection to this date range. To specify in the
+                        format <code>[YYYY-MM-DD, YYYY-MM-DD]</code>
                     </>
                 ),
-                propTypes: ["string[]"],
+                propTypes: ["[string, string]"],
             },
             {
                 name: "className",
@@ -31,8 +30,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "disabledDates",
                 description: (
                     <>
-                        The dates to be disabled. To specify in a format as such
-                        (e.g. <code>[2022-01-01, 2022-02-02]</code>)
+                        The dates to be disabled. To specify each date in the
+                        format <code>YYYY-MM-DD</code>
                     </>
                 ),
                 propTypes: ["string[]"],
@@ -41,22 +40,6 @@ const DATA: ApiTableSectionProps[] = [
                 name: "id",
                 description: "The unique identifier for the component",
                 propTypes: ["string"],
-            },
-            {
-                name: "type",
-                description: (
-                    <>
-                        Specifies the calendar type which affects layout and
-                        styles. <br />
-                        When the <code>standalone</code> type is specified, the
-                        component is rendered individually. While if
-                        <code>input</code> is specified, the controls interfaces
-                        are scaled down. It is usually used when rendering
-                        within an input component
-                    </>
-                ),
-                propTypes: [`"standalone"`, `"input"`],
-                defaultValue: `"standalone"`,
             },
             {
                 name: "value",
@@ -72,8 +55,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onHover",
                 description: (
                     <>
-                        Called when the user hover a value from the calendar.
-                        Returns value in&nbsp;
+                        Called with the current hovered date or empty string if
+                        the user leaves the calendar day view. Returns value
+                        in&nbsp;
                         <code>YYYY-MM-DD</code>&nbsp;format.
                     </>
                 ),

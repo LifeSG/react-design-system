@@ -34,7 +34,7 @@ export interface CommonCalendarProps {
     disabledDates?: string[] | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format or `"Invalid Date"` */
     onSelect?: ((value: string) => void) | undefined;
-    /** Called when day cell is hover, returns value in `YYYY-MM-DD` */
+    /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;
 
     // Basic component props
