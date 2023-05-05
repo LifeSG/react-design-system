@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import {
     Container,
     Input,
@@ -9,6 +8,7 @@ import {
 } from "./toggle.styles";
 import { ToggleProps } from "./types";
 import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
+import { SimpleIdGenerator } from "../util";
 
 export const Toggle = ({
     type = "checkbox",
@@ -29,7 +29,7 @@ export const Toggle = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selected, setSelected] = useState<boolean>(checked);
-    const [uuid] = useState(() => uuidv4());
+    const [uuid] = useState(SimpleIdGenerator.generate());
     const generatedInputId = id ? `${id}-input` : uuid;
 
     const inputRef = useRef<HTMLInputElement>();
