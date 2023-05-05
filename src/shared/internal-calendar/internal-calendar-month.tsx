@@ -76,9 +76,9 @@ export const InternalCalendarMonth = ({
         const disabled = isDisabled(date);
 
         const variant: MonthVariant =
-            selectedDate && dayjs(selectedDate).isSame(date)
+            selectedDate && dayjs(selectedDate).isSame(date, "month")
                 ? "selected-month"
-                : dayjs().isSame(date)
+                : dayjs().isSame(date, "month")
                 ? "current-month"
                 : "default";
 
@@ -90,7 +90,7 @@ export const InternalCalendarMonth = ({
     };
 
     const generateMonths = () => {
-        const months = CalendarHelper.generateMonths(dayjs(selectedDate));
+        const months = CalendarHelper.generateMonths(dayjs(calendarDate));
         setMonths(months);
     };
 

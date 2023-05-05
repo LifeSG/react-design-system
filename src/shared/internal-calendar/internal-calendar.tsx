@@ -87,9 +87,6 @@ export const Component = (
         // open with 'confirmed' value for day calendar in first mounted
         if (!isOpen) return;
 
-        const initCalendar = currentFocus === "end" ? endValue : value;
-
-        setCalendarDate(dayjs(initCalendar));
         setCurrentView("default");
 
         if (variant === "range" && value?.length && endValue?.length) {
@@ -103,6 +100,16 @@ export const Component = (
         // go back selected day calendar
         handleSelectedDayView();
     }, [currentType]);
+
+    useEffect(() => {
+        /**
+         * Update calendar value in month/year
+         * Once focus value is changed
+         */
+        const calendarValue = currentFocus === "end" ? endValue : value;
+
+        if (calendarValue) setCalendarDate(dayjs(calendarValue));
+    }, [currentFocus]);
 
     useEffect(() => {
         setIsNewSelection(true);

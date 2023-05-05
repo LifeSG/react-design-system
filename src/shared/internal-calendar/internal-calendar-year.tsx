@@ -83,9 +83,9 @@ export const InternalCalendarYear = ({
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
-            : selectedDate && dayjs(selectedDate).isSame(date)
+            : selectedDate && dayjs(selectedDate).isSame(date, "year")
             ? "selected-year"
-            : dayjs().isSame(date)
+            : dayjs().isSame(date, "year")
             ? "current-year"
             : "default";
 
@@ -97,7 +97,7 @@ export const InternalCalendarYear = ({
     };
 
     const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(dayjs(selectedDate));
+        const years = CalendarHelper.generateDecadeOfYears(dayjs(calendarDate));
         setYears(years);
     };
 
