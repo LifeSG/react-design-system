@@ -1,12 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import {
-    Calendar,
-    CalendarAction,
-    CalendarRef,
-    FocusType,
-    View,
-} from "../calendar";
-import {
     ArrowRangeIcon,
     ArrowRight,
     Container,
@@ -20,6 +13,13 @@ import {
     ReducerState,
     dateInputReducer,
 } from "./date-input-reducer";
+import {
+    CalendarAction,
+    CalendarRef,
+    FocusType,
+    InternalCalendar,
+    View,
+} from "../shared/internal-calendar";
 import { DateInputHelper } from "../util/date-input-helper";
 import { useEventListener } from "../util/use-event-listener";
 import { useMediaQuery } from "react-responsive";
@@ -617,7 +617,7 @@ export const DateInput = ({
             />
             {renderRangeInput()}
             {renderIndicateBar()}
-            <Calendar
+            <InternalCalendar
                 ref={calendarRef}
                 type="input"
                 disabledDates={disabledDates}

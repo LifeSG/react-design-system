@@ -1,12 +1,12 @@
-import { Color } from "../color";
+import { Color } from "../../color";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { CalendarType } from "./types";
-import { IconButton } from "../icon-button";
-import { TextStyleHelper } from "../text";
-import { Button } from "../button";
+import { IconButton } from "../../icon-button";
+import { TextStyleHelper } from "../../text";
+import { Button } from "../../button";
 
 interface ContainerStyleProps {
     $type: CalendarType;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FocusType } from "../calendar";
 import { DateHelper, StringHelper } from "../util";
 import { ActionType } from "./date-input-reducer";
+import { FocusType } from "../shared/internal-calendar";
 import {
     DayInput,
     Divider,

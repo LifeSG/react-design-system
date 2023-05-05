@@ -1,8 +1,8 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
-import { CalendarHelper } from "../util/calendar-helper";
-import { CellLabel, Wrapper, YearCell } from "./calendar-year.style";
-import { CalendarProps, FocusType } from "./types";
+import { CalendarHelper } from "../../util/calendar-helper";
+import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
+import { FocusType, InternalCalendarProps } from "./types";
 
 export type YearVariant =
     | "default"
@@ -10,7 +10,7 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface Props extends Pick<CalendarProps, "type" | "between"> {
+interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -19,7 +19,7 @@ interface Props extends Pick<CalendarProps, "type" | "between"> {
     onSelect: (value: Dayjs) => void;
 }
 
-export const CalendarYear = ({
+export const InternalCalendarYear = ({
     calendarDate,
     currentFocus,
     selectedStartDate,
