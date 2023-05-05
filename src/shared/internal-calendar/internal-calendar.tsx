@@ -459,14 +459,14 @@ export const Component = (
                     styleType="light"
                     ref={cancelButtonRef}
                     onClick={handleCancelButton}
-                    onKeyDown={(event) => handleKeyDown(event, disabled)}
+                    // onKeyDown={(event) => handleKeyDown(event, disabled)}
                 >
                     Cancel
                 </CancelButton>
                 <DoneButton
                     ref={doneButtonRef}
                     onClick={() => handleDoneButton(disabled)}
-                    onKeyDown={(event) => handleKeyDown(event, disabled)}
+                    // onKeyDown={(event) => handleKeyDown(event, disabled)}
                     disabled={disabled}
                 >
                     Done
