@@ -1,5 +1,6 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
+import dayjs from "dayjs";
 import { DateInput } from "src/date-input";
 import { Form } from "src/form";
 import {
@@ -25,31 +26,40 @@ The field that allows a user to enter a date value.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-> **Important note**: This component currently does not do date value validation
+<Heading3>Using a default date input</Heading3>
 
 <Canvas>
     <Story name="DateInput">
         <StoryContainer>
             <Container>
+                <Form.DateInput label="This is the default date input" />
                 <Form.DateInput
                     label="This is the date input without button"
                     withButton={false}
                 />
-                <Form.DateInput label="This is the date input with button" />
+                <Form.DateInput label="This is the disabled state" disabled />
+                <Form.DateInput label="This is the readOnly state" readOnly />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Using a range selection</Heading3>
+
+You can use `variant='range'` to specify to range selection.
+
+<Canvas>
+    <Story name="Ranged DateInput">
+        <StoryContainer>
+            <Container>
                 <Form.DateInput
-                    label="This is range date input with disabled dates"
+                    label="This is the default range date input"
+                    variant="range"
+                />
+                <Form.DateInput
+                    label="This is the range date input without button"
                     variant="range"
                     withButton={false}
-                    disabledDates={["2023-03-17", "2023-03-02"]}
-                />
-                <Form.DateInput
-                    label="This is range date input with button"
-                    variant="range"
-                />
-                <Form.DateInput
-                    label="This is range date input with range selection"
-                    variant="range"
-                    between={["2023-03-01", "2023-03-20"]}
                 />
                 <Form.DateInput
                     label="This is the disabled state"
@@ -57,24 +67,63 @@ import { Form } from "@lifesg/react-design-system/form";
                     variant="range"
                 />
                 <Form.DateInput
-                    label="This is the disabled state with value"
-                    disabled
-                    variant="range"
-                    value="2023-02-10"
-                    endValue="2023-04-20"
-                />
-                <Form.DateInput
-                    label="This is the readonly state"
+                    label="This is the readOnly state"
                     readOnly
-                    variant="range"
-                />
-                <Form.DateInput
-                    label="This is the error state"
-                    errorMessage="Date is required"
                     variant="range"
                 />
             </Container>
         </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With disabled dates</Heading3>
+
+You can use `disabledDates` to specify dates that are not available for selection.
+
+<Canvas>
+    <Story name="With disabled dates">
+        {() => {
+            const [disabledDates] = useState([
+                dayjs().day(10).format("YYYY-MM-DD"),
+                dayjs().day(15).format("YYYY-MM-DD"),
+                dayjs().day(25).format("YYYY-MM-DD"),
+            ]);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.DateInput
+                            label="This date input with disabled dates"
+                            disabledDates={disabledDates}
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Within date range</Heading3>
+
+You can restrict selection to a date range using `between`.
+
+<Canvas>
+    <Story name="Within date range">
+        {() => {
+            const [between] = useState([
+                dayjs().day(7).format("YYYY-MM-DD"),
+                dayjs().day(21).format("YYYY-MM-DD"),
+            ]);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.DateInput
+                            label="This date input with restrict selection dates"
+                            between={between}
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
     </Story>
 </Canvas>
 
