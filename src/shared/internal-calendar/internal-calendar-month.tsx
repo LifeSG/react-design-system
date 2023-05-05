@@ -1,12 +1,12 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { CalendarHelper } from "src/util/calendar-helper";
-import { CellLabel, MonthCell, Wrapper } from "./calendar-month.style";
-import { CalendarProps, FocusType } from "./types";
+import { CellLabel, MonthCell, Wrapper } from "./internal-calendar-month.style";
+import { FocusType, InternalCalendarProps } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
-interface Props extends Pick<CalendarProps, "type" | "between"> {
+interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -15,7 +15,7 @@ interface Props extends Pick<CalendarProps, "type" | "between"> {
     onSelect: (value: Dayjs) => void;
 }
 
-export const CalendarMonth = ({
+export const InternalCalendarMonth = ({
     calendarDate,
     currentFocus,
     selectedStartDate,

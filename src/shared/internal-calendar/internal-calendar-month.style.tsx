@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
-import { Text } from "../text/text";
-import { YearVariant } from "./calendar-year";
+import { Color } from "../../color";
+import { TextStyleHelper } from "../../text/helper";
+import { Text } from "../../text/text";
+import { MonthVariant } from "./internal-calendar-month";
 import { CalendarType } from "./types";
 
 interface StyleProps {
-    $disabled: boolean;
-    $variant: YearVariant;
+    $variant: MonthVariant;
+    $disabled?: boolean;
 }
 
 interface WrapperStyleProps {
@@ -21,31 +21,31 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
     height: 100%;
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 2.5rem);
     align-content: center;
-    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
 
     ${(props) => {
         switch (props.$type) {
             case "standalone":
                 return css`
-                    grid-template-rows: repeat(4, 4rem);
-                    gap: 0.5rem 2rem;
+                    gap: 0.5rem 2.5rem;
                 `;
             case "input":
                 return css`
-                    grid-template-rows: repeat(4, 4.375rem);
-                    gap: 0.5rem 1rem;
+                    gap: 0.5rem 2rem;
                 `;
         }
     }}
 `;
 
-export const YearCell = styled.div<StyleProps>`
+export const MonthCell = styled.div<StyleProps>`
     display: flex;
-    justify-content: center;
     align-items: center;
-    border-radius: 0.5rem;
+    justify-content: center;
     cursor: pointer;
+    border-radius: 5rem;
 
     &:hover {
         box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
@@ -65,20 +65,19 @@ export const YearCell = styled.div<StyleProps>`
         }
 
         switch (props.$variant) {
-            case "current-year":
+            case "current-month":
                 return css`
-                    background: ${Color.Accent.Light[6](props)};
+                    background-color: ${Color.Accent.Light[6](props)};
                 `;
-            case "selected-year":
+            case "selected-month":
                 return css`
-                    background: ${Color.Accent.Light[5](props)};
+                    background-color: ${Color.Accent.Light[5](props)};
                     border: 1px solid ${Color.Primary(props)};
                 `;
-            case "other-decade":
             case "default":
                 break;
         }
-    }};
+    }}
 `;
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
@@ -90,18 +89,14 @@ export const CellLabel = styled(Text.H5)<StyleProps>`
         }
 
         switch (props.$variant) {
-            case "current-year":
+            case "current-month":
                 return css`
                     color: ${Color.Neutral[3](props)};
                 `;
-            case "selected-year":
+            case "selected-month":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "semibold")}
                     color: ${Color.Primary(props)};
-                `;
-            case "other-decade":
-                return css`
-                    color: ${Color.Neutral[4](props)};
                 `;
             case "default":
                 break;

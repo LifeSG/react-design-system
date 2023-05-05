@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { Text, TextStyleHelper } from "../text";
-import { DayVariant } from "./calendar-day";
+import { Color } from "../../color";
+import { Text, TextStyleHelper } from "../../text";
+import { DayVariant } from "./internal-calendar-day";
 import { CalendarType } from "./types";
 
 export interface StyleCircleProps extends StyleProps {
