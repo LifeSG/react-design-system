@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { Text } from "../text/text";
-import { CalendarHelper } from "../util/calendar-helper";
+import { Text } from "../../text/text";
+import { CalendarHelper } from "../../util/calendar-helper";
 import {
     DayLabel,
     GrowDayCell,
@@ -13,8 +13,8 @@ import {
     StyleLabelProps,
     StyleProps,
     Wrapper,
-} from "./calendar-day.style";
-import { CalendarProps, CalendarType, FocusType } from "./types";
+} from "./internal-calendar-day.style";
+import { CalendarType, FocusType, InternalCalendarProps } from "./types";
 import isBetween from "dayjs/plugin/isBetween";
 
 dayjs.extend(isBetween);
@@ -31,7 +31,10 @@ type HoverDirection =
     | "reset-end";
 
 interface CalendarDayProps
-    extends Pick<CalendarProps, "disabledDates" | "variant" | "between"> {
+    extends Pick<
+        InternalCalendarProps,
+        "disabledDates" | "variant" | "between"
+    > {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
@@ -42,7 +45,7 @@ interface CalendarDayProps
     onHover: (value: string) => void;
 }
 
-export const CalendarDay = ({
+export const InternalCalendarDay = ({
     calendarDate,
     currentFocus,
     disabledDates,
@@ -74,15 +77,13 @@ export const CalendarDay = ({
     };
 
     const handleHoverCell = (value: string, isDisabled: boolean) => {
-        if (type !== "input" || isDisabled) return;
+        if (isDisabled) return;
 
         setHoverValue(value);
         onHover(value);
     };
 
     const handleMouseLeaveCell = () => {
-        if (type !== "input") return;
-
         setHoverValue("");
         onHover("");
     };
