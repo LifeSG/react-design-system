@@ -77,15 +77,13 @@ export const InternalCalendarDay = ({
     };
 
     const handleHoverCell = (value: string, isDisabled: boolean) => {
-        if (type !== "input" || isDisabled) return;
+        if (isDisabled) return;
 
         setHoverValue(value);
         onHover(value);
     };
 
     const handleMouseLeaveCell = () => {
-        if (type !== "input") return;
-
         setHoverValue("");
         onHover("");
     };

@@ -7,6 +7,17 @@ const DATA: ApiTableSectionProps[] = [
         name: "Calendar specific props",
         attributes: [
             {
+                name: "between",
+                description: (
+                    <>
+                        Only selectable the date between the range. To specify
+                        in a format as such &nbsp; (e.g.{" "}
+                        <code>[2023-02-10, 2023-04-12]</code>)
+                    </>
+                ),
+                propTypes: ["string[]"],
+            },
+            {
                 name: "className",
                 description: "Class selector for the component",
                 propTypes: ["string"],
@@ -56,6 +67,17 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["string"],
+            },
+            {
+                name: "onHover",
+                description: (
+                    <>
+                        Called when the user hover a value from the calendar.
+                        Returns value in&nbsp;
+                        <code>YYYY-MM-DD</code>&nbsp;format.
+                    </>
+                ),
+                propTypes: ["(value: string) => void"],
             },
             {
                 name: "onSelect",
