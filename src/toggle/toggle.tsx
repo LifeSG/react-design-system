@@ -29,8 +29,8 @@ export const Toggle = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selected, setSelected] = useState<boolean>(checked);
-    const [uuid] = useState(SimpleIdGenerator.generate());
-    const generatedInputId = id ? `${id}-input` : uuid;
+    const [uniqueId] = useState(SimpleIdGenerator.generate());
+    const generatedInputId = id ? `${id}-input` : `tg-${uniqueId}-input`;
 
     const inputRef = useRef<HTMLInputElement>();
 
