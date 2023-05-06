@@ -93,6 +93,7 @@ export const DateInput = ({
      */
 
     useEventListener("keydown", handleKeyDown, nodeRef.current);
+    useEventListener("mousedown", handleMouseDown, document);
 
     // =============================================================================
     // EFFECTS
@@ -162,6 +163,16 @@ export const DateInput = ({
             } else {
                 handleCalendarAction("confirmed");
             }
+        }
+    }
+
+    function handleMouseDown(event: MouseEvent) {
+        if (disabled || readOnly) return;
+
+        const target = event.target as Element;
+        if (nodeRef.current && !nodeRef.current.contains(target)) {
+            // outside click
+            handleBlurContainer();
         }
     }
 
@@ -313,24 +324,18 @@ export const DateInput = ({
         }
     };
 
-    const handleBlurContainer = (event: FocusEvent<HTMLDivElement>) => {
-        if (
-            nodeRef &&
-            !(nodeRef.current as any).contains(event.relatedTarget)
-        ) {
-            // leave focus from current container
-            handleReducer("reset");
+    const handleBlurContainer = () => {
+        handleReducer("reset");
 
-            setCurrentElement({
-                field: "none",
-                type: "none",
-                count: 0,
-            });
+        setCurrentElement({
+            field: "none",
+            type: "none",
+            count: 0,
+        });
 
-            performOnBlurHandler(startDate, endDate);
-            setCalendarOpen(false);
-            setIsError(false);
-        }
+        performOnBlurHandler(startDate, endDate);
+        setCalendarOpen(false);
+        setIsError(false);
     };
 
     const handleValidation = (value: string): boolean => {
@@ -565,6 +570,7 @@ export const DateInput = ({
                             performOnChangeRawHandler(value)
                         }
                         onFocus={handleFocus}
+                        onTabBlur={handleBlurContainer}
                         readOnly={readOnly}
                         names={["end-day", "end-month", "end-year"]}
                         value={endDate.input}
@@ -574,6 +580,7 @@ export const DateInput = ({
                         focusType={currentElement.type}
                         isOpen={calendarOpen}
                         isError={isError}
+                        withButton={withButton}
                     />
                 </>
             );
@@ -589,7 +596,6 @@ export const DateInput = ({
             data-testid={otherProps["data-testid"]}
             $readOnly={readOnly}
             $variant={variant}
-            onBlur={handleBlurContainer}
             {...otherProps}
         >
             <StandAloneInput
@@ -597,6 +603,7 @@ export const DateInput = ({
                 onChange={(value) => handleChange(value, "input")}
                 onChangeRaw={(value) => performOnChangeRawHandler(value)}
                 onFocus={handleFocus}
+                onTabBlur={handleBlurContainer}
                 readOnly={readOnly}
                 names={["start-day", "start-month", "start-year"]}
                 value={startDate.input}
@@ -606,6 +613,7 @@ export const DateInput = ({
                 focusType={currentElement.type}
                 isOpen={calendarOpen}
                 isError={isError}
+                withButton={withButton}
             />
             {renderRangeInput()}
             {renderIndicateBar()}

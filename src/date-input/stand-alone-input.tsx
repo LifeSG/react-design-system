@@ -35,6 +35,8 @@ interface Props {
     focusType: FocusType;
     isOpen: boolean;
     isError: boolean;
+    withButton: boolean;
+    onTabBlur: () => void;
     onChange: (value: string) => void;
     onChangeRaw: (value: string) => void;
     onFocus: (value: FieldType) => void;
@@ -47,6 +49,7 @@ export const StandAloneInput = ({
     onChange,
     onChangeRaw,
     onFocus,
+    onTabBlur,
     readOnly,
     names,
     value,
@@ -54,6 +57,7 @@ export const StandAloneInput = ({
     focusType,
     isOpen,
     isError,
+    withButton,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -198,6 +202,23 @@ export const StandAloneInput = ({
         if ((event.target as any).name === names[2] && event.code === "Tab") {
             // About to blur the entire input
             setCurrentFocus("none");
+        }
+
+        // close calendar if it keyboard 'Tab' leaving from
+        // - 'start-year' field in single calendar without button
+        // - 'end-year' field in range selection without button
+        if (
+            (variant === "single" &&
+                (event.target as any).name === "start-year" &&
+                event.code === "Tab" &&
+                !withButton) ||
+            (variant === "range" &&
+                (event.target as any).name === "end-year" &&
+                event.code === "Tab" &&
+                !withButton)
+        ) {
+            // close calendar and reset
+            onTabBlur();
         }
     };
 
@@ -427,7 +448,7 @@ export const StandAloneInput = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const RenderPlaceholder = () => {
+    const renderPlaceholder = () => {
         if (value || readOnly) {
             return;
         }
@@ -533,7 +554,7 @@ export const StandAloneInput = ({
                     }
                 />
             </InputContainer>
-            {RenderPlaceholder()}
+            {renderPlaceholder()}
         </InputSection>
     );
 };
