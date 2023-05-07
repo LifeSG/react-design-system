@@ -368,6 +368,8 @@ export const DateInput = ({
                     );
                     break;
             }
+
+            console.log("isValid. ", isValid);
         } else if (variant === "single") {
             isValid = DateInputHelper.validateSingle(
                 value,

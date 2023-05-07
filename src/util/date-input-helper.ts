@@ -5,6 +5,8 @@ import { ChangeValueTypes, RawInputValues } from "../date-input";
 dayjs.extend(isBetween);
 
 export namespace DateInputHelper {
+    const dateFormat = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
+
     export const validate = (
         startDate: string | undefined,
         endDate: string | undefined,
@@ -42,6 +44,14 @@ export namespace DateInputHelper {
             return false;
         }
 
+        if (
+            between &&
+            between.length &&
+            !between.every((value) => dateFormat.test(value))
+        ) {
+            return false;
+        }
+
         return true;
     };
 
@@ -66,6 +76,14 @@ export namespace DateInputHelper {
             between &&
             between.length &&
             !dayjs(value).isBetween(between[0], between[1], "day", "[]")
+        ) {
+            return false;
+        }
+
+        if (
+            between &&
+            between.length &&
+            !between.every((value) => dateFormat.test(value))
         ) {
             return false;
         }
