@@ -1,4 +1,5 @@
-import indexOf from "lodash/indexOf";
+import find from "lodash/find";
+import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
 import { useSpring } from "react-spring";
 import { Spinner } from "../../button/button.style";
@@ -172,7 +173,9 @@ export const DropdownList = <T, V>({
     };
 
     const checkListItemSelected = (item: T): boolean => {
-        return indexOf<T>(selectedItems, item) > -1;
+        return !!find(selectedItems, (arrItem) => {
+            return isEqual(arrItem, item);
+        });
     };
 
     const filterAndUpdateList = (searchValue: string) => {
