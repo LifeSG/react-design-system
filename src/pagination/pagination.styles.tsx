@@ -238,7 +238,7 @@ export const InputView = styled(Input)`
 `;
 
 export const Hover = styled.div`
-    ${TextStyleHelper.getTextStyle("BodySmall", 400)};
+    ${TextStyleHelper.getTextStyle("XSmall", 400)};
 
     background-color: ${Color.Primary};
     border: none;
@@ -249,5 +249,5 @@ export const Hover = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 6rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.75rem;
 `;

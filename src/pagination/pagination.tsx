@@ -133,6 +133,7 @@ const Component = (
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
                     aria-label={"Page " + pageIndex}
+                    tabIndex={active ? -1 : 0}
                 >
                     {pageIndex}
                 </PageItem>
@@ -148,8 +149,21 @@ const Component = (
 
         if (ellipsisStart || ellipsisEnd) {
             return (
-                <EllipsisContainer key={pageIndex}>
-                    <EllipsisItem key={pageIndex} focusHighlight={false}>
+                <EllipsisContainer
+                    key={pageIndex}
+                    onFocus={
+                        ellipsisStart ? onHoverLeftButton : onHoverRightButton
+                    }
+                    onBlur={
+                        ellipsisStart ? onLeaveLeftButton : onLeaveRightButton
+                    }
+                >
+                    <EllipsisItem
+                        key={pageIndex}
+                        focusHighlight={false}
+                        focusOutline="browser"
+                        tabIndex={0}
+                    >
                         <EllipsisHorizontalIcon />
                     </EllipsisItem>
                     {ellipsisStart && (
@@ -161,6 +175,8 @@ const Component = (
                                 aria-label="Fast Forward"
                                 onMouseOver={onHoverLeftButton}
                                 onMouseOut={onLeaveLeftButton}
+                                focusOutline="browser"
+                                tabIndex={0}
                             >
                                 <Chevron2LeftIcon />
                             </NavigationItem>
@@ -176,6 +192,8 @@ const Component = (
                                 aria-label="Fast Backward"
                                 onMouseOver={onHoverRightButton}
                                 onMouseOut={onLeaveRightButton}
+                                focusOutline="browser"
+                                tabIndex={0}
                             >
                                 <Chevron2RightIcon />
                             </NavigationItem>
@@ -204,6 +222,7 @@ const Component = (
                     onClick={() => handlePaginationItemOnClick(pageIndex)}
                     $selected={active}
                     aria-label={"Page " + pageIndex}
+                    tabIndex={active ? -1 : 0}
                 >
                     {pageIndex}
                 </PageItem>
@@ -223,6 +242,7 @@ const Component = (
                 type="number"
                 id={(id || "pagination") + "-input"}
                 data-testid={(dataTestId || "pagination") + "-input"}
+                tabIndex={0}
             />
             <LabelDivider>/</LabelDivider>
             <Label>{totalPages}</Label>
@@ -245,6 +265,8 @@ const Component = (
                             focusHighlight={false}
                             $position="left"
                             aria-label="First page"
+                            tabIndex={isFirstPage ? -1 : 0}
+                            focusOutline="browser"
                         >
                             <ChevronLineLeftIcon aria-hidden />
                         </NavigationButton>
@@ -255,6 +277,8 @@ const Component = (
                         focusHighlight={false}
                         $position="left"
                         aria-label="Previous Page"
+                        tabIndex={isFirstPage ? -1 : 0}
+                        focusOutline="browser"
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationButton>
@@ -265,6 +289,8 @@ const Component = (
                         focusHighlight={false}
                         $position="right"
                         aria-label="Next Page"
+                        tabIndex={isLastPage ? -1 : 0}
+                        focusOutline="browser"
                     >
                         <ChevronRightIcon aria-hidden />
                     </NavigationButton>
@@ -275,6 +301,8 @@ const Component = (
                             focusHighlight={false}
                             $position="right"
                             aria-label="last page"
+                            tabIndex={isLastPage ? -1 : 0}
+                            focusOutline="browser"
                         >
                             <ChevronLineRightIcon aria-hidden />
                         </NavigationButton>
