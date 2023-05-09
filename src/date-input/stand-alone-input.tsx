@@ -32,11 +32,10 @@ interface Props {
     confirmedValue: string | undefined;
     variant: VariantStyleProps;
     action: ActionType;
+    focused: boolean;
     focusType: FocusType;
     isOpen: boolean;
     isError: boolean;
-    withButton: boolean;
-    onTabBlur: () => void;
     onChange: (value: string) => void;
     onChangeRaw: (value: string) => void;
     onFocus: (value: FieldType) => void;
@@ -49,15 +48,15 @@ export const StandAloneInput = ({
     onChange,
     onChangeRaw,
     onFocus,
-    onTabBlur,
+    // onTabBlur,
     readOnly,
     names,
     value,
     variant,
+    focused,
     focusType,
     isOpen,
     isError,
-    withButton,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -173,6 +172,12 @@ export const StandAloneInput = ({
         }
     }, [focusType, isError]);
 
+    useEffect(() => {
+        if (focused) {
+            dayInputRef.current.focus();
+        }
+    }, [focused]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -202,23 +207,6 @@ export const StandAloneInput = ({
         if ((event.target as any).name === names[2] && event.code === "Tab") {
             // About to blur the entire input
             setCurrentFocus("none");
-        }
-
-        // close calendar if it keyboard 'Tab' leaving from
-        // - 'start-year' field in single calendar without button
-        // - 'end-year' field in range selection without button
-        if (
-            (variant === "single" &&
-                (event.target as any).name === "start-year" &&
-                event.code === "Tab" &&
-                !withButton) ||
-            (variant === "range" &&
-                (event.target as any).name === "end-year" &&
-                event.code === "Tab" &&
-                !withButton)
-        ) {
-            // close calendar and reset
-            onTabBlur();
         }
     };
 

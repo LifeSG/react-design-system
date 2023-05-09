@@ -173,29 +173,6 @@ export const Component = (
         }
     };
 
-    function handleKeyDown(
-        event: React.KeyboardEvent<HTMLButtonElement>,
-        isDoneDisabled: boolean
-    ) {
-        const target = event.target as HTMLButtonElement;
-
-        if (
-            cancelButtonRef.current.contains(target) &&
-            event.code === "Tab" &&
-            isDoneDisabled
-        ) {
-            // 'Tab' away from cancel button if done button is disabled
-            performOnWithButtonHandler("reset");
-        } else if (
-            doneButtonRef.current.contains(target) &&
-            event.code === "Tab" &&
-            !isDoneDisabled
-        ) {
-            // 'Tab' away from done button if done button is active
-            performOnWithButtonHandler("reset");
-        }
-    }
-
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
 
@@ -459,14 +436,12 @@ export const Component = (
                     styleType="light"
                     ref={cancelButtonRef}
                     onClick={handleCancelButton}
-                    onKeyDown={(event) => handleKeyDown(event, disabled)}
                 >
                     Cancel
                 </CancelButton>
                 <DoneButton
                     ref={doneButtonRef}
                     onClick={() => handleDoneButton(disabled)}
-                    onKeyDown={(event) => handleKeyDown(event, disabled)}
                     disabled={disabled}
                 >
                     Done
