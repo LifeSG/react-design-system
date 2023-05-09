@@ -37,6 +37,8 @@ export interface DropdownSearchProps<T> {
     /** Custom function to perform search when a user keys in a value in the search input */
     searchFunction?: ((searchValue: string) => T[]) | undefined;
     onSearch?: (() => void) | undefined;
+    /** Specifying if no results prompt should be hidden*/
+    hideNoResultsDisplay?: boolean | undefined;
 }
 
 export interface DropdownListProps<T, V>
@@ -61,6 +63,9 @@ export interface DropdownListProps<T, V>
     onSelectAll?: (() => void) | undefined;
     onRetry?: (() => void) | undefined;
     onBlur?: (() => void) | undefined;
+
+    /** Callback function to update displaylistItems when there is a UI change in display list */
+    onDisplayListItemsUpdate?: (displayListItems: T[]) => void | undefined;
 }
 
 export interface ListItemSelectorProps {

@@ -37,6 +37,8 @@ export const InputSelect = <T, V>({
     optionTruncationType = "end",
     renderCustomSelectedOption,
     renderListItem,
+    hideNoResultsDisplay,
+    renderCustomCallToAction,
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -44,6 +46,7 @@ export const InputSelect = <T, V>({
     // =============================================================================
     const [selected, setSelected] = useState<T>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [displayListItems, setDisplayListItems] = useState<T[]>([]);
 
     const selectorRef = useRef<HTMLButtonElement>();
     const labelContainerRef = useRef<HTMLDivElement>();
@@ -96,6 +99,10 @@ export const InputSelect = <T, V>({
     const handleWrapperBlur = () => {
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
+    };
+
+    const handleDisplayListItemsUpdate = (updatedListItems: T[]) => {
+        setDisplayListItems(updatedListItems);
     };
 
     // =============================================================================
@@ -203,6 +210,8 @@ export const InputSelect = <T, V>({
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     renderListItem={renderListItem}
+                    onDisplayListItemsUpdate={handleDisplayListItemsUpdate}
+                    hideNoResultsDisplay={hideNoResultsDisplay}
                 />
             );
         }
@@ -231,6 +240,12 @@ export const InputSelect = <T, V>({
             </Selector>
             {showOptions && <Divider />}
             {renderOptionList()}
+            {showOptions &&
+                renderCustomCallToAction(
+                    () => setShowOptions(true),
+                    () => setShowOptions(false),
+                    displayListItems
+                )}
         </InputSelectWrapper>
     );
 };

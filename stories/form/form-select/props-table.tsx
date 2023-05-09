@@ -156,6 +156,19 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a search is being executed",
                 propTypes: ["() => void"],
             },
+            {
+                name: "hideNoResultsDisplay",
+                description: "Specifying if no results prompt should be hidden",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "renderCustomCallToAction",
+                description:
+                    "Function to render optional call to action at the bottom of dropdown list",
+                propTypes: [
+                    "(showOptions: () => void, hideOptions: () => void, displayOptions: T[]) => JSX.Element",
+                ],
+            },
         ],
     },
     {

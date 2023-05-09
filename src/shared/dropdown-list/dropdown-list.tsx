@@ -48,6 +48,8 @@ export const DropdownList = <T, V>({
     itemTruncationType = "end",
     renderListItem,
     onBlur,
+    onDisplayListItemsUpdate,
+    hideNoResultsDisplay,
     ...otherProps
 }: DropdownListProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -93,6 +95,12 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // EFFECTS
     // =============================================================================
+    useEffect(() => {
+        if (onDisplayListItemsUpdate) {
+            onDisplayListItemsUpdate(displayListItems);
+        }
+    }, [displayListItems]);
+
     useEffect(() => {
         document.addEventListener("keydown", handleKeyboardPress);
         return () => {
@@ -400,7 +408,11 @@ export const DropdownList = <T, V>({
     };
 
     const renderNoResults = () => {
-        if (searchValue && displayListItems.length === 0) {
+        if (
+            !hideNoResultsDisplay &&
+            searchValue &&
+            displayListItems.length === 0
+        ) {
             return (
                 <ResultStateContainer
                     key="noResults"

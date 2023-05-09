@@ -3,6 +3,7 @@ import { useState } from "react";
 import { InputSelect } from "src/input-select";
 import { Form } from "src/form";
 import { Text } from "src/text";
+import { Button } from "src/button";
 import {
     Heading3,
     Heading4,
@@ -85,6 +86,50 @@ import { Form } from "@lifesg/react-design-system/form";
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
                     errorMessage="Selection is required"
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With custom call to action at the bottom of dropdown list</Heading3>
+
+You are able to customise the optional call to action at the bottom of dropdown list.
+
+<Canvas>
+    <Story name="With custom call to action">
+        <StoryContainer>
+            <Container>
+                <Form.Select
+                    label="This has a call to action at the bottom of dropdown list"
+                    options={[
+                        { value: "A", label: "Option A" },
+                        { value: "B", label: "Option B" },
+                        { value: "C", label: "Option C" },
+                        { value: "D", label: "Option D" },
+                    ]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    enableSearch
+                    hideNoResultsDisplay
+                    renderCustomCallToAction={(
+                        showOptions,
+                        hideOptions,
+                        list
+                    ) => {
+                        return (
+                            <Button.Default
+                                style={{ width: "100%" }}
+                                onClick={() => {
+                                    console.log("***CLICK");
+                                    hideOptions();
+                                }}
+                            >
+                                {list.length === 0 ? "Empty" : "Not Empty"}
+                            </Button.Default>
+                        );
+                    }}
                 />
             </Container>
         </StoryContainer>
