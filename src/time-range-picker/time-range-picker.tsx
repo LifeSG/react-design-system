@@ -100,13 +100,9 @@ export const TimeRangePicker = ({
 
     const handleStartTime = (value: string) => {
         setShowStartTimeSelector(false);
-        if (endTimeVal == "") {
-            setShowEndTimeSelector(true);
-            setStartTimeVal(value);
-        } else if (value > endTimeVal) {
-            setStartTimeVal(endTimeVal);
-            setEndTimeVal(value);
-        }
+        setShowEndTimeSelector(true);
+        setStartTimeVal(value);
+
         const timeValue: Value = {
             startValue: startTimeVal,
             endValue: endTimeVal,

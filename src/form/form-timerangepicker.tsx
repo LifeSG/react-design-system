@@ -1,4 +1,4 @@
-import { TimeRangePicker } from "../timeRangePicker";
+import { TimeRangePicker } from "../time-range-picker";
 import { FormWrapper } from "./form-wrapper";
 import { FormTimeRangePickerProps } from "./types";
 

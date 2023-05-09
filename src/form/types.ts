@@ -8,7 +8,7 @@ import { TextareaPartialProps } from "../input-textarea/types";
 import { InputPartialProps } from "../input/types";
 import { PhoneNumberInputProps } from "../phone-number-input/types";
 import { TimepickerProps } from "../timepicker/types";
-import { TimeRangePickerProps } from "../timeRangePicker/types";
+import { TimeRangePickerProps } from "../time-range-picker/types";
 
 import { UnitNumberInputProps } from "../unit-number/types";
 
