@@ -41,6 +41,7 @@ export const PaginationList = styled.div`
 
 export const PaginationMenu = styled.div`
     display: inline-flex;
+    padding: 0.125rem;
     align-items: center;
 `;
 
