@@ -48,7 +48,6 @@ export const StandAloneInput = ({
     onChange,
     onChangeRaw,
     onFocus,
-    // onTabBlur,
     readOnly,
     names,
     value,

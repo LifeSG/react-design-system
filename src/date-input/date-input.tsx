@@ -1,4 +1,4 @@
-import { FocusEvent, useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import {
     ArrowRangeIcon,
     ArrowRight,
