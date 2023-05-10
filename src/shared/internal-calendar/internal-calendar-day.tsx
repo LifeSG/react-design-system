@@ -194,6 +194,16 @@ export const InternalCalendarDay = ({
             styleCircleProps: StyleProps = {},
             styleLabelProps: StyleProps = {};
 
+        let isSelectedSame = false;
+
+        if (
+            selectedStartDate &&
+            selectedEndDate &&
+            selectedStartDate === selectedEndDate
+        ) {
+            isSelectedSame = true;
+        }
+
         if (
             !isNewSelection &&
             ["reset-start", "reset-end"].includes(hoverDirection) &&
@@ -217,10 +227,10 @@ export const InternalCalendarDay = ({
         if (
             selectedStartDate &&
             selectedEndDate &&
+            !isSelectedSame &&
             day.isBetween(selectedStartDate, selectedEndDate, "day", "[]")
         ) {
             styleLabelProps.$selected = true;
-
             if (day.isSame(selectedStartDate)) {
                 styleRightProps.$selected = true;
             } else if (day.isSame(selectedEndDate)) {
@@ -305,7 +315,10 @@ export const InternalCalendarDay = ({
             hoverDirection === "full-overlap-start" &&
             day.isBetween(selectedEndDate, hoverValue, "day", "[]")
         ) {
-            if (selectedStartDate === dateStartWithYear) {
+            if (selectedStartDate === dateStartWithYear && isSelectedSame) {
+                styleLeftProps.$hovered = true;
+                styleCircleProps.$overlap = true;
+            } else if (selectedStartDate === dateStartWithYear) {
                 styleLeftProps.$hovered = true;
                 styleRightProps.$overlap = true;
                 styleCircleProps.$overlap = true;
@@ -329,7 +342,10 @@ export const InternalCalendarDay = ({
             hoverDirection === "full-overlap-end" &&
             day.isBetween(selectedStartDate, hoverValue, "day", "[]")
         ) {
-            if (selectedEndDate === dateStartWithYear) {
+            if (selectedEndDate === dateStartWithYear && isSelectedSame) {
+                styleRightProps.$hovered = true;
+                styleCircleProps.$overlap = true;
+            } else if (selectedEndDate === dateStartWithYear) {
                 styleLeftProps.$overlap = true;
                 styleRightProps.$hovered = true;
                 styleCircleProps.$overlap = true;
