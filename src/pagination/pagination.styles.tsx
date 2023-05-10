@@ -145,7 +145,6 @@ export const EllipsisItem = styled(IconButton)`
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: not-allowed;
     color: ${Color.Neutral[3]};
     padding: 0.4rem 0.5rem;
     border-radius: 0.25rem;
@@ -163,8 +162,6 @@ export const EllipsisItem = styled(IconButton)`
             color: ${Color.Neutral[3]};
         }
     }
-
-    :
 `;
 
 export const EllipsisContainer = styled.div`
@@ -176,29 +173,6 @@ export const EllipsisContainer = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-
-    button:nth-child(1) {
-        opacity: 1;
-        display: block;
-    }
-
-    button:nth-child(2) {
-        opacity: 0;
-        display: none;
-    }
-    :hover,
-    :active,
-    :focus {
-        button:nth-child(1) {
-            opacity: 0;
-            display: none;
-        }
-
-        button:nth-child(2) {
-            opacity: 1;
-            display: block;
-        }
-    }
 `;
 
 export const PaginationMobileInput = styled.div`

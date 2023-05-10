@@ -44,6 +44,8 @@ const Component = (
     // =============================================================================
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
+    const [inputText, setInputText] = useState<string>("");
+
     const boundaryRange = 1;
     const siblingRange = 1;
     const totalPages = Math.ceil(totalItems / pageSize);
@@ -72,34 +74,48 @@ const Component = (
             : undefined;
 
     // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const setInputValue = (value) => {
+        setInputText(value.toString());
+    };
+    // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handlePaginationItemOnClick = (pageIndex: number) => {
         if (onPageChange) {
             onPageChange(pageIndex);
+            setInputValue(pageIndex);
         }
     };
 
     const handleFastForwardOnClick = () => {
         handlePaginationItemOnClick(activePage - 5);
+        setInputValue(activePage - 5);
         setHoverRightButton(false);
         setHoverLeftButton(false);
     };
 
     const handleFastBackwardsOnClick = () => {
         handlePaginationItemOnClick(activePage + 5);
+        setInputValue(activePage + 5);
         setHoverRightButton(false);
         setHoverLeftButton(false);
     };
 
-    const setInput4 = (value) => {
-        if (value < totalPages && value > 0) {
-            onPageChange(value);
+    const handleInput = (value) => {
+        if (value <= totalPages && value > 0) {
+            setInputText(value);
         } else if (value > totalPages) {
-            onPageChange(totalPages);
-        } else {
-            onPageChange(1);
+            setInputText(totalPages.toString());
+        } else if (value < 1) {
+            setInputText(value);
         }
+    };
+
+    const handleInputSubmit = (event) => {
+        event.preventDefault();
+        onPageChange(parseInt(inputText));
     };
 
     const onHoverRightButton = () => {
@@ -120,130 +136,122 @@ const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const paginationItemList = [...Array(totalPages)].map((e, i) => {
-        const pageIndex = i + 1;
-        const startRange = boundaryRange + 2 + siblingRange * 2;
-        const endRange = totalPages - startRange;
-        const totalRange = (boundaryRange + siblingRange) * 2 + 3;
-        const active = activePage === pageIndex;
-        if (totalPages <= totalRange) {
-            return (
-                <PageItem
-                    key={pageIndex}
-                    onClick={() => handlePaginationItemOnClick(pageIndex)}
-                    $selected={active}
-                    aria-label={"Page " + pageIndex}
-                    tabIndex={active ? -1 : 0}
-                >
-                    {pageIndex}
-                </PageItem>
-            );
-        }
-
-        const ellipsisStart =
-            activePage + siblingRange > startRange &&
-            pageIndex === boundaryRange + 1;
-        const ellipsisEnd =
-            activePage - siblingRange <= endRange &&
-            pageIndex === totalPages - boundaryRange - 1;
-
-        if (ellipsisStart || ellipsisEnd) {
-            return (
-                <EllipsisContainer
-                    key={pageIndex}
-                    onFocus={
-                        ellipsisStart ? onHoverLeftButton : onHoverRightButton
-                    }
-                    onBlur={
-                        ellipsisStart ? onLeaveLeftButton : onLeaveRightButton
-                    }
-                >
-                    <EllipsisItem
+    const renderPaginationItem = () => {
+        return [...Array(totalPages)].map((e, i) => {
+            const pageIndex = i + 1;
+            const startRange = boundaryRange + 2 + siblingRange * 2;
+            const endRange = totalPages - startRange;
+            const totalRange = (boundaryRange + siblingRange) * 2 + 3;
+            const active = activePage === pageIndex;
+            if (totalPages <= totalRange) {
+                return (
+                    <PageItem
                         key={pageIndex}
-                        focusHighlight={false}
-                        focusOutline="browser"
-                        tabIndex={0}
+                        onClick={() => handlePaginationItemOnClick(pageIndex)}
+                        $selected={active}
+                        aria-label={"Page " + pageIndex}
                     >
-                        <EllipsisHorizontalIcon />
-                    </EllipsisItem>
-                    {ellipsisStart && (
-                        <>
-                            <NavigationItem
-                                onClick={handleFastForwardOnClick}
-                                disabled={false}
-                                focusHighlight={false}
-                                aria-label="Fast Forward"
-                                onMouseOver={onHoverLeftButton}
-                                onMouseOut={onLeaveLeftButton}
-                                focusOutline="browser"
-                                tabIndex={0}
-                            >
-                                <Chevron2LeftIcon />
-                            </NavigationItem>
-                            {hoverLeftButton && <Hover>Previous 5 Pages</Hover>}
-                        </>
-                    )}
-                    {ellipsisEnd && (
-                        <>
-                            <NavigationItem
-                                onClick={handleFastBackwardsOnClick}
-                                disabled={false}
-                                focusHighlight={false}
-                                aria-label="Fast Backward"
-                                onMouseOver={onHoverRightButton}
-                                onMouseOut={onLeaveRightButton}
-                                focusOutline="browser"
-                                tabIndex={0}
-                            >
-                                <Chevron2RightIcon />
-                            </NavigationItem>
-                            {hoverRightButton && <Hover>Next 5 Pages</Hover>}
-                        </>
-                    )}
-                </EllipsisContainer>
-            );
-        }
+                        {pageIndex}
+                    </PageItem>
+                );
+            }
 
-        const paginationStart =
-            (pageIndex <= startRange &&
-                activePage + siblingRange <= startRange) ||
-            pageIndex <= boundaryRange;
-        const paginationMiddle =
-            pageIndex === activePage ||
-            (pageIndex <= activePage + siblingRange &&
-                pageIndex >= activePage - siblingRange - 1);
-        const paginationEnd =
-            (pageIndex > endRange && activePage - siblingRange > endRange) ||
-            pageIndex > totalPages - boundaryRange;
-        if (paginationStart || paginationMiddle || paginationEnd) {
-            return (
-                <PageItem
-                    key={pageIndex}
-                    onClick={() => handlePaginationItemOnClick(pageIndex)}
-                    $selected={active}
-                    aria-label={"Page " + pageIndex}
-                    tabIndex={active ? -1 : 0}
-                >
-                    {pageIndex}
-                </PageItem>
-            );
-        }
+            const ellipsisStart =
+                activePage + siblingRange > startRange &&
+                pageIndex === boundaryRange + 1;
+            const ellipsisEnd =
+                activePage - siblingRange <= endRange &&
+                pageIndex === totalPages - boundaryRange - 1;
 
-        return null;
-    });
+            if (ellipsisStart || ellipsisEnd) {
+                return renderEllipsis(ellipsisStart, ellipsisEnd, pageIndex);
+            }
+
+            const paginationStart =
+                (pageIndex <= startRange &&
+                    activePage + siblingRange <= startRange) ||
+                pageIndex <= boundaryRange;
+            const paginationMiddle =
+                pageIndex === activePage ||
+                (pageIndex <= activePage + siblingRange &&
+                    pageIndex >= activePage - siblingRange - 1);
+            const paginationEnd =
+                (pageIndex > endRange &&
+                    activePage - siblingRange > endRange) ||
+                pageIndex > totalPages - boundaryRange;
+            if (paginationStart || paginationMiddle || paginationEnd) {
+                return (
+                    <PageItem
+                        key={pageIndex}
+                        onClick={() => handlePaginationItemOnClick(pageIndex)}
+                        $selected={active}
+                        aria-label={"Page " + pageIndex}
+                    >
+                        {pageIndex}
+                    </PageItem>
+                );
+            }
+
+            return null;
+        });
+    };
+    const renderEllipsis = (ellipsisStart, ellipsisEnd, pageIndex) => (
+        <EllipsisContainer key={pageIndex}>
+            <NavigationItem
+                key={pageIndex}
+                focusHighlight={false}
+                focusOutline="browser"
+                aria-label={
+                    ellipsisStart
+                        ? "Go to page " + (activePage - 5)
+                        : "Go to page " + (activePage + 5)
+                }
+                onMouseOver={
+                    ellipsisStart ? onHoverLeftButton : onHoverRightButton
+                }
+                onMouseOut={
+                    ellipsisStart ? onLeaveLeftButton : onLeaveRightButton
+                }
+                onFocus={ellipsisStart ? onHoverLeftButton : onHoverRightButton}
+                onBlur={ellipsisStart ? onLeaveLeftButton : onLeaveRightButton}
+                onClick={
+                    ellipsisStart
+                        ? handleFastForwardOnClick
+                        : handleFastBackwardsOnClick
+                }
+            >
+                {ellipsisStart && hoverLeftButton ? (
+                    <Chevron2LeftIcon />
+                ) : (
+                    ellipsisStart && <EllipsisHorizontalIcon />
+                )}
+                {ellipsisEnd && hoverRightButton ? (
+                    <Chevron2RightIcon />
+                ) : (
+                    ellipsisEnd && <EllipsisHorizontalIcon />
+                )}
+            </NavigationItem>
+            {ellipsisStart && hoverLeftButton && (
+                <Hover>Previous 5 pages</Hover>
+            )}
+
+            {ellipsisEnd && hoverRightButton && <Hover>Next 5 pages</Hover>}
+        </EllipsisContainer>
+    );
 
     const renderMobile = () => (
         <PaginationMobileInput>
-            <InputView
-                placeholder="Page"
-                value={activePage}
-                onChange={(event) => setInput4(event.target.value)}
-                autoComplete="off"
-                type="number"
-                id={(id || "pagination") + "-input"}
-                data-testid={(dataTestId || "pagination") + "-input"}
-                tabIndex={0}
-            />
+            <form onSubmit={handleInputSubmit}>
+                <InputView
+                    placeholder="Page"
+                    value={inputText}
+                    onChange={(event) => handleInput(event.target.value)}
+                    autoComplete="off"
+                    type="number"
+                    id={(id || "pagination") + "-input"}
+                    data-testid={(dataTestId || "pagination") + "-input"}
+                />
+            </form>
             <LabelDivider>/</LabelDivider>
             <Label>{totalPages}</Label>
         </PaginationMobileInput>
@@ -265,7 +273,6 @@ const Component = (
                             focusHighlight={false}
                             $position="left"
                             aria-label="First page"
-                            tabIndex={isFirstPage ? -1 : 0}
                             focusOutline="browser"
                         >
                             <ChevronLineLeftIcon aria-hidden />
@@ -277,19 +284,17 @@ const Component = (
                         focusHighlight={false}
                         $position="left"
                         aria-label="Previous Page"
-                        tabIndex={isFirstPage ? -1 : 0}
                         focusOutline="browser"
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationButton>
-                    {isMobile ? renderMobile() : paginationItemList}
+                    {isMobile ? renderMobile() : renderPaginationItem()}
                     <NavigationButton
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
                         focusHighlight={false}
                         $position="right"
                         aria-label="Next Page"
-                        tabIndex={isLastPage ? -1 : 0}
                         focusOutline="browser"
                     >
                         <ChevronRightIcon aria-hidden />
@@ -301,7 +306,6 @@ const Component = (
                             focusHighlight={false}
                             $position="right"
                             aria-label="last page"
-                            tabIndex={isLastPage ? -1 : 0}
                             focusOutline="browser"
                         >
                             <ChevronLineRightIcon aria-hidden />
