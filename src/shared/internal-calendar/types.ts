@@ -19,7 +19,7 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     /** Indicate calendar variant from the date input component. */
     variant?: DateInputVariant | undefined;
     /** Function to handle cancel/done .*/
-    onWithButton?: ((action: CalendarAction) => void) | undefined;
+    onDismiss?: ((action: CalendarAction) => void) | undefined;
     /** Current calendar view inform to date input. .*/
     onCalendarView?: ((view: View) => void) | undefined;
 }

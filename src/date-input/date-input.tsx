@@ -627,7 +627,7 @@ export const DateInput = ({
                 onCalendarView={handleCalendarView}
                 onHover={handleHoverDayCell}
                 onSelect={(value) => handleChange(value, "calendar")}
-                onWithButton={handleCalendarAction}
+                onDismiss={handleCalendarAction}
             />
         </Container>
     );

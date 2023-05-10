@@ -37,7 +37,7 @@ export const Component = (
         onCalendarView,
         onSelect,
         onHover,
-        onWithButton,
+        onDismiss,
         actionComponent,
         isOpen,
         value,
@@ -185,13 +185,13 @@ export const Component = (
 
     const handleCancelButton = () => {
         // close calendar and use 'confirmed' value if exist
-        performOnWithButtonHandler("reset");
+        performOnDismissHandler("reset");
     };
 
     const handleDoneButton = (isDisabled: boolean) => {
         if (isDisabled) return;
         // close calendar and 'confirmed' the value
-        performOnWithButtonHandler("confirmed");
+        performOnDismissHandler("confirmed");
     };
 
     const handleHover = (value: string) => {
@@ -226,9 +226,9 @@ export const Component = (
         }
     };
 
-    const performOnWithButtonHandler = (action: CalendarAction) => {
-        if (onWithButton) {
-            onWithButton(action);
+    const performOnDismissHandler = (action: CalendarAction) => {
+        if (onDismiss) {
+            onDismiss(action);
         }
     };
 
