@@ -9,8 +9,6 @@ import {
     InteractiveCircle,
     OverflowDisplay,
     RowDayCell,
-    StyleCircleProps,
-    StyleLabelProps,
     StyleProps,
     Wrapper,
 } from "./internal-calendar-day.style";
@@ -193,8 +191,8 @@ export const InternalCalendarDay = ({
 
         const styleLeftProps: StyleProps = {},
             styleRightProps: StyleProps = {},
-            styleCircleProps: StyleCircleProps = {},
-            styleLabelProps: StyleLabelProps = {};
+            styleCircleProps: StyleProps = {},
+            styleLabelProps: StyleProps = {};
 
         if (
             !isNewSelection &&

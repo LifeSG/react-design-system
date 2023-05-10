@@ -4,14 +4,8 @@ import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
 import { CalendarType } from "./types";
 
-export interface StyleCircleProps extends StyleProps {
-    $disabled?: boolean;
-}
-export interface StyleLabelProps extends StyleProps {
-    $disabled?: boolean;
-}
-
 export interface StyleProps {
+    $disabled?: boolean;
     $overlap?: boolean;
     $hovered?: boolean;
     $selected?: boolean;
@@ -19,7 +13,6 @@ export interface StyleProps {
 
 interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
-    $disabled?: boolean;
 }
 
 interface OverflowDisplayProps extends StyleProps {
