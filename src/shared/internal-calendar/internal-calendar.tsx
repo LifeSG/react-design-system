@@ -63,6 +63,7 @@ export const Component = (
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // HOOKS
@@ -258,12 +259,11 @@ export const Component = (
                     ? selectedStartDate
                     : selectedEndDate;
 
-            /**
-             * Buggy here if swap to next the value didn't render to the focus type
-             */
             setCalendarDate(dayjs(targetValue));
             setCurrentView("month-options");
             performOnCalendarView("month-options");
+
+            containerRef.current.focus();
         } else {
             setCurrentView("default");
             performOnCalendarView("default");
@@ -455,7 +455,13 @@ export const Component = (
         return <Container $type={type} tabIndex={-1} />;
 
     return (
-        <Container $type={type} $isOpen={isOpen} {...otherProps} tabIndex={-1}>
+        <Container
+            ref={containerRef}
+            $type={type}
+            $isOpen={isOpen}
+            {...otherProps}
+            tabIndex={-1}
+        >
             <SideArrowButton
                 $direction="left"
                 $type={type}

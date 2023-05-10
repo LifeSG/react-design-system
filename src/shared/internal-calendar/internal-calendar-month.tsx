@@ -38,7 +38,7 @@ export const InternalCalendarMonth = ({
     // =============================================================================
     useEffect(() => {
         generateMonths();
-    }, [calendarDate, selectedDate]);
+    }, [calendarDate]);
 
     // =============================================================================
     // EVENT HANDLERS

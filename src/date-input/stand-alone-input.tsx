@@ -165,7 +165,7 @@ export const StandAloneInput = ({
         // remove the cursor if it
         // - field is 'none'
         // - error happened from range value check
-        if (focusType === "none" || isError) {
+        if (focusType === "none") {
             dayInputRef.current.blur();
             monthInputRef.current.blur();
             yearInputRef.current.blur();
@@ -173,6 +173,7 @@ export const StandAloneInput = ({
     }, [focusType, isError]);
 
     useEffect(() => {
+        // focus day field element
         if (focused) {
             dayInputRef.current.focus();
         }
@@ -538,7 +539,9 @@ export const StandAloneInput = ({
                     tabIndex={readOnly ? -1 : 0}
                     autoComplete={"off"}
                     placeholder={
-                        currentFocus === names[2] && !readOnly ? "" : "YYYY"
+                        focused && currentFocus === names[2] && !readOnly
+                            ? ""
+                            : "YYYY"
                     }
                 />
             </InputContainer>
