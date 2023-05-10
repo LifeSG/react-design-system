@@ -222,13 +222,10 @@ const Component = (
             >
                 {ellipsisStart && hoverLeftButton ? (
                     <Chevron2LeftIcon />
-                ) : (
-                    ellipsisStart && <EllipsisHorizontalIcon />
-                )}
-                {ellipsisEnd && hoverRightButton ? (
+                ) : ellipsisEnd && hoverRightButton ? (
                     <Chevron2RightIcon />
                 ) : (
-                    ellipsisEnd && <EllipsisHorizontalIcon />
+                    <EllipsisHorizontalIcon />
                 )}
             </NavigationItem>
             {ellipsisStart && hoverLeftButton && (
