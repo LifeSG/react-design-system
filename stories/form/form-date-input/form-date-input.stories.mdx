@@ -49,30 +49,44 @@ import { Form } from "@lifesg/react-design-system/form";
 You can use `variant='range'` to specify to range selection.
 
 <Canvas>
-    <Story name="Ranged DateInput">
-        <StoryContainer>
-            <Container>
-                <Form.DateInput
-                    label="This is the default range date input"
-                    variant="range"
-                />
-                <Form.DateInput
-                    label="This is the range date input without button"
-                    variant="range"
-                    withButton={false}
-                />
-                <Form.DateInput
-                    label="This is the disabled state"
-                    disabled
-                    variant="range"
-                />
-                <Form.DateInput
-                    label="This is the readOnly state"
-                    readOnly
-                    variant="range"
-                />
-            </Container>
-        </StoryContainer>
+    <Story name="Range input">
+        {() => {
+            const [startValue] = useState(dayjs().day(10).format("YYYY-MM-DD"));
+            const [endValue] = useState(dayjs().day(20).format("YYYY-MM-DD"));
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.DateInput
+                            label="This is the default range date input"
+                            variant="range"
+                            value={startValue}
+                            endValue={endValue}
+                        />
+                        <Form.DateInput
+                            label="This is the range date input without button"
+                            variant="range"
+                            withButton={false}
+                            value={startValue}
+                            endValue={endValue}
+                        />
+                        <Form.DateInput
+                            label="This is the disabled state"
+                            disabled
+                            variant="range"
+                            value={startValue}
+                            endValue={endValue}
+                        />
+                        <Form.DateInput
+                            label="This is the readOnly state"
+                            readOnly
+                            variant="range"
+                            value={startValue}
+                            endValue={endValue}
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
     </Story>
 </Canvas>
 
