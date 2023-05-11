@@ -11,7 +11,10 @@ export const parameters = {
     },
     layout: "centered",
     controls: {
-        expanded: true,
+        disabled: true,
+    },
+    actions: {
+        disabled: true,
     },
     docs: {
         transformSource: (input) => pretty(input),

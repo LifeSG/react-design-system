@@ -1,6 +1,6 @@
 {
     "name": "@lifesg/react-design-system",
-    "version": "1.0.0-alpha.23",
+    "version": "1.0.2",
     "description": "A component design system for LifeSG web apps",
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
@@ -9,6 +9,7 @@
         "build": "npm run rollup && npm run post:build",
         "build-check": "npm run rollup",
         "rollup": "rm -rf dist && rollup -c",
+        "pack-package": "cd dist && npm pack",
         "post:build": "node ./scripts/post-build.js",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",

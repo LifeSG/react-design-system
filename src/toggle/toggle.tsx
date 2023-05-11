@@ -8,6 +8,7 @@ import {
 } from "./toggle.styles";
 import { ToggleProps } from "./types";
 import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
+import { SimpleIdGenerator } from "../util";
 
 export const Toggle = ({
     type = "checkbox",
@@ -28,8 +29,8 @@ export const Toggle = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selected, setSelected] = useState<boolean>(checked);
-    const [uuid] = useState(() => crypto.randomUUID());
-    const generatedInputId = id ? `${id}-input` : uuid;
+    const [uniqueId] = useState(SimpleIdGenerator.generate());
+    const generatedInputId = id ? `${id}-input` : `tg-${uniqueId}-input`;
 
     const inputRef = useRef<HTMLInputElement>();
 
