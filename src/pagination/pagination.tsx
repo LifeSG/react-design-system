@@ -104,7 +104,9 @@ const Component = (
     };
 
     const handleInput = (value) => {
-        if (value <= totalPages && value > 0) {
+        if (value <= 0 && value !== "") {
+            setInputText("1");
+        } else if (value <= totalPages && value > 0) {
             setInputText(value);
         } else if (value > totalPages) {
             setInputText(totalPages.toString());
@@ -115,7 +117,9 @@ const Component = (
 
     const handleInputSubmit = (event) => {
         event.preventDefault();
-        onPageChange(parseInt(inputText));
+        if (inputText) {
+            onPageChange(parseInt(inputText));
+        }
     };
 
     const onHoverRightButton = () => {
