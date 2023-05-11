@@ -5,7 +5,7 @@ import { Color } from "../color";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
-import { ToggleButton } from "../toggle-button";
+import { Toggle } from "../toggle";
 
 // =============================================================================
 // STYLING
@@ -69,7 +69,6 @@ export const ControlSection = styled.div`
     margin-top: 1rem;
 
     ${MediaQuery.MaxWidth.mobileS} {
-        // border-top: 1px solid ${Color.Neutral[5]};
         flex-direction: column;
         margin-top: 2rem;
         padding-top: 1.5rem;
@@ -165,7 +164,8 @@ export const TimeInput = styled.input`
     }
 `;
 
-export const TimePeriodToggle = styled(ToggleButton)`
+export const TimePeriodToggle = styled(Toggle)`
+    min-width: 5rem;
     :not(:last-of-type) {
         margin-right: 0.5rem;
     }

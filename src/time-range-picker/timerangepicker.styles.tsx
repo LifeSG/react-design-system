@@ -78,18 +78,6 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
         }
     }}
 
-    /* ${MediaQuery.MaxWidth.tablet} {
-        width: 335px;
-    } */
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        /* width: 335px; */
-    }
-
-    /* ${MediaQuery.MaxWidth.mobileM} {
-        width: 309px;
-    }*/
-
     ${MediaQuery.MaxWidth.mobileS} {
         width: 235px;
     }
@@ -100,10 +88,6 @@ export const ArrowRangeIcon = styled(IconButton)`
     left: 50%;
     transform: translateX(-50%);
     padding: 0;
-
-    /* ${MediaQuery.MaxWidth.mobileS} {
-        left: % !important;
-    } */
 `;
 
 export const ArrowRight = styled(ArrowRightIcon)`
@@ -171,7 +155,7 @@ export const BottomHighlightEndTime = styled.div`
     }
 `;
 
-export const InputSelectorElement = styled.input<StyleProps>`
+export const InputSelectorStartTimeElement = styled.input<StyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
 
     display: block;
@@ -206,7 +190,7 @@ export const InputSelectorElement = styled.input<StyleProps>`
     }}
 `;
 
-export const InputSelectorRightElement = styled.input<StyleProps>`
+export const InputSelectorEndTimeElement = styled.input<StyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
 
     display: block;
@@ -236,7 +220,6 @@ export const InputSelectorRightElement = styled.input<StyleProps>`
                     cursor: not-allowed;
                 }
                 :focus-within {
-                    //  border: 1px solid ${Color.Neutral[5](props)};
                 }
             `;
         }

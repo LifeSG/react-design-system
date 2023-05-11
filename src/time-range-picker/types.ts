@@ -1,8 +1,8 @@
 export type TimeRangePickerFormat = "12hr" | "24hr";
 
-export interface Value {
-    startValue: string;
-    endValue: string;
+export interface TimeRangePickerProps {
+    startTime: string;
+    endTime: string;
 }
 
 export interface TimeRangePickerProps extends React.AriaAttributes {
@@ -17,13 +17,13 @@ export interface TimeRangePickerProps extends React.AriaAttributes {
 
     // Input-specific attributes
 
-    value?: Value | undefined;
+    value?: TimeRangePickerProps | undefined;
     placeholder?: string | undefined;
     defaultValue?: string | undefined;
     format?: TimeRangePickerFormat | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;
-    onChange?: ((value: Value) => void) | undefined;
+    onChange?: ((value: TimeRangePickerProps) => void) | undefined;
     onBlur?: (() => void) | undefined;
     onSelectionCancel?: (() => void) | undefined;
 }

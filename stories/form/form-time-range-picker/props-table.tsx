@@ -95,7 +95,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onChange",
                 description:
                     "Called when the user clicks on the 'Done' button in the time selection box. Returns the time value in the format specified",
-                propTypes: ["(value: string) => void"],
+                propTypes: ["(value: TimeRangePickerProps) => void"],
             },
             {
                 name: "onBlur",

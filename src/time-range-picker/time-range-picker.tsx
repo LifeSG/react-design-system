@@ -6,12 +6,12 @@ import {
     ArrowRight,
     BottomHighlightEndTime,
     BottomHighlightStartTime,
-    InputSelectorElement,
-    InputSelectorRightElement,
+    InputSelectorEndTimeElement,
+    InputSelectorStartTimeElement,
     TimeContainer,
     Wrapper,
 } from "./timerangepicker.styles";
-import { TimeRangePickerProps, Value } from "./types";
+import { TimeRangePickerProps } from "./types";
 
 export const TimeRangePicker = ({
     id,
@@ -45,8 +45,8 @@ export const TimeRangePicker = ({
 
     useEffect(() => {
         if (value) {
-            setStartTimeVal(value.startValue);
-            setEndTimeVal(value.endValue);
+            setStartTimeVal(value.startTime);
+            setEndTimeVal(value.endTime);
         }
     }, []);
     useEffect(() => {
@@ -103,9 +103,9 @@ export const TimeRangePicker = ({
         setShowEndTimeSelector(true);
         setStartTimeVal(value);
 
-        const timeValue: Value = {
-            startValue: startTimeVal,
-            endValue: endTimeVal,
+        const timeValue: TimeRangePickerProps = {
+            startTime: startTimeVal,
+            endTime: endTimeVal,
         };
 
         onChange && onChange(timeValue);
@@ -122,9 +122,9 @@ export const TimeRangePicker = ({
         }
         setShowEndTimeSelector(false);
 
-        const timeValue: Value = {
-            startValue: startTimeVal,
-            endValue: endTimeVal,
+        const timeValue: TimeRangePickerProps = {
+            startTime: startTimeVal,
+            endTime: endTimeVal,
         };
 
         onChange && onChange(timeValue);
@@ -157,7 +157,7 @@ export const TimeRangePicker = ({
                 $error={error}
                 $readOnly={readOnly}
             >
-                <InputSelectorElement
+                <InputSelectorStartTimeElement
                     onFocus={handleStartTimeFocus}
                     $focused={showStartTimeSelector}
                     readOnly={readOnly}
@@ -190,7 +190,7 @@ export const TimeRangePicker = ({
 
                 {showEndTimeSelector && <BottomHighlightEndTime />}
 
-                <InputSelectorRightElement
+                <InputSelectorEndTimeElement
                     onFocus={handleEndTimeFocus}
                     $focused={showEndTimeSelector}
                     readOnly={readOnly}
