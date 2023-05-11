@@ -537,7 +537,6 @@ export const DateInput = ({
                         action={endDate.currentType}
                         focusType={currentElement.type}
                         isOpen={calendarOpen}
-                        isError={isError}
                     />
                 </>
             );
@@ -569,7 +568,6 @@ export const DateInput = ({
                 action={startDate.currentType}
                 focusType={currentElement.type}
                 isOpen={calendarOpen}
-                isError={isError}
             />
             {renderRangeInput()}
             {renderIndicateBar()}

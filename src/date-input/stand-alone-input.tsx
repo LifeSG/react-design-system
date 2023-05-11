@@ -35,7 +35,6 @@ interface Props {
     focused: boolean;
     focusType: FocusType;
     isOpen: boolean;
-    isError: boolean;
     onChange: (value: string) => void;
     onFocus: (value: FieldType) => void;
 }
@@ -53,7 +52,6 @@ export const StandAloneInput = ({
     focused,
     focusType,
     isOpen,
-    isError,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -132,7 +130,8 @@ export const StandAloneInput = ({
         if (
             currentFocus === names[0] &&
             dayValue.length === 2 &&
-            monthInputRef.current
+            monthInputRef.current &&
+            focused
         ) {
             monthInputRef.current.focus();
         }
@@ -143,7 +142,8 @@ export const StandAloneInput = ({
         if (
             currentFocus === names[1] &&
             monthValue.length === 2 &&
-            yearInputRef.current
+            yearInputRef.current &&
+            focused
         ) {
             yearInputRef.current.focus();
         }
@@ -157,17 +157,6 @@ export const StandAloneInput = ({
 
         formatDisplayValues(value);
     }, [value, isOpen]);
-
-    useEffect(() => {
-        // remove the cursor if it
-        // - field is 'none'
-        // - error happened from range value check
-        if (focusType === "none") {
-            dayInputRef.current.blur();
-            monthInputRef.current.blur();
-            yearInputRef.current.blur();
-        }
-    }, [focusType, isError]);
 
     useEffect(() => {
         // focus day field element

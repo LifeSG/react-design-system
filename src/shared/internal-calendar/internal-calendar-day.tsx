@@ -194,15 +194,10 @@ export const InternalCalendarDay = ({
             styleCircleProps: StyleProps = {},
             styleLabelProps: StyleProps = {};
 
-        let isSelectedSame = false;
-
-        if (
+        const isSelectedSame =
             selectedStartDate &&
             selectedEndDate &&
-            selectedStartDate === selectedEndDate
-        ) {
-            isSelectedSame = true;
-        }
+            selectedStartDate === selectedEndDate;
 
         if (
             !isNewSelection &&

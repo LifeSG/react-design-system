@@ -59,8 +59,6 @@ You can use `variant='range'` to specify to range selection.
                         <Form.DateInput
                             label="This is the default range date input"
                             variant="range"
-                            value={startValue}
-                            endValue={endValue}
                         />
                         <Form.DateInput
                             label="This is the range date input without button"
@@ -109,6 +107,11 @@ You can use `disabledDates` to specify dates that are not available for selectio
                             label="This date input with disabled dates"
                             disabledDates={disabledDates}
                         />
+                        <Form.DateInput
+                            label="This date input with disabled dates"
+                            variant="range"
+                            disabledDates={disabledDates}
+                        />
                     </Container>
                 </StoryContainer>
             );
@@ -132,6 +135,11 @@ You can restrict selection to a date range using `between`.
                     <Container>
                         <Form.DateInput
                             label="This date input with restrict selection dates"
+                            between={between}
+                        />
+                        <Form.DateInput
+                            label="This date input with restrict selection dates"
+                            variant="range"
                             between={between}
                         />
                     </Container>

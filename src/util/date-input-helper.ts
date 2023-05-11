@@ -29,27 +29,23 @@ export namespace DateInputHelper {
             return false;
         }
 
-        if (
-            between &&
-            between.length &&
-            ![startDate, endDate].every((selectedDate) =>
-                dayjs(selectedDate).isBetween(
-                    between[0],
-                    between[1],
-                    "day",
-                    "[]"
+        if (between && between.length) {
+            if (
+                ![startDate, endDate].every((selectedDate) =>
+                    dayjs(selectedDate).isBetween(
+                        between[0],
+                        between[1],
+                        "day",
+                        "[]"
+                    )
                 )
-            )
-        ) {
-            return false;
-        }
+            ) {
+                return false;
+            }
 
-        if (
-            between &&
-            between.length &&
-            !between.every((value) => dateFormat.test(value))
-        ) {
-            return false;
+            if (!between.every((value) => dateFormat.test(value))) {
+                return false;
+            }
         }
 
         return true;
@@ -77,15 +73,13 @@ export namespace DateInputHelper {
             between.length &&
             !dayjs(value).isBetween(between[0], between[1], "day", "[]")
         ) {
-            return false;
-        }
+            if (!dayjs(value).isBetween(between[0], between[1], "day", "[]")) {
+                return false;
+            }
 
-        if (
-            between &&
-            between.length &&
-            !between.every((value) => dateFormat.test(value))
-        ) {
-            return false;
+            if (!between.every((value) => dateFormat.test(value))) {
+                return false;
+            }
         }
 
         return true;
