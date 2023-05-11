@@ -19,6 +19,16 @@ export interface DropdownDisplayProps<T, V> {
     renderListItem?:
         | ((item: T, args: ListItemRenderArgs) => JSX.Element)
         | undefined;
+    /**
+     * Function to render a custom call-to-action component at the bottom of the dropdown list.
+     * @param hideOptions - A function that can be called to hide the dropdown list.
+     * @param displayOptions - The currently displayed list items in the dropdown list.
+     * @returns A JSX.Element representing the custom call-to-action component.
+     */
+    renderCustomCallToAction?: (
+        hideOptions: () => void,
+        displayOptions: T[]
+    ) => JSX.Element | undefined;
 }
 
 export interface DropdownStyleProps {
@@ -33,12 +43,12 @@ export interface DropdownEventHandlerProps<T, V> {
 export interface DropdownSearchProps<T> {
     /** Specifying will render a search bar in the dropdown */
     enableSearch?: boolean | undefined;
+    /** If specified, the default no results display will not be rendered */
+    hideNoResultsDisplay?: boolean | undefined;
     searchPlaceholder?: string | undefined;
     /** Custom function to perform search when a user keys in a value in the search input */
     searchFunction?: ((searchValue: string) => T[]) | undefined;
     onSearch?: (() => void) | undefined;
-    /** Specifying if no results prompt should be hidden*/
-    hideNoResultsDisplay?: boolean | undefined;
 }
 
 export interface DropdownListProps<T, V>
@@ -59,13 +69,10 @@ export interface DropdownListProps<T, V>
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     itemTruncationType?: TruncateType | undefined;
 
-    onDismiss?: (() => void) | undefined;
+    onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
     onSelectAll?: (() => void) | undefined;
     onRetry?: (() => void) | undefined;
     onBlur?: (() => void) | undefined;
-
-    /** Callback function to update displaylistItems when there is a UI change in display list */
-    onDisplayListItemsUpdate?: (displayListItems: T[]) => void | undefined;
 }
 
 export interface ListItemSelectorProps {

@@ -158,7 +158,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "hideNoResultsDisplay",
-                description: "Specifying if no results prompt should be hidden",
+                description:
+                    "If specified, the default no results display will not be rendered",
                 propTypes: ["boolean"],
             },
             {
@@ -166,7 +167,7 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Function to render optional call to action at the bottom of dropdown list",
                 propTypes: [
-                    "(showOptions: () => void, hideOptions: () => void, displayOptions: T[]) => JSX.Element",
+                    "(hideOptions: () => void, displayOptions: T[]) => JSX.Element",
                 ],
             },
         ],

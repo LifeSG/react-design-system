@@ -64,12 +64,6 @@ export interface InputSelectProps<T, V>
     valueToStringFunction?: ((value: V) => string) | undefined;
     /** Function to render selected custom component */
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
-    /** Function to render call to action at the bottom of dropdown list */
-    renderCustomCallToAction?: (
-        showOptions: () => void,
-        hideOptions: () => void,
-        displayOptions: T[]
-    ) => JSX.Element | undefined;
 }
 
 /** To be exposed for Form component inheritance */

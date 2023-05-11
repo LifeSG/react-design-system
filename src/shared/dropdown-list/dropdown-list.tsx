@@ -48,8 +48,8 @@ export const DropdownList = <T, V>({
     itemTruncationType = "end",
     renderListItem,
     onBlur,
-    onDisplayListItemsUpdate,
     hideNoResultsDisplay,
+    renderCustomCallToAction,
     ...otherProps
 }: DropdownListProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -69,6 +69,7 @@ export const DropdownList = <T, V>({
     const listRef = useRef<HTMLUListElement>();
     const listItemRefs = useRef<HTMLButtonElement[]>([]);
     const searchInputRef = useRef<HTMLInputElement>();
+    const customCallToActionRef = useRef<HTMLDivElement>();
 
     /**
      * Have to use refs to allow the state values to be accessible
@@ -95,11 +96,6 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        if (onDisplayListItemsUpdate) {
-            onDisplayListItemsUpdate(displayListItems);
-        }
-    }, [displayListItems]);
 
     useEffect(() => {
         document.addEventListener("keydown", handleKeyboardPress);
@@ -116,7 +112,10 @@ export const DropdownList = <T, V>({
         setSearchValue("");
 
         if (visible) {
-            setListHeight(getListHeight());
+            // Give some time for the custom call-to-action to be rendered
+            setTimeout(() => {
+                setListHeight(getListHeight());
+            });
 
             // Focus search input if there is a search input
             if (searchInputRef && searchInputRef.current) {
@@ -218,9 +217,14 @@ export const DropdownList = <T, V>({
     };
 
     const getListHeight = () => {
-        return listRef && listRef.current
-            ? listRef.current.getBoundingClientRect().height
+        const listHeight =
+            listRef && listRef.current
+                ? listRef.current.getBoundingClientRect().height
+                : 0;
+        const customCallToActionHeight = customCallToActionRef.current
+            ? customCallToActionRef.current.getBoundingClientRect().height
             : 0;
+        return listHeight + customCallToActionHeight;
     };
 
     // =============================================================================
@@ -254,7 +258,7 @@ export const DropdownList = <T, V>({
                     }
                     break;
                 case "Escape":
-                    if (onDismiss) onDismiss();
+                    if (onDismiss) onDismiss(true);
                     break;
                 default:
                     break;
@@ -472,15 +476,30 @@ export const DropdownList = <T, V>({
         );
     };
 
+    const renderBottomCta = () => {
+        if (!visible || !renderCustomCallToAction) {
+            return;
+        }
+
+        return (
+            <div ref={customCallToActionRef} data-testid="custom-cta">
+                {renderCustomCallToAction(onDismiss, displayListItems)}
+            </div>
+        );
+    };
+
     return (
-        <Container
-            style={containerStyles}
-            data-testid={
-                visible ? "dropdown-container" : "dropdown-container-hidden"
-            }
-            ref={nodeRef}
-        >
-            {renderList()}
-        </Container>
+        <>
+            <Container
+                style={containerStyles}
+                data-testid={
+                    visible ? "dropdown-container" : "dropdown-container-hidden"
+                }
+                ref={nodeRef}
+            >
+                {renderList()}
+                {renderBottomCta()}
+            </Container>
+        </>
     );
 };

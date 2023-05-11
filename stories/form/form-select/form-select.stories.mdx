@@ -113,11 +113,7 @@ You are able to customise the optional call to action at the bottom of dropdown 
                     displayValueExtractor={(item) => item.label}
                     enableSearch
                     hideNoResultsDisplay
-                    renderCustomCallToAction={(
-                        showOptions,
-                        hideOptions,
-                        list
-                    ) => {
+                    renderCustomCallToAction={(hideOptions, list) => {
                         return (
                             <Button.Default
                                 style={{ width: "100%" }}
