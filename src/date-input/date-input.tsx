@@ -106,12 +106,10 @@ export const DateInput = ({
     }, []);
 
     useEffect(() => {
-        const _value = value !== INVALID_VALUE ? value : "";
-        dispatchStart({ type: "selected", value: _value });
+        dispatchStart({ type: "selected", value: value });
 
         if (variant === "range") {
-            const _endValue = endValue !== INVALID_VALUE ? endValue : "";
-            dispatchEnd({ type: "selected", value: _endValue });
+            dispatchEnd({ type: "selected", value: endValue });
         }
     }, [value, endValue]);
 
@@ -167,8 +165,6 @@ export const DateInput = ({
 
     const handleChange = (value: string, from: ActionComponent) => {
         if (value === INVALID_VALUE || value === "") {
-            performOnChangeHandler(value, true);
-
             // update state/calendar
             if (value === "") {
                 handleReducer("selected", value);
@@ -187,8 +183,7 @@ export const DateInput = ({
 
         setIsError(!isValid);
         setActionComponent(from);
-        handleFocusElement(isValid, from);
-        performOnChangeHandler(value, isValid);
+        handleFocusElement(isValid, from, value);
     };
 
     const handleFocus = (value: FieldType) => {
@@ -227,6 +222,7 @@ export const DateInput = ({
                 }
 
                 handleReducer("confirmed");
+                performOnChangeHandler();
                 break;
         }
 
@@ -268,21 +264,26 @@ export const DateInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnChangeHandler = (
-        value: string,
-        isOtherValueValid: boolean
-    ) => {
-        const returnValue = getFormattedValue(value, isOtherValueValid);
+    const performOnChangeHandler = (changeValue?: string) => {
+        const focusType = currentElement.type as FocusType;
+        const returnValue: ChangeValueTypes = {
+            start: startDate.selected,
+            end: endDate.selected,
+        };
+
+        // Update the specific field value.
+        // - only use in without button
+        if (changeValue) {
+            returnValue[focusType] = changeValue;
+        }
+
+        if (variant === "single") delete returnValue.end;
 
         if (onChange) {
             onChange(returnValue);
         }
-    };
 
-    const performOnChangeRawHandler = (value: string) => {
         if (onChangeRaw) {
-            const returnValue = getFormattedValue(value, true);
-
             const returnRawValue =
                 DateInputHelper.getFormattedRawValue(returnValue);
 
@@ -438,7 +439,11 @@ export const DateInput = ({
         }
     };
 
-    const handleFocusElement = (isValid: boolean, from: ActionComponent) => {
+    const handleFocusElement = (
+        isValid: boolean,
+        from: ActionComponent,
+        value?: string
+    ) => {
         // input invalid value
         if (variant === "range" && !isValid) {
             const { field: otherField, type: otherType } = getAnotherElement();
@@ -468,6 +473,7 @@ export const DateInput = ({
         ) {
             setCalendarOpen(false);
             handleReducer("confirmed");
+            performOnChangeHandler(value);
             setCurrentElement({
                 field: "none",
                 type: "none",
@@ -502,42 +508,6 @@ export const DateInput = ({
         };
     };
 
-    /**
-     * Transform the output value for the user
-     * @param isValid is to indicate another value status in range varaint
-     * As example: both value been selected and selected a new startDate after endDate,
-     * endDate will become INVALID
-     */
-    const getFormattedValue = (value: string, isValid: boolean) => {
-        const focusType = currentElement.type as FocusType;
-
-        let values: ChangeValueTypes = {};
-
-        if (variant === "range") {
-            switch (focusType) {
-                case "start":
-                    values = {
-                        start: value,
-                        end: isValid ? endDate.selected : INVALID_VALUE,
-                    };
-
-                    break;
-                case "end":
-                    values = {
-                        start: isValid ? startDate.selected : INVALID_VALUE,
-                        end: value,
-                    };
-                    break;
-            }
-        } else if (variant === "single") {
-            values = {
-                start: isValid ? value : INVALID_VALUE,
-            };
-        }
-
-        return values;
-    };
-
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -557,9 +527,6 @@ export const DateInput = ({
                     <StandAloneInput
                         disabled={disabled}
                         onChange={(value) => handleChange(value, "input")}
-                        onChangeRaw={(value) =>
-                            performOnChangeRawHandler(value)
-                        }
                         onFocus={handleFocus}
                         readOnly={readOnly}
                         focused={currentElement.type === "end"}
@@ -592,7 +559,6 @@ export const DateInput = ({
             <StandAloneInput
                 disabled={disabled}
                 onChange={(value) => handleChange(value, "input")}
-                onChangeRaw={(value) => performOnChangeRawHandler(value)}
                 onFocus={handleFocus}
                 readOnly={readOnly}
                 focused={currentElement.type === "start"}
