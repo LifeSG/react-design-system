@@ -19,7 +19,7 @@ export const TimeRangePicker = ({
     error,
     value,
     defaultValue,
-    format = "24hr",
+    format = "12hr",
     readOnly,
     onChange,
     onBlur,
@@ -157,7 +157,7 @@ export const TimeRangePicker = ({
                 <InputSelectorStartTimeElement
                     onFocus={handleStartTimeFocus}
                     $focused={showStartTimeSelector}
-                    readOnly={readOnly}
+                    readOnly
                     placeholder={"From"}
                     value={TimeRangePickerHelper.formatValue(
                         startTimeVal,
@@ -191,7 +191,7 @@ export const TimeRangePicker = ({
                 <InputSelectorEndTimeElement
                     onFocus={handleEndTimeFocus}
                     $focused={showEndTimeSelector}
-                    readOnly={readOnly}
+                    readOnly
                     placeholder={"To"}
                     value={TimeRangePickerHelper.formatValue(
                         endTimeVal,

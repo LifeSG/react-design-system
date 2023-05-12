@@ -37,35 +37,43 @@ export namespace TimeRangePickerHelper {
         if (!value) return timeValues;
 
         try {
-            if (format === "24hr") {
-                const plain = convertToPlain(value, format);
-                // Add minute
-                timeValues.minute = StringHelper.padValue(plain.minute);
+            // TODO: hold release 24hr format
+            // if (format === "24hr") {
+            //     const plain = convertToPlain(value, format);
+            //     // Add minute
+            //     timeValues.minute = StringHelper.padValue(plain.minute);
 
-                // Determine period, and convert to 12 hour value
-                const hour = parseInt(plain.hour);
+            //     // Determine period, and convert to 12 hour value
+            //     const hour = parseInt(plain.hour);
 
-                if (Math.floor(hour / 12) === 0) {
-                    timeValues.period = "am";
-                    timeValues.hour =
-                        hour === 0
-                            ? "12"
-                            : StringHelper.padValue(hour.toString());
-                } else {
-                    timeValues.period = "pm";
-                    timeValues.hour =
-                        hour === 12
-                            ? hour.toString()
-                            : StringHelper.padValue((hour - 12).toString());
-                }
-            } else {
-                const plain = convertToPlain(value, format);
+            //     if (Math.floor(hour / 12) === 0) {
+            //         timeValues.period = "am";
+            //         timeValues.hour =
+            //             hour === 0
+            //                 ? "12"
+            //                 : StringHelper.padValue(hour.toString());
+            //     } else {
+            //         timeValues.period = "pm";
+            //         timeValues.hour =
+            //             hour === 12
+            //                 ? hour.toString()
+            //                 : StringHelper.padValue((hour - 12).toString());
+            //     }
+            // } else {
+            //     const plain = convertToPlain(value, format);
 
-                timeValues.hour = StringHelper.padValue(plain.hour);
-                timeValues.minute = StringHelper.padValue(plain.minute);
-                timeValues.period =
-                    plain.period.toLowerCase() === "am" ? "am" : "pm";
-            }
+            //     timeValues.hour = StringHelper.padValue(plain.hour);
+            //     timeValues.minute = StringHelper.padValue(plain.minute);
+            //     timeValues.period =
+            //         plain.period.toLowerCase() === "am" ? "am" : "pm";
+            // }
+
+            const plain = convertToPlain(value, format);
+
+            timeValues.hour = StringHelper.padValue(plain.hour);
+            timeValues.minute = StringHelper.padValue(plain.minute);
+            timeValues.period =
+                plain.period.toLowerCase() === "am" ? "am" : "pm";
 
             return timeValues;
         } catch (error) {
@@ -187,9 +195,12 @@ const isValidHour = (
     format: TimeRangePickerFormat
 ): boolean => {
     const numValue = parseInt(hourString);
-    return format === "24hr"
-        ? numValue >= 0 && numValue <= 23
-        : numValue >= 1 && numValue <= 12;
+    // hold release 24hr format
+    // return format === "24hr"
+    //     ? numValue >= 0 && numValue <= 23
+    //     : numValue >= 1 && numValue <= 12;
+
+    return numValue >= 1 && numValue <= 12;
 };
 
 const isValidMinutes = (hourString: string): boolean => {

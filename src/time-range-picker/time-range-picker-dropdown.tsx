@@ -254,17 +254,18 @@ export const TimeRangePickerDropdown = ({
     };
 
     const handleConfirm = () => {
-        let formattedValue: string;
+        const formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
 
-        if (format === "24hr") {
-            formattedValue = TimeRangePickerHelper.convertTo24HourFormat({
-                hour: hourValue,
-                minute: minuteValue,
-                period: timePeriod,
-            });
-        } else {
-            formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
-        }
+        // TODO: hold release 24hr format
+        // if (format === "24hr") {
+        //     formattedValue = TimeRangePickerHelper.convertTo24HourFormat({
+        //         hour: hourValue,
+        //         minute: minuteValue,
+        //         period: timePeriod,
+        //     });
+        // } else {
+        //     formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
+        // }
 
         onChange(formattedValue);
     };
@@ -294,6 +295,7 @@ export const TimeRangePickerDropdown = ({
             <TimeInput
                 aria-label="hour"
                 type="number"
+                tabIndex={show ? 0 : -1}
                 name={EInputName.HOUR}
                 id="hour"
                 maxLength={2}
@@ -336,6 +338,7 @@ export const TimeRangePickerDropdown = ({
             <TimeInput
                 aria-label="minute"
                 type="number"
+                tabIndex={show ? 0 : -1}
                 name={EInputName.MINUTE}
                 id="minute"
                 maxLength={2}
@@ -363,30 +366,35 @@ export const TimeRangePickerDropdown = ({
         </InputContainer>
     );
 
-    const renderTimePeriodControl = () => (
-        <TimePeriodSection>
-            <TimePeriodToggle
-                checked={timePeriod === "am"}
-                name={ETimePeriodToggleName.AM}
-                type="radio"
-                onChange={handleTimePeriodChange}
-                data-testid={getTestId("am-toggle")}
-                aria-label="AM"
-            >
-                AM
-            </TimePeriodToggle>
-            <TimePeriodToggle
-                checked={timePeriod === "pm"}
-                name={ETimePeriodToggleName.PM}
-                type="radio"
-                onChange={handleTimePeriodChange}
-                data-testid={getTestId("pm-toggle")}
-                aria-label="PM"
-            >
-                PM
-            </TimePeriodToggle>
-        </TimePeriodSection>
-    );
+    const renderTimePeriodControl = () => {
+        // FIXME: this results in a flash when switching inputs
+        if (!show) return;
+
+        return (
+            <TimePeriodSection>
+                <TimePeriodToggle
+                    checked={timePeriod === "am"}
+                    name={ETimePeriodToggleName.AM}
+                    type="radio"
+                    onChange={handleTimePeriodChange}
+                    data-testid={getTestId("am-toggle")}
+                    aria-label="AM"
+                >
+                    AM
+                </TimePeriodToggle>
+                <TimePeriodToggle
+                    checked={timePeriod === "pm"}
+                    name={ETimePeriodToggleName.PM}
+                    type="radio"
+                    onChange={handleTimePeriodChange}
+                    data-testid={getTestId("pm-toggle")}
+                    aria-label="PM"
+                >
+                    PM
+                </TimePeriodToggle>
+            </TimePeriodSection>
+        );
+    };
 
     // React spring animation configuration
     const styles = useSpring({
@@ -411,6 +419,7 @@ export const TimeRangePickerDropdown = ({
                 </InputSection>
                 <ControlSection>
                     <ControlButton
+                        tabIndex={show ? 0 : -1}
                         aria-label="close selector"
                         type="button"
                         styleType="secondary"
@@ -420,6 +429,7 @@ export const TimeRangePickerDropdown = ({
                         Cancel
                     </ControlButton>
                     <ControlButton
+                        tabIndex={show ? 0 : -1}
                         aria-label="confirm selection"
                         type="button"
                         onClick={handleConfirm}

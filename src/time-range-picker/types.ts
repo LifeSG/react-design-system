@@ -1,4 +1,4 @@
-export type TimeRangePickerFormat = "12hr" | "24hr";
+export type TimeRangePickerFormat = "12hr";
 
 export interface TimeRangeSelectorProps {
     startTime: string;
