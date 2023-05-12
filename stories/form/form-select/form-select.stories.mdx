@@ -1,8 +1,9 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { InputSelect } from "src/input-select";
 import { Form } from "src/form";
 import { Text } from "src/text";
+import { Button } from "src/button";
 import {
     Heading3,
     Heading4,
@@ -13,10 +14,11 @@ import {
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
 import {
+    Checkmark,
+    CustomCTAContainer,
     Image,
     ImageWrapper,
     ImageWrapperSelected,
-    Checkmark,
 } from "./doc-elements";
 
 <Meta title="Form/Select" component={Form.Select} />
@@ -177,6 +179,51 @@ You are able to customise the display of the dropdown list items as well as the 
     </Story>
 </Canvas>
 
+<Heading3>With custom call to action at the bottom of dropdown list</Heading3>
+
+You are also able to specify a custom call to action component at the bottom
+of the list.
+
+<Canvas>
+    <Story name="With custom call to action">
+        <StoryContainer>
+            <Container>
+                <Form.Select
+                    label="This has a call to action at the bottom of dropdown list"
+                    options={[
+                        { value: "A", label: "Option A" },
+                        { value: "B", label: "Option B" },
+                        { value: "C", label: "Option C" },
+                        { value: "D", label: "Option D" },
+                    ]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    enableSearch
+                    hideNoResultsDisplay
+                    renderCustomCallToAction={(hideOptions, options) => {
+                        return (
+                            <CustomCTAContainer>
+                                <Button.Default
+                                    style={{ width: "100%" }}
+                                    onClick={() => {
+                                        alert("Clicked on custom CTA");
+                                        hideOptions();
+                                    }}
+                                >
+                                    {options.length === 0
+                                        ? "Add first option"
+                                        : "Add another option"}
+                                </Button.Default>
+                            </CustomCTAContainer>
+                        );
+                    }}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
 <Heading3>Using the field as a standalone</Heading3>
 
 In the case that you require the select field as a standalone, you can do this.
@@ -185,7 +232,7 @@ In the case that you require the select field as a standalone, you can do this.
 import { InputSelect } from "@lifesg/react-design-system/input-select";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
@@ -218,7 +265,7 @@ import { InputSelect } from "@lifesg/react-design-system/input-select";
             </Container>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 
