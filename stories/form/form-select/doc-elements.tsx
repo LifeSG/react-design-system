@@ -27,3 +27,9 @@ export const Checkmark = styled(TickIcon)`
     width: 32px;
     color: ${Color.Primary};
 `;
+
+export const CustomCTAContainer = styled.div`
+    margin: 0 0.5rem;
+    border-top: 1px solid ${Color.Neutral[4]};
+    padding: 1rem 0.5rem;
+`;
