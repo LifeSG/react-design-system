@@ -58,11 +58,11 @@ export const DropdownList = <T, V>({
     const [focusedListIndex, _setFocusedIndex] = useState<number>(0);
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, _setDisplayListItems] = useState<T[]>(listItems);
-    const [listHeight, setListHeight] = useState<number>(0);
+    const [contentHeight, setContentHeight] = useState<number>(0);
 
     // React spring animation configuration
     const containerStyles = useSpring({
-        height: listHeight,
+        height: contentHeight,
     });
 
     const nodeRef = useRef<HTMLDivElement>();
@@ -114,7 +114,7 @@ export const DropdownList = <T, V>({
         if (visible) {
             // Give some time for the custom call-to-action to be rendered
             setTimeout(() => {
-                setListHeight(getListHeight());
+                setContentHeight(getContentHeight());
             });
 
             // Focus search input if there is a search input
@@ -126,15 +126,15 @@ export const DropdownList = <T, V>({
                 listItemRefs.current[focusedListIndex].focus();
             }
         } else {
-            setListHeight(0);
+            setContentHeight(0);
         }
     }, [visible]);
 
     useEffect(() => {
         if (visible) {
             // safeguard
-            const listHeight = getListHeight();
-            setListHeight(listHeight);
+            const contentHeight = getContentHeight();
+            setContentHeight(contentHeight);
         }
     }, [displayListItems]);
 
@@ -216,7 +216,7 @@ export const DropdownList = <T, V>({
         }
     };
 
-    const getListHeight = () => {
+    const getContentHeight = () => {
         const listHeight =
             listRef && listRef.current
                 ? listRef.current.getBoundingClientRect().height
