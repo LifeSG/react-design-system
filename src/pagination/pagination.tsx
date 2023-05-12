@@ -9,7 +9,6 @@ import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 import React, { useState } from "react";
 import {
     EllipsisContainer,
-    EllipsisItem,
     Hover,
     InputView,
     Label,
@@ -25,6 +24,7 @@ import {
 import { PaginationsProps } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../spec/media-spec";
+import { StringHelper } from "../util/string-helper";
 
 const Component = (
     {
@@ -56,22 +56,24 @@ const Component = (
     });
 
     const firstPaginationItem =
-        activePage > 1 ? () => handlePaginationItemOnClick(1) : undefined;
+        activePage > 1 ? () => handlePaginationItemClick(1) : undefined;
     const lastPaginationItem =
         activePage < totalPages
-            ? () => handlePaginationItemOnClick(totalPages)
+            ? () => handlePaginationItemClick(totalPages)
             : undefined;
     const prevPaginationItem =
         activePage > 1
-            ? () => handlePaginationItemOnClick(activePage - 1)
+            ? () => handlePaginationItemClick(activePage - 1)
             : undefined;
     const nextPaginationItem =
         activePage < totalPages
             ? () =>
-                  handlePaginationItemOnClick(
-                      parseInt(activePage.toString()) + 1
-                  )
+                  handlePaginationItemClick(parseInt(activePage.toString()) + 1)
             : undefined;
+    const hoverAction = (position: boolean) =>
+        position ? () => onHoverLeftButton() : () => onHoverRightButton();
+    const blurAction = (position: boolean) =>
+        position ? () => onBlurLeftButton() : () => onBlurRightButton();
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -79,39 +81,52 @@ const Component = (
     const setInputValue = (value) => {
         setInputText(value.toString());
     };
+
+    const formatInput = (value: string) => {
+        return /^[0-9]$/.test(value)
+            ? StringHelper.padValue(value, true)
+            : value;
+    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handlePaginationItemOnClick = (pageIndex: number) => {
+    const handlePaginationItemClick = (pageIndex: number) => {
         if (onPageChange) {
             onPageChange(pageIndex);
             setInputValue(pageIndex);
         }
     };
 
-    const handleFastForwardOnClick = () => {
-        handlePaginationItemOnClick(activePage - 5);
+    const handleFastForwardClick = () => {
+        handlePaginationItemClick(activePage + 5);
+        setInputValue(activePage + 5);
+        setHoverRightButton(true);
+        setHoverLeftButton(false);
+    };
+
+    const handleFastBackwardClick = () => {
+        handlePaginationItemClick(activePage - 5);
         setInputValue(activePage - 5);
         setHoverRightButton(false);
-        setHoverLeftButton(false);
+        setHoverLeftButton(true);
     };
 
-    const handleFastBackwardsOnClick = () => {
-        handlePaginationItemOnClick(activePage + 5);
-        setInputValue(activePage + 5);
-        setHoverRightButton(false);
-        setHoverLeftButton(false);
-    };
-
-    const handleInput = (value) => {
-        if (value <= 0 && value !== "") {
-            setInputText("1");
-        } else if (value <= totalPages && value > 0) {
-            setInputText(value);
-        } else if (value > totalPages) {
-            setInputText(totalPages.toString());
-        } else if (value < 1) {
-            setInputText(value);
+    const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        const re = /^[0-9\b]+$/;
+        if (value === undefined || value.length === 0) {
+            setInputText("");
+        } else if (!re.test(value)) {
+            setInputText(value.replace(/[^0-9]/g, ""));
+        } else {
+            const valueInt = parseInt(value.replace(/[^0-9]/g, ""));
+            if (valueInt > totalPages) {
+                setInputValue(totalPages);
+            } else if (valueInt < 1) {
+                setInputValue(1);
+            } else {
+                setInputValue(valueInt);
+            }
         }
     };
 
@@ -126,7 +141,7 @@ const Component = (
         setHoverRightButton(true);
     };
 
-    const onLeaveRightButton = () => {
+    const onBlurRightButton = () => {
         setHoverRightButton(false);
     };
 
@@ -134,7 +149,7 @@ const Component = (
         setHoverLeftButton(true);
     };
 
-    const onLeaveLeftButton = () => {
+    const onBlurLeftButton = () => {
         setHoverLeftButton(false);
     };
     // =============================================================================
@@ -151,7 +166,7 @@ const Component = (
                 return (
                     <PageItem
                         key={pageIndex}
-                        onClick={() => handlePaginationItemOnClick(pageIndex)}
+                        onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
                         aria-label={"Page " + pageIndex}
                     >
@@ -187,7 +202,7 @@ const Component = (
                 return (
                     <PageItem
                         key={pageIndex}
-                        onClick={() => handlePaginationItemOnClick(pageIndex)}
+                        onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
                         aria-label={"Page " + pageIndex}
                     >
@@ -210,33 +225,31 @@ const Component = (
                         ? "Go to page " + (activePage - 5)
                         : "Go to page " + (activePage + 5)
                 }
-                onMouseOver={
-                    ellipsisStart ? onHoverLeftButton : onHoverRightButton
-                }
-                onMouseOut={
-                    ellipsisStart ? onLeaveLeftButton : onLeaveRightButton
-                }
-                onFocus={ellipsisStart ? onHoverLeftButton : onHoverRightButton}
-                onBlur={ellipsisStart ? onLeaveLeftButton : onLeaveRightButton}
+                onMouseOver={hoverAction(ellipsisStart)}
+                onMouseOut={blurAction(ellipsisStart)}
+                onFocus={hoverAction(ellipsisStart)}
+                onBlur={blurAction(ellipsisStart)}
                 onClick={
                     ellipsisStart
-                        ? handleFastForwardOnClick
-                        : handleFastBackwardsOnClick
+                        ? handleFastBackwardClick
+                        : handleFastForwardClick
                 }
             >
                 {ellipsisStart && hoverLeftButton ? (
-                    <Chevron2LeftIcon />
+                    <Chevron2LeftIcon aria-hidden />
                 ) : ellipsisEnd && hoverRightButton ? (
-                    <Chevron2RightIcon />
+                    <Chevron2RightIcon aria-hidden />
                 ) : (
-                    <EllipsisHorizontalIcon />
+                    <EllipsisHorizontalIcon aria-hidden />
                 )}
             </NavigationItem>
             {ellipsisStart && hoverLeftButton && (
-                <Hover>Previous 5 pages</Hover>
+                <Hover aria-label="Previous 5 pages">Previous 5 pages</Hover>
             )}
 
-            {ellipsisEnd && hoverRightButton && <Hover>Next 5 pages</Hover>}
+            {ellipsisEnd && hoverRightButton && (
+                <Hover aria-label="Next 5 pages">Next 5 pages</Hover>
+            )}
         </EllipsisContainer>
     );
 
@@ -246,9 +259,9 @@ const Component = (
                 <InputView
                     placeholder="Page"
                     value={inputText}
-                    onChange={(event) => handleInput(event.target.value)}
+                    onChange={handleInput}
                     autoComplete="off"
-                    type="number"
+                    type="numeric"
                     id={(id || "pagination") + "-input"}
                     data-testid={(dataTestId || "pagination") + "-input"}
                 />

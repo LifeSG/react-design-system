@@ -188,13 +188,11 @@ export const PaginationMobileInput = styled.div`
 
 export const Label = styled(Text.Body)`
     white-space: nowrap;
-    ${TextStyleHelper.getTextStyle("Body", 400)};
 `;
 
 export const LabelDivider = styled(Text.Body)`
     white-space: nowrap;
     margin: 0 1rem;
-    ${TextStyleHelper.getTextStyle("Body", 400)};
 `;
 
 export const InputView = styled(Input)`
@@ -209,6 +207,10 @@ export const InputView = styled(Input)`
 
     input {
         text-align: center;
+
+        ::placeholder {
+            ${TextStyleHelper.getTextStyle("XSmall", 400)};
+        }
     }
 `;
 
