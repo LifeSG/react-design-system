@@ -37,7 +37,7 @@ export namespace TimeRangePickerHelper {
         if (!value) return timeValues;
 
         try {
-            // hold release 24hr format
+            // TODO: hold release 24hr format
             // if (format === "24hr") {
             //     const plain = convertToPlain(value, format);
             //     // Add minute

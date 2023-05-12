@@ -256,7 +256,7 @@ export const TimeRangePickerDropdown = ({
     const handleConfirm = () => {
         const formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
 
-        // hold release 24hr format
+        // TODO: hold release 24hr format
         // if (format === "24hr") {
         //     formattedValue = TimeRangePickerHelper.convertTo24HourFormat({
         //         hour: hourValue,
@@ -367,6 +367,7 @@ export const TimeRangePickerDropdown = ({
     );
 
     const renderTimePeriodControl = () => {
+        // FIXME: this results in a flash when switching inputs
         if (!show) return;
 
         return (
