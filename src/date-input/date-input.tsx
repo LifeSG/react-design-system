@@ -1,416 +1,598 @@
-import React, { useEffect, useRef, useState } from "react";
-import { DateHelper } from "../util";
-import { StringHelper } from "../util/string-helper";
+import { useEffect, useReducer, useRef, useState } from "react";
 import {
-    BaseInput,
+    ArrowRangeIcon,
+    ArrowRight,
     Container,
-    Divider,
-    InputContainer,
-    MonthInput,
-    YearInput,
+    IndicateBar,
 } from "./date-input.style";
-import { DateInputProps } from "./types";
+import { FieldType, INVALID_VALUE, StandAloneInput } from "./stand-alone-input";
+import { ChangeValueTypes, DateInputProps } from "./types";
+import {
+    ActionType,
+    INITIAL_INPUT_VALUES,
+    ReducerState,
+    dateInputReducer,
+} from "./date-input-reducer";
+import {
+    CalendarAction,
+    CalendarRef,
+    FocusType,
+    InternalCalendar,
+    View,
+} from "../shared/internal-calendar";
+import { DateInputHelper } from "../util/date-input-helper";
+import { useEventListener } from "../util/use-event-listener";
+import { useMediaQuery } from "react-responsive";
+import { MediaWidths } from "../spec/media-spec";
 
-type FieldType = "day" | "month" | "year" | "none";
-type ValueFieldTypes = Exclude<FieldType, "none">;
+interface CurrentFocusTypes {
+    field: FieldType;
+    type: FocusType;
+    count: number;
+}
+
+export type ActionComponent = "calendar" | "input";
 
 export const DateInput = ({
+    between,
     disabled,
+    disabledDates,
     error,
     value,
+    endValue,
     onChange,
     onBlur,
     onChangeRaw,
     onBlurRaw,
+    withButton: _withButton = true,
     readOnly,
     id,
+    variant = "single",
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [dayValue, _setDayValue] = useState<string>("");
-    const [monthValue, _setMonthValue] = useState<string>("");
-    const [yearValue, _setYearValue] = useState<string>("");
-    const [currentFocus, _setCurrentFocus] = useState<FieldType>("none");
+    const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+    const [actionComponent, setActionComponent] =
+        useState<ActionComponent>("calendar");
+    const [calendarView, setCalendarView] = useState<View>("default");
+    const [currentElement, setCurrentElement] = useState<CurrentFocusTypes>({
+        field: "none",
+        type: "none",
+        count: 0,
+    });
+    const [isError, setIsError] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const dayInputRef = useRef<HTMLInputElement>(null);
-    const monthInputRef = useRef<HTMLInputElement>(null);
-    const yearInputRef = useRef<HTMLInputElement>(null);
+    const calendarRef = useRef<CalendarRef>();
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
+
+    // show button if it is mobile view
+    const withButton = _withButton || isMobile;
+
+    // =============================================================================
+    // HOOKS
+    // =============================================================================
+    const [startDate, dispatchStart] = useReducer(
+        dateInputReducer,
+        INITIAL_INPUT_VALUES
+    );
+
+    const [endDate, dispatchEnd] = useReducer(
+        dateInputReducer,
+        INITIAL_INPUT_VALUES
+    );
 
     /**
-     * Have to use refs to allow the state values to be accessible
-     * by the event listener callback functions
+     * Allows effect below to always get latest state value
      * Reference:
-     * https://stackoverflow.com/questions/55265255/react-usestate-hook-event-handler-using-initial-state
+     * https://stackoverflow.com/questions/65125665/new-event-doesnt-have-latest-state-value-updated-by-previous-event
      */
 
-    const dayValueStateRef = useRef<string>(dayValue);
-    const monthValueStateRef = useRef<string>(monthValue);
-    const yearValueStateRef = useRef<string>(yearValue);
-    const currentFocusStateRef = useRef<FieldType>(currentFocus);
-
-    // =============================================================================
-    // REF FUNCTIONS
-    // =============================================================================
-    const setDayValue = (data: string) => {
-        dayValueStateRef.current = data;
-        _setDayValue(data);
-    };
-
-    const setMonthValue = (data: string) => {
-        monthValueStateRef.current = data;
-        _setMonthValue(data);
-    };
-
-    const setYearValue = (data: string) => {
-        yearValueStateRef.current = data;
-        _setYearValue(data);
-    };
-
-    const setCurrentFocus = (data: FieldType) => {
-        currentFocusStateRef.current = data;
-        _setCurrentFocus(data);
-    };
+    useEventListener("keydown", handleKeyDown, nodeRef.current);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDown);
+        // inital mounted value
+        dispatchStart({ type: "confirmed", value: value });
 
-        if (nodeRef.current) {
-            nodeRef.current.addEventListener("keydown", handleNodeKeyDown);
+        if (variant === "range")
+            dispatchEnd({ type: "confirmed", value: endValue });
+    }, []);
+
+    useEffect(() => {
+        dispatchStart({ type: "selected", value: value });
+
+        if (variant === "range") {
+            dispatchEnd({ type: "selected", value: endValue });
+        }
+    }, [value, endValue]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        // reset back 'default' action from unhover
+        if ([startDate.currentType, endDate.currentType].includes("unhover")) {
+            const handleDefaultReducer = async () => {
+                await DateInputHelper.sleep(250, controller);
+                handleReducer("default");
+            };
+
+            handleDefaultReducer();
         }
 
         return () => {
-            document.removeEventListener("mousedown", handleMouseDown);
-
-            if (nodeRef.current) {
-                nodeRef.current.removeEventListener(
-                    "keydown",
-                    handleNodeKeyDown
-                );
-            }
+            controller.abort();
         };
-    }, [currentFocus]);
+    }, [startDate.currentType, endDate.currentType]);
 
     useEffect(() => {
-        // Auto focus feature
-        if (
-            currentFocus === "day" &&
-            dayValue.length === 2 &&
-            monthInputRef.current
-        ) {
-            monthInputRef.current.focus();
-        }
-    }, [dayValue]);
+        if (variant === "single") return;
+        if (currentElement.type === "none") return;
 
-    useEffect(() => {
-        // Auto focus feature
-        if (
-            currentFocus === "month" &&
-            monthValue.length === 2 &&
-            yearInputRef.current
-        ) {
-            yearInputRef.current.focus();
-        }
-    }, [monthValue]);
-
-    useEffect(() => {
-        formatDisplayValues(value);
-    }, [value]);
+        // update count via manual input
+        setCurrentElement((prev) => ({
+            ...currentElement,
+            count: prev.count + 1,
+        }));
+    }, [currentElement.type]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleMouseDown = (event: MouseEvent) => {
-        if (disabled || readOnly) {
-            return;
+    function handleKeyDown(event: KeyboardEvent) {
+        if (event.code === "Escape") {
+            handleCalendarAction("reset");
         }
 
-        if (nodeRef && (nodeRef.current as any).contains(event.target)) {
-            // inside click
-            return;
-        }
-        // outside click
-        if (currentFocusStateRef.current !== "none") {
-            setCurrentFocus("none");
-            performOnBlurHandler();
-        }
-    };
-
-    const handleNodeKeyDown = (event: KeyboardEvent) => {
-        if ((event.target as any).name === "year" && event.code === "Tab") {
-            // About to blur the entire input
-            setCurrentFocus("none");
-            performOnBlurHandler();
-        }
-    };
-
-    const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        setCurrentFocus(event.target.name as FieldType);
-        event.target.select();
-    };
-
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        const targetName = event.target.name as FieldType;
-        const targetValue = StringHelper.padValue(event.target.value, true);
-
-        switch (targetName) {
-            case "day":
-                setDayValue(targetValue);
-                break;
-            case "month":
-                setMonthValue(targetValue);
-                break;
-            case "year":
-            default:
-                break;
-        }
-
-        const isFullyFormedDate =
-            dayValue.length && monthValue.length && yearValue.length === 4;
-        const isDayTarget = targetName === "day";
-        const clampedMonth = DateHelper.clampMonth(monthValue);
-
-        if (isFullyFormedDate) {
-            setDayValue(
-                StringHelper.padValue(
-                    DateHelper.clampDay(
-                        isDayTarget ? targetValue : dayValue,
-                        clampedMonth,
-                        yearValue
-                    )
-                )
+        if (event.code === "Enter" && variant === "range" && !withButton) {
+            const hasValue = [startDate.selected, endDate.selected].every(
+                Boolean
             );
-            setMonthValue(StringHelper.padValue(clampedMonth));
-        }
-    };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const targetName = event.target.name as FieldType;
-
-        const value = event.target.value.replace(/[^0-9]/g, "");
-
-        switch (targetName) {
-            case "day":
-                setDayValue(value);
-                performOnChangeHandler(value, targetName);
-                break;
-            case "month":
-                setMonthValue(value);
-                performOnChangeHandler(value, targetName);
-                break;
-            case "year":
-                setYearValue(value);
-                performOnChangeHandler(value, targetName);
-                break;
-            default:
-                break;
-        }
-    };
-
-    const handleNodeClick = () => {
-        if (currentFocus === "none" && dayInputRef.current) {
-            dayInputRef.current.focus();
-        }
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        /**
-         * Allow going to the field before if user presses Backspace
-         * on an empty field
-         */
-        if (event.code === "Backspace" || event.key === "Backspace") {
-            if (currentFocus === "month" && monthValue.length === 0) {
-                dayInputRef.current.focus();
-            }
-
-            if (currentFocus === "year" && yearValue.length === 0) {
-                monthInputRef.current.focus();
+            if (!hasValue) {
+                handleCalendarAction("reset");
+            } else {
+                handleCalendarAction("confirmed");
             }
         }
+    }
+
+    const handleChange = (value: string, from: ActionComponent) => {
+        if (value === INVALID_VALUE || value === "") {
+            // update state/calendar
+            if (value === "") {
+                handleReducer("selected", value);
+            }
+
+            return;
+        }
+        const isValid = handleValidation(value);
+
+        if (["month-options", "year-options"].includes(calendarView)) {
+            handleReducer("transition", value);
+        } else {
+            // day calendar view
+            handleReducer("selected", value);
+        }
+
+        setIsError(!isValid);
+        setActionComponent(from);
+        handleFocusElement(isValid, from, value);
+    };
+
+    const handleFocus = (value: FieldType) => {
+        const type = value.split("-")[0] as FocusType;
+
+        setCalendarOpen(true);
+        setCurrentElement({ ...currentElement, field: value, type });
+    };
+
+    const handleHoverDayCell = (value: string) => {
+        if (!value) {
+            handleReducer("unhover");
+            return;
+        }
+
+        handleReducer("hover", value);
+    };
+
+    const handleCalendarAction = (buttonAction: CalendarAction) => {
+        if (["month-options", "year-options"].includes(calendarView)) {
+            // handle button in month/year calendar view
+            handleMonthYearCalendarAction(buttonAction);
+
+            return;
+        }
+
+        // handle button in day calendar view
+        switch (buttonAction) {
+            case "reset":
+                handleReducer("reset");
+                break;
+            case "confirmed":
+                if (isError) {
+                    handleReducer("reset");
+                    break;
+                }
+
+                handleReducer("confirmed");
+                performOnChangeHandler();
+                break;
+        }
+
+        setCurrentElement({
+            field: "none",
+            type: "none",
+            count: 0,
+        });
+
+        setCalendarOpen(false);
+    };
+
+    const handleMonthYearCalendarAction = (action: CalendarAction) => {
+        const { field: otherField, type: otherType } = getAnotherElement();
+
+        switch (action) {
+            case "reset":
+                handleReducer("restore");
+                calendarRef.current.defaultView();
+                break;
+            case "confirmed":
+                calendarRef.current.defaultView();
+
+                setCurrentElement((prev) => {
+                    return {
+                        field: otherField,
+                        type: otherType,
+                        count: prev.count + 1,
+                    };
+                });
+                break;
+        }
+    };
+
+    const handleCalendarView = (calendarView: View) => {
+        setCalendarView(calendarView);
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const formatDisplayValues = (value: string) => {
-        if (value === undefined || value === "") {
-            setDayValue("");
-            setMonthValue("");
-            setYearValue("");
-        } else {
-            const date = new Date(value);
-            if (!isNaN(date.getTime())) {
-                // Valid value
-                const month = (date.getMonth() + 1).toString(); // returns as an index
-                const year = date.getFullYear().toString();
-                const day = DateHelper.clampDay(
-                    date.getDate().toString(),
-                    month,
-                    year
-                );
+    const performOnChangeHandler = (changeValue?: string) => {
+        const focusType = currentElement.type as FocusType;
+        const returnValue: ChangeValueTypes = {
+            start: startDate.selected,
+            end: endDate.selected,
+        };
 
-                setDayValue(StringHelper.padValue(day));
-                setMonthValue(StringHelper.padValue(month));
-                setYearValue(year);
-            }
+        // Update the specific field value.
+        // - only use in without button
+        if (changeValue) {
+            returnValue[focusType] = changeValue;
         }
-    };
 
-    const performOnChangeHandler = (changeValue: string, field: FieldType) => {
+        if (variant === "single") delete returnValue.end;
+
         if (onChange) {
-            const values: Record<ValueFieldTypes, string> = {
-                day: dayValue,
-                month: monthValue,
-                year: yearValue,
-            };
-
-            // Update the specific field value
-            values[field] = changeValue;
-
-            const returnValue = getFormattedValue(values);
             onChange(returnValue);
         }
 
         if (onChangeRaw) {
-            const valuesArr = [
-                ...(field === "day"
-                    ? [StringHelper.padValue(changeValue)]
-                    : [dayValue]),
-                ...(field === "month"
-                    ? [StringHelper.padValue(changeValue)]
-                    : [monthValue]),
-                ...(field === "year" ? [changeValue] : [yearValue]),
-            ];
+            const returnRawValue =
+                DateInputHelper.getFormattedRawValue(returnValue);
 
-            onChangeRaw(valuesArr);
+            onChangeRaw(returnRawValue);
         }
     };
 
-    const performOnBlurHandler = () => {
-        if (onBlur) {
-            const values: Record<ValueFieldTypes, string> = {
-                day: dayValueStateRef.current,
-                month: monthValueStateRef.current,
-                year: yearValueStateRef.current,
-            };
+    const performOnBlurHandler = (
+        startDate: ReducerState,
+        endDate: ReducerState
+    ) => {
+        const returnValue = {
+            start: startDate.confirmed,
+            end: endDate.confirmed,
+        };
 
-            const returnValue = getFormattedValue(values);
+        if (variant === "single") delete returnValue.end;
+
+        if (onBlur) {
             onBlur(returnValue);
         }
 
         if (onBlurRaw) {
-            const valuesArr = [
-                StringHelper.padValue(dayValueStateRef.current.toString()),
-                StringHelper.padValue(monthValueStateRef.current.toString()),
-                yearValueStateRef.current,
-            ];
+            const returnRawValue =
+                DateInputHelper.getFormattedRawValue(returnValue);
 
-            onBlurRaw(valuesArr);
+            onBlurRaw(returnRawValue);
         }
     };
 
-    const getFormattedValue = (values: Record<ValueFieldTypes, string>) => {
-        const valueArr = [values.year, values.month, values.day]; // eventual format YYYY-MM-DD
+    const handleBlurContainer = (event: React.FocusEvent<HTMLDivElement>) => {
+        if (nodeRef && !nodeRef.current.contains(event.relatedTarget)) {
+            handleReducer("reset");
 
-        if (
-            values.day.length >= 1 &&
-            values.month.length >= 1 &&
-            values.year.length === 4
-        ) {
-            return valueArr.join("-");
-        } else if (valueArr.every((value) => value === "")) {
-            return "";
-        } else {
-            return INVALID_VALUE;
+            setCurrentElement({
+                field: "none",
+                type: "none",
+                count: 0,
+            });
+
+            performOnBlurHandler(startDate, endDate);
+            setCalendarOpen(false);
+            setIsError(false);
         }
+    };
+
+    const handleValidation = (value: string): boolean => {
+        let isValid = true;
+
+        const values = {
+            start: startDate.selected,
+            end: endDate.selected,
+        };
+
+        // Update the specific field value
+        values[currentElement.type] = value;
+
+        if (variant === "range") {
+            switch (currentElement.type) {
+                case "start":
+                    isValid = DateInputHelper.validate(
+                        value,
+                        values.end,
+                        disabledDates,
+                        between
+                    );
+                    break;
+                case "end":
+                    isValid = DateInputHelper.validate(
+                        values.start,
+                        value,
+                        disabledDates,
+                        between
+                    );
+                    break;
+            }
+        } else if (variant === "single") {
+            isValid = DateInputHelper.validateSingle(
+                value,
+                disabledDates,
+                between
+            );
+        }
+
+        return isValid;
+    };
+
+    const handleReducer = (type: ActionType, value?: string) => {
+        let field = currentElement.type as FocusType;
+
+        let isValid = true;
+
+        // closed calendar action
+        if (["confirmed", "reset"].includes(type)) {
+            field = "none"; // set to default
+
+            // validation
+            if (withButton && variant === "range") {
+                isValid = DateInputHelper.validate(
+                    startDate.selected,
+                    endDate.selected,
+                    disabledDates,
+                    between
+                );
+            }
+        }
+
+        // error status, reset both
+        if (!isValid) {
+            dispatchStart({ type: "reset" });
+            dispatchEnd({ type: "reset" });
+        }
+
+        if (type === "restore") {
+            // restore both value when click month/year view cancel button
+            dispatchStart({ type });
+            dispatchEnd({ type });
+
+            return;
+        }
+
+        switch (field) {
+            case "start":
+                if (type === "invalid") {
+                    dispatchEnd({ type });
+
+                    return;
+                }
+
+                dispatchStart({ type, value });
+
+                break;
+            case "end":
+                if (type === "invalid") {
+                    dispatchStart({ type });
+
+                    return;
+                }
+
+                dispatchEnd({ type, value });
+
+                break;
+            case "none":
+                dispatchStart({ type, value });
+
+                if (variant === "range") dispatchEnd({ type, value });
+                break;
+            default:
+                dispatchStart({ type, value });
+
+                if (variant === "range") dispatchEnd({ type, value });
+                break;
+        }
+    };
+
+    const handleFocusElement = (
+        isValid: boolean,
+        from: ActionComponent,
+        value?: string
+    ) => {
+        // input invalid value
+        if (variant === "range" && !isValid) {
+            const { field: otherField, type: otherType } = getAnotherElement();
+
+            setCurrentElement({
+                field: otherField,
+                type: otherType,
+                count: 1,
+            });
+
+            // blank other element input value
+            handleReducer("invalid");
+        }
+
+        // stop switch if detect selected in calendar month/year view
+        if (["month-options", "year-options"].includes(calendarView)) return;
+
+        // closed calendar in without button calendar if it
+        // - after selection in single value calendar
+        // - both valid value in range selection
+        if (
+            (!withButton && variant === "single" && isValid) ||
+            (!withButton &&
+                variant === "range" &&
+                currentElement.count >= 2 &&
+                isValid)
+        ) {
+            setCalendarOpen(false);
+            handleReducer("confirmed");
+            performOnChangeHandler(value);
+            setCurrentElement({
+                field: "none",
+                type: "none",
+                count: 0,
+            });
+            return;
+        }
+
+        // stop to switch element in with button
+        if (currentElement.count >= 2) return;
+
+        // calendar selection swap to another element
+        if (from === "calendar" && variant === "range") {
+            const { field: otherField, type: otherType } = getAnotherElement();
+
+            setCurrentElement((prev) => ({
+                field: otherField,
+                type: otherType,
+                count: prev.count + 1,
+            }));
+        }
+    };
+
+    const getAnotherElement = (): Omit<CurrentFocusTypes, "count"> => {
+        const currentFocus = currentElement.type as FocusType;
+        const otherType = currentFocus === "start" ? "end" : "start";
+        const otherField = `${otherType}-day` as FieldType;
+
+        return {
+            field: otherField,
+            type: otherType,
+        };
     };
 
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+    const renderIndicateBar = () => {
+        if (variant === "single" || disabled || readOnly) return;
+
+        return <IndicateBar $position={currentElement.type || "none"} />;
+    };
+
+    const renderRangeInput = () => {
+        if (variant === "range") {
+            return (
+                <>
+                    <ArrowRangeIcon tabIndex={-1}>
+                        <ArrowRight />
+                    </ArrowRangeIcon>
+                    <StandAloneInput
+                        disabled={disabled}
+                        onChange={(value) => handleChange(value, "input")}
+                        onFocus={handleFocus}
+                        readOnly={readOnly}
+                        focused={currentElement.type === "end"}
+                        names={["end-day", "end-month", "end-year"]}
+                        value={endDate.input}
+                        confirmedValue={endDate.confirmed}
+                        variant={variant}
+                        action={endDate.currentType}
+                        focusType={currentElement.type}
+                        isOpen={calendarOpen}
+                    />
+                </>
+            );
+        }
+    };
+
     return (
         <Container
             ref={nodeRef}
-            onClick={handleNodeClick}
-            disabled={disabled}
+            $disabled={disabled}
             $error={error}
             id={id}
             data-testid={otherProps["data-testid"]}
             $readOnly={readOnly}
+            $variant={variant}
+            onBlur={handleBlurContainer}
+            {...otherProps}
         >
-            <InputContainer $readOnly={readOnly}>
-                <BaseInput
-                    name="day"
-                    maxLength={2}
-                    value={dayValue}
-                    ref={dayInputRef}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    disabled={disabled}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]{2}"
-                    data-testid="day-input"
-                    aria-label="day-input"
-                    readOnly={readOnly}
-                    placeholder={
-                        currentFocus === "day" && !readOnly ? "" : "DD"
-                    }
-                />
-                <Divider $hide={dayValue.length === 0}>/</Divider>
-                <MonthInput
-                    name="month"
-                    maxLength={2}
-                    value={monthValue}
-                    ref={monthInputRef}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    disabled={disabled}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]{2}"
-                    data-testid="month-input"
-                    aria-label="month-input"
-                    readOnly={readOnly}
-                    placeholder={
-                        currentFocus === "month" && !readOnly ? "" : "MM"
-                    }
-                />
-                <Divider $hide={monthValue.length === 0}>/</Divider>
-                <YearInput
-                    name="year"
-                    maxLength={4}
-                    value={yearValue}
-                    ref={yearInputRef}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    disabled={disabled}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]{4}"
-                    data-testid="year-input"
-                    aria-label="year-input"
-                    readOnly={readOnly}
-                    placeholder={
-                        currentFocus === "year" && !readOnly ? "" : "YYYY"
-                    }
-                />
-            </InputContainer>
+            <StandAloneInput
+                disabled={disabled}
+                onChange={(value) => handleChange(value, "input")}
+                onFocus={handleFocus}
+                readOnly={readOnly}
+                focused={currentElement.type === "start"}
+                names={["start-day", "start-month", "start-year"]}
+                value={startDate.input}
+                confirmedValue={startDate.confirmed}
+                variant={variant === "range" ? "start" : "single"}
+                action={startDate.currentType}
+                focusType={currentElement.type}
+                isOpen={calendarOpen}
+            />
+            {renderRangeInput()}
+            {renderIndicateBar()}
+            <InternalCalendar
+                ref={calendarRef}
+                type="input"
+                disabledDates={disabledDates}
+                isOpen={calendarOpen}
+                withButton={withButton}
+                actionComponent={actionComponent}
+                currentFocus={currentElement.type}
+                currentType={
+                    currentElement.type === "start"
+                        ? startDate.currentType
+                        : endDate.currentType
+                }
+                value={startDate.calendar}
+                endValue={endDate.calendar}
+                between={between}
+                variant={variant}
+                onCalendarView={handleCalendarView}
+                onHover={handleHoverDayCell}
+                onSelect={(value) => handleChange(value, "calendar")}
+                onDismiss={handleCalendarAction}
+            />
         </Container>
     );
 };
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const INVALID_VALUE = "Invalid date";
