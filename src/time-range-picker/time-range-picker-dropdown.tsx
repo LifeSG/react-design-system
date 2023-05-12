@@ -18,7 +18,7 @@ import {
     TimeInput,
     TimePeriodSection,
     TimePeriodToggle,
-} from "./timerangepicker-dropdown.styles";
+} from "./time-range-picker-dropdown.styles";
 import { TimeRangePickerFormat } from "./types";
 
 enum EInputButtonName {

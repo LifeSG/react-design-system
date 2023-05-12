@@ -1,29 +1,25 @@
 export type TimeRangePickerFormat = "12hr" | "24hr";
 
-export interface TimeRangePickerProps {
+export interface TimeRangeSelectorProps {
     startTime: string;
     endTime: string;
 }
 
-export interface TimeRangePickerProps extends React.AriaAttributes {
+export interface TimeRangePickerProps {
     // Standard HTML Attributes
     className?: string | undefined;
     id?: string | undefined;
-    name?: string | undefined;
     style?: React.CSSProperties | undefined;
-    tabIndex?: number | undefined;
     readOnly?: boolean | undefined;
     "data-testid"?: string | undefined;
 
     // Input-specific attributes
 
-    value?: TimeRangePickerProps | undefined;
-    placeholder?: string | undefined;
+    value?: TimeRangeSelectorProps | undefined;
     defaultValue?: string | undefined;
     format?: TimeRangePickerFormat | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;
-    onChange?: ((value: TimeRangePickerProps) => void) | undefined;
+    onChange?: ((value: TimeRangeSelectorProps) => void) | undefined;
     onBlur?: (() => void) | undefined;
-    onSelectionCancel?: (() => void) | undefined;
 }

@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TimeRangePickerHelper } from "./helper";
-import { TimeRangePickerDropdown } from "./timerangepicker-dropdown";
+import { TimeRangePickerDropdown } from "./time-range-picker-dropdown";
 import {
-    ArrowRangeIcon,
+    ArrowRangeContainer,
     ArrowRight,
     BottomHighlightEndTime,
     BottomHighlightStartTime,
@@ -10,8 +10,8 @@ import {
     InputSelectorStartTimeElement,
     TimeContainer,
     Wrapper,
-} from "./timerangepicker.styles";
-import { TimeRangePickerProps } from "./types";
+} from "./time-range-picker.styles";
+import { TimeRangePickerProps, TimeRangeSelectorProps } from "./types";
 
 export const TimeRangePicker = ({
     id,
@@ -19,12 +19,10 @@ export const TimeRangePicker = ({
     error,
     value,
     defaultValue,
-    placeholder,
     format = "24hr",
     readOnly,
     onChange,
     onBlur,
-    onSelectionCancel,
     ...otherProps
 }: TimeRangePickerProps) => {
     // =============================================================================
@@ -62,19 +60,19 @@ export const TimeRangePicker = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleStartTimeFocus = useCallback(() => {
+    const handleStartTimeFocus = () => {
         if (!disabled && !readOnly && !showStartTimeSelector) {
             setShowEndTimeSelector(false);
             setShowStartTimeSelector(true);
         }
-    }, [showStartTimeSelector]);
+    };
 
-    const handleEndTimeFocus = useCallback(() => {
+    const handleEndTimeFocus = () => {
         if (!disabled && !readOnly && !showEndTimeSelector) {
             setShowStartTimeSelector(false);
             setShowEndTimeSelector(true);
         }
-    }, [showEndTimeSelector]);
+    };
 
     const handleMouseDownEvent = (event: MouseEvent) => {
         if (!disabled) {
@@ -95,7 +93,6 @@ export const TimeRangePicker = ({
     const handleSelectionDropdownCancel = () => {
         setShowEndTimeSelector(false);
         setShowStartTimeSelector(false);
-        onSelectionCancel && onSelectionCancel();
     };
 
     const handleStartTime = (value: string) => {
@@ -103,7 +100,7 @@ export const TimeRangePicker = ({
         setShowEndTimeSelector(true);
         setStartTimeVal(value);
 
-        const timeValue: TimeRangePickerProps = {
+        const timeValue: TimeRangeSelectorProps = {
             startTime: startTimeVal,
             endTime: endTimeVal,
         };
@@ -122,7 +119,7 @@ export const TimeRangePicker = ({
         }
         setShowEndTimeSelector(false);
 
-        const timeValue: TimeRangePickerProps = {
+        const timeValue: TimeRangeSelectorProps = {
             startTime: startTimeVal,
             endTime: endTimeVal,
         };
@@ -167,10 +164,12 @@ export const TimeRangePicker = ({
                         format
                     )}
                     defaultValue={defaultValue}
-                    $disabled={disabled}
+                    disabled={disabled}
                     $error={error}
                     data-testid={
-                        id ? `${id}-timepicker-selector` : "timepicker-selector"
+                        otherProps["data-testid"]
+                            ? `${otherProps["data-testid"]}-timepicker-selector`
+                            : "timepicker-selector"
                     }
                 />
                 {showStartTimeSelector && <BottomHighlightStartTime />}
@@ -183,10 +182,9 @@ export const TimeRangePicker = ({
                     onCancel={handleSelectionDropdownCancel}
                     onChange={handleStartTime}
                 />
-
-                <ArrowRangeIcon>
+                <ArrowRangeContainer>
                     <ArrowRight />
-                </ArrowRangeIcon>
+                </ArrowRangeContainer>
 
                 {showEndTimeSelector && <BottomHighlightEndTime />}
 
@@ -200,10 +198,12 @@ export const TimeRangePicker = ({
                         format
                     )}
                     defaultValue={defaultValue}
-                    $disabled={disabled}
+                    disabled={disabled}
                     $error={error}
                     data-testid={
-                        id ? `${id}-timepicker-selector` : "timepicker-selector"
+                        otherProps["data-testid"]
+                            ? `${otherProps["data-testid"]}-timepicker-selector`
+                            : "timepicker-selector"
                     }
                 />
                 <TimeRangePickerDropdown

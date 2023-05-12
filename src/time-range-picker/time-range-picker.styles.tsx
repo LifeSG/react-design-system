@@ -5,7 +5,6 @@ import { TextStyleHelper } from "../text/helper";
 import { MediaQuery } from "../media";
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import { DesignToken } from "src/design-token";
-import { IconButton } from "src/icon-button";
 
 // =============================================================================
 // STYLE INTERFACe
@@ -83,7 +82,7 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
     }
 `;
 
-export const ArrowRangeIcon = styled(IconButton)`
+export const ArrowRangeContainer = styled.div`
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -94,7 +93,7 @@ export const ArrowRight = styled(ArrowRightIcon)`
     color: ${Color.Neutral[3]};
     cursor: pointer;
     width: 1.125rem;
-    height: 1.125rem;
+    height: 1rem;
 `;
 
 export const BottomHighlightStartTime = styled.div`
@@ -159,7 +158,6 @@ export const InputSelectorStartTimeElement = styled.input<StyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
 
     display: block;
-    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
     width: 100%;
     height: 26px;
     background: ${BookingSGColorSet.Neutral[8]};
@@ -168,6 +166,12 @@ export const InputSelectorStartTimeElement = styled.input<StyleProps>`
     :focus,
     :active {
         outline: none;
+    }
+    :disabled {
+        background: ${Color.Neutral[6]} !important;
+        :hover {
+            cursor: not-allowed;
+        }
     }
     ${(props) => {
         if (props.$readOnly) {
@@ -181,9 +185,6 @@ export const InputSelectorStartTimeElement = styled.input<StyleProps>`
                 background: ${Color.Neutral[6](props)} !important;
                 :hover {
                     cursor: not-allowed;
-                }
-                :focus-within {
-                    // border: 1px solid ${Color.Neutral[5](props)};
                 }
             `;
         }
@@ -194,7 +195,6 @@ export const InputSelectorEndTimeElement = styled.input<StyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
 
     display: block;
-    // padding: 0.2rem 1rem 0.3rem 1rem; // Somehow the input text appears lower
     width: 100%;
     height: 26px;
     margin-left: 1rem;
@@ -204,6 +204,12 @@ export const InputSelectorEndTimeElement = styled.input<StyleProps>`
     :focus,
     :active {
         outline: none;
+    }
+    :disabled {
+        background: ${Color.Neutral[6]} !important;
+        :hover {
+            cursor: not-allowed;
+        }
     }
 
     ${(props) => {
@@ -218,8 +224,6 @@ export const InputSelectorEndTimeElement = styled.input<StyleProps>`
                 background: ${Color.Neutral[6](props)} !important;
                 :hover {
                     cursor: not-allowed;
-                }
-                :focus-within {
                 }
             `;
         }
