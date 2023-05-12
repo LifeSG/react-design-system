@@ -24,7 +24,6 @@ import {
 import { PaginationsProps } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../spec/media-spec";
-import { StringHelper } from "../util/string-helper";
 
 const Component = (
     {
@@ -82,11 +81,6 @@ const Component = (
         setInputText(value.toString());
     };
 
-    const formatInput = (value: string) => {
-        return /^[0-9]$/.test(value)
-            ? StringHelper.padValue(value, true)
-            : value;
-    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
