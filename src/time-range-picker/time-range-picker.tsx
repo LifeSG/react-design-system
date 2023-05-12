@@ -157,7 +157,7 @@ export const TimeRangePicker = ({
                 <InputSelectorStartTimeElement
                     onFocus={handleStartTimeFocus}
                     $focused={showStartTimeSelector}
-                    readOnly={true}
+                    readOnly
                     placeholder={"From"}
                     value={TimeRangePickerHelper.formatValue(
                         startTimeVal,
@@ -191,7 +191,7 @@ export const TimeRangePicker = ({
                 <InputSelectorEndTimeElement
                     onFocus={handleEndTimeFocus}
                     $focused={showEndTimeSelector}
-                    readOnly={true}
+                    readOnly
                     placeholder={"To"}
                     value={TimeRangePickerHelper.formatValue(
                         endTimeVal,

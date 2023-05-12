@@ -98,12 +98,11 @@ export const ArrowRight = styled(ArrowRightIcon)`
 
 export const BottomHighlightStartTime = styled.div`
     position: absolute;
-    bottom: 0;
+    bottom: -0.1rem;
     height: 2px;
     left: 1rem;
     right: 23rem;
-    background: ${BookingSGColorSet.Neutral[8]};
-    background-color: ${Color.Accent.Light[1]};
+    background-color: ${Color.Primary};
 
     ${MediaQuery.MaxWidth.tablet} {
         width: 40%;
@@ -125,12 +124,11 @@ export const BottomHighlightStartTime = styled.div`
 
 export const BottomHighlightEndTime = styled.div`
     position: absolute;
-    bottom: 0;
+    bottom: -0.1rem;
     height: 2px;
     left: 16rem;
     right: 7rem;
-    background: ${BookingSGColorSet.Neutral[8]};
-    background-color: ${Color.Accent.Light[1]};
+    background-color: ${Color.Primary};
 
     ${MediaQuery.MaxWidth.tablet} {
         width: 8rem;
