@@ -11,12 +11,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "between",
                 description: (
                     <>
-                        Only selectable the date between the range. To specify
-                        in a format as such &nbsp; (e.g.{" "}
-                        <code>[2023-02-10, 2023-04-12]</code>)
+                        Restrict selection to this date range. To specify in the
+                        format <code>[YYYY-MM-DD, YYYY-MM-DD]</code>
                     </>
                 ),
-                propTypes: ["string[]"],
+                propTypes: ["[string, string]"],
             },
             {
                 name: "className",
@@ -27,8 +26,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "disabledDates",
                 description: (
                     <>
-                        The dates to be disabled. To specify in a format as such
-                        (e.g. <code>[2022-01-01, 2022-02-02]</code>)
+                        The dates to be disabled. To specify each date in the
+                        format <code>YYYY-MM-DD</code>
                     </>
                 ),
                 propTypes: ["string[]"],
@@ -49,7 +48,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The value of end date in string based format. Available
-                        only in variant props is range.&nbsp;
+                        only for ranged selection.&nbsp;
                         <code>YYYY-MM-DD</code> or <code>YYYY-M-D</code>
                     </>
                 ),
@@ -95,12 +94,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "variant",
                 description: (
                     <>
-                        Specifies the input variant which affects layout and
-                        styles. <br />
-                        When the <code>single</code> variant is specified, the
-                        component is rendered one input element. While if
-                        <code>range</code> is specified, the component is
-                        rendered two input element for range selection.
+                        Specify <code>single</code> for single date selection
+                        and <code>range</code> for ranged selection
                     </>
                 ),
                 propTypes: [`"single"`, `"range"`],
@@ -109,7 +104,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "withButton",
                 description:
-                    "Indicates to display Cancel/Done button inside the component.",
+                    "Specifies if done/cancel buttons are visible. Always true on mobile.",
                 propTypes: ["boolean"],
                 defaultValue: `"true"`,
             },
@@ -117,60 +112,75 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onChange",
                 description: (
                     <>
-                        Called when the user enters the set of value in the
-                        field. Returns value in an object &nbsp;
-                        <code>
-                            &#123;start: 2023-03-10, end: 2023-04-05&#125;
-                        </code>
-                        format. Should the value be invalid, the&nbsp;
-                        &lsquo;Invalid date&rsquo; value will be returned
+                        Called when a valid selection is made.
+                        <br />
+                        If <code>withButton</code> is true, this is when the
+                        confirmed button is clicked. Otherwise, whenever a valid
+                        date is entered or selected.
                     </>
                 ),
-                propTypes: ["(value: {start: string, end: string}) => void"],
+                propTypes: ["(value: ChangeValueTypes) => void"],
             },
             {
                 name: "onChangeRaw",
-                description: (
-                    <>
-                        Called when the user enters a value in the field.
-                        Returns actual values in an array format as such
-                        <code>
-                            &#123;start: &#123;year, month, day&#125;, end:
-                            &#123;year, month, day&#125;&#125;
-                        </code>
-                        &nbsp;regardless if it is invalid
-                    </>
-                ),
-                propTypes: ["(value: {start: {}}, end: {}}) => void"],
+                description: <>Called when a valid selection is made.</>,
+                propTypes: ["(value: RawInputValues) => void"],
             },
             {
                 name: "onBlur",
-                description: (
-                    <>
-                        Called when a defocus happens from input field. Returns
-                        the existing value in&nbsp;
-                        <code>
-                            &#123;start: 2023-03-10, end: 2023-04-05&#125;
-                        </code>
-                        &nbsp; format
-                    </>
-                ),
-                propTypes: ["(value: {start: string, end: string}) => void"],
+                description: "Called when a defocus happens from input field.",
+                propTypes: ["(value: ChangeValueTypes) => void"],
             },
             {
                 name: "onBlurRaw",
+                description: "Called when a defocus happens.",
+                propTypes: ["(value: RawInputValues) => void"],
+            },
+        ],
+    },
+    {
+        name: "ChangeValueTypes",
+        attributes: [
+            {
+                name: "start",
                 description: (
                     <>
-                        Called when a defocus happens. Returns values in an
-                        array format as such
-                        <code>
-                            &#123;start: &#123;year, month, day&#125;, end:
-                            &#123;year, month, day&#125;&#125;
-                        </code>
-                        &nbsp;regardless if it is invalid
+                        A string in the format <code>YYYY-MM-DD</code>
                     </>
                 ),
-                propTypes: ["(value: {start: {}}, end: {}}) => void"],
+            },
+            {
+                name: "end",
+                description: (
+                    <>
+                        Only available in the ranged date input. A string in the
+                        format <code>YYYY-MM-DD</code>
+                    </>
+                ),
+            },
+        ],
+    },
+    {
+        name: "RawInputValues",
+        attributes: [
+            {
+                name: "start",
+                description: (
+                    <>
+                        An object in the format
+                        <code>&#123; year, month, day &#125;</code>
+                    </>
+                ),
+            },
+            {
+                name: "end",
+                description: (
+                    <>
+                        Only available in the ranged date input. An object in
+                        the format
+                        <code>&#123; year, month, day &#125;</code>
+                    </>
+                ),
             },
         ],
     },

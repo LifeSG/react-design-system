@@ -6,7 +6,6 @@ import { Form } from "src/form";
 import {
     Heading3,
     Heading4,
-    FullWidthStoryContainer,
     Secondary,
     StoryContainer,
     Title,
@@ -20,7 +19,7 @@ import { PropsTable } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-The field that allows a user to enter a date value.
+A field that allows a user to enter a single date or date range.
 
 ```tsx
 import { Form } from "@lifesg/react-design-system/form";
@@ -34,11 +33,15 @@ import { Form } from "@lifesg/react-design-system/form";
             <Container>
                 <Form.DateInput label="This is the default date input" />
                 <Form.DateInput
-                    label="This is the date input without button"
+                    label="This is the date input without buttons"
                     withButton={false}
                 />
                 <Form.DateInput label="This is the disabled state" disabled />
-                <Form.DateInput label="This is the readOnly state" readOnly />
+                <Form.DateInput label="This is the readonly state" readOnly />
+                <Form.DateInput
+                    label="This is the error state"
+                    errorMessage="Invalid date"
+                />
             </Container>
         </StoryContainer>
     </Story>
@@ -46,7 +49,7 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Heading3>Using a range selection</Heading3>
 
-You can use `variant='range'` to specify to range selection.
+You can use `variant='range'` to specify a range selection.
 
 <Canvas>
     <Story name="Range input">
@@ -57,11 +60,11 @@ You can use `variant='range'` to specify to range selection.
                 <StoryContainer>
                     <Container>
                         <Form.DateInput
-                            label="This is the default range date input"
+                            label="This is the default date range input"
                             variant="range"
                         />
                         <Form.DateInput
-                            label="This is the range date input without button"
+                            label="This is the date range input without button"
                             variant="range"
                             withButton={false}
                             value={startValue}
@@ -75,11 +78,16 @@ You can use `variant='range'` to specify to range selection.
                             endValue={endValue}
                         />
                         <Form.DateInput
-                            label="This is the readOnly state"
+                            label="This is the readonly state"
                             readOnly
                             variant="range"
                             value={startValue}
                             endValue={endValue}
+                        />
+                        <Form.DateInput
+                            label="This is the error state"
+                            variant="range"
+                            errorMessage="Invalid date"
                         />
                     </Container>
                 </StoryContainer>
@@ -104,11 +112,11 @@ You can use `disabledDates` to specify dates that are not available for selectio
                 <StoryContainer>
                     <Container>
                         <Form.DateInput
-                            label="This date input with disabled dates"
+                            label="This is a date input with disabled dates"
                             disabledDates={disabledDates}
                         />
                         <Form.DateInput
-                            label="This date input with disabled dates"
+                            label="This is a date range input with disabled dates"
                             variant="range"
                             disabledDates={disabledDates}
                         />
@@ -134,11 +142,11 @@ You can restrict selection to a date range using `between`.
                 <StoryContainer>
                     <Container>
                         <Form.DateInput
-                            label="This date input with restrict selection dates"
+                            label="This date input has restricted selection"
                             between={between}
                         />
                         <Form.DateInput
-                            label="This date input with restrict selection dates"
+                            label="This date range input has restricted selection"
                             variant="range"
                             between={between}
                         />
@@ -160,23 +168,9 @@ import { DateInput } from "@lifesg/react-design-system/date-input";
 <Preview>
     <Story name="Standalone usage">
         <StoryContainer>
-            <FullWidthStoryContainer>
-                <DateInput withButton={false} />
-            </FullWidthStoryContainer>
-            <FullWidthStoryContainer>
-                <DateInput
-                    withButton={true}
-                    variant="range"
-                    disabledDates={["2023-03-17", "2023-03-02"]}
-                />
-            </FullWidthStoryContainer>
-            <FullWidthStoryContainer>
-                <DateInput
-                    withButton={false}
-                    variant="range"
-                    disabledDates={["2023-03-17", "2023-03-02"]}
-                />
-            </FullWidthStoryContainer>
+            <DateInput />
+            <br />
+            <DateInput variant="range" />
         </StoryContainer>
     </Story>
 </Preview>

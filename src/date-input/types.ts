@@ -17,7 +17,7 @@ export interface DateInputProps extends React.AriaAttributes {
     disabledDates?: string[] | undefined;
     /** The variant of the component. Values `single` | `range` */
     variant?: DateInputVariant | undefined;
-    /** The display cancel/done button inside calendar component. Defualt value as `true` */
+    /** Specifies if done/cancel buttons are visible in the calendar. Defaults to `true` */
     withButton?: boolean | undefined;
     /**
      * Restrict selection to within this date range, in `YYYY-MM-DD` format.
@@ -25,12 +25,12 @@ export interface DateInputProps extends React.AriaAttributes {
      */
     between?: [string, string] | undefined;
     /**
-     * Function that returns the raw values in the DateInput on change in an object format
+     * Function that returns the values in the DateInput on valid selection in an object format
      * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}
      */
     onChange?: ((value: ChangeValueTypes) => void) | undefined;
     /**
-     * Function that returns the raw values in the DateInput on change in an object format
+     * Function that returns the raw values in the DateInput on valid selection in an object format
      * as such { start: {year: "", month: "", day: "", end: {year: "", month: "", day: ""} }}
      */
     onChangeRaw?: ((value: RawInputValues) => void) | undefined;

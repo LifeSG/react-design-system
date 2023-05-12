@@ -8,7 +8,7 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     endValue?: string | undefined;
     /** Status from date input for calendar. */
     isOpen?: boolean | undefined;
-    /** The display cancel/done button inside component.*/
+    /** Specifies if done/cancel buttons are visible */
     withButton?: boolean | undefined;
     /** indicate which component makes the changed from the date input component */
     actionComponent?: ActionComponent | undefined;
