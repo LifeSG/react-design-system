@@ -30,16 +30,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "placeholder",
-                description: (
-                    <>
-                        The placeholder text in the <code>Timerangepicker</code>{" "}
-                        field
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
                 name: "format",
                 description: "The time input format",
                 propTypes: [`"12hr"`],

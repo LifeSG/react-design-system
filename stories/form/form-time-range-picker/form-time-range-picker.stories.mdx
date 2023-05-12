@@ -49,17 +49,14 @@ import { Form } from "@lifesg/react-design-system/form";
                         <Form.TimeRangePicker
                             label="This is a TimeRangePicker"
                             value={time1}
-                            placeholder="From"
                             onChange={(value) => setTime1(value)}
                         />
                         <Form.TimeRangePicker
                             label="This is the disabled state"
-                            placeholder="From"
                             disabled={true}
                         />
                         <Form.TimeRangePicker
                             label="This is the error state"
-                            placeholder="From"
                             value={time3}
                             onChange={(value) => setTime3(value)}
                             error={true}
