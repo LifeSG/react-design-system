@@ -42,8 +42,8 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "format",
                 description: "The time input format",
-                propTypes: [`"12hr"`, `"24hr"`],
-                defaultValue: `"24hr"`,
+                propTypes: [`"12hr"`],
+                defaultValue: `"12hr"`,
             },
             {
                 name: "disabled",

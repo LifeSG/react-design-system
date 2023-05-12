@@ -43,10 +43,6 @@ import { Form } from "@lifesg/react-design-system/form";
                 startTime: "",
                 endTime: "",
             });
-            const [time4, setTime4] = useState({
-                startTime: "",
-                endTime: "",
-            });
             return (
                 <StoryContainer>
                     <Container>
@@ -68,13 +64,6 @@ import { Form } from "@lifesg/react-design-system/form";
                             onChange={(value) => setTime3(value)}
                             error={true}
                             errorMessage="Time input required"
-                        />
-                        <Form.TimeRangePicker
-                            label="This is the 12 hour format timepicker"
-                            placeholder="From"
-                            value={time4}
-                            onChange={(value) => setTime4(value)}
-                            format="12hr"
                         />
                         <Form.TimeRangePicker
                             label="This is read only state for timepicker"

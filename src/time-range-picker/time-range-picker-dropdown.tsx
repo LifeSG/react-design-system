@@ -254,17 +254,18 @@ export const TimeRangePickerDropdown = ({
     };
 
     const handleConfirm = () => {
-        let formattedValue: string;
+        const formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
 
-        if (format === "24hr") {
-            formattedValue = TimeRangePickerHelper.convertTo24HourFormat({
-                hour: hourValue,
-                minute: minuteValue,
-                period: timePeriod,
-            });
-        } else {
-            formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
-        }
+        // hold release 24hr format
+        // if (format === "24hr") {
+        //     formattedValue = TimeRangePickerHelper.convertTo24HourFormat({
+        //         hour: hourValue,
+        //         minute: minuteValue,
+        //         period: timePeriod,
+        //     });
+        // } else {
+        //     formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
+        // }
 
         onChange(formattedValue);
     };
