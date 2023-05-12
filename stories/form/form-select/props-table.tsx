@@ -165,9 +165,9 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "renderCustomCallToAction",
                 description:
-                    "Function to render optional call to action at the bottom of dropdown list",
+                    "Function to render a custom call to action component at the bottom of dropdown list",
                 propTypes: [
-                    "(hideOptions: () => void, displayOptions: T[]) => JSX.Element",
+                    "(hideOptions: () => void, options: T[]) => JSX.Element",
                 ],
             },
         ],

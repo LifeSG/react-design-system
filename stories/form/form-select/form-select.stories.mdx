@@ -201,7 +201,7 @@ of the list.
                     displayValueExtractor={(item) => item.label}
                     enableSearch
                     hideNoResultsDisplay
-                    renderCustomCallToAction={(hideOptions, list) => {
+                    renderCustomCallToAction={(hideOptions, options) => {
                         return (
                             <CustomCTAContainer>
                                 <Button.Default
@@ -211,7 +211,7 @@ of the list.
                                         hideOptions();
                                     }}
                                 >
-                                    {list.length === 0
+                                    {options.length === 0
                                         ? "Add first option"
                                         : "Add another option"}
                                 </Button.Default>

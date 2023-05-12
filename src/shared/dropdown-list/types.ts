@@ -22,12 +22,12 @@ export interface DropdownDisplayProps<T, V> {
     /**
      * Function to render a custom call-to-action component at the bottom of the dropdown list.
      * @param hideOptions - A function that can be called to hide the dropdown list.
-     * @param displayOptions - The currently displayed list items in the dropdown list.
+     * @param options - The currently displayed list items in the dropdown list.
      * @returns A JSX.Element representing the custom call-to-action component.
      */
     renderCustomCallToAction?: (
         hideOptions: () => void,
-        displayOptions: T[]
+        options: T[]
     ) => JSX.Element | undefined;
 }
 
