@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
-import { Text } from "../text/text";
-import { YearVariant } from "./calendar-year";
+import { Color } from "../../color";
+import { TextStyleHelper } from "../../text/helper";
+import { Text } from "../../text/text";
+import { YearVariant } from "./internal-calendar-year";
 import { CalendarType } from "./types";
 
 interface StyleProps {
+    $disabled: boolean;
     $variant: YearVariant;
 }
 
@@ -18,19 +19,21 @@ interface WrapperStyleProps {
 // =============================================================================
 export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
+    height: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 4rem);
     align-content: center;
+    grid-template-columns: repeat(3, 1fr);
 
     ${(props) => {
         switch (props.$type) {
             case "standalone":
                 return css`
+                    grid-template-rows: repeat(4, 4rem);
                     gap: 0.5rem 2rem;
                 `;
             case "input":
                 return css`
+                    grid-template-rows: repeat(4, 4.375rem);
                     gap: 0.5rem 1rem;
                 `;
         }
@@ -50,6 +53,17 @@ export const YearCell = styled.div<StyleProps>`
     }
 
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                cursor: not-allowed;
+
+                :hover {
+                    box-shadow: unset;
+                    border: unset;
+                }
+            `;
+        }
+
         switch (props.$variant) {
             case "current-year":
                 return css`
@@ -69,6 +83,12 @@ export const YearCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[4]};
+            `;
+        }
+
         switch (props.$variant) {
             case "current-year":
                 return css`

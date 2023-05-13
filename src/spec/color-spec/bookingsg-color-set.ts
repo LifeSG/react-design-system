@@ -19,7 +19,7 @@ export const BookingSGColorSet: ColorSet = {
             3: "#9AABBE",
         },
         Light: {
-            1: "#9F82D9",
+            1: "#977ECC",
             2: "#B5A5D7",
             3: "#CEC3E4 ",
             4: "#E2DBEF",

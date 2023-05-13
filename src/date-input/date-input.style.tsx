@@ -1,42 +1,77 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { DesignToken } from "../design-token";
-import { TextStyleHelper } from "../text/helper";
-import { Text } from "../text/text";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { DateInputVariant } from "./types";
+import { MediaQuery } from "../media";
+import { IconButton } from "../icon-button";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface ContainerStyleProps {
-    disabled?: boolean;
+    $disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
+    $variant?: DateInputVariant;
 }
-interface LabelStyleProps {
-    $hide?: boolean;
-    $compress?: boolean;
-    $addGap?: boolean;
+
+interface IndicateBarStyleProps {
+    $position: "start" | "end" | "none";
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
+
 export const Container = styled.div<ContainerStyleProps>`
     display: flex;
     position: relative;
     align-items: center;
     border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
+    border-radius: 0.25rem;
     background: ${Color.Neutral[8]};
     height: 3rem;
     width: 100%;
+    min-width: 20.75rem;
     padding: 0.1rem 1rem 0;
 
     :focus,
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: ${DesignToken.InputBoxShadow};
+    }
+
+    ${(props) => {
+        if (props.$readOnly) {
+            return css`
+                ${ArrowRangeIcon} {
+                    left: 43%;
+                }
+            `;
+        }
+    }}
+
+    @media screen and (max-width: 374px) {
+        ${(props) => {
+            if (props.$variant === "range") {
+                return css`
+                    width: 100%;
+                    height: 5.125rem;
+
+                    ${ArrowRangeIcon} {
+                        transform: unset;
+                        left: ${props.$readOnly ? "48%" : "57%"};
+                        top: 1rem;
+                    }
+                `;
+            } else if (props.$variant === "single") {
+                return css`
+                    width: 100%;
+                `;
+            }
+        }}
     }
 
     ${(props) => {
@@ -51,7 +86,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     box-shadow: none;
                 }
             `;
-        } else if (props.disabled) {
+        } else if (props.$disabled) {
             return css`
                 background: ${Color.Neutral[6](props)};
                 :hover {
@@ -76,76 +111,54 @@ export const Container = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const InputContainer = styled.div<ContainerStyleProps>`
+export const ArrowRangeIcon = styled(IconButton)`
     position: absolute;
-    top: 0;
-    left: ${(props) => (props.$readOnly ? "-0.5rem" : "1rem")};
-    height: 100%;
-    display: flex;
-    align-items: center;
-`;
-
-export const BaseInput = styled.input`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    background: transparent;
-    height: 100%;
-    width: 2.5rem;
-    border: none;
-    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
     padding: 0;
 
-    // Chrome, Safari, Edge, Opera
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+    ${MediaQuery.MaxWidth.mobileS} {
+        left: 71% !important;
     }
+`;
 
-    // Safari (remove top shadow)
-    --webkit-appearance: none;
+export const ArrowRight = styled(ArrowRightIcon)`
+    color: ${Color.Neutral[3]};
+    cursor: pointer;
+    width: 1.125rem;
+    height: 1.125rem;
+`;
 
-    // Firefox
-    --moz-appearance: textfield;
+export const IndicateBar = styled.div<IndicateBarStyleProps>`
+    position: absolute;
+    background-color: ${Color.Primary};
+    height: 0.125rem;
+    width: calc(100% - 50% - 2rem); // paddingX is 2rem,
+    transition: left 350ms ease-in-out, opacity 350ms ease-in-out;
+    left: 1rem;
+    bottom: -0.1rem;
 
-    :focus,
-    :active {
-        outline: none;
+    ${(props) => {
+        switch (props.$position) {
+            case "start":
+                return css`
+                    left: 1rem;
+                    opacity: 1;
+                `;
+            case "end":
+                return css`
+                    left: calc(50% + 1rem);
+                    opacity: 1;
+                `;
+            case "none":
+                return css`
+                    left: 1rem;
+                    opacity: 0;
+                `;
+        }
+    }}
+
+    @media screen and (max-width: 374px) {
+        display: none;
     }
-
-    ${(props) => {
-        if (props.disabled) {
-            return css`
-                cursor: not-allowed;
-            `;
-        }
-    }}
-`;
-
-export const MonthInput = styled(BaseInput)`
-    width: 2.6rem;
-`;
-
-export const YearInput = styled(BaseInput)`
-    width: 3.5rem;
-`;
-
-export const Divider = styled(Text.Body)<LabelStyleProps>`
-    margin: 0.1rem 0.2rem 0 0.2rem;
-    ${(props) => {
-        if (props.$hide) {
-            return css`
-                color: ${Color.Neutral[3]};
-            `;
-        }
-    }}
-`;
-
-export const MonthDivider = styled(Divider)`
-    ${(props) => {
-        if (props.$compress) {
-            return css`
-                margin: 0.1rem 0.1rem 0 0.1rem;
-            `;
-        }
-    }}
 `;
