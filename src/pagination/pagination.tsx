@@ -173,6 +173,7 @@ const Component = (
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
                         aria-label={"Page " + pageIndex}
+                        aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltip}
                         onFocus={closeAllTooltip}
                     >
@@ -211,6 +212,7 @@ const Component = (
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
                         aria-label={"Page " + pageIndex}
+                        aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltip}
                         onFocus={closeAllTooltip}
                     >
@@ -225,14 +227,9 @@ const Component = (
     const renderEllipsis = (ellipsisStart, ellipsisEnd, pageIndex) => (
         <EllipsisContainer key={pageIndex}>
             <NavigationItem
-                key={pageIndex}
                 focusHighlight={false}
                 focusOutline="browser"
-                aria-label={
-                    ellipsisStart
-                        ? "Go to page " + (activePage - 5)
-                        : "Go to page " + (activePage + 5)
-                }
+                aria-label={ellipsisStart ? "Previous 5 pages" : "Next 5 pages"}
                 onMouseOver={hoverAction(ellipsisStart)}
                 onMouseOut={blurAction(ellipsisStart)}
                 onFocus={hoverAction(ellipsisStart)}
@@ -252,12 +249,9 @@ const Component = (
                 )}
             </NavigationItem>
             {ellipsisStart && hoverLeftButton && (
-                <Hover aria-label="Previous 5 pages">Previous 5 pages</Hover>
+                <Hover>Previous 5 pages</Hover>
             )}
-
-            {ellipsisEnd && hoverRightButton && (
-                <Hover aria-label="Next 5 pages">Next 5 pages</Hover>
-            )}
+            {ellipsisEnd && hoverRightButton && <Hover>Next 5 pages</Hover>}
         </EllipsisContainer>
     );
 
@@ -304,7 +298,7 @@ const Component = (
                         disabled={isFirstPage}
                         focusHighlight={false}
                         $position="left"
-                        aria-label="Previous Page"
+                        aria-label="Previous page"
                         focusOutline="browser"
                     >
                         <ChevronLeftIcon aria-hidden />
@@ -315,7 +309,7 @@ const Component = (
                         disabled={isLastPage}
                         focusHighlight={false}
                         $position="right"
-                        aria-label="Next Page"
+                        aria-label="Next page"
                         focusOutline="browser"
                     >
                         <ChevronRightIcon aria-hidden />
@@ -326,7 +320,7 @@ const Component = (
                             disabled={isLastPage}
                             focusHighlight={false}
                             $position="right"
-                            aria-label="last page"
+                            aria-label="Last page"
                             focusOutline="browser"
                         >
                             <ChevronLineRightIcon aria-hidden />
