@@ -47,7 +47,7 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
         if (props.$readOnly) {
             return css`
                 border: 0;
-                cursor: none;
+                padding: 0;
                 :focus,
                 :focus-within {
                     border: 0px;
