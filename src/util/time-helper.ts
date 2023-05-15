@@ -22,7 +22,7 @@ interface TimeValuesPlain {
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-export namespace TimepickerHelper {
+export namespace TimeHelper {
     export const getTimeValues = (
         format: TimeFormat,
         value?: string

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TimepickerHelper } from "../util/time-helper";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
+import { TimeHelper } from "../util/time-helper";
 import { InputSelectorElement, Wrapper } from "./timepicker.styles";
 import { TimepickerProps } from "./types";
 
@@ -105,7 +105,7 @@ export const Timepicker = ({
             focused={showSelector}
             readOnly={true}
             placeholder={placeholder || getPlaceholderValue()}
-            value={TimepickerHelper.formatValue(value, format)}
+            value={TimeHelper.formatValue(value, format)}
             defaultValue={defaultValue}
             disabled={disabled}
             error={error}

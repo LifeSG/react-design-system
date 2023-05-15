@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { StringHelper } from "../../util/string-helper";
-import { Period, TimeFormat, TimepickerHelper } from "../../util/time-helper";
+import { Period, TimeFormat, TimeHelper } from "../../util/time-helper";
 import {
     AnimatedDiv,
     Container,
@@ -37,7 +37,7 @@ enum ETimePeriodToggleName {
     PM = "pm",
 }
 
-interface IProps {
+interface TimepickerDropdownProps {
     id?: string;
     value: string;
     show: boolean;
@@ -53,11 +53,11 @@ export const TimepickerDropdown = ({
     format,
     onChange,
     onCancel,
-}: IProps) => {
+}: TimepickerDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const timeValues = TimepickerHelper.getTimeValues(format, value);
+    const timeValues = TimeHelper.getTimeValues(format, value);
 
     const [hourValue, setHourValue] = useState<string>(timeValues.hour);
     const [minuteValue, setMinuteValue] = useState<string>(timeValues.minute);
@@ -78,7 +78,7 @@ export const TimepickerDropdown = ({
 
         if (show) {
             // reset time values especially when a Cancel or blur event happened
-            const { hour, minute, period } = TimepickerHelper.getTimeValues(
+            const { hour, minute, period } = TimeHelper.getTimeValues(
                 format,
                 value
             );
@@ -161,23 +161,19 @@ export const TimepickerDropdown = ({
             switch (event.currentTarget.name) {
                 case EInputButtonName.MINUTE_UP:
                     setMinuteValue(
-                        TimepickerHelper.updateMinutes(minuteValue, "add")
+                        TimeHelper.updateMinutes(minuteValue, "add")
                     );
                     break;
                 case EInputButtonName.MINUTE_DOWN:
                     setMinuteValue(
-                        TimepickerHelper.updateMinutes(minuteValue, "minus")
+                        TimeHelper.updateMinutes(minuteValue, "minus")
                     );
                     break;
                 case EInputButtonName.HOUR_UP:
-                    setHourValue(
-                        TimepickerHelper.updateHours(hourValue, "add")
-                    );
+                    setHourValue(TimeHelper.updateHours(hourValue, "add"));
                     break;
                 case EInputButtonName.HOUR_DOWN:
-                    setHourValue(
-                        TimepickerHelper.updateHours(hourValue, "minus")
-                    );
+                    setHourValue(TimeHelper.updateHours(hourValue, "minus"));
                     break;
                 default:
                     break;
@@ -215,7 +211,7 @@ export const TimepickerDropdown = ({
                 const valueToSet =
                     value > 23 || value < 0
                         ? timeValues.hour
-                        : TimepickerHelper.convertHourTo12HourFormat(
+                        : TimeHelper.convertHourTo12HourFormat(
                               event.target.value
                           );
 
@@ -255,7 +251,7 @@ export const TimepickerDropdown = ({
         let formattedValue: string;
 
         if (format === "24hr") {
-            formattedValue = TimepickerHelper.convertTo24HourFormat({
+            formattedValue = TimeHelper.convertTo24HourFormat({
                 hour: hourValue,
                 minute: minuteValue,
                 period: timePeriod,
@@ -424,7 +420,7 @@ export const TimepickerDropdown = ({
                         disabled={hourValue === "" || minuteValue === ""}
                         data-testid={getTestId("confirm-button")}
                     >
-                        Confirm
+                        Done
                     </ControlButton>
                 </ControlSection>
             </Container>

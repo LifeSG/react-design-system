@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { TimeRangePickerHelper } from "./helper";
-import { TimeRangePickerDropdown } from "./time-range-picker-dropdown";
+import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
+import { TimeHelper } from "../util/time-helper";
 import {
     ArrowRangeContainer,
     ArrowRight,
@@ -155,10 +155,7 @@ export const TimeRangePicker = ({
                     $focused={showStartTimeSelector}
                     readOnly
                     placeholder={"From"}
-                    value={TimeRangePickerHelper.formatValue(
-                        startTimeVal,
-                        format
-                    )}
+                    value={TimeHelper.formatValue(startTimeVal, format)}
                     disabled={disabled}
                     $error={error}
                     data-testid={
@@ -168,8 +165,7 @@ export const TimeRangePicker = ({
                     }
                 />
                 {showStartTimeSelector && <BottomHighlightStartTime />}
-
-                <TimeRangePickerDropdown
+                <TimepickerDropdown
                     id={id}
                     show={showStartTimeSelector}
                     value={startTimeVal}
@@ -188,10 +184,7 @@ export const TimeRangePicker = ({
                     $focused={showEndTimeSelector}
                     readOnly
                     placeholder={"To"}
-                    value={TimeRangePickerHelper.formatValue(
-                        endTimeVal,
-                        format
-                    )}
+                    value={TimeHelper.formatValue(endTimeVal, format)}
                     disabled={disabled}
                     $error={error}
                     data-testid={
@@ -200,7 +193,7 @@ export const TimeRangePicker = ({
                             : "timepicker-selector"
                     }
                 />
-                <TimeRangePickerDropdown
+                <TimepickerDropdown
                     id={id}
                     show={showEndTimeSelector}
                     value={endTimeVal}
