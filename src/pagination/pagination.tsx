@@ -90,6 +90,11 @@ const Component = (
         setInputText(value.toString());
     };
 
+    const closeAllTooltip = () => {
+        setHoverRightButton(false);
+        setHoverLeftButton(false);
+    };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -168,6 +173,8 @@ const Component = (
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
                         aria-label={"Page " + pageIndex}
+                        onMouseOver={closeAllTooltip}
+                        onFocus={closeAllTooltip}
                     >
                         {pageIndex}
                     </PageItem>
@@ -204,6 +211,8 @@ const Component = (
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
                         aria-label={"Page " + pageIndex}
+                        onMouseOver={closeAllTooltip}
+                        onFocus={closeAllTooltip}
                     >
                         {pageIndex}
                     </PageItem>
