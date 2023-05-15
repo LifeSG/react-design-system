@@ -6,7 +6,7 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
 import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     EllipsisContainer,
     Hover,
@@ -69,15 +69,24 @@ const Component = (
             ? () =>
                   handlePaginationItemClick(parseInt(activePage.toString()) + 1)
             : undefined;
-    const hoverAction = (position: boolean) =>
-        position ? () => onHoverLeftButton() : () => onHoverRightButton();
-    const blurAction = (position: boolean) =>
-        position ? () => onBlurLeftButton() : () => onBlurRightButton();
+    const hoverAction = (isStart: boolean) =>
+        isStart ? () => onHoverLeftButton() : () => onHoverRightButton();
+    const blurAction = (isStart: boolean) =>
+        isStart ? () => onBlurLeftButton() : () => onBlurRightButton();
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        if (activePage) {
+            setInputValue(activePage);
+        }
+    }, []);
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const setInputValue = (value) => {
+    const setInputValue = (value: number) => {
         setInputText(value.toString());
     };
 
@@ -92,15 +101,17 @@ const Component = (
     };
 
     const handleFastForwardClick = () => {
-        handlePaginationItemClick(activePage + 5);
-        setInputValue(activePage + 5);
+        const currentIndex = Math.min(totalPages, activePage + 5);
+        handlePaginationItemClick(currentIndex);
+        setInputValue(currentIndex);
         setHoverRightButton(true);
         setHoverLeftButton(false);
     };
 
     const handleFastBackwardClick = () => {
-        handlePaginationItemClick(activePage - 5);
-        setInputValue(activePage - 5);
+        const currentIndex = Math.max(1, activePage - 5);
+        handlePaginationItemClick(currentIndex);
+        setInputValue(currentIndex);
         setHoverRightButton(false);
         setHoverLeftButton(true);
     };
@@ -113,14 +124,8 @@ const Component = (
         } else if (!re.test(value)) {
             setInputText(value.replace(/[^0-9]/g, ""));
         } else {
-            const valueInt = parseInt(value.replace(/[^0-9]/g, ""));
-            if (valueInt > totalPages) {
-                setInputValue(totalPages);
-            } else if (valueInt < 1) {
-                setInputValue(1);
-            } else {
-                setInputValue(valueInt);
-            }
+            const newPage = parseInt(value.replace(/[^0-9]/g, ""));
+            setInputValue(Math.max(1, Math.min(totalPages, newPage)));
         }
     };
 

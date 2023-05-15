@@ -22,10 +22,6 @@ interface ButtonProps {
 
 export const PaginationWrapper = styled.div`
     display: flex;
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        margin-left: -1.5rem;
-    }
 `;
 
 export const PaginationList = styled.div`
@@ -198,7 +194,6 @@ export const LabelDivider = styled(Text.Body)`
 export const InputView = styled(Input)`
     ${TextStyleHelper.getTextStyle("Body", 400)};
     justify-content: center;
-    //margin: 0 0.5rem;
     width: 3.5rem;
     height: 2.5rem;
     border-radius: 0.25rem;
@@ -210,6 +205,10 @@ export const InputView = styled(Input)`
 
         ::placeholder {
             ${TextStyleHelper.getTextStyle("XSmall", 400)};
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
     }
 `;
