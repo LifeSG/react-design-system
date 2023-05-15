@@ -256,7 +256,6 @@ const Component = (
         <PaginationMobileInput>
             <form onSubmit={handleInputSubmit}>
                 <InputView
-                    placeholder="Page"
                     value={inputText}
                     onChange={handleInput}
                     autoComplete="off"

@@ -205,10 +205,6 @@ export const InputView = styled(Input)`
 
         ::placeholder {
             ${TextStyleHelper.getTextStyle("XSmall", 400)};
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
         }
     }
 `;
