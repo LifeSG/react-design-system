@@ -31,6 +31,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "readOnly",
+                description:
+                    "Indicates if the component has a read only state and selection or input is not allowed",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "error",
                 description: (
                     <>
@@ -64,13 +70,30 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onChange",
                 description:
                     "Called when the user clicks on the 'Done' button in the time selection box. Returns the time value in the format specified",
-                propTypes: ["(value: TimeRangePickerProps) => void"],
+                propTypes: ["(value: TimeRangeInputValue) => void"],
             },
             {
                 name: "onBlur",
                 description:
                     "Called when a defocus happens. Any changes in the time selection box will not be applied",
                 propTypes: ["() => void"],
+            },
+        ],
+    },
+    {
+        name: "TimeRangeInputValue",
+        attributes: [
+            {
+                name: "startTime",
+                description:
+                    "The selected start time value in the format specified",
+                propTypes: ["string"],
+            },
+            {
+                name: "endTime",
+                description:
+                    "The selected end time value in the format specified",
+                propTypes: ["string"],
             },
         ],
     },

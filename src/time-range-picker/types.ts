@@ -1,6 +1,6 @@
 export type TimeRangePickerFormat = "12hr";
 
-export interface TimeRangeSelectorProps {
+export interface TimeRangeInputValue {
     startTime: string;
     endTime: string;
 }
@@ -15,10 +15,10 @@ export interface TimeRangePickerProps {
 
     // Input-specific attributes
 
-    value?: TimeRangeSelectorProps | undefined;
+    value?: TimeRangeInputValue | undefined;
     format?: TimeRangePickerFormat | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;
-    onChange?: ((value: TimeRangeSelectorProps) => void) | undefined;
+    onChange?: ((value: TimeRangeInputValue) => void) | undefined;
     onBlur?: (() => void) | undefined;
 }

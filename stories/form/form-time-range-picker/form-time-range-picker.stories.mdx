@@ -18,7 +18,7 @@ import { PropsTable } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-The field that allows a user to enter a time value.
+The field that allows a user to enter a time range.
 
 ```tsx
 import { Form } from "@lifesg/react-design-system/form";
@@ -31,23 +31,19 @@ import { Form } from "@lifesg/react-design-system/form";
                 startTime: "",
                 endTime: "",
             });
-            const timeVal = {
-                startTime: "12:00am",
-                endTime: "12:30am",
-            };
             const [time2, setTime2] = useState({
                 startTime: "",
                 endTime: "",
             });
-            const [time3, setTime3] = useState({
-                startTime: "",
-                endTime: "",
+            const [time3] = useState({
+                startTime: "12:00am",
+                endTime: "12:30am",
             });
             return (
                 <StoryContainer>
                     <Container>
                         <Form.TimeRangePicker
-                            label="This is a TimeRangePicker"
+                            label="This is a time range picker"
                             value={time1}
                             onChange={(value) => setTime1(value)}
                         />
@@ -57,15 +53,14 @@ import { Form } from "@lifesg/react-design-system/form";
                         />
                         <Form.TimeRangePicker
                             label="This is the error state"
-                            value={time3}
-                            onChange={(value) => setTime3(value)}
-                            error={true}
+                            value={time2}
+                            onChange={(value) => setTime2(value)}
                             errorMessage="Time input required"
                         />
                         <Form.TimeRangePicker
                             label="This is read only state for timepicker"
-                            value={timeVal}
-                            readOnly={true}
+                            value={time3}
+                            readOnly
                         />
                     </Container>
                 </StoryContainer>

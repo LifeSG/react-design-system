@@ -11,7 +11,7 @@ import {
     TimeContainer,
     Wrapper,
 } from "./time-range-picker.styles";
-import { TimeRangePickerProps, TimeRangeSelectorProps } from "./types";
+import { TimeRangeInputValue, TimeRangePickerProps } from "./types";
 
 export const TimeRangePicker = ({
     id,
@@ -99,7 +99,7 @@ export const TimeRangePicker = ({
         setShowEndTimeSelector(true);
         setStartTimeVal(value);
 
-        const timeValue: TimeRangeSelectorProps = {
+        const timeValue: TimeRangeInputValue = {
             startTime: value,
             endTime: endTimeVal,
         };
@@ -115,7 +115,7 @@ export const TimeRangePicker = ({
             setShowStartTimeSelector(true);
         }
 
-        const timeValue: TimeRangeSelectorProps = {
+        const timeValue: TimeRangeInputValue = {
             startTime: startTimeVal,
             endTime: value,
         };
