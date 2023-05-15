@@ -1,10 +1,10 @@
-import { StringHelper } from "../util/string-helper";
-import { TimepickerFormat } from "./types";
+import { StringHelper } from "./string-helper";
 
 // =============================================================================
 // INTERFACES
 // =============================================================================
 export type Period = "am" | "pm";
+export type TimeFormat = "12hr" | "24hr";
 
 export interface TimeValues {
     hour: string;
@@ -24,7 +24,7 @@ interface TimeValuesPlain {
 // =============================================================================
 export namespace TimepickerHelper {
     export const getTimeValues = (
-        format: TimepickerFormat,
+        format: TimeFormat,
         value?: string
     ): TimeValues => {
         // Default value
@@ -154,10 +154,7 @@ export namespace TimepickerHelper {
         return StringHelper.padValue(hourString);
     };
 
-    export const formatValue = (
-        value: string,
-        format: TimepickerFormat
-    ): string => {
+    export const formatValue = (value: string, format: TimeFormat): string => {
         try {
             const plain = convertToPlain(value, format);
 
@@ -182,7 +179,7 @@ export namespace TimepickerHelper {
 // =============================================================================
 // NON-EXPORTABLES
 // =============================================================================
-const isValidHour = (hourString: string, format: TimepickerFormat): boolean => {
+const isValidHour = (hourString: string, format: TimeFormat): boolean => {
     const numValue = parseInt(hourString);
     return format === "24hr"
         ? numValue >= 0 && numValue <= 23
@@ -201,10 +198,7 @@ const isValidTimePeriod = (timePeriodString: string): boolean => {
     );
 };
 
-const convertToPlain = (
-    value: string,
-    format: TimepickerFormat
-): TimeValuesPlain => {
+const convertToPlain = (value: string, format: TimeFormat): TimeValuesPlain => {
     const timeArr = value.split(":");
     const error = new Error("Invalid format");
 

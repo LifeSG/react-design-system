@@ -3,8 +3,8 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
-import { StringHelper } from "../util/string-helper";
-import { Period, TimepickerHelper } from "./helper";
+import { StringHelper } from "../../util/string-helper";
+import { Period, TimeFormat, TimepickerHelper } from "../../util/time-helper";
 import {
     AnimatedDiv,
     Container,
@@ -19,7 +19,6 @@ import {
     TimePeriodSection,
     TimePeriodToggle,
 } from "./timepicker-dropdown.styles";
-import { TimepickerFormat } from "./types";
 
 enum EInputButtonName {
     HOUR_UP = "hour-up",
@@ -42,7 +41,7 @@ interface IProps {
     id?: string;
     value: string;
     show: boolean;
-    format: TimepickerFormat;
+    format: TimeFormat;
     onChange: (value: string) => void;
     onCancel: () => void;
 }

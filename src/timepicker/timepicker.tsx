@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TimepickerHelper } from "./helper";
-import { TimepickerDropdown } from "./timepicker-dropdown";
+import { TimepickerHelper } from "../util/time-helper";
+import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { InputSelectorElement, Wrapper } from "./timepicker.styles";
 import { TimepickerProps } from "./types";
 

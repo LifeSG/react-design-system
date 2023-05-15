@@ -1,11 +1,11 @@
 import { animated } from "react-spring";
 import styled from "styled-components";
-import { Button } from "../button";
-import { Color } from "../color";
-import { IconButton } from "../icon-button";
-import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
-import { Toggle } from "../toggle";
+import { Button } from "../../button";
+import { Color } from "../../color";
+import { IconButton } from "../../icon-button";
+import { MediaQuery } from "../../media";
+import { Text, TextStyleHelper } from "../../text";
+import { Toggle } from "../../toggle";
 
 // =============================================================================
 // STYLING
