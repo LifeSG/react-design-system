@@ -90,7 +90,7 @@ const Component = (
         setInputText(value.toString());
     };
 
-    const closeAllTooltip = () => {
+    const closeAllTooltips = () => {
         setHoverRightButton(false);
         setHoverLeftButton(false);
     };
@@ -123,10 +123,10 @@ const Component = (
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        const re = /^[0-9]+$/;
+        const numericRegex = /^[0-9]+$/;
         if (value === undefined || value.length === 0) {
             setInputText("");
-        } else if (!re.test(value)) {
+        } else if (!numericRegex.test(value)) {
             setInputText(value.replace(/[^0-9]/g, ""));
         } else {
             const newPage = parseInt(value.replace(/[^0-9]/g, ""));
@@ -134,7 +134,7 @@ const Component = (
         }
     };
 
-    const handleInputSubmit = (event) => {
+    const handleInputSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (inputText) {
             onPageChange(parseInt(inputText));
@@ -159,7 +159,7 @@ const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderPaginationItem = () => {
+    const renderPaginationItems = () => {
         return [...Array(totalPages)].map((e, i) => {
             const pageIndex = i + 1;
             const startRange = boundaryRange + 2 + siblingRange * 2;
@@ -174,8 +174,8 @@ const Component = (
                         $selected={active}
                         aria-label={"Page " + pageIndex}
                         aria-current={active ? "page" : false}
-                        onMouseOver={closeAllTooltip}
-                        onFocus={closeAllTooltip}
+                        onMouseOver={closeAllTooltips}
+                        onFocus={closeAllTooltips}
                     >
                         {pageIndex}
                     </PageItem>
@@ -213,8 +213,8 @@ const Component = (
                         $selected={active}
                         aria-label={"Page " + pageIndex}
                         aria-current={active ? "page" : false}
-                        onMouseOver={closeAllTooltip}
-                        onFocus={closeAllTooltip}
+                        onMouseOver={closeAllTooltips}
+                        onFocus={closeAllTooltips}
                     >
                         {pageIndex}
                     </PageItem>
@@ -224,7 +224,11 @@ const Component = (
             return null;
         });
     };
-    const renderEllipsis = (ellipsisStart, ellipsisEnd, pageIndex) => (
+    const renderEllipsis = (
+        ellipsisStart: boolean,
+        ellipsisEnd: boolean,
+        pageIndex: number
+    ) => (
         <EllipsisContainer key={pageIndex}>
             <NavigationItem
                 focusHighlight={false}
@@ -303,7 +307,7 @@ const Component = (
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationButton>
-                    {isMobile ? renderMobile() : renderPaginationItem()}
+                    {isMobile ? renderMobile() : renderPaginationItems()}
                     <NavigationButton
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
