@@ -118,7 +118,7 @@ const Component = (
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        const re = /^[0-9\b]+$/;
+        const re = /^[0-9]+$/;
         if (value === undefined || value.length === 0) {
             setInputText("");
         } else if (!re.test(value)) {
