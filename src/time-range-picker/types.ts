@@ -16,7 +16,6 @@ export interface TimeRangePickerProps {
     // Input-specific attributes
 
     value?: TimeRangeSelectorProps | undefined;
-    defaultValue?: string | undefined;
     format?: TimeRangePickerFormat | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;

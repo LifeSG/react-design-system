@@ -18,7 +18,6 @@ export const TimeRangePicker = ({
     disabled = false,
     error,
     value,
-    defaultValue,
     format = "12hr",
     readOnly,
     onChange,
@@ -101,7 +100,7 @@ export const TimeRangePicker = ({
         setStartTimeVal(value);
 
         const timeValue: TimeRangeSelectorProps = {
-            startTime: startTimeVal,
+            startTime: value,
             endTime: endTimeVal,
         };
 
@@ -109,20 +108,23 @@ export const TimeRangePicker = ({
     };
 
     const handleEndTime = (value: string) => {
-        setEndTimeVal(value);
-        if (startTimeVal == "") {
-            setShowStartTimeSelector(true);
-        }
-        if (startTimeVal > value) {
-            setEndTimeVal(startTimeVal);
-            handleStartTime(value);
-        }
         setShowEndTimeSelector(false);
 
+        let startTime = startTimeVal;
+        let endTime = value;
+        if (startTimeVal == "") {
+            setShowStartTimeSelector(true);
+        } else if (startTimeVal > value) {
+            endTime = startTimeVal;
+            startTime = value;
+        }
+
         const timeValue: TimeRangeSelectorProps = {
-            startTime: startTimeVal,
-            endTime: endTimeVal,
+            startTime: startTime,
+            endTime: endTime,
         };
+        setEndTimeVal(endTime);
+        setStartTimeVal(startTime);
 
         onChange && onChange(timeValue);
     };
@@ -163,7 +165,6 @@ export const TimeRangePicker = ({
                         startTimeVal,
                         format
                     )}
-                    defaultValue={defaultValue}
                     disabled={disabled}
                     $error={error}
                     data-testid={
@@ -177,7 +178,7 @@ export const TimeRangePicker = ({
                 <TimeRangePickerDropdown
                     id={id}
                     show={showStartTimeSelector}
-                    value={startTimeVal || defaultValue}
+                    value={startTimeVal}
                     format={format}
                     onCancel={handleSelectionDropdownCancel}
                     onChange={handleStartTime}
@@ -197,7 +198,6 @@ export const TimeRangePicker = ({
                         endTimeVal,
                         format
                     )}
-                    defaultValue={defaultValue}
                     disabled={disabled}
                     $error={error}
                     data-testid={
@@ -209,7 +209,7 @@ export const TimeRangePicker = ({
                 <TimeRangePickerDropdown
                     id={id}
                     show={showEndTimeSelector}
-                    value={endTimeVal || defaultValue}
+                    value={endTimeVal}
                     format={format}
                     onCancel={handleSelectionDropdownCancel}
                     onChange={handleEndTime}
