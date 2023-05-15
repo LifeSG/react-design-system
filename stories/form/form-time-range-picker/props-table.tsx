@@ -61,12 +61,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "swapInvalidRange",
-                description:
-                    "Indicates if the Swapping of time if user enters start time greater than end time",
-                propTypes: ["boolean"],
-            },
-            {
                 name: "onChange",
                 description:
                     "Called when the user clicks on the 'Done' button in the time selection box. Returns the time value in the format specified",

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { TimeRangePickerHelper, shouldSwapTime } from "./helper";
+import { TimeRangePickerHelper } from "./helper";
 import { TimeRangePickerDropdown } from "./time-range-picker-dropdown";
 import {
     ArrowRangeContainer,
@@ -20,7 +20,6 @@ export const TimeRangePicker = ({
     value,
     format = "12hr",
     readOnly,
-    swapInvalidRange = false,
     onChange,
     onBlur,
     ...otherProps
@@ -113,10 +112,9 @@ export const TimeRangePicker = ({
 
         let startTime = startTimeVal;
         let endTime = value;
-
         if (startTimeVal == "") {
             setShowStartTimeSelector(true);
-        } else if (shouldSwapTime(startTime, endTime) && swapInvalidRange) {
+        } else if (startTimeVal > value) {
             endTime = startTimeVal;
             startTime = value;
         }

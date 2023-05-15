@@ -258,31 +258,3 @@ const convertToPlain = (
         };
     }
 };
-
-export const shouldSwapTime = (startTime: string, endTime: string): boolean => {
-    const startTimeValue = TimeRangePickerHelper.getTimeValues(
-        "12hr",
-        startTime
-    );
-    const endTimeValue = TimeRangePickerHelper.getTimeValues("12hr", endTime);
-
-    if (
-        startTimeValue.hour === "12" &&
-        startTimeValue.minute === "00" &&
-        startTimeValue.period === "am"
-    ) {
-        return true; // treat 12:AM as end of the day
-    }
-
-    if (startTimeValue.period > endTimeValue.period) {
-        return true;
-    }
-    if (startTimeValue.period === endTimeValue.period) {
-        if (startTimeValue.hour > endTimeValue.hour) {
-            return true;
-        } else if (startTimeValue.hour === endTimeValue.hour) {
-            if (startTimeValue.minute > endTimeValue.minute) return true;
-        }
-    }
-    return false;
-};
