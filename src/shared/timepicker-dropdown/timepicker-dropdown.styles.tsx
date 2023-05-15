@@ -20,16 +20,11 @@ export const AnimatedDiv = styled(animated.div)`
     position: absolute;
     top: 3.5rem;
     left: 0;
-    width: 27rem;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     background: ${Color.Neutral[8]};
     border-radius: ${BORDER_RADIUS};
     overflow: hidden;
     z-index: 1;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        width: 100%;
-    }
 `;
 
 export const Container = styled.div`
@@ -54,11 +49,11 @@ export const ControlSection = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+    gap: 0.5rem 1rem;
 
     ${MediaQuery.MaxWidth.mobileS} {
-        border-top: 1px solid ${Color.Neutral[5]};
+        flex-direction: column-reverse; // FIXME: this breaks tab focus
         margin-top: 2rem;
-        padding-top: 1.5rem;
     }
 `;
 
@@ -70,13 +65,14 @@ export const HourMinuteSection = styled.div`
     align-items: center;
     margin-right: 2rem;
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileS} {
         margin-right: 0;
     }
 `;
 
 export const TimePeriodSection = styled.div`
     display: flex;
+    gap: 0.5rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
@@ -97,18 +93,29 @@ export const InputContainer = styled.div`
 export const SwitchButton = styled(IconButton)`
     width: 5rem;
     padding: 1rem 0;
-    color: ${Color.Primary};
+    color: ${Color.Neutral[3]};
+
+    svg {
+        height: 1rem;
+        width: 1rem;
+    }
+
+    &:hover {
+        color: ${Color.Primary};
+    }
 `;
 
 export const DividerLabel = styled(Text.Body)`
-    margin: 0 0.75rem;
+    width: 1.5rem;
+    margin: 0 0.25rem;
+    text-align: center;
 
     ${MediaQuery.MaxWidth.tablet} {
-        margin: 0 0.5rem;
+        margin: 0;
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        margin: 0 0.75rem;
+        margin: 0 0.25rem;
     }
 `;
 
@@ -153,25 +160,7 @@ export const TimeInput = styled.input`
 
 export const TimePeriodToggle = styled(Toggle)`
     min-width: 5rem;
-
-    :not(:last-of-type) {
-        margin-right: 0.5rem;
-    }
-
-    ${MediaQuery.MaxWidth.tablet} {
-        :not(:last-of-type) {
-            margin-right: 0;
-            margin-bottom: 0.5rem;
-        }
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        width: 50%;
-        :not(:last-of-type) {
-            margin-right: 0.5rem;
-            margin-bottom: 0;
-        }
-    }
+    flex: 1;
 `;
 
 // -----------------------------------------------------------------------------
@@ -180,11 +169,11 @@ export const TimePeriodToggle = styled(Toggle)`
 export const ControlButton = styled(Button.Small)`
     width: 7rem;
 
-    :not(:last-of-type) {
-        margin-right: 0.5rem;
+    ${MediaQuery.MaxWidth.mobileL} {
+        flex: 1;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
-        width: 50%;
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 100%;
     }
 `;
