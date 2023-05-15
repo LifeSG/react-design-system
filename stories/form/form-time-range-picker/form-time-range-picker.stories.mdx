@@ -49,6 +49,7 @@ import { Form } from "@lifesg/react-design-system/form";
                         <Form.TimeRangePicker
                             label="This is a TimeRangePicker"
                             value={time1}
+                            swapInvalidRange
                             onChange={(value) => setTime1(value)}
                         />
                         <Form.TimeRangePicker
@@ -60,6 +61,7 @@ import { Form } from "@lifesg/react-design-system/form";
                             value={time3}
                             onChange={(value) => setTime3(value)}
                             error={true}
+                            swapInvalidRange
                             errorMessage="Time input required"
                         />
                         <Form.TimeRangePicker

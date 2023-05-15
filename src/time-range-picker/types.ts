@@ -19,6 +19,7 @@ export interface TimeRangePickerProps {
     format?: TimeRangePickerFormat | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;
+    swapInvalidRange?: boolean | undefined;
     onChange?: ((value: TimeRangeSelectorProps) => void) | undefined;
     onBlur?: (() => void) | undefined;
 }
