@@ -36,7 +36,7 @@ export interface CommonCalendarProps {
     onSelect?: ((value: string) => void) | undefined;
     /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;
-    /** Called when day calendar view is changed to another month or year, returns value in `YYYY-MM-DD`. Example: `"2023-06-01"` */
+    /** Called when selected a date in month/year calendar or day calendar changed to another month or year */
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
 
     // Basic component props
