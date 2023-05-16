@@ -1,25 +1,21 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { BookingSGColorSet } from "../spec/color-spec/bookingsg-color-set";
 import { TextStyleHelper } from "../text/helper";
-import { MediaQuery } from "../media";
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import { DesignToken } from "src/design-token";
 
 // =============================================================================
-// STYLE INTERFACe
+// STYLE INTERFACE
 // =============================================================================
-interface StyleProps {
-    $focused?: boolean;
-    $disabled?: boolean;
-    $error?: boolean;
-    $readOnly?: boolean;
-}
 
 interface ContainerStyleProps {
     $disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
+}
+
+interface IndicatorStyleProps {
+    $position: "start" | "end" | "none";
 }
 
 // =============================================================================
@@ -32,17 +28,19 @@ export const Wrapper = styled.div`
 export const TimeContainer = styled.div<ContainerStyleProps>`
     display: flex;
     align-items: center;
-    padding: 11px 16px;
-    gap: 8px;
+    gap: 0.5rem;
     width: 100%;
-    height: 48px;
-    border-radius: 4px;
+    height: 3rem;
+    border-radius: 0.25rem;
     border: 1px solid ${Color.Neutral[5]};
+    padding: 11px 16px;
+
     :focus,
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: ${DesignToken.InputBoxShadow};
     }
+
     ${(props) => {
         if (props.$readOnly) {
             return css`
@@ -50,20 +48,19 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
                 padding: 0;
                 :focus,
                 :focus-within {
-                    border: 0px;
+                    border: none;
                     box-shadow: none;
                 }
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[6](props)} !important;
+                background: ${Color.Neutral[6]};
                 :hover {
                     cursor: not-allowed;
                 }
                 :focus-within {
-                    border: 0px;
+                    border: none;
                     box-shadow: none;
-                    //    border: 1px solid ${Color.Neutral[5](props)};
                 }
             `;
         } else if (props.$error) {
@@ -76,154 +73,60 @@ export const TimeContainer = styled.div<ContainerStyleProps>`
             `;
         }
     }}
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        width: 235px;
-    }
-`;
-
-export const ArrowRangeContainer = styled.div`
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0;
 `;
 
 export const ArrowRight = styled(ArrowRightIcon)`
     color: ${Color.Neutral[3]};
-    cursor: pointer;
     width: 1.125rem;
-    height: 1rem;
+    height: 1.125rem;
+    flex-shrink: 0;
 `;
 
-export const BottomHighlightStartTime = styled.div`
+export const Indicator = styled.div<IndicatorStyleProps>`
     position: absolute;
-    bottom: -0.1rem;
-    height: 2px;
+    background-color: ${Color.Primary};
+    height: 0.125rem;
+    width: calc(100% - 50% - 2rem); // paddingX is 2rem
+    transition: left 350ms ease-in-out, opacity 350ms ease-in-out;
     left: 1rem;
-    right: 23rem;
-    background-color: ${Color.Primary};
+    bottom: 0;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        width: 40%;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        /* width: 335px; */
-        width: 40%;
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
-        width: 40%;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        width: 40%;
-    }
-`;
-
-export const BottomHighlightEndTime = styled.div`
-    position: absolute;
-    bottom: -0.1rem;
-    height: 2px;
-    left: 16rem;
-    right: 7rem;
-    background-color: ${Color.Primary};
-
-    ${MediaQuery.MaxWidth.tablet} {
-        width: 8rem;
-        left: 12rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        /* width: 335px; */
-        width: 8rem;
-        left: 10rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
-        width: 6rem;
-        left: 10rem;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        width: 5rem;
-        left: 8rem;
-    }
-`;
-
-export const InputSelectorStartTimeElement = styled.input<StyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-
-    display: block;
-    width: 100%;
-    height: 26px;
-    background: ${BookingSGColorSet.Neutral[8]};
-    color: ${BookingSGColorSet.Neutral[1]};
-    border: 0px;
-    :focus,
-    :active {
-        outline: none;
-    }
-    :disabled {
-        background: ${Color.Neutral[6]} !important;
-        :hover {
-            cursor: not-allowed;
-        }
-    }
     ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                border: none;
-                cursor: none;
-            `;
-        }
-        if (props.$disabled) {
-            return css`
-                background: ${Color.Neutral[6](props)} !important;
-                :hover {
-                    cursor: not-allowed;
-                }
-            `;
+        switch (props.$position) {
+            case "start":
+                return css`
+                    left: 1rem;
+                    opacity: 1;
+                `;
+            case "end":
+                return css`
+                    left: calc(50% + 1rem);
+                    opacity: 1;
+                `;
+            case "none":
+                return css`
+                    left: 1rem;
+                    opacity: 0;
+                `;
         }
     }}
 `;
 
-export const InputSelectorEndTimeElement = styled.input<StyleProps>`
+export const SelectorInput = styled.input`
+    /* reset default styles */
     ${TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${Color.Neutral[1]};
+    background-color: transparent;
+    border: none;
+    outline: none;
 
-    display: block;
-    width: 100%;
-    height: 26px;
-    margin-left: 1rem;
-    background: ${BookingSGColorSet.Neutral[8]};
-    color: ${BookingSGColorSet.Neutral[1]};
-    border: 0px;
-    :focus,
-    :active {
-        outline: none;
-    }
     :disabled {
-        background: ${Color.Neutral[6]} !important;
         :hover {
             cursor: not-allowed;
         }
     }
 
-    ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                border: none;
-                cursor: none;
-            `;
-        }
-        if (props.$disabled) {
-            return css`
-                background: ${Color.Neutral[6](props)} !important;
-                :hover {
-                    cursor: not-allowed;
-                }
-            `;
-        }
-    }}
+    display: block;
+    width: 100%;
+    flex: 1;
 `;
