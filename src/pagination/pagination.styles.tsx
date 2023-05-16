@@ -3,7 +3,8 @@ import { Button } from "../button/button";
 import { Color } from "../color";
 import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
-import { TextStyleHelper } from "../text";
+import { Text, TextStyleHelper } from "../text";
+import { Input } from "../input";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -12,12 +13,14 @@ import { TextStyleHelper } from "../text";
 interface StyleProps {
     $selected: boolean;
 }
-
+interface ButtonProps {
+    $position: string;
+}
 // =============================================================================
 // STYLING
 // =============================================================================
 
-export const PaginationWrapper = styled.div`
+export const PaginationWrapper = styled.nav`
     display: flex;
 `;
 
@@ -34,6 +37,7 @@ export const PaginationList = styled.div`
 
 export const PaginationMenu = styled.div`
     display: inline-flex;
+    padding: 0.125rem;
     align-items: center;
 `;
 
@@ -56,6 +60,43 @@ export const NavigationItem = styled(IconButton)`
     }
 `;
 
+export const NavigationButton = styled(IconButton)<ButtonProps>`
+    display: flex;
+    padding: 0.625rem;
+    justify-content: center;
+    align-items: center;
+
+    color: ${Color.Primary};
+
+    svg {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+
+    &:disabled {
+        color: ${Color.Neutral[4]};
+        cursor: not-allowed;
+    }
+    ${(props) => {
+        if (props.$position === "left") {
+            return css`
+                margin-right: 0.625rem;
+                margin-left: 0rem;
+            `;
+        } else {
+            return css`
+                margin-right: 0rem;
+                margin-left: 0.625rem;
+            `;
+        }
+    }}
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        margin-right: 0rem;
+        margin-left: 0rem;
+    }
+`;
+
 export const PageItem = styled(Button.Default)<StyleProps>`
     background: ${(props) =>
         props.$selected ? Color.Primary : Color.Neutral[8]};
@@ -68,7 +109,7 @@ export const PageItem = styled(Button.Default)<StyleProps>`
     height: 2.5rem;
     text-align: center;
     padding: 0.4rem 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin: 0.25rem;
     cursor: pointer;
 
@@ -100,10 +141,9 @@ export const EllipsisItem = styled(IconButton)`
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: not-allowed;
     color: ${Color.Neutral[3]};
     padding: 0.4rem 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     white-space: nowrap;
 
     svg {
@@ -118,4 +158,68 @@ export const EllipsisItem = styled(IconButton)`
             color: ${Color.Neutral[3]};
         }
     }
+`;
+
+export const EllipsisContainer = styled.div`
+    display: flex;
+    cursor: pointer;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+`;
+
+export const PaginationMobileInput = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 0.625rem;
+    align-items: center;
+    color: ${Color.Neutral[1]};
+
+    display: flex;
+    justify-content: center;
+`;
+
+export const Label = styled(Text.Body)`
+    white-space: nowrap;
+`;
+
+export const LabelDivider = styled(Text.Body)`
+    white-space: nowrap;
+    margin: 0 1rem;
+`;
+
+export const InputView = styled(Input)`
+    ${TextStyleHelper.getTextStyle("Body", 400)};
+    justify-content: center;
+    width: 3.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid ${Color.Neutral[5]};
+    padding: 0.5rem 0.5rem;
+
+    input {
+        text-align: center;
+
+        ::placeholder {
+            ${TextStyleHelper.getTextStyle("XSmall", 400)};
+        }
+    }
+`;
+
+export const Hover = styled.div`
+    ${TextStyleHelper.getTextStyle("XSmall", 400)};
+
+    background-color: ${Color.Primary};
+    border: none;
+    border-radius: 0.25rem;
+    color: ${Color.Neutral[8]};
+    align-items: center;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    margin-top: 6rem;
+    padding: 0.25rem 0.75rem;
 `;

@@ -7,6 +7,7 @@ import {
     FullWidthStoryContainer,
     Title,
 } from "../storybook-common";
+import { CurrentPage } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta title="Modules/Pagination" component={Pagination} />
@@ -30,7 +31,7 @@ import { Pagination } from "@lifesg/react-design-system/pagination";
                     <Pagination
                         onPageChange={(selected) => setSelected(selected)}
                         activePage={selectedPage}
-                        totalItems={45}
+                        totalItems={50}
                     />
                 </FullWidthStoryContainer>
             );
@@ -49,13 +50,16 @@ When there are more items to display, only some pages are visible.
         {() => {
             const [selectedPage, setSelected] = useState(5);
             return (
-                <FullWidthStoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        activePage={selectedPage}
-                        totalItems={500}
-                    />
-                </FullWidthStoryContainer>
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            activePage={selectedPage}
+                            totalItems={500}
+                        />
+                    </FullWidthStoryContainer>
+                </>
             );
         }}
     </Story>
@@ -70,14 +74,17 @@ The `showFirstAndLastNav` prop allows the user to jump directly to the first and
         {() => {
             const [selectedPage, setSelected] = useState(5);
             return (
-                <FullWidthStoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        activePage={selectedPage}
-                        totalItems={500}
-                        showFirstAndLastNav
-                    />
-                </FullWidthStoryContainer>
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            activePage={selectedPage}
+                            totalItems={600}
+                            showFirstAndLastNav
+                        />
+                    </FullWidthStoryContainer>
+                </>
             );
         }}
     </Story>
