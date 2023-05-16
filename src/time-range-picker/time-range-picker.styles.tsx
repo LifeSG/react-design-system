@@ -1,8 +1,10 @@
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
-import { InputWrapper } from "src/shared/input-wrapper/input-wrapper";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
+import {
+    BasicInput,
+    InputWrapper,
+} from "../shared/input-wrapper/input-wrapper";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -61,20 +63,7 @@ export const Indicator = styled.div<IndicatorStyleProps>`
     }}
 `;
 
-export const SelectorInput = styled.input`
-    /* reset default styles */
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
-    background-color: transparent;
-    border: none;
-    outline: none;
-
-    :disabled {
-        :hover {
-            cursor: not-allowed;
-        }
-    }
-
+export const SelectorInput = styled(BasicInput)`
     display: block;
     width: 100%;
     flex: 1;

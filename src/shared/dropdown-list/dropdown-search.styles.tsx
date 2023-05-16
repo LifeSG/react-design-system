@@ -3,7 +3,7 @@ import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled from "styled-components";
 import { Color } from "../../color";
 import { IconButton } from "../../icon-button";
-import { TextStyleHelper } from "../../text";
+import { BasicInput } from "../input-wrapper/input-wrapper";
 
 export const Container = styled.li`
     background: ${Color.Neutral[7]};
@@ -12,24 +12,11 @@ export const Container = styled.li`
     align-items: center;
 `;
 
-export const SearchInput = styled.input`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+export const SearchInput = styled(BasicInput)`
     height: 3rem;
-    border: none;
-    background: transparent;
     flex: 1;
     padding: 0 0.5rem 0 0;
     width: 100%;
-
-    :focus,
-    :active {
-        outline: none;
-    }
-
-    ::placeholder,
-    ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
-    }
 `;
 
 export const SearchIcon = styled(MagnifierIcon)`

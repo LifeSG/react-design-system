@@ -1,6 +1,7 @@
+import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { DesignToken } from "../../design-token";
-import styled, { css } from "styled-components";
+import { TextStyleHelper } from "../../text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -67,4 +68,44 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
             `;
         }
     }}
+`;
+
+/**
+ * standalone native input with stripped-down styles, intended to be used in
+ * combination with `InputWrapper` or other wrappers to build composite widgets
+ */
+export const BasicInput = styled.input`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${Color.Neutral[1]};
+    display: block;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+
+    :disabled {
+        :hover {
+            cursor: not-allowed;
+        }
+    }
+
+    ::placeholder,
+    ::-webkit-input-placeholder {
+        color: ${Color.Neutral[3]};
+    }
+
+    // Chrome, Safari, Edge, Opera
+    ::-webkit-outer-spin-button,
+    ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    // Safari (remove top shadow)
+    --webkit-appearance: none;
+
+    // Firefox
+    --moz-appearance: textfield;
 `;

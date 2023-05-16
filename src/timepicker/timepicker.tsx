@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
-import { InputSelectorElement, Wrapper } from "./timepicker.styles";
+import { InputSelectorElement } from "./timepicker.styles";
 import { TimepickerProps } from "./types";
 
 export const Timepicker = ({
@@ -108,7 +109,6 @@ export const Timepicker = ({
             value={TimeHelper.formatValue(value, format)}
             defaultValue={defaultValue}
             disabled={disabled}
-            error={error}
             data-testid={
                 id ? `${id}-timepicker-selector` : "timepicker-selector"
             }
@@ -116,7 +116,13 @@ export const Timepicker = ({
     );
 
     return (
-        <Wrapper ref={nodeRef} id={id} {...otherProps}>
+        <InputWrapper
+            ref={nodeRef}
+            id={id}
+            $disabled={disabled}
+            $error={error}
+            {...otherProps}
+        >
             {renderSelector()}
             <TimepickerDropdown
                 id={id}
@@ -126,6 +132,6 @@ export const Timepicker = ({
                 onCancel={handleSelectionDropdownCancel}
                 onChange={handleChange}
             />
-        </Wrapper>
+        </InputWrapper>
     );
 };

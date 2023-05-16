@@ -4,8 +4,9 @@ import { Button } from "../../button";
 import { Color } from "../../color";
 import { IconButton } from "../../icon-button";
 import { MediaQuery } from "../../media";
-import { Text, TextStyleHelper } from "../../text";
+import { Text } from "../../text";
 import { Toggle } from "../../toggle";
+import { BasicInput } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
 // STYLING
@@ -119,19 +120,16 @@ export const DividerLabel = styled(Text.Body)`
     }
 `;
 
-export const TimeInput = styled.input`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+export const TimeInput = styled(BasicInput)`
     border-radius: ${BORDER_RADIUS};
     height: 3rem;
     width: 5rem;
     text-align: center;
     border: 1px solid ${Color.Neutral[5]};
     background: ${Color.Neutral[8]};
-    color: ${Color.Neutral[1]};
 
     :focus,
     :active {
-        outline: none;
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
     }
@@ -139,19 +137,6 @@ export const TimeInput = styled.input`
     :focus::placeholder {
         color: transparent;
     }
-
-    // Chrome, Safari, Edge, Opera
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    // Safari (remove top shadow)
-    --webkit-appearance: none;
-
-    // Firefox
-    --moz-appearance: textfield;
 
     ${MediaQuery.MaxWidth.mobileS} {
         width: 6rem;
