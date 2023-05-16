@@ -52,6 +52,17 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "onCalendarDate",
+                description: (
+                    <>
+                        Called when trigger the prev/next arrow in day calendar
+                        or selected a value in month/year calendar &nbsp;
+                        <code>YYYY-MM-DD</code>&nbsp;format.
+                    </>
+                ),
+                propTypes: ["(value: string) => void"],
+            },
+            {
                 name: "onHover",
                 description: (
                     <>
