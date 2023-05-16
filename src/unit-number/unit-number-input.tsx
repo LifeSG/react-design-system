@@ -338,7 +338,7 @@ export const UnitNumberInput = ({
         <InputWrapper
             ref={nodeRef}
             onClick={handleNodeClick}
-            disabled={disabled}
+            $disabled={disabled}
             $error={error}
             $readOnly={readOnly}
             data-testid={otherProps["data-testid"]}

@@ -6,8 +6,8 @@ import styled, { css } from "styled-components";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface StyleProps {
-    disabled?: boolean | undefined;
+export interface InputWrapperStyleProps {
+    $disabled?: boolean | undefined;
     $error?: boolean | undefined;
     $readOnly?: boolean | undefined;
     $position?: "left" | "right" | undefined;
@@ -16,7 +16,7 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const InputWrapper = styled.div<StyleProps>`
+export const InputWrapper = styled.div<InputWrapperStyleProps>`
     display: flex;
     align-items: center;
     position: relative;
@@ -46,22 +46,22 @@ export const InputWrapper = styled.div<StyleProps>`
                     box-shadow: none;
                 }
             `;
-        } else if (props.disabled) {
+        } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${Color.Neutral[6]};
                 cursor: not-allowed;
 
                 :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    border: 1px solid ${Color.Neutral[5]};
                     box-shadow: none;
                 }
             `;
         } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
+                border: 1px solid ${Color.Validation.Red.Border};
 
                 :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
+                    border: 1px solid ${Color.Validation.Red.Border};
                     box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;

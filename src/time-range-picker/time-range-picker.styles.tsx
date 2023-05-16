@@ -1,18 +1,12 @@
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { InputWrapper } from "src/shared/input-wrapper/input-wrapper";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
-import { DesignToken } from "src/design-token";
 
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
-
-interface ContainerStyleProps {
-    $disabled?: boolean;
-    $error?: boolean;
-    $readOnly?: boolean;
-}
 
 interface IndicatorStyleProps {
     $position: "start" | "end" | "none";
@@ -25,54 +19,9 @@ export const Wrapper = styled.div`
     position: relative;
 `;
 
-export const TimeContainer = styled.div<ContainerStyleProps>`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
+export const TimeContainer = styled(InputWrapper)`
     height: 3rem;
-    border-radius: 0.25rem;
-    border: 1px solid ${Color.Neutral[5]};
-    padding: 11px 16px;
-
-    :focus,
-    :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
-    }
-
-    ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                border: 0;
-                padding: 0;
-                :focus,
-                :focus-within {
-                    border: none;
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.$disabled) {
-            return css`
-                background: ${Color.Neutral[6]};
-                :hover {
-                    cursor: not-allowed;
-                }
-                :focus-within {
-                    border: none;
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.$error) {
-            return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
-                :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
-                }
-            `;
-        }
-    }}
+    gap: 0.5rem;
 `;
 
 export const ArrowRight = styled(ArrowRightIcon)`
