@@ -1,4 +1,21 @@
 import { useEffect, useReducer, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import {
+    CalendarAction,
+    CalendarRef,
+    FocusType,
+    InternalCalendar,
+    View,
+} from "../shared/internal-calendar";
+import { MediaWidths } from "../spec/media-spec";
+import { DateInputHelper } from "../util/date-input-helper";
+import { useEventListener } from "../util/use-event-listener";
+import {
+    ActionType,
+    INITIAL_INPUT_VALUES,
+    ReducerState,
+    dateInputReducer,
+} from "./date-input-reducer";
 import {
     ArrowRangeIcon,
     ArrowRight,
@@ -7,23 +24,6 @@ import {
 } from "./date-input.style";
 import { FieldType, INVALID_VALUE, StandAloneInput } from "./stand-alone-input";
 import { ChangeValueTypes, DateInputProps } from "./types";
-import {
-    ActionType,
-    INITIAL_INPUT_VALUES,
-    ReducerState,
-    dateInputReducer,
-} from "./date-input-reducer";
-import {
-    CalendarAction,
-    CalendarRef,
-    FocusType,
-    InternalCalendar,
-    View,
-} from "../shared/internal-calendar";
-import { DateInputHelper } from "../util/date-input-helper";
-import { useEventListener } from "../util/use-event-listener";
-import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../spec/media-spec";
 
 interface CurrentFocusTypes {
     field: FieldType;
@@ -522,6 +522,7 @@ export const DateInput = ({
             $readOnly={readOnly}
             $variant={variant}
             onBlur={handleBlurContainer}
+            tabIndex={-1}
             {...otherProps}
         >
             <StandAloneInput

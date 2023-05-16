@@ -1,12 +1,13 @@
-import { Color } from "../../color";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { CalendarType } from "./types";
+import { Button } from "../../button";
+import { Color } from "../../color";
 import { IconButton } from "../../icon-button";
 import { TextStyleHelper } from "../../text";
-import { Button } from "../../button";
+import { CalendarType } from "./types";
 
 interface ContainerStyleProps {
     $type: CalendarType;
@@ -15,7 +16,6 @@ interface ContainerStyleProps {
 
 interface SideArrowButtonStyleProps {
     $direction: "left" | "right";
-    $type: CalendarType;
 }
 
 interface DropdownButtonStyleProps {
@@ -35,73 +35,55 @@ interface OverlayStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+// -----------------------------------------------------------------------------
+// ICONS
+// -----------------------------------------------------------------------------
+const directionalIconStyle = css`
+    color: ${Color.Neutral[3]};
+`;
+
+export const ArrowLeft = styled(ChevronLeftIcon)`
+    ${directionalIconStyle}
+`;
+
+export const ArrowRight = styled(ChevronRightIcon)`
+    ${directionalIconStyle}
+`;
+
+export const IconChevronDown = styled(ChevronDownIcon)`
+    color: ${Color.Neutral[3]};
+    transition: transform 250ms ease-in-out;
+    margin-left: 0.625rem;
+    width: 1rem;
+`;
 
 // -----------------------------------------------------------------------------
 // MAIN
 // -----------------------------------------------------------------------------
+export const AnimatedDiv = styled(animated.div)`
+    position: absolute;
+    top: 3.5rem;
+    left: 0;
+    width: 100%;
+    max-width: 41rem;
+    background: ${Color.Neutral[8]};
+    overflow: hidden;
+    z-index: 1;
+`;
 
 export const Container = styled.div<ContainerStyleProps>`
     position: relative;
-    display: flex;
-    min-width: 28rem;
     width: 100%;
-    max-width: 41rem;
-    padding: 2rem 0.25rem;
-    align-items: center;
-    background: ${Color.Neutral[8]};
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
     border: 1px solid ${Color.Neutral[5]};
-    border-radius: 0.75rem;
+    border-radius: 8px;
 
     ${(props) => {
-        const { $type } = props;
-
-        switch ($type) {
-            case "standalone":
-                return css`
-                    ${ArrowLeft},
-                    ${ArrowRight} {
-                        width: 1.5rem;
-                        height: 1.5rem;
-                    }
-
-                    ${IconChevronDown} {
-                        width: 1.125rem;
-                        height: 1.125rem;
-                    }
-                `;
-            case "input":
-                return css`
-                    min-width: unset;
-                    position: absolute;
-                    padding: 1.5rem 1.25rem;
-                    left: 0;
-                    top: 100%;
-                    opacity: 0;
-                    transition: top 350ms ease-in-out, opacity 350ms ease-in-out;
-                    z-index: 1;
-
-                    ${ArrowLeft},
-                    ${ArrowRight} {
-                        width: 1rem;
-                        height: 1rem;
-                    }
-                `;
-            default:
-                break;
-        }
-    }}
-
-    ${(props) => {
-        if (props.$type === "input" && props.$isOpen) {
+        if (props.$type) {
             return css`
-                top: calc(100% + 0.5rem);
-                opacity: 1;
-            `;
-        } else if (props.$type === "input" && !props.$isOpen) {
-            return css`
-                height: 24.8rem; // fake height for animation
-                opacity: 0;
-                pointer-events: none;
+                flex-direction: row;
             `;
         }
     }}
@@ -190,6 +172,11 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
             `;
         }
     }}
+
+    ${IconChevronDown} {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
 `;
 
 export const DropdownText = styled.p<DropdownTextStyleProps>`
@@ -247,14 +234,11 @@ export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
         background: transparent;
     }
 
-    ${(props) => {
-        switch (props.$type) {
-            case "input":
-                return css`
-                    display: none;
-                `;
-        }
-    }}
+    ${ArrowLeft},
+    ${ArrowRight} {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
 
     ${(props) => {
         switch (props.$direction) {
@@ -269,26 +253,4 @@ export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
                 `;
         }
     }}
-`;
-
-// -----------------------------------------------------------------------------
-// ICONS
-// -----------------------------------------------------------------------------
-const directionalIconStyle = css`
-    color: ${Color.Neutral[3]};
-`;
-
-export const ArrowLeft = styled(ChevronLeftIcon)`
-    ${directionalIconStyle}
-`;
-
-export const ArrowRight = styled(ChevronRightIcon)`
-    ${directionalIconStyle}
-`;
-
-export const IconChevronDown = styled(ChevronDownIcon)`
-    color: ${Color.Neutral[3]};
-    transition: transform 250ms ease-in-out;
-    margin-left: 0.625rem;
-    width: 1rem;
 `;
