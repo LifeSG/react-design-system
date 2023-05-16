@@ -1,11 +1,14 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+import { useSpring } from "react-spring";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { InternalCalendarDay } from "./internal-calendar-day";
 import { InternalCalendarMonth } from "./internal-calendar-month";
 import { InternalCalendarYear } from "./internal-calendar-year";
 import {
     ActionButtonSection,
+    AnimatedDiv,
     ArrowLeft,
     ArrowRight,
     CancelButton,
@@ -64,6 +67,7 @@ export const Component = (
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const resizeDetector = useResizeDetector();
 
     // =============================================================================
     // HOOKS
@@ -263,7 +267,8 @@ export const Component = (
             setCurrentView("month-options");
             performOnCalendarView("month-options");
 
-            containerRef.current.focus();
+            // Maintain focus when selecting month dropdown
+            resizeDetector.ref.current.focus();
         } else {
             setCurrentView("default");
             performOnCalendarView("default");
@@ -450,56 +455,63 @@ export const Component = (
         );
     };
 
-    // handle the animation transition
-    if (type === "input" && !isOpen)
-        return <Container $type={type} tabIndex={-1} />;
+    const renderContent = () => {
+        return (
+            <Container ref={resizeDetector.ref} tabIndex={-1} $type={type}>
+                {type === "standalone" && (
+                    <SideArrowButton
+                        $direction="left"
+                        onClick={handleLeftArrowClick}
+                    >
+                        <ArrowLeft />
+                    </SideArrowButton>
+                )}
+                <ContentBody>
+                    {renderHeader()}
+                    <ToggleZone>
+                        <InternalCalendarDay
+                            type={type}
+                            calendarDate={calendarDate}
+                            currentFocus={currentFocus}
+                            disabledDates={disabledDates}
+                            selectedStartDate={selectedStartDate}
+                            selectedEndDate={selectedEndDate}
+                            variant={variant}
+                            between={between}
+                            isNewSelection={isNewSelection}
+                            onSelect={handleDateSelect}
+                            onHover={handleHover}
+                        />
+                        <OptionsOverlay $visible={currentView !== "default"}>
+                            {renderOptionsOverlay()}
+                        </OptionsOverlay>
+                    </ToggleZone>
+                    {renderCancelDoneButton()}
+                </ContentBody>
+                {type === "standalone" && (
+                    <SideArrowButton
+                        $direction="right"
+                        onClick={handleRightArrowClick}
+                    >
+                        <ArrowRight />
+                    </SideArrowButton>
+                )}
+            </Container>
+        );
+    };
 
-    return (
-        <Container
-            ref={containerRef}
-            $type={type}
-            $isOpen={isOpen}
-            {...otherProps}
-            tabIndex={-1}
-        >
-            <SideArrowButton
-                $direction="left"
-                $type={type}
-                onClick={handleLeftArrowClick}
-            >
-                <ArrowLeft />
-            </SideArrowButton>
-            <ContentBody>
-                {renderHeader()}
-                <ToggleZone>
-                    <InternalCalendarDay
-                        type={type}
-                        calendarDate={calendarDate}
-                        currentFocus={currentFocus}
-                        disabledDates={disabledDates}
-                        selectedStartDate={selectedStartDate}
-                        selectedEndDate={selectedEndDate}
-                        variant={variant}
-                        between={between}
-                        isNewSelection={isNewSelection}
-                        onSelect={handleDateSelect}
-                        onHover={handleHover}
-                    />
-                    <OptionsOverlay $visible={currentView !== "default"}>
-                        {renderOptionsOverlay()}
-                    </OptionsOverlay>
-                </ToggleZone>
-                {renderCancelDoneButton()}
-            </ContentBody>
-            <SideArrowButton
-                $direction="right"
-                $type={type}
-                onClick={handleRightArrowClick}
-            >
-                <ArrowRight />
-            </SideArrowButton>
-        </Container>
-    );
+    if (type === "input") {
+        // React spring animation configuration
+        const styles = useSpring({
+            height: isOpen
+                ? resizeDetector.height + 64 // include vertical padding
+                : 0,
+        });
+
+        return <AnimatedDiv style={styles}>{renderContent()}</AnimatedDiv>;
+    } else {
+        return <>{renderContent()}</>;
+    }
 };
 
 export const InternalCalendar = React.forwardRef(Component);
