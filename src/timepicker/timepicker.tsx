@@ -8,6 +8,7 @@ import { TimepickerProps } from "./types";
 export const Timepicker = ({
     id,
     disabled = false,
+    readOnly = false,
     error,
     value,
     defaultValue,
@@ -42,13 +43,13 @@ export const Timepicker = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleInputFocus = useCallback(() => {
-        if (!disabled && !showSelector) {
+        if (!disabled && !readOnly && !showSelector) {
             setShowSelector(true);
         }
     }, [showSelector]);
 
     const handleMouseDownEvent = (event: MouseEvent) => {
-        if (!disabled) {
+        if (!disabled && !readOnly) {
             runOutsideFocusHandler(event);
         }
     };
@@ -119,6 +120,7 @@ export const Timepicker = ({
         <InputWrapper
             ref={nodeRef}
             id={id}
+            $readOnly={readOnly}
             $disabled={disabled}
             $error={error}
             {...otherProps}

@@ -30,7 +30,6 @@ import { Form } from "@lifesg/react-design-system/form";
             const [time1, setTime1] = useState("");
             const [time2, setTime2] = useState("");
             const [time3, setTime3] = useState("");
-            const [time4, setTime4] = useState("");
             return (
                 <StoryContainer>
                     <Container>
@@ -44,16 +43,37 @@ import { Form } from "@lifesg/react-design-system/form";
                             disabled
                         />
                         <Form.Timepicker
+                            label="This is the readonly state"
+                            readOnly
+                            value="01:00"
+                        />
+                        <Form.Timepicker
                             label="This is the error state"
                             value={time3}
                             onChange={(value) => setTime3(value)}
                             errorMessage="Time input required"
                         />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>12hr format</Heading3>
+
+<Canvas>
+    <Story name="12 hour format">
+        {() => {
+            const [time, setTime] = useState("");
+            return (
+                <StoryContainer>
+                    <Container>
                         <Form.Timepicker
                             label="This is the 12 hour format timepicker"
-                            value={time4}
-                            onChange={(value) => setTime4(value)}
                             format="12hr"
+                            value={time}
+                            onChange={(value) => setTime(value)}
                         />
                     </Container>
                 </StoryContainer>

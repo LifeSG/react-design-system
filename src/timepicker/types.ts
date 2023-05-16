@@ -15,6 +15,7 @@ export interface TimepickerProps extends React.AriaAttributes {
     defaultValue?: string | undefined;
     format?: TimepickerFormat | undefined;
     disabled?: boolean | undefined;
+    readOnly?: boolean | undefined;
     error?: boolean | undefined;
     onChange?: ((value: string) => void) | undefined;
     onBlur?: (() => void) | undefined;
