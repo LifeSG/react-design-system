@@ -174,12 +174,7 @@ export const DateInput = ({
         }
         const isValid = handleValidation(value);
 
-        if (["month-options", "year-options"].includes(calendarView)) {
-            handleReducer("transition", value);
-        } else {
-            // day calendar view
-            handleReducer("selected", value);
-        }
+        handleReducer("selected", value);
 
         setIsError(!isValid);
         setActionComponent(from);
@@ -205,7 +200,7 @@ export const DateInput = ({
     const handleCalendarAction = (buttonAction: CalendarAction) => {
         if (["month-options", "year-options"].includes(calendarView)) {
             // handle button in month/year calendar view
-            handleMonthYearCalendarAction(buttonAction);
+            handleMonthYearCalendarAction();
 
             return;
         }
@@ -235,26 +230,8 @@ export const DateInput = ({
         setCalendarOpen(false);
     };
 
-    const handleMonthYearCalendarAction = (action: CalendarAction) => {
-        const { field: otherField, type: otherType } = getAnotherElement();
-
-        switch (action) {
-            case "reset":
-                handleReducer("restore");
-                calendarRef.current.defaultView();
-                break;
-            case "confirmed":
-                calendarRef.current.defaultView();
-
-                setCurrentElement((prev) => {
-                    return {
-                        field: otherField,
-                        type: otherType,
-                        count: prev.count + 1,
-                    };
-                });
-                break;
-        }
+    const handleMonthYearCalendarAction = () => {
+        calendarRef.current.defaultView();
     };
 
     const handleCalendarView = (calendarView: View) => {
@@ -395,14 +372,6 @@ export const DateInput = ({
         if (!isValid) {
             dispatchStart({ type: "reset" });
             dispatchEnd({ type: "reset" });
-        }
-
-        if (type === "restore") {
-            // restore both value when click month/year view cancel button
-            dispatchStart({ type });
-            dispatchEnd({ type });
-
-            return;
         }
 
         switch (field) {
