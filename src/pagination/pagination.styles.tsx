@@ -20,7 +20,7 @@ interface ButtonProps {
 // STYLING
 // =============================================================================
 
-export const PaginationWrapper = styled.div`
+export const PaginationWrapper = styled.nav`
     display: flex;
 `;
 

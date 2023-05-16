@@ -282,6 +282,7 @@ const Component = (
             ref={ref}
             id={id || "pagination-wrapper"}
             data-testid={dataTestId || "pagination"}
+            aria-label="Pagination"
         >
             <PaginationList>
                 <PaginationMenu>
