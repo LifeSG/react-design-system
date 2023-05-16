@@ -19,6 +19,8 @@ interface ContainerStyleProps {
 
 interface IndicateBarStyleProps {
     $position: "start" | "end" | "none";
+    $stickTo?: "top" | "bottom";
+    $disableMobile?: boolean;
 }
 
 // =============================================================================
@@ -139,6 +141,19 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
     bottom: -0.1rem;
 
     ${(props) => {
+        switch (props.$stickTo) {
+            case "top":
+                return css`
+                    top: 3rem;
+                `;
+            case "bottom":
+                return css`
+                    bottom: -0.1rem;
+                `;
+        }
+    }}
+
+    ${(props) => {
         switch (props.$position) {
             case "start":
                 return css`
@@ -158,7 +173,13 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
         }
     }}
 
-    @media screen and (max-width: 374px) {
-        display: none;
-    }
+    ${(props) => {
+        if (!props.$disableMobile) {
+            return css`
+                @media screen and (max-width: 374px) {
+                    display: none;
+                }
+            `;
+        }
+    }}
 `;

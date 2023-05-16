@@ -10,6 +10,7 @@ import { FormTimepicker } from "./form-timepicker";
 import { FormTimeRangePicker } from "./form-timerangepicker";
 import { FormUnitNumberInput } from "./form-unit-number-input";
 import { FormPhoneNumberInput } from "./form-phone-number-input";
+import { FormRangeSelect } from "./form-range-select";
 
 export const Form = {
     DateInput: FormDateInput,
@@ -18,6 +19,7 @@ export const Form = {
     Label: FormLabel,
     MultiSelect: FormMultiSelect,
     Select: FormSelect,
+    RangeSelect: FormRangeSelect,
     Textarea: FormTextarea,
     Timepicker: FormTimepicker,
     TimeRangePicker: FormTimeRangePicker,

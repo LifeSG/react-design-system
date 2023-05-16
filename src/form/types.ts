@@ -2,6 +2,7 @@ import { DateInputProps } from "../date-input/types";
 import { InputGroupPartialProps } from "../input-group/types";
 import {
     InputMultiSelectPartialProps,
+    InputRangeSelectPartialProps,
     InputSelectPartialProps,
 } from "../input-select/types";
 import { TextareaPartialProps } from "../input-textarea/types";
@@ -66,6 +67,10 @@ export interface FormCustomFieldProps
 
 export interface FormInputSelectProps<T, V>
     extends InputSelectPartialProps<T, V>,
+        BaseFormElementProps {}
+
+export interface FormInputRangeSelectProps<T, V>
+    extends InputRangeSelectPartialProps<T, V>,
         BaseFormElementProps {}
 
 export interface FormMultiSelectProps<T, V>
