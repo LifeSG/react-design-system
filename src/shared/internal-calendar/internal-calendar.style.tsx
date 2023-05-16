@@ -9,11 +9,6 @@ import { IconButton } from "../../icon-button";
 import { TextStyleHelper } from "../../text";
 import { CalendarType } from "./types";
 
-interface ContainerStyleProps {
-    $type: CalendarType;
-    $isOpen?: boolean | undefined;
-}
-
 interface SideArrowButtonStyleProps {
     $direction: "left" | "right";
 }
@@ -38,23 +33,24 @@ interface OverlayStyleProps {
 // -----------------------------------------------------------------------------
 // ICONS
 // -----------------------------------------------------------------------------
-const directionalIconStyle = css`
+const iconStyle = css`
     color: ${Color.Neutral[3]};
+    height: 1rem;
+    width: 1rem;
 `;
 
 export const ArrowLeft = styled(ChevronLeftIcon)`
-    ${directionalIconStyle}
+    ${iconStyle}
 `;
 
 export const ArrowRight = styled(ChevronRightIcon)`
-    ${directionalIconStyle}
+    ${iconStyle}
 `;
 
 export const IconChevronDown = styled(ChevronDownIcon)`
-    color: ${Color.Neutral[3]};
+    ${iconStyle}
     transition: transform 250ms ease-in-out;
     margin-left: 0.625rem;
-    width: 1rem;
 `;
 
 // -----------------------------------------------------------------------------
@@ -71,22 +67,13 @@ export const AnimatedDiv = styled(animated.div)`
     z-index: 1;
 `;
 
-export const Container = styled.div<ContainerStyleProps>`
+export const Container = styled.div`
     position: relative;
     width: 100%;
     padding: 1.5rem 1.25rem;
     display: flex;
-    flex-direction: column;
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 8px;
-
-    ${(props) => {
-        if (props.$type) {
-            return css`
-                flex-direction: row;
-            `;
-        }
-    }}
 `;
 
 export const ContentBody = styled.div`
@@ -154,6 +141,13 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
                         margin-right: 0;
                     }
                 `;
+            case "standalone":
+                return css`
+                    ${IconChevronDown} {
+                        width: 1.125rem;
+                        height: 1.125rem;
+                    }
+                `;
         }
     }}
 
@@ -172,11 +166,6 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
             `;
         }
     }}
-
-    ${IconChevronDown} {
-        width: 1.125rem;
-        height: 1.125rem;
-    }
 `;
 
 export const DropdownText = styled.p<DropdownTextStyleProps>`
@@ -215,11 +204,7 @@ export const ActionButtonSection = styled.div`
     margin-top: 1.5rem;
 `;
 
-export const CancelButton = styled(Button.Small)`
-    flex: 1;
-`;
-
-export const DoneButton = styled(Button.Small)`
+export const ActionButton = styled(Button.Small)`
     flex: 1;
 `;
 

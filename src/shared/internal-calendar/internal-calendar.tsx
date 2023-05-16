@@ -7,14 +7,13 @@ import { InternalCalendarDay } from "./internal-calendar-day";
 import { InternalCalendarMonth } from "./internal-calendar-month";
 import { InternalCalendarYear } from "./internal-calendar-year";
 import {
+    ActionButton,
     ActionButtonSection,
     AnimatedDiv,
     ArrowLeft,
     ArrowRight,
-    CancelButton,
     Container,
     ContentBody,
-    DoneButton,
     DropdownButton,
     DropdownText,
     Header,
@@ -67,7 +66,6 @@ export const Component = (
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
     const resizeDetector = useResizeDetector();
 
     // =============================================================================
@@ -430,7 +428,7 @@ export const Component = (
         }
     };
 
-    const renderCancelDoneButton = () => {
+    const renderActionButtons = () => {
         if (type === "standalone" || !withButton) return;
 
         let isDisabled = true;
@@ -449,27 +447,29 @@ export const Component = (
 
         return (
             <ActionButtonSection>
-                <CancelButton
-                    styleType="light"
+                <ActionButton
                     ref={cancelButtonRef}
+                    data-testid="cancel-button"
+                    styleType="light"
                     onClick={handleCancelButton}
                 >
                     Cancel
-                </CancelButton>
-                <DoneButton
+                </ActionButton>
+                <ActionButton
+                    data-testid="done-button"
                     ref={doneButtonRef}
                     onClick={() => handleDoneButton(disabled)}
                     disabled={disabled}
                 >
                     Done
-                </DoneButton>
+                </ActionButton>
             </ActionButtonSection>
         );
     };
 
     const renderContent = () => {
         return (
-            <Container ref={resizeDetector.ref} tabIndex={-1} $type={type}>
+            <Container ref={resizeDetector.ref} tabIndex={-1} {...otherProps}>
                 {type === "standalone" && (
                     <SideArrowButton
                         $direction="left"
@@ -498,7 +498,7 @@ export const Component = (
                             {renderOptionsOverlay()}
                         </OptionsOverlay>
                     </ToggleZone>
-                    {renderCancelDoneButton()}
+                    {renderActionButtons()}
                 </ContentBody>
                 {type === "standalone" && (
                     <SideArrowButton
@@ -512,14 +512,14 @@ export const Component = (
         );
     };
 
-    if (type === "input") {
-        // React spring animation configuration
-        const styles = useSpring({
-            height: isOpen
-                ? resizeDetector.height + 64 // include vertical padding
-                : 0,
-        });
+    // React spring animation configuration
+    const styles = useSpring({
+        height: isOpen
+            ? resizeDetector.height + 64 // include vertical padding
+            : 0,
+    });
 
+    if (type === "input") {
         return <AnimatedDiv style={styles}>{renderContent()}</AnimatedDiv>;
     } else {
         return <>{renderContent()}</>;
