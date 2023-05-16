@@ -1,7 +1,8 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
-import { TimeRangePicker } from "src/time-range-picker";
+import { Alert } from "src/alert";
 import { Form } from "src/form";
+import { TimeRangePicker } from "src/time-range-picker";
 import {
     Heading3,
     Heading4,
@@ -17,6 +18,12 @@ import { PropsTable } from "./props-table";
 <Title>Form.TimeRangePicker</Title>
 
 <Secondary>Overview</Secondary>
+
+<Alert type="warning">
+    This is an interim component and changes are expected in upcoming releases
+</Alert>
+
+<br />
 
 The field that allows a user to enter a time range.
 

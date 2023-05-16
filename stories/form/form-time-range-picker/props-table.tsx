@@ -9,14 +9,8 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "value",
-                description: (
-                    <>
-                        The value of the time in string based format. 24 hour
-                        will be <code>hh:mm</code>, while 12 hour will be{" "}
-                        <code>hh:mma</code>
-                    </>
-                ),
-                propTypes: ["string"],
+                description: "The value of the component",
+                propTypes: ["TimeRangeInputValue"],
             },
             {
                 name: "format",
@@ -85,14 +79,22 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "startTime",
-                description:
-                    "The selected start time value in the format specified",
+                description: (
+                    <>
+                        The start time value. 24 hour will be <code>hh:mm</code>
+                        , while 12 hour will be <code>hh:mma</code>
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
                 name: "endTime",
-                description:
-                    "The selected end time value in the format specified",
+                description: (
+                    <>
+                        The end time value. 24 hour will be <code>hh:mm</code>,
+                        while 12 hour will be <code>hh:mma</code>
+                    </>
+                ),
                 propTypes: ["string"],
             },
         ],
