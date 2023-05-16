@@ -26,7 +26,7 @@ export const InputSelectWrapper = ({
         return () => {
             document.removeEventListener("mousedown", handleMouseDownEvent);
         };
-    }, []);
+    }, [onBlur]); // Fixes issue of unable read state values within onBlur Callback.
 
     useEffect(() => {
         showValueRef.current = show;
