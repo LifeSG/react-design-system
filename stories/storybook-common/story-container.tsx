@@ -43,5 +43,4 @@ export const FullWidthStoryContainer = styled.div`
     margin: auto;
     display: flex;
     justify-content: center;
-    padding: 2rem 1.25rem;
 `;
