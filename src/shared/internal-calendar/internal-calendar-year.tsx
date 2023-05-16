@@ -15,8 +15,9 @@ interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
     selectedEndDate?: string | undefined;
+    viewCalendarDate: Dayjs;
     isNewSelection: boolean;
-    onSelect: (value: Dayjs) => void;
+    onYearSelect: (value: Dayjs) => void;
 }
 
 export const InternalCalendarYear = ({
@@ -24,17 +25,16 @@ export const InternalCalendarYear = ({
     currentFocus,
     selectedStartDate,
     selectedEndDate,
+    viewCalendarDate,
     type,
     isNewSelection,
     between,
-    onSelect,
+    onYearSelect,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [years, setYears] = useState<Dayjs[]>([]);
-    const selectedDate =
-        currentFocus === "end" ? selectedEndDate : selectedStartDate;
 
     // =============================================================================
     // EFFECTS
@@ -49,7 +49,7 @@ export const InternalCalendarYear = ({
     const handleYearClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled) return;
 
-        onSelect(value);
+        onYearSelect(value);
     };
 
     // =============================================================================
@@ -83,7 +83,7 @@ export const InternalCalendarYear = ({
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
-            : selectedDate && dayjs(selectedDate).isSame(date, "year")
+            : viewCalendarDate.isSame(date, "year")
             ? "selected-year"
             : dayjs().isSame(date, "year")
             ? "current-year"

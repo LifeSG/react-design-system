@@ -11,8 +11,9 @@ interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
     selectedEndDate?: string | undefined;
+    viewCalendarDate: Dayjs;
     isNewSelection: boolean;
-    onSelect: (value: Dayjs) => void;
+    onMonthSelect: (value: Dayjs) => void;
 }
 
 export const InternalCalendarMonth = ({
@@ -20,18 +21,16 @@ export const InternalCalendarMonth = ({
     currentFocus,
     selectedStartDate,
     selectedEndDate,
+    viewCalendarDate,
     type,
     isNewSelection,
     between,
-    onSelect,
+    onMonthSelect,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [months, setMonths] = useState<Dayjs[]>([]);
-
-    const selectedDate =
-        currentFocus === "end" ? selectedEndDate : selectedStartDate;
 
     // =============================================================================
     // EFFECTS
@@ -46,7 +45,7 @@ export const InternalCalendarMonth = ({
     const handleMonthClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled) return;
 
-        onSelect(value);
+        onMonthSelect(value);
     };
 
     // =============================================================================
@@ -75,12 +74,11 @@ export const InternalCalendarMonth = ({
         const month = date.format("MMMM");
         const disabled = isDisabled(date);
 
-        const variant: MonthVariant =
-            selectedDate && dayjs(selectedDate).isSame(date, "month")
-                ? "selected-month"
-                : dayjs().isSame(date, "month")
-                ? "current-month"
-                : "default";
+        const variant: MonthVariant = viewCalendarDate.isSame(date, "month")
+            ? "selected-month"
+            : dayjs().isSame(date, "month")
+            ? "current-month"
+            : "default";
 
         return {
             disabled,

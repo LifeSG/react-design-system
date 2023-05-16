@@ -8,7 +8,6 @@ export type ActionType =
     | "invalid"
     | "reset"
     | "selected"
-    | "transition"
     | "restore"
     | "unhover"
     | any;
@@ -26,8 +25,6 @@ interface Action {
  * 'hover'          return back current hover value
  * 'input'          return back current input element value
  * 'selected'       return back current value been selected
- * 'transition'     temporary store the value (store value before go to month/year calendar)
- * 'restore'        use the restore value in transiton (trigger cancel button in month/year calendar)
  */
 export interface ReducerState {
     calendar: string | undefined;
@@ -36,7 +33,6 @@ export interface ReducerState {
     hover: string;
     input: string;
     selected: string;
-    transition: string;
 }
 const calendarValue = (value: string, state: ReducerState) => {
     if (value === INVALID_VALUE) {
@@ -94,7 +90,6 @@ export const dateInputReducer = (
                 hover: "",
                 input: value,
                 selected: value,
-                transition: value,
                 currentType: "selected",
             };
         case "confirmed":
@@ -104,25 +99,7 @@ export const dateInputReducer = (
                 confirmed: confirmedValue,
                 input: confirmedValue,
                 selected: confirmedValue,
-                transition: confirmedValue,
                 currentType: "confirmed",
-            };
-        case "transition":
-            return {
-                ...state,
-                calendar: calendarValue(value, state),
-                input: value,
-                selected: value,
-                transition: state.selected,
-                currentType: "transition",
-            };
-        case "restore":
-            return {
-                ...state,
-                calendar: calendarValue(state.transition, state),
-                input: state.transition,
-                selected: state.transition,
-                currentType: "restore",
             };
         case "reset":
             return {
@@ -156,6 +133,5 @@ export const INITIAL_INPUT_VALUES = {
     hover: "",
     input: "",
     selected: "",
-    transition: "",
     currentType: "confirmed",
 };

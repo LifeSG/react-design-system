@@ -59,6 +59,7 @@ export const Component = (
     const [currentView, setCurrentView] = useState<View>("default");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
+    const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>();
     const [isNewSelection, setIsNewSelection] = useState<boolean>(true);
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
@@ -88,6 +89,7 @@ export const Component = (
         // open with 'confirmed' value for day calendar in first mounted
         if (!isOpen) return;
 
+        setCalendarDate(dayjs());
         setCurrentView("default");
 
         if (variant === "range" && value?.length && endValue?.length) {
@@ -108,6 +110,9 @@ export const Component = (
          * Once focus value is changed
          */
         const calendarValue = currentFocus === "end" ? endValue : value;
+
+        // update selected in month/year view
+        setViewCalendarDate(dayjs(calendarValue));
 
         if (calendarValue) setCalendarDate(dayjs(calendarValue));
     }, [currentFocus]);
@@ -150,6 +155,7 @@ export const Component = (
         switch (currentView) {
             case "default":
                 setCalendarDate((date) => date.subtract(1, "month"));
+                setViewCalendarDate((date) => date.subtract(1, "month"));
                 break;
             case "month-options":
                 setCalendarDate((date) => date.subtract(1, "year"));
@@ -164,6 +170,7 @@ export const Component = (
         switch (currentView) {
             case "default":
                 setCalendarDate((date) => date.add(1, "month"));
+                setViewCalendarDate((date) => date.add(1, "month"));
                 break;
             case "month-options":
                 setCalendarDate((date) => date.add(1, "year"));
@@ -183,13 +190,23 @@ export const Component = (
         performOnSelectHandler(stringValue);
     };
 
+    const handleMonthYearSelect = (value: Dayjs) => {
+        setCalendarDate(value);
+
+        setViewCalendarDate(value);
+    };
+
     const handleCancelButton = () => {
-        // close calendar and use 'confirmed' value if exist
+        const calendarValue = currentFocus === "end" ? endValue : value;
+
+        setCalendarDate(dayjs(calendarValue));
         performOnDismissHandler("reset");
     };
 
     const handleDoneButton = (isDisabled: boolean) => {
         if (isDisabled) return;
+        setCalendarDate(viewCalendarDate);
+
         // close calendar and 'confirmed' the value
         performOnDismissHandler("confirmed");
     };
@@ -254,18 +271,13 @@ export const Component = (
 
     const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
-            const targetValue =
-                currentFocus === "start" || !currentFocus
-                    ? selectedStartDate
-                    : selectedEndDate;
-
-            setCalendarDate(dayjs(targetValue));
             setCurrentView("month-options");
             performOnCalendarView("month-options");
 
             containerRef.current.focus();
         } else {
             setCurrentView("default");
+            setCalendarDate(viewCalendarDate);
             performOnCalendarView("default");
         }
     };
@@ -278,14 +290,9 @@ export const Component = (
          */
         if (currentView !== "default") {
             setCurrentView("default");
+            setCalendarDate(viewCalendarDate);
             performOnCalendarView("default");
         } else {
-            const targetValue =
-                currentFocus === "start" || !currentFocus
-                    ? selectedStartDate
-                    : selectedEndDate;
-
-            setCalendarDate(dayjs(targetValue));
             setCurrentView("year-options");
             performOnCalendarView("year-options");
         }
@@ -355,9 +362,10 @@ export const Component = (
                         currentFocus={currentFocus}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
+                        viewCalendarDate={viewCalendarDate}
                         between={between}
                         isNewSelection={isNewSelection}
-                        onSelect={handleDateSelect}
+                        onMonthSelect={handleMonthYearSelect}
                     />
                 );
             case "year-options":
@@ -368,9 +376,10 @@ export const Component = (
                         currentFocus={currentFocus}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
+                        viewCalendarDate={viewCalendarDate}
                         between={between}
                         isNewSelection={isNewSelection}
-                        onSelect={handleDateSelect}
+                        onYearSelect={handleMonthYearSelect}
                     />
                 );
             default:
