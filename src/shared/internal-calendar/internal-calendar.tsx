@@ -34,7 +34,7 @@ import {
 export const Component = (
     {
         disabledDates,
-        onCalendarDate,
+        onYearMonthDisplayChange,
         onCalendarView,
         onSelect,
         onHover,
@@ -155,7 +155,6 @@ export const Component = (
     const handleLeftArrowClick = () => {
         switch (currentView) {
             case "default":
-                setCalendarDate((date) => date.subtract(1, "month"));
                 setViewCalendarDate((date) => date.subtract(1, "month"));
                 setCalendarDate((date) => {
                     const prevMonth = date.subtract(1, "month");
@@ -176,7 +175,6 @@ export const Component = (
     const handleRightArrowClick = () => {
         switch (currentView) {
             case "default":
-                setCalendarDate((date) => date.add(1, "month"));
                 setViewCalendarDate((date) => date.add(1, "month"));
                 setCalendarDate((date) => {
                     const nextMonth = date.add(1, "month");
@@ -258,10 +256,13 @@ export const Component = (
     };
 
     const performOnCalendarDate = (value: Dayjs) => {
-        if (onCalendarDate) {
-            const firstOfMonth = dayjs(value).date(1).format("YYYY-MM-DD");
+        if (onYearMonthDisplayChange) {
+            const returnValue = {
+                month: value.month(),
+                year: value.year(),
+            };
 
-            onCalendarDate(firstOfMonth);
+            onYearMonthDisplayChange(returnValue);
         }
     };
 
