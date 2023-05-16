@@ -196,6 +196,7 @@ export const TimeRangePicker = ({
                             ? "end"
                             : "none"
                     }
+                    $error={error}
                 />
             </TimeContainer>
         </Wrapper>

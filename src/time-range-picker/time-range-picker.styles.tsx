@@ -12,6 +12,7 @@ import {
 
 interface IndicatorStyleProps {
     $position: "start" | "end" | "none";
+    $error: boolean;
 }
 
 // =============================================================================
@@ -35,7 +36,8 @@ export const ArrowRight = styled(ArrowRightIcon)`
 
 export const Indicator = styled.div<IndicatorStyleProps>`
     position: absolute;
-    background-color: ${Color.Primary};
+    background-color: ${(props) =>
+        props.$error ? Color.Validation.Red.Border : Color.Primary};
     height: 0.125rem;
     width: calc(100% - 50% - 2rem); // paddingX is 2rem
     transition: left 350ms ease-in-out, opacity 350ms ease-in-out;
