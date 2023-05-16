@@ -394,6 +394,7 @@ export const TimepickerDropdown = ({
             <Container
                 ref={resizeDetector.ref}
                 data-testid={getTestId("timepicker-dropdown")}
+                inert={show ? undefined : ""}
             >
                 <InputSection>
                     <HourMinuteSection>
