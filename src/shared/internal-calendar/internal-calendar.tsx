@@ -34,6 +34,7 @@ import {
 export const Component = (
     {
         disabledDates,
+        onCalendarDate,
         onCalendarView,
         onSelect,
         onHover,
@@ -156,6 +157,12 @@ export const Component = (
             case "default":
                 setCalendarDate((date) => date.subtract(1, "month"));
                 setViewCalendarDate((date) => date.subtract(1, "month"));
+                setCalendarDate((date) => {
+                    const prevMonth = date.subtract(1, "month");
+                    performOnCalendarDate(prevMonth);
+
+                    return prevMonth;
+                });
                 break;
             case "month-options":
                 setCalendarDate((date) => date.subtract(1, "year"));
@@ -171,6 +178,12 @@ export const Component = (
             case "default":
                 setCalendarDate((date) => date.add(1, "month"));
                 setViewCalendarDate((date) => date.add(1, "month"));
+                setCalendarDate((date) => {
+                    const nextMonth = date.add(1, "month");
+                    performOnCalendarDate(nextMonth);
+
+                    return nextMonth;
+                });
                 break;
             case "month-options":
                 setCalendarDate((date) => date.add(1, "year"));
@@ -192,8 +205,9 @@ export const Component = (
 
     const handleMonthYearSelect = (value: Dayjs) => {
         setCalendarDate(value);
-
         setViewCalendarDate(value);
+
+        performOnCalendarDate(value);
     };
 
     const handleCancelButton = () => {
@@ -240,6 +254,14 @@ export const Component = (
     const performOnHoverHandler = (value: string) => {
         if (onHover) {
             onHover(value);
+        }
+    };
+
+    const performOnCalendarDate = (value: Dayjs) => {
+        if (onCalendarDate) {
+            const firstOfMonth = dayjs(value).date(1).format("YYYY-MM-DD");
+
+            onCalendarDate(firstOfMonth);
         }
     };
 
