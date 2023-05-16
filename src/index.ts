@@ -42,6 +42,7 @@ export * from "./theme";
 export * from "./time-slot-bar";
 export * from "./timeline";
 export * from "./timepicker";
+export * from "./time-range-picker";
 export * from "./toggle";
 export * from "./tooltip";
 export * from "./transition";

@@ -1,12 +1,13 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
-import { Text } from "../text/text";
-import { MonthVariant } from "./calendar-month";
+import { Color } from "../../color";
+import { TextStyleHelper } from "../../text/helper";
+import { Text } from "../../text/text";
+import { MonthVariant } from "./internal-calendar-month";
 import { CalendarType } from "./types";
 
 interface StyleProps {
     $variant: MonthVariant;
+    $disabled?: boolean;
 }
 
 interface WrapperStyleProps {
@@ -18,6 +19,7 @@ interface WrapperStyleProps {
 // =============================================================================
 export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 2.5rem);
@@ -51,6 +53,17 @@ export const MonthCell = styled.div<StyleProps>`
     }
 
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                cursor: not-allowed;
+
+                :hover {
+                    box-shadow: unset;
+                    border: unset;
+                }
+            `;
+        }
+
         switch (props.$variant) {
             case "current-month":
                 return css`
@@ -69,6 +82,12 @@ export const MonthCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[4]};
+            `;
+        }
+
         switch (props.$variant) {
             case "current-month":
                 return css`

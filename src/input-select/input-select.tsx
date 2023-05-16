@@ -37,6 +37,8 @@ export const InputSelect = <T, V>({
     optionTruncationType = "end",
     renderCustomSelectedOption,
     renderListItem,
+    hideNoResultsDisplay,
+    renderCustomCallToAction,
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -82,13 +84,13 @@ export const InputSelect = <T, V>({
         }
     };
 
-    const handleListDismiss = () => {
+    const handleListDismiss = (setSelectorFocus?: boolean | undefined) => {
         if (showOptions) {
             setShowOptions(false);
             triggerOptionDisplayCallback(false);
         }
 
-        if (selectorRef) {
+        if (setSelectorFocus && selectorRef) {
             selectorRef.current.focus();
         }
     };
@@ -203,6 +205,8 @@ export const InputSelect = <T, V>({
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     renderListItem={renderListItem}
+                    hideNoResultsDisplay={hideNoResultsDisplay}
+                    renderCustomCallToAction={renderCustomCallToAction}
                 />
             );
         }

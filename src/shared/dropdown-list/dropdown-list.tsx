@@ -1,4 +1,5 @@
-import findIndex from "lodash/findIndex";
+import find from "lodash/find";
+import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
 import { useSpring } from "react-spring";
 import { Spinner } from "../../button/button.style";
@@ -47,6 +48,8 @@ export const DropdownList = <T, V>({
     itemTruncationType = "end",
     renderListItem,
     onBlur,
+    hideNoResultsDisplay,
+    renderCustomCallToAction,
     ...otherProps
 }: DropdownListProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -55,17 +58,18 @@ export const DropdownList = <T, V>({
     const [focusedListIndex, _setFocusedIndex] = useState<number>(0);
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, _setDisplayListItems] = useState<T[]>(listItems);
-    const [listHeight, setListHeight] = useState<number>(0);
+    const [contentHeight, setContentHeight] = useState<number>(0);
 
     // React spring animation configuration
     const containerStyles = useSpring({
-        height: listHeight,
+        height: contentHeight,
     });
 
     const nodeRef = useRef<HTMLDivElement>();
     const listRef = useRef<HTMLUListElement>();
     const listItemRefs = useRef<HTMLButtonElement[]>([]);
     const searchInputRef = useRef<HTMLInputElement>();
+    const customCallToActionRef = useRef<HTMLDivElement>();
 
     /**
      * Have to use refs to allow the state values to be accessible
@@ -92,6 +96,7 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // EFFECTS
     // =============================================================================
+
     useEffect(() => {
         document.addEventListener("keydown", handleKeyboardPress);
         return () => {
@@ -107,7 +112,10 @@ export const DropdownList = <T, V>({
         setSearchValue("");
 
         if (visible) {
-            setListHeight(getListHeight());
+            // Give some time for the custom call-to-action to be rendered
+            setTimeout(() => {
+                setContentHeight(getContentHeight());
+            });
 
             // Focus search input if there is a search input
             if (searchInputRef && searchInputRef.current) {
@@ -118,15 +126,15 @@ export const DropdownList = <T, V>({
                 listItemRefs.current[focusedListIndex].focus();
             }
         } else {
-            setListHeight(0);
+            setContentHeight(0);
         }
     }, [visible]);
 
     useEffect(() => {
         if (visible) {
             // safeguard
-            const listHeight = getListHeight();
-            setListHeight(listHeight);
+            const contentHeight = getContentHeight();
+            setContentHeight(contentHeight);
         }
     }, [displayListItems]);
 
@@ -172,7 +180,9 @@ export const DropdownList = <T, V>({
     };
 
     const checkListItemSelected = (item: T): boolean => {
-        return findIndex(selectedItems, item as any) > -1;
+        return !!find(selectedItems, (arrItem) => {
+            return isEqual(arrItem, item);
+        });
     };
 
     const filterAndUpdateList = (searchValue: string) => {
@@ -206,10 +216,15 @@ export const DropdownList = <T, V>({
         }
     };
 
-    const getListHeight = () => {
-        return listRef && listRef.current
-            ? listRef.current.getBoundingClientRect().height
+    const getContentHeight = () => {
+        const listHeight =
+            listRef && listRef.current
+                ? listRef.current.getBoundingClientRect().height
+                : 0;
+        const customCallToActionHeight = customCallToActionRef.current
+            ? customCallToActionRef.current.getBoundingClientRect().height
             : 0;
+        return listHeight + customCallToActionHeight;
     };
 
     // =============================================================================
@@ -243,7 +258,7 @@ export const DropdownList = <T, V>({
                     }
                     break;
                 case "Escape":
-                    if (onDismiss) onDismiss();
+                    if (onDismiss) onDismiss(true);
                     break;
                 default:
                     break;
@@ -397,7 +412,11 @@ export const DropdownList = <T, V>({
     };
 
     const renderNoResults = () => {
-        if (searchValue && displayListItems.length === 0) {
+        if (
+            !hideNoResultsDisplay &&
+            searchValue &&
+            displayListItems.length === 0
+        ) {
             return (
                 <ResultStateContainer
                     key="noResults"
@@ -457,15 +476,30 @@ export const DropdownList = <T, V>({
         );
     };
 
+    const renderBottomCta = () => {
+        if (!visible || !renderCustomCallToAction) {
+            return;
+        }
+
+        return (
+            <div ref={customCallToActionRef} data-testid="custom-cta">
+                {renderCustomCallToAction(onDismiss, displayListItems)}
+            </div>
+        );
+    };
+
     return (
-        <Container
-            style={containerStyles}
-            data-testid={
-                visible ? "dropdown-container" : "dropdown-container-hidden"
-            }
-            ref={nodeRef}
-        >
-            {renderList()}
-        </Container>
+        <>
+            <Container
+                style={containerStyles}
+                data-testid={
+                    visible ? "dropdown-container" : "dropdown-container-hidden"
+                }
+                ref={nodeRef}
+            >
+                {renderList()}
+                {renderBottomCta()}
+            </Container>
+        </>
     );
 };

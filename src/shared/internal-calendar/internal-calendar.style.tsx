@@ -1,22 +1,31 @@
-import { Color } from "../color";
+import { Color } from "../../color";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { CalendarType } from "./types";
-import { IconButton } from "../icon-button";
+import { IconButton } from "../../icon-button";
+import { TextStyleHelper } from "../../text";
+import { Button } from "../../button";
 
 interface ContainerStyleProps {
     $type: CalendarType;
+    $isOpen?: boolean | undefined;
 }
 
 interface SideArrowButtonStyleProps {
     $direction: "left" | "right";
+    $type: CalendarType;
 }
 
 interface DropdownButtonStyleProps {
     $expandedDisplay: boolean;
     $visible?: boolean;
+    $type: CalendarType;
+}
+
+interface DropdownTextStyleProps {
+    $type: CalendarType;
 }
 
 interface OverlayStyleProps {
@@ -41,14 +50,12 @@ export const Container = styled.div<ContainerStyleProps>`
     align-items: center;
     background: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
-    border-radius: 12px;
+    border-radius: 0.75rem;
 
     ${(props) => {
         const { $type } = props;
 
         switch ($type) {
-            // control standalone calender style
-            // element style itself that use in input calendar
             case "standalone":
                 return css`
                     ${ArrowLeft},
@@ -62,8 +69,40 @@ export const Container = styled.div<ContainerStyleProps>`
                         height: 1.125rem;
                     }
                 `;
+            case "input":
+                return css`
+                    min-width: unset;
+                    position: absolute;
+                    padding: 1.5rem 1.25rem;
+                    left: 0;
+                    top: 100%;
+                    opacity: 0;
+                    transition: top 350ms ease-in-out, opacity 350ms ease-in-out;
+                    z-index: 1;
+
+                    ${ArrowLeft},
+                    ${ArrowRight} {
+                        width: 1rem;
+                        height: 1rem;
+                    }
+                `;
             default:
                 break;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$type === "input" && props.$isOpen) {
+            return css`
+                top: calc(100% + 0.5rem);
+                opacity: 1;
+            `;
+        } else if (props.$type === "input" && !props.$isOpen) {
+            return css`
+                height: 24.8rem; // fake height for animation
+                opacity: 0;
+                pointer-events: none;
+            `;
         }
     }}
 `;
@@ -97,6 +136,16 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
     }}
 `;
 
+export const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+`;
+
+export const HeaderInputDropdown = styled.div`
+    display: flex;
+`;
+
 export const HeaderDropdown = styled.div`
     display: flex;
     margin: 0 auto;
@@ -116,6 +165,17 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     }
 
     ${(props) => {
+        switch (props.$type) {
+            case "input":
+                return css`
+                    :not(:last-of-type) {
+                        margin-right: 0;
+                    }
+                `;
+        }
+    }}
+
+    ${(props) => {
         if (props.$visible === false) {
             return css`
                 display: none;
@@ -132,7 +192,52 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     }}
 `;
 
+export const DropdownText = styled.p<DropdownTextStyleProps>`
+    ${(props) => {
+        switch (props.$type) {
+            case "standalone":
+                return css`
+                    ${TextStyleHelper.getTextStyle("H4", "regular")}
+                `;
+            case "input":
+                return css`
+                    ${TextStyleHelper.getTextStyle("H5", "regular")}
+                `;
+        }
+    }}
+`;
+
+export const HeaderArrows = styled.div`
+    display: flex;
+`;
+
+export const HeaderArrowButton = styled(IconButton)`
+    background: transparent;
+    margin: auto 0;
+    padding: 0.5rem;
+
+    :focus,
+    :active {
+        background: transparent;
+    }
+`;
+
+export const ActionButtonSection = styled.div`
+    display: flex;
+    gap: 8px;
+    margin-top: 1.5rem;
+`;
+
+export const CancelButton = styled(Button.Small)`
+    flex: 1;
+`;
+
+export const DoneButton = styled(Button.Small)`
+    flex: 1;
+`;
+
 export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
+    display: block;
     padding: 1rem;
     background: transparent;
     margin: auto 0;
@@ -141,6 +246,15 @@ export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
     :active {
         background: transparent;
     }
+
+    ${(props) => {
+        switch (props.$type) {
+            case "input":
+                return css`
+                    display: none;
+                `;
+        }
+    }}
 
     ${(props) => {
         switch (props.$direction) {
@@ -176,4 +290,5 @@ export const IconChevronDown = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
     transition: transform 250ms ease-in-out;
     margin-left: 0.625rem;
+    width: 1rem;
 `;

@@ -1,8 +1,8 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
-import { CalendarHelper } from "../util/calendar-helper";
-import { CellLabel, Wrapper, YearCell } from "./calendar-year.style";
-import { CalendarType } from "./types";
+import { CalendarHelper } from "../../util/calendar-helper";
+import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
+import { FocusType, InternalCalendarProps } from "./types";
 
 export type YearVariant =
     | "default"
@@ -10,23 +10,31 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface Props {
+interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
     calendarDate: Dayjs;
+    currentFocus?: FocusType | undefined;
     selectedStartDate: string;
-    type: CalendarType;
+    selectedEndDate?: string | undefined;
+    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
 }
 
-export const CalendarYear = ({
+export const InternalCalendarYear = ({
     calendarDate,
+    currentFocus,
     selectedStartDate,
+    selectedEndDate,
     type,
+    isNewSelection,
+    between,
     onSelect,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [years, setYears] = useState<Dayjs[]>([]);
+    const selectedDate =
+        currentFocus === "end" ? selectedEndDate : selectedStartDate;
 
     // =============================================================================
     // EFFECTS
@@ -38,36 +46,58 @@ export const CalendarYear = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleYearClick = (value: Dayjs) => {
+    const handleYearClick = (value: Dayjs, isDisabled: boolean) => {
+        if (isDisabled) return;
+
         onSelect(value);
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const isDisabled = (day: Dayjs): boolean => {
+        const isOutsideBetweenRange =
+            between && !day.isBetween(between[0], between[1], "year", "[]");
+
+        const isStartAfterEnd =
+            currentFocus === "start" &&
+            selectedEndDate &&
+            day.isAfter(selectedEndDate, "year") &&
+            isNewSelection;
+
+        const isEndBeforeStart =
+            currentFocus === "end" &&
+            selectedStartDate &&
+            day.isBefore(selectedStartDate, "year") &&
+            isNewSelection;
+
+        return isOutsideBetweenRange || isStartAfterEnd || isEndBeforeStart;
+    };
+
     const generateYearStatus = (date: Dayjs) => {
         const otherDecadeIndexes = [0, 11];
 
         const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
-        const fullDate = date.format("YYYY-MM-DD");
         const year = date.year();
+        const disabled = isDisabled(date);
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
-            : dayjs(selectedStartDate).isSame(fullDate, "year")
+            : selectedDate && dayjs(selectedDate).isSame(date, "year")
             ? "selected-year"
-            : dayjs().isSame(fullDate, "year")
+            : dayjs().isSame(date, "year")
             ? "current-year"
             : "default";
 
         return {
+            disabled,
             year,
             variant: variant,
         };
     };
 
     const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(calendarDate);
+        const years = CalendarHelper.generateDecadeOfYears(dayjs(calendarDate));
         setYears(years);
     };
 
@@ -79,15 +109,20 @@ export const CalendarYear = ({
     return (
         <Wrapper $type={type}>
             {years.map((date) => {
-                const { variant, year } = generateYearStatus(date);
+                const { disabled, variant, year } = generateYearStatus(date);
 
                 return (
                     <YearCell
                         key={year}
                         $variant={variant}
-                        onClick={() => handleYearClick(date)}
+                        $disabled={disabled}
+                        onClick={() => handleYearClick(date, disabled)}
                     >
-                        <CellLabel weight="regular" $variant={variant}>
+                        <CellLabel
+                            weight="regular"
+                            $variant={variant}
+                            $disabled={disabled}
+                        >
                             {year}
                         </CellLabel>
                     </YearCell>
