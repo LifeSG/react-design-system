@@ -44,7 +44,6 @@ export const Component = (
         value,
         endValue,
         currentFocus,
-        currentType,
         withButton,
         variant,
         between,
@@ -97,13 +96,6 @@ export const Component = (
             setIsNewSelection(false);
         }
     }, [isOpen]);
-
-    useEffect(() => {
-        if (!currentType) return;
-
-        // go back selected day calendar
-        handleSelectedDayView();
-    }, [currentType]);
 
     useEffect(() => {
         /**
@@ -227,19 +219,6 @@ export const Component = (
         performOnHoverHandler(value);
     };
 
-    const handleSelectedDayView = () => {
-        if (currentType !== "restore") return;
-
-        switch (currentFocus) {
-            case "start":
-                setCalendarDate(dayjs(value));
-                break;
-            case "end":
-                setCalendarDate(dayjs(endValue));
-                break;
-        }
-    };
-
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -258,7 +237,7 @@ export const Component = (
     const performOnCalendarDate = (value: Dayjs) => {
         if (onYearMonthDisplayChange) {
             const returnValue = {
-                month: value.month(),
+                month: value.month() + 1,
                 year: value.year(),
             };
 

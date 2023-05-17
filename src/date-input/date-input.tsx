@@ -548,11 +548,6 @@ export const DateInput = ({
                 withButton={withButton}
                 actionComponent={actionComponent}
                 currentFocus={currentElement.type}
-                currentType={
-                    currentElement.type === "start"
-                        ? startDate.currentType
-                        : endDate.currentType
-                }
                 value={startDate.calendar}
                 endValue={endDate.calendar}
                 between={between}
