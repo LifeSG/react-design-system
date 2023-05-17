@@ -53,16 +53,16 @@ export const YearCell = styled.div<StyleProps>`
     }
 
     ${(props) => {
-        if (props.$disabled) {
-            return css`
-                cursor: not-allowed;
+        // if (props.$disabled) {
+        //     return css`
+        //         cursor: not-allowed;
 
-                :hover {
-                    box-shadow: unset;
-                    border: unset;
-                }
-            `;
-        }
+        //         :hover {
+        //             box-shadow: unset;
+        //             border: unset;
+        //         }
+        //     `;
+        // }
 
         switch (props.$variant) {
             case "current-year":

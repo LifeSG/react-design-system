@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
 import { FocusType, InternalCalendarProps } from "./types";
+import { InternalCalendarHelper } from "./helper";
 
 export type YearVariant =
     | "default"
@@ -18,6 +19,8 @@ interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
     onYearSelect: (value: Dayjs) => void;
+    minDate?: Dayjs;
+    maxDate?: Dayjs;
 }
 
 export const InternalCalendarYear = ({
@@ -30,6 +33,8 @@ export const InternalCalendarYear = ({
     isNewSelection,
     between,
     onYearSelect,
+    minDate,
+    maxDate,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -46,9 +51,7 @@ export const InternalCalendarYear = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleYearClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled) return;
-
+    const handleYearClick = (value: Dayjs) => {
         onYearSelect(value);
     };
 
@@ -79,7 +82,7 @@ export const InternalCalendarYear = ({
 
         const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
         const year = date.year();
-        const disabled = isDisabled(date);
+        let disabled = false;
 
         const variant: YearVariant = isOtherDecade
             ? "other-decade"
@@ -89,6 +92,28 @@ export const InternalCalendarYear = ({
             ? "current-year"
             : "default";
 
+        // logic to disable year of the dates if it falls outside of either minDate's year or maxDate's year
+        if (minDate || maxDate) {
+            if (
+                InternalCalendarHelper.isOutOfDateRange(
+                    date,
+                    minDate,
+                    maxDate,
+                    "year"
+                )
+            ) {
+                disabled = true;
+            }
+            // early return result, taking precedence over the between prop
+            return {
+                disabled,
+                year,
+                variant: variant,
+            };
+        }
+
+        disabled = isDisabled(date);
+
         return {
             disabled,
             year,
@@ -97,7 +122,8 @@ export const InternalCalendarYear = ({
     };
 
     const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(dayjs(calendarDate));
+        const date = dayjs(calendarDate).date(1).month(0);
+        const years = CalendarHelper.generateDecadeOfYears(date);
         setYears(years);
     };
 
@@ -116,7 +142,7 @@ export const InternalCalendarYear = ({
                         key={year}
                         $variant={variant}
                         $disabled={disabled}
-                        onClick={() => handleYearClick(date, disabled)}
+                        onClick={() => handleYearClick(date)}
                     >
                         <CellLabel
                             weight="regular"

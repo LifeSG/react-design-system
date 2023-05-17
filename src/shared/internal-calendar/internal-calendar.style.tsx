@@ -11,6 +11,7 @@ import { Button } from "../../button";
 interface ContainerStyleProps {
     $type: CalendarType;
     $isOpen?: boolean | undefined;
+    $showBorder?: boolean;
 }
 
 interface SideArrowButtonStyleProps {
@@ -49,8 +50,12 @@ export const Container = styled.div<ContainerStyleProps>`
     padding: 2rem 0.25rem;
     align-items: center;
     background: ${Color.Neutral[8]};
-    border: 1px solid ${Color.Neutral[5]};
+    border: ${(props) =>
+        props.$showBorder
+            ? `1px solid ${Color.Neutral[5](props)}`
+            : "none"}; // if showBorder is true, show border
     border-radius: 0.75rem;
+    border-radius: 12px;
 
     ${(props) => {
         const { $type } = props;
@@ -60,8 +65,8 @@ export const Container = styled.div<ContainerStyleProps>`
                 return css`
                     ${ArrowLeft},
                     ${ArrowRight} {
-                        width: 1.5rem;
-                        height: 1.5rem;
+                        width: 1.125rem;
+                        height: 1.125rem;
                     }
 
                     ${IconChevronDown} {
@@ -142,14 +147,26 @@ export const Header = styled.div`
     margin-bottom: 0.5rem;
 `;
 
+export const HeaderStandalone = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+`;
+
 export const HeaderInputDropdown = styled.div`
     display: flex;
 `;
 
 export const HeaderDropdown = styled.div`
     display: flex;
-    margin: 0 auto;
-    margin-bottom: 1rem;
+    margin-left: 1.5rem;
+    margin-bottom: 2rem;
+`;
+
+export const HeaderArrow = styled.div`
+    display: flex;
+    margin-right: 0.7rem;
+    margin-bottom: 2rem;
 `;
 
 export const DropdownButton = styled.button<DropdownButtonStyleProps>`
@@ -252,20 +269,6 @@ export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
             case "input":
                 return css`
                     display: none;
-                `;
-        }
-    }}
-
-    ${(props) => {
-        switch (props.$direction) {
-            case "left":
-                return css`
-                    margin: auto 0.625rem auto 0; // to counter the padding
-                `;
-            case "right":
-            default:
-                return css`
-                    margin: auto 0 auto 0.625rem; // to counter the padding
                 `;
         }
     }}

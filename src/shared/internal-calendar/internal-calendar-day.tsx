@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
+import { InternalCalendarHelper } from "./helper";
 import {
     DayLabel,
     GrowDayCell,
@@ -41,6 +42,8 @@ interface CalendarDayProps
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
+    minDate?: Dayjs;
+    maxDate?: Dayjs;
 }
 
 export const InternalCalendarDay = ({
@@ -55,6 +58,8 @@ export const InternalCalendarDay = ({
     isNewSelection,
     between,
     variant,
+    minDate,
+    maxDate,
 }: CalendarDayProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -103,11 +108,28 @@ export const InternalCalendarDay = ({
     };
 
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange =
-            between && !day.isBetween(between[0], between[1], "day", "[]");
+        // logic to disable dates if it falls outside of either minDate or maxDate
+        if (
+            InternalCalendarHelper.isOutOfDateRange(
+                day,
+                minDate,
+                maxDate,
+                "day"
+            )
+        ) {
+            disabledDates.push(day.format("YYYY-MM-DD"));
+        }
 
         const isDisabledDate =
             disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
+
+        if (minDate || maxDate) {
+            // early return result, taking precedence over the between prop
+            return isDisabledDate;
+        }
+
+        const isOutsideBetweenRange =
+            between && !day.isBetween(between[0], between[1], "day", "[]");
 
         const isStartAfterEnd =
             currentFocus === "start" &&

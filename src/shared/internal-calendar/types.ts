@@ -35,6 +35,12 @@ export interface CommonCalendarProps {
     onHover?: ((value: string) => void) | undefined;
     /** Called when there is a change in the current visible month and year */
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
+    /** Set `true` to display the border of the calendar */
+    showBorder?: boolean;
+    /** Minimum date is set to restrict selection from this date onwards */
+    minDate?: string;
+    /** Maximum date is set to restrict selection till this date */
+    maxDate?: string;
 
     // Basic component props
     /** The class selector */

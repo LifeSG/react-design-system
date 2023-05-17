@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CalendarHelper } from "src/util/calendar-helper";
 import { CellLabel, MonthCell, Wrapper } from "./internal-calendar-month.style";
 import { FocusType, InternalCalendarProps } from "./types";
+import { InternalCalendarHelper } from "./helper";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
@@ -14,6 +15,8 @@ interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
     onMonthSelect: (value: Dayjs) => void;
+    minDate?: Dayjs;
+    maxDate?: Dayjs;
 }
 
 export const InternalCalendarMonth = ({
@@ -26,6 +29,8 @@ export const InternalCalendarMonth = ({
     isNewSelection,
     between,
     onMonthSelect,
+    minDate,
+    maxDate,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -42,9 +47,7 @@ export const InternalCalendarMonth = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleMonthClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled) return;
-
+    const handleMonthClick = (value: Dayjs) => {
         onMonthSelect(value);
     };
 
@@ -72,13 +75,35 @@ export const InternalCalendarMonth = ({
 
     const generateMonthStatus = (date: Dayjs) => {
         const month = date.format("MMMM");
-        const disabled = isDisabled(date);
+        let disabled = false;
 
         const variant: MonthVariant = viewCalendarDate.isSame(date, "month")
             ? "selected-month"
             : dayjs().isSame(date, "month")
             ? "current-month"
             : "default";
+
+        // logic to disable month of the dates if it falls outside of either minDate's month or maxDate's month
+        if (minDate || maxDate) {
+            if (
+                InternalCalendarHelper.isOutOfDateRange(
+                    date,
+                    minDate,
+                    maxDate,
+                    "month"
+                )
+            ) {
+                disabled = true;
+            }
+            // early return result, taking precedence over the between prop
+            return {
+                disabled,
+                month,
+                variant,
+            };
+        }
+
+        disabled = isDisabled(date);
 
         return {
             disabled,
@@ -88,7 +113,8 @@ export const InternalCalendarMonth = ({
     };
 
     const generateMonths = () => {
-        const months = CalendarHelper.generateMonths(dayjs(calendarDate));
+        const date = dayjs(calendarDate).date(1);
+        const months = CalendarHelper.generateMonths(date);
         setMonths(months);
     };
 
@@ -107,7 +133,7 @@ export const InternalCalendarMonth = ({
                         key={month}
                         $variant={variant}
                         $disabled={disabled}
-                        onClick={() => handleMonthClick(date, disabled)}
+                        onClick={() => handleMonthClick(date)}
                     >
                         <CellLabel
                             weight="regular"

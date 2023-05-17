@@ -36,6 +36,18 @@ import { Calendar } from "@lifesg/react-design-system/calendar";
     </Story>
 </Canvas>
 
+<Heading3>With border</Heading3>
+
+You can use `showBorder` to display a border around the calendar.
+
+<Canvas>
+    <Story name="With border">
+        <FullWidthStoryContainer>
+            <Calendar showBorder={true} />
+        </FullWidthStoryContainer>
+    </Story>
+</Canvas>
+
 <Heading3>With disabled dates</Heading3>
 
 You can use `disabledDates` to specify dates that are not available for selection.
@@ -64,6 +76,7 @@ You can restrict selection to a date range using `between`.
 <Canvas>
     <Story name="Within date range">
         {() => {
+            // const [disabledDates] = useState([]);
             const [between] = useState([
                 dayjs().day(7).format("YYYY-MM-DD"),
                 dayjs().day(21).format("YYYY-MM-DD"),
@@ -71,6 +84,37 @@ You can restrict selection to a date range using `between`.
             return (
                 <FullWidthStoryContainer>
                     <Calendar between={between} />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With minimum date and maximum date</Heading3>
+
+You can restrict selection to a date if it falls outside of the range of either `minDate` or `maxDate`.
+This takes precedence over `between`.
+
+<Canvas>
+    <Story name="With minimum date and maximum date">
+        {() => {
+            const [disabledDates] = useState([
+                dayjs().day(10).format("YYYY-MM-DD"),
+                dayjs().day(15).format("YYYY-MM-DD"),
+                dayjs().day(25).format("YYYY-MM-DD"),
+            ]);
+            const [between] = useState([
+                dayjs().day(7).format("YYYY-MM-DD"),
+                dayjs().day(21).format("YYYY-MM-DD"),
+            ]);
+            return (
+                <FullWidthStoryContainer>
+                    <Calendar
+                        disabledDates={disabledDates}
+                        minDate="2023-05-07"
+                        maxDate="2024-05-15"
+                        between={between}
+                    />
                 </FullWidthStoryContainer>
             );
         }}

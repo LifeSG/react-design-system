@@ -82,6 +82,38 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["(value: string) => void"],
             },
+            {
+                name: "showBorder",
+                description: (
+                    <>
+                        Display a border around the calendar. When set to{" "}
+                        <code>true</code>, the border will be rendered.
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
+            {
+                name: "minDate",
+                description: (
+                    <>
+                        The dates which falls before minimum date are to be
+                        disabled. To specify date in the format{" "}
+                        <code>YYYY-MM-DD</code>
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "maxDate",
+                description: (
+                    <>
+                        The dates which falls after maximum date are to be
+                        disabled. To specify date in the format{" "}
+                        <code>YYYY-MM-DD</code>
+                    </>
+                ),
+                propTypes: ["string"],
+            },
         ],
     },
     {

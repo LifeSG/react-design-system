@@ -15,10 +15,12 @@ import {
     DropdownButton,
     DropdownText,
     Header,
+    HeaderArrow,
     HeaderArrowButton,
     HeaderArrows,
     HeaderDropdown,
     HeaderInputDropdown,
+    HeaderStandalone,
     IconChevronDown,
     OptionsOverlay,
     SideArrowButton,
@@ -30,6 +32,7 @@ import {
     InternalCalendarProps,
     View,
 } from "./types";
+import { max } from "lodash";
 
 export const Component = (
     {
@@ -48,6 +51,9 @@ export const Component = (
         variant,
         between,
         type = "standalone",
+        showBorder,
+        minDate,
+        maxDate,
         ...otherProps
     }: InternalCalendarProps,
     ref: React.ForwardedRef<CalendarRef>
@@ -65,6 +71,9 @@ export const Component = (
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const minDateParsed = minDate && dayjs(minDate);
+    const maxDateParsed = maxDate && dayjs(maxDate);
 
     // =============================================================================
     // HOOKS
@@ -368,7 +377,9 @@ export const Component = (
                         viewCalendarDate={viewCalendarDate}
                         between={between}
                         isNewSelection={isNewSelection}
-                        onMonthSelect={handleMonthYearSelect}
+                        onMonthSelect={handleDateSelect}
+                        minDate={minDateParsed}
+                        maxDate={maxDateParsed}
                     />
                 );
             case "year-options":
@@ -382,7 +393,9 @@ export const Component = (
                         viewCalendarDate={viewCalendarDate}
                         between={between}
                         isNewSelection={isNewSelection}
-                        onYearSelect={handleMonthYearSelect}
+                        onYearSelect={handleDateSelect}
+                        minDate={minDateParsed}
+                        maxDate={maxDateParsed}
                     />
                 );
             default:
@@ -394,7 +407,27 @@ export const Component = (
         switch (type) {
             case "standalone":
                 return (
-                    <HeaderDropdown>{renderDropdownButtons()}</HeaderDropdown>
+                    <HeaderStandalone>
+                        <HeaderDropdown>
+                            {renderDropdownButtons()}
+                        </HeaderDropdown>
+                        <HeaderArrow>
+                            <SideArrowButton
+                                $direction="left"
+                                $type={type}
+                                onClick={handleLeftArrowClick}
+                            >
+                                <ArrowLeft />
+                            </SideArrowButton>
+                            <SideArrowButton
+                                $direction="right"
+                                $type={type}
+                                onClick={handleRightArrowClick}
+                            >
+                                <ArrowRight />
+                            </SideArrowButton>
+                        </HeaderArrow>
+                    </HeaderStandalone>
                 );
             case "input":
                 return (
@@ -471,16 +504,10 @@ export const Component = (
             ref={containerRef}
             $type={type}
             $isOpen={isOpen}
+            $showBorder={showBorder}
             {...otherProps}
             tabIndex={-1}
         >
-            <SideArrowButton
-                $direction="left"
-                $type={type}
-                onClick={handleLeftArrowClick}
-            >
-                <ArrowLeft />
-            </SideArrowButton>
             <ContentBody>
                 {renderHeader()}
                 <ToggleZone>
@@ -496,6 +523,8 @@ export const Component = (
                         isNewSelection={isNewSelection}
                         onSelect={handleDateSelect}
                         onHover={handleHover}
+                        minDate={minDateParsed}
+                        maxDate={maxDateParsed}
                     />
                     <OptionsOverlay $visible={currentView !== "default"}>
                         {renderOptionsOverlay()}
@@ -503,13 +532,6 @@ export const Component = (
                 </ToggleZone>
                 {renderCancelDoneButton()}
             </ContentBody>
-            <SideArrowButton
-                $direction="right"
-                $type={type}
-                onClick={handleRightArrowClick}
-            >
-                <ArrowRight />
-            </SideArrowButton>
         </Container>
     );
 };
