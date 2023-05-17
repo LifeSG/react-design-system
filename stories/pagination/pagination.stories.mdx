@@ -90,6 +90,32 @@ The `showFirstAndLastNav` prop allows the user to jump directly to the first and
     </Story>
 </Canvas>
 
+<Heading3>With Page Size Changer</Heading3>
+
+The `showPageSizeChanger` prop allows the user to show page size changer dropdown.
+
+<Canvas>
+    <Story name="With Page Size Changer">
+        {() => {
+            const [selectedPage, setSelected] = useState(5);
+            return (
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            activePage={selectedPage}
+                            totalItems={600}
+                            showFirstAndLastNav
+                            showPageSizeChanger
+                        />
+                    </FullWidthStoryContainer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Secondary>Component API</Secondary>
 
 <PropsTable />

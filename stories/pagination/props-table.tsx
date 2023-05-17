@@ -47,6 +47,13 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "showPageSizeChanger",
+                description:
+                    "Specifies if the page size changer dropdown is visible",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onPageChange",
                 description: "Called when a page is selected",
                 propTypes: ["(page: number) => void"],
