@@ -188,6 +188,7 @@ export const Component = (
         const stringValue = value.format("YYYY-MM-DD");
 
         setCalendarDate(value);
+        setViewCalendarDate(value);
         handleSelectedType(stringValue);
 
         performOnSelectHandler(stringValue);
