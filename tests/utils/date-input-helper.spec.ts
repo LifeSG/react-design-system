@@ -212,33 +212,26 @@ describe("DateInputHelper", () => {
 
     describe("getFormattedRawValue", () => {
         it("should split each value into field object format", () => {
-            const value = { start: "2023-03-10" };
-            const values = { start: "2023-03-10", end: "2023-04-05" };
-            const expectedFormats = {
-                start: {
-                    year: "2023",
-                    month: "03",
-                    day: "10",
-                },
-                end: {
-                    year: "2023",
-                    month: "04",
-                    day: "05",
-                },
+            const startValue = "2023-03-10";
+            const endValue = "2023-04-05";
+
+            const expected1 = {
+                start: ["10", "03", "2023"],
+                end: undefined,
             };
-            const expectedFormat = {
-                start: {
-                    year: "2023",
-                    month: "03",
-                    day: "10",
-                },
+            const expected2 = {
+                start: ["10", "03", "2023"],
+                end: ["05", "04", "2023"],
             };
 
-            const result = DateInputHelper.getFormattedRawValue(value);
-            const results = DateInputHelper.getFormattedRawValue(values);
+            const result1 = DateInputHelper.getFormattedRawValue(startValue);
+            const result2 = DateInputHelper.getFormattedRawValue(
+                startValue,
+                endValue
+            );
 
-            expect(result).toEqual(expect.objectContaining(expectedFormat));
-            expect(results).toEqual(expect.objectContaining(expectedFormats));
+            expect(result1).toEqual(expected1);
+            expect(result2).toEqual(expected2);
         });
     });
 
