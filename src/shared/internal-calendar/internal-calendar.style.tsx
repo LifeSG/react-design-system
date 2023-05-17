@@ -9,18 +9,17 @@ import { IconButton } from "../../icon-button";
 import { TextStyleHelper } from "../../text";
 import { CalendarType } from "./types";
 
+interface GeneralStyleProps {
+    $type: CalendarType;
+}
+
 interface SideArrowButtonStyleProps {
     $direction: "left" | "right";
 }
 
-interface DropdownButtonStyleProps {
+interface DropdownButtonStyleProps extends GeneralStyleProps {
     $expandedDisplay: boolean;
     $visible?: boolean;
-    $type: CalendarType;
-}
-
-interface DropdownTextStyleProps {
-    $type: CalendarType;
 }
 
 interface OverlayStyleProps {
@@ -67,13 +66,20 @@ export const AnimatedDiv = styled(animated.div)`
     z-index: 1;
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<GeneralStyleProps>`
     position: relative;
     width: 100%;
     padding: 1.5rem 1.25rem;
     display: flex;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 8px;
+
+    ${(props) => {
+        if (props.$type === "input") {
+            return css`
+                border: 1px solid ${Color.Neutral[5]};
+                border-radius: 8px;
+            `;
+        }
+    }}
 `;
 
 export const ContentBody = styled.div`
@@ -168,7 +174,7 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     }}
 `;
 
-export const DropdownText = styled.p<DropdownTextStyleProps>`
+export const DropdownText = styled.p<GeneralStyleProps>`
     ${(props) => {
         switch (props.$type) {
             case "standalone":

@@ -469,7 +469,13 @@ export const Component = (
 
     const renderContent = () => {
         return (
-            <Container ref={resizeDetector.ref} tabIndex={-1} {...otherProps}>
+            <Container
+                ref={resizeDetector.ref}
+                tabIndex={-1}
+                data-id="calendar-container"
+                $type={type}
+                {...otherProps}
+            >
                 {type === "standalone" && (
                     <SideArrowButton
                         $direction="left"
