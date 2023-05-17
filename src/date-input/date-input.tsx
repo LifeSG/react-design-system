@@ -23,7 +23,7 @@ import {
     IndicateBar,
 } from "./date-input.style";
 import { FieldType, INVALID_VALUE, StandAloneInput } from "./stand-alone-input";
-import { ChangeValueTypes, DateInputProps } from "./types";
+import { DateInputProps } from "./types";
 
 interface CurrentFocusTypes {
     field: FieldType;
@@ -39,7 +39,7 @@ export const DateInput = ({
     disabledDates,
     error,
     value,
-    endValue,
+    valueEnd,
     onChange,
     onBlur,
     onChangeRaw,
@@ -102,16 +102,16 @@ export const DateInput = ({
         dispatchStart({ type: "confirmed", value: value });
 
         if (variant === "range")
-            dispatchEnd({ type: "confirmed", value: endValue });
+            dispatchEnd({ type: "confirmed", value: valueEnd });
     }, []);
 
     useEffect(() => {
         dispatchStart({ type: "selected", value: value });
 
         if (variant === "range") {
-            dispatchEnd({ type: "selected", value: endValue });
+            dispatchEnd({ type: "selected", value: valueEnd });
         }
-    }, [value, endValue]);
+    }, [value, valueEnd]);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -266,28 +266,30 @@ export const DateInput = ({
     // =============================================================================
     const performOnChangeHandler = (changeValue?: string) => {
         const focusType = currentElement.type as FocusType;
-        const returnValue: ChangeValueTypes = {
-            start: startDate.selected,
-            end: endDate.selected,
-        };
 
-        // Update the specific field value.
-        // - only use in without button
+        let start = startDate.selected;
+        let end = endDate.selected;
+
         if (changeValue) {
-            returnValue[focusType] = changeValue;
+            switch (focusType) {
+                case "end":
+                    end = changeValue;
+                    break;
+                case "start":
+                    start = changeValue;
+                    break;
+                default:
+            }
         }
 
-        if (variant === "single") delete returnValue.end;
-
         if (onChange) {
-            onChange(returnValue);
+            onChange(start, end);
         }
 
         if (onChangeRaw) {
-            const returnRawValue =
-                DateInputHelper.getFormattedRawValue(returnValue);
-
-            onChangeRaw(returnRawValue);
+            const { start: startRaw, end: endRaw } =
+                DateInputHelper.getFormattedRawValue(start, end);
+            onChangeRaw(startRaw, endRaw);
         }
     };
 
@@ -295,22 +297,17 @@ export const DateInput = ({
         startDate: ReducerState,
         endDate: ReducerState
     ) => {
-        const returnValue = {
-            start: startDate.confirmed,
-            end: endDate.confirmed,
-        };
-
-        if (variant === "single") delete returnValue.end;
-
         if (onBlur) {
-            onBlur(returnValue);
+            onBlur(startDate.confirmed, endDate.confirmed);
         }
 
         if (onBlurRaw) {
-            const returnRawValue =
-                DateInputHelper.getFormattedRawValue(returnValue);
-
-            onBlurRaw(returnRawValue);
+            const { start: startRaw, end: endRaw } =
+                DateInputHelper.getFormattedRawValue(
+                    startDate.confirmed,
+                    endDate.confirmed
+                );
+            onBlurRaw(startRaw, endRaw);
         }
     };
 
