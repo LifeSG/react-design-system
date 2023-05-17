@@ -1,4 +1,3 @@
-import { ActionType } from "../../date-input/date-input-reducer";
 import { ActionComponent, DateInputVariant } from "../../date-input";
 
 export interface InternalCalendarProps extends CommonCalendarProps {
@@ -14,8 +13,6 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     actionComponent?: ActionComponent | undefined;
     /** Indicate current focus in the date-input component. */
     currentFocus?: FocusType | undefined;
-    /** Indicate current action in the date-input component. */
-    currentType?: ActionType | undefined;
     /** Indicate calendar variant from the date input component. */
     variant?: DateInputVariant | undefined;
     /** Function to handle cancel/done .*/

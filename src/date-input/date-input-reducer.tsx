@@ -8,7 +8,6 @@ export type ActionType =
     | "invalid"
     | "reset"
     | "selected"
-    | "restore"
     | "unhover"
     | any;
 
