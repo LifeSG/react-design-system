@@ -26,6 +26,10 @@ export const AnimatedDiv = styled(animated.div)`
     border-radius: ${BORDER_RADIUS};
     overflow: hidden;
     z-index: 1;
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        max-width: 100%;
+    }
 `;
 
 export const Container = styled.div`
@@ -43,6 +47,7 @@ export const InputSection = styled.div`
 
     ${MediaQuery.MaxWidth.mobileS} {
         flex-direction: column;
+        width: 100%;
     }
 `;
 
@@ -68,6 +73,7 @@ export const HourMinuteSection = styled.div`
 
     ${MediaQuery.MaxWidth.mobileS} {
         margin-right: 0;
+        width: 100%;
     }
 `;
 
@@ -89,6 +95,10 @@ export const InputContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 6rem;
+    }
 `;
 
 export const SwitchButton = styled(IconButton)`
@@ -139,7 +149,7 @@ export const TimeInput = styled(BasicInput)`
     }
 
     ${MediaQuery.MaxWidth.mobileS} {
-        width: 6rem;
+        width: 100%;
     }
 `;
 
