@@ -1,0 +1,79 @@
+import { LockIcon } from "@lifesg/react-icons/lock";
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { ImageButton } from "src/image-button";
+import { Secondary, Heading3, Title } from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="General/ImageButton" component={ImageButton} />
+
+<Title>Image Button</Title>
+
+<Secondary>Overview</Secondary>
+
+A call to action component with an image in it.
+
+```tsx
+import { ImageButton } from "@lifesg/react-design-system/image-button";
+```
+
+<Canvas>
+    <Story name="ImageButton">
+        <ImageButton src="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
+            Rooms
+        </ImageButton>
+    </Story>
+</Canvas>
+
+<Heading3>Outline</Heading3>
+
+By default, the button is not outlined when focused. To defer to the browser's default style, specify the `focusOutline` prop.
+
+(Try focusing the button below with the Tab key)
+
+<Preview>
+    <Story name="Outline">
+        <ImageButton
+            src="https://cdn-icons-png.flaticon.com/512/10754/10754537.png"
+            focusOutline="browser"
+        >
+            Rooms
+        </ImageButton>
+    </Story>
+</Preview>
+
+<Heading3>Disabled</Heading3>
+
+Button support disabled state.
+
+<Preview>
+    <Story name="Disabled">
+        <ImageButton
+            disabled={true}
+            src="https://cdn-icons-png.flaticon.com/512/10754/10754537.png"
+            focusOutline="browser"
+        >
+            Rooms
+        </ImageButton>
+    </Story>
+</Preview>
+
+<Heading3>Fallback</Heading3>
+Button support fallback to default image on error.
+
+<Preview>
+    <Story name="Fallback">
+        <ImageButton
+            disabled={false}
+            src="https://cdn-icons-png.flaticon.com/512/10754/10754asdfads537.png"
+            focusOutline="browser"
+        >
+            Rooms
+        </ImageButton>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+The component also inherits the [Button](/docs/general-button--button) props.
+
+<PropsTable />
