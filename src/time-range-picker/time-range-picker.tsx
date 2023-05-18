@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
+import { useEventListener } from "../util/use-event-listener";
 import {
     ArrowRight,
     Indicator,
@@ -43,15 +44,8 @@ export const TimeRangePicker = ({
         }
     }, []);
 
-    useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDownEvent);
-        document.addEventListener("keyup", handleKeyUpEvent);
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDownEvent);
-            document.removeEventListener("keyup", handleKeyUpEvent);
-        };
-    }, [showEndTimeSelector]);
+    useEventListener("mousedown", handleMouseDownEvent, document);
+    useEventListener("keyup", handleKeyUpEvent, document);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -70,13 +64,13 @@ export const TimeRangePicker = ({
         }
     };
 
-    const handleMouseDownEvent = (event: MouseEvent) => {
+    function handleMouseDownEvent(event: MouseEvent) {
         if (!disabled) {
             runOutsideFocusHandler(event);
         }
-    };
+    }
 
-    const handleKeyUpEvent = (event: KeyboardEvent) => {
+    function handleKeyUpEvent(event: KeyboardEvent) {
         switch (event.code) {
             case "Tab":
                 runOutsideFocusHandler(event);
@@ -84,11 +78,10 @@ export const TimeRangePicker = ({
             default:
                 break;
         }
-    };
+    }
 
     const handleSelectionDropdownCancel = () => {
-        setShowEndTimeSelector(false);
-        setShowStartTimeSelector(false);
+        runOnBlurHandler();
     };
 
     const handleStartTime = (value: string) => {
@@ -131,10 +124,7 @@ export const TimeRangePicker = ({
 
     const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {
         if (nodeRef && !nodeRef.current.contains(event.target as any)) {
-            if (!showEndTimeSelector) {
-                runOnBlurHandler();
-            }
-            if (!showStartTimeSelector) {
+            if (showEndTimeSelector || showStartTimeSelector) {
                 runOnBlurHandler();
             }
         }

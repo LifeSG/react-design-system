@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
+import { useEventListener } from "../util/use-event-listener";
 import { InputSelectorElement } from "./timepicker.styles";
 import { TimepickerProps } from "./types";
 
@@ -15,7 +16,6 @@ export const Timepicker = ({
     format = "24hr",
     onChange,
     onBlur,
-    onSelectionCancel,
     ...otherProps
 }: TimepickerProps) => {
     // =============================================================================
@@ -28,32 +28,25 @@ export const Timepicker = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDownEvent);
-        document.addEventListener("keyup", handleKeyUpEvent);
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDownEvent);
-            document.removeEventListener("keyup", handleKeyUpEvent);
-        };
-    }, [showSelector]);
+    useEventListener("mousedown", handleMouseDownEvent, document);
+    useEventListener("keyup", handleKeyUpEvent, document);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleInputFocus = useCallback(() => {
+    const handleInputFocus = () => {
         if (!disabled && !readOnly && !showSelector) {
             setShowSelector(true);
         }
-    }, [showSelector]);
+    };
 
-    const handleMouseDownEvent = (event: MouseEvent) => {
+    function handleMouseDownEvent(event: MouseEvent) {
         if (!disabled && !readOnly) {
             runOutsideFocusHandler(event);
         }
-    };
+    }
 
-    const handleKeyUpEvent = (event: KeyboardEvent) => {
+    function handleKeyUpEvent(event: KeyboardEvent) {
         switch (event.code) {
             case "Tab":
                 runOutsideFocusHandler(event);
@@ -61,11 +54,10 @@ export const Timepicker = ({
             default:
                 break;
         }
-    };
+    }
 
     const handleSelectionDropdownCancel = () => {
-        setShowSelector(false);
-        onSelectionCancel && onSelectionCancel();
+        runOnBlurHandler();
     };
 
     const handleChange = (value: string) => {

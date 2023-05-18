@@ -82,12 +82,6 @@ const DATA: ApiTableSectionProps[] = [
                     "Called when a defocus happens. Any changes in the time selection box will not be applied",
                 propTypes: ["() => void"],
             },
-            {
-                name: "onSelectionCancel",
-                description:
-                    "Called when the user clicks on the 'Cancel' button in the time selection box. Any changes will not be applied",
-                propTypes: ["() => void"],
-            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,

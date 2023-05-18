@@ -27,8 +27,4 @@ export interface TimepickerProps {
      * Called when a defocus is made on the field
      */
     onBlur?: (() => void) | undefined;
-    /**
-     * Called when the "Cancel" button is clicked
-     */
-    onSelectionCancel?: (() => void) | undefined;
 }
