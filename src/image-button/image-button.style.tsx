@@ -31,7 +31,7 @@ export const Main = styled.button`
         padding: 1rem 0rem;
     }
 
-    ${MediaQuery.MinWidth.desktopM} {
+    ${MediaQuery.MinWidth.tablet} {
         :focus:active {
             box-shadow: ${DesignToken.ElevationBoxShadow};
             ${TextStyleHelper.getTextStyle("H4", "bold")}
