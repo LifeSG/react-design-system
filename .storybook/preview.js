@@ -1,6 +1,5 @@
 import { withThemes } from "@react-theming/storybook-addon";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
-import { addDecorator } from "@storybook/react";
 import pretty from "pretty";
 import { ThemeProvider } from "styled-components";
 import { BaseTheme, BookingSGTheme } from "src/theme";
@@ -38,4 +37,4 @@ const themes = [
     { ...BookingSGTheme, name: "BookingSG" },
 ];
 
-addDecorator(withThemes(ThemeProvider, themes));
+// export const decorators = [withThemes(ThemeProvider, themes)];
