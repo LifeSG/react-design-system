@@ -17,5 +17,5 @@ export const Calendar = ({ className, ...otherProps }: CalendarProps) => {
 const Wrapper = styled.div`
     width: 41rem;
     border: 1px solid ${Color.Neutral[5]};
-    border-radius: 8px;
+    border-radius: 12px;
 `;
