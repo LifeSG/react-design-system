@@ -12,7 +12,7 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description:
                     "A list of options that a user can choose from, has to specify options for from and to select options seperately.",
-                propTypes: ["{from: T[], to: T[]"],
+                propTypes: ["{from: T[], to: T[]}"],
             },
             {
                 name: "selectedOption",
@@ -53,7 +53,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "placeholders",
                 description: "The placeholder text for each select component",
                 propTypes: ["{from: string, to: string}"],
-                defaultValue: "{from: Select, to: Select}",
+                defaultValue: `{from: "Select", to: "Select"}`,
             },
             {
                 name: "disabled",
