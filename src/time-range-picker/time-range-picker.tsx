@@ -15,7 +15,7 @@ export const TimeRangePicker = ({
     disabled = false,
     error,
     value,
-    format = "12hr",
+    format = "24hr",
     readOnly,
     onChange,
     onBlur,
