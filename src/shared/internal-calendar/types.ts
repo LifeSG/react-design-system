@@ -13,6 +13,8 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     currentFocus?: FocusType | undefined;
     /** Indicate calendar variant from the date input component. */
     variant?: Variant | undefined;
+    /** Selection to respect start or end range. */
+    selectWithinRange?: boolean | undefined;
     /** Function to handle cancel/done .*/
     onDismiss?: ((action: CalendarAction) => void) | undefined;
     /** Current calendar view inform to date input. .*/
@@ -48,6 +50,7 @@ export interface CommonCalendarProps {
 
 export interface CalendarRef {
     defaultView: () => void;
+    resetView: () => void;
 }
 
 // =============================================================================

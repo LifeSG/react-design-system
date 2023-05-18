@@ -46,6 +46,7 @@ export const Component = (
         variant,
         between,
         type = "standalone",
+        selectWithinRange = true,
         ...otherProps
     }: InternalCalendarProps,
     ref: React.ForwardedRef<CalendarRef>
@@ -58,7 +59,6 @@ export const Component = (
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
     const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>();
-    const [isNewSelection, setIsNewSelection] = useState<boolean>(true);
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
@@ -75,6 +75,10 @@ export const Component = (
                     setCurrentView("default");
                     onCalendarView("default");
                 },
+                resetView() {
+                    setCalendarDate(dayjs());
+                    setCurrentView("default");
+                },
             };
         },
         []
@@ -83,19 +87,6 @@ export const Component = (
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    // TODO:
-    // useEffect(() => {
-    //     // open with 'confirmed' value for day calendar in first mounted
-    //     if (!isOpen) return;
-
-    //     setCalendarDate(dayjs());
-    //     setCurrentView("default");
-
-    //     if (variant === "range" && value?.length && endValue?.length) {
-    //         setIsNewSelection(false);
-    //     }
-    // }, [isOpen]);
-
     useEffect(() => {
         /**
          * Update calendar value in month/year
@@ -110,8 +101,6 @@ export const Component = (
     }, [currentFocus]);
 
     useEffect(() => {
-        setIsNewSelection(true);
-
         if (!value) {
             setSelectedStartDate(undefined);
             return;
@@ -126,8 +115,6 @@ export const Component = (
     }, [value]);
 
     useEffect(() => {
-        setIsNewSelection(true);
-
         if (!endValue) {
             setSelectedEndDate(undefined);
             return;
@@ -367,7 +354,7 @@ export const Component = (
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
                         between={between}
-                        isNewSelection={isNewSelection}
+                        isNewSelection={selectWithinRange}
                         onMonthSelect={handleMonthYearSelect}
                     />
                 );
@@ -381,7 +368,7 @@ export const Component = (
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
                         between={between}
-                        isNewSelection={isNewSelection}
+                        isNewSelection={selectWithinRange}
                         onYearSelect={handleMonthYearSelect}
                     />
                 );
@@ -492,7 +479,7 @@ export const Component = (
                         selectedEndDate={selectedEndDate}
                         variant={variant}
                         between={between}
-                        isNewSelection={isNewSelection}
+                        isNewSelection={selectWithinRange}
                         onSelect={handleDateSelect}
                         onHover={handleHover}
                     />
