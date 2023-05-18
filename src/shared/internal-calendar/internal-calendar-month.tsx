@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
-import { CalendarHelper } from "src/util/calendar-helper";
+import { useMemo } from "react";
+import { CalendarHelper } from "../../util/calendar-helper";
 import { CellLabel, MonthCell, Wrapper } from "./internal-calendar-month.style";
 import { FocusType, InternalCalendarProps } from "./types";
 
@@ -30,14 +30,10 @@ export const InternalCalendarMonth = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [months, setMonths] = useState<Dayjs[]>([]);
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        generateMonths();
-    }, [calendarDate]);
+    const months = useMemo<Dayjs[]>(
+        () => CalendarHelper.generateMonths(dayjs(calendarDate)),
+        [calendarDate]
+    );
 
     // =============================================================================
     // EVENT HANDLERS
@@ -85,11 +81,6 @@ export const InternalCalendarMonth = ({
             month,
             variant,
         };
-    };
-
-    const generateMonths = () => {
-        const months = CalendarHelper.generateMonths(dayjs(calendarDate));
-        setMonths(months);
     };
 
     // =============================================================================
