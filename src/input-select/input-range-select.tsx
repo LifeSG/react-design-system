@@ -11,7 +11,7 @@ import {
     Selector,
     ValueLabel,
 } from "./input-select.styles";
-import { InputRangeProp, InputRangeSelectProps } from "./types";
+import { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";
 
@@ -46,28 +46,24 @@ export const InputRangeSelect = <T, V>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selected, setSelected] = useState<InputRangeProp<T>>({
-        from: selectedOptions?.from,
-        to: selectedOptions?.to,
-    });
-    const [showOptions, setShowOptions] = useState<InputRangeProp<boolean>>({
-        from: false,
-        to: false,
-    });
+
+    const [selectedFromValue, setSelectedFromValue] = useState<T | undefined>();
+    const [selectedToValue, setSelectedToValue] = useState<T | undefined>();
 
     const selectorRef = useRef<HTMLButtonElement>();
     const labelContainerRef = {
         from: useRef<HTMLDivElement>(),
         to: useRef<HTMLDivElement>(),
     };
-    const [currentElementType, setCurrentElementType] = useState<
-        "start" | "end" | "none"
-    >("none");
+    const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
+        "none"
+    );
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setSelected({ from: selectedOptions?.from, to: selectedOptions?.to });
+        setSelectedFromValue(selectedOptions?.from);
+        setSelectedToValue(selectedOptions?.to);
     }, [selectedOptions]);
 
     // =============================================================================
@@ -83,22 +79,14 @@ export const InputRangeSelect = <T, V>({
             return;
         }
         if (rangeType === "from") {
-            showDropDown("from");
-        } else if (rangeType === "to" && selected.from) {
-            showDropDown("to");
-        } else if (rangeType === "to" && !selected.from) {
-            showDropDown("from");
+            setFocusedInput("from");
+        } else if (rangeType === "to" && selectedFromValue) {
+            setFocusedInput("to");
+        } else if (rangeType === "to" && !selectedFromValue) {
+            setFocusedInput("from");
         } else {
-            showDropDown("from");
+            setFocusedInput("from");
         }
-    };
-
-    const showDropDown = (rangeType: RangeType) => {
-        const otherRangeType = rangeType === "from" ? "to" : "from";
-        showOptions[rangeType] = true;
-        showOptions[otherRangeType] = false;
-        setShowOptions({ ...showOptions });
-        setCurrentElementType(rangeType === "from" ? "start" : "end");
     };
 
     const handleListItemClick = (
@@ -106,8 +94,9 @@ export const InputRangeSelect = <T, V>({
         extractedValue: V,
         rangeType?: RangeType
     ) => {
-        selected[rangeType] = item;
-        setSelected({ ...selected });
+        rangeType === "from"
+            ? setSelectedFromValue(item)
+            : setSelectedToValue(item);
         triggerOptionDisplayCallback(false);
         if (selectorRef) {
             selectorRef.current.focus();
@@ -116,41 +105,34 @@ export const InputRangeSelect = <T, V>({
             onSelectOption({ [rangeType]: item }, extractedValue);
         }
         if (rangeType === "from") {
-            showOptions[rangeType] = false;
-            selected.to = undefined;
-            setSelected({ ...selected });
-            setTimeout(() => {
-                showOptions.to = true;
-                setShowOptions({ ...showOptions });
-                setCurrentElementType("end");
-            }, 250); // Allow dropdown animations to complete
-            triggerOptionDisplayCallback(showOptions[rangeType]);
+            setSelectedToValue(undefined);
+            setFocusedInput("to");
+            triggerOptionDisplayCallback(true);
         } else {
-            showOptions[rangeType] = false;
-            setShowOptions({ ...showOptions });
-            setCurrentElementType("none");
+            setFocusedInput("none");
         }
     };
 
     const handleListDismiss = (rangeType: RangeType) => {
-        if (showOptions) {
-            showOptions[rangeType] = false;
-            setShowOptions({ ...showOptions });
-            triggerOptionDisplayCallback(false);
-        }
+        setFocusedInput("none");
+        triggerOptionDisplayCallback(false);
+
         if (selectorRef) {
             selectorRef.current.focus();
+        }
+
+        if (!selectedFromValue || !selectedToValue) {
+            setSelectedToValue(undefined);
+            setSelectedFromValue(undefined);
         }
     };
 
     const handleWrapperBlur = () => {
         triggerOptionDisplayCallback(false);
-        setCurrentElementType("none");
-        showOptions.from = false;
-        showOptions.to = false;
-        setShowOptions({ ...showOptions });
-        if (!selected.from || !selected.to) {
-            setSelected({ from: undefined, to: undefined });
+        setFocusedInput("none");
+        if (!selectedFromValue || !selectedToValue) {
+            setSelectedToValue(undefined);
+            setSelectedFromValue(undefined);
         }
     };
 
@@ -158,14 +140,16 @@ export const InputRangeSelect = <T, V>({
     // HELPER FUNCTION
     // =============================================================================
     const getDisplayValue = (rangeType: RangeType): string | V => {
+        const selected =
+            rangeType === "from" ? selectedFromValue : selectedToValue;
         if (displayValueExtractor) {
-            return displayValueExtractor(selected[rangeType]);
+            return displayValueExtractor(selected);
         }
 
         if (valueExtractor) {
-            return valueExtractor(selected[rangeType]);
+            return valueExtractor(selected);
         }
-        return selected[rangeType]?.toString();
+        return selected?.toString();
     };
 
     const convertValueToString = (value: V | string): string => {
@@ -211,21 +195,29 @@ export const InputRangeSelect = <T, V>({
         return (
             <IndicateBar
                 $stickTo="top"
-                $position={currentElementType}
+                $position={
+                    focusedInput === "from"
+                        ? "start"
+                        : focusedInput === "to"
+                        ? "end"
+                        : "none"
+                }
                 $disableMobile={false}
             />
         );
     };
 
     const renderLabel = (rangeType: RangeType) => {
-        if (!selected[rangeType]) {
+        const selected =
+            rangeType === "from" ? selectedFromValue : selectedToValue;
+        if (!selected) {
             return (
                 <PlaceholderLabel truncateType={optionTruncationType}>
                     {truncateValue(rangeType, placeholders[rangeType])}
                 </PlaceholderLabel>
             );
         } else if (renderCustomSelectedOption) {
-            return renderCustomSelectedOption(selected[rangeType]);
+            return renderCustomSelectedOption(selected);
         } else {
             return (
                 <ValueLabel truncateType={optionTruncationType}>
@@ -251,6 +243,8 @@ export const InputRangeSelect = <T, V>({
 
     const renderOptionList = (optionsArr: T[], rangeType: RangeType) => {
         if (optionsArr && optionsArr.length > 0) {
+            const selected =
+                rangeType === "from" ? selectedFromValue : selectedToValue;
             return (
                 <DropdownList
                     listItems={optionsArr}
@@ -261,16 +255,12 @@ export const InputRangeSelect = <T, V>({
                     valueExtractor={valueExtractor}
                     listExtractor={listExtractor}
                     listStyleWidth={listStyleWidth}
-                    visible={showOptions[rangeType]}
+                    visible={focusedInput !== "none"}
                     enableSearch={enableSearch}
                     searchPlaceholder={searchPlaceholder}
                     searchFunction={searchFunction}
                     data-testid={`${rangeType}-dropdown-list`}
-                    selectedItems={
-                        selected && selected[rangeType]
-                            ? [selected[rangeType]]
-                            : []
-                    }
+                    selectedItems={selected ? [selected] : []}
                     onRetry={onRetry}
                     itemsLoadState={optionsLoadState[rangeType]}
                     itemTruncationType={optionTruncationType}
@@ -284,9 +274,9 @@ export const InputRangeSelect = <T, V>({
     };
     return (
         <InputSelectWrapper
-            show={showOptions.from || showOptions.to}
+            show={focusedInput !== "none"}
             data-testid={otherProps["data-testid"]}
-            error={error && !(showOptions.from || showOptions.to)}
+            error={error && !(focusedInput !== "none")}
             disabled={disabled}
             readOnly={readOnly}
             testId={testId}
@@ -307,9 +297,14 @@ export const InputRangeSelect = <T, V>({
                 </RangeIcon>
                 {renderSelectorContent("to")}
             </Selector>
-            {(showOptions?.from || showOptions?.to) && <Divider />}
-            {renderOptionList(options.from, "from")}
-            {renderOptionList(options.to, "to")}
+            {focusedInput !== "none" && <Divider />}
+            {focusedInput === "from" ? (
+                renderOptionList(options.from, "from")
+            ) : focusedInput === "to" ? (
+                renderOptionList(options.to, "to")
+            ) : (
+                <></>
+            )}
             {renderIndicateBar()}
         </InputSelectWrapper>
     );
