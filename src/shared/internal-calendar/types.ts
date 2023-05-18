@@ -1,4 +1,4 @@
-import { ActionComponent, DateInputVariant } from "../../date-input";
+import { ActionComponent } from "../../date-input";
 
 export interface InternalCalendarProps extends CommonCalendarProps {
     /** The display type of the component. Values `standalone` | `input` */
@@ -14,7 +14,7 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     /** Indicate current focus in the date-input component. */
     currentFocus?: FocusType | undefined;
     /** Indicate calendar variant from the date input component. */
-    variant?: DateInputVariant | undefined;
+    variant?: Variant | undefined;
     /** Function to handle cancel/done .*/
     onDismiss?: ((action: CalendarAction) => void) | undefined;
     /** Current calendar view inform to date input. .*/
@@ -52,6 +52,7 @@ export interface CalendarRef {
 // =============================================================================
 export type CalendarAction = "reset" | "confirmed";
 export type CalendarType = "standalone" | "input";
+export type Variant = "single" | "range";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 
