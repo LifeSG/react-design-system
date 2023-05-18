@@ -4,9 +4,9 @@ import {
     CalendarAction,
     CalendarRef,
     FocusType,
-    InternalCalendar,
     View,
 } from "../shared/internal-calendar";
+import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import { MediaWidths } from "../spec/media-spec";
 import { DateInputHelper } from "../util/date-input-helper";
 import { useEventListener } from "../util/use-event-listener";
@@ -543,7 +543,7 @@ export const DateInput = ({
             />
             {renderRangeInput()}
             {renderIndicateBar()}
-            <InternalCalendar
+            <AnimatedInternalCalendar
                 ref={calendarRef}
                 type="input"
                 disabledDates={disabledDates}

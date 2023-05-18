@@ -5,8 +5,6 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     type: "standalone" | "input";
     /** Selected end date in `YYYY-MM-DD` format */
     endValue?: string | undefined;
-    /** Status from date input for calendar. */
-    isOpen?: boolean | undefined;
     /** Specifies if done/cancel buttons are visible */
     withButton?: boolean | undefined;
     /** indicate which component makes the changed from the date input component */
@@ -19,6 +17,11 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     onDismiss?: ((action: CalendarAction) => void) | undefined;
     /** Current calendar view inform to date input. .*/
     onCalendarView?: ((view: View) => void) | undefined;
+}
+
+export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
+    /** Status from date input for calendar. */
+    isOpen?: boolean | undefined;
 }
 
 export interface CommonCalendarProps {

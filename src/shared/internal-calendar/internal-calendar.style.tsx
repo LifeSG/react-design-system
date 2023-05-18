@@ -55,17 +55,6 @@ export const IconChevronDown = styled(ChevronDownIcon)`
 // -----------------------------------------------------------------------------
 // MAIN
 // -----------------------------------------------------------------------------
-export const AnimatedDiv = styled(animated.div)`
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 0;
-    width: 100%;
-    max-width: 41rem;
-    background: ${Color.Neutral[8]};
-    overflow: hidden;
-    z-index: 1;
-`;
-
 export const Container = styled.div<GeneralStyleProps>`
     position: relative;
     width: 100%;
