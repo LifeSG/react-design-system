@@ -1,10 +1,10 @@
 import image from "../../navbar/img/default.png";
 export interface ImageWithFallbackProps {
-    src: string;
+    imgSrc: string;
     alt?: string;
 }
 
-export const ImageWithFallback = ({ src, alt }: ImageWithFallbackProps) => {
+export const ImageWithFallback = ({ imgSrc, alt }: ImageWithFallbackProps) => {
     const handleError = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
     ) => {
@@ -12,5 +12,5 @@ export const ImageWithFallback = ({ src, alt }: ImageWithFallbackProps) => {
         (event.target as HTMLImageElement).src = image;
     };
 
-    return <img src={src} alt={alt ? alt : ""} onError={handleError} />;
+    return <img src={imgSrc} alt={alt ? alt : ""} onError={handleError} />;
 };

@@ -6,7 +6,7 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "src",
+                name: "imgSrc",
                 description:
                     "Allows image url to be provided which will be used to render the image.",
                 propTypes: ["string"],

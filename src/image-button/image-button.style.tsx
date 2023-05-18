@@ -17,9 +17,7 @@ export const Main = styled.button`
     cursor: pointer;
     width: 13rem;
     transition: all 200ms ease;
-    h4 {
-        ${TextStyleHelper.getTextStyle("H4", "semibold")}
-    }
+    ${TextStyleHelper.getTextStyle("H4", "semibold")}
 
     img {
         width: 3.5rem;
@@ -29,32 +27,32 @@ export const Main = styled.button`
         padding: 1.5rem 0rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileL} {
         padding: 1rem 0rem;
     }
 
-    :focus:active {
-        box-shadow: ${DesignToken.ElevationBoxShadow};
-        h4 {
+    ${MediaQuery.MinWidth.desktopM} {
+        :focus:active {
+            box-shadow: ${DesignToken.ElevationBoxShadow};
             ${TextStyleHelper.getTextStyle("H4", "bold")}
         }
-    }
-    @media (hover: hover) {
-        &:hover {
-            box-shadow: 0px 8px 16px -8px ${Color.Shadow.Elevation};
-            h4 {
+
+        @media (hover: hover) {
+            &:hover {
+                box-shadow: 0px 8px 16px -8px ${Color.Shadow.Elevation};
                 ${TextStyleHelper.getTextStyle("H4", "bold")}
             }
         }
     }
+
     :disabled {
         box-shadow: none;
         img {
             filter: grayscale(100%);
         }
-        h4 {
-            ${TextStyleHelper.getTextStyle("H4", "semibold")}
-        }
+        ${TextStyleHelper.getTextStyle("H4", "semibold")}
+        color: ${Color.Neutral[3]};
+
         outline: none;
         cursor: not-allowed;
     }
