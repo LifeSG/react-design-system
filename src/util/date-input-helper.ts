@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { ChangeValueTypes, RawInputValues } from "../date-input";
 
 dayjs.extend(isBetween);
 
@@ -86,29 +85,27 @@ export namespace DateInputHelper {
     };
 
     export const getFormattedRawValue = (
-        values: ChangeValueTypes
-    ): RawInputValues => {
-        const returnValue = Object.keys(values).reduce((acc, key) => {
-            if (acc[key] == null) acc[key] = {};
+        startValue: string,
+        endValue?: string
+    ): {
+        start: string[];
+        end: string[] | undefined;
+    } => {
+        const delimiter = "-";
+        const [year, month, day] = startValue.split(delimiter);
 
-            if (!values[key]) {
-                acc[key] = { year: "", month: "", day: "" };
+        const start = [day, month, year];
 
-                return acc;
-            }
+        let end = undefined;
+        if (endValue) {
+            const [endYear, endMonth, endDay] = endValue.split(delimiter);
+            end = [endDay, endMonth, endYear];
+        }
 
-            const [year, month, day] = values[key].split("-");
-
-            acc[key] = {
-                year,
-                month,
-                day,
-            };
-
-            return acc;
-        }, {});
-
-        return returnValue;
+        return {
+            start,
+            end,
+        };
     };
 
     export const sleep = (ms: number, controller: AbortController) =>
