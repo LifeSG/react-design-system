@@ -11,7 +11,6 @@ export const Timepicker = ({
     readOnly = false,
     error,
     value,
-    defaultValue,
     placeholder,
     format = "24hr",
     onChange,
@@ -105,10 +104,9 @@ export const Timepicker = ({
         <InputSelectorElement
             onFocus={handleInputFocus}
             focused={showSelector}
-            readOnly={true}
+            readOnly
             placeholder={placeholder || getPlaceholderValue()}
             value={TimeHelper.formatValue(value, format)}
-            defaultValue={defaultValue}
             disabled={disabled}
             data-testid={
                 id ? `${id}-timepicker-selector` : "timepicker-selector"
@@ -129,7 +127,7 @@ export const Timepicker = ({
             <TimepickerDropdown
                 id={id}
                 show={showSelector}
-                value={value || defaultValue}
+                value={value}
                 format={format}
                 onCancel={handleSelectionDropdownCancel}
                 onChange={handleChange}

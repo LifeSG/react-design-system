@@ -8,7 +8,7 @@ import {
     TimeContainer,
     Wrapper,
 } from "./time-range-picker.styles";
-import { TimeRangeInputValue, TimeRangePickerProps } from "./types";
+import { TimeRangePickerProps, TimeRangePickerValue } from "./types";
 
 export const TimeRangePicker = ({
     id,
@@ -28,21 +28,21 @@ export const TimeRangePicker = ({
         useState<boolean>(false);
     const [showEndTimeSelector, setShowEndTimeSelector] =
         useState<boolean>(false);
-    const [startTimeVal, setStartTimeVal] = useState("");
-    const [endTimeVal, setEndTimeVal] = useState("");
+    const [startTimeVal, setStartTimeVal] = useState<string>("");
+    const [endTimeVal, setEndTimeVal] = useState<string>("");
 
     const nodeRef = useRef<HTMLDivElement>();
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-
     useEffect(() => {
         if (value) {
-            setStartTimeVal(value.startTime);
-            setEndTimeVal(value.endTime);
+            setStartTimeVal(value.start);
+            setEndTimeVal(value.end);
         }
     }, []);
+
     useEffect(() => {
         document.addEventListener("mousedown", handleMouseDownEvent);
         document.addEventListener("keyup", handleKeyUpEvent);
@@ -96,9 +96,9 @@ export const TimeRangePicker = ({
         setShowEndTimeSelector(true);
         setStartTimeVal(value);
 
-        const timeValue: TimeRangeInputValue = {
-            startTime: value,
-            endTime: endTimeVal,
+        const timeValue: TimeRangePickerValue = {
+            start: value,
+            end: endTimeVal,
         };
 
         onChange && onChange(timeValue);
@@ -112,9 +112,9 @@ export const TimeRangePicker = ({
             setShowStartTimeSelector(true);
         }
 
-        const timeValue: TimeRangeInputValue = {
-            startTime: startTimeVal,
-            endTime: value,
+        const timeValue: TimeRangePickerValue = {
+            start: startTimeVal,
+            end: value,
         };
 
         onChange && onChange(timeValue);

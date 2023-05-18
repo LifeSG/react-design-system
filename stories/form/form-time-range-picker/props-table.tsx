@@ -9,20 +9,14 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "value",
-                description: (
-                    <>
-                        The value of the time in string based format. 24 hour
-                        will be <code>hh:mm</code>, while 12 hour will be{" "}
-                        <code>hh:mma</code>
-                    </>
-                ),
-                propTypes: ["string"],
+                description: "The time range values in the format specified",
+                propTypes: ["TimeRangePickerValue"],
             },
             {
                 name: "format",
                 description: "The time input format",
-                propTypes: [`"12hr"`],
-                defaultValue: `"12hr"`,
+                propTypes: [`"12hr"`, `"24hr"`],
+                defaultValue: `"24hr"`,
             },
             {
                 name: "disabled",
@@ -69,30 +63,39 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onChange",
                 description:
-                    "Called when the user clicks on the 'Done' button in the time selection box. Returns the time value in the format specified",
-                propTypes: ["(value: TimeRangeInputValue) => void"],
+                    "Called when the user clicks on the 'Done' button in the time selection box. Returns the time range values in the format specified",
+                propTypes: ["(value: TimeRangePickerValue) => void"],
             },
             {
                 name: "onBlur",
-                description:
-                    "Called when a defocus happens. Any changes in the time selection box will not be applied",
+                description: "Called when a defocus happens",
                 propTypes: ["() => void"],
             },
         ],
     },
     {
-        name: "TimeRangeInputValue",
+        name: "TimeRangePickerValue",
         attributes: [
             {
-                name: "startTime",
-                description:
-                    "The selected start time value in the format specified",
+                name: "start",
+                description: (
+                    <>
+                        The selected start time value as an empty string or a
+                        string-based format. 24 hour uses <code>hh:mm</code>,
+                        while 12 hour uses <code>hh:mma</code>
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
-                name: "endTime",
-                description:
-                    "The selected end time value in the format specified",
+                name: "end",
+                description: (
+                    <>
+                        The selected start time value as an empty string or a
+                        string-based format. 24 hour uses <code>hh:mm</code>,
+                        while 12 hour uses <code>hh:mma</code>
+                    </>
+                ),
                 propTypes: ["string"],
             },
         ],
