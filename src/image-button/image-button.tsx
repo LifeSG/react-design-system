@@ -3,32 +3,16 @@ import { ButtonRef } from "../button/types";
 import { Main } from "./image-button.style";
 import { ImageButtonProps } from "./types";
 import { Text } from "../text/text";
-import image from "../navbar/img/default.png";
+import { ImageWithFallback } from "src/shared/image-with-fallback/image-with-fallback";
+
 const Component = (
-    {
-        children,
-        focusOutline = "none",
-        src,
-        disabled,
-        ...otherProps
-    }: ImageButtonProps,
+    { children, src, ...otherProps }: ImageButtonProps,
     ref: ButtonRef
 ) => {
-    const handleError = (
-        event: React.SyntheticEvent<HTMLImageElement, Event>
-    ) => {
-        (event.target as HTMLImageElement).onerror = null;
-        (event.target as HTMLImageElement).src = image;
-    };
     return (
-        <Main
-            ref={ref}
-            $outline={focusOutline}
-            $disabled={disabled}
-            {...otherProps}
-        >
-            <img src={src} alt="icon-image" onError={handleError} />
-            <Text.H4 inline={false}>{children}</Text.H4>
+        <Main ref={ref} {...otherProps}>
+            <ImageWithFallback src={src} />
+            <Text.H4>{children}</Text.H4>
         </Main>
     );
 };

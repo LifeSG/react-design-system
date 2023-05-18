@@ -6,11 +6,10 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "focusOutline",
+                name: "src",
                 description:
-                    "Controls the outline style when button is focused",
-                propTypes: [`"none"`, `"browser"`],
-                defaultValue: `"none"`,
+                    "Allows image url to be provided which will be used to render the image.",
+                propTypes: ["string"],
             },
         ],
     },
