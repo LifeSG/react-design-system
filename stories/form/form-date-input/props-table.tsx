@@ -5,7 +5,7 @@ import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const STRING_FORMAT = (
     <>
-        string based format <code>YYYY-MM-DD</code> or <code>YYYY-M-D</code>
+        string based format <code>YYYY-MM-DD</code>
     </>
 );
 
@@ -86,8 +86,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "value",
                 description: (
                     <>
-                        The value of begin date in the {STRING_FORMAT}. It also
-                        serves as the start date value in ranged selection
+                        The value of the <code>DateInput</code> in the&nbsp;
+                        {STRING_FORMAT} or <code>YYYY-M-D</code>. In a ranged
+                        selection, this serves as the start date.
                     </>
                 ),
                 propTypes: ["string"],
@@ -96,7 +97,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "valueEnd",
                 description: (
                     <>
-                        The value of end date in the {STRING_FORMAT}
+                        The value of end date in the {STRING_FORMAT} or&nbsp;
+                        <code>YYYY-M-D</code>
                         <br />
                         <b>Note: Only relevant for ranged selection</b>
                     </>

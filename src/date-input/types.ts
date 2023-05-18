@@ -40,7 +40,7 @@ export interface DateInputProps extends React.AriaAttributes {
     between?: [string, string] | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start and
-     * end date in "YYYY-MM-DD" or "YYYY-M-D" string format.
+     * end date in "YYYY-MM-DD" string format.
      */
     onChange?:
         | ((startDate: string, endDate: string | undefined) => void)
@@ -54,7 +54,7 @@ export interface DateInputProps extends React.AriaAttributes {
         | undefined;
     /**
      * Function that returns when a defocus is made on the field. Returns the start and
-     * end date in "YYYY-MM-DD" or "YYYY-M-D" string format.
+     * end date in "YYYY-MM-DD" string format.
      */
     onBlur?:
         | ((startDate: string, endDate: string | undefined) => void)
