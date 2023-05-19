@@ -20,6 +20,8 @@ interface ContainerStyleProps {
 interface IndicateBarStyleProps {
     $position: "start" | "end" | "none";
     $error: boolean;
+    $stickTo?: "top" | "bottom";
+    $disableMobile?: boolean;
 }
 
 // =============================================================================
@@ -35,7 +37,6 @@ export const Container = styled.div<ContainerStyleProps>`
     background: ${Color.Neutral[8]};
     height: 3rem;
     width: 100%;
-    min-width: 20.75rem;
     padding: 0.1rem 1rem 0;
 
     :focus,
@@ -141,6 +142,19 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
     bottom: 0;
 
     ${(props) => {
+        switch (props.$stickTo) {
+            case "top":
+                return css`
+                    top: 3rem;
+                `;
+            case "bottom":
+                return css`
+                    bottom: -0.1rem;
+                `;
+        }
+    }}
+
+    ${(props) => {
         switch (props.$position) {
             case "start":
                 return css`
@@ -160,7 +174,13 @@ export const IndicateBar = styled.div<IndicateBarStyleProps>`
         }
     }}
 
-    @media screen and (max-width: 374px) {
-        display: none;
-    }
+    ${(props) => {
+        if (!props.$disableMobile) {
+            return css`
+                @media screen and (max-width: 374px) {
+                    display: none;
+                }
+            `;
+        }
+    }}
 `;

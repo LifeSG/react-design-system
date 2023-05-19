@@ -16,6 +16,7 @@ export * from "./filter";
 export * from "./footer";
 export * from "./form";
 export * from "./icon-button";
+export * from "./image-button";
 export * from "./input";
 export * from "./input-group";
 export * from "./input-select";

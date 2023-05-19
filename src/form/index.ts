@@ -5,6 +5,7 @@ import { FormInputGroup } from "./form-input-group";
 import { FormLabel } from "./form-label";
 import { FormMultiSelect } from "./form-multi-select";
 import { FormPhoneNumberInput } from "./form-phone-number-input";
+import { FormRangeSelect } from "./form-range-select";
 import { FormSelect } from "./form-select";
 import { FormTextarea } from "./form-textarea";
 import { FormTimeRangePicker } from "./form-time-range-picker";
@@ -18,6 +19,7 @@ export const Form = {
     Label: FormLabel,
     MultiSelect: FormMultiSelect,
     Select: FormSelect,
+    RangeSelect: FormRangeSelect,
     Textarea: FormTextarea,
     Timepicker: FormTimepicker,
     TimeRangePicker: FormTimeRangePicker,

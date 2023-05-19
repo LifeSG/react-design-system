@@ -30,19 +30,17 @@ import { Form } from "@lifesg/react-design-system/form";
 <Canvas>
     <Story name="DateInput">
         <StoryContainer>
-            <Container>
-                <Form.DateInput label="This is the default date input" />
-                <Form.DateInput
-                    label="This is the date input without buttons"
-                    withButton={false}
-                />
-                <Form.DateInput label="This is the disabled state" disabled />
-                <Form.DateInput label="This is the readonly state" readOnly />
-                <Form.DateInput
-                    label="This is the error state"
-                    errorMessage="Invalid date"
-                />
-            </Container>
+            <Form.DateInput label="This is the default date input" />
+            <Form.DateInput
+                label="This is the date input without buttons"
+                withButton={false}
+            />
+            <Form.DateInput label="This is the disabled state" disabled />
+            <Form.DateInput label="This is the readonly state" readOnly />
+            <Form.DateInput
+                label="This is the error state"
+                errorMessage="Invalid date"
+            />
         </StoryContainer>
     </Story>
 </Canvas>
@@ -58,38 +56,36 @@ You can use `variant='range'` to specify a range selection.
             const [endValue] = useState(dayjs().day(20).format("YYYY-MM-DD"));
             return (
                 <StoryContainer>
-                    <Container>
-                        <Form.DateInput
-                            label="This is the default date range input"
-                            variant="range"
-                        />
-                        <Form.DateInput
-                            label="This is the date range input without button"
-                            variant="range"
-                            withButton={false}
-                            value={startValue}
-                            valueEnd={endValue}
-                        />
-                        <Form.DateInput
-                            label="This is the disabled state"
-                            disabled
-                            variant="range"
-                            value={startValue}
-                            valueEnd={endValue}
-                        />
-                        <Form.DateInput
-                            label="This is the readonly state"
-                            readOnly
-                            variant="range"
-                            value={startValue}
-                            valueEnd={endValue}
-                        />
-                        <Form.DateInput
-                            label="This is the error state"
-                            variant="range"
-                            errorMessage="Invalid date"
-                        />
-                    </Container>
+                    <Form.DateInput
+                        label="This is the default date range input"
+                        variant="range"
+                    />
+                    <Form.DateInput
+                        label="This is the date range input without button"
+                        variant="range"
+                        withButton={false}
+                        value={startValue}
+                        valueEnd={endValue}
+                    />
+                    <Form.DateInput
+                        label="This is the disabled state"
+                        disabled
+                        variant="range"
+                        value={startValue}
+                        valueEnd={endValue}
+                    />
+                    <Form.DateInput
+                        label="This is the readonly state"
+                        readOnly
+                        variant="range"
+                        value={startValue}
+                        valueEnd={endValue}
+                    />
+                    <Form.DateInput
+                        label="This is the error state"
+                        variant="range"
+                        errorMessage="Invalid date"
+                    />
                 </StoryContainer>
             );
         }}
@@ -110,17 +106,16 @@ You can use `disabledDates` to specify dates that are not available for selectio
             ]);
             return (
                 <StoryContainer>
-                    <Container>
-                        <Form.DateInput
-                            label="This is a date input with disabled dates"
-                            disabledDates={disabledDates}
-                        />
-                        <Form.DateInput
-                            label="This is a date range input with disabled dates"
-                            variant="range"
-                            disabledDates={disabledDates}
-                        />
-                    </Container>
+                    <Form.DateInput
+                        label="This is a date input with disabled dates"
+                        disabledDates={disabledDates}
+                    />
+                    <br />
+                    <Form.DateInput
+                        label="This is a date range input with disabled dates"
+                        variant="range"
+                        disabledDates={disabledDates}
+                    />
                 </StoryContainer>
             );
         }}
