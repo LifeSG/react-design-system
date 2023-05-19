@@ -40,25 +40,23 @@ import { Form } from "@lifesg/react-design-system/form";
                     label="This is the range select field"
                     options={{
                         from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
+                            { value: "A", label: "Option A" },
+                            { value: "B", label: "Option B" },
+                            { value: "C", label: "Option C" },
+                            { value: "D", label: "Option D" },
                             {
-                                value: "C",
-                                label: "From Option C This is a long From Option that should get wrapped and truncated.",
+                                value: "E",
+                                label: "From Option E This is a long From Option that should get wrapped and truncated.",
                             },
-                            { value: "D", label: "From Option D" },
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
+                            { value: "F", label: "Option F" },
+                            { value: "G", label: "Option G" },
+                            { value: "H", label: "Option H" },
+                            { value: "I", label: "Option I" },
+                            { value: "J", label: "Option J" },
                         ],
                         to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
+                            { value: "K", label: "Option K" },
+                            { value: "L", label: "Option L" },
                         ],
                     }}
                     valueExtractor={(item) => item.value}
@@ -69,14 +67,14 @@ import { Form } from "@lifesg/react-design-system/form";
                     label="This is the disabled state"
                     options={{
                         from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
+                            { value: "A", label: "Option A" },
+                            { value: "B", label: "Option B" },
+                            { value: "C", label: "Option C" },
+                            { value: "D", label: "Option D" },
                         ],
                         to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
+                            { value: "K", label: "Option K" },
+                            { value: "L", label: "Option L" },
                         ],
                     }}
                     valueExtractor={(item) => item.value}
@@ -88,22 +86,22 @@ import { Form } from "@lifesg/react-design-system/form";
                     label="This is the readonly state"
                     options={{
                         from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
+                            { value: "A", label: "Option A" },
+                            { value: "B", label: "Option B" },
+                            { value: "C", label: "Option C" },
+                            { value: "D", label: "Option D" },
                         ],
                         to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
+                            { value: "K", label: "Option K" },
+                            { value: "L", label: "Option L" },
                         ],
                     }}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
                     selectedOptions={{
-                        from: { value: "A", label: "From Option A" },
-                        to: { value: "TA", label: "To Option A" },
+                        from: { value: "A", label: "Option A" },
+                        to: { value: "K", label: "Option K" },
                     }}
                     readOnly
                 />
@@ -111,14 +109,14 @@ import { Form } from "@lifesg/react-design-system/form";
                     label="This is the error state"
                     options={{
                         from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
+                            { value: "A", label: "Option A" },
+                            { value: "B", label: "Option B" },
+                            { value: "C", label: "Option C" },
+                            { value: "D", label: "Option D" },
                         ],
                         to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
+                            { value: "K", label: "Option K" },
+                            { value: "L", label: "Option L" },
                         ],
                     }}
                     valueExtractor={(item) => item.value}
@@ -207,14 +205,14 @@ You are able to customise the display of the dropdown list items as well as the 
                     label="This has searchable options"
                     options={{
                         from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
+                            { value: "A", label: "Option A" },
+                            { value: "B", label: "Option B" },
+                            { value: "C", label: "Option C" },
+                            { value: "D", label: "Option D" },
                         ],
                         to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
+                            { value: "K", label: "Option K" },
+                            { value: "L", label: "Option L" },
                         ],
                     }}
                     valueExtractor={(item) => item.value}
@@ -242,14 +240,14 @@ import { InputRangeSelect } from "@lifesg/react-design-system/input-select";
                 <InputRangeSelect
                     options={{
                         from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
+                            { value: "A", label: "Option A" },
+                            { value: "B", label: "Option B" },
+                            { value: "C", label: "Option C" },
+                            { value: "D", label: "Option D" },
                         ],
                         to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
+                            { value: "K", label: "Option K" },
+                            { value: "L", label: "Option L" },
                         ],
                     }}
                     valueExtractor={(item) => item.value}
@@ -261,14 +259,14 @@ import { InputRangeSelect } from "@lifesg/react-design-system/input-select";
                 <InputRangeSelect
                     options={{
                         from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
+                            { value: "A", label: "Option A" },
+                            { value: "B", label: "Option B" },
+                            { value: "C", label: "Option C" },
+                            { value: "D", label: "Option D" },
                         ],
                         to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
+                            { value: "K", label: "Option K" },
+                            { value: "L", label: "Option L" },
                         ],
                     }}
                     valueExtractor={(item) => item.value}
