@@ -57,7 +57,7 @@ export const IconChevronDown = styled(ChevronDownIcon)`
 // -----------------------------------------------------------------------------
 export const AnimatedDiv = styled(animated.div)`
     position: absolute;
-    top: 3.5rem;
+    top: calc(100% + 0.5rem);
     left: 0;
     width: 100%;
     max-width: 41rem;

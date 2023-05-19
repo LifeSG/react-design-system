@@ -34,7 +34,6 @@ export const Container = styled.div<ContainerStyleProps>`
     background: ${Color.Neutral[8]};
     height: 3rem;
     width: 100%;
-    min-width: 20.75rem;
     padding: 0.1rem 1rem 0;
 
     :focus,
