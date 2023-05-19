@@ -480,7 +480,12 @@ export const DateInput = ({
     const renderIndicateBar = () => {
         if (variant === "single" || disabled || readOnly) return;
 
-        return <IndicateBar $position={currentElement.type || "none"} />;
+        return (
+            <IndicateBar
+                $position={currentElement.type || "none"}
+                $error={error}
+            />
+        );
     };
 
     const renderRangeInput = () => {

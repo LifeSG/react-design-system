@@ -19,17 +19,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "defaultValue",
-                description: (
-                    <>
-                        The default value of the time in string based format. 24
-                        hour will be <code>hh:mm</code>, while 12 hour will be{" "}
-                        <code>hh:mma</code>
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
                 name: "placeholder",
                 description: (
                     <>
@@ -72,19 +61,9 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "name",
-                description: "The name of the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "style",
                 description: "Allows for inline styling of the component",
                 propTypes: ["React.CSSProperties"],
-            },
-            {
-                name: "tabIndex",
-                description: "Specifies the tab order of the component",
-                propTypes: ["number"],
             },
             {
                 name: "data-testid",
@@ -101,12 +80,6 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onBlur",
                 description:
                     "Called when a defocus happens. Any changes in the time selection box will not be applied",
-                propTypes: ["() => void"],
-            },
-            {
-                name: "onSelectionCancel",
-                description:
-                    "Called when the user clicks on the 'Cancel' button in the time selection box. Any changes will not be applied",
                 propTypes: ["() => void"],
             },
         ],

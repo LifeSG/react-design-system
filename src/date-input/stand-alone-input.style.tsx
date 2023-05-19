@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media";
 import { Color } from "../color";
+import { MediaQuery } from "../media";
+import { BasicInput } from "../shared/input-wrapper/input-wrapper";
 import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
 import { DateInputVariant } from "./types";
@@ -112,39 +113,10 @@ export const InputContainer = styled.div<InputContainerStyleProps>`
     }}
 `;
 
-const BaseInput = styled.input`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+const BaseInput = styled(BasicInput)`
     background: transparent;
     height: 100%;
-    border: none;
     text-align: center;
-    padding: 0;
-
-    // Chrome, Safari, Edge, Opera
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    // Safari (remove top shadow)
-    --webkit-appearance: none;
-
-    // Firefox
-    --moz-appearance: textfield;
-
-    :focus,
-    :active {
-        outline: none;
-    }
-
-    ${(props) => {
-        if (props.disabled) {
-            return css`
-                cursor: not-allowed;
-            `;
-        }
-    }}
 `;
 
 export const DayInput = styled(BaseInput)`

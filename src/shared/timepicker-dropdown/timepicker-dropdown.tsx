@@ -3,8 +3,8 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
-import { StringHelper } from "../util/string-helper";
-import { Period, TimeRangePickerHelper } from "./helper";
+import { StringHelper } from "../../util/string-helper";
+import { Period, TimeFormat, TimeHelper } from "../../util/time-helper";
 import {
     AnimatedDiv,
     Container,
@@ -18,8 +18,7 @@ import {
     TimeInput,
     TimePeriodSection,
     TimePeriodToggle,
-} from "./time-range-picker-dropdown.styles";
-import { TimeRangePickerFormat } from "./types";
+} from "./timepicker-dropdown.styles";
 
 enum EInputButtonName {
     HOUR_UP = "hour-up",
@@ -38,27 +37,27 @@ enum ETimePeriodToggleName {
     PM = "pm",
 }
 
-interface IProps {
+interface TimepickerDropdownProps {
     id?: string;
     value: string;
     show: boolean;
-    format: TimeRangePickerFormat;
+    format: TimeFormat;
     onChange: (value: string) => void;
     onCancel: () => void;
 }
 
-export const TimeRangePickerDropdown = ({
+export const TimepickerDropdown = ({
     id,
     value,
     show,
     format,
     onChange,
     onCancel,
-}: IProps) => {
+}: TimepickerDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const timeValues = TimeRangePickerHelper.getTimeValues(format, value);
+    const timeValues = TimeHelper.getTimeValues(format, value);
 
     const [hourValue, setHourValue] = useState<string>(timeValues.hour);
     const [minuteValue, setMinuteValue] = useState<string>(timeValues.minute);
@@ -79,8 +78,10 @@ export const TimeRangePickerDropdown = ({
 
         if (show) {
             // reset time values especially when a Cancel or blur event happened
-            const { hour, minute, period } =
-                TimeRangePickerHelper.getTimeValues(format, value);
+            const { hour, minute, period } = TimeHelper.getTimeValues(
+                format,
+                value
+            );
             setHourValue(hour);
             setMinuteValue(minute);
             setTimePeriod(period);
@@ -160,26 +161,19 @@ export const TimeRangePickerDropdown = ({
             switch (event.currentTarget.name) {
                 case EInputButtonName.MINUTE_UP:
                     setMinuteValue(
-                        TimeRangePickerHelper.updateMinutes(minuteValue, "add")
+                        TimeHelper.updateMinutes(minuteValue, "add")
                     );
                     break;
                 case EInputButtonName.MINUTE_DOWN:
                     setMinuteValue(
-                        TimeRangePickerHelper.updateMinutes(
-                            minuteValue,
-                            "minus"
-                        )
+                        TimeHelper.updateMinutes(minuteValue, "minus")
                     );
                     break;
                 case EInputButtonName.HOUR_UP:
-                    setHourValue(
-                        TimeRangePickerHelper.updateHours(hourValue, "add")
-                    );
+                    setHourValue(TimeHelper.updateHours(hourValue, "add"));
                     break;
                 case EInputButtonName.HOUR_DOWN:
-                    setHourValue(
-                        TimeRangePickerHelper.updateHours(hourValue, "minus")
-                    );
+                    setHourValue(TimeHelper.updateHours(hourValue, "minus"));
                     break;
                 default:
                     break;
@@ -217,7 +211,7 @@ export const TimeRangePickerDropdown = ({
                 const valueToSet =
                     value > 23 || value < 0
                         ? timeValues.hour
-                        : TimeRangePickerHelper.convertHourTo12HourFormat(
+                        : TimeHelper.convertHourTo12HourFormat(
                               event.target.value
                           );
 
@@ -254,18 +248,17 @@ export const TimeRangePickerDropdown = ({
     };
 
     const handleConfirm = () => {
-        const formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
+        let formattedValue: string;
 
-        // TODO: hold release 24hr format
-        // if (format === "24hr") {
-        //     formattedValue = TimeRangePickerHelper.convertTo24HourFormat({
-        //         hour: hourValue,
-        //         minute: minuteValue,
-        //         period: timePeriod,
-        //     });
-        // } else {
-        //     formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
-        // }
+        if (format === "24hr") {
+            formattedValue = TimeHelper.convertTo24HourFormat({
+                hour: hourValue,
+                minute: minuteValue,
+                period: timePeriod,
+            });
+        } else {
+            formattedValue = `${hourValue}:${minuteValue}${timePeriod}`;
+        }
 
         onChange(formattedValue);
     };
@@ -295,7 +288,6 @@ export const TimeRangePickerDropdown = ({
             <TimeInput
                 aria-label="hour"
                 type="number"
-                tabIndex={show ? 0 : -1}
                 name={EInputName.HOUR}
                 id="hour"
                 maxLength={2}
@@ -338,7 +330,6 @@ export const TimeRangePickerDropdown = ({
             <TimeInput
                 aria-label="minute"
                 type="number"
-                tabIndex={show ? 0 : -1}
                 name={EInputName.MINUTE}
                 id="minute"
                 maxLength={2}
@@ -366,35 +357,30 @@ export const TimeRangePickerDropdown = ({
         </InputContainer>
     );
 
-    const renderTimePeriodControl = () => {
-        // FIXME: this results in a flash when switching inputs
-        if (!show) return;
-
-        return (
-            <TimePeriodSection>
-                <TimePeriodToggle
-                    checked={timePeriod === "am"}
-                    name={ETimePeriodToggleName.AM}
-                    type="radio"
-                    onChange={handleTimePeriodChange}
-                    data-testid={getTestId("am-toggle")}
-                    aria-label="AM"
-                >
-                    AM
-                </TimePeriodToggle>
-                <TimePeriodToggle
-                    checked={timePeriod === "pm"}
-                    name={ETimePeriodToggleName.PM}
-                    type="radio"
-                    onChange={handleTimePeriodChange}
-                    data-testid={getTestId("pm-toggle")}
-                    aria-label="PM"
-                >
-                    PM
-                </TimePeriodToggle>
-            </TimePeriodSection>
-        );
-    };
+    const renderTimePeriodControl = () => (
+        <TimePeriodSection>
+            <TimePeriodToggle
+                checked={timePeriod === "am"}
+                name={ETimePeriodToggleName.AM}
+                type="radio"
+                onChange={handleTimePeriodChange}
+                data-testid={getTestId("am-toggle")}
+                aria-label="AM"
+            >
+                AM
+            </TimePeriodToggle>
+            <TimePeriodToggle
+                checked={timePeriod === "pm"}
+                name={ETimePeriodToggleName.PM}
+                type="radio"
+                onChange={handleTimePeriodChange}
+                data-testid={getTestId("pm-toggle")}
+                aria-label="PM"
+            >
+                PM
+            </TimePeriodToggle>
+        </TimePeriodSection>
+    );
 
     // React spring animation configuration
     const styles = useSpring({
@@ -408,6 +394,7 @@ export const TimeRangePickerDropdown = ({
             <Container
                 ref={resizeDetector.ref}
                 data-testid={getTestId("timepicker-dropdown")}
+                inert={show ? undefined : ""}
             >
                 <InputSection>
                     <HourMinuteSection>
@@ -419,7 +406,6 @@ export const TimeRangePickerDropdown = ({
                 </InputSection>
                 <ControlSection>
                     <ControlButton
-                        tabIndex={show ? 0 : -1}
                         aria-label="close selector"
                         type="button"
                         styleType="secondary"
@@ -429,7 +415,6 @@ export const TimeRangePickerDropdown = ({
                         Cancel
                     </ControlButton>
                     <ControlButton
-                        tabIndex={show ? 0 : -1}
                         aria-label="confirm selection"
                         type="button"
                         onClick={handleConfirm}

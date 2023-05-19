@@ -46,7 +46,7 @@ const Component = <T, V>(
                     return (
                         <InputWrapper
                             $error={error}
-                            disabled={otherProps.disabled}
+                            $disabled={otherProps.disabled}
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
@@ -77,7 +77,7 @@ const Component = <T, V>(
                 if (labelAddon.value) {
                     return (
                         <InputWrapper
-                            disabled={otherProps.disabled}
+                            $disabled={otherProps.disabled}
                             $error={error}
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
