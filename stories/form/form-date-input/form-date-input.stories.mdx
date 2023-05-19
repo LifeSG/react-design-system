@@ -58,11 +58,14 @@ You can use `variant='range'` to specify a range selection.
             const [endValue] = useState(dayjs().day(20).format("YYYY-MM-DD"));
             return (
                 <StoryContainer>
-                    <Container>
+                    <div>
                         <Form.DateInput
                             label="This is the default date range input"
                             variant="range"
                         />
+                    </div>
+                    <br />
+                    <div>
                         <Form.DateInput
                             label="This is the date range input without button"
                             variant="range"
@@ -70,6 +73,9 @@ You can use `variant='range'` to specify a range selection.
                             value={startValue}
                             valueEnd={endValue}
                         />
+                    </div>
+                    <br />
+                    <div>
                         <Form.DateInput
                             label="This is the disabled state"
                             disabled
@@ -77,6 +83,9 @@ You can use `variant='range'` to specify a range selection.
                             value={startValue}
                             valueEnd={endValue}
                         />
+                    </div>
+                    <br />
+                    <div>
                         <Form.DateInput
                             label="This is the readonly state"
                             readOnly
@@ -84,12 +93,15 @@ You can use `variant='range'` to specify a range selection.
                             value={startValue}
                             valueEnd={endValue}
                         />
+                    </div>
+                    <br />
+                    <div>
                         <Form.DateInput
                             label="This is the error state"
                             variant="range"
                             errorMessage="Invalid date"
                         />
-                    </Container>
+                    </div>
                 </StoryContainer>
             );
         }}
@@ -110,17 +122,18 @@ You can use `disabledDates` to specify dates that are not available for selectio
             ]);
             return (
                 <StoryContainer>
-                    <Container>
+                    <div>
                         <Form.DateInput
                             label="This is a date input with disabled dates"
                             disabledDates={disabledDates}
                         />
+                        <br />
                         <Form.DateInput
                             label="This is a date range input with disabled dates"
                             variant="range"
                             disabledDates={disabledDates}
                         />
-                    </Container>
+                    </div>
                 </StoryContainer>
             );
         }}
