@@ -190,3 +190,10 @@ export const ValueLabel = styled(Text.Body)<ValueLabelStyleProps>`
 export const PlaceholderLabel = styled(ValueLabel)`
     color: ${Color.Neutral[3]};
 `;
+
+export const RangeIcon = styled.div`
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0;
+`;

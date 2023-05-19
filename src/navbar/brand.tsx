@@ -1,7 +1,7 @@
 import React from "react";
 import { Clickable } from "./brand.styles";
 import { BrandType, NavbarBrandingProps } from "./types";
-import image from "./img/default.png";
+import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
 
 interface Props {
     resources: NavbarBrandingProps;
@@ -32,13 +32,6 @@ export const Brand = ({
         }
     };
 
-    const handleError = (
-        event: React.SyntheticEvent<HTMLImageElement, Event>
-    ) => {
-        (event.target as HTMLImageElement).onerror = null;
-        (event.target as HTMLImageElement).src = image;
-    };
-
     return (
         <Clickable
             role="link"
@@ -49,10 +42,9 @@ export const Brand = ({
             data-testid={testId}
             $type={type}
         >
-            <img
-                src={resources.logoSrc}
+            <ImageWithFallback
+                imgSrc={resources.logoSrc}
                 alt={resources.brandName + "-app-logo"}
-                onError={handleError}
             />
         </Clickable>
     );
