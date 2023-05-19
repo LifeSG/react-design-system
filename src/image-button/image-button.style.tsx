@@ -1,8 +1,8 @@
 import { MediaQuery } from "../media";
 import styled from "styled-components";
 import { Color } from "../color/color";
-import { DesignToken } from "src/design-token/design-token";
-import { TextStyleHelper } from "src/text/helper";
+import { DesignToken } from "../design-token/design-token";
+import { TextStyleHelper } from "../text/helper";
 
 export const Main = styled.button`
     display: flex;
