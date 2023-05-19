@@ -1,4 +1,4 @@
-import image from "../../navbar/img/default.png";
+import image from "./default.png";
 export interface ImageWithFallbackProps {
     imgSrc: string;
     alt?: string;

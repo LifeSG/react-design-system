@@ -1,7 +1,7 @@
 import React from "react";
 import { Clickable } from "./brand.styles";
 import { BrandType, NavbarBrandingProps } from "./types";
-import { ImageWithFallback } from "src/shared/image-with-fallback/image-with-fallback";
+import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
 
 interface Props {
     resources: NavbarBrandingProps;
