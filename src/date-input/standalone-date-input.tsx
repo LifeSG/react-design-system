@@ -27,7 +27,7 @@ interface Props {
     readOnly?: boolean | undefined;
     names: StartInputNames | EndInputNames;
     value: string | undefined;
-    fromHover: boolean;
+    hoverValue?: string | undefined;
     focused: boolean;
     placeholder?: string | undefined;
     label?: string | undefined;
@@ -49,7 +49,7 @@ export const Component = (
         names,
         value,
         focused,
-        fromHover,
+        hoverValue,
         placeholder,
         label,
         onChange,
@@ -72,21 +72,17 @@ export const Component = (
     const monthInputRef = useRef<HTMLInputElement>(null);
     const yearInputRef = useRef<HTMLInputElement>(null);
 
+    const [hoverDayValue, hoverMonthValue, hoverYearValue] =
+        parseToInputValues(hoverValue);
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!value) {
-            setDayValue("");
-            setMonthValue("");
-            setYearValue("");
-        } else {
-            const day = dayjs(value, "YYYY-MM-DD");
-
-            setDayValue(StringHelper.padValue(day.date().toString()));
-            setMonthValue(StringHelper.padValue((day.month() + 1).toString()));
-            setYearValue(day.year().toString());
-        }
+        const [day = "", month = "", year = ""] = parseToInputValues(value);
+        setDayValue(day);
+        setMonthValue(month);
+        setYearValue(year);
     }, [value]);
 
     useEffect(() => {
@@ -113,19 +109,11 @@ export const Component = (
                 setHidePlaceholder(false);
             },
             resetInput() {
-                if (!value) {
-                    setDayValue("");
-                    setMonthValue("");
-                    setYearValue("");
-                } else {
-                    const day = dayjs(value, "YYYY-MM-DD");
-
-                    setDayValue(StringHelper.padValue(day.date().toString()));
-                    setMonthValue(
-                        StringHelper.padValue((day.month() + 1).toString())
-                    );
-                    setYearValue(day.year().toString());
-                }
+                const [day = "", month = "", year = ""] =
+                    parseToInputValues(value);
+                setDayValue(day);
+                setMonthValue(month);
+                setYearValue(year);
             },
         }),
         [value]
@@ -266,6 +254,23 @@ export const Component = (
     };
 
     // =============================================================================
+    // HELPERS
+    // =============================================================================
+    function parseToInputValues(stringVal: string) {
+        if (!stringVal) {
+            return [undefined, undefined, undefined];
+        } else {
+            const day = dayjs(stringVal, "YYYY-MM-DD");
+
+            return [
+                StringHelper.padValue(day.date().toString()),
+                StringHelper.padValue((day.month() + 1).toString()),
+                day.year().toString(),
+            ];
+        }
+    }
+
+    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderPlaceholder = () => {
@@ -288,12 +293,12 @@ export const Component = (
             onFocus={handleSectionFocus}
             onBlur={handleSectionBlur}
         >
-            <InputContainer ref={nodeRef} $hover={fromHover}>
+            <InputContainer ref={nodeRef} $hover={!!hoverValue}>
                 <DayInput
                     ref={dayInputRef}
                     name={names[0]}
                     maxLength={2}
-                    value={dayValue}
+                    value={hoverDayValue ?? dayValue}
                     onFocus={handleInputFocus}
                     onBlur={handleInputBlur}
                     onChange={handleInputChange}
@@ -315,7 +320,7 @@ export const Component = (
                     ref={monthInputRef}
                     name={names[1]}
                     maxLength={2}
-                    value={monthValue}
+                    value={hoverMonthValue ?? monthValue}
                     onFocus={handleInputFocus}
                     onBlur={handleInputBlur}
                     onChange={handleInputChange}
@@ -338,7 +343,7 @@ export const Component = (
                     ref={yearInputRef}
                     name={names[2]}
                     maxLength={4}
-                    value={yearValue}
+                    value={hoverYearValue ?? yearValue}
                     onFocus={handleInputFocus}
                     onBlur={handleInputBlur}
                     onChange={handleInputChange}

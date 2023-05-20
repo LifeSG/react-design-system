@@ -39,6 +39,7 @@ export const DateRangeInput = ({
     const [currentFocus, setCurrentFocus] = useState<FocusType>("none");
     const [isStartDirty, setIsStartDirty] = useState<boolean>(false);
     const [isEndDirty, setIsEndDirty] = useState<boolean>(false);
+    const [hoverValue, setHoverValue] = useState<string>(undefined);
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -102,7 +103,7 @@ export const DateRangeInput = ({
                 disabled={disabled}
                 readOnly={readOnly}
                 focused={currentFocus === "start"}
-                fromHover={false}
+                hoverValue={currentFocus === "start" ? hoverValue : undefined}
                 onChange={(val) => {
                     setSelectedStart(val);
                     setIsStartDirty(true);
@@ -136,7 +137,7 @@ export const DateRangeInput = ({
                 disabled={disabled}
                 readOnly={readOnly}
                 focused={currentFocus === "end"}
-                fromHover={false}
+                hoverValue={currentFocus === "end" ? hoverValue : undefined}
                 onChange={(val) => {
                     setSelectedEnd(val);
                     setIsEndDirty(true);
@@ -221,6 +222,9 @@ export const DateRangeInput = ({
                             onChange?.(selectedStart, selectedEnd);
                             break;
                     }
+                }}
+                onHover={(val) => {
+                    setHoverValue(val);
                 }}
             />
         </Container>
