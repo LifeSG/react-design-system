@@ -105,6 +105,18 @@ export const DateRangeInput = ({
                 ref={calendarRef}
                 type="input"
                 isOpen={currentFocus !== "none"}
+                currentFocus={currentFocus}
+                disabledDates={disabledDates}
+                between={between}
+                onSelect={(val) => {
+                    if (currentFocus === "start") {
+                        onChange?.(val, selectedEnd);
+                        setSelectedStart(val);
+                    } else if (currentFocus === "end") {
+                        onChange?.(selectedStart, val);
+                        setSelectedEnd(val);
+                    }
+                }}
             />
         </Container>
     );
