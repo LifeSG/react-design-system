@@ -2,7 +2,11 @@ import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../media";
-import { CalendarRef, FocusType } from "../shared/internal-calendar";
+import {
+    CalendarAction,
+    CalendarRef,
+    FocusType,
+} from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import { ArrowRight, Container, IndicateBar } from "./date-range-input.style";
 import {
@@ -47,6 +51,9 @@ export const DateRangeInput = ({
     // show button if it is mobile view
     const withButton = _withButton || isMobile;
 
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
     useEffect(() => {
         setInitialStart(value);
         setSelectedStart(value);
@@ -56,6 +63,169 @@ export const DateRangeInput = ({
         setInitialEnd(valueEnd);
         setSelectedEnd(valueEnd);
     }, [valueEnd]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleNodeBlur = (event: React.FocusEvent) => {
+        if (!nodeRef.current.contains(event.relatedTarget)) {
+            collapseField();
+
+            if (withButton) {
+                resetField();
+            }
+
+            startInputRef.current.resetPlaceholder();
+            endInputRef.current.resetPlaceholder();
+
+            onBlur?.();
+        }
+    };
+
+    const handleStartDateChange = (val: string) => {
+        setSelectedStart(val);
+        setIsStartDirty(true);
+
+        if (!val) {
+            // date was cleared, remain on this input
+            return;
+        }
+
+        /*
+        - if next input is empty, focus it
+        - else if date range is invalid, clear and focus the next input
+        - else if date range is valid
+            - if next input is still pristine, focus it
+            - else if !withButton, confirm the selection and "blur" the field
+        */
+
+        if (!selectedEnd) {
+            setCurrentFocus("end");
+            return;
+        }
+
+        const isInvalidRange = dayjs(val).isAfter(selectedEnd);
+
+        if (isInvalidRange) {
+            setSelectedEnd("");
+            setCurrentFocus("end");
+            return;
+        }
+
+        if (!isEndDirty) {
+            setCurrentFocus("end");
+            return;
+        }
+
+        if (!withButton) {
+            setInitialStart(val);
+            onChange?.(val, selectedEnd);
+            collapseField();
+            return;
+        }
+    };
+
+    const handleEndDateChange = (val: string) => {
+        setSelectedEnd(val);
+        setIsEndDirty(true);
+
+        if (!val) {
+            // date was cleared, remain on this input
+            return;
+        }
+
+        /*
+        - if next input is empty, focus it
+        - else if date range is invalid, clear and focus the next input
+        - else if date range is valid
+            - if next input is still pristine, focus it
+            - else if !withButton, confirm the selection and "blur" the field
+        */
+
+        if (!selectedStart) {
+            setCurrentFocus("start");
+            return;
+        }
+
+        const isInvalidRange = dayjs(val).isBefore(selectedStart);
+
+        if (isInvalidRange) {
+            setSelectedStart("");
+            setCurrentFocus("start");
+            return;
+        }
+
+        if (!isStartDirty) {
+            setCurrentFocus("start");
+            return;
+        }
+
+        if (!withButton) {
+            setInitialEnd(val);
+            onChange?.(selectedStart, val);
+            collapseField();
+            return;
+        }
+    };
+
+    const handleInputFocus = (focusType: FocusType) => () => {
+        setCurrentFocus(focusType);
+    };
+
+    const handleStartInputBlur = (valid: boolean) => {
+        if (!valid) {
+            setSelectedStart(selectedStart);
+            startInputRef.current.resetInput();
+        }
+    };
+
+    const handleEndInputBlur = (valid: boolean) => {
+        if (!valid) {
+            setSelectedEnd(selectedEnd);
+            endInputRef.current.resetInput();
+        }
+    };
+
+    const handleCalendarSelect = (val: string) => {
+        if (currentFocus === "start") {
+            handleStartDateChange(val);
+        } else if (currentFocus === "end") {
+            handleEndDateChange(val);
+        }
+    };
+
+    const handleCalendarDismiss = (action: CalendarAction) => {
+        switch (action) {
+            case "reset":
+                resetField();
+                collapseField();
+                break;
+            case "confirmed":
+                setInitialStart(selectedStart);
+                setInitialEnd(selectedEnd);
+                collapseField();
+                onChange?.(selectedStart, selectedEnd);
+                break;
+        }
+    };
+
+    const handleCalendarHover = (val: string) => {
+        setHoverValue(val);
+    };
+
+    // =============================================================================
+    // HELPERS
+    // =============================================================================
+    const collapseField = () => {
+        setCurrentFocus("none");
+        setIsStartDirty(false);
+        setIsEndDirty(false);
+    };
+
+    const resetField = () => {
+        setSelectedStart(initialStart);
+        setSelectedEnd(initialEnd);
+    };
 
     // =============================================================================
     // RENDER FUNCTION
@@ -75,24 +245,7 @@ export const DateRangeInput = ({
             id={id}
             data-testid={otherProps["data-testid"]}
             tabIndex={-1}
-            onBlur={(e) => {
-                if (!nodeRef.current.contains(e.relatedTarget)) {
-                    setCurrentFocus("none");
-                    setIsStartDirty(false);
-                    setIsEndDirty(false);
-
-                    // reset
-                    if (withButton) {
-                        setSelectedStart(initialStart);
-                        setSelectedEnd(initialEnd);
-                    }
-
-                    startInputRef.current.resetPlaceholder();
-                    endInputRef.current.resetPlaceholder();
-
-                    onBlur?.();
-                }
-            }}
+            onBlur={handleNodeBlur}
             {...otherProps}
         >
             <StandaloneDateInput
@@ -104,29 +257,9 @@ export const DateRangeInput = ({
                 readOnly={readOnly}
                 focused={currentFocus === "start"}
                 hoverValue={currentFocus === "start" ? hoverValue : undefined}
-                onChange={(val) => {
-                    setSelectedStart(val);
-                    setIsStartDirty(true);
-
-                    if (val && (!isEndDirty || !selectedEnd)) {
-                        setCurrentFocus("end");
-                    }
-
-                    if (dayjs(val).isAfter(selectedEnd)) {
-                        setSelectedEnd("");
-                    } else if (!withButton) {
-                        onChange?.(val, selectedEnd);
-                    }
-                }}
-                onFocus={() => {
-                    setCurrentFocus("start");
-                }}
-                onBlur={(valid) => {
-                    if (!valid) {
-                        setSelectedStart(selectedStart);
-                        startInputRef.current.resetInput();
-                    }
-                }}
+                onChange={handleStartDateChange}
+                onFocus={handleInputFocus("start")}
+                onBlur={handleStartInputBlur}
             />
             <ArrowRight />
             <StandaloneDateInput
@@ -138,29 +271,9 @@ export const DateRangeInput = ({
                 readOnly={readOnly}
                 focused={currentFocus === "end"}
                 hoverValue={currentFocus === "end" ? hoverValue : undefined}
-                onChange={(val) => {
-                    setSelectedEnd(val);
-                    setIsEndDirty(true);
-
-                    if (val && (!isStartDirty || !selectedStart)) {
-                        setCurrentFocus("start");
-                    }
-
-                    if (dayjs(val).isBefore(selectedStart)) {
-                        setSelectedStart("");
-                    } else if (!withButton) {
-                        onChange?.(selectedStart, val);
-                    }
-                }}
-                onFocus={() => {
-                    setCurrentFocus("end");
-                }}
-                onBlur={(valid) => {
-                    if (!valid) {
-                        setSelectedEnd(selectedEnd);
-                        endInputRef.current.resetInput();
-                    }
-                }}
+                onChange={handleEndDateChange}
+                onFocus={handleInputFocus("end")}
+                onBlur={handleEndInputBlur}
             />
             {renderIndicateBar()}
             <AnimatedInternalCalendar
@@ -175,57 +288,9 @@ export const DateRangeInput = ({
                 currentFocus={currentFocus}
                 disabledDates={disabledDates}
                 between={between}
-                onSelect={(val) => {
-                    if (currentFocus === "start") {
-                        setSelectedStart(val);
-                        setIsStartDirty(true);
-
-                        if (!isEndDirty) {
-                            setCurrentFocus("end");
-                        }
-
-                        if (dayjs(val).isAfter(selectedEnd)) {
-                            setSelectedEnd("");
-                        } else if (!withButton) {
-                            onChange?.(val, selectedEnd);
-                        }
-                    } else if (currentFocus === "end") {
-                        setSelectedEnd(val);
-                        setIsEndDirty(true);
-
-                        if (!isStartDirty) {
-                            setCurrentFocus("start");
-                        }
-
-                        if (dayjs(val).isBefore(selectedStart)) {
-                            setSelectedStart("");
-                        } else if (!withButton) {
-                            onChange?.(selectedStart, val);
-                        }
-                    }
-                }}
-                onDismiss={(action) => {
-                    switch (action) {
-                        case "reset":
-                            setSelectedStart(initialStart);
-                            setSelectedEnd(initialEnd);
-                            setCurrentFocus("none");
-                            setIsStartDirty(false);
-                            setIsEndDirty(false);
-                            break;
-                        case "confirmed":
-                            setInitialStart(selectedStart);
-                            setInitialEnd(selectedEnd);
-                            setCurrentFocus("none");
-                            setIsStartDirty(false);
-                            setIsEndDirty(false);
-                            onChange?.(selectedStart, selectedEnd);
-                            break;
-                    }
-                }}
-                onHover={(val) => {
-                    setHoverValue(val);
-                }}
+                onSelect={handleCalendarSelect}
+                onDismiss={handleCalendarDismiss}
+                onHover={handleCalendarHover}
             />
         </Container>
     );
