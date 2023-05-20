@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { RangeContainer } from "../shared/range-container";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
 import { useEventListener } from "../util/use-event-listener";
 import {
-    ArrowRight,
-    Indicator,
     SelectorInput,
     TimeContainer,
     Wrapper,
@@ -137,18 +136,43 @@ export const TimeRangePicker = ({
                 $error={error}
                 $readOnly={readOnly}
             >
-                <SelectorInput
-                    onFocus={handleStartTimeFocus}
-                    readOnly
-                    placeholder="From"
-                    value={TimeHelper.formatValue(startTimeVal, format)}
-                    disabled={disabled}
-                    data-testid={
-                        otherProps["data-testid"]
-                            ? `${otherProps["data-testid"]}-timepicker-selector`
-                            : "timepicker-selector"
+                <RangeContainer
+                    error={error}
+                    currentActive={
+                        showStartTimeSelector
+                            ? "start"
+                            : showEndTimeSelector
+                            ? "end"
+                            : "none"
                     }
-                />
+                >
+                    {/* From */}
+                    <SelectorInput
+                        onFocus={handleStartTimeFocus}
+                        readOnly
+                        placeholder="From"
+                        value={TimeHelper.formatValue(startTimeVal, format)}
+                        disabled={disabled}
+                        data-testid={
+                            otherProps["data-testid"]
+                                ? `${otherProps["data-testid"]}-timepicker-selector`
+                                : "timepicker-selector"
+                        }
+                    />
+                    {/* To */}
+                    <SelectorInput
+                        onFocus={handleEndTimeFocus}
+                        readOnly
+                        placeholder="To"
+                        value={TimeHelper.formatValue(endTimeVal, format)}
+                        disabled={disabled}
+                        data-testid={
+                            otherProps["data-testid"]
+                                ? `${otherProps["data-testid"]}-timepicker-selector`
+                                : "timepicker-selector"
+                        }
+                    />
+                </RangeContainer>
                 <TimepickerDropdown
                     id={id}
                     show={showStartTimeSelector}
@@ -157,19 +181,6 @@ export const TimeRangePicker = ({
                     onCancel={handleSelectionDropdownCancel}
                     onChange={handleStartTime}
                 />
-                <ArrowRight />
-                <SelectorInput
-                    onFocus={handleEndTimeFocus}
-                    readOnly
-                    placeholder="To"
-                    value={TimeHelper.formatValue(endTimeVal, format)}
-                    disabled={disabled}
-                    data-testid={
-                        otherProps["data-testid"]
-                            ? `${otherProps["data-testid"]}-timepicker-selector`
-                            : "timepicker-selector"
-                    }
-                />
                 <TimepickerDropdown
                     id={id}
                     show={showEndTimeSelector}
@@ -177,16 +188,6 @@ export const TimeRangePicker = ({
                     format={format}
                     onCancel={handleSelectionDropdownCancel}
                     onChange={handleEndTime}
-                />
-                <Indicator
-                    $position={
-                        showStartTimeSelector
-                            ? "start"
-                            : showEndTimeSelector
-                            ? "end"
-                            : "none"
-                    }
-                    $error={error}
                 />
             </TimeContainer>
         </Wrapper>
