@@ -1,0 +1,82 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import dayjs from "dayjs";
+import { useState } from "react";
+import {
+    Heading3,
+    Heading4,
+    FullWidthStoryContainer,
+    Secondary,
+    Title,
+} from "../../storybook-common";
+import { DateRangeInput } from "src/date-range-input";
+import { Layout } from "src/layout";
+
+<Meta
+    title="Form/DateRangeInput"
+    component={DateRangeInput}
+    parameters={{ layout: "padded" }}
+/>
+
+<Title>DateRangeInput</Title>
+
+WIP
+
+```tsx
+import { DateRangeInput } from "@lifesg/react-design-system/date-range-input";
+```
+
+<Canvas>
+    <Story name="DateRangeInput">
+        {() => {
+            const [start, setStart] = useState("2023-01-01");
+            const [end, setEnd] = useState("");
+            return (
+                <>
+                    <h3>uncontrolled</h3>
+                    <DateRangeInput
+                        data-testid="date-input--default"
+                        onChange={(s, e) => console.log("onChange", s, e)}
+                        onBlur={() => console.log("onBlur")}
+                        between={[
+                            dayjs().date(7).format("YYYY-MM-DD"),
+                            dayjs().date(21).format("YYYY-MM-DD"),
+                        ]}
+                        disabledDates={[
+                            dayjs().date(10).format("YYYY-MM-DD"),
+                            dayjs().date(15).format("YYYY-MM-DD"),
+                            dayjs().date(25).format("YYYY-MM-DD"),
+                        ]}
+                    />
+                    <DateRangeInput
+                        data-testid="date-input--no-btn"
+                        withButton={false}
+                        onChange={(s, e) => console.log("onChange", s, e)}
+                        onBlur={() => console.log("onBlur")}
+                        between={[
+                            dayjs().date(7).format("YYYY-MM-DD"),
+                            dayjs().date(21).format("YYYY-MM-DD"),
+                        ]}
+                        disabledDates={[
+                            dayjs().date(10).format("YYYY-MM-DD"),
+                            dayjs().date(15).format("YYYY-MM-DD"),
+                            dayjs().date(25).format("YYYY-MM-DD"),
+                        ]}
+                    />
+                    <br />
+                    <h3>with initial value</h3>
+                    <DateRangeInput
+                        value="2023-04-20"
+                        onChange={(s, e) => console.log("onChange", s, e)}
+                        onBlur={() => console.log("onBlur")}
+                    />
+                    <DateRangeInput
+                        withButton={false}
+                        valueEnd="2023-05-01"
+                        onChange={(s, e) => console.log("onChange", s, e)}
+                        onBlur={() => console.log("onBlur")}
+                    />
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
