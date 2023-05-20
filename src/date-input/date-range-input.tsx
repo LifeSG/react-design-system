@@ -5,7 +5,10 @@ import { MediaWidths } from "../media";
 import { CalendarRef, FocusType } from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import { ArrowRight, Container, IndicateBar } from "./date-range-input.style";
-import { StandaloneDateInput } from "./standalone-date-input";
+import {
+    StandaloneDateInput,
+    StandaloneDateInputRef,
+} from "./standalone-date-input";
 import { DateRangeInputProps } from "./types";
 
 export const DateRangeInput = ({
@@ -27,6 +30,8 @@ export const DateRangeInput = ({
     // =============================================================================
     const nodeRef = useRef<HTMLDivElement>();
     const calendarRef = useRef<CalendarRef>();
+    const startInputRef = useRef<StandaloneDateInputRef>();
+    const endInputRef = useRef<StandaloneDateInputRef>();
     const [initialStart, setInitialStart] = useState<string>("");
     const [initialEnd, setInitialEnd] = useState<string>("");
     const [selectedStart, setSelectedStart] = useState<string>("");
@@ -80,11 +85,17 @@ export const DateRangeInput = ({
                         setSelectedStart(initialStart);
                         setSelectedEnd(initialEnd);
                     }
+
+                    startInputRef.current.resetPlaceholder();
+                    endInputRef.current.resetPlaceholder();
+
+                    onBlur?.();
                 }
             }}
             {...otherProps}
         >
             <StandaloneDateInput
+                ref={startInputRef}
                 placeholder="From"
                 names={["start-day", "start-month", "start-year"]}
                 value={selectedStart}
@@ -112,11 +123,13 @@ export const DateRangeInput = ({
                 onBlur={(valid) => {
                     if (!valid) {
                         setSelectedStart(selectedStart);
+                        startInputRef.current.resetInput();
                     }
                 }}
             />
             <ArrowRight />
             <StandaloneDateInput
+                ref={endInputRef}
                 placeholder="To"
                 names={["end-day", "end-month", "end-year"]}
                 value={selectedEnd}
@@ -144,6 +157,7 @@ export const DateRangeInput = ({
                 onBlur={(valid) => {
                     if (!valid) {
                         setSelectedEnd(selectedEnd);
+                        endInputRef.current.resetInput();
                     }
                 }}
             />

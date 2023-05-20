@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { StringHelper } from "../util";
 import {
     DayInput,
@@ -36,19 +36,28 @@ interface Props {
     onBlur: (valid: boolean) => void;
 }
 
-export const StandaloneDateInput = ({
-    disabled,
-    readOnly,
-    names,
-    value,
-    focused,
-    fromHover,
-    placeholder,
-    label,
-    onChange,
-    onFocus,
-    onBlur,
-}: Props) => {
+export interface StandaloneDateInputRef {
+    ref: React.Ref<HTMLDivElement>;
+    resetPlaceholder: () => void;
+    resetInput: () => void;
+}
+
+export const Component = (
+    {
+        disabled,
+        readOnly,
+        names,
+        value,
+        focused,
+        fromHover,
+        placeholder,
+        label,
+        onChange,
+        onFocus,
+        onBlur,
+    }: Props,
+    ref: React.ForwardedRef<StandaloneDateInputRef>
+) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -95,6 +104,32 @@ export const StandaloneDateInput = ({
             }
         }
     }, [focused]);
+
+    useImperativeHandle(
+        ref,
+        () => ({
+            ref: nodeRef,
+            resetPlaceholder() {
+                setHidePlaceholder(false);
+            },
+            resetInput() {
+                if (!value) {
+                    setDayValue("");
+                    setMonthValue("");
+                    setYearValue("");
+                } else {
+                    const day = dayjs(value, "YYYY-MM-DD");
+
+                    setDayValue(StringHelper.padValue(day.date().toString()));
+                    setMonthValue(
+                        StringHelper.padValue((day.month() + 1).toString())
+                    );
+                    setYearValue(day.year().toString());
+                }
+            },
+        }),
+        [value]
+    );
 
     // =============================================================================
     // EVENT HANDLERS
@@ -326,3 +361,5 @@ export const StandaloneDateInput = ({
         </InputSection>
     );
 };
+
+export const StandaloneDateInput = React.forwardRef(Component);
