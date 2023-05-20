@@ -3,20 +3,20 @@ import {
     ElementContainer,
     Indicator,
     Wrapper,
-} from "./range-container.styles";
-import { RangeContainerProps } from "./types";
+} from "./range-input-inner-container.styles";
+import { RangeInputInnerContainerProps } from "./types";
 
 /**
  * This component allows for input fields to be added within the containers
  * and renders the slider based on the focused element.
  */
-export const RangeContainer = ({
+export const RangeInputInnerContainer = ({
     children,
     currentActive,
     error,
     className,
     minWidthBeforeWrap,
-}: RangeContainerProps) => {
+}: RangeInputInnerContainerProps) => {
     // =========================================================================
     // CONST, STATE
     // =========================================================================

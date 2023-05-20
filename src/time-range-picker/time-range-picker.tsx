@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { RangeContainer } from "../shared/range-container";
+import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
 import { useEventListener } from "../util/use-event-listener";
@@ -136,7 +136,7 @@ export const TimeRangePicker = ({
                 $error={error}
                 $readOnly={readOnly}
             >
-                <RangeContainer
+                <RangeInputInnerContainer
                     error={error}
                     currentActive={
                         showStartTimeSelector
@@ -172,7 +172,7 @@ export const TimeRangePicker = ({
                                 : "timepicker-selector"
                         }
                     />
-                </RangeContainer>
+                </RangeInputInnerContainer>
                 <TimepickerDropdown
                     id={id}
                     show={showStartTimeSelector}

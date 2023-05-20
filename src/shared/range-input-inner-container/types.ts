@@ -1,4 +1,4 @@
-export interface RangeContainerProps {
+export interface RangeInputInnerContainerProps {
     error?: boolean | undefined;
     /**
      * The range element.

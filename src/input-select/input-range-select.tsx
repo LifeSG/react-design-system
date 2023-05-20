@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { RangeContainer } from "../shared/range-container";
+import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { StringHelper } from "../util/string-helper";
 import { InputSelectWrapper } from "./input-select-wrapper";
 import {
@@ -285,10 +285,10 @@ export const InputRangeSelect = <T, V>({
                 onClick={handleSelectorClick()}
                 {...otherProps}
             >
-                <RangeContainer currentActive={getCurrentFocused()}>
+                <RangeInputInnerContainer currentActive={getCurrentFocused()}>
                     {renderSelectorContent("from")}
                     {renderSelectorContent("to")}
-                </RangeContainer>
+                </RangeInputInnerContainer>
             </Selector>
             {focusedInput !== "none" && <Divider />}
             {renderOptionsList()}

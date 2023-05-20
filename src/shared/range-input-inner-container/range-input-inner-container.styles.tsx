@@ -70,7 +70,9 @@ export const ArrowRight = styled(ArrowRightIcon)`
 export const Indicator = styled.div<IndicatorStyleProps>`
     position: absolute;
     background: ${(props) =>
-        props.$error ? Color.Validation.Red.Border : Color.Primary};
+        props.$error
+            ? Color.Validation.Red.Border(props)
+            : Color.Primary(props)};
     height: 0.125rem;
     // half - half padding - half icon width
     width: calc(50% - 0.5rem - (1.125rem / 2));
