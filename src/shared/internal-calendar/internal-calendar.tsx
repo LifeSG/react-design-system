@@ -191,7 +191,12 @@ export const Component = (
         const calendarValue = currentFocus === "end" ? endValue : value;
 
         setCalendarDate(dayjs(calendarValue));
-        performOnDismissHandler("reset");
+
+        if (currentView === "default") {
+            performOnDismissHandler("reset");
+        } else {
+            setCurrentView("default");
+        }
     };
 
     const handleDoneButton = (isDisabled: boolean) => {
@@ -199,7 +204,11 @@ export const Component = (
         setCalendarDate(viewCalendarDate);
 
         // close calendar and 'confirmed' the value
-        performOnDismissHandler("confirmed");
+        if (currentView === "default") {
+            performOnDismissHandler("confirmed");
+        } else {
+            setCurrentView("default");
+        }
     };
 
     const handleHover = (value: string) => {
