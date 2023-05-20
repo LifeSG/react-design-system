@@ -5,11 +5,11 @@ import { ImageButtonProps } from "./types";
 import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
 
 const Component = (
-    { children, imgSrc, ...otherProps }: ImageButtonProps,
+    { children, imgSrc, selected, ...otherProps }: ImageButtonProps,
     ref: ButtonRef
 ) => {
     return (
-        <Main ref={ref} {...otherProps}>
+        <Main ref={ref} $selected={selected} {...otherProps}>
             <ImageWithFallback imgSrc={imgSrc} />
             {children}
         </Main>

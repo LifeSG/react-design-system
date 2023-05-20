@@ -1,10 +1,10 @@
 import { MediaQuery } from "../media";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../color/color";
 import { DesignToken } from "../design-token/design-token";
 import { TextStyleHelper } from "../text/helper";
 
-export const Main = styled.button`
+export const Main = styled.button<{ $selected?: boolean }>`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -21,29 +21,31 @@ export const Main = styled.button`
 
     img {
         width: 3.5rem;
-    }
-
-    ${MediaQuery.MaxWidth.tablet} {
-        padding: 1.5rem 0rem;
+        height: 3.5rem;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        padding: 1rem 0rem;
+        padding: 0.5rem 0.25rem;
     }
 
-    ${MediaQuery.MinWidth.tablet} {
-        :focus:active {
-            box-shadow: ${DesignToken.ElevationBoxShadow};
-            ${TextStyleHelper.getTextStyle("H4", "bold")}
-        }
-
-        @media (hover: hover) {
-            &:hover {
-                box-shadow: 0px 8px 16px -8px ${Color.Shadow.Elevation};
-                ${TextStyleHelper.getTextStyle("H4", "bold")}
-            }
-        }
+    &:hover {
+        border: 1px solid ${Color.Accent.Light[1]};
+        box-shadow: ${DesignToken.InputBoxShadow};
+        ${TextStyleHelper.getTextStyle("H4", "bold")}
     }
+    ${(props) => {
+        if (props.$selected) {
+            return css`
+                background: ${Color.Accent.Light[5]};
+                border-color: ${Color.Primary};
+                color: ${Color.Primary(props)};
+
+                :hover {
+                    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                }
+            `;
+        }
+    }}
 
     :disabled {
         box-shadow: none;
