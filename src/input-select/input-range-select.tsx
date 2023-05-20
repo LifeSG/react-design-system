@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowRight, IndicateBar } from "src/date-input/date-input.style";
 import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+import { RangeContainer } from "../shared/range-container";
 import { StringHelper } from "../util/string-helper";
 import { InputSelectWrapper } from "./input-select-wrapper";
 import {
     Divider,
     LabelContainer,
     PlaceholderLabel,
-    RangeIcon,
     Selector,
     ValueLabel,
 } from "./input-select.styles";
@@ -69,25 +68,23 @@ export const InputRangeSelect = <T, V>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleSelectorClick = (
-        event: React.MouseEvent,
-        rangeType?: RangeType
-    ) => {
-        event.stopPropagation();
-        event.preventDefault();
-        if (disabled || readOnly) {
-            return;
-        }
-        if (rangeType === "from") {
-            setFocusedInput("from");
-        } else if (rangeType === "to" && selectedFromValue) {
-            setFocusedInput("to");
-        } else if (rangeType === "to" && !selectedFromValue) {
-            setFocusedInput("from");
-        } else {
-            setFocusedInput("from");
-        }
-    };
+    const handleSelectorClick =
+        (rangeType?: RangeType) => (event: React.MouseEvent) => {
+            event.stopPropagation();
+            event.preventDefault();
+            if (disabled || readOnly) {
+                return;
+            }
+            if (rangeType === "from") {
+                setFocusedInput("from");
+            } else if (rangeType === "to" && selectedFromValue) {
+                setFocusedInput("to");
+            } else if (rangeType === "to" && !selectedFromValue) {
+                setFocusedInput("from");
+            } else {
+                setFocusedInput("from");
+            }
+        };
 
     const handleListItemClick = (
         item: T,
@@ -188,26 +185,20 @@ export const InputRangeSelect = <T, V>({
         }
     };
 
+    const getCurrentFocused = (): "none" | "start" | "end" => {
+        switch (focusedInput) {
+            case "from":
+                return "start";
+            case "to":
+                return "end";
+            case "none":
+                return focusedInput;
+        }
+    };
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-    const renderIndicateBar = () => {
-        return (
-            <IndicateBar
-                $stickTo="top"
-                $position={
-                    focusedInput === "from"
-                        ? "start"
-                        : focusedInput === "to"
-                        ? "end"
-                        : "none"
-                }
-                $disableMobile={false}
-                $error={error}
-            />
-        );
-    };
-
     const renderLabel = (rangeType: RangeType) => {
         const selected =
             rangeType === "from" ? selectedFromValue : selectedToValue;
@@ -229,12 +220,9 @@ export const InputRangeSelect = <T, V>({
     };
 
     const renderSelectorContent = (rangeType: RangeType) => {
-        const readOnlyStyle =
-            rangeType === "to" && readOnly ? { marginLeft: "1rem" } : {};
         return (
             <LabelContainer
-                onClick={(e) => handleSelectorClick(e, rangeType)}
-                style={readOnlyStyle}
+                onClick={handleSelectorClick(rangeType)}
                 ref={labelContainerRef[rangeType]}
             >
                 {renderLabel(rangeType)}
@@ -242,28 +230,34 @@ export const InputRangeSelect = <T, V>({
         );
     };
 
-    const renderOptionList = (optionsArr: T[], rangeType: RangeType) => {
+    const renderOptionsList = () => {
+        if (focusedInput === "none") {
+            return null;
+        }
+
+        const optionsArr = options[focusedInput];
+
         if (optionsArr && optionsArr.length > 0) {
             const selected =
-                rangeType === "from" ? selectedFromValue : selectedToValue;
+                focusedInput === "from" ? selectedFromValue : selectedToValue;
             return (
                 <DropdownList
                     listItems={optionsArr}
                     onSelectItem={(i, v) =>
-                        handleListItemClick(i, v, rangeType)
+                        handleListItemClick(i, v, focusedInput)
                     }
-                    onDismiss={() => handleListDismiss(rangeType)}
+                    onDismiss={() => handleListDismiss(focusedInput)}
                     valueExtractor={valueExtractor}
                     listExtractor={listExtractor}
                     listStyleWidth={listStyleWidth}
-                    visible={focusedInput !== "none"}
+                    visible
                     enableSearch={enableSearch}
                     searchPlaceholder={searchPlaceholder}
                     searchFunction={searchFunction}
-                    data-testid={`${rangeType}-dropdown-list`}
+                    data-testid={`${focusedInput}-dropdown-list`}
                     selectedItems={selected ? [selected] : []}
                     onRetry={onRetry}
-                    itemsLoadState={optionsLoadState[rangeType]}
+                    itemsLoadState={optionsLoadState[focusedInput]}
                     itemTruncationType={optionTruncationType}
                     renderListItem={renderListItem}
                     renderCustomCallToAction={renderCustomCallToAction}
@@ -288,25 +282,16 @@ export const InputRangeSelect = <T, V>({
                 data-testid={id || "selector"}
                 disabled={disabled}
                 ref={selectorRef}
-                style={{ gap: "1.8rem" }}
-                onClick={(e) => handleSelectorClick(e)}
+                onClick={handleSelectorClick()}
                 {...otherProps}
             >
-                {renderSelectorContent("from")}
-                <RangeIcon tabIndex={-1}>
-                    <ArrowRight />
-                </RangeIcon>
-                {renderSelectorContent("to")}
+                <RangeContainer currentActive={getCurrentFocused()}>
+                    {renderSelectorContent("from")}
+                    {renderSelectorContent("to")}
+                </RangeContainer>
             </Selector>
             {focusedInput !== "none" && <Divider />}
-            {focusedInput === "from" ? (
-                renderOptionList(options.from, "from")
-            ) : focusedInput === "to" ? (
-                renderOptionList(options.to, "to")
-            ) : (
-                <></>
-            )}
-            {renderIndicateBar()}
+            {renderOptionsList()}
         </InputSelectWrapper>
     );
 };
