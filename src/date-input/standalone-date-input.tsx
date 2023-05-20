@@ -33,6 +33,7 @@ interface Props {
     label?: string | undefined;
     onChange: (value: string) => void;
     onFocus: () => void;
+    onBlur: () => void;
 }
 
 export const StandaloneDateInput = ({
@@ -46,6 +47,7 @@ export const StandaloneDateInput = ({
     label,
     onChange,
     onFocus,
+    onBlur,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -106,7 +108,15 @@ export const StandaloneDateInput = ({
     };
 
     const handleSectionFocus = () => {
+        setHidePlaceholder(true);
         onFocus();
+    };
+
+    const handleSectionBlur = (event: React.FocusEvent) => {
+        if (!nodeRef.current.contains(event.relatedTarget)) {
+            setCurrentFocus("none");
+            onBlur();
+        }
     };
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -237,6 +247,7 @@ export const StandaloneDateInput = ({
             aria-label={label}
             onClick={handleSectionClick}
             onFocus={handleSectionFocus}
+            onBlur={handleSectionBlur}
         >
             <InputContainer ref={nodeRef} $hover={fromHover}>
                 <DayInput

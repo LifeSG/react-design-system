@@ -53,6 +53,12 @@ export const DateRangeInput = ({
             $error={error}
             id={id}
             data-testid={otherProps["data-testid"]}
+            tabIndex={-1}
+            onBlur={(e) => {
+                if (!nodeRef.current.contains(e.relatedTarget)) {
+                    setCurrentFocus("none");
+                }
+            }}
             {...otherProps}
         >
             <StandaloneDateInput
@@ -61,7 +67,7 @@ export const DateRangeInput = ({
                 value={selectedStart}
                 disabled={disabled}
                 readOnly={readOnly}
-                focused={false}
+                focused={currentFocus === "start"}
                 fromHover={false}
                 onChange={(val) => {
                     onChange?.(val, selectedEnd);
@@ -69,6 +75,9 @@ export const DateRangeInput = ({
                 }}
                 onFocus={() => {
                     setCurrentFocus("start");
+                }}
+                onBlur={() => {
+                    // TODO: reset invalid values
                 }}
             />
             <ArrowRight />
@@ -78,7 +87,7 @@ export const DateRangeInput = ({
                 value={selectedEnd}
                 disabled={disabled}
                 readOnly={readOnly}
-                focused={false}
+                focused={currentFocus === "end"}
                 fromHover={false}
                 onChange={(val) => {
                     onChange?.(selectedStart, val);
@@ -87,9 +96,16 @@ export const DateRangeInput = ({
                 onFocus={() => {
                     setCurrentFocus("end");
                 }}
+                onBlur={() => {
+                    // TODO: reset invalid values
+                }}
             />
             {renderIndicateBar()}
-            <AnimatedInternalCalendar ref={calendarRef} type="input" />
+            <AnimatedInternalCalendar
+                ref={calendarRef}
+                type="input"
+                isOpen={currentFocus !== "none"}
+            />
         </Container>
     );
 };
