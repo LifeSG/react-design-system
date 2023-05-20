@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { CalendarRef, FocusType } from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
@@ -27,6 +28,8 @@ export const DateRangeInput = ({
     const [selectedStart, setSelectedStart] = useState<string>("");
     const [selectedEnd, setSelectedEnd] = useState<string>("");
     const [currentFocus, setCurrentFocus] = useState<FocusType>("none");
+    const [isStartDirty, setIsStartDirty] = useState<boolean>(false);
+    const [isEndDirty, setIsEndDirty] = useState<boolean>(false);
 
     useEffect(() => {
         setSelectedStart(value);
@@ -57,6 +60,8 @@ export const DateRangeInput = ({
             onBlur={(e) => {
                 if (!nodeRef.current.contains(e.relatedTarget)) {
                     setCurrentFocus("none");
+                    setIsStartDirty(false);
+                    setIsEndDirty(false);
                 }
             }}
             {...otherProps}
@@ -70,8 +75,18 @@ export const DateRangeInput = ({
                 focused={currentFocus === "start"}
                 fromHover={false}
                 onChange={(val) => {
-                    onChange?.(val, selectedEnd);
                     setSelectedStart(val);
+                    setIsStartDirty(true);
+
+                    if (!isEndDirty) {
+                        setCurrentFocus("end");
+                    }
+
+                    if (dayjs(val).isAfter(selectedEnd)) {
+                        setSelectedEnd("");
+                    } else {
+                        onChange?.(val, selectedEnd);
+                    }
                 }}
                 onFocus={() => {
                     setCurrentFocus("start");
@@ -90,8 +105,18 @@ export const DateRangeInput = ({
                 focused={currentFocus === "end"}
                 fromHover={false}
                 onChange={(val) => {
-                    onChange?.(selectedStart, val);
                     setSelectedEnd(val);
+                    setIsEndDirty(true);
+
+                    if (!isStartDirty) {
+                        setCurrentFocus("start");
+                    }
+
+                    if (dayjs(val).isBefore(selectedStart)) {
+                        setSelectedStart("");
+                    } else {
+                        onChange?.(selectedStart, val);
+                    }
                 }}
                 onFocus={() => {
                     setCurrentFocus("end");
@@ -105,16 +130,39 @@ export const DateRangeInput = ({
                 ref={calendarRef}
                 type="input"
                 isOpen={currentFocus !== "none"}
+                value={selectedStart}
+                endValue={selectedEnd}
+                selectWithinRange={isStartDirty || isEndDirty}
                 currentFocus={currentFocus}
                 disabledDates={disabledDates}
                 between={between}
                 onSelect={(val) => {
                     if (currentFocus === "start") {
-                        onChange?.(val, selectedEnd);
                         setSelectedStart(val);
+                        setIsStartDirty(true);
+
+                        if (!isEndDirty) {
+                            setCurrentFocus("end");
+                        }
+
+                        if (dayjs(val).isAfter(selectedEnd)) {
+                            setSelectedEnd("");
+                        } else {
+                            onChange?.(val, selectedEnd);
+                        }
                     } else if (currentFocus === "end") {
-                        onChange?.(selectedStart, val);
                         setSelectedEnd(val);
+                        setIsEndDirty(true);
+
+                        if (!isStartDirty) {
+                            setCurrentFocus("start");
+                        }
+
+                        if (dayjs(val).isBefore(selectedStart)) {
+                            setSelectedStart("");
+                        } else {
+                            onChange?.(selectedStart, val);
+                        }
                     }
                 }}
             />
