@@ -86,7 +86,7 @@ export const DateRangeInput = ({
         setSelectedStart(val);
         setIsStartDirty(true);
 
-        if (!val) {
+        if (!val || isDisabledDate(val, "start")) {
             // date was cleared, remain on this input
             return;
         }
@@ -129,7 +129,7 @@ export const DateRangeInput = ({
         setSelectedEnd(val);
         setIsEndDirty(true);
 
-        if (!val) {
+        if (!val || isDisabledDate(selectedEnd, "end")) {
             // date was cleared, remain on this input
             return;
         }
@@ -172,16 +172,16 @@ export const DateRangeInput = ({
         setCurrentFocus(focusType);
     };
 
-    const handleStartInputBlur = (valid: boolean) => {
-        if (!valid) {
-            setSelectedStart(selectedStart);
+    const handleStartInputBlur = (validFormat: boolean) => {
+        if (!validFormat || isDisabledDate(selectedStart, "start")) {
+            setSelectedStart(initialStart);
             startInputRef.current.resetInput();
         }
     };
 
-    const handleEndInputBlur = (valid: boolean) => {
-        if (!valid) {
-            setSelectedEnd(selectedEnd);
+    const handleEndInputBlur = (validFormat: boolean) => {
+        if (!validFormat || isDisabledDate(selectedEnd, "end")) {
+            setSelectedEnd(initialEnd);
             endInputRef.current.resetInput();
         }
     };
@@ -225,6 +225,32 @@ export const DateRangeInput = ({
     const resetField = () => {
         setSelectedStart(initialStart);
         setSelectedEnd(initialEnd);
+    };
+
+    const isDisabledDate = (val: string, type: FocusType): boolean => {
+        if (
+            disabledDates &&
+            disabledDates.length &&
+            disabledDates.includes(val)
+        ) {
+            return true;
+        }
+
+        if (between && between.length) {
+            const [min, max] = between;
+            if (type === "start") {
+                if (dayjs(val).isBefore(min)) {
+                    return true;
+                }
+            }
+            if (type === "end") {
+                if (dayjs(val).isAfter(max)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     };
 
     // =============================================================================
