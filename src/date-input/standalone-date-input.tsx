@@ -33,7 +33,7 @@ interface Props {
     label?: string | undefined;
     onChange: (value: string) => void;
     onFocus: () => void;
-    onBlur: () => void;
+    onBlur: (valid: boolean) => void;
 }
 
 export const StandaloneDateInput = ({
@@ -115,7 +115,11 @@ export const StandaloneDateInput = ({
     const handleSectionBlur = (event: React.FocusEvent) => {
         if (!nodeRef.current.contains(event.relatedTarget)) {
             setCurrentFocus("none");
-            onBlur();
+
+            const value = `${yearValue}-${monthValue}-${dayValue}`;
+            const isValid = dayjs(value, "YYYY-MM-DD", true).isValid();
+
+            onBlur(isValid);
         }
     };
 

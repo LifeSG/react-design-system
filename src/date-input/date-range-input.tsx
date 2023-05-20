@@ -96,7 +96,7 @@ export const DateRangeInput = ({
                     setSelectedStart(val);
                     setIsStartDirty(true);
 
-                    if (!isEndDirty) {
+                    if (val && (!isEndDirty || !selectedEnd)) {
                         setCurrentFocus("end");
                     }
 
@@ -109,8 +109,10 @@ export const DateRangeInput = ({
                 onFocus={() => {
                     setCurrentFocus("start");
                 }}
-                onBlur={() => {
-                    // TODO: reset invalid values
+                onBlur={(valid) => {
+                    if (!valid) {
+                        setSelectedStart(selectedStart);
+                    }
                 }}
             />
             <ArrowRight />
@@ -126,7 +128,7 @@ export const DateRangeInput = ({
                     setSelectedEnd(val);
                     setIsEndDirty(true);
 
-                    if (!isStartDirty) {
+                    if (val && (!isStartDirty || !selectedStart)) {
                         setCurrentFocus("start");
                     }
 
@@ -139,8 +141,10 @@ export const DateRangeInput = ({
                 onFocus={() => {
                     setCurrentFocus("end");
                 }}
-                onBlur={() => {
-                    // TODO: reset invalid values
+                onBlur={(valid) => {
+                    if (!valid) {
+                        setSelectedEnd(selectedEnd);
+                    }
                 }}
             />
             {renderIndicateBar()}
