@@ -14,6 +14,7 @@ import {
     StandaloneDateInputRef,
 } from "./standalone-date-input";
 import { DateRangeInputProps } from "./types";
+import { DateInputHelper } from "../util/date-input-helper";
 
 export const DateRangeInput = ({
     between,
@@ -86,8 +87,11 @@ export const DateRangeInput = ({
         setSelectedStart(val);
         setIsStartDirty(true);
 
-        if (!val || isDisabledDate(val, "start")) {
-            // date was cleared, remain on this input
+        if (
+            !val ||
+            DateInputHelper.isDateDisabled(val, { disabledDates, between })
+        ) {
+            // date was cleared or is invalid, remain on this input
             return;
         }
 
@@ -104,7 +108,7 @@ export const DateRangeInput = ({
             return;
         }
 
-        const isInvalidRange = dayjs(val).isAfter(selectedEnd);
+        const isInvalidRange = dayjs(val).isAfter(selectedEnd, "day");
 
         if (isInvalidRange) {
             setSelectedEnd("");
@@ -118,7 +122,7 @@ export const DateRangeInput = ({
         }
 
         if (!withButton) {
-            setInitialStart(val);
+            confirmFields(val, selectedEnd);
             onChange?.(val, selectedEnd);
             collapseField();
             return;
@@ -129,8 +133,11 @@ export const DateRangeInput = ({
         setSelectedEnd(val);
         setIsEndDirty(true);
 
-        if (!val || isDisabledDate(selectedEnd, "end")) {
-            // date was cleared, remain on this input
+        if (
+            !val ||
+            DateInputHelper.isDateDisabled(val, { disabledDates, between })
+        ) {
+            // date was cleared or is invalid, remain on this input
             return;
         }
 
@@ -147,7 +154,7 @@ export const DateRangeInput = ({
             return;
         }
 
-        const isInvalidRange = dayjs(val).isBefore(selectedStart);
+        const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
 
         if (isInvalidRange) {
             setSelectedStart("");
@@ -161,7 +168,7 @@ export const DateRangeInput = ({
         }
 
         if (!withButton) {
-            setInitialEnd(val);
+            confirmFields(selectedStart, val);
             onChange?.(selectedStart, val);
             collapseField();
             return;
@@ -173,14 +180,26 @@ export const DateRangeInput = ({
     };
 
     const handleStartInputBlur = (validFormat: boolean) => {
-        if (!validFormat || isDisabledDate(selectedStart, "start")) {
+        if (
+            !validFormat ||
+            DateInputHelper.isDateDisabled(selectedStart, {
+                disabledDates,
+                between,
+            })
+        ) {
             setSelectedStart(initialStart);
             startInputRef.current.resetInput();
         }
     };
 
     const handleEndInputBlur = (validFormat: boolean) => {
-        if (!validFormat || isDisabledDate(selectedEnd, "end")) {
+        if (
+            !validFormat ||
+            DateInputHelper.isDateDisabled(selectedEnd, {
+                disabledDates,
+                between,
+            })
+        ) {
             setSelectedEnd(initialEnd);
             endInputRef.current.resetInput();
         }
@@ -201,8 +220,7 @@ export const DateRangeInput = ({
                 collapseField();
                 break;
             case "confirmed":
-                setInitialStart(selectedStart);
-                setInitialEnd(selectedEnd);
+                confirmFields(selectedStart, selectedEnd);
                 collapseField();
                 onChange?.(selectedStart, selectedEnd);
                 break;
@@ -227,30 +245,9 @@ export const DateRangeInput = ({
         setSelectedEnd(initialEnd);
     };
 
-    const isDisabledDate = (val: string, type: FocusType): boolean => {
-        if (
-            disabledDates &&
-            disabledDates.length &&
-            disabledDates.includes(val)
-        ) {
-            return true;
-        }
-
-        if (between && between.length) {
-            const [min, max] = between;
-            if (type === "start") {
-                if (dayjs(val).isBefore(min)) {
-                    return true;
-                }
-            }
-            if (type === "end") {
-                if (dayjs(val).isAfter(max)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+    const confirmFields = (start: string, end: string) => {
+        setInitialStart(start);
+        setInitialEnd(end);
     };
 
     // =============================================================================
