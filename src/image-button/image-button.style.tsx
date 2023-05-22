@@ -57,12 +57,14 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
                     box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
                     ${TextStyleHelper.getTextStyle("H4", "bold")}
                 }
-                border: 1px solid transparent;
             `;
         }
     }}
 
     :disabled {
+        &:hover {
+            border: 1px solid transparent;
+        }
         box-shadow: none;
         img {
             filter: grayscale(100%);
