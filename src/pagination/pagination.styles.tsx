@@ -131,9 +131,28 @@ export const PageItem = styled(Button.Default)<StyleProps>`
     :hover,
     :active,
     :focus {
-        color: ${(props) =>
-            props.$selected ? Color.Neutral[8] : Color.Primary};
         box-shadow: none;
+
+        background: ${(props) =>
+            props.$selected ? Color.Primary : Color.Accent.Light[5]};
+        border: 1px solid
+            ${(props) =>
+                props.$selected ? Color.Primary : Color.Accent.Light[5]};
+        span {
+            color: ${(props) =>
+                props.$selected ? Color.Neutral[8] : Color.Primary};
+            ${(props) => {
+                if (props.$selected) {
+                    return css`
+                        ${TextStyleHelper.getTextStyle("Body", 700)};
+                    `;
+                } else {
+                    return css`
+                        ${TextStyleHelper.getTextStyle("Body", 600)};
+                    `;
+                }
+            }}
+        }
     }
 `;
 
