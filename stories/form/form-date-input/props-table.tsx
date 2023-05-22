@@ -86,9 +86,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "value",
                 description: (
                     <>
-                        The value of the <code>DateInput</code> in the&nbsp;
-                        {STRING_FORMAT} or <code>YYYY-M-D</code>. In a ranged
-                        selection, this serves as the start date.
+                        The value of begin date in the {STRING_FORMAT}. It also
+                        serves as the start date value in ranged selection
                     </>
                 ),
                 propTypes: ["string"],
@@ -97,8 +96,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "valueEnd",
                 description: (
                     <>
-                        The value of end date in the {STRING_FORMAT} or&nbsp;
-                        <code>YYYY-M-D</code>
+                        The value of end date in the {STRING_FORMAT}
                         <br />
                         <b>Note: Only relevant for ranged selection</b>
                     </>
