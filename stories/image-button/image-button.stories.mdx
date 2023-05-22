@@ -67,9 +67,12 @@ The button supports error state.
 <Preview>
     <Story name="Error">
         {() => {
+            const [selected, setSelected] = useState(false);
             return (
                 <ImageButton
                     error
+                    selected={selected}
+                    onClick={() => setSelected(!selected)}
                     imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754537.png"
                 >
                     Error

@@ -18,6 +18,8 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     width: 13rem;
     transition: all 200ms ease;
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    color: ${({ $selected }) => $selected && Color.Primary};
+    border: 1px solid transparent;
 
     img {
         width: 3.5rem;
@@ -44,7 +46,6 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
             return css`
                 background: ${Color.Accent.Light[5]};
                 border: 1px solid ${Color.Primary};
-                color: ${Color.Primary};
 
                 :hover {
                     box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
@@ -57,6 +58,7 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
                     box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
                     ${TextStyleHelper.getTextStyle("H4", "bold")}
                 }
+                border: 1px solid transparent;
             `;
         }
     }}
