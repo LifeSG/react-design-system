@@ -12,14 +12,13 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     align-items: center;
     padding: 1.5rem 1rem;
     background-color: ${Color.Neutral[8]};
-    border: none;
+    border: 1px solid transparent;
     border-radius: 0.5rem;
     cursor: pointer;
     width: 13rem;
     transition: all 200ms ease;
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
     color: ${({ $selected }) => $selected && Color.Primary};
-    border: 1px solid transparent;
 
     img {
         width: 3.5rem;
