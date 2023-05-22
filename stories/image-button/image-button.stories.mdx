@@ -1,5 +1,5 @@
-import { LockIcon } from "@lifesg/react-icons/lock";
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
 import { ImageButton } from "src/image-button";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
@@ -36,6 +36,49 @@ The button supports disabled state.
         >
             Disabled
         </ImageButton>
+    </Story>
+</Preview>
+
+<Heading3>Selected</Heading3>
+
+The button supports selected state.
+
+<Preview>
+    <Story name="Selected">
+        {() => {
+            const [selected, setSelected] = useState(false);
+            return (
+                <ImageButton
+                    selected={selected}
+                    onClick={() => setSelected(!selected)}
+                    imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754537.png"
+                >
+                    Select Me
+                </ImageButton>
+            );
+        }}
+    </Story>
+</Preview>
+
+<Heading3>Error</Heading3>
+
+The button supports error state.
+
+<Preview>
+    <Story name="Error">
+        {() => {
+            const [selected, setSelected] = useState(false);
+            return (
+                <ImageButton
+                    error
+                    selected={selected}
+                    onClick={() => setSelected(!selected)}
+                    imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754537.png"
+                >
+                    Error
+                </ImageButton>
+            );
+        }}
     </Story>
 </Preview>
 
