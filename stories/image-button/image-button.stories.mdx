@@ -60,6 +60,25 @@ The button supports selected state.
     </Story>
 </Preview>
 
+<Heading3>Error</Heading3>
+
+The button supports error state.
+
+<Preview>
+    <Story name="Error">
+        {() => {
+            return (
+                <ImageButton
+                    error
+                    imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754537.png"
+                >
+                    Error
+                </ImageButton>
+            );
+        }}
+    </Story>
+</Preview>
+
 <Heading3>Fallback</Heading3>
 
 When the specified image fails to load, it is replaced by a fallback.

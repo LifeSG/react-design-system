@@ -4,7 +4,7 @@ import { Color } from "../color/color";
 import { DesignToken } from "../design-token/design-token";
 import { TextStyleHelper } from "../text/helper";
 
-export const Main = styled.button<{ $selected?: boolean }>`
+export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -22,26 +22,40 @@ export const Main = styled.button<{ $selected?: boolean }>`
     img {
         width: 3.5rem;
         height: 3.5rem;
+        object-fit: contain;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 0.5rem 0.25rem;
+        gap: 0.25rem;
     }
 
-    &:hover {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
-        ${TextStyleHelper.getTextStyle("H4", "bold")}
-    }
     ${(props) => {
-        if (props.$selected) {
+        if (props.$error) {
+            return css`
+                background: ${Color.Neutral[8]};
+                border: 1px solid ${Color.Validation.Red.Border};
+
+                :hover {
+                    box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
+                }
+            `;
+        } else if (props.$selected) {
             return css`
                 background: ${Color.Accent.Light[5]};
-                border-color: ${Color.Primary};
-                color: ${Color.Primary(props)};
+                border: 1px solid ${Color.Primary};
+                color: ${Color.Primary};
 
                 :hover {
                     box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                }
+            `;
+        } else {
+            return css`
+                &:hover {
+                    border: 1px solid ${Color.Accent.Light[1]};
+                    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                    ${TextStyleHelper.getTextStyle("H4", "bold")}
                 }
             `;
         }
