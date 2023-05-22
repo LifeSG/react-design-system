@@ -1,0 +1,2 @@
+var e;!function(e){e.colorScheme="colorScheme",e.layout="layout",e.textStyleScheme="textStyleScheme",e.designTokenScheme="designTokenScheme",e.resourceScheme="resourceScheme"}(e||(e={}));const c={[e.colorScheme]:"base",[e.textStyleScheme]:"base",[e.designTokenScheme]:"base",[e.resourceScheme]:"base"},o={[e.colorScheme]:"bookingsg",[e.textStyleScheme]:"base",[e.designTokenScheme]:"base",[e.resourceScheme]:"bookingsg"};export{c as BaseTheme,o as BookingSGTheme,e as ThemeContextKeys};
+//# sourceMappingURL=index.js.map
