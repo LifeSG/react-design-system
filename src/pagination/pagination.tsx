@@ -7,7 +7,7 @@ import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
 import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 import { CaretDownIcon } from "@lifesg/react-icons/caret-down";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     DropdownSelectOption,
     DropdownWrapper,
@@ -54,6 +54,7 @@ const Component = (
     const [selected, setSelected] = useState();
     const [inputText, setInputText] = useState<string>("");
     const [pageSizeLocal, setPageSize] = useState<number>(pageSize);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const boundaryRange = 1;
     const siblingRange = 1;
@@ -98,6 +99,21 @@ const Component = (
         }
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target as Node)
+            ) {
+                onBlur();
+            }
+        };
+        document.addEventListener("click", handleClickOutside, true);
+        return () => {
+            document.removeEventListener("click", handleClickOutside, true);
+        };
+    }, []);
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -110,6 +126,9 @@ const Component = (
         setHoverLeftButton(false);
     };
 
+    const onBlur = () => {
+        setShowDropdown(false);
+    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -312,7 +331,7 @@ const Component = (
     );
 
     const renderPageSizeDropdown = () => (
-        <DropdownWrapper>
+        <DropdownWrapper ref={dropdownRef}>
             <PageSizeDropDownButton onClick={handleDropdownButtonClick}>
                 <Label>{pageSizeLocal}</Label>
                 <LabelDropdownDivider> / </LabelDropdownDivider>
