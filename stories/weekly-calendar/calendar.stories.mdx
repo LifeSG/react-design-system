@@ -1,0 +1,146 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import dayjs from "dayjs";
+import { useState } from "react";
+import {
+    Heading3,
+    Heading4,
+    FullWidthStoryContainer,
+    Secondary,
+    Title,
+} from "../storybook-common";
+import { WeeklyCalendar } from "src/weekly-calendar";
+import { Layout } from "src/layout";
+import { PropsTable } from "./props-table";
+import { getSlots, getSlotsMin } from "./slots";
+
+<Meta
+    title="Modules/Weekly Calendar"
+    component={WeeklyCalendar}
+    parameters={{ layout: "padded" }}
+/>
+
+<Title>Weekly Calendar</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays a calendar component.
+
+```tsx
+import { WeeklyCalendar } from "@lifesg/react-design-system/weekly-calendar";
+```
+
+<Canvas>
+    <Story name="Calendar">
+        <FullWidthStoryContainer>
+            <WeeklyCalendar slots={getSlots()} />
+        </FullWidthStoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With disabled dates</Heading3>
+
+You can use `disabledDates` to specify dates that are not available for selection.
+
+<Canvas>
+    <Story name="With disabled dates">
+        {() => {
+            const [disabledDates] = useState([
+                dayjs().add(1, "day").format("YYYY-MM-DD"),
+                dayjs().add(3, "day").format("YYYY-MM-DD"),
+            ]);
+            return (
+                <FullWidthStoryContainer>
+                    <WeeklyCalendar
+                        slots={getSlots()}
+                        disabledDates={disabledDates}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Within date range</Heading3>
+
+You can restrict selection to a date range using `between`.
+
+<Canvas>
+    <Story name="Within date range">
+        {() => {
+            const minDate = dayjs().add(1, "day").format("YYYY-MM-DD");
+            const maxDate = dayjs().add(4, "day").format("YYYY-MM-DD");
+            return (
+                <FullWidthStoryContainer>
+                    <WeeklyCalendar
+                        slots={getSlots()}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Without Navigation Header</Heading3>
+
+You can remove navigation header including month,year dropdown.
+
+<Canvas>
+    <Story name="Without Nav Header">
+        {() => {
+            return (
+                <FullWidthStoryContainer>
+                    <WeeklyCalendar
+                        slots={getSlotsMin()}
+                        showMonthSwitcher={false}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With Selection Disabled</Heading3>
+
+You can disable date selection for this component.
+
+<Canvas>
+    <Story name="With Selection Disabled">
+        {() => {
+            return (
+                <FullWidthStoryContainer>
+                    <WeeklyCalendar
+                        slots={getSlots()}
+                        enableSelection={false}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With Slotclick handler</Heading3>
+
+You can disable date selection for this component.
+
+<Canvas>
+    <Story name="With SlotClick handler">
+        {() => {
+            return (
+                <FullWidthStoryContainer>
+                    <WeeklyCalendar
+                        slots={getSlots()}
+                        onSlotClick={(e) => {
+                            alert(JSON.stringify(e));
+                        }}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

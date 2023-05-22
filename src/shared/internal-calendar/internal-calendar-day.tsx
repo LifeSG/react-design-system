@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
 import {
+    ColumnWeekCell,
     DayLabel,
     GrowDayCell,
     HeaderCell,
@@ -10,10 +11,14 @@ import {
     OverflowDisplay,
     RowDayCell,
     StyleProps,
+    TimeSlotText,
+    TimeSlotWrapper,
     Wrapper,
 } from "./internal-calendar-day.style";
 import { CalendarType, FocusType, InternalCalendarProps } from "./types";
 import isBetween from "dayjs/plugin/isBetween";
+import { TimeSlot } from "../../time-slot-bar";
+import { TimeSlot as TimeSlotComponent } from "../../time-slot-bar/time-slot-bar.styles";
 
 dayjs.extend(isBetween);
 
@@ -41,6 +46,9 @@ interface CalendarDayProps
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
+    slots?: { [date: string]: TimeSlot[] } | undefined;
+    enableSelection?: boolean | undefined;
+    onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
 }
 
 export const InternalCalendarDay = ({
@@ -55,21 +63,25 @@ export const InternalCalendarDay = ({
     isNewSelection,
     between,
     variant,
+    slots: daySlots,
+    enableSelection = true,
+    onSlotClick,
 }: CalendarDayProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const weeksOfTheMonth = useMemo(
-        (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
-        [calendarDate]
-    );
+    const weeksOfTheMonth = useMemo((): Dayjs[][] => {
+        if (type === "weekly")
+            return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
+        else return CalendarHelper.generateDays(calendarDate);
+    }, [calendarDate]);
     const [hoverValue, setHoverValue] = useState<string>("");
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled) return;
+        if (isDisabled || !enableSelection) return;
 
         onSelect(value);
     };
@@ -86,14 +98,20 @@ export const InternalCalendarDay = ({
         onHover("");
     };
 
+    const handleSlotClick = (slot: TimeSlot) => {
+        onSlotClick(slot);
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
     const generateDayStatus = (day: Dayjs) => {
         const variant: DayVariant =
             calendarDate.month() !== day.month()
-                ? "other-month"
-                : dayjs().isSame(day, "day")
+                ? type === "weekly"
+                    ? "default"
+                    : "other-month"
+                : dayjs().isSame(day, "day") && type !== "weekly"
                 ? "today"
                 : "default";
 
@@ -377,14 +395,23 @@ export const InternalCalendarDay = ({
             styleLabelProps,
         };
     };
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
             <HeaderCell key={`week-day-${index}`}>
-                <Text.H6 weight="semibold">{dayjs(day).format("ddd")}</Text.H6>
+                {type === "weekly" ? (
+                    <>
+                        <Text.XSmall weight={"semibold"}>
+                            {dayjs(day).format("ddd")}
+                        </Text.XSmall>
+                    </>
+                ) : (
+                    <Text.H6 weight="semibold">
+                        {dayjs(day).format("ddd")}
+                    </Text.H6>
+                )}
             </HeaderCell>
         ));
     };
@@ -415,6 +442,7 @@ export const InternalCalendarDay = ({
                                 />
                                 <InteractiveCircle
                                     $variant={variant}
+                                    $enableSelection={enableSelection}
                                     onClick={() =>
                                         handleDayClick(
                                             day,
@@ -436,6 +464,7 @@ export const InternalCalendarDay = ({
                                                 : "regular"
                                         }
                                         $variant={variant}
+                                        $calenderType={type}
                                         {...styleLabelProps}
                                     >
                                         {day.format("D")}
@@ -449,10 +478,76 @@ export const InternalCalendarDay = ({
         });
     };
 
+    const renderTimeSlotBarCells = () => {
+        return (
+            <ColumnWeekCell
+                key={`week-cell-${calendarDate.format("YYYY-MM-DD")}`}
+                onMouseLeave={handleMouseLeaveCell}
+            >
+                {weeksOfTheMonth[0].map((day, dayIndex) => {
+                    const slots =
+                        daySlots && daySlots[day.format("YYYY-MM-DD")];
+                    return (
+                        <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
+                            {slots &&
+                                slots.map((slot) => {
+                                    const {
+                                        id,
+                                        startTime: slotStartTime,
+                                        endTime: slotEndTime,
+                                        clickable = true,
+                                        styleAttributes,
+                                    } = slot;
+                                    const {
+                                        color,
+                                        styleType = "default",
+                                        backgroundColor,
+                                        backgroundColor2,
+                                    } = styleAttributes;
+                                    return (
+                                        <TimeSlotComponent
+                                            $type="vertical"
+                                            key={id}
+                                            $styleType={styleType}
+                                            $bgColor={backgroundColor}
+                                            $bgColor2={backgroundColor2}
+                                            $clickable={clickable}
+                                            onClick={() =>
+                                                clickable &&
+                                                handleSlotClick(slot)
+                                            }
+                                        >
+                                            <TimeSlotText
+                                                style={{ color: color }}
+                                            >
+                                                <span> {slotStartTime}</span>
+                                                <span> {"-"}</span>
+                                                <span> {slotEndTime}</span>
+                                            </TimeSlotText>
+                                        </TimeSlotComponent>
+                                    );
+                                })}
+                        </TimeSlotWrapper>
+                    );
+                })}
+            </ColumnWeekCell>
+        );
+    };
+
     return (
         <Wrapper $type={type}>
-            {renderHeader()}
-            {renderDayCells()}
+            {type === "weekly" ? (
+                <>
+                    {renderDayCells()}
+                    {renderHeader()}
+                    {renderTimeSlotBarCells()}
+                </>
+            ) : (
+                <>
+                    {renderHeader()}
+                    {renderDayCells()}
+                </>
+            )}
         </Wrapper>
     );
 };

@@ -1,0 +1,134 @@
+{
+    "day1": [
+        {
+            "id": "1",
+            "startTime": "09:00",
+            "endTime": "09:30",
+            "clickable": false,
+            "styleAttributes": {
+                "styleType": "stripes",
+                "backgroundColor": "#ECEFEF",
+                "backgroundColor2": "#E0E4E5"
+            }
+        }
+    ],
+    "day2": [
+        {
+            "id": "1",
+            "startTime": "13:00",
+            "endTime": "14:30",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        },
+        {
+            "id": "2",
+            "startTime": "14:30",
+            "endTime": "16:45",
+            "styleAttributes": {
+                "styleType": "stripes",
+                "backgroundColor": "#57A9FF",
+                "backgroundColor2": "#81BFFF",
+                "color": "#FFFFFF"
+            }
+        }
+    ],
+    "day3": [
+        {
+            "id": "1",
+            "startTime": "14:30",
+            "endTime": "16:45",
+            "styleAttributes": {
+                "backgroundColor": "#E2EFD2"
+            }
+        },
+        {
+            "id": "2",
+            "startTime": "14:30",
+            "endTime": "16:45",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        }
+    ],
+    "day4": [
+        {
+            "id": "1",
+            "startTime": "14:30",
+            "endTime": "16:45",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        }
+    ],
+    "day5": [
+        {
+            "id": "1",
+            "startTime": "14:30",
+            "endTime": "16:45",
+            "styleAttributes": {
+                "backgroundColor": "#F2EAD2"
+            }
+        }
+    ],
+    "day6": [
+        {
+            "id": "1",
+            "startTime": "09:00",
+            "endTime": "09:30",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        },
+        {
+            "id": "2",
+            "startTime": "09:30",
+            "endTime": "10:00",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        },
+        {
+            "id": "3",
+            "startTime": "10:30",
+            "endTime": "12:00",
+            "styleAttributes": {
+                "backgroundColor": "#AB8AD2"
+            }
+        },
+        {
+            "id": "4",
+            "startTime": "12:00",
+            "endTime": "14:00",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        },
+        {
+            "id": "5",
+            "startTime": "14:00",
+            "endTime": "15:00",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        },
+        {
+            "id": "6",
+            "startTime": "15:00",
+            "endTime": "16:00",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        }
+    ],
+    "day7": [
+        {
+            "id": "1",
+            "startTime": "14:30",
+            "endTime": "16:45",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        }
+    ]
+}

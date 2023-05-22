@@ -1,8 +1,9 @@
 import { ActionComponent, DateInputVariant } from "../../date-input";
+import { TimeSlot } from "../../time-slot-bar";
 
 export interface InternalCalendarProps extends CommonCalendarProps {
     /** The display type of the component. Values `standalone` | `input` */
-    type: "standalone" | "input";
+    type: "standalone" | "input" | "weekly";
     /** Selected end date in `YYYY-MM-DD` format */
     endValue?: string | undefined;
     /** Status from date input for calendar. */
@@ -15,6 +16,13 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     currentFocus?: FocusType | undefined;
     /** Indicate calendar variant from the date input component. */
     variant?: DateInputVariant | undefined;
+    // TODO: comment
+    slots?: { [date: string]: TimeSlot[] } | undefined;
+    // TODO: comment
+    showNavigationHeader?: boolean | undefined;
+    // TODO: comment
+    enableSelection?: boolean | undefined;
+    onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
     /** Function to handle cancel/done .*/
     onDismiss?: ((action: CalendarAction) => void) | undefined;
     /** Current calendar view inform to date input. .*/
@@ -51,7 +59,7 @@ export interface CalendarRef {
 // Types use in InternalCalendarProps
 // =============================================================================
 export type CalendarAction = "reset" | "confirmed";
-export type CalendarType = "standalone" | "input";
+export type CalendarType = "standalone" | "input" | "weekly";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 

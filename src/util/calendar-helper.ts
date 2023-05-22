@@ -14,6 +14,14 @@ export namespace CalendarHelper {
         return firstDayOfEachWeek.map((date) => generateWeek(date));
     };
 
+    export const generateDaysForCurrentWeek = (
+        calendarDate: Dayjs
+    ): Dayjs[][] => {
+        const firstDayOfWeek = calendarDate.startOf("week");
+
+        return [generateWeek(firstDayOfWeek)];
+    };
+
     export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
         const months: Dayjs[] = [];
 

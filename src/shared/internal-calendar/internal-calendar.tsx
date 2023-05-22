@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
+import { TimeSlot } from "../../time-slot-bar";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { InternalCalendarDay } from "./internal-calendar-day";
 import { InternalCalendarMonth } from "./internal-calendar-month";
@@ -50,6 +51,10 @@ export const Component = (
         variant,
         between,
         type = "standalone",
+        slots,
+        showNavigationHeader = true,
+        enableSelection,
+        onSlotClick,
         ...otherProps
     }: InternalCalendarProps,
     ref: React.ForwardedRef<CalendarRef>
@@ -149,9 +154,14 @@ export const Component = (
     const handleLeftArrowClick = () => {
         switch (currentView) {
             case "default":
-                setViewCalendarDate((date) => date.subtract(1, "month"));
+                setViewCalendarDate((date) =>
+                    date.subtract(1, type === "weekly" ? "week" : "month")
+                );
                 setCalendarDate((date) => {
-                    const prevMonth = date.subtract(1, "month");
+                    const prevMonth = date.subtract(
+                        1,
+                        type === "weekly" ? "week" : "month"
+                    );
                     performOnCalendarDate(prevMonth);
 
                     return prevMonth;
@@ -169,9 +179,14 @@ export const Component = (
     const handleRightArrowClick = () => {
         switch (currentView) {
             case "default":
-                setViewCalendarDate((date) => date.add(1, "month"));
+                setViewCalendarDate((date) =>
+                    date.add(1, type === "weekly" ? "week" : "month")
+                );
                 setCalendarDate((date) => {
-                    const nextMonth = date.add(1, "month");
+                    const nextMonth = date.add(
+                        1,
+                        type === "weekly" ? "week" : "month"
+                    );
                     performOnCalendarDate(nextMonth);
 
                     return nextMonth;
@@ -220,6 +235,12 @@ export const Component = (
 
     const handleHover = (value: string) => {
         performOnHoverHandler(value);
+    };
+
+    const handleOnSlotClick = (slot: TimeSlot) => {
+        if (onSlotClick) {
+            onSlotClick(slot);
+        }
     };
 
     // =============================================================================
@@ -394,32 +415,47 @@ export const Component = (
     };
 
     const renderHeader = () => {
+        const disableLeftArrow =
+            type === "weekly" &&
+            between &&
+            between.length > 0 &&
+            dayjs(calendarDate).startOf("week") < dayjs(between[0]);
+        const disableRightArrow =
+            type === "weekly" &&
+            between &&
+            between.length > 1 &&
+            dayjs(calendarDate).endOf("week") > dayjs(between[1]);
         switch (type) {
             case "standalone":
                 return (
                     <HeaderDropdown>{renderDropdownButtons()}</HeaderDropdown>
                 );
+            case "weekly":
             case "input":
                 return (
-                    <Header>
-                        <HeaderInputDropdown>
-                            {renderDropdownButtons()}
-                        </HeaderInputDropdown>
-                        <HeaderArrows>
-                            <HeaderArrowButton
-                                tabIndex={-1}
-                                onClick={handleLeftArrowClick}
-                            >
-                                <ArrowLeft />
-                            </HeaderArrowButton>
-                            <HeaderArrowButton
-                                tabIndex={-1}
-                                onClick={handleRightArrowClick}
-                            >
-                                <ArrowRight />
-                            </HeaderArrowButton>
-                        </HeaderArrows>
-                    </Header>
+                    showNavigationHeader && (
+                        <Header>
+                            <HeaderInputDropdown>
+                                {renderDropdownButtons()}
+                            </HeaderInputDropdown>
+                            <HeaderArrows>
+                                <HeaderArrowButton
+                                    disabled={disableLeftArrow}
+                                    tabIndex={-1}
+                                    onClick={handleLeftArrowClick}
+                                >
+                                    <ArrowLeft />
+                                </HeaderArrowButton>
+                                <HeaderArrowButton
+                                    disabled={disableRightArrow}
+                                    tabIndex={-1}
+                                    onClick={handleRightArrowClick}
+                                >
+                                    <ArrowRight />
+                                </HeaderArrowButton>
+                            </HeaderArrows>
+                        </Header>
+                    )
                 );
             default:
                 return (
@@ -429,7 +465,7 @@ export const Component = (
     };
 
     const renderActionButtons = () => {
-        if (type === "standalone" || !withButton) return;
+        if (type === "standalone" || type === "weekly" || !withButton) return;
 
         let isDisabled = true;
         const isDayView = ["default"].includes(currentView);
@@ -499,6 +535,9 @@ export const Component = (
                             isNewSelection={isNewSelection}
                             onSelect={handleDateSelect}
                             onHover={handleHover}
+                            slots={slots}
+                            enableSelection={enableSelection}
+                            onSlotClick={handleOnSlotClick}
                         />
                         <OptionsOverlay $visible={currentView !== "default"}>
                             {renderOptionsOverlay()}

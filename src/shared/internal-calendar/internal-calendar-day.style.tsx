@@ -13,6 +13,7 @@ export interface StyleProps {
 
 interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
+    $calenderType?: CalendarType | undefined;
 }
 
 interface OverflowDisplayProps extends StyleProps {
@@ -23,7 +24,9 @@ interface WrapperStyleProps {
     $type: CalendarType;
 }
 
-interface InteractiveCircleProps extends DayLabelStyleProps {}
+interface InteractiveCircleProps extends DayLabelStyleProps {
+    $enableSelection?: boolean | undefined;
+}
 
 // =============================================================================
 // STYLING
@@ -129,14 +132,8 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     cursor: pointer;
     position: absolute;
 
-    :hover {
-        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-        border: 1px solid ${Color.Accent.Light[1]};
-        background-color: ${Color.Neutral[8]};
-    }
-
     ${(props) => {
-        const { $hovered, $selected } = props;
+        const { $hovered, $selected, $enableSelection } = props;
 
         if ($selected) {
             return css`
@@ -150,6 +147,20 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
                 box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
                 border: 1px solid ${Color.Accent.Light[1]};
                 background-color: ${Color.Neutral[8]};
+            `;
+        }
+
+        if ($enableSelection) {
+            return css`
+                :hover {
+                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
+                    border: 1px solid ${Color.Accent.Light[1]};
+                    background-color: ${Color.Neutral[8]};
+                }
+            `;
+        } else {
+            return css`
+                cursor: default;
             `;
         }
     }}
@@ -194,7 +205,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        const { $disabled, $selected, $variant } = props;
+        const { $disabled, $selected, $variant, $calenderType } = props;
 
         if ($disabled && $selected) {
             return css`
@@ -226,9 +237,45 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
                     color: ${Color.Neutral[3]};
                 `;
             case "default":
+                if ($calenderType === "weekly") {
+                    return css`
+                        ${TextStyleHelper.getFontFamily("H5", "semibold")}
+                        color: ${Color.Neutral[3]};
+                    `;
+                }
                 return css`
                     color: ${Color.Neutral[1]};
                 `;
         }
     }}
+`;
+
+export const ColumnWeekCell = styled.div`
+    grid-column: 1 / -1;
+    display: flex;
+    min-height: 20rem;
+`;
+
+export const TimeSlotText = styled.div`
+    margin: 1rem 0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.12px;
+    span {
+        display: block;
+    }
+`;
+
+export const TimeSlotWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 1px;
 `;
