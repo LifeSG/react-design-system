@@ -8,13 +8,34 @@ import {
     FocusType,
 } from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
+import { DateInputHelper } from "../util/date-input-helper";
+import { useStateActions } from "../util/use-state-actions";
 import { ArrowRight, Container, IndicateBar } from "./date-range-input.style";
 import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "./standalone-date-input";
 import { DateRangeInputProps } from "./types";
-import { DateInputHelper } from "../util/date-input-helper";
+
+interface DateRangeInputState {
+    initialStart: string;
+    initialEnd: string;
+    selectedStart: string;
+    selectedEnd: string;
+    currentFocus: FocusType;
+    isStartDirty: boolean;
+    isEndDirty: boolean;
+}
+
+const INITIAL_STATE: DateRangeInputState = {
+    initialStart: "",
+    initialEnd: "",
+    selectedStart: "",
+    selectedEnd: "",
+    currentFocus: "none",
+    isStartDirty: false,
+    isEndDirty: false,
+};
 
 export const DateRangeInput = ({
     between,
@@ -33,18 +54,88 @@ export const DateRangeInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [hoverValue, setHoverValue] = useState<string>(undefined);
+    const [
+        { selectedStart, selectedEnd, currentFocus, isStartDirty, isEndDirty },
+        actions,
+    ] = useStateActions({
+        name: "date-range-input",
+        initialState: INITIAL_STATE,
+        reducers: {
+            blur: (state) => ({
+                ...state,
+                currentFocus: "none",
+                isStartDirty: false,
+                isEndDirty: false,
+            }),
+            blurWithButton: (state) => ({
+                ...state,
+                currentFocus: "none",
+                isStartDirty: false,
+                isEndDirty: false,
+                selectedStart: state.initialStart,
+                selectedEnd: state.initialEnd,
+            }),
+            changeStart: (state, val: string) => ({
+                ...state,
+                selectedStart: val,
+                isStartDirty: true,
+            }),
+            changeEnd: (state, val: string) => ({
+                ...state,
+                selectedEnd: val,
+                isEndDirty: true,
+            }),
+            reselectStart: (state) => ({
+                ...state,
+                selectedStart: "",
+                currentFocus: "start",
+            }),
+            reselectEnd: (state) => ({
+                ...state,
+                selectedEnd: "",
+                currentFocus: "end",
+            }),
+            focus: (state, currentFocus: FocusType) => ({
+                ...state,
+                currentFocus,
+            }),
+            cancel: (state) => ({
+                ...state,
+                selectedStart: state.initialStart,
+                selectedEnd: state.initialEnd,
+                currentFocus: "none",
+            }),
+            done: (state, payload: { start: string; end: string }) => ({
+                ...state,
+                initialStart: payload.start,
+                initialEnd: payload.end,
+                currentFocus: "none",
+                isStartDirty: false,
+                isEndDirty: false,
+            }),
+            resetStart: (state) => ({
+                ...state,
+                selectedStart: state.initialStart,
+            }),
+            resetEnd: (state) => ({
+                ...state,
+                selectedEnd: state.initialEnd,
+            }),
+            resetRange: (state, payload: { start: string; end: string }) => ({
+                ...state,
+                initialStart: payload.start,
+                selectedStart: payload.start,
+                initialEnd: payload.end,
+                selectedEnd: payload.end,
+            }),
+        },
+    });
+
     const nodeRef = useRef<HTMLDivElement>();
     const calendarRef = useRef<CalendarRef>();
     const startInputRef = useRef<StandaloneDateInputRef>();
     const endInputRef = useRef<StandaloneDateInputRef>();
-    const [initialStart, setInitialStart] = useState<string>("");
-    const [initialEnd, setInitialEnd] = useState<string>("");
-    const [selectedStart, setSelectedStart] = useState<string>("");
-    const [selectedEnd, setSelectedEnd] = useState<string>("");
-    const [currentFocus, setCurrentFocus] = useState<FocusType>("none");
-    const [isStartDirty, setIsStartDirty] = useState<boolean>(false);
-    const [isEndDirty, setIsEndDirty] = useState<boolean>(false);
-    const [hoverValue, setHoverValue] = useState<string>(undefined);
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -56,24 +147,18 @@ export const DateRangeInput = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setInitialStart(value);
-        setSelectedStart(value);
-    }, [value]);
-
-    useEffect(() => {
-        setInitialEnd(valueEnd);
-        setSelectedEnd(valueEnd);
-    }, [valueEnd]);
+        actions.resetRange({ start: value, end: valueEnd });
+    }, [value, valueEnd]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleNodeBlur = (event: React.FocusEvent) => {
         if (!nodeRef.current.contains(event.relatedTarget)) {
-            collapseField();
-
             if (withButton) {
-                resetField();
+                actions.blurWithButton();
+            } else {
+                actions.blur();
             }
 
             startInputRef.current.resetPlaceholder();
@@ -84,8 +169,7 @@ export const DateRangeInput = ({
     };
 
     const handleStartDateChange = (val: string) => {
-        setSelectedStart(val);
-        setIsStartDirty(true);
+        actions.changeStart(val);
 
         if (
             !val ||
@@ -104,34 +188,31 @@ export const DateRangeInput = ({
         */
 
         if (!selectedEnd) {
-            setCurrentFocus("end");
+            actions.focus("end");
             return;
         }
 
         const isInvalidRange = dayjs(val).isAfter(selectedEnd, "day");
 
         if (isInvalidRange) {
-            setSelectedEnd("");
-            setCurrentFocus("end");
+            actions.reselectEnd();
             return;
         }
 
         if (!isEndDirty) {
-            setCurrentFocus("end");
+            actions.focus("end");
             return;
         }
 
         if (!withButton) {
-            confirmFields(val, selectedEnd);
+            actions.done({ start: val, end: selectedEnd });
             onChange?.(val, selectedEnd);
-            collapseField();
             return;
         }
     };
 
     const handleEndDateChange = (val: string) => {
-        setSelectedEnd(val);
-        setIsEndDirty(true);
+        actions.changeEnd(val);
 
         if (
             !val ||
@@ -150,33 +231,31 @@ export const DateRangeInput = ({
         */
 
         if (!selectedStart) {
-            setCurrentFocus("start");
+            actions.focus("start");
             return;
         }
 
         const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
 
         if (isInvalidRange) {
-            setSelectedStart("");
-            setCurrentFocus("start");
+            actions.reselectStart();
             return;
         }
 
         if (!isStartDirty) {
-            setCurrentFocus("start");
+            actions.focus("start");
             return;
         }
 
         if (!withButton) {
-            confirmFields(selectedStart, val);
+            actions.done({ start: selectedStart, end: val });
             onChange?.(selectedStart, val);
-            collapseField();
             return;
         }
     };
 
     const handleInputFocus = (focusType: FocusType) => () => {
-        setCurrentFocus(focusType);
+        actions.focus(focusType);
     };
 
     const handleStartInputBlur = (validFormat: boolean) => {
@@ -187,7 +266,7 @@ export const DateRangeInput = ({
                 between,
             })
         ) {
-            setSelectedStart(initialStart);
+            actions.resetStart();
             startInputRef.current.resetInput();
         }
     };
@@ -200,7 +279,7 @@ export const DateRangeInput = ({
                 between,
             })
         ) {
-            setSelectedEnd(initialEnd);
+            actions.resetEnd();
             endInputRef.current.resetInput();
         }
     };
@@ -216,12 +295,10 @@ export const DateRangeInput = ({
     const handleCalendarDismiss = (action: CalendarAction) => {
         switch (action) {
             case "reset":
-                resetField();
-                collapseField();
+                actions.cancel();
                 break;
             case "confirmed":
-                confirmFields(selectedStart, selectedEnd);
-                collapseField();
+                actions.done({ start: selectedStart, end: selectedEnd });
                 onChange?.(selectedStart, selectedEnd);
                 break;
         }
@@ -229,25 +306,6 @@ export const DateRangeInput = ({
 
     const handleCalendarHover = (val: string) => {
         setHoverValue(val);
-    };
-
-    // =============================================================================
-    // HELPERS
-    // =============================================================================
-    const collapseField = () => {
-        setCurrentFocus("none");
-        setIsStartDirty(false);
-        setIsEndDirty(false);
-    };
-
-    const resetField = () => {
-        setSelectedStart(initialStart);
-        setSelectedEnd(initialEnd);
-    };
-
-    const confirmFields = (start: string, end: string) => {
-        setInitialStart(start);
-        setInitialEnd(end);
     };
 
     // =============================================================================
