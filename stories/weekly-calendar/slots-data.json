@@ -130,5 +130,15 @@
                 "backgroundColor": "#B2EAD2"
             }
         }
+    ],
+    "day8": [
+        {
+            "id": "1",
+            "startTime": "14:30",
+            "endTime": "16:45",
+            "styleAttributes": {
+                "backgroundColor": "#B2EAD2"
+            }
+        }
     ]
 }

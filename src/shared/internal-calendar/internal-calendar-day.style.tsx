@@ -50,13 +50,14 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     }}
 `;
 
-export const HeaderCell = styled.div`
+export const HeaderCell = styled.div<{ $type: CalendarType }>`
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
     user-select: none;
-    margin-bottom: 0.625rem;
+    margin-bottom: ${({ $type }) =>
+        $type === "weekly" ? "0.188" : "0.625rem"};
 `;
 
 export const RowDayCell = styled.div`
@@ -267,6 +268,7 @@ export const TimeSlotText = styled.div`
     font-size: 14px;
     line-height: 16px;
     letter-spacing: 0.12px;
+    max-width: 2.5rem;
     span {
         display: block;
     }

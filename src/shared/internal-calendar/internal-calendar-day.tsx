@@ -51,6 +51,18 @@ interface CalendarDayProps
     onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
 }
 
+const fallbackSlot = {
+    id: "1",
+    startTime: "",
+    endTime: "",
+    clickable: false,
+    styleAttributes: {
+        styleType: "stripes",
+        backgroundColor: "#ECEFEF",
+        backgroundColor2: "#E0E4E5",
+    },
+};
+
 export const InternalCalendarDay = ({
     calendarDate,
     currentFocus,
@@ -400,7 +412,7 @@ export const InternalCalendarDay = ({
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
-            <HeaderCell key={`week-day-${index}`}>
+            <HeaderCell $type={type} key={`week-day-${index}`}>
                 {type === "weekly" ? (
                     <>
                         <Text.XSmall weight={"semibold"}>
@@ -486,7 +498,11 @@ export const InternalCalendarDay = ({
             >
                 {weeksOfTheMonth[0].map((day, dayIndex) => {
                     const slots =
-                        daySlots && daySlots[day.format("YYYY-MM-DD")];
+                        daySlots &&
+                        (daySlots[day.format("YYYY-MM-DD")]
+                            ? daySlots[day.format("YYYY-MM-DD")]
+                            : [fallbackSlot]);
+
                     return (
                         <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
                             {slots &&
@@ -520,9 +536,22 @@ export const InternalCalendarDay = ({
                                             <TimeSlotText
                                                 style={{ color: color }}
                                             >
-                                                <span> {slotStartTime}</span>
-                                                <span> {"-"}</span>
-                                                <span> {slotEndTime}</span>
+                                                <span>
+                                                    {" "}
+                                                    {CalendarHelper.convertTo12HourFormat(
+                                                        slotStartTime
+                                                    )}
+                                                </span>
+                                                {slotEndTime &&
+                                                    slotStartTime && (
+                                                        <span> {"-"}</span>
+                                                    )}
+                                                <span>
+                                                    {" "}
+                                                    {CalendarHelper.convertTo12HourFormat(
+                                                        slotEndTime
+                                                    )}
+                                                </span>
                                             </TimeSlotText>
                                         </TimeSlotComponent>
                                     );

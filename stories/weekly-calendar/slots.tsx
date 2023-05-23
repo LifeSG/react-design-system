@@ -6,8 +6,10 @@ export const getSlots = () => {
     const [weekdays] = CalendarHelper.generateDaysForCurrentWeek(dayjs());
     const slots = {};
     let i = 0;
+    weekdays.push(weekdays[weekdays.length - 1].add(1, "day"));
     for (const key in slotsData) {
-        slots[weekdays[i].format("YYYY-MM-DD")] = slotsData[key];
+        if (i < weekdays.length)
+            slots[weekdays[i].format("YYYY-MM-DD")] = slotsData[key];
         i++;
     }
     return slots;
@@ -18,7 +20,8 @@ export const getSlotsMin = () => {
     const slots = {};
     let i = 0;
     for (const key in slotsDataMin) {
-        slots[weekdays[i].format("YYYY-MM-DD")] = slotsDataMin[key];
+        if (i < weekdays.length)
+            slots[weekdays[i].format("YYYY-MM-DD")] = slotsDataMin[key];
         i++;
     }
     return slots;
