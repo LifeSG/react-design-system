@@ -2,8 +2,9 @@ import { CommonCalendarProps } from "../shared/internal-calendar/types";
 import { TimeSlot } from "../time-slot-bar";
 
 export interface WeeklyCalendarProps extends CommonCalendarProps {
-    showMonthSwitcher?: boolean; // default true
-    shownWeek: string; // date in the week that is displayed (the week is Sun-Sat; any day within the week will show the appropriate week containing the date)
+    showNavigationHeader?: boolean; // default true: show or hide month/year and arrow dropdowns
+    value?: string | undefined; // selected date format (YYYY-MM-DD)
+    currentCalendarDate?: string | undefined; // Specifies which date should be included in the rendered calendar component (date will not be selected) formate: YYYY-DD-MM
     slots?: { [date: string]: TimeSlot[] } | undefined;
     enableSelection?: boolean | undefined; // enable date selection
     calendarDate?: string | undefined;

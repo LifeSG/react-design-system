@@ -22,6 +22,8 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     showNavigationHeader?: boolean | undefined;
     /** Specifies should allow selecting date on weekly-calendar component */
     enableSelection?: boolean | undefined;
+    /** Specifies which date should be included in the rendered calendar component (date will not be selected) formate: YYYY-DD-MM*/
+    currentCalendarDate?: string | undefined;
     /** Specifies any callback to execute when user click on rendered slots on weekly-calendar component */
     onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
     /** Function to handle cancel/done .*/

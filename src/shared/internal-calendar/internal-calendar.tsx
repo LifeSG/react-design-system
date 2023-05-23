@@ -55,6 +55,7 @@ export const Component = (
         showNavigationHeader = true,
         enableSelection,
         onSlotClick,
+        currentCalendarDate,
         ...otherProps
     }: InternalCalendarProps,
     ref: React.ForwardedRef<CalendarRef>
@@ -96,7 +97,9 @@ export const Component = (
         // open with 'confirmed' value for day calendar in first mounted
         if (!isOpen) return;
 
-        setCalendarDate(dayjs());
+        currentCalendarDate
+            ? setCalendarDate(dayjs(currentCalendarDate))
+            : setCalendarDate(dayjs());
         setCurrentView("default");
 
         if (variant === "range" && value?.length && endValue?.length) {

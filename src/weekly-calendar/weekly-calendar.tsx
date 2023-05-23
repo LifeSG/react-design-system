@@ -7,7 +7,7 @@ import { TimeSlot } from "../time-slot-bar";
 export const WeeklyCalendar = ({
     className,
     slots,
-    showMonthSwitcher,
+    showNavigationHeader,
     enableSelection,
     onChange,
     onSlotClick,
@@ -31,10 +31,11 @@ export const WeeklyCalendar = ({
             <InternalCalendar
                 type="weekly"
                 slots={slots}
-                showNavigationHeader={showMonthSwitcher}
+                showNavigationHeader={showNavigationHeader}
                 enableSelection={enableSelection}
                 onSlotClick={onSlotClickHandler}
                 onSelect={onSelectHandler}
+                value={"2023-06-01"}
                 {...otherProps}
                 between={minDate && maxDate ? [minDate, maxDate] : undefined}
             />
