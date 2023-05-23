@@ -1,4 +1,3 @@
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { DesignToken } from "../design-token";
@@ -13,14 +12,10 @@ interface ContainerStyleProps {
     $readOnly?: boolean;
 }
 
-interface IndicateBarStyleProps {
-    $position: "start" | "end" | "none";
-    $error: boolean;
-}
-
 // =============================================================================
 // STYLING
 // =============================================================================
+export const MOBILE_WRAP_WIDTH = 374;
 
 export const Container = styled.div<ContainerStyleProps>`
     display: flex;
@@ -32,12 +27,15 @@ export const Container = styled.div<ContainerStyleProps>`
     min-height: 3rem;
     width: 100%;
     padding: 0 1rem;
-    gap: 0.5rem;
 
     :focus,
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: ${DesignToken.InputBoxShadow};
+    }
+
+    @media screen and (max-width: ${MOBILE_WRAP_WIDTH}px) {
+        padding: 0.75rem 1rem;
     }
 
     ${(props) => {
@@ -77,44 +75,13 @@ export const Container = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const ArrowRight = styled(ArrowRightIcon)`
-    color: ${Color.Neutral[3]};
-    width: 1.125rem;
-    height: 1.125rem;
-    flex-shrink: 0;
-`;
+export const InputContainer = styled.div`
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
 
-export const IndicateBar = styled.div<IndicateBarStyleProps>`
-    position: absolute;
-    background-color: ${(props) =>
-        props.$error ? Color.Validation.Red.Border : Color.Primary};
-    height: 0.125rem;
-    width: calc(100% - 50% - 2rem); // paddingX is 2rem,
-    transition: left 350ms ease-in-out, opacity 350ms ease-in-out;
-    left: 1rem;
-    bottom: 0;
-
-    ${(props) => {
-        switch (props.$position) {
-            case "start":
-                return css`
-                    left: 1rem;
-                    opacity: 1;
-                `;
-            case "end":
-                return css`
-                    left: calc(50% + 1rem);
-                    opacity: 1;
-                `;
-            case "none":
-                return css`
-                    left: 1rem;
-                    opacity: 0;
-                `;
-        }
-    }}
-
-    @media screen and (max-width: 374px) {
-        display: none;
+    @media screen and (max-width: ${MOBILE_WRAP_WIDTH}px) {
+        height: fit-content;
     }
 `;

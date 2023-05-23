@@ -54,7 +54,8 @@ const BaseInput = styled(BasicInput)`
 `;
 
 export const DayInput = styled(BaseInput)`
-    width: 2.5rem;
+    width: 2rem;
+    margin-right: 0.25rem;
 `;
 
 export const MonthInput = styled(BaseInput)`
@@ -62,7 +63,8 @@ export const MonthInput = styled(BaseInput)`
 `;
 
 export const YearInput = styled(BaseInput)`
-    width: 3.5rem;
+    width: 3rem;
+    margin-left: 0.25rem;
 `;
 
 export const Divider = styled(Text.Body)<DividerStyleProps>`
@@ -82,8 +84,8 @@ export const Placeholder = styled.div<PlaceholderStyleProps>`
     position: absolute;
     display: flex;
     align-items: center;
-    width: calc(100% - 0.5rem); // 0.5rem is the focus blur shadow area
-    height: calc(100% - 0.5rem); // 0.5rem is the focus blur shadow area
+    width: 100%;
+    height: 100%;
 
     ${(props) => {
         if (props.$disabled) {
