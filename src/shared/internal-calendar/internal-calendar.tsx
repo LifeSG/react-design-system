@@ -332,7 +332,9 @@ export const Component = (
 
             return `${beginDecade} to ${endDecade}`;
         } else {
-            return dayjs(calendarDate).format("YYYY");
+            return type === "weekly"
+                ? dayjs(calendarDate).endOf("week").format("YYYY")
+                : dayjs(calendarDate).format("YYYY");
         }
     };
 
@@ -358,7 +360,9 @@ export const Component = (
                     onClick={handleMonthDropdownClick}
                 >
                     <DropdownText $type={type}>
-                        {dayjs(calendarDate).format("MMM")}
+                        {type === "weekly"
+                            ? dayjs(calendarDate).endOf("week").format("MMM")
+                            : dayjs(calendarDate).format("MMM")}
                     </DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
