@@ -250,11 +250,10 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     }}
 `;
 
-export const ColumnWeekCell = styled.div<{ $currentCalenderView?: View }>`
+export const ColumnWeekCell = styled.div`
     grid-column: 1 / -1;
     display: flex;
-    min-height: ${({ $currentCalenderView }) =>
-        $currentCalenderView === "default" ? "7.625rem" : "17.5rem"};
+    min-height: 7.625rem;
 `;
 export const TimeSlotText = styled.div`
     margin: 1rem 0rem;

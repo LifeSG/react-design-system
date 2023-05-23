@@ -523,26 +523,35 @@ export const Component = (
                 <ContentBody>
                     {renderHeader()}
                     <ToggleZone>
-                        <InternalCalendarDay
-                            type={type}
-                            calendarDate={calendarDate}
-                            currentFocus={currentFocus}
-                            disabledDates={disabledDates}
-                            selectedStartDate={selectedStartDate}
-                            selectedEndDate={selectedEndDate}
-                            variant={variant}
-                            between={between}
-                            isNewSelection={isNewSelection}
-                            onSelect={handleDateSelect}
-                            onHover={handleHover}
-                            slots={slots}
-                            enableSelection={enableSelection}
-                            onSlotClick={handleOnSlotClick}
-                            currentCalenderView={currentView}
-                        />
-                        <OptionsOverlay $visible={currentView !== "default"}>
-                            {renderOptionsOverlay()}
-                        </OptionsOverlay>
+                        {type !== "weekly" || currentView === "default" ? (
+                            <InternalCalendarDay
+                                type={type}
+                                calendarDate={calendarDate}
+                                currentFocus={currentFocus}
+                                disabledDates={disabledDates}
+                                selectedStartDate={selectedStartDate}
+                                selectedEndDate={selectedEndDate}
+                                variant={variant}
+                                between={between}
+                                isNewSelection={isNewSelection}
+                                onSelect={handleDateSelect}
+                                onHover={handleHover}
+                                slots={slots}
+                                enableSelection={enableSelection}
+                                onSlotClick={handleOnSlotClick}
+                            />
+                        ) : (
+                            <></>
+                        )}
+                        {type !== "weekly" ? (
+                            <OptionsOverlay
+                                $visible={currentView !== "default"}
+                            >
+                                {renderOptionsOverlay()}
+                            </OptionsOverlay>
+                        ) : (
+                            currentView !== "default" && renderOptionsOverlay()
+                        )}
                     </ToggleZone>
                     {renderActionButtons()}
                 </ContentBody>
