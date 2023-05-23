@@ -257,15 +257,12 @@ export const ColumnWeekCell = styled.div`
     min-height: 7.625rem;
 `;
 export const TimeSlotText = styled.div`
+    ${TextStyleHelper.getTextStyle("XSmall", 600)}
     margin: 1rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    font-family: "Open Sans";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
     line-height: 16px;
     letter-spacing: 0.12px;
     max-width: 2.5rem;
