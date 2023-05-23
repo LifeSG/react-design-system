@@ -3,7 +3,7 @@ import {
     Container,
     Input,
     Label,
-    // SubLabel,
+    SubLabel,
     TextContainer,
 } from "./toggle.styles";
 import { ToggleProps } from "./types";
@@ -16,7 +16,7 @@ export const Toggle = ({
     checked,
     styleType = "default",
     children,
-    // subLabel,
+    subLabel,
     disabled,
     error,
     name,
@@ -46,15 +46,16 @@ export const Toggle = ({
     // =============================================================================
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!disabled) {
+            if (onChange) {
+                onChange(event);
+                return;
+            }
+
             switch (type) {
                 case "checkbox":
-                    {
-                        if (!selected) {
-                            setSelected((prevSelected) => {
-                                return !prevSelected;
-                            });
-                        }
-                    }
+                    setSelected((prevSelected) => {
+                        return !prevSelected;
+                    });
                     break;
                 case "radio":
                 case "yes":
@@ -66,8 +67,6 @@ export const Toggle = ({
                     }
                     break;
             }
-
-            if (onChange) onChange(event);
         }
     };
 
@@ -99,26 +98,25 @@ export const Toggle = ({
         );
     };
 
-    // TODO: Reinstate later
-    // const renderSubLabel = () => {
-    //     if (!subLabel) {
-    //         return null;
-    //     }
+    const renderSubLabel = () => {
+        if (!subLabel) {
+            return null;
+        }
 
-    //     let component: string | JSX.Element;
+        let component: string | JSX.Element;
 
-    //     if (typeof subLabel === "string") {
-    //         component = subLabel;
-    //     } else if (typeof subLabel === "function") {
-    //         component = subLabel();
-    //     }
+        if (typeof subLabel === "string") {
+            component = subLabel;
+        } else if (typeof subLabel === "function") {
+            component = subLabel();
+        }
 
-    //     return (
-    //         <SubLabel disabled={disabled} $selected={selected}>
-    //             {component}
-    //         </SubLabel>
-    //     );
-    // };
+        return (
+            <SubLabel $disabled={disabled} $selected={selected}>
+                {component}
+            </SubLabel>
+        );
+    };
 
     return (
         <Container
@@ -128,7 +126,7 @@ export const Toggle = ({
             $styleType={styleType}
             $error={error}
             $indicator={indicator}
-            // $hasSubLabel={!!subLabel}
+            $hasSubLabel={!!subLabel}
             id={id}
             data-testid={testId}
         >
@@ -153,7 +151,7 @@ export const Toggle = ({
                 >
                     {children}
                 </Label>
-                {/* {subLabel && renderSubLabel()}  */}
+                {subLabel && renderSubLabel()}
             </TextContainer>
         </Container>
     );

@@ -162,28 +162,27 @@ export const Label = styled.label<LabelStyleProps>`
     }}
 `;
 
-// TODO: Reinstate later
-// export const SubLabel = styled.div<LabelStyleProps>`
-//     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
-//     margin-top: 0.25rem;
+export const SubLabel = styled.div<LabelStyleProps>`
+    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    margin-top: 0.25rem;
 
-//     strong {
-//         ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
-//     }
+    strong {
+        ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
+    }
 
-//     ${(props) => {
-//         if (props.disabled) {
-//             return css`
-//                 color: ${Color.Neutral[3](props)};
-//             `;
-//         } else if (props.$selected) {
-//             return css`
-//                 color: ${Color.Primary(props)};
-//             `;
-//         } else {
-//             return css`
-//                 color: ${Color.Neutral[1]};
-//             `;
-//         }
-//     }}
-// `;
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[3](props)};
+            `;
+        } else if (props.$selected) {
+            return css`
+                color: ${Color.Primary(props)};
+            `;
+        } else {
+            return css`
+                color: ${Color.Neutral[1]};
+            `;
+        }
+    }}
+`;
