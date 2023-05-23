@@ -538,6 +538,7 @@ export const Component = (
                             slots={slots}
                             enableSelection={enableSelection}
                             onSlotClick={handleOnSlotClick}
+                            currentCalenderView={currentView}
                         />
                         <OptionsOverlay $visible={currentView !== "default"}>
                             {renderOptionsOverlay()}

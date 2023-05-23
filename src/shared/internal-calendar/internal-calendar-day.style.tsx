@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
-import { CalendarType } from "./types";
+import { CalendarType, View } from "./types";
 
 export interface StyleProps {
     $disabled?: boolean;
@@ -250,12 +250,12 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     }}
 `;
 
-export const ColumnWeekCell = styled.div`
+export const ColumnWeekCell = styled.div<{ $currentCalenderView?: View }>`
     grid-column: 1 / -1;
     display: flex;
-    min-height: 20rem;
+    min-height: ${({ $currentCalenderView }) =>
+        $currentCalenderView === "default" ? "7.625rem" : "17.5rem"};
 `;
-
 export const TimeSlotText = styled.div`
     margin: 1rem 0rem;
     display: flex;

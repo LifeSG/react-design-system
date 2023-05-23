@@ -16,12 +16,13 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     currentFocus?: FocusType | undefined;
     /** Indicate calendar variant from the date input component. */
     variant?: DateInputVariant | undefined;
-    // TODO: comment
+    /** Specifies any time-bar slots to render in weekly-calendar component */
     slots?: { [date: string]: TimeSlot[] } | undefined;
-    // TODO: comment
+    /** Specifies should show or hide drop-down buttons and navigation arrows in header*/
     showNavigationHeader?: boolean | undefined;
-    // TODO: comment
+    /** Specifies should allow selecting date on weekly-calendar component */
     enableSelection?: boolean | undefined;
+    /** Specifies any callback to execute when user click on rendered slots on weekly-calendar component */
     onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
     /** Function to handle cancel/done .*/
     onDismiss?: ((action: CalendarAction) => void) | undefined;

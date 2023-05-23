@@ -15,7 +15,7 @@ import {
     TimeSlotWrapper,
     Wrapper,
 } from "./internal-calendar-day.style";
-import { CalendarType, FocusType, InternalCalendarProps } from "./types";
+import { CalendarType, FocusType, InternalCalendarProps, View } from "./types";
 import isBetween from "dayjs/plugin/isBetween";
 import { TimeSlot } from "../../time-slot-bar";
 import { TimeSlot as TimeSlotComponent } from "../../time-slot-bar/time-slot-bar.styles";
@@ -49,6 +49,7 @@ interface CalendarDayProps
     slots?: { [date: string]: TimeSlot[] } | undefined;
     enableSelection?: boolean | undefined;
     onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
+    currentCalenderView?: View | undefined;
 }
 
 export const InternalCalendarDay = ({
@@ -66,6 +67,7 @@ export const InternalCalendarDay = ({
     slots: daySlots,
     enableSelection = true,
     onSlotClick,
+    currentCalenderView,
 }: CalendarDayProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -482,52 +484,58 @@ export const InternalCalendarDay = ({
         return (
             <ColumnWeekCell
                 key={`week-cell-${calendarDate.format("YYYY-MM-DD")}`}
+                $currentCalenderView={currentCalenderView}
                 onMouseLeave={handleMouseLeaveCell}
             >
                 {weeksOfTheMonth[0].map((day, dayIndex) => {
                     const slots =
                         daySlots && daySlots[day.format("YYYY-MM-DD")];
                     return (
-                        <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
-                            {slots &&
-                                slots.map((slot) => {
-                                    const {
-                                        id,
-                                        startTime: slotStartTime,
-                                        endTime: slotEndTime,
-                                        clickable = true,
-                                        styleAttributes,
-                                    } = slot;
-                                    const {
-                                        color,
-                                        styleType = "default",
-                                        backgroundColor,
-                                        backgroundColor2,
-                                    } = styleAttributes;
-                                    return (
-                                        <TimeSlotComponent
-                                            $type="vertical"
-                                            key={id}
-                                            $styleType={styleType}
-                                            $bgColor={backgroundColor}
-                                            $bgColor2={backgroundColor2}
-                                            $clickable={clickable}
-                                            onClick={() =>
-                                                clickable &&
-                                                handleSlotClick(slot)
-                                            }
-                                        >
-                                            <TimeSlotText
-                                                style={{ color: color }}
+                        currentCalenderView === "default" && (
+                            <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
+                                {slots &&
+                                    slots.map((slot) => {
+                                        const {
+                                            id,
+                                            startTime: slotStartTime,
+                                            endTime: slotEndTime,
+                                            clickable = true,
+                                            styleAttributes,
+                                        } = slot;
+                                        const {
+                                            color,
+                                            styleType = "default",
+                                            backgroundColor,
+                                            backgroundColor2,
+                                        } = styleAttributes;
+                                        return (
+                                            <TimeSlotComponent
+                                                $type="vertical"
+                                                key={id}
+                                                $styleType={styleType}
+                                                $bgColor={backgroundColor}
+                                                $bgColor2={backgroundColor2}
+                                                $clickable={clickable}
+                                                onClick={() =>
+                                                    clickable &&
+                                                    handleSlotClick(slot)
+                                                }
                                             >
-                                                <span> {slotStartTime}</span>
-                                                <span> {"-"}</span>
-                                                <span> {slotEndTime}</span>
-                                            </TimeSlotText>
-                                        </TimeSlotComponent>
-                                    );
-                                })}
-                        </TimeSlotWrapper>
+                                                <TimeSlotText
+                                                    style={{ color: color }}
+                                                >
+                                                    <span>
+                                                        {" "}
+                                                        {slotStartTime}
+                                                    </span>
+                                                    <span> {"-"}</span>
+                                                    <span> {slotEndTime}</span>
+                                                </TimeSlotText>
+                                            </TimeSlotComponent>
+                                        );
+                                    })}
+                            </TimeSlotWrapper>
+                        )
                     );
                 })}
             </ColumnWeekCell>
