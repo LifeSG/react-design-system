@@ -17,8 +17,9 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     cursor: pointer;
     width: 13rem;
     transition: all 200ms ease;
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${({ $selected }) => $selected && Color.Primary};
+    overflow-wrap: anywhere;
 
     img {
         width: 3.5rem;
@@ -29,6 +30,7 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
+        ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
     }
 
     ${(props) => {
@@ -55,7 +57,6 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
                 &:hover {
                     border: 1px solid ${Color.Accent.Light[1]};
                     box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
-                    ${TextStyleHelper.getTextStyle("H4", "bold")}
                 }
             `;
         }
@@ -69,7 +70,6 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
         img {
             filter: grayscale(100%);
         }
-        ${TextStyleHelper.getTextStyle("H4", "semibold")}
         color: ${Color.Neutral[3]};
 
         outline: none;
