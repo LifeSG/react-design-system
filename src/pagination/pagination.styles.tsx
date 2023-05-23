@@ -262,7 +262,7 @@ export const PageSizeDropDownButton = styled(Button.Default)`
     color: ${Color.Neutral[1]};
     background: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     min-width: 7.125rem;
     padding: 0.25rem 1rem;
 
