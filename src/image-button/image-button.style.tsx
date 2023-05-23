@@ -19,7 +19,7 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     transition: all 200ms ease;
     ${TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${({ $selected }) => $selected && Color.Primary};
-    word-break: break-word;
+    overflow-wrap: anywhere;
 
     img {
         width: 3.5rem;
