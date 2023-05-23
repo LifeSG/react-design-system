@@ -76,6 +76,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "subLabel",
+                description: (
+                    <>
+                        The description label of the <code>Toggle</code>{" "}
+                        displayed between the main label.
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
                 name: "onChange",
                 description: (
                     <>
