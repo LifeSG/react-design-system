@@ -17,8 +17,9 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     cursor: pointer;
     width: 13rem;
     transition: all 200ms ease;
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${({ $selected }) => $selected && Color.Primary};
+    word-break: break-word;
 
     img {
         width: 3.5rem;
