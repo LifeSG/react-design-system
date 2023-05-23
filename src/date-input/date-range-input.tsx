@@ -64,17 +64,11 @@ export const DateRangeInput = ({
         reducers: {
             blur: (state) => ({
                 ...state,
-                currentFocus: "none",
-                isStartDirty: false,
-                isEndDirty: false,
-            }),
-            blurWithButton: (state) => ({
-                ...state,
-                currentFocus: "none",
-                isStartDirty: false,
-                isEndDirty: false,
                 selectedStart: state.initialStart,
                 selectedEnd: state.initialEnd,
+                currentFocus: "none",
+                isStartDirty: false,
+                isEndDirty: false,
             }),
             changeStart: (state, val: string) => ({
                 ...state,
@@ -108,6 +102,8 @@ export const DateRangeInput = ({
             }),
             done: (state, payload: { start: string; end: string }) => ({
                 ...state,
+                selectedStart: payload.start,
+                selectedEnd: payload.end,
                 initialStart: payload.start,
                 initialEnd: payload.end,
                 currentFocus: "none",
@@ -155,11 +151,7 @@ export const DateRangeInput = ({
     // =============================================================================
     const handleNodeBlur = (event: React.FocusEvent) => {
         if (!nodeRef.current.contains(event.relatedTarget)) {
-            if (withButton) {
-                actions.blurWithButton();
-            } else {
-                actions.blur();
-            }
+            actions.blur();
 
             startInputRef.current.resetPlaceholder();
             endInputRef.current.resetPlaceholder();

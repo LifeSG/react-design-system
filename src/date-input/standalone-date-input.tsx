@@ -132,17 +132,8 @@ export const Component = (
 
     const handleSectionFocus = () => {
         setHidePlaceholder(true);
-        onFocus();
-    };
-
-    const handleSectionBlur = (event: React.FocusEvent) => {
-        if (!nodeRef.current.contains(event.relatedTarget)) {
-            setCurrentFocus("none");
-
-            const value = `${yearValue}-${monthValue}-${dayValue}`;
-            const isValid = dayjs(value, "YYYY-MM-DD", true).isValid();
-
-            onBlur(isValid);
+        if (!focused) {
+            onFocus();
         }
     };
 
@@ -162,11 +153,6 @@ export const Component = (
             year: yearValue,
         };
 
-        if (targetValue === event.target.value) {
-            // nothing actually changed
-            return;
-        }
-
         switch (targetName) {
             case names[0]:
                 date.day = targetValue;
@@ -183,9 +169,17 @@ export const Component = (
 
         const value = `${date.year}-${date.month}-${date.day}`;
         const isValid = dayjs(value, "YYYY-MM-DD", true).isValid();
+        const isPadded =
+            targetName !== names[2] && targetValue !== event.target.value;
 
-        if (isValid) {
+        if (isValid && isPadded) {
             onChange(value);
+        }
+
+        if (!nodeRef.current.contains(event.relatedTarget)) {
+            // entire field was blurred
+            setCurrentFocus("none");
+            onBlur(isValid);
         }
     };
 
@@ -291,7 +285,6 @@ export const Component = (
             aria-label={label}
             onClick={handleSectionClick}
             onFocus={handleSectionFocus}
-            onBlur={handleSectionBlur}
         >
             <InputContainer ref={nodeRef} $hover={!!hoverValue}>
                 <DayInput
