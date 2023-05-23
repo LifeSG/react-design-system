@@ -160,6 +160,23 @@ export const DateRangeInput = ({
         }
     };
 
+    const handleNodeKeyDown = (event: React.KeyboardEvent) => {
+        if (event.code === "Escape") {
+            actions.blur();
+        }
+        if (event.code === "Enter" && !withButton) {
+            if (selectedStart && selectedEnd) {
+                actions.done({
+                    start: selectedStart,
+                    end: selectedEnd,
+                });
+                onChange?.(selectedStart, selectedEnd);
+            } else {
+                actions.blur();
+            }
+        }
+    };
+
     const handleStartDateChange = (val: string) => {
         actions.changeStart(val);
 
@@ -319,6 +336,7 @@ export const DateRangeInput = ({
             data-testid={otherProps["data-testid"]}
             tabIndex={-1}
             onBlur={handleNodeBlur}
+            onKeyDown={handleNodeKeyDown}
             {...otherProps}
         >
             <StandaloneDateInput
