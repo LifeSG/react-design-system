@@ -5,22 +5,17 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
 import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
 import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
-import { CaretDownIcon } from "@lifesg/react-icons/caret-down";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-    DropdownSelectOption,
-    DropdownWrapper,
     EllipsisContainer,
     Hover,
     InputView,
     Label,
     LabelDivider,
-    LabelDropdownDivider,
     NavigationButton,
     NavigationItem,
     PageItem,
-    PageSizeDropDownButton,
     PaginationList,
     PaginationMenu,
     PaginationMobileInput,
@@ -29,7 +24,7 @@ import {
 import { PaginationsProps } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../spec/media-spec";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+import { DropdownButton } from "./dropdown-button";
 
 const Component = (
     {
@@ -50,11 +45,8 @@ const Component = (
     // =============================================================================
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [selected, setSelected] = useState();
     const [inputText, setInputText] = useState<string>("");
     const [pageSizeLocal, setPageSize] = useState<number>(pageSize);
-    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const boundaryRange = 1;
     const siblingRange = 1;
@@ -85,11 +77,7 @@ const Component = (
         isStart ? () => onHoverLeftButton() : () => onHoverRightButton();
     const blurAction = (isStart: boolean) =>
         isStart ? () => onBlurLeftButton() : () => onBlurRightButton();
-    const options = [
-        { value: 10, label: "10 / page" },
-        { value: 20, label: "20 / page" },
-        { value: 30, label: "30 / page" },
-    ];
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -97,21 +85,6 @@ const Component = (
         if (activePage) {
             setInputValue(activePage);
         }
-    }, []);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
-            ) {
-                onBlur();
-            }
-        };
-        document.addEventListener("click", handleClickOutside, true);
-        return () => {
-            document.removeEventListener("click", handleClickOutside, true);
-        };
     }, []);
 
     // =============================================================================
@@ -126,9 +99,6 @@ const Component = (
         setHoverLeftButton(false);
     };
 
-    const onBlur = () => {
-        setShowDropdown(false);
-    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -191,15 +161,9 @@ const Component = (
         setHoverLeftButton(false);
     };
 
-    const handleDropdownButtonClick = () => {
-        setShowDropdown(!showDropdown);
-    };
-
-    const handleListItemClick = (item) => {
-        setSelected(item);
-        setPageSize(item.value);
-        setShowDropdown(false);
-        totalPages = Math.ceil(totalItems / item.value);
+    const handleListItemClick = (pagesize: number) => {
+        setPageSize(pagesize);
+        totalPages = Math.ceil(totalItems / pagesize);
 
         if (activePage >= totalPages) {
             if (onPageChange) {
@@ -330,39 +294,6 @@ const Component = (
         </PaginationMobileInput>
     );
 
-    const renderPageSizeDropdown = () => (
-        <DropdownWrapper ref={dropdownRef}>
-            <PageSizeDropDownButton onClick={handleDropdownButtonClick}>
-                <Label>{pageSizeLocal}</Label>
-                <LabelDropdownDivider> / </LabelDropdownDivider>
-                <Label>page</Label>
-                <CaretDownIcon />
-            </PageSizeDropDownButton>
-
-            {showDropdown && (
-                <DropdownSelectOption>
-                    {renderOptionList()}
-                </DropdownSelectOption>
-            )}
-        </DropdownWrapper>
-    );
-
-    const renderOptionList = () => {
-        if (options && options.length > 0) {
-            return (
-                <DropdownList
-                    listItems={options}
-                    onSelectItem={handleListItemClick}
-                    visible={showDropdown}
-                    data-testid="dropdown-list"
-                    selectedItems={selected ? [selected] : []}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                />
-            );
-        }
-    };
-
     return (
         <>
             <PaginationWrapper
@@ -422,7 +353,12 @@ const Component = (
                     </PaginationMenu>
                 </PaginationList>
             </PaginationWrapper>
-            {showPageSizeChanger && !isMobile && renderPageSizeDropdown()}
+            {showPageSizeChanger && !isMobile && (
+                <DropdownButton
+                    onPageSizeChange={handleListItemClick}
+                    pageSize={pageSize}
+                />
+            )}
         </>
     );
 };
