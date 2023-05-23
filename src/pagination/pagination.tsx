@@ -21,7 +21,7 @@ import {
     PaginationMobileInput,
     PaginationWrapper,
 } from "./pagination.styles";
-import { PaginationsProps } from "./types";
+import { DropdownItemProps, PaginationsProps } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../spec/media-spec";
 import { DropdownButton } from "./dropdown-button";
@@ -77,7 +77,11 @@ const Component = (
         isStart ? () => onHoverLeftButton() : () => onHoverRightButton();
     const blurAction = (isStart: boolean) =>
         isStart ? () => onBlurLeftButton() : () => onBlurRightButton();
-
+    const options: DropdownItemProps[] = [
+        { value: 10, label: "10 / page" },
+        { value: 20, label: "20 / page" },
+        { value: 30, label: "30 / page" },
+    ];
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -161,7 +165,8 @@ const Component = (
         setHoverLeftButton(false);
     };
 
-    const handleListItemClick = (pagesize: number) => {
+    const handleListItemClick = (item: DropdownItemProps) => {
+        const pagesize = item.value;
         setPageSize(pagesize);
         totalPages = Math.ceil(totalItems / pagesize);
 
@@ -355,8 +360,10 @@ const Component = (
             </PaginationWrapper>
             {showPageSizeChanger && !isMobile && (
                 <DropdownButton
-                    onPageSizeChange={handleListItemClick}
-                    pageSize={pageSize}
+                    selectedItem={options[0]}
+                    options={options}
+                    labelExtractor={(item) => item.label}
+                    onSelectItem={handleListItemClick}
                 />
             )}
         </>
