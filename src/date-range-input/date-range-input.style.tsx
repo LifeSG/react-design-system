@@ -2,7 +2,6 @@ import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { DesignToken } from "../design-token";
-import { DateInputVariant } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -12,7 +11,6 @@ interface ContainerStyleProps {
     $disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
-    $variant?: DateInputVariant;
 }
 
 interface IndicateBarStyleProps {

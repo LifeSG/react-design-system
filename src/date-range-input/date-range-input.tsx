@@ -8,13 +8,13 @@ import {
     FocusType,
 } from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
-import { DateInputHelper } from "../util/date-input-helper";
-import { useStateActions } from "../util/use-state-actions";
-import { ArrowRight, Container, IndicateBar } from "./date-range-input.style";
 import {
     StandaloneDateInput,
     StandaloneDateInputRef,
-} from "./standalone-date-input";
+} from "../shared/standalone-date-input/standalone-date-input";
+import { DateInputHelper } from "../util/date-input-helper";
+import { useStateActions } from "../util/use-state-actions";
+import { ArrowRight, Container, IndicateBar } from "./date-range-input.style";
 import { DateRangeInputProps } from "./types";
 
 interface DateRangeInputState {

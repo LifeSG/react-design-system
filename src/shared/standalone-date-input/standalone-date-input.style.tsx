@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { BasicInput } from "../shared/input-wrapper/input-wrapper";
-import { TextStyleHelper } from "../text/helper";
-import { Text } from "../text/text";
+import { Color } from "../../color";
+import { BasicInput } from "../input-wrapper/input-wrapper";
+import { TextStyleHelper } from "../../text/helper";
+import { Text } from "../../text/text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
