@@ -8,7 +8,7 @@ import {
     LabelDropdownDivider,
     PageSizeDropDownButton,
 } from "./dropdown-button.styles";
-import { DropdownProps } from "./types";
+import { DropdownItemProps, DropdownProps } from "./types";
 import { DropdownList } from "../shared/dropdown-list/dropdown-list";
 
 const Component = ({
@@ -23,7 +23,7 @@ const Component = ({
     // =============================================================================
 
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState<DropdownItemProps>();
     const [pageSizeLocal, setPageSize] = useState<number>(pageSize);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -61,7 +61,7 @@ const Component = ({
         setShowDropdown(!showDropdown);
     };
 
-    const handleListItemClick = (item) => {
+    const handleListItemClick = (item: DropdownItemProps) => {
         setSelected(item);
         setPageSize(item.value);
         setShowDropdown(false);

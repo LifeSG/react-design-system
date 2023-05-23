@@ -17,3 +17,8 @@ export interface DropdownProps {
     pageSize?: number | undefined;
     onPageSizeChange?: ((page: number) => void) | undefined;
 }
+
+export interface DropdownItemProps {
+    value?: number | undefined;
+    label?: string | undefined;
+}
