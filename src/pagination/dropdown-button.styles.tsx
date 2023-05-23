@@ -22,7 +22,7 @@ export const DropdownWrapper = styled.div`
     flex-direction: column;
 `;
 
-export const PageSizeDropDownButton = styled(Button.Default)`
+export const DropDownButton = styled(Button.Default)`
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -32,7 +32,7 @@ export const PageSizeDropDownButton = styled(Button.Default)`
     background: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 0.25rem;
-    min-width: 7.125rem;
+    min-width: 9rem;
     padding: 0.25rem 1rem;
 
     span {
@@ -62,7 +62,7 @@ export const DropdownSelectOption = styled.div`
     background: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 0.25rem;
-    width: 8.875rem;
+    width: 9rem;
     margin: 0 0.625rem;
     margin-top: 3.8rem;
 

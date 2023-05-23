@@ -2,11 +2,10 @@ import { CaretDownIcon } from "@lifesg/react-icons/caret-down";
 import React, { useEffect, useRef, useState } from "react";
 
 import {
+    DropDownButton,
     DropdownSelectOption,
     DropdownWrapper,
     Label,
-    LabelDropdownDivider,
-    PageSizeDropDownButton,
 } from "./dropdown-button.styles";
 import { DropdownItemProps, DropdownProps } from "./types";
 import { DropdownList } from "../shared/dropdown-list/dropdown-list";
@@ -15,8 +14,10 @@ const Component = ({
     id,
     "data-testid": dataTestId,
     className,
-    pageSize = 10,
-    onPageSizeChange,
+    selectedItem,
+    options,
+    labelExtractor,
+    onSelectItem,
 }: DropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -24,19 +25,17 @@ const Component = ({
 
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
     const [selected, setSelected] = useState<DropdownItemProps>();
-    const [pageSizeLocal, setPageSize] = useState<number>(pageSize);
+    const [selectedOption, setSelectedOption] = useState<string>();
     const ref = useRef<HTMLDivElement>(null);
 
-    const options = [
-        { value: 10, label: "10 / page" },
-        { value: 20, label: "20 / page" },
-        { value: 30, label: "30 / page" },
-    ];
     // =============================================================================
     // EFFECTS
     // =============================================================================
 
     useEffect(() => {
+        if (selectedItem) {
+            setSelectedOption(labelExtractor(selectedItem));
+        }
         const handleClickOutside = (event: MouseEvent) => {
             if (ref.current && !ref.current.contains(event.target as Node)) {
                 onBlur();
@@ -63,10 +62,10 @@ const Component = ({
 
     const handleListItemClick = (item: DropdownItemProps) => {
         setSelected(item);
-        setPageSize(item.value);
+        setSelectedOption(labelExtractor(item));
         setShowDropdown(false);
-        if (onPageSizeChange) {
-            onPageSizeChange(item.value);
+        if (onSelectItem) {
+            onSelectItem(item);
         }
     };
     // =============================================================================
@@ -96,14 +95,12 @@ const Component = ({
             className={className}
             id={id || "dropdown-button-wrapper"}
             data-testid={dataTestId || "dropdown-button"}
-            aria-label="Pagination"
+            aria-label="dropdown-button"
         >
-            <PageSizeDropDownButton onClick={handleDropdownButtonClick}>
-                <Label>{pageSizeLocal}</Label>
-                <LabelDropdownDivider> / </LabelDropdownDivider>
-                <Label>page</Label>
+            <DropDownButton onClick={handleDropdownButtonClick}>
+                <Label>{selectedOption}</Label>
                 <CaretDownIcon />
-            </PageSizeDropDownButton>
+            </DropDownButton>
 
             {showDropdown && renderOptionList()}
         </DropdownWrapper>
