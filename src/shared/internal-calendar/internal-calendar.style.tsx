@@ -78,6 +78,10 @@ export const Container = styled.div<GeneralStyleProps>`
                 border: 1px solid ${Color.Neutral[5]};
                 border-radius: 8px;
             `;
+        } else if (props.$type === "weekly") {
+            return css`
+                padding: 0rem;
+            `;
         }
     }}
 `;

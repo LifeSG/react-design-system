@@ -1,6 +1,4 @@
-import styled from "styled-components";
 import { InternalCalendar } from "../shared/internal-calendar";
-import { Color } from "../color";
 import { WeeklyCalendarProps } from "./types";
 import { TimeSlot } from "../time-slot-bar";
 
@@ -13,6 +11,8 @@ export const WeeklyCalendar = ({
     onSlotClick,
     minDate,
     maxDate,
+    value,
+    currentCalendarDate,
     ...otherProps
 }: WeeklyCalendarProps) => {
     // =============================================================================
@@ -27,27 +27,21 @@ export const WeeklyCalendar = ({
     };
 
     return (
-        <Wrapper className={className}>
-            <InternalCalendar
-                type="weekly"
-                slots={slots}
-                showNavigationHeader={showNavigationHeader}
-                enableSelection={enableSelection}
-                onSlotClick={onSlotClickHandler}
-                onSelect={onSelectHandler}
-                value={"2023-06-01"}
-                {...otherProps}
-                between={minDate && maxDate ? [minDate, maxDate] : undefined}
-            />
-        </Wrapper>
+        <InternalCalendar
+            type="weekly"
+            slots={slots}
+            showNavigationHeader={showNavigationHeader}
+            enableSelection={enableSelection}
+            onSlotClick={onSlotClickHandler}
+            onSelect={onSelectHandler}
+            value={value}
+            currentCalendarDate={currentCalendarDate}
+            {...otherProps}
+            between={minDate && maxDate ? [minDate, maxDate] : undefined}
+        />
     );
 };
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const Wrapper = styled.div`
-    min-width: 25rem;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 12px;
-`;
