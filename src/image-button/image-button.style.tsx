@@ -4,8 +4,13 @@ import { Color } from "../color/color";
 import { DesignToken } from "../design-token/design-token";
 import { TextStyleHelper } from "../text/helper";
 
-export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
+export const Main = styled.button<{
+    $selected?: boolean;
+    $error?: boolean;
+    $minWidth?: string;
+}>`
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 0.5rem;
     justify-content: center;
@@ -15,13 +20,15 @@ export const Main = styled.button<{ $selected?: boolean; $error?: boolean }>`
     border: 1px solid transparent;
     border-radius: 0.5rem;
     cursor: pointer;
-    width: 13rem;
+    min-width: ${({ $minWidth }) => $minWidth};
+    max-width: 13rem;
     transition: all 200ms ease;
     ${TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${({ $selected }) => $selected && Color.Primary};
     overflow-wrap: anywhere;
 
     img {
+        min-width: 3.5rem;
         width: 3.5rem;
         height: 3.5rem;
         object-fit: contain;

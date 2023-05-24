@@ -1,7 +1,13 @@
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { ImageButton } from "src/image-button";
-import { Secondary, Heading3, Title } from "../storybook-common";
+import {
+    Secondary,
+    Heading3,
+    Title,
+    FullWidthStoryContainer,
+    FlexWrapper,
+} from "../storybook-common";
 import { PropsTable } from "./props-table";
 
 <Meta title="General/ImageButton" component={ImageButton} />
@@ -95,6 +101,29 @@ When the specified image fails to load, it is replaced by a fallback.
         >
             Rooms
         </ImageButton>
+    </Story>
+</Preview>
+
+<Heading3>Flexible Width</Heading3>
+
+The button supports flexible width.
+
+<Preview>
+    <Story name="FlexibleWidth">
+        <FlexWrapper>
+            <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
+                Office Equipment
+            </ImageButton>
+            <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
+                Office Equipment
+            </ImageButton>
+            <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
+                Office Equipment
+            </ImageButton>
+            <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
+                Office Equipment
+            </ImageButton>
+        </FlexWrapper>
     </Story>
 </Preview>
 
