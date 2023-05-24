@@ -1,7 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Button } from "../../button";
 import { Color } from "../../color";
@@ -58,23 +57,19 @@ export const IconChevronDown = styled(ChevronDownIcon)`
 export const Container = styled.div<GeneralStyleProps>`
     position: relative;
     width: 100%;
-    padding: 1.5rem 1.25rem;
+    padding: 1.5rem 1.5rem 2rem;
     display: flex;
+    flex-direction: column;
 
     ${(props) => {
         if (props.$type === "input") {
             return css`
                 border: 1px solid ${Color.Neutral[5]};
                 border-radius: 8px;
+                padding: 1.5rem 1.25rem;
             `;
         }
     }}
-`;
-
-export const ContentBody = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
 `;
 
 export const ToggleZone = styled.div`
@@ -100,20 +95,22 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
     }}
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<GeneralStyleProps>`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.5rem;
+    margin: 0 0.5rem 1rem 0.5rem;
+
+    ${(props) => {
+        if (props.$type === "input") {
+            return css`
+                margin: 0 0 0.5rem 0;
+            `;
+        }
+    }}
 `;
 
 export const HeaderInputDropdown = styled.div`
     display: flex;
-`;
-
-export const HeaderDropdown = styled.div`
-    display: flex;
-    margin: 0 auto;
-    margin-bottom: 1rem;
 `;
 
 export const DropdownButton = styled.button<DropdownButtonStyleProps>`
@@ -182,7 +179,7 @@ export const HeaderArrows = styled.div`
     display: flex;
 `;
 
-export const HeaderArrowButton = styled(IconButton)`
+export const HeaderArrowButton = styled(IconButton)<GeneralStyleProps>`
     background: transparent;
     margin: auto 0;
     padding: 0.5rem;
@@ -191,6 +188,18 @@ export const HeaderArrowButton = styled(IconButton)`
     :active {
         background: transparent;
     }
+
+    ${(props) => {
+        if (props.$type === "standalone") {
+            return css`
+                ${ArrowLeft},
+                ${ArrowRight} {
+                    height: 1.125rem;
+                    width: 1.125rem;
+                }
+            `;
+        }
+    }}
 `;
 
 export const ActionButtonSection = styled.div`
@@ -201,36 +210,4 @@ export const ActionButtonSection = styled.div`
 
 export const ActionButton = styled(Button.Small)`
     flex: 1;
-`;
-
-export const SideArrowButton = styled(IconButton)<SideArrowButtonStyleProps>`
-    display: block;
-    padding: 1rem;
-    background: transparent;
-    margin: auto 0;
-
-    :focus,
-    :active {
-        background: transparent;
-    }
-
-    ${ArrowLeft},
-    ${ArrowRight} {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-
-    ${(props) => {
-        switch (props.$direction) {
-            case "left":
-                return css`
-                    margin: auto 0.625rem auto 0; // to counter the padding
-                `;
-            case "right":
-            default:
-                return css`
-                    margin: auto 0 auto 0.625rem; // to counter the padding
-                `;
-        }
-    }}
 `;
