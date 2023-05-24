@@ -27,3 +27,7 @@ export const TimeSlotWrapper = styled.div`
     flex: 1;
     margin: 1px;
 `;
+
+export const Wrapper = styled.div`
+    min-width: 18.5rem;
+`;

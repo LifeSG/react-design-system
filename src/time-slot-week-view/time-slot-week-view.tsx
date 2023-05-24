@@ -2,6 +2,7 @@ import { TimeSlotWeekViewProps } from "./types";
 import { TimeSlot } from "../time-slot-bar";
 import styled from "styled-components";
 import { TimeSlotWeekCalendar } from "./time-slot-week-calendar";
+import { Wrapper } from "./time-slot-week.styles";
 
 export const TimeSlotWeekView = ({
     className,
@@ -44,8 +45,3 @@ export const TimeSlotWeekView = ({
         </Wrapper>
     );
 };
-
-// TODO : remove
-const Wrapper = styled.div`
-    min-width: 18.5rem;
-`;
