@@ -1,5 +1,9 @@
 import dayjs, { Dayjs } from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import timezone from "dayjs/plugin/timezone";
 
+dayjs.extend(customParseFormat);
+dayjs.extend(timezone);
 export namespace CalendarHelper {
     export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
         const firstDayOfTheMonth = calendarDate.startOf("month");
@@ -12,6 +16,14 @@ export namespace CalendarHelper {
         );
 
         return firstDayOfEachWeek.map((date) => generateWeek(date));
+    };
+
+    export const generateDaysForCurrentWeek = (
+        calendarDate: Dayjs
+    ): Dayjs[][] => {
+        const firstDayOfWeek = calendarDate.startOf("week");
+
+        return [generateWeek(firstDayOfWeek)];
     };
 
     export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
@@ -49,6 +61,14 @@ export namespace CalendarHelper {
             beginDecade,
             endDecade,
         };
+    };
+
+    export const convertTo12HourFormat = (time: string): string => {
+        const parsedTime = dayjs(time, "HH:mm");
+        if (!parsedTime.isValid()) {
+            return "";
+        }
+        return parsedTime.format("h:mm A").toLocaleLowerCase();
     };
 }
 

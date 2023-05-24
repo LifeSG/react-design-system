@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
-import { CalendarType } from "./types";
+import { CalendarType, View } from "./types";
 
 export interface StyleProps {
     $disabled?: boolean;
@@ -13,6 +13,7 @@ export interface StyleProps {
 
 interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
+    $calenderType?: CalendarType | undefined;
 }
 
 interface OverflowDisplayProps extends StyleProps {
@@ -23,7 +24,9 @@ interface WrapperStyleProps {
     $type: CalendarType;
 }
 
-interface InteractiveCircleProps extends DayLabelStyleProps {}
+interface InteractiveCircleProps extends DayLabelStyleProps {
+    $enableSelection?: boolean | undefined;
+}
 
 // =============================================================================
 // STYLING
@@ -47,13 +50,14 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     }}
 `;
 
-export const HeaderCell = styled.div`
+export const HeaderCell = styled.div<{ $type?: CalendarType }>`
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
     user-select: none;
-    margin-bottom: 0.625rem;
+    margin-bottom: ${({ $type }) =>
+        $type === "weekly" ? "0.188" : "0.625rem"};
 `;
 
 export const RowDayCell = styled.div`
@@ -129,14 +133,8 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     cursor: pointer;
     position: absolute;
 
-    :hover {
-        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-        border: 1px solid ${Color.Accent.Light[1]};
-        background-color: ${Color.Neutral[8]};
-    }
-
     ${(props) => {
-        const { $hovered, $selected } = props;
+        const { $hovered, $selected, $enableSelection } = props;
 
         if ($selected) {
             return css`
@@ -150,6 +148,20 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
                 box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
                 border: 1px solid ${Color.Accent.Light[1]};
                 background-color: ${Color.Neutral[8]};
+            `;
+        }
+
+        if ($enableSelection) {
+            return css`
+                :hover {
+                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
+                    border: 1px solid ${Color.Accent.Light[1]};
+                    background-color: ${Color.Neutral[8]};
+                }
+            `;
+        } else {
+            return css`
+                cursor: default;
             `;
         }
     }}
@@ -194,7 +206,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        const { $disabled, $selected, $variant } = props;
+        const { $disabled, $selected, $variant, $calenderType } = props;
 
         if ($disabled && $selected) {
             return css`
@@ -226,6 +238,12 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
                     color: ${Color.Neutral[3]};
                 `;
             case "default":
+                if ($calenderType === "weekly") {
+                    return css`
+                        ${TextStyleHelper.getFontFamily("H5", "semibold")}
+                        color: ${Color.Neutral[3]};
+                    `;
+                }
                 return css`
                     color: ${Color.Neutral[1]};
                 `;

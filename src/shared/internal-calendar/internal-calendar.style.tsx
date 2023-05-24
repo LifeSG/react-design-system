@@ -67,6 +67,10 @@ export const Container = styled.div<GeneralStyleProps>`
                 border: 1px solid ${Color.Neutral[5]};
                 border-radius: 8px;
             `;
+        } else if (props.$type === "weekly") {
+            return css`
+                padding: 0rem;
+            `;
         }
     }}
 `;
@@ -136,6 +140,7 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
                         margin-right: 0;
                     }
                 `;
+            case "weekly":
             case "standalone":
                 return css`
                     ${IconChevronDown} {
@@ -170,6 +175,7 @@ export const DropdownText = styled.p<GeneralStyleProps>`
                 return css`
                     ${TextStyleHelper.getTextStyle("H4", "regular")}
                 `;
+            case "weekly":
             case "input":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "regular")}
@@ -190,6 +196,9 @@ export const HeaderArrowButton = styled(IconButton)`
     :focus,
     :active {
         background: transparent;
+    }
+    :disabled {
+        cursor: not-allowed;
     }
 `;
 

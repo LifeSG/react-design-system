@@ -18,8 +18,9 @@ interface ArrowStyleProps {
 }
 
 interface TimeSlotStyleProps {
-    $width: number;
-    $left: number;
+    $type?: "default" | "vertical";
+    $width?: number;
+    $left?: number;
     $styleType: SlotStyle;
     $bgColor: string;
     $bgColor2?: string;
@@ -116,10 +117,25 @@ export const TimeLabel = styled(Text.XSmall)`
 `;
 
 export const TimeSlot = styled.div<TimeSlotStyleProps>`
-    position: absolute;
-    height: 3.375rem;
-    width: ${({ $width }) => `${$width}px`};
-    left: ${({ $left }) => `${$left}px`};
+    ${(props) => {
+        if (props.$type === "vertical") {
+            return css`
+                display: flex;
+                flex-grow: 1;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                margin: 1px 0px;
+            `;
+        } else {
+            return css`
+                position: absolute;
+                height: 3.375rem;
+                width: ${props.$width}px;
+                left: ${props.$left}px;
+            `;
+        }
+    }}
     background-color: ${({ $bgColor }) => $bgColor};
     cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
 
