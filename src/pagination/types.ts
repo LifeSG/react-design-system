@@ -5,6 +5,7 @@ export interface PaginationsProps {
     pageSize?: number | undefined;
     totalItems: number;
     activePage: number;
+    pageSizeOptions?: DropdownItemProps[];
     showFirstAndLastNav?: boolean | undefined;
     showPageSizeChanger?: boolean | undefined;
     onPageChange?: ((page: number) => void) | undefined;

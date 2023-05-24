@@ -35,6 +35,7 @@ const Component = (
         pageSize = 10,
         totalItems,
         activePage,
+        pageSizeOptions,
         showFirstAndLastNav,
         showPageSizeChanger = false,
         onPageChange,
@@ -80,11 +81,9 @@ const Component = (
         isStart ? () => onHoverLeftButton() : () => onHoverRightButton();
     const blurAction = (isStart: boolean) =>
         isStart ? () => onBlurLeftButton() : () => onBlurRightButton();
-    const options: DropdownItemProps[] = [
-        { value: 10, label: "10 / page" },
-        { value: 20, label: "20 / page" },
-        { value: 30, label: "30 / page" },
-    ];
+    const options: DropdownItemProps[] = pageSizeOptions
+        ? pageSizeOptions
+        : DEFAULT_OPTIONS;
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -377,3 +376,9 @@ const Component = (
     );
 };
 export const Pagination = React.forwardRef(Component);
+
+const DEFAULT_OPTIONS: DropdownItemProps[] = [
+    { value: 10, label: "10 / page" },
+    { value: 20, label: "20 / page" },
+    { value: 30, label: "30 / page" },
+];
