@@ -1,17 +1,19 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+import { useSpring } from "react-spring";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { InternalCalendarDay } from "./internal-calendar-day";
 import { InternalCalendarMonth } from "./internal-calendar-month";
 import { InternalCalendarYear } from "./internal-calendar-year";
 import {
+    ActionButton,
     ActionButtonSection,
+    AnimatedDiv,
     ArrowLeft,
     ArrowRight,
-    CancelButton,
     Container,
     ContentBody,
-    DoneButton,
     DropdownButton,
     DropdownText,
     Header,
@@ -34,6 +36,7 @@ import {
 export const Component = (
     {
         disabledDates,
+        onYearMonthDisplayChange,
         onCalendarView,
         onSelect,
         onHover,
@@ -43,7 +46,6 @@ export const Component = (
         value,
         endValue,
         currentFocus,
-        currentType,
         withButton,
         variant,
         between,
@@ -59,11 +61,12 @@ export const Component = (
     const [currentView, setCurrentView] = useState<View>("default");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
+    const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>();
     const [isNewSelection, setIsNewSelection] = useState<boolean>(true);
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const resizeDetector = useResizeDetector();
 
     // =============================================================================
     // HOOKS
@@ -88,6 +91,7 @@ export const Component = (
         // open with 'confirmed' value for day calendar in first mounted
         if (!isOpen) return;
 
+        setCalendarDate(dayjs());
         setCurrentView("default");
 
         if (variant === "range" && value?.length && endValue?.length) {
@@ -96,18 +100,14 @@ export const Component = (
     }, [isOpen]);
 
     useEffect(() => {
-        if (!currentType) return;
-
-        // go back selected day calendar
-        handleSelectedDayView();
-    }, [currentType]);
-
-    useEffect(() => {
         /**
          * Update calendar value in month/year
          * Once focus value is changed
          */
         const calendarValue = currentFocus === "end" ? endValue : value;
+
+        // update selected in month/year view
+        setViewCalendarDate(dayjs(calendarValue));
 
         if (calendarValue) setCalendarDate(dayjs(calendarValue));
     }, [currentFocus]);
@@ -149,7 +149,13 @@ export const Component = (
     const handleLeftArrowClick = () => {
         switch (currentView) {
             case "default":
-                setCalendarDate((date) => date.subtract(1, "month"));
+                setViewCalendarDate((date) => date.subtract(1, "month"));
+                setCalendarDate((date) => {
+                    const prevMonth = date.subtract(1, "month");
+                    performOnCalendarDate(prevMonth);
+
+                    return prevMonth;
+                });
                 break;
             case "month-options":
                 setCalendarDate((date) => date.subtract(1, "year"));
@@ -163,7 +169,13 @@ export const Component = (
     const handleRightArrowClick = () => {
         switch (currentView) {
             case "default":
-                setCalendarDate((date) => date.add(1, "month"));
+                setViewCalendarDate((date) => date.add(1, "month"));
+                setCalendarDate((date) => {
+                    const nextMonth = date.add(1, "month");
+                    performOnCalendarDate(nextMonth);
+
+                    return nextMonth;
+                });
                 break;
             case "month-options":
                 setCalendarDate((date) => date.add(1, "year"));
@@ -178,37 +190,36 @@ export const Component = (
         const stringValue = value.format("YYYY-MM-DD");
 
         setCalendarDate(value);
+        setViewCalendarDate(value);
         handleSelectedType(stringValue);
 
         performOnSelectHandler(stringValue);
     };
 
+    const handleMonthYearSelect = (value: Dayjs) => {
+        setCalendarDate(value);
+        setViewCalendarDate(value);
+
+        performOnCalendarDate(value);
+    };
+
     const handleCancelButton = () => {
-        // close calendar and use 'confirmed' value if exist
+        const calendarValue = currentFocus === "end" ? endValue : value;
+
+        setCalendarDate(dayjs(calendarValue));
         performOnDismissHandler("reset");
     };
 
     const handleDoneButton = (isDisabled: boolean) => {
         if (isDisabled) return;
+        setCalendarDate(viewCalendarDate);
+
         // close calendar and 'confirmed' the value
         performOnDismissHandler("confirmed");
     };
 
     const handleHover = (value: string) => {
         performOnHoverHandler(value);
-    };
-
-    const handleSelectedDayView = () => {
-        if (currentType !== "restore") return;
-
-        switch (currentFocus) {
-            case "start":
-                setCalendarDate(dayjs(value));
-                break;
-            case "end":
-                setCalendarDate(dayjs(endValue));
-                break;
-        }
     };
 
     // =============================================================================
@@ -223,6 +234,17 @@ export const Component = (
     const performOnHoverHandler = (value: string) => {
         if (onHover) {
             onHover(value);
+        }
+    };
+
+    const performOnCalendarDate = (value: Dayjs) => {
+        if (onYearMonthDisplayChange) {
+            const returnValue = {
+                month: value.month() + 1,
+                year: value.year(),
+            };
+
+            onYearMonthDisplayChange(returnValue);
         }
     };
 
@@ -254,18 +276,14 @@ export const Component = (
 
     const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
-            const targetValue =
-                currentFocus === "start" || !currentFocus
-                    ? selectedStartDate
-                    : selectedEndDate;
-
-            setCalendarDate(dayjs(targetValue));
             setCurrentView("month-options");
             performOnCalendarView("month-options");
 
-            containerRef.current.focus();
+            // Maintain focus when selecting month dropdown
+            resizeDetector.ref.current.focus();
         } else {
             setCurrentView("default");
+            setCalendarDate(viewCalendarDate);
             performOnCalendarView("default");
         }
     };
@@ -278,14 +296,9 @@ export const Component = (
          */
         if (currentView !== "default") {
             setCurrentView("default");
+            setCalendarDate(viewCalendarDate);
             performOnCalendarView("default");
         } else {
-            const targetValue =
-                currentFocus === "start" || !currentFocus
-                    ? selectedStartDate
-                    : selectedEndDate;
-
-            setCalendarDate(dayjs(targetValue));
             setCurrentView("year-options");
             performOnCalendarView("year-options");
         }
@@ -355,9 +368,10 @@ export const Component = (
                         currentFocus={currentFocus}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
+                        viewCalendarDate={viewCalendarDate}
                         between={between}
                         isNewSelection={isNewSelection}
-                        onSelect={handleDateSelect}
+                        onMonthSelect={handleMonthYearSelect}
                     />
                 );
             case "year-options":
@@ -368,9 +382,10 @@ export const Component = (
                         currentFocus={currentFocus}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
+                        viewCalendarDate={viewCalendarDate}
                         between={between}
                         isNewSelection={isNewSelection}
-                        onSelect={handleDateSelect}
+                        onYearSelect={handleMonthYearSelect}
                     />
                 );
             default:
@@ -413,7 +428,7 @@ export const Component = (
         }
     };
 
-    const renderCancelDoneButton = () => {
+    const renderActionButtons = () => {
         if (type === "standalone" || !withButton) return;
 
         let isDisabled = true;
@@ -432,74 +447,89 @@ export const Component = (
 
         return (
             <ActionButtonSection>
-                <CancelButton
-                    styleType="light"
+                <ActionButton
                     ref={cancelButtonRef}
+                    data-testid="cancel-button"
+                    styleType="light"
                     onClick={handleCancelButton}
                 >
                     Cancel
-                </CancelButton>
-                <DoneButton
+                </ActionButton>
+                <ActionButton
+                    data-testid="done-button"
                     ref={doneButtonRef}
                     onClick={() => handleDoneButton(disabled)}
                     disabled={disabled}
                 >
                     Done
-                </DoneButton>
+                </ActionButton>
             </ActionButtonSection>
         );
     };
 
-    // handle the animation transition
-    if (type === "input" && !isOpen)
-        return <Container $type={type} tabIndex={-1} />;
+    const renderContent = () => {
+        return (
+            <Container
+                ref={resizeDetector.ref}
+                tabIndex={-1}
+                data-id="calendar-container"
+                $type={type}
+                {...otherProps}
+            >
+                {type === "standalone" && (
+                    <SideArrowButton
+                        $direction="left"
+                        onClick={handleLeftArrowClick}
+                    >
+                        <ArrowLeft />
+                    </SideArrowButton>
+                )}
+                <ContentBody>
+                    {renderHeader()}
+                    <ToggleZone>
+                        <InternalCalendarDay
+                            type={type}
+                            calendarDate={calendarDate}
+                            currentFocus={currentFocus}
+                            disabledDates={disabledDates}
+                            selectedStartDate={selectedStartDate}
+                            selectedEndDate={selectedEndDate}
+                            variant={variant}
+                            between={between}
+                            isNewSelection={isNewSelection}
+                            onSelect={handleDateSelect}
+                            onHover={handleHover}
+                        />
+                        <OptionsOverlay $visible={currentView !== "default"}>
+                            {renderOptionsOverlay()}
+                        </OptionsOverlay>
+                    </ToggleZone>
+                    {renderActionButtons()}
+                </ContentBody>
+                {type === "standalone" && (
+                    <SideArrowButton
+                        $direction="right"
+                        onClick={handleRightArrowClick}
+                    >
+                        <ArrowRight />
+                    </SideArrowButton>
+                )}
+            </Container>
+        );
+    };
 
-    return (
-        <Container
-            ref={containerRef}
-            $type={type}
-            $isOpen={isOpen}
-            {...otherProps}
-            tabIndex={-1}
-        >
-            <SideArrowButton
-                $direction="left"
-                $type={type}
-                onClick={handleLeftArrowClick}
-            >
-                <ArrowLeft />
-            </SideArrowButton>
-            <ContentBody>
-                {renderHeader()}
-                <ToggleZone>
-                    <InternalCalendarDay
-                        type={type}
-                        calendarDate={calendarDate}
-                        currentFocus={currentFocus}
-                        disabledDates={disabledDates}
-                        selectedStartDate={selectedStartDate}
-                        selectedEndDate={selectedEndDate}
-                        variant={variant}
-                        between={between}
-                        isNewSelection={isNewSelection}
-                        onSelect={handleDateSelect}
-                        onHover={handleHover}
-                    />
-                    <OptionsOverlay $visible={currentView !== "default"}>
-                        {renderOptionsOverlay()}
-                    </OptionsOverlay>
-                </ToggleZone>
-                {renderCancelDoneButton()}
-            </ContentBody>
-            <SideArrowButton
-                $direction="right"
-                $type={type}
-                onClick={handleRightArrowClick}
-            >
-                <ArrowRight />
-            </SideArrowButton>
-        </Container>
-    );
+    // React spring animation configuration
+    const styles = useSpring({
+        height: isOpen
+            ? resizeDetector.height + 64 // include vertical padding
+            : 0,
+    });
+
+    if (type === "input") {
+        return <AnimatedDiv style={styles}>{renderContent()}</AnimatedDiv>;
+    } else {
+        return <>{renderContent()}</>;
+    }
 };
 
 export const InternalCalendar = React.forwardRef(Component);

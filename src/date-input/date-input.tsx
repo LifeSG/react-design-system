@@ -1,18 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import {
-    ArrowRangeIcon,
-    ArrowRight,
-    Container,
-    IndicateBar,
-} from "./date-input.style";
-import { FieldType, INVALID_VALUE, StandAloneInput } from "./stand-alone-input";
-import { ChangeValueTypes, DateInputProps } from "./types";
-import {
-    ActionType,
-    INITIAL_INPUT_VALUES,
-    ReducerState,
-    dateInputReducer,
-} from "./date-input-reducer";
+import { useMediaQuery } from "react-responsive";
 import {
     CalendarAction,
     CalendarRef,
@@ -20,10 +7,23 @@ import {
     InternalCalendar,
     View,
 } from "../shared/internal-calendar";
+import { MediaWidths } from "../spec/media-spec";
 import { DateInputHelper } from "../util/date-input-helper";
 import { useEventListener } from "../util/use-event-listener";
-import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../spec/media-spec";
+import {
+    ActionType,
+    INITIAL_INPUT_VALUES,
+    ReducerState,
+    dateInputReducer,
+} from "./date-input-reducer";
+import {
+    ArrowRangeIcon,
+    ArrowRight,
+    Container,
+    IndicateBar,
+} from "./date-input.style";
+import { FieldType, INVALID_VALUE, StandAloneInput } from "./stand-alone-input";
+import { DateInputProps } from "./types";
 
 interface CurrentFocusTypes {
     field: FieldType;
@@ -39,7 +39,7 @@ export const DateInput = ({
     disabledDates,
     error,
     value,
-    endValue,
+    valueEnd,
     onChange,
     onBlur,
     onChangeRaw,
@@ -102,16 +102,16 @@ export const DateInput = ({
         dispatchStart({ type: "confirmed", value: value });
 
         if (variant === "range")
-            dispatchEnd({ type: "confirmed", value: endValue });
+            dispatchEnd({ type: "confirmed", value: valueEnd });
     }, []);
 
     useEffect(() => {
         dispatchStart({ type: "selected", value: value });
 
         if (variant === "range") {
-            dispatchEnd({ type: "selected", value: endValue });
+            dispatchEnd({ type: "selected", value: valueEnd });
         }
-    }, [value, endValue]);
+    }, [value, valueEnd]);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -174,12 +174,7 @@ export const DateInput = ({
         }
         const isValid = handleValidation(value);
 
-        if (["month-options", "year-options"].includes(calendarView)) {
-            handleReducer("transition", value);
-        } else {
-            // day calendar view
-            handleReducer("selected", value);
-        }
+        handleReducer("selected", value);
 
         setIsError(!isValid);
         setActionComponent(from);
@@ -205,7 +200,7 @@ export const DateInput = ({
     const handleCalendarAction = (buttonAction: CalendarAction) => {
         if (["month-options", "year-options"].includes(calendarView)) {
             // handle button in month/year calendar view
-            handleMonthYearCalendarAction(buttonAction);
+            handleMonthYearCalendarAction();
 
             return;
         }
@@ -235,26 +230,8 @@ export const DateInput = ({
         setCalendarOpen(false);
     };
 
-    const handleMonthYearCalendarAction = (action: CalendarAction) => {
-        const { field: otherField, type: otherType } = getAnotherElement();
-
-        switch (action) {
-            case "reset":
-                handleReducer("restore");
-                calendarRef.current.defaultView();
-                break;
-            case "confirmed":
-                calendarRef.current.defaultView();
-
-                setCurrentElement((prev) => {
-                    return {
-                        field: otherField,
-                        type: otherType,
-                        count: prev.count + 1,
-                    };
-                });
-                break;
-        }
+    const handleMonthYearCalendarAction = () => {
+        calendarRef.current.defaultView();
     };
 
     const handleCalendarView = (calendarView: View) => {
@@ -266,28 +243,30 @@ export const DateInput = ({
     // =============================================================================
     const performOnChangeHandler = (changeValue?: string) => {
         const focusType = currentElement.type as FocusType;
-        const returnValue: ChangeValueTypes = {
-            start: startDate.selected,
-            end: endDate.selected,
-        };
 
-        // Update the specific field value.
-        // - only use in without button
+        let start = startDate.selected;
+        let end = endDate.selected;
+
         if (changeValue) {
-            returnValue[focusType] = changeValue;
+            switch (focusType) {
+                case "end":
+                    end = changeValue;
+                    break;
+                case "start":
+                    start = changeValue;
+                    break;
+                default:
+            }
         }
 
-        if (variant === "single") delete returnValue.end;
-
         if (onChange) {
-            onChange(returnValue);
+            onChange(start, end);
         }
 
         if (onChangeRaw) {
-            const returnRawValue =
-                DateInputHelper.getFormattedRawValue(returnValue);
-
-            onChangeRaw(returnRawValue);
+            const { start: startRaw, end: endRaw } =
+                DateInputHelper.getFormattedRawValue(start, end);
+            onChangeRaw(startRaw, endRaw);
         }
     };
 
@@ -295,22 +274,17 @@ export const DateInput = ({
         startDate: ReducerState,
         endDate: ReducerState
     ) => {
-        const returnValue = {
-            start: startDate.confirmed,
-            end: endDate.confirmed,
-        };
-
-        if (variant === "single") delete returnValue.end;
-
         if (onBlur) {
-            onBlur(returnValue);
+            onBlur(startDate.confirmed, endDate.confirmed);
         }
 
         if (onBlurRaw) {
-            const returnRawValue =
-                DateInputHelper.getFormattedRawValue(returnValue);
-
-            onBlurRaw(returnRawValue);
+            const { start: startRaw, end: endRaw } =
+                DateInputHelper.getFormattedRawValue(
+                    startDate.confirmed,
+                    endDate.confirmed
+                );
+            onBlurRaw(startRaw, endRaw);
         }
     };
 
@@ -395,14 +369,6 @@ export const DateInput = ({
         if (!isValid) {
             dispatchStart({ type: "reset" });
             dispatchEnd({ type: "reset" });
-        }
-
-        if (type === "restore") {
-            // restore both value when click month/year view cancel button
-            dispatchStart({ type });
-            dispatchEnd({ type });
-
-            return;
         }
 
         switch (field) {
@@ -553,6 +519,7 @@ export const DateInput = ({
             $readOnly={readOnly}
             $variant={variant}
             onBlur={handleBlurContainer}
+            tabIndex={-1}
             {...otherProps}
         >
             <StandAloneInput
@@ -579,11 +546,6 @@ export const DateInput = ({
                 withButton={withButton}
                 actionComponent={actionComponent}
                 currentFocus={currentElement.type}
-                currentType={
-                    currentElement.type === "start"
-                        ? startDate.currentType
-                        : endDate.currentType
-                }
                 value={startDate.calendar}
                 endValue={endDate.calendar}
                 between={between}

@@ -1,3 +1,5 @@
+export type DateInputVariant = "single" | "range";
+
 export interface DateInputProps extends React.AriaAttributes {
     // Standard HTML Attributes
     className?: string | undefined;
@@ -9,15 +11,27 @@ export interface DateInputProps extends React.AriaAttributes {
 
     // Input-specific Attributes
     "data-testid"?: string | undefined;
+
+    /**
+     * The value of the date input in "YYYY-MM-DD" or "YYYY-M-D" string format.
+     * In the range variant, it serves as the start value
+     */
     value?: string | undefined;
-    endValue?: string | undefined;
+    /**
+     * The end value of the date input in "YYYY-MM-DD" or "YYYY-M-D"
+     * string format. Only relevant to range variant
+     */
+    valueEnd?: string | undefined;
     error?: boolean | undefined;
     disabled?: boolean | undefined;
     /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
     disabledDates?: string[] | undefined;
     /** The variant of the component. Values `single` | `range` */
     variant?: DateInputVariant | undefined;
-    /** Specifies if done/cancel buttons are visible in the calendar. Defaults to `true` */
+    /**
+     * Specifies if the "Done" and "Cancel" action buttons should be rendered.
+     * Is restricted to `true` on mobile viewports
+     */
     withButton?: boolean | undefined;
     /**
      * Restrict selection to within this date range, in `YYYY-MM-DD` format.
@@ -25,39 +39,31 @@ export interface DateInputProps extends React.AriaAttributes {
      */
     between?: [string, string] | undefined;
     /**
-     * Function that returns the values in the DateInput on valid selection in an object format
-     * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}
+     * Function that returns when a valid selection is made. Returns the start and
+     * end date in "YYYY-MM-DD" string format.
      */
-    onChange?: ((value: ChangeValueTypes) => void) | undefined;
+    onChange?:
+        | ((startDate: string, endDate: string | undefined) => void)
+        | undefined;
     /**
-     * Function that returns the raw values in the DateInput on valid selection in an object format
-     * as such { start: {year: "", month: "", day: "", end: {year: "", month: "", day: ""} }}
+     * Function that returns when a valid selection is made. Returns the start
+     * and end date in a string array format [day, month, year]
      */
-    onChangeRaw?: ((value: RawInputValues) => void) | undefined;
+    onChangeRaw?:
+        | ((startDate: string[], endDate: string[] | undefined) => void)
+        | undefined;
     /**
-     * Function that returns the raw values in the DateInput on blur in an object format
-     * as such { start: "YYYY-MM-DD", end: "YYYY-MM-DD"}
+     * Function that returns when a defocus is made on the field. Returns the start and
+     * end date in "YYYY-MM-DD" string format.
      */
-    onBlur?: ((value: ChangeValueTypes) => void) | undefined;
+    onBlur?:
+        | ((startDate: string, endDate: string | undefined) => void)
+        | undefined;
     /**
-     * Function that returns the raw values in the DateInput on blur in an object format
-     * as such { start: {year: "", month: "", day: "", end: {year: "", month: "", day: ""} }}
+     * Function that returns when a defocus is made on the field. Returns the start
+     * and end date in a string array format [day, month, year]
      */
-    onBlurRaw?: ((value: RawInputValues) => void) | undefined;
-}
-
-export type DateInputVariant = "single" | "range";
-
-export interface ChangeValueTypes {
-    start?: string | undefined;
-    end?: string | undefined;
-}
-
-export interface RawInputValues
-    extends Partial<Record<keyof ChangeValueTypes, RawInputValue>> {}
-
-interface RawInputValue {
-    year?: string;
-    month?: string;
-    day?: string;
+    onBlurRaw?:
+        | ((startDate: string[], endDate: string[] | undefined) => void)
+        | undefined;
 }

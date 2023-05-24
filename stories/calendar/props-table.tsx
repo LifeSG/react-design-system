@@ -52,6 +52,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "onYearMonthDisplayChange",
+                description:
+                    "Called when there is a change in the current visible month and year",
+                propTypes: ["(value: YearMonthDisplay) => void"],
+            },
+            {
                 name: "onHover",
                 description: (
                     <>
@@ -75,6 +81,25 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
+            },
+        ],
+    },
+    {
+        name: "YearMonthDisplay",
+        attributes: [
+            {
+                name: "year",
+                description: (
+                    <>
+                        The current visible year in <code>YYYY</code> format
+                    </>
+                ),
+                propTypes: ["number"],
+            },
+            {
+                name: "month",
+                description: "The current visible month, from 1 to 12",
+                propTypes: ["number"],
             },
         ],
     },
