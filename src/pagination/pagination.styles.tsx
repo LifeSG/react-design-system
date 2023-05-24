@@ -241,3 +241,8 @@ export const Hover = styled.div`
     margin-top: 6rem;
     padding: 0.25rem 0.75rem;
 `;
+
+export const InputSelectWrapper = styled.div`
+    width: 9.2rem;
+    margin-left: 0.5rem;
+`;

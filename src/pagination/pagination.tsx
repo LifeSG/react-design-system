@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import {
     EllipsisContainer,
     Hover,
+    InputSelectWrapper,
     InputView,
     Label,
     LabelDivider,
@@ -24,7 +25,7 @@ import {
 import { DropdownItemProps, PaginationsProps } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../spec/media-spec";
-import { DropdownButton } from "./dropdown-button";
+import { InputSelect } from "src/input-select";
 
 const Component = (
     {
@@ -301,70 +302,79 @@ const Component = (
 
     return (
         <>
-            <PaginationWrapper
-                className={className}
-                ref={ref}
-                id={id || "pagination-wrapper"}
-                data-testid={dataTestId || "pagination"}
-                aria-label="Pagination"
-            >
-                <PaginationList>
-                    <PaginationMenu>
-                        {showFirstAndLastNav && (
+            {" "}
+            <>
+                <PaginationWrapper
+                    className={className}
+                    ref={ref}
+                    id={id || "pagination-wrapper"}
+                    data-testid={dataTestId || "pagination"}
+                    aria-label="Pagination"
+                >
+                    <PaginationList>
+                        <PaginationMenu>
+                            {showFirstAndLastNav && (
+                                <NavigationButton
+                                    onClick={firstPaginationItem}
+                                    disabled={isFirstPage}
+                                    focusHighlight={false}
+                                    $position="left"
+                                    aria-label="First page"
+                                    focusOutline="browser"
+                                >
+                                    <ChevronLineLeftIcon aria-hidden />
+                                </NavigationButton>
+                            )}
                             <NavigationButton
-                                onClick={firstPaginationItem}
+                                onClick={prevPaginationItem}
                                 disabled={isFirstPage}
                                 focusHighlight={false}
                                 $position="left"
-                                aria-label="First page"
+                                aria-label="Previous page"
                                 focusOutline="browser"
                             >
-                                <ChevronLineLeftIcon aria-hidden />
+                                <ChevronLeftIcon aria-hidden />
                             </NavigationButton>
-                        )}
-                        <NavigationButton
-                            onClick={prevPaginationItem}
-                            disabled={isFirstPage}
-                            focusHighlight={false}
-                            $position="left"
-                            aria-label="Previous page"
-                            focusOutline="browser"
-                        >
-                            <ChevronLeftIcon aria-hidden />
-                        </NavigationButton>
-                        {isMobile ? renderMobile() : renderPaginationItems()}
-                        <NavigationButton
-                            onClick={nextPaginationItem}
-                            disabled={isLastPage}
-                            focusHighlight={false}
-                            $position="right"
-                            aria-label="Next page"
-                            focusOutline="browser"
-                        >
-                            <ChevronRightIcon aria-hidden />
-                        </NavigationButton>
-                        {showFirstAndLastNav && (
+                            {isMobile
+                                ? renderMobile()
+                                : renderPaginationItems()}
                             <NavigationButton
-                                onClick={lastPaginationItem}
+                                onClick={nextPaginationItem}
                                 disabled={isLastPage}
                                 focusHighlight={false}
                                 $position="right"
-                                aria-label="Last page"
+                                aria-label="Next page"
                                 focusOutline="browser"
                             >
-                                <ChevronLineRightIcon aria-hidden />
+                                <ChevronRightIcon aria-hidden />
                             </NavigationButton>
-                        )}
-                    </PaginationMenu>
-                </PaginationList>
-            </PaginationWrapper>
+                            {showFirstAndLastNav && (
+                                <NavigationButton
+                                    onClick={lastPaginationItem}
+                                    disabled={isLastPage}
+                                    focusHighlight={false}
+                                    $position="right"
+                                    aria-label="Last page"
+                                    focusOutline="browser"
+                                >
+                                    <ChevronLineRightIcon aria-hidden />
+                                </NavigationButton>
+                            )}
+                        </PaginationMenu>
+                    </PaginationList>
+                </PaginationWrapper>
+            </>
             {showPageSizeChanger && !isMobile && (
-                <DropdownButton
-                    selectedItem={options[0]}
-                    options={options}
-                    labelExtractor={(item) => item.label}
-                    onSelectItem={handleListItemClick}
-                />
+                <InputSelectWrapper>
+                    <InputSelect
+                        options={options}
+                        valueExtractor={(item) => item.value}
+                        listExtractor={(item) => item.label}
+                        displayValueExtractor={(item) => item.label}
+                        selectedOption={options[0]}
+                        onSelectOption={handleListItemClick}
+                    />
+                </InputSelectWrapper>
             )}
         </>
     );
