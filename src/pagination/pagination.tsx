@@ -171,12 +171,8 @@ const Component = (
         const pagesize = item.value;
         setPageSize(pagesize);
         totalPages = Math.ceil(totalItems / pagesize);
-        let page = 0;
-        if (activePage >= totalPages) {
-            page = totalPages;
-        } else {
-            page = activePage;
-        }
+        const page = activePage >= totalPages ? totalPages : activePage;
+
         if (onPageSizeChange) {
             onPageSizeChange(page, pagesize);
         }
