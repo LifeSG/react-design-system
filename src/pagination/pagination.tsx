@@ -46,18 +46,32 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const options: DropdownItemProps[] = pageSizeOptions
+        ? pageSizeOptions
+        : DEFAULT_OPTIONS;
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
-    const [pageSizeLocal, setPageSize] = useState<number>(pageSize);
-    const [selecctedOption, setSelecctedOption] = useState<DropdownItemProps>();
+
+    const [pageSizeLocal, setPageSize] = useState<number>(
+        showPageSizeChanger
+            ? options.length >= 1
+                ? options[0].value
+                : pageSize
+            : pageSize
+    );
+    const [selectedOption, setselectedOption] = useState<DropdownItemProps>(
+        options.length ? options[0] : null
+    );
 
     const boundaryRange = 1;
     const siblingRange = 1;
     let totalPages = Math.ceil(totalItems / pageSizeLocal);
 
-    let isFirstPage = activePage === 1;
-    let isLastPage = activePage === totalPages;
+    const [isFirstPage, setIsFirstPage] = useState<boolean>(activePage === 1);
+    const [isLastPage, setIsLastPage] = useState<boolean>(
+        activePage === totalPages
+    );
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -81,18 +95,15 @@ const Component = (
         isStart ? () => onHoverLeftButton() : () => onHoverRightButton();
     const blurAction = (isStart: boolean) =>
         isStart ? () => onBlurLeftButton() : () => onBlurRightButton();
-    const options: DropdownItemProps[] = pageSizeOptions
-        ? pageSizeOptions
-        : DEFAULT_OPTIONS;
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setSelecctedOption(options[0]);
         if (activePage) {
             setInputValue(activePage);
         }
-    }, []);
+    }, [activePage]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -169,7 +180,7 @@ const Component = (
     };
 
     const handleListItemClick = (item: DropdownItemProps) => {
-        setSelecctedOption(item);
+        setselectedOption(item);
         const pagesize = item.value;
         setPageSize(pagesize);
         totalPages = Math.ceil(totalItems / pagesize);
@@ -178,8 +189,8 @@ const Component = (
         if (onPageSizeChange) {
             onPageSizeChange(page, pagesize);
         }
-        isFirstPage = activePage === 1;
-        isLastPage = activePage === totalPages;
+        setIsFirstPage(activePage === 1);
+        setIsLastPage(activePage === totalPages);
     };
     // =============================================================================
     // RENDER FUNCTIONS
@@ -302,64 +313,62 @@ const Component = (
     );
 
     return (
-        <>
-            <PaginationWrapper
-                className={className}
-                ref={ref}
-                id={id || "pagination-wrapper"}
-                data-testid={dataTestId || "pagination"}
-                aria-label="Pagination"
-            >
-                <PaginationList>
-                    <PaginationMenu>
-                        {showFirstAndLastNav && (
-                            <NavigationButton
-                                onClick={firstPaginationItem}
-                                disabled={isFirstPage}
-                                focusHighlight={false}
-                                $position="left"
-                                aria-label="First page"
-                                focusOutline="browser"
-                            >
-                                <ChevronLineLeftIcon aria-hidden />
-                            </NavigationButton>
-                        )}
+        <PaginationWrapper
+            className={className}
+            ref={ref}
+            id={id || "pagination-wrapper"}
+            data-testid={dataTestId || "pagination"}
+            aria-label="Pagination"
+        >
+            <PaginationList>
+                <PaginationMenu>
+                    {showFirstAndLastNav && (
                         <NavigationButton
-                            onClick={prevPaginationItem}
+                            onClick={firstPaginationItem}
                             disabled={isFirstPage}
                             focusHighlight={false}
                             $position="left"
-                            aria-label="Previous page"
+                            aria-label="First page"
                             focusOutline="browser"
                         >
-                            <ChevronLeftIcon aria-hidden />
+                            <ChevronLineLeftIcon aria-hidden />
                         </NavigationButton>
-                        {isMobile ? renderMobile() : renderPaginationItems()}
+                    )}
+                    <NavigationButton
+                        onClick={prevPaginationItem}
+                        disabled={isFirstPage}
+                        focusHighlight={false}
+                        $position="left"
+                        aria-label="Previous page"
+                        focusOutline="browser"
+                    >
+                        <ChevronLeftIcon aria-hidden />
+                    </NavigationButton>
+                    {isMobile ? renderMobile() : renderPaginationItems()}
+                    <NavigationButton
+                        onClick={nextPaginationItem}
+                        disabled={isLastPage}
+                        focusHighlight={false}
+                        $position="right"
+                        aria-label="Next page"
+                        focusOutline="browser"
+                    >
+                        <ChevronRightIcon aria-hidden />
+                    </NavigationButton>
+                    {showFirstAndLastNav && (
                         <NavigationButton
-                            onClick={nextPaginationItem}
+                            onClick={lastPaginationItem}
                             disabled={isLastPage}
                             focusHighlight={false}
                             $position="right"
-                            aria-label="Next page"
+                            aria-label="Last page"
                             focusOutline="browser"
                         >
-                            <ChevronRightIcon aria-hidden />
+                            <ChevronLineRightIcon aria-hidden />
                         </NavigationButton>
-                        {showFirstAndLastNav && (
-                            <NavigationButton
-                                onClick={lastPaginationItem}
-                                disabled={isLastPage}
-                                focusHighlight={false}
-                                $position="right"
-                                aria-label="Last page"
-                                focusOutline="browser"
-                            >
-                                <ChevronLineRightIcon aria-hidden />
-                            </NavigationButton>
-                        )}
-                    </PaginationMenu>
-                </PaginationList>
-            </PaginationWrapper>
+                    )}
+                </PaginationMenu>
+            </PaginationList>
             {showPageSizeChanger && !isMobile && (
                 <InputSelectWrapper>
                     <InputSelect
@@ -367,12 +376,12 @@ const Component = (
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
-                        selectedOption={selecctedOption}
+                        selectedOption={selectedOption}
                         onSelectOption={handleListItemClick}
                     />
                 </InputSelectWrapper>
             )}
-        </>
+        </PaginationWrapper>
     );
 };
 export const Pagination = React.forwardRef(Component);
