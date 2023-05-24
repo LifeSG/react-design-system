@@ -49,6 +49,7 @@ const Component = (
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
     const [pageSizeLocal, setPageSize] = useState<number>(pageSize);
+    const [selecctedOption, setSelecctedOption] = useState<DropdownItemProps>();
 
     const boundaryRange = 1;
     const siblingRange = 1;
@@ -88,6 +89,7 @@ const Component = (
     // EFFECTS
     // =============================================================================
     useEffect(() => {
+        setSelecctedOption(options[0]);
         if (activePage) {
             setInputValue(activePage);
         }
@@ -168,6 +170,7 @@ const Component = (
     };
 
     const handleListItemClick = (item: DropdownItemProps) => {
+        setSelecctedOption(item);
         const pagesize = item.value;
         setPageSize(pagesize);
         totalPages = Math.ceil(totalItems / pagesize);
@@ -365,7 +368,7 @@ const Component = (
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
-                        selectedOption={options[0]}
+                        selectedOption={selecctedOption}
                         onSelectOption={handleListItemClick}
                     />
                 </InputSelectWrapper>
