@@ -103,13 +103,17 @@ When the specified image fails to load, it is replaced by a fallback.
 
 <Preview>
     <Story name="Fallback">
-        <ImageButton
-            disabled={false}
-            imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754asdfads537.png"
-            focusOutline="browser"
-        >
-            Rooms
-        </ImageButton>
+        <StoryContainer>
+            <FlexWrapper>
+                <ImageButton
+                    disabled={false}
+                    imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754asdfads537.png"
+                    focusOutline="browser"
+                >
+                    Rooms
+                </ImageButton>
+            </FlexWrapper>
+        </StoryContainer>
     </Story>
 </Preview>
 
