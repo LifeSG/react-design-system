@@ -38,6 +38,7 @@ const Component = (
         showFirstAndLastNav,
         showPageSizeChanger = false,
         onPageChange,
+        onPageSizeChange,
     }: PaginationsProps,
     ref: React.Ref<HTMLDivElement>
 ) => {
@@ -170,12 +171,14 @@ const Component = (
         const pagesize = item.value;
         setPageSize(pagesize);
         totalPages = Math.ceil(totalItems / pagesize);
-
+        let page = 0;
         if (activePage >= totalPages) {
-            if (onPageChange) {
-                onPageChange(totalPages);
-                setInputText(totalPages.toString());
-            }
+            page = totalPages;
+        } else {
+            page = activePage;
+        }
+        if (onPageSizeChange) {
+            onPageSizeChange(page, pagesize);
         }
         isFirstPage = activePage === 1;
         isLastPage = activePage === totalPages;

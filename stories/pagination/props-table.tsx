@@ -58,6 +58,11 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a page is selected",
                 propTypes: ["(page: number) => void"],
             },
+            {
+                name: "onPageSizeChange",
+                description: "Called when a page is size changed",
+                propTypes: ["(page: number, pageSize: number) => void"],
+            },
         ],
     },
 ];

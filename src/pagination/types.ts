@@ -8,6 +8,7 @@ export interface PaginationsProps {
     showFirstAndLastNav?: boolean | undefined;
     showPageSizeChanger?: boolean | undefined;
     onPageChange?: ((page: number) => void) | undefined;
+    onPageSizeChange?: ((page: number, pageSize: number) => void) | undefined;
 }
 
 export interface DropdownItemProps {

@@ -104,6 +104,10 @@ The `showPageSizeChanger` prop allows the user to show page size changer dropdow
                     <FullWidthStoryContainer>
                         <Pagination
                             onPageChange={(selected) => setSelected(selected)}
+                            onPageSizeChange={(page, pageSize) => {
+                                setSelected(page);
+                                console.log(page, pageSize);
+                            }}
                             activePage={selectedPage}
                             totalItems={600}
                             showFirstAndLastNav
