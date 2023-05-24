@@ -66,12 +66,15 @@ const Component = (
 
     const boundaryRange = 1;
     const siblingRange = 1;
-    let totalPages = Math.ceil(totalItems / pageSizeLocal);
 
+    const [totalPages, setTotalPages] = useState<number>(
+        Math.ceil(totalItems / pageSizeLocal)
+    );
     const [isFirstPage, setIsFirstPage] = useState<boolean>(activePage === 1);
     const [isLastPage, setIsLastPage] = useState<boolean>(
         activePage === totalPages
     );
+
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -182,15 +185,18 @@ const Component = (
     const handleListItemClick = (item: DropdownItemProps) => {
         setselectedOption(item);
         const pagesize = item.value;
+        const totalPage = Math.ceil(totalItems / pagesize);
+
         setPageSize(pagesize);
-        totalPages = Math.ceil(totalItems / pagesize);
-        const page = activePage >= totalPages ? totalPages : activePage;
+        setTotalPages(totalPage);
+
+        const page = activePage >= totalPage ? totalPage : activePage;
 
         if (onPageSizeChange) {
             onPageSizeChange(page, pagesize);
         }
         setIsFirstPage(activePage === 1);
-        setIsLastPage(activePage === totalPages);
+        setIsLastPage(activePage === totalPage);
     };
     // =============================================================================
     // RENDER FUNCTIONS
