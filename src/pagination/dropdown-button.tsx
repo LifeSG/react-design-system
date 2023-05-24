@@ -97,7 +97,10 @@ const Component = ({
             data-testid={dataTestId || "dropdown-button"}
             aria-label="dropdown-button"
         >
-            <DropDownButton onClick={handleDropdownButtonClick}>
+            <DropDownButton
+                onClick={handleDropdownButtonClick}
+                $selected={showDropdown}
+            >
                 <Label>{selectedOption}</Label>
                 <CaretDownIcon />
             </DropDownButton>
