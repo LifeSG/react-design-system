@@ -53,15 +53,15 @@ const Component = (
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
 
+    const [selectedOption, setselectedOption] = useState<DropdownItemProps>(
+        options.length >= 1 ? options[0] : null
+    );
     const [pageSizeLocal, setPageSize] = useState<number>(
         showPageSizeChanger
-            ? options.length >= 1
-                ? options[0].value
+            ? selectedOption
+                ? selectedOption.value
                 : pageSize
             : pageSize
-    );
-    const [selectedOption, setselectedOption] = useState<DropdownItemProps>(
-        options.length ? options[0] : null
     );
 
     const boundaryRange = 1;
