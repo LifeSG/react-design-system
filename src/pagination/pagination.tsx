@@ -302,68 +302,63 @@ const Component = (
 
     return (
         <>
-            {" "}
-            <>
-                <PaginationWrapper
-                    className={className}
-                    ref={ref}
-                    id={id || "pagination-wrapper"}
-                    data-testid={dataTestId || "pagination"}
-                    aria-label="Pagination"
-                >
-                    <PaginationList>
-                        <PaginationMenu>
-                            {showFirstAndLastNav && (
-                                <NavigationButton
-                                    onClick={firstPaginationItem}
-                                    disabled={isFirstPage}
-                                    focusHighlight={false}
-                                    $position="left"
-                                    aria-label="First page"
-                                    focusOutline="browser"
-                                >
-                                    <ChevronLineLeftIcon aria-hidden />
-                                </NavigationButton>
-                            )}
+            <PaginationWrapper
+                className={className}
+                ref={ref}
+                id={id || "pagination-wrapper"}
+                data-testid={dataTestId || "pagination"}
+                aria-label="Pagination"
+            >
+                <PaginationList>
+                    <PaginationMenu>
+                        {showFirstAndLastNav && (
                             <NavigationButton
-                                onClick={prevPaginationItem}
+                                onClick={firstPaginationItem}
                                 disabled={isFirstPage}
                                 focusHighlight={false}
                                 $position="left"
-                                aria-label="Previous page"
+                                aria-label="First page"
                                 focusOutline="browser"
                             >
-                                <ChevronLeftIcon aria-hidden />
+                                <ChevronLineLeftIcon aria-hidden />
                             </NavigationButton>
-                            {isMobile
-                                ? renderMobile()
-                                : renderPaginationItems()}
+                        )}
+                        <NavigationButton
+                            onClick={prevPaginationItem}
+                            disabled={isFirstPage}
+                            focusHighlight={false}
+                            $position="left"
+                            aria-label="Previous page"
+                            focusOutline="browser"
+                        >
+                            <ChevronLeftIcon aria-hidden />
+                        </NavigationButton>
+                        {isMobile ? renderMobile() : renderPaginationItems()}
+                        <NavigationButton
+                            onClick={nextPaginationItem}
+                            disabled={isLastPage}
+                            focusHighlight={false}
+                            $position="right"
+                            aria-label="Next page"
+                            focusOutline="browser"
+                        >
+                            <ChevronRightIcon aria-hidden />
+                        </NavigationButton>
+                        {showFirstAndLastNav && (
                             <NavigationButton
-                                onClick={nextPaginationItem}
+                                onClick={lastPaginationItem}
                                 disabled={isLastPage}
                                 focusHighlight={false}
                                 $position="right"
-                                aria-label="Next page"
+                                aria-label="Last page"
                                 focusOutline="browser"
                             >
-                                <ChevronRightIcon aria-hidden />
+                                <ChevronLineRightIcon aria-hidden />
                             </NavigationButton>
-                            {showFirstAndLastNav && (
-                                <NavigationButton
-                                    onClick={lastPaginationItem}
-                                    disabled={isLastPage}
-                                    focusHighlight={false}
-                                    $position="right"
-                                    aria-label="Last page"
-                                    focusOutline="browser"
-                                >
-                                    <ChevronLineRightIcon aria-hidden />
-                                </NavigationButton>
-                            )}
-                        </PaginationMenu>
-                    </PaginationList>
-                </PaginationWrapper>
-            </>
+                        )}
+                    </PaginationMenu>
+                </PaginationList>
+            </PaginationWrapper>
             {showPageSizeChanger && !isMobile && (
                 <InputSelectWrapper>
                     <InputSelect
