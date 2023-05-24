@@ -2,19 +2,35 @@ import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
+const STRING_FORMAT = (
+    <>
+        string based format <code>YYYY-MM-DD</code>
+    </>
+);
+
 const DATA: ApiTableSectionProps[] = [
     {
         name: "Calendar specific props",
         attributes: [
             {
-                name: "between",
+                name: "minDate",
                 description: (
                     <>
-                        Restrict selection to this date range. To specify in the
-                        format <code>[YYYY-MM-DD, YYYY-MM-DD]</code>
+                        Specifies the minimum date allowed for selection in
+                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
                     </>
                 ),
-                propTypes: ["[string, string]"],
+                propTypes: ["string"],
+            },
+            {
+                name: "maxDate",
+                description: (
+                    <>
+                        Specifies the maximum date allowed for selection in
+                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
+                    </>
+                ),
+                propTypes: ["string"],
             },
             {
                 name: "className",
@@ -30,8 +46,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "disabledDates",
                 description: (
                     <>
-                        The dates to be disabled. To specify each date in the
-                        format <code>YYYY-MM-DD</code>
+                        The dates to be disabled. To specify each date in
+                        the&nbsp;
+                        {STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["string[]"],
@@ -45,8 +62,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "value",
                 description: (
                     <>
-                        The value of the selected date in&nbsp;
-                        <code>YYYY-MM-DD</code> format
+                        The value of the selected date in the&nbsp;
+                        {STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["string"],
@@ -62,9 +79,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Called with the current hovered date or empty string if
-                        the user leaves the calendar day view. Returns value
-                        in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format.
+                        the user leaves the calendar day view. Returns value in
+                        the&nbsp;{STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
@@ -74,10 +90,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Called when the user selected a value from the calendar.
-                        Returns value in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format. Should the value be
-                        invalid, the&nbsp; &lsquo;Invalid Date&rsquo; value will
-                        be returned
+                        Returns value in the&nbsp;{STRING_FORMAT}. Should the
+                        value be invalid, the&nbsp; &lsquo;Invalid Date&rsquo;
+                        value will be returned
                     </>
                 ),
                 propTypes: ["(value: string) => void"],

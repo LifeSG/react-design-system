@@ -99,6 +99,87 @@ describe("CalendarHelper", () => {
             expect(endYear).toEqual(endDecade);
         });
     });
+
+    describe("isWithinRange", () => {
+        it("should return true if the date is within range", () => {
+            const date = dayjs("2023-01-04");
+            const minDate = dayjs("2023-01-01");
+            const maxDate = dayjs("2023-02-01");
+
+            const isWithinRange = CalendarHelper.isWithinRange(
+                date,
+                minDate,
+                maxDate
+            );
+
+            expect(isWithinRange).toBeTruthy();
+        });
+
+        it("should return true if the date is within range (inclusive check)", () => {
+            const date = dayjs("2023-02-01");
+            const minDate = dayjs("2023-01-01");
+            const maxDate = dayjs("2023-02-01");
+
+            const isWithinRange = CalendarHelper.isWithinRange(
+                date,
+                minDate,
+                maxDate
+            );
+
+            expect(isWithinRange).toBeTruthy();
+        });
+
+        it("should return false if the date is out of range", () => {
+            const date = dayjs("2023-03-04");
+            const minDate = dayjs("2023-01-01");
+            const maxDate = dayjs("2023-02-01");
+
+            const isWithinRange = CalendarHelper.isWithinRange(
+                date,
+                minDate,
+                maxDate
+            );
+
+            expect(isWithinRange).toBeFalsy();
+        });
+
+        it("should return true if date is same or after minDate (if only minDate provided)", () => {
+            const date = dayjs("2023-01-02");
+            const minDate = dayjs("2023-01-02");
+
+            const isWithinRange = CalendarHelper.isWithinRange(date, minDate);
+            const isMonthWithinRange = CalendarHelper.isWithinRange(
+                date,
+                minDate,
+                undefined,
+                "month"
+            );
+
+            expect(isWithinRange).toBeTruthy();
+            expect(isMonthWithinRange).toBeTruthy();
+        });
+
+        it("should return true if date is same or before maxDate (if only maxDate provided)", () => {
+            const date = dayjs("2023-01-02");
+            const maxDate = dayjs("2023-01-02");
+
+            const isWithinRange = CalendarHelper.isWithinRange(
+                date,
+                undefined,
+                maxDate
+            );
+
+            const isMonthWithinRange = CalendarHelper.isWithinRange(
+                date,
+                undefined,
+                maxDate,
+                "month"
+            );
+
+            expect(isWithinRange).toBeTruthy();
+            expect(isMonthWithinRange).toBeTruthy();
+        });
+    });
 });
 
 // =============================================================================

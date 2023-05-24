@@ -41,7 +41,8 @@ export const Component = (
         currentFocus,
         withButton,
         variant,
-        between,
+        minDate,
+        maxDate,
         type = "standalone",
         selectWithinRange = true,
         ...otherProps
@@ -356,10 +357,11 @@ export const Component = (
                         type={type}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
+                        minDate={minDate}
+                        maxDate={maxDate}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        between={between}
                         isNewSelection={selectWithinRange}
                         onMonthSelect={handleMonthYearSelect}
                     />
@@ -370,10 +372,11 @@ export const Component = (
                         type={type}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
+                        minDate={minDate}
+                        maxDate={maxDate}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        between={between}
                         isNewSelection={selectWithinRange}
                         onYearSelect={handleMonthYearSelect}
                     />
@@ -466,7 +469,8 @@ export const Component = (
                     selectedStartDate={selectedStartDate}
                     selectedEndDate={selectedEndDate}
                     variant={variant}
-                    between={between}
+                    minDate={minDate}
+                    maxDate={maxDate}
                     isNewSelection={selectWithinRange}
                     onSelect={handleDateSelect}
                     onHover={handleHover}

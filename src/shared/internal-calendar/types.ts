@@ -32,6 +32,14 @@ export interface CommonCalendarProps {
     /** Restrict selection to within this date range,
      * in `YYYY-MM-DD` format. Example: `["2023-03-15", "2023-04-19"]` */
     between?: [string, string] | undefined;
+    /**
+     * The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
+     */
+    minDate?: string | undefined;
+    /**
+     * The maximum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
+     */
+    maxDate?: string | undefined;
     /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
     disabledDates?: string[] | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format or `"Invalid Date"` */
