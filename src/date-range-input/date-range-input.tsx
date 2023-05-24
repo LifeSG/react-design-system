@@ -341,6 +341,7 @@ export const DateRangeInput = ({
             <RangeInputInnerContainer
                 currentActive={currentFocus}
                 minWidthBeforeWrap={MOBILE_WRAP_WIDTH}
+                error={error}
             >
                 <InputContainer>
                     <StandaloneDateInput

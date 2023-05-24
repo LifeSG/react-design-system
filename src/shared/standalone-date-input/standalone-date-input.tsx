@@ -123,6 +123,10 @@ export const Component = (
     // EVENT HANDLERS
     // =============================================================================
     const handleSectionClick = () => {
+        if (disabled || readOnly) {
+            return;
+        }
+
         setHidePlaceholder(true);
 
         if (!nodeRef.current.contains(document.activeElement)) {
@@ -131,7 +135,12 @@ export const Component = (
     };
 
     const handleSectionFocus = () => {
+        if (disabled || readOnly) {
+            return;
+        }
+
         setHidePlaceholder(true);
+
         if (!focused) {
             onFocus();
         }
