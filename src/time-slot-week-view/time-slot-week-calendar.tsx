@@ -2,7 +2,6 @@ import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useImperativeHandle, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { CalendarRef, View } from "../shared/internal-calendar";
-import { InternalCalendarDay } from "../shared/internal-calendar/internal-calendar-day";
 import { InternalCalendarMonth } from "../shared/internal-calendar/internal-calendar-month";
 import { InternalCalendarYear } from "../shared/internal-calendar/internal-calendar-year";
 import {

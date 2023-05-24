@@ -1,6 +1,5 @@
 import { TimeSlotWeekViewProps } from "./types";
 import { TimeSlot } from "../time-slot-bar";
-import styled from "styled-components";
 import { TimeSlotWeekCalendar } from "./time-slot-week-calendar";
 import { Wrapper } from "./time-slot-week.styles";
 
@@ -14,6 +13,7 @@ export const TimeSlotWeekView = ({
     minDate,
     maxDate,
     value,
+    onYearMonthDisplayChange,
     currentCalendarDate,
     ...otherProps
 }: TimeSlotWeekViewProps) => {
@@ -37,6 +37,7 @@ export const TimeSlotWeekView = ({
                 enableSelection={enableSelection}
                 onSlotClick={onSlotClickHandler}
                 onSelect={onSelectHandler}
+                onYearMonthDisplayChange={onYearMonthDisplayChange}
                 value={value}
                 currentCalendarDate={currentCalendarDate}
                 {...otherProps}

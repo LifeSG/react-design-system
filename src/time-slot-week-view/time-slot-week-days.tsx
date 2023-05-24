@@ -225,7 +225,6 @@ export const TimeSlotWeekDays = ({
                                                 style={{ color: color }}
                                             >
                                                 <span>
-                                                    {" "}
                                                     {CalendarHelper.convertTo12HourFormat(
                                                         slotStartTime
                                                     )}
@@ -235,7 +234,6 @@ export const TimeSlotWeekDays = ({
                                                         <span> {"-"}</span>
                                                     )}
                                                 <span>
-                                                    {" "}
                                                     {CalendarHelper.convertTo12HourFormat(
                                                         slotEndTime
                                                     )}
