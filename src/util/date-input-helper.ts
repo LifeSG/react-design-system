@@ -6,6 +6,34 @@ dayjs.extend(isBetween);
 export namespace DateInputHelper {
     const dateFormat = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
 
+    export const isDateDisabled = (
+        val: string | undefined,
+        props: { disabledDates?: string[]; between?: [string, string] }
+    ): boolean => {
+        const { disabledDates, between } = props;
+        if (
+            disabledDates &&
+            disabledDates.length &&
+            disabledDates.includes(val)
+        ) {
+            return true;
+        }
+
+        if (between && between.length === 2) {
+            const [min, max] = between;
+            if (!min || !max) {
+                console.warn('"between" prop is invalid');
+                return true;
+            }
+
+            if (!dayjs(val).isBetween(min, max, "day", "[]")) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     export const validate = (
         startDate: string | undefined,
         endDate: string | undefined,

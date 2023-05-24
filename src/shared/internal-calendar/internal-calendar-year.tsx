@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
 import { FocusType, InternalCalendarProps } from "./types";
@@ -34,14 +34,10 @@ export const InternalCalendarYear = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [years, setYears] = useState<Dayjs[]>([]);
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        generateDecadeOfYears();
-    }, [calendarDate]);
+    const years = useMemo<Dayjs[]>(
+        () => CalendarHelper.generateDecadeOfYears(dayjs(calendarDate)),
+        [calendarDate]
+    );
 
     // =============================================================================
     // EVENT HANDLERS
@@ -94,11 +90,6 @@ export const InternalCalendarYear = ({
             year,
             variant: variant,
         };
-    };
-
-    const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(dayjs(calendarDate));
-        setYears(years);
     };
 
     // =============================================================================

@@ -4,9 +4,9 @@ import {
     CalendarAction,
     CalendarRef,
     FocusType,
-    InternalCalendar,
     View,
 } from "../shared/internal-calendar";
+import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import { MediaWidths } from "../spec/media-spec";
 import { DateInputHelper } from "../util/date-input-helper";
 import { useEventListener } from "../util/use-event-listener";
@@ -63,6 +63,7 @@ export const DateInput = ({
         count: 0,
     });
     const [isError, setIsError] = useState<boolean>(false);
+    const [selectWithinRange, setSelectWithinRange] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<CalendarRef>();
@@ -164,6 +165,8 @@ export const DateInput = ({
     }
 
     const handleChange = (value: string, from: ActionComponent) => {
+        setSelectWithinRange(true);
+
         if (value === INVALID_VALUE || value === "") {
             // update state/calendar
             if (value === "") {
@@ -183,6 +186,11 @@ export const DateInput = ({
 
     const handleFocus = (value: FieldType) => {
         const type = value.split("-")[0] as FocusType;
+
+        if (!calendarOpen) {
+            setSelectWithinRange(false);
+            calendarRef.current.resetView();
+        }
 
         setCalendarOpen(true);
         setCurrentElement({ ...currentElement, field: value, type });
@@ -543,7 +551,7 @@ export const DateInput = ({
             />
             {renderRangeInput()}
             {renderIndicateBar()}
-            <InternalCalendar
+            <AnimatedInternalCalendar
                 ref={calendarRef}
                 type="input"
                 disabledDates={disabledDates}
@@ -559,6 +567,7 @@ export const DateInput = ({
                 onHover={handleHoverDayCell}
                 onSelect={(value) => handleChange(value, "calendar")}
                 onDismiss={handleCalendarAction}
+                selectWithinRange={selectWithinRange}
             />
         </Container>
     );

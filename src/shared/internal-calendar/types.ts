@@ -1,12 +1,10 @@
-import { ActionComponent, DateInputVariant } from "../../date-input";
+import { ActionComponent } from "../../date-input";
 
 export interface InternalCalendarProps extends CommonCalendarProps {
     /** The display type of the component. Values `standalone` | `input` */
     type: "standalone" | "input";
     /** Selected end date in `YYYY-MM-DD` format */
     endValue?: string | undefined;
-    /** Status from date input for calendar. */
-    isOpen?: boolean | undefined;
     /** Specifies if done/cancel buttons are visible */
     withButton?: boolean | undefined;
     /** indicate which component makes the changed from the date input component */
@@ -14,11 +12,18 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     /** Indicate current focus in the date-input component. */
     currentFocus?: FocusType | undefined;
     /** Indicate calendar variant from the date input component. */
-    variant?: DateInputVariant | undefined;
+    variant?: Variant | undefined;
+    /** Selection to respect start or end range. */
+    selectWithinRange?: boolean | undefined;
     /** Function to handle cancel/done .*/
     onDismiss?: ((action: CalendarAction) => void) | undefined;
     /** Current calendar view inform to date input. .*/
     onCalendarView?: ((view: View) => void) | undefined;
+}
+
+export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
+    /** Status from date input for calendar. */
+    isOpen?: boolean | undefined;
 }
 
 export interface CommonCalendarProps {
@@ -45,6 +50,7 @@ export interface CommonCalendarProps {
 
 export interface CalendarRef {
     defaultView: () => void;
+    resetView: () => void;
 }
 
 // =============================================================================
@@ -52,6 +58,7 @@ export interface CalendarRef {
 // =============================================================================
 export type CalendarAction = "reset" | "confirmed";
 export type CalendarType = "standalone" | "input";
+export type Variant = "single" | "range";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 
