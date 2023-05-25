@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { AnimatedDiv } from "./animated-internal-calendar.style";
@@ -9,15 +9,25 @@ const AnimatedComponent = (
     props: AnimatedInternalCalendarProps,
     ref: React.ForwardedRef<CalendarRef>
 ) => {
+    const { isOpen, ...remainingProps } = props;
+    const calendarRef = useRef<CalendarRef>();
     const resizeDetector = useResizeDetector();
     const styles = useSpring({
-        height: props.isOpen ? resizeDetector.height : 0,
+        height: isOpen ? resizeDetector.height : 0,
     });
+
+    useEffect(() => {
+        if (isOpen) {
+            calendarRef.current.defaultView();
+        }
+    }, [isOpen]);
+
+    useImperativeHandle(ref, () => calendarRef.current);
 
     return (
         <AnimatedDiv style={styles}>
-            <div ref={resizeDetector.ref} inert={props.isOpen ? undefined : ""}>
-                <InternalCalendar ref={ref} {...props} />
+            <div ref={resizeDetector.ref} inert={isOpen ? undefined : ""}>
+                <InternalCalendar ref={calendarRef} {...remainingProps} />
             </div>
         </AnimatedDiv>
     );

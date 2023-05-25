@@ -65,22 +65,18 @@ export const Component = (
     // =============================================================================
     // HOOKS
     // =============================================================================
-    useImperativeHandle(
-        ref,
-        () => {
-            return {
-                defaultView() {
-                    setCurrentView("default");
-                    onCalendarView("default");
-                },
-                resetView() {
-                    setCalendarDate(dayjs());
-                    setCurrentView("default");
-                },
-            };
-        },
-        []
-    );
+    useImperativeHandle(ref, () => {
+        return {
+            defaultView() {
+                setCurrentView("default");
+                performOnCalendarView("default");
+            },
+            resetView() {
+                setCalendarDate(dayjs());
+                setCurrentView("default");
+            },
+        };
+    });
 
     // =============================================================================
     // EFFECTS
