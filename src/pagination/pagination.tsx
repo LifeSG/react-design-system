@@ -46,6 +46,9 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
     const options: PageSizeItemProps[] = pageSizeOptions;
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
@@ -55,7 +58,7 @@ const Component = (
         options && options.length >= 1 ? options[0] : null
     );
     const [pageSizeLocal, setPageSize] = useState<number>(
-        showPageSizeChanger
+        !isMobile && showPageSizeChanger
             ? selectedOption
                 ? selectedOption.value
                 : pageSize
@@ -65,15 +68,9 @@ const Component = (
     const boundaryRange = 1;
     const siblingRange = 1;
 
-    const [totalPages, setTotalPages] = useState<number>(
-        Math.ceil(totalItems / pageSizeLocal)
-    );
-
+    const totalPages = Math.ceil(totalItems / pageSizeLocal);
     const isFirstPage = activePage === 1;
     const isLastPage = activePage === totalPages;
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
 
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemClick(1) : undefined;
@@ -103,6 +100,10 @@ const Component = (
             setInputValue(activePage);
         }
     }, [activePage]);
+
+    // useEffect(() => {
+    //     totalPages = selectedOption.value;
+    // }, [selectedOption]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -184,7 +185,7 @@ const Component = (
         const totalPage = Math.ceil(totalItems / pagesize);
 
         setPageSize(pagesize);
-        setTotalPages(totalPage);
+        //setTotalPages(totalPage);
 
         const page = activePage >= totalPage ? totalPage : activePage;
 
