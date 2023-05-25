@@ -46,12 +46,11 @@ export const FullWidthStoryContainer = styled.div`
     padding: 2rem 1.25rem;
 `;
 
-export const FlexWrapper = styled.div`
+export const FlexStoryContainer = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
     padding: 2rem 1.25rem;
-    gap: 3rem;
+    gap: 2rem;
 `;
