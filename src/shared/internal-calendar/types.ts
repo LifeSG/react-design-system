@@ -1,5 +1,4 @@
-import { ActionComponent, DateInputVariant } from "../../date-input";
-import { TimeSlot } from "../../time-slot-bar";
+import { ActionComponent } from "../../date-input";
 
 export interface InternalCalendarProps extends CommonCalendarProps {
     /** The display type of the component. Values `standalone` | `input` */
