@@ -22,7 +22,7 @@ import {
     PaginationMobileInput,
     PaginationWrapper,
 } from "./pagination.styles";
-import { DropdownItemProps, PaginationsProps } from "./types";
+import { PageSizeItemProps, PaginationsProps } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../spec/media-spec";
 import { InputSelect } from "src/input-select";
@@ -35,7 +35,7 @@ const Component = (
         pageSize = 10,
         totalItems,
         activePage,
-        pageSizeOptions,
+        pageSizeOptions = DEFAULT_OPTIONS,
         showFirstAndLastNav,
         showPageSizeChanger = false,
         onPageChange,
@@ -46,15 +46,13 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const options: DropdownItemProps[] = pageSizeOptions
-        ? pageSizeOptions
-        : DEFAULT_OPTIONS;
+    const options: PageSizeItemProps[] = pageSizeOptions;
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
 
-    const [selectedOption, setselectedOption] = useState<DropdownItemProps>(
-        options.length >= 1 ? options[0] : null
+    const [selectedOption, setSelectedOption] = useState<PageSizeItemProps>(
+        options && options.length >= 1 ? options[0] : null
     );
     const [pageSizeLocal, setPageSize] = useState<number>(
         showPageSizeChanger
@@ -70,11 +68,12 @@ const Component = (
     const [totalPages, setTotalPages] = useState<number>(
         Math.ceil(totalItems / pageSizeLocal)
     );
-    const [isFirstPage, setIsFirstPage] = useState<boolean>(activePage === 1);
-    const [isLastPage, setIsLastPage] = useState<boolean>(
-        activePage === totalPages
-    );
-
+    // const [isFirstPage, setIsFirstPage] = useState<boolean>(activePage === 1);
+    // const [isLastPage, setIsLastPage] = useState<boolean>(
+    //     activePage === totalPages
+    // );
+    const isFirstPage = activePage === 1;
+    const isLastPage = activePage === totalPages;
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -182,8 +181,8 @@ const Component = (
         setHoverLeftButton(false);
     };
 
-    const handleListItemClick = (item: DropdownItemProps) => {
-        setselectedOption(item);
+    const handleListItemClick = (item: PageSizeItemProps) => {
+        setSelectedOption(item);
         const pagesize = item.value;
         const totalPage = Math.ceil(totalItems / pagesize);
 
@@ -195,8 +194,8 @@ const Component = (
         if (onPageSizeChange) {
             onPageSizeChange(page, pagesize);
         }
-        setIsFirstPage(activePage === 1);
-        setIsLastPage(activePage === totalPage);
+        // setIsFirstPage(activePage === 1);
+        // setIsLastPage(activePage === totalPage);
     };
     // =============================================================================
     // RENDER FUNCTIONS
@@ -392,7 +391,7 @@ const Component = (
 };
 export const Pagination = React.forwardRef(Component);
 
-const DEFAULT_OPTIONS: DropdownItemProps[] = [
+const DEFAULT_OPTIONS: PageSizeItemProps[] = [
     { value: 10, label: "10 / page" },
     { value: 20, label: "20 / page" },
     { value: 30, label: "30 / page" },

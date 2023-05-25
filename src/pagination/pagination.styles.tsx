@@ -5,6 +5,7 @@ import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
 import { Input } from "../input";
+import { DesignToken } from "../design-token";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -21,6 +22,7 @@ interface ButtonProps {
 
 export const PaginationWrapper = styled.nav`
     display: flex;
+    justify-content: right;
 `;
 
 export const PaginationList = styled.div`
@@ -127,9 +129,7 @@ export const PageItem = styled(Button.Default)<StyleProps>`
             }
         }}
     }
-    :hover,
-    :active,
-    :focus {
+    :hover {
         box-shadow: none;
 
         background: ${(props) =>
@@ -148,6 +148,34 @@ export const PageItem = styled(Button.Default)<StyleProps>`
                 } else {
                     return css`
                         ${TextStyleHelper.getTextStyle("Body", 600)};
+                    `;
+                }
+            }}
+        }
+    }
+
+    :active,
+    :focus {
+        background: ${(props) =>
+            props.$selected ? Color.Primary : Color.Neutral[8]};
+        outline: none;
+        border-color: Color.Accent.Light[1];
+        border-width: 1px solid;
+        box-shadow: inset 0px 0px 4px 1px rgba(161, 87, 255, 0.5);
+        span {
+            color: ${(props) =>
+                props.$selected ? Color.Neutral[8] : Color.Primary};
+
+            ${(props) => {
+                if (props.$selected) {
+                    return css`
+                        // border-color: Color.Primary;
+                        ${TextStyleHelper.getTextStyle("Body", 700)};
+                    `;
+                } else {
+                    return css`
+                        //  border-color: Color.Accent.Light[1];
+                        ${TextStyleHelper.getTextStyle("Body", 400)};
                     `;
                 }
             }}

@@ -5,14 +5,14 @@ export interface PaginationsProps {
     pageSize?: number | undefined;
     totalItems: number;
     activePage: number;
-    pageSizeOptions?: DropdownItemProps[];
+    pageSizeOptions?: PageSizeItemProps[] | undefined;
     showFirstAndLastNav?: boolean | undefined;
     showPageSizeChanger?: boolean | undefined;
     onPageChange?: ((page: number) => void) | undefined;
     onPageSizeChange?: ((page: number, pageSize: number) => void) | undefined;
 }
 
-export interface DropdownItemProps {
+export interface PageSizeItemProps {
     value?: number | undefined;
     label?: string | undefined;
 }

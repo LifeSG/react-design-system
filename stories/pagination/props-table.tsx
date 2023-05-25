@@ -41,8 +41,9 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "pageSizeOptions",
-                description: "Specifies the list for page size options",
-                propTypes: ["DropdownItemProps<T>[]"],
+                description:
+                    "Specifies a list of options that a user can choose from",
+                propTypes: ["PageSizeItemProps<T>[]"],
                 defaultValue:
                     '[ { value: 10, label: "10 / page" }, { value: 20, label: "20 / page" }, { value: 30, label: "30 / page" }]',
             },
@@ -73,7 +74,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "DropdownItemProps",
+        name: "PageSizeItemProps",
         attributes: [
             {
                 name: "value",
