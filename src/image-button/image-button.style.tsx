@@ -1,13 +1,11 @@
 import { MediaQuery } from "../media";
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { DesignToken } from "../design-token/design-token";
 import { TextStyleHelper } from "../text/helper";
 
 export const Main = styled.button<{
     $selected?: boolean;
     $error?: boolean;
-    $minWidth?: string;
 }>`
     display: flex;
     flex: 1;
@@ -20,7 +18,6 @@ export const Main = styled.button<{
     border: 1px solid transparent;
     border-radius: 0.5rem;
     cursor: pointer;
-    min-width: ${({ $minWidth }) => $minWidth};
     max-width: 13rem;
     transition: all 200ms ease;
     ${TextStyleHelper.getTextStyle("Body", "semibold")}
