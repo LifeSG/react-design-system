@@ -154,7 +154,11 @@ export const Component = (
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
-        const targetValue = StringHelper.padValue(event.target.value, true);
+        const targetValue = event.target.value;
+        const paddedValue =
+            targetName !== names[2]
+                ? StringHelper.padValue(targetValue, true)
+                : targetValue;
 
         const date = {
             day: dayValue,
@@ -164,12 +168,12 @@ export const Component = (
 
         switch (targetName) {
             case names[0]:
-                date.day = targetValue;
-                setDayValue(targetValue);
+                date.day = paddedValue;
+                setDayValue(paddedValue);
                 break;
             case names[1]:
-                date.month = targetValue;
-                setMonthValue(targetValue);
+                date.month = paddedValue;
+                setMonthValue(paddedValue);
                 break;
             case names[2]:
             default:
@@ -178,8 +182,8 @@ export const Component = (
 
         const value = `${date.year}-${date.month}-${date.day}`;
         const isValid = dayjs(value, "YYYY-MM-DD", true).isValid();
-        const isPadded =
-            targetName !== names[2] && targetValue !== event.target.value;
+        const isEmpty = !date.day && !date.month && !date.year;
+        const isPadded = targetValue !== paddedValue;
 
         if (isValid && isPadded) {
             onChange(value);
@@ -188,7 +192,7 @@ export const Component = (
         if (!nodeRef.current.contains(event.relatedTarget)) {
             // entire field was blurred
             setCurrentFocus("none");
-            onBlur?.(isValid);
+            onBlur?.(isEmpty || isValid);
         }
     };
 
