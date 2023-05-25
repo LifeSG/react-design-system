@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import React, { useEffect, useImperativeHandle, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { CalendarRef, View } from "../shared/internal-calendar";
 import { InternalCalendarMonth } from "../shared/internal-calendar/internal-calendar-month";
@@ -11,7 +11,6 @@ import {
     ContentBody,
     DropdownButton,
     DropdownText,
-    Header,
     HeaderArrowButton,
     HeaderArrows,
     HeaderInputDropdown,
@@ -21,6 +20,7 @@ import {
 import { TimeSlot } from "../time-slot-bar";
 import { CalendarHelper } from "../util/calendar-helper";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
+import { Header } from "./time-slot-week.styles";
 import { TimeSlotWeekCalendarProps } from "./types";
 
 export const Component = (
@@ -53,18 +53,6 @@ export const Component = (
     // HOOKS
     // =============================================================================
     const resizeDetector = useResizeDetector();
-    useImperativeHandle(
-        ref,
-        () => {
-            return {
-                defaultView() {
-                    setCurrentView("default");
-                    onCalendarView("default");
-                },
-            };
-        },
-        []
-    );
 
     // =============================================================================
     // EFFECTS
@@ -239,6 +227,7 @@ export const Component = (
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
+                    style={{ marginRight: 0 }}
                 >
                     <DropdownText $type={type}>
                         {dayjs(calendarDate).endOf("week").format("MMM")}
