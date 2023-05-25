@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { CalendarAction, CalendarRef, View } from "../shared/internal-calendar";
+import { CalendarAction, CalendarRef } from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
-import { StandaloneDateInput } from "../shared/standalone-date-input/standalone-date-input";
+import {
+    StandaloneDateInput,
+    StandaloneDateInputRef,
+} from "../shared/standalone-date-input/standalone-date-input";
 import { MediaWidths } from "../spec/media-spec";
 import { useEventListener } from "../util/use-event-listener";
 import { Container } from "./date-input.style";
@@ -30,10 +33,10 @@ export const DateInput = ({
     const [selectedDate, setSelectedDate] = useState<string>(value);
     const [hoveredDate, setHoveredDate] = useState<string>(undefined);
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
-    const [calendarView, setCalendarView] = useState<View>("default");
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<CalendarRef>();
+    const inputRef = useRef<StandaloneDateInputRef>();
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -55,27 +58,36 @@ export const DateInput = ({
      * https://stackoverflow.com/questions/65125665/new-event-doesnt-have-latest-state-value-updated-by-previous-event
      */
 
-    useEventListener("keydown", handleKeyDown, nodeRef.current);
+    useEventListener("keydown", handleContainerKeyDown, nodeRef.current);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    function handleKeyDown(event: KeyboardEvent) {
-        if (event.code === "Escape") {
+    const handleContainerBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+        if (nodeRef && !nodeRef.current.contains(event.relatedTarget)) {
+            inputRef.current.resetInput();
             setSelectedDate(initialDate);
             setCalendarOpen(false);
+            performOnBlurHandler();
         }
+    };
 
-        if (event.code === "Enter" && !withButton) {
-            setInitialDate(selectedDate);
-            performOnChangeHandler(selectedDate);
+    function handleContainerKeyDown(event: KeyboardEvent) {
+        if (event.code === "Escape") {
+            inputRef.current.resetInput();
+            setSelectedDate(initialDate);
             setCalendarOpen(false);
         }
     }
 
     const handleChange = (value: string) => {
         setSelectedDate(value);
-        handleFocusElement(value);
+
+        if (value && !withButton) {
+            setInitialDate(value);
+            setCalendarOpen(false);
+            performOnChangeHandler(value);
+        }
     };
 
     const handleFocus = () => {
@@ -86,40 +98,23 @@ export const DateInput = ({
         }
     };
 
-    const handleBlur = () => {
-        // probably should be optional
-    };
-
     const handleHoverDayCell = (value: string) => {
         setHoveredDate(value);
     };
 
     const handleCalendarAction = (buttonAction: CalendarAction) => {
-        if (["month-options", "year-options"].includes(calendarView)) {
-            // handle button in month/year calendar view
-            handleMonthYearCalendarAction();
-
-            return;
-        }
-
         // handle button in day calendar view
         switch (buttonAction) {
             case "reset":
+                setSelectedDate(initialDate);
                 break;
             case "confirmed":
-                performOnChangeHandler();
+                setInitialDate(selectedDate);
+                performOnChangeHandler(selectedDate);
                 break;
         }
 
         setCalendarOpen(false);
-    };
-
-    const handleMonthYearCalendarAction = () => {
-        calendarRef.current.defaultView();
-    };
-
-    const handleCalendarView = (calendarView: View) => {
-        setCalendarView(calendarView);
     };
 
     // =============================================================================
@@ -137,26 +132,6 @@ export const DateInput = ({
         }
     };
 
-    const handleBlurContainer = (event: React.FocusEvent<HTMLDivElement>) => {
-        if (nodeRef && !nodeRef.current.contains(event.relatedTarget)) {
-            performOnBlurHandler();
-            setCalendarOpen(false);
-        }
-    };
-
-    const handleFocusElement = (value?: string) => {
-        const isValid = !!value;
-
-        // closed calendar in without button calendar if it
-        // - after selection in single value calendar
-        // - both valid value in range selection
-        if (!withButton && isValid) {
-            setCalendarOpen(false);
-            performOnChangeHandler(value);
-            return;
-        }
-    };
-
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -164,19 +139,19 @@ export const DateInput = ({
         <Container
             ref={nodeRef}
             $disabled={disabled}
+            $readOnly={readOnly}
             $error={error}
             id={id}
             data-testid={otherProps["data-testid"]}
-            $readOnly={readOnly}
-            onBlur={handleBlurContainer}
             tabIndex={-1}
+            onBlur={handleContainerBlur}
             {...otherProps}
         >
             <StandaloneDateInput
+                ref={inputRef}
                 disabled={disabled}
                 onChange={handleChange}
                 onFocus={handleFocus}
-                onBlur={handleBlur}
                 readOnly={readOnly}
                 focused={calendarOpen}
                 names={["start-day", "start-month", "start-year"]}
@@ -186,14 +161,13 @@ export const DateInput = ({
             <AnimatedInternalCalendar
                 ref={calendarRef}
                 type="input"
-                disabledDates={disabledDates}
+                variant="single"
                 isOpen={calendarOpen}
                 withButton={withButton}
                 value={selectedDate}
+                disabledDates={disabledDates}
                 minDate={between && between[0]} // FIXME: Handle refactoring of between prop to minDate and maxDate
                 maxDate={between && between[1]} // FIXME: Same as above
-                variant="single"
-                onCalendarView={handleCalendarView}
                 onHover={handleHoverDayCell}
                 onSelect={handleChange}
                 onDismiss={handleCalendarAction}

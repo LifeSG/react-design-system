@@ -33,7 +33,7 @@ interface Props {
     label?: string | undefined;
     onChange: (value: string) => void;
     onFocus: () => void;
-    onBlur: (valid: boolean) => void;
+    onBlur?: ((valid: boolean) => void) | undefined;
 }
 
 export interface StandaloneDateInputRef {
@@ -188,7 +188,7 @@ export const Component = (
         if (!nodeRef.current.contains(event.relatedTarget)) {
             // entire field was blurred
             setCurrentFocus("none");
-            onBlur(isValid);
+            onBlur?.(isValid);
         }
     };
 
