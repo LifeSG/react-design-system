@@ -22,7 +22,6 @@ interface ButtonProps {
 
 export const PaginationWrapper = styled.nav`
     display: flex;
-    justify-content: right;
 `;
 
 export const PaginationList = styled.div`
@@ -161,7 +160,7 @@ export const PageItem = styled(Button.Default)<StyleProps>`
         outline: none;
         border-color: Color.Accent.Light[1];
         border-width: 1px solid;
-        box-shadow: inset 0px 0px 4px 1px rgba(161, 87, 255, 0.5);
+        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
         span {
             color: ${(props) =>
                 props.$selected ? Color.Neutral[8] : Color.Primary};
