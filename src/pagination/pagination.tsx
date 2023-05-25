@@ -101,10 +101,6 @@ const Component = (
         }
     }, [activePage]);
 
-    // useEffect(() => {
-    //     totalPages = selectedOption.value;
-    // }, [selectedOption]);
-
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -185,7 +181,6 @@ const Component = (
         const totalPage = Math.ceil(totalItems / pagesize);
 
         setPageSize(pagesize);
-        //setTotalPages(totalPage);
 
         const page = activePage >= totalPage ? totalPage : activePage;
 
