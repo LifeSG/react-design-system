@@ -169,6 +169,7 @@ export const DateInput = ({
                 ref={calendarRef}
                 type="input"
                 variant="single"
+                currentFocus={calendarOpen ? "start" : "none"}
                 isOpen={calendarOpen}
                 withButton={withButton}
                 value={selectedDate}
