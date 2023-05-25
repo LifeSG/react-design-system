@@ -7,6 +7,7 @@ import {
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
 import { MediaWidths } from "../spec/media-spec";
+import { DateInputHelper } from "../util/date-input-helper";
 import { useEventListener } from "../util/use-event-listener";
 import { Container } from "./date-input.style";
 import { DateInputProps } from "./types";
@@ -80,13 +81,19 @@ export const DateInput = ({
         }
     }
 
-    const handleChange = (value: string) => {
-        setSelectedDate(value);
+    const handleChange = (val: string) => {
+        if (DateInputHelper.isDateDisabled(val, { disabledDates, between })) {
+            return;
+        }
 
-        if (value && !withButton) {
-            setInitialDate(value);
-            setCalendarOpen(false);
-            performOnChangeHandler(value);
+        setSelectedDate(val);
+
+        if (!withButton) {
+            performOnChangeHandler(val);
+            setInitialDate(val);
+            if (val) {
+                setCalendarOpen(false);
+            }
         }
     };
 

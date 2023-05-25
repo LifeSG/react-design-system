@@ -418,10 +418,11 @@ export const Component = (
 
         switch (variant) {
             case "single":
-                isDisabled = selectedStartDate ? false : true;
+                isDisabled = false;
                 break;
             case "range":
-                isDisabled = !selectedStartDate || !selectedEndDate;
+                // ensure both are empty or complete at the same time
+                isDisabled = !!selectedStartDate !== !!selectedEndDate;
                 break;
         }
 
