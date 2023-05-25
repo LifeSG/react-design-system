@@ -5,7 +5,7 @@ import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
 import { Input } from "../input";
-import { DesignToken } from "../design-token";
+
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -16,10 +16,10 @@ interface StyleProps {
 interface ButtonProps {
     $position: string;
 }
+
 // =============================================================================
 // STYLING
 // =============================================================================
-
 export const PaginationWrapper = styled.nav`
     display: flex;
 `;
@@ -46,7 +46,7 @@ export const NavigationItem = styled(IconButton)`
     padding: 0.625rem;
     justify-content: center;
     align-items: center;
-
+    border-radius: 0.25rem;
     color: ${Color.Primary};
 
     svg {
@@ -57,6 +57,11 @@ export const NavigationItem = styled(IconButton)`
     &:disabled {
         color: ${Color.Neutral[4]};
         cursor: not-allowed;
+    }
+    :active,
+    :focus {
+        outline: none;
+        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
     }
 `;
 
@@ -65,7 +70,7 @@ export const NavigationButton = styled(IconButton)<ButtonProps>`
     padding: 0.625rem;
     justify-content: center;
     align-items: center;
-
+    border-radius: 0.25rem;
     color: ${Color.Primary};
 
     svg {
@@ -76,6 +81,11 @@ export const NavigationButton = styled(IconButton)<ButtonProps>`
     &:disabled {
         color: ${Color.Neutral[4]};
         cursor: not-allowed;
+    }
+    :active,
+    :focus {
+        outline: none;
+        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
     }
     ${(props) => {
         if (props.$position === "left") {
@@ -158,8 +168,6 @@ export const PageItem = styled(Button.Default)<StyleProps>`
         background: ${(props) =>
             props.$selected ? Color.Primary : Color.Neutral[8]};
         outline: none;
-        border-color: Color.Accent.Light[1];
-        border-width: 1px solid;
         box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
         span {
             color: ${(props) =>
@@ -168,12 +176,10 @@ export const PageItem = styled(Button.Default)<StyleProps>`
             ${(props) => {
                 if (props.$selected) {
                     return css`
-                        // border-color: Color.Primary;
                         ${TextStyleHelper.getTextStyle("Body", 700)};
                     `;
                 } else {
                     return css`
-                        //  border-color: Color.Accent.Light[1];
                         ${TextStyleHelper.getTextStyle("Body", 400)};
                     `;
                 }
@@ -196,12 +202,16 @@ export const EllipsisItem = styled(IconButton)`
         width: 1.25rem;
     }
 
-    :hover,
-    :active,
-    :focus {
+    :hover {
         svg {
             color: ${Color.Neutral[3]};
         }
+    }
+
+    :active,
+    :focus {
+        outline: none;
+        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
     }
 `;
 

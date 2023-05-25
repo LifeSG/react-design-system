@@ -68,10 +68,7 @@ const Component = (
     const [totalPages, setTotalPages] = useState<number>(
         Math.ceil(totalItems / pageSizeLocal)
     );
-    // const [isFirstPage, setIsFirstPage] = useState<boolean>(activePage === 1);
-    // const [isLastPage, setIsLastPage] = useState<boolean>(
-    //     activePage === totalPages
-    // );
+
     const isFirstPage = activePage === 1;
     const isLastPage = activePage === totalPages;
     const isMobile = useMediaQuery({
@@ -194,8 +191,6 @@ const Component = (
         if (onPageSizeChange) {
             onPageSizeChange(page, pagesize);
         }
-        // setIsFirstPage(activePage === 1);
-        // setIsLastPage(activePage === totalPage);
     };
     // =============================================================================
     // RENDER FUNCTIONS
