@@ -3,13 +3,17 @@ import { StringHelper } from "./string-helper";
 // =============================================================================
 // INTERFACES
 // =============================================================================
-export type Period = "AM" | "PM";
 export type TimeFormat = "12hr" | "24hr";
+
+export enum EPeriod {
+    AM = "AM",
+    PM = "PM",
+}
 
 export interface TimeValues {
     hour: string;
     minute: string;
-    period: Period;
+    period: EPeriod;
 }
 
 // unexportable
@@ -31,7 +35,7 @@ export namespace TimeHelper {
         const timeValues: TimeValues = {
             hour: "",
             minute: "",
-            period: "AM",
+            period: EPeriod.AM,
         };
 
         if (!value) return timeValues;
@@ -46,13 +50,13 @@ export namespace TimeHelper {
                 const hour = parseInt(plain.hour);
 
                 if (Math.floor(hour / 12) === 0) {
-                    timeValues.period = "AM";
+                    timeValues.period = EPeriod.AM;
                     timeValues.hour =
                         hour === 0
                             ? "12"
                             : StringHelper.padValue(hour.toString());
                 } else {
-                    timeValues.period = "PM";
+                    timeValues.period = EPeriod.PM;
                     timeValues.hour =
                         hour === 12
                             ? hour.toString()
@@ -64,7 +68,9 @@ export namespace TimeHelper {
                 timeValues.hour = StringHelper.padValue(plain.hour);
                 timeValues.minute = StringHelper.padValue(plain.minute);
                 timeValues.period =
-                    plain.period.toLowerCase() === "am" ? "AM" : "PM";
+                    plain.period.toLowerCase() === "am"
+                        ? EPeriod.AM
+                        : EPeriod.PM;
             }
 
             return timeValues;
@@ -137,7 +143,7 @@ export namespace TimeHelper {
         const hour = parseInt(values.hour);
         let hourString: string;
 
-        if (values.period === "PM") {
+        if (values.period === EPeriod.PM) {
             hourString = hour === 12 ? hour.toString() : (hour + 12).toString();
         } else {
             hourString = hour === 12 ? "00" : values.hour;
