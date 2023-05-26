@@ -35,6 +35,6 @@ interface YearMonthWeekDisplay {
 
 export interface TimeSlotWeekCalendarProps
     extends TimeSlotWeekProps,
-        Omit<InternalCalendarProps, "onYearMonthDisplayChange"> {
+        Omit<InternalCalendarProps, "onYearMonthDisplayChange" | "type"> {
     onWeekDisplayChange?: ((value: YearMonthWeekDisplay) => void) | undefined;
 }

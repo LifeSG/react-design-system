@@ -31,7 +31,6 @@ export const TimeSlotWeekView = ({
     return (
         <Wrapper>
             <TimeSlotWeekCalendar
-                type="weekly"
                 slots={slots}
                 showNavigationHeader={showNavigationHeader}
                 enableSelection={enableSelection}
