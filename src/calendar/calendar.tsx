@@ -1,21 +1,38 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { InternalCalendar } from "../shared/internal-calendar";
 import { Color } from "../color";
 import { CalendarProps } from "./types";
 
-export const Calendar = ({ className, ...otherProps }: CalendarProps) => {
+export const Calendar = ({
+    className,
+    styleType = "bordered",
+    ...otherProps
+}: CalendarProps) => {
     return (
-        <Wrapper className={className}>
+        <Wrapper className={className} $hasBorder={styleType === "bordered"}>
             <InternalCalendar type="standalone" {...otherProps} />
         </Wrapper>
     );
 };
 
 // =============================================================================
+// STYLE INTERFACE
+// =============================================================================
+interface StyleProps {
+    $hasBorder?: boolean;
+}
+
+// =============================================================================
 // STYLING
 // =============================================================================
-const Wrapper = styled.div`
+const Wrapper = styled.div<StyleProps>`
     width: 41rem;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 12px;
+    ${(props) => {
+        if (props.$hasBorder) {
+            return css`
+                border: 1px solid ${Color.Neutral[5](props)};
+                border-radius: 12px;
+            `;
+        }
+    }}
 `;

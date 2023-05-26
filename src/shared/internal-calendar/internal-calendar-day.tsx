@@ -31,7 +31,7 @@ type HoverDirection =
 interface CalendarDayProps
     extends Pick<
         InternalCalendarProps,
-        "disabledDates" | "variant" | "between"
+        "disabledDates" | "variant" | "minDate" | "maxDate"
     > {
     selectedStartDate: string;
     selectedEndDate: string;
@@ -53,7 +53,8 @@ export const InternalCalendarDay = ({
     onHover,
     type,
     isNewSelection,
-    between,
+    minDate,
+    maxDate,
     variant,
 }: CalendarDayProps) => {
     // =============================================================================
@@ -103,8 +104,11 @@ export const InternalCalendarDay = ({
     };
 
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange =
-            between && !day.isBetween(between[0], between[1], "day", "[]");
+        const isWithinRange = CalendarHelper.isWithinRange(
+            day,
+            minDate ? dayjs(minDate) : undefined,
+            maxDate ? dayjs(maxDate) : undefined
+        );
 
         const isDisabledDate =
             disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
@@ -122,7 +126,7 @@ export const InternalCalendarDay = ({
             isNewSelection;
 
         return (
-            isOutsideBetweenRange ||
+            !isWithinRange ||
             isDisabledDate ||
             isStartAfterEnd ||
             isEndBeforeStart

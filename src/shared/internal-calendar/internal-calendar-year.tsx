@@ -10,7 +10,8 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
+interface Props
+    extends Pick<InternalCalendarProps, "type" | "minDate" | "maxDate"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -28,7 +29,8 @@ export const InternalCalendarYear = ({
     viewCalendarDate,
     type,
     isNewSelection,
-    between,
+    minDate,
+    maxDate,
     onYearSelect,
 }: Props) => {
     // =============================================================================
@@ -52,8 +54,12 @@ export const InternalCalendarYear = ({
     // HELPER FUNCTIONS
     // =============================================================================
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange =
-            between && !day.isBetween(between[0], between[1], "year", "[]");
+        const isWithinRange = CalendarHelper.isWithinRange(
+            day,
+            minDate ? dayjs(minDate) : undefined,
+            maxDate ? dayjs(maxDate) : undefined,
+            "year"
+        );
 
         const isStartAfterEnd =
             currentFocus === "start" &&
@@ -67,7 +73,7 @@ export const InternalCalendarYear = ({
             day.isBefore(selectedStartDate, "year") &&
             isNewSelection;
 
-        return isOutsideBetweenRange || isStartAfterEnd || isEndBeforeStart;
+        return !isWithinRange || isStartAfterEnd || isEndBeforeStart;
     };
 
     const generateYearStatus = (date: Dayjs) => {

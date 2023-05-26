@@ -10,17 +10,14 @@ import {
     ArrowLeft,
     ArrowRight,
     Container,
-    ContentBody,
     DropdownButton,
     DropdownText,
     Header,
     HeaderArrowButton,
     HeaderArrows,
-    HeaderDropdown,
     HeaderInputDropdown,
     IconChevronDown,
     OptionsOverlay,
-    SideArrowButton,
     ToggleZone,
 } from "./internal-calendar.style";
 import {
@@ -44,7 +41,8 @@ export const Component = (
         currentFocus,
         withButton,
         variant,
-        between,
+        minDate,
+        maxDate,
         type = "standalone",
         selectWithinRange = true,
         ...otherProps
@@ -359,10 +357,11 @@ export const Component = (
                         type={type}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
+                        minDate={minDate}
+                        maxDate={maxDate}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        between={between}
                         isNewSelection={selectWithinRange}
                         onMonthSelect={handleMonthYearSelect}
                     />
@@ -373,10 +372,11 @@ export const Component = (
                         type={type}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
+                        minDate={minDate}
+                        maxDate={maxDate}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        between={between}
                         isNewSelection={selectWithinRange}
                         onYearSelect={handleMonthYearSelect}
                     />
@@ -387,38 +387,27 @@ export const Component = (
     };
 
     const renderHeader = () => {
-        switch (type) {
-            case "standalone":
-                return (
-                    <HeaderDropdown>{renderDropdownButtons()}</HeaderDropdown>
-                );
-            case "input":
-                return (
-                    <Header>
-                        <HeaderInputDropdown>
-                            {renderDropdownButtons()}
-                        </HeaderInputDropdown>
-                        <HeaderArrows>
-                            <HeaderArrowButton
-                                tabIndex={-1}
-                                onClick={handleLeftArrowClick}
-                            >
-                                <ArrowLeft />
-                            </HeaderArrowButton>
-                            <HeaderArrowButton
-                                tabIndex={-1}
-                                onClick={handleRightArrowClick}
-                            >
-                                <ArrowRight />
-                            </HeaderArrowButton>
-                        </HeaderArrows>
-                    </Header>
-                );
-            default:
-                return (
-                    <HeaderDropdown>{renderDropdownButtons()}</HeaderDropdown>
-                );
-        }
+        return (
+            <Header $type={type}>
+                <HeaderInputDropdown>
+                    {renderDropdownButtons()}
+                </HeaderInputDropdown>
+                <HeaderArrows>
+                    <HeaderArrowButton
+                        tabIndex={-1}
+                        onClick={handleLeftArrowClick}
+                    >
+                        <ArrowLeft />
+                    </HeaderArrowButton>
+                    <HeaderArrowButton
+                        tabIndex={-1}
+                        onClick={handleRightArrowClick}
+                    >
+                        <ArrowRight />
+                    </HeaderArrowButton>
+                </HeaderArrows>
+            </Header>
+        );
     };
 
     const renderActionButtons = () => {
@@ -468,44 +457,27 @@ export const Component = (
             $type={type}
             {...otherProps}
         >
-            {type === "standalone" && (
-                <SideArrowButton
-                    $direction="left"
-                    onClick={handleLeftArrowClick}
-                >
-                    <ArrowLeft />
-                </SideArrowButton>
-            )}
-            <ContentBody>
-                {renderHeader()}
-                <ToggleZone>
-                    <InternalCalendarDay
-                        type={type}
-                        calendarDate={calendarDate}
-                        currentFocus={currentFocus}
-                        disabledDates={disabledDates}
-                        selectedStartDate={selectedStartDate}
-                        selectedEndDate={selectedEndDate}
-                        variant={variant}
-                        between={between}
-                        isNewSelection={selectWithinRange}
-                        onSelect={handleDateSelect}
-                        onHover={handleHover}
-                    />
-                    <OptionsOverlay $visible={currentView !== "default"}>
-                        {renderOptionsOverlay()}
-                    </OptionsOverlay>
-                </ToggleZone>
-                {renderActionButtons()}
-            </ContentBody>
-            {type === "standalone" && (
-                <SideArrowButton
-                    $direction="right"
-                    onClick={handleRightArrowClick}
-                >
-                    <ArrowRight />
-                </SideArrowButton>
-            )}
+            {renderHeader()}
+            <ToggleZone>
+                <InternalCalendarDay
+                    type={type}
+                    calendarDate={calendarDate}
+                    currentFocus={currentFocus}
+                    disabledDates={disabledDates}
+                    selectedStartDate={selectedStartDate}
+                    selectedEndDate={selectedEndDate}
+                    variant={variant}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    isNewSelection={selectWithinRange}
+                    onSelect={handleDateSelect}
+                    onHover={handleHover}
+                />
+                <OptionsOverlay $visible={currentView !== "default"}>
+                    {renderOptionsOverlay()}
+                </OptionsOverlay>
+            </ToggleZone>
+            {renderActionButtons()}
         </Container>
     );
 };

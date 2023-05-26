@@ -1,4 +1,11 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs, { Dayjs, OpUnitType } from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+
+dayjs.extend(isBetween);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 export namespace CalendarHelper {
     export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
@@ -49,6 +56,32 @@ export namespace CalendarHelper {
             beginDecade,
             endDecade,
         };
+    };
+
+    /**
+     * Returns if a date is within a min and max date (inclusive)
+     *
+     * If only minDate is provided, then it will return true if
+     * same or after.
+     *
+     * If only maxDate is provided, then it will return true if
+     * same or before.
+     */
+    export const isWithinRange = (
+        day: Dayjs,
+        minDate?: Dayjs,
+        maxDate?: Dayjs,
+        unit: OpUnitType = "day"
+    ) => {
+        if (!minDate && !maxDate) {
+            return true;
+        } else if (minDate && maxDate) {
+            return day.isBetween(minDate, maxDate, unit, "[]");
+        } else if (minDate) {
+            return day.isSameOrAfter(minDate, unit);
+        } else {
+            return day.isSameOrBefore(maxDate, unit);
+        }
     };
 }
 

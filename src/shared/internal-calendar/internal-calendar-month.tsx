@@ -6,7 +6,8 @@ import { FocusType, InternalCalendarProps } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
-interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
+interface Props
+    extends Pick<InternalCalendarProps, "type" | "minDate" | "maxDate"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -24,7 +25,8 @@ export const InternalCalendarMonth = ({
     viewCalendarDate,
     type,
     isNewSelection,
-    between,
+    minDate,
+    maxDate,
     onMonthSelect,
 }: Props) => {
     // =============================================================================
@@ -48,8 +50,12 @@ export const InternalCalendarMonth = ({
     // HELPER FUNCTIONS
     // =============================================================================
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange =
-            between && !day.isBetween(between[0], between[1], "month", "[]");
+        const isWithinRange = CalendarHelper.isWithinRange(
+            day,
+            minDate ? dayjs(minDate) : undefined,
+            maxDate ? dayjs(maxDate) : undefined,
+            "month"
+        );
 
         const isStartAfterEnd =
             currentFocus === "start" &&
@@ -63,7 +69,7 @@ export const InternalCalendarMonth = ({
             day.isBefore(selectedStartDate, "month") &&
             isNewSelection;
 
-        return isOutsideBetweenRange || isStartAfterEnd || isEndBeforeStart;
+        return !isWithinRange || isStartAfterEnd || isEndBeforeStart;
     };
 
     const generateMonthStatus = (date: Dayjs) => {
