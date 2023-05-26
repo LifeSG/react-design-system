@@ -25,13 +25,12 @@ export interface DateInputProps {
      */
     between?: [string, string] | undefined;
     /**
-     * Function that returns when a valid selection is made. Returns the start and
-     * end date in "YYYY-MM-DD" string format.
+     * Function that returns when a valid selection is made. Returns the start
+     * date in "YYYY-MM-DD" string format.
      */
     onChange?: ((value: string) => void) | undefined;
     /**
-     * Function that returns when a defocus is made on the field. Returns the start and
-     * end date in "YYYY-MM-DD" string format.
+     * Function that returns when a defocus is made on the field
      */
     onBlur?: (() => void) | undefined;
 }
