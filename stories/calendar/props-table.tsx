@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
 const STRING_FORMAT = (
@@ -69,6 +69,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "styleType",
+                description:
+                    "Specifies the style type of the component, particularly if a border is to be rendered",
+                propTypes: [`"bordered"`, `"no-border"`],
+                defaultValue: `"bordered"`,
+            },
+            {
                 name: "onYearMonthDisplayChange",
                 description:
                     "Called when there is a change in the current visible month and year",
@@ -90,9 +97,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Called when the user selected a value from the calendar.
-                        Returns value in the&nbsp;{STRING_FORMAT}. Should the
-                        value be invalid, the&nbsp; &lsquo;Invalid Date&rsquo;
-                        value will be returned
+                        Returns value in the&nbsp;{STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
@@ -105,9 +110,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "year",
                 description: (
-                    <>
-                        The current visible year in <code>YYYY</code> format
-                    </>
+                    <>The current visible year in {code("YYYY")} format</>
                 ),
                 propTypes: ["number"],
             },
