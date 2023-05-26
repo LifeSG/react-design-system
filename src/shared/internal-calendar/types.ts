@@ -29,9 +29,6 @@ export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
 export interface CommonCalendarProps {
     /** Selected start date in `YYYY-MM-DD` format */
     value?: string | undefined;
-    /** Restrict selection to within this date range,
-     * in `YYYY-MM-DD` format. Example: `["2023-03-15", "2023-04-19"]` */
-    between?: [string, string] | undefined;
     /**
      * The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
      */
