@@ -2,7 +2,7 @@ import { ActionComponent } from "../../date-input";
 
 export interface InternalCalendarProps extends CommonCalendarProps {
     /** The display type of the component. Values `standalone` | `input` */
-    type: "standalone" | "input" | "weekly";
+    type: "standalone" | "input";
     /** Selected end date in `YYYY-MM-DD` format */
     endValue?: string | undefined;
     /** Specifies if done/cancel buttons are visible */
@@ -57,7 +57,7 @@ export interface CalendarRef {
 // Types use in InternalCalendarProps
 // =============================================================================
 export type CalendarAction = "reset" | "confirmed";
-export type CalendarType = "standalone" | "input" | "weekly";
+export type CalendarType = "standalone" | "input";
 export type Variant = "single" | "range";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";

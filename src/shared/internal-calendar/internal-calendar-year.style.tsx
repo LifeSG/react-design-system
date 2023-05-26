@@ -31,7 +31,6 @@ export const Wrapper = styled.div<WrapperStyleProps>`
                     grid-template-rows: repeat(4, 4rem);
                     gap: 0.5rem 2rem;
                 `;
-            case "weekly":
             case "input":
                 return css`
                     grid-template-rows: repeat(4, 4.375rem);

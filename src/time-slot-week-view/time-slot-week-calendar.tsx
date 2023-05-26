@@ -7,7 +7,6 @@ import { InternalCalendarYear } from "../shared/internal-calendar/internal-calen
 import {
     ArrowLeft,
     ArrowRight,
-    Container,
     ContentBody,
     DropdownButton,
     DropdownText,
@@ -19,8 +18,8 @@ import {
 } from "../shared/internal-calendar/internal-calendar.style";
 import { TimeSlot } from "../time-slot-bar";
 import { CalendarHelper } from "../util/calendar-helper";
+import { Container, Header } from "./time-slot-week-calendar.style";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
-import { Header } from "./time-slot-week.styles";
 import { TimeSlotWeekCalendarProps } from "./types";
 
 export const Component = (
@@ -37,7 +36,6 @@ export const Component = (
         enableSelection,
         onSlotClick,
         currentCalendarDate,
-        type = "weekly",
         ...otherProps
     }: TimeSlotWeekCalendarProps,
     ref: React.ForwardedRef<CalendarRef>
@@ -221,14 +219,14 @@ export const Component = (
                 <DropdownButton
                     type="button"
                     tabIndex={-1}
-                    $type={type}
+                    $type={"standalone"}
                     $expandedDisplay={currentView === "month-options"}
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
                     style={{ marginRight: 0 }}
                 >
-                    <DropdownText $type={type}>
+                    <DropdownText $type={"input"}>
                         {dayjs(calendarDate).endOf("week").format("MMM")}
                     </DropdownText>
                     <IconChevronDown />
@@ -236,12 +234,12 @@ export const Component = (
                 <DropdownButton
                     type="button"
                     tabIndex={-1}
-                    $type={type}
+                    $type={"standalone"}
                     $expandedDisplay={currentView !== "default"}
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
                 >
-                    <DropdownText $type={type}>
+                    <DropdownText $type={"input"}>
                         {getYearHeaderText()}
                     </DropdownText>
                     <IconChevronDown />
@@ -255,7 +253,7 @@ export const Component = (
             case "month-options":
                 return (
                     <InternalCalendarMonth
-                        type={type}
+                        type={"input"}
                         calendarDate={calendarDate}
                         selectedStartDate={selectedDate}
                         viewCalendarDate={viewCalendarDate}
@@ -267,7 +265,7 @@ export const Component = (
             case "year-options":
                 return (
                     <InternalCalendarYear
-                        type={type}
+                        type={"input"}
                         calendarDate={calendarDate}
                         selectedStartDate={selectedDate}
                         viewCalendarDate={viewCalendarDate}
@@ -283,12 +281,10 @@ export const Component = (
 
     const renderHeader = () => {
         const disableLeftArrow =
-            type === "weekly" &&
             between &&
             between.length > 0 &&
             dayjs(calendarDate).startOf("week") < dayjs(between[0]);
         const disableRightArrow =
-            type === "weekly" &&
             between &&
             between.length > 1 &&
             dayjs(calendarDate).endOf("week") > dayjs(between[1]);
@@ -325,7 +321,6 @@ export const Component = (
                 ref={resizeDetector.ref}
                 tabIndex={-1}
                 data-id="calendar-container"
-                $type={type}
                 {...otherProps}
             >
                 <ContentBody>
@@ -333,7 +328,6 @@ export const Component = (
                     <ToggleZone>
                         {currentView === "default" && (
                             <TimeSlotWeekDays
-                                type={type}
                                 calendarDate={calendarDate}
                                 disabledDates={disabledDates}
                                 selectedDate={selectedDate}

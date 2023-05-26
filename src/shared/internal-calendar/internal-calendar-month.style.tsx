@@ -32,7 +32,6 @@ export const Wrapper = styled.div<WrapperStyleProps>`
                 return css`
                     gap: 0.5rem 2.5rem;
                 `;
-            case "weekly":
             case "input":
                 return css`
                     gap: 0.5rem 2rem;

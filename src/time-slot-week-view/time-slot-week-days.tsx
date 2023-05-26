@@ -11,13 +11,10 @@ import {
 import { TimeSlot } from "../time-slot-bar/types";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import {
-    DayLabel,
     GrowDayCell,
-    HeaderCell,
     InteractiveCircle,
     RowDayCell,
     StyleProps,
-    Wrapper,
 } from "../shared/internal-calendar/internal-calendar-day.style";
 import { Text } from "../text/text";
 import {
@@ -25,6 +22,11 @@ import {
     TimeSlotText,
     TimeSlotWrapper,
 } from "./time-slot-week.styles";
+import {
+    DayLabelWeek,
+    HeaderCellWeek,
+    Wrapper,
+} from "./time-slot-week-days.style";
 dayjs.extend(isBetween);
 
 export type DayVariant = "default" | "other-month" | "today";
@@ -37,7 +39,6 @@ interface TimeSlotWeekDaysProps
     selectedDate: string;
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    type: CalendarType;
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     slots?: { [date: string]: TimeSlot[] } | undefined;
@@ -62,7 +63,6 @@ export const TimeSlotWeekDays = ({
     disabledDates,
     selectedDate,
     onSelect,
-    type,
     between,
     slots: daySlots,
     enableSelection = true,
@@ -129,11 +129,11 @@ export const TimeSlotWeekDays = ({
     // =============================================================================
     const renderWeek = () => {
         return currentCalendarWeek.map((day, index) => (
-            <HeaderCell $type={type} key={`week-day-${index}`}>
+            <HeaderCellWeek key={`week-day-${index}`}>
                 <Text.XSmall weight={"semibold"}>
                     {dayjs(day).format("ddd")}
                 </Text.XSmall>
-            </HeaderCell>
+            </HeaderCellWeek>
         ));
     };
 
@@ -158,18 +158,17 @@ export const TimeSlotWeekDays = ({
                                 }
                                 {...styleCircleProps}
                             >
-                                <DayLabel
+                                <DayLabelWeek
                                     weight={
                                         styleLabelProps["$selected"]
                                             ? "semibold"
                                             : "regular"
                                     }
                                     $variant={variant}
-                                    $calenderType={type}
                                     {...styleLabelProps}
                                 >
                                     {day.format("D")}
-                                </DayLabel>
+                                </DayLabelWeek>
                             </InteractiveCircle>
                         </GrowDayCell>
                     );
@@ -253,7 +252,7 @@ export const TimeSlotWeekDays = ({
     };
 
     return (
-        <Wrapper $type={type}>
+        <Wrapper>
             {renderHeader()}
             {renderWeek()}
             {renderTimeSlotBarCells()}

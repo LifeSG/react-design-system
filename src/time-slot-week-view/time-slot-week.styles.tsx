@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { MediaQuery } from "../media/media";
 import { TextStyleHelper } from "../text";
 
 export const ColumnWeekCell = styled.div`
@@ -31,14 +30,4 @@ export const TimeSlotWrapper = styled.div`
 
 export const Wrapper = styled.div`
     min-width: 18.5rem;
-`;
-
-export const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding: 0 1.25rem;
-    }
 `;

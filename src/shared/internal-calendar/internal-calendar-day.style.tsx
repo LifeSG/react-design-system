@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
-import { CalendarType, View } from "./types";
+import { CalendarType } from "./types";
 
 export interface StyleProps {
     $disabled?: boolean;
@@ -11,9 +11,8 @@ export interface StyleProps {
     $selected?: boolean;
 }
 
-interface DayLabelStyleProps extends StyleProps {
+export interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
-    $calenderType?: CalendarType | undefined;
 }
 
 interface OverflowDisplayProps extends StyleProps {
@@ -50,14 +49,13 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     }}
 `;
 
-export const HeaderCell = styled.div<{ $type?: CalendarType }>`
+export const HeaderCell = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
     user-select: none;
-    margin-bottom: ${({ $type }) =>
-        $type === "weekly" ? "0.188" : "0.625rem"};
+    margin-bottom: 0.625rem;
 `;
 
 export const RowDayCell = styled.div`
@@ -206,7 +204,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        const { $disabled, $selected, $variant, $calenderType } = props;
+        const { $disabled, $selected, $variant } = props;
 
         if ($disabled && $selected) {
             return css`
@@ -238,12 +236,6 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
                     color: ${Color.Neutral[3]};
                 `;
             case "default":
-                if ($calenderType === "weekly") {
-                    return css`
-                        ${TextStyleHelper.getFontFamily("H5", "semibold")}
-                        color: ${Color.Neutral[3]};
-                    `;
-                }
                 return css`
                     color: ${Color.Neutral[1]};
                 `;
