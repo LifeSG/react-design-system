@@ -8,7 +8,6 @@ import {
 } from "../shared/standalone-date-input/standalone-date-input";
 import { MediaWidths } from "../spec/media-spec";
 import { DateInputHelper } from "../util/date-input-helper";
-import { useEventListener } from "../util/use-event-listener";
 import { Container } from "./date-input.style";
 import { DateInputProps } from "./types";
 
@@ -53,14 +52,6 @@ export const DateInput = ({
         setSelectedDate(value);
     }, [value]);
 
-    /**
-     * Allows effect below to always get latest state value
-     * Reference:
-     * https://stackoverflow.com/questions/65125665/new-event-doesnt-have-latest-state-value-updated-by-previous-event
-     */
-
-    useEventListener("keydown", handleContainerKeyDown, nodeRef.current);
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -73,7 +64,7 @@ export const DateInput = ({
         }
     };
 
-    function handleContainerKeyDown(event: KeyboardEvent) {
+    function handleContainerKeyDown(event: React.KeyboardEvent) {
         if (event.code === "Escape") {
             inputRef.current.resetInput();
             setSelectedDate(initialDate);
@@ -152,6 +143,7 @@ export const DateInput = ({
             data-testid={otherProps["data-testid"]}
             tabIndex={-1}
             onBlur={handleContainerBlur}
+            onKeyDown={handleContainerKeyDown}
             {...otherProps}
         >
             <StandaloneDateInput
