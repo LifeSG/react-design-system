@@ -1,8 +1,8 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
+import { ClickableIcon } from "../shared/clickable-icon";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -91,7 +91,7 @@ export const CloseIcon = styled(CrossIcon)`
     margin-right: -0.25rem;
 `;
 
-export const CloseButton = styled(IconButton)`
+export const CloseButton = styled(ClickableIcon)`
     position: absolute;
     right: -0.25rem;
     bottom: 0.65rem;

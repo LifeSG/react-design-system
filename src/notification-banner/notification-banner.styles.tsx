@@ -1,8 +1,8 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { IconButton } from "../icon-button";
 import { Layout } from "../layout";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Text, TextStyleHelper } from "../text";
 import { Transition } from "../transition";
 
@@ -83,7 +83,7 @@ export const ContentLink = styled(Text.Hyperlink.Default)`
     ${commonLinkStyle}
 `;
 
-export const StyledIconButton = styled(IconButton)`
+export const StyledIconButton = styled(ClickableIcon)`
     margin-right: -1.5rem;
     padding-left: 1rem;
     height: max-content;

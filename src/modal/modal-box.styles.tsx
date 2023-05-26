@@ -1,8 +1,8 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled from "styled-components";
 import { Color } from "../color";
-import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
+import { ClickableIcon } from "../shared/clickable-icon";
 
 export const Box = styled.div`
     position: relative;
@@ -21,7 +21,7 @@ export const Box = styled.div`
     }
 `;
 
-export const CloseButton = styled(IconButton)`
+export const CloseButton = styled(ClickableIcon)`
     position: absolute;
     top: 0;
     right: 0;

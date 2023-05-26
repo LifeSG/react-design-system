@@ -15,7 +15,8 @@ export const Main = styled.button<StyleProps>`
     border: none;
     cursor: pointer;
 
-    img {
+    img,
+    svg {
         height: 1rem;
         width: 1rem;
     }

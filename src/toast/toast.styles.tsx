@@ -4,7 +4,7 @@ import { ValidationElementAttributes } from "src/color";
 import { PropertiesToType } from "src/util/utility-types";
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { IconButton } from "../icon-button";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
 import { ToastType } from "./types";
 
@@ -92,7 +92,7 @@ export const CloseIcon = styled(CrossIcon)`
     margin-top: 0.2rem;
 `;
 
-export const DismissButton = styled(IconButton)<StyleProps>`
+export const DismissButton = styled(ClickableIcon)<StyleProps>`
     padding-top: 0px;
     padding-bottom: 0px;
     margin-left: 5px;

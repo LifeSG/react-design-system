@@ -3,8 +3,8 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button/button";
 import { Color } from "../color/color";
-import { IconButton } from "../icon-button/icon-button";
 import { MediaQuery } from "../media/media";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
@@ -59,7 +59,7 @@ export const FilterItemHeader = styled.div`
     }
 `;
 
-export const FilterItemExpandButton = styled(IconButton)`
+export const FilterItemExpandButton = styled(ClickableIcon)`
     margin: 0 0 0 auto;
 `;
 

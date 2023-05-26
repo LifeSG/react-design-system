@@ -1,10 +1,9 @@
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
-import { IconButton } from "../icon-button";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -118,7 +117,7 @@ export const LinkIconContainer = styled.div`
     margin-right: -0.5rem;
 `;
 
-export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
+export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
     padding: 0.5rem;
     transform: rotate(${(props) => (props.$selected ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;

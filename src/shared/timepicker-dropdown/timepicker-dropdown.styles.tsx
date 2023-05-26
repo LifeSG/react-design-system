@@ -2,10 +2,10 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../../button";
 import { Color } from "../../color";
-import { IconButton } from "../../icon-button";
 import { MediaQuery } from "../../media";
 import { Text } from "../../text";
 import { Toggle } from "../../toggle";
+import { ClickableIcon } from "../clickable-icon";
 import { BasicInput } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
@@ -101,7 +101,7 @@ export const InputContainer = styled.div`
     }
 `;
 
-export const SwitchButton = styled(IconButton)`
+export const SwitchButton = styled(ClickableIcon)`
     width: 5rem;
     padding: 1rem 0;
     color: ${Color.Neutral[3]};
