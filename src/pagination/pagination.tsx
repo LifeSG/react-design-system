@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import {
     EllipsisContainer,
     Hover,
+    InputSelectWrapper,
     InputView,
     Label,
     LabelDivider,
@@ -21,9 +22,10 @@ import {
     PaginationMobileInput,
     PaginationWrapper,
 } from "./pagination.styles";
-import { PaginationsProps } from "./types";
+import { PageSizeItemProps, PaginationsProps } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../spec/media-spec";
+import { InputSelect } from "src/input-select";
 
 const Component = (
     {
@@ -33,26 +35,42 @@ const Component = (
         pageSize = 10,
         totalItems,
         activePage,
+        pageSizeOptions = DEFAULT_OPTIONS,
         showFirstAndLastNav,
+        showPageSizeChanger = false,
         onPageChange,
+        onPageSizeChange,
     }: PaginationsProps,
     ref: React.Ref<HTMLDivElement>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
+    const options: PageSizeItemProps[] = pageSizeOptions;
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
 
+    const [selectedOption, setSelectedOption] = useState<PageSizeItemProps>(
+        options && options.length >= 1 ? options[0] : null
+    );
+    const [pageSizeLocal, setPageSize] = useState<number>(
+        !isMobile && showPageSizeChanger
+            ? selectedOption
+                ? selectedOption.value
+                : pageSize
+            : pageSize
+    );
+
     const boundaryRange = 1;
     const siblingRange = 1;
-    const totalPages = Math.ceil(totalItems / pageSize);
+
+    const totalPages = Math.ceil(totalItems / pageSizeLocal);
     const isFirstPage = activePage === 1;
     const isLastPage = activePage === totalPages;
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
 
     const firstPaginationItem =
         activePage > 1 ? () => handlePaginationItemClick(1) : undefined;
@@ -81,7 +99,7 @@ const Component = (
         if (activePage) {
             setInputValue(activePage);
         }
-    }, []);
+    }, [activePage]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -155,6 +173,20 @@ const Component = (
 
     const onBlurLeftButton = () => {
         setHoverLeftButton(false);
+    };
+
+    const handleListItemClick = (item: PageSizeItemProps) => {
+        setSelectedOption(item);
+        const pagesize = item.value;
+        const totalPage = Math.ceil(totalItems / pagesize);
+
+        setPageSize(pagesize);
+
+        const page = activePage >= totalPage ? totalPage : activePage;
+
+        if (onPageSizeChange) {
+            onPageSizeChange(page, pagesize);
+        }
     };
     // =============================================================================
     // RENDER FUNCTIONS
@@ -333,7 +365,25 @@ const Component = (
                     )}
                 </PaginationMenu>
             </PaginationList>
+            {showPageSizeChanger && !isMobile && (
+                <InputSelectWrapper>
+                    <InputSelect
+                        options={options}
+                        valueExtractor={(item) => item.value}
+                        listExtractor={(item) => item.label}
+                        displayValueExtractor={(item) => item.label}
+                        selectedOption={selectedOption}
+                        onSelectOption={handleListItemClick}
+                    />
+                </InputSelectWrapper>
+            )}
         </PaginationWrapper>
     );
 };
 export const Pagination = React.forwardRef(Component);
+
+const DEFAULT_OPTIONS: PageSizeItemProps[] = [
+    { value: 10, label: "10 / page" },
+    { value: 20, label: "20 / page" },
+    { value: 30, label: "30 / page" },
+];

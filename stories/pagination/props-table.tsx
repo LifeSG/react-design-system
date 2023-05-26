@@ -40,6 +40,14 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
             },
             {
+                name: "pageSizeOptions",
+                description:
+                    "Specifies a list of options that a user can choose from",
+                propTypes: ["PageSizeItemProps<T>[]"],
+                defaultValue:
+                    '[ { value: 10, label: "10 / page" }, { value: 20, label: "20 / page" }, { value: 30, label: "30 / page" }]',
+            },
+            {
                 name: "showFirstAndLastNav",
                 description:
                     "Specifies if the buttons to jump to the first and last pages are visible",
@@ -47,9 +55,36 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "showPageSizeChanger",
+                description:
+                    "Specifies if the page size changer dropdown is visible",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onPageChange",
                 description: "Called when a page is selected",
                 propTypes: ["(page: number) => void"],
+            },
+            {
+                name: "onPageSizeChange",
+                description: "Called when a page size changed",
+                propTypes: ["(page: number, pageSize: number) => void"],
+            },
+        ],
+    },
+    {
+        name: "PageSizeItemProps",
+        attributes: [
+            {
+                name: "value",
+                description: "value to be used for this item",
+                propTypes: ["number"],
+            },
+            {
+                name: "label",
+                description: "label to be used for this item",
+                propTypes: ["string"],
             },
         ],
     },

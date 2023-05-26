@@ -90,6 +90,71 @@ The `showFirstAndLastNav` prop allows the user to jump directly to the first and
     </Story>
 </Canvas>
 
+<Heading3>With Page Size Changer</Heading3>
+
+The `showPageSizeChanger` prop allows the user to show page size changer dropdown.
+
+<Canvas>
+    <Story name="With Page Size Changer">
+        {() => {
+            const [selectedPage, setSelected] = useState(5);
+            return (
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            onPageSizeChange={(page, pageSize) =>
+                                setSelected(page)
+                            }
+                            activePage={selectedPage}
+                            totalItems={400}
+                            showPageSizeChanger
+                        />
+                    </FullWidthStoryContainer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With custom page size options</Heading3>
+
+The `showPageSizeChanger` prop allows the user to show page size changer dropdown.
+
+<Canvas>
+    <Story name="With custom page size options">
+        {() => {
+            const [selectedPage, setSelected] = useState(5);
+            const pageOptions = [
+                { value: 5, label: "5 / page" },
+                { value: 10, label: "10 / page" },
+                { value: 20, label: "20 / page" },
+                { value: 30, label: "30 / page" },
+                { value: 50, label: "50 / page" },
+            ];
+            return (
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            onPageSizeChange={(page, pageSize) =>
+                                setSelected(page)
+                            }
+                            activePage={selectedPage}
+                            totalItems={600}
+                            pageSizeOptions={pageOptions}
+                            showFirstAndLastNav
+                            showPageSizeChanger
+                        />
+                    </FullWidthStoryContainer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Secondary>Component API</Secondary>
 
 <PropsTable />
