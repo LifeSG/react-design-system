@@ -40,7 +40,8 @@ export const TimeSlotWeekView = ({
                 value={value}
                 currentCalendarDate={currentCalendarDate}
                 {...otherProps}
-                between={minDate && maxDate ? [minDate, maxDate] : undefined}
+                minDate={minDate}
+                maxDate={maxDate}
             />
         </Wrapper>
     );

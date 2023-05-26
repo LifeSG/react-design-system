@@ -22,7 +22,7 @@ export interface ToggleProps
     /** The Toggle label */
     children: string;
     // /** The description label displayed below the main label */
-    // subLabel?: (() => JSX.Element) | string | undefined;
+    subLabel?: (() => JSX.Element) | string | undefined;
     disabled?: boolean | undefined;
     /** Specifies if the error display should be present */
     error?: boolean | undefined;

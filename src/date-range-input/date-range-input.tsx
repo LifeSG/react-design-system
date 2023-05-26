@@ -8,13 +8,18 @@ import {
     FocusType,
 } from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
+import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
 import { DateInputHelper } from "../util/date-input-helper";
 import { useStateActions } from "../util/use-state-actions";
-import { ArrowRight, Container, IndicateBar } from "./date-range-input.style";
+import {
+    Container,
+    InputContainer,
+    MOBILE_WRAP_WIDTH,
+} from "./date-range-input.style";
 import { DateRangeInputProps } from "./types";
 
 interface DateRangeInputState {
@@ -320,12 +325,6 @@ export const DateRangeInput = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-    const renderIndicateBar = () => {
-        if (disabled || readOnly) return;
-
-        return <IndicateBar $position={currentFocus} $error={error} />;
-    };
-
     return (
         <Container
             ref={nodeRef}
@@ -339,34 +338,46 @@ export const DateRangeInput = ({
             onKeyDown={handleNodeKeyDown}
             {...otherProps}
         >
-            <StandaloneDateInput
-                ref={startInputRef}
-                placeholder="From"
-                names={["start-day", "start-month", "start-year"]}
-                value={selectedStart}
-                disabled={disabled}
-                readOnly={readOnly}
-                focused={currentFocus === "start"}
-                hoverValue={currentFocus === "start" ? hoverValue : undefined}
-                onChange={handleStartDateChange}
-                onFocus={handleInputFocus("start")}
-                onBlur={handleStartInputBlur}
-            />
-            <ArrowRight />
-            <StandaloneDateInput
-                ref={endInputRef}
-                placeholder="To"
-                names={["end-day", "end-month", "end-year"]}
-                value={selectedEnd}
-                disabled={disabled}
-                readOnly={readOnly}
-                focused={currentFocus === "end"}
-                hoverValue={currentFocus === "end" ? hoverValue : undefined}
-                onChange={handleEndDateChange}
-                onFocus={handleInputFocus("end")}
-                onBlur={handleEndInputBlur}
-            />
-            {renderIndicateBar()}
+            <RangeInputInnerContainer
+                currentActive={currentFocus}
+                minWidthBeforeWrap={MOBILE_WRAP_WIDTH}
+                error={error}
+            >
+                <InputContainer>
+                    <StandaloneDateInput
+                        ref={startInputRef}
+                        placeholder="From"
+                        names={["start-day", "start-month", "start-year"]}
+                        value={selectedStart}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        focused={currentFocus === "start"}
+                        hoverValue={
+                            currentFocus === "start" ? hoverValue : undefined
+                        }
+                        onChange={handleStartDateChange}
+                        onFocus={handleInputFocus("start")}
+                        onBlur={handleStartInputBlur}
+                    />
+                </InputContainer>
+                <InputContainer>
+                    <StandaloneDateInput
+                        ref={endInputRef}
+                        placeholder="To"
+                        names={["end-day", "end-month", "end-year"]}
+                        value={selectedEnd}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        focused={currentFocus === "end"}
+                        hoverValue={
+                            currentFocus === "end" ? hoverValue : undefined
+                        }
+                        onChange={handleEndDateChange}
+                        onFocus={handleInputFocus("end")}
+                        onBlur={handleEndInputBlur}
+                    />
+                </InputContainer>
+            </RangeInputInnerContainer>
             <AnimatedInternalCalendar
                 ref={calendarRef}
                 type="input"
@@ -378,7 +389,8 @@ export const DateRangeInput = ({
                 selectWithinRange={isStartDirty || isEndDirty}
                 currentFocus={currentFocus}
                 disabledDates={disabledDates}
-                between={between}
+                minDate={between && between[0]} // FIXME: Handle refactoring of between prop to minDate and maxDate
+                maxDate={between && between[1]} // FIXME: Same as above
                 onSelect={handleCalendarSelect}
                 onDismiss={handleCalendarDismiss}
                 onHover={handleCalendarHover}

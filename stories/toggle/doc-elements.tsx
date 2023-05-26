@@ -16,7 +16,7 @@ export const Wrapper = styled.div<StyleProps>`
             return css`
                 width: 100%;
                 display: grid;
-                grid-template-columns: 1fr 2fr;
+                grid-template: auto / repeat(3, minmax(0, 1fr));
                 column-gap: 2rem;
 
                 > div {
@@ -29,6 +29,12 @@ export const Wrapper = styled.div<StyleProps>`
                         text-align: left;
                         align-self: center;
                     }
+                }
+
+                ${MediaQuery.MaxWidth.mobileL} {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
                 }
             `;
         } else {

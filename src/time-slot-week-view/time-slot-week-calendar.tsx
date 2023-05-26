@@ -31,7 +31,8 @@ export const Component = (
         onSelect,
         value,
         variant,
-        between,
+        minDate,
+        maxDate,
         slots,
         showNavigationHeader = true,
         enableSelection,
@@ -254,7 +255,8 @@ export const Component = (
                         calendarDate={calendarDate}
                         selectedStartDate={selectedDate}
                         viewCalendarDate={viewCalendarDate}
-                        between={between}
+                        minDate={minDate}
+                        maxDate={maxDate}
                         isNewSelection={true}
                         onMonthSelect={handleMonthYearSelect}
                     />
@@ -266,7 +268,8 @@ export const Component = (
                         calendarDate={calendarDate}
                         selectedStartDate={selectedDate}
                         viewCalendarDate={viewCalendarDate}
-                        between={between}
+                        minDate={minDate}
+                        maxDate={maxDate}
                         isNewSelection={true}
                         onYearSelect={handleMonthYearSelect}
                     />
@@ -278,13 +281,9 @@ export const Component = (
 
     const renderHeader = () => {
         const disableLeftArrow =
-            between &&
-            between.length > 0 &&
-            dayjs(calendarDate).startOf("week") < dayjs(between[0]);
+            minDate && dayjs(calendarDate).startOf("week") < dayjs(minDate);
         const disableRightArrow =
-            between &&
-            between.length > 1 &&
-            dayjs(calendarDate).endOf("week") > dayjs(between[1]);
+            maxDate && dayjs(calendarDate).endOf("week") > dayjs(maxDate);
         return (
             showNavigationHeader && (
                 <Header>
@@ -329,7 +328,8 @@ export const Component = (
                                 disabledDates={disabledDates}
                                 selectedDate={selectedDate}
                                 variant={variant}
-                                between={between}
+                                minDate={minDate}
+                                maxDate={maxDate}
                                 isNewSelection={true}
                                 onSelect={handleDateSelect}
                                 slots={slots}

@@ -34,7 +34,7 @@ export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
     extends Pick<
         InternalCalendarProps,
-        "disabledDates" | "variant" | "between"
+        "disabledDates" | "variant" | "minDate" | "maxDate"
     > {
     selectedDate: string;
     calendarDate: Dayjs;
@@ -63,7 +63,8 @@ export const TimeSlotWeekDays = ({
     disabledDates,
     selectedDate,
     onSelect,
-    between,
+    minDate,
+    maxDate,
     slots: daySlots,
     enableSelection = true,
     onSlotClick,
@@ -93,8 +94,12 @@ export const TimeSlotWeekDays = ({
     // HELPER FUNCTIONS
     // =============================================================================
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange =
-            between && !day.isBetween(between[0], between[1], "day", "[]");
+        const isOutsideBetweenRange = !day.isBetween(
+            minDate,
+            maxDate,
+            "day",
+            "[]"
+        );
 
         const isDisabledDate =
             disabledDates && disabledDates.includes(day.format(dateFormat));
