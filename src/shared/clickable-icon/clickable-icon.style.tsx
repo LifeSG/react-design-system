@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
+import { Color } from "../../color/color";
 
 interface StyleProps {
     $outline: "none" | "browser";
@@ -15,8 +15,7 @@ export const Main = styled.button<StyleProps>`
     border: none;
     cursor: pointer;
 
-    img,
-    svg {
+    img {
         height: 1rem;
         width: 1rem;
     }

@@ -4,8 +4,8 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { Button } from "../../button";
 import { Color } from "../../color";
-import { IconButton } from "../../icon-button";
 import { TextStyleHelper } from "../../text";
+import { ClickableIcon } from "../clickable-icon";
 import { CalendarType } from "./types";
 
 interface GeneralStyleProps {
@@ -167,7 +167,7 @@ export const HeaderArrows = styled.div`
     display: flex;
 `;
 
-export const HeaderArrowButton = styled(IconButton)`
+export const HeaderArrowButton = styled(ClickableIcon)`
     background: transparent;
     margin: auto 0;
     padding: 0.5rem;

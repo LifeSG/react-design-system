@@ -2,8 +2,8 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text/text";
 import { Transition } from "../transition";
 
@@ -53,7 +53,7 @@ export const TitleH4 = styled(Text.H4)<StyleProps>`
     }}
 `;
 
-export const ExpandCollapseButton = styled(IconButton)<StyleProps>`
+export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
     height: 3.25rem;
     width: 3.25rem;
     padding: 1rem;

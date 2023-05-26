@@ -1,9 +1,9 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import { Color } from "src/color";
-import { IconButton } from "src/icon-button";
-import { Text } from "src/text";
 import styled, { css } from "styled-components";
+import { Color } from "../color";
+import { ClickableIcon } from "../shared/clickable-icon";
+import { Text } from "../text";
 import { Direction, SlotStyle } from "./types";
 
 export const CELL_WIDTH = 44; // NOTE in px
@@ -40,7 +40,7 @@ export const Container = styled.div`
     align-items: center;
 `;
 
-export const ArrowButton = styled(IconButton)<ArrowStyleProps>`
+export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     z-index: 2;
     position: absolute;
     bottom: 1rem;

@@ -2,8 +2,8 @@ import { FilterIcon } from "@lifesg/react-icons/filter";
 import styled from "styled-components";
 import { Button } from "../button/button";
 import { Color } from "../color/color";
-import { IconButton } from "../icon-button/icon-button";
 import { MediaQuery } from "../media/media";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text/text";
 
 // =============================================================================
@@ -70,7 +70,7 @@ export const FilterTitle = styled(Text.H4)`
     }
 `;
 
-export const FilterHeaderButton = styled(IconButton)`
+export const FilterHeaderButton = styled(ClickableIcon)`
     padding: 1.5rem 1.25rem;
     margin-right: auto;
     color: ${Color.Neutral[3]};

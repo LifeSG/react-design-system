@@ -2,7 +2,7 @@ import { CrossIcon } from "@lifesg/react-icons/cross";
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled from "styled-components";
 import { Color } from "../../color";
-import { IconButton } from "../../icon-button";
+import { ClickableIcon } from "../clickable-icon";
 import { BasicInput } from "../input-wrapper/input-wrapper";
 
 export const Container = styled.li`
@@ -26,7 +26,7 @@ export const SearchIcon = styled(MagnifierIcon)`
     color: ${Color.Neutral[3]};
 `;
 
-export const CancelButton = styled(IconButton)`
+export const CancelButton = styled(ClickableIcon)`
     padding: 0;
     margin: 0 0.5rem;
     color: ${Color.Neutral[3]};
