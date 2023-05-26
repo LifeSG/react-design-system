@@ -112,21 +112,26 @@ describe("CalendarHelper", () => {
                 maxDate
             );
 
-            expect(isWithinRange).toBeTruthy();
+            expect(isWithinRange).toBe(true);
         });
 
         it("should return true if the date is within range (inclusive check)", () => {
-            const date = dayjs("2023-02-01");
             const minDate = dayjs("2023-01-01");
             const maxDate = dayjs("2023-02-01");
 
-            const isWithinRange = CalendarHelper.isWithinRange(
-                date,
+            const sameAsMaxCheck = CalendarHelper.isWithinRange(
+                maxDate,
+                minDate,
+                maxDate
+            );
+            const sameAsMinCheck = CalendarHelper.isWithinRange(
+                minDate,
                 minDate,
                 maxDate
             );
 
-            expect(isWithinRange).toBeTruthy();
+            expect(sameAsMaxCheck).toBe(true);
+            expect(sameAsMinCheck).toBe(true);
         });
 
         it("should return false if the date is out of range", () => {
@@ -140,7 +145,7 @@ describe("CalendarHelper", () => {
                 maxDate
             );
 
-            expect(isWithinRange).toBeFalsy();
+            expect(isWithinRange).toBe(false);
         });
 
         it("should return true if date is same or after minDate (if only minDate provided)", () => {
@@ -155,8 +160,8 @@ describe("CalendarHelper", () => {
                 "month"
             );
 
-            expect(isWithinRange).toBeTruthy();
-            expect(isMonthWithinRange).toBeTruthy();
+            expect(isWithinRange).toBe(true);
+            expect(isMonthWithinRange).toBe(true);
         });
 
         it("should return true if date is same or before maxDate (if only maxDate provided)", () => {
@@ -176,8 +181,8 @@ describe("CalendarHelper", () => {
                 "month"
             );
 
-            expect(isWithinRange).toBeTruthy();
-            expect(isMonthWithinRange).toBeTruthy();
+            expect(isWithinRange).toBe(true);
+            expect(isMonthWithinRange).toBe(true);
         });
     });
 });
