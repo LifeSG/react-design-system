@@ -4,21 +4,22 @@ import { useResizeDetector } from "react-resize-detector";
 import { CalendarRef, View } from "../shared/internal-calendar";
 import { InternalCalendarMonth } from "../shared/internal-calendar/internal-calendar-month";
 import { InternalCalendarYear } from "../shared/internal-calendar/internal-calendar-year";
+import { TimeSlot } from "../time-slot-bar";
+import { CalendarHelper } from "../util/calendar-helper";
 import {
     ArrowLeft,
     ArrowRight,
+    Container,
     ContentBody,
     DropdownButton,
     DropdownText,
+    Header,
     HeaderArrowButton,
     HeaderArrows,
     HeaderInputDropdown,
     IconChevronDown,
     ToggleZone,
-} from "../shared/internal-calendar/internal-calendar.style";
-import { TimeSlot } from "../time-slot-bar";
-import { CalendarHelper } from "../util/calendar-helper";
-import { Container, Header } from "./time-slot-week-calendar.style";
+} from "./time-slot-week-calendar.style";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
 import { TimeSlotWeekCalendarProps } from "./types";
 
@@ -219,14 +220,13 @@ export const Component = (
                 <DropdownButton
                     type="button"
                     tabIndex={-1}
-                    $type={"standalone"}
                     $expandedDisplay={currentView === "month-options"}
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
                     style={{ marginRight: 0 }}
                 >
-                    <DropdownText $type={"input"}>
+                    <DropdownText>
                         {dayjs(calendarDate).endOf("week").format("MMM")}
                     </DropdownText>
                     <IconChevronDown />
@@ -234,14 +234,11 @@ export const Component = (
                 <DropdownButton
                     type="button"
                     tabIndex={-1}
-                    $type={"standalone"}
                     $expandedDisplay={currentView !== "default"}
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
                 >
-                    <DropdownText $type={"input"}>
-                        {getYearHeaderText()}
-                    </DropdownText>
+                    <DropdownText>{getYearHeaderText()}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
             </>
