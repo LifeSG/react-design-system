@@ -1,5 +1,3 @@
-export type DateInputVariant = "single" | "range";
-
 export interface DateInputProps {
     // Standard HTML Attributes
     className?: string | undefined;
