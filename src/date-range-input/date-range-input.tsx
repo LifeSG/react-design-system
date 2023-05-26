@@ -185,11 +185,18 @@ export const DateRangeInput = ({
     const handleStartDateChange = (val: string) => {
         actions.changeStart(val);
 
-        if (
-            !val ||
-            DateInputHelper.isDateDisabled(val, { disabledDates, between })
-        ) {
-            // date was cleared or is invalid, remain on this input
+        if (!val) {
+            // if both start and end were cleared, confirm the selection
+            // and remain on this input
+            if (!withButton && !selectedEnd && isEndDirty) {
+                actions.resetRange({ start: "", end: "" });
+                onChange?.("", "");
+            }
+            return;
+        }
+
+        if (DateInputHelper.isDateDisabled(val, { disabledDates, between })) {
+            // date is invalid, remain on this input
             return;
         }
 
@@ -228,11 +235,18 @@ export const DateRangeInput = ({
     const handleEndDateChange = (val: string) => {
         actions.changeEnd(val);
 
-        if (
-            !val ||
-            DateInputHelper.isDateDisabled(val, { disabledDates, between })
-        ) {
-            // date was cleared or is invalid, remain on this input
+        if (!val) {
+            // if both start and end were cleared, confirm the selection
+            // and remain on this input
+            if (!withButton && !selectedStart && isStartDirty) {
+                actions.resetRange({ start: "", end: "" });
+                onChange?.("", "");
+            }
+            return;
+        }
+
+        if (DateInputHelper.isDateDisabled(val, { disabledDates, between })) {
+            // date  is invalid, remain on this input
             return;
         }
 

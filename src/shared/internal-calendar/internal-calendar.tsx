@@ -56,7 +56,7 @@ export const Component = (
     const [currentView, setCurrentView] = useState<View>("default");
     const [selectedStartDate, setSelectedStartDate] = useState<string>(); // YYYY-MM-DD
     const [selectedEndDate, setSelectedEndDate] = useState<string>(); // YYYY-MM-DD
-    const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>();
+    const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>(dayjs());
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
@@ -65,22 +65,18 @@ export const Component = (
     // =============================================================================
     // HOOKS
     // =============================================================================
-    useImperativeHandle(
-        ref,
-        () => {
-            return {
-                defaultView() {
-                    setCurrentView("default");
-                    onCalendarView("default");
-                },
-                resetView() {
-                    setCalendarDate(dayjs());
-                    setCurrentView("default");
-                },
-            };
-        },
-        []
-    );
+    useImperativeHandle(ref, () => {
+        return {
+            defaultView() {
+                setCurrentView("default");
+                performOnCalendarView("default");
+            },
+            resetView() {
+                setCalendarDate(dayjs());
+                setCurrentView("default");
+            },
+        };
+    });
 
     // =============================================================================
     // EFFECTS
@@ -91,11 +87,10 @@ export const Component = (
          * Once focus value is changed
          */
         const calendarValue = currentFocus === "end" ? endValue : value;
+        const day = calendarValue ? dayjs(calendarValue) : dayjs();
 
-        // update selected in month/year view
-        setViewCalendarDate(dayjs(calendarValue));
-
-        if (calendarValue) setCalendarDate(dayjs(calendarValue));
+        setCalendarDate(day);
+        setViewCalendarDate(day);
     }, [currentFocus]);
 
     useEffect(() => {
@@ -418,10 +413,11 @@ export const Component = (
 
         switch (variant) {
             case "single":
-                isDisabled = selectedStartDate ? false : true;
+                isDisabled = false;
                 break;
             case "range":
-                isDisabled = !selectedStartDate || !selectedEndDate;
+                // ensure both are empty or complete at the same time
+                isDisabled = !!selectedStartDate !== !!selectedEndDate;
                 break;
         }
 

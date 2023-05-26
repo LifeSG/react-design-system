@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
+import { ApiTable, quote } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
@@ -22,7 +22,10 @@ const DATA: ApiTableSectionProps[] = [
                         <code>[startDate, endDate]</code> using the{" "}
                         {STRING_FORMAT} for the dates.
                         <br />
-                        E.g. <code>["2023-01-01", "2023-02-01"]</code>
+                        E.g.{" "}
+                        <code>
+                            [{quote("2023-01-01")}, {quote("2023-02-01")}]
+                        </code>
                     </>
                 ),
                 propTypes: ["[string, string]"],
@@ -40,7 +43,10 @@ const DATA: ApiTableSectionProps[] = [
                         the&nbsp;
                         {STRING_FORMAT}.
                         <br />
-                        E.g. <code>["2023-01-01", "2023-01-03"]</code>
+                        E.g.{" "}
+                        <code>
+                            [{quote("2023-01-01")}, {quote("2023-01-03")}]
+                        </code>
                     </>
                 ),
                 propTypes: ["string[]"],
@@ -78,50 +84,21 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "role",
-                description: "The aria role of the component",
-                propTypes: ["React.AriaRole"],
-            },
-            {
                 name: "value",
                 description: (
                     <>
                         The value of the <code>DateInput</code> in the&nbsp;
-                        {STRING_FORMAT} or <code>YYYY-M-D</code>. In a ranged
-                        selection, this serves as the start date.
+                        {STRING_FORMAT} or <code>YYYY-M-D</code>.
                     </>
                 ),
                 propTypes: ["string"],
-            },
-            {
-                name: "valueEnd",
-                description: (
-                    <>
-                        The value of end date in the {STRING_FORMAT} or&nbsp;
-                        <code>YYYY-M-D</code>
-                        <br />
-                        <b>Note: Only relevant for ranged selection</b>
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "variant",
-                description: (
-                    <>
-                        Specifies if the component supports the single or ranged
-                        selection
-                    </>
-                ),
-                propTypes: [`"single"`, `"range"`],
-                defaultValue: `"single"`,
             },
             {
                 name: "withButton",
                 description: (
                     <>
-                        Specifies if the "Done" and "Cancel" action buttons
-                        should be rendered
+                        Specifies if the {quote("Done")} and {quote("Cancel")}{" "}
+                        action buttons should be rendered
                         <br />
                         <b>Note: It appears by default in mobile viewports</b>
                     </>
@@ -133,25 +110,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onChange",
                 description: (
                     <>
-                        Called when a selection is made. Returns the start and
-                        end date in the {STRING_FORMAT}
+                        Called when a selection is made. Returns the date in the{" "}
+                        {STRING_FORMAT}
                     </>
                 ),
-                propTypes: ["(startDate: string, endDate: string) => void"],
-            },
-            {
-                name: "onChangeRaw",
-                description: (
-                    <>
-                        Called when a selection is made. Returns the start and
-                        end date values in a string array format{" "}
-                        <code>[day, month, year]</code>
-                        <br />
-                        E.g. "2023-02-01" will be returned as{" "}
-                        <code>["01", "02", "2023"]</code>
-                    </>
-                ),
-                propTypes: ["(startDate: string[], endDate: string[]) => void"],
+                propTypes: ["(date: string) => void"],
             },
             {
                 name: "onBlur",
@@ -161,21 +124,7 @@ const DATA: ApiTableSectionProps[] = [
                         start and end date in the {STRING_FORMAT}
                     </>
                 ),
-                propTypes: ["(startDate: string, endDate: string) => void"],
-            },
-            {
-                name: "onBlurRaw",
-                description: (
-                    <>
-                        Called when a defocus on the field is made. Returns the
-                        start and end date values in a string array format{" "}
-                        <code>[day, month, year]</code>
-                        <br />
-                        E.g. "2023-02-01" will be returned as{" "}
-                        <code>["01", "02", "2023"]</code>
-                    </>
-                ),
-                propTypes: ["(startDate: string[], endDate: string[]) => void"],
+                propTypes: ["() => void"],
             },
         ],
     },
