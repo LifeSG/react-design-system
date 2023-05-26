@@ -14,11 +14,11 @@ export interface TimeSlotWeekProps {
     /** Specifies which date should be included in the rendered calendar component (date will not be selected) formate: YYYY-DD-MM*/
     currentCalendarDate?: string | undefined;
     /** Specifies any callback to execute when user click on rendered slots on weekly-calendar component */
-    onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
+    onSlotClick?: (date: string, timeSlot: TimeSlot) => void | undefined;
 }
 
 export interface TimeSlotWeekViewProps
-    extends CommonCalendarProps,
+    extends TimeSlotWeekCalendarProps,
         TimeSlotWeekProps {
     value?: string | undefined; // selected date format (YYYY-MM-DD)
     calendarDate?: string | undefined;
@@ -27,6 +27,14 @@ export interface TimeSlotWeekViewProps
     maxDate?: string | undefined; // maximum allowed date to select: format (YYYY-MM-DD)
 }
 
+interface YearMonthWeekDisplay {
+    week: { firstDayOfWeek: string; lastDayOfWeek: string };
+    year: number;
+    month: number;
+}
+
 export interface TimeSlotWeekCalendarProps
     extends TimeSlotWeekProps,
-        InternalCalendarProps {}
+        Omit<InternalCalendarProps, "onYearMonthDisplayChange"> {
+    onWeekDisplayChange?: ((value: YearMonthWeekDisplay) => void) | undefined;
+}

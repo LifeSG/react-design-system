@@ -62,10 +62,10 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "onYearMonthDisplayChange",
+                name: "onWeekDisplayChange",
                 description:
                     "Called when there is a change in the current visible month and year",
-                propTypes: ["(value: YearMonthDisplay) => void"],
+                propTypes: ["(value: YearMonthWeekDisplay) => void"],
             },
             {
                 name: "onChange",
@@ -138,8 +138,20 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "YearMonthDisplay",
+        name: "YearMonthWeekDisplay",
         attributes: [
+            {
+                name: "week",
+                description: (
+                    <>
+                        The current visible week. Both firstDayOfWeek,
+                        lastDayOfWeek is in <code>YYYY-MM-DD</code> format
+                    </>
+                ),
+                propTypes: [
+                    "{ firstDayOfWeek: string; lastDayOfWeek: string }",
+                ],
+            },
             {
                 name: "year",
                 description: (

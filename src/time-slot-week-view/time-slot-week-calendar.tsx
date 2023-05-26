@@ -26,7 +26,7 @@ import { TimeSlotWeekCalendarProps } from "./types";
 export const Component = (
     {
         disabledDates,
-        onYearMonthDisplayChange,
+        onWeekDisplayChange,
         onCalendarView,
         onSelect,
         value,
@@ -49,6 +49,7 @@ export const Component = (
     const [currentView, setCurrentView] = useState<View>("default");
     const [selectedDate, setSelectedDate] = useState<string>(); // YYYY-MM-DD
     const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>();
+    const dateFormat = "YYYY-MM-DD";
     // =============================================================================
     // HOOKS
     // =============================================================================
@@ -118,11 +119,11 @@ export const Component = (
     };
 
     const handleDateSelect = (value: Dayjs) => {
-        const stringValue = value.format("YYYY-MM-DD");
+        const stringValue = value.format(dateFormat);
 
         setCalendarDate(value);
         setViewCalendarDate(value);
-        handleSelectedType(stringValue);
+        setSelectedDate(stringValue);
 
         performOnSelectHandler(stringValue);
     };
@@ -134,9 +135,9 @@ export const Component = (
         performOnCalendarDate(value);
     };
 
-    const handleOnSlotClick = (slot: TimeSlot) => {
+    const handleOnSlotClick = (date: string, slot: TimeSlot) => {
         if (onSlotClick) {
-            onSlotClick(slot);
+            onSlotClick(date, slot);
         }
     };
 
@@ -150,20 +151,18 @@ export const Component = (
     };
 
     const performOnCalendarDate = (value: Dayjs) => {
-        if (onYearMonthDisplayChange) {
+        if (onWeekDisplayChange) {
             const returnValue = {
+                week: {
+                    firstDayOfWeek: value.startOf("week").format(dateFormat),
+                    lastDayOfWeek: value.endOf("week").format(dateFormat),
+                },
                 month: value.month() + 1,
                 year: value.year(),
             };
 
-            onYearMonthDisplayChange(returnValue);
+            onWeekDisplayChange(returnValue);
         }
-    };
-
-    const handleSelectedType = (value: string) => {
-        setSelectedDate(value);
-
-        return;
     };
 
     const handleMonthDropdownClick = () => {

@@ -3,7 +3,7 @@ import { CalendarHelper } from "../../src/util/calendar-helper";
 import slotsData from "./slots-data.json";
 import slotsDataMin from "./slots-data-minimum.json";
 export const getSlots = () => {
-    const [weekdays] = CalendarHelper.generateDaysForCurrentWeek(dayjs());
+    const weekdays = CalendarHelper.generateDaysForCurrentWeek(dayjs());
     const slots = {};
     let i = 0;
     weekdays.push(weekdays[weekdays.length - 1].add(1, "day"));
@@ -16,7 +16,7 @@ export const getSlots = () => {
 };
 
 export const getSlotsMin = () => {
-    const [weekdays] = CalendarHelper.generateDaysForCurrentWeek(dayjs());
+    const weekdays = CalendarHelper.generateDaysForCurrentWeek(dayjs());
     const slots = {};
     let i = 0;
     for (const key in slotsDataMin) {

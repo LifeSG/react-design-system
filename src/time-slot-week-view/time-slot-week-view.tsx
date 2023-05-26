@@ -13,15 +13,15 @@ export const TimeSlotWeekView = ({
     minDate,
     maxDate,
     value,
-    onYearMonthDisplayChange,
+    onWeekDisplayChange,
     currentCalendarDate,
     ...otherProps
 }: TimeSlotWeekViewProps) => {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const onSlotClickHandler = (t: TimeSlot) => {
-        if (onSlotClick) onSlotClick(t);
+    const onSlotClickHandler = (d: string, t: TimeSlot) => {
+        if (onSlotClick) onSlotClick(d, t);
     };
 
     const onSelectHandler = (val: string) => {
@@ -37,7 +37,7 @@ export const TimeSlotWeekView = ({
                 enableSelection={enableSelection}
                 onSlotClick={onSlotClickHandler}
                 onSelect={onSelectHandler}
-                onYearMonthDisplayChange={onYearMonthDisplayChange}
+                onWeekDisplayChange={onWeekDisplayChange}
                 value={value}
                 currentCalendarDate={currentCalendarDate}
                 {...otherProps}

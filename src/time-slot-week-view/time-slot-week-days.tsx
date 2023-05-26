@@ -42,7 +42,7 @@ interface TimeSlotWeekDaysProps
     onSelect: (value: Dayjs) => void;
     slots?: { [date: string]: TimeSlot[] } | undefined;
     enableSelection?: boolean | undefined;
-    onSlotClick?: (timeSlot: TimeSlot) => void | undefined;
+    onSlotClick?: (date: string, timeSlot: TimeSlot) => void | undefined;
 }
 
 const fallbackSlot = {
@@ -71,7 +71,7 @@ export const TimeSlotWeekDays = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const currentCalendarWeek = useMemo((): Dayjs[][] => {
+    const currentCalendarWeek = useMemo((): Dayjs[] => {
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
 
@@ -84,9 +84,10 @@ export const TimeSlotWeekDays = ({
         onSelect(value);
     };
 
-    const handleSlotClick = (slot: TimeSlot) => {
-        onSlotClick(slot);
+    const handleSlotClick = (date: string, slot: TimeSlot) => {
+        onSlotClick(date, slot);
     };
+    const dateFormat = "YYYY-MM-DD";
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -96,13 +97,13 @@ export const TimeSlotWeekDays = ({
             between && !day.isBetween(between[0], between[1], "day", "[]");
 
         const isDisabledDate =
-            disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
+            disabledDates && disabledDates.includes(day.format(dateFormat));
 
         return isOutsideBetweenRange || isDisabledDate;
     };
 
     const generateStyleProps = (day: Dayjs) => {
-        const dateStartWithYear = day.format("YYYY-MM-DD");
+        const dateStartWithYear = day.format(dateFormat);
 
         const styleCircleProps: StyleProps = {},
             styleLabelProps: StyleProps = {};
@@ -127,7 +128,7 @@ export const TimeSlotWeekDays = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderWeek = () => {
-        return currentCalendarWeek[0].map((day, index) => (
+        return currentCalendarWeek.map((day, index) => (
             <HeaderCell $type={type} key={`week-day-${index}`}>
                 <Text.XSmall weight={"semibold"}>
                     {dayjs(day).format("ddd")}
@@ -137,58 +138,57 @@ export const TimeSlotWeekDays = ({
     };
 
     const renderHeader = () => {
-        return currentCalendarWeek.map((week, weekIndex) => {
-            return (
-                <RowDayCell key={weekIndex}>
-                    {week.map((day, dayIndex) => {
-                        const variant = "default";
-                        const { styleCircleProps, styleLabelProps } =
-                            generateStyleProps(day);
+        return (
+            <RowDayCell>
+                {currentCalendarWeek.map((day, dayIndex) => {
+                    const variant = "default";
+                    const { styleCircleProps, styleLabelProps } =
+                        generateStyleProps(day);
 
-                        return (
-                            <GrowDayCell key={`day-${dayIndex}`}>
-                                <InteractiveCircle
-                                    $variant={variant}
-                                    $enableSelection={enableSelection}
-                                    onClick={() =>
-                                        handleDayClick(
-                                            day,
-                                            styleCircleProps.$disabled
-                                        )
+                    return (
+                        <GrowDayCell key={`day-${dayIndex}`}>
+                            <InteractiveCircle
+                                $variant={variant}
+                                $enableSelection={enableSelection}
+                                onClick={() =>
+                                    handleDayClick(
+                                        day,
+                                        styleCircleProps.$disabled
+                                    )
+                                }
+                                {...styleCircleProps}
+                            >
+                                <DayLabel
+                                    weight={
+                                        styleLabelProps["$selected"]
+                                            ? "semibold"
+                                            : "regular"
                                     }
-                                    {...styleCircleProps}
+                                    $variant={variant}
+                                    $calenderType={type}
+                                    {...styleLabelProps}
                                 >
-                                    <DayLabel
-                                        weight={
-                                            styleLabelProps["$selected"]
-                                                ? "semibold"
-                                                : "regular"
-                                        }
-                                        $variant={variant}
-                                        $calenderType={type}
-                                        {...styleLabelProps}
-                                    >
-                                        {day.format("D")}
-                                    </DayLabel>
-                                </InteractiveCircle>
-                            </GrowDayCell>
-                        );
-                    })}
-                </RowDayCell>
-            );
-        });
+                                    {day.format("D")}
+                                </DayLabel>
+                            </InteractiveCircle>
+                        </GrowDayCell>
+                    );
+                })}
+            </RowDayCell>
+        );
     };
 
     const renderTimeSlotBarCells = () => {
         return (
             <ColumnWeekCell
-                key={`week-cell-${calendarDate.format("YYYY-MM-DD")}`}
+                key={`week-cell-${calendarDate.format(dateFormat)}`}
             >
-                {currentCalendarWeek[0].map((day, dayIndex) => {
+                {currentCalendarWeek.map((day, dayIndex) => {
+                    const formattedDate = day.format(dateFormat);
                     const slots =
                         daySlots &&
-                        (daySlots[day.format("YYYY-MM-DD")]
-                            ? daySlots[day.format("YYYY-MM-DD")]
+                        (daySlots[formattedDate]
+                            ? daySlots[formattedDate]
                             : [fallbackSlot]);
 
                     return (
@@ -218,7 +218,10 @@ export const TimeSlotWeekDays = ({
                                             $clickable={clickable}
                                             onClick={() =>
                                                 clickable &&
-                                                handleSlotClick(slot)
+                                                handleSlotClick(
+                                                    formattedDate,
+                                                    slot
+                                                )
                                             }
                                         >
                                             <TimeSlotText

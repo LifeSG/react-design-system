@@ -20,10 +20,10 @@ export namespace CalendarHelper {
 
     export const generateDaysForCurrentWeek = (
         calendarDate: Dayjs
-    ): Dayjs[][] => {
+    ): Dayjs[] => {
         const firstDayOfWeek = calendarDate.startOf("week");
 
-        return [generateWeek(firstDayOfWeek)];
+        return generateWeek(firstDayOfWeek);
     };
 
     export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
@@ -68,7 +68,7 @@ export namespace CalendarHelper {
         if (!parsedTime.isValid()) {
             return "";
         }
-        return parsedTime.format("h:mm A").toLocaleLowerCase();
+        return parsedTime.format("h:mm a");
     };
 }
 

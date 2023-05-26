@@ -136,8 +136,8 @@ You can disable date selection for this component.
                     <Wrapper>
                         <TimeSlotWeekView
                             slots={getSlots()}
-                            onSlotClick={(e) => {
-                                alert(JSON.stringify(e));
+                            onSlotClick={(date, slot) => {
+                                alert(date + JSON.stringify(slot));
                             }}
                         />
                     </Wrapper>
