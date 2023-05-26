@@ -13,7 +13,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The value of the time in string based format. 24 hour
                         will be <code>hh:mm</code>, while 12 hour will be{" "}
-                        <code>hh:mma</code>
+                        <code>hh:mmA</code>
                     </>
                 ),
                 propTypes: ["string"],

@@ -20,7 +20,7 @@ export interface TimepickerProps {
     /**
      * Called when the user makes a selection and clicks on the "Confirm" button
      * in the time selection box. Returns a string based format.
-     * 24 hour uses "hh:mm", while 12 hour uses "hh:mma"
+     * 24 hour uses "hh:mm", while 12 hour uses "hh:mmA"
      */
     onChange?: ((value: string) => void) | undefined;
     /**

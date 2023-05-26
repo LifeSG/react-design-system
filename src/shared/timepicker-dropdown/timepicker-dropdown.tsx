@@ -237,10 +237,10 @@ export const TimepickerDropdown = ({
     ) => {
         switch (event.target.name) {
             case ETimePeriodToggleName.AM:
-                setTimePeriod("am");
+                setTimePeriod("AM");
                 break;
             case ETimePeriodToggleName.PM:
-                setTimePeriod("pm");
+                setTimePeriod("PM");
                 break;
             default:
                 break;
@@ -360,7 +360,7 @@ export const TimepickerDropdown = ({
     const renderTimePeriodControl = () => (
         <TimePeriodSection>
             <TimePeriodToggle
-                checked={timePeriod === "am"}
+                checked={timePeriod === "AM"}
                 name={ETimePeriodToggleName.AM}
                 type="radio"
                 onChange={handleTimePeriodChange}
@@ -370,7 +370,7 @@ export const TimepickerDropdown = ({
                 AM
             </TimePeriodToggle>
             <TimePeriodToggle
-                checked={timePeriod === "pm"}
+                checked={timePeriod === "PM"}
                 name={ETimePeriodToggleName.PM}
                 type="radio"
                 onChange={handleTimePeriodChange}

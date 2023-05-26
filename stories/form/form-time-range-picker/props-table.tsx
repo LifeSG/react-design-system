@@ -82,7 +82,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The selected start time value as an empty string or a
                         string-based format. 24 hour uses <code>hh:mm</code>,
-                        while 12 hour uses <code>hh:mma</code>
+                        while 12 hour uses <code>hh:mmA</code>
                     </>
                 ),
                 propTypes: ["string"],
@@ -93,7 +93,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The selected start time value as an empty string or a
                         string-based format. 24 hour uses <code>hh:mm</code>,
-                        while 12 hour uses <code>hh:mma</code>
+                        while 12 hour uses <code>hh:mmA</code>
                     </>
                 ),
                 propTypes: ["string"],
