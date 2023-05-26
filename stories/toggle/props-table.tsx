@@ -80,10 +80,10 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The description label of the <code>Toggle</code>{" "}
-                        displayed between the main label.
+                        displayed below the main label.
                     </>
                 ),
-                propTypes: ["string"],
+                propTypes: ["string", "() => JSX.Element"],
             },
             {
                 name: "onChange",
