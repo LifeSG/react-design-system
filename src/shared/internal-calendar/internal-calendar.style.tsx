@@ -12,10 +12,6 @@ interface GeneralStyleProps {
     $type: CalendarType;
 }
 
-interface SideArrowButtonStyleProps {
-    $direction: "left" | "right";
-}
-
 interface DropdownButtonStyleProps extends GeneralStyleProps {
     $expandedDisplay: boolean;
     $visible?: boolean;
@@ -126,20 +122,12 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     }
 
     ${(props) => {
-        switch (props.$type) {
-            case "input":
-                return css`
-                    :not(:last-of-type) {
-                        margin-right: 0;
-                    }
-                `;
-            case "standalone":
-                return css`
-                    ${IconChevronDown} {
-                        width: 1.125rem;
-                        height: 1.125rem;
-                    }
-                `;
+        if (props.$type === "input") {
+            return css`
+                :not(:last-of-type) {
+                    margin-right: 0;
+                }
+            `;
         }
     }}
 
@@ -179,7 +167,7 @@ export const HeaderArrows = styled.div`
     display: flex;
 `;
 
-export const HeaderArrowButton = styled(IconButton)<GeneralStyleProps>`
+export const HeaderArrowButton = styled(IconButton)`
     background: transparent;
     margin: auto 0;
     padding: 0.5rem;
@@ -188,18 +176,6 @@ export const HeaderArrowButton = styled(IconButton)<GeneralStyleProps>`
     :active {
         background: transparent;
     }
-
-    ${(props) => {
-        if (props.$type === "standalone") {
-            return css`
-                ${ArrowLeft},
-                ${ArrowRight} {
-                    height: 1.125rem;
-                    width: 1.125rem;
-                }
-            `;
-        }
-    }}
 `;
 
 export const ActionButtonSection = styled.div`

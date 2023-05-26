@@ -394,14 +394,12 @@ export const Component = (
                 </HeaderInputDropdown>
                 <HeaderArrows>
                     <HeaderArrowButton
-                        $type={type}
                         tabIndex={-1}
                         onClick={handleLeftArrowClick}
                     >
                         <ArrowLeft />
                     </HeaderArrowButton>
                     <HeaderArrowButton
-                        $type={type}
                         tabIndex={-1}
                         onClick={handleRightArrowClick}
                     >
