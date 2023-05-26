@@ -126,7 +126,6 @@ export const Toggle = ({
             $styleType={styleType}
             $error={error}
             $indicator={indicator}
-            $hasSubLabel={!!subLabel}
             id={id}
             data-testid={testId}
         >

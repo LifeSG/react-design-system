@@ -16,7 +16,6 @@ interface StyleProps {
 interface ContainerStyleProps extends StyleProps {
     $styleType?: ToggleStyleType;
     $error?: boolean;
-    $hasSubLabel?: boolean;
 }
 
 interface LabelStyleProps extends StyleProps {}
