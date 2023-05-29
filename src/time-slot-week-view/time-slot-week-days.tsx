@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 
 import isBetween from "dayjs/plugin/isBetween";
-import { FocusType, InternalCalendarProps } from "../shared/internal-calendar";
+import { InternalCalendarProps } from "../shared/internal-calendar";
 import {
     GrowDayCell,
     InteractiveCircle,
@@ -229,7 +229,7 @@ export const TimeSlotWeekDays = ({
                                                 </span>
                                                 {slotEndTime &&
                                                     slotStartTime && (
-                                                        <span> {"-"}</span>
+                                                        <span>-</span>
                                                     )}
                                                 <span>
                                                     {CalendarHelper.convertTo12HourFormat(

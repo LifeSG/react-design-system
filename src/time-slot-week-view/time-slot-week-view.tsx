@@ -1,9 +1,9 @@
-import { TimeSlot } from "../time-slot-bar";
-import { Wrapper } from "./time-slot-week-view.styles";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
+import { TimeSlot } from "../time-slot-bar";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
+import { Wrapper } from "./time-slot-week-view.styles";
 
 interface TimeSlotWeekViewProps {
     value?: string | undefined; // selected date format (YYYY-MM-DD)
