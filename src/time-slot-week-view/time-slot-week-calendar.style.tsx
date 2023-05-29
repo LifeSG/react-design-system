@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
         display: flex;
         justify-content: space-between;
         margin-bottom: 0rem;
-        padding: 0.5rem;
+        padding: 0rem;
         ${MediaQuery.MaxWidth.mobileL} {
             padding: 0 1.25rem;
         }
