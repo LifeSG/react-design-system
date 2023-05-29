@@ -1,11 +1,11 @@
 import dayjs, { Dayjs } from "dayjs";
-import React, { useState } from "react";
+import { useState } from "react";
 import { TimeSlot } from "../time-slot-bar";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
 import { TimeSlotWeekCalendarProps } from "./types";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
 
-export const Component = ({
+export const TimeSlotWeekCalendar = ({
     disabledDates,
     onWeekDisplayChange,
     onSelect,
@@ -101,5 +101,3 @@ export const Component = ({
 
     return <>{renderContent()}</>;
 };
-
-export const TimeSlotWeekCalendar = React.forwardRef(Component);
