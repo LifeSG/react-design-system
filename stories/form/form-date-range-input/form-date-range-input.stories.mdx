@@ -102,22 +102,21 @@ _(In this example, 2 days before today and 2 days after today are disabled)_
     </Story>
 </Canvas>
 
-<Heading3>Within date range</Heading3>
+<Heading3>Within minimum and maximum dates</Heading3>
 
-You can restrict selection to a date range using `between`.
+You can specify the `minDate` and/or `maxDate` to control the selection range.
 
 <Canvas>
-    <Story name="Within date range">
+    <Story name="Min and max dates">
         {() => {
-            const [between] = useState([
-                dayjs().subtract(2, "days").format("YYYY-MM-DD"),
-                dayjs().add(20, "days").format("YYYY-MM-DD"),
-            ]);
             return (
                 <StoryContainer>
                     <Form.DateRangeInput
                         label="This has restricted selection"
-                        between={between}
+                        minDate={dayjs()
+                            .subtract(2, "days")
+                            .format("YYYY-MM-DD")}
+                        maxDate={dayjs().add(20, "days").format("YYYY-MM-DD")}
                     />
                 </StoryContainer>
             );
