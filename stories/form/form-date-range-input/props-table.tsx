@@ -14,23 +14,6 @@ const DATA: ApiTableSectionProps[] = [
         name: "DateRangeInput specific props",
         attributes: [
             {
-                name: "between",
-                description: (
-                    <>
-                        Specifies the selection between a given date range. To
-                        specify in an array where&nbsp;
-                        <code>[startDate, endDate]</code> using the{" "}
-                        {STRING_FORMAT} for the dates.
-                        <br />
-                        E.g.{" "}
-                        <code>
-                            [{quote("2023-01-01")}, {quote("2023-02-01")}]
-                        </code>
-                    </>
-                ),
-                propTypes: ["[string, string]"],
-            },
-            {
                 name: "className",
                 description: "The class selector of the component",
                 propTypes: ["string"],
@@ -75,6 +58,26 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "id",
                 description: "The unique identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "maxDate",
+                description: (
+                    <>
+                        Specifies the maximum date allowed for selection in
+                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "minDate",
+                description: (
+                    <>
+                        Specifies the minimum date allowed for selection in
+                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {

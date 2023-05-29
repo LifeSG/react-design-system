@@ -23,7 +23,14 @@ export interface DateRangeInputProps {
      * Is restricted to `true` on mobile viewports
      */
     withButton?: boolean | undefined;
-    between?: [string, string] | undefined;
+    /**
+     * The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
+     */
+    minDate?: string | undefined;
+    /**
+     * The maximum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
+     */
+    maxDate?: string | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start and
      * end date in "YYYY-MM-DD" string format.
