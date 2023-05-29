@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
+import { ApiTable, code, quote } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
@@ -81,8 +81,13 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The selected start time value as an empty string or a
-                        string-based format. 24 hour uses <code>hh:mm</code>,
-                        while 12 hour uses <code>hh:mmA</code>
+                        string-based format.
+                        <br />
+                        24 hour uses {quote("hh:mm")} e.g.{" "}
+                        {code(quote("13:00"))}
+                        <br />
+                        12 hour uses {quote("hh:mmA")} e.g.{" "}
+                        {code(quote("01:00PM"))}
                     </>
                 ),
                 propTypes: ["string"],
@@ -92,8 +97,13 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The selected start time value as an empty string or a
-                        string-based format. 24 hour uses <code>hh:mm</code>,
-                        while 12 hour uses <code>hh:mmA</code>
+                        string-based format.
+                        <br />
+                        24 hour uses {quote("hh:mm")} e.g.{" "}
+                        {code(quote("13:00"))}
+                        <br />
+                        12 hour uses {quote("hh:mmA")} e.g.{" "}
+                        {code(quote("01:00PM"))}
                     </>
                 ),
                 propTypes: ["string"],

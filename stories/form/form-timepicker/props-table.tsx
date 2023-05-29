@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
+import { ApiTable, code, quote } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
@@ -11,9 +11,13 @@ const DATA: ApiTableSectionProps[] = [
                 name: "value",
                 description: (
                     <>
-                        The value of the time in string based format. 24 hour
-                        will be <code>hh:mm</code>, while 12 hour will be{" "}
-                        <code>hh:mmA</code>
+                        The value of the time input in a string based format.
+                        <br />
+                        24 hour uses {quote("hh:mm")} e.g.{" "}
+                        {code(quote("13:00"))}
+                        <br />
+                        12 hour uses {quote("hh:mmA")} e.g.{" "}
+                        {code(quote("01:00PM"))}
                     </>
                 ),
                 propTypes: ["string"],
@@ -73,7 +77,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onChange",
                 description:
-                    "Called when the user clicks on the 'Confirm' button in the time selection box. Returns the date value in the format specified",
+                    "Called when the user clicks on the 'Confirm' button in the time selection box. Returns the time value in the format specified",
                 propTypes: ["(value: string) => void"],
             },
             {
