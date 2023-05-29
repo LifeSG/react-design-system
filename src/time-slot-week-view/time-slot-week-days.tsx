@@ -94,17 +94,16 @@ export const TimeSlotWeekDays = ({
     // HELPER FUNCTIONS
     // =============================================================================
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange = !day.isBetween(
-            minDate,
-            maxDate,
-            "day",
-            "[]"
+        const isWithinRange = CalendarHelper.isWithinRange(
+            day,
+            minDate ? dayjs(minDate) : undefined,
+            maxDate ? dayjs(maxDate) : undefined
         );
 
         const isDisabledDate =
             disabledDates && disabledDates.includes(day.format(dateFormat));
 
-        return isOutsideBetweenRange || isDisabledDate;
+        return !isWithinRange || isDisabledDate;
     };
 
     const generateStyleProps = (day: Dayjs) => {

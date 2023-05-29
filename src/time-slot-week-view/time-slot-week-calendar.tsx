@@ -27,10 +27,8 @@ export const Component = (
     {
         disabledDates,
         onWeekDisplayChange,
-        onCalendarView,
         onSelect,
         value,
-        variant,
         minDate,
         maxDate,
         slots,
@@ -168,14 +166,12 @@ export const Component = (
     const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
             setCurrentView("month-options");
-            performOnCalendarView("month-options");
 
             // Maintain focus when selecting month dropdown
             resizeDetector.ref.current.focus();
         } else {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
-            performOnCalendarView("default");
         }
     };
 
@@ -188,10 +184,8 @@ export const Component = (
         if (currentView !== "default") {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
-            performOnCalendarView("default");
         } else {
             setCurrentView("year-options");
-            performOnCalendarView("year-options");
         }
     };
 
@@ -203,12 +197,6 @@ export const Component = (
             return `${beginDecade} to ${endDecade}`;
         } else {
             return dayjs(calendarDate).endOf("week").format("YYYY");
-        }
-    };
-
-    const performOnCalendarView = (view: View) => {
-        if (onCalendarView) {
-            onCalendarView(view);
         }
     };
 
@@ -329,7 +317,6 @@ export const Component = (
                                 calendarDate={calendarDate}
                                 disabledDates={disabledDates}
                                 selectedDate={selectedDate}
-                                variant={variant}
                                 minDate={minDate}
                                 maxDate={maxDate}
                                 isNewSelection={true}

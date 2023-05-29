@@ -18,7 +18,7 @@ export interface TimeSlotWeekProps {
 }
 
 export interface TimeSlotWeekViewProps
-    extends TimeSlotWeekCalendarProps,
+    extends Omit<TimeSlotWeekCalendarProps, "onSelect" | "onHover">,
         TimeSlotWeekProps {
     value?: string | undefined; // selected date format (YYYY-MM-DD)
     calendarDate?: string | undefined;
@@ -35,6 +35,9 @@ interface YearMonthWeekDisplay {
 
 export interface TimeSlotWeekCalendarProps
     extends TimeSlotWeekProps,
-        Omit<InternalCalendarProps, "onYearMonthDisplayChange" | "type"> {
+        Omit<
+            CommonCalendarProps,
+            "onYearMonthDisplayChange" | "type" | "selectWithinRange"
+        > {
     onWeekDisplayChange?: ((value: YearMonthWeekDisplay) => void) | undefined;
 }

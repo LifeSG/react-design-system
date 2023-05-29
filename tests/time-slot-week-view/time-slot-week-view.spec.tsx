@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import { TimeSlotWeekView } from "../../src";
+import { TimeSlot, TimeSlotWeekView } from "../../src";
 
 describe("TimeSlotWeekCalendar", () => {
     const currentDay = dayjs();
@@ -158,16 +158,119 @@ describe("TimeSlotWeekCalendar", () => {
     });
 
     // TODO : Add tests for slots behaviour
-    it.skip("updates the calendarDate state when the value prop changes", () => {
-        const { rerender } = render(<TimeSlotWeekView value="2023-05-26" />);
+
+    describe("Slots behaviour", () => {
+        // should render the given slots with correct start and end time
+        const slots: { [date: string]: TimeSlot[] } = {
+            "2021-01-01": [
+                {
+                    id: "1",
+                    startTime: "09:00",
+                    endTime: "14:30",
+                    clickable: true,
+                    styleAttributes: {
+                        styleType: "stripes",
+                        backgroundColor: "#ECEFEF",
+                        backgroundColor2: "#E0E4E5",
+                    },
+                },
+            ],
+        };
+        it("should render the given slots with correct start and end time", () => {
+            const onSlotClick = jest.fn();
+            const minDate = dayjs("2021-01-01").startOf("week");
+            render(
+                <TimeSlotWeekView
+                    onWeekDisplayChange={onSlotClick}
+                    onSlotClick={onSlotClick}
+                    currentCalendarDate={"2021-01-01"}
+                    slots={slots}
+                    minDate={minDate.format(dateFormat)}
+                />
+            );
+            expect(screen.getByText("9:00 am")).toBeVisible();
+            expect(screen.getByText("2:30 pm")).toBeVisible();
+        });
+        it("should fire the given callback when clicked on a slot with relevant data", () => {
+            const onSlotClick = jest.fn();
+            const minDate = dayjs("2021-01-01").startOf("week");
+            render(
+                <TimeSlotWeekView
+                    onWeekDisplayChange={onSlotClick}
+                    onSlotClick={onSlotClick}
+                    currentCalendarDate={"2021-01-01"}
+                    slots={slots}
+                    minDate={minDate.format(dateFormat)}
+                />
+            );
+            const slot = screen.getByText("9:00 am");
+            fireEvent.click(slot);
+            expect(onSlotClick).toHaveBeenCalledTimes(1);
+            expect(onSlotClick).toHaveBeenCalledWith("2021-01-01", {
+                clickable: true,
+                endTime: "14:30",
+                id: "1",
+                startTime: "09:00",
+                styleAttributes: {
+                    backgroundColor: "#ECEFEF",
+                    backgroundColor2: "#E0E4E5",
+                    styleType: "stripes",
+                },
+            });
+        });
+        it("should fire the given callback when clicked on a slot with relevant data", () => {
+            const disabledSlots: { [date: string]: TimeSlot[] } = {
+                "2021-01-01": [
+                    {
+                        id: "1",
+                        startTime: "09:00",
+                        endTime: "14:30",
+                        clickable: false,
+                        styleAttributes: {
+                            styleType: "stripes",
+                            backgroundColor: "#ECEFEF",
+                            backgroundColor2: "#E0E4E5",
+                        },
+                    },
+                ],
+            };
+            const onSlotClick = jest.fn();
+            const minDate = dayjs("2021-01-01").startOf("week");
+            render(
+                <TimeSlotWeekView
+                    onWeekDisplayChange={onSlotClick}
+                    onSlotClick={onSlotClick}
+                    currentCalendarDate={"2021-01-01"}
+                    slots={disabledSlots}
+                    minDate={minDate.format(dateFormat)}
+                />
+            );
+            const slot = screen.getByText("9:00 am");
+            fireEvent.click(slot);
+            expect(onSlotClick).toHaveBeenCalledTimes(0);
+        });
+    });
+    it("updates the calendarDate state when the value prop changes", () => {
+        const { rerender } = render(<TimeSlotWeekView value="2022-05-26" />);
+        expect(screen.getByText("May")).toBeVisible();
+        expect(screen.getByText("2022")).toBeVisible();
+        expect(screen.getByText("26")).toBeVisible();
         rerender(<TimeSlotWeekView value="2023-06-01" />);
+        expect(screen.getByText("Jun")).toBeVisible();
+        expect(screen.getByText("2023")).toBeVisible();
+        expect(screen.getByText("1")).toBeVisible();
     });
 
-    it.skip("calls the onSelect callback when a date is selected", () => {
-        const onSelect = jest.fn();
-        render(<TimeSlotWeekView onSelect={onSelect} />);
-        const dateButton = screen.getByLabelText("Select Date");
+    it("calls the onChange callback when a date is selected", () => {
+        const onChange = jest.fn();
+        render(
+            <TimeSlotWeekView
+                onChange={onChange}
+                currentCalendarDate={"2021-01-29"}
+            />
+        );
+        const dateButton = screen.getByText("29");
         fireEvent.click(dateButton);
-        expect(onSelect).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledTimes(1);
     });
 });
