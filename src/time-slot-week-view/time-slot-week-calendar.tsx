@@ -281,9 +281,9 @@ export const Component = (
 
     const renderHeader = () => {
         const disableLeftArrow =
-            minDate && dayjs(calendarDate).startOf("week") < dayjs(minDate);
+            minDate && dayjs(calendarDate).startOf("week") <= dayjs(minDate);
         const disableRightArrow =
-            maxDate && dayjs(calendarDate).endOf("week") > dayjs(maxDate);
+            maxDate && dayjs(calendarDate).endOf("week") >= dayjs(maxDate);
         return (
             showNavigationHeader && (
                 <Header>
@@ -295,6 +295,7 @@ export const Component = (
                             disabled={disableLeftArrow}
                             tabIndex={-1}
                             onClick={handleLeftArrowClick}
+                            data-testid={"left-arrow-btn"}
                         >
                             <ArrowLeft />
                         </HeaderArrowButton>
@@ -302,6 +303,7 @@ export const Component = (
                             disabled={disableRightArrow}
                             tabIndex={-1}
                             onClick={handleRightArrowClick}
+                            data-testid={"right-arrow-btn"}
                         >
                             <ArrowRight />
                         </HeaderArrowButton>
