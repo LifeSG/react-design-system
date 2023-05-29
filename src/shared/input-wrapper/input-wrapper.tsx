@@ -21,7 +21,7 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
     display: flex;
     align-items: center;
     position: relative;
-    border: 1px solid ${Color.Neutral[5]};
+    outline: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     background: ${Color.Neutral[8]};
     height: max-content;
@@ -31,7 +31,7 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
         props.$position === "right" ? "row-reverse" : "row"};
 
     :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
+        outline: 1px solid ${Color.Accent.Light[1]};
         box-shadow: ${DesignToken.InputBoxShadow};
     }
 
@@ -59,10 +59,10 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
             `;
         } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border};
+                outline: 1px solid ${Color.Validation.Red.Border};
 
                 :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border};
+                    outline: 1px solid ${Color.Validation.Red.Border};
                     box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
             `;
