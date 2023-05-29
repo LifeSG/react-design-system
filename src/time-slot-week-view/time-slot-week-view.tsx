@@ -117,7 +117,6 @@ export const TimeSlotWeekView = ({
                                 selectedDate={selectedDate}
                                 minDate={minDate}
                                 maxDate={maxDate}
-                                isNewSelection={true}
                                 onSelect={handleDateSelect}
                                 slots={slots}
                                 enableSelection={enableSelection}

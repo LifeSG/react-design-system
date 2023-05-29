@@ -14,12 +14,12 @@ import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.st
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
+    ColumnWeekCell,
     DayLabelWeek,
     HeaderCellWeek,
-    Wrapper,
-    ColumnWeekCell,
     TimeSlotText,
     TimeSlotWrapper,
+    Wrapper,
 } from "./time-slot-week-days.style";
 dayjs.extend(isBetween);
 
@@ -28,12 +28,10 @@ export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
     extends Pick<
         InternalCalendarProps,
-        "disabledDates" | "variant" | "minDate" | "maxDate"
+        "disabledDates" | "minDate" | "maxDate"
     > {
     selectedDate: string;
     calendarDate: Dayjs;
-    currentFocus?: FocusType | undefined;
-    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     slots?: { [date: string]: TimeSlot[] } | undefined;
     enableSelection?: boolean | undefined;

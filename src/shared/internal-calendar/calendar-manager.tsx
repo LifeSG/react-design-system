@@ -65,7 +65,6 @@ export const CalendarManager = ({
     selectedEndDate,
     selectWithinRange,
     type = "input",
-    onDismiss,
     onCalendarDate,
     onCalendarView,
     showNavigationHeader,
@@ -189,30 +188,6 @@ export const CalendarManager = ({
         performOnCalendarDate(value);
     };
 
-    const handleCancelButton = () => {
-        const calendarValue =
-            currentFocus === "end" ? selectedEndDate : selectedStartDate;
-        setCalendarDate(dayjs(calendarValue));
-
-        if (currentView === "default") {
-            performOnDismissHandler("reset");
-        } else {
-            setCurrentView("default");
-        }
-    };
-
-    const handleDoneButton = (isDisabled: boolean) => {
-        if (isDisabled) return;
-        setCalendarDate(viewCalendarDate);
-
-        // close calendar and 'confirmed' the value
-        if (currentView === "default") {
-            performOnDismissHandler("confirmed");
-        } else {
-            setCurrentView("default");
-        }
-    };
-
     const performOnCalendarDate = (date: Dayjs) => {
         if (onYearMonthDisplayChange) {
             const returnValue = {
@@ -228,12 +203,6 @@ export const CalendarManager = ({
     const performOnCalendarView = (view: View) => {
         if (onCalendarView) {
             onCalendarView(view);
-        }
-    };
-
-    const performOnDismissHandler = (action: CalendarAction) => {
-        if (onDismiss) {
-            onDismiss(action);
         }
     };
 
@@ -263,7 +232,6 @@ export const CalendarManager = ({
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
-                    style={{ marginRight: 0 }}
                     $type={type}
                 >
                     <DropdownText $type={type}>
