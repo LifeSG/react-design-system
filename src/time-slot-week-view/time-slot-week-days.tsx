@@ -2,14 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 
 import isBetween from "dayjs/plugin/isBetween";
-import { CalendarHelper } from "../util/calendar-helper";
-import {
-    CalendarType,
-    FocusType,
-    InternalCalendarProps,
-} from "../shared/internal-calendar";
-import { TimeSlot } from "../time-slot-bar/types";
-import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
+import { FocusType, InternalCalendarProps } from "../shared/internal-calendar";
 import {
     GrowDayCell,
     InteractiveCircle,
@@ -17,15 +10,16 @@ import {
     StyleProps,
 } from "../shared/internal-calendar/internal-calendar-day.style";
 import { Text } from "../text/text";
-import {
-    ColumnWeekCell,
-    TimeSlotText,
-    TimeSlotWrapper,
-} from "./time-slot-week.styles";
+import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
+import { TimeSlot } from "../time-slot-bar/types";
+import { CalendarHelper } from "../util/calendar-helper";
 import {
     DayLabelWeek,
     HeaderCellWeek,
     Wrapper,
+    ColumnWeekCell,
+    TimeSlotText,
+    TimeSlotWrapper,
 } from "./time-slot-week-days.style";
 dayjs.extend(isBetween);
 

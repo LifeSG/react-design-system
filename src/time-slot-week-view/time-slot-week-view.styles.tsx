@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { MediaQuery } from "../media/media";
 
 export const Wrapper = styled.div`
+    min-width: 18.5rem;
     [data-id="calendar-container"] {
         padding: 1.5rem 1.25rem;
         display: flex;
