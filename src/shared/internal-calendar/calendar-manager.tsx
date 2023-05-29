@@ -1,6 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useState } from "react";
-import { ContentBody } from "../../time-slot-week-view/time-slot-week-calendar.style";
 import { CalendarHelper } from "../../util";
 import { InternalCalendarMonth } from "./internal-calendar-month";
 import { InternalCalendarYear } from "./internal-calendar-year";
@@ -280,7 +279,7 @@ export const CalendarManager = ({
                     onClick={handleYearDropdownClick}
                     $type={type}
                 >
-                    <DropdownText $type="input">
+                    <DropdownText $type={type}>
                         {getYearHeaderText()}
                     </DropdownText>
                     <IconChevronDown />
@@ -334,7 +333,7 @@ export const CalendarManager = ({
             ? isRightArrowDisabled(calendarDate)
             : false;
         return (
-            <Header $type="input">
+            <Header $type="input" data-id={"calendar-header"}>
                 <HeaderInputDropdown>
                     {renderDropdownButtons()}
                 </HeaderInputDropdown>
@@ -368,16 +367,14 @@ export const CalendarManager = ({
             $type="input"
             // {...otherProps}
         >
-            <ContentBody>
-                {showNavigationHeader && renderHeader()}
-                <ToggleZone>
-                    {currentView === "default" &&
-                        (typeof children === "function"
-                            ? children({ calendarDate })
-                            : children)}
-                    {renderOptionsOverlay()}
-                </ToggleZone>
-            </ContentBody>
+            {showNavigationHeader && renderHeader()}
+            <ToggleZone>
+                {currentView === "default" &&
+                    (typeof children === "function"
+                        ? children({ calendarDate })
+                        : children)}
+                {renderOptionsOverlay()}
+            </ToggleZone>
         </Container>
     );
 };
