@@ -20,10 +20,13 @@ export interface DateInputProps {
      */
     withButton?: boolean | undefined;
     /**
-     * Restrict selection to within this date range, in `YYYY-MM-DD` format.
-     * Example: `["2023-03-15", "2023-04-19"]
+     * The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
      */
-    between?: [string, string] | undefined;
+    minDate?: string | undefined;
+    /**
+     * The maximum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
+     */
+    maxDate?: string | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start
      * date in "YYYY-MM-DD" string format.

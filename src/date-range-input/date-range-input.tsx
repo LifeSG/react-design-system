@@ -43,7 +43,8 @@ const INITIAL_STATE: DateRangeInputState = {
 };
 
 export const DateRangeInput = ({
-    between,
+    minDate,
+    maxDate,
     disabled,
     disabledDates,
     error,
@@ -195,7 +196,13 @@ export const DateRangeInput = ({
             return;
         }
 
-        if (DateInputHelper.isDateDisabled(val, { disabledDates, between })) {
+        if (
+            DateInputHelper.isDateDisabled(val, {
+                disabledDates,
+                minDate,
+                maxDate,
+            })
+        ) {
             // date is invalid, remain on this input
             return;
         }
@@ -245,7 +252,13 @@ export const DateRangeInput = ({
             return;
         }
 
-        if (DateInputHelper.isDateDisabled(val, { disabledDates, between })) {
+        if (
+            DateInputHelper.isDateDisabled(val, {
+                disabledDates,
+                minDate,
+                maxDate,
+            })
+        ) {
             // date  is invalid, remain on this input
             return;
         }
@@ -291,7 +304,8 @@ export const DateRangeInput = ({
             !validFormat ||
             DateInputHelper.isDateDisabled(selectedStart, {
                 disabledDates,
-                between,
+                minDate,
+                maxDate,
             })
         ) {
             actions.resetStart();
@@ -304,7 +318,8 @@ export const DateRangeInput = ({
             !validFormat ||
             DateInputHelper.isDateDisabled(selectedEnd, {
                 disabledDates,
-                between,
+                minDate,
+                maxDate,
             })
         ) {
             actions.resetEnd();
@@ -403,8 +418,8 @@ export const DateRangeInput = ({
                 selectWithinRange={isStartDirty || isEndDirty}
                 currentFocus={currentFocus}
                 disabledDates={disabledDates}
-                minDate={between && between[0]} // FIXME: Handle refactoring of between prop to minDate and maxDate
-                maxDate={between && between[1]} // FIXME: Same as above
+                minDate={minDate}
+                maxDate={maxDate}
                 onSelect={handleCalendarSelect}
                 onDismiss={handleCalendarDismiss}
                 onHover={handleCalendarHover}

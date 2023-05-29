@@ -14,7 +14,8 @@ import { DateInputProps } from "./types";
 export type ActionComponent = "calendar" | "input";
 
 export const DateInput = ({
-    between,
+    minDate,
+    maxDate,
     disabled,
     disabledDates,
     error,
@@ -73,7 +74,13 @@ export const DateInput = ({
     }
 
     const handleChange = (val: string) => {
-        if (DateInputHelper.isDateDisabled(val, { disabledDates, between })) {
+        if (
+            DateInputHelper.isDateDisabled(val, {
+                disabledDates,
+                minDate,
+                maxDate,
+            })
+        ) {
             return;
         }
 
@@ -166,8 +173,8 @@ export const DateInput = ({
                 withButton={withButton}
                 value={selectedDate}
                 disabledDates={disabledDates}
-                minDate={between && between[0]} // FIXME: Handle refactoring of between prop to minDate and maxDate
-                maxDate={between && between[1]} // FIXME: Same as above
+                minDate={minDate}
+                maxDate={maxDate}
                 onHover={handleHoverDayCell}
                 onSelect={handleChange}
                 onDismiss={handleCalendarAction}
