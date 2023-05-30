@@ -35,16 +35,6 @@ export interface InputSelectSharedProps<T> {
     "data-testid"?: string | undefined;
 }
 
-export interface InputSelectWrapperProps {
-    children: JSX.Element[];
-    show: boolean;
-    onBlur: () => void;
-    error?: boolean | undefined;
-    disabled?: boolean | undefined;
-    testId?: string | undefined;
-    readOnly?: boolean | undefined;
-}
-
 // =============================================================================
 // INPUT SELECT PROPS
 // =============================================================================

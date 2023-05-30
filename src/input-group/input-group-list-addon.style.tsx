@@ -5,7 +5,7 @@ import {
     ElementBoundary as InputSelectElemBoundary,
     Selector as InputSelectSelector,
     Wrapper as InputSelectWrapper,
-} from "../input-select/input-select.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { Text } from "../text/text";
 import { TextStyle } from "../text/text-style";
 import { Transition } from "../transition";

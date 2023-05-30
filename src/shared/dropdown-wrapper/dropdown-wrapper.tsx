@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { ElementBoundary, Wrapper } from "./input-select.styles";
-import { InputSelectWrapperProps } from "./types";
+import { useEffect, useRef } from "react";
+import { ElementBoundary, Wrapper } from "./dropdown-wrapper.styles";
+import { DropdownSelectorProps } from "./types";
 
-export const InputSelectWrapper = ({
+export const DropdownWrapper = ({
     children,
     show,
     error,
@@ -10,7 +10,7 @@ export const InputSelectWrapper = ({
     testId,
     onBlur,
     readOnly,
-}: InputSelectWrapperProps): JSX.Element => {
+}: DropdownSelectorProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================

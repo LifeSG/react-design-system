@@ -1,6 +1,7 @@
 import findIndex from "lodash/findIndex";
 import React, { useEffect, useRef, useState } from "react";
-import { InputSelectWrapper } from "../input-select/input-select-wrapper";
+import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
     Divider,
     IconContainer,
@@ -9,8 +10,7 @@ import {
     Selector,
     StyledChevronIcon,
     ValueLabel,
-} from "../input-select/input-select.styles";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputMultiSelectProps } from "./types";
 
 export const InputMultiSelect = <T, V>({
@@ -191,7 +191,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     return (
-        <InputSelectWrapper
+        <DropdownWrapper
             show={showOptions}
             error={error && !showOptions}
             disabled={disabled}
@@ -209,6 +209,6 @@ export const InputMultiSelect = <T, V>({
             </Selector>
             {showOptions && <Divider />}
             {renderOptionList()}
-        </InputSelectWrapper>
+        </DropdownWrapper>
     );
 };

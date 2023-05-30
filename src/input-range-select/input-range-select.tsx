@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { InputSelectWrapper } from "../input-select/input-select-wrapper";
+import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
     Divider,
     LabelContainer,
     PlaceholderLabel,
     Selector,
     ValueLabel,
-} from "../input-select/input-select.styles";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { StringHelper } from "../util/string-helper";
 import { InputRangeSelectProps } from "./types";
@@ -268,7 +268,7 @@ export const InputRangeSelect = <T, V>({
         return null;
     };
     return (
-        <InputSelectWrapper
+        <DropdownWrapper
             show={focusedInput !== "none"}
             data-testid={otherProps["data-testid"]}
             error={error && !(focusedInput !== "none")}
@@ -292,6 +292,6 @@ export const InputRangeSelect = <T, V>({
             </Selector>
             {focusedInput !== "none" && <Divider />}
             {renderOptionsList()}
-        </InputSelectWrapper>
+        </DropdownWrapper>
     );
 };
