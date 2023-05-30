@@ -151,7 +151,10 @@ export const TimeRangePicker = ({
                         onFocus={handleStartTimeFocus}
                         readOnly
                         placeholder="From"
-                        value={TimeHelper.formatValue(startTimeVal, format)}
+                        value={TimeHelper.formatDisplayValue(
+                            startTimeVal,
+                            format
+                        )}
                         disabled={disabled}
                         data-testid={
                             otherProps["data-testid"]
@@ -164,7 +167,10 @@ export const TimeRangePicker = ({
                         onFocus={handleEndTimeFocus}
                         readOnly
                         placeholder="To"
-                        value={TimeHelper.formatValue(endTimeVal, format)}
+                        value={TimeHelper.formatDisplayValue(
+                            endTimeVal,
+                            format
+                        )}
                         disabled={disabled}
                         data-testid={
                             otherProps["data-testid"]

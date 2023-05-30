@@ -14,8 +14,12 @@ export interface TimeRangePickerProps {
     // Input-specific attributes
     "data-testid"?: string | undefined;
     /**
-     * An object with `start` and `end` values. Can be an empty string or a
-     * string based format. 24 hour uses "hh:mm", while 12 hour uses "hh:mma"
+     * An object with `start` and `end` values as an empty string or a
+     * string based format.
+     *
+     * 24 hour uses "hh:mm" e.g. `{ start: "13:00", end: "14:00" }`
+     *
+     * 12 hour uses "hh:mmA" e.g. `{ start: "01:00PM", end: "02:00PM" }`
      */
     value?: TimeRangePickerValue | undefined;
     /**
@@ -27,8 +31,11 @@ export interface TimeRangePickerProps {
     error?: boolean | undefined;
     /**
      * Called when a selection is made. Returns an object with `start` and
-     * `end` values. Can be an empty string or a string based format.
-     * 24 hour uses "hh:mm", while 12 hour uses "hh:mma"
+     * `end` values as an empty string or a string based format.
+     *
+     * 24 hour returns "hh:mm" e.g. `{ start: "13:00", end: "14:00" }`
+     *
+     * 12 hour returns "hh:mmA" e.g. `{ start: "01:00PM", end: "02:00PM" }`
      */
     onChange?: ((value: TimeRangePickerValue) => void) | undefined;
     /**

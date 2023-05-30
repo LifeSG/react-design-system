@@ -8,6 +8,13 @@ export interface TimepickerProps {
 
     // Input-specific attributes
     "data-testid"?: string | undefined;
+    /**
+     * The value of the time input in a string based format
+     *
+     * 24 hour uses "hh:mm" e.g. `"13:00"`
+     *
+     * 12 hour uses "hh:mmA" e.g. `"01:00PM"`
+     */
     value?: string | undefined;
     placeholder?: string | undefined;
     /**
@@ -20,7 +27,10 @@ export interface TimepickerProps {
     /**
      * Called when the user makes a selection and clicks on the "Confirm" button
      * in the time selection box. Returns a string based format.
-     * 24 hour uses "hh:mm", while 12 hour uses "hh:mma"
+     *
+     * 24 hour returns "hh:mm" e.g. `"13:00"`
+     *
+     * 12 hour returns "hh:mmA" e.g. `"01:00PM"`
      */
     onChange?: ((value: string) => void) | undefined;
     /**

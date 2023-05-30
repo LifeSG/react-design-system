@@ -98,7 +98,7 @@ export const Timepicker = ({
             focused={showSelector}
             readOnly
             placeholder={placeholder || getPlaceholderValue()}
-            value={TimeHelper.formatValue(value, format)}
+            value={TimeHelper.formatDisplayValue(value, format)}
             disabled={disabled}
             data-testid={
                 id ? `${id}-timepicker-selector` : "timepicker-selector"

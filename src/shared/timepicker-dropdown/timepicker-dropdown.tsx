@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { StringHelper } from "../../util/string-helper";
-import { Period, TimeFormat, TimeHelper } from "../../util/time-helper";
+import { EPeriod, TimeFormat, TimeHelper } from "../../util/time-helper";
 import {
     AnimatedDiv,
     Container,
@@ -61,7 +61,7 @@ export const TimepickerDropdown = ({
 
     const [hourValue, setHourValue] = useState<string>(timeValues.hour);
     const [minuteValue, setMinuteValue] = useState<string>(timeValues.minute);
-    const [timePeriod, setTimePeriod] = useState<Period>(timeValues.period);
+    const [timePeriod, setTimePeriod] = useState<EPeriod>(timeValues.period);
 
     const hourInputRef = useRef<HTMLInputElement>();
     const minuteInputRef = useRef<HTMLInputElement>();
@@ -237,10 +237,10 @@ export const TimepickerDropdown = ({
     ) => {
         switch (event.target.name) {
             case ETimePeriodToggleName.AM:
-                setTimePeriod("am");
+                setTimePeriod(EPeriod.AM);
                 break;
             case ETimePeriodToggleName.PM:
-                setTimePeriod("pm");
+                setTimePeriod(EPeriod.PM);
                 break;
             default:
                 break;
@@ -360,7 +360,7 @@ export const TimepickerDropdown = ({
     const renderTimePeriodControl = () => (
         <TimePeriodSection>
             <TimePeriodToggle
-                checked={timePeriod === "am"}
+                checked={timePeriod === EPeriod.AM}
                 name={ETimePeriodToggleName.AM}
                 type="radio"
                 onChange={handleTimePeriodChange}
@@ -370,7 +370,7 @@ export const TimepickerDropdown = ({
                 AM
             </TimePeriodToggle>
             <TimePeriodToggle
-                checked={timePeriod === "pm"}
+                checked={timePeriod === EPeriod.PM}
                 name={ETimePeriodToggleName.PM}
                 type="radio"
                 onChange={handleTimePeriodChange}
