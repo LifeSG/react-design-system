@@ -1,3 +1,5 @@
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import timezone from "dayjs/plugin/timezone";
 import dayjs, { Dayjs, OpUnitType } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
@@ -7,6 +9,8 @@ dayjs.extend(isBetween);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
+dayjs.extend(customParseFormat);
+dayjs.extend(timezone);
 export namespace CalendarHelper {
     export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
         const firstDayOfTheMonth = calendarDate.startOf("month");
@@ -19,6 +23,14 @@ export namespace CalendarHelper {
         );
 
         return firstDayOfEachWeek.map((date) => generateWeek(date));
+    };
+
+    export const generateDaysForCurrentWeek = (
+        calendarDate: Dayjs
+    ): Dayjs[] => {
+        const firstDayOfWeek = calendarDate.startOf("week");
+
+        return generateWeek(firstDayOfWeek);
     };
 
     export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
@@ -58,6 +70,13 @@ export namespace CalendarHelper {
         };
     };
 
+    export const convertTo12HourFormat = (time: string): string => {
+        const parsedTime = dayjs(time, "HH:mm");
+        if (!parsedTime.isValid()) {
+            return "";
+        }
+        return parsedTime.format("h:mm a");
+    };
     /**
      * Returns if a date is within a min and max date (inclusive)
      *

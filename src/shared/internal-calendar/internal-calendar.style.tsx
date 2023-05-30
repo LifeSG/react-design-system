@@ -176,6 +176,9 @@ export const HeaderArrowButton = styled(ClickableIcon)`
     :active {
         background: transparent;
     }
+    :disabled {
+        cursor: not-allowed;
+    }
 `;
 
 export const ActionButtonSection = styled.div`

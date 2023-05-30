@@ -42,6 +42,7 @@ export * from "./text-list";
 export * from "./theme";
 export * from "./time-range-picker";
 export * from "./time-slot-bar";
+export * from "./time-slot-week-view";
 export * from "./timeline";
 export * from "./timepicker";
 export * from "./toast";

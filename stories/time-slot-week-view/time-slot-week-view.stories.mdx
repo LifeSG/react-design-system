@@ -1,0 +1,150 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import dayjs from "dayjs";
+import { useState } from "react";
+import {
+    Heading3,
+    Heading4,
+    FullWidthStoryContainer,
+    Secondary,
+    Title,
+} from "../storybook-common";
+import { TimeSlotWeekView } from "src/time-slot-week-view";
+import { Layout } from "src/layout";
+import { PropsTable } from "./props-table";
+import { getSlots, getSlotsMin } from "./slots";
+import { Wrapper } from "./doc-elements";
+
+<Meta
+    title="Modules/TimeSlotWeekView"
+    component={TimeSlotWeekView}
+    parameters={{ layout: "padded" }}
+/>
+
+<Title>TimeSlotWeekView</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays a calendar component to view available time slots in a week.
+
+```tsx
+import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
+```
+
+<Canvas>
+    <Story name="TimeSlotWeekView">
+        <FullWidthStoryContainer>
+            <Wrapper>
+                <TimeSlotWeekView slots={getSlots()} />
+            </Wrapper>
+        </FullWidthStoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With disabled dates</Heading3>
+
+You can use `disabledDates` to specify dates that are not available for selection.
+
+_(In this example,2 days before today and 2 days after today are disabled)_
+
+<Canvas>
+    <Story name="With disabled dates">
+        {() => {
+            const [disabledDates] = useState([
+                dayjs().subtract(2, "day").format("YYYY-MM-DD"),
+                dayjs().add(2, "day").format("YYYY-MM-DD"),
+            ]);
+            return (
+                <FullWidthStoryContainer>
+                    <Wrapper>
+                        <TimeSlotWeekView
+                            slots={getSlots()}
+                            disabledDates={disabledDates}
+                        />
+                    </Wrapper>
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Within minimum and maximum dates</Heading3>
+
+You can specify the `minDate` and/or `maxDate` to control the selection range.
+
+<Canvas>
+    <Story name="Min and max dates">
+        {() => {
+            const minDate = dayjs().subtract(7, "day").format("YYYY-MM-DD");
+            const maxDate = dayjs().add(20, "day").format("YYYY-MM-DD");
+            return (
+                <FullWidthStoryContainer>
+                    <Wrapper>
+                        <TimeSlotWeekView
+                            slots={getSlots()}
+                            minDate={minDate}
+                            maxDate={maxDate}
+                        />
+                    </Wrapper>
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Hiding nav header</Heading3>
+
+You can remove the navigation header, including the month, year dropdown.
+
+<Canvas>
+    <Story name="Hide nav header">
+        {() => {
+            return (
+                <FullWidthStoryContainer>
+                    <Wrapper>
+                        <TimeSlotWeekView
+                            slots={getSlotsMin()}
+                            showNavigationHeader={false}
+                        />
+                    </Wrapper>
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Disable day selection</Heading3>
+
+<Canvas>
+    <Story name="Disable day selection">
+        <FullWidthStoryContainer>
+            <Wrapper>
+                <TimeSlotWeekView slots={getSlots()} enableSelection={false} />
+            </Wrapper>
+        </FullWidthStoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Handle slot selection</Heading3>
+
+<Canvas>
+    <Story name="Slot selection">
+        {() => {
+            return (
+                <FullWidthStoryContainer>
+                    <Wrapper>
+                        <TimeSlotWeekView
+                            slots={getSlots()}
+                            onSlotClick={(date, slot) => {
+                                alert(date + JSON.stringify(slot));
+                            }}
+                        />
+                    </Wrapper>
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
