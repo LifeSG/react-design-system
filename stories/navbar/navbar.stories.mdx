@@ -474,6 +474,65 @@ In this example, a co-brand is displayed next to the primary brand.
     </Story>
 </Canvas>
 
+<Heading3>Hidden masthead</Heading3>
+
+In this example, the masthead is hidden.
+
+<Canvas>
+    <Story name="Hidden masthead">
+        <Navbar
+            items={{
+                desktop: [
+                    {
+                        id: "home",
+                        children: "Home",
+                        onClick: () => {
+                            setSelected("home");
+                        },
+                    },
+                    {
+                        id: "guides",
+                        children: "Guides",
+                        onClick: () => {
+                            setSelected("guides");
+                        },
+                    },
+                    {
+                        id: "lifesg-app",
+                        children: "LifeSG app",
+                        onClick: () => {
+                            setSelected("lifesg-app");
+                        },
+                    },
+                ],
+            }}
+            actionButtons={{
+                desktop: [
+                    {
+                        type: "button",
+                        args: {
+                            styleType: "link",
+                            children: "FAQ",
+                        },
+                    },
+                    {
+                        type: "button",
+                        args: {
+                            styleType: "secondary",
+                            children: "Logout",
+                        },
+                    },
+                    {
+                        type: "download",
+                    },
+                ],
+            }}
+            fixed={false} /* For storybook purposes */
+            masthead={false}
+        />
+    </Story>
+</Canvas>
+
 <Secondary>Troubleshooting</Secondary>
 
 > The component also uses a custom script. Should you encounter a content security

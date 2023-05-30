@@ -40,6 +40,7 @@ const Component = <T,>(
         onItemClick,
         onActionButtonClick,
         onBrandClick,
+        masthead = true,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<HTMLDivElement>
@@ -250,7 +251,7 @@ const Component = <T,>(
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
-            <Masthead />
+            {masthead && <Masthead />}
             {renderNavbar()}
         </Wrapper>
     );
