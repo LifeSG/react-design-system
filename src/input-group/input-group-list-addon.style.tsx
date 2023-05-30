@@ -1,11 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import {
-    ElementBoundary as InputSelectElemBoundary,
-    Selector as InputSelectSelector,
-    Wrapper as InputSelectWrapper,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { Selector as DropdownSelector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { Text } from "../text/text";
 import { TextStyle } from "../text/text-style";
 import { Transition } from "../transition";
@@ -30,9 +26,6 @@ interface DividerStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = InputSelectWrapper;
-export const ElementBoundary = styled(InputSelectElemBoundary)``;
-
 export const DisplayContainer = styled.div<StyleProps>`
     position: relative;
     display: flex;
@@ -67,7 +60,7 @@ export const DisplayContainer = styled.div<StyleProps>`
     }}
 `;
 
-export const Selector = styled(InputSelectSelector)`
+export const Selector = styled(DropdownSelector)`
     padding: 0;
     width: auto;
 `;

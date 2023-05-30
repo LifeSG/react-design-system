@@ -6,4 +6,5 @@ export interface DropdownSelectorProps {
     disabled?: boolean | undefined;
     testId?: string | undefined;
     readOnly?: boolean | undefined;
+    className?: string | undefined;
 }

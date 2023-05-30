@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useEventListener } from "../../util/use-event-listener";
 import { ElementBoundary, Wrapper } from "./dropdown-wrapper.styles";
 import { DropdownSelectorProps } from "./types";
 
@@ -15,38 +16,27 @@ export const DropdownWrapper = ({
     // CONST, STATE, REFS
     // =============================================================================
     const nodeRef = useRef<HTMLDivElement>();
-    const showValueRef = useRef<boolean>(show);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDownEvent);
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDownEvent);
-        };
-    }, [onBlur]); // Fixes issue of unable read state values within onBlur Callback.
-
-    useEffect(() => {
-        showValueRef.current = show;
-    }, [show]);
+    useEventListener("mousedown", handleMouseDownEvent, document);
 
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
-    const handleMouseDownEvent = (event: MouseEvent) => {
+    function handleMouseDownEvent(event: MouseEvent) {
         if (!disabled) {
             if (nodeRef && (nodeRef.current as any).contains(event.target)) {
                 // inside click
                 return;
             }
             // outside click
-            if (showValueRef.current) {
+            if (show) {
                 onBlur();
             }
         }
-    };
+    }
 
     // =============================================================================
     // RENDER FUNCTIONS
