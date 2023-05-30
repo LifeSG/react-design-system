@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
-import { StringHelper } from "../util/string-helper";
-import { InputSelectWrapper } from "./input-select-wrapper";
+import { InputSelectWrapper } from "../input-select/input-select-wrapper";
 import {
     Divider,
     LabelContainer,
     PlaceholderLabel,
     Selector,
     ValueLabel,
-} from "./input-select.styles";
+} from "../input-select/input-select.styles";
+import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
+import { StringHelper } from "../util/string-helper";
 import { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";

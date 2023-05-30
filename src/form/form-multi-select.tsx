@@ -1,4 +1,4 @@
-import { InputMultiSelect } from "../input-select/input-multi-select";
+import { InputMultiSelect } from "../input-multi-select/input-multi-select";
 import { FormWrapper } from "./form-wrapper";
 import { FormMultiSelectProps } from "./types";
 

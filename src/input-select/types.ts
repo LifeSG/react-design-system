@@ -24,12 +24,6 @@ export interface InputSelectOptionsProps<T> {
     onRetry?: (() => void) | undefined;
 }
 
-export interface InputRangeSelectOptionsProps<T>
-    extends Omit<InputSelectOptionsProps<T>, "options" | "optionsLoadState"> {
-    options: InputRangeProp<T[]>;
-    optionsLoadState?: InputRangeProp<ItemsLoadStateType | undefined>;
-}
-
 export interface InputSelectSharedProps<T> {
     /** HTML button props */
     name?: string | undefined;
@@ -75,59 +69,5 @@ export interface InputSelectProps<T, V>
 /** To be exposed for Form component inheritance */
 export type InputSelectPartialProps<T, V> = Omit<
     InputSelectProps<T, V>,
-    "error"
->;
-
-// =============================================================================
-// INPUT RANGE SELECT PROPS
-// =============================================================================
-export interface InputRangeProp<T> {
-    from?: T | undefined;
-    to?: T | undefined;
-}
-
-export interface InputRangeSelectProps<T, V>
-    extends React.HTMLAttributes<HTMLElement>,
-        InputRangeSelectOptionsProps<T>,
-        Omit<InputSelectSharedProps<T>, "options">,
-        DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
-    readOnly?: boolean | undefined;
-    placeholders?: InputRangeProp<string> | undefined;
-    selectedOptions?: InputRangeProp<T> | undefined;
-    onSelectOption?:
-        | ((option: InputRangeProp<T>, extractedValue: V) => void)
-        | undefined;
-    // /** Function to derive display value for selected option */
-    displayValueExtractor?: ((option: T) => string) | undefined;
-    // /** Function to convert value into a string */
-    valueToStringFunction?: ((value: V) => string) | undefined;
-    // /** Function to render selected custom component */
-    renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
-}
-
-/** To be exposed for Form component inheritance */
-export type InputRangeSelectPartialProps<T, V> = Omit<
-    InputRangeSelectProps<T, V>,
-    "error"
->;
-// =============================================================================
-// INPUT MULTI SELECT PROPS
-// =============================================================================
-export interface InputMultiSelectProps<T, V>
-    extends React.HTMLAttributes<HTMLElement>,
-        InputSelectOptionsProps<T>,
-        InputSelectSharedProps<T>,
-        DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
-    selectedOptions?: T[] | undefined;
-    onSelectOptions?: ((options: T[]) => void) | undefined;
-}
-
-/** To be exposed for Form component inheritance */
-export type InputMultiSelectPartialProps<T, V> = Omit<
-    InputMultiSelectProps<T, V>,
     "error"
 >;
