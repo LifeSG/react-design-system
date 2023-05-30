@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { Color } from "../../src/color/color";
+import { MediaQuery } from "../../src/media";
 
 export const Wrapper = styled.div`
-    border: 1px solid ${Color.Neutral[5]};
-    flex: 0.7;
+    width: 70%;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 100%;
+    }
 `;

@@ -24,14 +24,14 @@ import { Wrapper } from "./doc-elements";
 
 <Secondary>Overview</Secondary>
 
-Displays a calendar component.
+Displays a calendar component to view available time slots in a week.
 
 ```tsx
 import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
 ```
 
 <Canvas>
-    <Story name="Default">
+    <Story name="TimeSlotWeekView">
         <FullWidthStoryContainer>
             <Wrapper>
                 <TimeSlotWeekView slots={getSlots()} />
@@ -44,12 +44,14 @@ import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-vie
 
 You can use `disabledDates` to specify dates that are not available for selection.
 
+_(In this example,2 days before today and 2 days after today are disabled)_
+
 <Canvas>
     <Story name="With disabled dates">
         {() => {
             const [disabledDates] = useState([
-                dayjs().add(1, "day").format("YYYY-MM-DD"),
-                dayjs().add(3, "day").format("YYYY-MM-DD"),
+                dayjs().subtract(2, "day").format("YYYY-MM-DD"),
+                dayjs().add(2, "day").format("YYYY-MM-DD"),
             ]);
             return (
                 <FullWidthStoryContainer>
@@ -65,15 +67,15 @@ You can use `disabledDates` to specify dates that are not available for selectio
     </Story>
 </Canvas>
 
-<Heading3>Within date range</Heading3>
+<Heading3>Within minimum and maximum dates</Heading3>
 
-You can restrict selection to a date range using `minDate` & `maxDate`.
+You can specify the `minDate` and/or `maxDate` to control the selection range.
 
 <Canvas>
-    <Story name="Within date range">
+    <Story name="Min and max dates">
         {() => {
-            const minDate = dayjs().add(1, "day").format("YYYY-MM-DD");
-            const maxDate = dayjs().add(4, "day").format("YYYY-MM-DD");
+            const minDate = dayjs().subtract(7, "day").format("YYYY-MM-DD");
+            const maxDate = dayjs().add(20, "day").format("YYYY-MM-DD");
             return (
                 <FullWidthStoryContainer>
                     <Wrapper>
@@ -89,12 +91,12 @@ You can restrict selection to a date range using `minDate` & `maxDate`.
     </Story>
 </Canvas>
 
-<Heading3>Without Navigation Header</Heading3>
+<Heading3>Hiding nav header</Heading3>
 
-You can remove navigation header including month,year dropdown.
+You can remove the navigation header, including the month, year dropdown.
 
 <Canvas>
-    <Story name="Without Nav Header">
+    <Story name="Hide nav header">
         {() => {
             return (
                 <FullWidthStoryContainer>
@@ -110,26 +112,22 @@ You can remove navigation header including month,year dropdown.
     </Story>
 </Canvas>
 
-<Heading3>With Selection Disabled</Heading3>
-
-You can disable date selection for this component.
+<Heading3>Disable day selection</Heading3>
 
 <Canvas>
-    <Story name="With Selection Disabled">
-        {() => {
-            return (
+    <Story name="Disable day selection">
+        <FullWidthStoryContainer>
+            <Wrapper>
                 <TimeSlotWeekView slots={getSlots()} enableSelection={false} />
-            );
-        }}
+            </Wrapper>
+        </FullWidthStoryContainer>
     </Story>
 </Canvas>
 
-<Heading3>With Slotclick handler</Heading3>
-
-You can disable date selection for this component.
+<Heading3>Handle slot selection</Heading3>
 
 <Canvas>
-    <Story name="With SlotClick handler">
+    <Story name="Slot selection">
         {() => {
             return (
                 <FullWidthStoryContainer>
