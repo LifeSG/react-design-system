@@ -85,9 +85,7 @@ export const InputMultiSelect = <T, V>({
             selectorRef.current.focus();
         }
 
-        if (onSelectOptions) {
-            onSelectOptions(selectedCopy);
-        }
+        performOnSelectOptions(selectedCopy);
     };
 
     const handleListDismiss = () => {
@@ -104,10 +102,10 @@ export const InputMultiSelect = <T, V>({
     const handleSelectAllClick = () => {
         if (selected && selected.length > 0) {
             setSelected([]);
-            onSelectOptions([]);
+            performOnSelectOptions([]);
         } else {
             setSelected(options);
-            onSelectOptions(options);
+            performOnSelectOptions(options);
         }
     };
 
@@ -134,6 +132,12 @@ export const InputMultiSelect = <T, V>({
 
         if (show && onShowOptions) {
             onShowOptions();
+        }
+    };
+
+    const performOnSelectOptions = (options: T[]) => {
+        if (onSelectOptions) {
+            onSelectOptions(options);
         }
     };
 
