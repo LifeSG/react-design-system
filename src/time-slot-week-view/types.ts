@@ -1,8 +1,11 @@
 import { TimeSlot } from "../time-slot-bar/types";
 
 export interface TimeSlotWeekViewProps {
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
+    id?: string | undefined;
+
     value?: string | undefined; // selected date format (YYYY-MM-DD)
-    calendarDate?: string | undefined;
     /** minimum allowed date to select: format (YYYY-MM-DD) **/
     minDate?: string | undefined;
     /** maximum allowed date to select: format (YYYY-MM-DD) **/

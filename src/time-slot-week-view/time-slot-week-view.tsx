@@ -61,47 +61,44 @@ export const TimeSlotWeekView = ({
     // RENDER FUNCTIONS
     // =============================================================================
 
-    const renderContent = () => {
-        return (
-            <Wrapper>
-                <CalendarManager
-                    initialCalendarDate={dayjs(currentCalendarDate)
-                        .endOf("week")
-                        .format(DATE_FORMAT)}
-                    selectedStartDate={value}
-                    getLeftArrowDate={(day) => day.subtract(1, "week")}
-                    getRightArrowDate={(day) => day.add(1, "week")}
-                    isLeftArrowDisabled={(calendarDate) =>
-                        minDate &&
-                        dayjs(calendarDate).startOf("week") <= dayjs(minDate)
-                    }
-                    isRightArrowDisabled={(calendarDate) =>
-                        maxDate &&
-                        dayjs(calendarDate).endOf("week") >= dayjs(maxDate)
-                    }
-                    onCalendarDate={performOnCalendarDate}
-                    showNavigationHeader={showNavigationHeader}
-                    {...otherProps}
-                >
-                    {({ calendarDate }) => {
-                        return (
-                            <TimeSlotWeekDays
-                                calendarDate={calendarDate}
-                                disabledDates={disabledDates}
-                                selectedDate={selectedDate}
-                                minDate={minDate}
-                                maxDate={maxDate}
-                                onSelect={handleDateSelect}
-                                slots={slots}
-                                enableSelection={enableSelection}
-                                onSlotClick={handleOnSlotClick}
-                            />
-                        );
-                    }}
-                </CalendarManager>
-            </Wrapper>
-        );
-    };
-
-    return <>{renderContent()}</>;
+    return (
+        <Wrapper {...otherProps}>
+            <CalendarManager
+                initialCalendarDate={dayjs(currentCalendarDate)
+                    .endOf("week")
+                    .format(DATE_FORMAT)}
+                selectedStartDate={value}
+                getLeftArrowDate={(day) => day.subtract(1, "week")}
+                getRightArrowDate={(day) => day.add(1, "week")}
+                isLeftArrowDisabled={(calendarDate) =>
+                    minDate &&
+                    dayjs(calendarDate).startOf("week").isBefore(minDate)
+                }
+                isRightArrowDisabled={(calendarDate) =>
+                    maxDate &&
+                    dayjs(calendarDate).endOf("week").isAfter(maxDate)
+                }
+                onCalendarDate={performOnCalendarDate}
+                showNavigationHeader={showNavigationHeader}
+                minDate={minDate}
+                maxDate={maxDate}
+            >
+                {({ calendarDate }) => {
+                    return (
+                        <TimeSlotWeekDays
+                            calendarDate={calendarDate}
+                            disabledDates={disabledDates}
+                            selectedDate={selectedDate}
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            onSelect={handleDateSelect}
+                            slots={slots}
+                            enableSelection={enableSelection}
+                            onSlotClick={handleOnSlotClick}
+                        />
+                    );
+                }}
+            </CalendarManager>
+        </Wrapper>
+    );
 };
