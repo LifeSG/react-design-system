@@ -65,7 +65,9 @@ export const TimeSlotWeekView = ({
         return (
             <Wrapper>
                 <CalendarManager
-                    initialCalendarDate={currentCalendarDate}
+                    initialCalendarDate={dayjs(currentCalendarDate)
+                        .endOf("week")
+                        .format(DATE_FORMAT)}
                     selectedStartDate={value}
                     getLeftArrowDate={(day) => day.subtract(1, "week")}
                     getRightArrowDate={(day) => day.add(1, "week")}
