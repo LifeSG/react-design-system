@@ -2,7 +2,6 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
 import { Color } from "../../color";
 import { DesignToken } from "../../design-token";
-import { MediaQuery } from "../../media";
 import { Text, TextStyle } from "../../text";
 import { Transition } from "../../transition";
 import { TruncateType } from "../dropdown-list/types";
@@ -31,10 +30,6 @@ export const Wrapper = styled.div`
     min-height: 3rem;
     height: 3rem; // Need this to persist the height when expanding or collapsing list
     width: 100%;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        height: auto;
-    }
 `;
 
 export const Selector = styled.button`
