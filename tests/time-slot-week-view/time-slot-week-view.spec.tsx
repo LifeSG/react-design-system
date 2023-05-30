@@ -4,7 +4,7 @@ import { TimeSlot, TimeSlotWeekView } from "../../src";
 
 describe("TimeSlotWeekCalendar", () => {
     const currentDay = dayjs();
-    const dateFormat = "YYYY-MM-DD";
+    const DATE_FORMAT = "YYYY-MM-DD";
     beforeEach(() => {
         jest.resetAllMocks();
 
@@ -83,7 +83,7 @@ describe("TimeSlotWeekCalendar", () => {
                     <TimeSlotWeekView
                         onWeekDisplayChange={onWeekDisplayChange}
                         currentCalendarDate={"2021-01-01"}
-                        maxDate={maxDate.format(dateFormat)}
+                        maxDate={maxDate.format(DATE_FORMAT)}
                     />
                 );
                 const rightArrowButton = screen.getByTestId("right-arrow-btn");
@@ -97,7 +97,7 @@ describe("TimeSlotWeekCalendar", () => {
                     <TimeSlotWeekView
                         onWeekDisplayChange={onWeekDisplayChange}
                         currentCalendarDate={"2021-01-01"}
-                        minDate={minDate.format(dateFormat)}
+                        minDate={minDate.format(DATE_FORMAT)}
                     />
                 );
                 const leftArrowButton = screen.getByTestId("left-arrow-btn");
@@ -185,7 +185,7 @@ describe("TimeSlotWeekCalendar", () => {
                     onSlotClick={onSlotClick}
                     currentCalendarDate={"2021-01-01"}
                     slots={slots}
-                    minDate={minDate.format(dateFormat)}
+                    minDate={minDate.format(DATE_FORMAT)}
                 />
             );
             expect(screen.getByText("9:00 am")).toBeVisible();
@@ -200,7 +200,7 @@ describe("TimeSlotWeekCalendar", () => {
                     onSlotClick={onSlotClick}
                     currentCalendarDate={"2021-01-01"}
                     slots={slots}
-                    minDate={minDate.format(dateFormat)}
+                    minDate={minDate.format(DATE_FORMAT)}
                 />
             );
             const slot = screen.getByText("9:00 am");
@@ -242,7 +242,7 @@ describe("TimeSlotWeekCalendar", () => {
                     onSlotClick={onSlotClick}
                     currentCalendarDate={"2021-01-01"}
                     slots={disabledSlots}
-                    minDate={minDate.format(dateFormat)}
+                    minDate={minDate.format(DATE_FORMAT)}
                 />
             );
             const slot = screen.getByText("9:00 am");

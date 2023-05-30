@@ -132,7 +132,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     position: absolute;
 
     ${(props) => {
-        const { $hovered, $selected, $enableSelection } = props;
+        const { $hovered, $selected } = props;
 
         if ($selected) {
             return css`
@@ -148,6 +148,10 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
                 background-color: ${Color.Neutral[8]};
             `;
         }
+    }}
+
+    ${(props) => {
+        const { $enableSelection = true } = props;
 
         if ($enableSelection) {
             return css`

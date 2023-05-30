@@ -37,15 +37,14 @@ export const ColumnWeekCell = styled.div`
     min-height: 7.625rem;
 `;
 export const TimeSlotText = styled.div`
-    ${TextStyleHelper.getTextStyle("XSmall", 600)}
+    ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
     margin: 1rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    line-height: 16px;
-    letter-spacing: 0.12px;
     max-width: 2.5rem;
+    color: ${Color.Neutral[1]};
     span {
         display: block;
     }

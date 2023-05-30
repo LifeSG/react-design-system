@@ -34,6 +34,8 @@ interface YearMonthWeekDisplay {
     month: number;
 }
 
+const DATE_FORMAT = "YYYY-MM-DD";
+
 export const TimeSlotWeekView = ({
     disabledDates,
     onWeekDisplayChange,
@@ -52,14 +54,12 @@ export const TimeSlotWeekView = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selectedDate, setSelectedDate] = useState<string>(); // YYYY-MM-DD
-    const dateFormat = "YYYY-MM-DD";
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
 
     const handleDateSelect = (value: Dayjs) => {
-        const stringValue = value.format(dateFormat);
+        const stringValue = value.format(DATE_FORMAT);
         setSelectedDate(stringValue);
         onChange(stringValue);
     };
@@ -74,8 +74,8 @@ export const TimeSlotWeekView = ({
         if (onWeekDisplayChange) {
             const returnValue = {
                 week: {
-                    firstDayOfWeek: value.startOf("week").format(dateFormat),
-                    lastDayOfWeek: value.endOf("week").format(dateFormat),
+                    firstDayOfWeek: value.startOf("week").format(DATE_FORMAT),
+                    lastDayOfWeek: value.endOf("week").format(DATE_FORMAT),
                 },
                 month: value.month() + 1,
                 year: value.year(),
