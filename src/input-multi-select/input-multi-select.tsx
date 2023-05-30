@@ -1,7 +1,7 @@
 import findIndex from "lodash/findIndex";
 import React, { useEffect, useRef, useState } from "react";
 import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { InputSelectWrapper } from "./input-select-wrapper";
+import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
     Divider,
     IconContainer,
@@ -10,7 +10,7 @@ import {
     Selector,
     StyledChevronIcon,
     ValueLabel,
-} from "./input-select.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputMultiSelectProps } from "./types";
 
 export const InputMultiSelect = <T, V>({
@@ -85,9 +85,7 @@ export const InputMultiSelect = <T, V>({
             selectorRef.current.focus();
         }
 
-        if (onSelectOptions) {
-            onSelectOptions(selectedCopy);
-        }
+        performOnSelectOptions(selectedCopy);
     };
 
     const handleListDismiss = () => {
@@ -104,10 +102,10 @@ export const InputMultiSelect = <T, V>({
     const handleSelectAllClick = () => {
         if (selected && selected.length > 0) {
             setSelected([]);
-            onSelectOptions([]);
+            performOnSelectOptions([]);
         } else {
             setSelected(options);
-            onSelectOptions(options);
+            performOnSelectOptions(options);
         }
     };
 
@@ -134,6 +132,12 @@ export const InputMultiSelect = <T, V>({
 
         if (show && onShowOptions) {
             onShowOptions();
+        }
+    };
+
+    const performOnSelectOptions = (options: T[]) => {
+        if (onSelectOptions) {
+            onSelectOptions(options);
         }
     };
 
@@ -191,7 +195,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     return (
-        <InputSelectWrapper
+        <DropdownWrapper
             show={showOptions}
             error={error && !showOptions}
             disabled={disabled}
@@ -209,6 +213,6 @@ export const InputMultiSelect = <T, V>({
             </Selector>
             {showOptions && <Divider />}
             {renderOptionList()}
-        </InputSelectWrapper>
+        </DropdownWrapper>
     );
 };

@@ -1,11 +1,9 @@
 import { DateInputProps } from "../date-input/types";
 import { DateRangeInputProps } from "../date-range-input/types";
 import { InputGroupPartialProps } from "../input-group/types";
-import {
-    InputMultiSelectPartialProps,
-    InputRangeSelectPartialProps,
-    InputSelectPartialProps,
-} from "../input-select/types";
+import { InputMultiSelectPartialProps } from "../input-multi-select/types";
+import { InputRangeSelectPartialProps } from "../input-range-select/types";
+import { InputSelectPartialProps } from "../input-select/types";
 import { TextareaPartialProps } from "../input-textarea/types";
 import { InputPartialProps } from "../input/types";
 import { PhoneNumberInputProps } from "../phone-number-input/types";
