@@ -2,30 +2,16 @@ import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
+const STRING_FORMAT = (
+    <>
+        string based format <code>YYYY-MM-DD</code>
+    </>
+);
+
 const DATA: ApiTableSectionProps[] = [
     {
         name: "TimeSlotWeekView specific props",
         attributes: [
-            {
-                name: "minDate",
-                description: (
-                    <>
-                        Restrict selection to this above this date. To specify
-                        in the format <code>YYYY-MM-DD</code>
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "maxDate",
-                description: (
-                    <>
-                        Restrict selection to this above this date. To specify
-                        in the format <code>YYYY-MM-DD</code>
-                    </>
-                ),
-                propTypes: ["string"],
-            },
             {
                 name: "className",
                 description: "Class selector for the component",
@@ -40,8 +26,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "disabledDates",
                 description: (
                     <>
-                        The dates to be disabled. To specify each date in the
-                        format <code>YYYY-MM-DD</code>
+                        The dates to be disabled. To specify each date in the{" "}
+                        {STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["string[]"],
@@ -52,30 +38,44 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "value",
+                name: "maxDate",
                 description: (
                     <>
-                        The value of the selected date in&nbsp;
-                        <code>YYYY-MM-DD</code> format
+                        Specifies the maximum date allowed for selection in the{" "}
+                        {STRING_FORMAT} {`(Inclusive)`}
                     </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "minDate",
+                description: (
+                    <>
+                        Specifies the minimum date allowed for selection in the{" "}
+                        {STRING_FORMAT} {`(Inclusive)`}
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "value",
+                description: (
+                    <>The value of the selected date in the {STRING_FORMAT}</>
                 ),
                 propTypes: ["string"],
             },
             {
                 name: "onWeekDisplayChange",
                 description:
-                    "Called when there is a change in the current visible month and year",
+                    "Called when there is a change in the current visible week",
                 propTypes: ["(value: YearMonthWeekDisplay) => void"],
             },
             {
                 name: "onChange",
                 description: (
                     <>
-                        Called when the user selected a value from the calendar.
-                        Returns value in&nbsp;
-                        <code>YYYY-MM-DD</code>&nbsp;format. Should the value be
-                        invalid, the&nbsp; &lsquo;Invalid Date&rsquo; value will
-                        be returned
+                        Called when the user selected a day from the calendar.
+                        Returns value in the {STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
@@ -84,12 +84,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onSlotClick",
                 description: (
                     <>
-                        Called when the user click a timeslot in calendar.
-                        Returns value in&nbsp;
-                        <code>TimeSlotBar</code>&nbsp;format.
+                        Called when the user clicks a timeslot in the calendar.
+                        Returns value as a <code>TimeSlot</code> object.
                     </>
                 ),
-                propTypes: ["(timeSlot: TimeSlot) => void | undefined"],
+                propTypes: ["(date: string, timeSlot: TimeSlot) => void"],
             },
             {
                 name: "slots",
@@ -100,7 +99,7 @@ const DATA: ApiTableSectionProps[] = [
                         will fallback to disabled slot pattern.
                     </>
                 ),
-                propTypes: ["{[date:string]:[TimeSlot[]}"],
+                propTypes: ["{ [date: string]: TimeSlot[] }"],
             },
             {
                 name: "showNavigationHeader",
@@ -115,12 +114,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "enableSelection",
-                description: (
-                    <>
-                        Specifies if the month/year dropdown and navigation
-                        arrows should be displayed.
-                    </>
-                ),
+                description: <>Specifies if date can be selected</>,
                 defaultValue: "true",
                 propTypes: ["boolean"],
             },
@@ -128,9 +122,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "currentCalendarDate",
                 description: (
                     <>
-                        The current date to be displayed in calendar. calendar
-                        will render the week including this date.&nbsp;
-                        <code>YYYY-MM-DD</code> format
+                        The initial date to be visible in the week view in the{" "}
+                        {STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["string"],
@@ -144,12 +137,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "week",
                 description: (
                     <>
-                        The current visible week. Both firstDayOfWeek,
-                        lastDayOfWeek is in <code>YYYY-MM-DD</code> format
+                        The first and last days of the current visible week in
+                        the {STRING_FORMAT}
                     </>
                 ),
                 propTypes: [
-                    "{ firstDayOfWeek: string; lastDayOfWeek: string }",
+                    "{ firstDayOfWeek: string; lastDayOfWeek: string; }",
                 ],
             },
             {
