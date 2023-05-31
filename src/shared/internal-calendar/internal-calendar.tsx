@@ -25,7 +25,6 @@ export const Component = (
         maxDate,
         type = "standalone",
         selectWithinRange = true,
-        ...otherProps
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -132,7 +131,7 @@ export const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Container $type={type} {...otherProps}>
+        <Container $type={type}>
             <CalendarManager
                 type={type}
                 ref={calendarManagerRef}

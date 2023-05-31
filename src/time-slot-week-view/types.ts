@@ -2,6 +2,11 @@ import { CommonCalendarProps } from "../shared/internal-calendar/types";
 import { TimeSlot } from "../time-slot-bar/types";
 
 export interface TimeSlotWeekViewProps extends CommonCalendarProps {
+    // Basic component props
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
+    id?: string | undefined;
+
     /** The value of the selected date in YYYY-MM-DD format */
     value?: string | undefined;
     /** Time slots to render */

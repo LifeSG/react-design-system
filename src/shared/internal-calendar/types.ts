@@ -1,11 +1,6 @@
 import type { Dayjs } from "dayjs";
 
 export interface CommonCalendarProps {
-    // Basic component props
-    className?: string | undefined;
-    "data-testid"?: string | undefined;
-    id?: string | undefined;
-
     /**
      * The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
      */
@@ -19,11 +14,11 @@ export interface CommonCalendarProps {
 }
 
 // =============================================================================
-// Types use in InternalCalendarProps
+// Types used in InternalCalendarProps
 // =============================================================================
 export interface InternalCalendarProps extends CommonCalendarProps {
     /** The display type of the component. Values `standalone` | `input` */
-    type: "standalone" | "input";
+    type: CalendarType;
     /** Selected start date in `YYYY-MM-DD` format */
     value?: string | undefined;
     /** Selected end date in `YYYY-MM-DD` format */
@@ -38,8 +33,6 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     selectWithinRange?: boolean | undefined;
     /** Function to handle cancel/done .*/
     onDismiss?: ((action: CalendarAction) => void) | undefined;
-    /** Current calendar view inform to date input. .*/
-    onCalendarView?: ((view: View) => void) | undefined;
     /** Called when there is a change in the current visible month and year */
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format */
@@ -71,12 +64,10 @@ export interface InternalCalendarRef {
 // =============================================================================
 // Types used in CalendarManager
 // =============================================================================
-export interface CalendarManagerProps {
+export interface CalendarManagerProps extends CommonCalendarProps {
     children: React.ReactNode | ((props: DefaultViewProps) => React.ReactNode);
     initialCalendarDate?: string | undefined;
     type: CalendarType;
-    minDate?: string | undefined;
-    maxDate?: string | undefined;
     currentFocus?: FocusType | undefined;
     selectedStartDate?: string | undefined;
     selectedEndDate?: string | undefined;
