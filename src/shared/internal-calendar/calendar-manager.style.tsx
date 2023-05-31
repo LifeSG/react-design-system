@@ -42,7 +42,7 @@ export const ArrowRight = styled(ChevronRightIcon)`
 export const IconChevronDown = styled(ChevronDownIcon)`
     ${iconStyle}
     transition: transform 250ms ease-in-out;
-    margin-left: 0.625rem;
+    margin-left: 0.5rem;
 `;
 
 // -----------------------------------------------------------------------------
@@ -98,10 +98,6 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
     padding: 0.5rem;
     background: transparent;
     cursor: pointer;
-
-    :not(:last-of-type) {
-        margin-right: 0.5rem;
-    }
 
     ${(props) => {
         if (props.$visible === false) {

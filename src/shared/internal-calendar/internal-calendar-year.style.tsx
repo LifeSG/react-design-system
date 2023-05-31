@@ -45,6 +45,7 @@ export const YearCell = styled.div<StyleProps>`
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
+    margin: 0 0.5rem;
     cursor: pointer;
 
     &:hover {

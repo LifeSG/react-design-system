@@ -14,7 +14,7 @@ interface GeneralStyleProps {
 // =============================================================================
 export const Container = styled.div<GeneralStyleProps>`
     width: 100%;
-    padding: 1.5rem 1.5rem 2rem;
+    padding: 1.5rem 2rem;
 
     ${(props) => {
         if (props.$type === "input") {
@@ -22,6 +22,10 @@ export const Container = styled.div<GeneralStyleProps>`
                 border: 1px solid ${Color.Neutral[5]};
                 border-radius: 8px;
                 padding: 1.5rem 1.25rem;
+
+                [data-id="header"] {
+                    margin: 0 0 0.25rem 0;
+                }
             `;
         }
     }}

@@ -36,9 +36,9 @@ export const HeaderCell = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 2.5rem;
     pointer-events: none;
     user-select: none;
-    margin-bottom: 0.625rem;
 `;
 
 export const RowDayCell = styled.div`
