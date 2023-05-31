@@ -261,33 +261,45 @@ const Component = (
     };
 
     const isLeftArrowDisabled = () => {
-        if (_isLeftArrowDisabled) {
-            return _isLeftArrowDisabled(calendarDate);
+        if (!minDate) {
+            return false;
         }
-        if (minDate) {
-            return !CalendarHelper.isWithinRange(
-                calendarDate.subtract(1, "month"),
-                dayjs(minDate),
-                undefined,
-                "month"
+
+        const min = dayjs(minDate);
+        if (currentView === "month-options") {
+            return !CalendarHelper.isPreviousYearWithinRange(calendarDate, min);
+        } else if (currentView === "year-options") {
+            return !CalendarHelper.isPreviousDecadeWithinRange(
+                calendarDate,
+                min
+            );
+        } else {
+            if (_isLeftArrowDisabled) {
+                return _isLeftArrowDisabled(calendarDate);
+            }
+            return !CalendarHelper.isPreviousMonthWithinRange(
+                calendarDate,
+                min
             );
         }
-        return false;
     };
 
     const isRightArrowDisabled = () => {
-        if (_isRightArrowDisabled) {
-            return _isRightArrowDisabled(calendarDate);
+        if (!maxDate) {
+            return false;
         }
-        if (minDate) {
-            return !CalendarHelper.isWithinRange(
-                calendarDate.add(1, "month"),
-                undefined,
-                dayjs(maxDate),
-                "month"
-            );
+
+        const max = dayjs(maxDate);
+        if (currentView === "month-options") {
+            return !CalendarHelper.isNextYearWithinRange(calendarDate, max);
+        } else if (currentView === "year-options") {
+            return !CalendarHelper.isNextDecadeWithinRange(calendarDate, max);
+        } else {
+            if (_isRightArrowDisabled) {
+                return _isRightArrowDisabled(calendarDate);
+            }
+            return !CalendarHelper.isNextMonthWithinRange(calendarDate, max);
         }
-        return false;
     };
 
     // =============================================================================

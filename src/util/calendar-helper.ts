@@ -102,6 +102,80 @@ export namespace CalendarHelper {
             return day.isSameOrBefore(maxDate, unit);
         }
     };
+
+    /**
+     * If the previous month of this date is within min date
+     */
+    export const isPreviousMonthWithinRange = (day: Dayjs, minDate: Dayjs) => {
+        return CalendarHelper.isWithinRange(
+            day.subtract(1, "month"),
+            minDate,
+            undefined,
+            "month"
+        );
+    };
+
+    /**
+     * If the previous year of this date is within min date
+     */
+    export const isPreviousYearWithinRange = (day: Dayjs, minDate: Dayjs) => {
+        return CalendarHelper.isWithinRange(
+            day.subtract(1, "year"),
+            minDate,
+            undefined,
+            "year"
+        );
+    };
+
+    /**
+     * If the previous decade of this date is within min date
+     */
+    export const isPreviousDecadeWithinRange = (day: Dayjs, minDate: Dayjs) => {
+        const { beginDecade } = CalendarHelper.getStartEndDecade(day);
+        return CalendarHelper.isWithinRange(
+            day.year(beginDecade).subtract(1, "year"),
+            minDate,
+            undefined,
+            "year"
+        );
+    };
+
+    /**
+     * If the next month of this date is within max date
+     */
+    export const isNextMonthWithinRange = (day: Dayjs, maxDate: Dayjs) => {
+        return CalendarHelper.isWithinRange(
+            day.add(1, "month"),
+            undefined,
+            maxDate,
+            "month"
+        );
+    };
+
+    /**
+     * If the next year of this date is within max date
+     */
+    export const isNextYearWithinRange = (day: Dayjs, maxDate: Dayjs) => {
+        return CalendarHelper.isWithinRange(
+            day.add(1, "year"),
+            undefined,
+            maxDate,
+            "year"
+        );
+    };
+
+    /**
+     * If the next decade of this date is within max date
+     */
+    export const isNextDecadeWithinRange = (day: Dayjs, maxDate: Dayjs) => {
+        const { endDecade } = CalendarHelper.getStartEndDecade(day);
+        return CalendarHelper.isWithinRange(
+            day.year(endDecade).add(1, "year"),
+            undefined,
+            maxDate,
+            "year"
+        );
+    };
 }
 
 // =============================================================================
