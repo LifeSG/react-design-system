@@ -350,6 +350,7 @@ const Component = (
                 </HeaderInputDropdown>
                 <HeaderArrows>
                     <HeaderArrowButton
+                        data-testid="left-arrow-btn"
                         disabled={isLeftArrowDisabled()}
                         focusHighlight={false}
                         tabIndex={-1}
@@ -358,6 +359,7 @@ const Component = (
                         <ArrowLeft />
                     </HeaderArrowButton>
                     <HeaderArrowButton
+                        data-testid="right-arrow-btn"
                         disabled={isRightArrowDisabled()}
                         focusHighlight={false}
                         tabIndex={-1}

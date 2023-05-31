@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CalendarManagerRef } from "../shared/internal-calendar";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
 import { TimeSlot } from "../time-slot-bar";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
@@ -26,12 +27,17 @@ export const TimeSlotWeekView = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
+    const calendarManagerRef = useRef<CalendarManagerRef>();
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         setSelectedDate(value);
+
+        if (value) {
+            calendarManagerRef.current.setCalendarDate(value);
+        }
     }, [value]);
 
     // =============================================================================
@@ -72,6 +78,7 @@ export const TimeSlotWeekView = ({
     return (
         <Wrapper {...otherProps}>
             <CalendarManager
+                ref={calendarManagerRef}
                 type="standalone"
                 dynamicHeight
                 initialCalendarDate={dayjs(currentCalendarDate)
@@ -82,11 +89,13 @@ export const TimeSlotWeekView = ({
                 getRightArrowDate={(day) => day.add(1, "week")}
                 isLeftArrowDisabled={(calendarDate) =>
                     minDate &&
-                    dayjs(calendarDate).startOf("week").isBefore(minDate)
+                    dayjs(calendarDate)
+                        .subtract(1, "week")
+                        .isBefore(minDate, "week")
                 }
                 isRightArrowDisabled={(calendarDate) =>
                     maxDate &&
-                    dayjs(calendarDate).endOf("week").isAfter(maxDate)
+                    dayjs(calendarDate).add(1, "week").isAfter(maxDate, "week")
                 }
                 onCalendarDateChange={performOnCalendarDateChange}
                 showNavigationHeader={showNavigationHeader}
