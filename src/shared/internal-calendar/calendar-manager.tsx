@@ -14,6 +14,7 @@ import {
     HeaderArrows,
     HeaderInputDropdown,
     IconChevronDown,
+    OptionsOverlay,
     ToggleZone,
 } from "./calendar-manager.style";
 import { InternalCalendarMonth } from "./internal-calendar-month";
@@ -36,6 +37,7 @@ interface CalendarManagerProps {
     selectWithinRange?: boolean | undefined;
     onCalendarDateChange?: ((calendarDate: Dayjs) => void) | undefined;
     onCalendarViewChange?: ((view: View) => void) | undefined;
+    dynamicHeight?: boolean | undefined;
     /* action button props */
     withButton?: boolean | undefined;
     doneButtonDisabled?: boolean | undefined;
@@ -67,6 +69,7 @@ const Component = (
         selectedStartDate,
         selectedEndDate,
         selectWithinRange,
+        dynamicHeight = false,
         onCalendarDateChange,
         onCalendarViewChange,
         /* action button props */
@@ -429,6 +432,31 @@ const Component = (
         );
     };
 
+    const renderViews = () => {
+        const defaultView =
+            typeof children === "function"
+                ? children({ calendarDate })
+                : children;
+
+        if (dynamicHeight) {
+            return (
+                <>
+                    {currentView === "default" && defaultView}
+                    {renderOptionsOverlay()}
+                </>
+            );
+        } else {
+            return (
+                <>
+                    {defaultView}
+                    <OptionsOverlay $visible={currentView !== "default"}>
+                        {renderOptionsOverlay()}
+                    </OptionsOverlay>
+                </>
+            );
+        }
+    };
+
     return (
         <Container
             ref={containerRef}
@@ -437,13 +465,7 @@ const Component = (
             {...otherProps}
         >
             {showNavigationHeader && renderHeader()}
-            <ToggleZone>
-                {currentView === "default" &&
-                    (typeof children === "function"
-                        ? children({ calendarDate })
-                        : children)}
-                {renderOptionsOverlay()}
-            </ToggleZone>
+            <ToggleZone>{renderViews()}</ToggleZone>
             {renderActionButtons()}
         </Container>
     );

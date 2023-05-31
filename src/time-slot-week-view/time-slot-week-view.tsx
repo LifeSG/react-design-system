@@ -72,6 +72,7 @@ export const TimeSlotWeekView = ({
     return (
         <Wrapper {...otherProps}>
             <CalendarManager
+                dynamicHeight
                 initialCalendarDate={dayjs(currentCalendarDate)
                     .endOf("week")
                     .format(DATE_FORMAT)}
