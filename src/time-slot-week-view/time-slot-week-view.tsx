@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
 import { TimeSlot } from "../time-slot-bar";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
@@ -25,7 +25,15 @@ export const TimeSlotWeekView = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selectedDate, setSelectedDate] = useState<string>(); // YYYY-MM-DD
+    const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        setSelectedDate(value);
+    }, [value]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -42,7 +50,7 @@ export const TimeSlotWeekView = ({
         }
     };
 
-    const performOnCalendarDate = (value: Dayjs) => {
+    const performOnCalendarDateChange = (value: Dayjs) => {
         if (onWeekDisplayChange) {
             const returnValue = {
                 week: {
@@ -78,10 +86,16 @@ export const TimeSlotWeekView = ({
                     maxDate &&
                     dayjs(calendarDate).endOf("week").isAfter(maxDate)
                 }
-                onCalendarDate={performOnCalendarDate}
+                onCalendarDateChange={performOnCalendarDateChange}
                 showNavigationHeader={showNavigationHeader}
                 minDate={minDate}
                 maxDate={maxDate}
+                getMonthHeaderLabel={(calendarDate) =>
+                    dayjs(calendarDate).endOf("week").format("MMM")
+                }
+                getYearHeaderLabel={(calendarDate) =>
+                    dayjs(calendarDate).endOf("week").format("YYYY")
+                }
             >
                 {({ calendarDate }) => {
                     return (
