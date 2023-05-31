@@ -71,6 +71,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a footer link item is clicked",
                 propTypes: ["(link: FooterLinkProps<T>) => void"],
             },
+            {
+                name: "layout",
+                description:
+                    "Specifies the layout type of the content in the footer",
+                propTypes: ["stretch | default"],
+            },
         ],
     },
     {

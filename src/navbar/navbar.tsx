@@ -41,6 +41,7 @@ const Component = <T,>(
         onActionButtonClick,
         onBrandClick,
         masthead = true,
+        layout,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<HTMLDivElement>
@@ -211,7 +212,7 @@ const Component = <T,>(
 
     const renderNavbar = () => {
         return (
-            <Layout.Content>
+            <Layout.Content stretch={layout === "stretch"}>
                 <Nav $compress={compress}>
                     {renderBrand()}
                     {!hideNavElements && (

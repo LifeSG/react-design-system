@@ -1,16 +1,23 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { DivRef, SectionProps } from "./types";
+import { MediaQuery } from "../media";
 
 const Component = (props: SectionProps, ref: DivRef): JSX.Element => {
     const {
         children,
         "data-testid": testId = "section",
+        stretch = false,
         ...otherProps
     } = props;
 
     return (
-        <StyledSection ref={ref} data-testid={testId} {...otherProps}>
+        <StyledSection
+            ref={ref}
+            data-testid={testId}
+            stretch={stretch}
+            {...otherProps}
+        >
             {children}
         </StyledSection>
     );
@@ -24,12 +31,33 @@ export const Section = React.forwardRef(Component);
 // =============================================================================
 // STYLING
 // =============================================================================
-const StyledSection = styled.section`
+interface StyleProps {
+    stretch: boolean;
+}
+
+const StyledSection = styled.section<StyleProps>`
     display: block;
     position: relative;
-    padding: 0 1.5rem;
+    ${(props) => {
+        if (props.stretch) {
+            return css`
+                padding: unset;
+                ${MediaQuery.MaxWidth.tablet} {
+                    padding: 0 1.5rem;
 
-    // Extra enforcement
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
+                    // Extra enforcement
+                    padding-left: 1.5rem !important;
+                    padding-right: 1.5rem !important;
+                }
+            `;
+        } else {
+            return css`
+                padding: 0 1.5rem;
+
+                // Extra enforcement
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            `;
+        }
+    }}
 `;

@@ -96,4 +96,5 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
         | undefined;
     /** Specifies if masthead should be hidden */
     masthead?: boolean | undefined;
+    layout?: "default" | "stretch" | undefined;
 }

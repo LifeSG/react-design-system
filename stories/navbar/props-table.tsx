@@ -96,9 +96,15 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "masthead",
-                description: "Specifies if the masthead is hidden",
+                description: "Specifies if the masthead is shown",
                 propTypes: ["boolean"],
                 defaultValue: "true",
+            },
+            {
+                name: "layout",
+                description:
+                    "Specifies the layout type of the content in the navbar",
+                propTypes: ["stretch | default"],
             },
         ],
     },

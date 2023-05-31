@@ -8,6 +8,7 @@ const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
         children,
         "data-testid": testId = "container",
         type = "flex",
+        stretch = false,
         ...otherProps
     } = props;
 
@@ -16,6 +17,7 @@ const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
             ref={ref}
             data-testid={testId}
             type={type}
+            stretch={stretch}
             {...otherProps}
         >
             {children}
@@ -33,6 +35,7 @@ export const Container = React.forwardRef(Component);
 // =============================================================================
 interface StyleProps {
     type: ContainerType;
+    stretch: boolean;
 }
 
 const StyledContainer = styled.div<StyleProps>`
@@ -41,17 +44,26 @@ const StyledContainer = styled.div<StyleProps>`
     position: relative;
     width: auto;
     height: auto;
-    padding: 0 0.75rem;
+    ${(props) => {
+        if (props.stretch) {
+            return css`
+                padding: 0 3rem;
+            `;
+        } else {
+            return css`
+                /* Max width restrictions */
+                max-width: 1320px;
 
-    /* Max width restrictions */
-    max-width: 1320px;
-
-    ${MediaQuery.MaxWidth.desktopM} {
-        max-width: 1140px;
-    }
+                ${MediaQuery.MaxWidth.desktopM} {
+                    max-width: 1140px;
+                }
+            `;
+        }
+    }}
 
     ${MediaQuery.MaxWidth.tablet} {
         max-width: 720px;
+        padding: 0 0.75rem;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
