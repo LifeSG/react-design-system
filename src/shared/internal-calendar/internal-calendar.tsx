@@ -1,9 +1,13 @@
 import { Dayjs } from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
-import { CalendarManager, CalendarManagerRef } from "./calendar-manager";
+import { CalendarManager } from "./calendar-manager";
 import { InternalCalendarDay } from "./internal-calendar-day";
 import { Container } from "./internal-calendar.style";
-import { CalendarRef, InternalCalendarProps } from "./types";
+import {
+    CalendarManagerRef,
+    InternalCalendarProps,
+    InternalCalendarRef,
+} from "./types";
 
 export const Component = (
     {
@@ -23,7 +27,7 @@ export const Component = (
         selectWithinRange = true,
         ...otherProps
     }: InternalCalendarProps,
-    ref: React.ForwardedRef<CalendarRef>
+    ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -37,9 +41,6 @@ export const Component = (
         return {
             defaultView() {
                 calendarManagerRef.current.defaultView();
-            },
-            resetView() {
-                calendarManagerRef.current.resetView();
             },
         };
     });
@@ -57,6 +58,18 @@ export const Component = (
 
         calendarManagerRef.current.setCalendarDate(calendarValue);
     }, [currentFocus]);
+
+    useEffect(() => {
+        if (selectedStartDate) {
+            calendarManagerRef.current.setCalendarDate(selectedStartDate);
+        }
+    }, [selectedStartDate]);
+
+    useEffect(() => {
+        if (selectedEndDate) {
+            calendarManagerRef.current.setCalendarDate(selectedEndDate);
+        }
+    }, [selectedEndDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -122,9 +135,6 @@ export const Component = (
         <Container $type={type} {...otherProps}>
             <CalendarManager
                 type={type}
-                initialCalendarDate={
-                    currentFocus === "end" ? selectedEndDate : selectedStartDate
-                }
                 ref={calendarManagerRef}
                 withButton={withButton}
                 doneButtonDisabled={isDoneButtonDisabled()}

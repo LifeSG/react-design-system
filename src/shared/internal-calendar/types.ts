@@ -1,38 +1,4 @@
-import { ActionComponent } from "../../date-input";
-
-export interface InternalCalendarProps extends CommonCalendarProps {
-    /** The display type of the component. Values `standalone` | `input` */
-    type: "standalone" | "input";
-    /** Selected start date in `YYYY-MM-DD` format */
-    value?: string | undefined;
-    /** Selected end date in `YYYY-MM-DD` format */
-    endValue?: string | undefined;
-    /** Specifies if done/cancel buttons are visible */
-    withButton?: boolean | undefined;
-    /** indicate which component makes the changed from the date input component */
-    actionComponent?: ActionComponent | undefined;
-    /** Indicate current focus in the date-input component. */
-    currentFocus?: FocusType | undefined;
-    /** Indicate calendar variant from the date input component. */
-    variant?: Variant | undefined;
-    /** Selection to respect start or end range. */
-    selectWithinRange?: boolean | undefined;
-    /** Function to handle cancel/done .*/
-    onDismiss?: ((action: CalendarAction) => void) | undefined;
-    /** Current calendar view inform to date input. .*/
-    onCalendarView?: ((view: View) => void) | undefined;
-    /** Called when there is a change in the current visible month and year */
-    onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
-    /** Called when date is selected, returns value in `YYYY-MM-DD` format */
-    onSelect?: ((value: string) => void) | undefined;
-    /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
-    onHover?: ((value: string) => void) | undefined;
-}
-
-export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
-    /** Status from date input for calendar. */
-    isOpen?: boolean | undefined;
-}
+import type { Dayjs } from "dayjs";
 
 export interface CommonCalendarProps {
     // Basic component props
@@ -52,14 +18,41 @@ export interface CommonCalendarProps {
     disabledDates?: string[] | undefined;
 }
 
-export interface CalendarRef {
-    defaultView: () => void;
-    resetView: () => void;
-}
-
 // =============================================================================
 // Types use in InternalCalendarProps
 // =============================================================================
+export interface InternalCalendarProps extends CommonCalendarProps {
+    /** The display type of the component. Values `standalone` | `input` */
+    type: "standalone" | "input";
+    /** Selected start date in `YYYY-MM-DD` format */
+    value?: string | undefined;
+    /** Selected end date in `YYYY-MM-DD` format */
+    endValue?: string | undefined;
+    /** Specifies if done/cancel buttons are visible */
+    withButton?: boolean | undefined;
+    /** Indicate current focus in the date-input component. */
+    currentFocus?: FocusType | undefined;
+    /** Indicate calendar variant from the date input component. */
+    variant?: Variant | undefined;
+    /** Selection to respect start or end range. */
+    selectWithinRange?: boolean | undefined;
+    /** Function to handle cancel/done .*/
+    onDismiss?: ((action: CalendarAction) => void) | undefined;
+    /** Current calendar view inform to date input. .*/
+    onCalendarView?: ((view: View) => void) | undefined;
+    /** Called when there is a change in the current visible month and year */
+    onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
+    /** Called when date is selected, returns value in `YYYY-MM-DD` format */
+    onSelect?: ((value: string) => void) | undefined;
+    /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
+    onHover?: ((value: string) => void) | undefined;
+}
+
+export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
+    /** If calendar is visible. */
+    isOpen?: boolean | undefined;
+}
+
 export type CalendarAction = "reset" | "confirmed";
 export type CalendarType = "standalone" | "input";
 export type Variant = "single" | "range";
@@ -69,4 +62,47 @@ export type View = "default" | "month-options" | "year-options";
 export interface YearMonthDisplay {
     year: number;
     month: number;
+}
+
+export interface InternalCalendarRef {
+    defaultView: () => void;
+}
+
+// =============================================================================
+// Types used in CalendarManager
+// =============================================================================
+export interface CalendarManagerProps {
+    children: React.ReactNode | ((props: DefaultViewProps) => React.ReactNode);
+    initialCalendarDate?: string | undefined;
+    type: CalendarType;
+    minDate?: string | undefined;
+    maxDate?: string | undefined;
+    currentFocus?: FocusType | undefined;
+    selectedStartDate?: string | undefined;
+    selectedEndDate?: string | undefined;
+    selectWithinRange?: boolean | undefined;
+    onCalendarDateChange?: ((calendarDate: Dayjs) => void) | undefined;
+    dynamicHeight?: boolean | undefined;
+    // action button props
+    withButton?: boolean | undefined;
+    doneButtonDisabled?: boolean | undefined;
+    onDismiss?: ((action: CalendarAction) => void) | undefined;
+    // header props
+    showNavigationHeader?: boolean | undefined;
+    getLeftArrowDate?: ((current: Dayjs) => Dayjs) | undefined;
+    getRightArrowDate?: ((current: Dayjs) => Dayjs) | undefined;
+    isLeftArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined;
+    isRightArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined;
+    getMonthHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
+    getYearHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
+}
+
+export interface DefaultViewProps {
+    calendarDate: Dayjs;
+}
+
+export interface CalendarManagerRef {
+    defaultView: () => void;
+    resetView: () => void;
+    setCalendarDate: (date: string) => void;
 }

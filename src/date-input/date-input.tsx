@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { CalendarAction, CalendarRef } from "../shared/internal-calendar";
+import {
+    CalendarAction,
+    InternalCalendarRef,
+} from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import {
     StandaloneDateInput,
@@ -10,8 +13,6 @@ import { MediaWidths } from "../spec/media-spec";
 import { DateInputHelper } from "../util/date-input-helper";
 import { Container } from "./date-input.style";
 import { DateInputProps } from "./types";
-
-export type ActionComponent = "calendar" | "input";
 
 export const DateInput = ({
     minDate,
@@ -36,7 +37,7 @@ export const DateInput = ({
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const calendarRef = useRef<CalendarRef>();
+    const calendarRef = useRef<InternalCalendarRef>();
     const inputRef = useRef<StandaloneDateInputRef>();
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
@@ -97,10 +98,6 @@ export const DateInput = ({
 
     const handleFocus = () => {
         setCalendarOpen(true);
-
-        if (!calendarOpen) {
-            calendarRef.current.resetView();
-        }
     };
 
     const handleHoverDayCell = (value: string) => {

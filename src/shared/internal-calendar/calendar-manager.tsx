@@ -19,50 +19,18 @@ import {
 } from "./calendar-manager.style";
 import { InternalCalendarMonth } from "./internal-calendar-month";
 import { InternalCalendarYear } from "./internal-calendar-year";
-import { CalendarAction, CalendarType, FocusType, View } from "./types";
-
-interface DefaultViewProps {
-    calendarDate: Dayjs;
-}
-
-interface CalendarManagerProps {
-    children: React.ReactNode | ((props: DefaultViewProps) => React.ReactNode);
-    initialCalendarDate?: string | undefined;
-    type?: CalendarType | undefined;
-    minDate?: string | undefined;
-    maxDate?: string | undefined;
-    currentFocus?: FocusType | undefined;
-    selectedStartDate?: string | undefined;
-    selectedEndDate?: string | undefined;
-    selectWithinRange?: boolean | undefined;
-    onCalendarDateChange?: ((calendarDate: Dayjs) => void) | undefined;
-    onCalendarViewChange?: ((view: View) => void) | undefined;
-    dynamicHeight?: boolean | undefined;
-    /* action button props */
-    withButton?: boolean | undefined;
-    doneButtonDisabled?: boolean | undefined;
-    onDismiss?: ((action: CalendarAction) => void) | undefined;
-    /* header props */
-    showNavigationHeader?: boolean | undefined;
-    getLeftArrowDate?: ((current: Dayjs) => Dayjs) | undefined;
-    getRightArrowDate?: ((current: Dayjs) => Dayjs) | undefined;
-    isLeftArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined;
-    isRightArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined;
-    getMonthHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
-    getYearHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
-}
-
-export interface CalendarManagerRef {
-    defaultView: () => void;
-    resetView: () => void;
-    setCalendarDate: (date: string) => void;
-}
+import {
+    CalendarAction,
+    CalendarManagerProps,
+    CalendarManagerRef,
+    View,
+} from "./types";
 
 const Component = (
     {
         children,
         initialCalendarDate,
-        type = "standalone",
+        type,
         minDate,
         maxDate,
         currentFocus,
@@ -71,7 +39,6 @@ const Component = (
         selectWithinRange,
         dynamicHeight = false,
         onCalendarDateChange,
-        onCalendarViewChange,
         /* action button props */
         withButton,
         doneButtonDisabled,
@@ -112,7 +79,6 @@ const Component = (
         return {
             defaultView() {
                 setCurrentView("default");
-                performOnCalendarViewChange("default");
             },
             resetView() {
                 const date = dayjs(initialCalendarDate);
@@ -121,7 +87,6 @@ const Component = (
                 performOnCalendarDateChange(date);
 
                 setCurrentView("default");
-                performOnCalendarViewChange("default");
             },
             setCalendarDate(value?: string) {
                 const date = value ? dayjs(value) : dayjs();
@@ -144,14 +109,12 @@ const Component = (
     const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
             setCurrentView("month-options");
-            performOnCalendarViewChange("month-options");
 
             // Maintain focus when selecting month dropdown
             containerRef.current.focus();
         } else {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
-            performOnCalendarViewChange("default");
         }
     };
 
@@ -164,10 +127,8 @@ const Component = (
         if (currentView !== "default") {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
-            performOnCalendarViewChange("default");
         } else {
             setCurrentView("year-options");
-            performOnCalendarViewChange("year-options");
         }
     };
 
@@ -251,12 +212,6 @@ const Component = (
     const performOnDismissHandler = (action: CalendarAction) => {
         if (onDismiss) {
             onDismiss(action);
-        }
-    };
-
-    const performOnCalendarViewChange = (view: View) => {
-        if (onCalendarViewChange) {
-            onCalendarViewChange(view);
         }
     };
 
