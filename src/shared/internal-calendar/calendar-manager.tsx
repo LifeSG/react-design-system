@@ -133,9 +133,13 @@ const Component = (
     };
 
     const handleLeftArrowClick = () => {
+        // Maintain focus as button could become disabled
+        containerRef.current.focus();
+
         const nextDate = getLeftArrowDate
             ? getLeftArrowDate(calendarDate)
             : calendarDate.subtract(1, "month");
+
         switch (currentView) {
             case "default":
                 setViewCalendarDate(nextDate);
@@ -152,9 +156,13 @@ const Component = (
     };
 
     const handleRightArrowClick = () => {
+        // Maintain focus as button could become disabled
+        containerRef.current.focus();
+
         const nextDate = getRightArrowDate
             ? getRightArrowDate(calendarDate)
             : calendarDate.add(1, "month");
+
         switch (currentView) {
             case "default":
                 setViewCalendarDate(nextDate);
