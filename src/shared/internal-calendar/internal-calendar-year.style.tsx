@@ -29,7 +29,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
             case "standalone":
                 return css`
                     grid-template-rows: repeat(4, 4rem);
-                    gap: 0.5rem 2rem;
+                    gap: 0.5rem 2.5rem;
                 `;
             case "input":
                 return css`

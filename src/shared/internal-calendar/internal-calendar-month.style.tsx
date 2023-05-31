@@ -34,7 +34,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
                 `;
             case "input":
                 return css`
-                    gap: 0.5rem 2rem;
+                    gap: 0.5rem 1rem;
                 `;
         }
     }}

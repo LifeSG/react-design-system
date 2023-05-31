@@ -1,4 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
@@ -12,8 +13,7 @@ import {
     StyleProps,
     Wrapper,
 } from "./internal-calendar-day.style";
-import { CalendarType, FocusType, InternalCalendarProps } from "./types";
-import isBetween from "dayjs/plugin/isBetween";
+import { FocusType, InternalCalendarProps } from "./types";
 
 dayjs.extend(isBetween);
 
@@ -37,7 +37,6 @@ interface CalendarDayProps
     selectedEndDate: string;
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    type: CalendarType;
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
@@ -51,7 +50,6 @@ export const InternalCalendarDay = ({
     selectedEndDate,
     onSelect,
     onHover,
-    type,
     isNewSelection,
     minDate,
     maxDate,
@@ -454,7 +452,7 @@ export const InternalCalendarDay = ({
     };
 
     return (
-        <Wrapper $type={type}>
+        <Wrapper>
             {renderHeader()}
             {renderDayCells()}
         </Wrapper>
