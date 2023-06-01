@@ -135,6 +135,8 @@ export const DateRangeInput = ({
         },
     });
 
+    // tracks if current value in focused input is allowed for selection
+    const isUnselectable = useRef<boolean>(false);
     const nodeRef = useRef<HTMLDivElement>();
     const calendarRef = useRef<InternalCalendarRef>();
     const startInputRef = useRef<StandaloneDateInputRef>();
@@ -187,10 +189,12 @@ export const DateRangeInput = ({
     const handleStartDateChange = (val: string) => {
         if (isDateUnselectable(val)) {
             // date is invalid, remain on this input
+            isUnselectable.current = true;
             return;
         }
 
         actions.changeStart(val);
+        isUnselectable.current = false;
 
         if (!val) {
             // if both start and end were cleared, confirm the selection
@@ -237,6 +241,7 @@ export const DateRangeInput = ({
     const handleEndDateChange = (val: string) => {
         if (isDateUnselectable(val)) {
             // date is invalid, remain on this input
+            isUnselectable.current = true;
             return;
         }
 
@@ -289,14 +294,14 @@ export const DateRangeInput = ({
     };
 
     const handleStartInputBlur = (validFormat: boolean) => {
-        if (!validFormat || isDateUnselectable(selectedStart)) {
+        if (!validFormat || isUnselectable.current) {
             actions.resetStart();
             startInputRef.current.resetInput();
         }
     };
 
     const handleEndInputBlur = (validFormat: boolean) => {
-        if (!validFormat || isDateUnselectable(selectedEnd)) {
+        if (!validFormat || isUnselectable.current) {
             actions.resetEnd();
             endInputRef.current.resetInput();
         }

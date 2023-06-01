@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { StringHelper } from "../../util";
+import { StringHelper, useStateRef } from "../../util";
 import {
     DayInput,
     Divider,
@@ -61,9 +61,9 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [dayValue, setDayValue] = useState<string>("");
-    const [monthValue, setMonthValue] = useState<string>("");
-    const [yearValue, setYearValue] = useState<string>("");
+    const [dayValue, setDayValue, dayValueRef] = useStateRef<string>("");
+    const [monthValue, setMonthValue, monthValueRef] = useStateRef<string>("");
+    const [yearValue, setYearValue, yearValueRef] = useStateRef<string>("");
     const [currentFocus, setCurrentFocus] = useState<FieldType>("none");
     const [hidePlaceholder, setHidePlaceholder] = useState<boolean>(false);
 
@@ -153,36 +153,40 @@ export const Component = (
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        const [dayName, monthName, yearName] = names;
+        const date = {
+            [dayName]: dayValueRef.current,
+            [monthName]: monthValueRef.current,
+            [yearName]: yearValueRef.current,
+        };
+
         const targetName = event.target.name as FieldType;
-        const targetValue = event.target.value;
+        const targetValue = date[targetName];
+
+        // pad single digits for day and month inputs
+
         const paddedValue =
-            targetName !== names[2]
+            targetName !== yearName
                 ? StringHelper.padValue(targetValue, true)
                 : targetValue;
 
-        const date = {
-            day: dayValue,
-            month: monthValue,
-            year: yearValue,
-        };
-
         switch (targetName) {
-            case names[0]:
-                date.day = paddedValue;
+            case dayName:
+                date[dayName] = paddedValue;
                 setDayValue(paddedValue);
                 break;
-            case names[1]:
-                date.month = paddedValue;
+            case monthName:
+                date[monthName] = paddedValue;
                 setMonthValue(paddedValue);
                 break;
-            case names[2]:
+            case yearName:
             default:
                 break;
         }
 
-        const value = `${date.year}-${date.month}-${date.day}`;
+        const value = `${date[yearName]}-${date[monthName]}-${date[dayName]}`;
         const isValid = dayjs(value, "YYYY-MM-DD", true).isValid();
-        const isEmpty = !date.day && !date.month && !date.year;
+        const isEmpty = !date[dayName] && !date[monthName] && !date[yearName];
         const isPadded = targetValue !== paddedValue;
 
         if (isValid && isPadded) {
@@ -197,6 +201,11 @@ export const Component = (
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (hoverValue) {
+            // do not modify inputs when selecting date from another source
+            return;
+        }
+
         const targetName = event.target.name as FieldType;
         const targetValue = event.target.value.replace(/[^0-9]/g, "");
 
