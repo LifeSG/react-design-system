@@ -23,6 +23,7 @@ export const Component = (
         variant,
         minDate,
         maxDate,
+        allowDisabledSelection,
         type = "standalone",
         selectWithinRange = true,
     }: InternalCalendarProps,
@@ -144,6 +145,7 @@ export const Component = (
                 currentFocus={currentFocus}
                 selectedStartDate={selectedStartDate}
                 selectedEndDate={selectedEndDate}
+                allowDisabledSelection={allowDisabledSelection}
             >
                 {({ calendarDate }) => (
                     <InternalCalendarDay
@@ -156,6 +158,7 @@ export const Component = (
                         minDate={minDate}
                         maxDate={maxDate}
                         isNewSelection={selectWithinRange}
+                        allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
                     />

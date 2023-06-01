@@ -11,6 +11,7 @@ export interface CommonCalendarProps {
     maxDate?: string | undefined;
     /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
     disabledDates?: string[] | undefined;
+    allowDisabledSelection?: boolean | undefined;
 }
 
 // =============================================================================

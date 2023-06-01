@@ -11,7 +11,10 @@ export type YearVariant =
     | "selected-year";
 
 interface Props
-    extends Pick<InternalCalendarProps, "type" | "minDate" | "maxDate"> {
+    extends Pick<
+        InternalCalendarProps,
+        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+    > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -31,6 +34,7 @@ export const InternalCalendarYear = ({
     isNewSelection,
     minDate,
     maxDate,
+    allowDisabledSelection,
     onYearSelect,
 }: Props) => {
     // =============================================================================
@@ -45,7 +49,7 @@ export const InternalCalendarYear = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleYearClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled) return;
+        if (isDisabled && !allowDisabledSelection) return;
 
         onYearSelect(value);
     };

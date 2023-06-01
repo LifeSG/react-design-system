@@ -7,7 +7,10 @@ import { FocusType, InternalCalendarProps } from "./types";
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
 interface Props
-    extends Pick<InternalCalendarProps, "type" | "minDate" | "maxDate"> {
+    extends Pick<
+        InternalCalendarProps,
+        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+    > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -27,6 +30,7 @@ export const InternalCalendarMonth = ({
     isNewSelection,
     minDate,
     maxDate,
+    allowDisabledSelection,
     onMonthSelect,
 }: Props) => {
     // =============================================================================
@@ -41,7 +45,7 @@ export const InternalCalendarMonth = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleMonthClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled) return;
+        if (isDisabled && !allowDisabledSelection) return;
 
         onMonthSelect(value);
     };

@@ -55,6 +55,7 @@ export const DateRangeInput = ({
     withButton: _withButton = true,
     readOnly,
     id,
+    allowDisabledSelection,
     ...otherProps
 }: DateRangeInputProps) => {
     // =============================================================================
@@ -196,13 +197,7 @@ export const DateRangeInput = ({
             return;
         }
 
-        if (
-            DateInputHelper.isDateDisabled(val, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
+        if (isDateUnselectable(val)) {
             // date is invalid, remain on this input
             return;
         }
@@ -252,13 +247,7 @@ export const DateRangeInput = ({
             return;
         }
 
-        if (
-            DateInputHelper.isDateDisabled(val, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
+        if (isDateUnselectable(val)) {
             // date  is invalid, remain on this input
             return;
         }
@@ -300,28 +289,14 @@ export const DateRangeInput = ({
     };
 
     const handleStartInputBlur = (validFormat: boolean) => {
-        if (
-            !validFormat ||
-            DateInputHelper.isDateDisabled(selectedStart, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
+        if (!validFormat || isDateUnselectable(selectedStart)) {
             actions.resetStart();
             startInputRef.current.resetInput();
         }
     };
 
     const handleEndInputBlur = (validFormat: boolean) => {
-        if (
-            !validFormat ||
-            DateInputHelper.isDateDisabled(selectedEnd, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
+        if (!validFormat || isDateUnselectable(selectedEnd)) {
             actions.resetEnd();
             endInputRef.current.resetInput();
         }
@@ -349,6 +324,21 @@ export const DateRangeInput = ({
 
     const handleCalendarHover = (val: string) => {
         setHoverValue(val);
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const isDateUnselectable = (val: string) => {
+        return (
+            !allowDisabledSelection &&
+            val &&
+            DateInputHelper.isDateDisabled(val, {
+                disabledDates,
+                minDate,
+                maxDate,
+            })
+        );
     };
 
     // =============================================================================
@@ -420,6 +410,7 @@ export const DateRangeInput = ({
                 disabledDates={disabledDates}
                 minDate={minDate}
                 maxDate={maxDate}
+                allowDisabledSelection={allowDisabledSelection}
                 onSelect={handleCalendarSelect}
                 onDismiss={handleCalendarDismiss}
                 onHover={handleCalendarHover}

@@ -13,7 +13,7 @@ import {
     StyleProps,
     Wrapper,
 } from "./internal-calendar-day.style";
-import { FocusType, InternalCalendarProps } from "./types";
+import { CommonCalendarProps, FocusType, InternalCalendarProps } from "./types";
 
 dayjs.extend(isBetween);
 
@@ -29,10 +29,8 @@ type HoverDirection =
     | "reset-end";
 
 interface CalendarDayProps
-    extends Pick<
-        InternalCalendarProps,
-        "disabledDates" | "variant" | "minDate" | "maxDate"
-    > {
+    extends CommonCalendarProps,
+        Pick<InternalCalendarProps, "variant"> {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
@@ -54,6 +52,7 @@ export const InternalCalendarDay = ({
     minDate,
     maxDate,
     variant,
+    allowDisabledSelection,
 }: CalendarDayProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -68,13 +67,13 @@ export const InternalCalendarDay = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled) return;
+        if (isDisabled && !allowDisabledSelection) return;
 
         onSelect(value);
     };
 
     const handleHoverCell = (value: string, isDisabled: boolean) => {
-        if (isDisabled) return;
+        if (isDisabled && !allowDisabledSelection) return;
 
         setHoverValue(value);
         onHover(value);
