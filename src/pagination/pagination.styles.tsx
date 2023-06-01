@@ -5,6 +5,7 @@ import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
 import { Input } from "../input";
+import { ClickableIcon } from "../shared/clickable-icon";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -41,7 +42,7 @@ export const PaginationMenu = styled.div`
     align-items: center;
 `;
 
-export const NavigationItem = styled(IconButton)`
+export const NavigationItem = styled(ClickableIcon)`
     display: flex;
     padding: 0.625rem;
     justify-content: center;
@@ -65,7 +66,7 @@ export const NavigationItem = styled(IconButton)`
     }
 `;
 
-export const NavigationButton = styled(IconButton)<ButtonProps>`
+export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     display: flex;
     padding: 0.625rem;
     justify-content: center;
@@ -188,7 +189,7 @@ export const PageItem = styled(Button.Default)<StyleProps>`
     }
 `;
 
-export const EllipsisItem = styled(IconButton)`
+export const EllipsisItem = styled(ClickableIcon)`
     display: flex;
     align-items: center;
     justify-content: center;
