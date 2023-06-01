@@ -110,6 +110,10 @@ export const InternalCalendarDay = ({
         const isDisabledDate =
             disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
 
+        return !isWithinRange || isDisabledDate;
+    };
+
+    const isOutsideSelectedRange = (day: Dayjs): boolean => {
         const isStartAfterEnd =
             currentFocus === "start" &&
             selectedEndDate &&
@@ -122,12 +126,7 @@ export const InternalCalendarDay = ({
             day.isBefore(selectedStartDate) &&
             isNewSelection;
 
-        return (
-            !isWithinRange ||
-            isDisabledDate ||
-            isStartAfterEnd ||
-            isEndBeforeStart
-        );
+        return isStartAfterEnd || isEndBeforeStart;
     };
 
     const getHoverDirection = (): HoverDirection => {
@@ -216,6 +215,9 @@ export const InternalCalendarDay = ({
                 styleCircleProps.$disabled = true;
                 styleLabelProps.$disabled = true;
             }
+        } else if (isOutsideSelectedRange(day)) {
+            styleCircleProps.$disallowed = true;
+            styleLabelProps.$disallowed = true;
         }
 
         // apply selected styles

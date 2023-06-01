@@ -61,6 +61,10 @@ export const InternalCalendarMonth = ({
             "month"
         );
 
+        return !isWithinRange;
+    };
+
+    const isOutsideSelectedRange = (day: Dayjs): boolean => {
         const isStartAfterEnd =
             currentFocus === "start" &&
             selectedEndDate &&
@@ -73,7 +77,7 @@ export const InternalCalendarMonth = ({
             day.isBefore(selectedStartDate, "month") &&
             isNewSelection;
 
-        return !isWithinRange || isStartAfterEnd || isEndBeforeStart;
+        return isStartAfterEnd || isEndBeforeStart;
     };
 
     const generateMonthStatus = (date: Dayjs) => {
@@ -88,7 +92,9 @@ export const InternalCalendarMonth = ({
 
         return {
             disabled: !allowDisabledSelection && disabled,
-            disallowed: allowDisabledSelection && disabled,
+            disallowed:
+                (allowDisabledSelection && disabled) ||
+                isOutsideSelectedRange(date),
             month,
             variant,
         };

@@ -65,6 +65,10 @@ export const InternalCalendarYear = ({
             "year"
         );
 
+        return !isWithinRange;
+    };
+
+    const isOutsideSelectedRange = (day: Dayjs): boolean => {
         const isStartAfterEnd =
             currentFocus === "start" &&
             selectedEndDate &&
@@ -77,7 +81,7 @@ export const InternalCalendarYear = ({
             day.isBefore(selectedStartDate, "year") &&
             isNewSelection;
 
-        return !isWithinRange || isStartAfterEnd || isEndBeforeStart;
+        return isStartAfterEnd || isEndBeforeStart;
     };
 
     const generateYearStatus = (date: Dayjs) => {
@@ -97,7 +101,9 @@ export const InternalCalendarYear = ({
 
         return {
             disabled: !allowDisabledSelection && disabled,
-            disallowed: allowDisabledSelection && disabled,
+            disallowed:
+                (allowDisabledSelection && disabled) ||
+                isOutsideSelectedRange(date),
             year,
             variant: variant,
         };
