@@ -185,6 +185,11 @@ export const DateRangeInput = ({
     };
 
     const handleStartDateChange = (val: string) => {
+        if (isDateUnselectable(val)) {
+            // date is invalid, remain on this input
+            return;
+        }
+
         actions.changeStart(val);
 
         if (!val) {
@@ -194,11 +199,6 @@ export const DateRangeInput = ({
                 actions.resetRange({ start: "", end: "" });
                 onChange?.("", "");
             }
-            return;
-        }
-
-        if (isDateUnselectable(val)) {
-            // date is invalid, remain on this input
             return;
         }
 
@@ -235,6 +235,11 @@ export const DateRangeInput = ({
     };
 
     const handleEndDateChange = (val: string) => {
+        if (isDateUnselectable(val)) {
+            // date is invalid, remain on this input
+            return;
+        }
+
         actions.changeEnd(val);
 
         if (!val) {
@@ -244,11 +249,6 @@ export const DateRangeInput = ({
                 actions.resetRange({ start: "", end: "" });
                 onChange?.("", "");
             }
-            return;
-        }
-
-        if (isDateUnselectable(val)) {
-            // date  is invalid, remain on this input
             return;
         }
 
