@@ -4,8 +4,8 @@ import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../media";
 import {
     CalendarAction,
-    CalendarRef,
     FocusType,
+    InternalCalendarRef,
 } from "../shared/internal-calendar";
 import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
@@ -135,7 +135,7 @@ export const DateRangeInput = ({
     });
 
     const nodeRef = useRef<HTMLDivElement>();
-    const calendarRef = useRef<CalendarRef>();
+    const calendarRef = useRef<InternalCalendarRef>();
     const startInputRef = useRef<StandaloneDateInputRef>();
     const endInputRef = useRef<StandaloneDateInputRef>();
     const isMobile = useMediaQuery({

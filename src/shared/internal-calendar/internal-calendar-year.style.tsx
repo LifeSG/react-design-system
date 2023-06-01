@@ -29,7 +29,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
             case "standalone":
                 return css`
                     grid-template-rows: repeat(4, 4rem);
-                    gap: 0.5rem 2rem;
+                    gap: 0.5rem 2.5rem;
                 `;
             case "input":
                 return css`
@@ -45,6 +45,7 @@ export const YearCell = styled.div<StyleProps>`
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
+    margin: 0 0.5rem;
     cursor: pointer;
 
     &:hover {

@@ -1,9 +1,9 @@
 import dayjs, { Dayjs } from "dayjs";
-import React, { useEffect, useState } from "react";
-import { CalendarHelper } from "../../util";
-import { InternalCalendarMonth } from "./internal-calendar-month";
-import { InternalCalendarYear } from "./internal-calendar-year";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { CalendarHelper } from "../../util/calendar-helper";
 import {
+    ActionButton,
+    ActionButtonSection,
     ArrowLeft,
     ArrowRight,
     Container,
@@ -14,116 +14,107 @@ import {
     HeaderArrows,
     HeaderInputDropdown,
     IconChevronDown,
+    OptionsOverlay,
     ToggleZone,
-} from "./internal-calendar.style";
-import { CalendarAction, View } from "./types";
+} from "./calendar-manager.style";
+import { InternalCalendarMonth } from "./internal-calendar-month";
+import { InternalCalendarYear } from "./internal-calendar-year";
+import {
+    CalendarAction,
+    CalendarManagerProps,
+    CalendarManagerRef,
+    View,
+} from "./types";
 
-interface YearMonthDisplay {
-    year: number;
-    month: number;
-}
-
-interface DefaultViewProps {
-    calendarDate: Dayjs;
-}
-
-interface CalendarManagerProps {
-    children: React.ReactNode | ((props: DefaultViewProps) => React.ReactNode);
-    initialCalendarDate?: string | undefined;
-    minDate?: string | undefined;
-    maxDate?: string | undefined;
-    onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
-    currentFocus?: "start" | "end" | "none" | undefined;
-    getLeftArrowDate?: ((current: Dayjs) => Dayjs) | undefined;
-    getRightArrowDate?: ((current: Dayjs) => Dayjs) | undefined;
-    isLeftArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined;
-    isRightArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined; // TODO: can support custom header
-    selectedStartDate?: string | undefined;
-    selectedEndDate?: string | undefined;
-    selectWithinRange?: boolean | undefined;
-    withButton?: boolean | undefined;
-    doneButtonDisabled?: boolean | undefined;
-    type?: "standalone" | "input"; // TODO: use styling instead
-    onDismiss?: ((action: CalendarAction) => void) | undefined;
-    onCalendarDate?: ((calendarDate: Dayjs) => void) | undefined;
-    onCalendarView?: ((view: View) => void) | undefined;
-    showNavigationHeader?: boolean | undefined;
-}
-
-export const CalendarManager = ({
-    children,
-    initialCalendarDate,
-    minDate,
-    maxDate,
-    onYearMonthDisplayChange,
-    currentFocus,
-    getLeftArrowDate,
-    getRightArrowDate,
-    selectedStartDate,
-    isLeftArrowDisabled,
-    isRightArrowDisabled,
-    selectedEndDate,
-    selectWithinRange,
-    type = "input",
-    onCalendarDate,
-    onCalendarView,
-    showNavigationHeader,
-}: CalendarManagerProps) => {
+const Component = (
+    {
+        children,
+        initialCalendarDate,
+        type,
+        minDate,
+        maxDate,
+        currentFocus,
+        selectedStartDate,
+        selectedEndDate,
+        selectWithinRange,
+        dynamicHeight = false,
+        onCalendarDateChange,
+        /* action button props */
+        withButton,
+        doneButtonDisabled,
+        onDismiss,
+        /* header props */
+        showNavigationHeader = true,
+        getLeftArrowDate,
+        getRightArrowDate,
+        isLeftArrowDisabled: _isLeftArrowDisabled,
+        isRightArrowDisabled: _isRightArrowDisabled,
+        getMonthHeaderLabel,
+        getYearHeaderLabel,
+        ...otherProps
+    }: CalendarManagerProps,
+    ref: React.ForwardedRef<CalendarManagerRef>
+) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    // the current visible date in all views
     const [calendarDate, setCalendarDate] = useState<Dayjs>(
         dayjs(initialCalendarDate)
     );
+    // the selected date in month/year views
     const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>(
         dayjs(initialCalendarDate)
     );
     const [currentView, setCurrentView] = useState<View>("default");
 
+    const doneButtonRef = useRef<HTMLButtonElement>(null);
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
+    const containerRef = useRef<HTMLDivElement>();
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useImperativeHandle(ref, () => {
+        return {
+            defaultView() {
+                setCurrentView("default");
+            },
+            resetView() {
+                const date = dayjs(initialCalendarDate);
+                setCalendarDate(date);
+                setViewCalendarDate(date);
+                performOnCalendarDateChange(date);
+
+                setCurrentView("default");
+            },
+            setCalendarDate(value?: string) {
+                const date = value ? dayjs(value) : dayjs();
+                setCalendarDate(date);
+                setViewCalendarDate(date);
+                performOnCalendarDateChange(date);
+            },
+        };
+    });
+
     useEffect(() => {
-        /**
-         * Update calendar value in month/year
-         * Once focus value is changed
-         */
-        const calendarValue =
-            currentFocus === "end" ? selectedStartDate : selectedStartDate;
-
-        // update selected in month/year view
-        setViewCalendarDate(dayjs(calendarValue));
-
-        if (calendarValue) setCalendarDate(dayjs(calendarValue));
-    }, [currentFocus]);
-
-    useEffect(() => {
-        if (initialCalendarDate) {
-            setCalendarDate(dayjs(initialCalendarDate));
-            setViewCalendarDate(dayjs(initialCalendarDate));
-        } else {
-            setCalendarDate(dayjs());
-            setViewCalendarDate(dayjs());
-        }
+        const date = initialCalendarDate ? dayjs(initialCalendarDate) : dayjs();
+        setCalendarDate(date);
+        setViewCalendarDate(date);
     }, [initialCalendarDate]);
 
-    useEffect(() => {
-        if (selectedStartDate) {
-            setCalendarDate(dayjs(selectedStartDate));
-        }
-    }, [selectedStartDate]);
-
-    useEffect(() => {
-        if (selectedEndDate) {
-            setCalendarDate(dayjs(selectedEndDate));
-        }
-    }, [selectedEndDate]);
-
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
     const handleMonthDropdownClick = () => {
         if (currentView !== "month-options") {
             setCurrentView("month-options");
-            performOnCalendarView("month-options");
 
             // Maintain focus when selecting month dropdown
-            // containerRef.current.focus();
+            containerRef.current.focus();
         } else {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
-            performOnCalendarView("default");
         }
     };
 
@@ -136,22 +127,24 @@ export const CalendarManager = ({
         if (currentView !== "default") {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
-            performOnCalendarView("default");
         } else {
             setCurrentView("year-options");
-            performOnCalendarView("year-options");
         }
     };
 
     const handleLeftArrowClick = () => {
+        // Maintain focus as button could become disabled
+        containerRef.current.focus();
+
         const nextDate = getLeftArrowDate
             ? getLeftArrowDate(calendarDate)
             : calendarDate.subtract(1, "month");
+
         switch (currentView) {
             case "default":
                 setViewCalendarDate(nextDate);
                 setCalendarDate(nextDate);
-                performOnCalendarDate(nextDate);
+                performOnCalendarDateChange(nextDate);
                 break;
             case "month-options":
                 setCalendarDate((date) => date.subtract(1, "year"));
@@ -163,14 +156,18 @@ export const CalendarManager = ({
     };
 
     const handleRightArrowClick = () => {
+        // Maintain focus as button could become disabled
+        containerRef.current.focus();
+
         const nextDate = getRightArrowDate
             ? getRightArrowDate(calendarDate)
             : calendarDate.add(1, "month");
+
         switch (currentView) {
             case "default":
                 setViewCalendarDate(nextDate);
                 setCalendarDate(nextDate);
-                performOnCalendarDate(nextDate);
+                performOnCalendarDateChange(nextDate);
                 break;
             case "month-options":
                 setCalendarDate((date) => date.add(1, "year"));
@@ -185,24 +182,86 @@ export const CalendarManager = ({
         setCalendarDate(value);
         setViewCalendarDate(value);
 
-        performOnCalendarDate(value);
+        performOnCalendarDateChange(value);
     };
 
-    const performOnCalendarDate = (date: Dayjs) => {
-        if (onYearMonthDisplayChange) {
-            const returnValue = {
-                month: date.month() + 1,
-                year: date.year(),
-            };
+    const handleCancelButton = () => {
+        setCalendarDate(dayjs(initialCalendarDate));
+        setViewCalendarDate(dayjs(initialCalendarDate));
 
-            onYearMonthDisplayChange(returnValue);
+        if (currentView === "default") {
+            performOnDismissHandler("reset");
+        } else {
+            setCurrentView("default");
         }
-        onCalendarDate && onCalendarDate(date);
     };
 
-    const performOnCalendarView = (view: View) => {
-        if (onCalendarView) {
-            onCalendarView(view);
+    const handleDoneButton = (isDisabled: boolean) => {
+        if (isDisabled) return;
+
+        setCalendarDate(viewCalendarDate);
+
+        if (currentView === "default") {
+            performOnDismissHandler("confirmed");
+        } else {
+            setCurrentView("default");
+        }
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const performOnCalendarDateChange = (date: Dayjs) => {
+        if (onCalendarDateChange) {
+            onCalendarDateChange(date);
+        }
+    };
+
+    const performOnDismissHandler = (action: CalendarAction) => {
+        if (onDismiss) {
+            onDismiss(action);
+        }
+    };
+
+    const isLeftArrowDisabled = () => {
+        if (!minDate) {
+            return false;
+        }
+
+        const min = dayjs(minDate);
+        if (currentView === "month-options") {
+            return !CalendarHelper.isPreviousYearWithinRange(calendarDate, min);
+        } else if (currentView === "year-options") {
+            return !CalendarHelper.isPreviousDecadeWithinRange(
+                calendarDate,
+                min
+            );
+        } else {
+            if (_isLeftArrowDisabled) {
+                return _isLeftArrowDisabled(calendarDate);
+            }
+            return !CalendarHelper.isPreviousMonthWithinRange(
+                calendarDate,
+                min
+            );
+        }
+    };
+
+    const isRightArrowDisabled = () => {
+        if (!maxDate) {
+            return false;
+        }
+
+        const max = dayjs(maxDate);
+        if (currentView === "month-options") {
+            return !CalendarHelper.isNextYearWithinRange(calendarDate, max);
+        } else if (currentView === "year-options") {
+            return !CalendarHelper.isNextDecadeWithinRange(calendarDate, max);
+        } else {
+            if (_isRightArrowDisabled) {
+                return _isRightArrowDisabled(calendarDate);
+            }
+            return !CalendarHelper.isNextMonthWithinRange(calendarDate, max);
         }
     };
 
@@ -217,39 +276,37 @@ export const CalendarManager = ({
 
             return `${beginDecade} to ${endDecade}`;
         } else {
-            return dayjs(calendarDate).endOf("week").format("YYYY");
+            return getYearHeaderLabel
+                ? getYearHeaderLabel(calendarDate)
+                : dayjs(calendarDate).format("YYYY");
         }
     };
 
     const renderDropdownButtons = () => {
-        // TODO: Should update the view calendar date.
+        const monthLabel = getMonthHeaderLabel
+            ? getMonthHeaderLabel(calendarDate)
+            : dayjs(calendarDate).format("MMM");
         return (
             <>
                 <DropdownButton
                     type="button"
                     tabIndex={-1}
-                    $expandedDisplay={currentView === "month-options"}
+                    $expanded={currentView === "month-options"}
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
-                    $type={type}
                 >
-                    <DropdownText $type={type}>
-                        {dayjs(calendarDate).endOf("week").format("MMM")}
-                    </DropdownText>
+                    <DropdownText>{monthLabel}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
                 <DropdownButton
                     type="button"
                     tabIndex={-1}
-                    $expandedDisplay={currentView !== "default"}
+                    $expanded={currentView !== "default"}
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
-                    $type={type}
                 >
-                    <DropdownText $type={type}>
-                        {getYearHeaderText()}
-                    </DropdownText>
+                    <DropdownText>{getYearHeaderText()}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
             </>
@@ -294,31 +351,27 @@ export const CalendarManager = ({
     };
 
     const renderHeader = () => {
-        const disableLeftArrow = isLeftArrowDisabled
-            ? isLeftArrowDisabled(calendarDate)
-            : false;
-        const disableRightArrow = isRightArrowDisabled
-            ? isRightArrowDisabled(calendarDate)
-            : false;
         return (
-            <Header $type="input" data-id={"calendar-header"}>
+            <Header data-id="calendar-header">
                 <HeaderInputDropdown>
                     {renderDropdownButtons()}
                 </HeaderInputDropdown>
                 <HeaderArrows>
                     <HeaderArrowButton
-                        disabled={disableLeftArrow}
+                        data-testid="left-arrow-btn"
+                        disabled={isLeftArrowDisabled()}
+                        focusHighlight={false}
                         tabIndex={-1}
                         onClick={handleLeftArrowClick}
-                        data-testid={"left-arrow-btn"}
                     >
                         <ArrowLeft />
                     </HeaderArrowButton>
                     <HeaderArrowButton
-                        disabled={disableRightArrow}
+                        data-testid="right-arrow-btn"
+                        disabled={isRightArrowDisabled()}
+                        focusHighlight={false}
                         tabIndex={-1}
                         onClick={handleRightArrowClick}
-                        data-testid={"right-arrow-btn"}
                     >
                         <ArrowRight />
                     </HeaderArrowButton>
@@ -327,22 +380,72 @@ export const CalendarManager = ({
         );
     };
 
+    const renderActionButtons = () => {
+        if (!withButton) return;
+
+        const isDayView = currentView === "default";
+
+        const disabled = !isDayView ? false : doneButtonDisabled;
+
+        return (
+            <ActionButtonSection>
+                <ActionButton
+                    ref={cancelButtonRef}
+                    data-testid="cancel-button"
+                    styleType="light"
+                    onClick={handleCancelButton}
+                >
+                    Cancel
+                </ActionButton>
+                <ActionButton
+                    data-testid="done-button"
+                    ref={doneButtonRef}
+                    onClick={() => handleDoneButton(disabled)}
+                    disabled={disabled}
+                >
+                    Done
+                </ActionButton>
+            </ActionButtonSection>
+        );
+    };
+
+    const renderViews = () => {
+        const defaultView =
+            typeof children === "function"
+                ? children({ calendarDate })
+                : children;
+
+        if (dynamicHeight) {
+            return (
+                <>
+                    {currentView === "default" && defaultView}
+                    {renderOptionsOverlay()}
+                </>
+            );
+        } else {
+            return (
+                <>
+                    {defaultView}
+                    <OptionsOverlay $visible={currentView !== "default"}>
+                        {renderOptionsOverlay()}
+                    </OptionsOverlay>
+                </>
+            );
+        }
+    };
+
     return (
         <Container
-            // ref={resizeDetector.ref}
+            ref={containerRef}
             tabIndex={-1}
             data-id="calendar-container"
-            $type="input"
-            // {...otherProps}
+            {...otherProps}
         >
             {showNavigationHeader && renderHeader()}
-            <ToggleZone>
-                {currentView === "default" &&
-                    (typeof children === "function"
-                        ? children({ calendarDate })
-                        : children)}
-                {renderOptionsOverlay()}
-            </ToggleZone>
+            <ToggleZone>{renderViews()}</ToggleZone>
+            {renderActionButtons()}
         </Container>
     );
 };
+
+export const CalendarManager = React.forwardRef(Component);

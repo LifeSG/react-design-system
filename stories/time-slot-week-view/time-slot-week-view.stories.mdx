@@ -17,7 +17,7 @@ import { Wrapper } from "./doc-elements";
 <Meta
     title="Modules/TimeSlotWeekView"
     component={TimeSlotWeekView}
-    parameters={{ layout: "padded" }}
+    parameters={{ layout: "fullscreen" }}
 />
 
 <Title>TimeSlotWeekView</Title>
@@ -32,11 +32,9 @@ import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-vie
 
 <Canvas>
     <Story name="TimeSlotWeekView">
-        <FullWidthStoryContainer>
-            <Wrapper>
-                <TimeSlotWeekView slots={getSlots()} />
-            </Wrapper>
-        </FullWidthStoryContainer>
+        <Wrapper>
+            <TimeSlotWeekView slots={getSlots()} />
+        </Wrapper>
     </Story>
 </Canvas>
 
@@ -54,14 +52,12 @@ _(In this example,2 days before today and 2 days after today are disabled)_
                 dayjs().add(2, "day").format("YYYY-MM-DD"),
             ]);
             return (
-                <FullWidthStoryContainer>
-                    <Wrapper>
-                        <TimeSlotWeekView
-                            slots={getSlots()}
-                            disabledDates={disabledDates}
-                        />
-                    </Wrapper>
-                </FullWidthStoryContainer>
+                <Wrapper>
+                    <TimeSlotWeekView
+                        slots={getSlots()}
+                        disabledDates={disabledDates}
+                    />
+                </Wrapper>
             );
         }}
     </Story>
@@ -77,15 +73,13 @@ You can specify the `minDate` and/or `maxDate` to control the selection range.
             const minDate = dayjs().subtract(7, "day").format("YYYY-MM-DD");
             const maxDate = dayjs().add(20, "day").format("YYYY-MM-DD");
             return (
-                <FullWidthStoryContainer>
-                    <Wrapper>
-                        <TimeSlotWeekView
-                            slots={getSlots()}
-                            minDate={minDate}
-                            maxDate={maxDate}
-                        />
-                    </Wrapper>
-                </FullWidthStoryContainer>
+                <Wrapper>
+                    <TimeSlotWeekView
+                        slots={getSlots()}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                    />
+                </Wrapper>
             );
         }}
     </Story>
