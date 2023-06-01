@@ -7,6 +7,7 @@ import { CalendarType } from "./types";
 
 interface StyleProps {
     $disabled: boolean;
+    $disallowed: boolean;
     $variant: YearVariant;
 }
 
@@ -84,7 +85,7 @@ export const YearCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
-        if (props.$disabled) {
+        if (props.$disallowed || props.$disabled) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

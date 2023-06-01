@@ -8,6 +8,7 @@ import { CalendarType } from "./types";
 interface StyleProps {
     $variant: MonthVariant;
     $disabled?: boolean;
+    $disallowed?: boolean;
 }
 
 interface WrapperStyleProps {
@@ -83,7 +84,7 @@ export const MonthCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
-        if (props.$disabled) {
+        if (props.$disallowed || props.$disabled) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

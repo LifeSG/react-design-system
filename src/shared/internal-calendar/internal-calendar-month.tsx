@@ -87,7 +87,8 @@ export const InternalCalendarMonth = ({
             : "default";
 
         return {
-            disabled,
+            disabled: !allowDisabledSelection && disabled,
+            disallowed: allowDisabledSelection && disabled,
             month,
             variant,
         };
@@ -101,19 +102,22 @@ export const InternalCalendarMonth = ({
     return (
         <Wrapper $type={type}>
             {months.map((date) => {
-                const { disabled, variant, month } = generateMonthStatus(date);
+                const { disabled, disallowed, variant, month } =
+                    generateMonthStatus(date);
 
                 return (
                     <MonthCell
                         key={month}
                         $variant={variant}
                         $disabled={disabled}
+                        $disallowed={disallowed}
                         onClick={() => handleMonthClick(date, disabled)}
                     >
                         <CellLabel
                             weight="regular"
                             $variant={variant}
                             $disabled={disabled}
+                            $disallowed={disallowed}
                         >
                             {month}
                         </CellLabel>

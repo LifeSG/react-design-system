@@ -209,8 +209,13 @@ export const InternalCalendarDay = ({
         }
 
         if (isDisabled(day)) {
-            styleCircleProps.$disabled = true;
-            styleLabelProps.$disabled = true;
+            if (allowDisabledSelection) {
+                styleCircleProps.$disallowed = true;
+                styleLabelProps.$disallowed = true;
+            } else {
+                styleCircleProps.$disabled = true;
+                styleLabelProps.$disabled = true;
+            }
         }
 
         // apply selected styles

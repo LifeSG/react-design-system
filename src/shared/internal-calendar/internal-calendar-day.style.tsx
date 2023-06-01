@@ -5,6 +5,7 @@ import { DayVariant } from "./internal-calendar-day";
 
 export interface StyleProps {
     $disabled?: boolean;
+    $disallowed?: boolean;
     $overlap?: boolean;
     $hovered?: boolean;
     $selected?: boolean;
@@ -152,7 +153,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }}
 
     ${(props) => {
-        const { $disabled, $overlap, $variant } = props;
+        const { $disabled, $disallowed, $overlap, $variant } = props;
 
         if ($overlap) {
             return css`
@@ -162,6 +163,12 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
                 :hover {
                     background: ${Color.Accent.Light[4]};
                 }
+            `;
+        }
+
+        if ($disallowed) {
+            return css`
+                color: ${Color.Neutral[4]};
             `;
         }
 
@@ -191,16 +198,16 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        const { $disabled, $selected, $variant } = props;
+        const { $disallowed, $disabled, $selected, $variant } = props;
 
-        if ($disabled && $selected) {
+        if ($disallowed && $selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
                 color: ${Color.Accent.Light[2]};
             `;
         }
 
-        if ($disabled) {
+        if ($disallowed || $disabled) {
             return css`
                 color: ${Color.Neutral[4]};
             `;
