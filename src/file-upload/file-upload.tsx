@@ -68,7 +68,7 @@ export const FileUpload = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderItems = () => {
-        if (fileItems.length === 0) return null;
+        if (!fileItems || fileItems.length === 0) return null;
 
         const itemsToRender = fileItems.map((item) => {
             return (
@@ -91,6 +91,8 @@ export const FileUpload = ({
             accept={accept}
             capture={capture}
             border={styleType === "bordered"}
+            className={className}
+            name={name}
         >
             <TitleContainer>
                 {title && <Title weight="regular">{title}</Title>}
@@ -107,9 +109,7 @@ export const FileUpload = ({
                 >
                     Upload files
                 </UploadButton>
-                <UploadButtonLabel htmlFor="upload-button">
-                    or drop them here
-                </UploadButtonLabel>
+                <UploadButtonLabel>or drop them here</UploadButtonLabel>
             </UploadButtonContainer>
         </FileUploadDropzone>
     );
