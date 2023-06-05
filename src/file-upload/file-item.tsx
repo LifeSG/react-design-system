@@ -74,7 +74,8 @@ export const FileItem = ({
 
             return (
                 <ItemActionContainer $hasEditButton={isEditable}>
-                    {isEditable && (
+                    {/* TODO: Add in part 2 */}
+                    {/* {isEditable && (
                         <IconButton
                             key="edit"
                             data-testid={`${id}-edit-button`}
@@ -84,7 +85,7 @@ export const FileItem = ({
                         >
                             <PencilIcon />
                         </IconButton>
-                    )}
+                    )} */}
                     <IconButton
                         key="delete"
                         data-testid={`${id}-delete-button`}
@@ -142,18 +143,18 @@ export const FileItem = ({
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-// Adapted from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
+// Adapted from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-size-to-kb-mb-gb-in-javascript
 const formatFileSizeDisplay = (size?: number) => {
-    if (!size || size === 0) return "0kb";
+    if (!size || size === 0) return "0 KB";
 
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
-    const index = Math.floor(Math.log(size) / Math.log(k));
+    const index: number = Math.floor(Math.log(size) / Math.log(1024));
 
-    return `${parseFloat((size / Math.pow(k, index)).toFixed(0))} ${
-        sizes[index]
-    }`;
+    const value = Number(size / Math.pow(1024, index)).toFixed(0);
+    const measurement = sizes[index];
+
+    return `${value} ${measurement}`;
 };
 
 const isSupportedImageType = (type: string) => {
