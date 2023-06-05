@@ -15,7 +15,7 @@ const Component = (props: SectionProps, ref: DivRef): JSX.Element => {
         <StyledSection
             ref={ref}
             data-testid={testId}
-            stretch={stretch}
+            $stretch={stretch}
             {...otherProps}
         >
             {children}
@@ -32,17 +32,17 @@ export const Section = React.forwardRef(Component);
 // STYLING
 // =============================================================================
 interface StyleProps {
-    stretch: boolean;
+    $stretch: boolean;
 }
 
 const StyledSection = styled.section<StyleProps>`
     display: block;
     position: relative;
     ${(props) => {
-        if (props.stretch) {
+        if (props.$stretch) {
             return css`
                 padding: unset;
-                ${MediaQuery.MaxWidth.tablet} {
+                ${MediaQuery.MaxWidth.mobileL} {
                     padding: 0 1.5rem;
 
                     // Extra enforcement

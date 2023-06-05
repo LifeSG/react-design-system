@@ -16,8 +16,8 @@ const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
         <StyledContainer
             ref={ref}
             data-testid={testId}
-            type={type}
-            stretch={stretch}
+            $type={type}
+            $stretch={stretch}
             {...otherProps}
         >
             {children}
@@ -34,8 +34,8 @@ export const Container = React.forwardRef(Component);
 // STYLING
 // =============================================================================
 interface StyleProps {
-    type: ContainerType;
-    stretch: boolean;
+    $type: ContainerType;
+    $stretch: boolean;
 }
 
 const StyledContainer = styled.div<StyleProps>`
@@ -45,7 +45,7 @@ const StyledContainer = styled.div<StyleProps>`
     width: auto;
     height: auto;
     ${(props) => {
-        if (props.stretch) {
+        if (props.$stretch) {
             return css`
                 padding: 0 3rem;
             `;
@@ -57,14 +57,13 @@ const StyledContainer = styled.div<StyleProps>`
                 ${MediaQuery.MaxWidth.desktopM} {
                     max-width: 1140px;
                 }
+                ${MediaQuery.MaxWidth.tablet} {
+                    max-width: 720px;
+                    padding: 0 0.75rem;
+                }
             `;
         }
     }}
-
-    ${MediaQuery.MaxWidth.tablet} {
-        max-width: 720px;
-        padding: 0 0.75rem;
-    }
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: 100%;
@@ -73,7 +72,7 @@ const StyledContainer = styled.div<StyleProps>`
     }
 
     ${(props) => {
-        switch (props.type) {
+        switch (props.$type) {
             case "grid":
                 return css`
                     column-gap: 2rem;

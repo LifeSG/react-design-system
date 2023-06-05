@@ -76,6 +76,7 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Specifies the layout type of the content in the footer",
                 propTypes: ["stretch | default"],
+                defaultValue: "default",
             },
         ],
     },

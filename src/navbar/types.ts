@@ -94,7 +94,7 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)
         | undefined;
-    /** Specifies if masthead should be hidden */
+    /** Specifies if masthead should be rendered */
     masthead?: boolean | undefined;
     layout?: "default" | "stretch" | undefined;
 }
