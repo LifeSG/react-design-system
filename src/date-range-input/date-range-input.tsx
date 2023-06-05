@@ -52,6 +52,7 @@ export const DateRangeInput = ({
     valueEnd,
     onChange,
     onBlur,
+    onYearMonthDisplayChange,
     withButton: _withButton = true,
     readOnly,
     id,
@@ -423,6 +424,7 @@ export const DateRangeInput = ({
                 onSelect={handleCalendarSelect}
                 onDismiss={handleCalendarDismiss}
                 onHover={handleCalendarHover}
+                onYearMonthDisplayChange={onYearMonthDisplayChange}
             />
         </Container>
     );
