@@ -1,4 +1,7 @@
-import { CommonCalendarProps } from "../shared/internal-calendar/types";
+import {
+    CommonCalendarProps,
+    YearMonthDisplay,
+} from "../shared/internal-calendar/types";
 
 export interface DateInputProps extends CommonCalendarProps {
     // Standard HTML Attributes
@@ -28,4 +31,6 @@ export interface DateInputProps extends CommonCalendarProps {
      * Function that returns when a defocus is made on the field
      */
     onBlur?: (() => void) | undefined;
+    /** Called when there is a change in the current visible month and year */
+    onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
 }
