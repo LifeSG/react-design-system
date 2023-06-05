@@ -18,15 +18,15 @@ export const FileUpload = ({
     fileItems,
     title,
     description,
-    maxFiles,
-    errorMessage,
+    maxFiles, // TODO: In consideration. Deciding if it should be smart or parent handle
+    errorMessage, // TODO: Clarifying with Selig if this is needed
     warning,
     className,
     name,
     id,
     accept,
     capture,
-    multiple,
+    multiple, // FIXME: Trying to clarify if we want to allow feature
     disabled,
     onChange,
     onDelete,
