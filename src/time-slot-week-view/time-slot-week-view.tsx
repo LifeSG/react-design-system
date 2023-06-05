@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CalendarManagerRef } from "../shared/internal-calendar";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
 import { TimeSlot } from "../time-slot-bar";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
@@ -25,7 +26,20 @@ export const TimeSlotWeekView = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selectedDate, setSelectedDate] = useState<string>(); // YYYY-MM-DD
+    const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
+    const calendarManagerRef = useRef<CalendarManagerRef>();
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        setSelectedDate(value);
+
+        if (value) {
+            calendarManagerRef.current.setCalendarDate(value);
+        }
+    }, [value]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -42,7 +56,7 @@ export const TimeSlotWeekView = ({
         }
     };
 
-    const performOnCalendarDate = (value: Dayjs) => {
+    const performOnCalendarDateChange = (value: Dayjs) => {
         if (onWeekDisplayChange) {
             const returnValue = {
                 week: {
@@ -64,6 +78,9 @@ export const TimeSlotWeekView = ({
     return (
         <Wrapper {...otherProps}>
             <CalendarManager
+                ref={calendarManagerRef}
+                type="standalone"
+                dynamicHeight
                 initialCalendarDate={dayjs(currentCalendarDate)
                     .endOf("week")
                     .format(DATE_FORMAT)}
@@ -72,16 +89,24 @@ export const TimeSlotWeekView = ({
                 getRightArrowDate={(day) => day.add(1, "week")}
                 isLeftArrowDisabled={(calendarDate) =>
                     minDate &&
-                    dayjs(calendarDate).startOf("week").isBefore(minDate)
+                    dayjs(calendarDate)
+                        .subtract(1, "week")
+                        .isBefore(minDate, "week")
                 }
                 isRightArrowDisabled={(calendarDate) =>
                     maxDate &&
-                    dayjs(calendarDate).endOf("week").isAfter(maxDate)
+                    dayjs(calendarDate).add(1, "week").isAfter(maxDate, "week")
                 }
-                onCalendarDate={performOnCalendarDate}
+                onCalendarDateChange={performOnCalendarDateChange}
                 showNavigationHeader={showNavigationHeader}
                 minDate={minDate}
                 maxDate={maxDate}
+                getMonthHeaderLabel={(calendarDate) =>
+                    dayjs(calendarDate).endOf("week").format("MMM")
+                }
+                getYearHeaderLabel={(calendarDate) =>
+                    dayjs(calendarDate).endOf("week").format("YYYY")
+                }
             >
                 {({ calendarDate }) => {
                     return (

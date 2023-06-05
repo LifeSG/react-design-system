@@ -1,4 +1,6 @@
-export interface DateRangeInputProps {
+import { CommonCalendarProps } from "../shared/internal-calendar/types";
+
+export interface DateRangeInputProps extends CommonCalendarProps {
     // Standard HTML Attributes
     className?: string | undefined;
     id?: string | undefined;
@@ -16,21 +18,11 @@ export interface DateRangeInputProps {
     error?: boolean | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
-    /** Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]` */
-    disabledDates?: string[] | undefined;
     /**
      * Specifies if the "Done" and "Cancel" action buttons should be rendered.
      * Is restricted to `true` on mobile viewports
      */
     withButton?: boolean | undefined;
-    /**
-     * The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
-     */
-    minDate?: string | undefined;
-    /**
-     * The maximum date that can be selected (inclusive) in 'YYYY-MM-DD' format.
-     */
-    maxDate?: string | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start and
      * end date in "YYYY-MM-DD" string format.

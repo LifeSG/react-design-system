@@ -1,16 +1,42 @@
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { InternalCalendar } from "../shared/internal-calendar";
 import { Color } from "../color";
+import { InternalCalendar } from "../shared/internal-calendar";
 import { CalendarProps } from "./types";
 
 export const Calendar = ({
     className,
     styleType = "bordered",
+    value,
+    onSelect,
     ...otherProps
 }: CalendarProps) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        setSelectedDate(value);
+    }, [value]);
+
+    // =============================================================================
+    // RENDER FUNCTION
+    // =============================================================================
     return (
         <Wrapper className={className} $hasBorder={styleType === "bordered"}>
-            <InternalCalendar type="standalone" {...otherProps} />
+            <InternalCalendar
+                type="standalone"
+                value={selectedDate}
+                onSelect={(value) => {
+                    setSelectedDate(value);
+                    onSelect?.(value);
+                }}
+                {...otherProps}
+            />
         </Wrapper>
     );
 };

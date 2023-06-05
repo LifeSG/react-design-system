@@ -34,7 +34,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
                 `;
             case "input":
                 return css`
-                    gap: 0.5rem 2rem;
+                    gap: 0.5rem 1rem;
                 `;
         }
     }}
@@ -46,6 +46,7 @@ export const MonthCell = styled.div<StyleProps>`
     justify-content: center;
     cursor: pointer;
     border-radius: 5rem;
+    margin: 0 0.5rem;
 
     &:hover {
         box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
