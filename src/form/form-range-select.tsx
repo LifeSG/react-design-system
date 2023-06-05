@@ -1,4 +1,4 @@
-import { InputRangeSelect } from "src/input-select/input-range-select";
+import { InputRangeSelect } from "../input-range-select/input-range-select";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputRangeSelectProps } from "./types";
 

@@ -1,20 +1,21 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { TimepickerHelper } from "./helper";
-import { TimepickerDropdown } from "./timepicker-dropdown";
-import { InputSelectorElement, Wrapper } from "./timepicker.styles";
+import { useCallback, useRef, useState } from "react";
+import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
+import { TimeHelper } from "../util/time-helper";
+import { useEventListener } from "../util/use-event-listener";
+import { InputSelectorElement } from "./timepicker.styles";
 import { TimepickerProps } from "./types";
 
 export const Timepicker = ({
     id,
     disabled = false,
+    readOnly = false,
     error,
     value,
-    defaultValue,
     placeholder,
     format = "24hr",
     onChange,
     onBlur,
-    onSelectionCancel,
     ...otherProps
 }: TimepickerProps) => {
     // =============================================================================
@@ -27,32 +28,25 @@ export const Timepicker = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDownEvent);
-        document.addEventListener("keyup", handleKeyUpEvent);
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDownEvent);
-            document.removeEventListener("keyup", handleKeyUpEvent);
-        };
-    }, [showSelector]);
+    useEventListener("mousedown", handleMouseDownEvent, document);
+    useEventListener("keyup", handleKeyUpEvent, document);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleInputFocus = useCallback(() => {
-        if (!disabled && !showSelector) {
+    const handleInputFocus = () => {
+        if (!disabled && !readOnly && !showSelector) {
             setShowSelector(true);
-        }
-    }, [showSelector]);
-
-    const handleMouseDownEvent = (event: MouseEvent) => {
-        if (!disabled) {
-            runOutsideFocusHandler(event);
         }
     };
 
-    const handleKeyUpEvent = (event: KeyboardEvent) => {
+    function handleMouseDownEvent(event: MouseEvent) {
+        if (!disabled && !readOnly) {
+            runOutsideFocusHandler(event);
+        }
+    }
+
+    function handleKeyUpEvent(event: KeyboardEvent) {
         switch (event.code) {
             case "Tab":
                 runOutsideFocusHandler(event);
@@ -60,11 +54,10 @@ export const Timepicker = ({
             default:
                 break;
         }
-    };
+    }
 
     const handleSelectionDropdownCancel = () => {
-        setShowSelector(false);
-        onSelectionCancel && onSelectionCancel();
+        runOnBlurHandler();
     };
 
     const handleChange = (value: string) => {
@@ -103,12 +96,10 @@ export const Timepicker = ({
         <InputSelectorElement
             onFocus={handleInputFocus}
             focused={showSelector}
-            readOnly={true}
+            readOnly
             placeholder={placeholder || getPlaceholderValue()}
-            value={TimepickerHelper.formatValue(value, format)}
-            defaultValue={defaultValue}
+            value={TimeHelper.formatDisplayValue(value, format)}
             disabled={disabled}
-            error={error}
             data-testid={
                 id ? `${id}-timepicker-selector` : "timepicker-selector"
             }
@@ -116,16 +107,23 @@ export const Timepicker = ({
     );
 
     return (
-        <Wrapper ref={nodeRef} id={id} {...otherProps}>
+        <InputWrapper
+            ref={nodeRef}
+            id={id}
+            $readOnly={readOnly}
+            $disabled={disabled}
+            $error={error}
+            {...otherProps}
+        >
             {renderSelector()}
             <TimepickerDropdown
                 id={id}
                 show={showSelector}
-                value={value || defaultValue}
+                value={value}
                 format={format}
                 onCancel={handleSelectionDropdownCancel}
                 onChange={handleChange}
             />
-        </Wrapper>
+        </InputWrapper>
     );
 };

@@ -5,8 +5,8 @@ import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
-import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Text, TextStyleHelper } from "../text";
 
 const slideDown = keyframes`
@@ -53,7 +53,7 @@ export const DismissContainer = styled.div`
     padding: 0.5rem 0.25rem 0.5rem 1rem;
 `;
 
-export const DismissButton = styled(IconButton)`
+export const DismissButton = styled(ClickableIcon)`
     padding: 0;
 `;
 

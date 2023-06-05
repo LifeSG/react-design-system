@@ -1,8 +1,8 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { Color } from "../color";
-import { IconButton } from "../icon-button";
 import { MediaQuery } from "../media";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { Transition } from "../transition";
 
 // =============================================================================
@@ -66,7 +66,7 @@ export const NavElementsContainer = styled.div`
     }
 `;
 
-export const MobileMenuButton = styled(IconButton)`
+export const MobileMenuButton = styled(ClickableIcon)`
     display: none;
 
     ${MediaQuery.MaxWidth.tablet} {

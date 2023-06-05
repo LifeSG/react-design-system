@@ -28,16 +28,16 @@ import { Form } from "@lifesg/react-design-system/form";
     <Story name="TimeRangePicker">
         {() => {
             const [time1, setTime1] = useState({
-                startTime: "",
-                endTime: "",
+                start: "",
+                end: "",
             });
             const [time2, setTime2] = useState({
-                startTime: "",
-                endTime: "",
+                start: "",
+                end: "",
             });
             const [time3] = useState({
-                startTime: "12:00am",
-                endTime: "12:30am",
+                start: "12:00am",
+                end: "12:30am",
             });
             return (
                 <StoryContainer>
@@ -61,6 +61,31 @@ import { Form } from "@lifesg/react-design-system/form";
                             label="This is read only state for timepicker"
                             value={time3}
                             readOnly
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>12 hour format</Heading3>
+
+<Canvas>
+    <Story name="12 hour format">
+        {() => {
+            const [time, setTime] = useState({
+                start: "12:00am",
+                end: "",
+            });
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.TimeRangePicker
+                            label="This is a time range picker"
+                            format="12hr"
+                            value={time}
+                            onChange={(value) => setTime(value)}
                         />
                     </Container>
                 </StoryContainer>

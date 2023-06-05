@@ -19,7 +19,7 @@ import { PropsTable } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-A field that allows a user to enter a single date or date range.
+A field that allows a user to enter a single date.
 
 ```tsx
 import { Form } from "@lifesg/react-design-system/form";
@@ -45,53 +45,6 @@ import { Form } from "@lifesg/react-design-system/form";
     </Story>
 </Canvas>
 
-<Heading3>Using a range selection</Heading3>
-
-You can use `variant='range'` to specify a range selection.
-
-<Canvas>
-    <Story name="Range input">
-        {() => {
-            const [startValue] = useState(dayjs().day(10).format("YYYY-MM-DD"));
-            const [endValue] = useState(dayjs().day(20).format("YYYY-MM-DD"));
-            return (
-                <StoryContainer>
-                    <Form.DateInput
-                        label="This is the default date range input"
-                        variant="range"
-                    />
-                    <Form.DateInput
-                        label="This is the date range input without button"
-                        variant="range"
-                        withButton={false}
-                        value={startValue}
-                        valueEnd={endValue}
-                    />
-                    <Form.DateInput
-                        label="This is the disabled state"
-                        disabled
-                        variant="range"
-                        value={startValue}
-                        valueEnd={endValue}
-                    />
-                    <Form.DateInput
-                        label="This is the readonly state"
-                        readOnly
-                        variant="range"
-                        value={startValue}
-                        valueEnd={endValue}
-                    />
-                    <Form.DateInput
-                        label="This is the error state"
-                        variant="range"
-                        errorMessage="Invalid date"
-                    />
-                </StoryContainer>
-            );
-        }}
-    </Story>
-</Canvas>
-
 <Heading3>With disabled dates</Heading3>
 
 You can use `disabledDates` to specify dates that are not available for selection.
@@ -100,20 +53,14 @@ You can use `disabledDates` to specify dates that are not available for selectio
     <Story name="With disabled dates">
         {() => {
             const [disabledDates] = useState([
-                dayjs().day(10).format("YYYY-MM-DD"),
-                dayjs().day(15).format("YYYY-MM-DD"),
-                dayjs().day(25).format("YYYY-MM-DD"),
+                dayjs().date(10).format("YYYY-MM-DD"),
+                dayjs().date(15).format("YYYY-MM-DD"),
+                dayjs().date(25).format("YYYY-MM-DD"),
             ]);
             return (
                 <StoryContainer>
                     <Form.DateInput
                         label="This is a date input with disabled dates"
-                        disabledDates={disabledDates}
-                    />
-                    <br />
-                    <Form.DateInput
-                        label="This is a date range input with disabled dates"
-                        variant="range"
                         disabledDates={disabledDates}
                     />
                 </StoryContainer>
@@ -122,28 +69,24 @@ You can use `disabledDates` to specify dates that are not available for selectio
     </Story>
 </Canvas>
 
-<Heading3>Within date range</Heading3>
+<Heading3>Within minimum and maximum dates</Heading3>
 
-You can restrict selection to a date range using `between`.
+You can specify the `minDate` and/or `maxDate` to control the selection range.
 
 <Canvas>
-    <Story name="Within date range">
+    <Story name="Min and max dates">
         {() => {
-            const [between] = useState([
-                dayjs().day(7).format("YYYY-MM-DD"),
-                dayjs().day(21).format("YYYY-MM-DD"),
-            ]);
             return (
                 <StoryContainer>
                     <Container>
                         <Form.DateInput
                             label="This date input has restricted selection"
-                            between={between}
-                        />
-                        <Form.DateInput
-                            label="This date range input has restricted selection"
-                            variant="range"
-                            between={between}
+                            minDate={dayjs()
+                                .subtract(2, "days")
+                                .format("YYYY-MM-DD")}
+                            maxDate={dayjs()
+                                .add(20, "days")
+                                .format("YYYY-MM-DD")}
                         />
                     </Container>
                 </StoryContainer>
@@ -164,8 +107,6 @@ import { DateInput } from "@lifesg/react-design-system/date-input";
     <Story name="Standalone usage">
         <StoryContainer>
             <DateInput />
-            <br />
-            <DateInput variant="range" />
         </StoryContainer>
     </Story>
 </Preview>

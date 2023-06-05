@@ -95,7 +95,7 @@ const Component = (
 
     return (
         <InputWrapper
-            disabled={disabled}
+            $disabled={disabled}
             $error={error}
             $readOnly={readOnly}
             className={className}

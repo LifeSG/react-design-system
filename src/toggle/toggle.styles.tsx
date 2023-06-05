@@ -16,7 +16,6 @@ interface StyleProps {
 interface ContainerStyleProps extends StyleProps {
     $styleType?: ToggleStyleType;
     $error?: boolean;
-    $hasSubLabel?: boolean;
 }
 
 interface LabelStyleProps extends StyleProps {}
@@ -132,6 +131,7 @@ export const Input = styled.input`
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
+    overflow-wrap: anywhere;
 `;
 
 export const Label = styled.label<LabelStyleProps>`
@@ -152,38 +152,39 @@ export const Label = styled.label<LabelStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[3](props)};
+                color: ${Color.Neutral[3]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${Color.Primary(props)};
+                color: ${Color.Primary};
             `;
         }
     }}
 `;
 
-// TODO: Reinstate later
-// export const SubLabel = styled.div<LabelStyleProps>`
-//     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
-//     margin-top: 0.25rem;
+export const SubLabel = styled.div<LabelStyleProps>`
+    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    margin-top: 0.5rem;
 
-//     strong {
-//         ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
-//     }
+    strong,
+    b {
+        ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
+        color: inherit;
+    }
 
-//     ${(props) => {
-//         if (props.disabled) {
-//             return css`
-//                 color: ${Color.Neutral[3](props)};
-//             `;
-//         } else if (props.$selected) {
-//             return css`
-//                 color: ${Color.Primary(props)};
-//             `;
-//         } else {
-//             return css`
-//                 color: ${Color.Neutral[1]};
-//             `;
-//         }
-//     }}
-// `;
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[3]};
+            `;
+        } else if (props.$selected) {
+            return css`
+                color: ${Color.Primary};
+            `;
+        } else {
+            return css`
+                color: ${Color.Neutral[1]};
+            `;
+        }
+    }}
+`;

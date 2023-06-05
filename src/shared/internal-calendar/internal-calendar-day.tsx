@@ -1,4 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
@@ -12,8 +13,7 @@ import {
     StyleProps,
     Wrapper,
 } from "./internal-calendar-day.style";
-import { CalendarType, FocusType, InternalCalendarProps } from "./types";
-import isBetween from "dayjs/plugin/isBetween";
+import { FocusType, InternalCalendarProps } from "./types";
 
 dayjs.extend(isBetween);
 
@@ -31,13 +31,12 @@ type HoverDirection =
 interface CalendarDayProps
     extends Pick<
         InternalCalendarProps,
-        "disabledDates" | "variant" | "between"
+        "disabledDates" | "variant" | "minDate" | "maxDate"
     > {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    type: CalendarType;
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
@@ -51,9 +50,9 @@ export const InternalCalendarDay = ({
     selectedEndDate,
     onSelect,
     onHover,
-    type,
     isNewSelection,
-    between,
+    minDate,
+    maxDate,
     variant,
 }: CalendarDayProps) => {
     // =============================================================================
@@ -103,8 +102,11 @@ export const InternalCalendarDay = ({
     };
 
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange =
-            between && !day.isBetween(between[0], between[1], "day", "[]");
+        const isWithinRange = CalendarHelper.isWithinRange(
+            day,
+            minDate ? dayjs(minDate) : undefined,
+            maxDate ? dayjs(maxDate) : undefined
+        );
 
         const isDisabledDate =
             disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
@@ -122,7 +124,7 @@ export const InternalCalendarDay = ({
             isNewSelection;
 
         return (
-            isOutsideBetweenRange ||
+            !isWithinRange ||
             isDisabledDate ||
             isStartAfterEnd ||
             isEndBeforeStart
@@ -450,7 +452,7 @@ export const InternalCalendarDay = ({
     };
 
     return (
-        <Wrapper $type={type}>
+        <Wrapper>
             {renderHeader()}
             {renderDayCells()}
         </Wrapper>

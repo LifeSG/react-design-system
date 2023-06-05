@@ -1,0 +1,145 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import dayjs from "dayjs";
+import { useState } from "react";
+import { DateRangeInput } from "src/date-range-input";
+import { Form } from "src/form";
+import {
+    Heading3,
+    Heading4,
+    StoryContainer,
+    Secondary,
+    Title,
+} from "../../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta
+    title="Form/DateRangeInput"
+    component={DateRangeInput}
+    parameters={{ layout: "padded" }}
+/>
+
+<Title>DateRangeInput</Title>
+
+<Secondary>Overview</Secondary>
+
+A field that allows a user to enter a date range.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas>
+    <Story name="DateRangeInput">
+        {() => {
+            const [start, setStart] = useState(
+                dayjs().subtract(1, "month").date(21).format("YYYY-MM-DD")
+            );
+            const [end, setEnd] = useState(
+                dayjs().date(7).format("YYYY-MM-DD")
+            );
+            return (
+                <StoryContainer>
+                    <Form.DateRangeInput
+                        label="This is the date range input"
+                        value={start}
+                        valueEnd={end}
+                        onChange={(s, e) => {
+                            setStart(s);
+                            setEnd(e);
+                        }}
+                    />
+                    <Form.DateRangeInput
+                        label="This has no action buttons on desktop viewports"
+                        withButton={false}
+                    />
+                    <Form.DateRangeInput
+                        label="This is the disabled state"
+                        withButton={false}
+                        value="2023-04-20"
+                        valueEnd="2023-05-01"
+                        disabled
+                    />
+                    <Form.DateRangeInput
+                        label="This is the readonly state"
+                        withButton={false}
+                        value="2023-04-20"
+                        valueEnd="2023-05-01"
+                        readOnly
+                    />
+                    <Form.DateRangeInput
+                        label="This is the error state"
+                        withButton={false}
+                        errorMessage="Invalid date"
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With disabled dates</Heading3>
+
+You can use `disabledDates` to specify dates that are not available for selection.
+
+_(In this example, 2 days before today and 2 days after today are disabled)_
+
+<Canvas>
+    <Story name="With disabled dates">
+        {() => {
+            const [disabledDates] = useState([
+                dayjs().subtract(2, "days").format("YYYY-MM-DD"),
+                dayjs().add(2, "days").format("YYYY-MM-DD"),
+            ]);
+            return (
+                <StoryContainer>
+                    <Form.DateRangeInput
+                        label="This has disabled dates"
+                        disabledDates={disabledDates}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Within minimum and maximum dates</Heading3>
+
+You can specify the `minDate` and/or `maxDate` to control the selection range.
+
+<Canvas>
+    <Story name="Min and max dates">
+        {() => {
+            return (
+                <StoryContainer>
+                    <Form.DateRangeInput
+                        label="This has restricted selection"
+                        minDate={dayjs()
+                            .subtract(2, "days")
+                            .format("YYYY-MM-DD")}
+                        maxDate={dayjs().add(20, "days").format("YYYY-MM-DD")}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the date range input field as a standalone, you can do this.
+
+```tsx
+import { DateRangeInput } from "@lifesg/react-design-system/date-range-input";
+```
+
+<Preview>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <DateRangeInput />
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

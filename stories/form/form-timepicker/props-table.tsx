@@ -1,7 +1,15 @@
 import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
+import { ApiTable, code, quote } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
+
+const TIME_FORMAT = (
+    <>
+        24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
+        <br />
+        12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
+    </>
+);
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -11,20 +19,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "value",
                 description: (
                     <>
-                        The value of the time in string based format. 24 hour
-                        will be <code>hh:mm</code>, while 12 hour will be{" "}
-                        <code>hh:mma</code>
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "defaultValue",
-                description: (
-                    <>
-                        The default value of the time in string based format. 24
-                        hour will be <code>hh:mm</code>, while 12 hour will be{" "}
-                        <code>hh:mma</code>
+                        The value of the time input in a string based format.
+                        <br />
+                        {TIME_FORMAT}
                     </>
                 ),
                 propTypes: ["string"],
@@ -72,19 +69,9 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "name",
-                description: "The name of the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "style",
                 description: "Allows for inline styling of the component",
                 propTypes: ["React.CSSProperties"],
-            },
-            {
-                name: "tabIndex",
-                description: "Specifies the tab order of the component",
-                propTypes: ["number"],
             },
             {
                 name: "data-testid",
@@ -93,20 +80,21 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "onChange",
-                description:
-                    "Called when the user clicks on the 'Confirm' button in the time selection box. Returns the date value in the format specified",
+                description: (
+                    <>
+                        Called when the user clicks on the {quote("Confirm")}{" "}
+                        button in the time selection box. Returns the time value
+                        in a string based format.
+                        <br />
+                        {TIME_FORMAT}
+                    </>
+                ),
                 propTypes: ["(value: string) => void"],
             },
             {
                 name: "onBlur",
                 description:
                     "Called when a defocus happens. Any changes in the time selection box will not be applied",
-                propTypes: ["() => void"],
-            },
-            {
-                name: "onSelectionCancel",
-                description:
-                    "Called when the user clicks on the 'Cancel' button in the time selection box. Any changes will not be applied",
                 propTypes: ["() => void"],
             },
         ],

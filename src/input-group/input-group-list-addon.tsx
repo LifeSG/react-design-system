@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DropdownList } from "../shared/dropdown-list/dropdown-list";
+import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
     DisplayContainer,
     Divider,
-    ElementBoundary,
     IconContainer,
     LabelContainer,
     PlaceholderLabel,
@@ -11,7 +11,6 @@ import {
     SelectorReadOnly,
     StyledChevronIcon,
     ValueLabel,
-    Wrapper,
 } from "./input-group-list-addon.style";
 import { MainInput } from "./input-group.style";
 import { InputGroupProps, ListAddon } from "./types";
@@ -49,7 +48,6 @@ export const InputGroupListAddon = <T, V>({
     const [selected, setSelected] = useState<T>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
-    const nodeRef = useRef();
     const selectorRef = useRef<HTMLButtonElement>();
 
     // =============================================================================
@@ -58,14 +56,6 @@ export const InputGroupListAddon = <T, V>({
     useEffect(() => {
         setSelected(selectedOption);
     }, [selectedOption]);
-
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClick);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
-        };
-    }, []);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -95,17 +85,10 @@ export const InputGroupListAddon = <T, V>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleClick = (event: MouseEvent) => {
-        if (!otherProps.disabled) {
-            if (nodeRef && (nodeRef.current as any).contains(event.target)) {
-                // inside click
-                return;
-            }
-            // outside click
-            setShowOptions(false);
-            triggerOptionDisplayCallback(false);
-            handleBlur();
-        }
+    const handleWrapperBlur = () => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+        handleBlur();
     };
 
     const handleAddonSelectorClick = (
@@ -238,17 +221,16 @@ export const InputGroupListAddon = <T, V>({
     );
 
     return (
-        <Wrapper className={className}>
-            <ElementBoundary
-                ref={nodeRef}
-                disabled={otherProps.disabled}
-                error={error && !showOptions}
-                expanded={showOptions}
-                $readOnly={readOnly}
-            >
-                {renderDisplay()}
-                {renderOptionList()}
-            </ElementBoundary>
-        </Wrapper>
+        <DropdownWrapper
+            className={className}
+            show={showOptions}
+            error={error && !showOptions}
+            disabled={otherProps.disabled}
+            readOnly={readOnly}
+            onBlur={handleWrapperBlur}
+        >
+            {renderDisplay()}
+            {renderOptionList()}
+        </DropdownWrapper>
     );
 };

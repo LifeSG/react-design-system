@@ -1,16 +1,15 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
-import { Color } from "../color";
-import { DesignToken } from "../design-token";
-import { MediaQuery } from "../media";
-import { TruncateType } from "../shared/dropdown-list/types";
-import { Text, TextStyle } from "../text";
-import { Transition } from "../transition";
+import { Color } from "../../color";
+import { DesignToken } from "../../design-token";
+import { Text, TextStyle } from "../../text";
+import { Transition } from "../../transition";
+import { TruncateType } from "../dropdown-list/types";
 
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
-export interface InputSelectStyleProps {
+export interface DropdownWrapperStyleProps {
     disabled?: boolean;
     $readOnly?: boolean;
     error?: boolean;
@@ -31,10 +30,6 @@ export const Wrapper = styled.div`
     min-height: 3rem;
     height: 3rem; // Need this to persist the height when expanding or collapsing list
     width: 100%;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        height: auto;
-    }
 `;
 
 export const Selector = styled.button`
@@ -76,7 +71,7 @@ const zindexPositionHide = keyframes`
 	}
 `;
 
-export const ElementBoundary = styled.div<InputSelectStyleProps>`
+export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     position: relative;
     border: 1px solid ${Color.Neutral[5]};
     border-radius: ${BORDER_RADIUS};
@@ -123,7 +118,7 @@ export const ElementBoundary = styled.div<InputSelectStyleProps>`
                 background: transparent !important;
 
                 ${Selector} {
-                    padding-left: 0rem;
+                    padding: 0;
                 }
 
                 :focus-within {
@@ -144,7 +139,7 @@ export const ElementBoundary = styled.div<InputSelectStyleProps>`
     }}
 `;
 
-export const IconContainer = styled.div<InputSelectStyleProps>`
+export const IconContainer = styled.div<DropdownWrapperStyleProps>`
     transform: rotate(${(props) => (props.expanded ? 180 : 0)}deg);
     transition: ${Transition.Base};
     margin-left: 1rem;
@@ -189,11 +184,4 @@ export const ValueLabel = styled(Text.Body)<ValueLabelStyleProps>`
 
 export const PlaceholderLabel = styled(ValueLabel)`
     color: ${Color.Neutral[3]};
-`;
-
-export const RangeIcon = styled.div`
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0;
 `;

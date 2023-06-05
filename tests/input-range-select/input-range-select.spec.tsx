@@ -1,8 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormRangeSelect } from "src/form/form-range-select";
+import { InputRangeSelect } from "src/input-range-select";
 import styled from "styled-components";
-import { Button, InputRangeSelect } from "../../src";
 
 // =============================================================================
 // UNIT TESTS

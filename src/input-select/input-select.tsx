@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { StringHelper } from "../util/string-helper";
-import { InputSelectWrapper } from "./input-select-wrapper";
+import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
     Divider,
     IconContainer,
@@ -10,7 +9,8 @@ import {
     Selector,
     StyledChevronIcon,
     ValueLabel,
-} from "./input-select.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { StringHelper } from "../util/string-helper";
 import { InputSelectProps } from "./types";
 
 export const InputSelect = <T, V>({
@@ -215,7 +215,7 @@ export const InputSelect = <T, V>({
     };
 
     return (
-        <InputSelectWrapper
+        <DropdownWrapper
             show={showOptions}
             error={error && !showOptions}
             disabled={disabled}
@@ -235,6 +235,6 @@ export const InputSelect = <T, V>({
             </Selector>
             {showOptions && <Divider />}
             {renderOptionList()}
-        </InputSelectWrapper>
+        </DropdownWrapper>
     );
 };

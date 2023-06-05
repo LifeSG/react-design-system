@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
-import { CalendarType } from "./types";
 
 export interface StyleProps {
     $disabled?: boolean;
@@ -11,7 +10,7 @@ export interface StyleProps {
     $selected?: boolean;
 }
 
-interface DayLabelStyleProps extends StyleProps {
+export interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
 }
 
@@ -19,41 +18,27 @@ interface OverflowDisplayProps extends StyleProps {
     $position: "left" | "right";
 }
 
-interface WrapperStyleProps {
-    $type: CalendarType;
+interface InteractiveCircleProps extends DayLabelStyleProps {
+    $enableSelection?: boolean | undefined;
 }
-
-interface InteractiveCircleProps extends DayLabelStyleProps {}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div<WrapperStyleProps>`
+export const Wrapper = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-
-    ${(props) => {
-        switch (props.$type) {
-            case "standalone":
-                return css`
-                    row-gap: 0.5rem;
-                `;
-            case "input":
-                return css`
-                    row-gap: 0.25rem;
-                `;
-        }
-    }}
+    row-gap: 0.25rem;
 `;
 
 export const HeaderCell = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 2.5rem;
     pointer-events: none;
     user-select: none;
-    margin-bottom: 0.625rem;
 `;
 
 export const RowDayCell = styled.div`
@@ -129,12 +114,6 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     cursor: pointer;
     position: absolute;
 
-    :hover {
-        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-        border: 1px solid ${Color.Accent.Light[1]};
-        background-color: ${Color.Neutral[8]};
-    }
-
     ${(props) => {
         const { $hovered, $selected } = props;
 
@@ -150,6 +129,24 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
                 box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
                 border: 1px solid ${Color.Accent.Light[1]};
                 background-color: ${Color.Neutral[8]};
+            `;
+        }
+    }}
+
+    ${(props) => {
+        const { $enableSelection = true } = props;
+
+        if ($enableSelection) {
+            return css`
+                :hover {
+                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
+                    border: 1px solid ${Color.Accent.Light[1]};
+                    background-color: ${Color.Neutral[8]};
+                }
+            `;
+        } else {
+            return css`
+                cursor: default;
             `;
         }
     }}

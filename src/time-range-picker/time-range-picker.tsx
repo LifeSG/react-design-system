@@ -1,24 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { TimeRangePickerHelper } from "./helper";
-import { TimeRangePickerDropdown } from "./time-range-picker-dropdown";
+import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
+import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
+import { TimeHelper } from "../util/time-helper";
+import { useEventListener } from "../util/use-event-listener";
 import {
-    ArrowRangeContainer,
-    ArrowRight,
-    BottomHighlightEndTime,
-    BottomHighlightStartTime,
-    InputSelectorEndTimeElement,
-    InputSelectorStartTimeElement,
+    SelectorInput,
     TimeContainer,
     Wrapper,
 } from "./time-range-picker.styles";
-import { TimeRangeInputValue, TimeRangePickerProps } from "./types";
+import { TimeRangePickerProps, TimeRangePickerValue } from "./types";
 
 export const TimeRangePicker = ({
     id,
     disabled = false,
     error,
     value,
-    format = "12hr",
+    format = "24hr",
     readOnly,
     onChange,
     onBlur,
@@ -31,30 +28,23 @@ export const TimeRangePicker = ({
         useState<boolean>(false);
     const [showEndTimeSelector, setShowEndTimeSelector] =
         useState<boolean>(false);
-    const [startTimeVal, setStartTimeVal] = useState("");
-    const [endTimeVal, setEndTimeVal] = useState("");
+    const [startTimeVal, setStartTimeVal] = useState<string>("");
+    const [endTimeVal, setEndTimeVal] = useState<string>("");
 
     const nodeRef = useRef<HTMLDivElement>();
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-
     useEffect(() => {
         if (value) {
-            setStartTimeVal(value.startTime);
-            setEndTimeVal(value.endTime);
+            setStartTimeVal(value.start);
+            setEndTimeVal(value.end);
         }
     }, []);
-    useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDownEvent);
-        document.addEventListener("keyup", handleKeyUpEvent);
 
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDownEvent);
-            document.removeEventListener("keyup", handleKeyUpEvent);
-        };
-    }, [showEndTimeSelector]);
+    useEventListener("mousedown", handleMouseDownEvent, document);
+    useEventListener("keyup", handleKeyUpEvent, document);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -73,13 +63,13 @@ export const TimeRangePicker = ({
         }
     };
 
-    const handleMouseDownEvent = (event: MouseEvent) => {
+    function handleMouseDownEvent(event: MouseEvent) {
         if (!disabled) {
             runOutsideFocusHandler(event);
         }
-    };
+    }
 
-    const handleKeyUpEvent = (event: KeyboardEvent) => {
+    function handleKeyUpEvent(event: KeyboardEvent) {
         switch (event.code) {
             case "Tab":
                 runOutsideFocusHandler(event);
@@ -87,11 +77,10 @@ export const TimeRangePicker = ({
             default:
                 break;
         }
-    };
+    }
 
     const handleSelectionDropdownCancel = () => {
-        setShowEndTimeSelector(false);
-        setShowStartTimeSelector(false);
+        runOnBlurHandler();
     };
 
     const handleStartTime = (value: string) => {
@@ -99,9 +88,9 @@ export const TimeRangePicker = ({
         setShowEndTimeSelector(true);
         setStartTimeVal(value);
 
-        const timeValue: TimeRangeInputValue = {
-            startTime: value,
-            endTime: endTimeVal,
+        const timeValue: TimeRangePickerValue = {
+            start: value,
+            end: endTimeVal,
         };
 
         onChange && onChange(timeValue);
@@ -115,9 +104,9 @@ export const TimeRangePicker = ({
             setShowStartTimeSelector(true);
         }
 
-        const timeValue: TimeRangeInputValue = {
-            startTime: startTimeVal,
-            endTime: value,
+        const timeValue: TimeRangePickerValue = {
+            start: startTimeVal,
+            end: value,
         };
 
         onChange && onChange(timeValue);
@@ -134,10 +123,7 @@ export const TimeRangePicker = ({
 
     const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {
         if (nodeRef && !nodeRef.current.contains(event.target as any)) {
-            if (!showEndTimeSelector) {
-                runOnBlurHandler();
-            }
-            if (!showStartTimeSelector) {
+            if (showEndTimeSelector || showStartTimeSelector) {
                 runOnBlurHandler();
             }
         }
@@ -150,26 +136,50 @@ export const TimeRangePicker = ({
                 $error={error}
                 $readOnly={readOnly}
             >
-                <InputSelectorStartTimeElement
-                    onFocus={handleStartTimeFocus}
-                    $focused={showStartTimeSelector}
-                    readOnly
-                    placeholder={"From"}
-                    value={TimeRangePickerHelper.formatValue(
-                        startTimeVal,
-                        format
-                    )}
-                    disabled={disabled}
-                    $error={error}
-                    data-testid={
-                        otherProps["data-testid"]
-                            ? `${otherProps["data-testid"]}-timepicker-selector`
-                            : "timepicker-selector"
+                <RangeInputInnerContainer
+                    error={error}
+                    currentActive={
+                        showStartTimeSelector
+                            ? "start"
+                            : showEndTimeSelector
+                            ? "end"
+                            : "none"
                     }
-                />
-                {showStartTimeSelector && <BottomHighlightStartTime />}
-
-                <TimeRangePickerDropdown
+                >
+                    {/* From */}
+                    <SelectorInput
+                        onFocus={handleStartTimeFocus}
+                        readOnly
+                        placeholder="From"
+                        value={TimeHelper.formatDisplayValue(
+                            startTimeVal,
+                            format
+                        )}
+                        disabled={disabled}
+                        data-testid={
+                            otherProps["data-testid"]
+                                ? `${otherProps["data-testid"]}-timepicker-selector`
+                                : "timepicker-selector"
+                        }
+                    />
+                    {/* To */}
+                    <SelectorInput
+                        onFocus={handleEndTimeFocus}
+                        readOnly
+                        placeholder="To"
+                        value={TimeHelper.formatDisplayValue(
+                            endTimeVal,
+                            format
+                        )}
+                        disabled={disabled}
+                        data-testid={
+                            otherProps["data-testid"]
+                                ? `${otherProps["data-testid"]}-timepicker-selector`
+                                : "timepicker-selector"
+                        }
+                    />
+                </RangeInputInnerContainer>
+                <TimepickerDropdown
                     id={id}
                     show={showStartTimeSelector}
                     value={startTimeVal}
@@ -177,30 +187,7 @@ export const TimeRangePicker = ({
                     onCancel={handleSelectionDropdownCancel}
                     onChange={handleStartTime}
                 />
-                <ArrowRangeContainer>
-                    <ArrowRight />
-                </ArrowRangeContainer>
-
-                {showEndTimeSelector && <BottomHighlightEndTime />}
-
-                <InputSelectorEndTimeElement
-                    onFocus={handleEndTimeFocus}
-                    $focused={showEndTimeSelector}
-                    readOnly
-                    placeholder={"To"}
-                    value={TimeRangePickerHelper.formatValue(
-                        endTimeVal,
-                        format
-                    )}
-                    disabled={disabled}
-                    $error={error}
-                    data-testid={
-                        otherProps["data-testid"]
-                            ? `${otherProps["data-testid"]}-timepicker-selector`
-                            : "timepicker-selector"
-                    }
-                />
-                <TimeRangePickerDropdown
+                <TimepickerDropdown
                     id={id}
                     show={showEndTimeSelector}
                     value={endTimeVal}

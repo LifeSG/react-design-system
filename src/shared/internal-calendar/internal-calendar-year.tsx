@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
 import { FocusType, InternalCalendarProps } from "./types";
@@ -10,7 +10,8 @@ export type YearVariant =
     | "other-decade"
     | "selected-year";
 
-interface Props extends Pick<InternalCalendarProps, "type" | "between"> {
+interface Props
+    extends Pick<InternalCalendarProps, "type" | "minDate" | "maxDate"> {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -28,20 +29,17 @@ export const InternalCalendarYear = ({
     viewCalendarDate,
     type,
     isNewSelection,
-    between,
+    minDate,
+    maxDate,
     onYearSelect,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [years, setYears] = useState<Dayjs[]>([]);
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        generateDecadeOfYears();
-    }, [calendarDate]);
+    const years = useMemo<Dayjs[]>(
+        () => CalendarHelper.generateDecadeOfYears(dayjs(calendarDate)),
+        [calendarDate]
+    );
 
     // =============================================================================
     // EVENT HANDLERS
@@ -56,8 +54,12 @@ export const InternalCalendarYear = ({
     // HELPER FUNCTIONS
     // =============================================================================
     const isDisabled = (day: Dayjs): boolean => {
-        const isOutsideBetweenRange =
-            between && !day.isBetween(between[0], between[1], "year", "[]");
+        const isWithinRange = CalendarHelper.isWithinRange(
+            day,
+            minDate ? dayjs(minDate) : undefined,
+            maxDate ? dayjs(maxDate) : undefined,
+            "year"
+        );
 
         const isStartAfterEnd =
             currentFocus === "start" &&
@@ -71,7 +73,7 @@ export const InternalCalendarYear = ({
             day.isBefore(selectedStartDate, "year") &&
             isNewSelection;
 
-        return isOutsideBetweenRange || isStartAfterEnd || isEndBeforeStart;
+        return !isWithinRange || isStartAfterEnd || isEndBeforeStart;
     };
 
     const generateYearStatus = (date: Dayjs) => {
@@ -94,11 +96,6 @@ export const InternalCalendarYear = ({
             year,
             variant: variant,
         };
-    };
-
-    const generateDecadeOfYears = () => {
-        const years = CalendarHelper.generateDecadeOfYears(dayjs(calendarDate));
-        setYears(years);
     };
 
     // =============================================================================
