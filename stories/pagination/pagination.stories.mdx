@@ -1,0 +1,160 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useEffect, useState } from "react";
+import { Pagination } from "src/pagination";
+import {
+    Heading3,
+    Secondary,
+    FullWidthStoryContainer,
+    Title,
+} from "../storybook-common";
+import { CurrentPage } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Pagination" component={Pagination} />
+
+<Title>Pagination</Title>
+
+<Secondary>Overview</Secondary>
+
+A component to provide navigation between pages.
+
+```tsx
+import { Pagination } from "@lifesg/react-design-system/pagination";
+```
+
+<Canvas>
+    <Story name="Pagination">
+        {() => {
+            const [selectedPage, setSelected] = useState(1);
+            return (
+                <FullWidthStoryContainer>
+                    <Pagination
+                        onPageChange={(selected) => setSelected(selected)}
+                        activePage={selectedPage}
+                        totalItems={50}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Usage examples</Secondary>
+
+<Heading3>With many pages</Heading3>
+
+When there are more items to display, only some pages are visible.
+
+<Canvas>
+    <Story name="With many pages">
+        {() => {
+            const [selectedPage, setSelected] = useState(5);
+            return (
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            activePage={selectedPage}
+                            totalItems={500}
+                        />
+                    </FullWidthStoryContainer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With first and last nav</Heading3>
+
+The `showFirstAndLastNav` prop allows the user to jump directly to the first and last page.
+
+<Canvas>
+    <Story name="With first and last nav">
+        {() => {
+            const [selectedPage, setSelected] = useState(5);
+            return (
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            activePage={selectedPage}
+                            totalItems={600}
+                            showFirstAndLastNav
+                        />
+                    </FullWidthStoryContainer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With Page Size Changer</Heading3>
+
+The `showPageSizeChanger` prop allows the user to show page size changer dropdown.
+
+<Canvas>
+    <Story name="With Page Size Changer">
+        {() => {
+            const [selectedPage, setSelected] = useState(5);
+            return (
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            onPageSizeChange={(page, pageSize) =>
+                                setSelected(page)
+                            }
+                            activePage={selectedPage}
+                            totalItems={400}
+                            showPageSizeChanger
+                        />
+                    </FullWidthStoryContainer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With custom page size options</Heading3>
+
+The `showPageSizeChanger` prop allows the user to show page size changer dropdown.
+
+<Canvas>
+    <Story name="With custom page size options">
+        {() => {
+            const [selectedPage, setSelected] = useState(5);
+            const pageOptions = [
+                { value: 5, label: "5 / page" },
+                { value: 10, label: "10 / page" },
+                { value: 20, label: "20 / page" },
+                { value: 30, label: "30 / page" },
+                { value: 50, label: "50 / page" },
+            ];
+            return (
+                <>
+                    <CurrentPage page={selectedPage} />
+                    <FullWidthStoryContainer>
+                        <Pagination
+                            onPageChange={(selected) => setSelected(selected)}
+                            onPageSizeChange={(page, pageSize) =>
+                                setSelected(page)
+                            }
+                            activePage={selectedPage}
+                            totalItems={600}
+                            pageSizeOptions={pageOptions}
+                            showFirstAndLastNav
+                            showPageSizeChanger
+                        />
+                    </FullWidthStoryContainer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
