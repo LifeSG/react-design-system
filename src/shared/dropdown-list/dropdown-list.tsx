@@ -285,6 +285,7 @@ export const DropdownList = <T, V>({
 
     const handleOnClear = () => {
         setSearchValue("");
+        searchInputRef.current.focus();
 
         if (onSearch) onSearch();
     };
