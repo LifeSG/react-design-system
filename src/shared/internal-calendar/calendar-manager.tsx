@@ -393,6 +393,7 @@ const Component = (
                     ref={cancelButtonRef}
                     data-testid="cancel-button"
                     styleType="light"
+                    type="button"
                     onClick={handleCancelButton}
                 >
                     Cancel
@@ -400,6 +401,7 @@ const Component = (
                 <ActionButton
                     data-testid="done-button"
                     ref={doneButtonRef}
+                    type="button"
                     onClick={() => handleDoneButton(disabled)}
                     disabled={disabled}
                 >

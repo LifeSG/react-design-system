@@ -7,6 +7,7 @@ const Component = (
         children,
         focusHighlight = true,
         focusOutline = "none",
+        type = "button",
         ...otherProps
     }: ClickableIconProps,
     ref: React.Ref<HTMLButtonElement>
@@ -16,6 +17,7 @@ const Component = (
             ref={ref}
             $outline={focusOutline}
             $highlight={focusHighlight}
+            type={type}
             {...otherProps}
         >
             {children}

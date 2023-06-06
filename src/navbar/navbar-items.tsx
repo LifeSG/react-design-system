@@ -125,6 +125,7 @@ export const NavbarItems = <T,>({
                         {mobile && item.subMenu && (
                             <LinkIconContainer>
                                 <ExpandCollapseButton
+                                    type="button"
                                     data-testid={`${testId}-expand-collapse-button`}
                                     $selected={expanded}
                                     focusHighlight={false}

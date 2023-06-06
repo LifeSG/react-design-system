@@ -97,6 +97,7 @@ const FilterBase = ({
                         focusOutline="browser"
                         focusHighlight={false}
                         aria-label="Dismiss"
+                        type="button"
                     >
                         <CrossIcon />
                     </FilterHeaderButton>
@@ -104,6 +105,7 @@ const FilterBase = ({
                 <FilterTitle weight="semibold">{headerTitle}</FilterTitle>
                 <FilterClearButton
                     styleType="link"
+                    type="button"
                     onClick={handleClearClick}
                     disabled={clearButtonDisabled}
                 >
@@ -116,7 +118,11 @@ const FilterBase = ({
     const renderMobile = () => {
         return (
             <>
-                <FilterButton styleType="light" onClick={handleShowFilter}>
+                <FilterButton
+                    styleType="light"
+                    onClick={handleShowFilter}
+                    type="button"
+                >
                     <StyledFilterIcon /> {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
@@ -124,7 +130,10 @@ const FilterBase = ({
                         {renderHeader("mobile")}
                         <FilterBody>{renderChildren("mobile")}</FilterBody>
                         <FilterFooter>
-                            <FilterDoneButton onClick={handleDoneClick}>
+                            <FilterDoneButton
+                                onClick={handleDoneClick}
+                                type="button"
+                            >
                                 Done
                             </FilterDoneButton>
                         </FilterFooter>

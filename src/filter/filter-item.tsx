@@ -70,6 +70,7 @@ export const FilterItem = ({
                                 setCollapsed(!collapsed);
                             }}
                             aria-label={collapsed ? "Expand" : "Collapse"}
+                            type="button"
                         >
                             <ChevronIcon $expanded={!collapsed} />
                         </FilterItemExpandButton>
@@ -97,6 +98,7 @@ export const FilterItem = ({
                             <FilterItemMinimiseButton
                                 data-id="minimise-button"
                                 styleType="link"
+                                type="button"
                                 onClick={() => {
                                     setContentMinimised(!contentMinimised);
                                 }}
