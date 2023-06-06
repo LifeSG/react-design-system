@@ -111,7 +111,7 @@ const Component = (
                 {...otherProps}
             />
             {shouldShowClear() && (
-                <ClearContainer onClick={handleClear} type="reset">
+                <ClearContainer onClick={handleClear} type="button">
                     <ClearIcon />
                 </ClearContainer>
             )}

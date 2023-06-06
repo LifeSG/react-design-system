@@ -25,7 +25,6 @@ const Component = (
                 <CancelButton
                     aria-label="Clear search"
                     focusOutline="browser"
-                    type="reset"
                     onClick={onClear}
                 >
                     <CancelIcon />
