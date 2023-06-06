@@ -22,7 +22,6 @@ export const ModalBox = ({
     const renderCloseButton = () => {
         return (
             <CloseButton
-                type="button"
                 onClick={onClose}
                 data-testid="close-button"
                 focusHighlight={false}
