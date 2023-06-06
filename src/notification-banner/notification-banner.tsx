@@ -61,7 +61,6 @@ export const NBComponent = ({
                 </TextContainer>
                 {dismissible && (
                     <StyledIconButton
-                        type="button"
                         onClick={handleDismiss}
                         id={formatId("dismiss-button", id)}
                         data-testid={formatId("dismiss-button", testId)}

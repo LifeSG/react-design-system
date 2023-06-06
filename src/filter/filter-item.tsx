@@ -70,7 +70,6 @@ export const FilterItem = ({
                                 setCollapsed(!collapsed);
                             }}
                             aria-label={collapsed ? "Expand" : "Collapse"}
-                            type="button"
                         >
                             <ChevronIcon $expanded={!collapsed} />
                         </FilterItemExpandButton>

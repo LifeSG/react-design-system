@@ -97,7 +97,6 @@ const FilterBase = ({
                         focusOutline="browser"
                         focusHighlight={false}
                         aria-label="Dismiss"
-                        type="button"
                     >
                         <CrossIcon />
                     </FilterHeaderButton>

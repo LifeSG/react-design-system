@@ -278,7 +278,6 @@ export const TimepickerDropdown = ({
             <SwitchButton
                 aria-label="increase hour"
                 name={EInputButtonName.HOUR_UP}
-                type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("hour-increment-button")}
@@ -305,7 +304,6 @@ export const TimepickerDropdown = ({
             <SwitchButton
                 aria-label="decrease hour"
                 name={EInputButtonName.HOUR_DOWN}
-                type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("hour-decrement-button")}
@@ -320,7 +318,6 @@ export const TimepickerDropdown = ({
             <SwitchButton
                 aria-label="increase minute"
                 name={EInputButtonName.MINUTE_UP}
-                type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("minute-increment-button")}
@@ -347,7 +344,6 @@ export const TimepickerDropdown = ({
             <SwitchButton
                 aria-label="decrease minute"
                 name={EInputButtonName.MINUTE_DOWN}
-                type="button"
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
                 data-testid={getTestId("minute-decrement-button")}

@@ -77,7 +77,6 @@ const Component = (
             </NavBrandContainer>
 
             <CloseButton
-                type="button"
                 onClick={onClose}
                 focusHighlight={false}
                 aria-label="Close nav menu"
