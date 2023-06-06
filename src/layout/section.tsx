@@ -41,7 +41,6 @@ const StyledSection = styled.section<StyleProps>`
     ${(props) => {
         if (props.$stretch) {
             return css`
-                padding: unset;
                 ${MediaQuery.MaxWidth.tablet} {
                     padding: 0 1.5rem;
 
