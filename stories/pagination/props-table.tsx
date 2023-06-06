@@ -56,8 +56,13 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "showPageSizeChanger",
-                description:
-                    "Specifies if the page size changer dropdown is visible",
+                description: (
+                    <>
+                        Specifies if the page size changer dropdown is visible
+                        in the desktop viewport. The current selected option
+                        takes precedence over <code>pageSize</code>
+                    </>
+                ),
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },

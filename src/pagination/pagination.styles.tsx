@@ -1,11 +1,10 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button/button";
 import { Color } from "../color";
-import { IconButton } from "../icon-button";
-import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
 import { Input } from "../input";
+import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

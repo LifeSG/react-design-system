@@ -1,12 +1,15 @@
+import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
+import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import { Chevron2LeftIcon } from "@lifesg/react-icons/chevron-2-left";
-import { Chevron2RightIcon } from "@lifesg/react-icons/chevron-2-right";
 
 import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { InputSelect } from "../input-select";
+import { MediaWidths } from "../spec/media-spec";
 import {
     EllipsisContainer,
     Hover,
@@ -22,10 +25,7 @@ import {
     PaginationMobileInput,
     PaginationWrapper,
 } from "./pagination.styles";
-import { PageSizeItemProps, PaginationsProps } from "./types";
-import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../spec/media-spec";
-import { InputSelect } from "src/input-select";
+import { PageSizeItemProps, PaginationProps } from "./types";
 
 const Component = (
     {
@@ -40,7 +40,7 @@ const Component = (
         showPageSizeChanger = false,
         onPageChange,
         onPageSizeChange,
-    }: PaginationsProps,
+    }: PaginationProps,
     ref: React.Ref<HTMLDivElement>
 ) => {
     // =============================================================================

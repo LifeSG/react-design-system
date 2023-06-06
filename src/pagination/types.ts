@@ -1,4 +1,4 @@
-export interface PaginationsProps {
+export interface PaginationProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
