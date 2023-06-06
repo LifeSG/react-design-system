@@ -40,6 +40,8 @@ const Component = <T,>(
         onItemClick,
         onActionButtonClick,
         onBrandClick,
+        masthead = true,
+        layout = "default",
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<HTMLDivElement>
@@ -49,6 +51,7 @@ const Component = <T,>(
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
+    const isStretch = layout === "stretch";
 
     const { primary = DEFAULT_RESOURCES.primary, secondary } = resources;
 
@@ -210,7 +213,7 @@ const Component = <T,>(
 
     const renderNavbar = () => {
         return (
-            <Layout.Content>
+            <Layout.Content stretch={isStretch}>
                 <Nav $compress={compress}>
                     {renderBrand()}
                     {!hideNavElements && (
@@ -250,7 +253,7 @@ const Component = <T,>(
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
-            <Masthead />
+            {masthead && <Masthead />}
             {renderNavbar()}
         </Wrapper>
     );

@@ -38,6 +38,15 @@ const CONTENT_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier of the component",
                 propTypes: ["string"],
             },
+            {
+                name: "stretch",
+                description: `
+                    Specifies if the layout container should stretch to the 
+                    maximum width of the screen, with a fixed padding
+                `,
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];
@@ -64,6 +73,15 @@ const SECTION_DATA: ApiTableSectionProps[] = [
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "stretch",
+                description: `
+                    Specifies if the layout container should stretch to the 
+                    maximum width of the screen, with a fixed padding
+                `,
+                propTypes: ["boolean"],
+                defaultValue: "false",
             },
         ],
     },
@@ -97,6 +115,15 @@ const CONTAINER_DATA: ApiTableSectionProps[] = [
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "stretch",
+                description: `
+                    Specifies if the layout container should stretch to the 
+                    maximum width of the screen, with a fixed padding
+                `,
+                propTypes: ["boolean"],
+                defaultValue: "false",
             },
         ],
     },

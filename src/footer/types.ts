@@ -30,6 +30,8 @@ export interface FooterProps<T = void> {
     /** Last updated date value that is displayed in the bottom of the Footer */
     lastUpdated?: Date | undefined;
     onFooterLinkClick?: ((link: FooterLinkProps<T>) => void) | undefined;
+    /** Determines if the content of the footer scales with the max width */
+    layout?: "default" | "stretch" | undefined;
 }
 
 // TODO: Update component and migration
