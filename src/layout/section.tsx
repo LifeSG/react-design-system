@@ -42,7 +42,7 @@ const StyledSection = styled.section<StyleProps>`
         if (props.$stretch) {
             return css`
                 padding: unset;
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.tablet} {
                     padding: 0 1.5rem;
 
                     // Extra enforcement
