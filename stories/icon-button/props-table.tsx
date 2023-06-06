@@ -18,6 +18,43 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"none"`, `"browser"`],
                 defaultValue: `"none"`,
             },
+            {
+                name: "buttonStyle",
+                description: "The navigation action button",
+                propTypes: ["ButtonStyle"],
+                defaultValue: `"primary"`,
+            },
+            {
+                name: "sizeType",
+                description: "The button style",
+                propTypes: ["SizeType"],
+                defaultValue: `"default"`,
+            },
+        ],
+    },
+    {
+        name: "ButtonStyle",
+        attributes: [
+            {
+                name: "",
+                description: "The button style",
+                propTypes: [
+                    `"primary"`,
+                    `"secondary"`,
+                    `"light"`,
+                    `"disabled"`,
+                ],
+            },
+        ],
+    },
+    {
+        name: "SizeType",
+        attributes: [
+            {
+                name: "",
+                description: "The button size type",
+                propTypes: [`"large"`, `"default"`, `"small"`],
+            },
         ],
     },
 ];

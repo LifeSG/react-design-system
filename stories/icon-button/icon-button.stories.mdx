@@ -3,6 +3,7 @@ import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { IconButton } from "src/icon-button";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
+import { Container } from "./doc-elements";
 
 <Meta title="General/IconButton" component={IconButton} />
 
@@ -23,6 +24,66 @@ import { IconButton } from "@lifesg/react-design-system/icon-button";
         </IconButton>
     </Story>
 </Canvas>
+
+<Heading3>New Size</Heading3>
+
+The `IconButton` component comes in 3 sizes, a large, small and default size.
+
+<Preview>
+    <Story name="New Size">
+        <Container>
+            <Span>Primary:</Span>
+            <IconButton sizeType="large" buttonStyle="primary">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="default" buttonStyle="primary">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="small" buttonStyle="primary">
+                <LockIcon />
+            </IconButton>
+        </Container>
+        <br />
+        <Container>
+            <Span>Secondary:</Span>
+            <IconButton sizeType="large" buttonStyle="secondary">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="default" buttonStyle="secondary">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="small" buttonStyle="secondary">
+                <LockIcon />
+            </IconButton>
+        </Container>
+        <br />
+        <Container>
+            <Span>Light:</Span>
+            <IconButton sizeType="large" buttonStyle="light">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="default" buttonStyle="light">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="small" buttonStyle="light">
+                <LockIcon />
+            </IconButton>
+        </Container>
+        <br />
+        <Container>
+            <Span>Disabled:</Span>
+            <IconButton sizeType="large" buttonStyle="disabled">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="default" buttonStyle="disabled">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="small" buttonStyle="disabled">
+                <LockIcon />
+            </IconButton>
+        </Container>
+    </Story>
+</Preview>
 
 <Heading3>Highlight</Heading3>
 

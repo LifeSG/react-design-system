@@ -9,6 +9,8 @@ const Component = (
         focusHighlight = true,
         focusOutline = "none",
         type = "button",
+        buttonStyle = "primary",
+        sizeType = "default",
         ...otherProps
     }: IconButtonProps,
     ref: ButtonRef
@@ -19,6 +21,8 @@ const Component = (
             $outline={focusOutline}
             $highlight={focusHighlight}
             type={type}
+            $sizeType={sizeType}
+            $buttonStyle={buttonStyle}
             {...otherProps}
         >
             {children}
