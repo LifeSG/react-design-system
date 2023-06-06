@@ -52,6 +52,7 @@ const StyledContainer = styled.div<StyleProps>`
             `;
         } else {
             return css`
+                padding: 0 0.75rem;
                 /* Max width restrictions */
                 max-width: 1320px;
 
@@ -62,7 +63,6 @@ const StyledContainer = styled.div<StyleProps>`
         }
     }}
     ${MediaQuery.MaxWidth.tablet} {
-        padding: 0 0.75rem;
         max-width: 720px;
     }
     ${MediaQuery.MaxWidth.mobileL} {
