@@ -124,6 +124,35 @@ You can specify the `minDate` and/or `maxDate` to control the selection range.
     </Story>
 </Canvas>
 
+<Heading3>Allow selection of disabled dates</Heading3>
+
+When `allowDisabledSelection` is set, dates are visually disabled, but still selectable.
+
+<Canvas>
+    <Story name="Allow disabled selection">
+        {() => {
+            const [disabledDates] = useState([
+                dayjs().date(10).format("YYYY-MM-DD"),
+                dayjs().date(15).format("YYYY-MM-DD"),
+                dayjs().date(25).format("YYYY-MM-DD"),
+            ]);
+            return (
+                <StoryContainer>
+                    <Form.DateRangeInput
+                        label="This allows selection of disabled dates"
+                        disabledDates={disabledDates}
+                        minDate={dayjs()
+                            .subtract(6, "weeks")
+                            .format("YYYY-MM-DD")}
+                        maxDate={dayjs().add(6, "weeks").format("YYYY-MM-DD")}
+                        allowDisabledSelection
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Heading3>Using the field as a standalone</Heading3>
 
 In the case that you require the date range input field as a standalone, you can do this.

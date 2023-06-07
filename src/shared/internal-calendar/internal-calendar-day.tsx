@@ -13,7 +13,7 @@ import {
     StyleProps,
     Wrapper,
 } from "./internal-calendar-day.style";
-import { FocusType, InternalCalendarProps } from "./types";
+import { CommonCalendarProps, FocusType, InternalCalendarProps } from "./types";
 
 dayjs.extend(isBetween);
 
@@ -29,10 +29,8 @@ type HoverDirection =
     | "reset-end";
 
 interface CalendarDayProps
-    extends Pick<
-        InternalCalendarProps,
-        "disabledDates" | "variant" | "minDate" | "maxDate"
-    > {
+    extends CommonCalendarProps,
+        Pick<InternalCalendarProps, "variant"> {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
@@ -54,6 +52,7 @@ export const InternalCalendarDay = ({
     minDate,
     maxDate,
     variant,
+    allowDisabledSelection,
 }: CalendarDayProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -68,13 +67,13 @@ export const InternalCalendarDay = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled) return;
+        if (isDisabled && !allowDisabledSelection) return;
 
         onSelect(value);
     };
 
     const handleHoverCell = (value: string, isDisabled: boolean) => {
-        if (isDisabled) return;
+        if (isDisabled && !allowDisabledSelection) return;
 
         setHoverValue(value);
         onHover(value);
@@ -111,6 +110,10 @@ export const InternalCalendarDay = ({
         const isDisabledDate =
             disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
 
+        return !isWithinRange || isDisabledDate;
+    };
+
+    const isOutsideSelectedRange = (day: Dayjs): boolean => {
         const isStartAfterEnd =
             currentFocus === "start" &&
             selectedEndDate &&
@@ -123,12 +126,7 @@ export const InternalCalendarDay = ({
             day.isBefore(selectedStartDate) &&
             isNewSelection;
 
-        return (
-            !isWithinRange ||
-            isDisabledDate ||
-            isStartAfterEnd ||
-            isEndBeforeStart
-        );
+        return isStartAfterEnd || isEndBeforeStart;
     };
 
     const getHoverDirection = (): HoverDirection => {
@@ -195,7 +193,7 @@ export const InternalCalendarDay = ({
             styleRightProps: StyleProps = {},
             styleCircleProps: StyleProps = {},
             styleLabelProps: StyleProps = {};
-
+        const disabled = isDisabled(day);
         const isSelectedSame =
             selectedStartDate &&
             selectedEndDate &&
@@ -209,10 +207,14 @@ export const InternalCalendarDay = ({
             styleCircleProps.$overlap = true;
         }
 
-        if (isDisabled(day)) {
-            styleCircleProps.$disabled = true;
-            styleLabelProps.$disabled = true;
+        // apply disabled styles
+
+        if (disabled || isOutsideSelectedRange(day)) {
+            styleCircleProps.$disabledDisplay = true;
+            styleLabelProps.$disabledDisplay = true;
         }
+
+        styleCircleProps.$interactive = !disabled || allowDisabledSelection;
 
         // apply selected styles
 
@@ -420,13 +422,13 @@ export const InternalCalendarDay = ({
                                     onClick={() =>
                                         handleDayClick(
                                             day,
-                                            styleCircleProps.$disabled
+                                            !styleCircleProps.$interactive
                                         )
                                     }
                                     onMouseEnter={() =>
                                         handleHoverCell(
                                             formattedDay,
-                                            styleCircleProps.$disabled
+                                            !styleCircleProps.$interactive
                                         )
                                     }
                                     {...styleCircleProps}

@@ -7,7 +7,10 @@ import { FocusType, InternalCalendarProps } from "./types";
 export type MonthVariant = "default" | "current-month" | "selected-month";
 
 interface Props
-    extends Pick<InternalCalendarProps, "type" | "minDate" | "maxDate"> {
+    extends Pick<
+        InternalCalendarProps,
+        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+    > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -27,6 +30,7 @@ export const InternalCalendarMonth = ({
     isNewSelection,
     minDate,
     maxDate,
+    allowDisabledSelection,
     onMonthSelect,
 }: Props) => {
     // =============================================================================
@@ -57,6 +61,10 @@ export const InternalCalendarMonth = ({
             "month"
         );
 
+        return !isWithinRange;
+    };
+
+    const isOutsideSelectedRange = (day: Dayjs): boolean => {
         const isStartAfterEnd =
             currentFocus === "start" &&
             selectedEndDate &&
@@ -69,7 +77,7 @@ export const InternalCalendarMonth = ({
             day.isBefore(selectedStartDate, "month") &&
             isNewSelection;
 
-        return !isWithinRange || isStartAfterEnd || isEndBeforeStart;
+        return isStartAfterEnd || isEndBeforeStart;
     };
 
     const generateMonthStatus = (date: Dayjs) => {
@@ -83,7 +91,8 @@ export const InternalCalendarMonth = ({
             : "default";
 
         return {
-            disabled,
+            disabledDisplay: disabled || isOutsideSelectedRange(date),
+            interactive: !disabled || allowDisabledSelection,
             month,
             variant,
         };
@@ -97,19 +106,21 @@ export const InternalCalendarMonth = ({
     return (
         <Wrapper $type={type}>
             {months.map((date) => {
-                const { disabled, variant, month } = generateMonthStatus(date);
+                const { disabledDisplay, interactive, variant, month } =
+                    generateMonthStatus(date);
 
                 return (
                     <MonthCell
                         key={month}
                         $variant={variant}
-                        $disabled={disabled}
-                        onClick={() => handleMonthClick(date, disabled)}
+                        $disabledDisplay={disabledDisplay}
+                        $interactive={interactive}
+                        onClick={() => handleMonthClick(date, !interactive)}
                     >
                         <CellLabel
                             weight="regular"
                             $variant={variant}
-                            $disabled={disabled}
+                            $disabledDisplay={disabledDisplay}
                         >
                             {month}
                         </CellLabel>
