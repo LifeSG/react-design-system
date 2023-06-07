@@ -2,7 +2,7 @@ import { css } from "styled-components";
 import { Color } from "../../color/color";
 import { DesignTokenSet } from "../../design-token/types";
 
-export const BaseDesignTokenSet: DesignTokenSet = {
+export const RBSDesignTokenSet: DesignTokenSet = {
     InputBoxShadow: css`
         inset 0 0 6px 1px ${Color.Shadow.Accent}
     `,
@@ -17,8 +17,8 @@ export const BaseDesignTokenSet: DesignTokenSet = {
         Cell: {
             Primary: css`#FBFBFB`,
             Secondary: css`#FFFFFF`,
-            Selected: css`#F9F6FF`,
-            Hover: css`#E8E1F5`,
+            Selected: css`#F0F6FF`,
+            Hover: css`#DDE6FD`,
         },
     },
 };
