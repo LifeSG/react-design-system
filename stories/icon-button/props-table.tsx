@@ -6,6 +6,22 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "className",
+                description:
+                    "The className of the component for custom styling.",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique identifier of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "focusHighlight",
                 description: "Specifies if button is highlighted when focused",
                 propTypes: ["boolean"],
