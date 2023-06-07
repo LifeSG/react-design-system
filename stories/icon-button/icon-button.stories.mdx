@@ -3,7 +3,12 @@ import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { IconButton } from "src/icon-button";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
-import { Container } from "./doc-elements";
+import {
+    Container,
+    SubTitle,
+    SubTitleDefault,
+    SubTitleSmall,
+} from "./doc-elements";
 
 <Meta title="General/IconButton" component={IconButton} />
 
@@ -31,6 +36,12 @@ The `IconButton` component comes in 3 sizes, a large, small and default size.
 
 <Preview>
     <Story name="New Size">
+        <Container>
+            <SubTitle>Large</SubTitle>
+            <SubTitleDefault>Default</SubTitleDefault>
+            <SubTitleSmall>Small</SubTitleSmall>
+        </Container>
+        <br />
         <Container>
             <Span>Primary:</Span>
             <IconButton sizeType="large" buttonStyle="primary">
@@ -72,13 +83,13 @@ The `IconButton` component comes in 3 sizes, a large, small and default size.
         <br />
         <Container>
             <Span>Disabled:</Span>
-            <IconButton sizeType="large" buttonStyle="disabled">
+            <IconButton sizeType="large" disabled>
                 <LockIcon />
             </IconButton>
-            <IconButton sizeType="default" buttonStyle="disabled">
+            <IconButton sizeType="default" disabled>
                 <LockIcon />
             </IconButton>
-            <IconButton sizeType="small" buttonStyle="disabled">
+            <IconButton sizeType="small" disabled>
                 <LockIcon />
             </IconButton>
         </Container>

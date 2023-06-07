@@ -13,7 +13,7 @@ export const Main = styled.button<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.125rem;
+    padding: 1rem;
     background-color: ${Color.Primary};
     color: ${Color.Neutral[8]};
     border: none;
@@ -21,8 +21,8 @@ export const Main = styled.button<StyleProps>`
     cursor: pointer;
     img,
     svg {
-        height: 0.875rem;
-        width: 0.875rem;
+        height: 1.125rem;
+        width: 1.125rem;
     }
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
@@ -31,33 +31,33 @@ export const Main = styled.button<StyleProps>`
         switch (props.$sizeType) {
             case "large":
                 return css`
-                    padding: 1.375rem;
+                    padding: 1.25rem;
 
                     img,
                     svg {
-                        height: 1.25rem;
-                        width: 1.25rem;
+                        height: 1.625rem;
+                        width: 1.625rem;
                     }
                 `;
             case "small":
                 return css`
-                    padding: 0.875rem;
+                    padding: 0.75rem;
 
                     img,
                     svg {
-                        height: 0.75rem;
-                        width: 0.75rem;
+                        height: 1rem;
+                        width: 1rem;
                     }
                 `;
 
             default:
                 return css`
-                    padding: 1.125rem;
+                    padding: 1rem;
 
                     img,
                     svg {
-                        height: 0.875rem;
-                        width: 0.875rem;
+                        height: 1.125rem;
+                        width: 1.125rem;
                     }
                 `;
         }
@@ -85,14 +85,6 @@ export const Main = styled.button<StyleProps>`
                     border: 1px solid ${Color.Neutral[5]};
                 `;
 
-            case "disabled":
-                return css`
-                    background-color: ${Color.Neutral[6]};
-                    color: ${Color.Primary};
-                    border: non;
-                    cursor: not-allowed;
-                `;
-
             default:
                 return css`
                     background-color: ${Color.Primary};
@@ -101,6 +93,12 @@ export const Main = styled.button<StyleProps>`
                 `;
         }
     }}
+    &:disabled {
+        background-color: ${Color.Neutral[6]};
+        color: ${Color.Primary};
+        border: non;
+        cursor: not-allowed;
+    }
 
     &:active,
     &:focus {
@@ -134,14 +132,6 @@ export const Main = styled.button<StyleProps>`
                         border: 1px solid ${Color.Neutral[5]};
                     `;
 
-                case "disabled":
-                    return css`
-                        background-color: ${Color.Neutral[6]};
-                        color: ${Color.Primary};
-                        border: non;
-                        cursor: not-allowed;
-                    `;
-
                 default:
                     return css`
                         background-color: ${Color.Primary};
@@ -150,5 +140,12 @@ export const Main = styled.button<StyleProps>`
                     `;
             }
         }}
+
+        :disabled {
+            background-color: ${Color.Neutral[6]};
+            color: ${Color.Primary};
+            border: non;
+            cursor: not-allowed;
+        }
     }
 `;

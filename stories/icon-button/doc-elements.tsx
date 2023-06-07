@@ -18,3 +18,13 @@ export const Container = styled.div`
         height: auto;
     }
 `;
+
+export const SubTitle = styled.span`
+    margin-left: 6.5rem;
+`;
+export const SubTitleDefault = styled.span`
+    margin-left: 2rem;
+`;
+export const SubTitleSmall = styled.span`
+    margin-left: 1rem;
+`;
