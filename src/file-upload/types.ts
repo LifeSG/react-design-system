@@ -1,13 +1,9 @@
 export interface FileItemProps {
     id: string;
-    /** The file MIME type */
-    type: string;
-    /** The name of the file and will be used as the title */
-    name: string;
+    /** The file object */
+    file: File;
     /** The alt text or description of the file */
     description?: string | undefined;
-    /** The size of the file in bytes */
-    size: number;
     /** The upload progress display. Values from 0 to 1 */
     progress?: number | undefined;
     /** The error message display to indicate file upload error */
@@ -29,12 +25,6 @@ export interface FileInputProps {
     id?: string | undefined;
     className?: string | undefined;
     name?: string | undefined;
-}
-
-export interface ChangeEventFile {
-    file: File;
-    /** The optional alt text or description assigned to the file */
-    description?: string | undefined;
 }
 
 export interface FileUploadProps extends FileInputProps {

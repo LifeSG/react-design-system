@@ -106,12 +106,11 @@ describe("FileUpload", () => {
 // =============================================================================
 const DEFAULT_TITLE = "File upload component";
 const DEFAULT_DESCRIPTION = "This is a description";
-
+const MOCK_FILE = new File([""], "bugs-bunny.png", { type: "image/png" });
+Object.defineProperty(MOCK_FILE, "size", { value: 3000 });
 const MOCK_FILE_ITEMS = [
     {
         id: "some",
-        type: "image/png",
-        name: "bugs-bunny.png",
-        size: 3000,
+        file: MOCK_FILE,
     },
 ];

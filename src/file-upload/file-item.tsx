@@ -22,10 +22,8 @@ interface Props extends FileItemProps {
 
 export const FileItem = ({
     id,
-    type,
-    name,
+    file,
     description,
-    size,
     progress = 1,
     errorMessage,
     editableMode,
@@ -70,7 +68,7 @@ export const FileItem = ({
                 </ItemActionContainer>
             );
         } else {
-            const isEditable = isSupportedImageType(type);
+            const isEditable = isSupportedImageType(file.type);
 
             return (
                 <ItemActionContainer $hasEditButton={isEditable}>
@@ -105,7 +103,7 @@ export const FileItem = ({
             id={id}
             $error={!!errorMessage}
             $loading={isLoading}
-            $editable={isSupportedImageType(type)}
+            $editable={isSupportedImageType(file.type)}
         >
             <Content>
                 <ItemNameSection>
@@ -113,7 +111,7 @@ export const FileItem = ({
                         data-testid="name"
                         weight={description ? "semibold" : "regular"}
                     >
-                        {name}
+                        {file.name}
                     </ItemText>
                     {description && (
                         <ItemText data-testid="description">
@@ -127,7 +125,7 @@ export const FileItem = ({
                     )}
                 </ItemNameSection>
                 <ItemFileSizeText>
-                    {!isLoading && formatFileSizeDisplay(size)}
+                    {!isLoading && formatFileSizeDisplay(file.size)}
                 </ItemFileSizeText>
                 {errorMessage && (
                     <MobileErrorMessage weight="semibold">
