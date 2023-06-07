@@ -49,7 +49,7 @@ export const InternalCalendarYear = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleYearClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled && !allowDisabledSelection) return;
+        if (isDisabled) return;
 
         onYearSelect(value);
     };
@@ -100,10 +100,8 @@ export const InternalCalendarYear = ({
             : "default";
 
         return {
-            disabled: !allowDisabledSelection && disabled,
-            disabledDisplay:
-                (allowDisabledSelection && disabled) ||
-                isOutsideSelectedRange(date),
+            disabledDisplay: disabled || isOutsideSelectedRange(date),
+            interactive: !disabled || allowDisabledSelection,
             year,
             variant: variant,
         };
@@ -117,22 +115,22 @@ export const InternalCalendarYear = ({
     return (
         <Wrapper $type={type}>
             {years.map((date) => {
-                const { disabled, disabledDisplay, variant, year } =
+                const { disabledDisplay, interactive, variant, year } =
                     generateYearStatus(date);
 
                 return (
                     <YearCell
                         key={year}
                         $variant={variant}
-                        $disabled={disabled}
                         $disabledDisplay={disabledDisplay}
-                        onClick={() => handleYearClick(date, disabled)}
+                        $interactive={interactive}
+                        onClick={() => handleYearClick(date, !interactive)}
                     >
                         <CellLabel
                             weight="regular"
                             $variant={variant}
-                            $disabled={disabled}
                             $disabledDisplay={disabledDisplay}
+                            $interactive={interactive}
                         >
                             {year}
                         </CellLabel>

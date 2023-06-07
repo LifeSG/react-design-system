@@ -193,7 +193,7 @@ export const InternalCalendarDay = ({
             styleRightProps: StyleProps = {},
             styleCircleProps: StyleProps = {},
             styleLabelProps: StyleProps = {};
-
+        const disabled = isDisabled(day);
         const isSelectedSame =
             selectedStartDate &&
             selectedEndDate &&
@@ -207,18 +207,14 @@ export const InternalCalendarDay = ({
             styleCircleProps.$overlap = true;
         }
 
-        if (isDisabled(day)) {
-            if (allowDisabledSelection) {
-                styleCircleProps.$disabledDisplay = true;
-                styleLabelProps.$disabledDisplay = true;
-            } else {
-                styleCircleProps.$disabled = true;
-                styleLabelProps.$disabled = true;
-            }
-        } else if (isOutsideSelectedRange(day)) {
+        // apply disabled styles
+
+        if (disabled || isOutsideSelectedRange(day)) {
             styleCircleProps.$disabledDisplay = true;
             styleLabelProps.$disabledDisplay = true;
         }
+
+        styleCircleProps.$interactive = !disabled || allowDisabledSelection;
 
         // apply selected styles
 
@@ -426,13 +422,13 @@ export const InternalCalendarDay = ({
                                     onClick={() =>
                                         handleDayClick(
                                             day,
-                                            styleCircleProps.$disabled
+                                            !styleCircleProps.$interactive
                                         )
                                     }
                                     onMouseEnter={() =>
                                         handleHoverCell(
                                             formattedDay,
-                                            styleCircleProps.$disabled
+                                            !styleCircleProps.$interactive
                                         )
                                     }
                                     {...styleCircleProps}

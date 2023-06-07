@@ -10,8 +10,8 @@ import { CalendarType } from "./types";
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
-    $disabled: boolean;
-    $disabledDisplay: boolean; // visually disabled but still interactable
+    $disabledDisplay: boolean;
+    $interactive: boolean;
     $variant: YearVariant;
 }
 
@@ -49,27 +49,29 @@ export const YearCell = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: default;
     border-radius: 0.5rem;
     margin: 0 0.5rem;
-    cursor: pointer;
-
-    &:hover {
-        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-        border: 1px solid ${Color.Accent.Light[1]};
-    }
 
     ${(props) => {
-        if (props.$disabled) {
+        if (props.$interactive) {
             return css`
-                cursor: not-allowed;
-
-                :hover {
-                    box-shadow: unset;
-                    border: unset;
+                cursor: pointer;
+                &:hover {
+                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
+                    border: 1px solid ${Color.Accent.Light[1]};
                 }
             `;
         }
 
+        if (props.$disabledDisplay) {
+            return css`
+                cursor: not-allowed;
+            `;
+        }
+    }}
+
+    ${(props) => {
         switch (props.$variant) {
             case "current-year":
                 return css`
@@ -89,7 +91,7 @@ export const YearCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
-        if (props.$disabledDisplay || props.$disabled) {
+        if (props.$disabledDisplay) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

@@ -11,8 +11,8 @@ import { CalendarType } from "./types";
 // =============================================================================
 interface StyleProps {
     $variant: MonthVariant;
-    $disabled?: boolean;
-    $disabledDisplay?: boolean; // visually disabled but still interactable
+    $disabledDisplay?: boolean;
+    $interactive?: boolean;
 }
 
 interface WrapperStyleProps {
@@ -49,27 +49,28 @@ export const MonthCell = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    cursor: default;
     border-radius: 5rem;
     margin: 0 0.5rem;
 
-    &:hover {
-        box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-        border: 1px solid ${Color.Accent.Light[1]};
-    }
-
     ${(props) => {
-        if (props.$disabled) {
+        if (props.$interactive) {
             return css`
-                cursor: not-allowed;
-
-                :hover {
-                    box-shadow: unset;
-                    border: unset;
+                cursor: pointer;
+                &:hover {
+                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
+                    border: 1px solid ${Color.Accent.Light[1]};
                 }
             `;
         }
+        if (props.$disabledDisplay) {
+            return css`
+                cursor: not-allowed;
+            `;
+        }
+    }}
 
+    ${(props) => {
         switch (props.$variant) {
             case "current-month":
                 return css`
@@ -88,7 +89,7 @@ export const MonthCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
-        if (props.$disabledDisplay || props.$disabled) {
+        if (props.$disabledDisplay) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

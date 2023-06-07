@@ -45,7 +45,7 @@ export const InternalCalendarMonth = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleMonthClick = (value: Dayjs, isDisabled: boolean) => {
-        if (isDisabled && !allowDisabledSelection) return;
+        if (isDisabled) return;
 
         onMonthSelect(value);
     };
@@ -91,10 +91,8 @@ export const InternalCalendarMonth = ({
             : "default";
 
         return {
-            disabled: !allowDisabledSelection && disabled,
-            disabledDisplay:
-                (allowDisabledSelection && disabled) ||
-                isOutsideSelectedRange(date),
+            disabledDisplay: disabled || isOutsideSelectedRange(date),
+            interactive: !disabled || allowDisabledSelection,
             month,
             variant,
         };
@@ -108,21 +106,20 @@ export const InternalCalendarMonth = ({
     return (
         <Wrapper $type={type}>
             {months.map((date) => {
-                const { disabled, disabledDisplay, variant, month } =
+                const { disabledDisplay, interactive, variant, month } =
                     generateMonthStatus(date);
 
                 return (
                     <MonthCell
                         key={month}
                         $variant={variant}
-                        $disabled={disabled}
                         $disabledDisplay={disabledDisplay}
-                        onClick={() => handleMonthClick(date, disabled)}
+                        $interactive={interactive}
+                        onClick={() => handleMonthClick(date, !interactive)}
                     >
                         <CellLabel
                             weight="regular"
                             $variant={variant}
-                            $disabled={disabled}
                             $disabledDisplay={disabledDisplay}
                         >
                             {month}
