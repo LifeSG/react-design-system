@@ -19,6 +19,7 @@ export const InputRangeSelect = <T, V>({
     placeholders = { from: "Select", to: "Select" },
     options,
     disabled,
+    className,
     readOnly,
     error,
     "data-testid": testId,
@@ -276,6 +277,7 @@ export const InputRangeSelect = <T, V>({
             readOnly={readOnly}
             testId={testId}
             onBlur={handleWrapperBlur}
+            className={className}
         >
             <Selector
                 type="button"
