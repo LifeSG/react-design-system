@@ -3,9 +3,13 @@ import { Color } from "../../color";
 import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
 
+// =============================================================================
+// STYLE INTERFACES, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
 export interface StyleProps {
     $disabled?: boolean;
-    $disallowed?: boolean;
+    $disabledDisplay?: boolean; // visually disabled but still interactable
     $overlap?: boolean;
     $hovered?: boolean;
     $selected?: boolean;
@@ -153,7 +157,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }}
 
     ${(props) => {
-        const { $disabled, $disallowed, $overlap, $variant } = props;
+        const { $disabled, $disabledDisplay, $overlap, $variant } = props;
 
         if ($overlap) {
             return css`
@@ -166,7 +170,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
 
-        if ($disallowed) {
+        if ($disabledDisplay) {
             return css`
                 color: ${Color.Neutral[4]};
             `;
@@ -198,16 +202,16 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        const { $disallowed, $disabled, $selected, $variant } = props;
+        const { $disabledDisplay, $disabled, $selected, $variant } = props;
 
-        if ($disallowed && $selected) {
+        if ($disabledDisplay && $selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
                 color: ${Color.Accent.Light[2]};
             `;
         }
 
-        if ($disallowed || $disabled) {
+        if ($disabledDisplay || $disabled) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

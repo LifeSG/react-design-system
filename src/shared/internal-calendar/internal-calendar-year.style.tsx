@@ -5,9 +5,13 @@ import { Text } from "../../text/text";
 import { YearVariant } from "./internal-calendar-year";
 import { CalendarType } from "./types";
 
+// =============================================================================
+// STYLE INTERFACES, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
 interface StyleProps {
     $disabled: boolean;
-    $disallowed: boolean;
+    $disabledDisplay: boolean; // visually disabled but still interactable
     $variant: YearVariant;
 }
 
@@ -85,7 +89,7 @@ export const YearCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
-        if (props.$disallowed || props.$disabled) {
+        if (props.$disabledDisplay || props.$disabled) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

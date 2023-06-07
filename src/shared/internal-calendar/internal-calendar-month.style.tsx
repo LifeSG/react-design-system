@@ -5,10 +5,14 @@ import { Text } from "../../text/text";
 import { MonthVariant } from "./internal-calendar-month";
 import { CalendarType } from "./types";
 
+// =============================================================================
+// STYLE INTERFACES, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
 interface StyleProps {
     $variant: MonthVariant;
     $disabled?: boolean;
-    $disallowed?: boolean;
+    $disabledDisplay?: boolean; // visually disabled but still interactable
 }
 
 interface WrapperStyleProps {
@@ -84,7 +88,7 @@ export const MonthCell = styled.div<StyleProps>`
 
 export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
-        if (props.$disallowed || props.$disabled) {
+        if (props.$disabledDisplay || props.$disabled) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

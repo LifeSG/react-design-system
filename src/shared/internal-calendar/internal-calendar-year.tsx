@@ -101,7 +101,7 @@ export const InternalCalendarYear = ({
 
         return {
             disabled: !allowDisabledSelection && disabled,
-            disallowed:
+            disabledDisplay:
                 (allowDisabledSelection && disabled) ||
                 isOutsideSelectedRange(date),
             year,
@@ -117,7 +117,7 @@ export const InternalCalendarYear = ({
     return (
         <Wrapper $type={type}>
             {years.map((date) => {
-                const { disabled, disallowed, variant, year } =
+                const { disabled, disabledDisplay, variant, year } =
                     generateYearStatus(date);
 
                 return (
@@ -125,14 +125,14 @@ export const InternalCalendarYear = ({
                         key={year}
                         $variant={variant}
                         $disabled={disabled}
-                        $disallowed={disallowed}
+                        $disabledDisplay={disabledDisplay}
                         onClick={() => handleYearClick(date, disabled)}
                     >
                         <CellLabel
                             weight="regular"
                             $variant={variant}
                             $disabled={disabled}
-                            $disallowed={disallowed}
+                            $disabledDisplay={disabledDisplay}
                         >
                             {year}
                         </CellLabel>
