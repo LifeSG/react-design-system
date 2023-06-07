@@ -23,6 +23,7 @@ export const DateInput = ({
     value,
     onChange,
     onBlur,
+    onYearMonthDisplayChange,
     withButton: _withButton = true,
     readOnly,
     id,
@@ -178,6 +179,7 @@ export const DateInput = ({
                 onHover={handleHoverDayCell}
                 onSelect={handleChange}
                 onDismiss={handleCalendarAction}
+                onYearMonthDisplayChange={onYearMonthDisplayChange}
             />
         </Container>
     );

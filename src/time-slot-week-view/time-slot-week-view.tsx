@@ -28,6 +28,7 @@ export const TimeSlotWeekView = ({
     // =============================================================================
     const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
     const calendarManagerRef = useRef<CalendarManagerRef>();
+    const previousCalendarDate = useRef<Dayjs>(undefined);
 
     // =============================================================================
     // EFFECTS
@@ -56,7 +57,21 @@ export const TimeSlotWeekView = ({
         }
     };
 
-    const performOnCalendarDateChange = (value: Dayjs) => {
+    const handleOnCalendarDateChange = (value: Dayjs) => {
+        if (
+            previousCalendarDate.current &&
+            !previousCalendarDate.current.isSame(value, "week")
+        ) {
+            performDisplayChangeHandler(value);
+        }
+        previousCalendarDate.current = value;
+    };
+
+    // =============================================================================
+    // HELPERS
+    // =============================================================================
+
+    const performDisplayChangeHandler = (value: Dayjs) => {
         if (onWeekDisplayChange) {
             const returnValue = {
                 week: {
@@ -97,7 +112,7 @@ export const TimeSlotWeekView = ({
                     maxDate &&
                     dayjs(calendarDate).add(1, "week").isAfter(maxDate, "week")
                 }
-                onCalendarDateChange={performOnCalendarDateChange}
+                onCalendarDateChange={handleOnCalendarDateChange}
                 showNavigationHeader={showNavigationHeader}
                 minDate={minDate}
                 maxDate={maxDate}

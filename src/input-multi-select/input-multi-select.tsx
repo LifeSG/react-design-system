@@ -17,6 +17,7 @@ export const InputMultiSelect = <T, V>({
     selectedOptions,
     placeholder = "Select",
     options,
+    className,
     disabled,
     error,
     "data-testid": testId,
@@ -200,6 +201,7 @@ export const InputMultiSelect = <T, V>({
             error={error && !showOptions}
             disabled={disabled}
             testId={testId}
+            className={className}
             onBlur={handleWrapperBlur}
         >
             <Selector

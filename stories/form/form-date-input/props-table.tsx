@@ -101,10 +101,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "value",
                 description: (
-                    <>
-                        The value of the <code>DateInput</code> in the&nbsp;
-                        {STRING_FORMAT} or <code>YYYY-M-D</code>.
-                    </>
+                    <>The value of the date input in the {STRING_FORMAT}</>
                 ),
                 propTypes: ["string"],
             },

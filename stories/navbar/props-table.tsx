@@ -94,6 +94,19 @@ const DATA: ApiTableSectionProps[] = [
                     "Called when a navigation action button is clicked",
                 propTypes: ["(actionButton: NavbarButtonProps) => void"],
             },
+            {
+                name: "masthead",
+                description: "Specifies if the masthead is to be rendered",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
+                name: "layout",
+                description:
+                    "Specifies the layout type of the content in the navbar",
+                propTypes: ["stretch | default"],
+                defaultValue: "default",
+            },
         ],
     },
     {

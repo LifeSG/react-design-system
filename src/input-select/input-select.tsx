@@ -19,6 +19,7 @@ export const InputSelect = <T, V>({
     options,
     disabled,
     error,
+    className,
     "data-testid": testId,
     id,
     enableSearch = false,
@@ -216,6 +217,7 @@ export const InputSelect = <T, V>({
 
     return (
         <DropdownWrapper
+            className={className}
             show={showOptions}
             error={error && !showOptions}
             disabled={disabled}

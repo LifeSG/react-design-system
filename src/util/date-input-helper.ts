@@ -18,13 +18,13 @@ export namespace DateInputHelper {
         }
 
         if (minDate) {
-            if (dayjs(val).isBefore(minDate)) {
+            if (dayjs(val).isBefore(minDate, "day")) {
                 return true;
             }
         }
 
         if (maxDate) {
-            if (dayjs(val).isAfter(maxDate)) {
+            if (dayjs(val).isAfter(maxDate, "day")) {
                 return true;
             }
         }

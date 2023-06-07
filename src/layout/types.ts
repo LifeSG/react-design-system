@@ -2,6 +2,7 @@ export interface CommonLayoutProps
     extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     "data-testid"?: string | undefined;
+    stretch?: boolean;
 }
 
 export interface SectionProps extends CommonLayoutProps {}

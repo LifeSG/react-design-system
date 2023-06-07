@@ -33,6 +33,7 @@ export const Component = (
     // CONST, STATE, REF
     // =============================================================================
     const calendarManagerRef = useRef<CalendarManagerRef>();
+    const previousCalendarDate = useRef<Dayjs>(undefined);
 
     // =============================================================================
     // HOOKS
@@ -77,11 +78,20 @@ export const Component = (
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
         performOnSelectHandler(stringValue);
-        performDisplayChangeHandler(value);
     };
 
     const handleDateHover = (value: string) => {
         performOnHoverHandler(value);
+    };
+
+    const handleCalendarDateChange = (value: Dayjs) => {
+        if (
+            !previousCalendarDate.current ||
+            !previousCalendarDate.current.isSame(value, "month")
+        ) {
+            performDisplayChangeHandler(value);
+        }
+        previousCalendarDate.current = value;
     };
 
     // =============================================================================
@@ -146,6 +156,7 @@ export const Component = (
                 selectedStartDate={selectedStartDate}
                 selectedEndDate={selectedEndDate}
                 allowDisabledSelection={allowDisabledSelection}
+                onCalendarDateChange={handleCalendarDateChange}
             >
                 {({ calendarDate }) => (
                     <InternalCalendarDay

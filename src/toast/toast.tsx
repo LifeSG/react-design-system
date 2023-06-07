@@ -113,7 +113,7 @@ export const Toast: React.FC = ({
                     </Description>
                 )}
             </TextContainer>
-            <DismissButton type="button" $type={type} onClick={handleDismiss}>
+            <DismissButton $type={type} onClick={handleDismiss}>
                 <CloseIcon />
             </DismissButton>
         </Wrapper>
