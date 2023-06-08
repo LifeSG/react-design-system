@@ -38,6 +38,7 @@ const Component = (
         selectedEndDate,
         selectWithinRange,
         dynamicHeight = false,
+        allowDisabledSelection,
         onCalendarDateChange,
         /* action button props */
         withButton,
@@ -224,7 +225,7 @@ const Component = (
     };
 
     const isLeftArrowDisabled = () => {
-        if (!minDate) {
+        if (!minDate || allowDisabledSelection) {
             return false;
         }
 
@@ -248,7 +249,7 @@ const Component = (
     };
 
     const isRightArrowDisabled = () => {
-        if (!maxDate) {
+        if (!maxDate || allowDisabledSelection) {
             return false;
         }
 
@@ -328,6 +329,7 @@ const Component = (
                         viewCalendarDate={viewCalendarDate}
                         isNewSelection={selectWithinRange}
                         onMonthSelect={handleMonthYearSelect}
+                        allowDisabledSelection={allowDisabledSelection}
                     />
                 );
             case "year-options":
@@ -343,6 +345,7 @@ const Component = (
                         viewCalendarDate={viewCalendarDate}
                         isNewSelection={selectWithinRange}
                         onYearSelect={handleMonthYearSelect}
+                        allowDisabledSelection={allowDisabledSelection}
                     />
                 );
             default:

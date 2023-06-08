@@ -11,7 +11,10 @@ export type YearVariant =
     | "selected-year";
 
 interface Props
-    extends Pick<InternalCalendarProps, "type" | "minDate" | "maxDate"> {
+    extends Pick<
+        InternalCalendarProps,
+        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+    > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     selectedStartDate: string;
@@ -31,6 +34,7 @@ export const InternalCalendarYear = ({
     isNewSelection,
     minDate,
     maxDate,
+    allowDisabledSelection,
     onYearSelect,
 }: Props) => {
     // =============================================================================
@@ -61,6 +65,10 @@ export const InternalCalendarYear = ({
             "year"
         );
 
+        return !isWithinRange;
+    };
+
+    const isOutsideSelectedRange = (day: Dayjs): boolean => {
         const isStartAfterEnd =
             currentFocus === "start" &&
             selectedEndDate &&
@@ -73,7 +81,7 @@ export const InternalCalendarYear = ({
             day.isBefore(selectedStartDate, "year") &&
             isNewSelection;
 
-        return !isWithinRange || isStartAfterEnd || isEndBeforeStart;
+        return isStartAfterEnd || isEndBeforeStart;
     };
 
     const generateYearStatus = (date: Dayjs) => {
@@ -92,7 +100,8 @@ export const InternalCalendarYear = ({
             : "default";
 
         return {
-            disabled,
+            disabledDisplay: disabled || isOutsideSelectedRange(date),
+            interactive: !disabled || allowDisabledSelection,
             year,
             variant: variant,
         };
@@ -106,19 +115,22 @@ export const InternalCalendarYear = ({
     return (
         <Wrapper $type={type}>
             {years.map((date) => {
-                const { disabled, variant, year } = generateYearStatus(date);
+                const { disabledDisplay, interactive, variant, year } =
+                    generateYearStatus(date);
 
                 return (
                     <YearCell
                         key={year}
                         $variant={variant}
-                        $disabled={disabled}
-                        onClick={() => handleYearClick(date, disabled)}
+                        $disabledDisplay={disabledDisplay}
+                        $interactive={interactive}
+                        onClick={() => handleYearClick(date, !interactive)}
                     >
                         <CellLabel
                             weight="regular"
                             $variant={variant}
-                            $disabled={disabled}
+                            $disabledDisplay={disabledDisplay}
+                            $interactive={interactive}
                         >
                             {year}
                         </CellLabel>

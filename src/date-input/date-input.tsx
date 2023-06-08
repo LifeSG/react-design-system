@@ -27,6 +27,7 @@ export const DateInput = ({
     withButton: _withButton = true,
     readOnly,
     id,
+    allowDisabledSelection,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -77,6 +78,7 @@ export const DateInput = ({
 
     const handleChange = (val: string) => {
         if (
+            !allowDisabledSelection &&
             DateInputHelper.isDateDisabled(val, {
                 disabledDates,
                 minDate,
@@ -173,6 +175,7 @@ export const DateInput = ({
                 disabledDates={disabledDates}
                 minDate={minDate}
                 maxDate={maxDate}
+                allowDisabledSelection={allowDisabledSelection}
                 onHover={handleHoverDayCell}
                 onSelect={handleChange}
                 onDismiss={handleCalendarAction}
