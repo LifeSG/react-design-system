@@ -9,6 +9,7 @@ const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
         "data-testid": testId = "content",
         className,
         type = "flex",
+        stretch = false,
         ...otherProps
     } = props;
 
@@ -17,12 +18,14 @@ const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
             ref={ref}
             data-testid={testId}
             className={className}
+            stretch={stretch}
             {...otherProps}
         >
             <Container
                 data-testid={`${testId}-container`}
                 type={type}
                 data-id="container"
+                stretch={stretch}
             >
                 {children}
             </Container>

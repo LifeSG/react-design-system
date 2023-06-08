@@ -23,6 +23,7 @@ export const Component = (
         variant,
         minDate,
         maxDate,
+        allowDisabledSelection,
         type = "standalone",
         selectWithinRange = true,
     }: InternalCalendarProps,
@@ -32,6 +33,7 @@ export const Component = (
     // CONST, STATE, REF
     // =============================================================================
     const calendarManagerRef = useRef<CalendarManagerRef>();
+    const previousCalendarDate = useRef<Dayjs>(undefined);
 
     // =============================================================================
     // HOOKS
@@ -76,11 +78,20 @@ export const Component = (
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
         performOnSelectHandler(stringValue);
-        performDisplayChangeHandler(value);
     };
 
     const handleDateHover = (value: string) => {
         performOnHoverHandler(value);
+    };
+
+    const handleCalendarDateChange = (value: Dayjs) => {
+        if (
+            !previousCalendarDate.current ||
+            !previousCalendarDate.current.isSame(value, "month")
+        ) {
+            performDisplayChangeHandler(value);
+        }
+        previousCalendarDate.current = value;
     };
 
     // =============================================================================
@@ -144,6 +155,8 @@ export const Component = (
                 currentFocus={currentFocus}
                 selectedStartDate={selectedStartDate}
                 selectedEndDate={selectedEndDate}
+                allowDisabledSelection={allowDisabledSelection}
+                onCalendarDateChange={handleCalendarDateChange}
             >
                 {({ calendarDate }) => (
                     <InternalCalendarDay
@@ -156,6 +169,7 @@ export const Component = (
                         minDate={minDate}
                         maxDate={maxDate}
                         isNewSelection={selectWithinRange}
+                        allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
                     />

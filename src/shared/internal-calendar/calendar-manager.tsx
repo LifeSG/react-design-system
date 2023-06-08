@@ -38,6 +38,7 @@ const Component = (
         selectedEndDate,
         selectWithinRange,
         dynamicHeight = false,
+        allowDisabledSelection,
         onCalendarDateChange,
         /* action button props */
         withButton,
@@ -58,11 +59,11 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    // the current visible date in all views
+    // the current visible date in month/year views and header
     const [calendarDate, setCalendarDate] = useState<Dayjs>(
         dayjs(initialCalendarDate)
     );
-    // the selected date in month/year views
+    // the selected date in month/year views and the current visible date in day view
     const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>(
         dayjs(initialCalendarDate)
     );
@@ -84,7 +85,6 @@ const Component = (
                 const date = dayjs(initialCalendarDate);
                 setCalendarDate(date);
                 setViewCalendarDate(date);
-                performOnCalendarDateChange(date);
 
                 setCurrentView("default");
             },
@@ -92,7 +92,6 @@ const Component = (
                 const date = value ? dayjs(value) : dayjs();
                 setCalendarDate(date);
                 setViewCalendarDate(date);
-                performOnCalendarDateChange(date);
             },
         };
     });
@@ -102,6 +101,12 @@ const Component = (
         setCalendarDate(date);
         setViewCalendarDate(date);
     }, [initialCalendarDate]);
+
+    useEffect(() => {
+        performOnCalendarDateChange(viewCalendarDate);
+        // more accurate than calendarDate since it accounts for selection state
+        // in month/year views
+    }, [viewCalendarDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -144,7 +149,6 @@ const Component = (
             case "default":
                 setViewCalendarDate(nextDate);
                 setCalendarDate(nextDate);
-                performOnCalendarDateChange(nextDate);
                 break;
             case "month-options":
                 setCalendarDate((date) => date.subtract(1, "year"));
@@ -167,7 +171,6 @@ const Component = (
             case "default":
                 setViewCalendarDate(nextDate);
                 setCalendarDate(nextDate);
-                performOnCalendarDateChange(nextDate);
                 break;
             case "month-options":
                 setCalendarDate((date) => date.add(1, "year"));
@@ -181,8 +184,6 @@ const Component = (
     const handleMonthYearSelect = (value: Dayjs) => {
         setCalendarDate(value);
         setViewCalendarDate(value);
-
-        performOnCalendarDateChange(value);
     };
 
     const handleCancelButton = () => {
@@ -224,7 +225,7 @@ const Component = (
     };
 
     const isLeftArrowDisabled = () => {
-        if (!minDate) {
+        if (!minDate || allowDisabledSelection) {
             return false;
         }
 
@@ -248,7 +249,7 @@ const Component = (
     };
 
     const isRightArrowDisabled = () => {
-        if (!maxDate) {
+        if (!maxDate || allowDisabledSelection) {
             return false;
         }
 
@@ -328,6 +329,7 @@ const Component = (
                         viewCalendarDate={viewCalendarDate}
                         isNewSelection={selectWithinRange}
                         onMonthSelect={handleMonthYearSelect}
+                        allowDisabledSelection={allowDisabledSelection}
                     />
                 );
             case "year-options":
@@ -343,6 +345,7 @@ const Component = (
                         viewCalendarDate={viewCalendarDate}
                         isNewSelection={selectWithinRange}
                         onYearSelect={handleMonthYearSelect}
+                        allowDisabledSelection={allowDisabledSelection}
                     />
                 );
             default:
@@ -393,6 +396,7 @@ const Component = (
                     ref={cancelButtonRef}
                     data-testid="cancel-button"
                     styleType="light"
+                    type="button"
                     onClick={handleCancelButton}
                 >
                     Cancel
@@ -400,6 +404,7 @@ const Component = (
                 <ActionButton
                     data-testid="done-button"
                     ref={doneButtonRef}
+                    type="button"
                     onClick={() => handleDoneButton(disabled)}
                     disabled={disabled}
                 >
@@ -412,7 +417,7 @@ const Component = (
     const renderViews = () => {
         const defaultView =
             typeof children === "function"
-                ? children({ calendarDate })
+                ? children({ calendarDate: viewCalendarDate })
                 : children;
 
         if (dynamicHeight) {

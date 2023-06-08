@@ -198,6 +198,56 @@ return (
 );
 ```
 
+<Heading3>Stretched layout</Heading3>
+
+In this example, the content of the footer is stretched to the full width of
+the screen with a fixed padding, ignoring the masthead's alignment.
+
+<Preview>
+    <Story name="Stretched layout">
+        <Footer
+            layout={"stretch"}
+            lastUpdated={new Date()}
+            showDownloadAddon
+            links={[
+                [
+                    { children: "Home", href: "https://www.life.gov.sg" },
+                    {
+                        children: "How it works",
+                        href: "https://www.life.gov.sg/#how-it-works",
+                    },
+                    {
+                        children: "Ways we help",
+                        href: "https://www.life.gov.sg/#ways-we-help",
+                    },
+                    {
+                        children: "Campaigns",
+                        href: "https://www.life.gov.sg/#campaigns",
+                    },
+                    {
+                        children: "News and media",
+                        href: "https://www.life.gov.sg/#newsandmedia",
+                    },
+                ],
+                [
+                    {
+                        children: "About us",
+                        href: "https://www.life.gov.sg/about-us",
+                    },
+                    {
+                        children: "Help & Support",
+                        href: "https://www.life.gov.sg/help-support",
+                    },
+                    {
+                        children: "Get in touch with us",
+                        href: "https://www.life.gov.sg/get-in-touch",
+                    },
+                ],
+            ]}
+        />
+    </Story>
+</Preview>
+
 <Secondary>Component API</Secondary>
 
 <PropsTable />

@@ -100,14 +100,17 @@ export const TimeSlotWeekDays = ({
 
     const generateStyleProps = (day: Dayjs) => {
         const dateStartWithYear = day.format(dateFormat);
+        const disabled = isDisabled(day);
 
         const styleCircleProps: StyleProps = {},
             styleLabelProps: StyleProps = {};
 
-        if (isDisabled(day)) {
-            styleCircleProps.$disabled = true;
-            styleLabelProps.$disabled = true;
+        if (disabled) {
+            styleCircleProps.$disabledDisplay = true;
+            styleLabelProps.$disabledDisplay = true;
         }
+
+        styleCircleProps.$interactive = enableSelection && !disabled;
 
         // apply selected styles
         if ([selectedDate].includes(dateStartWithYear)) {
@@ -145,11 +148,10 @@ export const TimeSlotWeekDays = ({
                         <GrowDayCell key={`day-${dayIndex}`}>
                             <InteractiveCircle
                                 $variant={variant}
-                                $enableSelection={enableSelection}
                                 onClick={() =>
                                     handleDayClick(
                                         day,
-                                        styleCircleProps.$disabled
+                                        !styleCircleProps.$interactive
                                     )
                                 }
                                 {...styleCircleProps}

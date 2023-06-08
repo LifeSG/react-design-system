@@ -8,6 +8,7 @@ const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
         children,
         "data-testid": testId = "container",
         type = "flex",
+        stretch = false,
         ...otherProps
     } = props;
 
@@ -15,7 +16,8 @@ const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
         <StyledContainer
             ref={ref}
             data-testid={testId}
-            type={type}
+            $type={type}
+            $stretch={stretch}
             {...otherProps}
         >
             {children}
@@ -32,7 +34,8 @@ export const Container = React.forwardRef(Component);
 // STYLING
 // =============================================================================
 interface StyleProps {
-    type: ContainerType;
+    $type: ContainerType;
+    $stretch: boolean;
 }
 
 const StyledContainer = styled.div<StyleProps>`
@@ -41,19 +44,27 @@ const StyledContainer = styled.div<StyleProps>`
     position: relative;
     width: auto;
     height: auto;
-    padding: 0 0.75rem;
 
-    /* Max width restrictions */
-    max-width: 1320px;
+    ${(props) => {
+        if (props.$stretch) {
+            return css`
+                padding: 0 3rem;
+            `;
+        } else {
+            return css`
+                padding: 0 0.75rem;
+                /* Max width restrictions */
+                max-width: 1320px;
 
-    ${MediaQuery.MaxWidth.desktopM} {
-        max-width: 1140px;
-    }
-
+                ${MediaQuery.MaxWidth.desktopM} {
+                    max-width: 1140px;
+                }
+            `;
+        }
+    }}
     ${MediaQuery.MaxWidth.tablet} {
         max-width: 720px;
     }
-
     ${MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         padding: 0;
@@ -61,7 +72,7 @@ const StyledContainer = styled.div<StyleProps>`
     }
 
     ${(props) => {
-        switch (props.type) {
+        switch (props.$type) {
             case "grid":
                 return css`
                     column-gap: 2rem;

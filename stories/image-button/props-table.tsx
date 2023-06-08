@@ -25,6 +25,16 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The image source to be rendered",
                 propTypes: ["string"],
             },
+            {
+                name: "selected",
+                description: "Specifies to show selected state or not",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "error",
+                description: "Specifies to show error state or not",
+                propTypes: ["boolean"],
+            },
         ],
     },
 ];

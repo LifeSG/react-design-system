@@ -97,6 +97,7 @@ export const FilterItem = ({
                             <FilterItemMinimiseButton
                                 data-id="minimise-button"
                                 styleType="link"
+                                type="button"
                                 onClick={() => {
                                     setContentMinimised(!contentMinimised);
                                 }}

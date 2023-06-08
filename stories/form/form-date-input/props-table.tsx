@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable, quote } from "../../storybook-common/api-table";
+import { ApiTable, code, quote } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
@@ -13,6 +13,18 @@ const DATA: ApiTableSectionProps[] = [
     {
         name: "DateInput specific props",
         attributes: [
+            {
+                name: "allowDisabledSelection",
+                description: (
+                    <>
+                        Specifies if dates normally disabled by{" "}
+                        {code("minDate")}, {code("maxDate")} and{" "}
+                        {code("disabledDates")}
+                        are still selectable
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
             {
                 name: "className",
                 description: "The class selector of the component",
@@ -89,10 +101,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "value",
                 description: (
-                    <>
-                        The value of the <code>DateInput</code> in the&nbsp;
-                        {STRING_FORMAT} or <code>YYYY-M-D</code>.
-                    </>
+                    <>The value of the date input in the {STRING_FORMAT}</>
                 ),
                 propTypes: ["string"],
             },

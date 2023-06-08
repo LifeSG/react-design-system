@@ -52,9 +52,11 @@ export const DateRangeInput = ({
     valueEnd,
     onChange,
     onBlur,
+    onYearMonthDisplayChange,
     withButton: _withButton = true,
     readOnly,
     id,
+    allowDisabledSelection,
     ...otherProps
 }: DateRangeInputProps) => {
     // =============================================================================
@@ -134,6 +136,8 @@ export const DateRangeInput = ({
         },
     });
 
+    // tracks if current value in focused input is allowed for selection
+    const isUnselectable = useRef<boolean>(false);
     const nodeRef = useRef<HTMLDivElement>();
     const calendarRef = useRef<InternalCalendarRef>();
     const startInputRef = useRef<StandaloneDateInputRef>();
@@ -184,7 +188,14 @@ export const DateRangeInput = ({
     };
 
     const handleStartDateChange = (val: string) => {
+        if (isDateUnselectable(val)) {
+            // date is invalid, remain on this input
+            isUnselectable.current = true;
+            return;
+        }
+
         actions.changeStart(val);
+        isUnselectable.current = false;
 
         if (!val) {
             // if both start and end were cleared, confirm the selection
@@ -193,17 +204,6 @@ export const DateRangeInput = ({
                 actions.resetRange({ start: "", end: "" });
                 onChange?.("", "");
             }
-            return;
-        }
-
-        if (
-            DateInputHelper.isDateDisabled(val, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
-            // date is invalid, remain on this input
             return;
         }
 
@@ -240,6 +240,12 @@ export const DateRangeInput = ({
     };
 
     const handleEndDateChange = (val: string) => {
+        if (isDateUnselectable(val)) {
+            // date is invalid, remain on this input
+            isUnselectable.current = true;
+            return;
+        }
+
         actions.changeEnd(val);
 
         if (!val) {
@@ -249,17 +255,6 @@ export const DateRangeInput = ({
                 actions.resetRange({ start: "", end: "" });
                 onChange?.("", "");
             }
-            return;
-        }
-
-        if (
-            DateInputHelper.isDateDisabled(val, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
-            // date  is invalid, remain on this input
             return;
         }
 
@@ -300,28 +295,14 @@ export const DateRangeInput = ({
     };
 
     const handleStartInputBlur = (validFormat: boolean) => {
-        if (
-            !validFormat ||
-            DateInputHelper.isDateDisabled(selectedStart, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
+        if (!validFormat || isUnselectable.current) {
             actions.resetStart();
             startInputRef.current.resetInput();
         }
     };
 
     const handleEndInputBlur = (validFormat: boolean) => {
-        if (
-            !validFormat ||
-            DateInputHelper.isDateDisabled(selectedEnd, {
-                disabledDates,
-                minDate,
-                maxDate,
-            })
-        ) {
+        if (!validFormat || isUnselectable.current) {
             actions.resetEnd();
             endInputRef.current.resetInput();
         }
@@ -349,6 +330,21 @@ export const DateRangeInput = ({
 
     const handleCalendarHover = (val: string) => {
         setHoverValue(val);
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const isDateUnselectable = (val: string) => {
+        return (
+            !allowDisabledSelection &&
+            val &&
+            DateInputHelper.isDateDisabled(val, {
+                disabledDates,
+                minDate,
+                maxDate,
+            })
+        );
     };
 
     // =============================================================================
@@ -420,9 +416,11 @@ export const DateRangeInput = ({
                 disabledDates={disabledDates}
                 minDate={minDate}
                 maxDate={maxDate}
+                allowDisabledSelection={allowDisabledSelection}
                 onSelect={handleCalendarSelect}
                 onDismiss={handleCalendarDismiss}
                 onHover={handleCalendarHover}
+                onYearMonthDisplayChange={onYearMonthDisplayChange}
             />
         </Container>
     );

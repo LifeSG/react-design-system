@@ -3,8 +3,13 @@ import { Color } from "../../color";
 import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
 
+// =============================================================================
+// STYLE INTERFACES, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
 export interface StyleProps {
-    $disabled?: boolean;
+    $disabledDisplay?: boolean;
+    $interactive?: boolean;
     $overlap?: boolean;
     $hovered?: boolean;
     $selected?: boolean;
@@ -18,9 +23,7 @@ interface OverflowDisplayProps extends StyleProps {
     $position: "left" | "right";
 }
 
-interface InteractiveCircleProps extends DayLabelStyleProps {
-    $enableSelection?: boolean | undefined;
-}
+interface InteractiveCircleProps extends DayLabelStyleProps {}
 
 // =============================================================================
 // STYLING
@@ -111,7 +114,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
-    cursor: pointer;
+    cursor: default;
     position: absolute;
 
     ${(props) => {
@@ -134,25 +137,26 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }}
 
     ${(props) => {
-        const { $enableSelection = true } = props;
+        const { $interactive, $disabledDisplay } = props;
 
-        if ($enableSelection) {
+        if ($interactive) {
             return css`
+                cursor: pointer;
                 :hover {
                     box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
                     border: 1px solid ${Color.Accent.Light[1]};
                     background-color: ${Color.Neutral[8]};
                 }
             `;
-        } else {
+        } else if ($disabledDisplay) {
             return css`
-                cursor: default;
+                cursor: not-allowed;
             `;
         }
     }}
 
     ${(props) => {
-        const { $disabled, $overlap, $variant } = props;
+        const { $disabledDisplay, $overlap, $variant } = props;
 
         if ($overlap) {
             return css`
@@ -165,16 +169,9 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
 
-        if ($disabled) {
+        if ($disabledDisplay) {
             return css`
                 color: ${Color.Neutral[4]};
-                cursor: not-allowed;
-
-                :hover {
-                    box-shadow: unset;
-                    border: unset;
-                    background-color: unset;
-                }
             `;
         }
 
@@ -191,16 +188,16 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
     ${(props) => {
-        const { $disabled, $selected, $variant } = props;
+        const { $disabledDisplay, $selected, $variant } = props;
 
-        if ($disabled && $selected) {
+        if ($disabledDisplay && $selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
                 color: ${Color.Accent.Light[2]};
             `;
         }
 
-        if ($disabled) {
+        if ($disabledDisplay) {
             return css`
                 color: ${Color.Neutral[4]};
             `;

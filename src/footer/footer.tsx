@@ -29,7 +29,13 @@ export const Footer = <T,>({
     logoSrc,
     copyrightInfo,
     onFooterLinkClick,
+    layout = "default",
 }: FooterProps<T>) => {
+    // =============================================================================
+    // CONST, STATE, REFS
+    // =============================================================================
+    const isStretch = layout === "stretch";
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -115,7 +121,11 @@ export const Footer = <T,>({
         }
 
         if (component) {
-            return <TopSection type="grid">{component}</TopSection>;
+            return (
+                <TopSection type="grid" stretch={isStretch}>
+                    {component}
+                </TopSection>
+            );
         }
 
         return null;
@@ -125,7 +135,7 @@ export const Footer = <T,>({
         <BaseFooter>
             {renderTopSection()}
             <MobileOnlyBorder />
-            <BottomSection type="grid">
+            <BottomSection type="grid" stretch={isStretch}>
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>
