@@ -5,9 +5,12 @@ import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
 import {
     Container,
+    ContainerRow2,
+    ContainerRow3,
     SubTitle,
     SubTitleDefault,
     SubTitleSmall,
+    SubTitleDisabled,
 } from "./doc-elements";
 
 <Meta title="General/IconButton" component={IconButton} />
@@ -37,88 +40,59 @@ The `IconButton` component comes in 3 sizes, a large, small and default size.
 <Preview>
     <Story name="Variations">
         <Container>
-            <SubTitle>Large</SubTitle>
-            <SubTitleDefault>Default</SubTitleDefault>
-            <SubTitleSmall>Small</SubTitleSmall>
+            <SubTitle>Primary</SubTitle>
+            <SubTitleDefault>Secondary</SubTitleDefault>
+            <SubTitleSmall>Light</SubTitleSmall>
+            <SubTitleDisabled>Disabled</SubTitleDisabled>
         </Container>
         <br />
         <Container>
-            <Span>Primary:</Span>
+            <Span>Large:</Span>
             <IconButton sizeType="large" buttonStyle="primary">
                 <LockIcon />
             </IconButton>
-            <IconButton sizeType="default" buttonStyle="primary">
+            <IconButton sizeType="large" buttonStyle="secondary">
                 <LockIcon />
             </IconButton>
-            <IconButton sizeType="small" buttonStyle="primary">
+            <IconButton sizeType="large" buttonStyle="light">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="large" disabled>
                 <LockIcon />
             </IconButton>
         </Container>
         <br />
-        <Container>
-            <Span>Secondary:</Span>
-            <IconButton sizeType="large" buttonStyle="secondary">
+        <ContainerRow2>
+            <Span>Default:</Span>
+            <IconButton sizeType="default" buttonStyle="primary">
                 <LockIcon />
             </IconButton>
             <IconButton sizeType="default" buttonStyle="secondary">
                 <LockIcon />
             </IconButton>
-            <IconButton sizeType="small" buttonStyle="secondary">
-                <LockIcon />
-            </IconButton>
-        </Container>
-        <br />
-        <Container>
-            <Span>Light:</Span>
-            <IconButton sizeType="large" buttonStyle="light">
-                <LockIcon />
-            </IconButton>
             <IconButton sizeType="default" buttonStyle="light">
-                <LockIcon />
-            </IconButton>
-            <IconButton sizeType="small" buttonStyle="light">
-                <LockIcon />
-            </IconButton>
-        </Container>
-        <br />
-        <Container>
-            <Span>Disabled:</Span>
-            <IconButton sizeType="large" disabled>
                 <LockIcon />
             </IconButton>
             <IconButton sizeType="default" disabled>
                 <LockIcon />
             </IconButton>
+        </ContainerRow2>
+        <br />
+        <ContainerRow3>
+            <Span>Small:</Span>
+            <IconButton sizeType="small" buttonStyle="primary">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="small" buttonStyle="secondary">
+                <LockIcon />
+            </IconButton>
+            <IconButton sizeType="small" buttonStyle="light">
+                <LockIcon />
+            </IconButton>
             <IconButton sizeType="small" disabled>
                 <LockIcon />
             </IconButton>
-        </Container>
-    </Story>
-</Preview>
-
-<Heading3>Highlight</Heading3>
-
-By default, the button is highlighted when focused. This can be customised with the `focusHighlight` prop.
-
-<Preview>
-    <Story name="Highlight">
-        <IconButton focusHighlight={false}>
-            <LockIcon />
-        </IconButton>
-    </Story>
-</Preview>
-
-<Heading3>Outline</Heading3>
-
-By default, the button is not outlined when focused. To defer to the browser's default style, specify the `focusOutline` prop.
-
-(Try focusing the button below with the Tab key)
-
-<Preview>
-    <Story name="Outline">
-        <IconButton focusOutline="browser">
-            <LockIcon />
-        </IconButton>
+        </ContainerRow3>
     </Story>
 </Preview>
 
@@ -139,6 +113,6 @@ You can also pass in custom components to the `IconButton`. In this example, we 
 
 <Secondary>Component API</Secondary>
 
-The component also inherits the [Button](/docs/general-button--button) props.
+The component also inherits the [ButtonHTML] props.
 
 <PropsTable />

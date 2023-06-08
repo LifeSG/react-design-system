@@ -13,17 +13,11 @@ export const Main = styled.button<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
     background-color: ${Color.Primary};
     color: ${Color.Neutral[8]};
-    border: none;
     border-radius: 0.25rem;
     cursor: pointer;
-    img,
-    svg {
-        height: 1.125rem;
-        width: 1.125rem;
-    }
+
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
     // -----------------------------------------------------------------------------
@@ -31,7 +25,8 @@ export const Main = styled.button<StyleProps>`
         switch (props.$sizeType) {
             case "large":
                 return css`
-                    padding: 1.25rem;
+                    height: 4rem;
+                    width: 4rem;
 
                     img,
                     svg {
@@ -41,7 +36,8 @@ export const Main = styled.button<StyleProps>`
                 `;
             case "small":
                 return css`
-                    padding: 0.75rem;
+                    height: 2.5rem;
+                    width: 2.5rem;
 
                     img,
                     svg {
@@ -52,8 +48,8 @@ export const Main = styled.button<StyleProps>`
 
             default:
                 return css`
-                    padding: 1rem;
-
+                    height: 3rem;
+                    width: 3rem;
                     img,
                     svg {
                         height: 1.125rem;
@@ -65,12 +61,6 @@ export const Main = styled.button<StyleProps>`
 
     ${(props) => {
         switch (props.$buttonStyle) {
-            case "primary":
-                return css`
-                    background-color: ${Color.Primary};
-                    color: ${Color.Neutral[8]};
-                    border: none;
-                `;
             case "secondary":
                 return css`
                     background-color: ${Color.Neutral[8]};
@@ -84,7 +74,7 @@ export const Main = styled.button<StyleProps>`
                     color: ${Color.Primary};
                     border: 1px solid ${Color.Neutral[5]};
                 `;
-
+            case "primary":
             default:
                 return css`
                     background-color: ${Color.Primary};
@@ -95,22 +85,14 @@ export const Main = styled.button<StyleProps>`
     }}
     &:disabled {
         background-color: ${Color.Neutral[6]};
-        color: ${Color.Primary};
-        border: non;
+        color: ${Color.Neutral[3]};
+        border: 1px solid ${Color.Neutral[6]};
         cursor: not-allowed;
     }
 
     &:active,
     &:focus {
-        ${({ $outline }) => $outline === "none" && "outline: none;"}
-
-        ${({ $highlight }) =>
-            $highlight &&
-            css`
-                background-color: ${Color.Neutral[7]};
-            `}
-
-            ${(props) => {
+        ${(props) => {
             switch (props.$buttonStyle) {
                 case "primary":
                     return css`
