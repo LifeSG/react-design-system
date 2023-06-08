@@ -48,6 +48,7 @@ export const Main = styled.button<StyleProps>`
                 return css`
                     height: 3rem;
                     width: 3rem;
+
                     img,
                     svg {
                         height: 1.125rem;
@@ -131,7 +132,7 @@ export const Main = styled.button<StyleProps>`
         :disabled {
             background-color: ${Color.Neutral[6]};
             color: ${Color.Primary};
-            border: non;
+            border: none;
             cursor: not-allowed;
         }
     }
