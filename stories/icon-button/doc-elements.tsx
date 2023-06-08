@@ -8,13 +8,26 @@ export const Container = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
 
-    div {
+    label {
         min-width: 5rem;
     }
 
     button {
         flex-direction: row;
         margin-left: 1rem;
+    }
+
+    span:nth-of-type(1) {
+        margin-left: 6rem;
+    }
+    span:nth-of-type(2) {
+        margin-left: 1.5rem;
+    }
+    span:nth-of-type(3) {
+        margin-left: 0.5rem;
+    }
+    span:nth-of-type(4) {
+        margin-left: 2.5rem;
     }
 `;
 
@@ -28,17 +41,4 @@ export const Container3 = styled(Container)`
     button:not(:nth-of-type(1)) {
         margin-left: 2.5rem;
     }
-`;
-
-export const SubTitle = styled.span`
-    margin-left: 6rem;
-`;
-export const SubTitleDefault = styled.span`
-    margin-left: 1.5rem;
-`;
-export const SubTitleSmall = styled.span`
-    margin-left: 0.5rem;
-`;
-export const SubTitleDisabled = styled.span`
-    margin-left: 2.5rem;
 `;

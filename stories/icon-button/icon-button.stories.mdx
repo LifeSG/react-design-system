@@ -3,15 +3,7 @@ import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { IconButton } from "src/icon-button";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
-import {
-    Container,
-    Container2,
-    Container3,
-    SubTitle,
-    SubTitleDefault,
-    SubTitleSmall,
-    SubTitleDisabled,
-} from "./doc-elements";
+import { Container, Container2, Container3 } from "./doc-elements";
 
 <Meta title="General/IconButton" component={IconButton} />
 
@@ -40,14 +32,14 @@ The `IconButton` component comes in 3 sizes, a large, small and default size.
 <Preview>
     <Story name="Variations">
         <Container>
-            <SubTitle>Primary</SubTitle>
-            <SubTitleDefault>Secondary</SubTitleDefault>
-            <SubTitleSmall>Light</SubTitleSmall>
-            <SubTitleDisabled>Disabled</SubTitleDisabled>
+            <span>Primary</span>
+            <span>Secondary</span>
+            <span>Light</span>
+            <span>Disabled</span>
         </Container>
         <br />
         <Container>
-            <Span>Large:</Span>
+            <label>Large:</label>
             <IconButton sizeType="large" buttonStyle="primary">
                 <LockIcon />
             </IconButton>
@@ -63,14 +55,14 @@ The `IconButton` component comes in 3 sizes, a large, small and default size.
         </Container>
         <br />
         <Container2>
-            <Span>Default:</Span>
-            <IconButton sizeType="default" buttonStyle="primary">
+            <label>Default:</label>
+            <IconButton buttonStyle="primary">
                 <LockIcon />
             </IconButton>
-            <IconButton sizeType="default" buttonStyle="secondary">
+            <IconButton buttonStyle="secondary">
                 <LockIcon />
             </IconButton>
-            <IconButton sizeType="default" buttonStyle="light">
+            <IconButton buttonStyle="light">
                 <LockIcon />
             </IconButton>
             <IconButton sizeType="default" disabled>
@@ -79,7 +71,7 @@ The `IconButton` component comes in 3 sizes, a large, small and default size.
         </Container2>
         <br />
         <Container3>
-            <Span>Small:</Span>
+            <label>Small:</label>
             <IconButton sizeType="small" buttonStyle="primary">
                 <LockIcon />
             </IconButton>
