@@ -3,10 +3,11 @@ import dayjs from "dayjs";
 import { TimeSlot, TimeSlotWeekView } from "../../src";
 
 describe("TimeSlotWeekCalendar", () => {
-    const currentDay = dayjs();
     const DATE_FORMAT = "YYYY-MM-DD";
+
     beforeEach(() => {
         jest.resetAllMocks();
+        jest.useFakeTimers("modern").setSystemTime(new Date("2023-03-01"));
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -14,22 +15,71 @@ describe("TimeSlotWeekCalendar", () => {
             disconnect: jest.fn(),
         }));
     });
-    it("renders without errors", () => {
-        render(<TimeSlotWeekView />);
-        expect(
-            screen.getByText(currentDay.endOf("week").format("MMM"))
-        ).toBeVisible();
-        expect(
-            screen.getByText(currentDay.endOf("week").format("YYYY"))
-        ).toBeVisible();
-        expect(screen.getByText(currentDay.format("D"))).toBeVisible();
+
+    it("should render without errors", () => {
+        const onWeekDisplayChange = jest.fn();
+        render(<TimeSlotWeekView onWeekDisplayChange={onWeekDisplayChange} />);
+
+        expect(screen.getByText("Mar")).toBeVisible();
+        expect(screen.getByText("2023")).toBeVisible();
+        expect(screen.getByText("1")).toBeVisible();
+
+        expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
+        expect(onWeekDisplayChange).toHaveBeenCalledWith({
+            week: {
+                firstDayOfWeek: "2023-02-26",
+                lastDayOfWeek: "2023-03-04",
+            },
+            month: 3,
+            year: 2023,
+        });
     });
 
-    it("should render the given calendar date", () => {
-        render(<TimeSlotWeekView currentCalendarDate={"2021-01-01"} />);
+    it("should render the visible week based on currentCalendarDate", () => {
+        const onWeekDisplayChange = jest.fn();
+        render(
+            <TimeSlotWeekView
+                onWeekDisplayChange={onWeekDisplayChange}
+                currentCalendarDate="2021-01-01"
+            />
+        );
+
         expect(screen.getByText("Jan")).toBeVisible();
         expect(screen.getByText("2021")).toBeVisible();
         expect(screen.getByText("1")).toBeVisible();
+        expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
+        expect(onWeekDisplayChange).toHaveBeenCalledWith({
+            week: {
+                firstDayOfWeek: "2020-12-27",
+                lastDayOfWeek: "2021-01-02",
+            },
+            month: 1,
+            year: 2021,
+        });
+    });
+
+    it("should render visible week based on value", () => {
+        const onWeekDisplayChange = jest.fn();
+        render(
+            <TimeSlotWeekView
+                onWeekDisplayChange={onWeekDisplayChange}
+                currentCalendarDate="2021-01-01"
+                value="2021-05-14"
+            />
+        );
+
+        expect(screen.getByText("May")).toBeVisible();
+        expect(screen.getByText("2021")).toBeVisible();
+        expect(screen.getByText("14")).toBeVisible();
+        expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
+        expect(onWeekDisplayChange).toHaveBeenCalledWith({
+            month: 5,
+            week: {
+                firstDayOfWeek: "2021-05-09",
+                lastDayOfWeek: "2021-05-15",
+            },
+            year: 2021,
+        });
     });
 
     describe("Arrow behaviour", () => {
@@ -43,7 +93,7 @@ describe("TimeSlotWeekCalendar", () => {
             );
             const leftArrowButton = screen.getByTestId("left-arrow-btn");
             fireEvent.click(leftArrowButton);
-            expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
+            expect(onWeekDisplayChange).toHaveBeenCalledTimes(2);
             expect(onWeekDisplayChange).toHaveBeenCalledWith({
                 month: 12,
                 week: {
@@ -64,7 +114,7 @@ describe("TimeSlotWeekCalendar", () => {
             );
             const rightArrowButton = screen.getByTestId("right-arrow-btn");
             fireEvent.click(rightArrowButton);
-            expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
+            expect(onWeekDisplayChange).toHaveBeenCalledTimes(2);
             expect(onWeekDisplayChange).toHaveBeenCalledWith({
                 month: 1,
                 week: {
@@ -88,8 +138,9 @@ describe("TimeSlotWeekCalendar", () => {
                 );
                 const rightArrowButton = screen.getByTestId("right-arrow-btn");
                 fireEvent.click(rightArrowButton);
-                expect(onWeekDisplayChange).not.toHaveBeenCalled();
+                expect(onWeekDisplayChange).toBeCalledTimes(1);
             });
+
             it("should not be able to navigate above given minDate", () => {
                 const onWeekDisplayChange = jest.fn();
                 const minDate = dayjs("2021-01-01").startOf("week");
@@ -102,7 +153,7 @@ describe("TimeSlotWeekCalendar", () => {
                 );
                 const leftArrowButton = screen.getByTestId("left-arrow-btn");
                 fireEvent.click(leftArrowButton);
-                expect(onWeekDisplayChange).not.toHaveBeenCalled();
+                expect(onWeekDisplayChange).toBeCalledTimes(1);
             });
         });
     });
@@ -121,7 +172,7 @@ describe("TimeSlotWeekCalendar", () => {
             // select Feb month
             const FebMonthButton = screen.getByText("February");
             fireEvent.click(FebMonthButton);
-            expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
+            expect(onWeekDisplayChange).toHaveBeenCalledTimes(2);
             expect(onWeekDisplayChange).toHaveBeenCalledWith({
                 month: 2,
                 week: {
@@ -145,7 +196,7 @@ describe("TimeSlotWeekCalendar", () => {
             // select different year
             const yearButton = screen.getByText("2023");
             fireEvent.click(yearButton);
-            expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
+            expect(onWeekDisplayChange).toHaveBeenCalledTimes(2);
             expect(onWeekDisplayChange).toHaveBeenCalledWith({
                 month: 1,
                 week: {
@@ -156,8 +207,6 @@ describe("TimeSlotWeekCalendar", () => {
             });
         });
     });
-
-    // TODO : Add tests for slots behaviour
 
     describe("Slots behaviour", () => {
         // should render the given slots with correct start and end time
@@ -176,6 +225,7 @@ describe("TimeSlotWeekCalendar", () => {
                 },
             ],
         };
+
         it("should render the given slots with correct start and end time", () => {
             const onSlotClick = jest.fn();
             const minDate = dayjs("2021-01-01").startOf("week");
@@ -191,12 +241,12 @@ describe("TimeSlotWeekCalendar", () => {
             expect(screen.getByText("9:00 am")).toBeVisible();
             expect(screen.getByText("2:30 pm")).toBeVisible();
         });
-        it("should fire the given callback when clicked on a slot with relevant data", () => {
+
+        it("should fire onSlotClick with relevant data when slot is clickable", () => {
             const onSlotClick = jest.fn();
             const minDate = dayjs("2021-01-01").startOf("week");
             render(
                 <TimeSlotWeekView
-                    onWeekDisplayChange={onSlotClick}
                     onSlotClick={onSlotClick}
                     currentCalendarDate={"2021-01-01"}
                     slots={slots}
@@ -218,7 +268,8 @@ describe("TimeSlotWeekCalendar", () => {
                 },
             });
         });
-        it("should fire the given callback when clicked on a slot with relevant data", () => {
+
+        it("should not fire onSlotClick when slot is not clickable", () => {
             const disabledSlots: { [date: string]: TimeSlot[] } = {
                 "2021-01-01": [
                     {
@@ -238,7 +289,6 @@ describe("TimeSlotWeekCalendar", () => {
             const minDate = dayjs("2021-01-01").startOf("week");
             render(
                 <TimeSlotWeekView
-                    onWeekDisplayChange={onSlotClick}
                     onSlotClick={onSlotClick}
                     currentCalendarDate={"2021-01-01"}
                     slots={disabledSlots}
@@ -250,11 +300,13 @@ describe("TimeSlotWeekCalendar", () => {
             expect(onSlotClick).toHaveBeenCalledTimes(0);
         });
     });
-    it("updates the calendarDate state when the value prop changes", () => {
+
+    it("updates the visible week when the value prop changes", () => {
         const { rerender } = render(<TimeSlotWeekView value="2022-05-26" />);
         expect(screen.getByText("May")).toBeVisible();
         expect(screen.getByText("2022")).toBeVisible();
         expect(screen.getByText("26")).toBeVisible();
+
         rerender(<TimeSlotWeekView value="2023-06-01" />);
         expect(screen.getByText("Jun")).toBeVisible();
         expect(screen.getByText("2023")).toBeVisible();

@@ -33,6 +33,8 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     variant?: Variant | undefined;
     /** Selection to respect start or end range. */
     selectWithinRange?: boolean | undefined;
+    /** The initially visible calendar month */
+    initialCalendarDate?: string | undefined;
     /** Function to handle cancel/done .*/
     onDismiss?: ((action: CalendarAction) => void) | undefined;
     /** Called when there is a change in the current visible month and year */
@@ -60,7 +62,7 @@ export interface YearMonthDisplay {
 }
 
 export interface InternalCalendarRef {
-    defaultView: () => void;
+    reset: () => void;
 }
 
 // =============================================================================

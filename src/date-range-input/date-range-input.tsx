@@ -62,6 +62,7 @@ export const DateRangeInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [initialCalendarDate, setInitialCalendarDate] = useState<string>();
     const [hoverValue, setHoverValue] = useState<string>(undefined);
     const [
         { selectedStart, selectedEnd, currentFocus, isStartDirty, isEndDirty },
@@ -155,6 +156,14 @@ export const DateRangeInput = ({
     useEffect(() => {
         actions.resetRange({ start: value, end: valueEnd });
     }, [value, valueEnd]);
+
+    useEffect(() => {
+        if (currentFocus === "start") {
+            setInitialCalendarDate(selectedStart);
+        } else if (currentFocus === "end") {
+            setInitialCalendarDate(selectedEnd);
+        }
+    }, [currentFocus]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -407,6 +416,7 @@ export const DateRangeInput = ({
                 ref={calendarRef}
                 type="input"
                 variant="range"
+                initialCalendarDate={initialCalendarDate}
                 isOpen={currentFocus !== "none"}
                 withButton={withButton}
                 value={selectedStart}
