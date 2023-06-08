@@ -3,18 +3,18 @@ import { Color } from "../color/color";
 import { ButtonStyle, SizeType } from "./types";
 
 interface StyleProps {
-    $sizeType: SizeType;
     $buttonStyle: ButtonStyle;
+    $sizeType: SizeType;
 }
 
 export const Main = styled.button<StyleProps>`
-    display: flex;
-    justify-content: center;
     align-items: center;
     background-color: ${Color.Primary};
-    color: ${Color.Neutral[8]};
     border-radius: 0.25rem;
+    color: ${Color.Neutral[8]};
     cursor: pointer;
+    display: flex;
+    justify-content: center;
 
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
@@ -63,22 +63,22 @@ export const Main = styled.button<StyleProps>`
             case "secondary":
                 return css`
                     background-color: ${Color.Neutral[8]};
-                    color: ${Color.Primary};
                     border: 1px solid ${Color.Primary};
+                    color: ${Color.Primary};
                 `;
 
             case "light":
                 return css`
                     background-color: ${Color.Neutral[8]};
-                    color: ${Color.Primary};
                     border: 1px solid ${Color.Neutral[5]};
+                    color: ${Color.Primary};
                 `;
             case "primary":
             default:
                 return css`
                     background-color: ${Color.Primary};
-                    color: ${Color.Neutral[8]};
                     border: none;
+                    color: ${Color.Neutral[8]};
                 `;
         }
     }}
@@ -87,8 +87,8 @@ export const Main = styled.button<StyleProps>`
     }
     &:disabled {
         background-color: ${Color.Neutral[6]};
-        color: ${Color.Neutral[3]};
         border: 1px solid ${Color.Neutral[6]};
+        color: ${Color.Neutral[3]};
         cursor: not-allowed;
 
         &:hover {
@@ -103,36 +103,36 @@ export const Main = styled.button<StyleProps>`
                 case "primary":
                     return css`
                         background-color: ${Color.Primary};
-                        color: ${Color.Neutral[8]};
                         border: none;
+                        color: ${Color.Neutral[8]};
                     `;
                 case "secondary":
                     return css`
                         background-color: ${Color.Neutral[8]};
-                        color: ${Color.Primary};
                         border: 1px solid ${Color.Primary};
+                        color: ${Color.Primary};
                     `;
 
                 case "light":
                     return css`
                         background-color: ${Color.Neutral[8]};
-                        color: ${Color.Primary};
                         border: 1px solid ${Color.Neutral[5]};
+                        color: ${Color.Primary};
                     `;
 
                 default:
                     return css`
                         background-color: ${Color.Primary};
-                        color: ${Color.Neutral[8]};
                         border: none;
+                        color: ${Color.Neutral[8]};
                     `;
             }
         }}
 
         :disabled {
             background-color: ${Color.Neutral[6]};
-            color: ${Color.Primary};
             border: none;
+            color: ${Color.Primary};
             cursor: not-allowed;
         }
     }

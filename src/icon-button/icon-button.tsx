@@ -6,10 +6,10 @@ import { IconButtonProps } from "./types";
 const Component = (
     {
         "data-testid": dataTestId,
-        children,
-        type = "button",
         buttonStyle = "primary",
+        children,
         sizeType = "default",
+        type = "button",
         ...otherProps
     }: IconButtonProps,
     ref: ButtonRef

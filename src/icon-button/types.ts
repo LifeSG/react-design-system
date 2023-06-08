@@ -1,8 +1,6 @@
 export interface IconButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     "data-testid"?: string | undefined;
-    focusHighlight?: boolean;
-    focusOutline?: "none" | "browser";
     buttonStyle?: ButtonStyle;
     sizeType?: SizeType;
 }
