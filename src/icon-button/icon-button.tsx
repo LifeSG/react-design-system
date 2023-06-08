@@ -5,12 +5,8 @@ import { IconButtonProps } from "./types";
 
 const Component = (
     {
-        id,
         "data-testid": dataTestId,
-        className,
         children,
-        focusHighlight = true,
-        focusOutline = "none",
         type = "button",
         buttonStyle = "primary",
         sizeType = "default",
@@ -20,12 +16,8 @@ const Component = (
 ) => {
     return (
         <Main
-            className={className}
-            id={id || "iconButton"}
             data-testid={dataTestId || "iconButton"}
             ref={ref}
-            $outline={focusOutline}
-            $highlight={focusHighlight}
             type={type}
             $sizeType={sizeType}
             $buttonStyle={buttonStyle}

@@ -3,8 +3,6 @@ import { Color } from "../color/color";
 import { ButtonStyle, SizeType } from "./types";
 
 interface StyleProps {
-    $outline: "none" | "browser";
-    $highlight: boolean;
     $sizeType: SizeType;
     $buttonStyle: ButtonStyle;
 }
@@ -83,11 +81,18 @@ export const Main = styled.button<StyleProps>`
                 `;
         }
     }}
+    &:hover {
+        box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
+    }
     &:disabled {
         background-color: ${Color.Neutral[6]};
         color: ${Color.Neutral[3]};
         border: 1px solid ${Color.Neutral[6]};
         cursor: not-allowed;
+
+        &:hover {
+            box-shadow: none;
+        }
     }
 
     &:active,
