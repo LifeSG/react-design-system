@@ -37,9 +37,9 @@ export interface FileUploadProps extends FileInputProps {
     onDelete?: (fileItem: FileItemProps) => void;
     title?: string | JSX.Element | undefined;
     description?: string | JSX.Element | undefined;
+    /** The style type for the component. Values "bordered" | "no-border" */
     styleType?: FileUploadStyle | undefined;
     maxFiles?: number | undefined;
-    errorMessage?: string | undefined;
     warning?: string | JSX.Element | undefined;
     fileItems?: FileItemProps[] | undefined;
     /** If set, file items will be editable (only image files) */

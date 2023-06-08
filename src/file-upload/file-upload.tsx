@@ -19,14 +19,13 @@ export const FileUpload = ({
     title,
     description,
     maxFiles, // TODO: In consideration. Deciding if it should be smart or parent handle
-    errorMessage, // TODO: Clarifying with Selig if this is needed
     warning,
     className,
     name,
     id,
     accept,
     capture,
-    multiple, // FIXME: Trying to clarify if we want to allow feature
+    multiple,
     disabled,
     onChange,
     onDelete,
@@ -93,6 +92,7 @@ export const FileUpload = ({
             border={styleType === "bordered"}
             className={className}
             name={name}
+            multiple={multiple}
         >
             <TitleContainer>
                 {title && <Title weight="regular">{title}</Title>}
