@@ -13,12 +13,12 @@ export const RBSDesignTokenSet: DesignTokenSet = {
       0px 2px 8px ${Color.Shadow.Elevation}
     `,
     Table: {
-        Header: css`#F5F5F5`,
+        Header: "#F5F5F5",
         Cell: {
-            Primary: css`#FBFBFB`,
-            Secondary: css`#FFFFFF`,
-            Selected: css`#F0F6FF`,
-            Hover: css`#DDE6FD`,
+            Primary: "#FBFBFB",
+            Secondary: "#FFFFFF",
+            Selected: "#F0F6FF",
+            Hover: "#DDE6FD",
         },
     },
 };

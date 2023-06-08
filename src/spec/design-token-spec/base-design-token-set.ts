@@ -13,12 +13,12 @@ export const BaseDesignTokenSet: DesignTokenSet = {
       0px 2px 8px ${Color.Shadow.Elevation}
     `,
     Table: {
-        Header: css`#F5F5F5`,
+        Header: "#F5F5F5",
         Cell: {
-            Primary: css`#FBFBFB`,
-            Secondary: css`#FFFFFF`,
-            Selected: css`#F9F6FF`,
-            Hover: css`#E8E1F5`,
+            Primary: "#FBFBFB",
+            Secondary: "#FFFFFF",
+            Selected: "#F9F6FF",
+            Hover: "#E8E1F5",
         },
     },
 };
