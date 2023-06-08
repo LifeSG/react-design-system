@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { ButtonStyle, SizeType } from "./types";
+import { SizeType, StyleType } from "./types";
 
 interface StyleProps {
-    $buttonStyle: ButtonStyle;
+    $buttonStyle: StyleType;
     $sizeType: SizeType;
 }
 
@@ -93,47 +93,6 @@ export const Main = styled.button<StyleProps>`
 
         &:hover {
             box-shadow: none;
-        }
-    }
-
-    &:active,
-    &:focus {
-        ${(props) => {
-            switch (props.$buttonStyle) {
-                case "primary":
-                    return css`
-                        background-color: ${Color.Primary};
-                        border: none;
-                        color: ${Color.Neutral[8]};
-                    `;
-                case "secondary":
-                    return css`
-                        background-color: ${Color.Neutral[8]};
-                        border: 1px solid ${Color.Primary};
-                        color: ${Color.Primary};
-                    `;
-
-                case "light":
-                    return css`
-                        background-color: ${Color.Neutral[8]};
-                        border: 1px solid ${Color.Neutral[5]};
-                        color: ${Color.Primary};
-                    `;
-
-                default:
-                    return css`
-                        background-color: ${Color.Primary};
-                        border: none;
-                        color: ${Color.Neutral[8]};
-                    `;
-            }
-        }}
-
-        :disabled {
-            background-color: ${Color.Neutral[6]};
-            border: none;
-            color: ${Color.Primary};
-            cursor: not-allowed;
         }
     }
 `;
