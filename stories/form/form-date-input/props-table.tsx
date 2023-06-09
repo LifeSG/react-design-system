@@ -133,6 +133,29 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a defocus on the field is made.",
                 propTypes: ["() => void"],
             },
+            {
+                name: "onYearMonthDisplayChange",
+                description:
+                    "Called when the current displayed month and year changes",
+                propTypes: ["(value: YearMonthDisplay) => void"],
+            },
+        ],
+    },
+    {
+        name: "YearMonthDisplay",
+        attributes: [
+            {
+                name: "year",
+                description: (
+                    <>The current displayed year in {code("YYYY")} format</>
+                ),
+                propTypes: ["number"],
+            },
+            {
+                name: "month",
+                description: "The current displayed month, from 1 to 12",
+                propTypes: ["number"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
