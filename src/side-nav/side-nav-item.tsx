@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import {
+    Container,
     DefaultButton,
     IconContainer,
     TitleText,
@@ -52,14 +53,16 @@ export const SideNavItem = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <DefaultButton
-            styleType="link"
-            onClick={handleOnClick}
-            {...otherProps}
-            $highlight={selected}
-        >
-            <IconContainer>{icon}</IconContainer>
-            <TitleText>{title}</TitleText>
-        </DefaultButton>
+        <Container>
+            <DefaultButton
+                styleType="link"
+                onClick={handleOnClick}
+                {...otherProps}
+                $highlight={selected}
+            >
+                <IconContainer>{icon}</IconContainer>
+                <TitleText>{title}</TitleText>
+            </DefaultButton>
+        </Container>
     );
 };
