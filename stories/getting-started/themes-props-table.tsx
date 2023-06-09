@@ -9,7 +9,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "colorScheme",
                 mandatory: true,
                 description: <>Specifies the color scheme of the theme</>,
-                propTypes: [`"base"`, `"bookingsg"`],
+                propTypes: [`"base"`, `"bookingsg"`, `"rbs"`],
             },
             {
                 name: "textStyleScheme",
@@ -31,7 +31,7 @@ const DATA: ApiTableSectionProps[] = [
                         properties throughout components
                     </>
                 ),
-                propTypes: [`"base"`],
+                propTypes: [`"base"`, `"rbs"`],
             },
             {
                 name: "resourceScheme",
@@ -42,7 +42,7 @@ const DATA: ApiTableSectionProps[] = [
                         text values in certain components
                     </>
                 ),
-                propTypes: [`"base"`, `"bookingsg"`],
+                propTypes: [`"base"`, `"bookingsg"`, `"rbs"`],
             },
             {
                 name: "options",

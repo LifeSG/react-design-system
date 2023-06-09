@@ -7,7 +7,7 @@ export type ThemeLayout = "normal";
 // =============================================================================
 // COLOR THEMES
 // =============================================================================
-export type ColorScheme = "base" | "bookingsg";
+export type ColorScheme = "base" | "bookingsg" | "rbs";
 export type ColorCollectionsMap = {
     [key in ColorScheme]: ColorSet;
 };
@@ -23,7 +23,7 @@ export type FontStyleCollectionsMap = {
 // =============================================================================
 // DESIGN TOKEN THEMES
 // =============================================================================
-export type DesignTokenScheme = "base";
+export type DesignTokenScheme = "base" | "rbs";
 export type DesignTokenCollectionsMap = {
     [key in DesignTokenScheme]: DesignTokenSet;
 };
@@ -31,7 +31,7 @@ export type DesignTokenCollectionsMap = {
 // =============================================================================
 // RESOURCE THEMES
 // =============================================================================
-export type ResourceScheme = "base" | "bookingsg";
+export type ResourceScheme = "base" | "bookingsg" | "rbs";
 
 // =============================================================================
 // GENERAL

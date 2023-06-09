@@ -1,5 +1,6 @@
 import { CssValue, DesignTokenSet } from "../design-token/types";
 import { BaseDesignTokenSet } from "../spec/design-token-spec/base-design-token-set";
+import { RBSDesignTokenSet } from "../spec/design-token-spec/rbs-design-token-set";
 import { getCollection, getValue } from "./helper";
 import {
     DesignTokenCollectionsMap,
@@ -18,6 +19,7 @@ const DesignTokenSpec: ThemeCollectionSpec<
 > = {
     collections: {
         base: BaseDesignTokenSet,
+        rbs: RBSDesignTokenSet,
     },
     defaultValue: "base",
 };
