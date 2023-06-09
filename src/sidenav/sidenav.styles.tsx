@@ -23,11 +23,13 @@ export const DesktopContainer = styled(Container)<StyleProps>`
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;
+        visibility: hidden;
     }
 `;
 
 export const MobileContainer = styled(Container)`
     display: none;
+    visibility: hidden;
     ${MediaQuery.MaxWidth.mobileL} {
         display: none; // NOTE: Since mobile view not supported yet
     }
