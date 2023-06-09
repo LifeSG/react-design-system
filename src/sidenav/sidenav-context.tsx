@@ -6,24 +6,24 @@ import {
     useState,
 } from "react";
 
-interface SideNavContextProps {
+interface SidenavContextProps {
     selectedItem: string | undefined;
     setSelectedItem: Dispatch<SetStateAction<string | undefined>>;
 }
 
-interface SideNavProviderProps {
+interface SidenavProviderProps {
     children: React.ReactNode;
 }
 
-export const SideNavContext = createContext<SideNavContextProps>({
+export const SidenavContext = createContext<SidenavContextProps>({
     selectedItem: undefined,
     setSelectedItem: (prevState: SetStateAction<string | undefined>) =>
         prevState,
 });
 
-export function SideNavProvider({
+export function SidenavProvider({
     children,
-}: SideNavProviderProps): JSX.Element {
+}: SidenavProviderProps): JSX.Element {
     const [selectedItem, setSelectedItem] = useState<string | undefined>(
         undefined
     );
@@ -34,8 +34,8 @@ export function SideNavProvider({
     );
 
     return (
-        <SideNavContext.Provider value={value}>
+        <SidenavContext.Provider value={value}>
             {children}
-        </SideNavContext.Provider>
+        </SidenavContext.Provider>
     );
 }
