@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import {
-    Container,
     DefaultButton,
-    TitleContainer,
+    IconContainer,
+    TitleText,
 } from "./side-nav-item.styles";
 import { SideNavItemProps } from "./types";
 import { SideNavContext } from "./side-nav-context";
@@ -18,7 +18,6 @@ export const SideNavItem = ({
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
     const { selectedItem, setSelectedItem } = useContext(SideNavContext);
-    const [highlight, setHighlight] = useState<boolean>();
     const [selected, setSelected] = useState<boolean>();
 
     // =============================================================================
@@ -33,28 +32,14 @@ export const SideNavItem = ({
     useEffect(() => {
         if (selectedItem === id && !selected) {
             setSelected(true);
-            setHighlight(true);
         } else if (selected) {
             setSelected(false);
-            setHighlight(false);
         }
     }, [selectedItem]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleMouseEnter = () => {
-        if (!highlight && !selected) {
-            setHighlight(true);
-        }
-    };
-
-    const handleMouseLeave = () => {
-        if (highlight && !selected) {
-            setHighlight(false);
-        }
-    };
-
     const handleOnClick = () => {
         if (selected) return;
         setSelectedItem(id);
@@ -67,16 +52,14 @@ export const SideNavItem = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Container
-            {...otherProps}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+        <DefaultButton
+            styleType="link"
             onClick={handleOnClick}
+            {...otherProps}
+            $highlight={selected}
         >
-            <DefaultButton $highlight={highlight} styleType="link">
-                {icon}
-            </DefaultButton>
-            <TitleContainer $highlight={highlight}>{title}</TitleContainer>
-        </Container>
+            <IconContainer>{icon}</IconContainer>
+            <TitleText>{title}</TitleText>
+        </DefaultButton>
     );
 };
