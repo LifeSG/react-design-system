@@ -1,6 +1,9 @@
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { useEffect, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import { ProgressBar } from "../shared/progress-bar";
+import { StringHelper } from "../util";
 import {
     Content,
     DesktopErrorMessage,
@@ -14,8 +17,8 @@ import {
     LoadingActionContainer,
     MobileErrorMessage,
 } from "./file-item.styles";
-import { FileItemProps } from "./types";
 import { FileUploadHelper } from "./helper";
+import { FileItemProps } from "./types";
 
 interface Props extends FileItemProps {
     onDelete: () => void;
@@ -36,9 +39,20 @@ export const FileItem = ({
     onEdit,
 }: Props) => {
     // =========================================================================
-    // EVENT HANDLERS
+    // CONST, STATE, REFS
     // =========================================================================
+    const [fileName, setFileName] = useState<string>();
     const isLoading = progress < 1;
+
+    const nameSectionRef = useRef<HTMLDivElement>();
+    const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
+
+    // =========================================================================
+    // EFFECTS
+    // =========================================================================
+    useEffect(() => {
+        setFileName(getTruncatedText(name));
+    }, [wrapperWidth]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -49,6 +63,24 @@ export const FileItem = ({
 
     const handleEdit = () => {
         if (onEdit) onEdit();
+    };
+
+    // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const getTruncatedText = (value: string) => {
+        const widthOfElement =
+            nameSectionRef && nameSectionRef.current
+                ? nameSectionRef.current.getBoundingClientRect().width
+                : 0;
+
+        return StringHelper.truncateOneLine(
+            value,
+            widthOfElement,
+            widthOfElement / 2,
+            widthOfElement / 2 / 8, // Arbitrary
+            16 // Font size
+        );
     };
 
     // =========================================================================
@@ -106,17 +138,18 @@ export const FileItem = ({
     return (
         <Item
             id={id}
+            ref={wrapperRef}
             $error={!!errorMessage}
             $loading={isLoading}
             $editable={FileUploadHelper.isSupportedImageType(type)}
         >
             <Content>
-                <ItemNameSection>
+                <ItemNameSection ref={nameSectionRef}>
                     <ItemText
                         data-testid="name"
                         weight={description ? "semibold" : "regular"}
                     >
-                        {name}
+                        {fileName}
                     </ItemText>
                     {description && (
                         <ItemText data-testid="description">
