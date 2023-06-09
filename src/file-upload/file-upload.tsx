@@ -94,12 +94,16 @@ export const FileUpload = ({
             name={name}
             multiple={multiple}
         >
-            <TitleContainer>
-                {title && <Title weight="regular">{title}</Title>}
-                {description && (
-                    <Description weight="semibold">{description}</Description>
-                )}
-            </TitleContainer>
+            {(title || description) && (
+                <TitleContainer>
+                    {title && <Title weight="regular">{title}</Title>}
+                    {description && (
+                        <Description weight="semibold">
+                            {description}
+                        </Description>
+                    )}
+                </TitleContainer>
+            )}
             {warning && <WarningAlert type="warning">{warning}</WarningAlert>}
             {renderItems()}
             <UploadButtonContainer>
