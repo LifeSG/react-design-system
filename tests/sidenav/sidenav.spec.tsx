@@ -1,26 +1,26 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { SideNav } from "../../src";
+import { Sidenav } from "../../src";
 import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
-describe("SideNav", () => {
+describe("Sidenav", () => {
     beforeEach(() => {
         jest.resetAllMocks();
     });
 
     it("should render component", () => {
         render(
-            <SideNav data-testid="side-nav">
-                <SideNav.Group data-testid="side-nav-group">
-                    <SideNav.Item
+            <Sidenav data-testid="side-nav">
+                <Sidenav.Group data-testid="side-nav-group">
+                    <Sidenav.Item
                         id="dashboard"
                         title="Dashboard"
                         icon={<Square2x2Icon />}
-                    ></SideNav.Item>
-                </SideNav.Group>
-            </SideNav>
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+            </Sidenav>
         );
 
         expect(screen.getByTestId("side-nav")).toBeInTheDocument();
@@ -28,22 +28,22 @@ describe("SideNav", () => {
 
     it("should render multiple groups and render separator correctly", () => {
         render(
-            <SideNav data-testid="side-nav">
-                <SideNav.Group data-testid="side-nav-group-1">
-                    <SideNav.Item
+            <Sidenav data-testid="side-nav">
+                <Sidenav.Group data-testid="side-nav-group-1">
+                    <Sidenav.Item
                         id="dashboard"
                         title="Dashboard"
                         icon={<Square2x2Icon />}
-                    ></SideNav.Item>
-                </SideNav.Group>
-                <SideNav.Group data-testid="side-nav-group-2">
-                    <SideNav.Item
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+                <Sidenav.Group data-testid="side-nav-group-2">
+                    <Sidenav.Item
                         id="users"
                         title="Users"
                         icon={<Person2Icon />}
-                    ></SideNav.Item>
-                </SideNav.Group>
-            </SideNav>
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+            </Sidenav>
         );
         expect(screen.getByTestId("side-nav-group-1")).toBeInTheDocument();
         expect(screen.getByTestId("side-nav-group-2")).toBeInTheDocument();
@@ -51,40 +51,40 @@ describe("SideNav", () => {
 
     it("should render separator if separator value is true", () => {
         render(
-            <SideNav data-testid="side-nav">
-                <SideNav.Group data-testid="side-nav-group-1" separator={true}>
-                    <SideNav.Item
+            <Sidenav data-testid="side-nav">
+                <Sidenav.Group data-testid="side-nav-group-1" separator={true}>
+                    <Sidenav.Item
                         id="dashboard"
                         title="Dashboard"
                         icon={<Square2x2Icon />}
-                    ></SideNav.Item>
-                </SideNav.Group>
-                <SideNav.Group data-testid="side-nav-group-2">
-                    <SideNav.Item
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+                <Sidenav.Group data-testid="side-nav-group-2">
+                    <Sidenav.Item
                         id="dashboard"
                         title="Dashboard"
                         icon={<Square2x2Icon />}
-                    ></SideNav.Item>
-                </SideNav.Group>
-            </SideNav>
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+            </Sidenav>
         );
         expect(screen.getByTestId("divider")).toBeInTheDocument();
         expect(screen.getAllByTestId("divider").length).toEqual(1);
     });
 
-    it("should render icon and text of sideNav item", () => {
+    it("should render icon and text of Sidenav item", () => {
         const ITEM_TEXT = "Dashboard";
         render(
-            <SideNav data-testid="side-nav">
-                <SideNav.Group data-testid="side-nav-group">
-                    <SideNav.Item
+            <Sidenav data-testid="side-nav">
+                <Sidenav.Group data-testid="side-nav-group">
+                    <Sidenav.Item
                         id="dashboard"
                         title={ITEM_TEXT}
                         icon={<Square2x2Icon />}
                         data-testid="dashboard-item"
-                    ></SideNav.Item>
-                </SideNav.Group>
-            </SideNav>
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+            </Sidenav>
         );
         const element = screen.getByTestId("dashboard-item");
         expect(element).toBeInTheDocument();
@@ -92,28 +92,28 @@ describe("SideNav", () => {
         expect(element.innerHTML).toContain("svg");
     });
 
-    it("should trigger onClick when click on sideNav item", () => {
+    it("should trigger onClick when click on Sidenav item", () => {
         const spy = jest.fn();
         render(
-            <SideNav data-testid="side-nav">
-                <SideNav.Group data-testid="side-nav-group">
-                    <SideNav.Item
+            <Sidenav data-testid="side-nav">
+                <Sidenav.Group data-testid="side-nav-group">
+                    <Sidenav.Item
                         id="dashboard"
                         title="Dashboard"
                         icon={<Square2x2Icon />}
                         data-testid="dashboard-item"
                         onClick={spy}
-                    ></SideNav.Item>
-                    <SideNav.Item
+                    ></Sidenav.Item>
+                    <Sidenav.Item
                         id="users"
                         title="Users"
                         icon={<Person2Icon />}
                         data-testid="users-item"
                         onClick={spy}
                         selected={true}
-                    ></SideNav.Item>
-                </SideNav.Group>
-            </SideNav>
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+            </Sidenav>
         );
         const userElement = screen.getByTestId("users-item");
         act(() => {

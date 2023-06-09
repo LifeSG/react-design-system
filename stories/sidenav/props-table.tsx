@@ -3,7 +3,7 @@ import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
-const SIDE_NAV_DATA: ApiTableSectionProps[] = [
+const SIDENAV_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
@@ -11,7 +11,7 @@ const SIDE_NAV_DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The groups and the items of the <code>SideNav</code>
+                        The groups and the items of the <code>Sidenav</code>
                     </>
                 ),
                 propTypes: ["React.ReactNode"],
@@ -30,7 +30,7 @@ const SIDE_NAV_DATA: ApiTableSectionProps[] = [
     },
 ];
 
-const SIDE_NAV_GROUP_DATA: ApiTableSectionProps[] = [
+const SIDENAV_GROUP_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
@@ -63,7 +63,7 @@ const SIDE_NAV_GROUP_DATA: ApiTableSectionProps[] = [
     },
 ];
 
-const SIDE_NAV_ITEM_DATA: ApiTableSectionProps[] = [
+const SIDENAV_ITEM_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
@@ -110,16 +110,16 @@ const SIDE_NAV_ITEM_DATA: ApiTableSectionProps[] = [
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
-        title: "SideNav",
-        component: <ApiTable sections={SIDE_NAV_DATA} />,
+        title: "Sidenav",
+        component: <ApiTable sections={SIDENAV_DATA} />,
     },
     {
-        title: "SideNav.Group",
-        component: <ApiTable sections={SIDE_NAV_GROUP_DATA} />,
+        title: "Sidenav.Group",
+        component: <ApiTable sections={SIDENAV_GROUP_DATA} />,
     },
     {
-        title: "SideNav.Item",
-        component: <ApiTable sections={SIDE_NAV_ITEM_DATA} />,
+        title: "Sidenav.Item",
+        component: <ApiTable sections={SIDENAV_ITEM_DATA} />,
     },
 ];
 

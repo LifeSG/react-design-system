@@ -2,7 +2,7 @@ import { GearIcon } from "@lifesg/react-icons/gear";
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { IconButton } from "src/icon-button";
-import { SideNav } from "src/side-nav";
+import { Sidenav } from "src/sidenav";
 import {
     Heading3,
     Heading4,
@@ -16,123 +16,121 @@ import { DocIcon } from "@lifesg/react-icons/doc";
 import { CalendarIcon } from "@lifesg/react-icons/calendar";
 import { Person2Icon } from "@lifesg/react-icons/person-2";
 
-<Meta title="Modules/SideNav" component={SideNav} />
+<Meta title="Modules/Sidenav" component={Sidenav} />
 
-<Title>SideNav</Title>
+<Title>Sidenav</Title>
 
 <Secondary>Overview</Secondary>
 
 A component that display navigations with multiples levels
 
 ```tsx
-import { SideNav } from "@lifesg/react-design-system/side-nav";
+import { Sidenav } from "@lifesg/react-design-system/sidenav";
 ```
 
 <Canvas>
-    <Story name="SideNav">
+    <Story name="Sidenav">
         {() => {
             return (
-                <SideNav>
-                    <SideNav.Group>
-                        <SideNav.Item
+                <Sidenav>
+                    <Sidenav.Group>
+                        <Sidenav.Item
                             id="dashboard"
                             title="Dashboard"
                             icon={<Square2x2Icon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             id="reports"
                             title="Reports"
                             icon={<DocIcon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             id="bookings"
                             title="Bookings"
                             icon={<CalendarIcon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             id="users2"
                             title="Users"
                             icon={<Person2Icon />}
-                        ></SideNav.Item>
-                    </SideNav.Group>
-                </SideNav>
+                        ></Sidenav.Item>
+                    </Sidenav.Group>
+                </Sidenav>
             );
         }}
     </Story>
 </Canvas>
 
-<Heading3>Separate group with divider</Heading3>
+<Heading3>With group divider</Heading3>
 
-Sepate groups by passing `separate` value as `true` in `Group`
+You are able to separate groups with a divider using the `separate` prop.
 
 <Canvas>
-    <Story name="Separate groups">
+    <Story name="With group divider">
         {() => {
             return (
-                <SideNav>
-                    <SideNav.Group separator={true}>
-                        <SideNav.Item
+                <Sidenav>
+                    <Sidenav.Group separator={true}>
+                        <Sidenav.Item
                             id="dashboard"
                             title="Dashboard"
                             icon={<Square2x2Icon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             id="reports"
                             title="Reports"
                             icon={<DocIcon />}
-                        ></SideNav.Item>
-                    </SideNav.Group>
-                    <SideNav.Group>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                    </Sidenav.Group>
+                    <Sidenav.Group>
+                        <Sidenav.Item
                             id="bookings"
                             title="Bookings"
                             icon={<CalendarIcon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             id="users2"
                             title="Users"
                             icon={<Person2Icon />}
-                        ></SideNav.Item>
-                    </SideNav.Group>
-                </SideNav>
+                        ></Sidenav.Item>
+                    </Sidenav.Group>
+                </Sidenav>
             );
         }}
     </Story>
 </Canvas>
 
-<Heading3>Pre select item</Heading3>
-
-Pre select item by passing `selected` value `true` for `SideNav.Item`
+<Heading3>With selected item</Heading3>
 
 <Canvas>
-    <Story name="Pre select item">
+    <Story name="With selected item">
         {() => {
             return (
-                <SideNav>
-                    <SideNav.Group>
-                        <SideNav.Item
+                <Sidenav>
+                    <Sidenav.Group>
+                        <Sidenav.Item
                             title="Dashboard"
                             icon={<Square2x2Icon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             title="Reports"
                             icon={<DocIcon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             title="Bookings"
                             icon={<CalendarIcon />}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             title="Archived user list with innactive users"
                             icon={<Person2Icon />}
                             selected={true}
-                        ></SideNav.Item>
-                        <SideNav.Item
+                        ></Sidenav.Item>
+                        <Sidenav.Item
                             title="Resources"
                             icon={<Person2Icon />}
-                        ></SideNav.Item>
-                    </SideNav.Group>
-                </SideNav>
+                        ></Sidenav.Item>
+                    </Sidenav.Group>
+                </Sidenav>
             );
         }}
     </Story>

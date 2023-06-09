@@ -4,21 +4,21 @@ import {
     DefaultButton,
     IconContainer,
     TitleText,
-} from "./side-nav-item.styles";
-import { SideNavItemProps } from "./types";
-import { SideNavContext } from "./side-nav-context";
+} from "./sidenav-item.styles";
+import { SidenavItemProps } from "./types";
+import { SidenavContext } from "./sidenav-context";
 
-export const SideNavItem = ({
+export const SidenavItem = ({
     icon,
     title,
     onClick,
     ...otherProps
-}: SideNavItemProps) => {
+}: SidenavItemProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
-    const { selectedItem, setSelectedItem } = useContext(SideNavContext);
+    const { selectedItem, setSelectedItem } = useContext(SidenavContext);
     const [selected, setSelected] = useState<boolean>();
 
     // =============================================================================

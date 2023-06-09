@@ -1,11 +1,11 @@
-import { Container, Divider } from "./side-nav-group.styles";
-import { SideNavGroupProps } from "./types";
+import { Container, Divider } from "./sidenav-group.styles";
+import { SidenavGroupProps } from "./types";
 
-export const SideNavGroup = ({
+export const SidenavGroup = ({
     separator,
     children,
     ...otherProps
-}: SideNavGroupProps) => {
+}: SidenavGroupProps) => {
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
