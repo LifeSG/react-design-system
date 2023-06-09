@@ -1,5 +1,10 @@
 export interface IconButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    focusHighlight?: boolean;
-    focusOutline?: "none" | "browser";
+    "data-testid"?: string | undefined;
+    styleType?: StyleType;
+    sizeType?: SizeType;
 }
+
+export type StyleType = "primary" | "secondary" | "light";
+
+export type SizeType = "large" | "default" | "small";

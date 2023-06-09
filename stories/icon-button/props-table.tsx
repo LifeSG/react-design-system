@@ -6,17 +6,37 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "focusHighlight",
-                description: "Specifies if button is highlighted when focused",
-                propTypes: ["boolean"],
-                defaultValue: "true",
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            HTMLButtonElement
+                        </a>
+                    </>
+                ),
             },
             {
-                name: "focusOutline",
-                description:
-                    "Controls the outline style when button is focused",
-                propTypes: [`"none"`, `"browser"`],
-                defaultValue: `"none"`,
+                name: "data-testid",
+                description: "The test identifier of the component",
+                propTypes: ["string"],
+            },
+
+            {
+                name: "styleType",
+                description: "The style of the button",
+                propTypes: [`"primary"`, `"secondary"`, `"light"`],
+                defaultValue: `"primary"`,
+            },
+            {
+                name: "sizeType",
+                description: "The size of the button",
+                propTypes: [`"large"`, `"default"`, `"small"`],
+                defaultValue: `"default"`,
             },
         ],
     },

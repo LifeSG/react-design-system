@@ -1,8 +1,14 @@
 import { LockIcon } from "@lifesg/react-icons/lock";
 import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
 import { IconButton } from "src/icon-button";
-import { Secondary, Heading3, Title } from "../storybook-common";
+import {
+    Heading3,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
 import { PropsTable } from "./props-table";
+import { Grid, Row } from "./doc-elements";
 
 <Meta title="General/IconButton" component={IconButton} />
 
@@ -24,29 +30,68 @@ import { IconButton } from "@lifesg/react-design-system/icon-button";
     </Story>
 </Canvas>
 
-<Heading3>Highlight</Heading3>
+<Heading3>Variations</Heading3>
 
-By default, the button is highlighted when focused. This can be customised with the `focusHighlight` prop.
-
-<Preview>
-    <Story name="Highlight">
-        <IconButton focusHighlight={false}>
-            <LockIcon />
-        </IconButton>
-    </Story>
-</Preview>
-
-<Heading3>Outline</Heading3>
-
-By default, the button is not outlined when focused. To defer to the browser's default style, specify the `focusOutline` prop.
-
-(Try focusing the button below with the Tab key)
+The `IconButton` component comes in 3 sizes, a large, small and default size.
 
 <Preview>
-    <Story name="Outline">
-        <IconButton focusOutline="browser">
-            <LockIcon />
-        </IconButton>
+    <Story name="Variations">
+        <StoryContainer>
+            <Grid>
+                <Row>
+                    <span />
+                    <label>Primary</label>
+                    <label>Secondary</label>
+                    <label>Light</label>
+                    <label>Disabled</label>
+                </Row>
+                <Row>
+                    <label>Large</label>
+                    <IconButton sizeType="large" styleType="primary">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton sizeType="large" styleType="secondary">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton sizeType="large" styleType="light">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton sizeType="large" disabled>
+                        <LockIcon />
+                    </IconButton>
+                </Row>
+                <Row>
+                    <label>Default</label>
+                    <IconButton styleType="primary">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton styleType="secondary">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton styleType="light">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton disabled>
+                        <LockIcon />
+                    </IconButton>
+                </Row>
+                <Row>
+                    <label>Small</label>
+                    <IconButton sizeType="small" styleType="primary">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton sizeType="small" styleType="secondary">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton sizeType="small" styleType="light">
+                        <LockIcon />
+                    </IconButton>
+                    <IconButton sizeType="small" disabled>
+                        <LockIcon />
+                    </IconButton>
+                </Row>
+            </Grid>
+        </StoryContainer>
     </Story>
 </Preview>
 
@@ -66,7 +111,5 @@ You can also pass in custom components to the `IconButton`. In this example, we 
 </Preview>
 
 <Secondary>Component API</Secondary>
-
-The component also inherits the [Button](/docs/general-button--button) props.
 
 <PropsTable />
