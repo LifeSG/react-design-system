@@ -5,7 +5,7 @@ import {
     TitleContainer,
 } from "./side-nav-item.styles";
 import { SideNavItemProps } from "./types";
-import { SideNavContext } from "./side-nav.context";
+import { SideNavContext } from "./side-nav-context";
 
 export const SideNavItem = ({
     icon,

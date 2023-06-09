@@ -11,7 +11,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 1rem;
+    padding: 0.5rem 0.5rem;
     cursor: pointer;
 `;
 
