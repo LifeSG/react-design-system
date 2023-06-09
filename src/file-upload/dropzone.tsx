@@ -59,10 +59,6 @@ const Component = (
         }
     };
 
-    const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-        event.currentTarget.value = "";
-    };
-
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -92,7 +88,6 @@ const Component = (
                 multiple={multiple}
                 data-testid="dropzone-input"
                 onChange={handleChange}
-                onClick={handleClick}
             />
             {children}
             {isDragActive && renderDragOverlay()}
