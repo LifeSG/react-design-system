@@ -12,7 +12,7 @@ export const SideNavGroup = ({
     return (
         <Container {...otherProps}>
             {children}
-            {separator && <Divider />}
+            {separator && <Divider data-testid="divider" />}
         </Container>
     );
 };
