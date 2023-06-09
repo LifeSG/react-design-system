@@ -17,6 +17,9 @@ import { BaseTheme } from "@lifesg/react-design-system/theme";
 
 // The BookingSG theme
 import { BookingSGTheme } from "@lifesg/react-design-system/theme";
+
+// The RBS theme
+import { RBSTheme } from "@lifesg/react-design-system/theme";
 ```
 
 <Heading3>Basics</Heading3>
@@ -114,7 +117,7 @@ const SomeComponent = styled.div`
 
 <Heading3>Using the preset themes</Heading3>
 
-There are currently 2 preset themes. `BaseTheme` and `BookingSGTheme`. To use them, simply import them and pass it via the 2 methods mentioned [above](#basics).
+There are currently 3 preset themes. `BaseTheme`, `BookingSGTheme` and `RBSTheme`. To use them, simply import them and pass it via the 2 methods mentioned [above](#basics).
 
 ```tsx
 // app.tsx
@@ -157,6 +160,13 @@ const myCustomTheme: ThemeSpec = {
         },
         designToken: {
             InputBoxShadow: "inset 0 0 6px 1px blue",
+            Table: {
+                Header: "#EF413D"
+                Cell: {
+                    Primary: "#F58E8B"
+                    Hover: "#F26664"
+                }
+            }
         },
     },
 };

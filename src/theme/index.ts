@@ -14,4 +14,11 @@ export const BookingSGTheme: ThemeSpec = {
     [ThemeContextKeys.resourceScheme]: "bookingsg",
 };
 
+export const RBSTheme: ThemeSpec = {
+    [ThemeContextKeys.colorScheme]: "rbs",
+    [ThemeContextKeys.textStyleScheme]: "base",
+    [ThemeContextKeys.designTokenScheme]: "rbs",
+    [ThemeContextKeys.resourceScheme]: "rbs",
+};
+
 export * from "./types";
