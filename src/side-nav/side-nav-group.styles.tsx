@@ -1,11 +1,16 @@
 import styled from "styled-components";
+import { Color } from "../color";
 
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
 `;
 
-export const Divider = styled.hr`
-    margin: 1rem 1rem 0 1rem;
+export const Divider = styled.div`
+    margin: 0.5rem 0;
+    width: 6.5rem;
+    height: 1px;
+    background-color: ${Color.Neutral[5]};
 `;

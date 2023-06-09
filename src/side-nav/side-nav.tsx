@@ -2,7 +2,7 @@ import { DesktopContainer, MobileContainer } from "./side-nav.styles";
 import { SideNavProps } from "./types";
 import { SideNavItem } from "./side-nav-item";
 import { SideNavGroup } from "./side-nav-group";
-import { SideNavProvider } from "./side-nav.context";
+import { SideNavProvider } from "./side-nav-context";
 
 const SideNavBase = ({ children, ...otherProps }: SideNavProps) => {
     // =========================================================================
