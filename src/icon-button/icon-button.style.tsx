@@ -3,7 +3,7 @@ import { Color } from "../color/color";
 import { SizeType, StyleType } from "./types";
 
 interface StyleProps {
-    $buttonStyle: StyleType;
+    $styleType: StyleType;
     $sizeType: SizeType;
 }
 
@@ -59,7 +59,7 @@ export const Main = styled.button<StyleProps>`
     }}
 
     ${(props) => {
-        switch (props.$buttonStyle) {
+        switch (props.$styleType) {
             case "secondary":
                 return css`
                     background-color: ${Color.Neutral[8]};

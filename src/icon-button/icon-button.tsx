@@ -6,7 +6,7 @@ import { IconButtonProps } from "./types";
 const Component = (
     {
         "data-testid": dataTestId,
-        buttonStyle = "primary",
+        styleType = "primary",
         children,
         sizeType = "default",
         type = "button",
@@ -20,7 +20,7 @@ const Component = (
             ref={ref}
             type={type}
             $sizeType={sizeType}
-            $buttonStyle={buttonStyle}
+            $styleType={styleType}
             {...otherProps}
         >
             {children}

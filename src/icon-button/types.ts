@@ -1,7 +1,7 @@
 export interface IconButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     "data-testid"?: string | undefined;
-    buttonStyle?: StyleType;
+    styleType?: StyleType;
     sizeType?: SizeType;
 }
 

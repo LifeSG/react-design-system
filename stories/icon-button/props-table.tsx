@@ -27,8 +27,8 @@ const DATA: ApiTableSectionProps[] = [
             },
 
             {
-                name: "buttonStyle",
-                description: "The navigation action button",
+                name: "styleType",
+                description: "The style of the button",
                 propTypes: [
                     `"primary"`,
                     `"secondary"`,
@@ -39,7 +39,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "sizeType",
-                description: "The button style",
+                description: "The size of the button",
                 propTypes: [`"large"`, `"default"`, `"small"`],
                 defaultValue: `"default"`,
             },
