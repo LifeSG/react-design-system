@@ -29,12 +29,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "styleType",
                 description: "The style of the button",
-                propTypes: [
-                    `"primary"`,
-                    `"secondary"`,
-                    `"light"`,
-                    `"disabled"`,
-                ],
+                propTypes: [`"primary"`, `"secondary"`, `"light"`],
                 defaultValue: `"primary"`,
             },
             {
