@@ -96,7 +96,9 @@ export const FileUpload = ({
         >
             <TitleContainer>
                 {title && <Title weight="regular">{title}</Title>}
-                {description && <Description>{description}</Description>}
+                {description && (
+                    <Description weight="semibold">{description}</Description>
+                )}
             </TitleContainer>
             {warning && <WarningAlert type="warning">{warning}</WarningAlert>}
             {renderItems()}

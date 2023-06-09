@@ -20,6 +20,7 @@ export const Title = styled(Text.H4)`
 
 export const Description = styled(Text.BodySmall)`
     margin-bottom: 0;
+    color: ${Color.Neutral[3]};
 `;
 
 export const ItemsContainer = styled.ul`
@@ -42,7 +43,7 @@ export const UploadButtonContainer = styled.div`
     }
 `;
 
-export const UploadButton = styled(Button.Default)`
+export const UploadButton = styled(Button.Small)`
     width: 10rem;
 
     ${MediaQuery.MaxWidth.mobileL} {
