@@ -1,0 +1,141 @@
+import { GearIcon } from "@lifesg/react-icons/gear";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { IconButton } from "src/icon-button";
+import { SideNav } from "src/side-nav";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { PropsTable } from "./props-table";
+import { Square2x2Icon } from "@lifesg/react-icons/square-2x2";
+import { DocIcon } from "@lifesg/react-icons/doc";
+import { CalendarIcon } from "@lifesg/react-icons/calendar";
+import { Person2Icon } from "@lifesg/react-icons/person-2";
+
+<Meta title="Modules/SideNav" component={SideNav} />
+
+<Title>SideNav</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that display navigations with multiples levels
+
+```tsx
+import { SideNav } from "@lifesg/react-design-system/side-nav";
+```
+
+<Canvas>
+    <Story name="SideNav">
+        {() => {
+            return (
+                <SideNav>
+                    <SideNav.Group>
+                        <SideNav.Item
+                            id="dashboard"
+                            title="Dashboard"
+                            icon={<Square2x2Icon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            id="reports"
+                            title="Reports"
+                            icon={<DocIcon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            id="bookings"
+                            title="Bookings"
+                            icon={<CalendarIcon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            id="users2"
+                            title="Users"
+                            icon={<Person2Icon />}
+                        ></SideNav.Item>
+                    </SideNav.Group>
+                </SideNav>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Separate group with divider</Heading3>
+
+Sepate groups by passing `separate` value as `true` in `Group`
+
+<Canvas>
+    <Story name="Separate groups">
+        {() => {
+            return (
+                <SideNav>
+                    <SideNav.Group separator={true}>
+                        <SideNav.Item
+                            id="dashboard"
+                            title="Dashboard"
+                            icon={<Square2x2Icon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            id="reports"
+                            title="Reports"
+                            icon={<DocIcon />}
+                        ></SideNav.Item>
+                    </SideNav.Group>
+                    <SideNav.Group>
+                        <SideNav.Item
+                            id="bookings"
+                            title="Bookings"
+                            icon={<CalendarIcon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            id="users2"
+                            title="Users"
+                            icon={<Person2Icon />}
+                        ></SideNav.Item>
+                    </SideNav.Group>
+                </SideNav>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Pre select item</Heading3>
+
+Pre select item by passing `selected` value `true` for `SideNav.Item`
+
+<Canvas>
+    <Story name="Pre select item">
+        {() => {
+            return (
+                <SideNav>
+                    <SideNav.Group separator={true}>
+                        <SideNav.Item
+                            title="Dashboard"
+                            icon={<Square2x2Icon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            title="Reports"
+                            icon={<DocIcon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            title="Bookings"
+                            icon={<CalendarIcon />}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            title="Archived user list with innactive users"
+                            icon={<Person2Icon />}
+                            selected={true}
+                        ></SideNav.Item>
+                        <SideNav.Item
+                            title="Resources"
+                            icon={<Person2Icon />}
+                        ></SideNav.Item>
+                    </SideNav.Group>
+                </SideNav>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<PropsTable />
