@@ -52,7 +52,14 @@ describe("SideNav", () => {
     it("should render separator if separator value is true", () => {
         render(
             <SideNav data-testid="side-nav">
-                <SideNav.Group data-testid="side-nav-group" separator={true}>
+                <SideNav.Group data-testid="side-nav-group-1" separator={true}>
+                    <SideNav.Item
+                        id="dashboard"
+                        title="Dashboard"
+                        icon={<Square2x2Icon />}
+                    ></SideNav.Item>
+                </SideNav.Group>
+                <SideNav.Group data-testid="side-nav-group-2">
                     <SideNav.Item
                         id="dashboard"
                         title="Dashboard"
@@ -61,24 +68,8 @@ describe("SideNav", () => {
                 </SideNav.Group>
             </SideNav>
         );
-        expect(screen.getByTestId("side-nav-group").innerHTML).toContain("<hr");
-    });
-
-    it("should not render separator if separator value not passed", () => {
-        render(
-            <SideNav data-testid="side-nav">
-                <SideNav.Group data-testid="side-nav-group">
-                    <SideNav.Item
-                        id="dashboard"
-                        title="Dashboard"
-                        icon={<Square2x2Icon />}
-                    ></SideNav.Item>
-                </SideNav.Group>
-            </SideNav>
-        );
-        expect(screen.getByTestId("side-nav-group").innerHTML).not.toContain(
-            "<hr"
-        );
+        expect(screen.getByTestId("divider")).toBeInTheDocument();
+        expect(screen.getAllByTestId("divider").length).toEqual(1);
     });
 
     it("should render icon and text of sideNav item", () => {
