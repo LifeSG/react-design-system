@@ -7,6 +7,8 @@ interface ButtonStyleProps {
     $highlight: boolean;
 }
 
+export const Container = styled.li``;
+
 export const DefaultButton = styled(Button.Default)<ButtonStyleProps>`
     margin: 0.5rem 0;
     span {
@@ -31,7 +33,8 @@ export const DefaultButton = styled(Button.Default)<ButtonStyleProps>`
         }
     }
 
-    :hover {
+    :hover,
+    :focus {
         span {
             div {
                 background-color: ${Color.Accent.Light[5]};
