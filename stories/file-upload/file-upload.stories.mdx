@@ -31,7 +31,9 @@ import { FileUpload } from "@lifesg/react-design-system/file-upload";
                 const newFileItems = files.map((file) => {
                     return {
                         id: SimpleIdGenerator.generate(),
-                        file,
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
                     };
                 });
                 setFileItems((prevItems) => {
@@ -75,7 +77,9 @@ Each file item comes with an error display to indicate that the upload has faile
                 const newFileItems = files.map((file) => {
                     return {
                         id: SimpleIdGenerator.generate(),
-                        file,
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
                         errorMessage: "Something went wrong",
                     };
                 });
@@ -129,7 +133,9 @@ uploads. However this will require the user to manage the progress themselves.
                 const newFileItems = files.map((file) => {
                     return {
                         id: SimpleIdGenerator.generate(),
-                        file,
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
                         progress: 0,
                     };
                 });

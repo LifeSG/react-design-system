@@ -1,5 +1,6 @@
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { ProgressBar } from "../shared/progress-bar";
 import {
     Content,
     DesktopErrorMessage,
@@ -14,7 +15,6 @@ import {
     MobileErrorMessage,
 } from "./file-item.styles";
 import { FileItemProps } from "./types";
-import { ProgressBar } from "../shared/progress-bar";
 
 interface Props extends FileItemProps {
     onDelete: () => void;
@@ -23,10 +23,13 @@ interface Props extends FileItemProps {
 
 export const FileItem = ({
     id,
-    file,
+    name,
+    size,
+    type,
     description,
     progress = 1,
     errorMessage,
+    thumbnailImageDataUrl,
     editableMode,
     onDelete,
     onEdit,
@@ -69,7 +72,7 @@ export const FileItem = ({
                 </ItemActionContainer>
             );
         } else {
-            const isEditable = isSupportedImageType(file.type);
+            const isEditable = isSupportedImageType(type);
 
             return (
                 <ItemActionContainer $hasEditButton={isEditable}>
@@ -104,7 +107,7 @@ export const FileItem = ({
             id={id}
             $error={!!errorMessage}
             $loading={isLoading}
-            $editable={isSupportedImageType(file.type)}
+            $editable={isSupportedImageType(type)}
         >
             <Content>
                 <ItemNameSection>
@@ -112,7 +115,7 @@ export const FileItem = ({
                         data-testid="name"
                         weight={description ? "semibold" : "regular"}
                     >
-                        {file.name}
+                        {name}
                     </ItemText>
                     {description && (
                         <ItemText data-testid="description">
@@ -126,7 +129,7 @@ export const FileItem = ({
                     )}
                 </ItemNameSection>
                 <ItemFileSizeText>
-                    {!isLoading && formatFileSizeDisplay(file.size)}
+                    {!isLoading && formatFileSizeDisplay(size)}
                 </ItemFileSizeText>
                 {errorMessage && (
                     <MobileErrorMessage weight="semibold">

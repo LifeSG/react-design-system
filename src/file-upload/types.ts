@@ -1,7 +1,11 @@
 export interface FileItemProps {
     id: string;
-    /** The file object */
-    file: File;
+    /** The name of the file */
+    name: string;
+    /** The MIME type of the file */
+    type: string;
+    /** The size of the file in bytes */
+    size: number;
     /** The alt text or description of the file */
     description?: string | undefined;
     /** The upload progress display. Values from 0 to 1 */
@@ -10,6 +14,8 @@ export interface FileItemProps {
     errorMessage?: string | undefined;
     /** If set, the item will be in editable mode */
     editableMode?: boolean | undefined;
+    /** The thumbnail of the file that will be rendered */
+    thumbnailImageDataUrl?: string | undefined;
 }
 
 export type FileUploadStyle = "bordered" | "no-border";
