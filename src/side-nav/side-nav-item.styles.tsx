@@ -3,35 +3,60 @@ import { Text } from "../text";
 import { Color } from "../color";
 import { Button } from "../button";
 
-interface TextStyleProps {
+interface ButtonStyleProps {
     $highlight: boolean;
 }
 
-export const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.5rem 0.5rem;
-    cursor: pointer;
-`;
+export const DefaultButton = styled(Button.Default)<ButtonStyleProps>`
+    margin: 0.5rem 0;
+    span {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-export const DefaultButton = styled(Button.Default)<TextStyleProps>`
-    width: 3.25rem;
-    height: 1.75rem;
-    border-radius: 0.5rem;
-    align-items: center;
+        svg {
+            height: 1.25rem;
+            width: 1.25rem;
+            margin-top: 0.25rem;
+        }
 
-    svg {
-        width: 1.25rem;
-        height: 1.25rem;
-        margin-top: 0.375rem;
+        span {
+            font-family: Open sans;
+            font-size: 0.75rem !important;
+            line-height: 1rem !important;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    }
+
+    :hover {
+        span {
+            div {
+                background-color: ${Color.Accent.Light[5]};
+            }
+
+            span {
+                font-weight: 600 !important;
+            }
+        }
     }
 
     ${(props) => {
         switch (props.$highlight) {
             case true:
                 return css`
-                    background-color: ${Color.Accent.Light[5]};
+                    span {
+                        div {
+                            background-color: ${Color.Accent.Light[5]};
+                        }
+
+                        span {
+                            font-weight: 600 !important;
+                            color: ${Color.Primary};
+                        }
+                    }
                 `;
             default:
                 return css``;
@@ -39,25 +64,11 @@ export const DefaultButton = styled(Button.Default)<TextStyleProps>`
     }}
 `;
 
-export const TitleContainer = styled(Text.XSmall)<TextStyleProps>`
-    padding: 0.25rem 1rem 0 1rem;
-    text-align: center;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-
-    ${(props) => {
-        switch (props.$highlight) {
-            case true:
-                return css`
-                    color: ${Color.Primary};
-                    font-weight: 600 !important;
-                `;
-            default:
-                return css`
-                    color: ${Color.Neutral[1]};
-                `;
-        }
-    }}
+export const IconContainer = styled.div`
+    height: 1.75rem;
+    width: 3.25rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.25rem;
 `;
+
+export const TitleText = styled(Text.XSmall)``;
