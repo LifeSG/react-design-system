@@ -30,6 +30,7 @@ const Component = (
         className,
         name,
         border,
+        disabled,
         onChange,
     }: Props,
     ref: React.Ref<DropzoneElement>
@@ -41,6 +42,7 @@ const Component = (
     const { getRootProps, isDragActive } = useDropzone({
         onDrop: onChange,
         noClick: true,
+        disabled,
     });
 
     useImperativeHandle(ref, () => ({
