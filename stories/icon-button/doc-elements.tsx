@@ -3,20 +3,18 @@ import styled from "styled-components";
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
-    align-items: flex-start;
+
+export const Grid = styled.div`
     display: grid;
-    justify-content: flex-start;
-    margin-right: 1rem;
-
-    button {
-        margin: 1rem 0;
-    }
-
-    span {
-        margin-bottom: 3.5rem;
-    }
+    grid-template-columns: repeat(5, min-content);
+    gap: 1.5rem;
+    align-items: center;
+    justify-items: center;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    margin: auto;
 `;
-export const ContainerWrapper = styled(Container)`
-    display: flex;
+
+export const Row = styled.div`
+    display: contents;
 `;
