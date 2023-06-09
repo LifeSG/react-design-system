@@ -1,4 +1,5 @@
-import { BinIcon, CrossIcon, PencilIcon } from "@lifesg/react-icons";
+import { BinIcon } from "@lifesg/react-icons/bin";
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import {
     Content,
     DesktopErrorMessage,

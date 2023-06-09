@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
-import { CloudArrowUpFillIcon } from "@lifesg/react-icons";
+import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
 
 // =============================================================================
 // STYLE INTERFACES
