@@ -15,6 +15,7 @@ import {
     MobileErrorMessage,
 } from "./file-item.styles";
 import { FileItemProps } from "./types";
+import { FileUploadHelper } from "./helper";
 
 interface Props extends FileItemProps {
     onDelete: () => void;
@@ -72,7 +73,7 @@ export const FileItem = ({
                 </ItemActionContainer>
             );
         } else {
-            const isEditable = isSupportedImageType(type);
+            const isEditable = FileUploadHelper.isSupportedImageType(type);
 
             return (
                 <ItemActionContainer $hasEditButton={isEditable}>
@@ -107,7 +108,7 @@ export const FileItem = ({
             id={id}
             $error={!!errorMessage}
             $loading={isLoading}
-            $editable={isSupportedImageType(type)}
+            $editable={FileUploadHelper.isSupportedImageType(type)}
         >
             <Content>
                 <ItemNameSection>
@@ -129,7 +130,7 @@ export const FileItem = ({
                     )}
                 </ItemNameSection>
                 <ItemFileSizeText>
-                    {!isLoading && formatFileSizeDisplay(size)}
+                    {!isLoading && FileUploadHelper.formatFileSizeDisplay(size)}
                 </ItemFileSizeText>
                 {errorMessage && (
                     <MobileErrorMessage weight="semibold">
@@ -140,35 +141,4 @@ export const FileItem = ({
             {renderActionButton()}
         </Item>
     );
-};
-
-// =============================================================================
-// HELPER FUNCTIONS
-// =============================================================================
-// Adapted from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-size-to-kb-mb-gb-in-javascript
-const formatFileSizeDisplay = (size?: number) => {
-    if (!size || size === 0) return "0 KB";
-
-    const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    const index: number = Math.floor(Math.log(size) / Math.log(1024));
-
-    const value = Number(size / Math.pow(1024, index)).toFixed(0);
-    const measurement = sizes[index];
-
-    return `${value} ${measurement}`;
-};
-
-const isSupportedImageType = (type: string) => {
-    /** Currently only images supported by html <img> */
-    const acceptedImageTypes = [
-        "image/avif",
-        "image/gif",
-        "image/jpeg",
-        "image/png",
-        "image/svg+xml",
-        "image/webp",
-    ];
-
-    return acceptedImageTypes.includes(type);
 };
