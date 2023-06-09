@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 
+interface StyleProps {
+    $fixed?: boolean;
+}
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -15,7 +19,8 @@ const Container = styled.div`
     padding: 0.5rem 0 1.5rem 0;
 `;
 
-export const DesktopContainer = styled(Container)`
+export const DesktopContainer = styled(Container)<StyleProps>`
+    position: ${(props) => (props.$fixed ? "fixed" : "relative")};
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;
     }

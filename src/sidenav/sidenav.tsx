@@ -4,13 +4,19 @@ import { SidenavItem } from "./sidenav-item";
 import { SidenavGroup } from "./sidenav-group";
 import { SidenavProvider } from "./sidenav-context";
 
-const SidenavBase = ({ children, ...otherProps }: SidenavProps) => {
+const SidenavBase = ({
+    fixed = true,
+    children,
+    ...otherProps
+}: SidenavProps) => {
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     return (
         <SidenavProvider>
-            <DesktopContainer {...otherProps}>{children}</DesktopContainer>
+            <DesktopContainer $fixed={fixed} {...otherProps}>
+                {children}
+            </DesktopContainer>
             {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
             <MobileContainer></MobileContainer>
         </SidenavProvider>

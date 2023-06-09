@@ -4,7 +4,10 @@ interface SidenavBaseProps {
     children: React.ReactNode;
 }
 
-export interface SidenavProps extends SidenavBaseProps {}
+export interface SidenavProps extends SidenavBaseProps {
+    /** Fix sidenav to position left */
+    fixed?: boolean | undefined;
+}
 
 export interface SidenavGroupProps extends SidenavBaseProps {
     separator?: boolean | undefined;

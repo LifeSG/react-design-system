@@ -26,6 +26,13 @@ const SIDENAV_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "fixed",
+                description:
+                    "Specifies if the sidenav position is to be fixed at left",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
         ],
     },
 ];

@@ -32,7 +32,8 @@ import { Sidenav } from "@lifesg/react-design-system/sidenav";
     <Story name="Sidenav">
         {() => {
             return (
-                <Sidenav>
+                // NOTE - fixed used for storybook purposes
+                <Sidenav fixed={false}>
                     <Sidenav.Group>
                         <Sidenav.Item
                             id="dashboard"
@@ -69,7 +70,8 @@ You are able to separate groups with a divider using the `separate` prop.
     <Story name="With group divider">
         {() => {
             return (
-                <Sidenav>
+                // NOTE - fixed used for storybook purposes
+                <Sidenav fixed={false}>
                     <Sidenav.Group separator={true}>
                         <Sidenav.Item
                             id="dashboard"
@@ -106,7 +108,8 @@ You are able to separate groups with a divider using the `separate` prop.
     <Story name="With selected item">
         {() => {
             return (
-                <Sidenav>
+                // NOTE - fixed used for storybook purposes
+                <Sidenav fixed={false}>
                     <Sidenav.Group>
                         <Sidenav.Item
                             title="Dashboard"

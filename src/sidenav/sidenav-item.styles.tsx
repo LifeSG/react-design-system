@@ -3,13 +3,13 @@ import { Text } from "../text";
 import { Color } from "../color";
 import { Button } from "../button";
 
-interface ButtonStyleProps {
+interface StyleProps {
     $highlight: boolean;
 }
 
 export const Container = styled.li``;
 
-export const DefaultButton = styled(Button.Default)<ButtonStyleProps>`
+export const DefaultButton = styled(Button.Default)<StyleProps>`
     margin: 0.5rem 0;
     span {
         display: flex;
