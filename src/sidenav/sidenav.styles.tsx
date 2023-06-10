@@ -6,7 +6,7 @@ interface StyleProps {
     $fixed?: boolean;
 }
 
-const Container = styled.div`
+const Container = styled.nav`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,6 +21,8 @@ const Container = styled.div`
 
 export const DesktopContainer = styled(Container)<StyleProps>`
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};
+    left: 0;
+    top: 0;
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;

@@ -11,12 +11,14 @@ describe("Sidenav", () => {
     });
 
     it("should render component", () => {
+        const ITEM_TEXT = "Dashboard";
         render(
             <Sidenav data-testid="side-nav">
                 <Sidenav.Group data-testid="side-nav-group">
                     <Sidenav.Item
+                        data-testid="dashboard-item"
                         id="dashboard"
-                        title="Dashboard"
+                        title={ITEM_TEXT}
                         icon={<Square2x2Icon />}
                     ></Sidenav.Item>
                 </Sidenav.Group>
@@ -24,9 +26,13 @@ describe("Sidenav", () => {
         );
 
         expect(screen.getByTestId("side-nav")).toBeInTheDocument();
+        const element = screen.getByTestId("dashboard-item");
+        expect(element).toBeInTheDocument();
+        expect(element.innerHTML).toContain(ITEM_TEXT);
+        expect(element.innerHTML).toContain("svg");
     });
 
-    it("should render multiple groups and render separator correctly", () => {
+    it("should render multiple groups correctly", () => {
         render(
             <Sidenav data-testid="side-nav">
                 <Sidenav.Group data-testid="side-nav-group-1">
@@ -45,6 +51,7 @@ describe("Sidenav", () => {
                 </Sidenav.Group>
             </Sidenav>
         );
+        expect(screen.getAllByRole("listitem").length).toEqual(2);
         expect(screen.getByTestId("side-nav-group-1")).toBeInTheDocument();
         expect(screen.getByTestId("side-nav-group-2")).toBeInTheDocument();
     });
@@ -70,26 +77,6 @@ describe("Sidenav", () => {
         );
         expect(screen.getByTestId("divider")).toBeInTheDocument();
         expect(screen.getAllByTestId("divider").length).toEqual(1);
-    });
-
-    it("should render icon and text of Sidenav item", () => {
-        const ITEM_TEXT = "Dashboard";
-        render(
-            <Sidenav data-testid="side-nav">
-                <Sidenav.Group data-testid="side-nav-group">
-                    <Sidenav.Item
-                        id="dashboard"
-                        title={ITEM_TEXT}
-                        icon={<Square2x2Icon />}
-                        data-testid="dashboard-item"
-                    ></Sidenav.Item>
-                </Sidenav.Group>
-            </Sidenav>
-        );
-        const element = screen.getByTestId("dashboard-item");
-        expect(element).toBeInTheDocument();
-        expect(element.innerHTML).toContain(ITEM_TEXT);
-        expect(element.innerHTML).toContain("svg");
     });
 
     it("should trigger onClick when click on Sidenav item", () => {

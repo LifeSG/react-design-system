@@ -39,22 +39,22 @@ import { Sidenav } from "@lifesg/react-design-system/sidenav";
                             id="dashboard"
                             title="Dashboard"
                             icon={<Square2x2Icon />}
-                        ></Sidenav.Item>
+                        />
                         <Sidenav.Item
                             id="reports"
                             title="Reports"
                             icon={<DocIcon />}
-                        ></Sidenav.Item>
+                        />
                         <Sidenav.Item
                             id="bookings"
                             title="Bookings"
                             icon={<CalendarIcon />}
-                        ></Sidenav.Item>
+                        />
                         <Sidenav.Item
                             id="users2"
                             title="Users"
                             icon={<Person2Icon />}
-                        ></Sidenav.Item>
+                        />
                     </Sidenav.Group>
                 </Sidenav>
             );
@@ -77,24 +77,24 @@ You are able to separate groups with a divider using the `separate` prop.
                             id="dashboard"
                             title="Dashboard"
                             icon={<Square2x2Icon />}
-                        ></Sidenav.Item>
+                        />
                         <Sidenav.Item
                             id="reports"
                             title="Reports"
                             icon={<DocIcon />}
-                        ></Sidenav.Item>
+                        />
                     </Sidenav.Group>
                     <Sidenav.Group>
                         <Sidenav.Item
                             id="bookings"
                             title="Bookings"
                             icon={<CalendarIcon />}
-                        ></Sidenav.Item>
+                        />
                         <Sidenav.Item
                             id="users2"
                             title="Users"
                             icon={<Person2Icon />}
-                        ></Sidenav.Item>
+                        />
                     </Sidenav.Group>
                 </Sidenav>
             );
@@ -114,24 +114,17 @@ You are able to separate groups with a divider using the `separate` prop.
                         <Sidenav.Item
                             title="Dashboard"
                             icon={<Square2x2Icon />}
-                        ></Sidenav.Item>
-                        <Sidenav.Item
-                            title="Reports"
-                            icon={<DocIcon />}
-                        ></Sidenav.Item>
-                        <Sidenav.Item
-                            title="Bookings"
-                            icon={<CalendarIcon />}
-                        ></Sidenav.Item>
+                        />
+                        <Sidenav.Item title="Reports" icon={<DocIcon />} />
                         <Sidenav.Item
                             title="Archived user list with innactive users"
                             icon={<Person2Icon />}
                             selected={true}
-                        ></Sidenav.Item>
+                        />
                         <Sidenav.Item
                             title="Resources"
                             icon={<Person2Icon />}
-                        ></Sidenav.Item>
+                        />
                     </Sidenav.Group>
                 </Sidenav>
             );
