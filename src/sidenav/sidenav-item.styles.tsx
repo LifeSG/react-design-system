@@ -7,10 +7,13 @@ interface StyleProps {
     $highlight: boolean;
 }
 
-export const Container = styled.li``;
+export const Container = styled.li`
+    width: 100%;
+`;
 
 export const DefaultButton = styled(Button.Default)<StyleProps>`
     margin: 0.5rem 0;
+    width: 100%;
     span {
         display: flex;
         flex-direction: column;
@@ -46,25 +49,20 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         }
     }
 
-    ${(props) => {
-        switch (props.$highlight) {
-            case true:
-                return css`
-                    span {
-                        div {
-                            background-color: ${Color.Accent.Light[5]};
-                        }
+    ${(props) =>
+        props.$highlight &&
+        css`
+            span {
+                div {
+                    background-color: ${Color.Accent.Light[5]};
+                }
 
-                        span {
-                            font-weight: 600 !important;
-                            color: ${Color.Primary};
-                        }
-                    }
-                `;
-            default:
-                return css``;
-        }
-    }}
+                span {
+                    font-weight: 600 !important;
+                    color: ${Color.Primary};
+                }
+            }
+        `}
 `;
 
 export const IconContainer = styled.div`
