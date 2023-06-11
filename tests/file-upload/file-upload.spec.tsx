@@ -11,6 +11,11 @@ import { FileItemProps, FileUpload } from "../../src/file-upload";
 describe("FileUpload", () => {
     beforeEach(() => {
         jest.resetAllMocks();
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     describe("Basic render", () => {
@@ -112,5 +117,6 @@ const MOCK_FILE_ITEMS = [
         name: "bugs-bunny.png",
         type: "image/png",
         size: 3000,
+        truncateText: false, // Test purposes
     },
 ];

@@ -35,6 +35,7 @@ export const FileItem = ({
     errorMessage,
     thumbnailImageDataUrl,
     editableMode,
+    truncateText = true,
     onDelete,
     onEdit,
 }: Props) => {
@@ -69,6 +70,8 @@ export const FileItem = ({
     // HELPER FUNCTIONS
     // =========================================================================
     const getTruncatedText = (value: string) => {
+        if (!truncateText) return value;
+
         const widthOfElement =
             nameSectionRef && nameSectionRef.current
                 ? nameSectionRef.current.getBoundingClientRect().width
