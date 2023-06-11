@@ -102,8 +102,9 @@ export const FileItem = ({
                     <ErrorIconButton
                         onClick={handleDelete}
                         data-testid={`${id}-error-delete-button`}
+                        aria-label={`delete-${name}`}
                     >
-                        <CrossIcon />
+                        <CrossIcon aria-hidden />
                     </ErrorIconButton>
                 </ItemActionContainer>
             );
@@ -129,9 +130,10 @@ export const FileItem = ({
                         data-testid={`${id}-delete-button`}
                         type="button"
                         styleType="light"
+                        aria-label={`delete-${name}`}
                         onClick={handleDelete}
                     >
-                        <BinIcon />
+                        <BinIcon aria-hidden />
                     </IconButton>
                 </ItemActionContainer>
             );
