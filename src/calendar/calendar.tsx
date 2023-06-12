@@ -31,6 +31,7 @@ export const Calendar = ({
             <InternalCalendar
                 type="standalone"
                 value={selectedDate}
+                initialCalendarDate={selectedDate}
                 onSelect={(value) => {
                     setSelectedDate(value);
                     onSelect?.(value);

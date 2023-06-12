@@ -1,5 +1,5 @@
 import { Dayjs } from "dayjs";
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
 import { InternalCalendarDay } from "./internal-calendar-day";
 import { Container } from "./internal-calendar.style";
@@ -26,6 +26,7 @@ export const Component = (
         allowDisabledSelection,
         type = "standalone",
         selectWithinRange = true,
+        initialCalendarDate,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -40,37 +41,11 @@ export const Component = (
     // =============================================================================
     useImperativeHandle(ref, () => {
         return {
-            defaultView() {
-                calendarManagerRef.current.defaultView();
+            reset() {
+                calendarManagerRef.current.resetView();
             },
         };
     });
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        /**
-         * Update calendar value in month/year
-         * Once focus value is changed
-         */
-        const calendarValue =
-            currentFocus === "end" ? selectedEndDate : selectedStartDate;
-
-        calendarManagerRef.current.setCalendarDate(calendarValue);
-    }, [currentFocus]);
-
-    useEffect(() => {
-        if (selectedStartDate) {
-            calendarManagerRef.current.setCalendarDate(selectedStartDate);
-        }
-    }, [selectedStartDate]);
-
-    useEffect(() => {
-        if (selectedEndDate) {
-            calendarManagerRef.current.setCalendarDate(selectedEndDate);
-        }
-    }, [selectedEndDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -157,6 +132,7 @@ export const Component = (
                 selectedEndDate={selectedEndDate}
                 allowDisabledSelection={allowDisabledSelection}
                 onCalendarDateChange={handleCalendarDateChange}
+                initialCalendarDate={initialCalendarDate}
             >
                 {({ calendarDate }) => (
                     <InternalCalendarDay

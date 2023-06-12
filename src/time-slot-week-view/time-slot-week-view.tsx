@@ -35,10 +35,6 @@ export const TimeSlotWeekView = ({
     // =============================================================================
     useEffect(() => {
         setSelectedDate(value);
-
-        if (value) {
-            calendarManagerRef.current.setCalendarDate(value);
-        }
     }, [value]);
 
     // =============================================================================
@@ -59,7 +55,7 @@ export const TimeSlotWeekView = ({
 
     const handleOnCalendarDateChange = (value: Dayjs) => {
         if (
-            previousCalendarDate.current &&
+            !previousCalendarDate.current ||
             !previousCalendarDate.current.isSame(value, "week")
         ) {
             performDisplayChangeHandler(value);
@@ -96,10 +92,10 @@ export const TimeSlotWeekView = ({
                 ref={calendarManagerRef}
                 type="standalone"
                 dynamicHeight
-                initialCalendarDate={dayjs(currentCalendarDate)
+                initialCalendarDate={dayjs(selectedDate || currentCalendarDate)
                     .endOf("week")
                     .format(DATE_FORMAT)}
-                selectedStartDate={value}
+                selectedStartDate={selectedDate}
                 getLeftArrowDate={(day) => day.subtract(1, "week")}
                 getRightArrowDate={(day) => day.add(1, "week")}
                 isLeftArrowDisabled={(calendarDate) =>
