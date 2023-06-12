@@ -12,8 +12,9 @@ export const Container = styled.li`
 `;
 
 export const DefaultButton = styled(Button.Default)<StyleProps>`
-    margin: 0.5rem 0;
     width: 100%;
+    height: unset;
+
     span {
         display: flex;
         flex-direction: column;
