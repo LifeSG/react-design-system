@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import {
     Container,
     DefaultButton,
@@ -18,32 +18,23 @@ export const SidenavItem = ({
     // CONST, STATE, REF
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
-    const { selectedItem, setSelectedItem } = useContext(SidenavContext);
-    const [selected, setSelected] = useState<boolean>();
+    const { selectedItemId, setSelectedItemId } = useContext(SidenavContext);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         if (otherProps.selected) {
-            setSelectedItem(id);
+            setSelectedItemId(id);
         }
     }, []);
-
-    useEffect(() => {
-        if (selectedItem === id && !selected) {
-            setSelected(true);
-        } else if (selected) {
-            setSelected(false);
-        }
-    }, [selectedItem]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleOnClick = () => {
-        if (selected) return;
-        setSelectedItem(id);
+        if (selectedItemId === id) return;
+        setSelectedItemId(id);
         if (onClick) {
             onClick();
         }
@@ -58,7 +49,7 @@ export const SidenavItem = ({
                 styleType="link"
                 onClick={handleOnClick}
                 {...otherProps}
-                $highlight={selected}
+                $highlight={selectedItemId === id}
             >
                 <IconContainer>{icon}</IconContainer>
                 <TitleText>{title}</TitleText>
