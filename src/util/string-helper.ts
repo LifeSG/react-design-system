@@ -53,25 +53,24 @@ export namespace StringHelper {
 
     /**
      * Performs a truncation by adding ellipsis in the middle of the text.
-     * **Note: This is relevant to font size 18px or 1.125rem only **
      * @param text input text
      * @param widthOfElement the dynamic width of the container in px
      * @param minDivSize the minimum container size (using size on mobileS viewport as baseline)
      * @param baselineCharLength the baseline amount of characters to be displayed before truncation kicks. This
      * will be increased if there is more space available (derived from `widthOfElement`)
+     * @param incrementFactor the size (in px).
      */
     export const truncateOneLine = (
         text: string,
         widthOfElement: number,
         minDivSize: number,
-        baselineCharLength: number
+        baselineCharLength: number,
+        incrementFactor = 8 // Arbitrary based on tests and applies to font size of 18px or 1.125rem
     ): string => {
         let additionalCharAllowed = 0;
         if (widthOfElement > minDivSize) {
-            // This is arbitrary and based on tests to derive that every 8px increment ~= 1 char length.
-            // But this applies to font size 18px or 1.125rem only
             additionalCharAllowed = Math.floor(
-                (widthOfElement - minDivSize) / 8
+                (widthOfElement - minDivSize) / incrementFactor
             );
         }
         const allowedCharLength = baselineCharLength + additionalCharAllowed;

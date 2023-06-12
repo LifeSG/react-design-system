@@ -13,6 +13,7 @@ export * from "./date-input";
 export * from "./date-range-input";
 export * from "./error-display";
 export * from "./feedback-rating";
+export * from "./file-upload";
 export * from "./filter";
 export * from "./footer";
 export * from "./form";
