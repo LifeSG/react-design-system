@@ -57,9 +57,11 @@ export const FileUpload = ({
     const handleUploadButtonClick = (
         event: React.MouseEvent<HTMLButtonElement>
     ) => {
-        event.preventDefault();
-        if (dropzoneRef.current) {
-            dropzoneRef.current.openFileDialog();
+        if (!disabled) {
+            event.preventDefault();
+            if (dropzoneRef.current) {
+                dropzoneRef.current.openFileDialog();
+            }
         }
     };
 
@@ -93,6 +95,7 @@ export const FileUpload = ({
             className={className}
             name={name}
             multiple={multiple}
+            disabled={disabled}
         >
             {(title || description) && (
                 <TitleContainer>
@@ -108,9 +111,9 @@ export const FileUpload = ({
             {renderItems()}
             <UploadButtonContainer>
                 <UploadButton
-                    id="upload-button"
                     type="button"
                     styleType="secondary"
+                    disabled={disabled}
                     onClick={handleUploadButtonClick}
                 >
                     Upload files
