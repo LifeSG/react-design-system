@@ -7,7 +7,7 @@
     "typings": "dist/index.d.ts",
     "scripts": {
         "build": "npm run rollup && npm run post:build",
-        "build-check": "npm run rollup",
+        "build-check": "npm run rollup --config rollup.check.config.js",
         "rollup": "rm -rf dist && rollup -c",
         "pack-package": "cd dist && npm pack",
         "post:build": "node ./scripts/post-build.js",
