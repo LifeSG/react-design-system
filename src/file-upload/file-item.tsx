@@ -130,7 +130,7 @@ export const FileItem = ({
                         data-testid={`${id}-delete-button`}
                         type="button"
                         styleType="light"
-                        aria-label={`delete-${name}`}
+                        aria-label={`delete ${name}`}
                         onClick={handleDelete}
                     >
                         <BinIcon aria-hidden />
