@@ -25,6 +25,7 @@ export const Description = styled(Text.BodySmall)`
 
 export const ItemsContainer = styled.ul`
     list-style-type: none;
+    margin-bottom: 2rem;
 `;
 
 export const WarningAlert = styled(Alert)`
@@ -33,7 +34,6 @@ export const WarningAlert = styled(Alert)`
 
 export const UploadButtonContainer = styled.div`
     width: 100%;
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;

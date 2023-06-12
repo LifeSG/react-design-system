@@ -138,11 +138,12 @@ export const IconButton = styled(Button.Small)`
 `;
 
 export const BaseErrorMessage = styled(Text.XSmall)`
-    font-size: 0.875rem;
+    font-size: 0.875rem !important;
     color: ${Color.Validation.Red.Text};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
+    margin-top: 0.25rem;
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;
