@@ -1,0 +1,135 @@
+import { GearIcon } from "@lifesg/react-icons/gear";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { IconButton } from "src/icon-button";
+import { Sidenav } from "src/sidenav";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { PropsTable } from "./props-table";
+import { Square2x2Icon } from "@lifesg/react-icons/square-2x2";
+import { DocIcon } from "@lifesg/react-icons/doc";
+import { CalendarIcon } from "@lifesg/react-icons/calendar";
+import { Person2Icon } from "@lifesg/react-icons/person-2";
+
+<Meta title="Modules/Sidenav" component={Sidenav} />
+
+<Title>Sidenav</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that renders navigation buttons on the side of a page.
+
+```tsx
+import { Sidenav } from "@lifesg/react-design-system/sidenav";
+```
+
+<Canvas>
+    <Story name="Sidenav">
+        {() => {
+            return (
+                // NOTE - fixed used for storybook purposes
+                <Sidenav fixed={false}>
+                    <Sidenav.Group>
+                        <Sidenav.Item
+                            id="dashboard"
+                            title="Dashboard"
+                            icon={<Square2x2Icon />}
+                        />
+                        <Sidenav.Item
+                            id="reports"
+                            title="Reports"
+                            icon={<DocIcon />}
+                        />
+                        <Sidenav.Item
+                            id="bookings"
+                            title="Bookings"
+                            icon={<CalendarIcon />}
+                        />
+                        <Sidenav.Item
+                            id="users2"
+                            title="Users"
+                            icon={<Person2Icon />}
+                        />
+                    </Sidenav.Group>
+                </Sidenav>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With group divider</Heading3>
+
+You are able to separate groups with a divider using the `separate` prop.
+
+<Canvas>
+    <Story name="With group divider">
+        {() => {
+            return (
+                // NOTE - fixed used for storybook purposes
+                <Sidenav fixed={false}>
+                    <Sidenav.Group separator={true}>
+                        <Sidenav.Item
+                            id="dashboard"
+                            title="Dashboard"
+                            icon={<Square2x2Icon />}
+                        />
+                        <Sidenav.Item
+                            id="reports"
+                            title="Reports"
+                            icon={<DocIcon />}
+                        />
+                    </Sidenav.Group>
+                    <Sidenav.Group>
+                        <Sidenav.Item
+                            id="bookings"
+                            title="Bookings"
+                            icon={<CalendarIcon />}
+                        />
+                        <Sidenav.Item
+                            id="users2"
+                            title="Users"
+                            icon={<Person2Icon />}
+                        />
+                    </Sidenav.Group>
+                </Sidenav>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With selected item</Heading3>
+
+<Canvas>
+    <Story name="With selected item">
+        {() => {
+            return (
+                // NOTE - fixed used for storybook purposes
+                <Sidenav fixed={false}>
+                    <Sidenav.Group>
+                        <Sidenav.Item
+                            title="Dashboard"
+                            icon={<Square2x2Icon />}
+                        />
+                        <Sidenav.Item title="Reports" icon={<DocIcon />} />
+                        <Sidenav.Item
+                            title="Archived user list with innactive users"
+                            icon={<Person2Icon />}
+                            selected={true}
+                        />
+                        <Sidenav.Item
+                            title="Resources"
+                            icon={<Person2Icon />}
+                        />
+                    </Sidenav.Group>
+                </Sidenav>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<PropsTable />
