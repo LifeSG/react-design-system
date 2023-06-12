@@ -7,8 +7,8 @@ import {
 } from "react";
 
 interface SidenavContextProps {
-    selectedItem: string | undefined;
-    setSelectedItem: Dispatch<SetStateAction<string | undefined>>;
+    selectedItemId: string | undefined;
+    setSelectedItemId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 interface SidenavProviderProps {
@@ -16,21 +16,24 @@ interface SidenavProviderProps {
 }
 
 export const SidenavContext = createContext<SidenavContextProps>({
-    selectedItem: undefined,
-    setSelectedItem: (prevState: SetStateAction<string | undefined>) =>
+    selectedItemId: undefined,
+    setSelectedItemId: (prevState: SetStateAction<string | undefined>) =>
         prevState,
 });
 
 export function SidenavProvider({
     children,
 }: SidenavProviderProps): JSX.Element {
-    const [selectedItem, setSelectedItem] = useState<string | undefined>(
+    const [selectedItemId, setSelectedItemId] = useState<string | undefined>(
         undefined
     );
 
     const value = useMemo(
-        () => ({ selectedItem, setSelectedItem }),
-        [selectedItem, setSelectedItem]
+        () => ({
+            selectedItemId: selectedItemId,
+            setSelectedItemId: setSelectedItemId,
+        }),
+        [selectedItemId, setSelectedItemId]
     );
 
     return (
