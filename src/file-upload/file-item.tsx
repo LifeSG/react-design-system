@@ -1,7 +1,6 @@
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useEffect, useRef, useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
 import { ProgressBar } from "../shared/progress-bar";
 import { StringHelper } from "../util";
 import {
@@ -46,7 +45,6 @@ export const FileItem = ({
     const isLoading = progress < 1;
 
     const nameSectionRef = useRef<HTMLDivElement>();
-    const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
     // =========================================================================
     // EFFECTS
@@ -143,7 +141,6 @@ export const FileItem = ({
     return (
         <Item
             id={id}
-            ref={wrapperRef}
             $error={!!errorMessage}
             $loading={isLoading}
             $editable={FileUploadHelper.isSupportedImageType(type)}

@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import { DropzoneElement, FileUploadDropzone } from "./dropzone";
 import { FileItem } from "./file-item";
 import {
@@ -34,6 +35,7 @@ export const FileUpload = ({
     // CONST, STATE, REFS
     // =========================================================================
     const dropzoneRef = useRef<DropzoneElement>();
+    const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
     // =========================================================================
     // EFFECTS
@@ -81,7 +83,9 @@ export const FileUpload = ({
             );
         });
 
-        return <ItemsContainer>{itemsToRender}</ItemsContainer>;
+        return (
+            <ItemsContainer ref={wrapperRef}>{itemsToRender}</ItemsContainer>
+        );
     };
 
     return (
