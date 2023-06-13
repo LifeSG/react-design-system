@@ -69,6 +69,9 @@ export const Content = styled.div`
 `;
 
 export const ItemText = styled(Text.BodySmall)``;
+export const ItemDescriptionText = styled(ItemText)`
+    margin-top: 0.25rem;
+`;
 export const ItemFileSizeText = styled(ItemText)`
     width: 5rem;
     padding-left: 0.5rem;

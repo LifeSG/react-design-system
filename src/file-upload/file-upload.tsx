@@ -28,8 +28,11 @@ export const FileUpload = ({
     capture,
     multiple,
     disabled,
+    descriptionMaxLength,
+    editableFileItems,
     onChange,
     onDelete,
+    onEdit,
 }: FileUploadProps) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -67,6 +70,14 @@ export const FileUpload = ({
         }
     };
 
+    const handleDescriptionUpdate =
+        (item: FileItemProps) => (description: string) => {
+            if (onEdit) {
+                const updatedItem = { ...item, description };
+                onEdit(updatedItem);
+            }
+        };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -78,7 +89,11 @@ export const FileUpload = ({
                 <FileItem
                     key={item.id}
                     {...item}
+                    wrapperWidth={wrapperWidth}
+                    descriptionMaxLength={descriptionMaxLength}
+                    editable={editableFileItems}
                     onDelete={handleItemDelete(item)}
+                    onDescriptionUpdate={handleDescriptionUpdate(item)}
                 />
             );
         });
