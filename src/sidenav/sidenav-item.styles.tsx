@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Text } from "../text";
+import { Text, TextStyleHelper } from "../text";
 import { Color } from "../color";
 import { Button } from "../button";
 
@@ -27,9 +27,8 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         }
 
         span {
-            font-family: Open sans;
+            ${TextStyleHelper.getFontFamily("XSmall", "regular")}
             font-size: 0.75rem !important;
-            line-height: 1rem !important;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;

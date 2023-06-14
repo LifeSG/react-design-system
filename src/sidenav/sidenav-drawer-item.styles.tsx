@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
+import { TextStyleHelper } from "../text";
 
 interface StyleProp {
     $highlight?: boolean | undefined;
@@ -9,19 +10,20 @@ interface StyleProp {
 export const Container = styled.li``;
 
 export const LinkButton = styled(Button.Default)<StyleProp>`
+    justify-content: flex-start;
     width: 14rem;
     height: unset;
     margin-left: 0.5rem;
     border-radius: 0.5rem;
-    justify-content: flex-start;
 
     span {
         width: 100%;
-        font-size: 1rem !important;
-        color: ${Color.Neutral[1]} !important;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        ${TextStyleHelper.getFontFamily("H5", "semibold")}
+        font-size: 1rem !important;
+        color: ${Color.Neutral[1]} !important;
     }
 
     :hover,

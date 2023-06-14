@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
+import { TextStyleHelper } from "../text";
 
 export const Container = styled.li``;
 
@@ -11,7 +12,7 @@ export const LinkButton = styled(Button.Default)`
     border-radius: 0.5rem;
 
     span {
-        font-family: Open Sans;
+        ${TextStyleHelper.getFontFamily("H5", "regular")}
         font-size: 1rem !important;
         color: ${Color.Neutral[1]} !important;
     }
@@ -20,7 +21,7 @@ export const LinkButton = styled(Button.Default)`
     :focus {
         background-color: ${Color.Accent.Light[5]};
         span {
-            font-family: Open Sans Semibold;
+            ${TextStyleHelper.getFontFamily("H5", "semibold")}
             color: ${Color.Primary} !important;
         }
     }
