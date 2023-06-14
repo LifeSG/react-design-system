@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import isEqual from "lodash/isEqual";
+import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { DropzoneElement, FileUploadDropzone } from "./dropzone";
 import { FileItem } from "./file-item";
 import {
     Description,
+    EditableItemsContainer,
     ItemsContainer,
     Title,
     TitleContainer,
@@ -13,13 +15,28 @@ import {
     WarningAlert,
 } from "./file-upload.styles";
 import { FileItemProps, FileUploadProps } from "./types";
+import { FileUploadHelper } from "./helper";
+import { FileItemEdit } from "./file-item-edit";
 
+// =============================================================================
+// INTERFACES
+// =============================================================================
+interface FileItemRenderProps {
+    fileItem: FileItemProps;
+    renderMode: "default" | "edit";
+}
+
+type RenderItem = FileItemRenderProps | FileItemRenderProps[];
+
+// =============================================================================
+// COMPONENT
+// =============================================================================
 export const FileUpload = ({
     styleType = "bordered",
     fileItems,
     title,
     description,
-    maxFiles, // TODO: In consideration. Deciding if it should be smart or parent handle
+    maxFiles,
     warning,
     className,
     name,
@@ -37,12 +54,24 @@ export const FileUpload = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const [arrangedItems, setArrangedItems] = useState<RenderItem[]>([]);
+    const [itemsRenderMode, setItemsRenderMode] = useState<
+        FileItemRenderProps[]
+    >([]);
+
     const dropzoneRef = useRef<DropzoneElement>();
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
+    useEffect(() => {
+        setItemsRenderMode(getItemsRenderMode(fileItems));
+    }, [fileItems]);
+
+    useEffect(() => {
+        setArrangedItems(getArrangedItemsToRender(itemsRenderMode));
+    }, [itemsRenderMode]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -78,24 +107,129 @@ export const FileUpload = ({
             }
         };
 
+    const handleInitiateEdit = (item: FileItemProps) => () => {
+        setItemsRenderMode((prevState) => {
+            return prevState.map((renderItem) => {
+                if (isEqual(item, renderItem.fileItem)) {
+                    return {
+                        ...renderItem,
+                        renderMode: "edit",
+                    };
+                }
+
+                return renderItem;
+            });
+        });
+    };
+
+    const handleCancel = (item: FileItemProps) => () => {
+        setItemsRenderMode((prevState) => {
+            return prevState.map((renderItem) => {
+                if (isEqual(item, renderItem.fileItem)) {
+                    return {
+                        ...renderItem,
+                        renderMode: "default",
+                    };
+                }
+
+                return renderItem;
+            });
+        });
+    };
+
+    // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const checkEditable = (type: string) => {
+        return editableFileItems && FileUploadHelper.isSupportedImageType(type);
+    };
+
+    const getItemsRenderMode = (
+        fileItems: FileItemProps[]
+    ): FileItemRenderProps[] => {
+        if (!fileItems || fileItems.length === 0) return [];
+
+        return fileItems.map((item) => {
+            return {
+                fileItem: item,
+                renderMode:
+                    FileUploadHelper.isSupportedImageType(item.type) &&
+                    item.description === undefined
+                        ? "edit"
+                        : "default",
+            };
+        });
+    };
+
+    const getArrangedItemsToRender = (
+        fileItemRenders: FileItemRenderProps[]
+    ) => {
+        if (!fileItemRenders || fileItemRenders.length === 0) {
+            return [];
+        }
+
+        return fileItemRenders.reduce((accumulator, currentItem) => {
+            const { renderMode } = currentItem;
+
+            if (renderMode === "edit") {
+                const previousElement = accumulator[accumulator.length - 1];
+                if (Array.isArray(previousElement)) {
+                    previousElement.push(currentItem);
+                } else {
+                    accumulator.push([currentItem]);
+                }
+            } else {
+                accumulator.push(currentItem);
+            }
+
+            return accumulator;
+        }, []);
+    };
+
+    const reachedMaxFiles = () => {
+        return maxFiles ? fileItems.length >= maxFiles : false;
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderItems = () => {
-        if (!fileItems || fileItems.length === 0) return null;
-
+    const renderItemsInEditMode = (fileItems: FileItemRenderProps[]) => {
         const itemsToRender = fileItems.map((item) => {
+            const { fileItem } = item;
             return (
-                <FileItem
-                    key={item.id}
-                    {...item}
+                <FileItemEdit
+                    key={fileItem.id}
+                    fileItem={fileItem}
                     wrapperWidth={wrapperWidth}
                     descriptionMaxLength={descriptionMaxLength}
-                    editable={editableFileItems}
-                    onDelete={handleItemDelete(item)}
-                    onDescriptionUpdate={handleDescriptionUpdate(item)}
+                    onEdit={handleDescriptionUpdate(fileItem)}
+                    onCancel={handleCancel(fileItem)}
                 />
             );
+        });
+
+        return <EditableItemsContainer>{itemsToRender}</EditableItemsContainer>;
+    };
+
+    const renderItems = () => {
+        if (arrangedItems.length === 0) return null;
+
+        const itemsToRender = arrangedItems.map((item) => {
+            if (Array.isArray(item)) {
+                return renderItemsInEditMode(item);
+            } else {
+                const { fileItem } = item;
+                return (
+                    <FileItem
+                        key={fileItem.id}
+                        fileItem={fileItem}
+                        editable={checkEditable(fileItem.type)}
+                        wrapperWidth={wrapperWidth}
+                        onDelete={handleItemDelete(fileItem)}
+                        onEditClick={handleInitiateEdit(fileItem)}
+                    />
+                );
+            }
         });
 
         return (
@@ -114,7 +248,7 @@ export const FileUpload = ({
             className={className}
             name={name}
             multiple={multiple}
-            disabled={disabled}
+            disabled={disabled || reachedMaxFiles()}
         >
             {(title || description) && (
                 <TitleContainer>
@@ -132,7 +266,7 @@ export const FileUpload = ({
                 <UploadButton
                     type="button"
                     styleType="secondary"
-                    disabled={disabled}
+                    disabled={disabled || reachedMaxFiles()}
                     onClick={handleUploadButtonClick}
                 >
                     Upload files

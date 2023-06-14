@@ -190,6 +190,75 @@ uploads. However this will require the user to manage the progress themselves.
     </Story>
 </Canvas>
 
+<Heading3>Editable file items</Heading3>
+
+The component also enables you to add a description to the file item. Note that
+this does not alter the file in any way and is up to the discretion of the user
+of the component to decide what to do with it.
+
+Currently only image file uploads have this feature.
+
+<Canvas>
+    <Story name="Editable file items">
+        {() => {
+            const [fileItems, setFileItems] = useState([]);
+            const handleChange = (files) => {
+                const newFileItems = files.map((file) => {
+                    return {
+                        id: SimpleIdGenerator.generate(),
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                });
+                setFileItems((prevItems) => {
+                    return prevItems.concat(newFileItems);
+                });
+            };
+            const handleDelete = (fileItem) => {
+                if (fileItems.length === 1) {
+                    setFileItems([]);
+                } else {
+                    const newArr = [...fileItems];
+                    newArr.splice(newArr.indexOf(fileItem), 1);
+                    setFileItems(newArr);
+                }
+            };
+            const handleEdit = (fileItem) => {
+                setFileItems((prevItems) => {
+                    return prevItems.map((item) => {
+                        if (item.id === fileItem.id) {
+                            return fileItem;
+                        } else {
+                            return item;
+                        }
+                    });
+                });
+            };
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    onChange={handleChange}
+                    onDelete={handleDelete}
+                    onEdit={handleEdit}
+                    title="Editable file items"
+                    description="Drag an image file and a textarea will be shown for you to enter a description"
+                    descriptionMaxLength={200}
+                    editableFileItems
+                    maxFiles={6}
+                    warning={
+                        <>
+                            Maximum size per file: 2 MB
+                            <br />
+                            Supported file types: .JPG, .JPEG, .PNG
+                        </>
+                    }
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Secondary>Component API</Secondary>
 
 To be added at the end

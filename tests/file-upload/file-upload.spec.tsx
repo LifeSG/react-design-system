@@ -51,6 +51,18 @@ describe("FileUpload", () => {
         });
 
         it("should render the file items if specified", () => {
+            const fileItems: FileItemProps[] = [MOCK_NON_IMAGE_FILE];
+
+            const rendered = render(<FileUpload fileItems={fileItems} />);
+
+            expect(screen.getByText("bugs-bunny.pdf")).toBeInTheDocument();
+            expect(screen.getByText("3 KB")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-delete-button")
+            ).toBeInTheDocument();
+        });
+
+        it("should render the image files in its edit mode if no description is specified for the image", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
             const rendered = render(<FileUpload fileItems={fileItems} />);
@@ -58,7 +70,7 @@ describe("FileUpload", () => {
             expect(screen.getByText("bugs-bunny.png")).toBeInTheDocument();
             expect(screen.getByText("3 KB")).toBeInTheDocument();
             expect(
-                rendered.getByTestId("some-delete-button")
+                rendered.getByTestId("some-edit-display")
             ).toBeInTheDocument();
         });
     });
@@ -92,7 +104,7 @@ describe("FileUpload", () => {
         it("should fire the onDelete callback when a file item's delete button is clicked", () => {
             const onDeleteCallback = jest.fn();
 
-            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+            const fileItems: FileItemProps[] = [MOCK_NON_IMAGE_FILE];
 
             const rendered = render(
                 <FileUpload fileItems={fileItems} onDelete={onDeleteCallback} />
@@ -101,7 +113,7 @@ describe("FileUpload", () => {
 
             fireEvent.click(deleteButton);
 
-            expect(onDeleteCallback).toBeCalledWith(MOCK_FILE_ITEMS[0]);
+            expect(onDeleteCallback).toBeCalledWith(MOCK_NON_IMAGE_FILE);
         });
     });
 });
@@ -120,3 +132,10 @@ const MOCK_FILE_ITEMS = [
         truncateText: false, // Test purposes
     },
 ];
+const MOCK_NON_IMAGE_FILE = {
+    id: "some",
+    name: "bugs-bunny.pdf",
+    type: "application/pdf",
+    size: 3000,
+    truncateText: false, // Test purposes
+};

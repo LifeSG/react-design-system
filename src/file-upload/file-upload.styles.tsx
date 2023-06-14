@@ -61,3 +61,20 @@ export const UploadButtonLabel = styled.label`
         visibility: hidden;
     }
 `;
+
+export const EditableItemsContainer = styled.ul`
+    list-style-type: none;
+    border-top: 1px solid ${Color.Neutral[5]};
+    :not(:last-child) {
+        border-bottom: 1px solid ${Color.Neutral[5]};
+        margin-bottom: 2rem;
+    }
+
+    :last-child {
+        margin-bottom: -2rem; // offset as margin already on ItemsContainer
+    }
+
+    :not(:first-child) {
+        margin-top: 2rem;
+    }
+`;

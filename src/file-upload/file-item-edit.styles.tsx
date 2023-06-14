@@ -2,12 +2,17 @@ import styled from "styled-components";
 import { MediaQuery } from "../media/media";
 import { Button } from "../button/button";
 import { Text } from "../text/text";
+import { Color } from "../color/color";
 
 export const Item = styled.li`
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
     background: transparent;
+
+    :not(:last-child) {
+        border-bottom: 1px solid ${Color.Neutral[5]};
+    }
 `;
 
 export const ContentSection = styled.div`
@@ -37,11 +42,6 @@ export const NameSection = styled.div`
 export const EditableSection = styled.div`
     display: flex;
     flex-direction: column;
-    padding-right: 5.3rem;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding-right: 0;
-    }
 `;
 
 export const ActionButtonsSection = styled.div`

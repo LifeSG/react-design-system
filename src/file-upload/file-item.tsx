@@ -20,39 +20,38 @@ import {
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import { FileItemEdit } from "./file-item-edit";
 
-interface Props extends FileItemProps {
-    wrapperWidth: number;
-    /** Indicates the max length for the file item description */
-    descriptionMaxLength?: number | undefined;
-    /** Indicates if the file item is editable (only for image files) */
+interface Props {
+    fileItem: FileItemProps;
     editable?: boolean | undefined;
+    wrapperWidth: number;
     onDelete: () => void;
-    onDescriptionUpdate: (description: string) => void;
+    onEditClick?: (() => void) | undefined;
 }
 
 export const FileItem = ({
-    id,
-    name,
-    size,
-    type,
-    description,
-    progress = 1,
+    fileItem,
     editable,
-    errorMessage,
     wrapperWidth,
-    thumbnailImageDataUrl,
-    truncateText = true,
-    descriptionMaxLength,
     onDelete,
-    onDescriptionUpdate,
+    onEditClick,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const {
+        id,
+        name,
+        size,
+        type,
+        description,
+        progress = 1,
+        errorMessage,
+        thumbnailImageDataUrl,
+        truncateText = true,
+    } = fileItem;
+
     const [formattedName, setFormattedName] = useState<string>();
-    const [renderEditMode, setRenderEditMode] = useState<boolean>(false);
     const isLoading = progress < 1;
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
 
@@ -63,17 +62,7 @@ export const FileItem = ({
     // =========================================================================
     useEffect(() => {
         setFormattedName(getTruncatedText(name));
-    }, [wrapperWidth, renderEditMode]);
-
-    useEffect(() => {
-        if (
-            editable &&
-            FileUploadHelper.isSupportedImageType(type) &&
-            !description
-        ) {
-            setRenderEditMode(true);
-        }
-    }, [description, type, editable]);
+    }, [wrapperWidth]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -83,16 +72,9 @@ export const FileItem = ({
     };
 
     const handleEdit = () => {
-        setRenderEditMode(true);
-    };
-
-    const handleDescriptionEdit = (description: string) => {
-        onDescriptionUpdate(description);
-        setRenderEditMode(false);
-    };
-
-    const handleDescriptionEditCancel = () => {
-        setRenderEditMode(false);
+        if (onEditClick) {
+            onEditClick();
+        }
     };
 
     // =========================================================================
@@ -138,12 +120,9 @@ export const FileItem = ({
                 </ItemActionContainer>
             );
         } else {
-            const isEditable =
-                editable && FileUploadHelper.isSupportedImageType(type);
-
             return (
-                <ItemActionContainer $hasEditButton={isEditable}>
-                    {isEditable && (
+                <ItemActionContainer $hasEditButton={editable}>
+                    {editable && (
                         <IconButton
                             key="edit"
                             data-testid={`${id}-edit-button`}
@@ -168,24 +147,6 @@ export const FileItem = ({
             );
         }
     };
-
-    // -------------------------------------------------------------------------
-    // ACTUAL RENDER
-    // -------------------------------------------------------------------------
-    if (renderEditMode) {
-        return (
-            <FileItemEdit
-                id={id}
-                name={name}
-                description={description}
-                descriptionMaxLength={descriptionMaxLength}
-                fileSize={fileSize}
-                wrapperWidth={wrapperWidth}
-                onEdit={handleDescriptionEdit}
-                onCancel={handleDescriptionEditCancel}
-            />
-        );
-    }
 
     return (
         <Item

@@ -12,33 +12,29 @@ import {
     NameSection,
 } from "./file-item-edit.styles";
 import { StringHelper } from "../util";
+import { FileItemProps } from "./types";
+import { FileUploadHelper } from "./helper";
 
 interface Props {
-    id: string;
-    name: string;
-    description: string;
-    fileSize: string;
+    fileItem: FileItemProps;
     wrapperWidth: number;
     descriptionMaxLength?: number | undefined;
-    truncateText?: boolean | undefined;
     onEdit: (description: string) => void;
     onCancel: () => void;
 }
 
 export const FileItemEdit = ({
-    id,
-    description,
-    name,
-    fileSize,
+    fileItem,
     descriptionMaxLength,
     wrapperWidth,
-    truncateText = true,
     onEdit,
     onCancel,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const { id, description, name, size, truncateText = true } = fileItem;
+
     const [formattedName, setFormattedName] = useState<string>();
 
     const textareaRef = useRef<HTMLTextAreaElement>();
@@ -56,10 +52,14 @@ export const FileItemEdit = ({
     // =========================================================================
     const handleSave = () => {
         if (textareaRef.current) {
-            onEdit(textareaRef.current.value);
+            onEdit(textareaRef.current.value || "");
         } else {
             onEdit(undefined);
         }
+    };
+
+    const handleCancel = () => {
+        onCancel();
     };
 
     // =========================================================================
@@ -86,7 +86,7 @@ export const FileItemEdit = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Item>
+        <Item data-testid={`${id}-edit-display`}>
             <ContentSection>
                 {/* Thumbnail to be rendered here. */}
                 <ContentMain>
@@ -94,12 +94,15 @@ export const FileItemEdit = ({
                         <FileNameText weight="semibold">
                             {formattedName}
                         </FileNameText>
-                        <FileSizeText>{fileSize}</FileSizeText>
+                        <FileSizeText>
+                            {FileUploadHelper.formatFileSizeDisplay(size)}
+                        </FileSizeText>
                     </NameSection>
                     <EditableSection>
                         <Form.Textarea
                             ref={textareaRef}
                             id={`${id}-description-textarea`}
+                            data-testid={`${id}-textarea`}
                             value={description}
                             maxLength={descriptionMaxLength}
                             rows={3}
@@ -113,13 +116,18 @@ export const FileItemEdit = ({
                 </ContentMain>
             </ContentSection>
             <ActionButtonsSection>
-                <ActionButton type="button" onClick={handleSave}>
+                <ActionButton
+                    data-testid={`${id}-save-button`}
+                    type="button"
+                    onClick={handleSave}
+                >
                     Save
                 </ActionButton>
                 <ActionButton
                     type="button"
                     styleType="secondary"
-                    onClick={onCancel}
+                    data-testid={`${id}-cancel-button`}
+                    onClick={handleCancel}
                 >
                     Cancel
                 </ActionButton>
