@@ -1,6 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Overlay } from "../overlay";
+import { SimpleIdGenerator } from "../util";
 import {
     CloseButton,
     Container,
@@ -22,6 +23,8 @@ export const Drawer = ({
     // CONST, STATE, REFS
     // =============================================================================
     const [showOverlay, setShowOverlay] = useState(show);
+    const [id] = useState(() => SimpleIdGenerator.generate());
+    const buttonRef = useRef<HTMLButtonElement>();
 
     // =============================================================================
     // EFFECTS
@@ -38,6 +41,13 @@ export const Drawer = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const handleDialogVisibility = (e: React.TransitionEvent) => {
+        if (e.propertyName === "visibility" && show) {
+            // focus the first element so that the screenreader enters the dialog
+            buttonRef.current.focus();
+        }
+    };
+
     const handleClick = (event: React.MouseEvent) => {
         event.stopPropagation();
     };
@@ -55,6 +65,9 @@ export const Drawer = ({
                 $show={show}
                 data-testid="drawer"
                 onClick={handleClick}
+                role="dialog"
+                aria-labelledby={id}
+                onTransitionEnd={handleDialogVisibility}
                 {...otherProps}
             >
                 <Header>
@@ -62,10 +75,11 @@ export const Drawer = ({
                         aria-label="Close drawer"
                         onClick={onClose}
                         focusHighlight={false}
+                        ref={buttonRef}
                     >
                         <CrossIcon aria-hidden />
                     </CloseButton>
-                    <Heading>{heading}</Heading>
+                    <Heading id={id}>{heading}</Heading>
                 </Header>
                 <Content>{children}</Content>
             </Container>
