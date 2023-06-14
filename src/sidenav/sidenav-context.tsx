@@ -6,10 +6,15 @@ import React, {
     useState,
 } from "react";
 
+interface SelectedItem {
+    itemId: string | undefined;
+    openDrawer?: boolean | undefined;
+}
+
 interface SidenavContextProps {
-    selectedItemId: string | undefined;
+    selectedItem: SelectedItem | undefined;
     drawerContent: React.ReactNode | undefined;
-    setSelectedItemId: Dispatch<SetStateAction<string | undefined>>;
+    setSelectedItem: Dispatch<SetStateAction<SelectedItem | undefined>>;
     setDrawerContent: Dispatch<SetStateAction<React.ReactNode | undefined>>;
 }
 
@@ -18,9 +23,9 @@ interface SidenavProviderProps {
 }
 
 export const SidenavContext = createContext<SidenavContextProps>({
-    selectedItemId: undefined,
+    selectedItem: undefined,
     drawerContent: undefined,
-    setSelectedItemId: (prevState: SetStateAction<string | undefined>) =>
+    setSelectedItem: (prevState: SetStateAction<SelectedItem | undefined>) =>
         prevState,
     setDrawerContent: (
         prevState: SetStateAction<React.ReactNode | undefined>
@@ -30,7 +35,7 @@ export const SidenavContext = createContext<SidenavContextProps>({
 export function SidenavProvider({
     children,
 }: SidenavProviderProps): JSX.Element {
-    const [selectedItemId, setSelectedItemId] = useState<string | undefined>(
+    const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>(
         undefined
     );
     const [drawerContent, setDrawerContent] = useState<
@@ -39,12 +44,12 @@ export function SidenavProvider({
 
     const value = useMemo(
         () => ({
-            selectedItemId,
+            selectedItem,
             drawerContent,
-            setSelectedItemId,
+            setSelectedItem,
             setDrawerContent,
         }),
-        [selectedItemId, drawerContent, setSelectedItemId, setDrawerContent]
+        [selectedItem, drawerContent, setSelectedItem, setDrawerContent]
     );
 
     return (

@@ -8,4 +8,5 @@ export const Container = styled.div<StyleProps>`
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};
     display: flex;
     height: 100vh;
+    width: 8.5rem;
 `;

@@ -11,7 +11,8 @@ export const SidenavDrawerSubitem = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { setDrawerContent } = useContext(SidenavContext);
+    const { selectedItem, setDrawerContent, setSelectedItem } =
+        useContext(SidenavContext);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -19,8 +20,9 @@ export const SidenavDrawerSubitem = ({
     const handleOnClick = () => {
         if (onClick) {
             onClick();
-            setDrawerContent(undefined);
         }
+        setSelectedItem({ ...selectedItem, openDrawer: false });
+        setDrawerContent(undefined);
     };
 
     // =========================================================================
