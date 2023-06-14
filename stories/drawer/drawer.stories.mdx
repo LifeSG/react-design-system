@@ -1,0 +1,96 @@
+import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Drawer } from "src/drawer";
+import { Button } from "src/button";
+import { Text } from "src/text";
+import { Secondary, Heading3, Title } from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Drawer" component={Drawer} />
+
+<Title>Drawer</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays content in a side panel overlay that slides in from the right.
+
+```tsx
+import { Drawer } from "@lifesg/react-design-system/drawer";
+```
+
+<Canvas>
+    <Story name="Drawer">
+        {() => {
+            const [show, setShow] = useState(false);
+            const openDrawer = () => setShow(true);
+            const closeDrawer = () => setShow(false);
+            return (
+                <>
+                    <Button.Default onClick={openDrawer}>
+                        Open drawer
+                    </Button.Default>
+                    <Drawer
+                        enableOverlayClick
+                        show={show}
+                        onClose={closeDrawer}
+                        onOverlayClick={closeDrawer}
+                        heading="Header text"
+                    >
+                        <Text.Body style={{ padding: "1rem" }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                        </Text.Body>
+                    </Drawer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Handling content overflow</Heading3>
+
+<Canvas>
+    <Story name="Handling content overflow">
+        {() => {
+            const [show, setShow] = useState(false);
+            const openDrawer = () => setShow(true);
+            const closeDrawer = () => setShow(false);
+            return (
+                <>
+                    <Button.Default onClick={openDrawer}>
+                        Open drawer
+                    </Button.Default>
+                    <Drawer
+                        enableOverlayClick
+                        show={show}
+                        onClose={closeDrawer}
+                        onOverlayClick={closeDrawer}
+                        heading="This title is truncated to a single line when it exceeds the available space"
+                    >
+                        <div
+                            style={{
+                                padding: "1rem",
+                            }}
+                        >
+                            <Text.Body
+                                style={{
+                                    height: "100vh",
+                                }}
+                            >
+                                Drawer content is scrollable when its height is
+                                taller than the current screen. The header
+                                remains at the top when scrolling down.
+                            </Text.Body>
+                            <Text.Body>
+                                This line marks the end of content.
+                            </Text.Body>
+                        </div>
+                    </Drawer>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
