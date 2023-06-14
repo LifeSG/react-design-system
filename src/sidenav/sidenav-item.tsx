@@ -19,24 +19,26 @@ export const SidenavItem = ({
     // CONST, STATE, REF
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
-    const {
-        drawerContent,
-        selectedItemId,
-        setSelectedItemId,
-        setDrawerContent,
-    } = useContext(SidenavContext);
+    const { drawerContent, selectedItem, setSelectedItem, setDrawerContent } =
+        useContext(SidenavContext);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         if (otherProps.selected) {
-            setSelectedItemId(id);
+            setSelectedItem({ itemId: id, openDrawer: true });
         }
     }, []);
 
     useEffect(() => {
-        if (!drawerContent && selectedItemId === id && children) {
+        if (
+            !drawerContent &&
+            selectedItem &&
+            selectedItem.itemId === id &&
+            children &&
+            selectedItem.openDrawer
+        ) {
             setDrawerContent(children);
         }
     }, [drawerContent]);
@@ -45,8 +47,8 @@ export const SidenavItem = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleOnClick = () => {
-        if (selectedItemId === id) return;
-        setSelectedItemId(id);
+        if (selectedItem && selectedItem.itemId === id) return;
+        setSelectedItem({ itemId: id, openDrawer: !!children });
         setDrawerContent(children ? children : undefined);
         if (onClick) {
             onClick();
@@ -67,7 +69,7 @@ export const SidenavItem = ({
                 onClick={handleOnClick}
                 onMouseEnter={handleMouseEnter}
                 {...otherProps}
-                $highlight={selectedItemId === id}
+                $highlight={selectedItem && selectedItem.itemId === id}
             >
                 <IconContainer>{icon}</IconContainer>
                 <TitleText>{title}</TitleText>

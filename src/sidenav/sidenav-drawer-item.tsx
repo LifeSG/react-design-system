@@ -21,7 +21,8 @@ export const SidenavDrawerItem = ({
     // =============================================================================
     const [expanded, setExpanded] = useState<boolean>(true);
     const [highlight, setHighlight] = useState<boolean>(false);
-    const { setDrawerContent } = useContext(SidenavContext);
+    const { selectedItem, setDrawerContent, setSelectedItem } =
+        useContext(SidenavContext);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -37,10 +38,13 @@ export const SidenavDrawerItem = ({
     const handleOnClick = () => {
         if (children) {
             setExpanded(!expanded);
-        } else if (onClick) {
-            onClick();
-            setDrawerContent(undefined);
+            return;
         }
+        if (onClick) {
+            onClick();
+        }
+        setSelectedItem({ ...selectedItem, openDrawer: false });
+        setDrawerContent(undefined);
     };
 
     // =========================================================================

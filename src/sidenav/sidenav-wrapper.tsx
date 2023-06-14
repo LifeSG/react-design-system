@@ -15,7 +15,7 @@ export const SideNavWrapper = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { drawerContent, setDrawerContent, setSelectedItemId } =
+    const { drawerContent, selectedItem, setDrawerContent, setSelectedItem } =
         useContext(SidenavContext);
     const clickRef = useRef(null);
 
@@ -39,7 +39,7 @@ export const SideNavWrapper = ({
             clickRef.current &&
             !clickRef.current.contains(e.target)
         ) {
-            setSelectedItemId(undefined);
+            setSelectedItem({ ...selectedItem, openDrawer: false });
             setDrawerContent(undefined);
         }
     };
