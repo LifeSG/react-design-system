@@ -9,6 +9,7 @@ import { SidenavItemProps } from "./types";
 import { SidenavContext } from "./sidenav-context";
 
 export const SidenavItem = ({
+    children,
     icon,
     title,
     onClick,
@@ -18,7 +19,12 @@ export const SidenavItem = ({
     // CONST, STATE, REF
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
-    const { selectedItemId, setSelectedItemId } = useContext(SidenavContext);
+    const {
+        drawerContent,
+        selectedItemId,
+        setSelectedItemId,
+        setDrawerContent,
+    } = useContext(SidenavContext);
 
     // =============================================================================
     // EFFECTS
@@ -29,15 +35,26 @@ export const SidenavItem = ({
         }
     }, []);
 
+    useEffect(() => {
+        if (!drawerContent && selectedItemId === id && children) {
+            setDrawerContent(children);
+        }
+    }, [drawerContent]);
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleOnClick = () => {
         if (selectedItemId === id) return;
         setSelectedItemId(id);
+        setDrawerContent(children ? children : undefined);
         if (onClick) {
             onClick();
         }
+    };
+
+    const handleMouseEnter = () => {
+        setDrawerContent(children);
     };
 
     // =========================================================================
@@ -48,6 +65,7 @@ export const SidenavItem = ({
             <DefaultButton
                 styleType="link"
                 onClick={handleOnClick}
+                onMouseEnter={handleMouseEnter}
                 {...otherProps}
                 $highlight={selectedItemId === id}
             >

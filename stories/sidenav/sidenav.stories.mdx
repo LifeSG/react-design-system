@@ -132,4 +132,74 @@ You are able to separate groups with a divider using the `separate` prop.
     </Story>
 </Canvas>
 
+<Heading3>With drawer</Heading3>
+
+With sub items listing, those will be shown in drawer
+
+<Canvas>
+    <Story name="With drawer">
+        {() => {
+            return (
+                // NOTE - fixed used for storybook purposes
+                <Sidenav fixed={false}>
+                    <Sidenav.Group separator={true}>
+                        <Sidenav.Item
+                            id="dashboard"
+                            title="Dashboard"
+                            icon={<Square2x2Icon />}
+                        />
+                        <Sidenav.Item
+                            id="reports"
+                            title="Reports"
+                            icon={<DocIcon />}
+                        >
+                            <Sidenav.DrawerItem
+                                id="new-reports"
+                                title="New reports"
+                            >
+                                <Sidenav.DrawerSubitem
+                                    id="bookings-reports"
+                                    title="Bookings Reports"
+                                    onClick={function someFunction() {
+                                        console.log("clicked");
+                                    }}
+                                />
+                                <Sidenav.DrawerSubitem
+                                    id="payment-reports"
+                                    title="Payment Reports"
+                                />
+                            </Sidenav.DrawerItem>
+                            <Sidenav.DrawerItem
+                                id="archived-reports"
+                                title="Archived reports"
+                            />
+                        </Sidenav.Item>
+                    </Sidenav.Group>
+                    <Sidenav.Group>
+                        <Sidenav.Item
+                            id="bookings"
+                            title="Bookings"
+                            icon={<CalendarIcon />}
+                        >
+                            <Sidenav.DrawerItem
+                                id="completed-bookings"
+                                title="Completed"
+                            />
+                            <Sidenav.DrawerItem
+                                id="upcomming-bookings"
+                                title="Upcomming"
+                            />
+                        </Sidenav.Item>
+                        <Sidenav.Item
+                            id="users2"
+                            title="Users"
+                            icon={<Person2Icon />}
+                        />
+                    </Sidenav.Group>
+                </Sidenav>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <PropsTable />

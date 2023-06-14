@@ -1,29 +1,29 @@
-import { DesktopContainer, MobileContainer } from "./sidenav.styles";
+import { Container } from "./sidenav.styles";
 import { SidenavProps } from "./types";
 import { SidenavItem } from "./sidenav-item";
 import { SidenavGroup } from "./sidenav-group";
 import { SidenavProvider } from "./sidenav-context";
+import { SidenavDrawerItem } from "./sidenav-drawer-item";
+import { SidenavDrawerSubitem } from "./sidenav-drawer-subitem";
+import { SideNavWrapper } from "./sidenav-wrapper";
 
 const SidenavBase = ({
     fixed = true,
     children,
     ...otherProps
 }: SidenavProps) => {
-    // =========================================================================
-    // RENDER FUNCTIONS
-    // =========================================================================
     return (
-        <SidenavProvider>
-            <DesktopContainer $fixed={fixed} {...otherProps}>
-                {children}
-            </DesktopContainer>
-            {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
-            <MobileContainer></MobileContainer>
-        </SidenavProvider>
+        <Container $fixed={fixed} {...otherProps}>
+            <SidenavProvider>
+                <SideNavWrapper>{children}</SideNavWrapper>
+            </SidenavProvider>
+        </Container>
     );
 };
 
 export const Sidenav = Object.assign(SidenavBase, {
     Group: SidenavGroup,
     Item: SidenavItem,
+    DrawerItem: SidenavDrawerItem,
+    DrawerSubitem: SidenavDrawerSubitem,
 });
