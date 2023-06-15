@@ -20,7 +20,7 @@ export const InputElement = styled.input<StyleProps>`
     // overwrite default styles
     background: transparent;
     border: none;
-    height: 3rem;
+    height: calc(3rem - 2px); // exclude top and bottom borders
     width: 100%;
     padding: 0;
 
