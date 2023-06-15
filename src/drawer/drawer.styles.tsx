@@ -48,6 +48,9 @@ export const Container = styled.div<IStyleProps>`
     ${(props) => VISIBILITY_STYLE(props.$show)}
 
     width: 40%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    overflow: hidden;
 
     ${MediaQuery.MaxWidth.desktopL} {
         width: 50%;
