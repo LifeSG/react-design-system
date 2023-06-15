@@ -18,5 +18,5 @@ export const Wrapper = styled.div`
 `;
 
 export const InputSelectorElement = styled(BasicInput)<StyleProps>`
-    height: 3rem;
+    height: calc(3rem - 2px); // exclude top and bottom borders
 `;
