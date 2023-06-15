@@ -75,6 +75,7 @@ export const Header = styled.div`
 
     ${MediaQuery.MaxWidth.tablet} {
         gap: 0.5rem;
+        padding: 2rem 1.25rem 1rem;
     }
 `;
 
