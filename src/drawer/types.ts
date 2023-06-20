@@ -7,8 +7,8 @@ export interface DrawerProps {
     heading?: string | undefined;
     /** Toggles the visibility of the drawer */
     show?: boolean | undefined;
-    /** Callback when the close button is clicked */
+    /** Called when the close button is clicked */
     onClose?: (() => void) | undefined;
-    /** Callback when the overlay is clicked */
+    /** Called when the overlay is clicked */
     onOverlayClick?: (() => void) | undefined;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
 const DATA: ApiTableSectionProps[] = [
@@ -7,7 +7,7 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "children",
-                description: "The contents of the drawer",
+                description: <>The contents of the {code("Drawer")}</>,
                 propTypes: ["React.ReactNode"],
             },
             {
@@ -22,8 +22,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "heading",
-                description: "The drawer header text",
-                propTypes: ["React.ReactNode"],
+                description: <>The header text of the {code("Drawer")}</>,
+                propTypes: ["string"],
             },
             {
                 name: "id",
@@ -32,17 +32,24 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "show",
-                description: "Toggles the visibility of the drawer",
+                description: (
+                    <>Toggles the visibility of the {code("Drawer")}</>
+                ),
                 propTypes: ["boolean"],
             },
             {
                 name: "onClose",
-                description: "Callback when the close button is clicked",
+                description: "Called when the close button is clicked",
                 propTypes: ["() => void"],
             },
             {
                 name: "onOverlayClick",
-                description: "Callback when the overlay is clicked",
+                description: (
+                    <>
+                        Called when the overlay of the {code("Drawer")} is
+                        clicked
+                    </>
+                ),
                 propTypes: ["() => void"],
             },
         ],
