@@ -38,7 +38,7 @@ export const Selector = styled.button`
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
-    height: 3rem;
+    height: calc(3rem - 2px); // exclude top and bottom borders
     width: 100%;
     border-radius: ${BORDER_RADIUS};
     cursor: pointer;
