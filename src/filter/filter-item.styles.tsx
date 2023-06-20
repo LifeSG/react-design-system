@@ -28,7 +28,7 @@ export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
         props.$collapsible ? Color.Neutral[7](props) : Color.Neutral[8](props)};
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         background-color: ${Color.Neutral[7]};
     }
 `;
@@ -38,7 +38,7 @@ export const Divider = styled.div<DividerStyleProps>`
     height: 1px;
     background-color: ${Color.Neutral[5]};
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
         margin: 0 1rem;
     }
@@ -54,7 +54,7 @@ export const FilterItemHeader = styled.div`
 
     background-color: ${Color.Neutral[8]};
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         background-color: transparent;
     }
 `;
@@ -79,7 +79,7 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
 export const FilterItemTitle = styled(Text.H4)`
     margin: 1.5rem 0 1.5rem 1.25rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         ${TextStyleHelper.getTextStyle("H5", "semibold")}
         margin: 1.5rem 1.25rem 0 1.25rem;
     }
@@ -95,10 +95,6 @@ export const ExpandableItem = styled(animated.div)`
 
 export const FilterItemBody = styled.div`
     padding: 1rem 1.25rem;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding: 1.5rem 1.25rem;
-    }
 `;
 
 export const MinimisableContent = styled(animated.div)<{
@@ -114,7 +110,7 @@ export const FilterItemMinimiseButton = styled(Button.Small)`
     padding: 0;
     margin: 1rem 0 0 0;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         span {
             ${TextStyleHelper.getTextStyle("H6", "semibold")}
         }
