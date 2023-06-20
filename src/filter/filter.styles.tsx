@@ -11,14 +11,14 @@ import { Text } from "../text/text";
 // =============================================================================
 
 export const DesktopView = styled.div`
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         display: none;
     }
 `;
 
 export const MobileView = styled.div`
     display: none;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         display: block;
     }
 `;
@@ -55,7 +55,7 @@ export const FilterHeader = styled.div`
 
     background-color: ${Color.Neutral[8]};
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         border-bottom: 1px solid ${Color.Neutral[5]};
     }
 `;
@@ -64,7 +64,7 @@ export const FilterTitle = styled(Text.H4)`
     flex: 1;
     margin: 1.5rem 0 1rem 1.25rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         text-align: center;
         margin: 1.5rem 0;
     }
@@ -90,7 +90,7 @@ export const FilterClearButton = styled(Button.Small)`
     padding: 1.5rem 1.25rem 1rem 1.25rem;
     height: auto;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         padding: 1.5rem 1.25rem;
     }
 `;
