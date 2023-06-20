@@ -19,13 +19,13 @@ import {
 } from "./toast.styles";
 import { ToastProps } from "./types";
 
-export const Toast: React.FC = ({
+export const Toast = ({
     type = "success",
     title,
     label,
     autoDismiss,
     ...otherProps
-}: ToastProps): JSX.Element => {
+}: ToastProps) => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
