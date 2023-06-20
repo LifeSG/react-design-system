@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Alert } from "../alert";
-import { Text, TextStyleHelper } from "../text";
-import { MediaQuery } from "../media";
 import { Button } from "../button";
 import { Color } from "../color";
+import { MediaQuery } from "../media";
+import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
 // STYLING
@@ -21,11 +21,6 @@ export const Title = styled(Text.H4)`
 export const Description = styled(Text.BodySmall)`
     margin-bottom: 0;
     color: ${Color.Neutral[3]};
-`;
-
-export const ItemsContainer = styled.ul`
-    list-style-type: none;
-    margin-bottom: 2rem;
 `;
 
 export const WarningAlert = styled(Alert)`
@@ -59,22 +54,5 @@ export const UploadButtonLabel = styled.label`
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;
-    }
-`;
-
-export const EditableItemsContainer = styled.ul`
-    list-style-type: none;
-    border-top: 1px solid ${Color.Neutral[5]};
-    :not(:last-child) {
-        border-bottom: 1px solid ${Color.Neutral[5]};
-        margin-bottom: 2rem;
-    }
-
-    :last-child {
-        margin-bottom: -2rem; // offset as margin already on ItemsContainer
-    }
-
-    :not(:first-child) {
-        margin-top: 2rem;
     }
 `;
