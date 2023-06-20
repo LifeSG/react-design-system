@@ -15,7 +15,7 @@ interface ItemStyleProps {
 }
 
 interface ItemActionContainerStyleProps {
-    $hasEditButton?: boolean | undefined;
+    $editable?: boolean | undefined;
 }
 
 // =============================================================================
@@ -101,7 +101,7 @@ export const ItemActionContainer = styled.div<ItemActionContainerStyleProps>`
 
     ${MediaQuery.MaxWidth.mobileL} {
         ${(props) => {
-            if (props.$hasEditButton) {
+            if (props.$editable) {
                 return css`
                     margin-left: 0;
                     margin-top: 1rem;

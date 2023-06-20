@@ -1,5 +1,6 @@
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { PencilIcon } from "@lifesg/react-icons/pencil";
 import { useEffect, useRef, useState } from "react";
 import { ProgressBar } from "../shared/progress-bar";
 import { StringHelper } from "../util";
@@ -19,7 +20,6 @@ import {
 } from "./file-item.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { PencilIcon } from "@lifesg/react-icons/pencil";
 
 interface Props {
     fileItem: FileItemProps;
@@ -121,16 +121,17 @@ export const FileItem = ({
             );
         } else {
             return (
-                <ItemActionContainer $hasEditButton={editable}>
+                <ItemActionContainer $editable={editable}>
                     {editable && (
                         <IconButton
                             key="edit"
                             data-testid={`${id}-edit-button`}
                             type="button"
                             styleType="light"
+                            aria-label={`edit ${name}`}
                             onClick={handleEdit}
                         >
-                            <PencilIcon />
+                            <PencilIcon aria-hidden />
                         </IconButton>
                     )}
                     <IconButton

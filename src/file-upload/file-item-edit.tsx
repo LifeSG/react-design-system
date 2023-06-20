@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Form } from "../form";
+import { StringHelper } from "../util";
 import {
     ActionButton,
     ActionButtonsSection,
@@ -11,9 +12,8 @@ import {
     Item,
     NameSection,
 } from "./file-item-edit.styles";
-import { StringHelper } from "../util";
-import { FileItemProps } from "./types";
 import { FileUploadHelper } from "./helper";
+import { FileItemProps } from "./types";
 
 interface Props {
     fileItem: FileItemProps;
