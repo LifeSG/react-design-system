@@ -8,7 +8,7 @@ import { ClickableIcon } from "../shared/clickable-icon";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface IStyleProps {
+interface StyleProps {
     $show: boolean;
     $viewHeight?: number | undefined;
 }
@@ -42,7 +42,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Container = styled.div<IStyleProps>`
+export const Container = styled.div<StyleProps>`
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;

@@ -8,8 +8,8 @@ import { Text } from "../text";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface IStyleProps {
-    $show: boolean;
+interface StyleProps {
+    $show?: boolean | undefined;
 }
 
 // =============================================================================
@@ -33,7 +33,7 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<IStyleProps>`
+export const Container = styled.div<StyleProps>`
     position: fixed;
     top: 0;
 
