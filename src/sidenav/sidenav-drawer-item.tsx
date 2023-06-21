@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useSpring } from "react-spring";
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import {
@@ -24,6 +25,15 @@ export const SidenavDrawerItem = ({
     const [highlight, setHighlight] = useState<boolean>(false);
     const { selectedItem, setDrawerContent, setSelectedItem } =
         useContext(SidenavContext);
+    const containerAnimationProps = useSpring({
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+    });
+
+    const contentAnimationProps = useSpring({
+        height: children && expanded ? "auto" : 0,
+        delay: 200,
+    });
 
     // =========================================================================
     // EVENT HANDLERS
@@ -61,6 +71,7 @@ export const SidenavDrawerItem = ({
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             {...otherProps}
+            style={containerAnimationProps}
         >
             <LinkButton
                 styleType="link"
@@ -77,11 +88,9 @@ export const SidenavDrawerItem = ({
                         ))}
                 </IconElement>
             </LinkButton>
-            {children && expanded && (
-                <>
-                    <DrawerSubitemContainer>{children}</DrawerSubitemContainer>
-                </>
-            )}
+            <DrawerSubitemContainer style={contentAnimationProps}>
+                {children}
+            </DrawerSubitemContainer>
         </Container>
     );
 };
