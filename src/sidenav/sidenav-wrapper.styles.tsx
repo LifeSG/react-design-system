@@ -1,7 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { animated } from "react-spring";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
+
+interface StyleProps {
+    $showDrawer: boolean;
+}
 
 export const Wrapper = styled.div`
     display: flex;
@@ -35,16 +39,21 @@ export const MobileContainer = styled(Container)`
     }
 `;
 
-export const DesktopDrawer = styled(animated.ul)`
+export const DesktopDrawer = styled(animated.ul)<StyleProps>`
     flex-direction: column;
     left: 8.5rem;
     top: 0;
     width: 15rem;
     z-index: 10;
     padding: 1rem 0;
-    border: 1px solid ${Color.Neutral[5]};
-    border-left: none;
     background-color: ${Color.Accent.Light[6]};
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border-radius: 0 8px 8px 0;
+
+    ${(props) =>
+        props.$showDrawer &&
+        css`
+            border: 1px solid ${Color.Neutral[5]};
+            border-left: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        `}
 `;

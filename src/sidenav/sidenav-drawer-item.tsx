@@ -29,10 +29,8 @@ export const SidenavDrawerItem = ({
         from: { opacity: 0 },
         to: { opacity: 1 },
     });
-
     const contentAnimationProps = useSpring({
         height: children && expanded ? "auto" : 0,
-        delay: 200,
     });
 
     // =========================================================================

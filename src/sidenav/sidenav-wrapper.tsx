@@ -57,7 +57,10 @@ export const SideNavWrapper = ({
     return (
         <Wrapper ref={drawerRef} onMouseLeave={handleMouseLeave}>
             <DesktopContainer {...otherProps}>{children}</DesktopContainer>
-            <DesktopDrawer style={drawerAnimationProps}>
+            <DesktopDrawer
+                style={drawerAnimationProps}
+                $showDrawer={!!drawerContent}
+            >
                 {drawerContent}
             </DesktopDrawer>
             {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
