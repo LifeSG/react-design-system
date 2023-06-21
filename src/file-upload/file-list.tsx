@@ -1,25 +1,20 @@
-import findIndex from "lodash/findIndex";
-import isEqual from "lodash/isEqual";
 import { useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { SimpleIdGenerator } from "../util";
 import { FileItem } from "./file-item";
 import { FileItemEdit } from "./file-item-edit";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { SimpleIdGenerator } from "../util";
 
 // =============================================================================
 // INTERFACES
 // =============================================================================
 type RenderMode = "cancelled-edit" | "list" | "edit";
 
-interface FileItemRenderProps {
-    fileItem: FileItemProps;
-    renderMode: RenderMode;
-}
+type FileItemRenderModes = Record<string, RenderMode>;
 
-type RenderItem = FileItemRenderProps | FileItemRenderProps[];
+type RenderItem = FileItemProps | FileItemProps[];
 
 interface Props {
     fileItems: FileItemProps[];
@@ -43,10 +38,8 @@ export const FileList = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
     const [arrangedItems, setArrangedItems] = useState<RenderItem[]>([]);
-    const [itemsRenderMode, setItemsRenderMode] = useState<
-        FileItemRenderProps[]
-    >([]);
 
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
@@ -54,12 +47,12 @@ export const FileList = ({
     // EFFECTS
     // =========================================================================
     useEffect(() => {
-        setItemsRenderMode(getItemsRenderMode(fileItems));
+        setRenderModes(getItemsRenderMode(fileItems));
     }, [fileItems]);
 
     useEffect(() => {
-        setArrangedItems(getArrangedItemsToRender(itemsRenderMode));
-    }, [itemsRenderMode]);
+        setArrangedItems(getArrangedItems(fileItems, renderModes));
+    }, [fileItems, renderModes]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -71,35 +64,19 @@ export const FileList = ({
         };
 
     const handleCancel = (item: FileItemProps) => () => {
-        setItemsRenderMode((prevState) => {
-            return prevState.map((renderItem) => {
-                if (isEqual(item, renderItem.fileItem)) {
-                    return {
-                        ...renderItem,
-                        renderMode: item.description
-                            ? "list"
-                            : "cancelled-edit",
-                    };
-                }
+        const updatedRenderModes = { ...renderModes };
+        updatedRenderModes[item.id] = item.description
+            ? "list"
+            : "cancelled-edit";
 
-                return renderItem;
-            });
-        });
+        setRenderModes(updatedRenderModes);
     };
 
     const handleInitiateEdit = (item: FileItemProps) => () => {
-        setItemsRenderMode((prevState) => {
-            return prevState.map((renderItem) => {
-                if (isEqual(item, renderItem.fileItem)) {
-                    return {
-                        ...renderItem,
-                        renderMode: "edit",
-                    };
-                }
+        const updatedRenderModes = { ...renderModes };
+        updatedRenderModes[item.id] = "edit";
 
-                return renderItem;
-            });
-        });
+        setRenderModes(updatedRenderModes);
     };
 
     const handleDelete = (item: FileItemProps) => () => {
@@ -122,82 +99,74 @@ export const FileList = ({
 
     const getItemsRenderMode = (
         fileItems: FileItemProps[]
-    ): FileItemRenderProps[] => {
-        if (!fileItems || fileItems.length === 0) return [];
+    ): FileItemRenderModes => {
+        if (!fileItems || fileItems.length === 0) return {};
 
-        return fileItems.map((item) => {
-            const existingIndex = findIndex(itemsRenderMode, (renderedItem) => {
-                return isEqual(renderedItem.fileItem, item);
-            });
+        const updatedRenderModes: FileItemRenderModes = { ...renderModes };
 
-            if (existingIndex < 0) {
-                // New item
-                return {
-                    fileItem: item,
-                    renderMode: shouldRenderEditMode(item) ? "edit" : "list",
-                };
-            } else {
-                const existingRenderedItem = itemsRenderMode[existingIndex];
-
+        for (const item of fileItems) {
+            if (
+                !updatedRenderModes[item.id] ||
+                updatedRenderModes[item.id] !== "cancelled-edit"
+            ) {
                 /**
-                 * If an item previously had it's edit cancelled,
-                 * we'll not re-render the edit mode even if the
-                 * description is undefined
+                 * If new item or if previously did not have edit cancelled,
+                 * we will just update the render mode according to the
+                 * description value.
+                 *
+                 * If editing was cancelled previously, we will leave it as
+                 * it is and not render the edit display
                  */
-                return {
-                    fileItem: item,
-                    renderMode:
-                        shouldRenderEditMode(item) &&
-                        !(existingRenderedItem.renderMode === "cancelled-edit")
-                            ? "edit"
-                            : existingRenderedItem.renderMode,
-                };
+                updatedRenderModes[item.id] = shouldRenderEditMode(item)
+                    ? "edit"
+                    : "list";
             }
-        });
+        }
+
+        return updatedRenderModes;
     };
 
     /**
-     * Due to a UI requirement, we will render
+     * Due to a UI requirement, we will render the items
+     * with edit modes as a group
      */
-    const getArrangedItemsToRender = (
-        fileItemRenders: FileItemRenderProps[]
+    const getArrangedItems = (
+        fileItems: FileItemProps[],
+        renderModes: FileItemRenderModes
     ) => {
-        if (!fileItemRenders || fileItemRenders.length === 0) {
-            return [];
-        }
+        if (!fileItems || fileItems.length === 0) return [];
 
-        return fileItemRenders.reduce((accumulator, currentItem) => {
-            const { renderMode } = currentItem;
+        const arrangedItems: RenderItem[] = [];
 
-            if (renderMode === "edit") {
-                const previousElement = accumulator[accumulator.length - 1];
+        for (const fileItem of fileItems) {
+            if (renderModes[fileItem.id] === "edit") {
+                const previousElement = arrangedItems[arrangedItems.length - 1];
                 if (Array.isArray(previousElement)) {
-                    previousElement.push(currentItem);
+                    previousElement.push(fileItem);
                 } else {
-                    accumulator.push([currentItem]);
+                    arrangedItems.push([fileItem]);
                 }
             } else {
-                accumulator.push(currentItem);
+                arrangedItems.push(fileItem);
             }
+        }
 
-            return accumulator;
-        }, []);
+        return arrangedItems;
     };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderItemsInEditMode = (fileItems: FileItemRenderProps[]) => {
+    const renderItemsInEditMode = (fileItems: FileItemProps[]) => {
         const itemsToRender = fileItems.map((item) => {
-            const { fileItem } = item;
             return (
                 <FileItemEdit
-                    key={fileItem.id}
-                    fileItem={fileItem}
+                    key={item.id}
+                    fileItem={item}
                     wrapperWidth={wrapperWidth}
                     descriptionMaxLength={descriptionMaxLength}
-                    onEdit={handleDescriptionUpdate(fileItem)}
-                    onCancel={handleCancel(fileItem)}
+                    onEdit={handleDescriptionUpdate(item)}
+                    onCancel={handleCancel(item)}
                 />
             );
         });
@@ -218,15 +187,14 @@ export const FileList = ({
             if (Array.isArray(item)) {
                 return renderItemsInEditMode(item);
             } else {
-                const { fileItem } = item;
                 return (
                     <FileItem
-                        key={fileItem.id}
-                        fileItem={fileItem}
-                        editable={checkEditable(fileItem)}
+                        key={item.id}
+                        fileItem={item}
+                        editable={checkEditable(item)}
                         wrapperWidth={wrapperWidth}
-                        onDelete={handleDelete(fileItem)}
-                        onEditClick={handleInitiateEdit(fileItem)}
+                        onDelete={handleDelete(item)}
+                        onEditClick={handleInitiateEdit(item)}
                     />
                 );
             }
