@@ -17,14 +17,13 @@ export const SideNavWrapper = ({
     // =============================================================================
     const { drawerContent, selectedItem, setDrawerContent, setSelectedItem } =
         useContext(SidenavContext);
-    const clickRef = useRef(null);
+    const drawerRef = useRef(null);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         document.addEventListener("click", handleOutsideClicks);
-        document.addEventListener("mouseleave", handleMouseLeave);
         return () => {
             document.removeEventListener("click", handleOutsideClicks);
         };
@@ -35,32 +34,24 @@ export const SideNavWrapper = ({
     // =========================================================================
     const handleOutsideClicks = (e: PointerEvent) => {
         if (
-            clickRef &&
-            clickRef.current &&
-            !clickRef.current.contains(e.target)
+            drawerRef &&
+            drawerRef.current &&
+            !drawerRef.current.contains(e.target)
         ) {
             setSelectedItem({ ...selectedItem, openDrawer: false });
             setDrawerContent(undefined);
         }
     };
 
-    const handleMouseLeave = (e: PointerEvent) => {
-        if (
-            !(
-                clickRef &&
-                clickRef.current &&
-                clickRef.current.contains(e.target)
-            )
-        ) {
-            setDrawerContent(undefined);
-        }
+    const handleMouseLeave = () => {
+        setDrawerContent(undefined);
     };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Wrapper ref={clickRef}>
+        <Wrapper ref={drawerRef} onMouseLeave={handleMouseLeave}>
             <DesktopContainer {...otherProps}>{children}</DesktopContainer>
             {drawerContent && <DesktopDrawer>{drawerContent}</DesktopDrawer>}
             {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
