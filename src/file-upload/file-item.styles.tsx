@@ -9,6 +9,7 @@ import { MediaQuery } from "../media";
 // STYLE INTERFACES
 // =============================================================================
 interface ItemStyleProps {
+    $sortable: boolean;
     $error?: boolean | undefined;
     $loading?: boolean | undefined;
     $editable?: boolean | undefined;
@@ -46,6 +47,20 @@ export const Item = styled.li<ItemStyleProps>`
                 ${MediaQuery.MaxWidth.mobileL} {
                     flex-direction: column;
                     align-items: flex-start;
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$sortable) {
+            return css`
+                :focus {
+                    cursor: grabbing;
+                }
+
+                :hover {
+                    cursor: grab;
                 }
             `;
         }

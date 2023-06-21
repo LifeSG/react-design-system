@@ -1,3 +1,5 @@
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
@@ -25,6 +27,7 @@ interface Props {
     fileItem: FileItemProps;
     editable?: boolean | undefined;
     wrapperWidth: number;
+    sortable: boolean;
     onDelete: () => void;
     onEditClick?: (() => void) | undefined;
 }
@@ -33,6 +36,7 @@ export const FileItem = ({
     fileItem,
     editable,
     wrapperWidth,
+    sortable,
     onDelete,
     onEditClick,
 }: Props) => {
@@ -56,6 +60,14 @@ export const FileItem = ({
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
 
     const nameSectionRef = useRef<HTMLDivElement>();
+
+    const { attributes, listeners, setNodeRef, transform, transition } =
+        useSortable({ id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
 
     // =========================================================================
     // EFFECTS
@@ -155,6 +167,11 @@ export const FileItem = ({
             $error={!!errorMessage}
             $loading={isLoading}
             $editable={FileUploadHelper.isSupportedImageType(type)}
+            $sortable={sortable}
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+            {...listeners}
         >
             <Content>
                 <ItemNameSection ref={nameSectionRef}>
