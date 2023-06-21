@@ -31,6 +31,7 @@ export const FileUpload = ({
     onChange,
     onDelete,
     onEdit,
+    onReorder,
 }: FileUploadProps) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -66,6 +67,12 @@ export const FileUpload = ({
     const handleItemUpdate = (updatedItem: FileItemProps) => {
         if (onEdit) {
             onEdit(updatedItem);
+        }
+    };
+
+    const handleReorder = (updatedItems: FileItemProps[]) => {
+        if (onReorder) {
+            onReorder(updatedItems);
         }
     };
 
@@ -109,6 +116,7 @@ export const FileUpload = ({
                 descriptionMaxLength={descriptionMaxLength}
                 onItemDelete={handleItemDelete}
                 onItemUpdate={handleItemUpdate}
+                onReorder={handleReorder}
             />
             <UploadButtonContainer>
                 <UploadButton

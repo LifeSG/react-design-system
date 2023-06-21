@@ -235,12 +235,16 @@ Currently only image file uploads have this feature.
                     });
                 });
             };
+            const handleReorder = (fileItems) => {
+                setFileItems(fileItems);
+            };
             return (
                 <FileUpload
                     fileItems={fileItems}
                     onChange={handleChange}
                     onDelete={handleDelete}
                     onEdit={handleEdit}
+                    onReorder={handleReorder}
                     title="Editable file items"
                     description="Drag an image file and a textarea will be shown for you to enter a description"
                     descriptionMaxLength={200}
