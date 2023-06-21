@@ -2,12 +2,13 @@ import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
+import { animated } from "react-spring";
 
 interface StyleProp {
     $highlight?: boolean | undefined;
 }
 
-export const Container = styled.li``;
+export const Container = styled(animated.li)``;
 
 export const LinkButton = styled(Button.Default)<StyleProp>`
     justify-content: flex-start;
@@ -38,8 +39,9 @@ export const LinkButton = styled(Button.Default)<StyleProp>`
         `}
 `;
 
-export const DrawerSubitemContainer = styled.ul`
+export const DrawerSubitemContainer = styled(animated.ul)`
     margin: 0.125rem 0.5rem 0.125rem 1rem;
+    overflow: hidden;
 `;
 
 export const IconElement = styled.div`

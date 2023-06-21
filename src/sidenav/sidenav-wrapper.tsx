@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
+import { useSpring } from "react-spring";
 import { SidenavContext } from "./sidenav-context";
 import {
     DesktopContainer,
@@ -18,6 +19,9 @@ export const SideNavWrapper = ({
     const { drawerContent, selectedItem, setDrawerContent, setSelectedItem } =
         useContext(SidenavContext);
     const drawerRef = useRef(null);
+    const drawerAnimationProps = useSpring({
+        width: drawerContent ? 240 : 0,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -53,7 +57,9 @@ export const SideNavWrapper = ({
     return (
         <Wrapper ref={drawerRef} onMouseLeave={handleMouseLeave}>
             <DesktopContainer {...otherProps}>{children}</DesktopContainer>
-            {drawerContent && <DesktopDrawer>{drawerContent}</DesktopDrawer>}
+            <DesktopDrawer style={drawerAnimationProps}>
+                {drawerContent}
+            </DesktopDrawer>
             {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
             <MobileContainer></MobileContainer>
         </Wrapper>

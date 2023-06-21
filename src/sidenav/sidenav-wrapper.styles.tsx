@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { animated } from "react-spring";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 
@@ -34,7 +35,7 @@ export const MobileContainer = styled(Container)`
     }
 `;
 
-export const DesktopDrawer = styled.ul`
+export const DesktopDrawer = styled(animated.ul)`
     flex-direction: column;
     left: 8.5rem;
     top: 0;
