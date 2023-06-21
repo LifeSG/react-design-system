@@ -42,4 +42,14 @@ export const DrawerSubitemContainer = styled.ul`
     margin: 0.125rem 0.5rem 0.125rem 1rem;
 `;
 
-export const ElementContainer = styled.div``;
+export const IconElement = styled.div`
+    align-self: center;
+`;
+
+export const TextElement = styled.div`
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-align: initial;
+`;

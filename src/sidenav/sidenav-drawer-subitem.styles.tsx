@@ -15,6 +15,11 @@ export const LinkButton = styled(Button.Default)`
         ${TextStyleHelper.getFontFamily("H5", "regular")}
         font-size: 1rem !important;
         color: ${Color.Neutral[1]} !important;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-align: initial;
     }
 
     :hover,

@@ -4,8 +4,9 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import {
     Container,
     DrawerSubitemContainer,
-    ElementContainer,
+    IconElement,
     LinkButton,
+    TextElement,
 } from "./sidenav-drawer-item.styles";
 import { SidenavDrawerItemProps } from "./types";
 import { SidenavContext } from "./sidenav-context";
@@ -47,6 +48,11 @@ export const SidenavDrawerItem = ({
         setDrawerContent(undefined);
     };
 
+    const handleIconClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        handleOnClick();
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -61,11 +67,15 @@ export const SidenavDrawerItem = ({
                 onClick={handleOnClick}
                 $highlight={highlight && expanded}
             >
-                <ElementContainer>{title}</ElementContainer>
-                <ElementContainer>
+                <TextElement>{title}</TextElement>
+                <IconElement>
                     {children &&
-                        (expanded ? <ChevronUpIcon /> : <ChevronDownIcon />)}
-                </ElementContainer>
+                        (expanded ? (
+                            <ChevronUpIcon onClick={handleIconClick} />
+                        ) : (
+                            <ChevronDownIcon onClick={handleIconClick} />
+                        ))}
+                </IconElement>
             </LinkButton>
             {children && expanded && (
                 <>

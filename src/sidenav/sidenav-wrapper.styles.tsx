@@ -44,4 +44,6 @@ export const DesktopDrawer = styled.ul`
     border: 1px solid ${Color.Neutral[5]};
     border-left: none;
     background-color: ${Color.Accent.Light[6]};
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 0 8px 8px 0;
 `;
