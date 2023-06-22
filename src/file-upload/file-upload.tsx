@@ -26,6 +26,7 @@ export const FileUpload = ({
     capture,
     multiple,
     disabled,
+    sortable = false,
     descriptionMaxLength,
     editableFileItems = false,
     onChange,
@@ -114,6 +115,7 @@ export const FileUpload = ({
                 fileItems={fileItems}
                 editableFileItems={editableFileItems}
                 descriptionMaxLength={descriptionMaxLength}
+                sortable={sortable}
                 onItemDelete={handleItemDelete}
                 onItemUpdate={handleItemUpdate}
                 onReorder={handleReorder}

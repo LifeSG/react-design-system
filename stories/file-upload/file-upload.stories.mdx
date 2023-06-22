@@ -235,16 +235,12 @@ Currently only image file uploads have this feature.
                     });
                 });
             };
-            const handleReorder = (fileItems) => {
-                setFileItems(fileItems);
-            };
             return (
                 <FileUpload
                     fileItems={fileItems}
                     onChange={handleChange}
                     onDelete={handleDelete}
                     onEdit={handleEdit}
-                    onReorder={handleReorder}
                     title="Editable file items"
                     description="Drag an image file and a textarea will be shown for you to enter a description"
                     descriptionMaxLength={200}
@@ -255,6 +251,66 @@ Currently only image file uploads have this feature.
                             Maximum size per file: 2 MB
                             <br />
                             Supported file types: .JPG, .JPEG, .PNG
+                        </>
+                    }
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Sortable file items</Heading3>
+
+The component also enables you to perform a drag sort on the items to give you
+the flexibility to reorder items after uploading them.
+
+> Note: Sorting is only enabled if there are no items in edit mode
+
+<Canvas>
+    <Story name="Sortable file items">
+        {() => {
+            const [fileItems, setFileItems] = useState([]);
+            const handleChange = (files) => {
+                const newFileItems = files.map((file) => {
+                    return {
+                        id: SimpleIdGenerator.generate(),
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                });
+                setFileItems((prevItems) => {
+                    return prevItems.concat(newFileItems);
+                });
+            };
+            const handleDelete = (fileItem) => {
+                if (fileItems.length === 1) {
+                    setFileItems([]);
+                } else {
+                    const newArr = [...fileItems];
+                    newArr.splice(newArr.indexOf(fileItem), 1);
+                    setFileItems(newArr);
+                }
+            };
+            const handleReorder = (fileItems) => {
+                setFileItems(fileItems);
+            };
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    onChange={handleChange}
+                    onDelete={handleDelete}
+                    onReorder={handleReorder}
+                    title="Sortable file items"
+                    description="Upload an image and try to perform sorting on them"
+                    descriptionMaxLength={200}
+                    sortable
+                    maxFiles={6}
+                    warning={
+                        <>
+                            Maximum size per file: 2 MB
+                            <br />
+                            Maximum number of files: 6
                         </>
                     }
                 />

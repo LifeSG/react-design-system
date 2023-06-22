@@ -46,6 +46,8 @@ export interface FileUploadProps extends FileInputProps {
     editableFileItems?: boolean | undefined;
     /** The max length of the description of the file (only image files) */
     descriptionMaxLength?: number | undefined;
+    /** Specifies if sorting is enabled for the file items */
+    sortable?: boolean | undefined;
     /** Called when an upload happens via drag drop or click */
     onChange?: ((files: File[]) => void) | undefined;
     /** Called when an update to the description happens */

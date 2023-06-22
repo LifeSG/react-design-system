@@ -32,6 +32,7 @@ interface Props {
     fileItems: FileItemProps[];
     editableFileItems: boolean;
     descriptionMaxLength?: number | undefined;
+    sortable?: boolean | undefined;
     onItemUpdate: (item: FileItemProps) => void;
     onItemDelete: (item: FileItemProps) => void;
     onReorder?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
@@ -45,6 +46,7 @@ export const FileList = ({
     fileItems,
     editableFileItems,
     descriptionMaxLength,
+    sortable,
     onItemUpdate,
     onItemDelete,
     onReorder,
@@ -203,6 +205,15 @@ export const FileList = ({
         return Object.values(renderModes).some((mode) => mode === "edit");
     };
 
+    const shouldEnableSort = () => {
+        return (
+            fileItems &&
+            fileItems.length > 1 &&
+            sortable &&
+            !hasFileItemsInEditMode()
+        );
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -244,7 +255,7 @@ export const FileList = ({
                         fileItem={item}
                         editable={checkEditable(item)}
                         wrapperWidth={wrapperWidth}
-                        sortable={!hasFileItemsInEditMode()}
+                        sortable={shouldEnableSort()}
                         onDelete={handleDelete(item)}
                         onEditClick={handleInitiateEdit(item)}
                     />
@@ -253,7 +264,7 @@ export const FileList = ({
         });
     };
 
-    if (hasFileItemsInEditMode()) {
+    if (!shouldEnableSort()) {
         return <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>;
     } else {
         return (
