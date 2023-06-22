@@ -7,8 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import { ProgressBar } from "../shared/progress-bar";
 import { StringHelper } from "../util";
 import {
+    Box,
     Content,
     DesktopErrorMessage,
+    DragHandleIcon,
     ErrorIconButton,
     IconButton,
     Item,
@@ -28,6 +30,7 @@ interface Props {
     editable?: boolean | undefined;
     wrapperWidth: number;
     sortable: boolean;
+    active?: boolean | undefined;
     onDelete: () => void;
     onEditClick?: (() => void) | undefined;
 }
@@ -37,6 +40,7 @@ export const FileItem = ({
     editable,
     wrapperWidth,
     sortable,
+    active,
     onDelete,
     onEditClick,
 }: Props) => {
@@ -164,42 +168,49 @@ export const FileItem = ({
     return (
         <Item
             id={id}
-            $error={!!errorMessage}
-            $loading={isLoading}
-            $editable={editable}
             $sortable={sortable}
             ref={setNodeRef}
             style={style}
             {...attributes}
             {...listeners}
         >
-            <Content>
-                <ItemNameSection ref={nameSectionRef}>
-                    <ItemText
-                        data-testid="name"
-                        weight={description ? "semibold" : "regular"}
-                    >
-                        {formattedName}
-                    </ItemText>
-                    {description && (
-                        <ItemDescriptionText data-testid="description">
-                            {description}
-                        </ItemDescriptionText>
+            {sortable && <DragHandleIcon />}
+            <Box
+                $error={!!errorMessage}
+                $loading={isLoading}
+                $editable={editable}
+                $active={active}
+            >
+                <Content>
+                    <ItemNameSection ref={nameSectionRef}>
+                        <ItemText
+                            data-testid="name"
+                            weight={description ? "semibold" : "regular"}
+                        >
+                            {formattedName}
+                        </ItemText>
+                        {description && (
+                            <ItemDescriptionText data-testid="description">
+                                {description}
+                            </ItemDescriptionText>
+                        )}
+                        {errorMessage && (
+                            <DesktopErrorMessage weight="semibold">
+                                {errorMessage}
+                            </DesktopErrorMessage>
+                        )}
+                    </ItemNameSection>
+                    {!isLoading && (
+                        <ItemFileSizeText>{fileSize}</ItemFileSizeText>
                     )}
                     {errorMessage && (
-                        <DesktopErrorMessage weight="semibold">
+                        <MobileErrorMessage weight="semibold">
                             {errorMessage}
-                        </DesktopErrorMessage>
+                        </MobileErrorMessage>
                     )}
-                </ItemNameSection>
-                {!isLoading && <ItemFileSizeText>{fileSize}</ItemFileSizeText>}
-                {errorMessage && (
-                    <MobileErrorMessage weight="semibold">
-                        {errorMessage}
-                    </MobileErrorMessage>
-                )}
-            </Content>
-            {renderActionButton()}
+                </Content>
+                {renderActionButton()}
+            </Box>
         </Item>
     );
 };

@@ -1,6 +1,7 @@
 import {
     DndContext,
     DragEndEvent,
+    DragStartEvent,
     PointerSensor,
     useSensor,
     useSensors,
@@ -55,6 +56,7 @@ export const FileList = ({
     // CONST, STATE, REFS
     // =========================================================================
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
+    const [activeFileId, setActiveFileId] = useState<string>();
 
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
@@ -128,6 +130,13 @@ export const FileList = ({
                 onReorder(updatedFileItems);
             }
         }
+
+        setActiveFileId(undefined);
+    };
+
+    const handleDragStart = (event: DragStartEvent) => {
+        const { active } = event;
+        setActiveFileId(active.id as string);
     };
 
     // =========================================================================
@@ -255,6 +264,7 @@ export const FileList = ({
                         fileItem={item}
                         editable={checkEditable(item)}
                         wrapperWidth={wrapperWidth}
+                        active={activeFileId === item.id}
                         sortable={shouldEnableSort()}
                         onDelete={handleDelete(item)}
                         onEditClick={handleInitiateEdit(item)}
@@ -268,7 +278,11 @@ export const FileList = ({
         return <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>;
     } else {
         return (
-            <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+            <DndContext
+                sensors={sensors}
+                onDragEnd={handleDragEnd}
+                onDragStart={handleDragStart}
+            >
                 <SortableContext
                     items={fileItems}
                     strategy={verticalListSortingStrategy}

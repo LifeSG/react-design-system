@@ -4,35 +4,64 @@ import { Text } from "../text";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { MediaQuery } from "../media";
+import { MenuIcon } from "@lifesg/react-icons/menu";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
 interface ItemStyleProps {
     $sortable: boolean;
-    $error?: boolean | undefined;
-    $loading?: boolean | undefined;
-    $editable?: boolean | undefined;
 }
 
 interface ItemActionContainerStyleProps {
     $editable?: boolean | undefined;
 }
 
+interface BoxStyleProps {
+    $error?: boolean | undefined;
+    $loading?: boolean | undefined;
+    $editable?: boolean | undefined;
+    $active?: boolean | undefined;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Item = styled.li<ItemStyleProps>`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: none;
+
+    :not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    ${(props) => {
+        if (props.$sortable) {
+            return css`
+                :focus {
+                    cursor: grabbing;
+                }
+
+                :hover {
+                    cursor: grab;
+                }
+
+                touch-action: none;
+            `;
+        }
+    }}
+`;
+
+export const Box = styled.div<BoxStyleProps>`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     background: ${Color.Accent.Light[6]};
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
-
-    :not(:last-child) {
-        margin-bottom: 1rem;
-    }
+    width: 100%;
 
     ${(props) => {
         if (props.$error) {
@@ -50,18 +79,11 @@ export const Item = styled.li<ItemStyleProps>`
                 }
             `;
         }
-    }}
 
-    ${(props) => {
-        if (props.$sortable) {
+        if (props.$active) {
             return css`
-                :focus {
-                    cursor: grabbing;
-                }
-
-                :hover {
-                    cursor: grab;
-                }
+                border: 1px solid ${Color.Accent.Light[1]};
+                box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
             `;
         }
     }}
@@ -183,4 +205,11 @@ export const ErrorIconButton = styled(ClickableIcon)`
         width: 1.5rem;
         color: ${Color.Neutral[3]};
     }
+`;
+
+export const DragHandleIcon = styled(MenuIcon)`
+    // Temp icon
+    margin-right: 1rem;
+    height: 1.5rem;
+    width: 1.5rem;
 `;
