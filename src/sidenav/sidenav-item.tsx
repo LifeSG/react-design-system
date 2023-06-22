@@ -50,6 +50,7 @@ export const SidenavItem = ({
         if (selectedItem && selectedItem.itemId === id) return;
         setSelectedItem({ itemId: id, openDrawer: !!children });
         setDrawerContent(children ? children : undefined);
+
         if (onClick) {
             onClick();
         }
