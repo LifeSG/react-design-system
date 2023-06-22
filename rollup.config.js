@@ -10,7 +10,7 @@ import generatePackageJson from "rollup-plugin-generate-package-json";
 import pkg from "./package.json";
 import { getFolders } from "./scripts/build-util";
 
-const plugins = [
+export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
     nodeResolve(), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules

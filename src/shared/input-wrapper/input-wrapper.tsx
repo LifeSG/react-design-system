@@ -38,12 +38,12 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                border: none;
+                border: 1px solid transparent;
                 padding: 0;
                 background: transparent !important;
 
                 :focus-within {
-                    border: none;
+                    border: 1px solid transparent;
                     box-shadow: none;
                 }
             `;

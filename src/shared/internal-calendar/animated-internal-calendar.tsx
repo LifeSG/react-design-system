@@ -18,7 +18,7 @@ const AnimatedComponent = (
 
     useEffect(() => {
         if (isOpen) {
-            calendarRef.current.defaultView();
+            calendarRef.current.reset();
         }
     }, [isOpen]);
 

@@ -13,7 +13,7 @@ export const StyledFilterItem = styled(FilterItem)`
         position: relative; // to get the item position relative to this parent
         padding: 0.5rem 0.5rem 0;
 
-        ${MediaQuery.MaxWidth.mobileL} {
+        ${MediaQuery.MaxWidth.tablet} {
             padding: 1rem 1.25rem 0.5rem;
         }
     }
@@ -21,7 +21,7 @@ export const StyledFilterItem = styled(FilterItem)`
     [data-id="minimise-button"] {
         margin: 0.5rem 1.25rem 0;
 
-        ${MediaQuery.MaxWidth.mobileL} {
+        ${MediaQuery.MaxWidth.tablet} {
             margin: 0.5rem 1.25rem 0;
         }
     }
@@ -31,7 +31,7 @@ export const Group = styled.div`
     display: flex;
     flex-direction: column;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 1rem;

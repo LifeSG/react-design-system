@@ -14,9 +14,9 @@ export const BaseColorSet: ColorSet = {
     Secondary: "#0056b3",
     Accent: {
         Dark: {
-            1: "#465A88",
-            2: "#556D99",
-            3: "#8D8DBF",
+            1: "#4B539F",
+            2: "#6D74B1",
+            3: "#959BC5",
         },
         Light: {
             1: "#57A9FF",
