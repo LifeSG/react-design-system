@@ -54,15 +54,18 @@ export const Item = styled.li<ItemStyleProps>`
         } else if (props.$sortable && props.$focus) {
             return css`
                 cursor: grabbing;
-                touch-action: none; // prevent scrolling on touch devices
+                // Following recommendation by the library for touch events
+                // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
+                touch-action: manipulation;
             `;
         } else if (props.$sortable) {
             return css`
                 :hover {
                     cursor: grab;
                 }
-
-                touch-action: none; // prevent scrolling on touch devices
+                // Following recommendation by the library for touch events
+                // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
+                touch-action: manipulation;
             `;
         }
     }}

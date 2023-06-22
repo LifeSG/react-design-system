@@ -2,7 +2,8 @@ import {
     DndContext,
     DragEndEvent,
     DragStartEvent,
-    PointerSensor,
+    MouseSensor,
+    TouchSensor,
     useSensor,
     useSensors,
 } from "@dnd-kit/core";
@@ -70,9 +71,15 @@ export const FileList = ({
      * only activate the drag if the mouse moves a certain distance
      */
     const sensors = useSensors(
-        useSensor(PointerSensor, {
+        useSensor(MouseSensor, {
             activationConstraint: {
                 distance: 8, // mouse drag of 8px then activate the drag event
+            },
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 150,
+                tolerance: 5,
             },
         })
     );
