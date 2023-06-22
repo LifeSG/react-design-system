@@ -10,7 +10,7 @@ interface LinkButtonStyleProp {
     $noChildren?: boolean | undefined;
 }
 
-interface IconStyleProp {
+interface ExpandedStyleProp {
     $expanded?: boolean | undefined;
 }
 
@@ -53,19 +53,22 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
         `}
 `;
 
-export const DrawerSubitemContainer = styled(animated.ul)`
+export const DrawerSubitemContainer = styled(animated.ul)<ExpandedStyleProp>`
     margin: 0.125rem 0.5rem 0.125rem 1rem;
-    overflow: hidden;
+    overflow: ${(props) => (props.$expanded ? "visible" : "hidden")};
     transition: height 1000ms ease;
 `;
 
-export const IconElement = styled.div<IconStyleProp>`
+export const IconElement = styled.div<ExpandedStyleProp>`
     align-self: center;
     transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
 `;
 
 export const ChevronIcon = styled(ChevronUpIcon)`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     color: ${Color.Neutral[3]};
 `;
 

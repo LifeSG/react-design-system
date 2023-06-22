@@ -91,10 +91,11 @@ export const SidenavDrawerItem = ({
                     </IconElement>
                 )}
             </LinkButton>
-            <DrawerSubitemContainer style={contentAnimationProps}>
-                <DrawerContent style={{ overflow: "hidden" }} ref={childRef}>
-                    {children}
-                </DrawerContent>
+            <DrawerSubitemContainer
+                style={contentAnimationProps}
+                $expanded={expanded}
+            >
+                <DrawerContent ref={childRef}>{children}</DrawerContent>
             </DrawerSubitemContainer>
         </Container>
     );
