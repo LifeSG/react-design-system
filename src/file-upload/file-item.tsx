@@ -3,7 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ProgressBar } from "../shared/progress-bar";
 import { StringHelper } from "../util";
 import {
@@ -24,15 +24,13 @@ import {
 } from "./file-item.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { FileUploadContext } from "./file-upload-context";
 
 interface Props {
     fileItem: FileItemProps;
     editable?: boolean | undefined;
     wrapperWidth: number;
     sortable: boolean;
-    focus?: boolean | undefined;
-    /** When there is a focus on other element */
-    focusOther?: boolean | undefined;
     disabled?: boolean | undefined;
     onDelete: () => void;
     onEditClick?: (() => void) | undefined;
@@ -43,8 +41,6 @@ export const FileItem = ({
     editable,
     wrapperWidth,
     sortable,
-    focus,
-    focusOther,
     disabled,
     onDelete,
     onEditClick,
@@ -64,18 +60,25 @@ export const FileItem = ({
     } = fileItem;
 
     const [formattedName, setFormattedName] = useState<string>();
-    const isLoading = progress < 1;
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
 
-    const nameSectionRef = useRef<HTMLDivElement>();
+    const { activeId } = useContext(FileUploadContext);
 
     const { attributes, listeners, setNodeRef, transform, transition } =
         useSortable({ id });
 
+    const nameSectionRef = useRef<HTMLDivElement>();
+
+    // -------------------------------------------------
+    // LOCAL VARS
+    // -------------------------------------------------
+    const isLoading = progress < 1;
+    const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
     const style = {
         transform: CSS.Translate.toString(transform),
         transition,
     };
+    const isFocused = activeId === id;
+    const isFocusedOthers = activeId && activeId !== id;
 
     // =========================================================================
     // EFFECTS
@@ -140,7 +143,8 @@ export const FileItem = ({
                 </ItemActionContainer>
             );
         } else {
-            const shouldDisableActions = disabled || focus || focusOther;
+            const shouldDisableActions =
+                disabled || isFocused || isFocusedOthers;
             return (
                 <ItemActionContainer $editable={editable}>
                     {editable && (
@@ -178,19 +182,21 @@ export const FileItem = ({
             ref={setNodeRef}
             $sortable={sortable}
             $disabled={disabled}
-            $focus={focus}
-            $focusOther={focusOther}
+            $focus={isFocused}
+            $focusOther={isFocusedOthers}
             style={style}
             {...attributes}
             {...listeners}
         >
-            {sortable && <DragHandleIcon $disabled={disabled} />}
+            {sortable && (
+                <DragHandleIcon $disabled={disabled || isFocusedOthers} />
+            )}
             <Box
                 $error={!!errorMessage}
                 $loading={isLoading}
                 $editable={editable}
-                $focus={focus}
-                $disabled={disabled || focusOther}
+                $focus={isFocused}
+                $disabled={disabled || isFocusedOthers}
             >
                 <Content>
                     <ItemNameSection ref={nameSectionRef}>

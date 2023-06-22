@@ -11,7 +11,7 @@ import {
     arrayMove,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { SimpleIdGenerator } from "../util";
 import { FileItem } from "./file-item";
@@ -19,6 +19,7 @@ import { FileItemEdit } from "./file-item-edit";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { FileUploadContext } from "./file-upload-context";
 
 // =============================================================================
 // INTERFACES
@@ -58,7 +59,8 @@ export const FileList = ({
     // CONST, STATE, REFS
     // =========================================================================
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
-    const [activeFileId, setActiveFileId] = useState<string>();
+
+    const { activeId, setActiveId } = useContext(FileUploadContext);
 
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
@@ -133,12 +135,12 @@ export const FileList = ({
             }
         }
 
-        setActiveFileId(undefined);
+        setActiveId(undefined);
     };
 
     const handleDragStart = (event: DragStartEvent) => {
         const { active } = event;
-        setActiveFileId(active.id as string);
+        setActiveId(active.id as string);
     };
 
     // =========================================================================
@@ -266,8 +268,6 @@ export const FileList = ({
                         fileItem={item}
                         editable={checkEditable(item)}
                         wrapperWidth={wrapperWidth}
-                        focus={activeFileId === item.id}
-                        focusOther={activeFileId && activeFileId !== item.id}
                         sortable={shouldEnableSort()}
                         disabled={disabled}
                         onDelete={handleDelete(item)}
