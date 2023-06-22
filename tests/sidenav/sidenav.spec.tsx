@@ -8,6 +8,12 @@ import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 describe("Sidenav", () => {
     beforeEach(() => {
         jest.resetAllMocks();
+
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     it("should render component", () => {
