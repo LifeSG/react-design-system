@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { useSpring } from "react-spring";
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
+import { useResizeDetector } from "react-resize-detector";
 import {
+    ChevronIcon,
     Container,
+    DrawerContent,
     DrawerSubitemContainer,
     IconElement,
     LinkButton,
@@ -30,8 +31,13 @@ export const SidenavDrawerItem = ({
         from: { opacity: 0 },
         to: { opacity: 1 },
     });
+    const resizeDetector = useResizeDetector();
+    const childRef = resizeDetector.ref;
     const contentAnimationProps = useSpring({
-        height: children && expanded ? "auto" : 0,
+        height: children && expanded ? resizeDetector.height : 0,
+        config: {
+            duration: 50,
+        },
     });
 
     // =========================================================================
@@ -76,19 +82,19 @@ export const SidenavDrawerItem = ({
                 styleType="link"
                 onClick={handleOnClick}
                 $highlight={highlight && expanded}
+                $noChildren={!children}
             >
                 <TextElement>{title}</TextElement>
-                <IconElement>
-                    {children &&
-                        (expanded ? (
-                            <ChevronUpIcon onClick={handleIconClick} />
-                        ) : (
-                            <ChevronDownIcon onClick={handleIconClick} />
-                        ))}
-                </IconElement>
+                {children && (
+                    <IconElement $expanded={expanded}>
+                        <ChevronIcon onClick={handleIconClick} />
+                    </IconElement>
+                )}
             </LinkButton>
             <DrawerSubitemContainer style={contentAnimationProps}>
-                {children}
+                <DrawerContent style={{ overflow: "hidden" }} ref={childRef}>
+                    {children}
+                </DrawerContent>
             </DrawerSubitemContainer>
         </Container>
     );

@@ -38,12 +38,22 @@ export interface SidenavItemProps extends SidenavBaseProps {
     selected?: boolean | undefined;
     /** Called when item selected */
     onClick?: ((id: string) => void) | undefined;
+    /**
+     * <Sidenav.DrawerItem>
+     *   ...
+     * </Sidenav.DrawerItem>
+     */
     children?: React.ReactNode | undefined;
 }
 
 export interface SidenavDrawerItemProps extends SidenavBaseProps {
     id?: string | undefined;
     title: string;
+    /**
+     * <Sidenav.DrawerSubitem>
+     *   ...
+     * </Sidenav.DrawerSubitem>
+     */
     children?: React.ReactNode | undefined;
     /** Called when item selected */
     onClick?: ((id: string) => void) | undefined;
