@@ -60,6 +60,7 @@ export const SideNavWrapper = ({
             <DesktopDrawer
                 style={drawerAnimationProps}
                 $showDrawer={!!drawerContent}
+                data-testid="sidenav-drawer"
             >
                 {drawerContent}
             </DesktopDrawer>

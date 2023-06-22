@@ -4,6 +4,7 @@ import { SidenavContext } from "./sidenav-context";
 import { useContext } from "react";
 
 export const SidenavDrawerSubitem = ({
+    id,
     title,
     onClick,
     ...otherProps
@@ -19,7 +20,7 @@ export const SidenavDrawerSubitem = ({
     // =========================================================================
     const handleOnClick = () => {
         if (onClick) {
-            onClick();
+            onClick(id);
         }
         setSelectedItem({ ...selectedItem, openDrawer: false });
         setDrawerContent(undefined);

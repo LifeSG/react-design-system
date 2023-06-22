@@ -51,7 +51,7 @@ export const SidenavItem = ({
         setSelectedItem({ itemId: id, openDrawer: !!children });
         setDrawerContent(children ? children : undefined);
         if (onClick) {
-            onClick();
+            onClick(id);
         }
     };
 

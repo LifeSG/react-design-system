@@ -13,6 +13,7 @@ import { SidenavDrawerItemProps } from "./types";
 import { SidenavContext } from "./sidenav-context";
 
 export const SidenavDrawerItem = ({
+    id,
     title,
     onClick,
     children,
@@ -50,7 +51,7 @@ export const SidenavDrawerItem = ({
             return;
         }
         if (onClick) {
-            onClick();
+            onClick(id);
         }
         setSelectedItem({ ...selectedItem, openDrawer: false });
         setDrawerContent(undefined);

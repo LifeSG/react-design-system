@@ -37,19 +37,21 @@ export interface SidenavItemProps extends SidenavBaseProps {
     /** Indicates if an item is selected */
     selected?: boolean | undefined;
     /** Called when item selected */
-    onClick?: (() => void) | undefined;
+    onClick?: ((id: string) => void) | undefined;
     children?: React.ReactNode | undefined;
 }
 
 export interface SidenavDrawerItemProps extends SidenavBaseProps {
+    id?: string | undefined;
     title: string;
-    children: React.ReactNode | undefined;
+    children?: React.ReactNode | undefined;
     /** Called when item selected */
-    onClick?: (() => void) | undefined;
+    onClick?: ((id: string) => void) | undefined;
 }
 
 export interface SidenavDrawerSubitemProps extends SidenavBaseProps {
+    id?: string | undefined;
     title: string;
     /** Called when item selected */
-    onClick?: (() => void) | undefined;
+    onClick?: ((id: string) => void) | undefined;
 }
