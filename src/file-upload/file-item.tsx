@@ -30,7 +30,10 @@ interface Props {
     editable?: boolean | undefined;
     wrapperWidth: number;
     sortable: boolean;
-    active?: boolean | undefined;
+    focus?: boolean | undefined;
+    /** When there is a focus on other element */
+    focusOther?: boolean | undefined;
+    disabled?: boolean | undefined;
     onDelete: () => void;
     onEditClick?: (() => void) | undefined;
 }
@@ -40,7 +43,9 @@ export const FileItem = ({
     editable,
     wrapperWidth,
     sortable,
-    active,
+    focus,
+    focusOther,
+    disabled,
     onDelete,
     onEditClick,
 }: Props) => {
@@ -51,7 +56,6 @@ export const FileItem = ({
         id,
         name,
         size,
-        type,
         description,
         progress = 1,
         errorMessage,
@@ -136,6 +140,7 @@ export const FileItem = ({
                 </ItemActionContainer>
             );
         } else {
+            const shouldDisableActions = disabled || focus || focusOther;
             return (
                 <ItemActionContainer $editable={editable}>
                     {editable && (
@@ -145,6 +150,7 @@ export const FileItem = ({
                             type="button"
                             styleType="light"
                             aria-label={`edit ${name}`}
+                            disabled={shouldDisableActions}
                             onClick={handleEdit}
                         >
                             <PencilIcon aria-hidden />
@@ -156,6 +162,7 @@ export const FileItem = ({
                         type="button"
                         styleType="light"
                         aria-label={`delete ${name}`}
+                        disabled={shouldDisableActions}
                         onClick={handleDelete}
                     >
                         <BinIcon aria-hidden />
@@ -168,18 +175,22 @@ export const FileItem = ({
     return (
         <Item
             id={id}
-            $sortable={sortable}
             ref={setNodeRef}
+            $sortable={sortable}
+            $disabled={disabled}
+            $focus={focus}
+            $focusOther={focusOther}
             style={style}
             {...attributes}
             {...listeners}
         >
-            {sortable && <DragHandleIcon />}
+            {sortable && <DragHandleIcon $disabled={disabled} />}
             <Box
                 $error={!!errorMessage}
                 $loading={isLoading}
                 $editable={editable}
-                $active={active}
+                $focus={focus}
+                $disabled={disabled || focusOther}
             >
                 <Content>
                     <ItemNameSection ref={nameSectionRef}>

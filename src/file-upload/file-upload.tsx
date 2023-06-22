@@ -116,6 +116,7 @@ export const FileUpload = ({
                 editableFileItems={editableFileItems}
                 descriptionMaxLength={descriptionMaxLength}
                 sortable={sortable}
+                disabled={disabled}
                 onItemDelete={handleItemDelete}
                 onItemUpdate={handleItemUpdate}
                 onReorder={handleReorder}
