@@ -95,10 +95,6 @@ export const ExpandableItem = styled(animated.div)`
 
 export const FilterItemBody = styled.div`
     padding: 1rem 1.25rem;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        padding: 1rem 1.25rem;
-    }
 `;
 
 export const MinimisableContent = styled(animated.div)<{

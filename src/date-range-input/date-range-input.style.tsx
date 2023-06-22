@@ -12,7 +12,7 @@ export const Container = styled(InputWrapper)`
 export const InputContainer = styled.div`
     display: flex;
     align-items: center;
-    height: 3rem;
+    height: calc(3rem - 2px); // exclude top and bottom borders
     width: 100%;
 
     @media screen and (max-width: ${MOBILE_WRAP_WIDTH}px) {

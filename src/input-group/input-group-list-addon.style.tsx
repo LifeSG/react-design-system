@@ -29,6 +29,7 @@ interface DividerStyleProps {
 export const DisplayContainer = styled.div<StyleProps>`
     position: relative;
     display: flex;
+    align-items: center;
     margin: 0 1rem;
     ${(props) => {
         if (props.$expanded) {
@@ -66,7 +67,7 @@ export const Selector = styled(DropdownSelector)`
 `;
 
 export const SelectorReadOnly = styled.div`
-    height: 3rem;
+    height: calc(3rem - 2px); // exclude top and bottom borders
     display: flex;
     align-items: center;
     padding: 0;
@@ -99,7 +100,6 @@ export const ValueLabel = styled(Text.Body)`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-top: 1px; // align with input
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
@@ -109,6 +109,8 @@ export const PlaceholderLabel = styled(ValueLabel)`
 export const Divider = styled.div<DividerStyleProps>`
     width: 1px;
     background: ${Color.Neutral[5]};
+    flex-shrink: 0;
+    height: 1.25rem;
 
     ${(props) => {
         if (props.$readOnly) {
@@ -122,11 +124,11 @@ export const Divider = styled.div<DividerStyleProps>`
         switch (props.$position) {
             case "right":
                 return css`
-                    margin: 1rem 0.75rem;
+                    margin: 0 0.75rem;
                 `;
             default:
                 return css`
-                    margin: 1rem 0.75rem 1rem 0;
+                    margin: 0 0.75rem 0 0;
                 `;
         }
     }}

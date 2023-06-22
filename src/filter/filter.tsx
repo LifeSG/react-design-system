@@ -44,7 +44,7 @@ const FilterBase = ({
     // =============================================================================
     useMediaQuery(
         {
-            maxWidth: MediaWidths.mobileL,
+            maxWidth: MediaWidths.tablet,
         },
         undefined,
         (isMobile) => {
