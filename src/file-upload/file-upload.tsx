@@ -27,7 +27,7 @@ export const FileUpload = ({
     multiple,
     disabled,
     descriptionMaxLength,
-    editableFileItems = true,
+    editableFileItems = false,
     onChange,
     onDelete,
     onEdit,

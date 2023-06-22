@@ -115,18 +115,14 @@ export const ItemActionContainer = styled.div<ItemActionContainerStyleProps>`
     align-items: center;
 
     ${MediaQuery.MaxWidth.mobileL} {
+        width: fit-content;
+
         ${(props) => {
             if (props.$editable) {
                 return css`
                     margin-left: 0;
                     margin-top: 1rem;
-                    width: fit-content;
                     align-self: flex-end;
-                `;
-            } else {
-                return css`
-                    width: fit-content;
-                    margin-left: 1rem;
                 `;
             }
         }}

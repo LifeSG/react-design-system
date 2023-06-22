@@ -65,7 +65,9 @@ describe("FileUpload", () => {
         it("should render the image files in its edit mode if no description is specified for the image", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
-            const rendered = render(<FileUpload fileItems={fileItems} />);
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
 
             expect(screen.getByText("bugs-bunny.png")).toBeInTheDocument();
             expect(screen.getByText("3 KB")).toBeInTheDocument();
@@ -86,7 +88,9 @@ describe("FileUpload", () => {
                 },
             ];
 
-            const rendered = render(<FileUpload fileItems={fileItems} />);
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
 
             // First image to be in list view but with edit button
             expect(screen.getByText("bugs-bunny.png")).toBeInTheDocument();
@@ -158,7 +162,9 @@ describe("FileUpload", () => {
         it("should render the textarea, save and cancel buttons in edit mode", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
-            const rendered = render(<FileUpload fileItems={fileItems} />);
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
 
             expect(screen.getByText("Photo description")).toBeInTheDocument();
             expect(rendered.getByTestId("some-textarea")).toBeInTheDocument();
@@ -175,7 +181,11 @@ describe("FileUpload", () => {
             const mockFn = jest.fn();
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} onEdit={mockFn} />
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    onEdit={mockFn}
+                />
             );
 
             const textarea = rendered.getByTestId("some-textarea");
