@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { Input } from "src/input";
-import { Button } from "src/button";
+import { Button } from "../button";
+import { Input } from "../input";
+import { MediaQuery } from "../media";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -28,6 +29,10 @@ export const InputField = styled(Input)`
     input[type="text"] {
         text-align: center;
         -moz-appearance: textfield;
+    }
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        padding: 0 0.5rem;
     }
 `;
 
