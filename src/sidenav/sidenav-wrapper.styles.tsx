@@ -40,7 +40,9 @@ export const MobileContainer = styled(Container)`
 `;
 
 export const DesktopDrawer = styled(animated.ul)<StyleProps>`
+    display: flex;
     flex-direction: column;
+    overflow: auto;
     left: 8.5rem;
     top: 0;
     width: 15rem;
