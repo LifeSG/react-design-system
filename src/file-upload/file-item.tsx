@@ -1,7 +1,7 @@
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { PencilIcon } from "@lifesg/react-icons/pencil";
 import { useEffect, useRef, useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
 import { ProgressBar } from "../shared/progress-bar";
 import { StringHelper } from "../util";
 import {
@@ -11,6 +11,7 @@ import {
     IconButton,
     Item,
     ItemActionContainer,
+    ItemDescriptionText,
     ItemFileSizeText,
     ItemNameSection,
     ItemText,
@@ -20,39 +21,47 @@ import {
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
 
-interface Props extends FileItemProps {
+interface Props {
+    fileItem: FileItemProps;
+    editable?: boolean | undefined;
+    wrapperWidth: number;
     onDelete: () => void;
-    onEdit?: (() => void) | undefined;
+    onEditClick?: (() => void) | undefined;
 }
 
 export const FileItem = ({
-    id,
-    name,
-    size,
-    type,
-    description,
-    progress = 1,
-    errorMessage,
-    thumbnailImageDataUrl,
-    editableMode,
-    truncateText = true,
+    fileItem,
+    editable,
+    wrapperWidth,
     onDelete,
-    onEdit,
+    onEditClick,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const [fileName, setFileName] = useState<string>();
+    const {
+        id,
+        name,
+        size,
+        type,
+        description,
+        progress = 1,
+        errorMessage,
+        thumbnailImageDataUrl,
+        truncateText = true,
+    } = fileItem;
+
+    const [formattedName, setFormattedName] = useState<string>();
     const isLoading = progress < 1;
+    const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
 
     const nameSectionRef = useRef<HTMLDivElement>();
-    const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
     useEffect(() => {
-        setFileName(getTruncatedText(name));
+        setFormattedName(getTruncatedText(name));
     }, [wrapperWidth]);
 
     // =========================================================================
@@ -63,7 +72,9 @@ export const FileItem = ({
     };
 
     const handleEdit = () => {
-        if (onEdit) onEdit();
+        if (onEditClick) {
+            onEditClick();
+        }
     };
 
     // =========================================================================
@@ -109,22 +120,20 @@ export const FileItem = ({
                 </ItemActionContainer>
             );
         } else {
-            const isEditable = FileUploadHelper.isSupportedImageType(type);
-
             return (
-                <ItemActionContainer $hasEditButton={isEditable}>
-                    {/* TODO: Add in part 2 */}
-                    {/* {isEditable && (
+                <ItemActionContainer $editable={editable}>
+                    {editable && (
                         <IconButton
                             key="edit"
                             data-testid={`${id}-edit-button`}
                             type="button"
                             styleType="light"
+                            aria-label={`edit ${name}`}
                             onClick={handleEdit}
                         >
-                            <PencilIcon />
+                            <PencilIcon aria-hidden />
                         </IconButton>
-                    )} */}
+                    )}
                     <IconButton
                         key="delete"
                         data-testid={`${id}-delete-button`}
@@ -143,7 +152,6 @@ export const FileItem = ({
     return (
         <Item
             id={id}
-            ref={wrapperRef}
             $error={!!errorMessage}
             $loading={isLoading}
             $editable={FileUploadHelper.isSupportedImageType(type)}
@@ -154,12 +162,12 @@ export const FileItem = ({
                         data-testid="name"
                         weight={description ? "semibold" : "regular"}
                     >
-                        {fileName}
+                        {formattedName}
                     </ItemText>
                     {description && (
-                        <ItemText data-testid="description">
+                        <ItemDescriptionText data-testid="description">
                             {description}
-                        </ItemText>
+                        </ItemDescriptionText>
                     )}
                     {errorMessage && (
                         <DesktopErrorMessage weight="semibold">
@@ -167,9 +175,7 @@ export const FileItem = ({
                         </DesktopErrorMessage>
                     )}
                 </ItemNameSection>
-                <ItemFileSizeText>
-                    {!isLoading && FileUploadHelper.formatFileSizeDisplay(size)}
-                </ItemFileSizeText>
+                {!isLoading && <ItemFileSizeText>{fileSize}</ItemFileSizeText>}
                 {errorMessage && (
                     <MobileErrorMessage weight="semibold">
                         {errorMessage}

@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import { DropzoneElement, FileUploadDropzone } from "./dropzone";
-import { FileItem } from "./file-item";
+import { FileList } from "./file-list";
 import {
     Description,
-    ItemsContainer,
     Title,
     TitleContainer,
     UploadButton,
@@ -18,7 +17,7 @@ export const FileUpload = ({
     fileItems,
     title,
     description,
-    maxFiles, // TODO: In consideration. Deciding if it should be smart or parent handle
+    maxFiles,
     warning,
     className,
     name,
@@ -27,17 +26,16 @@ export const FileUpload = ({
     capture,
     multiple,
     disabled,
+    descriptionMaxLength,
+    editableFileItems = true,
     onChange,
     onDelete,
+    onEdit,
 }: FileUploadProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const dropzoneRef = useRef<DropzoneElement>();
-
-    // =========================================================================
-    // EFFECTS
-    // =========================================================================
 
     // =========================================================================
     // EVENT HANDLERS
@@ -48,7 +46,7 @@ export const FileUpload = ({
         }
     };
 
-    const handleItemDelete = (item: FileItemProps) => () => {
+    const handleItemDelete = (item: FileItemProps) => {
         if (onDelete) {
             onDelete(item);
         }
@@ -65,25 +63,22 @@ export const FileUpload = ({
         }
     };
 
+    const handleItemUpdate = (updatedItem: FileItemProps) => {
+        if (onEdit) {
+            onEdit(updatedItem);
+        }
+    };
+
+    // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const reachedMaxFiles = () => {
+        return maxFiles ? fileItems.length >= maxFiles : false;
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderItems = () => {
-        if (!fileItems || fileItems.length === 0) return null;
-
-        const itemsToRender = fileItems.map((item) => {
-            return (
-                <FileItem
-                    key={item.id}
-                    {...item}
-                    onDelete={handleItemDelete(item)}
-                />
-            );
-        });
-
-        return <ItemsContainer>{itemsToRender}</ItemsContainer>;
-    };
-
     return (
         <FileUploadDropzone
             ref={dropzoneRef}
@@ -95,7 +90,7 @@ export const FileUpload = ({
             className={className}
             name={name}
             multiple={multiple}
-            disabled={disabled}
+            disabled={disabled || reachedMaxFiles()}
         >
             {(title || description) && (
                 <TitleContainer>
@@ -108,12 +103,18 @@ export const FileUpload = ({
                 </TitleContainer>
             )}
             {warning && <WarningAlert type="warning">{warning}</WarningAlert>}
-            {renderItems()}
+            <FileList
+                fileItems={fileItems}
+                editableFileItems={editableFileItems}
+                descriptionMaxLength={descriptionMaxLength}
+                onItemDelete={handleItemDelete}
+                onItemUpdate={handleItemUpdate}
+            />
             <UploadButtonContainer>
                 <UploadButton
                     type="button"
                     styleType="secondary"
-                    disabled={disabled}
+                    disabled={disabled || reachedMaxFiles()}
                     onClick={handleUploadButtonClick}
                 >
                     Upload files

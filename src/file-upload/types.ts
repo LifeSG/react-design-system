@@ -12,8 +12,6 @@ export interface FileItemProps {
     progress?: number | undefined;
     /** The error message display to indicate file upload error */
     errorMessage?: string | undefined;
-    /** If set, the item will be in editable mode */
-    editableMode?: boolean | undefined;
     /** The thumbnail of the file that will be rendered */
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */
@@ -40,7 +38,7 @@ export interface FileUploadProps extends FileInputProps {
     /** Called when an upload happens via drag drop or click */
     onChange?: (files: File[]) => void;
     /** Called when an update to the description happens */
-    onUpdate?: (fileItem: FileItemProps) => void;
+    onEdit?: (fileItem: FileItemProps) => void;
     /** Called when a file item's delete button is clicked */
     onDelete?: (fileItem: FileItemProps) => void;
     title?: string | JSX.Element | undefined;
@@ -52,4 +50,6 @@ export interface FileUploadProps extends FileInputProps {
     fileItems?: FileItemProps[] | undefined;
     /** If set, file items will be editable (only image files) */
     editableFileItems?: boolean | undefined;
+    /** The max length of the description of the file (only image files) */
+    descriptionMaxLength?: number | undefined;
 }
