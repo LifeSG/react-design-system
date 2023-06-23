@@ -292,7 +292,7 @@ the flexibility to reorder items after uploading them.
                     setFileItems(newArr);
                 }
             };
-            const handleReorder = (fileItems) => {
+            const handleSort = (fileItems) => {
                 setFileItems(fileItems);
             };
             return (
@@ -300,7 +300,7 @@ the flexibility to reorder items after uploading them.
                     fileItems={fileItems}
                     onChange={handleChange}
                     onDelete={handleDelete}
-                    onReorder={handleReorder}
+                    onSort={handleSort}
                     title="Sortable file items"
                     description="Upload an image and try to perform sorting on them"
                     descriptionMaxLength={200}

@@ -54,6 +54,6 @@ export interface FileUploadProps extends FileInputProps {
     onEdit?: ((fileItem: FileItemProps) => void) | undefined;
     /** Called when a file item's delete button is clicked */
     onDelete?: ((fileItem: FileItemProps) => void) | undefined;
-    /** Called when a drag reorder is made */
-    onReorder?: ((fileItems: FileItemProps[]) => void) | undefined;
+    /** Called when a drag sort is made */
+    onSort?: ((fileItems: FileItemProps[]) => void) | undefined;
 }

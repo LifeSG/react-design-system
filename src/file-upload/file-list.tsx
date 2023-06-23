@@ -39,7 +39,7 @@ interface Props {
     disabled?: boolean | undefined;
     onItemUpdate: (item: FileItemProps) => void;
     onItemDelete: (item: FileItemProps) => void;
-    onReorder?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
+    onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
 }
 
 // =============================================================================
@@ -54,15 +54,13 @@ export const FileList = ({
     disabled,
     onItemUpdate,
     onItemDelete,
-    onReorder,
+    onSort,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
-
-    const { activeId, setActiveId } = useContext(FileUploadContext);
-
+    const { setActiveId } = useContext(FileUploadContext);
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
     /**
@@ -121,7 +119,7 @@ export const FileList = ({
     };
 
     const handleDragEnd = (event: DragEndEvent) => {
-        if (onReorder) {
+        if (onSort) {
             const { active, over } = event;
 
             if (active.id !== over.id) {
@@ -138,7 +136,7 @@ export const FileList = ({
                     newIndex
                 );
 
-                onReorder(updatedFileItems);
+                onSort(updatedFileItems);
             }
         }
 

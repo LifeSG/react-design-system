@@ -33,7 +33,7 @@ export const FileUpload = ({
     onChange,
     onDelete,
     onEdit,
-    onReorder,
+    onSort,
 }: FileUploadProps) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -73,9 +73,9 @@ export const FileUpload = ({
         }
     };
 
-    const handleReorder = (updatedItems: FileItemProps[]) => {
-        if (onReorder) {
-            onReorder(updatedItems);
+    const handleSort = (updatedItems: FileItemProps[]) => {
+        if (onSort) {
+            onSort(updatedItems);
         }
     };
 
@@ -124,7 +124,7 @@ export const FileUpload = ({
                     disabled={disabled}
                     onItemDelete={handleItemDelete}
                     onItemUpdate={handleItemUpdate}
-                    onReorder={handleReorder}
+                    onSort={handleSort}
                 />
                 <UploadButtonContainer>
                     <UploadButton
