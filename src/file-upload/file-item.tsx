@@ -178,6 +178,12 @@ export const FileItem = ({
         }
     };
 
+    const sortableProps = {
+        style,
+        ...attributes,
+        ...listeners,
+    };
+
     return (
         <Item
             id={id}
@@ -186,9 +192,7 @@ export const FileItem = ({
             $disabled={disabled}
             $focus={isFocused}
             $focusOther={isFocusedOthers}
-            style={style}
-            {...attributes}
-            {...listeners}
+            {...(sortable ? sortableProps : {})}
         >
             {sortable && (
                 <DragHandleIcon $disabled={disabled || isFocusedOthers} />
