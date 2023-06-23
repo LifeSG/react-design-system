@@ -2,6 +2,7 @@ import {
     DndContext,
     DragEndEvent,
     DragStartEvent,
+    KeyboardSensor,
     MouseSensor,
     TouchSensor,
     useSensor,
@@ -10,6 +11,7 @@ import {
 import {
     SortableContext,
     arrayMove,
+    sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useContext, useEffect, useState } from "react";
@@ -25,7 +27,7 @@ import { FileUploadContext } from "./file-upload-context";
 // =============================================================================
 // INTERFACES
 // =============================================================================
-type RenderMode = "cancelled-edit" | "list" | "edit";
+type RenderMode = "cancelled-edit" | "list" | "edit" | "error" | "loading";
 
 type FileItemRenderModes = Record<string, RenderMode>;
 
@@ -39,7 +41,7 @@ interface Props {
     disabled?: boolean | undefined;
     onItemUpdate: (item: FileItemProps) => void;
     onItemDelete: (item: FileItemProps) => void;
-    onReorder?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
+    onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
 }
 
 // =============================================================================
@@ -54,15 +56,13 @@ export const FileList = ({
     disabled,
     onItemUpdate,
     onItemDelete,
-    onReorder,
+    onSort,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
-
-    const { activeId, setActiveId } = useContext(FileUploadContext);
-
+    const { setActiveId } = useContext(FileUploadContext);
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
     /**
@@ -81,6 +81,9 @@ export const FileList = ({
                 delay: 150,
                 tolerance: 5,
             },
+        }),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
         })
     );
 
@@ -121,10 +124,10 @@ export const FileList = ({
     };
 
     const handleDragEnd = (event: DragEndEvent) => {
-        if (onReorder) {
+        if (onSort) {
             const { active, over } = event;
 
-            if (active.id !== over.id) {
+            if (over && active.id !== over.id) {
                 const oldIndex = fileItems.findIndex(
                     (item) => item.id === active.id
                 );
@@ -138,7 +141,7 @@ export const FileList = ({
                     newIndex
                 );
 
-                onReorder(updatedFileItems);
+                onSort(updatedFileItems);
             }
         }
 
@@ -169,28 +172,30 @@ export const FileList = ({
     ): FileItemRenderModes => {
         if (!fileItems || fileItems.length === 0) return {};
 
-        const updatedRenderModes: FileItemRenderModes = { ...renderModes };
+        const newRenderModes: FileItemRenderModes = {};
 
         for (const item of fileItems) {
+            /**
+             * We retain the cancelled edits to prevent the edit
+             * display from re-rendering
+             */
             if (
-                !updatedRenderModes[item.id] ||
-                updatedRenderModes[item.id] !== "cancelled-edit"
+                renderModes[item.id] &&
+                renderModes[item.id] === "cancelled-edit"
             ) {
-                /**
-                 * If new item or if previously did not have edit cancelled,
-                 * we will just update the render mode according to the
-                 * description value.
-                 *
-                 * If editing was cancelled previously, we will leave it as
-                 * it is and not render the edit display
-                 */
-                updatedRenderModes[item.id] = shouldRenderEditMode(item)
+                newRenderModes[item.id] = renderModes[item.id];
+            } else if (item.errorMessage) {
+                newRenderModes[item.id] = "error";
+            } else if (item.progress && item.progress < 1) {
+                newRenderModes[item.id] = "loading";
+            } else {
+                newRenderModes[item.id] = shouldRenderEditMode(item)
                     ? "edit"
                     : "list";
             }
         }
 
-        return updatedRenderModes;
+        return newRenderModes;
     };
 
     /**
@@ -221,8 +226,10 @@ export const FileList = ({
         return arrangedItems;
     };
 
-    const hasFileItemsInEditMode = () => {
-        return Object.values(renderModes).some((mode) => mode === "edit");
+    const areAllItemsInDisplayViews = () => {
+        return Object.values(renderModes).every(
+            (mode) => mode === "list" || mode === "cancelled-edit"
+        );
     };
 
     const shouldEnableSort = () => {
@@ -230,7 +237,7 @@ export const FileList = ({
             fileItems &&
             fileItems.length > 1 &&
             sortable &&
-            !hasFileItemsInEditMode()
+            areAllItemsInDisplayViews()
         );
     };
 

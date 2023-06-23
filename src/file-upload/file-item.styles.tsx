@@ -176,13 +176,7 @@ export const LoadingActionContainer = styled(ItemActionContainer)`
 `;
 
 export const IconButton = styled(DSIconButton)`
-    height: 2.5rem;
-    width: 2.5rem;
     min-width: unset;
-    svg {
-        height: 1rem;
-        width: 1rem;
-    }
 
     :not(:last-child) {
         margin-right: 1rem;

@@ -153,6 +153,7 @@ export const FileItem = ({
                             data-testid={`${id}-edit-button`}
                             type="button"
                             styleType="light"
+                            sizeType="small"
                             aria-label={`edit ${name}`}
                             disabled={shouldDisableActions}
                             onClick={handleEdit}
@@ -165,6 +166,7 @@ export const FileItem = ({
                         data-testid={`${id}-delete-button`}
                         type="button"
                         styleType="light"
+                        sizeType="small"
                         aria-label={`delete ${name}`}
                         disabled={shouldDisableActions}
                         onClick={handleDelete}
@@ -176,6 +178,12 @@ export const FileItem = ({
         }
     };
 
+    const sortableProps = {
+        style,
+        ...attributes,
+        ...listeners,
+    };
+
     return (
         <Item
             id={id}
@@ -184,9 +192,7 @@ export const FileItem = ({
             $disabled={disabled}
             $focus={isFocused}
             $focusOther={isFocusedOthers}
-            style={style}
-            {...attributes}
-            {...listeners}
+            {...(sortable ? sortableProps : {})}
         >
             {sortable && (
                 <DragHandleIcon $disabled={disabled || isFocusedOthers} />
