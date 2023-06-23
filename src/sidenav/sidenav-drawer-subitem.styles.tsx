@@ -10,6 +10,7 @@ export const LinkButton = styled(Button.Default)`
     height: unset;
     justify-content: flex-start;
     border-radius: 0.5rem;
+    outline-offset: -0.125rem;
 
     span {
         ${TextStyleHelper.getFontFamily("H5", "regular")}

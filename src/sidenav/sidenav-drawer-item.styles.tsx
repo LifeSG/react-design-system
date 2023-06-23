@@ -10,7 +10,7 @@ interface LinkButtonStyleProp {
     $noChildren?: boolean | undefined;
 }
 
-interface ExpandedStyleProp {
+interface IconStyleProp {
     $expanded?: boolean | undefined;
 }
 
@@ -53,13 +53,13 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
         `}
 `;
 
-export const DrawerSubitemContainer = styled(animated.ul)<ExpandedStyleProp>`
+export const DrawerSubitemContainer = styled(animated.ul)`
     margin: 0.125rem 0.5rem 0.125rem 1rem;
-    overflow: ${(props) => (props.$expanded ? "visible" : "hidden")};
+    overflow: hidden;
     transition: height 1000ms ease;
 `;
 
-export const IconElement = styled.div<ExpandedStyleProp>`
+export const IconElement = styled.div<IconStyleProp>`
     align-self: center;
     transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;

@@ -36,7 +36,7 @@ export const SidenavDrawerItem = ({
     const contentAnimationProps = useSpring({
         height: children && expanded ? resizeDetector.height : 0,
         config: {
-            duration: 50,
+            duration: 10,
         },
     });
 
@@ -91,10 +91,7 @@ export const SidenavDrawerItem = ({
                     </IconElement>
                 )}
             </LinkButton>
-            <DrawerSubitemContainer
-                style={contentAnimationProps}
-                $expanded={expanded}
-            >
+            <DrawerSubitemContainer style={contentAnimationProps}>
                 <DrawerContent ref={childRef}>{children}</DrawerContent>
             </DrawerSubitemContainer>
         </Container>
