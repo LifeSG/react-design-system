@@ -25,6 +25,10 @@ interface BoxStyleProps {
     $disabled?: boolean | undefined;
     $focused?: boolean | undefined;
     $loading?: boolean | undefined;
+    $editable?: boolean | undefined;
+}
+
+interface ContentSectionStyleProps {
     $hasThumbnail?: boolean | undefined;
 }
 
@@ -32,6 +36,10 @@ interface ActionContainerStyleProps {
     $editable?: boolean | undefined;
     $error?: boolean | undefined;
     $loading?: boolean | undefined;
+}
+
+interface FileSizeSectionStyleProps {
+    $hideInMobile?: boolean | undefined;
 }
 
 // =============================================================================
@@ -125,7 +133,7 @@ export const Box = styled.div<BoxStyleProps>`
     }}
 
     ${(props) => {
-        if (props.$loading || props.$hasThumbnail) {
+        if (!props.$error && (props.$loading || props.$editable)) {
             return css`
                 ${MediaQuery.MaxWidth.mobileL} {
                     flex-direction: column;
@@ -136,7 +144,7 @@ export const Box = styled.div<BoxStyleProps>`
     }}
 `;
 
-export const ContentSection = styled.div`
+export const ContentSection = styled.div<ContentSectionStyleProps>`
     display: flex;
     flex: 1;
     align-items: center;
@@ -146,26 +154,66 @@ export const ContentSection = styled.div`
         width: 100%;
         align-items: flex-start;
     }
+
+    ${(props) => {
+        if (props.$hasThumbnail) {
+            return css`
+                ${MediaQuery.MaxWidth.mobileL} {
+                    flex-direction: row;
+                    align-items: center;
+                }
+            `;
+        }
+    }}
 `;
 
-export const DetailsSection = styled.div`
+export const NameSection = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
     width: 100%;
 `;
 
-export const FileSizeSection = styled.div`
+export const DetailsSection = styled.div`
+    display: flex;
+    flex: 1;
+    border: 1px solid blue;
+`;
+
+export const ExtendedNameSection = styled.div`
+    display: flex;
+    flex: 1;
+    align-items: center;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+`;
+
+export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     display: flex;
     width: 5rem;
     margin-left: 0.5rem;
     justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.mobileL} {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0.5rem;
-        justify-content: flex-start;
+        ${(props) => {
+            if (props.$hideInMobile) {
+                return css`
+                    display: none;
+                    visibility: hidden;
+                `;
+            } else {
+                return css`
+                    width: 100%;
+                    margin-left: 0;
+                    margin-top: 0.5rem;
+                    justify-content: flex-start;
+                `;
+            }
+        }}
     }
 `;
 

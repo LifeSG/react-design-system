@@ -13,6 +13,7 @@ import {
     DetailsSection,
     DragHandleIcon,
     ErrorIconButton,
+    ExtendedNameSection,
     FileSizeSection,
     IconButton,
     Item,
@@ -21,11 +22,13 @@ import {
     ItemText,
     LoadingFileSizeSection,
     MobileErrorMessage,
+    NameSection,
 } from "./file-list-item.styles";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { ProgressBar } from "../../shared/progress-bar";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { FileListItemThumbnail } from "./file-list-item-thumbnail";
 
 export const FileListItem = ({
     fileItem,
@@ -117,10 +120,11 @@ export const FileListItem = ({
     };
 
     const shouldDisable = () => disabled || focusType === "others";
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderDetails = () => (
+    const renderNameDescription = () => (
         <>
             <ItemText weight={description ? "semibold" : "regular"}>
                 {formattedName}
@@ -133,14 +137,14 @@ export const FileListItem = ({
 
     const renderErrorState = () => (
         <>
-            <DetailsSection ref={detailSectionRef}>
-                {renderDetails()}
+            <NameSection ref={detailSectionRef}>
+                {renderNameDescription()}
                 {errorMessage && (
                     <DesktopErrorMessage weight="semibold">
                         {errorMessage}
                     </DesktopErrorMessage>
                 )}
-            </DetailsSection>
+            </NameSection>
             <FileSizeSection>
                 <ItemText>{fileSize}</ItemText>
             </FileSizeSection>
@@ -151,19 +155,31 @@ export const FileListItem = ({
             )}
         </>
     );
-    const renderLoadingState = () => (
+
+    const renderWithThumbnail = () => (
         <>
-            <DetailsSection ref={detailSectionRef}>
-                {renderDetails()}
-                {errorMessage && (
-                    <DesktopErrorMessage weight="semibold">
-                        {errorMessage}
-                    </DesktopErrorMessage>
-                )}
-            </DetailsSection>
-            <LoadingFileSizeSection>
+            <FileListItemThumbnail
+                thumbnailImageDataUrl={thumbnailImageDataUrl}
+            />
+            <ExtendedNameSection>
+                <NameSection ref={detailSectionRef}>
+                    {renderNameDescription()}
+                </NameSection>
+                <FileSizeSection>
+                    <ItemText>{fileSize}</ItemText>
+                </FileSizeSection>
+            </ExtendedNameSection>
+        </>
+    );
+
+    const renderDefault = () => (
+        <>
+            <NameSection ref={detailSectionRef}>
+                {renderNameDescription()}
+            </NameSection>
+            <FileSizeSection $hideInMobile={isLoading}>
                 <ItemText>{fileSize}</ItemText>
-            </LoadingFileSizeSection>
+            </FileSizeSection>
         </>
     );
 
@@ -172,22 +188,17 @@ export const FileListItem = ({
 
         if (errorMessage) {
             content = renderErrorState();
-        } else if (isLoading) {
-            content = renderLoadingState();
+        } else if (thumbnailImageDataUrl) {
+            content = renderWithThumbnail();
         } else {
-            content = (
-                <>
-                    <DetailsSection ref={detailSectionRef}>
-                        {renderDetails()}
-                    </DetailsSection>
-                    <FileSizeSection>
-                        <ItemText>{fileSize}</ItemText>
-                    </FileSizeSection>
-                </>
-            );
+            content = renderDefault();
         }
 
-        return <ContentSection>{content}</ContentSection>;
+        return (
+            <ContentSection $hasThumbnail={!!thumbnailImageDataUrl}>
+                {content}
+            </ContentSection>
+        );
     };
 
     const renderActions = () => {
@@ -264,7 +275,7 @@ export const FileListItem = ({
                 $error={!!errorMessage}
                 $loading={isLoading}
                 $disabled={shouldDisable()}
-                $hasThumbnail={!!thumbnailImageDataUrl}
+                $editable={editable}
             >
                 {renderContents()}
                 {renderActions()}
