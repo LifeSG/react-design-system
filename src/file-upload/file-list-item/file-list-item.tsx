@@ -1,16 +1,19 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { BinIcon } from "@lifesg/react-icons/bin";
+import { CrossIcon } from "@lifesg/react-icons/cross";
+import { PencilIcon } from "@lifesg/react-icons/pencil";
 import { useContext, useEffect, useRef, useState } from "react";
-import { FileUploadContext } from "../context";
-import { FileListItemProps } from "./types";
-import { FileUploadHelper } from "../helper";
+import { ProgressBar } from "../../shared/progress-bar";
 import { StringHelper } from "../../util";
+import { FileUploadContext } from "../context";
+import { FileUploadHelper } from "../helper";
+import { FileListItemThumbnail } from "./file-list-item-thumbnail";
 import {
     ActionContainer,
     Box,
     ContentSection,
     DesktopErrorMessage,
-    DetailsSection,
     DragHandleIcon,
     ErrorIconButton,
     ExtendedNameSection,
@@ -20,15 +23,10 @@ import {
     ItemDescriptionText,
     ItemFocusType,
     ItemText,
-    LoadingFileSizeSection,
     MobileErrorMessage,
     NameSection,
 } from "./file-list-item.styles";
-import { PencilIcon } from "@lifesg/react-icons/pencil";
-import { BinIcon } from "@lifesg/react-icons/bin";
-import { ProgressBar } from "../../shared/progress-bar";
-import { CrossIcon } from "@lifesg/react-icons/cross";
-import { FileListItemThumbnail } from "./file-list-item-thumbnail";
+import { FileListItemProps } from "./types";
 
 export const FileListItem = ({
     fileItem,

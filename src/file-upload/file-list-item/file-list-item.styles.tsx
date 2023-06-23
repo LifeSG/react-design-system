@@ -174,12 +174,6 @@ export const NameSection = styled.div`
     width: 100%;
 `;
 
-export const DetailsSection = styled.div`
-    display: flex;
-    flex: 1;
-    border: 1px solid blue;
-`;
-
 export const ExtendedNameSection = styled.div`
     display: flex;
     flex: 1;
@@ -214,13 +208,6 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
                 `;
             }
         }}
-    }
-`;
-
-export const LoadingFileSizeSection = styled(FileSizeSection)`
-    ${MediaQuery.MaxWidth.mobileL} {
-        display: none;
-        visibility: hidden;
     }
 `;
 
