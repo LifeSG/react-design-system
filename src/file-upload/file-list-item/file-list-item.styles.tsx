@@ -1,35 +1,37 @@
-import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { Text } from "../text";
-import { IconButton as DSIconButton } from "../icon-button";
-import { ClickableIcon } from "../shared/clickable-icon";
-import { MediaQuery } from "../media";
 import { MenuIcon } from "@lifesg/react-icons/menu";
+import styled, { css } from "styled-components";
+import { Color } from "../../color";
+import { IconButton as DSIconButton } from "../../icon-button";
+import { MediaQuery } from "../../media";
+import { Text } from "../../text";
+import { ClickableIcon } from "../../shared/clickable-icon";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
+export type ItemFocusType = "self" | "others" | "none";
 interface ItemStyleProps {
     $sortable: boolean;
     $disabled?: boolean | undefined;
-    $focus?: boolean | undefined;
-    $focusOther?: boolean | undefined;
-}
-
-interface ItemActionContainerStyleProps {
-    $editable?: boolean | undefined;
-}
-
-interface BoxStyleProps {
-    $error?: boolean | undefined;
-    $loading?: boolean | undefined;
-    $editable?: boolean | undefined;
-    $focus?: boolean | undefined;
-    $disabled?: boolean | undefined;
+    $focusType: ItemFocusType;
 }
 
 interface DragHandleIconStyleProps {
     $disabled?: boolean | undefined;
+}
+
+interface BoxStyleProps {
+    $error?: boolean | undefined;
+    $disabled?: boolean | undefined;
+    $focused?: boolean | undefined;
+    $loading?: boolean | undefined;
+    $hasThumbnail?: boolean | undefined;
+}
+
+interface ActionContainerStyleProps {
+    $editable?: boolean | undefined;
+    $error?: boolean | undefined;
+    $loading?: boolean | undefined;
 }
 
 // =============================================================================
@@ -46,12 +48,12 @@ export const Item = styled.li<ItemStyleProps>`
     }
 
     ${(props) => {
-        if (props.$disabled && !props.$focusOther) {
+        if (props.$disabled && props.$focusType === "none") {
             // Show disabled cursor only if no dragging is happening
             return css`
                 cursor: not-allowed;
             `;
-        } else if (props.$sortable && props.$focus) {
+        } else if (props.$sortable && props.$focusType === "self") {
             return css`
                 cursor: grabbing;
                 // Following recommendation by the library for touch events
@@ -71,19 +73,39 @@ export const Item = styled.li<ItemStyleProps>`
     }}
 `;
 
+export const DragHandleIcon = styled(MenuIcon)<DragHandleIconStyleProps>`
+    // Temp icon
+    margin-right: 1rem;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[4]};
+            `;
+        }
+    }}
+`;
+
 export const Box = styled.div<BoxStyleProps>`
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
     background: ${Color.Accent.Light[6]};
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
     width: 100%;
 
+    ${MediaQuery.MaxWidth.mobileL} {
+        padding: 1rem;
+    }
+
     ${(props) => {
-        if (props.$focus) {
+        if (props.$focused) {
             return css`
-                border: 1px solid ${Color.Accent.Light[1]};
+                border-color: ${Color.Accent.Light[1]};
                 box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
             `;
         } else if (props.$disabled) {
@@ -95,7 +117,15 @@ export const Box = styled.div<BoxStyleProps>`
                 background: ${Color.Validation.Red.Background};
                 border-color: ${Color.Validation.Red.Border};
             `;
-        } else if (props.$loading || props.$editable) {
+        } else {
+            return css`
+                border-color: ${Color.Neutral[5]};
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$loading || props.$hasThumbnail) {
             return css`
                 ${MediaQuery.MaxWidth.mobileL} {
                     flex-direction: column;
@@ -104,13 +134,9 @@ export const Box = styled.div<BoxStyleProps>`
             `;
         }
     }}
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding: 1rem;
-    }
 `;
 
-export const Content = styled.div`
+export const ContentSection = styled.div`
     display: flex;
     flex: 1;
     align-items: center;
@@ -122,65 +148,37 @@ export const Content = styled.div`
     }
 `;
 
-export const ItemText = styled(Text.BodySmall)``;
-export const ItemDescriptionText = styled(ItemText)`
-    margin-top: 0.25rem;
-`;
-export const ItemFileSizeText = styled(ItemText)`
-    width: 5rem;
-    padding-left: 0.5rem;
-    text-align: right;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        width: 100%;
-        padding-left: 0;
-        text-align: left;
-        margin-top: 0.5rem;
-    }
-`;
-
-export const ItemNameSection = styled.div`
+export const DetailsSection = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
     width: 100%;
 `;
 
-export const ItemActionContainer = styled.div<ItemActionContainerStyleProps>`
-    width: 6rem;
-    margin-left: 2rem;
+export const FileSizeSection = styled.div`
     display: flex;
+    width: 5rem;
+    margin-left: 0.5rem;
     justify-content: flex-end;
-    align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        width: fit-content;
-
-        ${(props) => {
-            if (props.$editable) {
-                return css`
-                    margin-left: 0;
-                    margin-top: 1rem;
-                    align-self: flex-end;
-                `;
-            }
-        }}
-    }
-`;
-
-export const LoadingActionContainer = styled(ItemActionContainer)`
     ${MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         margin-left: 0;
+        margin-top: 0.5rem;
+        justify-content: flex-start;
     }
 `;
 
-export const IconButton = styled(DSIconButton)`
-    min-width: unset;
-
-    :not(:last-child) {
-        margin-right: 1rem;
+export const LoadingFileSizeSection = styled(FileSizeSection)`
+    ${MediaQuery.MaxWidth.mobileL} {
+        display: none;
+        visibility: hidden;
     }
+`;
+
+export const ItemText = styled(Text.BodySmall)``;
+export const ItemDescriptionText = styled(ItemText)`
+    margin-top: 0.25rem;
 `;
 
 export const BaseErrorMessage = styled(Text.XSmall)`
@@ -206,6 +204,44 @@ export const MobileErrorMessage = styled(BaseErrorMessage)`
     }
 `;
 
+export const ActionContainer = styled.div<ActionContainerStyleProps>`
+    width: 6rem;
+    margin-left: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: fit-content;
+
+        ${(props) => {
+            if (props.$editable && !props.$error) {
+                return css`
+                    margin-left: 0;
+                    margin-top: 1rem;
+                    align-self: flex-end;
+                `;
+            }
+        }}
+
+        ${(props) => {
+            if (props.$loading) {
+                return css`
+                    width: 100%;
+                `;
+            }
+        }}
+    }
+`;
+
+export const IconButton = styled(DSIconButton)`
+    min-width: unset;
+
+    :not(:last-child) {
+        margin-right: 1rem;
+    }
+`;
+
 export const ErrorIconButton = styled(ClickableIcon)`
     height: 2.5rem;
     width: 2.5rem;
@@ -215,19 +251,4 @@ export const ErrorIconButton = styled(ClickableIcon)`
         width: 1.5rem;
         color: ${Color.Neutral[3]};
     }
-`;
-
-export const DragHandleIcon = styled(MenuIcon)<DragHandleIconStyleProps>`
-    // Temp icon
-    margin-right: 1rem;
-    height: 1.5rem;
-    width: 1.5rem;
-
-    ${(props) => {
-        if (props.$disabled) {
-            return css`
-                color: ${Color.Neutral[4]};
-            `;
-        }
-    }}
 `;

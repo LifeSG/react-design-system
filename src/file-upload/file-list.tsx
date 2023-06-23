@@ -18,8 +18,8 @@ import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { SimpleIdGenerator } from "../util";
 import { FileUploadContext } from "./context";
-import { FileItem } from "./file-item";
 import { FileItemEdit } from "./file-item-edit";
+import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
@@ -277,7 +277,7 @@ export const FileList = ({
                 return renderItemsInEditMode(item);
             } else {
                 return (
-                    <FileItem
+                    <FileListItem
                         key={item.id}
                         fileItem={item}
                         editable={checkEditable(item)}
