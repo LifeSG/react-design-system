@@ -56,7 +56,6 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
 export const DrawerSubitemContainer = styled(animated.ul)`
     margin: 0.125rem 0.5rem 0.125rem 1rem;
     overflow: hidden;
-    transition: height 1000ms ease;
 `;
 
 export const IconElement = styled.div<IconStyleProp>`

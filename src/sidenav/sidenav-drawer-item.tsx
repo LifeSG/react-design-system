@@ -35,9 +35,6 @@ export const SidenavDrawerItem = ({
     const childRef = resizeDetector.ref;
     const contentAnimationProps = useSpring({
         height: children && expanded ? resizeDetector.height : 0,
-        config: {
-            duration: 10,
-        },
     });
 
     // =========================================================================
