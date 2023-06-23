@@ -1,16 +1,15 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Text } from "../text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
-    $show: boolean;
-    $viewHeight?: number | undefined;
+    $show?: boolean | undefined;
 }
 
 // =============================================================================
@@ -34,71 +33,77 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div`
-    display: none;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: flex;
-    }
-`;
-
 export const Container = styled.div<StyleProps>`
-    position: absolute;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100vh;
-    display: block;
-    padding: 0 0 1rem;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    visibility: ${(props) => (props.$show ? "visible" : "hidden")};
+    position: fixed;
+    top: 0;
 
-    ${(props) => VISIBILITY_STYLE(props.$show)}
-    ${(props) => {
-        const viewHeight = `${props.$viewHeight}px` || "1vh";
-        return css`
-            height: calc(${viewHeight} * 100);
-        `;
-    }}
-
-	${MediaQuery.MaxWidth.tablet} {
-        width: 75%;
-    }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        width: 100%;
-    }
-`;
-
-export const Content = styled.div`
     display: flex;
     flex-direction: column;
+    height: 100%;
+
+    background-color: ${Color.Neutral[8]};
+    box-shadow: 0px 2px 12px rgba(104, 104, 104, 0.25);
+
+    visibility: ${(props) => (props.$show ? "visible" : "hidden")};
+    ${(props) => VISIBILITY_STYLE(props.$show)}
+
+    width: 40%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    overflow: hidden;
+
+    ${MediaQuery.MaxWidth.desktopL} {
+        width: 50%;
+        min-width: 700px;
+    }
+
+    ${MediaQuery.MaxWidth.tablet} {
+        width: 100%;
+        min-width: unset;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
 `;
 
-// -----------------------------------------------------------------------------
-// NAV CONTENTS
-// -----------------------------------------------------------------------------
-export const TopBar = styled.div`
+export const Header = styled.div`
+    top: 0;
+
     display: flex;
-    justify-content: space-between;
-    position: relative;
-    padding: 2.5rem 1.25rem 2rem;
-`;
+    align-items: center;
+    gap: 1rem;
+    height: 5rem;
+    padding: 2rem 1rem 1rem;
+    background-color: ${Color.Neutral[8]};
+    border-bottom: 1px solid ${Color.Neutral[5]};
 
-export const CloseIcon = styled(CrossIcon)`
-    height: 1.5rem;
-    width: 1.5rem;
-    margin-right: -0.25rem;
+    ${MediaQuery.MaxWidth.tablet} {
+        gap: 0.5rem;
+        padding: 2rem 1.25rem 1rem;
+    }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    position: absolute;
-    right: -0.25rem;
-    bottom: 0.65rem;
     color: ${Color.Neutral[1]};
+    padding: 0;
 
     :active,
     :focus {
         color: ${Color.Primary};
     }
+
+    svg {
+        height: 2rem;
+        width: 2rem;
+    }
+`;
+
+export const Heading = styled(Text.H2)`
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+`;
+
+export const Content = styled.div`
+    flex: 1;
+    overflow-y: auto;
 `;

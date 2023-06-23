@@ -454,7 +454,7 @@ export const InternalCalendarDay = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper data-testid="calendar-content">
             {renderHeader()}
             {renderDayCells()}
         </Wrapper>

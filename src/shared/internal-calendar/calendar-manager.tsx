@@ -355,7 +355,7 @@ const Component = (
 
     const renderHeader = () => {
         return (
-            <Header data-id="calendar-header">
+            <Header data-id="calendar-header" data-testid="calendar-header">
                 <HeaderInputDropdown>
                     {renderDropdownButtons()}
                 </HeaderInputDropdown>
@@ -444,6 +444,7 @@ const Component = (
             ref={containerRef}
             tabIndex={-1}
             data-id="calendar-container"
+            data-testid="calendar-container"
             {...otherProps}
         >
             {showNavigationHeader && renderHeader()}

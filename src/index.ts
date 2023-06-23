@@ -11,6 +11,7 @@ export * from "./checkbox";
 export * from "./color";
 export * from "./date-input";
 export * from "./date-range-input";
+export * from "./drawer";
 export * from "./error-display";
 export * from "./feedback-rating";
 export * from "./file-upload";
