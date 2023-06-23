@@ -2,6 +2,7 @@ import {
     DndContext,
     DragEndEvent,
     DragStartEvent,
+    KeyboardSensor,
     MouseSensor,
     TouchSensor,
     useSensor,
@@ -10,6 +11,7 @@ import {
 import {
     SortableContext,
     arrayMove,
+    sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useContext, useEffect, useState } from "react";
@@ -79,6 +81,9 @@ export const FileList = ({
                 delay: 150,
                 tolerance: 5,
             },
+        }),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
         })
     );
 
