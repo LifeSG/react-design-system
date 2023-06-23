@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { FileUploadContext } from "./context";
 import { DropzoneElement, FileUploadDropzone } from "./dropzone";
 import { FileList } from "./file-list";
 import {
@@ -11,7 +12,6 @@ import {
     WarningAlert,
 } from "./file-upload.styles";
 import { FileItemProps, FileUploadProps } from "./types";
-import { FileUploadContext } from "./file-upload-context";
 
 export const FileUpload = ({
     styleType = "bordered",

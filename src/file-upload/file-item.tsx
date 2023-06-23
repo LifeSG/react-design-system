@@ -6,6 +6,7 @@ import { PencilIcon } from "@lifesg/react-icons/pencil";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ProgressBar } from "../shared/progress-bar";
 import { StringHelper } from "../util";
+import { FileUploadContext } from "./context";
 import {
     Box,
     Content,
@@ -24,7 +25,6 @@ import {
 } from "./file-item.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { FileUploadContext } from "./file-upload-context";
 
 interface Props {
     fileItem: FileItemProps;

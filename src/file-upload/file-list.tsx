@@ -17,12 +17,12 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { SimpleIdGenerator } from "../util";
+import { FileUploadContext } from "./context";
 import { FileItem } from "./file-item";
 import { FileItemEdit } from "./file-item-edit";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { FileUploadContext } from "./file-upload-context";
 
 // =============================================================================
 // INTERFACES
