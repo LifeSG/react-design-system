@@ -5,25 +5,25 @@ import { TextStyleHelper } from "../../text";
 
 interface Props {
     thumbnailImageDataUrl: string;
-    replaceable?: boolean | undefined;
-    onReplace?: (() => void) | undefined;
+    renderReplaceButton?: boolean | undefined;
+    onReplaceClick?: (() => void) | undefined;
 }
 
 export const FileListItemThumbnail = ({
     thumbnailImageDataUrl,
-    replaceable,
-    onReplace,
+    renderReplaceButton,
+    onReplaceClick,
 }: Props) => {
     const handleReplace = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (onReplace) {
-            onReplace();
+        if (onReplaceClick) {
+            onReplaceClick();
         }
     };
 
     return (
         <Container>
             <Image src={thumbnailImageDataUrl} />
-            {replaceable && (
+            {renderReplaceButton && (
                 <ReplaceButton type="button" onClick={handleReplace}>
                     Replace
                 </ReplaceButton>
@@ -39,6 +39,7 @@ export const Container = styled.div`
     width: auto;
     margin-right: 2rem;
     display: flex;
+    flex-shrink: 0;
     flex-direction: column;
     justify-content: center;
 `;
