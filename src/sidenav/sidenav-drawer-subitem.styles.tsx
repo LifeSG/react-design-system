@@ -6,7 +6,7 @@ import { TextStyleHelper } from "../text";
 export const Container = styled.li``;
 
 export const LinkButton = styled(Button.Default)`
-    width: 13.5rem;
+    width: 100%;
     height: unset;
     justify-content: flex-start;
     border-radius: 0.5rem;

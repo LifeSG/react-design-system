@@ -15,6 +15,7 @@ import { Square2x2Icon } from "@lifesg/react-icons/square-2x2";
 import { DocIcon } from "@lifesg/react-icons/doc";
 import { CalendarIcon } from "@lifesg/react-icons/calendar";
 import { Person2Icon } from "@lifesg/react-icons/person-2";
+import { TicketIcon } from "@lifesg/react-icons/ticket";
 
 <Meta title="Modules/Sidenav" component={Sidenav} />
 
@@ -30,44 +31,6 @@ import { Sidenav } from "@lifesg/react-design-system/sidenav";
 
 <Canvas>
     <Story name="Sidenav">
-        {() => {
-            return (
-                // NOTE - fixed used for storybook purposes
-                <Sidenav fixed={false}>
-                    <Sidenav.Group>
-                        <Sidenav.Item
-                            id="dashboard"
-                            title="Dashboard"
-                            icon={<Square2x2Icon />}
-                        />
-                        <Sidenav.Item
-                            id="reports"
-                            title="Reports"
-                            icon={<DocIcon />}
-                        />
-                        <Sidenav.Item
-                            id="bookings"
-                            title="Bookings"
-                            icon={<CalendarIcon />}
-                        />
-                        <Sidenav.Item
-                            id="users2"
-                            title="Users"
-                            icon={<Person2Icon />}
-                        />
-                    </Sidenav.Group>
-                </Sidenav>
-            );
-        }}
-    </Story>
-</Canvas>
-
-<Heading3>With group divider</Heading3>
-
-You are able to separate groups with a divider using the `separate` prop.
-
-<Canvas>
-    <Story name="With group divider">
         {() => {
             return (
                 // NOTE - fixed used for storybook purposes
@@ -89,6 +52,7 @@ You are able to separate groups with a divider using the `separate` prop.
                             id="bookings"
                             title="Bookings"
                             icon={<CalendarIcon />}
+                            selected={true}
                         />
                         <Sidenav.Item
                             id="users2"
@@ -102,39 +66,9 @@ You are able to separate groups with a divider using the `separate` prop.
     </Story>
 </Canvas>
 
-<Heading3>With selected item</Heading3>
-
-<Canvas>
-    <Story name="With selected item">
-        {() => {
-            return (
-                // NOTE - fixed used for storybook purposes
-                <Sidenav fixed={false}>
-                    <Sidenav.Group>
-                        <Sidenav.Item
-                            title="Dashboard"
-                            icon={<Square2x2Icon />}
-                        />
-                        <Sidenav.Item title="Reports" icon={<DocIcon />} />
-                        <Sidenav.Item
-                            title="Archived user list with innactive users"
-                            icon={<Person2Icon />}
-                            selected={true}
-                        />
-                        <Sidenav.Item
-                            title="Resources"
-                            icon={<Person2Icon />}
-                        />
-                    </Sidenav.Group>
-                </Sidenav>
-            );
-        }}
-    </Story>
-</Canvas>
-
 <Heading3>Sidenav drawer</Heading3>
 
-With sub items listing, those will be shown in drawer
+The drawer is expanded when a menu item with subitems is hovered or selected. After a subitem is selected, the drawer will close.
 
 <Canvas>
     <Story name="Sidenav drawer">
@@ -172,7 +106,7 @@ With sub items listing, those will be shown in drawer
                             />
                             <Sidenav.DrawerItem
                                 id="new-reports"
-                                title="Side reports"
+                                title="Side reports related to casual matters and extra reports"
                             >
                                 <Sidenav.DrawerSubitem
                                     id="bookings-reports"
@@ -196,14 +130,29 @@ With sub items listing, those will be shown in drawer
                                 title="Completed"
                             />
                             <Sidenav.DrawerItem
-                                id="upcomming-bookings"
-                                title="Upcomming"
-                            />
+                                id="upcoming-bookings"
+                                title="Upcoming"
+                            >
+                                <Sidenav.DrawerSubitem
+                                    id="approved-bookings"
+                                    title="Approved bookings"
+                                />
+                                <Sidenav.DrawerSubitem
+                                    id="pending-bookings"
+                                    title="Pending bookings waiting for approval"
+                                />
+                            </Sidenav.DrawerItem>
                         </Sidenav.Item>
                         <Sidenav.Item
-                            id="users2"
+                            id="users"
                             title="Users"
+                            selected={true}
                             icon={<Person2Icon />}
+                        />
+                        <Sidenav.Item
+                            id="announcements"
+                            title="Announcements of new events and bookings"
+                            icon={<TicketIcon />}
                         />
                     </Sidenav.Group>
                 </Sidenav>

@@ -18,10 +18,10 @@ export const Container = styled(animated.li)``;
 
 export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
     justify-content: flex-start;
-    width: 14rem;
+    width: 100%;
     height: unset;
-    margin-left: 0.5rem;
-    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
 
     span {
         width: 100%;
@@ -53,8 +53,8 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
         `}
 `;
 
-export const DrawerSubitemContainer = styled(animated.ul)`
-    margin: 0.125rem 0.5rem 0.125rem 1rem;
+export const DrawerSubitemContainer = styled(animated.div)`
+    margin: 0.125rem 0 0.125rem 0.5rem;
     overflow: hidden;
 `;
 
@@ -79,4 +79,4 @@ export const TextElement = styled.div`
     text-align: initial;
 `;
 
-export const DrawerContent = styled(animated.div)``;
+export const DrawerContent = styled(animated.ul)``;

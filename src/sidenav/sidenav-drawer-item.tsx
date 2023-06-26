@@ -60,11 +60,6 @@ export const SidenavDrawerItem = ({
         setDrawerContent(undefined);
     };
 
-    const handleIconClick = (event: React.MouseEvent) => {
-        event.stopPropagation();
-        handleOnClick();
-    };
-
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -84,7 +79,7 @@ export const SidenavDrawerItem = ({
                 <TextElement>{title}</TextElement>
                 {children && (
                     <IconElement $expanded={expanded}>
-                        <ChevronIcon onClick={handleIconClick} />
+                        <ChevronIcon aria-hidden />
                     </IconElement>
                 )}
             </LinkButton>
