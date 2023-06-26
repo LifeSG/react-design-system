@@ -74,6 +74,7 @@ const SidenavBase = ({
                 {...otherProps}
                 ref={wrapperRef}
                 onMouseLeave={handleMouseLeave}
+                data-testid="sidenav"
             >
                 <DesktopContainer {...otherProps}>{children}</DesktopContainer>
                 <DesktopDrawer
