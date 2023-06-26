@@ -22,8 +22,6 @@ const SidenavBase = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    // const { drawerContent, selectedItem, setDrawerContent, setSelectedItem } =
-    //     useContext(SidenavContext);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>(

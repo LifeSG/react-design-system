@@ -39,7 +39,7 @@ export const SidenavItem = ({
             children &&
             selectedItem.openDrawer
         ) {
-            setDrawerContent(children);
+            setDrawerContent(() => children);
         }
     }, [drawerContent]);
 
@@ -47,7 +47,12 @@ export const SidenavItem = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleOnClick = () => {
-        if (selectedItem && selectedItem.itemId === id) return;
+        if (
+            selectedItem &&
+            selectedItem.itemId === id &&
+            selectedItem.openDrawer
+        )
+            return;
         setSelectedItem({ itemId: id, openDrawer: !!children });
         setDrawerContent(children ? children : undefined);
         if (onClick) {
