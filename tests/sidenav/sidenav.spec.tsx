@@ -31,7 +31,7 @@ describe("Sidenav", () => {
             </Sidenav>
         );
 
-        expect(screen.getByTestId("sidenav")).toBeInTheDocument();
+        expect(screen.getByTestId("side-nav")).toBeInTheDocument();
         const element = screen.getByTestId("dashboard-item");
         expect(element).toBeInTheDocument();
         expect(element.innerHTML).toContain(ITEM_TEXT);
@@ -52,7 +52,7 @@ describe("Sidenav", () => {
             </Sidenav>
         );
 
-        const element = screen.getByTestId("sidenav");
+        const element = screen.getByTestId("side-nav");
         expect(element).toBeInTheDocument();
         expect(element).toHaveStyle({ position: "fixed" });
     });

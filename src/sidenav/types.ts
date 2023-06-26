@@ -14,10 +14,6 @@ export interface SidenavProps extends SidenavBaseProps {
     children: React.ReactNode;
 }
 
-export interface SidenavWrapperProps extends SidenavBaseProps {
-    children: React.ReactNode;
-}
-
 export interface SidenavGroupProps extends SidenavBaseProps {
     /** Divider will be rendered */
     separator?: boolean | undefined;
