@@ -57,15 +57,15 @@ export const DesktopDrawer = styled(animated.ul)<DrawerStyleProps>`
     padding: 1rem 0.5rem;
     background-color: ${Color.Accent.Light[6]};
     border-radius: 0 8px 8px 0;
+    border-color: ${Color.Neutral[5]};
 
     ${(props) =>
         props.$showDrawer
             ? css`
-                  border: 1px solid ${Color.Neutral[5]};
                   border-left: none;
                   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
               `
             : css`
                   padding: 0;
-              `}
+              `};
 `;

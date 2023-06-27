@@ -43,6 +43,9 @@ const SidenavBase = ({
 
     const drawerAnimationProps = useSpring({
         width: drawerContent ? 240 : 0,
+        borderWidth: drawerContent ? 1 : 0,
+        borderStyle: "solid",
+        borderLeft: "none",
     });
 
     // =========================================================================
