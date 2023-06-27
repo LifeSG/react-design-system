@@ -60,6 +60,7 @@ export const DrawerSubitemContainer = styled(animated.div)`
 
 export const IconElement = styled.div<IconStyleProp>`
     align-self: center;
+    padding-left: 0.5rem;
     transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
 `;

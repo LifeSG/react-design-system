@@ -41,10 +41,12 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         span {
             div {
                 background-color: ${Color.Accent.Light[5]};
+                color: ${Color.Primary} !important;
             }
 
             span {
                 font-weight: 600 !important;
+                color: ${Color.Primary} !important;
             }
         }
     }
