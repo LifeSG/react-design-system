@@ -19,8 +19,14 @@ export const SidenavItem = ({
     // CONST, STATE, REF
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
-    const { drawerContent, selectedItem, setSelectedItem, setDrawerContent } =
-        useContext(SidenavContext);
+    const {
+        currentItemId,
+        drawerContent,
+        selectedItem,
+        setCurrentItemId,
+        setSelectedItem,
+        setDrawerContent,
+    } = useContext(SidenavContext);
 
     // =============================================================================
     // EFFECTS
@@ -39,6 +45,7 @@ export const SidenavItem = ({
             children &&
             selectedItem.openDrawer
         ) {
+            setCurrentItemId(id);
             setDrawerContent(() => children);
         }
     }, [drawerContent]);
@@ -46,6 +53,14 @@ export const SidenavItem = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
+    const setPreviousSelectedItem = (): string | undefined => {
+        if (!children) return undefined;
+        if (selectedItem.prevSelectedId) {
+            return selectedItem.prevSelectedId;
+        }
+        return selectedItem.itemId;
+    };
+
     const handleOnClick = () => {
         if (
             selectedItem &&
@@ -53,7 +68,12 @@ export const SidenavItem = ({
             selectedItem.openDrawer
         )
             return;
-        setSelectedItem({ itemId: id, openDrawer: !!children });
+        setCurrentItemId(id);
+        setSelectedItem({
+            itemId: id,
+            openDrawer: !!children,
+            prevSelectedId: setPreviousSelectedItem(),
+        });
         setDrawerContent(children ? children : undefined);
         if (onClick) {
             onClick(id);
@@ -61,6 +81,7 @@ export const SidenavItem = ({
     };
 
     const handleMouseEnter = () => {
+        setCurrentItemId(id);
         setDrawerContent(children);
     };
 
@@ -74,7 +95,10 @@ export const SidenavItem = ({
                 onClick={handleOnClick}
                 onMouseEnter={handleMouseEnter}
                 {...otherProps}
-                $highlight={selectedItem && selectedItem.itemId === id}
+                $highlight={
+                    (selectedItem && selectedItem.itemId === id) ||
+                    currentItemId === id
+                }
             >
                 <IconContainer>{icon}</IconContainer>
                 <TitleText>{title}</TitleText>

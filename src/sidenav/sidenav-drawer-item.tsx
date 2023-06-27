@@ -25,8 +25,12 @@ export const SidenavDrawerItem = ({
     // =============================================================================
     const [expanded, setExpanded] = useState<boolean>(true);
     const [highlight, setHighlight] = useState<boolean>(false);
-    const { selectedItem, setDrawerContent, setSelectedItem } =
-        useContext(SidenavContext);
+    const {
+        currentItemId,
+        setCurrentItemId,
+        setDrawerContent,
+        setSelectedItem,
+    } = useContext(SidenavContext);
     const containerAnimationProps = useSpring({
         from: { opacity: 0 },
         to: { opacity: 1 },
@@ -56,8 +60,9 @@ export const SidenavDrawerItem = ({
         if (onClick) {
             onClick(id);
         }
-        setSelectedItem({ ...selectedItem, openDrawer: false });
+        setSelectedItem({ itemId: currentItemId, openDrawer: false });
         setDrawerContent(undefined);
+        setCurrentItemId(undefined);
     };
 
     // =========================================================================

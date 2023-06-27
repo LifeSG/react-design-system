@@ -24,6 +24,9 @@ const SidenavBase = ({
     // =============================================================================
     const wrapperRef = useRef<HTMLDivElement>(null);
 
+    const [currentItemId, setCurrentItemId] = useState<string | undefined>(
+        undefined
+    );
     const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>(
         undefined
     );
@@ -33,8 +36,10 @@ const SidenavBase = ({
 
     const value = useMemo(
         () => ({
+            currentItemId,
             selectedItem,
             drawerContent,
+            setCurrentItemId,
             setSelectedItem,
             setDrawerContent,
         }),
@@ -57,13 +62,23 @@ const SidenavBase = ({
             wrapperRef.current &&
             !wrapperRef.current.contains(e.target)
         ) {
-            setSelectedItem({ ...selectedItem, openDrawer: false });
+            setSelectedItem({
+                itemId: selectedItem.prevSelectedId
+                    ? selectedItem.prevSelectedId
+                    : selectedItem.itemId,
+                openDrawer: false,
+                prevSelectedId: undefined,
+            });
+            setCurrentItemId(undefined);
             setDrawerContent(undefined);
         }
     };
 
     const handleMouseLeave = () => {
         setDrawerContent(undefined);
+        if (selectedItem.itemId !== currentItemId) {
+            setCurrentItemId(undefined);
+        }
     };
 
     useEventListener("click", handleOutsideClicks);

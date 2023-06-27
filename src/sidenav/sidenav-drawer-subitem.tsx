@@ -12,8 +12,12 @@ export const SidenavDrawerSubitem = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { selectedItem, setDrawerContent, setSelectedItem } =
-        useContext(SidenavContext);
+    const {
+        currentItemId,
+        setCurrentItemId,
+        setDrawerContent,
+        setSelectedItem,
+    } = useContext(SidenavContext);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -22,8 +26,9 @@ export const SidenavDrawerSubitem = ({
         if (onClick) {
             onClick(id);
         }
-        setSelectedItem({ ...selectedItem, openDrawer: false });
+        setSelectedItem({ itemId: currentItemId, openDrawer: false });
         setDrawerContent(undefined);
+        setCurrentItemId(undefined);
     };
 
     // =========================================================================
