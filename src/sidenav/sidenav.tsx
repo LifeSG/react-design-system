@@ -75,7 +75,6 @@ const SidenavBase = ({
     };
 
     const handleMouseLeave = () => {
-        setDrawerContent(undefined);
         if (selectedItem.itemId !== currentItemId) {
             setCurrentItemId(undefined);
         }
