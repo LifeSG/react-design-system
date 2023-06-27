@@ -186,7 +186,7 @@ export const FileList = ({
                 newRenderModes[item.id] = renderModes[item.id];
             } else if (item.errorMessage) {
                 newRenderModes[item.id] = "error";
-            } else if (item.progress && item.progress < 1) {
+            } else if (item.progress < 1) {
                 newRenderModes[item.id] = "loading";
             } else {
                 newRenderModes[item.id] = shouldRenderEditMode(item)
