@@ -106,7 +106,6 @@ export const FileItemEdit = ({
             <ContentSection>
                 <FileListItemThumbnail
                     thumbnailImageDataUrl={thumbnailImageDataUrl}
-                    renderReplaceButton
                 />
                 <DetailsSection>
                     {renderFileNameAndSize()}
