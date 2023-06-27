@@ -58,18 +58,18 @@ export const DrawerSubitemContainer = styled(animated.div)`
     overflow: hidden;
 `;
 
-export const IconElement = styled.div<IconStyleProp>`
+export const IconElement = styled.div`
     align-self: center;
     padding-left: 0.5rem;
-    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
-    transition: transform 300ms ease-in-out;
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)`
+export const ChevronIcon = styled(ChevronUpIcon)<IconStyleProp>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: ${Color.Neutral[3]};
+    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
+    transition: transform 300ms ease-in-out;
 `;
 
 export const TextElement = styled.div`

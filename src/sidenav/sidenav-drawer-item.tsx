@@ -83,8 +83,8 @@ export const SidenavDrawerItem = ({
             >
                 <TextElement>{title}</TextElement>
                 {children && (
-                    <IconElement $expanded={expanded}>
-                        <ChevronIcon aria-hidden />
+                    <IconElement>
+                        <ChevronIcon aria-hidden $expanded={expanded} />
                     </IconElement>
                 )}
             </LinkButton>
