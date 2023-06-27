@@ -100,6 +100,16 @@ export const FileItem = ({
         }
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        /**
+         * Circumvent issue of keydown action activating the sort mechanism
+         * rather than the actual action
+         */
+        if (sortable) {
+            event.stopPropagation();
+        }
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -157,6 +167,7 @@ export const FileItem = ({
                             aria-label={`edit ${name}`}
                             disabled={shouldDisableActions}
                             onClick={handleEdit}
+                            onKeyDown={handleKeyDown}
                         >
                             <PencilIcon aria-hidden />
                         </IconButton>
@@ -170,6 +181,7 @@ export const FileItem = ({
                         aria-label={`delete ${name}`}
                         disabled={shouldDisableActions}
                         onClick={handleDelete}
+                        onKeyDown={handleKeyDown}
                     >
                         <BinIcon aria-hidden />
                     </IconButton>
