@@ -54,7 +54,7 @@ export const SidenavItem = ({
     // EVENT HANDLERS
     // =========================================================================
     const setPreviousSelectedItem = (): string | undefined => {
-        if (!children) return undefined;
+        if (!children || !selectedItem) return undefined;
         if (selectedItem.prevSelectedId) {
             return selectedItem.prevSelectedId;
         }
