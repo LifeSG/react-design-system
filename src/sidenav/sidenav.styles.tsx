@@ -66,6 +66,7 @@ export const DesktopDrawer = styled(animated.ul)<DrawerStyleProps>`
                   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
               `
             : css`
+                  border: 0;
                   padding: 0;
               `};
 `;
