@@ -32,6 +32,8 @@ interface InteractiveCircleProps
 // =============================================================================
 // STYLING
 // =============================================================================
+const SELECTED_HEIGHT = "2.35rem"; // Circle are overlap the borderTop and borderBottom
+
 export const Wrapper = styled.div`
     width: 100%;
     display: grid;
@@ -60,6 +62,17 @@ export const GrowDayCell = styled.div`
     align-items: center;
     justify-content: center;
     flex: 1;
+
+    // ::before {
+    //     content: "";
+    //     position: absolute;
+    //     display: block;
+    //     height: 1px;
+    //     border: 1px solid red;
+    //     top: 0;
+    //     width: 50%;
+    //     right: 0;
+    // }
 `;
 
 export const OverflowDisplay = styled.div<OverflowDisplayProps>`
@@ -107,7 +120,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
                 border-top: 1px solid ${Color.Primary};
                 border-bottom: 1px solid ${Color.Primary};
                 background-color: ${Color.Neutral[8]};
-                box-shadow: 10px 0px 4px 1px ${Color.Shadow.Accent};
+                box-shadow: 4px 0px 4px 1px ${Color.Shadow.Accent};
             `;
         }
     }}
@@ -169,12 +182,22 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     position: absolute;
 
     ${(props) => {
-        const { $hovered, $selected } = props;
+        const { $hovered, $selected, $position } = props;
 
         if ($selected) {
-            return css`
-                background: ${Color.Accent.Light[5]};
-            `;
+            if ($position === "left") {
+                return css`
+                    background: ${Color.Accent.Light[5]};
+                    height: ${SELECTED_HEIGHT};
+                `;
+            }
+
+            if ($position === "right") {
+                return css`
+                    background: ${Color.Accent.Light[5]};
+                    height: ${SELECTED_HEIGHT};
+                `;
+            }
         }
 
         if ($hovered) {
@@ -191,6 +214,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             return css`
                 background-color: ${Color.Neutral[8]};
                 box-shadow: -4px 0 4px -1px ${Color.Shadow.Accent};
+                // box-shadow: -4px 0 4px -1px red;
             `;
         } else if ($overlap && $position === "right") {
             return css`
@@ -214,7 +238,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
         }
     }}
     ${(props) => {
-        const { $disabledDisplay, $variant } = props;
+        const { $disabledDisplay, $overlap, $selected, $variant } = props;
 
         if ($disabledDisplay) {
             return css`
@@ -222,13 +246,21 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
 
-        switch ($variant) {
-            case "today":
+        if ($variant === "today") {
+            if ($overlap) {
+                return css`
+                    height: ${SELECTED_HEIGHT};
+                    background: ${Color.Neutral[8]};
+                `;
+            } else if ($selected) {
+                return css`
+                    height: ${SELECTED_HEIGHT};
+                `;
+            } else {
                 return css`
                     background: ${Color.Accent.Light[5]};
                 `;
-            default:
-                break;
+            }
         }
     }}
 `;

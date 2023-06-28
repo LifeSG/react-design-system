@@ -152,6 +152,7 @@ export const InternalWeekSelectionCalendarDay = ({
                     styleOverflowCirleProps.$position = "right";
                 } else {
                     styleLeftProps.$selected = true;
+                    styleCircleProps.$selected = true;
                     styleRightProps.$selected = true;
                 }
             }
@@ -219,6 +220,7 @@ export const InternalWeekSelectionCalendarDay = ({
                     styleOverflowCirleProps.$position = "right";
                 } else {
                     styleLeftProps.$overlap = true;
+                    styleCircleProps.$overlap = true;
                     styleRightProps.$overlap = true;
                 }
             }
