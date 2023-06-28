@@ -104,9 +104,11 @@ export const FileItemEdit = ({
     return (
         <Item data-testid={`${id}-edit-display`}>
             <ContentSection>
-                <FileListItemThumbnail
-                    thumbnailImageDataUrl={thumbnailImageDataUrl}
-                />
+                {thumbnailImageDataUrl && (
+                    <FileListItemThumbnail
+                        thumbnailImageDataUrl={thumbnailImageDataUrl}
+                    />
+                )}
                 <DetailsSection>
                     {renderFileNameAndSize()}
                     <Form.Textarea
@@ -124,7 +126,7 @@ export const FileItemEdit = ({
                     />
                 </DetailsSection>
             </ContentSection>
-            <ActionButtonsSection>
+            <ActionButtonsSection $thumbnail={!!thumbnailImageDataUrl}>
                 <ActionButton
                     data-testid={`${id}-save-button`}
                     type="button"

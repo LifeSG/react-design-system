@@ -1,9 +1,19 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { MediaQuery } from "../media/media";
 import { Button } from "../button/button";
 import { Text } from "../text/text";
 import { Color } from "../color/color";
 
+// =============================================================================
+// STYLE INTERFACE
+// =============================================================================
+interface ActionButtonSectionStyleProps {
+    $thumbnail?: boolean | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const Item = styled.li`
     display: flex;
     flex-direction: column;
@@ -53,14 +63,23 @@ export const FileNameText = styled(Text.BodySmall)`
 
 export const FileSizeText = styled(Text.BodySmall)``;
 
-export const ActionButtonsSection = styled.div`
+export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;
-    margin-left: 8rem; // 6rem width + 2rem gap
-
     ${MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
-        margin-left: 0;
     }
+
+    ${(props) => {
+        if (props.$thumbnail) {
+            return css`
+                margin-left: 8rem; // 6rem width + 2rem gap
+
+                ${MediaQuery.MaxWidth.mobileL} {
+                    margin-left: 0;
+                }
+            `;
+        }
+    }}
 `;
 
 export const ActionButton = styled(Button.Small)`
