@@ -3,7 +3,6 @@ import {
     DragEndEvent,
     DragStartEvent,
     KeyboardSensor,
-    MouseSensor,
     TouchSensor,
     useSensor,
     useSensors,
@@ -18,6 +17,7 @@ import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { SimpleIdGenerator } from "../util";
 import { FileUploadContext } from "./context";
+import { MouseSensor } from "./custom-sensors";
 import { FileItemEdit } from "./file-item-edit";
 import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
@@ -186,7 +186,7 @@ export const FileList = ({
                 newRenderModes[item.id] = renderModes[item.id];
             } else if (item.errorMessage) {
                 newRenderModes[item.id] = "error";
-            } else if (item.progress && item.progress < 1) {
+            } else if (item.progress < 1) {
                 newRenderModes[item.id] = "loading";
             } else {
                 newRenderModes[item.id] = shouldRenderEditMode(item)

@@ -221,6 +221,7 @@ export const FileListItem = ({
                         <IconButton
                             key="edit"
                             data-testid={`${id}-edit-button`}
+                            data-no-dnd="true"
                             type="button"
                             styleType="light"
                             sizeType="small"
@@ -234,6 +235,7 @@ export const FileListItem = ({
                     <IconButton
                         key="delete"
                         data-testid={`${id}-delete-button`}
+                        data-no-dnd="true"
                         type="button"
                         styleType="light"
                         sizeType="small"
