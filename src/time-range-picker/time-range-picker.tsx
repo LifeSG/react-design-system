@@ -43,8 +43,8 @@ export const TimeRangePicker = ({
         }
     }, []);
 
-    useEventListener("mousedown", handleMouseDownEvent, document);
-    useEventListener("keyup", handleKeyUpEvent, document);
+    useEventListener("mousedown", handleMouseDownEvent, "document");
+    useEventListener("keyup", handleKeyUpEvent, "document");
 
     // =============================================================================
     // EVENT HANDLERS

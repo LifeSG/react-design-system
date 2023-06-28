@@ -20,7 +20,7 @@ export const DropdownWrapper = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEventListener("mousedown", handleMouseDownEvent, document);
+    useEventListener("mousedown", handleMouseDownEvent, "document");
 
     // =============================================================================
     // HELPER FUNCTION
