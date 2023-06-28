@@ -3,7 +3,7 @@ name: Trigger GitLab CI Pipeline
 on:
     push:
         branches:
-            - main
+            - master
 
 jobs:
     trigger_pipeline:
