@@ -65,7 +65,7 @@ export const RBSColorSet: ColorSet = {
         },
     } as ValidationTypes,
     Shadow: {
-        Accent: "rgb(90, 87, 255)",
+        Accent: "rgba(90, 87, 255, 0.5)",
         Red: "rgba(221, 102, 102, 0.8)",
         Elevation: "rgba(75, 83, 159, 0.24)",
     },
