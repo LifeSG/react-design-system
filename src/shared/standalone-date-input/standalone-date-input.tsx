@@ -123,7 +123,7 @@ export const Component = (
     // EVENT HANDLERS
     // =============================================================================
     const handleSectionClick = () => {
-        if (disabled || readOnly) {
+        if (disabled) {
             return;
         }
 
@@ -135,7 +135,7 @@ export const Component = (
     };
 
     const handleSectionFocus = () => {
-        if (disabled || readOnly) {
+        if (disabled) {
             return;
         }
 

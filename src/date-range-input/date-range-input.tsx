@@ -338,6 +338,8 @@ export const DateRangeInput = ({
     };
 
     const handleInputFocus = (focusType: FocusType) => () => {
+        if (readOnly) return;
+
         actions.focus(focusType);
 
         handleWeekSelectionInputFocus();
