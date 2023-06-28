@@ -19,11 +19,15 @@ export interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
 }
 
+export interface OverflowCircleProps extends Partial<OverflowDisplayProps> {}
+
 interface OverflowDisplayProps extends StyleProps {
     $position: "left" | "right";
 }
 
-interface InteractiveCircleProps extends DayLabelStyleProps {}
+interface InteractiveCircleProps
+    extends DayLabelStyleProps,
+        OverflowCircleProps {}
 
 // =============================================================================
 // STYLING
@@ -77,19 +81,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
     }}
 
     ${(props) => {
-        const { $selected } = props;
-
-        if ($selected) {
-            return css`
-                border-top: 1px solid ${Color.Accent.Light[4]};
-                border-bottom: 1px solid ${Color.Accent.Light[4]};
-                background-color: ${Color.Accent.Light[5]};
-            `;
-        }
-    }}
-    
-    ${(props) => {
-        const { $hovered, $overlap } = props;
+        const { $hovered, $selected } = props;
 
         if ($hovered) {
             return css`
@@ -99,10 +91,69 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
             `;
         }
 
-        if ($overlap) {
+        if ($selected) {
             return css`
-                background-color: ${Color.Accent.Light[4]};
+                border-top: 1px solid ${Color.Primary};
+                border-bottom: 1px solid ${Color.Primary};
+                background-color: ${Color.Accent.Light[5]};
             `;
+        }
+    }}
+
+
+    ${(props) => {
+        if (props.$overlap) {
+            return css`
+                border-top: 1px solid ${Color.Primary};
+                border-bottom: 1px solid ${Color.Primary};
+                background-color: ${Color.Neutral[8]};
+                box-shadow: 10px 0px 4px 1px ${Color.Shadow.Accent};
+            `;
+        }
+    }}
+`;
+
+export const OverflowCircle = styled.div<OverflowCircleProps>`
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    background-color: transparent;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+
+    ${(props) => {
+        if (props.$hovered) {
+            return css`
+                border: 1px dashed ${Color.Accent.Light[4]};
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$selected) {
+            return css`
+                border: 1px solid ${Color.Primary};
+            `;
+        }
+    }}
+
+    ${(props) => {
+        switch (props.$position) {
+            case "left":
+                return css`
+                    display: block;
+                    transform: rotate(-45deg);
+                    border-bottom-color: transparent;
+                    border-right-color: transparent;
+                `;
+            case "right":
+                return css`
+                    display: block;
+                    transform: rotate(45deg);
+                    border-bottom-color: transparent;
+                    border-left-color: transparent;
+                `;
         }
     }}
 `;
@@ -123,15 +174,28 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
         if ($selected) {
             return css`
                 background: ${Color.Accent.Light[5]};
-                border: 1px solid ${Color.Primary};
             `;
         }
 
         if ($hovered) {
             return css`
-                box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                border: 1px solid ${Color.Accent.Light[1]};
+                background-color: ${Color.Accent.Light[6]};
+            `;
+        }
+    }}
+
+    ${(props) => {
+        const { $overlap, $position } = props;
+
+        if ($overlap && $position === "left") {
+            return css`
                 background-color: ${Color.Neutral[8]};
+                box-shadow: -4px 0 4px -1px ${Color.Shadow.Accent};
+            `;
+        } else if ($overlap && $position === "right") {
+            return css`
+                background-color: ${Color.Neutral[8]};
+                box-shadow: 4px 0 4px -1px ${Color.Shadow.Accent};
             `;
         }
     }}
@@ -142,11 +206,6 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
         if ($interactive) {
             return css`
                 cursor: pointer;
-                :hover {
-                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                    border: 1px solid ${Color.Accent.Light[1]};
-                    background-color: ${Color.Neutral[8]};
-                }
             `;
         } else if ($disabledDisplay) {
             return css`
@@ -154,20 +213,8 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
     }}
-
     ${(props) => {
-        const { $disabledDisplay, $overlap, $variant } = props;
-
-        if ($overlap) {
-            return css`
-                border: 1px solid ${Color.Accent.Light[1]};
-                background: ${Color.Accent.Light[4]};
-
-                :hover {
-                    background: ${Color.Accent.Light[4]};
-                }
-            `;
-        }
+        const { $disabledDisplay, $variant } = props;
 
         if ($disabledDisplay) {
             return css`

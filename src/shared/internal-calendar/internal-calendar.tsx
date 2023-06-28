@@ -2,6 +2,7 @@ import { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
 import { InternalCalendarDay } from "./internal-calendar-day";
+import { InternalWeekSelectionCalendarDay } from "./internal-week-selection-calendar-day";
 import { Container } from "./internal-calendar.style";
 import {
     CalendarManagerRef,
@@ -44,6 +45,9 @@ export const Component = (
             reset() {
                 calendarManagerRef.current.resetView();
             },
+            setCalendarDate(value?: string) {
+                calendarManagerRef.current.setCalendarDate(value);
+            },
         };
     });
 
@@ -52,6 +56,8 @@ export const Component = (
     // =============================================================================
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
+
+        calendarManagerRef.current.setCalendarDate(stringValue);
         performOnSelectHandler(stringValue);
     };
 
@@ -108,6 +114,9 @@ export const Component = (
                 // ensure both are empty or complete at the same time
                 isDisabled = !!selectedStartDate !== !!selectedEndDate;
                 break;
+            case "week":
+                isDisabled = !selectedStartDate && !selectedEndDate;
+                break;
         }
 
         return isDisabled;
@@ -116,6 +125,45 @@ export const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const renderCalendarDay = (calendarDate: Dayjs) => {
+        switch (variant) {
+            case "single":
+            case "range":
+                return (
+                    <InternalCalendarDay
+                        calendarDate={calendarDate}
+                        currentFocus={currentFocus}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        selectedEndDate={selectedEndDate}
+                        variant={variant}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        isNewSelection={selectWithinRange}
+                        allowDisabledSelection={allowDisabledSelection}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                    />
+                );
+            case "week":
+                return (
+                    <InternalWeekSelectionCalendarDay
+                        calendarDate={calendarDate}
+                        currentFocus={currentFocus}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        selectedEndDate={selectedEndDate}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        isNewSelection={selectWithinRange}
+                        allowDisabledSelection={allowDisabledSelection}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                    />
+                );
+        }
+    };
+
     return (
         <Container $type={type}>
             <CalendarManager
@@ -134,22 +182,7 @@ export const Component = (
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
             >
-                {({ calendarDate }) => (
-                    <InternalCalendarDay
-                        calendarDate={calendarDate}
-                        currentFocus={currentFocus}
-                        disabledDates={disabledDates}
-                        selectedStartDate={selectedStartDate}
-                        selectedEndDate={selectedEndDate}
-                        variant={variant}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        isNewSelection={selectWithinRange}
-                        allowDisabledSelection={allowDisabledSelection}
-                        onSelect={handleDateSelect}
-                        onHover={handleDateHover}
-                    />
-                )}
+                {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>
         </Container>
     );
