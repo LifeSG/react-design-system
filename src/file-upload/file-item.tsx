@@ -168,6 +168,7 @@ export const FileItem = ({
                             disabled={shouldDisableActions}
                             onClick={handleEdit}
                             onKeyDown={handleKeyDown}
+                            data-no-dnd="true"
                         >
                             <PencilIcon aria-hidden />
                         </IconButton>
@@ -182,6 +183,7 @@ export const FileItem = ({
                         disabled={shouldDisableActions}
                         onClick={handleDelete}
                         onKeyDown={handleKeyDown}
+                        data-no-dnd="true"
                     >
                         <BinIcon aria-hidden />
                     </IconButton>

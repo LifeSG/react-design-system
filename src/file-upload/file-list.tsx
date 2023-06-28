@@ -3,7 +3,6 @@ import {
     DragEndEvent,
     DragStartEvent,
     KeyboardSensor,
-    MouseSensor,
     TouchSensor,
     useSensor,
     useSensors,
@@ -17,12 +16,13 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { SimpleIdGenerator } from "../util";
+import { MouseSensor } from "./custom-sensors";
 import { FileItem } from "./file-item";
 import { FileItemEdit } from "./file-item-edit";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
+import { FileUploadContext } from "./file-upload-context";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { FileUploadContext } from "./file-upload-context";
 
 // =============================================================================
 // INTERFACES
