@@ -43,17 +43,23 @@ const SidenavBase = ({
             setSelectedItem,
             setDrawerContent,
         }),
-        [selectedItem, drawerContent, setSelectedItem, setDrawerContent]
+        [
+            currentItemId,
+            selectedItem,
+            drawerContent,
+            setCurrentItemId,
+            setSelectedItem,
+            setDrawerContent,
+        ]
     );
 
     const drawerAnimationProps = useSpring({
         width: drawerContent ? 240 : 0,
-        // borderWidth property divided to avoid mixing shorthand and non-shorthand properties
-        // If so, it will through an error
-        borderWidthRight: drawerContent ? 1 : 0,
-        borderWidthTop: drawerContent ? 1 : 0,
-        borderWidthBottom: drawerContent ? 1 : 0,
-        borderStyle: "solid",
+        // // borderWidth property divided to avoid mixing shorthand and non-shorthand properties
+        // // If so, it will through an error
+        borderRightWidth: drawerContent ? 1 : 0,
+        borderTopWidth: drawerContent ? 1 : 0,
+        borderBottomWidth: drawerContent ? 1 : 0,
         borderLeftWidth: 0,
     });
 
@@ -85,8 +91,14 @@ const SidenavBase = ({
         }
     };
 
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
     useEventListener("click", handleOutsideClicks);
 
+    // =========================================================================
+    // RENDER FUNCTIONS
+    // =========================================================================
     return (
         <SidenavContext.Provider value={value}>
             <Wrapper

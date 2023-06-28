@@ -19,11 +19,13 @@ export const SidenavContext = createContext<SidenavContextProps>({
     currentItemId: undefined,
     selectedItem: undefined,
     drawerContent: undefined,
-    setCurrentItemId: (prevState: SetStateAction<string | undefined>) =>
-        prevState,
-    setSelectedItem: (prevState: SetStateAction<SelectedItem | undefined>) =>
-        prevState,
-    setDrawerContent: (
-        prevState: SetStateAction<React.ReactNode | undefined>
-    ) => prevState,
+    setCurrentItemId: () => {
+        /**  */
+    },
+    setSelectedItem: () => {
+        /** */
+    },
+    setDrawerContent: () => {
+        /** */
+    },
 });

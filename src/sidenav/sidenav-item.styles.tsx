@@ -3,6 +3,9 @@ import { Text, TextStyleHelper } from "../text";
 import { Color } from "../color";
 import { Button } from "../button";
 
+//=============================================================================
+// STYLE INTERFACE
+//=============================================================================
 interface StyleProps {
     $highlight: boolean;
 }

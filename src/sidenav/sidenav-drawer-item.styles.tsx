@@ -5,6 +5,9 @@ import { Color } from "../color";
 import { TextStyleHelper } from "../text";
 import { animated } from "react-spring";
 
+//=============================================================================
+// STYLE INTERFACE
+//=============================================================================
 interface LinkButtonStyleProp {
     $highlight?: boolean | undefined;
     $noChildren?: boolean | undefined;
