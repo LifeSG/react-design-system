@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { DropzoneElement, FileUploadDropzone } from "./dropzone";
 import { FileList } from "./file-list";
 import {
@@ -11,6 +11,7 @@ import {
     WarningAlert,
 } from "./file-upload.styles";
 import { FileItemProps, FileUploadProps } from "./types";
+import { FileUploadContext } from "./file-upload-context";
 
 export const FileUpload = ({
     styleType = "bordered",
@@ -26,16 +27,19 @@ export const FileUpload = ({
     capture,
     multiple,
     disabled,
+    sortable = false,
     descriptionMaxLength,
-    editableFileItems = true,
+    editableFileItems = false,
     onChange,
     onDelete,
     onEdit,
+    onSort,
 }: FileUploadProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const dropzoneRef = useRef<DropzoneElement>();
+    const [activeId, setActiveId] = useState<string>();
 
     // =========================================================================
     // EVENT HANDLERS
@@ -69,6 +73,12 @@ export const FileUpload = ({
         }
     };
 
+    const handleSort = (updatedItems: FileItemProps[]) => {
+        if (onSort) {
+            onSort(updatedItems);
+        }
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -80,47 +90,54 @@ export const FileUpload = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <FileUploadDropzone
-            ref={dropzoneRef}
-            onChange={handleChange}
-            id={id ? `${id}-dropzone` : "dropzone"}
-            accept={accept}
-            capture={capture}
-            border={styleType === "bordered"}
-            className={className}
-            name={name}
-            multiple={multiple}
-            disabled={disabled || reachedMaxFiles()}
-        >
-            {(title || description) && (
-                <TitleContainer>
-                    {title && <Title weight="regular">{title}</Title>}
-                    {description && (
-                        <Description weight="semibold">
-                            {description}
-                        </Description>
-                    )}
-                </TitleContainer>
-            )}
-            {warning && <WarningAlert type="warning">{warning}</WarningAlert>}
-            <FileList
-                fileItems={fileItems}
-                editableFileItems={editableFileItems}
-                descriptionMaxLength={descriptionMaxLength}
-                onItemDelete={handleItemDelete}
-                onItemUpdate={handleItemUpdate}
-            />
-            <UploadButtonContainer>
-                <UploadButton
-                    type="button"
-                    styleType="secondary"
-                    disabled={disabled || reachedMaxFiles()}
-                    onClick={handleUploadButtonClick}
-                >
-                    Upload files
-                </UploadButton>
-                <UploadButtonLabel>or drop them here</UploadButtonLabel>
-            </UploadButtonContainer>
-        </FileUploadDropzone>
+        <FileUploadContext.Provider value={{ activeId, setActiveId }}>
+            <FileUploadDropzone
+                ref={dropzoneRef}
+                onChange={handleChange}
+                id={id ? `${id}-dropzone` : "dropzone"}
+                accept={accept}
+                capture={capture}
+                border={styleType === "bordered"}
+                className={className}
+                name={name}
+                multiple={multiple}
+                disabled={disabled || reachedMaxFiles()}
+            >
+                {(title || description) && (
+                    <TitleContainer>
+                        {title && <Title weight="regular">{title}</Title>}
+                        {description && (
+                            <Description weight="semibold">
+                                {description}
+                            </Description>
+                        )}
+                    </TitleContainer>
+                )}
+                {warning && (
+                    <WarningAlert type="warning">{warning}</WarningAlert>
+                )}
+                <FileList
+                    fileItems={fileItems}
+                    editableFileItems={editableFileItems}
+                    descriptionMaxLength={descriptionMaxLength}
+                    sortable={sortable}
+                    disabled={disabled}
+                    onItemDelete={handleItemDelete}
+                    onItemUpdate={handleItemUpdate}
+                    onSort={handleSort}
+                />
+                <UploadButtonContainer>
+                    <UploadButton
+                        type="button"
+                        styleType="secondary"
+                        disabled={!!activeId || disabled || reachedMaxFiles()}
+                        onClick={handleUploadButtonClick}
+                    >
+                        Upload files
+                    </UploadButton>
+                    <UploadButtonLabel>or drop them here</UploadButtonLabel>
+                </UploadButtonContainer>
+            </FileUploadDropzone>
+        </FileUploadContext.Provider>
     );
 };

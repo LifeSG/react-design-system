@@ -35,12 +35,6 @@ export interface FileInputProps {
 
 export interface FileUploadProps extends FileInputProps {
     /** Component specific */
-    /** Called when an upload happens via drag drop or click */
-    onChange?: (files: File[]) => void;
-    /** Called when an update to the description happens */
-    onEdit?: (fileItem: FileItemProps) => void;
-    /** Called when a file item's delete button is clicked */
-    onDelete?: (fileItem: FileItemProps) => void;
     title?: string | JSX.Element | undefined;
     description?: string | JSX.Element | undefined;
     /** The style type for the component. Values "bordered" | "no-border" */
@@ -52,4 +46,14 @@ export interface FileUploadProps extends FileInputProps {
     editableFileItems?: boolean | undefined;
     /** The max length of the description of the file (only image files) */
     descriptionMaxLength?: number | undefined;
+    /** Specifies if sorting is enabled for the file items */
+    sortable?: boolean | undefined;
+    /** Called when an upload happens via drag drop or click */
+    onChange?: ((files: File[]) => void) | undefined;
+    /** Called when an update to the description happens */
+    onEdit?: ((fileItem: FileItemProps) => void) | undefined;
+    /** Called when a file item's delete button is clicked */
+    onDelete?: ((fileItem: FileItemProps) => void) | undefined;
+    /** Called when a drag sort is made */
+    onSort?: ((fileItems: FileItemProps[]) => void) | undefined;
 }

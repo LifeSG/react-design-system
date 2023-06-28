@@ -1,16 +1,33 @@
-import { useEffect, useState } from "react";
+import {
+    DndContext,
+    DragEndEvent,
+    DragStartEvent,
+    KeyboardSensor,
+    TouchSensor,
+    useSensor,
+    useSensors,
+} from "@dnd-kit/core";
+import {
+    SortableContext,
+    arrayMove,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { SimpleIdGenerator } from "../util";
+import { MouseSensor } from "./custom-sensors";
 import { FileItem } from "./file-item";
 import { FileItemEdit } from "./file-item-edit";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
+import { FileUploadContext } from "./file-upload-context";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
 
 // =============================================================================
 // INTERFACES
 // =============================================================================
-type RenderMode = "cancelled-edit" | "list" | "edit";
+type RenderMode = "cancelled-edit" | "list" | "edit" | "error" | "loading";
 
 type FileItemRenderModes = Record<string, RenderMode>;
 
@@ -18,10 +35,13 @@ type RenderItem = FileItemProps | FileItemProps[];
 
 interface Props {
     fileItems: FileItemProps[];
-    onItemUpdate: (item: FileItemProps) => void;
-    onItemDelete: (item: FileItemProps) => void;
     editableFileItems: boolean;
     descriptionMaxLength?: number | undefined;
+    sortable?: boolean | undefined;
+    disabled?: boolean | undefined;
+    onItemUpdate: (item: FileItemProps) => void;
+    onItemDelete: (item: FileItemProps) => void;
+    onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
 }
 
 // =============================================================================
@@ -32,16 +52,40 @@ export const FileList = ({
     fileItems,
     editableFileItems,
     descriptionMaxLength,
+    sortable,
+    disabled,
     onItemUpdate,
     onItemDelete,
+    onSort,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
-    const [arrangedItems, setArrangedItems] = useState<RenderItem[]>([]);
-
+    const { setActiveId } = useContext(FileUploadContext);
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
+
+    /**
+     * As the default drag sensors interfere with click events
+     * on the file items, we'll need to configure the sensor to
+     * only activate the drag if the mouse moves a certain distance
+     */
+    const sensors = useSensors(
+        useSensor(MouseSensor, {
+            activationConstraint: {
+                distance: 8, // mouse drag of 8px then activate the drag event
+            },
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 150,
+                tolerance: 5,
+            },
+        }),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
 
     // =========================================================================
     // EFFECTS
@@ -49,10 +93,6 @@ export const FileList = ({
     useEffect(() => {
         setRenderModes(getItemsRenderMode(fileItems));
     }, [fileItems]);
-
-    useEffect(() => {
-        setArrangedItems(getArrangedItems(fileItems, renderModes));
-    }, [fileItems, renderModes]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -83,6 +123,36 @@ export const FileList = ({
         onItemDelete(item);
     };
 
+    const handleDragEnd = (event: DragEndEvent) => {
+        if (onSort) {
+            const { active, over } = event;
+
+            if (over && active.id !== over.id) {
+                const oldIndex = fileItems.findIndex(
+                    (item) => item.id === active.id
+                );
+                const newIndex = fileItems.findIndex(
+                    (item) => item.id === over.id
+                );
+
+                const updatedFileItems = arrayMove(
+                    fileItems,
+                    oldIndex,
+                    newIndex
+                );
+
+                onSort(updatedFileItems);
+            }
+        }
+
+        setActiveId(undefined);
+    };
+
+    const handleDragStart = (event: DragStartEvent) => {
+        const { active } = event;
+        setActiveId(active.id as string);
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -102,28 +172,30 @@ export const FileList = ({
     ): FileItemRenderModes => {
         if (!fileItems || fileItems.length === 0) return {};
 
-        const updatedRenderModes: FileItemRenderModes = { ...renderModes };
+        const newRenderModes: FileItemRenderModes = {};
 
         for (const item of fileItems) {
+            /**
+             * We retain the cancelled edits to prevent the edit
+             * display from re-rendering
+             */
             if (
-                !updatedRenderModes[item.id] ||
-                updatedRenderModes[item.id] !== "cancelled-edit"
+                renderModes[item.id] &&
+                renderModes[item.id] === "cancelled-edit"
             ) {
-                /**
-                 * If new item or if previously did not have edit cancelled,
-                 * we will just update the render mode according to the
-                 * description value.
-                 *
-                 * If editing was cancelled previously, we will leave it as
-                 * it is and not render the edit display
-                 */
-                updatedRenderModes[item.id] = shouldRenderEditMode(item)
+                newRenderModes[item.id] = renderModes[item.id];
+            } else if (item.errorMessage) {
+                newRenderModes[item.id] = "error";
+            } else if (item.progress < 1) {
+                newRenderModes[item.id] = "loading";
+            } else {
+                newRenderModes[item.id] = shouldRenderEditMode(item)
                     ? "edit"
                     : "list";
             }
         }
 
-        return updatedRenderModes;
+        return newRenderModes;
     };
 
     /**
@@ -154,6 +226,21 @@ export const FileList = ({
         return arrangedItems;
     };
 
+    const areAllItemsInDisplayViews = () => {
+        return Object.values(renderModes).every(
+            (mode) => mode === "list" || mode === "cancelled-edit"
+        );
+    };
+
+    const shouldEnableSort = () => {
+        return (
+            fileItems &&
+            fileItems.length > 1 &&
+            sortable &&
+            areAllItemsInDisplayViews()
+        );
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -181,6 +268,8 @@ export const FileList = ({
     };
 
     const renderItems = () => {
+        const arrangedItems = getArrangedItems(fileItems, renderModes);
+
         if (arrangedItems.length === 0) return null;
 
         return arrangedItems.map((item) => {
@@ -193,6 +282,8 @@ export const FileList = ({
                         fileItem={item}
                         editable={checkEditable(item)}
                         wrapperWidth={wrapperWidth}
+                        sortable={shouldEnableSort()}
+                        disabled={disabled}
                         onDelete={handleDelete(item)}
                         onEditClick={handleInitiateEdit(item)}
                     />
@@ -201,5 +292,22 @@ export const FileList = ({
         });
     };
 
-    return <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>;
+    if (disabled || !shouldEnableSort()) {
+        return <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>;
+    } else {
+        return (
+            <DndContext
+                sensors={sensors}
+                onDragEnd={handleDragEnd}
+                onDragStart={handleDragStart}
+            >
+                <SortableContext
+                    items={fileItems}
+                    strategy={verticalListSortingStrategy}
+                >
+                    <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>
+                </SortableContext>
+            </DndContext>
+        );
+    }
 };
