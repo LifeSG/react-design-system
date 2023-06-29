@@ -13,10 +13,10 @@ export const SidenavDrawerSubitem = ({
     // CONST, STATE, REF
     // =============================================================================
     const {
-        currentItemId,
-        setCurrentItemId,
-        setDrawerContent,
+        currentItem,
         setSelectedItem,
+        setCurrentItem,
+        setPreviouslySelectedItemId,
     } = useContext(SidenavContext);
 
     // =========================================================================
@@ -26,9 +26,9 @@ export const SidenavDrawerSubitem = ({
         if (onClick) {
             onClick(id);
         }
-        setSelectedItem({ itemId: currentItemId, openDrawer: false });
-        setDrawerContent(undefined);
-        setCurrentItemId(undefined);
+        setSelectedItem({ itemId: currentItem.itemId, content: undefined });
+        setCurrentItem(undefined);
+        setPreviouslySelectedItemId(undefined);
     };
 
     // =========================================================================

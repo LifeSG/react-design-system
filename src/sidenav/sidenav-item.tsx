@@ -20,12 +20,12 @@ export const SidenavItem = ({
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
     const {
-        currentItemId,
-        drawerContent,
+        currentItem,
+        previouslySelectedItemId,
         selectedItem,
-        setCurrentItemId,
+        setCurrentItem,
+        setPreviouslySelectedItemId,
         setSelectedItem,
-        setDrawerContent,
     } = useContext(SidenavContext);
 
     // =============================================================================
@@ -33,56 +33,35 @@ export const SidenavItem = ({
     // =============================================================================
     useEffect(() => {
         if (otherProps.selected) {
-            setSelectedItem({ itemId: id, openDrawer: true });
+            setSelectedItem({ itemId: id, content: undefined });
         }
     }, []);
-
-    useEffect(() => {
-        if (
-            !drawerContent &&
-            selectedItem &&
-            selectedItem.itemId === id &&
-            children &&
-            selectedItem.openDrawer
-        ) {
-            setCurrentItemId(id);
-            setDrawerContent(() => children);
-        }
-    }, [drawerContent]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const setPreviousSelectedItem = (): string | undefined => {
         if (!children || !selectedItem) return undefined;
-        if (selectedItem.prevSelectedId) {
-            return selectedItem.prevSelectedId;
+        if (previouslySelectedItemId) {
+            return previouslySelectedItemId;
         }
         return selectedItem.itemId;
     };
 
     const handleOnClick = () => {
-        if (
-            selectedItem &&
-            selectedItem.itemId === id &&
-            selectedItem.openDrawer
-        )
-            return;
-        setCurrentItemId(id);
+        setPreviouslySelectedItemId(setPreviousSelectedItem());
+        setCurrentItem({ itemId: id, content: children });
         setSelectedItem({
             itemId: id,
-            openDrawer: !!children,
-            prevSelectedId: setPreviousSelectedItem(),
+            content: children,
         });
-        setDrawerContent(children ? children : undefined);
-        if (onClick) {
+        if (onClick && !children) {
             onClick(id);
         }
     };
 
     const handleMouseEnter = () => {
-        setCurrentItemId(id);
-        setDrawerContent(children);
+        setCurrentItem({ itemId: id, content: children });
     };
 
     // =========================================================================
@@ -97,7 +76,7 @@ export const SidenavItem = ({
                 {...otherProps}
                 $highlight={
                     (selectedItem && selectedItem.itemId === id) ||
-                    currentItemId === id
+                    (currentItem && currentItem.itemId === id)
                 }
             >
                 <IconContainer>{icon}</IconContainer>

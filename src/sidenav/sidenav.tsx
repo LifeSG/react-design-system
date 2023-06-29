@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
     DesktopContainer,
     DesktopDrawer,
@@ -8,7 +8,7 @@ import {
 import { SidenavProps } from "./types";
 import { SidenavItem } from "./sidenav-item";
 import { SidenavGroup } from "./sidenav-group";
-import { SelectedItem, SidenavContext } from "./sidenav-context";
+import { SidenavContext, SidenavContextItem } from "./sidenav-context";
 import { SidenavDrawerItem } from "./sidenav-drawer-item";
 import { SidenavDrawerSubitem } from "./sidenav-drawer-subitem";
 import { useSpring } from "react-spring";
@@ -24,42 +24,43 @@ const SidenavBase = ({
     // =============================================================================
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const [currentItemId, setCurrentItemId] = useState<string | undefined>(
-        undefined
-    );
-    const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>(
-        undefined
-    );
-    const [drawerContent, setDrawerContent] = useState<
-        React.ReactNode | undefined
+    const [currentItem, setCurrentItem] = useState<
+        SidenavContextItem | undefined
     >(undefined);
+    const [selectedItem, setSelectedItem] = useState<
+        SidenavContextItem | undefined
+    >(undefined);
+    const [previouslySelectedItemId, setPreviouslySelectedItemId] = useState<
+        string | undefined
+    >(undefined);
+    const [showDrawer, setShowDrawer] = useState<boolean>(false);
 
     const value = useMemo(
         () => ({
-            currentItemId,
+            currentItem,
             selectedItem,
-            drawerContent,
-            setCurrentItemId,
+            previouslySelectedItemId,
+            setCurrentItem,
             setSelectedItem,
-            setDrawerContent,
+            setPreviouslySelectedItemId,
         }),
         [
-            currentItemId,
+            currentItem,
             selectedItem,
-            drawerContent,
-            setCurrentItemId,
+            previouslySelectedItemId,
+            setCurrentItem,
             setSelectedItem,
-            setDrawerContent,
+            setPreviouslySelectedItemId,
         ]
     );
 
     const drawerAnimationProps = useSpring({
-        width: drawerContent ? 240 : 0,
+        width: showDrawer ? 240 : 0,
         // // borderWidth property divided to avoid mixing shorthand and non-shorthand properties
         // // If so, it will through an error
-        borderRightWidth: drawerContent ? 1 : 0,
-        borderTopWidth: drawerContent ? 1 : 0,
-        borderBottomWidth: drawerContent ? 1 : 0,
+        borderRightWidth: showDrawer ? 1 : 0,
+        borderTopWidth: showDrawer ? 1 : 0,
+        borderBottomWidth: showDrawer ? 1 : 0,
         borderLeftWidth: 0,
     });
 
@@ -73,21 +74,19 @@ const SidenavBase = ({
             !wrapperRef.current.contains(e.target)
         ) {
             setSelectedItem({
-                itemId: selectedItem.prevSelectedId
-                    ? selectedItem.prevSelectedId
+                itemId: previouslySelectedItemId
+                    ? previouslySelectedItemId
                     : selectedItem.itemId,
-                openDrawer: false,
-                prevSelectedId: undefined,
+                content: undefined,
             });
-            setCurrentItemId(undefined);
-            setDrawerContent(undefined);
+            setPreviouslySelectedItemId(undefined);
+            setCurrentItem(undefined);
         }
     };
 
     const handleMouseLeave = () => {
-        if (selectedItem.itemId !== currentItemId) {
-            setDrawerContent(undefined);
-            setCurrentItemId(undefined);
+        if (selectedItem.itemId !== currentItem.itemId) {
+            setCurrentItem(undefined);
         }
     };
 
@@ -95,6 +94,13 @@ const SidenavBase = ({
     // EFFECTS
     // =============================================================================
     useEventListener("click", handleOutsideClicks);
+
+    useEffect(() => {
+        setShowDrawer(
+            (selectedItem && !!selectedItem.content) ||
+                (currentItem && !!currentItem.content)
+        );
+    }, [currentItem, selectedItem]);
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -110,10 +116,11 @@ const SidenavBase = ({
                 <DesktopContainer>{children}</DesktopContainer>
                 <DesktopDrawer
                     style={drawerAnimationProps}
-                    $showDrawer={!!drawerContent}
+                    $showDrawer={showDrawer}
                     data-testid="sidenav-drawer"
                 >
-                    {drawerContent}
+                    {(currentItem && currentItem.content) ||
+                        (selectedItem && selectedItem.content)}
                 </DesktopDrawer>
                 {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
                 <MobileContainer></MobileContainer>
