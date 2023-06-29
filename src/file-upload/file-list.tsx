@@ -103,13 +103,16 @@ export const FileList = ({
             onItemUpdate(updatedItem);
         };
 
-    const handleCancel = (item: FileItemProps) => () => {
-        const updatedRenderModes = { ...renderModes };
-        updatedRenderModes[item.id] = item.description
-            ? "list"
-            : "cancelled-edit";
-
-        setRenderModes(updatedRenderModes);
+    const handleCancel = (item: FileItemProps) => (description: string) => {
+        if (
+            description.length === 0 &&
+            !(item.description && item.description.length > 0)
+        ) {
+            // If did not enter anything on a new addition, we deem as a delete
+            onItemDelete(item);
+        } else {
+            updateRenderModes(item.id, "display");
+        }
     };
 
     const handleInitiateEdit = (item: FileItemProps) => () => {

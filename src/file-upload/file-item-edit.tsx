@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Form } from "../form";
 import { StringHelper } from "../util";
 import {
@@ -20,10 +20,10 @@ interface Props {
     wrapperWidth: number;
     descriptionMaxLength?: number | undefined;
     onEdit: (description: string) => void;
-    onCancel: () => void;
+    onCancel: (description: string) => void;
 }
 
-export const FileItemEdit = ({
+const Component = ({
     fileItem,
     descriptionMaxLength,
     wrapperWidth,
@@ -43,6 +43,9 @@ export const FileItemEdit = ({
     } = fileItem;
 
     const [formattedName, setFormattedName] = useState<string>();
+    const [currentDescription, setCurrentDescription] = useState<string>(
+        description || ""
+    );
 
     const textareaRef = useRef<HTMLTextAreaElement>();
     const nameSectionRef = useRef<HTMLDivElement>();
@@ -58,15 +61,15 @@ export const FileItemEdit = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleSave = () => {
-        if (textareaRef.current) {
-            onEdit(textareaRef.current.value || "");
-        } else {
-            onEdit(undefined);
-        }
+        onEdit(textareaRef.current.value);
     };
 
     const handleCancel = () => {
-        onCancel();
+        onCancel(textareaRef.current.value);
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCurrentDescription(event.target.value);
     };
 
     // =========================================================================
@@ -115,8 +118,9 @@ export const FileItemEdit = ({
                         ref={textareaRef}
                         id={`${id}-description-textarea`}
                         data-testid={`${id}-textarea`}
-                        value={description}
+                        value={currentDescription}
                         maxLength={descriptionMaxLength}
+                        onChange={handleChange}
                         rows={3}
                         label={{
                             children: "Photo description",
@@ -130,6 +134,7 @@ export const FileItemEdit = ({
                 <ActionButton
                     data-testid={`${id}-save-button`}
                     type="button"
+                    disabled={currentDescription.length === 0}
                     onClick={handleSave}
                 >
                     Save
@@ -146,3 +151,5 @@ export const FileItemEdit = ({
         </Item>
     );
 };
+
+export const FileItemEdit = memo(Component);
