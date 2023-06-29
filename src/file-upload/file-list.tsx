@@ -27,7 +27,7 @@ import { FileItemProps } from "./types";
 // =============================================================================
 // INTERFACES
 // =============================================================================
-type RenderMode = "cancelled-edit" | "list" | "edit" | "error" | "loading";
+type RenderMode = "edit" | "display" | "error";
 
 type FileItemRenderModes = Record<string, RenderMode>;
 
@@ -99,6 +99,7 @@ export const FileList = ({
     // =========================================================================
     const handleDescriptionUpdate =
         (item: FileItemProps) => (description: string) => {
+            updateRenderModes(item.id, "display");
             const updatedItem = { ...item, description };
             onItemUpdate(updatedItem);
         };
@@ -116,10 +117,7 @@ export const FileList = ({
     };
 
     const handleInitiateEdit = (item: FileItemProps) => () => {
-        const updatedRenderModes = { ...renderModes };
-        updatedRenderModes[item.id] = "edit";
-
-        setRenderModes(updatedRenderModes);
+        updateRenderModes(item.id, "edit");
     };
 
     const handleDelete = (item: FileItemProps) => () => {
@@ -178,27 +176,27 @@ export const FileList = ({
         const newRenderModes: FileItemRenderModes = {};
 
         for (const item of fileItems) {
-            /**
-             * We retain the cancelled edits to prevent the edit
-             * display from re-rendering
-             */
-            if (
-                renderModes[item.id] &&
-                renderModes[item.id] === "cancelled-edit"
-            ) {
-                newRenderModes[item.id] = renderModes[item.id];
-            } else if (item.errorMessage) {
+            if (item.errorMessage) {
                 newRenderModes[item.id] = "error";
-            } else if (item.progress < 1) {
-                newRenderModes[item.id] = "loading";
-            } else {
+            } else if (!renderModes[item.id]) {
                 newRenderModes[item.id] = shouldRenderEditMode(item)
                     ? "edit"
-                    : "list";
+                    : "display";
+            } else {
+                newRenderModes[item.id] = renderModes[item.id];
             }
         }
 
         return newRenderModes;
+    };
+
+    const updateRenderModes = (itemId: string, mode: RenderMode) => {
+        setRenderModes((prevRenderModes) => {
+            return {
+                ...prevRenderModes,
+                [itemId]: mode,
+            };
+        });
     };
 
     /**
@@ -230,9 +228,7 @@ export const FileList = ({
     };
 
     const areAllItemsInDisplayViews = () => {
-        return Object.values(renderModes).every(
-            (mode) => mode === "list" || mode === "cancelled-edit"
-        );
+        return Object.values(renderModes).every((mode) => mode === "display");
     };
 
     const shouldEnableSort = () => {
