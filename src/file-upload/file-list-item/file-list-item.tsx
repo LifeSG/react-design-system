@@ -117,7 +117,6 @@ export const FileListItem = ({
         );
     };
 
-    const shouldDisable = () => disabled || focusType === "others";
     const shouldDisable = () => disabled || !!activeId;
 
     // =========================================================================
