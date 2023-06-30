@@ -3,7 +3,7 @@ name: Trigger GitLab CI Pipeline
 on:
     push:
         branches:
-            - master
+            - main
 
 jobs:
     trigger_pipeline:
@@ -15,8 +15,11 @@ jobs:
                   GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
                   GITLAB_ENDPOINT: ${{ vars.GITLAB_ENDPOINT }}
                   GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
-                  TARGET_BRANCH: ${{ vars.GITLAB_PIPELINE_BRANCH }}
+                  GITLAB_REPO_NAME: ${{ vars.GITLAB_REPO_NAME }}
               run: |
-                  curl --request POST \
-                    --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
-                    "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipeline?ref=$TARGET_BRANCH"
+                  curl -X POST \
+                      --fail \
+                      -F token=$GITLAB_TOKEN \
+                      -F "ref=main" \
+                      -F "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
+                      https://$GITLAB_ENDPOINT/api/v4/projects/$GITLAB_PROJECT_ID/trigger/pipeline
