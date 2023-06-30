@@ -35,7 +35,7 @@ export const SidenavItem = ({
         if (otherProps.selected) {
             setSelectedItem({ itemId: id, content: undefined });
         }
-    }, []);
+    }, [otherProps.selected]);
 
     // =========================================================================
     // EVENT HANDLERS
