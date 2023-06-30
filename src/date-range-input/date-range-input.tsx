@@ -33,8 +33,6 @@ interface DateRangeInputState {
     isEndDirty: boolean;
 }
 
-type GetHoverValueProps = "start" | "end";
-
 const INITIAL_STATE: DateRangeInputState = {
     initialStart: "",
     initialEnd: "",
@@ -413,7 +411,7 @@ export const DateRangeInput = ({
         );
     };
 
-    const getHoverValue = (getValue: GetHoverValueProps) => {
+    const getHoverValue = (getValue: Exclude<FocusType, "none">) => {
         let values = {
             start: undefined,
             end: undefined,
