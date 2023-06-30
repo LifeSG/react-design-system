@@ -3,6 +3,9 @@ import { Button } from "../button";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
 
+//=============================================================================
+// STYLING
+//=============================================================================
 export const Container = styled.li``;
 
 export const LinkButton = styled(Button.Default)`

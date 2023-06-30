@@ -56,8 +56,10 @@ const SidenavBase = ({
 
     const drawerAnimationProps = useSpring({
         width: showDrawer ? 240 : 0,
-        // // borderWidth property divided to avoid mixing shorthand and non-shorthand properties
-        // // If so, it will through an error
+        /** NOTE
+         * borderWidth property divided to avoid mixing shorthand and non-shorthand propertied.
+         * Otherwise, it will throw an error
+         */
         borderRightWidth: showDrawer ? 1 : 0,
         borderTopWidth: showDrawer ? 1 : 0,
         borderBottomWidth: showDrawer ? 1 : 0,
@@ -69,14 +71,15 @@ const SidenavBase = ({
     // =========================================================================
     const handleOutsideClicks = (e: PointerEvent) => {
         if (
-            e.target instanceof HTMLDivElement &&
             wrapperRef.current &&
-            !wrapperRef.current.contains(e.target)
+            !wrapperRef.current.contains(e.target as Node)
         ) {
             setSelectedItem({
                 itemId: previouslySelectedItemId
                     ? previouslySelectedItemId
-                    : selectedItem.itemId,
+                    : selectedItem
+                    ? selectedItem.itemId
+                    : undefined,
                 content: undefined,
             });
             setPreviouslySelectedItemId(undefined);
@@ -85,7 +88,12 @@ const SidenavBase = ({
     };
 
     const handleMouseLeave = () => {
-        if (selectedItem.itemId !== currentItem.itemId) {
+        if (
+            !selectedItem ||
+            (selectedItem &&
+                currentItem &&
+                selectedItem.itemId !== currentItem.itemId)
+        ) {
             setCurrentItem(undefined);
         }
     };

@@ -17,6 +17,9 @@ interface IconStyleProp {
     $expanded?: boolean | undefined;
 }
 
+//=============================================================================
+// STYLING
+//=============================================================================
 export const Container = styled(animated.li)``;
 
 export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`

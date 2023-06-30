@@ -105,7 +105,7 @@ describe("Sidenav", () => {
     });
 
     it("should trigger onClick when click on Sidenav item", () => {
-        const Spy = jest.fn();
+        const spy = jest.fn();
         render(
             <Sidenav data-testid="side-nav">
                 <Sidenav.Group data-testid="side-nav-group">
@@ -114,7 +114,7 @@ describe("Sidenav", () => {
                         title="Dashboard"
                         icon={<Square2x2Icon />}
                         data-testid="dashboard-item"
-                        onClick={Spy}
+                        onClick={spy}
                     ></Sidenav.Item>
                 </Sidenav.Group>
             </Sidenav>
@@ -124,7 +124,7 @@ describe("Sidenav", () => {
         act(() => {
             fireEvent.click(dashboardElement);
         });
-        expect(Spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it("should open drawer if sidenav item contain children", () => {

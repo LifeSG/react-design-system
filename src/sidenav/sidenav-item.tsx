@@ -40,7 +40,7 @@ export const SidenavItem = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const setPreviousSelectedItem = (): string | undefined => {
+    const getPreviousSelectedItemId = (): string | undefined => {
         if (!children || !selectedItem) return undefined;
         if (previouslySelectedItemId) {
             return previouslySelectedItemId;
@@ -49,7 +49,7 @@ export const SidenavItem = ({
     };
 
     const handleOnClick = () => {
-        setPreviouslySelectedItemId(setPreviousSelectedItem());
+        setPreviouslySelectedItemId(getPreviousSelectedItemId());
         setCurrentItem({ itemId: id, content: children });
         setSelectedItem({
             itemId: id,
@@ -71,6 +71,7 @@ export const SidenavItem = ({
         <Container>
             <DefaultButton
                 styleType="link"
+                type="button"
                 onClick={handleOnClick}
                 onMouseEnter={handleMouseEnter}
                 {...otherProps}

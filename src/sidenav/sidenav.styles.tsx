@@ -14,6 +14,9 @@ interface DrawerStyleProps {
     $showDrawer: boolean;
 }
 
+//=============================================================================
+// STYLING
+//=============================================================================
 export const Wrapper = styled.div<StyleProps>`
     display: flex;
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};

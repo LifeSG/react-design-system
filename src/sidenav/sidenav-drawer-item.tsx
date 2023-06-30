@@ -77,6 +77,7 @@ export const SidenavDrawerItem = ({
         >
             <LinkButton
                 styleType="link"
+                type="button"
                 onClick={handleOnClick}
                 $highlight={highlight && expanded}
                 $noChildren={!children}
