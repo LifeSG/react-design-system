@@ -1,9 +1,19 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { MediaQuery } from "../media/media";
 import { Button } from "../button/button";
 import { Text } from "../text/text";
 import { Color } from "../color/color";
 
+// =============================================================================
+// STYLE INTERFACE
+// =============================================================================
+interface ActionButtonSectionStyleProps {
+    $thumbnail?: boolean | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const Item = styled.li`
     display: flex;
     flex-direction: column;
@@ -17,11 +27,12 @@ export const Item = styled.li`
 
 export const ContentSection = styled.div`
     display: flex;
+    align-items: flex-start;
     margin-bottom: 1rem;
     width: 100%;
 `;
 
-export const ContentMain = styled.div`
+export const DetailsSection = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -39,17 +50,36 @@ export const NameSection = styled.div`
     }
 `;
 
-export const EditableSection = styled.div`
+export const FileNameText = styled(Text.BodySmall)`
     display: flex;
-    flex-direction: column;
+    flex: 1;
+    margin-right: 1rem;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
 `;
 
-export const ActionButtonsSection = styled.div`
-    display: flex;
+export const FileSizeText = styled(Text.BodySmall)``;
 
+export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
+    display: flex;
     ${MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
     }
+
+    ${(props) => {
+        if (props.$thumbnail) {
+            return css`
+                margin-left: 8rem; // 6rem width + 2rem gap
+
+                ${MediaQuery.MaxWidth.mobileL} {
+                    margin-left: 0;
+                }
+            `;
+        }
+    }}
 `;
 
 export const ActionButton = styled(Button.Small)`
@@ -65,16 +95,3 @@ export const ActionButton = styled(Button.Small)`
         }
     }
 `;
-
-export const FileNameText = styled(Text.BodySmall)`
-    display: flex;
-    flex: 1;
-    margin-right: 1rem;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-    }
-`;
-
-export const FileSizeText = styled(Text.BodySmall)``;

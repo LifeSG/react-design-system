@@ -12,7 +12,9 @@ interface Props {
 }
 
 export const ProgressBar = ({ className, progress, color }: Props) => (
-    <Bar className={className} $innerWidth={progress} $color={color} />
+    <Bar className={className} $innerWidth={progress} $color={color}>
+        <progress value={progress * 100} max={100} />
+    </Bar>
 );
 // =============================================================================
 // STYLE INTERFACE
@@ -30,6 +32,15 @@ const Bar = styled.div<StyleProps>`
     width: 100%;
     height: 8px;
     background: transparent;
+
+    progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
 
     ${(props) => {
         const { $color: color } = props;

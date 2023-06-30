@@ -4,9 +4,8 @@ import { StringHelper } from "../util";
 import {
     ActionButton,
     ActionButtonsSection,
-    ContentMain,
     ContentSection,
-    EditableSection,
+    DetailsSection,
     FileNameText,
     FileSizeText,
     Item,
@@ -14,6 +13,7 @@ import {
 } from "./file-item-edit.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 
 interface Props {
     fileItem: FileItemProps;
@@ -33,7 +33,14 @@ export const FileItemEdit = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { id, description, name, size, truncateText = true } = fileItem;
+    const {
+        id,
+        description,
+        name,
+        size,
+        truncateText = true,
+        thumbnailImageDataUrl,
+    } = fileItem;
 
     const [formattedName, setFormattedName] = useState<string>();
 
@@ -85,37 +92,41 @@ export const FileItemEdit = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
+    const renderFileNameAndSize = () => (
+        <NameSection ref={nameSectionRef}>
+            <FileNameText weight="semibold">{formattedName}</FileNameText>
+            <FileSizeText>
+                {FileUploadHelper.formatFileSizeDisplay(size)}
+            </FileSizeText>
+        </NameSection>
+    );
+
     return (
         <Item data-testid={`${id}-edit-display`}>
             <ContentSection>
-                {/* Thumbnail to be rendered here. */}
-                <ContentMain>
-                    <NameSection ref={nameSectionRef}>
-                        <FileNameText weight="semibold">
-                            {formattedName}
-                        </FileNameText>
-                        <FileSizeText>
-                            {FileUploadHelper.formatFileSizeDisplay(size)}
-                        </FileSizeText>
-                    </NameSection>
-                    <EditableSection>
-                        <Form.Textarea
-                            ref={textareaRef}
-                            id={`${id}-description-textarea`}
-                            data-testid={`${id}-textarea`}
-                            value={description}
-                            maxLength={descriptionMaxLength}
-                            rows={3}
-                            label={{
-                                children: "Photo description",
-                                subtitle:
-                                    "Describe this photo to users who may not be able to see the image.",
-                            }}
-                        />
-                    </EditableSection>
-                </ContentMain>
+                {thumbnailImageDataUrl && (
+                    <FileListItemThumbnail
+                        thumbnailImageDataUrl={thumbnailImageDataUrl}
+                    />
+                )}
+                <DetailsSection>
+                    {renderFileNameAndSize()}
+                    <Form.Textarea
+                        ref={textareaRef}
+                        id={`${id}-description-textarea`}
+                        data-testid={`${id}-textarea`}
+                        value={description}
+                        maxLength={descriptionMaxLength}
+                        rows={3}
+                        label={{
+                            children: "Photo description",
+                            subtitle:
+                                "Describe this photo to users who may not be able to see the image.",
+                        }}
+                    />
+                </DetailsSection>
             </ContentSection>
-            <ActionButtonsSection>
+            <ActionButtonsSection $thumbnail={!!thumbnailImageDataUrl}>
                 <ActionButton
                     data-testid={`${id}-save-button`}
                     type="button"
