@@ -107,7 +107,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
                 border-top: 1px solid ${Color.Primary};
                 border-bottom: 1px solid ${Color.Primary};
                 background-color: ${Color.Neutral[8]};
-                box-shadow: 4px 1px 4px 0px ${Color.Shadow.Accent};
+                box-shadow: 4px 0px 4px 0px ${Color.Shadow.Accent};
             `;
         }
     }}
@@ -127,9 +127,9 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
         content: "";
         display: block;
         position: absolute;
-        width: calc(2.5rem / 2);
+        width: calc(3.5rem / 2);
         pointer-events: none;
-        height: 0.5rem;
+        height: 100%;
     }
 
     ${(props) => {
@@ -140,11 +140,6 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
                 ::before {
                     background-color: ${Color.Accent.Light[6]};
                     top: 0;
-                }
-
-                ::after {
-                    background-color: ${Color.Accent.Light[6]};
-                    bottom: 0;
                 }
             `;
         }
@@ -159,11 +154,6 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
                     background-color: ${Color.Accent.Light[5]};
                     top: 0;
                 }
-
-                ::after {
-                    background-color: ${Color.Accent.Light[5]};
-                    bottom: 0;
-                }
             `;
         }
     }}
@@ -175,11 +165,18 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
                     background-color: ${Color.Neutral[8]};
                     top: 0;
                 }
+            `;
+        }
+    }}
 
-                ::after {
-                    background-color: ${Color.Neutral[8]};
-                    bottom: 0;
-                }
+    ${(props) => {
+        if (props.$overlap && props.$position === "left") {
+            return css`
+                box-shadow: -1px 0px 4px 0px ${Color.Shadow.Accent};
+            `;
+        } else if (props.$overlap && props.$position === "right") {
+            return css`
+                box-shadow: 1px 0px 4px 0px ${Color.Shadow.Accent};
             `;
         }
     }}
@@ -191,9 +188,8 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
                     display: block;
                     border-right-color: transparent;
 
-                    ::before,
-                    ::after {
-                        right: 0;
+                    ::before {
+                        right: -0.45rem;
                     }
                 `;
             case "right":
@@ -201,9 +197,8 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
                     display: block;
                     border-left-color: transparent;
 
-                    ::before,
-                    ::after {
-                        left: 0;
+                    ::before {
+                        left: -0.45rem;
                     }
                 `;
         }
@@ -251,12 +246,10 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             if ($position === "left") {
                 return css`
                     background-color: ${Color.Neutral[8]};
-                    box-shadow: -4px 0 4px -1px ${Color.Shadow.Accent};
                 `;
             } else if ($position === "right") {
                 return css`
                     background-color: ${Color.Neutral[8]};
-                    box-shadow: 4px 0 4px -1px ${Color.Shadow.Accent};
                 `;
             }
         }
@@ -304,6 +297,8 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 `;
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
+    z-index: 1;
+
     ${(props) => {
         const { $disabledDisplay, $selected, $variant } = props;
 
