@@ -15,7 +15,6 @@ import {
 } from "@dnd-kit/sortable";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { SimpleIdGenerator } from "../util";
 import { FileUploadContext } from "./context";
 import { MouseSensor } from "./custom-sensors";
 import { FileItemEdit } from "./file-item-edit";
@@ -257,7 +256,10 @@ export const FileList = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderItemsInEditMode = (fileItems: FileItemProps[]) => {
+    const renderItemsInEditMode = (
+        fileItems: FileItemProps[],
+        keyToUse: number
+    ) => {
         const itemsToRender = fileItems.map((item) => {
             const updatedFileItem = { ...item };
             if (descriptionsValueRef.current[item.id] !== undefined) {
@@ -279,9 +281,7 @@ export const FileList = ({
         });
 
         return (
-            <EditableItemsContainer
-                key={`editable-items-${SimpleIdGenerator.generate()}`}
-            >
+            <EditableItemsContainer key={`editable-${keyToUse}`}>
                 <ul>{itemsToRender}</ul>
             </EditableItemsContainer>
         );
@@ -292,9 +292,9 @@ export const FileList = ({
 
         if (arrangedItems.length === 0) return null;
 
-        return arrangedItems.map((item) => {
+        return arrangedItems.map((item, index) => {
             if (Array.isArray(item)) {
-                return renderItemsInEditMode(item);
+                return renderItemsInEditMode(item, index);
             } else {
                 return (
                     <FileListItem
