@@ -62,17 +62,6 @@ export const GrowDayCell = styled.div`
     align-items: center;
     justify-content: center;
     flex: 1;
-
-    // ::before {
-    //     content: "";
-    //     position: absolute;
-    //     display: block;
-    //     height: 1px;
-    //     border: 1px solid red;
-    //     top: 0;
-    //     width: 50%;
-    //     right: 0;
-    // }
 `;
 
 export const OverflowDisplay = styled.div<OverflowDisplayProps>`
@@ -210,17 +199,18 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     ${(props) => {
         const { $overlap, $position } = props;
 
-        if ($overlap && $position === "left") {
-            return css`
-                background-color: ${Color.Neutral[8]};
-                box-shadow: -4px 0 4px -1px ${Color.Shadow.Accent};
-                // box-shadow: -4px 0 4px -1px red;
-            `;
-        } else if ($overlap && $position === "right") {
-            return css`
-                background-color: ${Color.Neutral[8]};
-                box-shadow: 4px 0 4px -1px ${Color.Shadow.Accent};
-            `;
+        if ($overlap) {
+            if ($position === "left") {
+                return css`
+                    background-color: ${Color.Neutral[8]};
+                    box-shadow: -4px 0 4px -1px ${Color.Shadow.Accent};
+                `;
+            } else if ($position === "right") {
+                return css`
+                    background-color: ${Color.Neutral[8]};
+                    box-shadow: 4px 0 4px -1px ${Color.Shadow.Accent};
+                `;
+            }
         }
     }}
 
