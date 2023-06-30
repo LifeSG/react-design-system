@@ -19,16 +19,18 @@ interface Props {
     fileItem: FileItemProps;
     wrapperWidth: number;
     descriptionMaxLength?: number | undefined;
-    onEdit: (description: string) => void;
-    onCancel: (description: string) => void;
+    onSave: (description: string) => void;
+    onCancel: () => void;
+    onBlur: (value: string) => void;
 }
 
 const Component = ({
     fileItem,
     descriptionMaxLength,
     wrapperWidth,
-    onEdit,
+    onSave,
     onCancel,
+    onBlur,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -43,9 +45,7 @@ const Component = ({
     } = fileItem;
 
     const [formattedName, setFormattedName] = useState<string>();
-    const [currentDescription, setCurrentDescription] = useState<string>(
-        description || ""
-    );
+    const [currentDescription, setCurrentDescription] = useState<string>("");
 
     const textareaRef = useRef<HTMLTextAreaElement>();
     const nameSectionRef = useRef<HTMLDivElement>();
@@ -57,19 +57,23 @@ const Component = ({
         setFormattedName(getTruncatedText(name));
     }, [wrapperWidth]);
 
+    useEffect(() => {
+        setCurrentDescription(fileItem.description || "");
+    }, [fileItem]);
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleSave = () => {
-        onEdit(textareaRef.current.value);
-    };
-
-    const handleCancel = () => {
-        onCancel(textareaRef.current.value);
+        onSave(textareaRef.current.value);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setCurrentDescription(event.target.value);
+    };
+
+    const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+        onBlur(event.target.value);
     };
 
     // =========================================================================
@@ -121,6 +125,7 @@ const Component = ({
                         value={currentDescription}
                         maxLength={descriptionMaxLength}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         rows={3}
                         label={{
                             children: "Photo description",
@@ -143,7 +148,7 @@ const Component = ({
                     type="button"
                     styleType="secondary"
                     data-testid={`${id}-cancel-button`}
-                    onClick={handleCancel}
+                    onClick={onCancel}
                 >
                     Cancel
                 </ActionButton>

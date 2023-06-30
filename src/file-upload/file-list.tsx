@@ -13,7 +13,7 @@ import {
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { SimpleIdGenerator } from "../util";
 import { FileUploadContext } from "./context";
@@ -30,6 +30,7 @@ import { FileItemProps } from "./types";
 type RenderMode = "edit" | "display" | "error";
 
 type FileItemRenderModes = Record<string, RenderMode>;
+type FileEditedDescriptions = Record<string, string>;
 
 type RenderItem = FileItemProps | FileItemProps[];
 
@@ -65,6 +66,9 @@ export const FileList = ({
     const { setActiveId } = useContext(FileUploadContext);
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
+    // Keep track of edited description without re-rendering
+    const descriptionsValueRef = useRef<FileEditedDescriptions>({});
+
     /**
      * As the default drag sensors interfere with click events
      * on the file items, we'll need to configure the sensor to
@@ -88,6 +92,13 @@ export const FileList = ({
     );
 
     // =========================================================================
+    // REF METHODS
+    // =========================================================================
+    const removeDescription = (itemId: string) => {
+        delete descriptionsValueRef.current[itemId];
+    };
+
+    // =========================================================================
     // EFFECTS
     // =========================================================================
     useEffect(() => {
@@ -97,22 +108,25 @@ export const FileList = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleDescriptionUpdate =
-        (item: FileItemProps) => (description: string) => {
-            updateRenderModes(item.id, "display");
-            const updatedItem = { ...item, description };
-            onItemUpdate(updatedItem);
-        };
+    const handleSaveEdit = (item: FileItemProps) => (description: string) => {
+        updateRenderModes(item.id, "display");
+        removeDescription(item.id);
 
-    const handleCancel = (item: FileItemProps) => (description: string) => {
-        if (
-            description.length === 0 &&
-            !(item.description && item.description.length > 0)
-        ) {
-            // If did not enter anything on a new addition, we deem as a delete
+        const updatedItem = { ...item, description };
+        onItemUpdate(updatedItem);
+    };
+
+    const handleBlurEdit = (item: FileItemProps) => (value: string) => {
+        descriptionsValueRef.current[item.id] = value;
+    };
+
+    const handleCancel = (item: FileItemProps) => () => {
+        if (!item.description || item.description.length === 0) {
+            // New addition
             onItemDelete(item);
         } else {
             updateRenderModes(item.id, "display");
+            removeDescription(item.id);
         }
     };
 
@@ -245,14 +259,21 @@ export const FileList = ({
     // =========================================================================
     const renderItemsInEditMode = (fileItems: FileItemProps[]) => {
         const itemsToRender = fileItems.map((item) => {
+            const updatedFileItem = { ...item };
+            if (descriptionsValueRef.current[item.id] !== undefined) {
+                updatedFileItem.description =
+                    descriptionsValueRef.current[item.id];
+            }
+
             return (
                 <FileItemEdit
                     key={item.id}
-                    fileItem={item}
+                    fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
                     descriptionMaxLength={descriptionMaxLength}
-                    onEdit={handleDescriptionUpdate(item)}
+                    onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
+                    onBlur={handleBlurEdit(item)}
                 />
             );
         });
