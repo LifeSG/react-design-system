@@ -45,7 +45,11 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                     rating={rating}
                     onRatingChange={onRatingChange}
                 />
-                <SubmitButton disabled={!rating} onClick={onSubmit}>
+                <SubmitButton
+                    disabled={!rating}
+                    onClick={onSubmit}
+                    type="button"
+                >
                     {buttonLabel ?? FeedbackRatingData.DEFAULT_BUTTON_LABEL}
                 </SubmitButton>
             </ChildContainer>

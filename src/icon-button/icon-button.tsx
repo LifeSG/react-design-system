@@ -17,6 +17,7 @@ const Component = (
             ref={ref}
             $outline={focusOutline}
             $highlight={focusHighlight}
+            type="button"
             {...otherProps}
         >
             {children}
