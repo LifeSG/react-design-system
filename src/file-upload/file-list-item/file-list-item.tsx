@@ -3,7 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import { useContext, useEffect, useRef, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
 import { ProgressBar } from "../../shared/progress-bar";
 import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
@@ -28,7 +28,7 @@ import {
 } from "./file-list-item.styles";
 import { FileListItemProps } from "./types";
 
-export const FileListItem = ({
+const Component = ({
     fileItem,
     editable,
     sortable,
@@ -283,3 +283,5 @@ export const FileListItem = ({
         </Item>
     );
 };
+
+export const FileListItem = memo(Component);
