@@ -88,14 +88,7 @@ const SidenavBase = ({
     };
 
     const handleMouseLeave = () => {
-        if (
-            !selectedItem ||
-            (selectedItem &&
-                currentItem &&
-                selectedItem.itemId !== currentItem.itemId)
-        ) {
-            setCurrentItem(undefined);
-        }
+        setCurrentItem(undefined);
     };
 
     // =============================================================================
