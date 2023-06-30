@@ -32,8 +32,6 @@ interface InteractiveCircleProps
 // =============================================================================
 // STYLING
 // =============================================================================
-const SELECTED_HEIGHT = "2.35rem"; // Circle are overlap the borderTop and borderBottom
-
 export const Wrapper = styled.div`
     width: 100%;
     display: grid;
@@ -124,10 +122,30 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
     height: 2.5rem;
     border-radius: 50%;
 
+    ::before,
+    ::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: calc(2.5rem / 2);
+        pointer-events: none;
+        height: 0.5rem;
+    }
+
     ${(props) => {
         if (props.$hovered) {
             return css`
                 border: 1px dashed ${Color.Accent.Light[4]};
+
+                ::before {
+                    background-color: ${Color.Accent.Light[6]};
+                    top: 0;
+                }
+
+                ::after {
+                    background-color: ${Color.Accent.Light[6]};
+                    bottom: 0;
+                }
             `;
         }
     }}
@@ -136,6 +154,32 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
         if (props.$selected) {
             return css`
                 border: 1px solid ${Color.Primary};
+
+                ::before {
+                    background-color: ${Color.Accent.Light[5]};
+                    top: 0;
+                }
+
+                ::after {
+                    background-color: ${Color.Accent.Light[5]};
+                    bottom: 0;
+                }
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (props.$overlap) {
+            return css`
+                ::before {
+                    background-color: ${Color.Neutral[8]};
+                    top: 0;
+                }
+
+                ::after {
+                    background-color: ${Color.Neutral[8]};
+                    bottom: 0;
+                }
             `;
         }
     }}
@@ -145,16 +189,22 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
             case "left":
                 return css`
                     display: block;
-                    transform: rotate(-45deg);
-                    border-bottom-color: transparent;
                     border-right-color: transparent;
+
+                    ::before,
+                    ::after {
+                        right: 0;
+                    }
                 `;
             case "right":
                 return css`
                     display: block;
-                    transform: rotate(45deg);
-                    border-bottom-color: transparent;
                     border-left-color: transparent;
+
+                    ::before,
+                    ::after {
+                        left: 0;
+                    }
                 `;
         }
     }}
@@ -177,14 +227,12 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             if ($position === "left") {
                 return css`
                     background: ${Color.Accent.Light[5]};
-                    height: ${SELECTED_HEIGHT};
                 `;
             }
 
             if ($position === "right") {
                 return css`
                     background: ${Color.Accent.Light[5]};
-                    height: ${SELECTED_HEIGHT};
                 `;
             }
         }
@@ -239,12 +287,12 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
         if ($variant === "today") {
             if ($overlap) {
                 return css`
-                    height: ${SELECTED_HEIGHT};
                     background: ${Color.Neutral[8]};
+                    height: 2.35rem;
                 `;
             } else if ($selected) {
                 return css`
-                    height: ${SELECTED_HEIGHT};
+                    height: 2.35rem;
                 `;
             } else {
                 return css`
