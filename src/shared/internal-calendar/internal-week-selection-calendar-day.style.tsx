@@ -107,7 +107,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
                 border-top: 1px solid ${Color.Primary};
                 border-bottom: 1px solid ${Color.Primary};
                 background-color: ${Color.Neutral[8]};
-                box-shadow: 4px 0px 4px 1px ${Color.Shadow.Accent};
+                box-shadow: 4px 1px 4px 0px ${Color.Shadow.Accent};
             `;
         }
     }}
