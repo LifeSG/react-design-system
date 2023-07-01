@@ -97,6 +97,16 @@ const Component = ({
         }
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        /**
+         * Circumvent issue of keydown action activating the sort mechanism
+         * rather than the actual action
+         */
+        if (sortable) {
+            event.stopPropagation();
+        }
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -117,7 +127,7 @@ const Component = ({
         );
     };
 
-    const shouldDisable = () => disabled || focusType === "others";
+    const shouldDisable = () => disabled || !!activeId;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -228,6 +238,7 @@ const Component = ({
                             aria-label={`edit ${name}`}
                             disabled={shouldDisable()}
                             onClick={handleEdit}
+                            onKeyDown={handleKeyDown}
                         >
                             <PencilIcon aria-hidden />
                         </IconButton>
@@ -242,6 +253,7 @@ const Component = ({
                         aria-label={`delete ${name}`}
                         disabled={shouldDisable()}
                         onClick={handleDelete}
+                        onKeyDown={handleKeyDown}
                     >
                         <BinIcon aria-hidden />
                     </IconButton>
@@ -265,7 +277,7 @@ const Component = ({
             id={id}
             ref={setNodeRef}
             $sortable={sortable}
-            $disabled={disabled}
+            $disabled={shouldDisable()}
             $focusType={focusType}
             {...(sortable ? sortableProps : {})}
         >

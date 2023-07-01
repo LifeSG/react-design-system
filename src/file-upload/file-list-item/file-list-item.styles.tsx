@@ -98,8 +98,7 @@ export const DragHandleIcon = styled(MenuIcon)<DragHandleIconStyleProps>`
 
 export const Box = styled.div<BoxStyleProps>`
     background: ${Color.Accent.Light[6]};
-    border-style: solid;
-    border-width: 1px;
+    border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     padding: 1rem 2rem;
     display: flex;
@@ -124,10 +123,6 @@ export const Box = styled.div<BoxStyleProps>`
             return css`
                 background: ${Color.Validation.Red.Background};
                 border-color: ${Color.Validation.Red.Border};
-            `;
-        } else {
-            return css`
-                border-color: ${Color.Neutral[5]};
             `;
         }
     }}
