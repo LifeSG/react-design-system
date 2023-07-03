@@ -125,8 +125,8 @@ export const FileList = ({
             onItemDelete(item);
         } else {
             updateRenderModes(item.id, "display");
-            removeDescription(item.id);
         }
+        removeDescription(item.id);
     };
 
     const handleInitiateEdit = (item: FileItemProps) => () => {
