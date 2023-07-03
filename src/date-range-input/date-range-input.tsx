@@ -83,7 +83,6 @@ export const DateRangeInput = ({
     ] = useStateActions({
         name: "date-range-input",
         initialState: INITIAL_STATE,
-
         reducers: {
             blur: (state) => ({
                 ...state,
