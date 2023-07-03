@@ -1,4 +1,5 @@
 interface SidenavBaseProps {
+    id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
 }
@@ -26,7 +27,6 @@ export interface SidenavGroupProps extends SidenavBaseProps {
 }
 
 export interface SidenavItemProps extends SidenavBaseProps {
-    id?: string | undefined;
     title: string;
     /** The icon to be rendered */
     icon: React.ReactNode;
@@ -43,7 +43,6 @@ export interface SidenavItemProps extends SidenavBaseProps {
 }
 
 export interface SidenavDrawerItemProps extends SidenavBaseProps {
-    id?: string | undefined;
     title: string;
     /**
      * <Sidenav.DrawerSubitem>
@@ -56,7 +55,6 @@ export interface SidenavDrawerItemProps extends SidenavBaseProps {
 }
 
 export interface SidenavDrawerSubitemProps extends SidenavBaseProps {
-    id?: string | undefined;
     title: string;
     /** Called when item is selected */
     onClick?: ((id: string) => void) | undefined;
