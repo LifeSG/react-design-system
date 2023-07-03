@@ -94,7 +94,7 @@ const SidenavBase = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEventListener("click", handleOutsideClicks, window, true);
+    useEventListener("click", handleOutsideClicks, "window", true);
 
     useEffect(() => {
         setShowDrawer(

@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 
-type Target = Window | HTMLElement | Document | null;
+type Target = "window" | "document" | HTMLElement | null;
+type Element = Window | Document | HTMLElement | null;
 
 export const useEventListener = <K extends keyof WindowEventMap>(
     eventName: K,
     handler: (event: WindowEventMap[K]) => void,
-    element: Target = window,
+    target: Target = "window",
     options?: AddEventListenerOptions | boolean
 ) => {
     // Create a ref that stores handler
@@ -18,6 +19,18 @@ export const useEventListener = <K extends keyof WindowEventMap>(
 
     useEffect(
         () => {
+            let element: Element;
+            switch (target) {
+                case "window":
+                    element = window;
+                    break;
+                case "document":
+                    element = document;
+                    break;
+                default:
+                    element = target;
+            }
+
             // Make sure element supports addEventListener
             const isSupported = element && element.addEventListener;
 
@@ -32,6 +45,6 @@ export const useEventListener = <K extends keyof WindowEventMap>(
                 element.removeEventListener(eventName, eventListener, options);
             };
         },
-        [eventName, element] // Re-run if eventName or element changes
+        [eventName, target] // Re-run if eventName or element changes
     );
 };
