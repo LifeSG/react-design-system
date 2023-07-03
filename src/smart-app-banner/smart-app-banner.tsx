@@ -48,7 +48,7 @@ function SmartAppBannerComponent(
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const onPress = (
+    const handleClick = (
         e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
     ) => {
         e.stopPropagation();
@@ -104,7 +104,7 @@ function SmartAppBannerComponent(
                         </DismissButton>
                     </DismissContainer>
                     <ProceedContainer
-                        onClick={onPress}
+                        onClick={handleClick}
                         id={`${ID}-proceed`}
                         data-testid={`${ID}-proceed-container`}
                     >
@@ -116,7 +116,8 @@ function SmartAppBannerComponent(
                         </TextContainer>
                         <ButtonContainer>
                             <StyledButton
-                                onClick={onPress}
+                                type="button"
+                                onClick={handleClick}
                                 aria-label={buttonAriaLabel}
                             >
                                 {buttonLabel}

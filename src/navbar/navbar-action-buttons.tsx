@@ -137,6 +137,7 @@ export const NavbarActionButtons = ({
                         )
                     ) : (
                         <ActionButton
+                            type="button"
                             onClick={handleActionButtonClick(actionButton)}
                             {...actionButton.args}
                             data-testid="action-button__download"
@@ -154,6 +155,7 @@ export const NavbarActionButtons = ({
 
                     component = (
                         <ActionButton
+                            type="button"
                             {...actionButton.args}
                             onClick={handleActionButtonClick(actionButton)}
                             data-testid={testId}

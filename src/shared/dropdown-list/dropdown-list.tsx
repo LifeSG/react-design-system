@@ -401,7 +401,7 @@ export const DropdownList = <T, V>({
         ) {
             return (
                 <SelectAllContainer key="selectAll">
-                    <DropdownCommonButton onClick={onSelectAll}>
+                    <DropdownCommonButton onClick={onSelectAll} type="button">
                         {selectedItems.length === 0
                             ? "Select all"
                             : "Unselect all"}
@@ -446,7 +446,10 @@ export const DropdownList = <T, V>({
                 <ResultStateContainer key="noResults" data-testid="list-fail">
                     <LabelIcon data-testid="load-error-icon" />
                     <ResultStateText>Failed to load.</ResultStateText>
-                    <DropdownCommonButton onClick={handleTryAgain}>
+                    <DropdownCommonButton
+                        onClick={handleTryAgain}
+                        type="button"
+                    >
                         Try again.
                     </DropdownCommonButton>
                 </ResultStateContainer>

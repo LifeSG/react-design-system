@@ -449,6 +449,7 @@ export const Component = (
             <ActionButtonSection>
                 <ActionButton
                     ref={cancelButtonRef}
+                    type="button"
                     data-testid="cancel-button"
                     styleType="light"
                     onClick={handleCancelButton}
@@ -457,6 +458,7 @@ export const Component = (
                 </ActionButton>
                 <ActionButton
                     data-testid="done-button"
+                    type="button"
                     ref={doneButtonRef}
                     onClick={() => handleDoneButton(disabled)}
                     disabled={disabled}

@@ -104,6 +104,7 @@ const FilterBase = ({
                 <FilterTitle weight="semibold">{headerTitle}</FilterTitle>
                 <FilterClearButton
                     styleType="link"
+                    type="button"
                     onClick={handleClearClick}
                     disabled={clearButtonDisabled}
                 >
@@ -116,7 +117,11 @@ const FilterBase = ({
     const renderMobile = () => {
         return (
             <>
-                <FilterButton styleType="light" onClick={handleShowFilter}>
+                <FilterButton
+                    styleType="light"
+                    type="button"
+                    onClick={handleShowFilter}
+                >
                     <StyledFilterIcon /> {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
@@ -124,7 +129,10 @@ const FilterBase = ({
                         {renderHeader("mobile")}
                         <FilterBody>{renderChildren("mobile")}</FilterBody>
                         <FilterFooter>
-                            <FilterDoneButton onClick={handleDoneClick}>
+                            <FilterDoneButton
+                                type="button"
+                                onClick={handleDoneClick}
+                            >
                                 Done
                             </FilterDoneButton>
                         </FilterFooter>

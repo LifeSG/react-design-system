@@ -28,6 +28,7 @@ const AccordionBase = ({
             <ExpandCollapseLink
                 data-testid={"accordion-expand-collapse-button"}
                 onClick={handleExpandCollapseClick}
+                type="button"
                 styleType="link"
             >
                 {expandAll ? "Hide all" : "Show all"}
