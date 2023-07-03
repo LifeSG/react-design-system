@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "../form";
 import { StringHelper } from "../util";
 import {
@@ -24,7 +24,7 @@ interface Props {
     onBlur: (value: string) => void;
 }
 
-const Component = ({
+export const FileItemEdit = ({
     fileItem,
     descriptionMaxLength,
     wrapperWidth,
@@ -37,7 +37,6 @@ const Component = ({
     // =========================================================================
     const {
         id,
-        description,
         name,
         size,
         truncateText = true,
@@ -156,5 +155,3 @@ const Component = ({
         </Item>
     );
 };
-
-export const FileItemEdit = memo(Component);
