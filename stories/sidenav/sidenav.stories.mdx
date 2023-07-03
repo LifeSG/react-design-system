@@ -1,7 +1,11 @@
+import { CalendarIcon } from "@lifesg/react-icons/calendar";
+import { DocIcon } from "@lifesg/react-icons/doc";
 import { GearIcon } from "@lifesg/react-icons/gear";
+import { Person2Icon } from "@lifesg/react-icons/person-2";
+import { Square2x2Icon } from "@lifesg/react-icons/square-2x2";
+import { TicketIcon } from "@lifesg/react-icons/ticket";
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
-import { IconButton } from "src/icon-button";
 import { Sidenav } from "src/sidenav";
 import {
     Heading3,
@@ -11,13 +15,14 @@ import {
     Title,
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
-import { Square2x2Icon } from "@lifesg/react-icons/square-2x2";
-import { DocIcon } from "@lifesg/react-icons/doc";
-import { CalendarIcon } from "@lifesg/react-icons/calendar";
-import { Person2Icon } from "@lifesg/react-icons/person-2";
-import { TicketIcon } from "@lifesg/react-icons/ticket";
 
-<Meta title="Modules/Sidenav" component={Sidenav} />
+<Meta
+    title="Modules/Sidenav"
+    component={Sidenav}
+    parameters={{
+        layout: "fullscreen",
+    }}
+/>
 
 <Title>Sidenav</Title>
 
@@ -33,8 +38,7 @@ import { Sidenav } from "@lifesg/react-design-system/sidenav";
     <Story name="Sidenav">
         {() => {
             return (
-                // NOTE - fixed used for storybook purposes
-                <Sidenav fixed={false}>
+                <Sidenav fixed={false} /* For storybook purposes */>
                     <Sidenav.Group separator={true}>
                         <Sidenav.Item
                             id="dashboard"
@@ -55,7 +59,7 @@ import { Sidenav } from "@lifesg/react-design-system/sidenav";
                             selected={true}
                         />
                         <Sidenav.Item
-                            id="users2"
+                            id="users"
                             title="Users"
                             icon={<Person2Icon />}
                         />
@@ -66,16 +70,15 @@ import { Sidenav } from "@lifesg/react-design-system/sidenav";
     </Story>
 </Canvas>
 
-<Heading3>Sidenav drawer</Heading3>
+<Heading3>Subitem drawer</Heading3>
 
 The drawer is expanded when a menu item with subitems is hovered or selected. After a subitem is selected, the drawer will close.
 
 <Canvas>
-    <Story name="Sidenav drawer">
+    <Story name="Subitem drawer">
         {() => {
             return (
-                // NOTE - fixed used for storybook purposes
-                <Sidenav fixed={false}>
+                <Sidenav fixed={false} /* For storybook purposes */>
                     <Sidenav.Group separator={true}>
                         <Sidenav.Item
                             id="dashboard"
@@ -93,11 +96,11 @@ The drawer is expanded when a menu item with subitems is hovered or selected. Af
                             >
                                 <Sidenav.DrawerSubitem
                                     id="bookings-reports"
-                                    title="Bookings Reports"
+                                    title="Bookings reports"
                                 />
                                 <Sidenav.DrawerSubitem
                                     id="payment-reports"
-                                    title="Payment Reports"
+                                    title="Payment reports"
                                 />
                             </Sidenav.DrawerItem>
                             <Sidenav.DrawerItem
@@ -105,16 +108,16 @@ The drawer is expanded when a menu item with subitems is hovered or selected. Af
                                 title="Archived reports"
                             />
                             <Sidenav.DrawerItem
-                                id="new-reports"
+                                id="side-reports"
                                 title="Side reports related to casual matters and extra reports"
                             >
                                 <Sidenav.DrawerSubitem
-                                    id="bookings-reports"
+                                    id="food-reports"
                                     title="Food reports"
                                 />
                                 <Sidenav.DrawerSubitem
-                                    id="payment-reports"
-                                    title="Some other"
+                                    id="other-reports"
+                                    title="Other reports"
                                 />
                             </Sidenav.DrawerItem>
                         </Sidenav.Item>

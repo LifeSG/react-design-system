@@ -5,7 +5,7 @@ interface SidenavBaseProps {
 }
 
 export interface SidenavProps extends SidenavBaseProps {
-    /** Fix sidenav to position left */
+    /** Specifies if sidenav should be fixed to left. Defaults to true */
     fixed?: boolean | undefined;
     /**
      * <Sidenav.Group>
@@ -16,7 +16,7 @@ export interface SidenavProps extends SidenavBaseProps {
 }
 
 export interface SidenavGroupProps extends SidenavBaseProps {
-    /** Divider will be rendered */
+    /** Specifies if bottom divider will be rendered */
     separator?: boolean | undefined;
     /**
      * <Sidenav.Item>
@@ -30,7 +30,7 @@ export interface SidenavItemProps extends SidenavBaseProps {
     title: string;
     /** The icon to be rendered */
     icon: React.ReactNode;
-    /** Indicates if an item is selected */
+    /** Indicates if an item is initially selected */
     selected?: boolean | undefined;
     /** Called when item is selected */
     onClick?: ((id: string) => void) | undefined;

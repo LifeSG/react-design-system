@@ -1,35 +1,47 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, code } from "../storybook-common/api-table";
+import {
+    ApiTableAttributeRowProps,
+    ApiTableSectionProps,
+} from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
+
+const BASE_ATTRIBUTES: ApiTableAttributeRowProps[] = [
+    {
+        name: "className",
+        description: "The class selector for the component",
+        propTypes: ["string"],
+    },
+    {
+        name: "data-testid",
+        description: "The test identifier for the component",
+        propTypes: ["string"],
+    },
+    {
+        name: "id",
+        description: "The unique identifier for the component",
+        propTypes: ["string"],
+    },
+];
 
 const SIDENAV_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
+            ...BASE_ATTRIBUTES,
             {
                 name: "children",
                 mandatory: true,
-                description: (
-                    <>
-                        The groups and the items of the <code>Sidenav</code>
-                    </>
-                ),
+                description: <>One or more {code("Sidenav.Group")} elements</>,
                 propTypes: ["React.ReactNode"],
             },
             {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "fixed",
-                description:
-                    "Specifies if the sidenav position is to be fixed at left",
+                description: (
+                    <>
+                        Specifies if the {code("Sidenav")} position is to be
+                        fixed at the left
+                    </>
+                ),
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
@@ -40,31 +52,17 @@ const SIDENAV_DATA: ApiTableSectionProps[] = [
 const SIDENAV_GROUP_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
+            ...BASE_ATTRIBUTES,
             {
                 name: "children",
                 mandatory: true,
-                description: (
-                    <>
-                        The list of items of the <code>SideNav.Item</code>
-                    </>
-                ),
+                description: <>One or more {code("Sidenav.Item")} elements</>,
                 propTypes: ["React.ReactNode"],
             },
             {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "separator",
-                description: "Will draw divider line after group end",
+                description: "Specifies if bottom divider will be rendered",
                 propTypes: ["boolean"],
-                defaultValue: "false",
             },
         ],
     },
@@ -73,24 +71,13 @@ const SIDENAV_GROUP_DATA: ApiTableSectionProps[] = [
 const SIDENAV_ITEM_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
+            ...BASE_ATTRIBUTES,
             {
                 name: "children",
                 description: (
-                    <>
-                        The list of items of the <code>SideNav.DrawerItem</code>
-                    </>
+                    <>One or more {code("Sidenav.DrawerItem")} elements</>
                 ),
                 propTypes: ["React.ReactNode"],
-            },
-            {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
             },
             {
                 name: "icon",
@@ -99,15 +86,9 @@ const SIDENAV_ITEM_DATA: ApiTableSectionProps[] = [
                 propTypes: ["React.ReactNode"],
             },
             {
-                name: "id",
-                description: "The id of the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "selected",
-                description: "Pre select side nav item",
+                description: "Specifies if the item is initially selected",
                 propTypes: ["boolean"],
-                defaultValue: "false",
             },
             {
                 name: "title",
@@ -117,7 +98,14 @@ const SIDENAV_ITEM_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "onClick",
-                description: "Called when item is clicked",
+                description: (
+                    <>
+                        Called when the item is clicked
+                        <br />
+                        <strong>Note</strong>: only applies if the item does not
+                        have subitems
+                    </>
+                ),
                 propTypes: ["(id: string) => void"],
             },
         ],
@@ -127,30 +115,13 @@ const SIDENAV_ITEM_DATA: ApiTableSectionProps[] = [
 const SIDENAV_DRAWER_ITEM_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
+            ...BASE_ATTRIBUTES,
             {
                 name: "children",
                 description: (
-                    <>
-                        The list of items of the{" "}
-                        <code>SideNav.DrawerSubitem</code>
-                    </>
+                    <>One or more {code("Sidenav.DrawerSubitem")} elements</>
                 ),
                 propTypes: ["React.ReactNode"],
-            },
-            {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "id",
-                description: "The id of the component",
-                propTypes: ["string"],
             },
             {
                 name: "title",
@@ -160,7 +131,14 @@ const SIDENAV_DRAWER_ITEM_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "onClick",
-                description: "Called when item is clicked",
+                description: (
+                    <>
+                        Called when the item is clicked
+                        <br />
+                        <strong>Note</strong>: only applies if the item does not
+                        have subitems
+                    </>
+                ),
                 propTypes: ["(id: string) => void"],
             },
         ],
@@ -170,21 +148,7 @@ const SIDENAV_DRAWER_ITEM_DATA: ApiTableSectionProps[] = [
 const SIDENAV_DRAWER_SUBITEM_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
-            {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "id",
-                description: "The id of the component",
-                propTypes: ["string"],
-            },
+            ...BASE_ATTRIBUTES,
             {
                 name: "title",
                 mandatory: true,
@@ -193,7 +157,7 @@ const SIDENAV_DRAWER_SUBITEM_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "onClick",
-                description: "Called when item is clicked",
+                description: "Called when the item is clicked",
                 propTypes: ["(id: string) => void"],
             },
         ],
