@@ -51,7 +51,7 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
             }
 
             span {
-                font-weight: 600 !important;
+                ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
                 color: ${Color.Primary} !important;
             }
         }
@@ -66,7 +66,7 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
                 }
 
                 span {
-                    font-weight: 600 !important;
+                    ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
                     color: ${Color.Primary};
                 }
             }
