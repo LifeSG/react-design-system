@@ -13,10 +13,11 @@ const AccordionBase = ({
     children,
     title,
     enableExpandAll = true,
+    initialExpandAll = true,
     showTitleInMobile = false,
     className,
 }: AccordionProps): JSX.Element => {
-    const [expandAll, setExpandAll] = useState<boolean>(true);
+    const [expandAll, setExpandAll] = useState<boolean>(initialExpandAll);
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();

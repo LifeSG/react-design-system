@@ -2,6 +2,7 @@ export interface AccordionProps {
     children: JSX.Element | JSX.Element[];
     title?: string | undefined;
     enableExpandAll?: boolean | undefined;
+    initialExpandAll?: boolean | undefined;
     showTitleInMobile?: boolean | undefined;
     className?: string | undefined;
 }
