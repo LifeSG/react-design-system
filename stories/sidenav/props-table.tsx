@@ -74,6 +74,15 @@ const SIDENAV_ITEM_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "children",
+                description: (
+                    <>
+                        The list of items of the <code>SideNav.DrawerItem</code>
+                    </>
+                ),
+                propTypes: ["React.ReactNode"],
+            },
+            {
                 name: "className",
                 description: "Class selector for the component",
                 propTypes: ["string"],
@@ -109,7 +118,83 @@ const SIDENAV_ITEM_DATA: ApiTableSectionProps[] = [
             {
                 name: "onClick",
                 description: "Called when item is clicked",
-                propTypes: ["() => void"],
+                propTypes: ["(id: string) => void"],
+            },
+        ],
+    },
+];
+
+const SIDENAV_DRAWER_ITEM_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                description: (
+                    <>
+                        The list of items of the{" "}
+                        <code>SideNav.DrawerSubitem</code>
+                    </>
+                ),
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "title",
+                mandatory: true,
+                description: "Display title of the item",
+                propTypes: ["string"],
+            },
+            {
+                name: "onClick",
+                description: "Called when item is clicked",
+                propTypes: ["(id: string) => void"],
+            },
+        ],
+    },
+];
+
+const SIDENAV_DRAWER_SUBITEM_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "title",
+                mandatory: true,
+                description: "Display title of the item",
+                propTypes: ["string"],
+            },
+            {
+                name: "onClick",
+                description: "Called when item is clicked",
+                propTypes: ["(id: string) => void"],
             },
         ],
     },
@@ -127,6 +212,14 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "Sidenav.Item",
         component: <ApiTable sections={SIDENAV_ITEM_DATA} />,
+    },
+    {
+        title: "Sidenav.DrawerItem",
+        component: <ApiTable sections={SIDENAV_DRAWER_ITEM_DATA} />,
+    },
+    {
+        title: "Sidenav.DrawerSubitem",
+        component: <ApiTable sections={SIDENAV_DRAWER_SUBITEM_DATA} />,
     },
 ];
 

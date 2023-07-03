@@ -9,6 +9,7 @@ import { SidenavItemProps } from "./types";
 import { SidenavContext } from "./sidenav-context";
 
 export const SidenavItem = ({
+    children,
     icon,
     title,
     onClick,
@@ -18,26 +19,49 @@ export const SidenavItem = ({
     // CONST, STATE, REF
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
-    const { selectedItemId, setSelectedItemId } = useContext(SidenavContext);
+    const {
+        currentItem,
+        previouslySelectedItemId,
+        selectedItem,
+        setCurrentItem,
+        setPreviouslySelectedItemId,
+        setSelectedItem,
+    } = useContext(SidenavContext);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         if (otherProps.selected) {
-            setSelectedItemId(id);
+            setSelectedItem({ itemId: id, content: undefined });
         }
-    }, []);
+    }, [otherProps.selected]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleOnClick = () => {
-        if (selectedItemId === id) return;
-        setSelectedItemId(id);
-        if (onClick) {
-            onClick();
+    const getPreviousSelectedItemId = (): string | undefined => {
+        if (!children || !selectedItem) return undefined;
+        if (previouslySelectedItemId) {
+            return previouslySelectedItemId;
         }
+        return selectedItem.itemId;
+    };
+
+    const handleOnClick = () => {
+        setPreviouslySelectedItemId(getPreviousSelectedItemId());
+        setCurrentItem({ itemId: id, content: children });
+        setSelectedItem({
+            itemId: id,
+            content: children,
+        });
+        if (onClick && !children) {
+            onClick(id);
+        }
+    };
+
+    const handleMouseEnter = () => {
+        setCurrentItem({ itemId: id, content: children });
     };
 
     // =========================================================================
@@ -47,9 +71,14 @@ export const SidenavItem = ({
         <Container>
             <DefaultButton
                 styleType="link"
+                type="button"
                 onClick={handleOnClick}
+                onMouseEnter={handleMouseEnter}
                 {...otherProps}
-                $highlight={selectedItemId === id}
+                $highlight={
+                    (selectedItem && selectedItem.itemId === id) ||
+                    (currentItem && currentItem.itemId === id)
+                }
             >
                 <IconContainer>{icon}</IconContainer>
                 <TitleText>{title}</TitleText>

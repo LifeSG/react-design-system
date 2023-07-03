@@ -8,6 +8,12 @@ import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 describe("Sidenav", () => {
     beforeEach(() => {
         jest.resetAllMocks();
+
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     it("should render component", () => {
@@ -30,6 +36,25 @@ describe("Sidenav", () => {
         expect(element).toBeInTheDocument();
         expect(element.innerHTML).toContain(ITEM_TEXT);
         expect(element.innerHTML).toContain("svg");
+    });
+
+    it("should render component with fixed argument", () => {
+        render(
+            <Sidenav data-testid="side-nav" fixed={true}>
+                <Sidenav.Group data-testid="side-nav-group">
+                    <Sidenav.Item
+                        data-testid="dashboard-item"
+                        id="dashboard"
+                        title="Dashboard"
+                        icon={<Square2x2Icon />}
+                    ></Sidenav.Item>
+                </Sidenav.Group>
+            </Sidenav>
+        );
+
+        const element = screen.getByTestId("side-nav");
+        expect(element).toBeInTheDocument();
+        expect(element).toHaveStyle({ position: "fixed" });
     });
 
     it("should render multiple groups correctly", () => {
@@ -91,26 +116,57 @@ describe("Sidenav", () => {
                         data-testid="dashboard-item"
                         onClick={spy}
                     ></Sidenav.Item>
-                    <Sidenav.Item
-                        id="users"
-                        title="Users"
-                        icon={<Person2Icon />}
-                        data-testid="users-item"
-                        onClick={spy}
-                        selected={true}
-                    ></Sidenav.Item>
                 </Sidenav.Group>
             </Sidenav>
         );
-        const userElement = screen.getByTestId("users-item");
-        act(() => {
-            fireEvent.click(userElement);
-        });
-        expect(spy).toHaveBeenCalledTimes(0);
+
         const dashboardElement = screen.getByTestId("dashboard-item");
         act(() => {
             fireEvent.click(dashboardElement);
         });
         expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should open drawer if sidenav item contain children", () => {
+        const LEVEL2_TEXT1 = "Mini Dashboard";
+        const LEVEL2_TEXT2 = "Big Dashboard";
+        const LEVEL3_TEXT = "Part 1";
+        render(
+            <Sidenav data-testid="side-nav">
+                <Sidenav.Group data-testid="side-nav-group">
+                    <Sidenav.Item
+                        id="dashboard"
+                        title="Dashboard"
+                        icon={<Square2x2Icon />}
+                        data-testid="dashboard-item"
+                    >
+                        <Sidenav.DrawerItem
+                            title={LEVEL2_TEXT1}
+                            data-testid="mini-dashboard-item"
+                            id="mini-dashboard"
+                        ></Sidenav.DrawerItem>
+                        <Sidenav.DrawerItem
+                            title={LEVEL2_TEXT2}
+                            data-testid="big-dashboard-item"
+                            id="big-dashboard"
+                        >
+                            <Sidenav.DrawerSubitem
+                                title={LEVEL3_TEXT}
+                                id="part-1"
+                                data-testid="part-1"
+                            />
+                        </Sidenav.DrawerItem>
+                    </Sidenav.Item>
+                </Sidenav.Group>
+            </Sidenav>
+        );
+
+        const sideNavItem = screen.getByTestId("dashboard-item");
+        act(() => {
+            fireEvent.click(sideNavItem);
+        });
+        expect(screen.getByTestId("sidenav-drawer"));
+        expect(screen.getByText(LEVEL2_TEXT1)).toBeInTheDocument();
+        expect(screen.getByText(LEVEL3_TEXT)).toBeInTheDocument();
     });
 });

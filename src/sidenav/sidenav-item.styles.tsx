@@ -1,12 +1,18 @@
 import styled, { css } from "styled-components";
-import { Text } from "../text";
+import { Text, TextStyleHelper } from "../text";
 import { Color } from "../color";
 import { Button } from "../button";
 
+//=============================================================================
+// STYLE INTERFACE
+//=============================================================================
 interface StyleProps {
     $highlight: boolean;
 }
 
+//=============================================================================
+// STYLING
+//=============================================================================
 export const Container = styled.li`
     width: 100%;
 `;
@@ -27,9 +33,8 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         }
 
         span {
-            font-family: Open sans;
+            ${TextStyleHelper.getFontFamily("XSmall", "regular")}
             font-size: 0.75rem !important;
-            line-height: 1rem !important;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -42,10 +47,12 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         span {
             div {
                 background-color: ${Color.Accent.Light[5]};
+                color: ${Color.Primary} !important;
             }
 
             span {
-                font-weight: 600 !important;
+                ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
+                color: ${Color.Primary} !important;
             }
         }
     }
@@ -59,7 +66,7 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
                 }
 
                 span {
-                    font-weight: 600 !important;
+                    ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
                     color: ${Color.Primary};
                 }
             }

@@ -1,44 +1,30 @@
-import {
-    Dispatch,
-    SetStateAction,
-    createContext,
-    useMemo,
-    useState,
-} from "react";
+import { Dispatch, SetStateAction, createContext } from "react";
 
-interface SidenavContextProps {
-    selectedItemId: string | undefined;
-    setSelectedItemId: Dispatch<SetStateAction<string | undefined>>;
+export interface SidenavContextItem {
+    itemId: string | undefined;
+    content: React.ReactNode | undefined;
 }
 
-interface SidenavProviderProps {
-    children: React.ReactNode;
+interface SidenavContextProps {
+    currentItem: SidenavContextItem | undefined;
+    previouslySelectedItemId: string | undefined;
+    selectedItem: SidenavContextItem | undefined;
+    setCurrentItem: Dispatch<SetStateAction<SidenavContextItem | undefined>>;
+    setPreviouslySelectedItemId: Dispatch<SetStateAction<string | undefined>>;
+    setSelectedItem: Dispatch<SetStateAction<SidenavContextItem | undefined>>;
 }
 
 export const SidenavContext = createContext<SidenavContextProps>({
-    selectedItemId: undefined,
-    setSelectedItemId: (prevState: SetStateAction<string | undefined>) =>
-        prevState,
+    selectedItem: undefined,
+    currentItem: undefined,
+    previouslySelectedItemId: undefined,
+    setCurrentItem: () => {
+        /**  */
+    },
+    setPreviouslySelectedItemId: () => {
+        /** */
+    },
+    setSelectedItem: () => {
+        /** */
+    },
 });
-
-export function SidenavProvider({
-    children,
-}: SidenavProviderProps): JSX.Element {
-    const [selectedItemId, setSelectedItemId] = useState<string | undefined>(
-        undefined
-    );
-
-    const value = useMemo(
-        () => ({
-            selectedItemId: selectedItemId,
-            setSelectedItemId: setSelectedItemId,
-        }),
-        [selectedItemId, setSelectedItemId]
-    );
-
-    return (
-        <SidenavContext.Provider value={value}>
-            {children}
-        </SidenavContext.Provider>
-    );
-}

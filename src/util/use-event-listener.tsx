@@ -5,7 +5,8 @@ type Target = Window | HTMLElement | Document | null;
 export const useEventListener = <K extends keyof WindowEventMap>(
     eventName: K,
     handler: (event: WindowEventMap[K]) => void,
-    element: Target = window
+    element: Target = window,
+    options?: AddEventListenerOptions | boolean
 ) => {
     // Create a ref that stores handler
     const savedHandler = useRef<(event: WindowEventMap[K]) => void>();
@@ -25,10 +26,10 @@ export const useEventListener = <K extends keyof WindowEventMap>(
             const eventListener = (event: WindowEventMap[K]) =>
                 savedHandler.current(event);
             // Add event listener
-            element.addEventListener(eventName, eventListener);
+            element.addEventListener(eventName, eventListener, options);
             // Remove event listener on cleanup
             return () => {
-                element.removeEventListener(eventName, eventListener);
+                element.removeEventListener(eventName, eventListener, options);
             };
         },
         [eventName, element] // Re-run if eventName or element changes
