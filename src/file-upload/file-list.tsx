@@ -178,7 +178,7 @@ export const FileList = ({
     };
 
     const shouldRenderEditMode = (item: FileItemProps) => {
-        return checkEditable(item) && item.description === undefined;
+        return checkEditable(item) && !item.description;
     };
 
     const getItemsRenderMode = (

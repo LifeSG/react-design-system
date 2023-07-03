@@ -68,7 +68,7 @@ export const FileItemEdit = ({
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setCurrentDescription(event.target.value);
+        setCurrentDescription(event.target.value.trim());
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
