@@ -19,12 +19,12 @@ export const SidenavContext = createContext<SidenavContextProps>({
     currentItem: undefined,
     previouslySelectedItemId: undefined,
     setCurrentItem: () => {
-        /**  */
+        // do nothing
     },
     setPreviouslySelectedItemId: () => {
-        /** */
+        // do nothing
     },
     setSelectedItem: () => {
-        /** */
+        // do nothing
     },
 });
