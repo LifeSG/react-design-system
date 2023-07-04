@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../../color";
 import { MediaQuery } from "../../media";
+import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { TextStyleHelper } from "../../text";
 
 interface Props {
@@ -22,7 +23,7 @@ export const FileListItemThumbnail = ({
 
     return (
         <Container>
-            <Image src={thumbnailImageDataUrl} />
+            <Thumbnail src={thumbnailImageDataUrl} />
             {renderReplaceButton && (
                 <ReplaceButton type="button" onClick={handleReplace}>
                     Replace
@@ -44,7 +45,7 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
-export const Image = styled.img`
+export const Thumbnail = styled(ImageWithFallback)`
     width: 6rem;
     height: 6rem;
     aspect-ratio: 1;
