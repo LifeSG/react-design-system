@@ -247,7 +247,13 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
         width: fit-content;
 
         ${(props) => {
-            if (props.$editable && !props.$error) {
+            if (props.$loading && !props.$error) {
+                return css`
+                    margin-left: 0;
+                    margin-top: 1rem;
+                    width: 100%;
+                `;
+            } else if (props.$editable && !props.$error) {
                 return css`
                     margin-left: 0;
                     margin-top: 1rem;
@@ -255,15 +261,6 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
                 `;
             }
         }}
-
-        ${(props) => {
-            if (props.$loading) {
-                return css`
-                    width: 100%;
-                `;
-            }
-        }}
-    }
 `;
 
 export const IconButton = styled(DSIconButton)`
