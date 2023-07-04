@@ -25,7 +25,8 @@ export const AccordionItem = ({
     // CONST, STATE, REF
     // =============================================================================
     const expandAll = useContext(AccordionContext);
-    const [expand, setExpand] = useState<boolean>(expandAll || expanded);
+    const [expand, setExpand] = useState<boolean>(expandAll ?? expanded);
+
     const testId = otherProps["data-testid"] || "accordion-item";
 
     const resizeDetector = useResizeDetector();
@@ -34,13 +35,15 @@ export const AccordionItem = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        setExpand(expandAll);
-    }, [expandAll]);
 
     useEffect(() => {
         setExpand(expanded);
     }, [expanded]);
+
+    // `setExpand(expandAll)` is after `setExpand(expanded)` to override its setState on initial load
+    useEffect(() => {
+        setExpand(expandAll);
+    }, [expandAll]);
 
     // =============================================================================
     // EVENT HANDLERS

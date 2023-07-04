@@ -31,6 +31,13 @@ const ACCORDION_DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
+                name: "initialDisplay",
+                description:
+                    "Specifies if the inital display of child items and parent state should be all collapsed or all expanded",
+                propTypes: [`"collapse-all"`, `"expand-all"`],
+                defaultValue: "expand-all",
+            },
+            {
                 name: "showTitleInMobile",
                 description:
                     "Specifies if the title should be shown in mobile viewports",
