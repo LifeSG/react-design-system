@@ -178,7 +178,12 @@ export const FileList = ({
     };
 
     const shouldRenderEditMode = (item: FileItemProps) => {
-        return checkEditable(item) && !item.description;
+        return (
+            !item.errorMessage &&
+            !(item.progress && item.progress < 1) &&
+            checkEditable(item) &&
+            !item.description
+        );
     };
 
     const getItemsRenderMode = (
