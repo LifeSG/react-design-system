@@ -69,7 +69,7 @@ describe("FileUpload", () => {
             ).toBeInTheDocument();
         });
 
-        it("should render the image files with an edit button if there is a description, or if the user cancelled an edit previously", () => {
+        it("should render the image files with description in the display view while files without description to be in the edit mode", () => {
             const fileItems: FileItemProps[] = [
                 { ...MOCK_IMAGE_ITEM, description: "Lorem ipsum" },
                 {
@@ -97,14 +97,6 @@ describe("FileUpload", () => {
             expect(screen.getByText("4 KB")).toBeInTheDocument();
             expect(
                 rendered.getByTestId("another-edit-display")
-            ).toBeInTheDocument();
-
-            // Cancel editing for second image
-            const cancelButton = rendered.getByTestId("another-cancel-button");
-            fireEvent.click(cancelButton);
-
-            expect(
-                rendered.getByTestId("another-edit-button")
             ).toBeInTheDocument();
         });
     });
@@ -152,7 +144,7 @@ describe("FileUpload", () => {
     });
 
     describe("Edit", () => {
-        it("should render the textarea, save and cancel buttons in edit mode", () => {
+        it("should render the textarea, save and cancel buttons in edit mode, with the save button being disabled", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
             const rendered = render(
@@ -161,12 +153,51 @@ describe("FileUpload", () => {
 
             expect(screen.getByText("Photo description")).toBeInTheDocument();
             expect(rendered.getByTestId("some-textarea")).toBeInTheDocument();
-            expect(
-                rendered.getByTestId("some-save-button")
-            ).toBeInTheDocument();
-            expect(
-                rendered.getByTestId("some-cancel-button")
-            ).toBeInTheDocument();
+
+            const saveButton = rendered.getByTestId("some-save-button");
+            const cancelButton = rendered.getByTestId("some-cancel-button");
+
+            expect(saveButton).toBeInTheDocument();
+            expect(saveButton).toBeDisabled();
+            expect(cancelButton).toBeInTheDocument();
+            expect(cancelButton).not.toBeDisabled();
+        });
+
+        it("should enable the save button if there is entry in the description textarea", () => {
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
+
+            const saveButton = rendered.getByTestId("some-save-button");
+            expect(saveButton).toBeInTheDocument();
+            expect(saveButton).toBeDisabled();
+
+            // Enter value
+            const textarea = rendered.getByTestId("some-textarea");
+            fireEvent.change(textarea, { target: { value: "Hello world" } });
+            expect(saveButton).not.toBeDisabled();
+        });
+
+        it("should delete the file item if the cancel button is clicked on a new upload", () => {
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+            const mockFn = jest.fn();
+
+            const rendered = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    onDelete={mockFn}
+                />
+            );
+
+            expect(screen.getByText("bugs-bunny.png")).toBeInTheDocument();
+
+            const cancelButton = rendered.getByTestId("some-cancel-button");
+            fireEvent.click(cancelButton);
+
+            expect(mockFn).toBeCalledWith(MOCK_IMAGE_ITEM);
         });
 
         it("should return the file item with the description via onEdit upon entering into the textarea", () => {

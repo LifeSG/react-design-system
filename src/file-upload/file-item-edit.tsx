@@ -19,23 +19,24 @@ interface Props {
     fileItem: FileItemProps;
     wrapperWidth: number;
     descriptionMaxLength?: number | undefined;
-    onEdit: (description: string) => void;
+    onSave: (description: string) => void;
     onCancel: () => void;
+    onBlur: (value: string) => void;
 }
 
 export const FileItemEdit = ({
     fileItem,
     descriptionMaxLength,
     wrapperWidth,
-    onEdit,
+    onSave,
     onCancel,
+    onBlur,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const {
         id,
-        description,
         name,
         size,
         truncateText = true,
@@ -43,6 +44,7 @@ export const FileItemEdit = ({
     } = fileItem;
 
     const [formattedName, setFormattedName] = useState<string>();
+    const [currentDescription, setCurrentDescription] = useState<string>("");
 
     const textareaRef = useRef<HTMLTextAreaElement>();
     const nameSectionRef = useRef<HTMLDivElement>();
@@ -54,19 +56,23 @@ export const FileItemEdit = ({
         setFormattedName(getTruncatedText(name));
     }, [wrapperWidth]);
 
+    useEffect(() => {
+        setCurrentDescription(fileItem.description || "");
+    }, [fileItem]);
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleSave = () => {
-        if (textareaRef.current) {
-            onEdit(textareaRef.current.value || "");
-        } else {
-            onEdit(undefined);
-        }
+        onSave(textareaRef.current.value.trim());
     };
 
-    const handleCancel = () => {
-        onCancel();
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCurrentDescription(event.target.value);
+    };
+
+    const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+        onBlur(event.target.value);
     };
 
     // =========================================================================
@@ -87,6 +93,11 @@ export const FileItemEdit = ({
             widthOfElement / 2 / 8, // Arbitrary
             16 // Font size
         );
+    };
+
+    const shouldDisableSave = () => {
+        const trimmedDescription = currentDescription.trim();
+        return trimmedDescription.length === 0;
     };
 
     // =========================================================================
@@ -115,8 +126,10 @@ export const FileItemEdit = ({
                         ref={textareaRef}
                         id={`${id}-description-textarea`}
                         data-testid={`${id}-textarea`}
-                        value={description}
+                        value={currentDescription}
                         maxLength={descriptionMaxLength}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         rows={3}
                         label={{
                             children: "Photo description",
@@ -130,6 +143,7 @@ export const FileItemEdit = ({
                 <ActionButton
                     data-testid={`${id}-save-button`}
                     type="button"
+                    disabled={shouldDisableSave()}
                     onClick={handleSave}
                 >
                     Save
@@ -138,7 +152,7 @@ export const FileItemEdit = ({
                     type="button"
                     styleType="secondary"
                     data-testid={`${id}-cancel-button`}
-                    onClick={handleCancel}
+                    onClick={onCancel}
                 >
                     Cancel
                 </ActionButton>

@@ -13,9 +13,8 @@ import {
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { SimpleIdGenerator } from "../util";
 import { FileUploadContext } from "./context";
 import { MouseSensor } from "./custom-sensors";
 import { FileItemEdit } from "./file-item-edit";
@@ -27,9 +26,10 @@ import { FileItemProps } from "./types";
 // =============================================================================
 // INTERFACES
 // =============================================================================
-type RenderMode = "cancelled-edit" | "list" | "edit" | "error" | "loading";
+type RenderMode = "edit" | "display" | "error";
 
 type FileItemRenderModes = Record<string, RenderMode>;
+type FileEditedDescriptions = Record<string, string>;
 
 type RenderItem = FileItemProps | FileItemProps[];
 
@@ -65,6 +65,9 @@ export const FileList = ({
     const { setActiveId } = useContext(FileUploadContext);
     const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
 
+    // Keep track of edited description without re-rendering
+    const descriptionsValueRef = useRef<FileEditedDescriptions>({});
+
     /**
      * As the default drag sensors interfere with click events
      * on the file items, we'll need to configure the sensor to
@@ -88,6 +91,13 @@ export const FileList = ({
     );
 
     // =========================================================================
+    // REF METHODS
+    // =========================================================================
+    const removeDescription = (itemId: string) => {
+        delete descriptionsValueRef.current[itemId];
+    };
+
+    // =========================================================================
     // EFFECTS
     // =========================================================================
     useEffect(() => {
@@ -97,26 +107,30 @@ export const FileList = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleDescriptionUpdate =
-        (item: FileItemProps) => (description: string) => {
-            const updatedItem = { ...item, description };
-            onItemUpdate(updatedItem);
-        };
+    const handleSaveEdit = (item: FileItemProps) => (description: string) => {
+        updateRenderModes(item.id, "display");
+        removeDescription(item.id);
+
+        const updatedItem = { ...item, description };
+        onItemUpdate(updatedItem);
+    };
+
+    const handleBlurEdit = (item: FileItemProps) => (value: string) => {
+        descriptionsValueRef.current[item.id] = value;
+    };
 
     const handleCancel = (item: FileItemProps) => () => {
-        const updatedRenderModes = { ...renderModes };
-        updatedRenderModes[item.id] = item.description
-            ? "list"
-            : "cancelled-edit";
-
-        setRenderModes(updatedRenderModes);
+        if (!item.description || item.description.length === 0) {
+            // New addition
+            onItemDelete(item);
+        } else {
+            updateRenderModes(item.id, "display");
+        }
+        removeDescription(item.id);
     };
 
     const handleInitiateEdit = (item: FileItemProps) => () => {
-        const updatedRenderModes = { ...renderModes };
-        updatedRenderModes[item.id] = "edit";
-
-        setRenderModes(updatedRenderModes);
+        updateRenderModes(item.id, "edit");
     };
 
     const handleDelete = (item: FileItemProps) => () => {
@@ -164,7 +178,7 @@ export const FileList = ({
     };
 
     const shouldRenderEditMode = (item: FileItemProps) => {
-        return checkEditable(item) && item.description === undefined;
+        return checkEditable(item) && !item.description;
     };
 
     const getItemsRenderMode = (
@@ -175,27 +189,27 @@ export const FileList = ({
         const newRenderModes: FileItemRenderModes = {};
 
         for (const item of fileItems) {
-            /**
-             * We retain the cancelled edits to prevent the edit
-             * display from re-rendering
-             */
-            if (
-                renderModes[item.id] &&
-                renderModes[item.id] === "cancelled-edit"
-            ) {
-                newRenderModes[item.id] = renderModes[item.id];
-            } else if (item.errorMessage) {
+            if (item.errorMessage) {
                 newRenderModes[item.id] = "error";
-            } else if (item.progress < 1) {
-                newRenderModes[item.id] = "loading";
-            } else {
+            } else if (!renderModes[item.id]) {
                 newRenderModes[item.id] = shouldRenderEditMode(item)
                     ? "edit"
-                    : "list";
+                    : "display";
+            } else {
+                newRenderModes[item.id] = renderModes[item.id];
             }
         }
 
         return newRenderModes;
+    };
+
+    const updateRenderModes = (itemId: string, mode: RenderMode) => {
+        setRenderModes((prevRenderModes) => {
+            return {
+                ...prevRenderModes,
+                [itemId]: mode,
+            };
+        });
     };
 
     /**
@@ -227,9 +241,7 @@ export const FileList = ({
     };
 
     const areAllItemsInDisplayViews = () => {
-        return Object.values(renderModes).every(
-            (mode) => mode === "list" || mode === "cancelled-edit"
-        );
+        return Object.values(renderModes).every((mode) => mode === "display");
     };
 
     const shouldEnableSort = () => {
@@ -244,24 +256,32 @@ export const FileList = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderItemsInEditMode = (fileItems: FileItemProps[]) => {
+    const renderItemsInEditMode = (
+        fileItems: FileItemProps[],
+        keyToUse: number
+    ) => {
         const itemsToRender = fileItems.map((item) => {
+            const updatedFileItem = { ...item };
+            if (descriptionsValueRef.current[item.id] !== undefined) {
+                updatedFileItem.description =
+                    descriptionsValueRef.current[item.id];
+            }
+
             return (
                 <FileItemEdit
                     key={item.id}
-                    fileItem={item}
+                    fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
                     descriptionMaxLength={descriptionMaxLength}
-                    onEdit={handleDescriptionUpdate(item)}
+                    onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
+                    onBlur={handleBlurEdit(item)}
                 />
             );
         });
 
         return (
-            <EditableItemsContainer
-                key={`editable-items-${SimpleIdGenerator.generate()}`}
-            >
+            <EditableItemsContainer key={`editable-${keyToUse}`}>
                 <ul>{itemsToRender}</ul>
             </EditableItemsContainer>
         );
@@ -272,9 +292,9 @@ export const FileList = ({
 
         if (arrangedItems.length === 0) return null;
 
-        return arrangedItems.map((item) => {
+        return arrangedItems.map((item, index) => {
             if (Array.isArray(item)) {
-                return renderItemsInEditMode(item);
+                return renderItemsInEditMode(item, index);
             } else {
                 return (
                     <FileListItem
