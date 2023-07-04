@@ -8,13 +8,12 @@ import {
     HeaderCell,
     InteractiveCircle,
     OverflowCircle,
-    OverflowCircleProps,
     OverflowDisplay,
     RowDayCell,
-    StyleProps,
     Wrapper,
 } from "./internal-week-selection-calendar-day.style";
-import { CommonCalendarProps, FocusType } from "./types";
+import { CommonCalendarProps } from "./types";
+import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
 
 export type DayVariant = "default" | "other-month" | "today";
 
@@ -22,18 +21,8 @@ interface CalendarDayProps extends CommonCalendarProps {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
-    currentFocus?: FocusType | undefined;
-    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-}
-
-interface GenerateStyleProps {
-    styleLeftProps: StyleProps;
-    styleRightProps: StyleProps;
-    styleCircleProps: StyleProps;
-    styleLabelProps: StyleProps;
-    styleOverflowCirleProps: OverflowCircleProps;
 }
 
 export const InternalWeekSelectionCalendarDay = ({
@@ -98,143 +87,6 @@ export const InternalWeekSelectionCalendarDay = ({
         };
     };
 
-    const isDisabled = (day: Dayjs): boolean => {
-        const isWithinRange = CalendarHelper.isWithinRange(
-            day,
-            minDate ? dayjs(minDate) : undefined,
-            maxDate ? dayjs(maxDate) : undefined
-        );
-
-        const isDisabledDate =
-            disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
-
-        return !isWithinRange || isDisabledDate;
-    };
-
-    const generateStyleProps = (day: Dayjs): GenerateStyleProps => {
-        const styleLeftProps: StyleProps = {},
-            styleRightProps: StyleProps = {},
-            styleCircleProps: StyleProps = {},
-            styleLabelProps: StyleProps = {},
-            styleOverflowCirleProps: OverflowCircleProps = {};
-
-        const disabled = isDisabled(day);
-
-        // apply disabled styles
-
-        if (disabled) {
-            styleCircleProps.$disabledDisplay = true;
-            styleLabelProps.$disabledDisplay = true;
-        }
-
-        styleCircleProps.$interactive = !disabled || allowDisabledSelection;
-
-        // apply selected styles
-
-        if (selectedStartDate) {
-            const firstDayOfWeek = dayjs(selectedStartDate)
-                .startOf("week")
-                .format("YYYY-MM-DD");
-            const lastDayOfWeek = dayjs(selectedStartDate)
-                .endOf("week")
-                .format("YYYY-MM-DD");
-
-            if (day.isBetween(firstDayOfWeek, lastDayOfWeek, "day", "[]")) {
-                styleLabelProps.$selected = true;
-
-                if (day.isSame(firstDayOfWeek)) {
-                    styleRightProps.$selected = true;
-                    styleCircleProps.$selected = true;
-                    styleOverflowCirleProps.$position = "left";
-                } else if (day.isSame(lastDayOfWeek)) {
-                    styleLeftProps.$selected = true;
-                    styleCircleProps.$selected = true;
-                    styleOverflowCirleProps.$position = "right";
-                } else {
-                    styleLeftProps.$selected = true;
-                    styleCircleProps.$selected = true;
-                    styleRightProps.$selected = true;
-                }
-            }
-        }
-
-        // apply hovered styles
-
-        if (hoverValue) {
-            const firstDayOfWeek = dayjs(hoverValue)
-                .startOf("week")
-                .format("YYYY-MM-DD");
-            const lastDayOfWeek = dayjs(hoverValue)
-                .endOf("week")
-                .format("YYYY-MM-DD");
-
-            if (day.isBetween(firstDayOfWeek, lastDayOfWeek, "day", "[]")) {
-                styleLabelProps.$selected = true;
-
-                if (day.isSame(firstDayOfWeek)) {
-                    styleRightProps.$hovered = true;
-                    styleCircleProps.$hovered = true;
-                    styleOverflowCirleProps.$position = "left";
-                } else if (day.isSame(lastDayOfWeek)) {
-                    styleLeftProps.$hovered = true;
-                    styleCircleProps.$hovered = true;
-                    styleOverflowCirleProps.$position = "right";
-                } else {
-                    styleLeftProps.$hovered = true;
-                    styleRightProps.$hovered = true;
-                }
-            }
-        }
-
-        // apply overlap styles
-
-        if (
-            selectedStartDate &&
-            selectedEndDate &&
-            hoverValue &&
-            day.isBetween(selectedStartDate, selectedEndDate, "day", "[]") &&
-            dayjs(hoverValue).isBetween(
-                selectedStartDate,
-                selectedEndDate,
-                "day",
-                "[]"
-            )
-        ) {
-            const firstDayOfWeek = dayjs(selectedStartDate)
-                .startOf("week")
-                .format("YYYY-MM-DD");
-            const lastDayOfWeek = dayjs(selectedStartDate)
-                .endOf("week")
-                .format("YYYY-MM-DD");
-
-            if (day.isBetween(firstDayOfWeek, lastDayOfWeek, "day", "[]")) {
-                styleLabelProps.$selected = true;
-
-                if (day.isSame(firstDayOfWeek)) {
-                    styleRightProps.$overlap = true;
-                    styleCircleProps.$overlap = true;
-                    styleOverflowCirleProps.$position = "left";
-                } else if (day.isSame(lastDayOfWeek)) {
-                    styleLeftProps.$overlap = true;
-                    styleCircleProps.$overlap = true;
-                    styleOverflowCirleProps.$position = "right";
-                } else {
-                    styleLeftProps.$overlap = true;
-                    styleCircleProps.$overlap = true;
-                    styleRightProps.$overlap = true;
-                }
-            }
-        }
-
-        return {
-            styleLeftProps,
-            styleRightProps,
-            styleCircleProps,
-            styleLabelProps,
-            styleOverflowCirleProps,
-        };
-    };
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -253,13 +105,23 @@ export const InternalWeekSelectionCalendarDay = ({
                     {week.map((day, dayIndex) => {
                         const formattedDay = day.format("YYYY-MM-DD");
                         const { variant } = generateDayStatus(day);
+
                         const {
                             styleLeftProps,
                             styleRightProps,
                             styleCircleProps,
                             styleLabelProps,
                             styleOverflowCirleProps,
-                        } = generateStyleProps(day);
+                        } = CalendarDayStyleHelper.getStylePropsForWeekSelection(
+                            day,
+                            selectedStartDate,
+                            selectedEndDate,
+                            hoverValue,
+                            minDate,
+                            maxDate,
+                            disabledDates,
+                            allowDisabledSelection
+                        );
 
                         return (
                             <GrowDayCell key={`day-${dayIndex}`}>

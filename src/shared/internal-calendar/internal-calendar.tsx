@@ -149,13 +149,11 @@ export const Component = (
                 return (
                     <InternalWeekSelectionCalendarDay
                         calendarDate={calendarDate}
-                        currentFocus={currentFocus}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         minDate={minDate}
                         maxDate={maxDate}
-                        isNewSelection={selectWithinRange}
                         allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
