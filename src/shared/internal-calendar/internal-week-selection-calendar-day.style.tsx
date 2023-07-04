@@ -122,8 +122,7 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
     height: 2.5rem;
     border-radius: 50%;
 
-    ::before,
-    ::after {
+    ::before {
         content: "";
         display: block;
         position: absolute;
