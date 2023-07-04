@@ -64,11 +64,11 @@ export const FileItemEdit = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleSave = () => {
-        onSave(textareaRef.current.value);
+        onSave(textareaRef.current.value.trim());
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setCurrentDescription(event.target.value.trim());
+        setCurrentDescription(event.target.value);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -93,6 +93,11 @@ export const FileItemEdit = ({
             widthOfElement / 2 / 8, // Arbitrary
             16 // Font size
         );
+    };
+
+    const shouldDisableSave = () => {
+        const trimmedDescription = currentDescription.trim();
+        return trimmedDescription.length === 0;
     };
 
     // =========================================================================
@@ -138,7 +143,7 @@ export const FileItemEdit = ({
                 <ActionButton
                     data-testid={`${id}-save-button`}
                     type="button"
-                    disabled={currentDescription.length === 0}
+                    disabled={shouldDisableSave()}
                     onClick={handleSave}
                 >
                     Save
