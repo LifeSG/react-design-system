@@ -123,7 +123,7 @@ export const Component = (
     // EVENT HANDLERS
     // =============================================================================
     const handleSectionClick = () => {
-        if (disabled) {
+        if (disabled || readOnly) {
             return;
         }
 
