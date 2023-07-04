@@ -1,9 +1,19 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../color";
 
-export const ListWrapper = styled.ul`
+// =============================================================================
+// STYLE INTERFACE
+// =============================================================================
+interface ListWrapperStyleProps {
+    $readOnly?: boolean | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const ListWrapper = styled.ul<ListWrapperStyleProps>`
     list-style-type: none;
-    margin-bottom: 2rem;
+    margin-bottom: ${(props) => (props.$readOnly ? "0" : "2rem")};
 `;
 
 export const EditableItemsContainer = styled.li`

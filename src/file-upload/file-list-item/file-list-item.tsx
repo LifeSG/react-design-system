@@ -28,15 +28,20 @@ import {
 } from "./file-list-item.styles";
 import { FileListItemProps } from "./types";
 
+interface Props extends FileListItemProps {
+    readOnly?: boolean | undefined;
+}
+
 const Component = ({
     fileItem,
     editable,
     sortable,
     wrapperWidth,
     disabled,
+    readOnly,
     onDelete,
     onEditClick,
-}: FileListItemProps) => {
+}: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -290,7 +295,7 @@ const Component = ({
                 $editable={editable}
             >
                 {renderContents()}
-                {renderActions()}
+                {!readOnly && renderActions()}
             </Box>
         </Item>
     );

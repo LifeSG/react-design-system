@@ -39,6 +39,7 @@ interface Props {
     descriptionMaxLength?: number | undefined;
     sortable?: boolean | undefined;
     disabled?: boolean | undefined;
+    readOnly?: boolean | undefined;
     onItemUpdate: (item: FileItemProps) => void;
     onItemDelete: (item: FileItemProps) => void;
     onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
@@ -54,6 +55,7 @@ export const FileList = ({
     descriptionMaxLength,
     sortable,
     disabled,
+    readOnly,
     onItemUpdate,
     onItemDelete,
     onSort,
@@ -180,6 +182,7 @@ export const FileList = ({
     const shouldRenderEditMode = (item: FileItemProps) => {
         return (
             !item.errorMessage &&
+            !readOnly &&
             !(item.progress && item.progress < 1) &&
             checkEditable(item) &&
             !item.description
@@ -309,6 +312,7 @@ export const FileList = ({
                         wrapperWidth={wrapperWidth}
                         sortable={shouldEnableSort()}
                         disabled={disabled}
+                        readOnly={readOnly}
                         onDelete={handleDelete(item)}
                         onEditClick={handleInitiateEdit(item)}
                     />
@@ -317,8 +321,12 @@ export const FileList = ({
         });
     };
 
-    if (disabled || !shouldEnableSort()) {
-        return <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>;
+    if (disabled || readOnly || !shouldEnableSort()) {
+        return (
+            <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
+                {renderItems()}
+            </ListWrapper>
+        );
     } else {
         return (
             <DndContext
@@ -330,7 +338,9 @@ export const FileList = ({
                     items={fileItems}
                     strategy={verticalListSortingStrategy}
                 >
-                    <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>
+                    <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
+                        {renderItems()}
+                    </ListWrapper>
                 </SortableContext>
             </DndContext>
         );
