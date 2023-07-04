@@ -4,6 +4,7 @@ import { DropzoneElement, FileUploadDropzone } from "./dropzone";
 import { FileList } from "./file-list";
 import {
     Description,
+    ErrorAlert,
     Title,
     TitleContainer,
     UploadButton,
@@ -30,6 +31,7 @@ export const FileUpload = ({
     sortable = false,
     descriptionMaxLength,
     editableFileItems = false,
+    errorMessage,
     onChange,
     onDelete,
     onEdit,
@@ -126,6 +128,9 @@ export const FileUpload = ({
                     onItemUpdate={handleItemUpdate}
                     onSort={handleSort}
                 />
+                {errorMessage && (
+                    <ErrorAlert type="error">{errorMessage}</ErrorAlert>
+                )}
                 <UploadButtonContainer>
                     <UploadButton
                         type="button"

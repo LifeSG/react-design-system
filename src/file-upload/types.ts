@@ -48,6 +48,8 @@ export interface FileUploadProps extends FileInputProps {
     descriptionMaxLength?: number | undefined;
     /** Specifies if sorting is enabled for the file items */
     sortable?: boolean | undefined;
+    /** The general error message for the component */
+    errorMessage?: string | undefined;
     /** Called when an upload happens via drag drop or click */
     onChange?: ((files: File[]) => void) | undefined;
     /** Called when an update to the description happens */
