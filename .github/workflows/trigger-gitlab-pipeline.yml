@@ -18,6 +18,7 @@ jobs:
                   GITLAB_REPO_NAME: ${{ vars.GITLAB_REPO_NAME }}
               run: |
                   curl --request POST \
+                      --fail \ #? silences all outputs including errors
                       --form token=$GITLAB_TOKEN \
                       --form "ref=main" \
                       --form "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
