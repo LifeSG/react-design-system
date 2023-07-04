@@ -321,6 +321,8 @@ export const FileList = ({
         });
     };
 
+    if (!fileItems || fileItems.length === 0) return null;
+
     if (disabled || readOnly || !shouldEnableSort()) {
         return (
             <ListWrapper $readOnly={readOnly} ref={wrapperRef}>

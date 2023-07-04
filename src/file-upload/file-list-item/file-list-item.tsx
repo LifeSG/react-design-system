@@ -134,6 +134,8 @@ const Component = ({
 
     const shouldDisable = () => disabled || !!activeId;
 
+    const shouldEnableSort = () => sortable && !readOnly;
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -286,7 +288,9 @@ const Component = ({
             $focusType={focusType}
             {...(sortable ? sortableProps : {})}
         >
-            {sortable && <DragHandleIcon $disabled={shouldDisable()} />}
+            {shouldEnableSort() && (
+                <DragHandleIcon $disabled={shouldDisable()} />
+            )}
             <Box
                 $focused={focusType === "self"}
                 $error={!!errorMessage}
