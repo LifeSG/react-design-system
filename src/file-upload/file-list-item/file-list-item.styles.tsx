@@ -1,4 +1,4 @@
-import { MenuIcon } from "@lifesg/react-icons/menu";
+import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { IconButton as DSIconButton } from "../../icon-button";
@@ -81,7 +81,9 @@ export const Item = styled.li<ItemStyleProps>`
     }}
 `;
 
-export const DragHandleIcon = styled(MenuIcon)<DragHandleIconStyleProps>`
+export const DragHandleIcon = styled(
+    DSDragHandleIcon
+)<DragHandleIconStyleProps>`
     // Temp icon
     margin-right: 1rem;
     height: 1.5rem;
