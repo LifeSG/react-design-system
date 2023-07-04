@@ -17,9 +17,8 @@ jobs:
                   GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
                   GITLAB_REPO_NAME: ${{ vars.GITLAB_REPO_NAME }}
               run: |
-                  curl -X POST \
-                      --fail \
-                      -F token=$GITLAB_TOKEN \
-                      -F "ref=main" \
-                      -F "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
-                      https://$GITLAB_ENDPOINT/api/v4/projects/$GITLAB_PROJECT_ID/trigger/pipeline
+                  curl --request POST \
+                      --form token=$GITLAB_TOKEN \
+                      --form "ref=main" \
+                      --form "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
+                      --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline"
