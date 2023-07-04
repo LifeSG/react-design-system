@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text, TextStyleHelper } from "../../text";
 import { DayVariant } from "./internal-calendar-day";
+import { View } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -17,6 +18,7 @@ export interface StyleProps {
 
 export interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
+    $view: View;
 }
 
 export interface OverflowCircleProps extends Partial<OverflowDisplayProps> {}
@@ -26,7 +28,7 @@ interface OverflowDisplayProps extends StyleProps {
 }
 
 interface InteractiveCircleProps
-    extends DayLabelStyleProps,
+    extends Omit<DayLabelStyleProps, "$view">,
         OverflowCircleProps {}
 
 // =============================================================================
@@ -296,7 +298,13 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
 `;
 
 export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
-    z-index: 1;
+    ${(props) => {
+        if (props.$view === "default") {
+            return css`
+                z-index: 1;
+            `;
+        }
+    }}
 
     ${(props) => {
         const { $disabledDisplay, $selected, $variant } = props;

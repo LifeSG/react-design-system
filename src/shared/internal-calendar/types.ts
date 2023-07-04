@@ -95,6 +95,7 @@ export interface CalendarManagerProps extends CommonCalendarProps {
 
 export interface DefaultViewProps {
     calendarDate: Dayjs;
+    currentView: View;
 }
 
 export interface CalendarManagerRef {

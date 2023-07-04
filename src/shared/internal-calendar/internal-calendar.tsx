@@ -8,6 +8,7 @@ import {
     CalendarManagerRef,
     InternalCalendarProps,
     InternalCalendarRef,
+    View,
 } from "./types";
 
 export const Component = (
@@ -125,7 +126,7 @@ export const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCalendarDay = (calendarDate: Dayjs) => {
+    const renderCalendarDay = (calendarDate: Dayjs, currentView: View) => {
         switch (variant) {
             case "single":
             case "range":
@@ -154,6 +155,7 @@ export const Component = (
                         selectedEndDate={selectedEndDate}
                         minDate={minDate}
                         maxDate={maxDate}
+                        currentView={currentView}
                         allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
@@ -180,7 +182,9 @@ export const Component = (
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
             >
-                {({ calendarDate }) => renderCalendarDay(calendarDate)}
+                {({ calendarDate, currentView }) =>
+                    renderCalendarDay(calendarDate, currentView)
+                }
             </CalendarManager>
         </Container>
     );

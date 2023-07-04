@@ -417,7 +417,7 @@ const Component = (
     const renderViews = () => {
         const defaultView =
             typeof children === "function"
-                ? children({ calendarDate: viewCalendarDate })
+                ? children({ calendarDate: viewCalendarDate, currentView })
                 : children;
 
         if (dynamicHeight) {

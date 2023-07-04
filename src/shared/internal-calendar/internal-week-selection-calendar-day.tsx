@@ -12,7 +12,7 @@ import {
     RowDayCell,
     Wrapper,
 } from "./internal-week-selection-calendar-day.style";
-import { CommonCalendarProps } from "./types";
+import { CommonCalendarProps, View } from "./types";
 import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
 
 export type DayVariant = "default" | "other-month" | "today";
@@ -21,6 +21,7 @@ interface CalendarDayProps extends CommonCalendarProps {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
+    currentView: View;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
 }
@@ -34,6 +35,7 @@ export const InternalWeekSelectionCalendarDay = ({
     onHover,
     minDate,
     maxDate,
+    currentView,
     allowDisabledSelection,
 }: CalendarDayProps) => {
     // =============================================================================
@@ -157,6 +159,7 @@ export const InternalWeekSelectionCalendarDay = ({
                                                 : "regular"
                                         }
                                         $variant={variant}
+                                        $view={currentView}
                                         {...styleLabelProps}
                                     >
                                         {day.format("D")}
