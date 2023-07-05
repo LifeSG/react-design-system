@@ -1,5 +1,7 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useEffect, useState } from "react";
+import { FileUpload } from "src/file-upload";
+import { SimpleIdGenerator } from "src/util/simple-id-generator";
 import {
     Heading3,
     Heading4,
@@ -8,8 +10,7 @@ import {
     StoryContainer,
     Title,
 } from "../storybook-common";
-import { FileUpload } from "src/file-upload";
-import { SimpleIdGenerator } from "src/util/simple-id-generator";
+import { PropsTable } from "./props-table.tsx";
 
 <Meta title="Modules/FileUpload" component={FileUpload} />
 
@@ -98,7 +99,8 @@ Each file item comes with an error display to indicate that the upload has faile
                     onChange={handleChange}
                     onDelete={handleDelete}
                     title="Content title"
-                    description="Additional description for the user to consider when uploading their files."
+                    description="Try dragging or adding a file to see the error state"
+                    errorMessage="This is a sample error"
                     warning={
                         <>
                             Maximum size per file: 2 MB
@@ -196,12 +198,21 @@ The component also enables you to add a description to the file item. Note that
 this does not alter the file in any way and is up to the discretion of the user
 of the component to decide what to do with it.
 
-Currently only image file uploads have this feature.
+> **Note**: Currently only image file uploads have this feature.
 
 <Canvas>
     <Story name="Editable file items">
         {() => {
-            const [fileItems, setFileItems] = useState([]);
+            const [fileItems, setFileItems] = useState([
+                {
+                    id: "1",
+                    name: "img-1.jpg",
+                    type: "image/jpeg",
+                    size: 5000,
+                    thumbnailImageDataUrl:
+                        "https://picsum.photos/seed/picsum/200/300",
+                },
+            ]);
             const handleChange = (files) => {
                 const newFileItems = files.map((file) => {
                     return {
@@ -319,6 +330,40 @@ the flexibility to reorder items after uploading them.
     </Story>
 </Canvas>
 
+<Heading3>Readonly state</Heading3>
+
+<Canvas>
+    <Story name="Readonly state">
+        {() => {
+            const [fileItems, setFileItems] = useState([
+                {
+                    id: "1",
+                    name: "img-1.jpg",
+                    type: "image/jpeg",
+                    size: 5000,
+                    description: "An evening sunset picture",
+                    thumbnailImageDataUrl:
+                        "https://picsum.photos/seed/picsum/200/300",
+                },
+                {
+                    id: "2",
+                    name: "pdf-doc-2.pdf",
+                    type: "application/pdf",
+                    size: 3000,
+                },
+            ]);
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    readOnly
+                    title="Readonly file items"
+                    description="In this state, you cannot sort nor interact with any of the items"
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Secondary>Component API</Secondary>
 
-To be added at the end
+<PropsTable />

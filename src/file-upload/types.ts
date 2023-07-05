@@ -42,7 +42,7 @@ export interface FileUploadProps extends FileInputProps {
     maxFiles?: number | undefined;
     warning?: string | JSX.Element | undefined;
     fileItems?: FileItemProps[] | undefined;
-    /** If set, file items will be editable (only image files) */
+    /** If set, file items will have editable descriptions (only image files) */
     editableFileItems?: boolean | undefined;
     /** The max length of the description of the file (only image files) */
     descriptionMaxLength?: number | undefined;
