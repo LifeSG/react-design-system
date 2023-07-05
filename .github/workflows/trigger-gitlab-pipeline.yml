@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Check GitHub Events
         run: |
-          echo EVENT: $GITHUB_EVENT_NAME
-          echo REF: $GITHUB_REF_NAME
+          echo "EVENT: $GITHUB_EVENT_NAME"
+          echo "REF: $GITHUB_REF_NAME"
 
       # - name: Trigger GitLab Pipeline
       #   env:
