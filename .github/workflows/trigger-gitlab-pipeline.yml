@@ -26,4 +26,4 @@ jobs:
               --form "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
               --form "variables[PIPELINE_EVENT]=$GITHUB_EVENT_NAME" \
               --form "variables[PIPELINE_BRANCH_REF]=$GITHUB_REF_NAME" \
-              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline" | jq -r '.web_url
+              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline" | jq -r '.web_url'
