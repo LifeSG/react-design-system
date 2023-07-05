@@ -4,28 +4,26 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   trigger_pipeline:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check GitHub Events
+      - name: Trigger GitLab Pipeline
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_ENDPOINT: ${{ vars.GITLAB_ENDPOINT }}
+          GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
+          GITLAB_REPO_NAME: ${{ vars.GITLAB_REPO_NAME }}
         run: |
-          echo "EVENT: $GITHUB_EVENT_NAME"
-          echo "REF: $GITHUB_REF_NAME"
-
-      # - name: Trigger GitLab Pipeline
-      #   env:
-      #     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-      #     GITLAB_ENDPOINT: ${{ vars.GITLAB_ENDPOINT }}
-      #     GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
-      #     GITLAB_REPO_NAME: ${{ vars.GITLAB_REPO_NAME }}
-      #   run: |
-      #     curl --request POST \
-      #         --fail \
-      #         --form token=$GITLAB_TOKEN \
-      #         --form "ref=main" \
-      #         --form "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
-      #         --form "variables[PIPELINE_EVENT]=$GITLAB_REPO_NAME" \
-      #         --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline"
+          curl --request POST \
+              --fail \
+              --form token=$GITLAB_TOKEN \
+              --form "ref=main" \
+              --form "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
+              --form "variables[PIPELINE_EVENT]=$GITHUB_EVENT_NAME" \
+              --form "variables[PIPELINE_BRANCH_REF]=$GITHUB_REF_NAME" \
+              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline"
