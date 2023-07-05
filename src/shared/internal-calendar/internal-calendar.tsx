@@ -161,6 +161,24 @@ export const Component = (
                         onHover={handleDateHover}
                     />
                 );
+            default:
+                // render for standalone type
+                return (
+                    <InternalCalendarDay
+                        calendarDate={calendarDate}
+                        currentFocus={currentFocus}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        selectedEndDate={selectedEndDate}
+                        variant={variant}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        isNewSelection={selectWithinRange}
+                        allowDisabledSelection={allowDisabledSelection}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                    />
+                );
         }
     };
 
