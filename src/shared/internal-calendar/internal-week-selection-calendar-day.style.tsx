@@ -128,9 +128,10 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
         content: "";
         display: block;
         position: absolute;
-        width: calc(3.5rem / 2);
+        width: 1.75rem; // width must larger than half original width to cover middle border curve and border shadow
         pointer-events: none;
         height: 100%;
+        top: 0;
     }
 
     ${(props) => {
@@ -140,7 +141,6 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
 
                 ::before {
                     background-color: ${Color.Accent.Light[6]};
-                    top: 0;
                 }
             `;
         }
@@ -153,7 +153,6 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
 
                 ::before {
                     background-color: ${Color.Accent.Light[5]};
-                    top: 0;
                 }
             `;
         }
@@ -164,7 +163,6 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
             return css`
                 ::before {
                     background-color: ${Color.Neutral[8]};
-                    top: 0;
                 }
             `;
         }
@@ -187,19 +185,17 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
             case "left":
                 return css`
                     display: block;
-                    border-right-color: transparent;
 
                     ::before {
-                        right: -0.45rem;
+                        left: 50%;
                     }
                 `;
             case "right":
                 return css`
                     display: block;
-                    border-left-color: transparent;
 
                     ::before {
-                        left: -0.45rem;
+                        right: 50%;
                     }
                 `;
         }
