@@ -2,18 +2,9 @@ import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
-import {
-    DayLabel,
-    GrowDayCell,
-    HeaderCell,
-    InteractiveCircle,
-    OverflowCircle,
-    OverflowDisplay,
-    RowDayCell,
-    Wrapper,
-} from "./internal-week-selection-calendar-day.style";
 import { CommonCalendarProps, View } from "./types";
-import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
+import { CalendarDayCell } from "./calendar-day-cell";
+import { HeaderCell, Wrapper } from "./internal-calendar-day.style";
 
 export type DayVariant = "default" | "other-month" | "today";
 
@@ -76,18 +67,6 @@ export const InternalWeekSelectionCalendarDay = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const generateDayStatus = (day: Dayjs) => {
-        const variant: DayVariant =
-            calendarDate.month() !== day.month()
-                ? "other-month"
-                : dayjs().isSame(day, "day")
-                ? "today"
-                : "default";
-
-        return {
-            variant,
-        };
-    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -100,87 +79,24 @@ export const InternalWeekSelectionCalendarDay = ({
         ));
     };
 
-    const renderDayCells = () => {
-        return weeksOfTheMonth.map((week, weekIndex) => {
-            return (
-                <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
-                    {week.map((day, dayIndex) => {
-                        const formattedDay = day.format("YYYY-MM-DD");
-                        const { variant } = generateDayStatus(day);
-
-                        const {
-                            styleLeftProps,
-                            styleRightProps,
-                            styleCircleProps,
-                            styleLabelProps,
-                            styleOverflowCirleProps,
-                        } = CalendarDayStyleHelper.getStylePropsForWeekSelection(
-                            day,
-                            selectedStartDate,
-                            selectedEndDate,
-                            hoverValue,
-                            minDate,
-                            maxDate,
-                            disabledDates,
-                            allowDisabledSelection
-                        );
-
-                        return (
-                            <GrowDayCell key={`day-${dayIndex}`}>
-                                <OverflowDisplay
-                                    $position="left"
-                                    {...styleLeftProps}
-                                />
-                                <OverflowDisplay
-                                    $position="right"
-                                    {...styleRightProps}
-                                />
-                                <InteractiveCircle
-                                    $variant={variant}
-                                    onClick={() =>
-                                        handleDayClick(
-                                            day,
-                                            !styleCircleProps.$interactive
-                                        )
-                                    }
-                                    onMouseEnter={() =>
-                                        handleHoverCell(
-                                            formattedDay,
-                                            !styleCircleProps.$interactive
-                                        )
-                                    }
-                                    {...styleCircleProps}
-                                    {...styleOverflowCirleProps}
-                                >
-                                    <DayLabel
-                                        weight={
-                                            styleLabelProps["$selected"]
-                                                ? "semibold"
-                                                : "regular"
-                                        }
-                                        $variant={variant}
-                                        $view={currentView}
-                                        {...styleLabelProps}
-                                    >
-                                        {day.format("D")}
-                                    </DayLabel>
-                                </InteractiveCircle>
-                                <OverflowCircle
-                                    {...styleCircleProps}
-                                    {...styleOverflowCirleProps}
-                                />
-                            </GrowDayCell>
-                        );
-                    })}
-                </RowDayCell>
-            );
-        });
-    };
-
     return (
         <Wrapper>
             {renderHeader()}
-            {renderDayCells()}
+            <CalendarDayCell
+                weeksOfTheMonth={weeksOfTheMonth}
+                calendarDate={calendarDate}
+                selectedStart={selectedStartDate}
+                selectedEnd={selectedEndDate}
+                hoverValue={hoverValue}
+                disabledDates={disabledDates}
+                minDate={minDate}
+                maxDate={maxDate}
+                currentView={currentView}
+                allowDisabledSelection={allowDisabledSelection}
+                onMouseLeave={handleMouseLeaveCell}
+                onDayClick={handleDayClick}
+                onHoverCell={handleHoverCell}
+            />
         </Wrapper>
     );
 };

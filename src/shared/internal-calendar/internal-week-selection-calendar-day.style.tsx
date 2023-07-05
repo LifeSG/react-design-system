@@ -1,87 +1,36 @@
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
-import { Text, TextStyleHelper } from "../../text";
-import { DayVariant } from "./internal-calendar-day";
 import { View } from "./types";
+import {
+    BaseInteractiveCircle,
+    BaseOverflowDisplay,
+    DayLabel,
+    DayLabelStyleProps,
+    StyleProps,
+} from "./internal-calendar-day.style";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-export interface StyleProps {
-    $disabledDisplay?: boolean;
-    $interactive?: boolean;
-    $overlap?: boolean;
-    $hovered?: boolean;
-    $selected?: boolean;
+interface OverflowDisplayProps extends StyleProps {
+    $position: "left" | "right";
 }
 
-export interface DayLabelStyleProps extends StyleProps {
-    $variant: DayVariant;
+export interface WeekDayLabelStyleProps extends DayLabelStyleProps {
     $view: View;
 }
 
 export interface OverflowCircleProps extends Partial<OverflowDisplayProps> {}
 
-interface OverflowDisplayProps extends StyleProps {
-    $position: "left" | "right";
-}
-
-interface InteractiveCircleProps
-    extends Omit<DayLabelStyleProps, "$view">,
+interface WeekInteractiveCircleProps
+    extends Omit<WeekDayLabelStyleProps, "$view">,
         OverflowCircleProps {}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div`
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    row-gap: 0.25rem;
-`;
-
-export const HeaderCell = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2.5rem;
-    pointer-events: none;
-    user-select: none;
-`;
-
-export const RowDayCell = styled.div`
-    grid-column: 1 / -1;
-    display: flex;
-`;
-
-export const GrowDayCell = styled.div`
-    display: flex;
-    position: relative;
-    height: 2.5rem;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-`;
-
-export const OverflowDisplay = styled.div<OverflowDisplayProps>`
-    position: absolute;
-    width: 50%;
-    height: 100%;
-
-    ${(props) => {
-        switch (props.$position) {
-            case "left":
-                return css`
-                    left: 0;
-                `;
-            case "right":
-                return css`
-                    right: 0;
-                `;
-        }
-    }}
-
+export const WeekOverflowDisplay = styled(BaseOverflowDisplay)`
     ${(props) => {
         const { $hovered, $selected } = props;
 
@@ -101,7 +50,6 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
             `;
         }
     }}
-
 
     ${(props) => {
         if (props.$overlap) {
@@ -202,16 +150,9 @@ export const OverflowCircle = styled.div<OverflowCircleProps>`
     }}
 `;
 
-export const InteractiveCircle = styled.div<InteractiveCircleProps>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    cursor: default;
-    position: absolute;
-
+export const WeekInteractiveCircle = styled(
+    BaseInteractiveCircle
+)<WeekInteractiveCircleProps>`
     ${(props) => {
         const { $hovered, $selected, $position } = props;
 
@@ -265,6 +206,7 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
             `;
         }
     }}
+    
     ${(props) => {
         const { $disabledDisplay, $overlap, $selected, $variant } = props;
 
@@ -293,51 +235,12 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
     }}
 `;
 
-export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
+export const WeekDayLabel = styled(DayLabel)<WeekDayLabelStyleProps>`
     ${(props) => {
         if (props.$view === "default") {
             return css`
                 z-index: 1;
             `;
-        }
-    }}
-
-    ${(props) => {
-        const { $disabledDisplay, $selected, $variant } = props;
-
-        if ($disabledDisplay && $selected) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Accent.Light[2]};
-            `;
-        }
-
-        if ($disabledDisplay) {
-            return css`
-                color: ${Color.Neutral[4]};
-            `;
-        }
-
-        if ($selected) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Primary};
-            `;
-        }
-
-        switch ($variant) {
-            case "other-month":
-                return css`
-                    color: ${Color.Neutral[4]};
-                `;
-            case "today":
-                return css`
-                    color: ${Color.Neutral[3]};
-                `;
-            case "default":
-                return css`
-                    color: ${Color.Neutral[1]};
-                `;
         }
     }}
 `;
