@@ -20,7 +20,6 @@ jobs:
                   curl --request POST \
                       --fail \
                       --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
-                      # --form token=$GITLAB_TOKEN \
                       --form "ref=main" \
                       --form "variables[PIPELINE_PROJECT_NAME]=$GITLAB_REPO_NAME" \
                       --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline"
