@@ -1,4 +1,3 @@
-import React from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { CommonCalendarProps, FocusType, View } from "./types";
 import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
@@ -19,8 +18,7 @@ import {
 
 type Variant = "regular" | "week";
 
-interface CalendarDayCellProps extends CommonCalendarProps {
-    // Common props
+interface CommanCalendarDayCellProps extends CommonCalendarProps {
     weeksOfTheMonth: Dayjs[][];
     calendarDate: Dayjs;
     selectedStart: string;
@@ -30,13 +28,25 @@ interface CalendarDayCellProps extends CommonCalendarProps {
     onDayClick: (value: Dayjs, isDisabled: boolean) => void;
     onHoverCell: (value: string, isDisabled: boolean) => void;
     onMouseLeave: () => void;
-    // Only for regular
-    currentFocus?: FocusType | undefined;
-    hoverDirection?: HoverDirection | undefined;
-    isNewSelection?: boolean | undefined;
-    // Only for week
-    currentView?: View | undefined;
 }
+
+type ConditionProps =
+    | {
+          variant: "regular";
+          currentView?: never;
+          currentFocus: FocusType;
+          hoverDirection: HoverDirection;
+          isNewSelection: boolean;
+      }
+    | {
+          variant: "week";
+          currentView: View;
+          currentFocus?: never;
+          hoverDirection?: never;
+          isNewSelection?: never;
+      };
+
+type CalendarDayCellProps = CommanCalendarDayCellProps & ConditionProps;
 
 export const CalendarDayCell = ({
     weeksOfTheMonth,
