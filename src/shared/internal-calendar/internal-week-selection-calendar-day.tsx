@@ -1,9 +1,9 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
-import { CalendarHelper } from "../../util/calendar-helper";
 import { CommonCalendarProps, View } from "./types";
 import { CalendarDayCell } from "./calendar-day-cell";
+import { CalendarHelper } from "../../util/calendar-helper";
 import { HeaderCell, Wrapper } from "./internal-calendar-day.style";
 
 export type DayVariant = "default" | "other-month" | "today";
@@ -83,6 +83,7 @@ export const InternalWeekSelectionCalendarDay = ({
         <Wrapper>
             {renderHeader()}
             <CalendarDayCell
+                variant="week"
                 weeksOfTheMonth={weeksOfTheMonth}
                 calendarDate={calendarDate}
                 selectedStart={selectedStartDate}
