@@ -80,7 +80,7 @@ export const InternalWeekSelectionCalendarDay = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper data-testid="calendar-content">
             {renderHeader()}
             <CalendarDayCell
                 variant="week"

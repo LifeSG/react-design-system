@@ -1,9 +1,15 @@
 import React from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { CommonCalendarProps, View } from "./types";
+import { CommonCalendarProps, FocusType, View } from "./types";
 import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
-import { DayVariant } from "./internal-calendar-day";
-import { GrowDayCell, RowDayCell } from "./internal-calendar-day.style";
+import { DayVariant, HoverDirection } from "./internal-calendar-day";
+import {
+    DayLabel,
+    GrowDayCell,
+    InteractiveCircle,
+    OverflowDisplay,
+    RowDayCell,
+} from "./internal-calendar-day.style";
 import {
     OverflowCircle,
     WeekDayLabel,
@@ -14,16 +20,22 @@ import {
 type Variant = "regular" | "week";
 
 interface CalendarDayCellProps extends CommonCalendarProps {
+    // Common props
     weeksOfTheMonth: Dayjs[][];
     calendarDate: Dayjs;
     selectedStart: string;
     selectedEnd: string;
     hoverValue: string;
-    currentView: View;
     variant: Variant;
-    onMouseLeave: () => void;
     onDayClick: (value: Dayjs, isDisabled: boolean) => void;
     onHoverCell: (value: string, isDisabled: boolean) => void;
+    onMouseLeave: () => void;
+    // Only for regular
+    currentFocus?: FocusType | undefined;
+    hoverDirection?: HoverDirection | undefined;
+    isNewSelection?: boolean | undefined;
+    // Only for week
+    currentView?: View | undefined;
 }
 
 export const CalendarDayCell = ({
@@ -38,9 +50,12 @@ export const CalendarDayCell = ({
     currentView,
     allowDisabledSelection,
     variant,
-    onMouseLeave,
     onDayClick,
     onHoverCell,
+    onMouseLeave,
+    currentFocus,
+    hoverDirection,
+    isNewSelection,
 }: CalendarDayCellProps): JSX.Element => {
     // =============================================================================
     // HELPER FUNCTIONS
@@ -64,7 +79,75 @@ export const CalendarDayCell = ({
     const renderDayCells = () => {
         switch (variant) {
             case "regular":
-                break;
+                return weeksOfTheMonth.map((week, weekIndex) => {
+                    return (
+                        <RowDayCell key={weekIndex} onMouseLeave={onMouseLeave}>
+                            {week.map((day, dayIndex) => {
+                                const formattedDay = day.format("YYYY-MM-DD");
+                                const { variant } = generateDayStatus(day);
+                                const {
+                                    styleLeftProps,
+                                    styleRightProps,
+                                    styleCircleProps,
+                                    styleLabelProps,
+                                } = CalendarDayStyleHelper.generateStyleProps(
+                                    day,
+                                    selectedStart,
+                                    selectedEnd,
+                                    hoverValue,
+                                    hoverDirection,
+                                    currentFocus,
+                                    minDate,
+                                    maxDate,
+                                    disabledDates,
+                                    allowDisabledSelection,
+                                    isNewSelection
+                                );
+
+                                return (
+                                    <GrowDayCell key={`day-${dayIndex}`}>
+                                        <OverflowDisplay
+                                            $position="left"
+                                            {...styleLeftProps}
+                                        />
+                                        <OverflowDisplay
+                                            $position="right"
+                                            {...styleRightProps}
+                                        />
+                                        <InteractiveCircle
+                                            $variant={variant}
+                                            onClick={() =>
+                                                onDayClick(
+                                                    day,
+                                                    !styleCircleProps.$interactive
+                                                )
+                                            }
+                                            onMouseEnter={() =>
+                                                onHoverCell(
+                                                    formattedDay,
+                                                    !styleCircleProps.$interactive
+                                                )
+                                            }
+                                            {...styleCircleProps}
+                                        >
+                                            <DayLabel
+                                                weight={
+                                                    styleLabelProps["$selected"]
+                                                        ? "semibold"
+                                                        : "regular"
+                                                }
+                                                $variant={variant}
+                                                {...styleLabelProps}
+                                            >
+                                                {day.format("D")}
+                                            </DayLabel>
+                                        </InteractiveCircle>
+                                    </GrowDayCell>
+                                );
+                            })}
+                        </RowDayCell>
+                    );
+                });
             case "week":
                 return weeksOfTheMonth.map((week, weekIndex) => {
                     return (

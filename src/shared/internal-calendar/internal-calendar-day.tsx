@@ -3,22 +3,14 @@ import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
-import {
-    DayLabel,
-    GrowDayCell,
-    HeaderCell,
-    InteractiveCircle,
-    OverflowDisplay,
-    RowDayCell,
-    StyleProps,
-    Wrapper,
-} from "./internal-calendar-day.style";
 import { CommonCalendarProps, FocusType, InternalCalendarProps } from "./types";
+import { HeaderCell, Wrapper } from "./internal-calendar-day.style";
+import { CalendarDayCell } from "./calendar-day-cell";
 
 dayjs.extend(isBetween);
 
 export type DayVariant = "default" | "other-month" | "today";
-type HoverDirection =
+export type HoverDirection =
     | "hover-start"
     | "hover-end"
     | "overlap-start"
@@ -87,48 +79,6 @@ export const InternalCalendarDay = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const generateDayStatus = (day: Dayjs) => {
-        const variant: DayVariant =
-            calendarDate.month() !== day.month()
-                ? "other-month"
-                : dayjs().isSame(day, "day")
-                ? "today"
-                : "default";
-
-        return {
-            variant,
-        };
-    };
-
-    const isDisabled = (day: Dayjs): boolean => {
-        const isWithinRange = CalendarHelper.isWithinRange(
-            day,
-            minDate ? dayjs(minDate) : undefined,
-            maxDate ? dayjs(maxDate) : undefined
-        );
-
-        const isDisabledDate =
-            disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
-
-        return !isWithinRange || isDisabledDate;
-    };
-
-    const isOutsideSelectedRange = (day: Dayjs): boolean => {
-        const isStartAfterEnd =
-            currentFocus === "start" &&
-            selectedEndDate &&
-            day.isAfter(selectedEndDate) &&
-            isNewSelection;
-
-        const isEndBeforeStart =
-            currentFocus === "end" &&
-            selectedStartDate &&
-            day.isBefore(selectedStartDate) &&
-            isNewSelection;
-
-        return isStartAfterEnd || isEndBeforeStart;
-    };
-
     const getHoverDirection = (): HoverDirection => {
         if (!hoverValue || variant === "single") {
             return null;
@@ -186,202 +136,6 @@ export const InternalCalendarDay = ({
 
     const hoverDirection: HoverDirection = getHoverDirection();
 
-    const generateStyleProps = (day: Dayjs) => {
-        const dateStartWithYear = day.format("YYYY-MM-DD");
-
-        const styleLeftProps: StyleProps = {},
-            styleRightProps: StyleProps = {},
-            styleCircleProps: StyleProps = {},
-            styleLabelProps: StyleProps = {};
-        const disabled = isDisabled(day);
-        const isSelectedSame =
-            selectedStartDate &&
-            selectedEndDate &&
-            selectedStartDate === selectedEndDate;
-
-        if (
-            !isNewSelection &&
-            ["reset-start", "reset-end"].includes(hoverDirection) &&
-            [selectedStartDate, selectedEndDate].includes(dateStartWithYear)
-        ) {
-            styleCircleProps.$overlap = true;
-        }
-
-        // apply disabled styles
-
-        if (disabled || isOutsideSelectedRange(day)) {
-            styleCircleProps.$disabledDisplay = true;
-            styleLabelProps.$disabledDisplay = true;
-        }
-
-        styleCircleProps.$interactive = !disabled || allowDisabledSelection;
-
-        // apply selected styles
-
-        if ([selectedStartDate, selectedEndDate].includes(dateStartWithYear)) {
-            styleCircleProps.$selected = true;
-            styleLabelProps.$selected = true;
-        }
-
-        if (
-            selectedStartDate &&
-            selectedEndDate &&
-            !isSelectedSame &&
-            day.isBetween(selectedStartDate, selectedEndDate, "day", "[]")
-        ) {
-            styleLabelProps.$selected = true;
-            if (day.isSame(selectedStartDate)) {
-                styleRightProps.$selected = true;
-            } else if (day.isSame(selectedEndDate)) {
-                styleLeftProps.$selected = true;
-            } else {
-                styleLeftProps.$selected = true;
-                styleRightProps.$selected = true;
-            }
-        }
-
-        // apply hovered styles
-
-        if (
-            hoverDirection === "hover-start" &&
-            day.isBetween(selectedEndDate, hoverValue, "day", "[]")
-        ) {
-            styleLabelProps.$selected = true;
-
-            if (selectedEndDate === dateStartWithYear) {
-                styleLeftProps.$hovered = true;
-            } else if (hoverValue === dateStartWithYear) {
-                styleRightProps.$hovered = true;
-                styleCircleProps.$hovered = true;
-            } else {
-                styleLeftProps.$hovered = true;
-                styleRightProps.$hovered = true;
-            }
-        }
-
-        if (
-            hoverDirection === "hover-end" &&
-            day.isBetween(selectedStartDate, hoverValue, "day", "[]")
-        ) {
-            styleLabelProps.$selected = true;
-
-            if (selectedStartDate === dateStartWithYear) {
-                styleRightProps.$hovered = true;
-            } else if (hoverValue === dateStartWithYear) {
-                styleLeftProps.$hovered = true;
-                styleCircleProps.$hovered = true;
-            } else {
-                styleLeftProps.$hovered = true;
-                styleRightProps.$hovered = true;
-            }
-        }
-
-        if (
-            hoverDirection === "overlap-start" &&
-            day.isBetween(selectedEndDate, hoverValue, "day", "[]")
-        ) {
-            if (hoverValue === dateStartWithYear) {
-                styleRightProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedEndDate === dateStartWithYear) {
-                styleLeftProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-                styleCircleProps.$hovered = true;
-            } else {
-                styleLeftProps.$overlap = true;
-                styleRightProps.$overlap = true;
-            }
-        }
-
-        if (
-            hoverDirection === "overlap-end" &&
-            day.isBetween(selectedStartDate, hoverValue, "day", "[]")
-        ) {
-            if (hoverValue === dateStartWithYear) {
-                styleLeftProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedStartDate === dateStartWithYear) {
-                styleRightProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-                styleCircleProps.$hovered = true;
-            } else {
-                styleLeftProps.$overlap = true;
-                styleRightProps.$overlap = true;
-            }
-        }
-
-        if (
-            hoverDirection === "full-overlap-start" &&
-            day.isBetween(selectedEndDate, hoverValue, "day", "[]")
-        ) {
-            if (selectedStartDate === dateStartWithYear && isSelectedSame) {
-                styleLeftProps.$hovered = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedStartDate === dateStartWithYear) {
-                styleLeftProps.$hovered = true;
-                styleRightProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedEndDate === dateStartWithYear) {
-                styleLeftProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-            } else if (day.isSame(hoverValue)) {
-                styleRightProps.$hovered = true;
-                styleLabelProps.$selected = true;
-                styleCircleProps.$hovered = true;
-            } else if (
-                day.isBetween(selectedStartDate, hoverValue, "day", "()")
-            ) {
-                styleLeftProps.$hovered = true;
-                styleRightProps.$hovered = true;
-                styleLabelProps.$selected = true;
-            }
-        }
-
-        if (
-            hoverDirection === "full-overlap-end" &&
-            day.isBetween(selectedStartDate, hoverValue, "day", "[]")
-        ) {
-            if (selectedEndDate === dateStartWithYear && isSelectedSame) {
-                styleRightProps.$hovered = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedEndDate === dateStartWithYear) {
-                styleLeftProps.$overlap = true;
-                styleRightProps.$hovered = true;
-                styleCircleProps.$overlap = true;
-            } else if (selectedStartDate === dateStartWithYear) {
-                styleRightProps.$overlap = true;
-                styleCircleProps.$overlap = true;
-            } else if (day.isSame(hoverValue)) {
-                styleLeftProps.$hovered = true;
-                styleLabelProps.$selected = true;
-                styleCircleProps.$hovered = true;
-            } else if (
-                day.isBetween(selectedEndDate, hoverValue, "day", "()")
-            ) {
-                styleLeftProps.$hovered = true;
-                styleRightProps.$hovered = true;
-                styleLabelProps.$selected = true;
-            }
-        }
-
-        if (
-            ["full-overlap-end", "full-overlap-start"].includes(
-                hoverDirection
-            ) &&
-            day.isBetween(selectedStartDate, selectedEndDate, "day", "()")
-        ) {
-            styleLeftProps.$overlap = true;
-            styleRightProps.$overlap = true;
-        }
-
-        return {
-            styleLeftProps,
-            styleRightProps,
-            styleCircleProps,
-            styleLabelProps,
-        };
-    };
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -393,70 +147,27 @@ export const InternalCalendarDay = ({
         ));
     };
 
-    const renderDayCells = () => {
-        return weeksOfTheMonth.map((week, weekIndex) => {
-            return (
-                <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
-                    {week.map((day, dayIndex) => {
-                        const formattedDay = day.format("YYYY-MM-DD");
-                        const { variant } = generateDayStatus(day);
-                        const {
-                            styleLeftProps,
-                            styleRightProps,
-                            styleCircleProps,
-                            styleLabelProps,
-                        } = generateStyleProps(day);
-
-                        return (
-                            <GrowDayCell key={`day-${dayIndex}`}>
-                                <OverflowDisplay
-                                    $position="left"
-                                    {...styleLeftProps}
-                                />
-                                <OverflowDisplay
-                                    $position="right"
-                                    {...styleRightProps}
-                                />
-                                <InteractiveCircle
-                                    $variant={variant}
-                                    onClick={() =>
-                                        handleDayClick(
-                                            day,
-                                            !styleCircleProps.$interactive
-                                        )
-                                    }
-                                    onMouseEnter={() =>
-                                        handleHoverCell(
-                                            formattedDay,
-                                            !styleCircleProps.$interactive
-                                        )
-                                    }
-                                    {...styleCircleProps}
-                                >
-                                    <DayLabel
-                                        weight={
-                                            styleLabelProps["$selected"]
-                                                ? "semibold"
-                                                : "regular"
-                                        }
-                                        $variant={variant}
-                                        {...styleLabelProps}
-                                    >
-                                        {day.format("D")}
-                                    </DayLabel>
-                                </InteractiveCircle>
-                            </GrowDayCell>
-                        );
-                    })}
-                </RowDayCell>
-            );
-        });
-    };
-
     return (
         <Wrapper data-testid="calendar-content">
             {renderHeader()}
-            {renderDayCells()}
+            <CalendarDayCell
+                variant="regular"
+                weeksOfTheMonth={weeksOfTheMonth}
+                calendarDate={calendarDate}
+                selectedStart={selectedStartDate}
+                selectedEnd={selectedEndDate}
+                hoverValue={hoverValue}
+                disabledDates={disabledDates}
+                minDate={minDate}
+                maxDate={maxDate}
+                allowDisabledSelection={allowDisabledSelection}
+                currentFocus={currentFocus}
+                hoverDirection={hoverDirection}
+                isNewSelection={isNewSelection}
+                onMouseLeave={handleMouseLeaveCell}
+                onDayClick={handleDayClick}
+                onHoverCell={handleHoverCell}
+            />
         </Wrapper>
     );
 };
