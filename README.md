@@ -68,3 +68,9 @@ import { Button } from "@lifesg/react-design-system";
 ```
 
 To see the full suite of components available, visit our [Storybook documentation](https://designsystem.life.gov.sg/react/index.html?path=/story/getting-started-installation--page).
+
+<br />
+
+## Migrations
+
+If you are migrating from an older version of the Design System, you may refer to our [migration guides](https://github.com/LifeSG/react-design-system/wiki).
