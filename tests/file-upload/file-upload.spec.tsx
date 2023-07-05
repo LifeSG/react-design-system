@@ -71,7 +71,7 @@ describe("FileUpload", () => {
 
         it("should render the image files with description in the display view while files without description to be in the edit mode", () => {
             const fileItems: FileItemProps[] = [
-                { ...MOCK_IMAGE_ITEM, description: "Lorem ipsum" },
+                MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
                 {
                     id: "another",
                     name: "donald-duck.png",
@@ -98,6 +98,61 @@ describe("FileUpload", () => {
             expect(
                 rendered.getByTestId("another-edit-display")
             ).toBeInTheDocument();
+        });
+
+        it("should not render image files in edit mode if progress of less than 1 is indicated", () => {
+            const fileItems: FileItemProps[] = [
+                { ...MOCK_IMAGE_ITEM, progress: 0.5 },
+            ];
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
+
+            expect(
+                rendered.queryByTestId("some-edit-display")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-progress-bar")
+            ).toBeInTheDocument();
+        });
+
+        it("should not render image files in edit mode if there is an error for the file item", () => {
+            const fileItems: FileItemProps[] = [
+                { ...MOCK_IMAGE_ITEM, errorMessage: "Woops!" },
+            ];
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
+
+            expect(
+                rendered.queryByTestId("some-edit-display")
+            ).not.toBeInTheDocument();
+            expect(screen.getAllByText("Woops!")).toHaveLength(2); // render 2 elements. For mobile and desktop
+            expect(
+                rendered.getByTestId("some-error-delete-button")
+            ).toBeInTheDocument();
+        });
+
+        it("should render the thumbnail of a file if specified", () => {
+            const MOCK_IMG_DATA_URL =
+                "https://picsum.photos/seed/picsum/200/300";
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
+                    thumbnailImageDataUrl: MOCK_IMG_DATA_URL,
+                },
+            ];
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
+
+            expect(rendered.getByTestId("some-thumbnail")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-thumbnail-image")
+            ).toHaveAttribute("src", MOCK_IMG_DATA_URL);
         });
     });
 
@@ -222,6 +277,89 @@ describe("FileUpload", () => {
             });
         });
     });
+
+    describe("Sort", () => {
+        it("should render the drag handles for the items if they are sortable", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
+                    id: "imageFile",
+                },
+                MOCK_NON_IMAGE_FILE,
+            ];
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems sortable />
+            );
+
+            expect(
+                rendered.getByTestId("imageFile-drag-handle")
+            ).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-drag-handle")
+            ).toBeInTheDocument();
+        });
+
+        it("should not render the drag handle if there are items in edit mode", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_IMAGE_ITEM,
+                    id: "imageFile",
+                },
+                MOCK_NON_IMAGE_FILE,
+            ];
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems sortable />
+            );
+
+            expect(
+                rendered.queryByTestId("imageFile-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.queryByTestId("some-drag-handle")
+            ).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Readonly", () => {
+        it("should not render the action buttons if the component is in readOnly mode", () => {
+            const fileItems: FileItemProps[] = [
+                MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
+                {
+                    ...MOCK_NON_IMAGE_FILE,
+                    errorMessage: "Some error",
+                    id: "another",
+                },
+            ];
+
+            const rendered = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    readOnly
+                    editableFileItems
+                    sortable
+                />
+            );
+
+            const { queryByTestId } = rendered;
+
+            expect(queryByTestId("some-delete-button")).not.toBeInTheDocument();
+            expect(
+                queryByTestId("some-editable-button")
+            ).not.toBeInTheDocument();
+            expect(queryByTestId("some-drag-handle")).not.toBeInTheDocument();
+            expect(
+                queryByTestId("another-delete-button")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("another-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("another-error-delete-button")
+            ).not.toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================
@@ -235,6 +373,10 @@ const MOCK_IMAGE_ITEM = {
     type: "image/png",
     size: 3000,
     truncateText: false, // Test purposes
+};
+const MOCK_IMAGE_ITEM_WITH_DESCRIPTION = {
+    ...MOCK_IMAGE_ITEM,
+    description: "Some description",
 };
 
 const MOCK_FILE_ITEMS = [MOCK_IMAGE_ITEM];

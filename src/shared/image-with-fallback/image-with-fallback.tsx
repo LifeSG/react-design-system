@@ -3,12 +3,14 @@ export interface ImageWithFallbackProps {
     src: string;
     alt?: string | undefined;
     className?: string | undefined;
+    "data-testid"?: string | undefined;
 }
 
 export const ImageWithFallback = ({
     src,
     alt,
     className,
+    "data-testid": testId,
 }: ImageWithFallbackProps) => {
     const handleError = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
@@ -22,6 +24,7 @@ export const ImageWithFallback = ({
             src={src}
             alt={alt || ""}
             className={className}
+            data-testid={testId}
             onError={handleError}
         />
     );

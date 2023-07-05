@@ -175,6 +175,7 @@ const Component = ({
         <>
             <FileListItemThumbnail
                 thumbnailImageDataUrl={thumbnailImageDataUrl}
+                data-testid={`${id}-thumbnail`}
             />
             <ExtendedNameSection>
                 <NameSection ref={detailSectionRef}>
@@ -230,7 +231,12 @@ const Component = ({
                 </ErrorIconButton>
             );
         } else if (isLoading) {
-            content = <ProgressBar progress={progress} />;
+            content = (
+                <ProgressBar
+                    progress={progress}
+                    data-testid={`${id}-progress-bar`}
+                />
+            );
         } else {
             content = (
                 <>
@@ -289,7 +295,10 @@ const Component = ({
             {...(sortable ? sortableProps : {})}
         >
             {shouldEnableSort() && (
-                <DragHandleIcon $disabled={shouldDisable()} />
+                <DragHandleIcon
+                    data-testid={`${id}-drag-handle`}
+                    $disabled={shouldDisable()}
+                />
             )}
             <Box
                 $focused={focusType === "self"}

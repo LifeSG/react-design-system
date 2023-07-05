@@ -6,12 +6,14 @@ import { TextStyleHelper } from "../../text";
 
 interface Props {
     thumbnailImageDataUrl: string;
+    "data-testid"?: string | undefined;
     renderReplaceButton?: boolean | undefined;
     onReplaceClick?: (() => void) | undefined;
 }
 
 export const FileListItemThumbnail = ({
     thumbnailImageDataUrl,
+    "data-testid": testId,
     renderReplaceButton,
     onReplaceClick,
 }: Props) => {
@@ -22,8 +24,11 @@ export const FileListItemThumbnail = ({
     };
 
     return (
-        <Container>
-            <Thumbnail src={thumbnailImageDataUrl} />
+        <Container data-testId={testId}>
+            <Thumbnail
+                data-testid={testId ? `${testId}-image` : undefined}
+                src={thumbnailImageDataUrl}
+            />
             {renderReplaceButton && (
                 <ReplaceButton type="button" onClick={handleReplace}>
                     Replace
