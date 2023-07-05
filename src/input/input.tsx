@@ -112,7 +112,7 @@ const Component = (
             />
             {shouldShowClear() && (
                 <ClearContainer onClick={handleClear} type="button">
-                    <ClearIcon />
+                    <ClearIcon aria-hidden />
                 </ClearContainer>
             )}
         </InputWrapper>
