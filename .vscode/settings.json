@@ -11,10 +11,7 @@
         "typescriptreact",
         "mdx"
     ],
-    "editor.rulers": [80],
-		"typescript.preferences.importModuleSpecifier": "relative",
-		"yaml.schemas": {
-			"https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json": "file:///Users/wayne/Documents/lifesg/ci-scripts/**/*.yml",
-			"https://json.schemastore.org/github-workflow.json": "file:///Users/wayne/Documents/gvt-lifesg/ccubesg/react-design-system/.github/workflows/trigger-gitlab-pipeline.yml"
-		}
+		"editor.rulers": [
+			80
+		]
 }
