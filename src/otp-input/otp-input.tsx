@@ -226,6 +226,7 @@ export const OtpInput = ({
             )}
             <CTAButton
                 styleType={styleType}
+                type="button"
                 {...otherCtaProps}
                 onClick={handleClick}
                 disabled={disabled || isWithinCooldown()}
