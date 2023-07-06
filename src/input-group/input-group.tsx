@@ -30,6 +30,7 @@ const Component = <T, V>(
                 if (listAddon.options && listAddon.options.length > 0) {
                     return (
                         <InputGroupListAddon
+                            ref={ref}
                             addon={addon}
                             error={error}
                             className={className}
@@ -61,6 +62,7 @@ const Component = <T, V>(
                                 {customAddon.children}
                             </AddOnContainer>
                             <MainInput
+                                ref={ref}
                                 {...otherProps}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}
@@ -93,6 +95,7 @@ const Component = <T, V>(
                                 {labelAddon.value}
                             </AddOnContainer>
                             <MainInput
+                                ref={ref}
                                 {...otherProps}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}

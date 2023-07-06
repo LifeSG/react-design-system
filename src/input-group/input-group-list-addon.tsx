@@ -15,15 +15,18 @@ import {
 import { MainInput } from "./input-group.style";
 import { InputGroupProps, ListAddon } from "./types";
 
-export const InputGroupListAddon = <T, V>({
-    addon,
-    error,
-    onChange,
-    readOnly,
-    className,
-    onBlur,
-    ...otherProps
-}: InputGroupProps<T, V>) => {
+export const Component = <T, V>(
+    {
+        addon,
+        error,
+        onChange,
+        readOnly,
+        className,
+        onBlur,
+        ...otherProps
+    }: InputGroupProps<T, V>,
+    ref
+) => {
     const {
         placeholder,
         options,
@@ -210,6 +213,7 @@ export const InputGroupListAddon = <T, V>({
             {renderSelector()}
             <Divider $readOnly={readOnly} $position={position} />
             <MainInput
+                ref={ref}
                 {...otherProps}
                 readOnly={readOnly}
                 error={error}
@@ -234,3 +238,5 @@ export const InputGroupListAddon = <T, V>({
         </DropdownWrapper>
     );
 };
+
+export const InputGroupListAddon = React.forwardRef(Component);
