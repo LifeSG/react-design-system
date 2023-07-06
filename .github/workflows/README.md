@@ -10,6 +10,12 @@ This file is responsible for creating the GitHub workflow and the job that trigg
 
 When a GitHub `push on master branch` or `pull request` is made it will trigger the job.
 
+Pull Request events that will trigger the pipeline are:
+
+-   `opened`: when opening of a PR
+-   `synchronize`: when a new commit is added to the PR
+-   `reopened`: when reopening of a PR
+
 We have set variables in the settings of the GitHub repository that is needed to be passed into the trigger pipeline API.
 
 These variables are:
