@@ -146,12 +146,26 @@ export const UnitNumberInput = ({
         }
     };
 
+    const getNextInputState = (el: HTMLInputElement) => {
+        const rawValue = el.value;
+        const value = rawValue.toLocaleUpperCase().replace(/[^0-9A-Za-z]/g, "");
+
+        // offset the text caret to compensate for removed characters
+        const removed = rawValue.length - value.length;
+        const cursorPosition = Math.max(0, el.selectionEnd - removed);
+
+        return { value, cursorPosition };
+    };
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
+        const { value, cursorPosition } = getNextInputState(event.target);
 
-        const value = event.target.value
-            .toLocaleUpperCase()
-            .replace(/[^0-9A-Za-z]/, "");
+        // sync DOM value with the new state value
+        event.target.value = value;
+        // set text caret position to prevent jump on next render
+        event.target.selectionStart = cursorPosition;
+        event.target.selectionEnd = cursorPosition;
 
         if (targetName === "floor") {
             setFloorValue(value);
