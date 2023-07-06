@@ -4,8 +4,9 @@ import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { CommonCalendarProps, FocusType, InternalCalendarProps } from "./types";
-import { HeaderCell, Wrapper } from "./internal-calendar-day.style";
 import { CalendarDayCell } from "./calendar-day-cell";
+import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
+import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
 
 dayjs.extend(isBetween);
 
@@ -79,6 +80,19 @@ export const InternalCalendarDay = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const generateDayStatus = (day: Dayjs) => {
+        const variant: DayVariant =
+            calendarDate.month() !== day.month()
+                ? "other-month"
+                : dayjs().isSame(day, "day")
+                ? "today"
+                : "default";
+
+        return {
+            variant,
+        };
+    };
+
     const getHoverDirection = (): HoverDirection => {
         if (!hoverValue || variant === "single") {
             return null;
@@ -147,27 +161,55 @@ export const InternalCalendarDay = ({
         ));
     };
 
+    const renderDayCells = () => {
+        return weeksOfTheMonth.map((week, weekIndex) => {
+            return (
+                <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
+                    {week.map((day, dayIndex) => {
+                        const { variant } = generateDayStatus(day);
+                        const {
+                            styleLeftProps,
+                            styleRightProps,
+                            styleCircleProps,
+                            styleLabelProps,
+                        } = CalendarDayStyleHelper.generateStyleProps(
+                            day,
+                            selectedStartDate,
+                            selectedEndDate,
+                            hoverValue,
+                            hoverDirection,
+                            currentFocus,
+                            minDate,
+                            maxDate,
+                            disabledDates,
+                            allowDisabledSelection,
+                            isNewSelection
+                        );
+
+                        return (
+                            <CalendarDayCell
+                                key={`day-${dayIndex}`}
+                                type="regular"
+                                dayDate={day}
+                                variant={variant}
+                                styleLeftProps={styleLeftProps}
+                                styleRightProps={styleRightProps}
+                                styleCircleProps={styleCircleProps}
+                                styleLabelProps={styleLabelProps}
+                                onDayClick={handleDayClick}
+                                onHoverCell={handleHoverCell}
+                            />
+                        );
+                    })}
+                </RowDayCell>
+            );
+        });
+    };
+
     return (
         <Wrapper data-testid="calendar-content">
             {renderHeader()}
-            <CalendarDayCell
-                variant="regular"
-                weeksOfTheMonth={weeksOfTheMonth}
-                calendarDate={calendarDate}
-                selectedStart={selectedStartDate}
-                selectedEnd={selectedEndDate}
-                hoverValue={hoverValue}
-                disabledDates={disabledDates}
-                minDate={minDate}
-                maxDate={maxDate}
-                allowDisabledSelection={allowDisabledSelection}
-                currentFocus={currentFocus}
-                hoverDirection={hoverDirection}
-                isNewSelection={isNewSelection}
-                onMouseLeave={handleMouseLeaveCell}
-                onDayClick={handleDayClick}
-                onHoverCell={handleHoverCell}
-            />
+            {renderDayCells()}
         </Wrapper>
     );
 };

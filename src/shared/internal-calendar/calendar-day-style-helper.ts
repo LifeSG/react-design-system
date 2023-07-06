@@ -342,7 +342,7 @@ export namespace CalendarDayStyleHelper {
 // =============================================================================
 const isDisabled = (
     day: Dayjs,
-    disabledDates?: string[],
+    disabledDates?: string[] | undefined,
     minDate?: string | undefined,
     maxDate?: string | undefined
 ): boolean => {

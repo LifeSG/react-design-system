@@ -4,11 +4,11 @@ import { Text } from "../../text/text";
 import { CommonCalendarProps, View } from "./types";
 import { CalendarDayCell } from "./calendar-day-cell";
 import { CalendarHelper } from "../../util/calendar-helper";
-import { HeaderCell, Wrapper } from "./internal-calendar-day.style";
+import { DayVariant } from "./internal-calendar-day";
+import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
+import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
 
-export type DayVariant = "default" | "other-month" | "today";
-
-interface CalendarDayProps extends CommonCalendarProps {
+interface CalendarWeekSelectProps extends CommonCalendarProps {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
@@ -28,7 +28,7 @@ export const InternalWeekSelectionCalendarDay = ({
     maxDate,
     currentView,
     allowDisabledSelection,
-}: CalendarDayProps) => {
+}: CalendarWeekSelectProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -67,6 +67,18 @@ export const InternalWeekSelectionCalendarDay = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const generateDayStatus = (day: Dayjs) => {
+        const variant: DayVariant =
+            calendarDate.month() !== day.month()
+                ? "other-month"
+                : dayjs().isSame(day, "day")
+                ? "today"
+                : "default";
+
+        return {
+            variant,
+        };
+    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -79,25 +91,58 @@ export const InternalWeekSelectionCalendarDay = ({
         ));
     };
 
+    const renderDayCells = () => {
+        return weeksOfTheMonth.map((week, weekIndex) => {
+            return (
+                <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
+                    {week.map((day, dayIndex) => {
+                        const { variant } = generateDayStatus(day);
+                        const {
+                            styleLeftProps,
+                            styleRightProps,
+                            styleCircleProps,
+                            styleLabelProps,
+                            styleOverflowCirleProps,
+                        } =
+                            CalendarDayStyleHelper.getStylePropsForWeekSelection(
+                                day,
+                                selectedStartDate,
+                                selectedEndDate,
+                                hoverValue,
+                                minDate,
+                                maxDate,
+                                disabledDates,
+                                allowDisabledSelection
+                            );
+
+                        return (
+                            <CalendarDayCell
+                                key={`day-${dayIndex}`}
+                                type="week"
+                                dayDate={day}
+                                variant={variant}
+                                currentView={currentView}
+                                styleLeftProps={styleLeftProps}
+                                styleRightProps={styleRightProps}
+                                styleCircleProps={styleCircleProps}
+                                styleLabelProps={styleLabelProps}
+                                styleOverflowCirleProps={
+                                    styleOverflowCirleProps
+                                }
+                                onDayClick={handleDayClick}
+                                onHoverCell={handleHoverCell}
+                            />
+                        );
+                    })}
+                </RowDayCell>
+            );
+        });
+    };
+
     return (
         <Wrapper data-testid="calendar-content">
             {renderHeader()}
-            <CalendarDayCell
-                variant="week"
-                weeksOfTheMonth={weeksOfTheMonth}
-                calendarDate={calendarDate}
-                selectedStart={selectedStartDate}
-                selectedEnd={selectedEndDate}
-                hoverValue={hoverValue}
-                disabledDates={disabledDates}
-                minDate={minDate}
-                maxDate={maxDate}
-                currentView={currentView}
-                allowDisabledSelection={allowDisabledSelection}
-                onMouseLeave={handleMouseLeaveCell}
-                onDayClick={handleDayClick}
-                onHoverCell={handleHoverCell}
-            />
+            {renderDayCells()}
         </Wrapper>
     );
 };
