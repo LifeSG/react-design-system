@@ -30,6 +30,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The style of the pill",
                 propTypes: [`"solid"`, `"outline"`],
             },
+            {
+                name: "icon",
+                mandatory: false,
+                description: "Display icon of the pill",
+                propTypes: ["JSX.Element"],
+            },
         ],
     },
 ];

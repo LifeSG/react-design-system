@@ -13,7 +13,7 @@ interface StyleProps {
 
 export const Wrapper = styled.div<StyleProps>`
     border-radius: 16px;
-    padding: 4px 8px;
+    padding: 2px 8px;
     text-align: center;
     width: inherit;
     ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
@@ -99,4 +99,19 @@ export const Content = styled.div`
     align-items: center;
     justify-content: center;
     gap: 4px;
+`;
+
+export const Icon = styled.div`
+    display: flex;
+    svg {
+        flex-shrink: 0;
+    }
+`;
+
+export const Label = styled.div`
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-align: left;
 `;

@@ -1,11 +1,13 @@
+import React from "react";
 import { PillProps } from "./types";
-import { Content, Wrapper } from "./pill.style";
+import { Content, Icon, Label, Wrapper } from "./pill.style";
 
 export const Pill = ({
     type,
     colorType = "black",
     className,
     children,
+    icon,
     ...otherProps
 }: PillProps): JSX.Element => {
     return (
@@ -15,7 +17,10 @@ export const Pill = ({
             $type={type}
             $color={colorType}
         >
-            <Content>{children}</Content>
+            <Content>
+                {icon && <Icon>{icon}</Icon>}
+                <Label>{children}</Label>
+            </Content>
         </Wrapper>
     );
 };

@@ -46,14 +46,23 @@ Example of `Pill` usage with icon.
 <Canvas>
     <Story name="With Icon">
         <Wrapper>
-            <Pill type="outline" data-testid="first-example">
-                <PlusCircleFillIcon /> Status Label
+            <Pill
+                type="outline"
+                icon={<PlusCircleFillIcon />}
+                data-testid="first-example"
+            >
+                Status Label
             </Pill>
         </Wrapper>
         <br />
         <Wrapper>
-            <Pill type="solid" colorType="blue" data-testid="second-example">
-                <PlaceholderIcon /> Status Label
+            <Pill
+                type="solid"
+                colorType="blue"
+                icon={<PlaceholderIcon />}
+                data-testid="second-example"
+            >
+                Status Label
             </Pill>
         </Wrapper>
     </Story>
