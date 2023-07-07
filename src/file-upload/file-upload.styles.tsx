@@ -56,3 +56,7 @@ export const UploadButtonLabel = styled.label`
         visibility: hidden;
     }
 `;
+
+export const ErrorAlert = styled(Alert)`
+    margin-bottom: 2rem;
+`;

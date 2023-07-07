@@ -36,9 +36,10 @@ type RenderItem = FileItemProps | FileItemProps[];
 interface Props {
     fileItems: FileItemProps[];
     editableFileItems: boolean;
-    descriptionMaxLength?: number | undefined;
+    fileDescriptionMaxLength?: number | undefined;
     sortable?: boolean | undefined;
     disabled?: boolean | undefined;
+    readOnly?: boolean | undefined;
     onItemUpdate: (item: FileItemProps) => void;
     onItemDelete: (item: FileItemProps) => void;
     onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
@@ -51,9 +52,10 @@ interface Props {
 export const FileList = ({
     fileItems,
     editableFileItems,
-    descriptionMaxLength,
+    fileDescriptionMaxLength,
     sortable,
     disabled,
+    readOnly,
     onItemUpdate,
     onItemDelete,
     onSort,
@@ -178,7 +180,13 @@ export const FileList = ({
     };
 
     const shouldRenderEditMode = (item: FileItemProps) => {
-        return checkEditable(item) && !item.description;
+        return (
+            !item.errorMessage &&
+            !readOnly &&
+            !(typeof item.progress === "number" && item.progress < 1) &&
+            checkEditable(item) &&
+            !item.description
+        );
     };
 
     const getItemsRenderMode = (
@@ -272,7 +280,7 @@ export const FileList = ({
                     key={item.id}
                     fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
-                    descriptionMaxLength={descriptionMaxLength}
+                    fileDescriptionMaxLength={fileDescriptionMaxLength}
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
                     onBlur={handleBlurEdit(item)}
@@ -304,6 +312,7 @@ export const FileList = ({
                         wrapperWidth={wrapperWidth}
                         sortable={shouldEnableSort()}
                         disabled={disabled}
+                        readOnly={readOnly}
                         onDelete={handleDelete(item)}
                         onEditClick={handleInitiateEdit(item)}
                     />
@@ -312,8 +321,14 @@ export const FileList = ({
         });
     };
 
-    if (disabled || !shouldEnableSort()) {
-        return <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>;
+    if (!fileItems || fileItems.length === 0) return null;
+
+    if (disabled || readOnly || !shouldEnableSort()) {
+        return (
+            <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
+                {renderItems()}
+            </ListWrapper>
+        );
     } else {
         return (
             <DndContext
@@ -325,7 +340,9 @@ export const FileList = ({
                     items={fileItems}
                     strategy={verticalListSortingStrategy}
                 >
-                    <ListWrapper ref={wrapperRef}>{renderItems()}</ListWrapper>
+                    <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
+                        {renderItems()}
+                    </ListWrapper>
                 </SortableContext>
             </DndContext>
         );

@@ -9,10 +9,21 @@ interface Props {
     /** Progress from 0 to 1 */
     progress: number;
     color?: string | ThemeColorFunctions | undefined;
+    "data-testid"?: string | undefined;
 }
 
-export const ProgressBar = ({ className, progress, color }: Props) => (
-    <Bar className={className} $innerWidth={progress} $color={color}>
+export const ProgressBar = ({
+    className,
+    progress,
+    color,
+    "data-testid": testId,
+}: Props) => (
+    <Bar
+        className={className}
+        $innerWidth={progress}
+        $color={color}
+        data-testid={testId}
+    >
         <progress value={progress * 100} max={100} />
     </Bar>
 );

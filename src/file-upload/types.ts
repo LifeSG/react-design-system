@@ -42,12 +42,16 @@ export interface FileUploadProps extends FileInputProps {
     maxFiles?: number | undefined;
     warning?: string | JSX.Element | undefined;
     fileItems?: FileItemProps[] | undefined;
-    /** If set, file items will be editable (only image files) */
+    /** If set, file items will have editable descriptions (only image files) */
     editableFileItems?: boolean | undefined;
     /** The max length of the description of the file (only image files) */
-    descriptionMaxLength?: number | undefined;
+    fileDescriptionMaxLength?: number | undefined;
     /** Specifies if sorting is enabled for the file items */
     sortable?: boolean | undefined;
+    /** The general error message for the component */
+    errorMessage?: string | undefined;
+    /** Indicates if the component is in the readonly state */
+    readOnly?: boolean | undefined;
     /** Called when an upload happens via drag drop or click */
     onChange?: ((files: File[]) => void) | undefined;
     /** Called when an update to the description happens */

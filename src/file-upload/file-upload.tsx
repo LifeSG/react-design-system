@@ -4,6 +4,7 @@ import { DropzoneElement, FileUploadDropzone } from "./dropzone";
 import { FileList } from "./file-list";
 import {
     Description,
+    ErrorAlert,
     Title,
     TitleContainer,
     UploadButton,
@@ -28,8 +29,10 @@ export const FileUpload = ({
     multiple,
     disabled,
     sortable = false,
-    descriptionMaxLength,
+    fileDescriptionMaxLength,
     editableFileItems = false,
+    errorMessage,
+    readOnly,
     onChange,
     onDelete,
     onEdit,
@@ -101,7 +104,7 @@ export const FileUpload = ({
                 className={className}
                 name={name}
                 multiple={multiple}
-                disabled={disabled || reachedMaxFiles()}
+                disabled={disabled || reachedMaxFiles() || readOnly}
             >
                 {(title || description) && (
                     <TitleContainer>
@@ -119,24 +122,32 @@ export const FileUpload = ({
                 <FileList
                     fileItems={fileItems}
                     editableFileItems={editableFileItems}
-                    descriptionMaxLength={descriptionMaxLength}
+                    fileDescriptionMaxLength={fileDescriptionMaxLength}
                     sortable={sortable}
                     disabled={disabled}
+                    readOnly={readOnly}
                     onItemDelete={handleItemDelete}
                     onItemUpdate={handleItemUpdate}
                     onSort={handleSort}
                 />
-                <UploadButtonContainer>
-                    <UploadButton
-                        type="button"
-                        styleType="secondary"
-                        disabled={!!activeId || disabled || reachedMaxFiles()}
-                        onClick={handleUploadButtonClick}
-                    >
-                        Upload files
-                    </UploadButton>
-                    <UploadButtonLabel>or drop them here</UploadButtonLabel>
-                </UploadButtonContainer>
+                {errorMessage && (
+                    <ErrorAlert type="error">{errorMessage}</ErrorAlert>
+                )}
+                {!readOnly && (
+                    <UploadButtonContainer>
+                        <UploadButton
+                            type="button"
+                            styleType="secondary"
+                            disabled={
+                                !!activeId || disabled || reachedMaxFiles()
+                            }
+                            onClick={handleUploadButtonClick}
+                        >
+                            Upload files
+                        </UploadButton>
+                        <UploadButtonLabel>or drop them here</UploadButtonLabel>
+                    </UploadButtonContainer>
+                )}
             </FileUploadDropzone>
         </FileUploadContext.Provider>
     );

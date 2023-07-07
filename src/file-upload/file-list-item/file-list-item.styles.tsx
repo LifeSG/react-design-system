@@ -1,4 +1,4 @@
-import { MenuIcon } from "@lifesg/react-icons/menu";
+import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { IconButton as DSIconButton } from "../../icon-button";
@@ -81,7 +81,9 @@ export const Item = styled.li<ItemStyleProps>`
     }}
 `;
 
-export const DragHandleIcon = styled(MenuIcon)<DragHandleIconStyleProps>`
+export const DragHandleIcon = styled(
+    DSDragHandleIcon
+)<DragHandleIconStyleProps>`
     // Temp icon
     margin-right: 1rem;
     height: 1.5rem;
@@ -245,7 +247,13 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
         width: fit-content;
 
         ${(props) => {
-            if (props.$editable && !props.$error) {
+            if (props.$loading && !props.$error) {
+                return css`
+                    margin-left: 0;
+                    margin-top: 1rem;
+                    width: 100%;
+                `;
+            } else if (props.$editable && !props.$error) {
                 return css`
                     margin-left: 0;
                     margin-top: 1rem;
@@ -253,15 +261,6 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
                 `;
             }
         }}
-
-        ${(props) => {
-            if (props.$loading) {
-                return css`
-                    width: 100%;
-                `;
-            }
-        }}
-    }
 `;
 
 export const IconButton = styled(DSIconButton)`

@@ -28,15 +28,20 @@ import {
 } from "./file-list-item.styles";
 import { FileListItemProps } from "./types";
 
+interface Props extends FileListItemProps {
+    readOnly?: boolean | undefined;
+}
+
 const Component = ({
     fileItem,
     editable,
     sortable,
     wrapperWidth,
     disabled,
+    readOnly,
     onDelete,
     onEditClick,
-}: FileListItemProps) => {
+}: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -129,6 +134,8 @@ const Component = ({
 
     const shouldDisable = () => disabled || !!activeId;
 
+    const shouldEnableSort = () => sortable && !readOnly;
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -168,6 +175,7 @@ const Component = ({
         <>
             <FileListItemThumbnail
                 thumbnailImageDataUrl={thumbnailImageDataUrl}
+                data-testid={`${id}-thumbnail`}
             />
             <ExtendedNameSection>
                 <NameSection ref={detailSectionRef}>
@@ -223,7 +231,12 @@ const Component = ({
                 </ErrorIconButton>
             );
         } else if (isLoading) {
-            content = <ProgressBar progress={progress} />;
+            content = (
+                <ProgressBar
+                    progress={progress}
+                    data-testid={`${id}-progress-bar`}
+                />
+            );
         } else {
             content = (
                 <>
@@ -276,12 +289,17 @@ const Component = ({
         <Item
             id={id}
             ref={setNodeRef}
-            $sortable={sortable}
+            $sortable={shouldEnableSort()}
             $disabled={shouldDisable()}
             $focusType={focusType}
-            {...(sortable ? sortableProps : {})}
+            {...(shouldEnableSort() ? sortableProps : {})}
         >
-            {sortable && <DragHandleIcon $disabled={shouldDisable()} />}
+            {shouldEnableSort() && (
+                <DragHandleIcon
+                    data-testid={`${id}-drag-handle`}
+                    $disabled={shouldDisable()}
+                />
+            )}
             <Box
                 $focused={focusType === "self"}
                 $error={!!errorMessage}
@@ -290,7 +308,7 @@ const Component = ({
                 $editable={editable}
             >
                 {renderContents()}
-                {renderActions()}
+                {!readOnly && renderActions()}
             </Box>
         </Item>
     );
