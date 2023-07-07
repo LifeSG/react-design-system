@@ -64,6 +64,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
+            {
+                name: "onDismiss",
+                description: (
+                    <>
+                        Called when the <code>Toast</code> is dismissed, either
+                        by user action or from auto dismiss.
+                    </>
+                ),
+                propTypes: ["() => void"],
+            },
         ],
     },
 ];

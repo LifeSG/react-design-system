@@ -24,6 +24,7 @@ export const Toast = ({
     title,
     label,
     autoDismiss,
+    onDismiss,
     ...otherProps
 }: ToastProps) => {
     // =============================================================================
@@ -73,6 +74,9 @@ export const Toast = ({
         config: {
             easing: easings.easeInOutQuart,
             duration: 1000,
+        },
+        onRest: () => {
+            if (!isVisible) onDismiss?.();
         },
     });
 
