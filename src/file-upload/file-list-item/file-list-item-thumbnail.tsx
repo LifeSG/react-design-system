@@ -24,7 +24,7 @@ export const FileListItemThumbnail = ({
     };
 
     return (
-        <Container data-testId={testId}>
+        <Container data-testid={testId}>
             <Thumbnail
                 data-testid={testId ? `${testId}-image` : undefined}
                 src={thumbnailImageDataUrl}
