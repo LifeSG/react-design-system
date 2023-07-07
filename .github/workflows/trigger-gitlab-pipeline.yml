@@ -54,8 +54,11 @@ jobs:
               --form "variables[PIPELINE_COMMIT_MSG]=$COMMIT_MSG" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline")
 
-          echo "Pipeline url: jq -r '.web_url' <<< $response"
-          echo "PIPELINE_ID=$(jq -r '.id'  <<< $response)" >> "$GITHUB_ENV"
+          pipeline_url=`$response | jq -r '.web_url'`
+          pipeline_id=`$response | jq -r '.id'`
+
+          echo "Pipeline url: $pipeline_url"
+          echo "PIPELINE_ID=$pipeline_id" >> "$GITHUB_ENV"
 
       - name: Check GitLab Pipeline
         env:
