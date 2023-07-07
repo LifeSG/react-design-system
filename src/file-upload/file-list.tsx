@@ -183,7 +183,7 @@ export const FileList = ({
         return (
             !item.errorMessage &&
             !readOnly &&
-            !(item.progress && item.progress < 1) &&
+            !(typeof item.progress === "number" && item.progress < 1) &&
             checkEditable(item) &&
             !item.description
         );
