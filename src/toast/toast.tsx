@@ -47,7 +47,6 @@ export const Toast = ({
 
         setTimeout(() => {
             setVisible(false);
-            onDismiss?.();
         }, timer);
 
         return () => clearTimeout(timer);
@@ -58,7 +57,6 @@ export const Toast = ({
     // =============================================================================
     const handleDismiss = () => {
         setVisible(false);
-        onDismiss?.();
     };
 
     // =============================================================================
@@ -76,6 +74,9 @@ export const Toast = ({
         config: {
             easing: easings.easeInOutQuart,
             duration: 1000,
+        },
+        onRest: () => {
+            if (!isVisible) onDismiss?.();
         },
     });
 
