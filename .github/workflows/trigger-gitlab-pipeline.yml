@@ -56,10 +56,10 @@ jobs:
 
           echo "Pipeline url: $(echo $response | jq -r '.web_url')"
 
-          pipeline_id=$(echo $response | jq -r '.id')
-          echo "PIPELINE_ID=$pipeline_id" >> "$GITHUB_ENV"
+          PIPELINE_ID=$(echo $response | jq -r '.id')
+          echo "PIPELINE_ID=$PIPELINE_ID" >> "$GITHUB_ENV"
 
-          echo "Pipeline ID: $pipeline_id"
+          echo "Pipeline ID: $PIPELINE_ID"
 
       - name: Check GitLab Pipeline
         env:
@@ -67,6 +67,7 @@ jobs:
           SLEEP_DURATION_MINUTES: 1
           CHECK_INTERVAL_MINUTES: 5
         run: |
+          echo "Pipeline ID: $PIPELINE_ID"
           echo "[ Running pipline check after $SLEEP_DURATION_MINUTES minutes ]"
           sleep $(($SLEEP_DURATION_MINUTES*60))
 
