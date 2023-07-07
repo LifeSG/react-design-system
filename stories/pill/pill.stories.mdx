@@ -3,6 +3,7 @@ import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 
 import { Pill } from "src/pill";
+import { Text } from "src/text";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { Grid, Label, Row, Wrapper } from "./doc-elements";
 import { PropsTable } from "./props-table";
@@ -13,35 +14,26 @@ import { PropsTable } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-A status pill component.
-
-Example of usage: As a status indicator on current flow state such as `Pending Approval`, `Approved`, `Rejected` and etc.
+A static element that is used to communicate selections, statuses and categories.
 
 ```tsx
 import { Pill } from "@lifesg/react-design-system/pill";
 ```
 
-The `Pill` component comes in 2 type, a `solid` and `outline`.
-
 <Canvas>
     <Story name="Pill">
         <Wrapper>
             <Pill type="outline" colorType="blue">
-                Pending Approval
+                Outline style pill
             </Pill>
-            <br />
-            <Pill type="outline" colorType="green">
-                Approved
-            </Pill>
-            <br />
             <Pill type="solid" colorType="red">
-                Rejected
+                Solid style pill
             </Pill>
         </Wrapper>
     </Story>
 </Canvas>
 
-Example of `Pill` usage with icon.
+<Heading3>Pill with icon</Heading3>
 
 <Canvas>
     <Story name="With Icon">
@@ -53,9 +45,6 @@ Example of `Pill` usage with icon.
             >
                 Status Label
             </Pill>
-        </Wrapper>
-        <br />
-        <Wrapper>
             <Pill
                 type="solid"
                 colorType="blue"
@@ -70,9 +59,7 @@ Example of `Pill` usage with icon.
 
 <Heading3>Variations</Heading3>
 
-The `Pill` component comes in 6 colorType, a `black`, `grey`, `green`, `yellow`, `red`, and `blue` color.
-
-Color `black` will be the default colorType.
+The `Pill` comes in 2 display formats, `outline` and `solid` and there are 6 color variations that can be denoted using the `colorType` prop.
 
 <Preview>
     <Story name="Variations">
@@ -80,15 +67,15 @@ Color `black` will be the default colorType.
             <Grid>
                 <Row>
                     <span />
-                    <Label>Black</Label>
-                    <Label>Grey</Label>
-                    <Label>Green</Label>
-                    <Label>Yellow</Label>
-                    <Label>Red</Label>
-                    <Label>Blue</Label>
+                    <Text.H6 weight="semibold">Black</Text.H6>
+                    <Text.H6 weight="semibold">Grey</Text.H6>
+                    <Text.H6 weight="semibold">Green</Text.H6>
+                    <Text.H6 weight="semibold">Yellow</Text.H6>
+                    <Text.H6 weight="semibold">Red</Text.H6>
+                    <Text.H6 weight="semibold">Blue</Text.H6>
                 </Row>
                 <Row>
-                    <Label>Outline</Label>
+                    <Text.H6 weight="semibold">Outline</Text.H6>
                     <Pill type="outline" colorType="black">
                         Label
                     </Pill>
@@ -109,7 +96,7 @@ Color `black` will be the default colorType.
                     </Pill>
                 </Row>
                 <Row>
-                    <Label>Solid</Label>
+                    <Text.H6 weight="semibold">Solid</Text.H6>
                     <Pill type="solid" colorType="black">
                         Label
                     </Pill>
@@ -135,7 +122,5 @@ Color `black` will be the default colorType.
 </Preview>
 
 <Secondary>Component API</Secondary>
-
-This component also inherits the [HTMLDivAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement)
 
 <PropsTable />

@@ -1,6 +1,6 @@
 import React from "react";
 import { PillProps } from "./types";
-import { Content, Icon, Label, Wrapper } from "./pill.style";
+import { Label, Wrapper } from "./pill.style";
 
 export const Pill = ({
     type,
@@ -13,14 +13,13 @@ export const Pill = ({
     return (
         <Wrapper
             className={className}
-            data-testid={otherProps["data-testid"]}
+            data-testid={otherProps["data-testid"] || "pill"}
             $type={type}
             $color={colorType}
+            {...otherProps}
         >
-            <Content>
-                {icon && <Icon>{icon}</Icon>}
-                <Label>{children}</Label>
-            </Content>
+            {icon}
+            <Label>{children}</Label>
         </Wrapper>
     );
 };

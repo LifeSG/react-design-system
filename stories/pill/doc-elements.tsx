@@ -20,9 +20,6 @@ export const Row = styled.div`
 
 export const Wrapper = styled.div`
     width: fit-content;
-`;
-
-export const Label = styled.label`
-    font-weight: 600;
-    font-size: small;
+    display: flex;
+    gap: 1rem;
 `;

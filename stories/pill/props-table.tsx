@@ -6,14 +6,32 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            HTMLDivAttributes
+                        </a>
+                    </>
+                ),
+            },
+            {
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],
             },
             {
                 name: "colorType",
-                mandatory: false,
-                description: "The color variations of the pill",
+                description: (
+                    <>
+                        The color style of the <code>Pill</code>
+                    </>
+                ),
                 propTypes: [
                     `"black"`,
                     `"grey"`,
@@ -27,13 +45,16 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "type",
                 mandatory: true,
-                description: "The style of the pill",
+                description: (
+                    <>
+                        The display style of the <code>Pill</code>
+                    </>
+                ),
                 propTypes: [`"solid"`, `"outline"`],
             },
             {
                 name: "icon",
-                mandatory: false,
-                description: "Display icon of the pill",
+                description: "A component to be displayed as the icon",
                 propTypes: ["JSX.Element"],
             },
         ],

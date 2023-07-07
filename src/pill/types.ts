@@ -1,11 +1,17 @@
 import React from "react";
 
-export type Type = "outline" | "solid";
-export type ColorType = "black" | "grey" | "green" | "yellow" | "red" | "blue";
+export type PillType = "outline" | "solid";
+export type PillColorType =
+    | "black"
+    | "grey"
+    | "green"
+    | "yellow"
+    | "red"
+    | "blue";
 
 export interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
-    type: Type;
-    colorType: ColorType;
+    type: PillType;
+    colorType?: PillColorType | undefined;
     icon?: JSX.Element | undefined;
     "data-testid"?: string | undefined;
 }

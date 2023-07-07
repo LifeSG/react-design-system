@@ -1,22 +1,29 @@
 import styled from "styled-components";
 import { Color } from "../color/color";
-import { ColorType, Type } from "./types";
+import { PillColorType, PillType } from "./types";
 import { TextStyleHelper } from "../text";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 interface StyleProps {
-    $type: Type;
-    $color: ColorType;
+    $type: PillType;
+    $color: PillColorType;
 }
 
 export const Wrapper = styled.div<StyleProps>`
-    border-radius: 16px;
-    padding: 2px 8px;
-    text-align: center;
-    width: inherit;
+    border-radius: 1rem;
+    padding: 0.125rem 0.5rem;
+    width: fit-content;
+    max-width: 100%;
     ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    svg {
+        flex-shrink: 0;
+    }
 
     ${(props) => {
         let backgroundColor: string;
@@ -92,20 +99,6 @@ export const Wrapper = styled.div<StyleProps>`
             color: ${color}
 		`;
     }}
-`;
-
-export const Content = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-`;
-
-export const Icon = styled.div`
-    display: flex;
-    svg {
-        flex-shrink: 0;
-    }
 `;
 
 export const Label = styled.div`
