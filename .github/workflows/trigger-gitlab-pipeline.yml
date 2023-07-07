@@ -70,10 +70,10 @@ jobs:
           pipeline_status=""
           until [ $pipeline_status == "success" || $pipeline_status == "failed" || $pipeline_status == "canceled" || $pipeline_status == "skipped" ]
           do
-            status=curl --header "PRIVATE-TOKEN: $GITLAB_PAT" \
+            pipeline_status=curl --header "PRIVATE-TOKEN: $GITLAB_PAT" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/${{ env.PIPELINE_ID }} | jq -r '.status'"
             
-            echo "Pipeline status: $status
+            echo "Pipeline status: $pipeline_status"
 
             sleep $(($CHECK_INTERVAL_MINUTES*60))
           done
