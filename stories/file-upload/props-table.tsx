@@ -7,22 +7,22 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             // Inherited props
             {
-                name: "accept",
-                description: "Defines the file types that is accepted",
-                propTypes: ["string"],
+                name: "",
+                description: (
+                    <>
+                        This component also inherits the additional props from
+                        the&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#additional_attributes"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            file input type
+                        </a>
+                    </>
+                ),
             },
-            {
-                name: "capture",
-                description:
-                    "Specifies which camera to use for capture of image or video data ",
-                propTypes: ["boolean", `"user"`, `"environment"`],
-            },
-            {
-                name: "multiple",
-                description:
-                    "Specifies if user is allowed to select more than one file.",
-                propTypes: ["boolean"],
-            },
+            // Component specific
             {
                 name: "disabled",
                 description: "Specifies if the component should be disabled",
@@ -43,7 +43,6 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The name of the component",
                 propTypes: ["string"],
             },
-            // Component specific
             {
                 name: "title",
                 description: "A title to be displayed for the component",
@@ -134,6 +133,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "id",
                 description: "The unique identifier for a file",
+                mandatory: true,
                 propTypes: ["string"],
             },
             {
@@ -179,6 +179,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "truncateText",
                 description: "Indicates if text should be truncated",
                 propTypes: ["boolean"],
+                defaultValue: "true",
             },
         ],
     },
