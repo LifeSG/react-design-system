@@ -74,8 +74,7 @@ jobs:
           pipeline_status=""
           until [[ $pipeline_status == "success" || $pipeline_status == "failed" || $pipeline_status == "canceled" || $pipeline_status == "skipped" ]]
           do
-            pipeline_status=$(curl -sS --request GET --header "PRIVATE-TOKEN: $GITLAB_PAT" \
-              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$PIPELINE_ID" | jq -r '.status')
+            pipeline_status=$(curl -sS --request GET --header "PRIVATE-TOKEN: $GITLAB_PAT" --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$PIPELINE_ID" | jq -r '.status')
             
             echo "Pipeline status: $pipeline_status"
 
