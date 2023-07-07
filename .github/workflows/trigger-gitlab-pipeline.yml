@@ -48,7 +48,7 @@ jobs:
               --form "variables[PIPELINE_BRANCH_NAME]=$BRANCH_NAME" \
               --form "variables[PIPELINE_TRIGGER_PERSON]=$GITHUB_ACTOR" \
               --form "variables[PIPELINE_COMMIT_MSG]=$COMMIT_MSG" \
-              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline")
+              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline" | jq -r .)
 
           echo "Pipeline url: $response | jq -r '.web_url'"
           echo "PIPELINE_ID=$(($reponse | jq -r '.id'))" >> "$GITHUB_ENV"
