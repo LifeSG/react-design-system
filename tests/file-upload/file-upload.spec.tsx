@@ -343,6 +343,9 @@ describe("FileUpload", () => {
             );
 
             const { queryByTestId } = rendered;
+            const uploadButton = screen.queryByRole("button", {
+                name: "Upload files",
+            });
 
             expect(queryByTestId("some-delete-button")).not.toBeInTheDocument();
             expect(
@@ -358,6 +361,7 @@ describe("FileUpload", () => {
             expect(
                 queryByTestId("another-error-delete-button")
             ).not.toBeInTheDocument();
+            expect(uploadButton).not.toBeInTheDocument();
         });
     });
 });
