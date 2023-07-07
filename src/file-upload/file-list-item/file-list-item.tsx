@@ -289,10 +289,10 @@ const Component = ({
         <Item
             id={id}
             ref={setNodeRef}
-            $sortable={sortable}
+            $sortable={shouldEnableSort()}
             $disabled={shouldDisable()}
             $focusType={focusType}
-            {...(sortable ? sortableProps : {})}
+            {...(shouldEnableSort() ? sortableProps : {})}
         >
             {shouldEnableSort() && (
                 <DragHandleIcon
