@@ -38,7 +38,7 @@ jobs:
           GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
           GITLAB_REPO_NAME: ${{ vars.GITLAB_REPO_NAME }}
         run: |
-          response=$(eval curl -sS --request POST \
+          response=$(curl -sS --request POST \
               --fail \
               --form token=$GITLAB_TOKEN \
               --form "ref=main" \
