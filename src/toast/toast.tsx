@@ -24,6 +24,7 @@ export const Toast = ({
     title,
     label,
     autoDismiss,
+    onDismiss,
     ...otherProps
 }: ToastProps) => {
     // =============================================================================
@@ -46,6 +47,7 @@ export const Toast = ({
 
         setTimeout(() => {
             setVisible(false);
+            onDismiss?.();
         }, timer);
 
         return () => clearTimeout(timer);
@@ -56,6 +58,7 @@ export const Toast = ({
     // =============================================================================
     const handleDismiss = () => {
         setVisible(false);
+        onDismiss?.();
     };
 
     // =============================================================================
