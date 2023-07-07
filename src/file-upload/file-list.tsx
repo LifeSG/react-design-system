@@ -36,7 +36,7 @@ type RenderItem = FileItemProps | FileItemProps[];
 interface Props {
     fileItems: FileItemProps[];
     editableFileItems: boolean;
-    descriptionMaxLength?: number | undefined;
+    fileDescriptionMaxLength?: number | undefined;
     sortable?: boolean | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
@@ -52,7 +52,7 @@ interface Props {
 export const FileList = ({
     fileItems,
     editableFileItems,
-    descriptionMaxLength,
+    fileDescriptionMaxLength,
     sortable,
     disabled,
     readOnly,
@@ -280,7 +280,7 @@ export const FileList = ({
                     key={item.id}
                     fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
-                    descriptionMaxLength={descriptionMaxLength}
+                    fileDescriptionMaxLength={fileDescriptionMaxLength}
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
                     onBlur={handleBlurEdit(item)}

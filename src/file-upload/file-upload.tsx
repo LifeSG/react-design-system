@@ -29,7 +29,7 @@ export const FileUpload = ({
     multiple,
     disabled,
     sortable = false,
-    descriptionMaxLength,
+    fileDescriptionMaxLength,
     editableFileItems = false,
     errorMessage,
     readOnly,
@@ -122,7 +122,7 @@ export const FileUpload = ({
                 <FileList
                     fileItems={fileItems}
                     editableFileItems={editableFileItems}
-                    descriptionMaxLength={descriptionMaxLength}
+                    fileDescriptionMaxLength={fileDescriptionMaxLength}
                     sortable={sortable}
                     disabled={disabled}
                     readOnly={readOnly}

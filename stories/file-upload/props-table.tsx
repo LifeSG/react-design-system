@@ -81,7 +81,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "descriptionMaxLength",
+                name: "fileDescriptionMaxLength",
                 description:
                     "The max length of the description of the file (only image files)",
                 propTypes: ["number"],

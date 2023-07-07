@@ -18,7 +18,7 @@ import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail
 interface Props {
     fileItem: FileItemProps;
     wrapperWidth: number;
-    descriptionMaxLength?: number | undefined;
+    fileDescriptionMaxLength?: number | undefined;
     onSave: (description: string) => void;
     onCancel: () => void;
     onBlur: (value: string) => void;
@@ -26,7 +26,7 @@ interface Props {
 
 export const FileItemEdit = ({
     fileItem,
-    descriptionMaxLength,
+    fileDescriptionMaxLength,
     wrapperWidth,
     onSave,
     onCancel,
@@ -127,7 +127,7 @@ export const FileItemEdit = ({
                         id={`${id}-description-textarea`}
                         data-testid={`${id}-textarea`}
                         value={currentDescription}
-                        maxLength={descriptionMaxLength}
+                        maxLength={fileDescriptionMaxLength}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
