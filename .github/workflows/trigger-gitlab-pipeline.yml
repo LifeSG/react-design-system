@@ -15,13 +15,16 @@ jobs:
       - name: Print Configs
         run: |
           [[ $GITHUB_EVENT_NAME = "pull_request" ]] && BRANCH_NAME=${{ github.head_ref }} || BRANCH_NAME=${{ github.ref_name }}
+          [[ $GITHUB_EVENT_NAME = "pull_request" ]] && COMMIT_MSG=${{ github.event.pull_request.title }} || COMMIT_MSG=${{ github.event.commits.0.message }}
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> "$GITHUB_ENV"
+          echo "COMMIT_MSG=$COMMIT_MSG" >> "$GITHUB_ENV"
 
           echo "PIPELINE_PROJECT_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
           echo "PIPELINE_EVENT: $GITHUB_EVENT_NAME"
           echo "PIPELINE_BRANCH_NAME: $BRANCH_NAME"
           echo "PIPELINE_TRIGGER_PERSON: $GITHUB_ACTOR"
+          echo "PIPELINE_COMMIT_MSG: $COMMIT_MSG"
 
       - name: Trigger GitLab Pipeline
         env:
@@ -39,4 +42,5 @@ jobs:
               --form "variables[PIPELINE_EVENT]=$GITHUB_EVENT_NAME" \
               --form "variables[PIPELINE_BRANCH_NAME]=${{ env.BRANCH_NAME }}" \
               --form "variables[PIPELINE_TRIGGER_PERSON]=$GITHUB_ACTOR" \
+              --form "variables[PIPELINE_COMMIT_MSG]=$COMMIT_MSG" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline" | jq -r '.web_url'
