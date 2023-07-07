@@ -59,7 +59,7 @@ jobs:
           pipeline_id=$(echo $response | jq -r '.id')
           echo "PIPELINE_ID=$pipeline_id" >> "$GITHUB_ENV"
 
-          echo "Pipeline ID: $PIPELINE_ID"
+          echo "Pipeline ID: $pipeline_id"
 
       - name: Check GitLab Pipeline
         env:
