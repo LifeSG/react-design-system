@@ -15,6 +15,7 @@ jobs:
       - name: Print Configs
         run: |
           [[ $GITHUB_EVENT_NAME = "pull_request" ]] && BRANCH_NAME=${{ github.head_ref }} || BRANCH_NAME=${{ github.ref_name }}
+
           [[ $GITHUB_EVENT_NAME = "pull_request" ]] && COMMIT_MSG=${{ github.event.pull_request.title }} || COMMIT_MSG=${{ github.event.head_commit.message }}
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> "$GITHUB_ENV"
