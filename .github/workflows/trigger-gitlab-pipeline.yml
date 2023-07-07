@@ -50,8 +50,8 @@ jobs:
               --form "variables[PIPELINE_COMMIT_MSG]=$COMMIT_MSG" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline")
 
-          pipeline_url=$(($response | jq -r '.web_url'))
-          pipeline_id=$(($response | jq -r '.id'))
+          pipeline_url="$(($response | jq -r '.web_url'))"
+          pipeline_id="$(($response | jq -r '.id'))"
 
           echo "Pipeline url: $pipeline_url"
           echo "PIPELINE_ID=$pipeline_id" >> "$GITHUB_ENV"
@@ -68,10 +68,10 @@ jobs:
           pipeline_status=""
           until [ $pipeline_status == "success" || $pipeline_status == "failed" || $pipeline_status == "canceled" || $pipeline_status == "skipped"]
           do
-            response=curl --header "PRIVATE-TOKEN: $GITLAB_PAT" \
-              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/${{ env.PIPELINE_ID }}"
+            status=curl --header "PRIVATE-TOKEN: $GITLAB_PAT" \
+              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/${{ env.PIPELINE_ID }} | jq -r '.status'"
             
-            echo "Pipeline status: `$response | jq -r '.status'`"
+            echo "Pipeline status: $status
 
             sleep $(($CHECK_INTERVAL_MINUTES*60))
           done
