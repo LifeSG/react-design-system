@@ -38,7 +38,7 @@ jobs:
           GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
           GITLAB_REPO_NAME: ${{ vars.GITLAB_REPO_NAME }}
         run: |
-          response=$(curl -sS --request POST \
+          response=$(eval curl -sS --request POST \
               --fail \
               --form token=$GITLAB_TOKEN \
               --form "ref=main" \
@@ -48,10 +48,10 @@ jobs:
               --form "variables[PIPELINE_BRANCH_NAME]=$BRANCH_NAME" \
               --form "variables[PIPELINE_TRIGGER_PERSON]=$GITHUB_ACTOR" \
               --form "variables[PIPELINE_COMMIT_MSG]=$COMMIT_MSG" \
-              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline" | jq -r .)
+              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline")
 
-          echo "Pipeline url: `jq -r '.web_url' $response`"
-          echo "PIPELINE_ID=$(($reponse | jq -r '.id'))" >> "$GITHUB_ENV"
+          echo "Pipeline url: jq -r '.web_url' <<< $response"
+          echo "PIPELINE_ID=$(jq -r '.id'  <<< $response)" >> "$GITHUB_ENV"
 
       - name: Check GitLab Pipeline
         env:
