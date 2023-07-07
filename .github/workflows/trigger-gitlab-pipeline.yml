@@ -54,23 +54,21 @@ jobs:
               --form "variables[PIPELINE_COMMIT_MSG]=$COMMIT_MSG" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/trigger/pipeline")
 
-          pipeline_url=$(echo $response | jq -r '.web_url')
-          pipeline_id="$(echo $response | jq -r '.id')"
+          echo "Pipeline url: $(echo $response | jq -r '.web_url')"
 
-          echo "Pipeline url: $pipeline_url"
-          echo "PIPELINE_ID=$pipeline_id" >> "$GITHUB_ENV"
+          echo "PIPELINE_ID=$(echo $response | jq -r '.id')" >> "$GITHUB_ENV"
 
       - name: Check GitLab Pipeline
         env:
           GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
-          SLEEP_DURATION_MINUTES: 20
+          SLEEP_DURATION_MINUTES: 1
           CHECK_INTERVAL_MINUTES: 5
         run: |
           echo "[ Running pipline check after $SLEEP_DURATION_MINUTES minutes ]"
           sleep $(($SLEEP_DURATION_MINUTES*60))
 
           pipeline_status=""
-          until [ $pipeline_status == "success" || $pipeline_status == "failed" || $pipeline_status == "canceled" || $pipeline_status == "skipped"]
+          until [ $pipeline_status == "success" || $pipeline_status == "failed" || $pipeline_status == "canceled" || $pipeline_status == "skipped" ]
           do
             status=curl --header "PRIVATE-TOKEN: $GITLAB_PAT" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/${{ env.PIPELINE_ID }} | jq -r '.status'"
