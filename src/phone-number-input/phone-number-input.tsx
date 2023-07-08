@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { InputGroup } from "../input-group/input-group";
 import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
+import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import { CountryValue, PhoneNumberInputProps } from "./types";
-
-const INVALID_CHARS_REGEX = /[^0-9]/g;
 
 export const PhoneNumberInput = ({
     onChange,
@@ -36,6 +35,15 @@ export const PhoneNumberInput = ({
 
     const nodeRef = useRef<HTMLInputElement>();
 
+    const getNextInputState = useNextInputState({
+        ref: nodeRef,
+        formatter: (value) =>
+            PhoneNumberInputHelper.formatNumber(
+                value.replace(/[^0-9]/g, ""),
+                selectedCountry
+            ),
+    });
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -63,19 +71,12 @@ export const PhoneNumberInput = ({
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { formattedValue, cursorPosition } = getNextInputState(
-            event.target
-        );
+        const { nextValue, updateCursorPosition } = getNextInputState();
 
-        // sync DOM value with the new state value
-        event.target.value = formattedValue;
-        // set text caret position to prevent jump on next render
-        event.target.selectionStart = cursorPosition;
-        event.target.selectionEnd = cursorPosition;
-
-        performLocalChangeHandler(formattedValue, selectedCountry);
+        updateCursorPosition();
+        performLocalChangeHandler(nextValue, selectedCountry);
         if (onChange) {
-            performOnChangeHandler(formattedValue, selectedCountry);
+            performOnChangeHandler(nextValue, selectedCountry);
         }
     };
 
@@ -143,28 +144,6 @@ export const PhoneNumberInput = ({
                 } as ListAddon<CountryValue, string>,
             };
         }
-    };
-
-    const getNextInputState = (el: HTMLInputElement) => {
-        const rawValue = el.value;
-        const strippedValue = rawValue.replace(INVALID_CHARS_REGEX, "");
-        const formattedValue = PhoneNumberInputHelper.formatNumber(
-            strippedValue,
-            selectedCountry
-        );
-
-        // compensate for characters that will be removed and added to the
-        // string before the text caret
-        const rawSubstr = rawValue.substring(0, el.selectionEnd);
-        const strippedSubstr = rawSubstr.replace(INVALID_CHARS_REGEX, "");
-        const formattedSubstr = PhoneNumberInputHelper.formatNumber(
-            strippedSubstr,
-            selectedCountry
-        );
-        const diff = rawSubstr.length - formattedSubstr.length;
-        const cursorPosition = Math.max(0, el.selectionEnd - diff);
-
-        return { formattedValue, cursorPosition };
     };
 
     // =========================================================================
