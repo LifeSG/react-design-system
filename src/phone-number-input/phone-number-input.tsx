@@ -70,10 +70,10 @@ export const PhoneNumberInput = ({
         }
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { nextValue, updateCursorPosition } = getNextInputState();
+    const handleInputChange = () => {
+        const { nextValue, updateCaretPosition } = getNextInputState();
 
-        updateCursorPosition();
+        updateCaretPosition();
         performLocalChangeHandler(nextValue, selectedCountry);
         if (onChange) {
             performOnChangeHandler(nextValue, selectedCountry);

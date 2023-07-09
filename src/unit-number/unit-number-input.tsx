@@ -157,29 +157,17 @@ export const UnitNumberInput = ({
         }
     };
 
-    const getNextInputState = (el: HTMLInputElement) => {
-        const rawValue = el.value;
-        const value = rawValue.toLocaleUpperCase().replace(/[^0-9A-Za-z]/g, "");
-
-        // offset the text caret to compensate for removed characters
-        const removed = rawValue.length - value.length;
-        const cursorPosition = Math.max(0, el.selectionEnd - removed);
-
-        return { value, cursorPosition };
-    };
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
 
         if (targetName === "floor") {
-            const { nextValue, updateCursorPosition } =
-                getNextFloorInputState();
-            updateCursorPosition();
+            const { nextValue, updateCaretPosition } = getNextFloorInputState();
+            updateCaretPosition();
             setFloorValue(nextValue);
             performOnChangeHandler(nextValue, targetName);
         } else {
-            const { nextValue, updateCursorPosition } = getNextUnitInputState();
-            updateCursorPosition();
+            const { nextValue, updateCaretPosition } = getNextUnitInputState();
+            updateCaretPosition();
             setUnitValue(nextValue);
             performOnChangeHandler(nextValue, targetName);
         }

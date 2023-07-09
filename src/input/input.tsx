@@ -70,14 +70,14 @@ const Component = (
     const handleSpacingAndCaretPosition = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        const { nextValue, updateCursorPosition } = getNextInputState();
+        const { nextValue, updateCaretPosition } = getNextInputState();
 
         // Send to handler unspaced value
         const valueWithoutSpace = nextValue.replace(/\s/g, "");
         event.target.value = valueWithoutSpace;
         onChange(event);
 
-        updateCursorPosition();
+        updateCaretPosition();
     };
 
     const shouldShowClear = () => {

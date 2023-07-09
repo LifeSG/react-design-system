@@ -15,17 +15,16 @@ export function useNextInputState({
         const rawSubstr = rawValue.substring(0, el.selectionEnd);
         const nextSubstr = formatter(rawSubstr);
         const diff = rawSubstr.length - nextSubstr.length;
-        const nextCursorPosition = Math.max(0, el.selectionEnd - diff);
+        const nextCaretPosition = Math.max(0, el.selectionEnd - diff);
 
-        const updateCursorPosition = () => {
+        const updateCaretPosition = () => {
             el.value = nextValue;
-            el.setSelectionRange(nextCursorPosition, nextCursorPosition);
+            el.setSelectionRange(nextCaretPosition, nextCaretPosition);
         };
 
         return {
             nextValue,
-            nextCursorPosition,
-            updateCursorPosition,
+            updateCaretPosition,
         };
     };
 
