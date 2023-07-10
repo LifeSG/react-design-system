@@ -11,4 +11,6 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
     title?: string | undefined;
     /** If specified, the Toast will be automatically dismissed after 4 seconds */
     autoDismiss?: boolean | undefined;
+    /** If given, the function will be called when the Toast is dismissed */
+    onDismiss?: () => void;
 }

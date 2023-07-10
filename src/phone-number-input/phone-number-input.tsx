@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { InputGroup } from "../input-group/input-group";
 import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
+import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import { CountryValue, PhoneNumberInputProps } from "./types";
 
@@ -32,7 +33,16 @@ export const PhoneNumberInput = ({
     >(undefined);
     const [inputValue, setInputValue] = useState<string>("");
 
-    const nodeRef = useRef();
+    const nodeRef = useRef<HTMLInputElement>();
+
+    const getNextInputState = useNextInputState({
+        ref: nodeRef,
+        formatter: (value) =>
+            PhoneNumberInputHelper.formatNumber(
+                value.replace(/[^0-9]/g, ""),
+                selectedCountry
+            ),
+    });
 
     // =============================================================================
     // EFFECTS
@@ -60,21 +70,20 @@ export const PhoneNumberInput = ({
         }
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const currentValue = event.target.value.replace(/[^0-9]/g, "");
+    const handleInputChange = () => {
+        const { nextValue, updateCaretPosition } = getNextInputState();
 
+        updateCaretPosition();
+        performLocalChangeHandler(nextValue, selectedCountry);
         if (onChange) {
-            performOnChangeHandler(currentValue, selectedCountry);
-        } else {
-            performLocalChangeHandler(currentValue, selectedCountry);
+            performOnChangeHandler(nextValue, selectedCountry);
         }
     };
 
     const handleSelectOption = (country: CountryValue) => {
+        performLocalChangeHandler(inputValue, country);
         if (onChange) {
             performOnChangeHandler(inputValue, country);
-        } else {
-            performLocalChangeHandler(inputValue, country);
         }
     };
 

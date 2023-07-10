@@ -25,7 +25,9 @@ export const FilterItemPage = ({
             </FilterHeaderButton>
             <FilterBody>{children}</FilterBody>
             <FilterFooter>
-                <FilterDoneButton onClick={onDone}>Done</FilterDoneButton>
+                <FilterDoneButton onClick={onDone} type="button">
+                    Done
+                </FilterDoneButton>
             </FilterFooter>
         </FilterItemPageContainer>
     );
