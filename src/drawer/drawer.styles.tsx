@@ -85,6 +85,7 @@ export const Header = styled.div`
 export const CloseButton = styled(ClickableIcon)`
     color: ${Color.Neutral[3]};
     padding: 0;
+    order: -1; // show button on the left of the header
 
     :active,
     :focus {

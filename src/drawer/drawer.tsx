@@ -71,16 +71,16 @@ export const Drawer = ({
                 {...otherProps}
             >
                 <Header>
-                    <CloseButton
+                    <Heading id={id} ref={initialFocusRef} tabIndex={-1}>
+                        {heading}
+                    </Heading>
+                    <CloseButton // second element for tab focus order
                         aria-label="Close drawer"
                         onClick={onClose}
                         focusHighlight={false}
                     >
                         <CrossIcon aria-hidden />
                     </CloseButton>
-                    <Heading id={id} ref={initialFocusRef}>
-                        {heading}
-                    </Heading>
                 </Header>
                 <Content>{children}</Content>
             </Container>
