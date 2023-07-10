@@ -15,6 +15,7 @@ export const Timepicker = ({
     placeholder,
     format = "24hr",
     onChange,
+    onFocus,
     onBlur,
     ...otherProps
 }: TimepickerProps) => {
@@ -37,6 +38,7 @@ export const Timepicker = ({
     const handleInputFocus = () => {
         if (!disabled && !readOnly && !showSelector) {
             setShowSelector(true);
+            onFocus && onFocus();
         }
     };
 
@@ -61,8 +63,8 @@ export const Timepicker = ({
     };
 
     const handleChange = (value: string) => {
-        setShowSelector(false);
         onChange && onChange(value);
+        runOnBlurHandler();
     };
 
     // =============================================================================

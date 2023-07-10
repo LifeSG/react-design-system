@@ -18,6 +18,7 @@ export const TimeRangePicker = ({
     format = "24hr",
     readOnly,
     onChange,
+    onFocus,
     onBlur,
     ...otherProps
 }: TimeRangePickerProps) => {
@@ -53,6 +54,7 @@ export const TimeRangePicker = ({
         if (!disabled && !readOnly && !showStartTimeSelector) {
             setShowEndTimeSelector(false);
             setShowStartTimeSelector(true);
+            runOnFocusHandler();
         }
     };
 
@@ -60,6 +62,7 @@ export const TimeRangePicker = ({
         if (!disabled && !readOnly && !showEndTimeSelector) {
             setShowStartTimeSelector(false);
             setShowEndTimeSelector(true);
+            runOnFocusHandler();
         }
     };
 
@@ -100,21 +103,29 @@ export const TimeRangePicker = ({
         setShowEndTimeSelector(false);
         setEndTimeVal(value);
 
-        if (startTimeVal == "") {
-            setShowStartTimeSelector(true);
-        }
-
         const timeValue: TimeRangePickerValue = {
             start: startTimeVal,
             end: value,
         };
 
         onChange && onChange(timeValue);
+
+        if (startTimeVal == "") {
+            setShowStartTimeSelector(true);
+        } else {
+            onBlur && onBlur();
+        }
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const runOnFocusHandler = () => {
+        if (!showStartTimeSelector && !showEndTimeSelector) {
+            onFocus && onFocus();
+        }
+    };
+
     const runOnBlurHandler = () => {
         setShowStartTimeSelector(false);
         setShowEndTimeSelector(false);

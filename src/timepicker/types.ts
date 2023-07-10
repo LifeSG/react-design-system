@@ -34,6 +34,10 @@ export interface TimepickerProps {
      */
     onChange?: ((value: string) => void) | undefined;
     /**
+     * Called when the field is focused
+     */
+    onFocus?: (() => void) | undefined;
+    /**
      * Called when a defocus is made on the field
      */
     onBlur?: (() => void) | undefined;
