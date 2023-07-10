@@ -83,7 +83,7 @@ export const Header = styled.div`
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    color: ${Color.Neutral[1]};
+    color: ${Color.Neutral[3]};
     padding: 0;
 
     :active,
