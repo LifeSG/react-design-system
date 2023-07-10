@@ -19,7 +19,7 @@ jobs:
 
           [[ $GITHUB_EVENT_NAME = "pull_request" ]] && COMMIT_MSG="${{ github.event.pull_request.title }}" || COMMIT_MSG="${{ github.event.head_commit.message }}"
 
-          COMMIT_MSG=$(echo $COMMIT_MSG | | sed -n '1p')
+          COMMIT_MSG=$(echo $COMMIT_MSG | sed -n '1p')
 
           PIPELINE_PROJECT_URL="github.com/$GITHUB_REPOSITORY.git"
 
