@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useRef } from "react";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { StringHelper } from "../util/string-helper";
+import { StringHelper, useNextInputState } from "../util";
 import { ClearContainer, ClearIcon, InputElement } from "./input.style";
 import { InputProps, InputRef } from "./types";
 
@@ -25,6 +25,11 @@ const Component = (
     // =============================================================================
     const elementRef = useRef<HTMLInputElement>();
     useImperativeHandle(ref, () => elementRef.current, []);
+
+    const getNextInputState = useNextInputState({
+        ref: elementRef,
+        formatter: (value) => StringHelper.transformWithSpaces(value, spacing),
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -65,16 +70,14 @@ const Component = (
     const handleSpacingAndCaretPosition = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        const element = event.target;
-        const currentValue = element.value;
+        const { nextValue, updateCaretPosition } = getNextInputState();
 
         // Send to handler unspaced value
-        const valueWithoutSpace = element.value.replace(/\s/g, "");
-        element.value = valueWithoutSpace;
+        const valueWithoutSpace = nextValue.replace(/\s/g, "");
+        event.target.value = valueWithoutSpace;
         onChange(event);
 
-        // reset element value
-        element.value = currentValue;
+        updateCaretPosition();
     };
 
     const shouldShowClear = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { StringHelper } from "../util/string-helper";
+import { StringHelper, useNextInputState } from "../util";
 import { UnitNumberInputProps } from "./types";
 import {
     FloorInput,
@@ -47,6 +47,17 @@ export const UnitNumberInput = ({
     const floorValueStateRef = useRef<string>(floorValue);
     const unitValueStateRef = useRef<string>(unitValue);
     const currentFocusStateRef = useRef<FieldType>(currentFocus);
+
+    const formatter = (value) =>
+        value.toLocaleUpperCase().replace(/[^0-9A-Za-z]/g, "");
+    const getNextFloorInputState = useNextInputState({
+        ref: floorInputRef,
+        formatter,
+    });
+    const getNextUnitInputState = useNextInputState({
+        ref: unitInputRef,
+        formatter,
+    });
 
     // =============================================================================
     // REF FUNCTIONS
@@ -149,16 +160,16 @@ export const UnitNumberInput = ({
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
 
-        const value = event.target.value
-            .toLocaleUpperCase()
-            .replace(/[^0-9A-Za-z]/, "");
-
         if (targetName === "floor") {
-            setFloorValue(value);
-            performOnChangeHandler(value, targetName);
+            const { nextValue, updateCaretPosition } = getNextFloorInputState();
+            updateCaretPosition();
+            setFloorValue(nextValue);
+            performOnChangeHandler(nextValue, targetName);
         } else {
-            setUnitValue(value);
-            performOnChangeHandler(value, targetName);
+            const { nextValue, updateCaretPosition } = getNextUnitInputState();
+            updateCaretPosition();
+            setUnitValue(nextValue);
+            performOnChangeHandler(nextValue, targetName);
         }
     };
 
