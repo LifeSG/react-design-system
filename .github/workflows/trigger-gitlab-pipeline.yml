@@ -23,7 +23,7 @@ jobs:
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> "$GITHUB_ENV"
           echo "COMMIT_MSG=$COMMIT_MSG" >> "$GITHUB_ENV"
-          echo "PIPELINE_PROJECT_URL=github.com/$GITHUB_REPOSITORY.git" >> "$GITHUB_ENV"
+          echo "PIPELINE_PROJECT_URL=$PIPELINE_PROJECT_URL" >> "$GITHUB_ENV"
 
           echo "PIPELINE_PROJECT_URL: $PIPELINE_PROJECT_URL"
           echo "PIPELINE_EVENT: $GITHUB_EVENT_NAME"
