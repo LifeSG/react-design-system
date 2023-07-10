@@ -25,7 +25,7 @@ jobs:
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> "$GITHUB_ENV"
           echo "COMMIT_MSG=$COMMIT_MSG" >> "$GITHUB_ENV"
-          echo "PIPELINE_PROJECT_URL=$PIPELINE_PROJECT_URL" >> "$GITHUB_ENV"
+          echo "PIPELINE_PROJECT_URL='github.com/$GITHUB_REPOSITORY.git'" >> "$GITHUB_ENV"
 
           echo "PIPELINE_PROJECT_URL: $PIPELINE_PROJECT_URL"
           echo "PIPELINE_EVENT: $GITHUB_EVENT_NAME"
@@ -82,3 +82,11 @@ jobs:
 
             sleep $(($CHECK_INTERVAL_MINUTES*60))
           done
+
+          [[ $pipeline_status == "canceled" ]] && echo "GitLab Pipeline was cancelled"
+
+          [[ $pipeline_status == "skipped" ]] && echo "GitLab pipeline has stopped, please head to the GitLab pipeline to trigger job manually"
+
+          [[ $pipeline_status == "failed" ]] && echo "GitLab pipeline has failed, please head to the GitLab pipeline to check on error && exit 1"
+
+          [[ $pipeline_status == "success" ]] && echo "GitLab pipeline is successfully completed"
