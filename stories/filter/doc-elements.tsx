@@ -41,7 +41,18 @@ export const SearchFilter = ({ mode, value, onChange }: Props<string>) => {
 };
 
 export const DateFilter = ({ value, onChange }: Props<string>) => {
-    return <Form.DateInput value={value} onChange={(date) => onChange(date)} />;
+    const [isFocused, setIsFocused] = useState(false);
+
+    return (
+        <div style={{ height: isFocused ? "33rem" : undefined }}>
+            <Form.DateInput
+                value={value}
+                onChange={(date) => onChange(date)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+            />
+        </div>
+    );
 };
 
 export const TextFilter = () => {
@@ -60,15 +71,9 @@ export const TextFilter = () => {
     );
 };
 
-export const useFilters = () => {
-    const INITIAL_STATE = {
-        search: "",
-        cat1: "",
-        cat2: [],
-    };
-
-    const [currentFilters, setCurrentFilters] = useState(INITIAL_STATE);
-    const [draftFilters, setDraftFilters] = useState(INITIAL_STATE);
+export const useFilters = <T extends Record<string, any>>(initialState: T) => {
+    const [currentFilters, setCurrentFilters] = useState(initialState);
+    const [draftFilters, setDraftFilters] = useState(initialState);
     const clearButtonDisabled = Object.values(draftFilters).every((filter) =>
         isEmpty(filter)
     );
@@ -97,8 +102,8 @@ export const useFilters = () => {
     };
 
     const clearFilters = () => {
-        setCurrentFilters(INITIAL_STATE);
-        setDraftFilters(INITIAL_STATE);
+        setCurrentFilters(initialState);
+        setDraftFilters(initialState);
     };
 
     return {

@@ -36,7 +36,7 @@ import { Filter } from "@lifesg/react-design-system/filter";
                 saveFilters,
                 dismissFilters,
                 clearFilters,
-            } = useFilters(); // your custom filter state management here
+            } = useFilters({ cat1: [], cat2: [] }); // your custom filter state management here
             return (
                 <StoryContainer>
                     <Filter
