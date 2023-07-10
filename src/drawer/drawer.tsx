@@ -24,7 +24,7 @@ export const Drawer = ({
     // =============================================================================
     const [showOverlay, setShowOverlay] = useState(show);
     const [id] = useState(() => SimpleIdGenerator.generate());
-    const buttonRef = useRef<HTMLButtonElement>();
+    const initialFocusRef = useRef<HTMLHeadingElement>();
 
     // =============================================================================
     // EFFECTS
@@ -44,7 +44,7 @@ export const Drawer = ({
     const handleDialogVisibility = (e: React.TransitionEvent) => {
         if (e.propertyName === "visibility" && show) {
             // focus the first element so that the screenreader enters the dialog
-            buttonRef.current.focus();
+            initialFocusRef.current.focus();
         }
     };
 
@@ -75,11 +75,12 @@ export const Drawer = ({
                         aria-label="Close drawer"
                         onClick={onClose}
                         focusHighlight={false}
-                        ref={buttonRef}
                     >
                         <CrossIcon aria-hidden />
                     </CloseButton>
-                    <Heading id={id}>{heading}</Heading>
+                    <Heading id={id} ref={initialFocusRef}>
+                        {heading}
+                    </Heading>
                 </Header>
                 <Content>{children}</Content>
             </Container>
