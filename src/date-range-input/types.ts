@@ -32,6 +32,10 @@ export interface DateRangeInputProps extends CommonCalendarProps {
      */
     onChange?: ((startDate: string, endDate: string) => void) | undefined;
     /**
+     * Called when field is focused
+     */
+    onFocus?: (() => void) | undefined;
+    /**
      * Function that returns when a defocus is made on the field
      */
     onBlur?: (() => void) | undefined;

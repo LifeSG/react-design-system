@@ -28,7 +28,11 @@ export interface DateInputProps extends CommonCalendarProps {
      */
     onChange?: ((value: string) => void) | undefined;
     /**
-     * Function that returns when a defocus is made on the field
+     * Called when the field is focused
+     */
+    onFocus?: (() => void) | undefined;
+    /**
+     * Called when a defocus is made on the field
      */
     onBlur?: (() => void) | undefined;
     /** Called when there is a change in the current visible month and year */
