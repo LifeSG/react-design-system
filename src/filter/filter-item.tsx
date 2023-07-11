@@ -76,7 +76,7 @@ export const FilterItem = ({
                     )}
                 </FilterItemHeader>
             )}
-            <ExpandableItem style={isMobile ? undefined : itemAnimationStyles}>
+            <ExpandableItem style={itemAnimationStyles}>
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>
                         <MinimisableContent
