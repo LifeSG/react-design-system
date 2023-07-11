@@ -43,7 +43,7 @@ export const Brand = ({
             $type={type}
         >
             <ImageWithFallback
-                imgSrc={resources.logoSrc}
+                src={resources.logoSrc}
                 alt={resources.brandName + "-app-logo"}
             />
         </Clickable>
