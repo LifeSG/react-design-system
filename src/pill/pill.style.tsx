@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../color/color";
 import { PillColorType, PillType } from "./types";
 import { TextStyleHelper } from "../text";
@@ -26,78 +26,78 @@ export const Wrapper = styled.div<StyleProps>`
     }
 
     ${(props) => {
-        let backgroundColor: string;
-        let borderColor: string;
-        let color: string;
+        let backgroundColor: (props: any) => string;
+        let borderColor: (props: any) => string;
+        let color: (props: any) => string;
 
         if (props.$type === "solid") {
-            color = Color.Neutral[8](props);
+            color = Color.Neutral[8];
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = Color.Neutral[3](props);
-                    borderColor = Color.Neutral[3](props);
+                    backgroundColor = Color.Neutral[3];
+                    borderColor = Color.Neutral[3];
                     break;
                 case "green":
-                    backgroundColor = Color.Validation.Green.Text(props);
-                    borderColor = Color.Validation.Green.Text(props);
+                    backgroundColor = Color.Validation.Green.Text;
+                    borderColor = Color.Validation.Green.Text;
                     break;
                 case "yellow":
-                    backgroundColor = Color.Validation.Orange.Text(props);
-                    borderColor = Color.Validation.Orange.Text(props);
+                    backgroundColor = Color.Validation.Orange.Text;
+                    borderColor = Color.Validation.Orange.Text;
                     break;
                 case "red":
-                    backgroundColor = Color.Validation.Red.Text(props);
-                    borderColor = Color.Validation.Red.Text(props);
+                    backgroundColor = Color.Validation.Red.Text;
+                    borderColor = Color.Validation.Red.Text;
                     break;
                 case "blue":
-                    backgroundColor = Color.Validation.Blue.Text(props);
-                    borderColor = Color.Validation.Blue.Text(props);
+                    backgroundColor = Color.Validation.Blue.Text;
+                    borderColor = Color.Validation.Blue.Text;
                     break;
                 default:
-                    backgroundColor = Color.Neutral[1](props);
-                    borderColor = Color.Neutral[1](props);
+                    backgroundColor = Color.Neutral[1];
+                    borderColor = Color.Neutral[1];
                     break;
             }
         } else {
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = Color.Neutral[6](props);
-                    borderColor = Color.Neutral[4](props);
-                    color = Color.Neutral[3](props);
+                    backgroundColor = Color.Neutral[6];
+                    borderColor = Color.Neutral[4];
+                    color = Color.Neutral[3];
                     break;
                 case "green":
-                    backgroundColor = Color.Validation.Green.Background(props);
-                    borderColor = Color.Validation.Green.Border(props);
-                    color = Color.Validation.Green.Text(props);
+                    backgroundColor = Color.Validation.Green.Background;
+                    borderColor = Color.Validation.Green.Border;
+                    color = Color.Validation.Green.Text;
                     break;
                 case "yellow":
-                    backgroundColor = Color.Validation.Orange.Background(props);
-                    borderColor = Color.Validation.Orange.Border(props);
-                    color = Color.Validation.Orange.Text(props);
+                    backgroundColor = Color.Validation.Orange.Background;
+                    borderColor = Color.Validation.Orange.Border;
+                    color = Color.Validation.Orange.Text;
                     break;
                 case "red":
-                    backgroundColor = Color.Validation.Red.Background(props);
-                    borderColor = Color.Validation.Red.Border(props);
-                    color = Color.Validation.Red.Text(props);
+                    backgroundColor = Color.Validation.Red.Background;
+                    borderColor = Color.Validation.Red.Border;
+                    color = Color.Validation.Red.Text;
                     break;
                 case "blue":
-                    backgroundColor = Color.Validation.Blue.Background(props);
-                    borderColor = Color.Validation.Blue.Border(props);
-                    color = Color.Validation.Blue.Text(props);
+                    backgroundColor = Color.Validation.Blue.Background;
+                    borderColor = Color.Validation.Blue.Border;
+                    color = Color.Validation.Blue.Text;
                     break;
                 default:
-                    backgroundColor = Color.Neutral[8](props);
-                    borderColor = Color.Neutral[5](props);
-                    color = Color.Neutral[1](props);
+                    backgroundColor = Color.Neutral[8];
+                    borderColor = Color.Neutral[5];
+                    color = Color.Neutral[1];
                     break;
             }
         }
 
-        return `
-			background: ${backgroundColor};
-			border: 1px solid ${borderColor};
-            color: ${color}
-		`;
+        return css`
+            background: ${backgroundColor};
+            border: 1px solid ${borderColor};
+            color: ${color};
+        `;
     }}
 `;
 
