@@ -16,7 +16,7 @@ export const Pill = ({
             $color={colorType}
             {...otherProps}
         >
-            {icon}
+            {icon && <div data-testid={"icon"}>{icon}</div>}
             <Label>{children}</Label>
         </Wrapper>
     );

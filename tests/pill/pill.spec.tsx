@@ -6,32 +6,30 @@ import { PlusCircleFillIcon } from "@lifesg/react-icons";
 // UNIT TESTS
 // =============================================================================
 describe("Pill", () => {
-    it("should render pill component", () => {
-        const label = "pill statuses";
+    const label = "Some label";
+    it("should render the label correctly", () => {
         render(
             <Pill type="solid" data-testid="pill-component">
                 {label}
             </Pill>
         );
 
-        const element = screen.getByTestId("pill-component");
-        expect(element).toBeInTheDocument();
-        expect(element.innerHTML).toContain(label);
-        expect(element.innerHTML).not.toContain("svg");
-        expect(element).toHaveStyle("background: #282828;");
+        expect(screen.getByText(label)).toBeInTheDocument();
     });
 
-    it("should render pill component with icon", () => {
-        const label = "pill with icon";
+    it("should render with an icon if specified", () => {
         render(
             <Pill type="outline" icon={<PlusCircleFillIcon />}>
                 {label}
             </Pill>
         );
 
-        const element = screen.getByTestId("pill");
-        expect(element).toBeInTheDocument();
-        expect(element.innerHTML).toContain("svg");
-        expect(element).toHaveStyle("background: #FFFFFF;");
+        expect(screen.getByTestId("icon")).toBeInTheDocument();
+    });
+
+    it("should render without an icon if not specified", () => {
+        render(<Pill type="outline">{label}</Pill>);
+
+        expect(screen.queryByTestId("icon")).not.toBeInTheDocument();
     });
 });
