@@ -14,6 +14,7 @@ export * from "./date-range-input";
 export * from "./drawer";
 export * from "./error-display";
 export * from "./feedback-rating";
+export * from "./file-upload";
 export * from "./filter";
 export * from "./footer";
 export * from "./form";

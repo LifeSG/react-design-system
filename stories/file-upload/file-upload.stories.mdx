@@ -1,0 +1,369 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useEffect, useState } from "react";
+import { FileUpload } from "src/file-upload";
+import { SimpleIdGenerator } from "src/util/simple-id-generator";
+import {
+    Heading3,
+    Heading4,
+    PreviewBox,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { PropsTable } from "./props-table.tsx";
+
+<Meta title="Modules/FileUpload" component={FileUpload} />
+
+<Title>FileUpload</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that allows for uploading files.
+
+```tsx
+import { FileUpload } from "@lifesg/react-design-system/file-upload";
+```
+
+<Canvas>
+    <Story name="FileUpload">
+        {() => {
+            const [fileItems, setFileItems] = useState([]);
+            const handleChange = (files) => {
+                const newFileItems = files.map((file) => {
+                    return {
+                        id: SimpleIdGenerator.generate(),
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                });
+                setFileItems((prevItems) => {
+                    return prevItems.concat(newFileItems);
+                });
+            };
+            const handleDelete = (fileItem) => {
+                const newArr = [...fileItems];
+                newArr.splice(newArr.indexOf(fileItem), 1);
+                setFileItems(newArr);
+            };
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    onChange={handleChange}
+                    onDelete={handleDelete}
+                    title="Content title"
+                    description="Additional description for the user to consider when uploading their files."
+                    warning={
+                        <>
+                            Maximum size per file: 2 MB
+                            <br />
+                            Supported file types: .JPG, .JPEG, .PNG
+                        </>
+                    }
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Error display</Heading3>
+
+Each file item comes with an error display to indicate that the upload has failed.
+
+<Canvas>
+    <Story name="With error display">
+        {() => {
+            const [fileItems, setFileItems] = useState([]);
+            const handleChange = (files) => {
+                const newFileItems = files.map((file) => {
+                    return {
+                        id: SimpleIdGenerator.generate(),
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        errorMessage: "Something went wrong",
+                    };
+                });
+                setFileItems((prevItems) => {
+                    return prevItems.concat(newFileItems);
+                });
+            };
+            const handleDelete = (fileItem) => {
+                const newArr = [...fileItems];
+                newArr.splice(newArr.indexOf(fileItem), 1);
+                setFileItems(newArr);
+            };
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    onChange={handleChange}
+                    onDelete={handleDelete}
+                    title="Content title"
+                    description="Try dragging or adding a file to see the error state"
+                    errorMessage="This is a sample error"
+                    warning={
+                        <>
+                            Maximum size per file: 2 MB
+                            <br />
+                            Supported file types: .JPG, .JPEG, .PNG
+                        </>
+                    }
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Loading indicator</Heading3>
+
+The component also has the ability to render a loading indicator for file
+uploads. However this will require the user to manage the progress themselves.
+
+> The source code implementation is meant for simulation purposes and should
+> not be used entirely as reference for the exact implementation
+
+<Canvas>
+    <Story name="With loading indicator">
+        {() => {
+            const [fileItems, setFileItems] = useState([]);
+            useEffect(() => {
+                if (fileItems.length > 0) {
+                    updateProgress();
+                }
+            }, [fileItems]);
+            const handleChange = (files) => {
+                const newFileItems = files.map((file) => {
+                    return {
+                        id: SimpleIdGenerator.generate(),
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        progress: 0,
+                    };
+                });
+                setFileItems((prevItems) => {
+                    return prevItems.concat(newFileItems);
+                });
+            };
+            const handleDelete = (fileItem) => {
+                const newArr = [...fileItems];
+                newArr.splice(newArr.indexOf(fileItem), 1);
+                setFileItems(newArr);
+            };
+            const updateProgress = () => {
+                const hasInProgressItems = fileItems.some(
+                    (item) => item.progress < 1
+                );
+                if (hasInProgressItems) {
+                    const updatedFileItems = fileItems.map((item) => {
+                        let newProgress;
+                        if (item.progress === 1) {
+                            newProgress = undefined;
+                        } else if (item.progress < 1) {
+                            newProgress = item.progress + 0.25;
+                        }
+                        return {
+                            ...item,
+                            progress: newProgress,
+                        };
+                    });
+                    setTimeout(() => {
+                        setFileItems(updatedFileItems);
+                    }, 200);
+                }
+            };
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    onChange={handleChange}
+                    onDelete={handleDelete}
+                    title="Content title"
+                    description="Additional description for the user to consider when uploading their files."
+                    warning={
+                        <>
+                            Maximum size per file: 2 MB
+                            <br />
+                            Supported file types: .JPG, .JPEG, .PNG
+                        </>
+                    }
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Editable file items</Heading3>
+
+The component also enables you to add a description to the file item. Note that
+this does not alter the file in any way and is up to the discretion of the user
+of the component to decide what to do with it.
+
+> **Note**: Currently only image file uploads have this feature.
+
+<Canvas>
+    <Story name="Editable file items">
+        {() => {
+            const [fileItems, setFileItems] = useState([
+                {
+                    id: "1",
+                    name: "img-1.jpg",
+                    type: "image/jpeg",
+                    size: 5000,
+                    thumbnailImageDataUrl:
+                        "https://picsum.photos/seed/picsum/200/300",
+                },
+            ]);
+            const handleChange = (files) => {
+                const newFileItems = files.map((file) => {
+                    return {
+                        id: SimpleIdGenerator.generate(),
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                });
+                setFileItems((prevItems) => {
+                    return prevItems.concat(newFileItems);
+                });
+            };
+            const handleDelete = (fileItem) => {
+                if (fileItems.length === 1) {
+                    setFileItems([]);
+                } else {
+                    const newArr = [...fileItems];
+                    newArr.splice(newArr.indexOf(fileItem), 1);
+                    setFileItems(newArr);
+                }
+            };
+            const handleEdit = (fileItem) => {
+                setFileItems((prevItems) => {
+                    return prevItems.map((item) => {
+                        if (item.id === fileItem.id) {
+                            return fileItem;
+                        } else {
+                            return item;
+                        }
+                    });
+                });
+            };
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    onChange={handleChange}
+                    onDelete={handleDelete}
+                    onEdit={handleEdit}
+                    title="Editable file items"
+                    description="Drag an image file and a textarea will be shown for you to enter a description"
+                    fileDescriptionMaxLength={200}
+                    editableFileItems
+                    maxFiles={6}
+                    warning={
+                        <>
+                            Maximum size per file: 2 MB
+                            <br />
+                            Supported file types: .JPG, .JPEG, .PNG
+                        </>
+                    }
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Sortable file items</Heading3>
+
+The component also enables you to perform a drag sort on the items to give you
+the flexibility to reorder items after uploading them.
+
+> Note: Sorting is only enabled if there are no items in edit mode
+
+<Canvas>
+    <Story name="Sortable file items">
+        {() => {
+            const [fileItems, setFileItems] = useState([]);
+            const handleChange = (files) => {
+                const newFileItems = files.map((file) => {
+                    return {
+                        id: SimpleIdGenerator.generate(),
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                });
+                setFileItems((prevItems) => {
+                    return prevItems.concat(newFileItems);
+                });
+            };
+            const handleDelete = (fileItem) => {
+                if (fileItems.length === 1) {
+                    setFileItems([]);
+                } else {
+                    const newArr = [...fileItems];
+                    newArr.splice(newArr.indexOf(fileItem), 1);
+                    setFileItems(newArr);
+                }
+            };
+            const handleSort = (fileItems) => {
+                setFileItems(fileItems);
+            };
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    onChange={handleChange}
+                    onDelete={handleDelete}
+                    onSort={handleSort}
+                    title="Sortable file items"
+                    description="Upload an image and try to perform sorting on them"
+                    fileDescriptionMaxLength={200}
+                    sortable
+                    maxFiles={6}
+                    warning={
+                        <>
+                            Maximum size per file: 2 MB
+                            <br />
+                            Maximum number of files: 6
+                        </>
+                    }
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Readonly state</Heading3>
+
+<Canvas>
+    <Story name="Readonly state">
+        {() => {
+            const [fileItems, setFileItems] = useState([
+                {
+                    id: "1",
+                    name: "img-1.jpg",
+                    type: "image/jpeg",
+                    size: 5000,
+                    description: "An evening sunset picture",
+                    thumbnailImageDataUrl:
+                        "https://picsum.photos/seed/picsum/200/300",
+                },
+                {
+                    id: "2",
+                    name: "pdf-doc-2.pdf",
+                    type: "application/pdf",
+                    size: 3000,
+                },
+            ]);
+            return (
+                <FileUpload
+                    fileItems={fileItems}
+                    readOnly
+                    title="Readonly file items"
+                    description="In this state, you cannot sort nor interact with any of the items"
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

@@ -23,7 +23,7 @@ const Component = (
             type={type}
             {...otherProps}
         >
-            <ImageWithFallback imgSrc={imgSrc} />
+            <ImageWithFallback src={imgSrc} />
             {children}
         </Main>
     );
