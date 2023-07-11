@@ -17,9 +17,7 @@ jobs:
         run: |
           [[ $GITHUB_EVENT_NAME = "pull_request" ]] && BRANCH_NAME="${{ github.head_ref }}" || BRANCH_NAME="${{ github.ref_name }}"
 
-          [[ $GITHUB_EVENT_NAME = "pull_request" ]] && COMMIT_MSG="${{ github.event.pull_request.title }}" || COMMIT_MSG=$(printf '%b ' ${{ github.event.head_commit.message }} | head -n 1)
-
-          echo $COMMIT_MSG
+          [[ $GITHUB_EVENT_NAME = "pull_request" ]] && COMMIT_MSG="${{ github.event.pull_request.title }}" || COMMIT_MSG=$(echo -e ${{ github.event.head_commit.message }} | head -n 1)
 
           PIPELINE_PROJECT_URL="github.com/$GITHUB_REPOSITORY.git"
 
@@ -32,8 +30,6 @@ jobs:
           echo "PIPELINE_BRANCH_NAME: $BRANCH_NAME"
           echo "PIPELINE_TRIGGER_PERSON: $GITHUB_ACTOR"
           echo "PIPELINE_COMMIT_MSG: $COMMIT_MSG"
-
-          exit 1
 
       - name: Trigger GitLab Pipeline
         env:
