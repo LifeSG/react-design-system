@@ -13,5 +13,4 @@ export interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
     type: PillType;
     colorType?: PillColorType | undefined;
     icon?: JSX.Element | undefined;
-    "data-testid"?: string | undefined;
 }

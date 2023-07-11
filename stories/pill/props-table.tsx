@@ -21,11 +21,6 @@ const DATA: ApiTableSectionProps[] = [
                 ),
             },
             {
-                name: "data-testid",
-                description: "The test identifier of the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "colorType",
                 description: (
                     <>

@@ -10,13 +10,8 @@ export const Pill = ({
     ...otherProps
 }: PillProps): JSX.Element => {
     return (
-        <Wrapper
-            data-testid={otherProps["data-testid"] || "pill"}
-            $type={type}
-            $color={colorType}
-            {...otherProps}
-        >
-            {icon && <div data-testid={"icon"}>{icon}</div>}
+        <Wrapper $type={type} $color={colorType} {...otherProps}>
+            {icon}
             <Label>{children}</Label>
         </Wrapper>
     );
