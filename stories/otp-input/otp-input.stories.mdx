@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useEffect, useState } from "react";
 import { OtpInput } from "src/otp-input";
 import {
@@ -32,7 +32,7 @@ import { OtpInput } from "@lifesg/react-design-system/otp-input";
 
 <Heading3>With an error message</Heading3>
 
-<Preview>
+<Canvas>
     <Story name="with error message">
         <StoryContainer>
             <OtpInput
@@ -42,7 +42,7 @@ import { OtpInput } from "@lifesg/react-design-system/otp-input";
             />
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>With a custom action button</Heading3>
 
@@ -58,7 +58,7 @@ you with it.
 
 > You can use `setInterval` to handle the countdown display
 
-<Preview>
+<Canvas>
     <Story name="With custom action button">
         {() => {
             const numOfInput = 4;
@@ -86,7 +86,7 @@ you with it.
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Heading4>
     <strong>Usage of custom countdown mechanism</strong>
@@ -98,7 +98,7 @@ use a simple `setTimeout` to handle the change in label.
 
 > You can use `setInterval` to handle the countdown display
 
-<Preview>
+<Canvas>
     <Story name="With custom action button (self-handle)">
         {() => {
             const [isInCooldown, setIsInCooldown] = useState(true);
@@ -129,7 +129,7 @@ use a simple `setTimeout` to handle the change in label.
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <br />
 

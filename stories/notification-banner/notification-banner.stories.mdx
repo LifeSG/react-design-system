@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { NotificationBanner } from "src/notification-banner";
 import { Layout } from "src/layout";
@@ -78,7 +78,7 @@ import { NotificationBanner } from "@lifesg/react-design-system/notification-ban
 The `NotificationBanner` is sticky by default. To make it non sticky, you can just specify `false` on the `sticky`
 property.
 
-<Preview>
+<Canvas>
     <Story name="Non sticky">
         <div
             style={{
@@ -121,11 +121,11 @@ property.
             </StyledContent>
         </div>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Non dismissible banner</Heading3>
 
-<Preview>
+<Canvas>
     <Story name="Non dismissible">
         <div
             style={{
@@ -151,7 +151,7 @@ property.
             </StyledContent>
         </div>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Text styling options</Heading3>
 
@@ -159,7 +159,7 @@ The banner also supports customisation of the text styles. Here is how you can a
 
 > Note: For external links, you will need to use the `NotificationBanner.Link` component to have the icon displayed
 
-<Preview>
+<Canvas>
     <Story name="Text styling options">
         <div style={{ position: "relative", paddingTop: "1.5rem" }}>
             <NotificationBanner>
@@ -194,13 +194,13 @@ The banner also supports customisation of the text styles. Here is how you can a
             </StyledContent>
         </div>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Custom content</Heading3>
 
 The `NotificationBanner` also allows custom content to be displayed.
 
-<Preview>
+<Canvas>
     <Story name="Custom content">
         <div
             style={{
@@ -235,7 +235,7 @@ The `NotificationBanner` also allows custom content to be displayed.
             </StyledContent>
         </div>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Using as a Higher Order Component (HOC)</Secondary>
 

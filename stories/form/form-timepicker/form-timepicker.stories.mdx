@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Timepicker } from "src/timepicker";
 import { Form } from "src/form";
@@ -90,7 +90,7 @@ In the case that you require the timepicker field as a standalone, you can do th
 import { Timepicker } from "@lifesg/react-design-system/timepicker";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Standalone usage">
         {() => {
             const [time, setTime] = useState("");
@@ -106,7 +106,7 @@ import { Timepicker } from "@lifesg/react-design-system/timepicker";
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

@@ -1,4 +1,4 @@
-import { Meta, Preview, Story } from "@storybook/addon-docs";
+import { Meta, Story } from "@storybook/addon-docs";
 import { Text } from "src/text";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { DisplayContainer, LinkDiv, TextDisplay } from "./doc-elements";
@@ -29,7 +29,7 @@ The `Text` component comes with 2 categories of components:
 
 export const EXAMPLE_TEXT = "A quick brown fox jumps over the lazy dog";
 
-<Preview>
+<Canvas>
     <Story name="Introduction">
         <DisplayContainer>
             <TextDisplay variant="D1">
@@ -70,13 +70,13 @@ export const EXAMPLE_TEXT = "A quick brown fox jumps over the lazy dog";
             </TextDisplay>
         </DisplayContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <a id="hyperlink">
     <Heading3>Hyperlinks</Heading3>
 </a>
 
-<Preview>
+<Canvas>
     <LinkDiv>
         <Text.Hyperlink.Default href="https://www.life.gov.sg" target="_blank">
             Default link
@@ -85,11 +85,11 @@ export const EXAMPLE_TEXT = "A quick brown fox jumps over the lazy dog";
             Small link
         </Text.Hyperlink.Small>
     </LinkDiv>
-</Preview>
+</Canvas>
 
 As we recommend providing an indicator for links leading to external sites, you are required to use the `external` prop to allow for the indicator to appear.
 
-<Preview>
+<Canvas>
     <Text.Hyperlink.Default
         href="https://www.google.com"
         target="_blank"
@@ -97,7 +97,7 @@ As we recommend providing an indicator for links leading to external sites, you 
     >
         This is an external link with the indicator
     </Text.Hyperlink.Default>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

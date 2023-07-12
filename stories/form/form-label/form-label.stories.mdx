@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Checkbox } from "src/checkbox";
 import { Form } from "src/form";
@@ -42,7 +42,7 @@ import { Form } from "@lifesg/react-design-system/form";
 
 Form labels come with an optional addon that you can use by specifying the `addon` prop.
 
-<Preview>
+<Canvas>
     <Story name="With addon">
         {() => {
             const [checked, setChecked] = useState(false);
@@ -68,13 +68,13 @@ Form labels come with an optional addon that you can use by specifying the `addo
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>With subtitle</Heading3>
 
 Form labels come with an optional subtitle that you can use by specifying the `subtitle` prop.
 
-<Preview>
+<Canvas>
     <Story name="With subtitle">
         {() => {
             const [checked, setChecked] = useState(false);
@@ -96,7 +96,7 @@ Form labels come with an optional subtitle that you can use by specifying the `s
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

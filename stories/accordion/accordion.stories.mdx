@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Accordion } from "src/accordion";
 import { Text } from "src/text";
 import { Secondary, Heading3, Title } from "../storybook-common";
@@ -47,7 +47,7 @@ import { Accordion } from "@lifesg/react-design-system/accordion";
 
 Specifying the type in the `Accordion.Item` produces a smaller text size for each item's title.
 
-<Preview>
+<Canvas>
     <Story name="Small Accordion item title">
         <Accordion title="Small Accordion item title">
             <Accordion.Item title="This is the first item" type="small">
@@ -72,14 +72,14 @@ Specifying the type in the `Accordion.Item` produces a smaller text size for eac
             </Accordion.Item>
         </Accordion>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Showing title in mobile view</Heading3>
 
 By default, the `Accordion` will not render the title in mobile views. However if you require, you may
 use the `showTitleInMobile` prop to enable the title to be visible in mobile view.
 
-<Preview>
+<Canvas>
     <Story name="Title shown in mobile">
         <Accordion title="Title in mobile too" showTitleInMobile>
             <Accordion.Item title="This is the first item">
@@ -104,13 +104,13 @@ use the `showTitleInMobile` prop to enable the title to be visible in mobile vie
             </Accordion.Item>
         </Accordion>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>No title</Heading3>
 
 If you do not require a title in the `Accordion`, simply omit the `title` prop.
 
-<Preview>
+<Canvas>
     <Story name="No title">
         <Accordion>
             <Accordion.Item title="This is the first item">
@@ -135,7 +135,7 @@ If you do not require a title in the `Accordion`, simply omit the `title` prop.
             </Accordion.Item>
         </Accordion>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

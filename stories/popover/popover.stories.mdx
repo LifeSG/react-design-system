@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Popover } from "src/popover";
@@ -119,7 +119,7 @@ You also have the freedom to construct the `Popover` as a separate component fro
 import { Popover } from "@lifesg/react-design-system/popover";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Using as a component">
         {() => {
             const [visible, setVisible] = useState(false);
@@ -140,7 +140,7 @@ import { Popover } from "@lifesg/react-design-system/popover";
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

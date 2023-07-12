@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Text } from "src/text";
 import { Layout } from "src/layout";
 import {
@@ -195,7 +195,7 @@ export const MyComponent = () => (
 
 As mentioned above, you can separately compose the `Section` and `Container` components.
 
-<Preview>
+<Canvas>
     <Story name="Split usage">
         <Layout.Section>
             <Layout.Container>
@@ -217,13 +217,13 @@ As mentioned above, you can separately compose the `Section` and `Container` com
             </Layout.Container>
         </Layout.Section>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Flex column layout</Secondary>
 
 You can arrange content vertically with the `type` prop set to `flex-column`.
 
-<Preview>
+<Canvas>
     <Story name="Flex column layout">
         {() => {
             const renderContent = (content) => {
@@ -246,13 +246,13 @@ You can arrange content vertically with the `type` prop set to `flex-column`.
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Grid layout</Secondary>
 
 You can make use of the `type` prop to specify if the layout will use the [CSS Grid](https://css-tricks.com/snippets/css/complete-guide-grid/).
 
-<Preview>
+<Canvas>
     <Story name="Grid layout">
         {() => {
             const renderColumn = (index) => (
@@ -286,7 +286,7 @@ You can make use of the `type` prop to specify if the layout will use the [CSS G
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>About the Grid</Heading3>
 

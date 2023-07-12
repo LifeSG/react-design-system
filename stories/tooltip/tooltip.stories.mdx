@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Tooltip } from "src/tooltip";
@@ -134,7 +134,7 @@ You also have the freedom to construct the `Tooltip` as a separate component fro
 import { Tooltip } from "@lifesg/react-design-system/tooltip";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Using as a component">
         {() => {
             const [visible, setVisible] = useState(false);
@@ -152,7 +152,7 @@ import { Tooltip } from "@lifesg/react-design-system/tooltip";
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <!-- POSITIONS -->
 
@@ -162,11 +162,11 @@ There are 4 types of positions that the `Tooltip` can appear. You can specify so
 
 In this example, click to interact with the buttons.
 
-<Preview>
+<Canvas>
     <Story name="Available positions">
         <PositionalTooltips />
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

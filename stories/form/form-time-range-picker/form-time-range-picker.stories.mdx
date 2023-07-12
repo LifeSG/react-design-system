@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { TimeRangePicker } from "src/time-range-picker";
 import { Form } from "src/form";
@@ -102,7 +102,7 @@ In the case that you require the timepicker field as a standalone, you can do th
 import { TimeRangePicker } from "@lifesg/react-design-system/TimeRangePicker";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Standalone usage">
         {() => {
             const [time, setTime] = useState("");
@@ -118,7 +118,7 @@ import { TimeRangePicker } from "@lifesg/react-design-system/TimeRangePicker";
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

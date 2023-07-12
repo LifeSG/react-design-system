@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Button } from "src/button";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { Container } from "./doc-elements";
@@ -40,7 +40,7 @@ The `Button` component comes in 2 sizes, a default and small size.
 
 <Heading3>Loading</Heading3>
 
-<Preview>
+<Canvas>
     <Story name="Loading state">
         <Container>
             <Button.Default loading>Loading</Button.Default>
@@ -74,7 +74,7 @@ The `Button` component comes in 2 sizes, a default and small size.
             </Button.Small>
         </Container>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

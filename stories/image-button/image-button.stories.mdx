@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { ImageButton } from "src/image-button";
 import {
@@ -63,7 +63,7 @@ import { ImageButton } from "@lifesg/react-design-system/image-button";
 
 When the specified image fails to load, it is replaced by a fallback.
 
-<Preview>
+<Canvas>
     <Story name="Fallback">
         <ImageButton
             disabled={false}
@@ -73,13 +73,13 @@ When the specified image fails to load, it is replaced by a fallback.
             Rooms
         </ImageButton>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Flex behaviour</Heading3>
 
 By default, the button shrinks to fit in a flex parent.
 
-<Preview>
+<Canvas>
     <Story name="Flex behaviour">
         <FlexStoryContainer>
             <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
@@ -96,7 +96,7 @@ By default, the button shrinks to fit in a flex parent.
             </ImageButton>
         </FlexStoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

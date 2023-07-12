@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Alert } from "src/alert";
 import { Text } from "src/text";
@@ -38,7 +38,7 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 You can also add an action button to be present in the `ErrorDisplay`. The action button will
 appear at the bottom of the component.
 
-<Preview>
+<Canvas>
     <Story name="With action button">
         <ErrorDisplay
             type="unsupported-browser"
@@ -50,7 +50,7 @@ appear at the bottom of the component.
             }}
         />
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Customisation</Heading3>
 
@@ -60,7 +60,7 @@ The `ErrorDisplay` component is customisable according to your project's needs. 
 -   title
 -   description
 
-<Preview>
+<Canvas>
     <Story name="Custom error">
         <ErrorDisplay
             type="404"
@@ -72,7 +72,7 @@ The `ErrorDisplay` component is customisable according to your project's needs. 
             }
         />
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Variants</Secondary>
 

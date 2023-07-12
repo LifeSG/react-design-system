@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import { Button } from "src/button";
@@ -35,7 +35,7 @@ import { Card } from "@lifesg/react-design-system/card";
 Other than a `string`, the `Card` also accepts a `JSX.Element` as its `children`.
 The child `JSX.Element` is unaltered and is simply wrapped by the `Card`.
 
-<Preview>
+<Canvas>
     <Story name="Custom content">
         <Card>
             <div
@@ -55,7 +55,7 @@ The child `JSX.Element` is unaltered and is simply wrapped by the `Card`.
             </div>
         </Card>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Customising the style</Heading3>
 

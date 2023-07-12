@@ -1,4 +1,4 @@
-import { Meta, Preview, Story } from "@storybook/addon-docs";
+import { Meta, Story } from "@storybook/addon-docs";
 import { Text } from "src/text";
 import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
 
@@ -14,7 +14,7 @@ In certain use cases, you might need to use multiple `Text` components to achiev
 
 Including a hyperlink within a set of text.
 
-<Preview>
+<Canvas>
     <Text.Body>
         The quick brown fox&nbsp;
         <Text.Hyperlink.Default href="https://www.google.com">
@@ -22,14 +22,14 @@ Including a hyperlink within a set of text.
         </Text.Hyperlink.Default>
         &nbsp;the lazy dog
     </Text.Body>
-</Preview>
+</Canvas>
 
 <Heading4>Example 2</Heading4>
 
 Including different weights within a set of text. All you need to do is to specify the `inline` prop
 for the child components.
 
-<Preview>
+<Canvas>
     <Text.Body>
         The quick&nbsp;
         <Text.Body weight="light" inline={true}>
@@ -40,13 +40,13 @@ for the child components.
         </Text.Body>
         &nbsp;the lazy dog
     </Text.Body>
-</Preview>
+</Canvas>
 
 <Heading3>Paragraph specification</Heading3>
 
 You can include a paragraph styled spacing between text blocks by specifying the `paragraph` prop.
 
-<Preview>
+<Canvas>
     <>
         <Text.Body paragraph={true}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
@@ -59,11 +59,11 @@ You can include a paragraph styled spacing between text blocks by specifying the
             Aliquam volutpat nibh non suscipit rhoncus.
         </Text.Body>
     </>
-</Preview>
+</Canvas>
 
 Comparing to if you did not specify it.
 
-<Preview>
+<Canvas>
     <>
         <Text.Body>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
@@ -76,7 +76,7 @@ Comparing to if you did not specify it.
             Aliquam volutpat nibh non suscipit rhoncus.
         </Text.Body>
     </>
-</Preview>
+</Canvas>
 
 <Heading3>Switching underlying component</Heading3>
 
@@ -86,10 +86,10 @@ rendered. You may do so using the `as` prop.
 > E.g. `Text.Body` renders a `<p>` but if you can specify another element to be
 > rendered instead. Inspect the element to find out
 
-<Preview>
+<Canvas>
     <>
         <Text.Body>This is the original</Text.Body>
         <br />
         <Text.Body as="span">This becomes a span under the hood</Text.Body>
     </>
-</Preview>
+</Canvas>
