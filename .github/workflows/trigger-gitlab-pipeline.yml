@@ -4,8 +4,10 @@ on:
   push:
     branches:
       - master
-      - release/*
-  pull_request:
+      - "release/**"
+  pull_request_target:
+    branches:
+      - master
     types: [opened, synchronize, reopened]
 
 jobs:
@@ -85,4 +87,4 @@ jobs:
 
           [[ $pipeline_status == "failed" ]] && echo "GitLab pipeline has failed, please head to the GitLab pipeline to check on error && exit 1"
 
-          [[ $pipeline_status == "success" ]] && echo "GitLab pipeline is successfully completed"
+          [[ $pipeline_status == "success" ]] && echo "GitLab pipeline is successfully completed, please head to the GitLab pipeline for further deployments"
