@@ -52,7 +52,7 @@ export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
 
 export type CalendarAction = "reset" | "confirmed";
 export type CalendarType = "standalone" | "input";
-export type Variant = "single" | "range";
+export type Variant = "single" | "range" | "week";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 
@@ -63,6 +63,7 @@ export interface YearMonthDisplay {
 
 export interface InternalCalendarRef {
     reset: () => void;
+    setCalendarDate: (value?: string) => void;
 }
 
 // =============================================================================
@@ -94,6 +95,7 @@ export interface CalendarManagerProps extends CommonCalendarProps {
 
 export interface DefaultViewProps {
     calendarDate: Dayjs;
+    currentView: View;
 }
 
 export interface CalendarManagerRef {

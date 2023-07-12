@@ -19,14 +19,14 @@ export interface DayLabelStyleProps extends StyleProps {
     $variant: DayVariant;
 }
 
-interface OverflowDisplayProps extends StyleProps {
+export interface BaseOverflowDisplayProps extends StyleProps {
     $position: "left" | "right";
 }
 
-interface InteractiveCircleProps extends DayLabelStyleProps {}
+export interface BaseInteractiveCircleProps extends DayLabelStyleProps {}
 
 // =============================================================================
-// STYLING
+// COMMON STYLING for DAY CELL
 // =============================================================================
 export const Wrapper = styled.div`
     width: 100%;
@@ -58,7 +58,7 @@ export const GrowDayCell = styled.div`
     flex: 1;
 `;
 
-export const OverflowDisplay = styled.div<OverflowDisplayProps>`
+export const BaseOverflowDisplay = styled.div<BaseOverflowDisplayProps>`
     position: absolute;
     width: 50%;
     height: 100%;
@@ -75,7 +75,64 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
                 `;
         }
     }}
+`;
 
+export const BaseInteractiveCircle = styled.div<BaseInteractiveCircleProps>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: default;
+    position: absolute;
+`;
+
+export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
+    ${(props) => {
+        const { $disabledDisplay, $selected, $variant } = props;
+
+        if ($disabledDisplay && $selected) {
+            return css`
+                ${TextStyleHelper.getTextStyle("H5", "semibold")};
+                color: ${Color.Accent.Light[2]};
+            `;
+        }
+
+        if ($disabledDisplay) {
+            return css`
+                color: ${Color.Neutral[4]};
+            `;
+        }
+
+        if ($selected) {
+            return css`
+                ${TextStyleHelper.getTextStyle("H5", "semibold")};
+                color: ${Color.Primary};
+            `;
+        }
+
+        switch ($variant) {
+            case "other-month":
+                return css`
+                    color: ${Color.Neutral[4]};
+                `;
+            case "today":
+                return css`
+                    color: ${Color.Neutral[3]};
+                `;
+            case "default":
+                return css`
+                    color: ${Color.Neutral[1]};
+                `;
+        }
+    }}
+`;
+
+// =============================================================================
+// STYLING for Regular
+// =============================================================================
+export const OverflowDisplay = styled(BaseOverflowDisplay)`
     ${(props) => {
         const { $selected } = props;
 
@@ -87,7 +144,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
             `;
         }
     }}
-    
+
     ${(props) => {
         const { $hovered, $overlap } = props;
 
@@ -107,16 +164,7 @@ export const OverflowDisplay = styled.div<OverflowDisplayProps>`
     }}
 `;
 
-export const InteractiveCircle = styled.div<InteractiveCircleProps>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    cursor: default;
-    position: absolute;
-
+export const InteractiveCircle = styled(BaseInteractiveCircle)`
     ${(props) => {
         const { $hovered, $selected } = props;
 
@@ -182,47 +230,6 @@ export const InteractiveCircle = styled.div<InteractiveCircleProps>`
                 `;
             default:
                 break;
-        }
-    }}
-`;
-
-export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
-    ${(props) => {
-        const { $disabledDisplay, $selected, $variant } = props;
-
-        if ($disabledDisplay && $selected) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Accent.Light[2]};
-            `;
-        }
-
-        if ($disabledDisplay) {
-            return css`
-                color: ${Color.Neutral[4]};
-            `;
-        }
-
-        if ($selected) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Primary};
-            `;
-        }
-
-        switch ($variant) {
-            case "other-month":
-                return css`
-                    color: ${Color.Neutral[4]};
-                `;
-            case "today":
-                return css`
-                    color: ${Color.Neutral[3]};
-                `;
-            case "default":
-                return css`
-                    color: ${Color.Neutral[1]};
-                `;
         }
     }}
 `;

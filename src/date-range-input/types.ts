@@ -1,5 +1,6 @@
 import {
     CommonCalendarProps,
+    Variant,
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";
 
@@ -21,6 +22,8 @@ export interface DateRangeInputProps extends CommonCalendarProps {
     error?: boolean | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
+    /** Indicate calendar variant from the date input component. */
+    variant?: Exclude<Variant, "single"> | undefined;
     /**
      * Specifies if the "Done" and "Cancel" action buttons should be rendered.
      * Is restricted to `true` on mobile viewports
