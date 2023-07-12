@@ -77,6 +77,63 @@ import { Form } from "@lifesg/react-design-system/form";
     </Story>
 </Canvas>
 
+<Heading3>Week Input</Heading3>
+
+A field that only allows user to pick a week date.
+
+<Canvas>
+    <Story name="Week input">
+        {() => {
+            const [start, setStart] = useState(
+                dayjs()
+                    .subtract(1, "month")
+                    .date(22)
+                    .startOf("week")
+                    .format("YYYY-MM-DD")
+            );
+            const [end, setEnd] = useState(
+                dayjs()
+                    .subtract(1, "month")
+                    .date(22)
+                    .endOf("week")
+                    .format("YYYY-MM-DD")
+            );
+            const [disabledDates] = useState([
+                dayjs().subtract(1, "month").date(10).format("YYYY-MM-DD"),
+                dayjs().subtract(1, "month").date(15).format("YYYY-MM-DD"),
+                dayjs().subtract(1, "month").date(21).format("YYYY-MM-DD"),
+                dayjs().subtract(1, "month").date(25).format("YYYY-MM-DD"),
+            ]);
+            return (
+                <StoryContainer>
+                    <Form.DateRangeInput
+                        label="This is the date range input week selection"
+                        variant="week"
+                        value={start}
+                        valueEnd={end}
+                        onChange={(s, e) => {
+                            setStart(s);
+                            setEnd(e);
+                        }}
+                    />
+                    <Form.DateRangeInput
+                        label="This has no action buttons on desktop viewports"
+                        variant="week"
+                        withButton={false}
+                    />
+                    <Form.DateRangeInput
+                        label="This is the with disabled dates"
+                        variant="week"
+                        value={start}
+                        valueEnd={end}
+                        disabledDates={disabledDates}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Heading3>With disabled dates</Heading3>
 
 You can use `disabledDates` to specify dates that are not available for selection.
@@ -140,6 +197,16 @@ When `allowDisabledSelection` is set, dates are visually disabled, but still sel
                 <StoryContainer>
                     <Form.DateRangeInput
                         label="This allows selection of disabled dates"
+                        disabledDates={disabledDates}
+                        minDate={dayjs()
+                            .subtract(6, "weeks")
+                            .format("YYYY-MM-DD")}
+                        maxDate={dayjs().add(6, "weeks").format("YYYY-MM-DD")}
+                        allowDisabledSelection
+                    />
+                    <Form.DateRangeInput
+                        label="This allows selection of disabled dates in week selection"
+                        variant="week"
                         disabledDates={disabledDates}
                         minDate={dayjs()
                             .subtract(6, "weeks")
