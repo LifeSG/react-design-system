@@ -14,7 +14,7 @@ interface StyleProps {
 }
 
 export const Wrapper = styled.div<StyleProps>`
-    border-radius: 0.25rem;
+    border-radius: 4px;
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;

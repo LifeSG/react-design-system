@@ -1,10 +1,15 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 
 import { Tag } from "src/tag";
 import { Text } from "src/text";
-import { Secondary, Heading3, Title } from "../storybook-common";
+import {
+    Secondary,
+    Heading3,
+    Title,
+    StoryContainer,
+} from "../storybook-common";
 import { Grid, Row, Wrapper } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
@@ -34,6 +39,8 @@ import { Tag } from "@lifesg/react-design-system/tag";
 </Canvas>
 
 <Heading3>Interactive tag</Heading3>
+
+**Note**: In tablet and mobile viewports, interactive tags are displayed in a larger size to extend the touch target.
 
 <Canvas>
     <Story name="Interactive">
@@ -81,7 +88,7 @@ import { Tag } from "@lifesg/react-design-system/tag";
 
 The `Tag` comes in 2 display formats, `outline` and `solid` and there are 6 color variations that can be denoted using the `colorType` prop.
 
-<Preview>
+<Canvas>
     <Story name="Variations">
         <StoryContainer>
             <Grid>
@@ -139,7 +146,7 @@ The `Tag` comes in 2 display formats, `outline` and `solid` and there are 6 colo
             </Grid>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

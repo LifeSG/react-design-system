@@ -16,16 +16,6 @@ export const Tag = ({
     const handleClick = (
         e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
     ) => {
-        e.stopPropagation();
-        performOnClickHandler(e);
-    };
-
-    // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
-    const performOnClickHandler = (
-        e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
-    ) => {
         if (onClick) {
             onClick(e);
         }
@@ -33,7 +23,7 @@ export const Tag = ({
 
     return (
         <Wrapper
-            as="button"
+            as={interactive ? "button" : "div"}
             $type={type}
             $color={colorType}
             $interactive={interactive}
