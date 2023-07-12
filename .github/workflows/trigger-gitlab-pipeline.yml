@@ -83,6 +83,6 @@ jobs:
 
           [[ $pipeline_status == "skipped" ]] && echo "GitLab pipeline has stopped, please head to the GitLab pipeline to trigger job manually"
 
-          [[ $pipeline_status == "failed" ]] && echo "GitLab pipeline has failed, please head to the GitLab pipeline to check on error && exit 1"
+          [[ $pipeline_status == "failed" ]] && echo "GitLab pipeline has failed, please head to the GitLab pipeline to check on error" && exit 1
 
           [[ $pipeline_status == "success" ]] && echo "GitLab pipeline is successfully completed, please head to the GitLab pipeline for further deployments"
