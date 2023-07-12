@@ -36,6 +36,7 @@ export * from "./otp-input";
 export * from "./overlay";
 export * from "./pagination";
 export * from "./phone-number-input";
+export * from "./pill";
 export * from "./popover";
 export * from "./progress-indicator";
 export * from "./radio-button";
