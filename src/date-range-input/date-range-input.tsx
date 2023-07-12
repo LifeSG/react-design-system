@@ -28,6 +28,7 @@ interface DateRangeInputState {
     selectedStart: string;
     selectedEnd: string;
     currentFocus: FocusType;
+    calendarOpen: boolean;
     isStartDirty: boolean;
     isEndDirty: boolean;
 }
@@ -38,6 +39,7 @@ const INITIAL_STATE: DateRangeInputState = {
     selectedStart: "",
     selectedEnd: "",
     currentFocus: "none",
+    calendarOpen: false,
     isStartDirty: false,
     isEndDirty: false,
 };
@@ -55,6 +57,7 @@ export const DateRangeInput = ({
     onBlur,
     onYearMonthDisplayChange,
     withButton: _withButton = true,
+    variant = "range",
     readOnly,
     id,
     allowDisabledSelection,
@@ -65,8 +68,18 @@ export const DateRangeInput = ({
     // =============================================================================
     const [initialCalendarDate, setInitialCalendarDate] = useState<string>();
     const [hoverValue, setHoverValue] = useState<string>(undefined);
+    const [isTouch, setIsTouch] = useState<boolean>(false);
+    const isWeekSelection = variant === "week";
+
     const [
-        { selectedStart, selectedEnd, currentFocus, isStartDirty, isEndDirty },
+        {
+            selectedStart,
+            selectedEnd,
+            currentFocus,
+            calendarOpen,
+            isStartDirty,
+            isEndDirty,
+        },
         actions,
     ] = useStateActions({
         name: "date-range-input",
@@ -77,6 +90,7 @@ export const DateRangeInput = ({
                 selectedStart: state.initialStart,
                 selectedEnd: state.initialEnd,
                 currentFocus: "none",
+                calendarOpen: false,
                 isStartDirty: false,
                 isEndDirty: false,
             }),
@@ -102,13 +116,15 @@ export const DateRangeInput = ({
             }),
             focus: (state, currentFocus: FocusType) => ({
                 ...state,
-                currentFocus,
+                currentFocus: !isWeekSelection ? currentFocus : "none",
+                calendarOpen: !readOnly,
             }),
             cancel: (state) => ({
                 ...state,
                 selectedStart: state.initialStart,
                 selectedEnd: state.initialEnd,
                 currentFocus: "none",
+                calendarOpen: false,
             }),
             done: (state, payload: { start: string; end: string }) => ({
                 ...state,
@@ -117,6 +133,7 @@ export const DateRangeInput = ({
                 initialStart: payload.start,
                 initialEnd: payload.end,
                 currentFocus: "none",
+                calendarOpen: false,
                 isStartDirty: false,
                 isEndDirty: false,
             }),
@@ -173,6 +190,7 @@ export const DateRangeInput = ({
         if (!nodeRef.current.contains(event.relatedTarget)) {
             actions.blur();
 
+            setIsTouch(false);
             startInputRef.current.resetPlaceholder();
             endInputRef.current.resetPlaceholder();
 
@@ -205,6 +223,7 @@ export const DateRangeInput = ({
         }
 
         actions.changeStart(val);
+        calendarRef.current.setCalendarDate(val);
         isUnselectable.current = false;
 
         if (!val) {
@@ -257,6 +276,7 @@ export const DateRangeInput = ({
         }
 
         actions.changeEnd(val);
+        calendarRef.current.setCalendarDate(val);
 
         if (!val) {
             // if both start and end were cleared, confirm the selection
@@ -300,11 +320,41 @@ export const DateRangeInput = ({
         }
     };
 
+    const handleWeekSelectionChange = (val: string) => {
+        const start = dayjs(val).startOf("week").format("YYYY-MM-DD");
+        const end = dayjs(val).endOf("week").format("YYYY-MM-DD");
+
+        actions.changeStart(start);
+        actions.changeEnd(end);
+        isUnselectable.current = false;
+
+        if (!withButton) {
+            actions.done({ start, end });
+            onChange?.(start, end);
+            return;
+        }
+    };
+
     const handleInputFocus = (focusType: FocusType) => () => {
+        if (readOnly) return;
+
         actions.focus(focusType);
+
+        handleWeekSelectionInputFocus();
 
         if (onFocus) {
             onFocus();
+        }
+    };
+
+    const handleWeekSelectionInputFocus = () => {
+        if (isWeekSelection) {
+            const firstDayOfWeek = dayjs(selectedStart)
+                .startOf("week")
+                .format("YYYY-MM-DD");
+
+            setIsTouch(true);
+            setInitialCalendarDate(firstDayOfWeek);
         }
     };
 
@@ -327,6 +377,10 @@ export const DateRangeInput = ({
             handleStartDateChange(val);
         } else if (currentFocus === "end") {
             handleEndDateChange(val);
+        }
+
+        if (isWeekSelection) {
+            handleWeekSelectionChange(val);
         }
     };
 
@@ -361,6 +415,34 @@ export const DateRangeInput = ({
         );
     };
 
+    const getHoverValue = (getValue: Exclude<FocusType, "none">) => {
+        let values = {
+            start: undefined,
+            end: undefined,
+        };
+
+        switch (variant) {
+            case "range":
+                values = {
+                    start: currentFocus === "start" ? hoverValue : undefined,
+                    end: currentFocus === "end" ? hoverValue : undefined,
+                };
+                break;
+            case "week":
+                if (!hoverValue) return;
+
+                values = {
+                    start: dayjs(hoverValue)
+                        .startOf("week")
+                        .format("YYYY-MM-DD"),
+                    end: dayjs(hoverValue).endOf("week").format("YYYY-MM-DD"),
+                };
+                break;
+        }
+
+        return values[getValue];
+    };
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -388,11 +470,9 @@ export const DateRangeInput = ({
                         names={["start-day", "start-month", "start-year"]}
                         value={selectedStart}
                         disabled={disabled}
-                        readOnly={readOnly}
+                        readOnly={isTouch || readOnly}
                         focused={currentFocus === "start"}
-                        hoverValue={
-                            currentFocus === "start" ? hoverValue : undefined
-                        }
+                        hoverValue={getHoverValue("start")}
                         onChange={handleStartDateChange}
                         onFocus={handleInputFocus("start")}
                         onBlur={handleStartInputBlur}
@@ -405,11 +485,9 @@ export const DateRangeInput = ({
                         names={["end-day", "end-month", "end-year"]}
                         value={selectedEnd}
                         disabled={disabled}
-                        readOnly={readOnly}
+                        readOnly={isTouch || readOnly}
                         focused={currentFocus === "end"}
-                        hoverValue={
-                            currentFocus === "end" ? hoverValue : undefined
-                        }
+                        hoverValue={getHoverValue("end")}
                         onChange={handleEndDateChange}
                         onFocus={handleInputFocus("end")}
                         onBlur={handleEndInputBlur}
@@ -419,9 +497,9 @@ export const DateRangeInput = ({
             <AnimatedInternalCalendar
                 ref={calendarRef}
                 type="input"
-                variant="range"
+                variant={variant}
                 initialCalendarDate={initialCalendarDate}
-                isOpen={currentFocus !== "none"}
+                isOpen={calendarOpen}
                 withButton={withButton}
                 value={selectedStart}
                 endValue={selectedEnd}

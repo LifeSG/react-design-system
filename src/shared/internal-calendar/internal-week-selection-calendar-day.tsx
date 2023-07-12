@@ -1,52 +1,34 @@
 import dayjs, { Dayjs } from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
-import { CalendarHelper } from "../../util/calendar-helper";
-import { CommonCalendarProps, FocusType, InternalCalendarProps } from "./types";
+import { CommonCalendarProps, View } from "./types";
 import { CalendarDayCell } from "./calendar-day-cell";
+import { CalendarHelper } from "../../util/calendar-helper";
+import { DayVariant } from "./internal-calendar-day";
 import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
 import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
 
-dayjs.extend(isBetween);
-
-export type DayVariant = "default" | "other-month" | "today";
-export type HoverDirection =
-    | "hover-start"
-    | "hover-end"
-    | "overlap-start"
-    | "overlap-end"
-    | "full-overlap-start"
-    | "full-overlap-end"
-    | "reset-start"
-    | "reset-end";
-
-interface CalendarDayProps
-    extends CommonCalendarProps,
-        Pick<InternalCalendarProps, "variant"> {
+interface CalendarWeekSelectProps extends CommonCalendarProps {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
-    currentFocus?: FocusType | undefined;
-    isNewSelection: boolean;
+    currentView: View;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
 }
 
-export const InternalCalendarDay = ({
+export const InternalWeekSelectionCalendarDay = ({
     calendarDate,
-    currentFocus,
     disabledDates,
     selectedStartDate,
     selectedEndDate,
     onSelect,
     onHover,
-    isNewSelection,
     minDate,
     maxDate,
-    variant,
+    currentView,
     allowDisabledSelection,
-}: CalendarDayProps) => {
+}: CalendarWeekSelectProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -61,8 +43,13 @@ export const InternalCalendarDay = ({
     // =============================================================================
     const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled && !allowDisabledSelection) return;
+        const firstDayOfWeek = value.startOf("week");
 
-        onSelect(value);
+        onSelect(firstDayOfWeek);
+
+        if (!!value && !dayjs(value).isSame(firstDayOfWeek, "month")) {
+            setHoverValue("");
+        }
     };
 
     const handleHoverCell = (value: string, isDisabled: boolean) => {
@@ -93,63 +80,6 @@ export const InternalCalendarDay = ({
         };
     };
 
-    const getHoverDirection = (): HoverDirection => {
-        if (!hoverValue || variant === "single") {
-            return null;
-        }
-
-        const hoverDay = dayjs(hoverValue);
-
-        if (selectedStartDate && selectedEndDate) {
-            if (hoverDay.isBefore(selectedStartDate)) {
-                if (currentFocus === "start") {
-                    return "full-overlap-start";
-                } else if (currentFocus === "end") {
-                    return "reset-end";
-                }
-            } else if (hoverDay.isAfter(selectedEndDate)) {
-                if (currentFocus === "end") {
-                    return "full-overlap-end";
-                } else if (currentFocus === "start") {
-                    return "reset-start";
-                }
-            } else if (
-                hoverDay.isBetween(
-                    selectedStartDate,
-                    selectedEndDate,
-                    "day",
-                    "[]"
-                ) &&
-                ![selectedStartDate, selectedEndDate].includes(hoverValue)
-            ) {
-                if (currentFocus === "start") {
-                    return "overlap-start";
-                } else if (currentFocus === "end") {
-                    return "overlap-end";
-                }
-            }
-        }
-
-        // handle hovering to start/end if didn't exist another selected value
-        if (selectedStartDate && !selectedEndDate) {
-            if (hoverDay.isAfter(selectedStartDate)) {
-                if (currentFocus === "end") {
-                    return "hover-end";
-                }
-            }
-        } else if (!selectedStartDate && selectedEndDate) {
-            if (hoverDay.isBefore(selectedEndDate)) {
-                if (currentFocus === "start") {
-                    return "hover-start";
-                }
-            }
-        }
-
-        return null;
-    };
-
-    const hoverDirection: HoverDirection = getHoverDirection();
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -172,30 +102,33 @@ export const InternalCalendarDay = ({
                             styleRightProps,
                             styleCircleProps,
                             styleLabelProps,
-                        } = CalendarDayStyleHelper.generateStyleProps(
-                            day,
-                            selectedStartDate,
-                            selectedEndDate,
-                            hoverValue,
-                            hoverDirection,
-                            currentFocus,
-                            minDate,
-                            maxDate,
-                            disabledDates,
-                            allowDisabledSelection,
-                            isNewSelection
-                        );
+                            styleOverflowCirleProps,
+                        } =
+                            CalendarDayStyleHelper.getStylePropsForWeekSelection(
+                                day,
+                                selectedStartDate,
+                                selectedEndDate,
+                                hoverValue,
+                                minDate,
+                                maxDate,
+                                disabledDates,
+                                allowDisabledSelection
+                            );
 
                         return (
                             <CalendarDayCell
                                 key={`day-${dayIndex}`}
-                                type="regular"
+                                type="week"
                                 dayDate={day}
                                 variant={variant}
+                                currentView={currentView}
                                 styleLeftProps={styleLeftProps}
                                 styleRightProps={styleRightProps}
                                 styleCircleProps={styleCircleProps}
                                 styleLabelProps={styleLabelProps}
+                                styleOverflowCirleProps={
+                                    styleOverflowCirleProps
+                                }
                                 onDayClick={handleDayClick}
                                 onHoverCell={handleHoverCell}
                             />

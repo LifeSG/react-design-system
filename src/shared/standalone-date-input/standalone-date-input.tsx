@@ -135,7 +135,7 @@ export const Component = (
     };
 
     const handleSectionFocus = () => {
-        if (disabled || readOnly) {
+        if (disabled) {
             return;
         }
 

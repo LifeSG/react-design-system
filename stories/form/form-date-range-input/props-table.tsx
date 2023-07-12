@@ -122,6 +122,17 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "variant",
+                description: (
+                    <>
+                        When the <code>week</code> is specified, the component
+                        is a week selection.
+                    </>
+                ),
+                propTypes: ["string"],
+                defaultValue: `range`,
+            },
+            {
                 name: "withButton",
                 description: (
                     <>
