@@ -161,6 +161,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
+                name: "onFocus",
+                description: "Called when the field is focused",
+                propTypes: ["() => void"],
+            },
+            {
                 name: "onYearMonthDisplayChange",
                 description:
                     "Called when the current displayed month and year changes",

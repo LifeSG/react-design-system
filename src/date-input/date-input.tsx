@@ -22,6 +22,7 @@ export const DateInput = ({
     error,
     value,
     onChange,
+    onFocus,
     onBlur,
     onYearMonthDisplayChange,
     withButton: _withButton = true,
@@ -103,6 +104,10 @@ export const DateInput = ({
         if (readOnly) return;
 
         setCalendarOpen(true);
+
+        if (onFocus) {
+            onFocus();
+        }
     };
 
     const handleHoverDayCell = (value: string) => {

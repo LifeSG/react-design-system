@@ -54,11 +54,13 @@ interface StyleProps {
 // =============================================================================
 const Wrapper = styled.div<StyleProps>`
     width: 41rem;
+
     ${(props) => {
         if (props.$hasBorder) {
             return css`
                 border: 1px solid ${Color.Neutral[5](props)};
                 border-radius: 12px;
+                overflow: hidden;
             `;
         }
     }}

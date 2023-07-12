@@ -79,6 +79,11 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a defocus happens",
                 propTypes: ["() => void"],
             },
+            {
+                name: "onFocus",
+                description: "Called when the field is focused",
+                propTypes: ["() => void"],
+            },
         ],
     },
     {

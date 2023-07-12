@@ -53,6 +53,7 @@ export const DateRangeInput = ({
     value,
     valueEnd,
     onChange,
+    onFocus,
     onBlur,
     onYearMonthDisplayChange,
     withButton: _withButton = true,
@@ -340,6 +341,10 @@ export const DateRangeInput = ({
         actions.focus(focusType);
 
         handleWeekSelectionInputFocus();
+
+        if (onFocus) {
+            onFocus();
+        }
     };
 
     const handleWeekSelectionInputFocus = () => {
@@ -449,7 +454,6 @@ export const DateRangeInput = ({
             $error={error}
             id={id}
             data-testid={otherProps["data-testid"]}
-            tabIndex={-1}
             onBlur={handleNodeBlur}
             onKeyDown={handleNodeKeyDown}
             {...otherProps}
