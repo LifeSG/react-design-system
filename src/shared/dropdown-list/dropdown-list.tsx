@@ -20,6 +20,7 @@ import {
     TruncateContainer,
     TruncateFirstLine,
     TruncateSecondLine,
+    TruncateText,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
 import { DropdownListProps, ListItemDisplayProps } from "./types";
@@ -40,12 +41,14 @@ export const DropdownList = <T, V>({
     onSearch,
     searchFunction,
     onDismiss,
+    disableItemFocus,
     multiSelect,
     selectedItems,
     onSelectAll,
     onRetry,
     itemsLoadState = "success",
     itemTruncationType = "end",
+    itemFlexDirection = "row",
     renderListItem,
     onBlur,
     hideNoResultsDisplay,
@@ -117,6 +120,8 @@ export const DropdownList = <T, V>({
                 setContentHeight(getContentHeight());
             });
 
+            if (disableItemFocus) return;
+
             // Focus search input if there is a search input
             if (searchInputRef && searchInputRef.current) {
                 searchInputRef.current.focus();
@@ -136,7 +141,7 @@ export const DropdownList = <T, V>({
             const contentHeight = getContentHeight();
             setContentHeight(contentHeight);
         }
-    }, [displayListItems]);
+    }, [displayListItems, itemsLoadState]);
 
     useEffect(() => {
         setDisplayListItems(listItems);
@@ -227,6 +232,14 @@ export const DropdownList = <T, V>({
         return listHeight + customCallToActionHeight;
     };
 
+    const hasTwoLinesLabel = () => {
+        return (
+            itemFlexDirection === "column" &&
+            displayListItems.length > 0 &&
+            typeof listExtractor(displayListItems[0]) !== "string"
+        );
+    };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -314,15 +327,47 @@ export const DropdownList = <T, V>({
 
     const renderLabel = (item: T): JSX.Element => {
         const label = getOptionLabel(item);
+        const isFlexColumn = itemFlexDirection === "column";
+
         if (typeof label === "string") {
-            return <>{label}</>;
+            return (
+                <TruncateText
+                    $labelType="primary"
+                    $shouldTruncate={isFlexColumn}
+                >
+                    {label}
+                </TruncateText>
+            );
         } else {
+            const secondaryLabel = label?.secondaryLabel && (
+                <SecondaryLabel $removePadding={isFlexColumn} weight="semibold">
+                    {label.secondaryLabel}
+                </SecondaryLabel>
+            );
+
+            if (itemFlexDirection === "row") {
+                return (
+                    <TruncateText>
+                        {label.title}
+                        {secondaryLabel}
+                    </TruncateText>
+                );
+            }
+
             return (
                 <>
-                    {label.title}
-                    {label.secondaryLabel && (
-                        <SecondaryLabel>{label.secondaryLabel}</SecondaryLabel>
-                    )}
+                    <TruncateText
+                        $labelType="primary"
+                        $shouldTruncate={isFlexColumn}
+                    >
+                        {label.title}
+                    </TruncateText>
+                    <TruncateText
+                        $labelType="secondary"
+                        $shouldTruncate={isFlexColumn}
+                    >
+                        {secondaryLabel}
+                    </TruncateText>
                 </>
             );
         }
@@ -334,9 +379,10 @@ export const DropdownList = <T, V>({
                 return (
                     <ListItem
                         key={getItemKey(item, index)}
-                        checked={checkListItemSelected(item) && !multiSelect}
+                        $checked={checkListItemSelected(item) && !multiSelect}
                     >
                         <ListItemSelector
+                            $hasTwoLinesLabel={hasTwoLinesLabel()}
                             onClick={(event) => {
                                 handleListItemClick(event, item);
                             }}
@@ -346,7 +392,7 @@ export const DropdownList = <T, V>({
                             data-testid={`list-item`}
                             type="button"
                             tabIndex={visible ? 0 : -1}
-                            multiSelect={multiSelect}
+                            $multiSelect={multiSelect}
                             onBlur={handleBlur}
                         >
                             {multiSelect && (
@@ -360,8 +406,9 @@ export const DropdownList = <T, V>({
                                     selected: checkListItemSelected(item),
                                 })
                             ) : (
-                                <Label truncateType={itemTruncationType}>
+                                <Label $truncateType={itemTruncationType}>
                                     {itemTruncationType === "middle" &&
+                                    itemFlexDirection === "row" &&
                                     hasExceededContainer(item)
                                         ? renderTruncatedText(item)
                                         : renderLabel(item)}
@@ -415,8 +462,9 @@ export const DropdownList = <T, V>({
     const renderNoResults = () => {
         if (
             !hideNoResultsDisplay &&
-            searchValue &&
-            displayListItems.length === 0
+            (searchValue || !enableSearch) &&
+            displayListItems.length === 0 &&
+            itemsLoadState !== "loading"
         ) {
             return (
                 <ResultStateContainer

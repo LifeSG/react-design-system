@@ -1,0 +1,92 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { PredictiveTextInput } from "src/predictive-text-input";
+import { Text } from "src/text";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { Container } from "stories/form/shared-doc-elements";
+import { PropsTable } from "./props-table";
+import {
+    mockFetchOptions,
+    mockFetchOptionsWithSecondaryLabel,
+} from "./mock-fetch-options.ts";
+
+<Meta title="Modules/PredictiveTextInput" component={PredictiveTextInput} />
+
+<Title>PredictiveTextInput</Title>
+
+<Secondary>Overview</Secondary>
+
+A predictive text input field that provides a set of options for a user to select.
+
+```tsx
+import { PredictiveTextInput } from "@lifesg/react-design-system/predictive-text-input";
+```
+
+<Canvas>
+    <Story name="PredictiveTextInput">
+        {() => {
+            const [selectedOption, setSelectedOption] = useState(undefined);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <PredictiveTextInput
+                            placeholder="Start typing..."
+                            selectedOption={selectedOption}
+                            fetchOptions={mockFetchOptions}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            onSelectOption={(option, extractedValue) =>
+                                setSelectedOption(option)
+                            }
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With secondary label</Heading3>
+
+You are able to include secondary label to the display of the dropdown list items.
+
+<Canvas>
+    <Story name="With secondary label">
+        {() => {
+            const [selectedOption, setSelectedOption] = useState(undefined);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <PredictiveTextInput
+                            selectedOption={selectedOption}
+                            placeholder="Start typing..."
+                            fetchOptions={mockFetchOptionsWithSecondaryLabel}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => {
+                                return {
+                                    title: item.title,
+                                    secondaryLabel: item?.secondaryLabel,
+                                };
+                            }}
+                            displayValueExtractor={(item) => item.title}
+                            onSelectOption={(option, extractedValue) =>
+                                setSelectedOption(option)
+                            }
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

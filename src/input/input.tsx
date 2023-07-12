@@ -16,6 +16,7 @@ const Component = (
         onClear,
         allowClear = false,
         className,
+        noWrapper,
         ...otherProps
     }: InputProps,
     ref: InputRef
@@ -96,29 +97,43 @@ const Component = (
      */
     const updatedValue = value ? convertInputString(value) : value;
 
+    const renderInputElement = () => {
+        return (
+            <>
+                <InputElement
+                    data-testid="input"
+                    ref={elementRef}
+                    disabled={disabled}
+                    value={updatedValue}
+                    onChange={handleChange}
+                    type={type}
+                    readOnly={readOnly}
+                    {...otherProps}
+                />
+                {shouldShowClear() && (
+                    <ClearContainer onClick={handleClear} type="button">
+                        <ClearIcon aria-hidden />
+                    </ClearContainer>
+                )}
+            </>
+        );
+    };
+
     return (
-        <InputWrapper
-            $disabled={disabled}
-            $error={error}
-            $readOnly={readOnly}
-            className={className}
-        >
-            <InputElement
-                data-testid="input"
-                ref={elementRef}
-                disabled={disabled}
-                value={updatedValue}
-                onChange={handleChange}
-                type={type}
-                readOnly={readOnly}
-                {...otherProps}
-            />
-            {shouldShowClear() && (
-                <ClearContainer onClick={handleClear} type="button">
-                    <ClearIcon aria-hidden />
-                </ClearContainer>
+        <>
+            {noWrapper ? (
+                renderInputElement()
+            ) : (
+                <InputWrapper
+                    $disabled={disabled}
+                    $error={error}
+                    $readOnly={readOnly}
+                    className={className}
+                >
+                    {renderInputElement()}
+                </InputWrapper>
             )}
-        </InputWrapper>
+        </>
     );
 };
 

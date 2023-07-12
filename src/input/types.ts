@@ -8,6 +8,8 @@ export interface InputProps
     allowClear?: boolean | undefined;
     onClear?: () => void | undefined;
     "data-testid"?: string | undefined;
+
+    noWrapper?: boolean;
 }
 
 /** To be exposed for Form component inheritance */

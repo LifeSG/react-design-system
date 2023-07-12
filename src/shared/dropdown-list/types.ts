@@ -1,5 +1,6 @@
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
+export type FlexDirection = "row" | "column";
 
 export interface ListItemRenderArgs {
     selected: boolean;
@@ -11,6 +12,8 @@ export interface ListItemDisplayProps {
 }
 
 export interface DropdownDisplayProps<T, V> {
+    /** Specifying flex direction within item */
+    itemFlexDirection?: FlexDirection | undefined;
     /** Function to derive value from an item */
     valueExtractor?: ((item: T) => V) | undefined;
     /** Function to derive options display value from an item */
@@ -61,6 +64,7 @@ export interface DropdownListProps<T, V>
     visible?: boolean | undefined;
     multiSelect?: boolean | undefined;
     selectedItems?: T[] | undefined;
+    disableItemFocus?: boolean | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"

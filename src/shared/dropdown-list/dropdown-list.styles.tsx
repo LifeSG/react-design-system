@@ -15,14 +15,24 @@ interface ListContainerProps {
 }
 
 interface ListItemProps {
-    checked?: boolean;
+    $checked?: boolean;
 }
 
 interface ListItemSelectorProps {
-    multiSelect?: boolean;
+    $multiSelect?: boolean;
+    $hasTwoLinesLabel?: boolean;
 }
 interface LabelProps {
-    truncateType?: TruncateType;
+    $truncateType?: TruncateType;
+}
+
+interface SecondaryLabelProps {
+    $removePadding?: boolean;
+}
+
+interface TruncateTextProps {
+    $labelType?: "primary" | "secondary";
+    $shouldTruncate?: boolean;
 }
 
 // =============================================================================
@@ -70,7 +80,7 @@ export const ListItem = styled.li<ListItemProps>`
         background: ${Color.Accent.Light[5]};
     }
     ${(props) => {
-        if (props.checked) {
+        if (props.$checked) {
             return css`
                 background: ${Color.Accent.Light[5]};
             `;
@@ -81,14 +91,14 @@ export const ListItem = styled.li<ListItemProps>`
 export const ListItemSelector = styled.button<ListItemSelectorProps>`
     display: flex;
     ${(props) => {
-        if (props.multiSelect) {
+        if (props.$multiSelect) {
             return css`
                 padding: 0.5rem 1rem;
             `;
         } else {
             return css`
                 padding: 0 1rem;
-                min-height: 3.5rem;
+                min-height: ${props.$hasTwoLinesLabel ? "4.255rem" : "3.5rem"};
                 align-items: center;
             `;
         }
@@ -127,7 +137,7 @@ export const Label = styled.div<LabelProps>`
     line-height: 1.375rem;
     overflow: hidden;
     ${(props) => {
-        switch (props.truncateType) {
+        switch (props.$truncateType) {
             case "middle":
                 break;
             case "end":
@@ -142,15 +152,22 @@ export const Label = styled.div<LabelProps>`
     }}
 `;
 
-export const SecondaryLabel = styled.span`
+export const SecondaryLabel = styled(Text.BodySmall)<SecondaryLabelProps>`
     color: ${Color.Neutral[4]};
     display: inline;
-    padding-left: 0.4rem;
+    padding-left: ${(props) => (props.$removePadding ? "0" : "0.4rem")};
 `;
 
 export const TruncateContainer = styled.div`
     display: flex;
     flex-direction: column;
+`;
+
+const truncateTextCss = css`
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 export const TruncateFirstLine = styled.div`
@@ -161,12 +178,32 @@ export const TruncateFirstLine = styled.div`
 `;
 
 export const TruncateSecondLine = styled.div`
-    width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    ${truncateTextCss}
     direction: rtl;
     text-align: right;
+`;
+
+export const TruncateText = styled.div<TruncateTextProps>`
+    ${(props) => {
+        if (!props.$shouldTruncate) return;
+
+        switch (props.$labelType) {
+            case "secondary":
+                return css`
+                    ${truncateTextCss}
+                    color: ${Color.Neutral[4]};
+                    direction: ltr;
+                    text-align: left;
+                `;
+            case "primary":
+            default:
+                return css`
+                    ${truncateTextCss}
+                    direction: ltr;
+                    text-align: left;
+                `;
+        }
+    }}
 `;
 
 export const Clickable = styled(Text.Hyperlink.Default)`
