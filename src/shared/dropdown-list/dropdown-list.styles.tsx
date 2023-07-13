@@ -24,16 +24,8 @@ interface ListItemSelectorProps {
 }
 interface LabelProps {
     $truncateType?: TruncateType;
-    $secondaryLabelDisplayType?: LabelDisplayType;
-}
-
-interface SecondaryLabelProps {
-    $removePadding?: boolean;
-}
-
-interface TruncateTextProps {
-    $labelType?: "primary" | "secondary";
-    $shouldTruncate?: boolean;
+    $maxLines?: number;
+    $labelDisplayType?: LabelDisplayType;
 }
 
 // =============================================================================
@@ -131,95 +123,86 @@ export const AddOnContainer = styled.div`
     background: ${Color.Neutral[8]};
 `;
 
-export const Label = styled.div<LabelProps>`
-    text-align: left;
-    line-height: 1.375rem;
+const lineClampCss = css<LabelProps>`
     overflow: hidden;
-    display: flex;
-    flex-direction: ${(props) =>
-        props.$secondaryLabelDisplayType === "inline" ? "row" : "column"};
+    display: -webkit-inline-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: ${(props) => props.$maxLines || 2};
+    -webkit-box-orient: vertical;
 `;
 
-export const Title = styled.div<LabelProps>`
+export const PrimaryText = styled.div<LabelProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${Color.Neutral[1]};
-    overflow: hidden;
+    width: 100%;
+
+    ${(props) => props.$truncateType === "end" && lineClampCss}
+`;
+
+export const SecondaryText = styled.div<LabelProps>`
+    color: ${Color.Neutral[4]};
+    width: 100%;
+
+    ${(props) => props.$truncateType === "end" && lineClampCss}
 
     ${(props) => {
-        if (props.$secondaryLabelDisplayType === "next-line") {
-            return css`
-                ${truncateTextCss}
-                direction: ltr;
-                text-align: left;
-            `;
-        }
-        switch (props.$truncateType) {
-            case "middle":
-                break;
-            case "end":
+        switch (props.$labelDisplayType) {
+            case "next-line":
+                return css`
+                    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                `;
+            case "inline":
             default:
                 return css`
-                    display: -webkit-box;
-                    text-overflow: ellipsis;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
+                    ${TextStyleHelper.getTextStyle("Body", "regular")}
                 `;
         }
     }}
 `;
 
-export const SecondaryLabel = styled(Text.BodySmall)<SecondaryLabelProps>`
-    color: ${Color.Neutral[4]};
-    display: inline;
-    padding-left: ${(props) => (props.$removePadding ? "0" : "0.4rem")};
-`;
-
-export const TruncateContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const truncateTextCss = css`
+export const Label = styled.div<LabelProps>`
+    text-align: left;
     width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+
+    ${(props) => {
+        switch (props.$labelDisplayType) {
+            case "next-line":
+                return css`
+                    display: flex;
+                    flex-direction: column;
+                `;
+            case "inline":
+                return css`
+                    ${PrimaryText} {
+                        display: inline;
+                    }
+
+                    ${SecondaryText} {
+                        display: inline;
+                        margin-left: 0.5rem;
+                    }
+                `;
+        }
+    }}
 `;
 
-export const TruncateFirstLine = styled.div`
-    width: 100%;
+export const TruncateFirstLine = styled.div<LabelProps>`
+    display: inline-block;
+    width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
     height: 1.5rem;
     word-break: break-all;
     overflow: hidden;
 `;
 
-export const TruncateSecondLine = styled.div`
-    ${truncateTextCss}
+export const TruncateSecondLine = styled.div<LabelProps>`
+    display: inline-block;
+    width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
+    height: 1.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     direction: rtl;
     text-align: right;
-`;
-
-export const TruncateText = styled.div<TruncateTextProps>`
-    ${(props) => {
-        if (!props.$shouldTruncate) return;
-
-        switch (props.$labelType) {
-            case "secondary":
-                return css`
-                    ${truncateTextCss}
-                    color: ${Color.Neutral[4]};
-                    direction: ltr;
-                    text-align: left;
-                `;
-            case "primary":
-            default:
-                return css`
-                    ${truncateTextCss}
-                    direction: ltr;
-                    text-align: left;
-                `;
-        }
-    }}
 `;
 
 export const Clickable = styled(Text.Hyperlink.Default)`

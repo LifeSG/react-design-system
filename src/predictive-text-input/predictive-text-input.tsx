@@ -182,6 +182,7 @@ export const PredictiveTextInput = <T, V>({
                 disableItemFocus={true}
                 onRetry={() => handleFetchOptions(input)}
                 itemTruncationType={"end"}
+                itemMaxLines={1}
                 secondaryLabelDisplayType={"next-line"}
             />
         );
