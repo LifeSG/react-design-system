@@ -28,7 +28,7 @@ describe("Tag", () => {
         expect(screen.getByTestId("icon")).toBeInTheDocument();
     });
 
-    it("should trigger onClick when click on tag", () => {
+    it("should trigger onClick when the tag is clicked", () => {
         const mockOnClick = jest.fn();
         render(
             <Tag type="solid" interactive={true} onClick={mockOnClick}>

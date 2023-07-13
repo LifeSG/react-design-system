@@ -118,7 +118,7 @@ export const Wrapper = styled.div<StyleProps>`
             if ($interactive) {
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                    padding: 0.438rem 1rem;
+                    padding: calc(0.5rem - 1px) 1rem;
                 `;
             }
         }}
