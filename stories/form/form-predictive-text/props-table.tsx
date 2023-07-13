@@ -1,6 +1,7 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable } from "../../storybook-common/api-table";
+import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -84,6 +85,7 @@ const DATA: ApiTableSectionProps[] = [
             },
         ],
     },
+    ...SHARED_FORM_PROPS_DATA,
 ];
 
 export const PropsTable = () => <ApiTable sections={DATA} />;

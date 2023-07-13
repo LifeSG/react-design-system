@@ -35,6 +35,7 @@ export * from "./notification-banner";
 export * from "./otp-input";
 export * from "./overlay";
 export * from "./pagination";
+export * from "./predictive-text-input";
 export * from "./phone-number-input";
 export * from "./popover";
 export * from "./progress-indicator";

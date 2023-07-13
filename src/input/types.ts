@@ -9,7 +9,7 @@ export interface InputProps
     onClear?: () => void | undefined;
     "data-testid"?: string | undefined;
 
-    noWrapper?: boolean;
+    basicWrapper?: boolean;
 }
 
 /** To be exposed for Form component inheritance */

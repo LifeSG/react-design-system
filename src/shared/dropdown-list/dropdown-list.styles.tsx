@@ -5,7 +5,7 @@ import { Checkbox } from "../../checkbox";
 import { Color } from "../../color";
 import { MediaQuery } from "../../media";
 import { Text, TextStyleHelper } from "../../text";
-import { TruncateType } from "./types";
+import { LabelDisplayType, TruncateType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -20,10 +20,11 @@ interface ListItemProps {
 
 interface ListItemSelectorProps {
     $multiSelect?: boolean;
-    $hasTwoLinesLabel?: boolean;
+    $hasNextLineLabel?: boolean;
 }
 interface LabelProps {
     $truncateType?: TruncateType;
+    $secondaryLabelDisplayType?: LabelDisplayType;
 }
 
 interface SecondaryLabelProps {
@@ -98,7 +99,7 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
         } else {
             return css`
                 padding: 0 1rem;
-                min-height: ${props.$hasTwoLinesLabel ? "4.255rem" : "3.5rem"};
+                min-height: ${props.$hasNextLineLabel ? "4.255rem" : "3.5rem"};
                 align-items: center;
             `;
         }
@@ -131,12 +132,27 @@ export const AddOnContainer = styled.div`
 `;
 
 export const Label = styled.div<LabelProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
     text-align: left;
     line-height: 1.375rem;
     overflow: hidden;
+    display: flex;
+    flex-direction: ${(props) =>
+        props.$secondaryLabelDisplayType === "inline" ? "row" : "column"};
+`;
+
+export const Title = styled.div<LabelProps>`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${Color.Neutral[1]};
+    overflow: hidden;
+
     ${(props) => {
+        if (props.$secondaryLabelDisplayType === "next-line") {
+            return css`
+                ${truncateTextCss}
+                direction: ltr;
+                text-align: left;
+            `;
+        }
         switch (props.$truncateType) {
             case "middle":
                 break;

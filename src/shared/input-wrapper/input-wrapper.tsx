@@ -109,3 +109,8 @@ export const BasicInput = styled.input`
     // Firefox
     --moz-appearance: textfield;
 `;
+
+export const BasicWrapper = styled.div`
+    display: flex;
+    width: 100%;
+`;

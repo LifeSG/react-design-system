@@ -1,5 +1,8 @@
 import React, { useImperativeHandle, useRef } from "react";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import {
+    BasicWrapper,
+    InputWrapper,
+} from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useNextInputState } from "../util";
 import { ClearContainer, ClearIcon, InputElement } from "./input.style";
 import { InputProps, InputRef } from "./types";
@@ -16,7 +19,7 @@ const Component = (
         onClear,
         allowClear = false,
         className,
-        noWrapper,
+        basicWrapper,
         ...otherProps
     }: InputProps,
     ref: InputRef
@@ -121,8 +124,10 @@ const Component = (
 
     return (
         <>
-            {noWrapper ? (
-                renderInputElement()
+            {basicWrapper ? (
+                <BasicWrapper className={className}>
+                    {renderInputElement()}
+                </BasicWrapper>
             ) : (
                 <InputWrapper
                     $disabled={disabled}

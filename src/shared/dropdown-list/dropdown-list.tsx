@@ -17,6 +17,7 @@ import {
     ResultStateText,
     SecondaryLabel,
     SelectAllContainer,
+    Title,
     TruncateContainer,
     TruncateFirstLine,
     TruncateSecondLine,
@@ -48,7 +49,7 @@ export const DropdownList = <T, V>({
     onRetry,
     itemsLoadState = "success",
     itemTruncationType = "end",
-    itemFlexDirection = "row",
+    secondaryLabelDisplayType = "inline",
     renderListItem,
     onBlur,
     hideNoResultsDisplay,
@@ -232,9 +233,9 @@ export const DropdownList = <T, V>({
         return listHeight + customCallToActionHeight;
     };
 
-    const hasTwoLinesLabel = () => {
+    const hasNextLineLabel = () => {
         return (
-            itemFlexDirection === "column" &&
+            secondaryLabelDisplayType === "next-line" &&
             displayListItems.length > 0 &&
             typeof listExtractor(displayListItems[0]) !== "string"
         );
@@ -325,52 +326,63 @@ export const DropdownList = <T, V>({
         );
     };
 
-    const renderLabel = (item: T): JSX.Element => {
+    const renderDropdownLabels = (item: T) => {
         const label = getOptionLabel(item);
-        const isFlexColumn = itemFlexDirection === "column";
+        const title = typeof label === "string" ? label : label.title;
+        const secondaryLabel =
+            typeof label == "string" ? undefined : label.secondaryLabel;
+        const isSecondaryLabelNextLine =
+            secondaryLabelDisplayType === "next-line";
 
-        if (typeof label === "string") {
-            return (
-                <TruncateText
-                    $labelType="primary"
-                    $shouldTruncate={isFlexColumn}
+        /**
+         * NOTE: itemTruncationType "middle" currently does not have a use case
+         * where secondaryLabelDisplayType is "next-line"
+         */
+
+        return (
+            <Label $secondaryLabelDisplayType={secondaryLabelDisplayType}>
+                <Title
+                    $truncateType={itemTruncationType}
+                    $secondaryLabelDisplayType={secondaryLabelDisplayType}
                 >
-                    {label}
-                </TruncateText>
-            );
-        } else {
-            const secondaryLabel = label?.secondaryLabel && (
-                <SecondaryLabel $removePadding={isFlexColumn} weight="semibold">
-                    {label.secondaryLabel}
-                </SecondaryLabel>
-            );
-
-            if (itemFlexDirection === "row") {
-                return (
-                    <TruncateText>
-                        {label.title}
-                        {secondaryLabel}
-                    </TruncateText>
-                );
-            }
-
-            return (
-                <>
-                    <TruncateText
-                        $labelType="primary"
-                        $shouldTruncate={isFlexColumn}
-                    >
-                        {label.title}
-                    </TruncateText>
+                    {itemTruncationType === "middle" &&
+                    !isSecondaryLabelNextLine &&
+                    hasExceededContainer(item) ? (
+                        renderTruncatedText(item)
+                    ) : (
+                        <TruncateText
+                            $labelType="primary"
+                            $shouldTruncate={isSecondaryLabelNextLine}
+                        >
+                            {title}
+                            {!isSecondaryLabelNextLine &&
+                                renderSecondaryLabel(secondaryLabel)}
+                        </TruncateText>
+                    )}
+                </Title>
+                {isSecondaryLabelNextLine && secondaryLabel && (
                     <TruncateText
                         $labelType="secondary"
-                        $shouldTruncate={isFlexColumn}
+                        $shouldTruncate={isSecondaryLabelNextLine}
                     >
-                        {secondaryLabel}
+                        {renderSecondaryLabel(secondaryLabel)}
                     </TruncateText>
-                </>
-            );
-        }
+                )}
+            </Label>
+        );
+    };
+
+    const renderSecondaryLabel = (secondaryLabel?: string) => {
+        return (
+            secondaryLabel && (
+                <SecondaryLabel
+                    $removePadding={secondaryLabelDisplayType === "next-line"}
+                    weight="semibold"
+                >
+                    {secondaryLabel}
+                </SecondaryLabel>
+            )
+        );
     };
 
     const renderItems = () => {
@@ -382,7 +394,7 @@ export const DropdownList = <T, V>({
                         $checked={checkListItemSelected(item) && !multiSelect}
                     >
                         <ListItemSelector
-                            $hasTwoLinesLabel={hasTwoLinesLabel()}
+                            $hasNextLineLabel={hasNextLineLabel()}
                             onClick={(event) => {
                                 handleListItemClick(event, item);
                             }}
@@ -406,13 +418,7 @@ export const DropdownList = <T, V>({
                                     selected: checkListItemSelected(item),
                                 })
                             ) : (
-                                <Label $truncateType={itemTruncationType}>
-                                    {itemTruncationType === "middle" &&
-                                    itemFlexDirection === "row" &&
-                                    hasExceededContainer(item)
-                                        ? renderTruncatedText(item)
-                                        : renderLabel(item)}
-                                </Label>
+                                <>{renderDropdownLabels(item)}</>
                             )}
                         </ListItemSelector>
                     </ListItem>
