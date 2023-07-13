@@ -1,0 +1,153 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
+
+import { Tag } from "src/tag";
+import { Text } from "src/text";
+import {
+    Secondary,
+    Heading3,
+    Title,
+    StoryContainer,
+} from "../storybook-common";
+import { Grid, Row, Wrapper } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="Modules/Tag" component={Tag} />
+
+<Title>Tag</Title>
+
+<Secondary>Overview</Secondary>
+
+A static or interactive element that is used to communicate selections, statuses and categories.
+
+```tsx
+import { Tag } from "@lifesg/react-design-system/tag";
+```
+
+<Canvas>
+    <Story name="Tag">
+        <Wrapper>
+            <Tag type="outline" colorType="green">
+                Outline style tag
+            </Tag>
+            <Tag type="solid" colorType="red">
+                Solid style tag
+            </Tag>
+        </Wrapper>
+    </Story>
+</Canvas>
+
+<Heading3>Interactive tag</Heading3>
+
+**Note**: In tablet and mobile viewports, interactive tags are displayed in a larger size to extend the touch target.
+
+<Canvas>
+    <Story name="Interactive">
+        <Wrapper>
+            <Tag
+                type="outline"
+                interactive={true}
+                onClick={() => window.alert("Interactive tag clicked!")}
+            >
+                Interactive tag
+            </Tag>
+            <Tag type="outline">Non interactive tag</Tag>
+        </Wrapper>
+    </Story>
+</Canvas>
+
+<Heading3>Tag with icon</Heading3>
+
+<Canvas>
+    <Story name="With Icon">
+        <Wrapper>
+            <Tag
+                type="solid"
+                colorType="blue"
+                icon={<PlusCircleFillIcon />}
+                data-testid="first-example"
+                interactive={true}
+                onClick={() => window.alert("Interactive tag clicked!")}
+            >
+                Some Label
+            </Tag>
+            <Tag
+                type="outline"
+                colorType="blue"
+                icon={<PlaceholderIcon />}
+                data-testid="second-example"
+            >
+                Some Label
+            </Tag>
+        </Wrapper>
+    </Story>
+</Canvas>
+
+<Heading3>Variations</Heading3>
+
+The `Tag` comes in 2 display formats, `outline` and `solid` and there are 6 color variations that can be denoted using the `colorType` prop.
+
+<Canvas>
+    <Story name="Variations">
+        <StoryContainer>
+            <Grid>
+                <Row>
+                    <span />
+                    <Text.H6 weight="semibold">Black</Text.H6>
+                    <Text.H6 weight="semibold">Grey</Text.H6>
+                    <Text.H6 weight="semibold">Green</Text.H6>
+                    <Text.H6 weight="semibold">Yellow</Text.H6>
+                    <Text.H6 weight="semibold">Red</Text.H6>
+                    <Text.H6 weight="semibold">Blue</Text.H6>
+                </Row>
+                <Row>
+                    <Text.H6 weight="semibold">Outline</Text.H6>
+                    <Tag type="outline" colorType="black">
+                        Label
+                    </Tag>
+                    <Tag type="outline" colorType="grey">
+                        Label
+                    </Tag>
+                    <Tag type="outline" colorType="green">
+                        Label
+                    </Tag>
+                    <Tag type="outline" colorType="yellow">
+                        Label
+                    </Tag>
+                    <Tag type="outline" colorType="red">
+                        Label
+                    </Tag>
+                    <Tag type="outline" colorType="blue">
+                        Label
+                    </Tag>
+                </Row>
+                <Row>
+                    <Text.H6 weight="semibold">Solid</Text.H6>
+                    <Tag type="solid" colorType="black">
+                        Label
+                    </Tag>
+                    <Tag type="solid" colorType="grey">
+                        Label
+                    </Tag>
+                    <Tag type="solid" colorType="green">
+                        Label
+                    </Tag>
+                    <Tag type="solid" colorType="yellow">
+                        Label
+                    </Tag>
+                    <Tag type="solid" colorType="red">
+                        Label
+                    </Tag>
+                    <Tag type="solid" colorType="blue">
+                        Label
+                    </Tag>
+                </Row>
+            </Grid>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
