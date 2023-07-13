@@ -238,15 +238,28 @@ import { InputSelect } from "@lifesg/react-design-system/input-select";
             <Container>
                 <InputSelect
                     options={[
-                        { value: "A", label: "Option A" },
-                        { value: "B", label: "Option B" },
+                        {
+                            value: "A",
+                            label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus justo nulla, at tincidunt quam placerat vel.",
+                        },
+                        {
+                            value: "B",
+                            label: "Option B Option B Option B Option B Option B Option B",
+                        },
                         { value: "C", label: "Option C" },
                         { value: "D", label: "Option D" },
                     ]}
                     valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
+                    listExtractor={(item) => ({
+                        title: item.label,
+                        secondaryLabel:
+                            item.value === "C"
+                                ? "The quick brown fox jumps over the lazy dog and gets a grape"
+                                : "A quick brown fox jumps over the lazy dog and falls into a puddle of water then never gets up again",
+                    })}
                     displayValueExtractor={(item) => item.label}
                     placeholder="Default select"
+                    optionTruncationType="middle"
                 />
                 <br />
                 <InputSelect

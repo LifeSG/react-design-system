@@ -21,17 +21,18 @@ export const mockFetchOptionsWithSecondaryLabel = async (input: string) => {
     }
     return [
         {
-            title: `Option ${input}-1`,
-            secondaryLabel: "Test1",
+            title: `Option Option Option Option Option Option Option Option Option Option Option Option ${input}-1`,
+            secondaryLabel:
+                "Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1 Test1",
             value: `${input}1`,
         },
         {
-            title: `Option ${input}-2`,
+            title: `Option Option Option Option Option Option ${input}-2`,
             secondaryLabel: "Test2",
             value: `${input}2`,
         },
         {
-            title: `Option ${input}-3`,
+            title: `Option Option Option ${input}-3`,
             secondaryLabel: "Test3",
             value: `${input}3`,
         },
