@@ -27,4 +27,13 @@ These variables are:
 
 The job will make a `curl` to the GitLab pipeline trigger API.
 
+The API contains variables that are important to be passed in the body of the request:
+
+-   PIPELINE_PROJECT_NAME - the repo name
+-   PIPELINE_PROJECT_URL - the github url of the repo
+-   PIPELINE_EVENT - the workflow trigger event type
+-   PIPELINE_BRANCH_NAME - the branch being built
+-   PIPELINE_TRIGGER_PERSON - the person that triggered the workflow
+-   PIPELINE_COMMIT_MSG - the 1st line of the commit message
+
 Then the Project in GitLab responsible for running the pipeline will create and start the pipeline.
