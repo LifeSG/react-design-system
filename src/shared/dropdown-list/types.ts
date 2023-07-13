@@ -72,6 +72,8 @@ export interface DropdownListProps<T, V>
     itemsLoadState?: ItemsLoadStateType | undefined;
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     itemTruncationType?: TruncateType | undefined;
+    /** Specifies the maximum number of lines visible before the label is truncated for "end" type */
+    itemMaxLines?: number | undefined;
 
     onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
     onSelectAll?: (() => void) | undefined;

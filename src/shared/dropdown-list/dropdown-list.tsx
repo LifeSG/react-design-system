@@ -13,15 +13,13 @@ import {
     ListCheckbox,
     ListItem,
     ListItemSelector,
+    Primary,
     ResultStateContainer,
     ResultStateText,
-    SecondaryLabel,
+    Secondary,
     SelectAllContainer,
-    Title,
-    TruncateContainer,
     TruncateFirstLine,
     TruncateSecondLine,
-    TruncateText,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
 import { DropdownListProps, ListItemDisplayProps } from "./types";
@@ -49,6 +47,7 @@ export const DropdownList = <T, V>({
     onRetry,
     itemsLoadState = "success",
     itemTruncationType = "end",
+    itemMaxLines = 2,
     secondaryLabelDisplayType = "inline",
     renderListItem,
     onBlur,
@@ -169,20 +168,17 @@ export const DropdownList = <T, V>({
         return listExtractor ? listExtractor(item) : item.toString();
     };
 
-    const hasExceededContainer = (item: T) => {
-        const displayText = listExtractor
-            ? listExtractor(item)
-            : item.toString();
-
+    const hasExceededContainer = (displayText: string, lines: number) => {
         let widthOfElement = 0;
         if (listRef && listRef.current) {
-            widthOfElement =
-                listRef.current.getBoundingClientRect().width - 100;
+            widthOfElement = listRef.current.getBoundingClientRect().width - 60;
         }
-        return StringHelper.shouldTruncateToTwoLines(
-            typeof displayText === "string" ? displayText : displayText.title,
-            widthOfElement
+
+        const textWidth = StringHelper.getTextWidth(
+            displayText,
+            "1.125rem 'Open Sans'"
         );
+        return textWidth > widthOfElement * lines;
     };
 
     const checkListItemSelected = (item: T): boolean => {
@@ -315,14 +311,16 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderTruncatedText = (item: T): JSX.Element => {
-        const label = getOptionLabel(item);
-        const displayText = typeof label === "string" ? label : label.title;
+    const renderTruncatedText = (displayText: string): JSX.Element => {
         return (
-            <TruncateContainer data-testid="truncate-middle-container">
-                <TruncateFirstLine>{displayText}</TruncateFirstLine>
-                <TruncateSecondLine> {displayText}</TruncateSecondLine>
-            </TruncateContainer>
+            <>
+                <TruncateFirstLine $maxLines={itemMaxLines} aria-hidden>
+                    {displayText}
+                </TruncateFirstLine>
+                <TruncateSecondLine $maxLines={itemMaxLines} aria-hidden>
+                    {displayText}
+                </TruncateSecondLine>
+            </>
         );
     };
 
@@ -331,57 +329,40 @@ export const DropdownList = <T, V>({
         const title = typeof label === "string" ? label : label.title;
         const secondaryLabel =
             typeof label == "string" ? undefined : label.secondaryLabel;
-        const isSecondaryLabelNextLine =
-            secondaryLabelDisplayType === "next-line";
 
-        /**
-         * NOTE: itemTruncationType "middle" currently does not have a use case
-         * where secondaryLabelDisplayType is "next-line"
-         */
+        const shouldTruncateTitle = hasExceededContainer(title, itemMaxLines);
+        const shouldTruncateLabel =
+            secondaryLabel &&
+            hasExceededContainer(secondaryLabel, itemMaxLines);
+        const labelDisplayType =
+            shouldTruncateTitle || shouldTruncateLabel
+                ? "next-line"
+                : secondaryLabelDisplayType;
 
         return (
-            <Label $secondaryLabelDisplayType={secondaryLabelDisplayType}>
-                <Title
+            <Label $labelDisplayType={labelDisplayType}>
+                <Primary
                     $truncateType={itemTruncationType}
-                    $secondaryLabelDisplayType={secondaryLabelDisplayType}
+                    $maxLines={itemMaxLines}
+                    aria-label={title}
                 >
-                    {itemTruncationType === "middle" &&
-                    !isSecondaryLabelNextLine &&
-                    hasExceededContainer(item) ? (
-                        renderTruncatedText(item)
-                    ) : (
-                        <TruncateText
-                            $labelType="primary"
-                            $shouldTruncate={isSecondaryLabelNextLine}
-                        >
-                            {title}
-                            {!isSecondaryLabelNextLine &&
-                                renderSecondaryLabel(secondaryLabel)}
-                        </TruncateText>
-                    )}
-                </Title>
-                {isSecondaryLabelNextLine && secondaryLabel && (
-                    <TruncateText
-                        $labelType="secondary"
-                        $shouldTruncate={isSecondaryLabelNextLine}
+                    {itemTruncationType === "middle" && shouldTruncateTitle
+                        ? renderTruncatedText(title)
+                        : title}
+                </Primary>
+                {secondaryLabel && (
+                    <Secondary
+                        $truncateType={itemTruncationType}
+                        $maxLines={itemMaxLines}
+                        $labelDisplayType={secondaryLabelDisplayType}
+                        aria-label={secondaryLabel}
                     >
-                        {renderSecondaryLabel(secondaryLabel)}
-                    </TruncateText>
+                        {itemTruncationType === "middle" && shouldTruncateLabel
+                            ? renderTruncatedText(secondaryLabel)
+                            : secondaryLabel}
+                    </Secondary>
                 )}
             </Label>
-        );
-    };
-
-    const renderSecondaryLabel = (secondaryLabel?: string) => {
-        return (
-            secondaryLabel && (
-                <SecondaryLabel
-                    $removePadding={secondaryLabelDisplayType === "next-line"}
-                    weight="semibold"
-                >
-                    {secondaryLabel}
-                </SecondaryLabel>
-            )
         );
     };
 
@@ -413,13 +394,11 @@ export const DropdownList = <T, V>({
                                     displaySize={"small"}
                                 />
                             )}
-                            {renderListItem ? (
-                                renderListItem(item, {
-                                    selected: checkListItemSelected(item),
-                                })
-                            ) : (
-                                <>{renderDropdownLabels(item)}</>
-                            )}
+                            {renderListItem
+                                ? renderListItem(item, {
+                                      selected: checkListItemSelected(item),
+                                  })
+                                : renderDropdownLabels(item)}
                         </ListItemSelector>
                     </ListItem>
                 );
