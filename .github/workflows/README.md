@@ -6,6 +6,8 @@ This guide will breifly explain what how the GitHub workflow works for LifeSG an
 
 This file is responsible for creating the GitHub workflow and the job that triggers the GitLab pipeline.
 
+--
+
 ## <u>Trigger Pipeline Job</u>
 
 When a GitHub `push on master branch` or `pull request` is made it will trigger the job.
