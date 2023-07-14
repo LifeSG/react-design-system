@@ -17,7 +17,7 @@ import { AccordionItemProps } from "./types";
 export const AccordionItem = ({
     title,
     children,
-    expanded = true,
+    expanded,
     type = "default",
     ...otherProps
 }: AccordionItemProps) => {
@@ -25,7 +25,8 @@ export const AccordionItem = ({
     // CONST, STATE, REF
     // =============================================================================
     const expandAll = useContext(AccordionContext);
-    const [expand, setExpand] = useState<boolean>(expandAll ?? expanded);
+    const [expand, setExpand] = useState<boolean>(expanded ?? expandAll);
+    const [hadFirstLoad, setHadFirstLoad] = useState<boolean>(false);
 
     const testId = otherProps["data-testid"] || "accordion-item";
 
@@ -37,13 +38,14 @@ export const AccordionItem = ({
     // =============================================================================
 
     useEffect(() => {
-        setExpand(expanded);
-    }, [expanded]);
-
-    // `setExpand(expandAll)` is after `setExpand(expanded)` to override its setState on initial load
-    useEffect(() => {
-        setExpand(expandAll);
+        if (hadFirstLoad) {
+            setExpand(expandAll);
+        }
     }, [expandAll]);
+
+    useEffect(() => {
+        setHadFirstLoad(true);
+    }, []);
 
     // =============================================================================
     // EVENT HANDLERS

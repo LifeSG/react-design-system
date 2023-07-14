@@ -12,6 +12,9 @@ export type AccordionItemType = "default" | "small";
 export interface AccordionItemProps {
     title: string;
     children: JSX.Element | JSX.Element[];
+    /**
+     * Only for initial state, do not use to programmatically expand/collapse Accordion.Item after first load
+     */
     expanded?: boolean | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
