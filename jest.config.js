@@ -12,4 +12,5 @@ module.exports = {
     },
     moduleDirectories: ["node_modules", "."],
     setupFilesAfterEnv: ["jest-canvas-mock", "@testing-library/jest-dom"],
+    reporters: ["default", ["jest-junit", { outputName: "junit.xml" }]],
 };
