@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { PhoneNumberInput } from "src/phone-number-input";
 import { Form } from "src/form";
@@ -80,7 +80,7 @@ import { Form } from "@lifesg/react-design-system/form";
 In the case where you do not wish to allow the user to select from the country options list,
 you can pass the prop `fixedCountry` to restrict input to only that country code.
 
-<Preview>
+<Canvas>
     <Story name="Fixed country">
         <StoryContainer>
             <Form.PhoneNumberInput
@@ -93,7 +93,7 @@ you can pass the prop `fixedCountry` to restrict input to only that country code
             />
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Using the field as a standalone</Heading3>
 
@@ -103,7 +103,7 @@ In the case that you require the phone number input field as a standalone, you c
 import { PhoneNumberInput } from "@lifesg/react-design-system/phone-number-input";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Standalone usage">
         {() => {
             const [value, setValue] = useState({
@@ -130,7 +130,7 @@ import { PhoneNumberInput } from "@lifesg/react-design-system/phone-number-input
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

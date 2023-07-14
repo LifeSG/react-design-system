@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
 import { Text } from "src/text";
@@ -34,7 +34,7 @@ import { BoxContainer } from "@lifesg/react-design-system/box-container";
 
 <Heading3>Non-collapsible</Heading3>
 
-<Preview>
+<Canvas>
     <Story name="Non collapsible">
         <BoxContainer title="This is not collapsible" collapsible={false}>
             <div style={{ padding: "2rem" }}>
@@ -47,7 +47,7 @@ import { BoxContainer } from "@lifesg/react-design-system/box-container";
             </div>
         </BoxContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>With a display state</Heading3>
 
@@ -62,7 +62,7 @@ There are currently 3 states:
 
 In this example, we are using the `error` display state.
 
-<Preview>
+<Canvas>
     <Story name="With display state">
         <BoxContainer
             title="This comes with an error icon"
@@ -91,13 +91,13 @@ In this example, we are using the `error` display state.
             </div>
         </BoxContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Specifying a custom call to action</Heading3>
 
 You can also specify a custom call to action that will appear on the header of the `BoxContainer`.
 
-<Preview>
+<Canvas>
     <Story name="With custom call to action">
         <BoxContainer
             title="This has a call to action button"
@@ -116,7 +116,7 @@ You can also specify a custom call to action that will appear on the header of t
             </div>
         </BoxContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

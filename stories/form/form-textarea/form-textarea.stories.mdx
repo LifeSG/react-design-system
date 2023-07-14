@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Textarea } from "src/input-textarea";
 import { Form } from "src/form";
@@ -65,7 +65,7 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Heading3>Textarea with custom counter label</Heading3>
 
-<Preview>
+<Canvas>
     <Story name="With custom counter">
         <StoryContainer>
             <Container>
@@ -78,7 +78,7 @@ import { Form } from "@lifesg/react-design-system/form";
             </Container>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 ```tsx
 const renderCustomCounter = (maxLength: number, currentValueLength: number) => {
@@ -98,7 +98,7 @@ In the case that you require the textarea field as a standalone, you can do this
 import { Textarea } from "@lifesg/react-design-system/input-textarea";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
@@ -106,7 +106,7 @@ import { Textarea } from "@lifesg/react-design-system/input-textarea";
             </Container>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

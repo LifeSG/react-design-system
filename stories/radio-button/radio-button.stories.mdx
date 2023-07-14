@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { RadioButton } from "src/radio-button";
 import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
@@ -33,7 +33,7 @@ import { RadioButton } from "@lifesg/react-design-system/radio-button";
 
 <Heading3>Multiple options</Heading3>
 
-<Preview>
+<Canvas>
     <Story name="Multiple options">
         {() => {
             const [value, setValue] = useState("");
@@ -66,7 +66,7 @@ import { RadioButton } from "@lifesg/react-design-system/radio-button";
             );
         }}
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

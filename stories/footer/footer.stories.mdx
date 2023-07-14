@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Footer } from "src/footer";
 import { Layout } from "src/layout";
 import {
@@ -72,15 +72,15 @@ import { Footer } from "@lifesg/react-design-system/footer";
 
 This version is useful to be used as footers for dedicated apps that do not have other web pages.
 
-<Preview>
+<Canvas>
     <Story name="Minimal version">
         <Footer lastUpdated={new Date()} />
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>With custom content</Heading3>
 
-<Preview>
+<Canvas>
     <Story name="With custom content">
         <Footer lastUpdated={new Date()}>
             <Layout.Content>
@@ -99,7 +99,7 @@ This version is useful to be used as footers for dedicated apps that do not have
             </Layout.Content>
         </Footer>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>With other customisations</Heading3>
 
@@ -109,7 +109,7 @@ You are also able to customise the logo, copyright text and disclaimerLinks. In 
 -   copyright text
 -   privacy disclaimer link
 
-<Preview>
+<Canvas>
     <Story name="Other customisations">
         <Footer
             lastUpdated={new Date()}
@@ -159,7 +159,7 @@ You are also able to customise the logo, copyright text and disclaimerLinks. In 
             }}
         />
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>About disclaimer links</Secondary>
 
@@ -203,7 +203,7 @@ return (
 In this example, the content of the footer is stretched to the full width of
 the screen with a fixed padding, ignoring the masthead's alignment.
 
-<Preview>
+<Canvas>
     <Story name="Stretched layout">
         <Footer
             layout={"stretch"}
@@ -246,7 +246,7 @@ the screen with a fixed padding, ignoring the masthead's alignment.
             ]}
         />
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

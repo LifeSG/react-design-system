@@ -1,5 +1,5 @@
 import { LockIcon } from "@lifesg/react-icons/lock";
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { IconButton } from "src/icon-button";
 import {
     Heading3,
@@ -34,7 +34,7 @@ import { IconButton } from "@lifesg/react-design-system/icon-button";
 
 The `IconButton` component comes in 3 sizes, a large, small and default size.
 
-<Preview>
+<Canvas>
     <Story name="Variations">
         <StoryContainer>
             <Grid>
@@ -93,13 +93,13 @@ The `IconButton` component comes in 3 sizes, a large, small and default size.
             </Grid>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Heading3>Using custom components</Heading3>
 
 You can also pass in custom components to the `IconButton`. In this example, we will pass in an image.
 
-<Preview>
+<Canvas>
     <Story name="Custom components">
         <IconButton>
             <img
@@ -108,7 +108,7 @@ You can also pass in custom components to the `IconButton`. In this example, we 
             />
         </IconButton>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

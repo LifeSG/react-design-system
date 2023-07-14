@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, Preview } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Masonry } from "src/masonry";
 import {
     Secondary,
@@ -73,7 +73,7 @@ Here are some of the guidelines for the different layouts:
 
 Here is an example how you can specify the different layouts for different media widths. (Reduce your viewport size to view)
 
-<Preview>
+<Canvas>
     <Story name="Different media widths">
         <StoryContainer>
             <Masonry.Grid numOfCols={{ lg: 4, md: 3, sm: 2 }}>
@@ -95,7 +95,7 @@ Here is an example how you can specify the different layouts for different media
             </Masonry.Grid>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

@@ -1,4 +1,4 @@
-import { Canvas, Meta, Preview, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Alert } from "src/alert";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
@@ -49,7 +49,7 @@ import { Alert } from "@lifesg/react-design-system/alert";
 
 If you require text of a bolder weight, you can make use of the `<strong>` tag.
 
-<Preview>
+<Canvas>
     <Story name="With bold text">
         <Alert type="success">
             <p>
@@ -62,11 +62,11 @@ If you require text of a bolder weight, you can make use of the `<strong>` tag.
             </p>
         </Alert>
     </Story>
-</Preview>
+</Canvas>
 
 Or if you require a custom display, you can construct your layout and pass it into the component.
 
-<Preview>
+<Canvas>
     <Story name="With custom display">
         <Alert type="error">
             <ul style={{ display: "flex" }}>
@@ -103,7 +103,7 @@ Or if you require a custom display, you can construct your layout and pass it in
             </ul>
         </Alert>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 
