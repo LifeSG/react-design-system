@@ -129,12 +129,15 @@ export const TriangleIcon = styled(TriangleForwardFillIcon)`
     color: ${Color.Primary};
 `;
 
-export const Title = styled.div`
+export const Title = styled.button`
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
     color: ${Color.Neutral[1]};
     text-align: left;
     line-height: 1.625rem;
     margin-left: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 `;
 
 export const List = styled.li`
