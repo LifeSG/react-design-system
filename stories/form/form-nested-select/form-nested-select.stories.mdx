@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { InputNestedSelect } from "src/input-nested-select";
 import { Form } from "src/form";
 import { Text } from "src/text";
@@ -18,7 +19,7 @@ import { options } from "./nested-data-list.ts";
 
 <Secondary>Overview</Secondary>
 
-A field that provides a set of options for a user to select.
+A field that provides a nested set of options for a user to select.
 
 ```tsx
 import { Form } from "@lifesg/react-design-system/form";
@@ -26,22 +27,34 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas>
     <Story name="NestedSelect">
-        <StoryContainer>
-            <Container>
-                <Form.NestedSelect
-                    label="This is the nested selected field"
-                    options={options}
-                    listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.name}
-                    placeholder="Select"
-                    selectedKeyPath={["32", "52"]}
-                    selectedOption={{
-                        id: 402,
-                        name: "Neptune room",
-                    }}
-                />
-            </Container>
-        </StoryContainer>
+        {() => {
+            const [selectedKeyPath, setSelectedKeyPath] = useState([
+                "32",
+                "52",
+            ]);
+            const [selected, setSelected] = useState({
+                id: 402,
+                name: "Neptune room",
+            });
+            useEffect(() => {
+                // fecth new selectedKeyPath from api query
+            }, [selected]);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.NestedSelect
+                            label="This is the nested selected field"
+                            options={options}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.name}
+                            placeholder="Select"
+                            selectedKeyPath={selectedKeyPath}
+                            selectedOption={selected}
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
     </Story>
 </Canvas>
 
