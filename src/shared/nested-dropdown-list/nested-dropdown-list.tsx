@@ -172,8 +172,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         parentKeys?: string[]
     ): string[] => {
         /**
-         * Get the first item's key
-         * which exist the subItems in each tier
+         * Get the keys which has the subItems on "items" tier
          */
         let keys = [];
 
@@ -201,8 +200,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         items: Map<string, FItemOption<V1, V2, V3>>
     ) => {
         /**
-         * Get the first category item
-         * which exist the subItems on "items" tier
+         * Filter the category which has the subItems
          */
         const itemWithSubItems = [];
 
