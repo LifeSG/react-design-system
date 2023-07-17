@@ -138,6 +138,7 @@ export const Title = styled.button`
     background: transparent;
     border: none;
     cursor: pointer;
+    padding: 0;
 `;
 
 export const List = styled.li`
