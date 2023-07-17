@@ -13,6 +13,7 @@ export type OffsetPosition =
     | "top-right"
     | "left"
     | "right"
+    | "top"
     | "none";
 
 interface PopoverStyleProps {
@@ -80,6 +81,16 @@ const getBubblePosition = (offset: OffsetPosition) => {
                 width: max-content;
                 margin: auto;
                 right: 0;
+            `;
+        case "top":
+            return css`
+                top: calc(100% + 12px);
+                width: max-content;
+                margin: auto;
+                left: 50%;
+                -moz-transform: translateX(-50%);
+                -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
             `;
         default:
             return css`
