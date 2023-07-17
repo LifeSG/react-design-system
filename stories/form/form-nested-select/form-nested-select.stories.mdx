@@ -1,0 +1,73 @@
+import { InputNestedSelect } from "src/input-nested-select";
+import { Form } from "src/form";
+import { Text } from "src/text";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
+import { options } from "./nested-data-list.ts";
+
+<Meta title="Form/NestedSelect" component={Form.NestedSelect} />
+
+<Title>Form.NestedSelect</Title>
+
+<Secondary>Overview</Secondary>
+
+A field that provides a set of options for a user to select.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas>
+    <Story name="NestedSelect">
+        <StoryContainer>
+            <Container>
+                <Form.NestedSelect
+                    label="This is the nested selected field"
+                    options={options}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.name}
+                    placeholder="Select"
+                    selectedKeyPath={["32", "52"]}
+                    selectedOption={{
+                        id: 402,
+                        name: "Neptune room",
+                    }}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the nested select field as a standalone, you can do this.
+
+```tsx
+import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-select";
+```
+
+<Preview>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <Container>
+                <InputNestedSelect
+                    options={options}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.name}
+                    placeholder="Select"
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
