@@ -29,6 +29,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     itemsLoadState = "success",
     itemTruncationType = "end",
     onBlur,
+    onDismiss,
     onRetry,
     onSelectItem,
     ...otherProps
@@ -78,17 +79,13 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const [contentHeight, setContentHeight] = useState<number>(0);
 
+    // React spring animation configuration
     const containerStyles = useSpring({
         height: contentHeight,
     });
-    // React spring animation configuration
 
     const nodeRef = useRef<HTMLDivElement>();
     const listRef = useRef<HTMLUListElement>();
-
-    // =============================================================================
-    // REF FUNCTIONS
-    // =============================================================================
 
     // =============================================================================
     // EFFECTS
@@ -112,7 +109,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         }
     }, [_listItems]);
 
-    useEventListener("keyup", handleKeyboardPress, "document");
+    useEventListener("keydown", handleKeyboardPress, "document");
 
     // =============================================================================
     // EVENT HANDLERS
@@ -132,14 +129,13 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     function handleKeyboardPress(event: KeyboardEvent) {
         if (nodeRef && (nodeRef.current as any).contains(event.target)) {
-            // inside click
             switch (event.code) {
                 case "ArrowDown":
-                    //
                     break;
                 case "ArrowUp":
                     break;
                 case "Escape":
+                    if (onDismiss) onDismiss(true);
                     break;
                 default:
                     break;

@@ -80,12 +80,22 @@ export const InputNestedSelect = <V1, V2, V3>({
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            console.log("focus?");
             selectorRef.current.focus();
         }
 
         if (onSelectOption) {
             onSelectOption(item.value);
+        }
+    };
+
+    const handleListDismiss = (setSelectorFocus?: boolean | undefined) => {
+        if (showOptions) {
+            setShowOptions(false);
+            triggerOptionDisplayCallback(false);
+        }
+
+        if (setSelectorFocus && selectorRef) {
+            selectorRef.current.focus();
         }
     };
 
@@ -191,6 +201,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                     selectedItems={selected ? [selected] : []}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
+                    onDismiss={handleListDismiss}
                     onSelectItem={handleListItemClick}
                     onRetry={onRetry}
                 />
@@ -199,11 +210,6 @@ export const InputNestedSelect = <V1, V2, V3>({
 
         return null;
     };
-
-    /**
-     * TODO:
-     * 1. handleListDismiss
-     */
 
     return (
         <DropdownWrapper
