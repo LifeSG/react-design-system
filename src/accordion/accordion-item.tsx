@@ -26,7 +26,7 @@ export const AccordionItem = ({
     // =============================================================================
     const expandAll = useContext(AccordionContext);
     const [expand, setExpand] = useState<boolean>(expanded ?? expandAll);
-    const [hadFirstLoad, setHadFirstLoad] = useState<boolean>(false);
+    const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
 
     const testId = otherProps["data-testid"] || "accordion-item";
 
@@ -38,13 +38,19 @@ export const AccordionItem = ({
     // =============================================================================
 
     useEffect(() => {
-        if (hadFirstLoad) {
+        if (hasFirstLoad) {
             setExpand(expandAll);
         }
     }, [expandAll]);
 
     useEffect(() => {
-        setHadFirstLoad(true);
+        if (hasFirstLoad) {
+            setExpand(expanded);
+        }
+    }, [expanded]);
+
+    useEffect(() => {
+        setHasFirstLoad(true);
     }, []);
 
     // =============================================================================
@@ -60,15 +66,13 @@ export const AccordionItem = ({
     // RENDER FUNCTIONS
     // =============================================================================
     // React spring animation configuration
-    const resizeHeight = resizeDetector.height;
-    const expandableStyles = useSpring({
-        height: hadFirstLoad ? (expand ? resizeHeight : 0) : resizeHeight,
-    });
+    const resizeHeight = { height: expand ? resizeDetector.height : 0 };
+    const expandableStyles = useSpring(resizeHeight);
 
     const renderContent = () => {
         return (
             <Expandable
-                style={expandableStyles}
+                style={hasFirstLoad ? expandableStyles : resizeHeight}
                 $isCollapsed={expand}
                 data-testid={`${testId}-expandable-container`}
             >
