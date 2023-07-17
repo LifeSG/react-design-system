@@ -43,6 +43,7 @@ export interface NestedDropdownListProps<V1, V2, V3>
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     itemTruncationType?: TruncateType | undefined;
 
+    onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
     onRetry?: (() => void) | undefined;
     onBlur?: (() => void) | undefined;
 }
