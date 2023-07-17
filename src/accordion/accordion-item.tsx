@@ -60,8 +60,9 @@ export const AccordionItem = ({
     // RENDER FUNCTIONS
     // =============================================================================
     // React spring animation configuration
+    const resizeHeight = resizeDetector.height;
     const expandableStyles = useSpring({
-        height: expand ? resizeDetector.height : 0,
+        height: hadFirstLoad ? (expand ? resizeHeight : 0) : resizeHeight,
     });
 
     const renderContent = () => {
