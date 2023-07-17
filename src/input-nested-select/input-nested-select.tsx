@@ -64,10 +64,10 @@ export const InputNestedSelect = <V1, V2, V3>({
     const handleSelectorClick = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        // TODO: what is this?
         if (disabled || otherProps.readOnly) {
             return;
         }
+
         setShowOptions(!showOptions);
         triggerOptionDisplayCallback(!showOptions);
     };
@@ -80,11 +80,12 @@ export const InputNestedSelect = <V1, V2, V3>({
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
+            console.log("focus?");
             selectorRef.current.focus();
         }
 
         if (onSelectOption) {
-            // onSelectOption(item.categories, value);
+            onSelectOption(item.value);
         }
     };
 
