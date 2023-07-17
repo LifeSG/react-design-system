@@ -22,6 +22,7 @@ interface ListItemSelectorProps {
     $multiSelect?: boolean;
     $hasNextLineLabel?: boolean;
 }
+
 interface LabelProps {
     $truncateType?: TruncateType;
     $maxLines?: number;
@@ -31,6 +32,10 @@ interface LabelProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// MAIN STYLES
+// -----------------------------------------------------------------------------
 
 export const Container = styled(animated.div)`
     overflow: hidden;
@@ -114,14 +119,9 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     }
 `;
 
-export const AddOnContainer = styled.div`
-    position: relative;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: ${Color.Neutral[8]};
-`;
+// -----------------------------------------------------------------------------
+// LIST ITEM LABEL STYLES
+// -----------------------------------------------------------------------------
 
 const lineClampCss = css<LabelProps>`
     overflow: hidden;
@@ -205,24 +205,14 @@ export const TruncateSecondLine = styled.div<LabelProps>`
     text-align: right;
 `;
 
-export const Clickable = styled(Text.Hyperlink.Default)`
-    color: ${Color.Neutral[1]} !important;
-    padding: 1.25rem 1rem;
-    margin-bottom: 0;
-
-    :hover,
-    :visited,
-    :focus,
-    :active {
-        outline-color: ${Color.Accent.Light[3]};
-        color: ${Color.Neutral[1]};
-    }
-`;
-
 export const ListCheckbox = styled(Checkbox)`
     flex: 0 0 1.5rem;
     margin-right: 1rem;
 `;
+
+// -----------------------------------------------------------------------------
+// ELEMENT STYLES
+// -----------------------------------------------------------------------------
 
 export const SelectAllContainer = styled.div`
     width: 100%;
