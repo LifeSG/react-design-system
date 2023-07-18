@@ -114,10 +114,6 @@ export const Popover = ({
                 return hasExceededTop ? "top-center" : "none";
             }
 
-            if (hasExceededTop) {
-                return "top";
-            }
-
             // All ok, do nothing
             return undefined;
         }
