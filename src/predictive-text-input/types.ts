@@ -12,7 +12,7 @@ export interface PredictiveTextInputProps<T, V> {
     error?: boolean | undefined;
     selectedOption?: T | undefined;
     /** Async Function to populate options */
-    fetchOptions?: (input: string) => Promise<T[]>;
+    fetchOptions: (input: string) => Promise<T[]>;
     /** Function to derive value from an item */
     valueExtractor?: (item: T) => V | undefined;
     /** Function to derive options display value from an item */
