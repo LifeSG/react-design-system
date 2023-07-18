@@ -78,3 +78,8 @@ export const ClearIcon = styled(CrossIcon)`
     width: 1.25rem;
     vertical-align: middle;
 `;
+
+export const BasicWrapper = styled.div`
+    display: flex;
+    width: 100%;
+`;

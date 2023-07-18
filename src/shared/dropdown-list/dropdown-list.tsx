@@ -48,7 +48,7 @@ export const DropdownList = <T, V>({
     itemsLoadState = "success",
     itemTruncationType = "end",
     itemMaxLines = 2,
-    secondaryLabelDisplayType = "inline",
+    labelDisplayType = "inline",
     renderListItem,
     onBlur,
     hideNoResultsDisplay,
@@ -169,7 +169,7 @@ export const DropdownList = <T, V>({
     };
 
     const hasExceededContainer = (displayText: string) => {
-        if (secondaryLabelDisplayType !== "inline") {
+        if (labelDisplayType !== "inline") {
             return false;
         }
 
@@ -235,7 +235,7 @@ export const DropdownList = <T, V>({
 
     const hasNextLineLabel = () => {
         return (
-            secondaryLabelDisplayType === "next-line" &&
+            labelDisplayType === "next-line" &&
             displayListItems.length > 0 &&
             typeof listExtractor(displayListItems[0]) !== "string"
         );
@@ -339,13 +339,13 @@ export const DropdownList = <T, V>({
             secondaryLabel && hasExceededContainer(secondaryLabel);
 
         // css cannot truncate inline elements so if needed, render as block elements instead
-        const labelDisplayType =
+        const itemDisplayType =
             shouldTruncateTitle || shouldTruncateLabel
                 ? "next-line"
-                : secondaryLabelDisplayType;
+                : labelDisplayType;
 
         return (
-            <Label $labelDisplayType={labelDisplayType}>
+            <Label $labelDisplayType={itemDisplayType}>
                 <PrimaryText
                     $truncateType={itemTruncationType}
                     $maxLines={itemMaxLines}
@@ -359,7 +359,7 @@ export const DropdownList = <T, V>({
                     <SecondaryText
                         $truncateType={itemTruncationType}
                         $maxLines={itemMaxLines}
-                        $labelDisplayType={secondaryLabelDisplayType}
+                        $labelDisplayType={labelDisplayType}
                         aria-label={secondaryLabel}
                     >
                         {itemTruncationType === "middle" && shouldTruncateLabel
@@ -454,7 +454,7 @@ export const DropdownList = <T, V>({
             !hideNoResultsDisplay &&
             (searchValue || !enableSearch) &&
             displayListItems.length === 0 &&
-            itemsLoadState !== "loading"
+            itemsLoadState === "success"
         ) {
             return (
                 <ResultStateContainer

@@ -5,6 +5,11 @@ export const mockFetchOptions = async (input: string) => {
     if (input === "empty") {
         return [];
     }
+
+    if (input === "error") {
+        throw new Error("Error");
+    }
+
     return [
         { label: `Option ${input}-1`, value: `${input}1` },
         { label: `Option ${input}-2`, value: `${input}2` },
@@ -19,6 +24,11 @@ export const mockFetchOptionsWithSecondaryLabel = async (input: string) => {
     if (input === "empty") {
         return [];
     }
+
+    if (input === "error") {
+        throw new Error("Error");
+    }
+
     return [
         {
             title: `Option ${input}-1`,

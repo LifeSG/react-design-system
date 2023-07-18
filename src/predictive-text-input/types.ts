@@ -14,11 +14,11 @@ export interface PredictiveTextInputProps<T, V> {
     /** Async Function to populate options */
     fetchOptions: (input: string) => Promise<T[]>;
     /** Function to derive value from an item */
-    valueExtractor: ((item: T) => V) | undefined;
+    valueExtractor: (item: T) => V;
     /** Function to derive options display value from an item */
-    listExtractor: ((item: T) => string | ListItemDisplayProps) | undefined;
+    listExtractor: (item: T) => string | ListItemDisplayProps;
     /** Function to derive display value for selected option */
-    displayValueExtractor: ((option: T) => string) | undefined;
+    displayValueExtractor: (option: T) => string;
     /** Callback function when option is selected */
     onSelectOption?: ((option: T, extractedValue: V) => void) | undefined;
 }

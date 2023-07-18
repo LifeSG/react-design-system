@@ -12,8 +12,6 @@ export interface ListItemDisplayProps {
 }
 
 export interface DropdownDisplayProps<T, V> {
-    /** Specifying flex direction within item */
-    secondaryLabelDisplayType?: LabelDisplayType | undefined;
     /** Function to derive value from an item */
     valueExtractor?: ((item: T) => V) | undefined;
     /** Function to derive options display value from an item */
@@ -74,6 +72,8 @@ export interface DropdownListProps<T, V>
     itemTruncationType?: TruncateType | undefined;
     /** Specifies the maximum number of lines visible before the label is truncated for "end" type */
     itemMaxLines?: number | undefined;
+    /** Specifying flex direction within item */
+    labelDisplayType?: LabelDisplayType | undefined;
 
     onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
     onSelectAll?: (() => void) | undefined;

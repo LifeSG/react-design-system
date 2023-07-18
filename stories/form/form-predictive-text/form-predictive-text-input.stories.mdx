@@ -33,6 +33,7 @@ import { Form } from "@lifesg/react-design-system/form";
     <Story name="PredictiveTextInput">
         {() => {
             const [selectedOption, setSelectedOption] = useState(undefined);
+            const [selectedOption2, setSelectedOption2] = useState(undefined);
             return (
                 <StoryContainer>
                     <Container>
@@ -47,6 +48,28 @@ import { Form } from "@lifesg/react-design-system/form";
                             onSelectOption={(option, extractedValue) =>
                                 setSelectedOption(option)
                             }
+                        />
+                        <Form.PredictiveTextInput
+                            label="This is the error state"
+                            placeholder="Start typing..."
+                            selectedOption={selectedOption2}
+                            fetchOptions={mockFetchOptions}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            onSelectOption={(option, extractedValue) =>
+                                setSelectedOption2(option)
+                            }
+                            errorMessage="Input is required"
+                        />
+                        <Form.PredictiveTextInput
+                            label="This is the disabled state"
+                            placeholder="Start typing..."
+                            fetchOptions={mockFetchOptions}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            disabled
                         />
                     </Container>
                 </StoryContainer>

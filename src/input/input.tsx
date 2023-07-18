@@ -1,10 +1,12 @@
 import React, { useImperativeHandle, useRef } from "react";
+import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import { StringHelper, useNextInputState } from "../util";
 import {
     BasicWrapper,
-    InputWrapper,
-} from "../shared/input-wrapper/input-wrapper";
-import { StringHelper, useNextInputState } from "../util";
-import { ClearContainer, ClearIcon, InputElement } from "./input.style";
+    ClearContainer,
+    ClearIcon,
+    InputElement,
+} from "./input.style";
 import { InputProps, InputRef } from "./types";
 
 const Component = (
@@ -19,7 +21,7 @@ const Component = (
         onClear,
         allowClear = false,
         className,
-        basicWrapper,
+        styleType = "bordered",
         ...otherProps
     }: InputProps,
     ref: InputRef
@@ -124,7 +126,7 @@ const Component = (
 
     return (
         <>
-            {basicWrapper ? (
+            {styleType === "no-border" ? (
                 <BasicWrapper className={className}>
                     {renderInputElement()}
                 </BasicWrapper>
