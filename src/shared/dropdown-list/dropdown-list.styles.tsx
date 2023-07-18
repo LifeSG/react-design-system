@@ -129,6 +129,7 @@ const lineClampCss = css<LabelProps>`
     text-overflow: ellipsis;
     -webkit-line-clamp: ${(props) => props.$maxLines || 2};
     -webkit-box-orient: vertical;
+    overflow-wrap: break-word;
 `;
 
 export const PrimaryText = styled.div<LabelProps>`
