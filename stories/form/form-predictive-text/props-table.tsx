@@ -60,20 +60,17 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "valueExtractor",
-                mandatory: true,
                 description: "The function to derive the value from an option",
                 propTypes: ["(option: T) => V"],
             },
             {
                 name: "listExtractor",
-                mandatory: true,
                 description:
                     "The function to derive the option display value from an option",
                 propTypes: ["(option: T) => string"],
             },
             {
                 name: "displayValueExtractor",
-                mandatory: true,
                 description:
                     "The function to derive the selector's display value from an option",
                 propTypes: ["(option: T) => string"],

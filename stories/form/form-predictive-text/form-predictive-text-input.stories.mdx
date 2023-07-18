@@ -71,6 +71,15 @@ import { Form } from "@lifesg/react-design-system/form";
                             displayValueExtractor={(item) => item.label}
                             disabled
                         />
+                        <Form.PredictiveTextInput
+                            label="This is the readonly state"
+                            placeholder="Start typing..."
+                            fetchOptions={mockFetchOptions}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            readOnly
+                        />
                     </Container>
                 </StoryContainer>
             );

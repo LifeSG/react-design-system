@@ -22,21 +22,25 @@ export const PredictiveTextInput = <T, V>({
     error,
     valueExtractor,
     listExtractor,
-    displayValueExtractor,
+    displayValueExtractor = (item) => item.toString(),
     onSelectOption,
 }: PredictiveTextInputProps<T, V>) => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [input, setInput] = useState<string>("");
-    const [searchedInput, setSearchedInput] = useState<string>("");
+    const inputValue = selectedOption && displayValueExtractor(selectedOption);
+    const [input, setInput] = useState<string>(inputValue || "");
+    const [searchedInput, setSearchedInput] = useState<string>(
+        inputValue || ""
+    );
     const [options, setOptions] = useState<T[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isError, setIsError] = useState<boolean>(false);
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(
         !!selectedOption
     );
-    const [prevOptionSelected, setPrevOptionSelected] = useState<T>();
+    const [prevOptionSelected, setPrevOptionSelected] =
+        useState<T>(selectedOption);
     const fetchOptionsRef = useRef(fetchOptions);
 
     // =============================================================================
@@ -225,8 +229,12 @@ export const PredictiveTextInput = <T, V>({
             testId={testId}
             onBlur={handleWrapperBlur}
         >
-            <SelectorDiv>{renderInputField()}</SelectorDiv>
-            {showDropdown && <Divider />}
+            {!readOnly ? (
+                <SelectorDiv>{renderInputField()}</SelectorDiv>
+            ) : (
+                <>{renderInputField()}</>
+            )}
+            {!readOnly && showDropdown() && <Divider />}
             {renderDropDown()}
         </DropdownWrapper>
     );
