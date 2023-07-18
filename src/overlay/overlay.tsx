@@ -22,6 +22,7 @@ export const Overlay = ({
     const [isStacked, _setIsStacked] = useState<boolean>();
 
     const stacked = useRef<boolean>();
+    const mounted = useRef<boolean>(false);
 
     const childRef = useRef<HTMLDivElement>(null);
     const childWithRef =
@@ -35,6 +36,11 @@ export const Overlay = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
+        const isMounted = mounted.current === true;
+        if (!isMounted) {
+            mounted.current = true;
+        }
+
         if (show) {
             const isStacked = checkIfStacked();
             setStacked(isStacked);
@@ -46,6 +52,11 @@ export const Overlay = ({
                 return () => clearTimeout(timerId);
             }
         } else {
+            // skip if the component hasn't mounted yet
+            if (!isMounted) {
+                return;
+            }
+
             /**
              * Here we have to used the ref value to know if it is stacked
              * rather than checking for the presence of the overlay class
