@@ -11,6 +11,8 @@ import {
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { StringHelper } from "../util/string-helper";
 import { InputRangeSelectProps } from "./types";
+import { ClearContainer, ClearIcon } from "../input/input.style";
+import { EmptyIconWrapper } from "./input-range-select.style";
 
 type RangeType = "from" | "to";
 
@@ -132,6 +134,12 @@ export const InputRangeSelect = <T, V>({
             setSelectedToValue(undefined);
             setSelectedFromValue(undefined);
         }
+    };
+
+    const handleClear = (event: { stopPropagation: () => void }) => {
+        setSelectedFromValue(undefined);
+        setSelectedToValue(undefined);
+        event.stopPropagation();
     };
 
     // =============================================================================
@@ -291,6 +299,15 @@ export const InputRangeSelect = <T, V>({
                     {renderSelectorContent("from")}
                     {renderSelectorContent("to")}
                 </RangeInputInnerContainer>
+                <ClearContainer onClick={handleClear} type="button">
+                    {focusedInput === "none" &&
+                    selectedFromValue &&
+                    selectedToValue ? (
+                        <ClearIcon aria-hidden />
+                    ) : (
+                        <EmptyIconWrapper />
+                    )}
+                </ClearContainer>
             </Selector>
             {focusedInput !== "none" && <Divider />}
             {renderOptionsList()}
