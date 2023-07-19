@@ -18,6 +18,11 @@ export interface AccordionItemProps {
     type?: AccordionItemType | undefined;
 }
 
+export type AccordionItemHandle = HTMLDivElement & {
+    expand: () => void;
+    collapse: () => void;
+};
+
 /**
  * Transient props are denoted with $
  * See more https://styled-components.com/docs/api#transient-props

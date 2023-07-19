@@ -1,4 +1,11 @@
-import React, { forwardRef, useContext, useEffect, useState } from "react";
+import { isFunction } from "lodash";
+import React, {
+    forwardRef,
+    useContext,
+    useEffect,
+    useImperativeHandle,
+    useState,
+} from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { AccordionContext } from "./accordion-context";
@@ -12,10 +19,9 @@ import {
     TitleContainer,
     TitleH4,
 } from "./accordion-item.style";
-import { AccordionItemProps } from "./types";
+import { AccordionItemHandle, AccordionItemProps } from "./types";
 
-
-function _AccordionItem(
+function Component(
     {
         title,
         children,
@@ -25,6 +31,22 @@ function _AccordionItem(
     }: AccordionItemProps,
     ref: React.Ref<HTMLDivElement>
 ) {
+    useImperativeHandle(
+        ref,
+        () => {
+            if (!isFunction(ref)) {
+                return Object.assign(ref.current, {
+                    expand(): void {
+                        setExpand(true);
+                    },
+                    collapse(): void {
+                        setExpand(false);
+                    },
+                });
+            }
+        },
+        []
+    );
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -135,4 +157,7 @@ function _AccordionItem(
     );
 }
 
-export const AccordionItem = forwardRef(_AccordionItem);
+export const AccordionItem = forwardRef<
+    AccordionItemHandle,
+    AccordionItemProps
+>(Component);

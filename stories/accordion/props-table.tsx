@@ -84,8 +84,7 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "expanded",
-                description:
-                    "Specifies if the item is expanded on for first load",
+                description: "Specifies if the item is expanded",
                 propTypes: ["boolean"],
             },
             {
