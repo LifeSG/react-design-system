@@ -234,6 +234,16 @@ export const NestedDropdownList = <V1, V2, V3>({
         }
     };
 
+    const handleKeyboardTarget = (element: HTMLButtonElement, key: string) => {
+        if (!element) return;
+        // const elements = listItemRefs.current.map((item) => item[1]);
+
+        // if (!elements.includes(element)) {
+        //     const result: ListItemRefTypes = [key, element];
+        //     listItemRefs.current.push(result);
+        // }
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
