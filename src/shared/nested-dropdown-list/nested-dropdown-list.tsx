@@ -1,3 +1,4 @@
+import cloneDeep from "lodash/cloneDeep";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
 import { useEventListener } from "../../util/use-event-listener";
@@ -17,6 +18,13 @@ import {
     ResultStateContainer,
     ResultStateText,
 } from "./nested-dropdown-list.styles";
+
+interface ListItemRefType {
+    ref?: HTMLButtonElement;
+    subItems?: ListItemRefType;
+}
+
+type Direction = "down" | "up";
 
 /**
  * NOTE: This component is not directly exportables
@@ -39,7 +47,10 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     // CONST, REF, STATE
     // =============================================================================
-    const listItems = useMemo((): Map<string, FormattedOption<V1, V2, V3>> => {
+    const formattedListItem = useMemo((): Map<
+        string,
+        FormattedOption<V1, V2, V3>
+    > => {
         if (!_listItems || !_listItems.length) return new Map([]);
 
         const formatted = (
@@ -56,6 +67,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                     label,
                     value,
                     keyPath,
+                    expanded: mode === "expand" || false,
                     subItems: subItems
                         ? formatted(subItems, keyPath)
                         : undefined,
@@ -70,7 +82,10 @@ export const NestedDropdownList = <V1, V2, V3>({
         return formatted(_listItems, []);
     }, [_listItems]);
 
+    const [focusedListIndex, setFocusedIndex] = useState<number>(0);
     const [contentHeight, setContentHeight] = useState<number>(0);
+    const [listItems, setListItems] =
+        useState<Map<string, FormattedOption<V1, V2, V3>>>(formattedListItem);
 
     // React spring animation configuration
     const containerStyles = useSpring({
@@ -79,12 +94,25 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const nodeRef = useRef<HTMLDivElement>();
     const listRef = useRef<HTMLUListElement>();
+    const listItemRefs = useRef<ListItemRefType>({});
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         if (visible) {
+            const lists = getDefaultExpandList();
+            const orders = getKeyboardExpandOrder(lists);
+
+            setListItems(lists);
+            setKeyboardOrders(orders);
+
+            // TODO: if search exist focus it else focus listItemRefs.current[target]
+            if (listItemRefs.current) {
+                const target = orders[focusedListIndex];
+                listItemRefs.current[target].ref.focus();
+            }
+
             // Give some time for the custom call-to-action to be rendered
             setTimeout(() => {
                 setContentHeight(getContentHeight());
@@ -112,18 +140,107 @@ export const NestedDropdownList = <V1, V2, V3>({
         onSelectItem(item);
     };
 
-    const handleExpand = () => {
+    const handleExpand = (parentKeys: string[]) => {
+        const lists = cloneDeep(listItems);
+
+        // length number means tier level
+        switch (parentKeys.length) {
+            case 1:
+                lists.set(parentKeys[0], {
+                    ...lists.get(parentKeys[0]),
+                    expanded: !lists.get(parentKeys[0]).expanded,
+                });
+                break;
+            case 2:
+                lists.get(parentKeys[0]).subItems.forEach((value, key) => {
+                    const targetKey = parentKeys[parentKeys.length - 1];
+
+                    if (targetKey === key) {
+                        value.expanded = !value.expanded;
+                    }
+                });
+                break;
+        }
+
+        setListItems(lists);
+
         setTimeout(() => {
             setContentHeight(getContentHeight());
         });
+    };
+
+    const handleListItemRef = (
+        ref: HTMLButtonElement,
+        keyPaths: string[],
+        currentObj: ListItemRefType = listItemRefs.current
+    ) => {
+        const [currentKey, ...remainingKeys] = keyPaths;
+
+        if (!currentObj[currentKey]) {
+            currentObj[currentKey] = { ref, subItems: {} };
+        }
+
+        if (remainingKeys.length) {
+            handleListItemRef(
+                ref,
+                remainingKeys,
+                currentObj[currentKey].subItems
+            );
+        }
+    };
+
+    const handleArrowUpDown = (direction: Direction) => {
+        let upcomingIndex = focusedListIndex;
+        let targetKey = null;
+        let selectedItem = null;
+
+        setFocusedIndex((prev) => {
+            upcomingIndex = direction === "down" ? prev + 1 : prev - 1;
+            return upcomingIndex;
+        });
+
+        targetKey = keyboardOrders[upcomingIndex];
+
+        const level = targetKey.length;
+        for (const key of targetKey) {
+            switch (level) {
+                case 1:
+                    selectedItem = listItemRefs.current[key];
+                    break;
+                case 2:
+                    selectedItem =
+                        listItemRefs.current[targetKey[0]].subItems[key];
+                    break;
+                case 3:
+                    selectedItem =
+                        listItemRefs.current[targetKey[0]].subItems[
+                            targetKey[1]
+                        ].subItems[key];
+                    break;
+            }
+        }
+
+        selectedItem.ref.focus();
     };
 
     function handleKeyboardPress(event: KeyboardEvent) {
         if (nodeRef && (nodeRef.current as any).contains(event.target)) {
             switch (event.code) {
                 case "ArrowDown":
+                    setFocusedIndex((prev) => {
+                        const next = prev + 1;
+
+                        // listItemRefs.current[next][1].focus();
+                        return next;
+                    });
                     break;
                 case "ArrowUp":
+                    setFocusedIndex((_prev) => {
+                        const prev = _prev - 1;
+
+                        // listItemRefs.current[prev][1].focus();
+                        return prev;
+                    });
                     break;
                 case "Escape":
                     if (onDismiss) onDismiss(true);
@@ -146,6 +263,16 @@ export const NestedDropdownList = <V1, V2, V3>({
         }
     };
 
+    const handleKeyboardTarget = (element: HTMLButtonElement, key: string) => {
+        if (!element) return;
+        // const elements = listItemRefs.current.map((item) => item[1]);
+
+        // if (!elements.includes(element)) {
+        //     const result: ListItemRefTypes = [key, element];
+        //     listItemRefs.current.push(result);
+        // }
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -158,30 +285,26 @@ export const NestedDropdownList = <V1, V2, V3>({
         return listHeight;
     };
 
-    const getDefaultExpandKeys = (
+    const getDefaultExpandKey = (
         items:
             | Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
             | undefined,
-        parentKeys?: string[]
+        keyPath?: string[]
     ): string[] => {
-        /**
-         * Get the keys which has the subItems on "items" tier
-         */
+        // Get the first one which has the subItems in the list
         let keys = [];
 
         if (!items) return keys;
 
-        if (parentKeys && parentKeys.length) {
-            keys = parentKeys;
+        if (keyPath && keyPath.length) {
+            keys = keyPath;
         }
 
-        for (const [key, item] of items.entries()) {
+        for (const [key, item] of items) {
             if (item.subItems && item.subItems.size) {
                 keys.push(key);
+                getDefaultExpandKey(item.subItems, keys);
 
-                getDefaultExpandKeys(item.subItems, keys);
-
-                // stop loop once hit the innermost level
                 break;
             }
         }
@@ -189,27 +312,70 @@ export const NestedDropdownList = <V1, V2, V3>({
         return keys;
     };
 
-    const getItemWithSubItems = (
-        items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-    ) => {
-        /**
-         * Filter the category which has the subItems
-         */
-        const itemWithSubItems = [];
+    const getDefaultExpandList = () => {
+        if (["expand", "collapse"].includes(mode)) return formattedListItem;
+        const lists = structuredClone(listItems);
+        let keys = selectedKeyPath;
+        let item: CombinedFormattedOptionProps<V1, V2, V3> = null;
 
-        for (const [key, value] of items.entries()) {
-            if (value.subItems && value.subItems.size) {
-                const item = new Map();
+        if (!selectedKeyPath || !selectedKeyPath.length) {
+            keys = getDefaultExpandKey(listItems);
+        }
 
-                item.set(key, value);
-                itemWithSubItems.push(item);
+        const [keyOne, keyTwo] = keys;
 
-                // stop loop once found the item
-                break;
+        for (let i = 0; i < keys.length; i++) {
+            const level = i + 1;
+
+            // update each level item
+            switch (level) {
+                case 1:
+                    item = lists.get(keyOne);
+                    break;
+                case 2:
+                    item = lists.get(keyOne)?.subItems?.get(keyTwo);
+                    break;
+            }
+
+            if (item) {
+                item.expanded = true;
+                // update last tier's expanded value same as tier 2
+                if (level === 2 && item.subItems instanceof Map) {
+                    for (const innermostItem of item.subItems.values()) {
+                        innermostItem.expanded = item.expanded;
+                    }
+                }
             }
         }
 
-        return itemWithSubItems;
+        return lists;
+    };
+
+    const itemExpand = () => {
+        if (["expand", "collapse"].includes(mode)) return;
+
+        const lists = cloneDeep(listItems);
+
+        for (let i = 0; i < selectedKeyPath.length; i++) {
+            let item: CombinedFormattedOptionProps<V1, V2, V3> = null;
+
+            switch (i) {
+                case 0:
+                    item = lists.get(selectedKeyPath[0]);
+                    break;
+                case 1:
+                    item = lists
+                        .get(selectedKeyPath[0])
+                        ?.subItems?.get(selectedKeyPath[1]);
+                    break;
+            }
+
+            if (item) {
+                item.expanded = !item.expanded;
+            }
+        }
+
+        setListItems(lists);
     };
 
     // =============================================================================
@@ -217,20 +383,16 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     const renderItems = () => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
-            const [item] = getItemWithSubItems(listItems);
-            const defaultExpandKeys = getDefaultExpandKeys(item);
-
             return Array.from(listItems).map(([key, item]) => (
                 <ListItem
                     key={key}
                     item={item}
-                    mode={mode}
                     selectedKeyPath={selectedKeyPath}
-                    defaultExpandKeys={defaultExpandKeys}
                     itemTruncationType={itemTruncationType}
                     visible={visible}
                     onBlur={handleBlur}
                     onExpand={handleExpand}
+                    onRef={handleListItemRef}
                     onSelect={handleSelect}
                 />
             ));

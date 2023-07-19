@@ -44,6 +44,7 @@ export interface ListItemSelectorProps {
 interface BaseFormattedOptionProps {
     label: string;
     keyPath: string[];
+    expanded: boolean;
 }
 
 export interface FormattedOption<V1, V2, V3> extends BaseFormattedOptionProps {
