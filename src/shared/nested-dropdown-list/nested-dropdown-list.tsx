@@ -263,16 +263,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         }
     };
 
-    const handleKeyboardTarget = (element: HTMLButtonElement, key: string) => {
-        if (!element) return;
-        // const elements = listItemRefs.current.map((item) => item[1]);
-
-        // if (!elements.includes(element)) {
-        //     const result: ListItemRefTypes = [key, element];
-        //     listItemRefs.current.push(result);
-        // }
-    };
-
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -351,31 +341,33 @@ export const NestedDropdownList = <V1, V2, V3>({
         return lists;
     };
 
-    const itemExpand = () => {
-        if (["expand", "collapse"].includes(mode)) return;
+    const getKeyboardExpandOrder = (
+        _lists: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+    ) => {
+        const lists = structuredClone(_lists);
+        const elementKeys = [];
 
-        const lists = cloneDeep(listItems);
-
-        for (let i = 0; i < selectedKeyPath.length; i++) {
-            let item: CombinedFormattedOptionProps<V1, V2, V3> = null;
-
-            switch (i) {
-                case 0:
-                    item = lists.get(selectedKeyPath[0]);
-                    break;
-                case 1:
-                    item = lists
-                        .get(selectedKeyPath[0])
-                        ?.subItems?.get(selectedKeyPath[1]);
-                    break;
+        const getOrders = (
+            items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+        ) => {
+            if (!items || !items.size) {
+                return;
             }
 
-            if (item) {
-                item.expanded = !item.expanded;
-            }
-        }
+            for (const item of items.values()) {
+                if (item.expanded) {
+                    elementKeys.push(item.keyPath);
 
-        setListItems(lists);
+                    getOrders(item.subItems);
+                } else {
+                    elementKeys.push(item.keyPath);
+                }
+            }
+        };
+
+        getOrders(lists);
+
+        return elementKeys;
     };
 
     // =============================================================================
