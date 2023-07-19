@@ -5,7 +5,7 @@ import { Checkbox } from "../../checkbox";
 import { Color } from "../../color";
 import { MediaQuery } from "../../media";
 import { Text, TextStyleHelper } from "../../text";
-import { TruncateType } from "./types";
+import { LabelDisplayType, TruncateType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -15,19 +15,27 @@ interface ListContainerProps {
 }
 
 interface ListItemProps {
-    checked?: boolean;
+    $checked?: boolean;
 }
 
 interface ListItemSelectorProps {
-    multiSelect?: boolean;
+    $multiSelect?: boolean;
+    $hasNextLineLabel?: boolean;
 }
+
 interface LabelProps {
-    truncateType?: TruncateType;
+    $truncateType?: TruncateType;
+    $maxLines?: number;
+    $labelDisplayType?: LabelDisplayType;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// MAIN STYLES
+// -----------------------------------------------------------------------------
 
 export const Container = styled(animated.div)`
     overflow: hidden;
@@ -70,7 +78,7 @@ export const ListItem = styled.li<ListItemProps>`
         background: ${Color.Accent.Light[5]};
     }
     ${(props) => {
-        if (props.checked) {
+        if (props.$checked) {
             return css`
                 background: ${Color.Accent.Light[5]};
             `;
@@ -81,14 +89,14 @@ export const ListItem = styled.li<ListItemProps>`
 export const ListItemSelector = styled.button<ListItemSelectorProps>`
     display: flex;
     ${(props) => {
-        if (props.multiSelect) {
+        if (props.$multiSelect) {
             return css`
                 padding: 0.5rem 1rem;
             `;
         } else {
             return css`
                 padding: 0 1rem;
-                min-height: 3.5rem;
+                min-height: ${props.$hasNextLineLabel ? "4.255rem" : "3.5rem"};
                 align-items: center;
             `;
         }
@@ -111,57 +119,86 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     }
 `;
 
-export const AddOnContainer = styled.div`
-    position: relative;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: ${Color.Neutral[8]};
+// -----------------------------------------------------------------------------
+// LIST ITEM LABEL STYLES
+// -----------------------------------------------------------------------------
+
+const lineClampCss = css<LabelProps>`
+    overflow: hidden;
+    display: -webkit-inline-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: ${(props) => props.$maxLines || 2};
+    -webkit-box-orient: vertical;
+    overflow-wrap: break-word;
 `;
 
-export const Label = styled.div<LabelProps>`
+export const PrimaryText = styled.div<LabelProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${Color.Neutral[1]};
-    text-align: left;
-    line-height: 1.375rem;
-    overflow: hidden;
+    width: 100%;
+
+    ${(props) => props.$truncateType === "end" && lineClampCss}
+`;
+
+export const SecondaryText = styled.div<LabelProps>`
+    color: ${Color.Neutral[4]};
+    width: 100%;
+
+    ${(props) => props.$truncateType === "end" && lineClampCss}
+
     ${(props) => {
-        switch (props.truncateType) {
-            case "middle":
-                break;
-            case "end":
+        switch (props.$labelDisplayType) {
+            case "next-line":
+                return css`
+                    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                `;
+            case "inline":
             default:
                 return css`
-                    display: -webkit-box;
-                    text-overflow: ellipsis;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
+                    ${TextStyleHelper.getTextStyle("Body", "regular")}
                 `;
         }
     }}
 `;
 
-export const SecondaryLabel = styled.span`
-    color: ${Color.Neutral[4]};
-    display: inline;
-    padding-left: 0.4rem;
-`;
-
-export const TruncateContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-export const TruncateFirstLine = styled.div`
+export const Label = styled.div<LabelProps>`
+    text-align: left;
     width: 100%;
+
+    ${(props) => {
+        switch (props.$labelDisplayType) {
+            case "next-line":
+                return css`
+                    display: flex;
+                    flex-direction: column;
+                `;
+            case "inline":
+                return css`
+                    ${PrimaryText} {
+                        display: inline;
+                    }
+
+                    ${SecondaryText} {
+                        display: inline;
+                        margin-left: 0.5rem;
+                    }
+                `;
+        }
+    }}
+`;
+
+export const TruncateFirstLine = styled.div<LabelProps>`
+    display: inline-block;
+    width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
     height: 1.5rem;
     word-break: break-all;
     overflow: hidden;
 `;
 
-export const TruncateSecondLine = styled.div`
-    width: 100%;
+export const TruncateSecondLine = styled.div<LabelProps>`
+    display: inline-block;
+    width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
+    height: 1.5rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -169,24 +206,14 @@ export const TruncateSecondLine = styled.div`
     text-align: right;
 `;
 
-export const Clickable = styled(Text.Hyperlink.Default)`
-    color: ${Color.Neutral[1]} !important;
-    padding: 1.25rem 1rem;
-    margin-bottom: 0;
-
-    :hover,
-    :visited,
-    :focus,
-    :active {
-        outline-color: ${Color.Accent.Light[3]};
-        color: ${Color.Neutral[1]};
-    }
-`;
-
 export const ListCheckbox = styled(Checkbox)`
     flex: 0 0 1.5rem;
     margin-right: 1rem;
 `;
+
+// -----------------------------------------------------------------------------
+// ELEMENT STYLES
+// -----------------------------------------------------------------------------
 
 export const SelectAllContainer = styled.div`
     width: 100%;

@@ -76,4 +76,10 @@ export const ClearContainer = styled.button<StyleProps>`
 export const ClearIcon = styled(CrossIcon)`
     height: 1.25rem;
     width: 1.25rem;
+    vertical-align: middle;
+`;
+
+export const BasicWrapper = styled.div`
+    display: flex;
+    width: 100%;
 `;

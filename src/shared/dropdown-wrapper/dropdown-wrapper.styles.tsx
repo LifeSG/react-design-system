@@ -32,7 +32,7 @@ export const Wrapper = styled.div`
     width: 100%;
 `;
 
-export const Selector = styled.button`
+export const baseSelectorCSS = css`
     display: flex;
     position: relative;
     align-items: center;
@@ -41,7 +41,6 @@ export const Selector = styled.button`
     height: calc(3rem - 2px); // exclude top and bottom borders
     width: 100%;
     border-radius: ${BORDER_RADIUS};
-    cursor: pointer;
     border: none;
     background: transparent;
 
@@ -53,6 +52,15 @@ export const Selector = styled.button`
     :focus-visible {
         outline: 2px solid ${Color.Accent.Light[3]};
     }
+`;
+
+export const Selector = styled.button`
+    ${baseSelectorCSS}
+    cursor: pointer;
+`;
+
+export const SelectorDiv = styled.div`
+    ${baseSelectorCSS}
 `;
 
 // Note: Need this to only switch back after
