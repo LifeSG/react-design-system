@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { forwardRef, useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { AccordionContext } from "./accordion-context";
@@ -14,13 +14,17 @@ import {
 } from "./accordion-item.style";
 import { AccordionItemProps } from "./types";
 
-export const AccordionItem = ({
-    title,
-    children,
-    expanded,
-    type = "default",
-    ...otherProps
-}: AccordionItemProps) => {
+
+function _AccordionItem(
+    {
+        title,
+        children,
+        expanded,
+        type = "default",
+        ...otherProps
+    }: AccordionItemProps,
+    ref: React.Ref<HTMLDivElement>
+) {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -111,6 +115,7 @@ export const AccordionItem = ({
             data-testid={testId}
             className={otherProps.className}
             $isCollapsed={expand}
+            ref={ref}
         >
             <TitleContainer>
                 {renderTitle()}
@@ -128,4 +133,6 @@ export const AccordionItem = ({
             {renderContent()}
         </Container>
     );
-};
+}
+
+export const AccordionItem = forwardRef(_AccordionItem);
