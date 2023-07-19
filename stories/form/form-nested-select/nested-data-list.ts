@@ -92,7 +92,7 @@ export const options = [
                 key: "81",
             },
             {
-                label: "Neptune",
+                label: "Category Neptune",
                 value: { id: 501, name: "Neptune" },
                 key: "52",
                 subItems: [
@@ -107,7 +107,7 @@ export const options = [
                 ],
             },
             {
-                label: "Uranus",
+                label: "Category Uranus",
                 value: { id: 401, name: "Uranus" },
                 key: "401",
                 subItems: [
