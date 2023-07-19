@@ -5,5 +5,5 @@ import styled from "styled-components";
 // =============================================================================
 export const EmptyIconWrapper = styled.div`
     height: 1.25rem;
-    width: 1.25rem;
+    width: 2.25rem;
 `;

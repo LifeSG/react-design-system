@@ -136,10 +136,11 @@ export const InputRangeSelect = <T, V>({
         }
     };
 
-    const handleClear = (event: { stopPropagation: () => void }) => {
+    const handleClear = (event: React.MouseEvent) => {
+        event.stopPropagation();
         setSelectedFromValue(undefined);
         setSelectedToValue(undefined);
-        event.stopPropagation();
+        onSelectOption(undefined, undefined);
     };
 
     // =============================================================================
@@ -299,15 +300,17 @@ export const InputRangeSelect = <T, V>({
                     {renderSelectorContent("from")}
                     {renderSelectorContent("to")}
                 </RangeInputInnerContainer>
-                <ClearContainer onClick={handleClear} type="button">
-                    {focusedInput === "none" &&
-                    selectedFromValue &&
-                    selectedToValue ? (
+                {focusedInput === "none" &&
+                selectedFromValue &&
+                selectedToValue &&
+                !readOnly &&
+                !disabled ? (
+                    <ClearContainer onClick={handleClear} type="button">
                         <ClearIcon aria-hidden />
-                    ) : (
-                        <EmptyIconWrapper />
-                    )}
-                </ClearContainer>
+                    </ClearContainer>
+                ) : (
+                    <EmptyIconWrapper />
+                )}
             </Selector>
             {focusedInput !== "none" && <Divider />}
             {renderOptionsList()}
