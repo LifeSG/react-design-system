@@ -1,11 +1,5 @@
 import React from "react";
-import {
-    ApiTable,
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
@@ -84,8 +78,13 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "expanded",
-                description:
-                    "Specifies if the item is expanded. Omit or set this to undefined to allow 'Hide All'/'Show All' in parent to take precedence for cases where we want the default expand behaviour",
+                description: (
+                    <>
+                        Specifies if the item is expanded. When set, this takes
+                        precedence over {code("initialDisplay")} of the
+                        {code("Accordion")}
+                    </>
+                ),
                 propTypes: ["boolean"],
             },
             {

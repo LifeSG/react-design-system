@@ -25,6 +25,7 @@ export interface AccordionItemProps {
 export type AccordionItemHandle = HTMLDivElement & {
     expand: () => void;
     collapse: () => void;
+    isExpanded: () => boolean;
 };
 
 /**

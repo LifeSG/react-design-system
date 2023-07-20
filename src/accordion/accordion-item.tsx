@@ -1,9 +1,9 @@
-import { isFunction } from "lodash";
 import React, {
     forwardRef,
     useContext,
     useEffect,
     useImperativeHandle,
+    useRef,
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
@@ -29,27 +29,12 @@ function Component(
         type = "default",
         ...otherProps
     }: AccordionItemProps,
-    ref: React.Ref<HTMLDivElement>
+    ref: React.Ref<AccordionItemHandle>
 ) {
-    useImperativeHandle(
-        ref,
-        () => {
-            if (!isFunction(ref)) {
-                return Object.assign(ref.current, {
-                    expand(): void {
-                        setExpand(true);
-                    },
-                    collapse(): void {
-                        setExpand(false);
-                    },
-                });
-            }
-        },
-        []
-    );
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const elementRef = useRef<HTMLDivElement>();
     const expandAll = useContext(AccordionContext);
     const [expand, setExpand] = useState<boolean>(expanded ?? expandAll);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
@@ -58,6 +43,20 @@ function Component(
 
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
+
+    useImperativeHandle(
+        ref,
+        () =>
+            Object.assign(elementRef.current, {
+                expand(): void {
+                    setExpand(true);
+                },
+                collapse(): void {
+                    setExpand(false);
+                },
+            }),
+        []
+    );
 
     // =============================================================================
     // EFFECTS
@@ -137,7 +136,7 @@ function Component(
             data-testid={testId}
             className={otherProps.className}
             $isCollapsed={expand}
-            ref={ref}
+            ref={elementRef}
         >
             <TitleContainer>
                 {renderTitle()}
