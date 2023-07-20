@@ -41,23 +41,22 @@ export interface ListItemSelectorProps {
 // =============================================================================
 // Recursive Types
 // =============================================================================
-export interface FormattedOption<V1, V2, V3> {
+interface BaseFormattedOption {
     label: string;
-    value: V1;
     keyPath: string[];
+}
+
+export interface FormattedOption<V1, V2, V3> extends BaseFormattedOption {
+    value: V1;
     subItems: Map<string, FL2<V2, V3>> | undefined;
 }
 
-export interface FL2<V2, V3> {
-    label: string;
+export interface FL2<V2, V3> extends BaseFormattedOption {
     value: V2;
-    keyPath: string[];
     subItems: Map<string, FL3<V3>> | undefined;
 }
-export interface FL3<V3> {
-    label: string;
+export interface FL3<V3> extends BaseFormattedOption {
     value: V3;
-    keyPath: string[];
     subItems: undefined;
 }
 

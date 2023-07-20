@@ -37,23 +37,22 @@ export type InputNestedSelectPartialProps<V1, V2, V3> = Omit<
 // =============================================================================
 // Recursive Types
 // =============================================================================
-export interface Option<V1, V2, V3> {
+interface BaseOption {
     label: string;
-    value: V1;
     key: number | string;
+}
+
+export interface Option<V1, V2, V3> extends BaseOption {
+    value: V1;
     subItems?: L2<V2, V3>[] | undefined;
 }
 
-export interface L2<V2, V3> {
-    label: string;
+export interface L2<V2, V3> extends BaseOption {
     value: V2;
-    key: number | string;
     subItems?: L3<V3>[] | undefined;
 }
-export interface L3<V3> {
-    label: string;
+export interface L3<V3> extends BaseOption {
     value: V3;
-    key: number | string;
     subItems?: undefined;
 }
 
