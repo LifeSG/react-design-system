@@ -1,11 +1,5 @@
 import React from "react";
-import {
-    ApiTable,
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
@@ -84,9 +78,14 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "expanded",
-                description: "Specifies if the item is expanded",
+                description: (
+                    <>
+                        Specifies if the item is expanded. When set, this takes
+                        precedence over {code("initialDisplay")} of the
+                        {code("Accordion")}
+                    </>
+                ),
                 propTypes: ["boolean"],
-                defaultValue: "true",
             },
             {
                 name: "className",

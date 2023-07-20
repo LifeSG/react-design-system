@@ -12,11 +12,21 @@ export type AccordionItemType = "default" | "small";
 export interface AccordionItemProps {
     title: string;
     children: JSX.Element | JSX.Element[];
+    /**
+     * Omit or set this to undefined to allow 'Hide All'/'Show All' in parent to take precedence
+     * for cases where we want the default expand behaviour
+     */
     expanded?: boolean | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
     type?: AccordionItemType | undefined;
 }
+
+export type AccordionItemHandle = HTMLDivElement & {
+    expand: () => void;
+    collapse: () => void;
+    isExpanded: () => boolean;
+};
 
 /**
  * Transient props are denoted with $
