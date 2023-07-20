@@ -17,7 +17,7 @@ import {
 interface ListItemProps<V1, V2, V3> {
     item: FItemOption<V1, V2, V3>;
     mode: Mode;
-    selectedKeys?: string[][] | undefined;
+    selectedKey?: string[] | undefined;
     defaultExpandKeys: string[];
     itemTruncationType?: TruncateType | undefined;
     visible: boolean;
@@ -29,7 +29,7 @@ interface ListItemProps<V1, V2, V3> {
 export const ListItem = <V1, V2, V3>({
     item,
     mode,
-    selectedKeys,
+    selectedKey,
     defaultExpandKeys,
     itemTruncationType,
     visible,
@@ -73,10 +73,10 @@ export const ListItem = <V1, V2, V3>({
             case "collapse":
                 return false;
             default:
-                if (selectedKeys.length && selectedKeys.flat().length) {
-                    for (let i = 0; i < selectedKeys.length; i++) {
+                if (selectedKey && selectedKey.length) {
+                    for (let i = 0; i < selectedKey.length; i++) {
                         const found = item.keyPath.every(
-                            (key, index) => selectedKeys[i][index] === key
+                            (key, index) => selectedKey[index] === key
                         );
 
                         if (!found) break;
@@ -93,9 +93,7 @@ export const ListItem = <V1, V2, V3>({
     }
 
     const checkListItemSelected = (keyPath: string[]): boolean => {
-        for (let i = 0; i < selectedKeys.length; i++) {
-            return JSON.stringify(selectedKeys[i]) === JSON.stringify(keyPath);
-        }
+        return JSON.stringify(selectedKey) === JSON.stringify(keyPath);
     };
 
     // =============================================================================
@@ -138,7 +136,7 @@ export const ListItem = <V1, V2, V3>({
                         key={item.keyPath.join("-")}
                         item={item}
                         mode={mode}
-                        selectedKeys={selectedKeys}
+                        selectedKey={selectedKey}
                         defaultExpandKeys={defaultExpandKeys}
                         visible={visible}
                         onBlur={onBlur}

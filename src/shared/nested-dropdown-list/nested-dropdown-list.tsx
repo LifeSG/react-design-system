@@ -23,7 +23,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     listStyleWidth,
     visible,
     mode = "default",
-    selectedKeys,
+    selectedKey,
     itemsLoadState = "success",
     itemTruncationType = "end",
     onBlur,
@@ -225,7 +225,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                     key={key}
                     item={item}
                     mode={mode}
-                    selectedKeys={selectedKeys}
+                    selectedKey={selectedKey}
                     defaultExpandKeys={defaultExpandKeys}
                     itemTruncationType={itemTruncationType}
                     visible={visible}

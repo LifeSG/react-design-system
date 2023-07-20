@@ -41,11 +41,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-
-    // how to get the label if user provided selectedKeys?
-
-    const [selectedKeys, setSelectedKeys] =
-        useState<string[][]>(selectedKeyPath);
+    const [selectedKey, setSelectedKey] = useState<string[]>(selectedKeyPath);
     const [selectedItem, setSelectedItem] =
         useState<SelectedItemTypes<V1, V2, V3>[]>();
 
@@ -58,10 +54,10 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!selectedKeys || !selectedKeys.flat().length) return;
+        if (!selectedKey || !selectedKey.length) return;
 
-        updateSelectedItemFromKeys(options, selectedKeys);
-    }, [selectedKeys]);
+        updateSelectedItemFromKey(options, selectedKey);
+    }, [selectedKey]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -80,7 +76,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     const handleListItemClick = (item: FItemOption<V1, V2, V3>) => {
         const { keyPath, value } = item;
 
-        setSelectedKeys([keyPath]);
+        setSelectedKey(keyPath);
         setSelectedItem([item]);
 
         setShowOptions(false);
@@ -117,23 +113,18 @@ export const InputNestedSelect = <V1, V2, V3>({
     const getDisplayValue = (): string => {
         if (selectedItem.length === 1) {
             return selectedItem[0].label;
-        } else if (selectedItem.length > 1) {
-            return `${selectedItem.length} selected`;
         }
     };
 
-    const updateSelectedItemFromKeys = (
+    const updateSelectedItemFromKey = (
         options: ItemOption<V1, V2, V3>[],
-        keyPaths: string[][],
-        items: ItemOption<V1, V2, V3>[] = []
+        keyPaths: string[]
     ) => {
         if (!options || !options.length) return;
 
-        const [currentKeys, ...remainingKeys] = keyPaths;
-
         let selectedItem = null;
 
-        for (const key of currentKeys) {
+        for (const key of keyPaths) {
             if (!selectedItem) {
                 selectedItem = options.find(
                     (item) => item.key.toString() === key.toString()
@@ -147,13 +138,7 @@ export const InputNestedSelect = <V1, V2, V3>({
             if (!selectedItem) return null;
         }
 
-        items = [...items, selectedItem];
-
-        if (remainingKeys.length) {
-            updateSelectedItemFromKeys(options, remainingKeys, items);
-        } else {
-            setSelectedItem(items);
-        }
+        setSelectedItem([selectedItem]);
     };
 
     const convertValueToString = (value: string | V1 | V2 | V3): string => {
@@ -232,7 +217,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                     listStyleWidth={listStyleWidth}
                     visible={showOptions}
                     mode={mode}
-                    selectedKeys={selectedKeys ? selectedKeys : []}
+                    selectedKey={selectedKey ? selectedKey : []}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     onDismiss={handleListDismiss}

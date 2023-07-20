@@ -18,7 +18,7 @@ export interface NestedDropdownListProps<V1, V2, V3>
         DropdownStyleProps {
     listItems?: Option<V1, V2, V3>[] | undefined;
     visible?: boolean | undefined;
-    selectedKeys?: string[][] | undefined;
+    selectedKey?: string[] | undefined;
     /** Behavior of dropdown list items once it is opened */
     mode?: Mode;
     /**
