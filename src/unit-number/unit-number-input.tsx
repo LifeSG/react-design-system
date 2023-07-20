@@ -81,25 +81,6 @@ export const UnitNumberInput = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDown);
-
-        if (nodeRef.current) {
-            nodeRef.current.addEventListener("keydown", handleNodeKeyDown);
-        }
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDown);
-
-            if (nodeRef.current) {
-                nodeRef.current.removeEventListener(
-                    "keydown",
-                    handleNodeKeyDown
-                );
-            }
-        };
-    }, [currentFocus]);
-
-    useEffect(() => {
         // Auto focus feature
         if (
             currentFocus === "floor" &&
@@ -117,30 +98,6 @@ export const UnitNumberInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleMouseDown = (event: MouseEvent) => {
-        if (disabled || readOnly) {
-            return;
-        }
-
-        if (nodeRef && (nodeRef.current as any).contains(event.target)) {
-            // inside click
-            return;
-        }
-        // outside click
-        if (currentFocusStateRef.current !== "none") {
-            setCurrentFocus("none");
-            performOnBlurHandler();
-        }
-    };
-
-    const handleNodeKeyDown = (event: KeyboardEvent) => {
-        if ((event.target as any).name === "unit" && event.code === "Tab") {
-            // About to blur the entire input
-            setCurrentFocus("none");
-            performOnBlurHandler();
-        }
-    };
-
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         setCurrentFocus(event.target.name as FieldType);
         event.target.select();
@@ -183,6 +140,17 @@ export const UnitNumberInput = ({
     const handleNodeClick = () => {
         if (currentFocus === "none" && floorInputRef.current) {
             floorInputRef.current.focus();
+        }
+    };
+
+    const handleNodeBlur = (event: React.FocusEvent) => {
+        if (nodeRef.current && nodeRef.current.contains(event.relatedTarget)) {
+            // internal element received focus
+            return;
+        }
+        if (currentFocusStateRef.current !== "none") {
+            setCurrentFocus("none");
+            performOnBlurHandler();
         }
     };
 
@@ -360,6 +328,8 @@ export const UnitNumberInput = ({
             $error={error}
             $readOnly={readOnly}
             data-testid={otherProps["data-testid"]}
+            tabIndex={-1}
+            onBlur={handleNodeBlur}
         >
             <HashContainer
                 data-testid="addon"
