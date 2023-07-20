@@ -10,16 +10,15 @@ import {
     StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { InputNestedSelectProps } from "./types";
+import { InputNestedSelectProps, ItemOption } from "./types";
 import { StringHelper } from "../util";
-import {
-    FL2,
-    FL3,
-    FormattedOption,
-} from "../shared/nested-dropdown-list/types";
+import { FItemOption } from "../shared/nested-dropdown-list/types";
+
+type SelectedItemTypes<V1, V2, V3> =
+    | ItemOption<V1, V2, V3>
+    | FItemOption<V1, V2, V3>;
 
 export const InputNestedSelect = <V1, V2, V3>({
-    selectedOption,
     placeholder = "Select",
     options,
     disabled,
@@ -27,12 +26,9 @@ export const InputNestedSelect = <V1, V2, V3>({
     className,
     "data-testid": testId,
     id,
-    displayValueExtractor,
     selectedKeyPath,
     mode,
-    valueExtractor,
     valueToStringFunction,
-    listExtractor,
     onSelectOption,
     listStyleWidth,
     onShowOptions,
@@ -45,7 +41,14 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selected, setSelected] = useState<V1 | V2 | V3>(selectedOption);
+
+    // how to get the label if user provided selectedKeys?
+
+    const [selectedKeys, setSelectedKeys] =
+        useState<string[][]>(selectedKeyPath);
+    const [selectedItem, setSelectedItem] =
+        useState<SelectedItemTypes<V1, V2, V3>[]>();
+
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
     const selectorRef = useRef<HTMLButtonElement>();
@@ -55,8 +58,10 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setSelected(selectedOption);
-    }, [selectedOption]);
+        if (!selectedKeys || !selectedKeys.flat().length) return;
+
+        updateSelectedItemFromKeys(options, selectedKeys);
+    }, [selectedKeys]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -72,10 +77,12 @@ export const InputNestedSelect = <V1, V2, V3>({
         triggerOptionDisplayCallback(!showOptions);
     };
 
-    const handleListItemClick = (
-        item: FormattedOption<V1, V2, V3> | FL2<V2, V3> | FL3<V3>
-    ) => {
-        setSelected(item.value);
+    const handleListItemClick = (item: FItemOption<V1, V2, V3>) => {
+        const { keyPath, value } = item;
+
+        setSelectedKeys([keyPath]);
+        setSelectedItem([item]);
+
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
@@ -84,7 +91,7 @@ export const InputNestedSelect = <V1, V2, V3>({
         }
 
         if (onSelectOption) {
-            onSelectOption(item.value);
+            onSelectOption(keyPath, value);
         }
     };
 
@@ -107,16 +114,46 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
-    const getDisplayValue = (): string | V1 | V2 | V3 => {
-        if (displayValueExtractor) {
-            return displayValueExtractor(selected);
+    const getDisplayValue = (): string => {
+        if (selectedItem.length === 1) {
+            return selectedItem[0].label;
+        } else if (selectedItem.length > 1) {
+            return `${selectedItem.length} selected`;
+        }
+    };
+
+    const updateSelectedItemFromKeys = (
+        options: ItemOption<V1, V2, V3>[],
+        keyPaths: string[][],
+        items: ItemOption<V1, V2, V3>[] = []
+    ) => {
+        if (!options || !options.length) return;
+
+        const [currentKeys, ...remainingKeys] = keyPaths;
+
+        let selectedItem = null;
+
+        for (const key of currentKeys) {
+            if (!selectedItem) {
+                selectedItem = options.find(
+                    (item) => item.key.toString() === key.toString()
+                );
+            } else {
+                selectedItem = selectedItem.subItems.find(
+                    (item) => item.key.toString() === key.toString()
+                );
+            }
+
+            if (!selectedItem) return null;
         }
 
-        if (valueExtractor) {
-            return valueExtractor(selected);
-        }
+        items = [...items, selectedItem];
 
-        return selected.toString();
+        if (remainingKeys.length) {
+            updateSelectedItemFromKeys(options, remainingKeys, items);
+        } else {
+            setSelectedItem(items);
+        }
     };
 
     const convertValueToString = (value: string | V1 | V2 | V3): string => {
@@ -160,7 +197,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     // RENDER FUNCTION
     // =============================================================================
     const renderLabel = () => {
-        if (!selected) {
+        if (!selectedItem) {
             return (
                 <PlaceholderLabel truncateType={optionTruncationType}>
                     {placeholder}
@@ -192,13 +229,10 @@ export const InputNestedSelect = <V1, V2, V3>({
                 <NestedDropdownList
                     data-testid="dropdown-list"
                     listItems={options}
-                    valueExtractor={valueExtractor}
-                    listExtractor={listExtractor}
                     listStyleWidth={listStyleWidth}
                     visible={showOptions}
                     mode={mode}
-                    selectedKeyPath={selectedKeyPath}
-                    selectedItems={selected ? [selected] : []}
+                    selectedKeys={selectedKeys ? selectedKeys : []}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     onDismiss={handleListDismiss}

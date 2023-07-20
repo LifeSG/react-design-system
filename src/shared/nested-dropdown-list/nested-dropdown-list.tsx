@@ -20,12 +20,10 @@ import {
  */
 export const NestedDropdownList = <V1, V2, V3>({
     listItems: _listItems,
-    listExtractor,
     listStyleWidth,
     visible,
     mode = "default",
-    selectedItems,
-    selectedKeyPath,
+    selectedKeys,
     itemsLoadState = "success",
     itemTruncationType = "end",
     onBlur,
@@ -48,17 +46,14 @@ export const NestedDropdownList = <V1, V2, V3>({
                 const { key, label, value, subItems } = option;
                 const stringKey = key.toString();
 
-                let categories = [];
+                let keyPath = [];
 
-                if (parentKeys.length) {
-                    categories = parentKeys;
-                }
+                keyPath = [...parentKeys, stringKey];
 
                 const item = {
                     label,
                     value,
-                    key: stringKey,
-                    categories,
+                    keyPath,
                     subItems: subItems ? new Map() : undefined,
                 };
 
@@ -116,9 +111,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
 
     const handleSelect = (item: FItemOption<V1, V2, V3>) => {
-        if (onSelectItem) {
-            onSelectItem(item);
-        }
+        onSelectItem(item);
     };
 
     const handleExpand = () => {
@@ -230,12 +223,9 @@ export const NestedDropdownList = <V1, V2, V3>({
             return Array.from(listItems).map(([key, item]) => (
                 <ListItem
                     key={key}
-                    parentKeys={[key]}
                     item={item}
                     mode={mode}
-                    listExtractor={listExtractor}
-                    selectedItems={selectedItems}
-                    selectedKeys={selectedKeyPath}
+                    selectedKeys={selectedKeys}
                     defaultExpandKeys={defaultExpandKeys}
                     itemTruncationType={itemTruncationType}
                     visible={visible}
