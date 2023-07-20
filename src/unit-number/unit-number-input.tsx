@@ -149,11 +149,18 @@ export const UnitNumberInput = ({
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const targetName = event.target.name as FieldType;
         const targetValue = event.target.value;
+        const formattedInput = formatInput(targetValue);
 
         if (targetName === "floor") {
-            setFloorValue(formatInput(targetValue));
+            setFloorValue(formattedInput);
+            if (formattedInput !== floorValue) {
+                performOnChangeHandler(formattedInput, targetName);
+            }
         } else {
-            setUnitValue(formatInput(targetValue));
+            setUnitValue(formattedInput);
+            if (formattedInput !== unitValue) {
+                performOnChangeHandler(formattedInput, targetName);
+            }
         }
     };
 
