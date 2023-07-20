@@ -29,7 +29,8 @@ import { Form } from "@lifesg/react-design-system/form";
     <Story name="NestedSelect">
         {() => {
             const [selectedKeyPath, setSelectedKeyPath] = useState([
-                ["32", "81"],
+                "32",
+                "81",
             ]);
             return (
                 <StoryContainer>
@@ -39,7 +40,7 @@ import { Form } from "@lifesg/react-design-system/form";
                             options={options}
                             selectedKeyPath={selectedKeyPath}
                             onSelectOption={(keyPaths, value) =>
-                                setSelectedKeyPath([keyPaths])
+                                setSelectedKeyPath(keyPaths)
                             }
                             placeholder="Select"
                         />
