@@ -29,27 +29,19 @@ import { Form } from "@lifesg/react-design-system/form";
     <Story name="NestedSelect">
         {() => {
             const [selectedKeyPath, setSelectedKeyPath] = useState([
-                "32",
-                "52",
+                ["32", "81"],
             ]);
-            const [selected, setSelected] = useState({
-                id: 402,
-                name: "Neptune room",
-            });
-            useEffect(() => {
-                // fecth new selectedKeyPath from api query
-            }, [selected]);
             return (
                 <StoryContainer>
                     <Container>
                         <Form.NestedSelect
                             label="This is the nested selected field"
                             options={options}
-                            listExtractor={(item) => item.label}
-                            displayValueExtractor={(item) => item.name}
-                            placeholder="Select"
                             selectedKeyPath={selectedKeyPath}
-                            selectedOption={selected}
+                            onSelectOption={(keyPaths, value) =>
+                                setSelectedKeyPath([keyPaths])
+                            }
+                            placeholder="Select"
                         />
                     </Container>
                 </StoryContainer>
@@ -75,6 +67,7 @@ import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-sele
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.name}
                     placeholder="Select"
+                    optionTruncationType="middle"
                 />
             </Container>
         </StoryContainer>

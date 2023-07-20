@@ -5,7 +5,7 @@ import { FormNestedSelectProps } from "./types";
 export const FormNestedSelect = <V1, V2, V3>({
     label,
     errorMessage,
-    id = "form-multi-select",
+    id = "form-nested-select",
     "data-error-testid": errorTestId,
     "data-testid": testId,
     ...otherProps

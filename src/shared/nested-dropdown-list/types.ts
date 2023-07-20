@@ -4,37 +4,23 @@ export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 export type Mode = "default" | "expand" | "collapse";
 
-export interface ListItemRenderArgs {
-    selected: boolean;
-}
-
-export interface DropdownDisplayProps<V1, V2, V3> {
-    /** Control the dropdown list when it is first opened */
-    mode?: Mode;
-    /** Expand the recursively selected key in dropdown list when it is first opened */
-    selectedKeyPath: string[];
-    /** Function to derive value from an item */
-    valueExtractor?: ((item: V1 | V2 | V3) => V1 | V2 | V3) | undefined;
-    /** Function to derive options display value from an item */
-    listExtractor?: ((item: FItemOption<V1, V2, V3>) => string) | undefined;
-}
-
 export interface DropdownStyleProps {
     listStyleWidth?: string | undefined;
 }
 
 export interface DropdownEventHandlerProps<V1, V2, V3> {
-    onSelectItem?: ((item: FItemOption<V1, V2, V3>) => void) | undefined;
+    onSelectItem: (item: FItemOption<V1, V2, V3>) => void;
 }
 
 export interface NestedDropdownListProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLUListElement>,
         DropdownEventHandlerProps<V1, V2, V3>,
-        DropdownDisplayProps<V1, V2, V3>,
         DropdownStyleProps {
     listItems?: Option<V1, V2, V3>[] | undefined;
     visible?: boolean | undefined;
-    selectedItems?: (V1 | V2 | V3)[] | undefined;
+    selectedKeys?: string[][] | undefined;
+    /** Behavior of dropdown list items once it is opened */
+    mode?: Mode;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"
@@ -58,23 +44,20 @@ export interface ListItemSelectorProps {
 export interface FormattedOption<V1, V2, V3> {
     label: string;
     value: V1;
-    key: string;
-    categories: string[];
+    keyPath: string[];
     subItems: Map<string, FL2<V2, V3>> | undefined;
 }
 
 export interface FL2<V2, V3> {
     label: string;
     value: V2;
-    key: string;
-    categories: string[];
+    keyPath: string[];
     subItems: Map<string, FL3<V3>> | undefined;
 }
 export interface FL3<V3> {
     label: string;
     value: V3;
-    key: string;
-    categories: number[];
+    keyPath: string[];
     subItems: undefined;
 }
 

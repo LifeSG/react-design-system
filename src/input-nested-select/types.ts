@@ -2,10 +2,7 @@ import {
     InputSelectOptionsProps,
     InputSelectSharedProps,
 } from "../input-select";
-import {
-    DropdownDisplayProps,
-    DropdownStyleProps,
-} from "../shared/nested-dropdown-list/types";
+import { DropdownStyleProps, Mode } from "../shared/nested-dropdown-list/types";
 
 export interface InputNestedSelectionOptionsProps<V1, V2, V3>
     extends Omit<InputSelectOptionsProps<V1>, "options"> {
@@ -19,13 +16,14 @@ export interface InputNestedSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
         InputNestedSelectionOptionsProps<V1, V2, V3>,
         Omit<InputSelectSharedProps<V1>, "options">,
-        DropdownDisplayProps<V1, V2, V3>,
         DropdownStyleProps {
     readOnly?: boolean | undefined;
-    selectedOption?: V1 | V2 | V3 | undefined;
-    onSelectOption?: ((value: V1 | V2 | V3) => void) | undefined;
-    /** Function to derive display value for selected option */
-    displayValueExtractor?: ((option: V1 | V2 | V3) => string) | undefined; // TODO: what is the type
+    /** Behavior of dropdown list items once it is opened */
+    mode?: Mode;
+    selectedKeyPath?: string[][] | undefined;
+    onSelectOption?:
+        | ((keyPath: string[], value: V1 | V2 | V3) => void)
+        | undefined;
     /** Function to convert value into a string */
     valueToStringFunction?: ((value: V1 | V2 | V3) => string) | undefined;
 }
@@ -42,20 +40,20 @@ export type InputNestedSelectPartialProps<V1, V2, V3> = Omit<
 export interface Option<V1, V2, V3> {
     label: string;
     value: V1;
-    key: number;
+    key: number | string;
     subItems?: L2<V2, V3>[] | undefined;
 }
 
 export interface L2<V2, V3> {
     label: string;
     value: V2;
-    key: number;
+    key: number | string;
     subItems?: L3<V3>[] | undefined;
 }
 export interface L3<V3> {
     label: string;
     value: V3;
-    key: number;
+    key: number | string;
     subItems?: undefined;
 }
 

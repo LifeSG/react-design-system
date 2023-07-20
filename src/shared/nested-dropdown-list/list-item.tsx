@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState } from "react";
-import { find, isEqual } from "lodash";
 import { FItemOption, Mode, TruncateType } from "./types";
 import { StringHelper } from "../../util";
 import {
@@ -18,10 +17,7 @@ import {
 interface ListItemProps<V1, V2, V3> {
     item: FItemOption<V1, V2, V3>;
     mode: Mode;
-    parentKeys: string[];
-    listExtractor?: ((item: FItemOption<V1, V2, V3>) => string) | undefined;
-    selectedItems?: (V1 | V2 | V3)[] | undefined;
-    selectedKeys: string[];
+    selectedKeys?: string[][] | undefined;
     defaultExpandKeys: string[];
     itemTruncationType?: TruncateType | undefined;
     visible: boolean;
@@ -33,9 +29,6 @@ interface ListItemProps<V1, V2, V3> {
 export const ListItem = <V1, V2, V3>({
     item,
     mode,
-    parentKeys,
-    listExtractor,
-    selectedItems,
     selectedKeys,
     defaultExpandKeys,
     itemTruncationType,
@@ -80,23 +73,29 @@ export const ListItem = <V1, V2, V3>({
             case "collapse":
                 return false;
             default:
-                if (selectedKeys && selectedKeys.length) {
-                    const found = parentKeys.every((key) =>
-                        selectedKeys.includes(key)
-                    );
+                if (selectedKeys.length && selectedKeys.flat().length) {
+                    for (let i = 0; i < selectedKeys.length; i++) {
+                        const found = item.keyPath.every(
+                            (key, index) => selectedKeys[i][index] === key
+                        );
 
-                    return found;
+                        if (!found) break;
+
+                        return found;
+                    }
                 } else {
-                    const found = defaultExpandKeys.includes(item.key);
+                    const found = defaultExpandKeys.includes(
+                        item.keyPath[item.keyPath.length - 1]
+                    );
                     return found;
                 }
         }
     }
 
-    const checkListItemSelected = (item: V1 | V2 | V3): boolean => {
-        return !!find(selectedItems, (arrItem) => {
-            return isEqual(arrItem, item);
-        });
+    const checkListItemSelected = (keyPath: string[]): boolean => {
+        for (let i = 0; i < selectedKeys.length; i++) {
+            return JSON.stringify(selectedKeys[i]) === JSON.stringify(keyPath);
+        }
     };
 
     // =============================================================================
@@ -105,22 +104,16 @@ export const ListItem = <V1, V2, V3>({
     const renderTruncatedText = (
         item: FItemOption<V1, V2, V3>
     ): JSX.Element => {
-        const displayText = listExtractor
-            ? listExtractor(item)
-            : item.toString();
-
         return (
             <TruncateContainer data-testid="truncate-middle-container">
-                <TruncateFirstLine>{displayText}</TruncateFirstLine>
-                <TruncateSecondLine>{displayText}</TruncateSecondLine>
+                <TruncateFirstLine>{item.label}</TruncateFirstLine>
+                <TruncateSecondLine>{item.label}</TruncateSecondLine>
             </TruncateContainer>
         );
     };
 
     const hasExceededContainer = (item: FItemOption<V1, V2, V3>) => {
-        const displayText = listExtractor
-            ? listExtractor(item)
-            : item.toString();
+        const displayText = item.label;
 
         let widthOfElement = 0;
         if (labelRef && labelRef.current) {
@@ -139,52 +132,38 @@ export const ListItem = <V1, V2, V3>({
         const nextSubItems = item.subItems.values();
 
         return (
-            <ul data-testid="sub-category-list">
-                <List>
-                    <ul>
-                        {[...nextSubItems].map((item) => (
-                            <ListItem
-                                key={item.key}
-                                parentKeys={[...parentKeys, item.key]}
-                                item={item}
-                                mode={mode}
-                                listExtractor={listExtractor}
-                                selectedItems={selectedItems}
-                                selectedKeys={selectedKeys}
-                                defaultExpandKeys={defaultExpandKeys}
-                                visible={visible}
-                                onBlur={onBlur}
-                                onExpand={onExpand}
-                                onSelect={onSelect}
-                            />
-                        ))}
-                    </ul>
-                </List>
-            </ul>
+            <List data-testid="sub-category-list">
+                {[...nextSubItems].map((item) => (
+                    <ListItem
+                        key={item.keyPath.join("-")}
+                        item={item}
+                        mode={mode}
+                        selectedKeys={selectedKeys}
+                        defaultExpandKeys={defaultExpandKeys}
+                        visible={visible}
+                        onBlur={onBlur}
+                        onExpand={onExpand}
+                        onSelect={onSelect}
+                    />
+                ))}
+            </List>
         );
     };
 
     if (!item.subItems) {
-        const hasExceeded = hasExceededContainer(item);
-
-        /**
-         * force re-render dropdown height
-         * buggy happened if flat option in tier 1
-         */
-        if (!hasExceeded) onExpand();
-
         return (
             <li ref={labelRef}>
                 <ListItemSelector
                     type="button"
                     data-testid="list-item"
                     tabIndex={visible ? 0 : -1}
-                    $selected={checkListItemSelected(item.value)}
+                    $selected={checkListItemSelected(item.keyPath)}
                     onBlur={handleBlur}
                     onClick={handleSelect}
                 >
                     <Label $truncateType={itemTruncationType}>
-                        {itemTruncationType === "middle" && hasExceeded
+                        {itemTruncationType === "middle" &&
+                        hasExceededContainer(item)
                             ? renderTruncatedText(item)
                             : item.label}
                     </Label>
@@ -195,15 +174,13 @@ export const ListItem = <V1, V2, V3>({
 
     return (
         <li data-testid="category-list">
-            <ul>
-                <Category data-testid="category-title" onClick={handleClick}>
-                    <ArrowButton $expand={expand}>
-                        <TriangleIcon />
-                    </ArrowButton>
-                    <Title>{item.label}</Title>
-                </Category>
-                {renderListItem()}
-            </ul>
+            <Category data-testid="category-title" onClick={handleClick}>
+                <ArrowButton $expand={expand}>
+                    <TriangleIcon />
+                </ArrowButton>
+                <Title>{item.label}</Title>
+            </Category>
+            {renderListItem()}
         </li>
     );
 };

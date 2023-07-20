@@ -25,7 +25,7 @@ interface LabelProps {
 // STYLING
 // =============================================================================
 
-export const Category = styled.li`
+export const Category = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -141,7 +141,7 @@ export const Title = styled.button`
     padding: 0;
 `;
 
-export const List = styled.li`
+export const List = styled.ul`
     display: flex;
     flex-direction: column;
     cursor: pointer;
