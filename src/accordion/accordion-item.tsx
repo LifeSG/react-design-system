@@ -54,8 +54,11 @@ function Component(
                 collapse(): void {
                     setExpand(false);
                 },
+                isExpanded() {
+                    return expand;
+                },
             }),
-        []
+        [expand]
     );
 
     // =============================================================================
