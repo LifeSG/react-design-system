@@ -12,7 +12,10 @@ import { RangeInputInnerContainer } from "../shared/range-input-inner-container"
 import { StringHelper } from "../util/string-helper";
 import { InputRangeSelectProps } from "./types";
 import { ClearContainer, ClearIcon } from "../input/input.style";
-import { EmptyIconWrapper } from "./input-range-select.style";
+import {
+    EmptyIconWrapper,
+    InputSelectorWrapper,
+} from "./input-range-select.style";
 
 type RangeType = "from" | "to";
 
@@ -140,7 +143,9 @@ export const InputRangeSelect = <T, V>({
         event.stopPropagation();
         setSelectedFromValue(undefined);
         setSelectedToValue(undefined);
-        onSelectOption(undefined, undefined);
+        if (onSelectOption) {
+            onSelectOption({ from: undefined, to: undefined }, undefined);
+        }
     };
 
     // =============================================================================
@@ -288,30 +293,34 @@ export const InputRangeSelect = <T, V>({
             onBlur={handleWrapperBlur}
             className={className}
         >
-            <Selector
-                type="button"
-                data-testid={id || "selector"}
-                disabled={disabled}
-                ref={selectorRef}
-                onClick={handleSelectorClick()}
-                {...otherProps}
-            >
-                <RangeInputInnerContainer currentActive={getCurrentFocused()}>
-                    {renderSelectorContent("from")}
-                    {renderSelectorContent("to")}
-                </RangeInputInnerContainer>
-                {focusedInput === "none" &&
-                selectedFromValue &&
-                selectedToValue &&
-                !readOnly &&
-                !disabled ? (
-                    <ClearContainer onClick={handleClear} type="button">
-                        <ClearIcon aria-hidden />
-                    </ClearContainer>
-                ) : (
-                    <EmptyIconWrapper />
-                )}
-            </Selector>
+            <InputSelectorWrapper>
+                <Selector
+                    type="button"
+                    data-testid={id || "selector"}
+                    disabled={disabled}
+                    ref={selectorRef}
+                    onClick={handleSelectorClick()}
+                    {...otherProps}
+                >
+                    <RangeInputInnerContainer
+                        currentActive={getCurrentFocused()}
+                    >
+                        {renderSelectorContent("from")}
+                        {renderSelectorContent("to")}
+                    </RangeInputInnerContainer>
+                    {focusedInput === "none" &&
+                    selectedFromValue &&
+                    selectedToValue &&
+                    !readOnly &&
+                    !disabled ? (
+                        <ClearContainer onClick={handleClear} type="button">
+                            <ClearIcon aria-hidden />
+                        </ClearContainer>
+                    ) : (
+                        <EmptyIconWrapper />
+                    )}
+                </Selector>
+            </InputSelectorWrapper>
             {focusedInput !== "none" && <Divider />}
             {renderOptionsList()}
         </DropdownWrapper>
