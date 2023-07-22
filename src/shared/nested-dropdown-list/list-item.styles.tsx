@@ -29,7 +29,8 @@ export const Category = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
-    height: 2.625rem;
+    padding: 0.5rem;
+    min-height: 2.625rem;
 `;
 
 export const ListItemSelector = styled.button<ListItemSelectorProps>`
@@ -139,6 +140,14 @@ export const Title = styled.button`
     border: none;
     cursor: pointer;
     padding: 0;
+
+    span {
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
 `;
 
 export const List = styled.ul`

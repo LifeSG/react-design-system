@@ -19,7 +19,7 @@ interface ListItemProps<V1, V2, V3> {
     mode: Mode;
     selectedKey?: string[] | undefined;
     defaultExpandKeys: string[];
-    itemTruncationType?: TruncateType | undefined;
+    itemTruncationType: TruncateType;
     visible: boolean;
     onSelect: (item: FItemOption<V1, V2, V3>) => void;
     onExpand: () => void;
@@ -130,7 +130,7 @@ export const ListItem = <V1, V2, V3>({
         const nextSubItems = item.subItems.values();
 
         return (
-            <List data-testid="sub-category-list">
+            <List>
                 {[...nextSubItems].map((item) => (
                     <ListItem
                         key={item.keyPath.join("-")}
@@ -138,6 +138,7 @@ export const ListItem = <V1, V2, V3>({
                         mode={mode}
                         selectedKey={selectedKey}
                         defaultExpandKeys={defaultExpandKeys}
+                        itemTruncationType={itemTruncationType}
                         visible={visible}
                         onBlur={onBlur}
                         onExpand={onExpand}
@@ -171,12 +172,14 @@ export const ListItem = <V1, V2, V3>({
     }
 
     return (
-        <li data-testid="category-list">
-            <Category data-testid="category-title" onClick={handleClick}>
+        <li>
+            <Category onClick={handleClick}>
                 <ArrowButton $expand={expand}>
                     <TriangleIcon />
                 </ArrowButton>
-                <Title>{item.label}</Title>
+                <Title tabIndex={-1}>
+                    <span>{item.label}</span>
+                </Title>
             </Category>
             {renderListItem()}
         </li>
