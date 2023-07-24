@@ -1,4 +1,3 @@
-import cloneDeep from "lodash/cloneDeep";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
 import { useEventListener } from "../../util/use-event-listener";
@@ -7,6 +6,7 @@ import { CombinedOptionProps } from "../../input-nested-select";
 import { ListItem } from "./list-item";
 import {
     CombinedFormattedOptionProps,
+    FL2,
     FormattedOption,
     NestedDropdownListProps,
 } from "./types";
@@ -66,8 +66,8 @@ export const NestedDropdownList = <V1, V2, V3>({
                 const item = {
                     label,
                     value,
+                    expanded: mode === "expand",
                     keyPath,
-                    expanded: mode === "expand" || false,
                     subItems: subItems
                         ? formatted(subItems, keyPath)
                         : undefined,
@@ -82,10 +82,11 @@ export const NestedDropdownList = <V1, V2, V3>({
         return formatted(_listItems, []);
     }, [_listItems]);
 
-    const [focusedListIndex, setFocusedIndex] = useState<number>(0);
     const [contentHeight, setContentHeight] = useState<number>(0);
     const [listItems, setListItems] =
         useState<Map<string, FormattedOption<V1, V2, V3>>>(formattedListItem);
+    const [focusedListIndex, setFocusedIndex] = useState<number>(0);
+    const [keyboardOrders, setKeyboardOrders] = useState<string[][]>([]);
 
     // React spring animation configuration
     const containerStyles = useSpring({
@@ -118,7 +119,10 @@ export const NestedDropdownList = <V1, V2, V3>({
                 setContentHeight(getContentHeight());
             });
         } else {
+            setFocusedIndex(0);
             setContentHeight(0);
+            listItemRefs.current = {};
+            setListItems(formattedListItem);
         }
     }, [visible]);
 
@@ -140,30 +144,41 @@ export const NestedDropdownList = <V1, V2, V3>({
         onSelectItem(item);
     };
 
-    const handleExpand = (parentKeys: string[]) => {
-        const lists = cloneDeep(listItems);
+    const handleExpand = (keyPath: string[]) => {
+        const lists = structuredClone(listItems);
+        const [keyOne, keyTwo] = keyPath;
+        const level = keyPath.length;
 
-        // length number means tier level
-        switch (parentKeys.length) {
+        let list: FormattedOption<V1, V2, V3> = null;
+        let item: FL2<V2, V3> = null;
+
+        // update specific level item
+        switch (level) {
             case 1:
-                lists.set(parentKeys[0], {
-                    ...lists.get(parentKeys[0]),
-                    expanded: !lists.get(parentKeys[0]).expanded,
-                });
+                list = lists.get(keyOne);
+                lists.set(keyOne, { ...list, expanded: !list.expanded });
                 break;
             case 2:
-                lists.get(parentKeys[0]).subItems.forEach((value, key) => {
-                    const targetKey = parentKeys[parentKeys.length - 1];
+                list = lists.get(keyOne);
+                item = list.subItems.get(keyTwo);
 
-                    if (targetKey === key) {
-                        value.expanded = !value.expanded;
+                if (item) {
+                    item.expanded = !item.expanded;
+
+                    if (item.subItems instanceof Map) {
+                        // update last tier's expanded value same as tier 2
+                        for (const innermostItem of item.subItems.values()) {
+                            innermostItem.expanded = item.expanded;
+                        }
                     }
-                });
+                }
                 break;
         }
 
-        setListItems(lists);
+        const orders = getKeyboardExpandOrder(lists);
 
+        setListItems(lists);
+        setKeyboardOrders(orders);
         setTimeout(() => {
             setContentHeight(getContentHeight());
         });
@@ -227,20 +242,12 @@ export const NestedDropdownList = <V1, V2, V3>({
         if (nodeRef && (nodeRef.current as any).contains(event.target)) {
             switch (event.code) {
                 case "ArrowDown":
-                    setFocusedIndex((prev) => {
-                        const next = prev + 1;
-
-                        // listItemRefs.current[next][1].focus();
-                        return next;
-                    });
+                    if (focusedListIndex + 1 >= keyboardOrders.length) return;
+                    handleArrowUpDown("down");
                     break;
                 case "ArrowUp":
-                    setFocusedIndex((_prev) => {
-                        const prev = _prev - 1;
-
-                        // listItemRefs.current[prev][1].focus();
-                        return prev;
-                    });
+                    if (focusedListIndex - 1 < 0) return;
+                    handleArrowUpDown("up");
                     break;
                 case "Escape":
                     if (onDismiss) onDismiss(true);
