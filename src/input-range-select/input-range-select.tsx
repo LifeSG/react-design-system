@@ -308,18 +308,18 @@ export const InputRangeSelect = <T, V>({
                         {renderSelectorContent("from")}
                         {renderSelectorContent("to")}
                     </RangeInputInnerContainer>
-                    {focusedInput === "none" &&
-                    selectedFromValue &&
-                    selectedToValue &&
-                    !readOnly &&
-                    !disabled ? (
-                        <ClearContainer onClick={handleClear} type="button">
-                            <ClearIcon aria-hidden />
-                        </ClearContainer>
-                    ) : (
-                        <EmptyIconWrapper />
-                    )}
                 </Selector>
+                {focusedInput === "none" &&
+                selectedFromValue &&
+                selectedToValue &&
+                !readOnly &&
+                !disabled ? (
+                    <ClearContainer onClick={handleClear} type="button">
+                        <ClearIcon aria-hidden />
+                    </ClearContainer>
+                ) : (
+                    <EmptyIconWrapper />
+                )}
             </InputSelectorWrapper>
             {focusedInput !== "none" && <Divider />}
             {renderOptionsList()}

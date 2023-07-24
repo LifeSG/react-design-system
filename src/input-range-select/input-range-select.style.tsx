@@ -5,8 +5,8 @@ import styled from "styled-components";
 // =============================================================================
 export const EmptyIconWrapper = styled.div`
     height: 1.25rem;
-    width: 1.25rem;
-    margin-left: 1rem;
+    min-width: 3.25rem;
+    margin-right: -1rem;
 `;
 
 export const InputSelectorWrapper = styled.div`
@@ -14,4 +14,5 @@ export const InputSelectorWrapper = styled.div`
     position: relative;
     align-items: center;
     justify-content: space-between;
+    padding-right: 1rem;
 `;
