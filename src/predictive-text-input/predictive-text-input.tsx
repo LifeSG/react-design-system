@@ -111,11 +111,9 @@ export const PredictiveTextInput = <T, V>({
      * hide dropdown and sync prevOption selected
      */
     useEffect(() => {
-        if (selectedOption) {
-            setInput(displayValueExtractor(selectedOption));
-            handleDropdownDismiss(selectedOption);
-            setPrevOptionSelected(selectedOption);
-        }
+        setInput(selectedOption ? displayValueExtractor(selectedOption) : "");
+        handleDropdownDismiss(selectedOption);
+        setPrevOptionSelected(selectedOption);
     }, [selectedOption]);
 
     // =============================================================================
@@ -147,7 +145,7 @@ export const PredictiveTextInput = <T, V>({
         handleDropdownDismiss();
     };
 
-    const handleWrapperBlur = () => {
+    const handleOnBlur = () => {
         if (!isOptionSelected && !prevOptionSelected) {
             handleOnClear();
         } else {
@@ -215,6 +213,9 @@ export const PredictiveTextInput = <T, V>({
                 allowClear={true}
                 onClear={handleOnClear}
                 styleType="no-border"
+                onBlur={
+                    input.length < minimumCharacters ? handleOnBlur : undefined
+                }
             />
         );
     };
@@ -227,7 +228,7 @@ export const PredictiveTextInput = <T, V>({
             disabled={disabled}
             readOnly={readOnly}
             testId={testId}
-            onBlur={handleWrapperBlur}
+            onBlur={handleOnBlur}
         >
             {!readOnly ? (
                 <SelectorDiv>{renderInputField()}</SelectorDiv>
