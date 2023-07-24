@@ -27,7 +27,6 @@ interface LabelProps {
 
 export const Category = styled.div`
     display: flex;
-    align-items: center;
     cursor: pointer;
     padding: 0.5rem;
     min-height: 2.625rem;
