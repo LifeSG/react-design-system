@@ -17,7 +17,7 @@ import {
 interface ListItemProps<V1, V2, V3> {
     item: CombinedFormattedOptionProps<V1, V2, V3>;
     selectedKeyPath?: string[] | undefined;
-    itemTruncationType: TruncateType;
+    itemTruncationType?: TruncateType | undefined;
     visible: boolean;
     onBlur: () => void;
     onExpand: (parentKeys: string[]) => void;
@@ -96,12 +96,10 @@ export const ListItem = <V1, V2, V3>({
     };
 
     const renderListItem = () => {
-        if (!item.expanded) return;
-
         const nextSubItems = item.subItems.values();
 
         return (
-            <List>
+            <List $expanded={item.expanded}>
                 {[...nextSubItems].map((item) => (
                     <ListItem
                         key={item.keyPath.join("-")}
@@ -148,7 +146,7 @@ export const ListItem = <V1, V2, V3>({
             <Category onClick={handleExpand}>
                 <ArrowButton
                     ref={(ref) => onRef(ref, item.keyPath)}
-                    $expand={item.expanded}
+                    $expanded={item.expanded}
                     aria-expanded={item.expanded}
                 >
                     <TriangleIcon />
