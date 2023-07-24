@@ -13,8 +13,10 @@ import { StringHelper } from "../util/string-helper";
 import { InputRangeSelectProps } from "./types";
 import { ClearContainer, ClearIcon } from "../input/input.style";
 import {
+    ClearIconContainer,
     EmptyIconWrapper,
     InputSelectorWrapper,
+    SelectorDropdown,
 } from "./input-range-select.style";
 
 type RangeType = "from" | "to";
@@ -294,7 +296,7 @@ export const InputRangeSelect = <T, V>({
             className={className}
         >
             <InputSelectorWrapper>
-                <Selector
+                <SelectorDropdown
                     type="button"
                     data-testid={id || "selector"}
                     disabled={disabled}
@@ -308,15 +310,15 @@ export const InputRangeSelect = <T, V>({
                         {renderSelectorContent("from")}
                         {renderSelectorContent("to")}
                     </RangeInputInnerContainer>
-                </Selector>
+                </SelectorDropdown>
                 {focusedInput === "none" &&
                 selectedFromValue &&
                 selectedToValue &&
                 !readOnly &&
                 !disabled ? (
-                    <ClearContainer onClick={handleClear} type="button">
+                    <ClearIconContainer onClick={handleClear} type="button">
                         <ClearIcon aria-hidden />
-                    </ClearContainer>
+                    </ClearIconContainer>
                 ) : (
                     <EmptyIconWrapper />
                 )}
