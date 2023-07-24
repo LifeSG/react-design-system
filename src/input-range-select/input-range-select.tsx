@@ -5,16 +5,14 @@ import {
     Divider,
     LabelContainer,
     PlaceholderLabel,
-    Selector,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { StringHelper } from "../util/string-helper";
 import { InputRangeSelectProps } from "./types";
-import { ClearContainer, ClearIcon } from "../input/input.style";
+import { ClearIcon } from "../input/input.style";
 import {
     ClearIconContainer,
-    EmptyIconWrapper,
     InputSelectorWrapper,
     SelectorDropdown,
 } from "./input-range-select.style";
@@ -312,16 +310,18 @@ export const InputRangeSelect = <T, V>({
                     </RangeInputInnerContainer>
                 </SelectorDropdown>
                 {focusedInput === "none" &&
-                selectedFromValue &&
-                selectedToValue &&
-                !readOnly &&
-                !disabled ? (
-                    <ClearIconContainer onClick={handleClear} type="button">
-                        <ClearIcon aria-hidden />
-                    </ClearIconContainer>
-                ) : (
-                    <EmptyIconWrapper />
-                )}
+                    selectedFromValue &&
+                    selectedToValue &&
+                    !readOnly &&
+                    !disabled && (
+                        <ClearIconContainer
+                            onClick={handleClear}
+                            type="button"
+                            aria-label="Clear"
+                        >
+                            <ClearIcon aria-hidden />
+                        </ClearIconContainer>
+                    )}
             </InputSelectorWrapper>
             {focusedInput !== "none" && <Divider />}
             {renderOptionsList()}

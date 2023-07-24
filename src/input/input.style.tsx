@@ -63,7 +63,7 @@ export const InputElement = styled.input<InputStyleProps>`
 export const ClearContainer = styled.button<InputStyleProps>`
     position: relative;
     height: auto;
-    padding: 0 1rem;
+    padding: 0.75rem 1rem;
 
     margin-right: -1rem; // offset the padding
     cursor: pointer;
