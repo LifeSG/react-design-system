@@ -19,11 +19,14 @@ import {
 } from "./toast.styles";
 import { ToastProps } from "./types";
 
+const defaultAutoDismissTime = 4000;
+
 export const Toast = ({
     type = "success",
     title,
     label,
     autoDismiss,
+    autoDismissTime = defaultAutoDismissTime,
     onDismiss,
     ...otherProps
 }: ToastProps) => {
@@ -45,11 +48,11 @@ export const Toast = ({
     useEffect(() => {
         if (!autoDismiss) return;
 
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             setVisible(false);
-        }, timer);
+        }, autoDismissTime);
 
-        return () => clearTimeout(timer);
+        return () => clearTimeout(timeout);
     }, [autoDismiss]);
 
     // =============================================================================
@@ -123,5 +126,3 @@ export const Toast = ({
         </Wrapper>
     );
 };
-
-const timer = 4000;
