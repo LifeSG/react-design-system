@@ -56,16 +56,12 @@ export const NestedDropdownList = <V1, V2, V3>({
                     label,
                     value,
                     keyPath,
-                    subItems: subItems ? new Map() : undefined,
+                    subItems: subItems
+                        ? formatted(subItems, keyPath)
+                        : undefined,
                 };
 
                 result.set(stringKey, item);
-
-                if (subItems && subItems.length) {
-                    const keys = [...parentKeys, stringKey];
-
-                    result.get(stringKey).subItems = formatted(subItems, keys);
-                }
 
                 return result;
             }, new Map());

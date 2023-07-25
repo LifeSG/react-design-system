@@ -56,9 +56,8 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     const [selectedKeyPath, setSelectedKeyPath] =
         useState<string[]>(_selectedKeyPath);
-    const [selectedItem, setSelectedItem] = useState<
-        SelectedItemType<V1, V2, V3>[]
-    >([]);
+    const [selectedItem, setSelectedItem] =
+        useState<SelectedItemType<V1, V2, V3>>();
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
@@ -73,7 +72,7 @@ export const InputNestedSelect = <V1, V2, V3>({
 
         // update the label
         updateSelectedItemFromKey(options, selectedKeyPath);
-    }, [selectedKeyPath]);
+    }, [_selectedKeyPath, options]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -95,7 +94,7 @@ export const InputNestedSelect = <V1, V2, V3>({
         const { keyPath, value, label } = item;
 
         setSelectedKeyPath(keyPath);
-        setSelectedItem([{ label, value }]);
+        setSelectedItem({ label, value });
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
@@ -128,11 +127,11 @@ export const InputNestedSelect = <V1, V2, V3>({
     // HELPER FUNCTION
     // =============================================================================
     const getDisplayValue = (): string => {
-        const { label, value } = selectedItem[0];
+        const { label, value } = selectedItem;
 
         if (valueToStringFunction) {
             return valueToStringFunction(value) || value.toString();
-        } else if (selectedItem.length === 1) {
+        } else if (selectedItem) {
             return label;
         }
     };
@@ -149,8 +148,9 @@ export const InputNestedSelect = <V1, V2, V3>({
         ) => {
             const [currentKey, ...nextKeyPath] = keyPaths;
 
-            if (!items || isEmpty(items) || !currentKey) {
-                return undefined;
+            if (isEmpty(items) || !currentKey) {
+                setSelectedItem(undefined);
+                return;
             }
 
             const item = items.find((item) => item.key === currentKey);
@@ -165,7 +165,7 @@ export const InputNestedSelect = <V1, V2, V3>({
         const selectedItem = findSelectedItem(options, keyPaths);
         const { label, value } = selectedItem;
 
-        setSelectedItem([{ label, value }]);
+        setSelectedItem({ label, value });
     };
 
     const truncateValue = (value: string) => {
@@ -195,7 +195,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     // RENDER FUNCTION
     // =============================================================================
     const renderLabel = () => {
-        if (!selectedItem.length) {
+        if (isEmpty(selectedItem)) {
             return (
                 <PlaceholderLabel truncateType={optionTruncationType}>
                     {placeholder}

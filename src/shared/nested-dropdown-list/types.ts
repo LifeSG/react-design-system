@@ -1,4 +1,4 @@
-import { L1OptionProps } from "../../input-nested-select";
+import { L1OptionProps } from "../../input-nested-select/types";
 
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
@@ -20,7 +20,7 @@ export interface NestedDropdownListProps<V1, V2, V3>
     visible?: boolean | undefined;
     selectedKeyPath?: string[] | undefined;
     /** Behavior of dropdown list items once it is opened */
-    mode?: Mode;
+    mode?: Mode | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"
