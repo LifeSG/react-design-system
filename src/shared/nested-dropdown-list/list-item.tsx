@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { FItemOption, Mode, TruncateType } from "./types";
+import { CombinedFormattedOptionProps, Mode, TruncateType } from "./types";
 import { StringHelper } from "../../util";
 import {
     ArrowButton,
@@ -15,13 +15,13 @@ import {
 } from "./list-item.styles";
 
 interface ListItemProps<V1, V2, V3> {
-    item: FItemOption<V1, V2, V3>;
+    item: CombinedFormattedOptionProps<V1, V2, V3>;
     mode: Mode;
-    selectedKey?: string[] | undefined;
+    selectedKeyPath?: string[] | undefined;
     defaultExpandKeys: string[];
     itemTruncationType: TruncateType;
     visible: boolean;
-    onSelect: (item: FItemOption<V1, V2, V3>) => void;
+    onSelect: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
     onExpand: () => void;
     onBlur: () => void;
 }
@@ -29,7 +29,7 @@ interface ListItemProps<V1, V2, V3> {
 export const ListItem = <V1, V2, V3>({
     item,
     mode,
-    selectedKey,
+    selectedKeyPath,
     defaultExpandKeys,
     itemTruncationType,
     visible,
@@ -73,10 +73,10 @@ export const ListItem = <V1, V2, V3>({
             case "collapse":
                 return false;
             default:
-                if (selectedKey && selectedKey.length) {
-                    for (let i = 0; i < selectedKey.length; i++) {
+                if (selectedKeyPath && selectedKeyPath.length) {
+                    for (let i = 0; i < selectedKeyPath.length; i++) {
                         const found = item.keyPath.every(
-                            (key, index) => selectedKey[index] === key
+                            (key, index) => selectedKeyPath[index] === key
                         );
 
                         if (!found) break;
@@ -87,20 +87,21 @@ export const ListItem = <V1, V2, V3>({
                     const found = defaultExpandKeys.includes(
                         item.keyPath[item.keyPath.length - 1]
                     );
+
                     return found;
                 }
         }
     }
 
     const checkListItemSelected = (keyPath: string[]): boolean => {
-        return JSON.stringify(selectedKey) === JSON.stringify(keyPath);
+        return JSON.stringify(selectedKeyPath) === JSON.stringify(keyPath);
     };
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderTruncatedText = (
-        item: FItemOption<V1, V2, V3>
+        item: CombinedFormattedOptionProps<V1, V2, V3>
     ): JSX.Element => {
         return (
             <TruncateContainer data-testid="truncate-middle-container">
@@ -110,7 +111,9 @@ export const ListItem = <V1, V2, V3>({
         );
     };
 
-    const hasExceededContainer = (item: FItemOption<V1, V2, V3>) => {
+    const hasExceededContainer = (
+        item: CombinedFormattedOptionProps<V1, V2, V3>
+    ) => {
         const displayText = item.label;
 
         let widthOfElement = 0;
@@ -136,7 +139,7 @@ export const ListItem = <V1, V2, V3>({
                         key={item.keyPath.join("-")}
                         item={item}
                         mode={mode}
-                        selectedKey={selectedKey}
+                        selectedKeyPath={selectedKeyPath}
                         defaultExpandKeys={defaultExpandKeys}
                         itemTruncationType={itemTruncationType}
                         visible={visible}
@@ -154,9 +157,9 @@ export const ListItem = <V1, V2, V3>({
             <li ref={labelRef}>
                 <ListItemSelector
                     type="button"
-                    data-testid="list-item"
                     tabIndex={visible ? 0 : -1}
                     $selected={checkListItemSelected(item.keyPath)}
+                    $level_3={item.keyPath.length === 3}
                     onBlur={handleBlur}
                     onClick={handleSelect}
                 >
