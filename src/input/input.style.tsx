@@ -6,14 +6,14 @@ import { TextStyleHelper } from "../text/helper";
 // =============================================================================
 // STYLE INTERFACe
 // =============================================================================
-interface StyleProps {
+export interface InputStyleProps {
     type?: React.HTMLInputTypeAttribute;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const InputElement = styled.input<StyleProps>`
+export const InputElement = styled.input<InputStyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${Color.Neutral[1]};
 
@@ -60,10 +60,10 @@ export const InputElement = styled.input<StyleProps>`
     }}
 `;
 
-export const ClearContainer = styled.button<StyleProps>`
+export const ClearContainer = styled.button<InputStyleProps>`
     position: relative;
     height: auto;
-    padding: 0 1rem;
+    padding: 0.75rem 1rem;
 
     margin-right: -1rem; // offset the padding
     cursor: pointer;
