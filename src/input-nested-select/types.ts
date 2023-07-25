@@ -4,9 +4,9 @@ import {
 } from "../input-select";
 import { DropdownStyleProps, Mode } from "../shared/nested-dropdown-list/types";
 
-export interface InputNestedSelectionOptionsProps<V1, V2, V3>
+interface InputNestedSelectOptionsProps<V1, V2, V3>
     extends Omit<InputSelectOptionsProps<V1>, "options"> {
-    options: Option<V1, V2, V3>[];
+    options: L1OptionProps<V1, V2, V3>[];
 }
 
 // =============================================================================
@@ -14,7 +14,7 @@ export interface InputNestedSelectionOptionsProps<V1, V2, V3>
 // =============================================================================
 export interface InputNestedSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
-        InputNestedSelectionOptionsProps<V1, V2, V3>,
+        InputNestedSelectOptionsProps<V1, V2, V3>,
         Omit<InputSelectSharedProps<V1>, "options">,
         DropdownStyleProps {
     readOnly?: boolean | undefined;
@@ -30,30 +30,28 @@ export interface InputNestedSelectProps<V1, V2, V3>
 
 /** To be exposed for Form component inheritance */
 export type InputNestedSelectPartialProps<V1, V2, V3> = Omit<
-    InputNestedSelectProps<V1, V2, V3>, // what is this? need to check it later
+    InputNestedSelectProps<V1, V2, V3>,
     "error"
 >;
 
 // =============================================================================
 // Recursive Types
 // =============================================================================
-interface BaseOption {
+interface BaseOptionProps {
     label: string;
-    key: number | string;
+    key: string;
 }
 
-export interface Option<V1, V2, V3> extends BaseOption {
+export interface L1OptionProps<V1, V2, V3> extends BaseOptionProps {
     value: V1;
-    subItems?: L2<V2, V3>[] | undefined;
+    subItems?: L2OptionProps<V2, V3>[] | undefined;
 }
 
-export interface L2<V2, V3> extends BaseOption {
+export interface L2OptionProps<V2, V3> extends BaseOptionProps {
     value: V2;
-    subItems?: L3<V3>[] | undefined;
+    subItems?: L3OptionProps<V3>[] | undefined;
 }
-export interface L3<V3> extends BaseOption {
+export interface L3OptionProps<V3> extends BaseOptionProps {
     value: V3;
     subItems?: undefined;
 }
-
-export type ItemOption<V1, V2, V3> = Option<V1, V2, V3> | L2<V2, V3> | L3<V3>;

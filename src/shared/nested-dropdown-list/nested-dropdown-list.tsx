@@ -2,9 +2,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
 import { useEventListener } from "../../util/use-event-listener";
 import { Spinner } from "../../button/button.style";
-import { ItemOption } from "../../input-nested-select";
+import { CombinedOptionProps } from "../../input-nested-select";
 import { ListItem } from "./list-item";
-import { FItemOption, FormattedOption, NestedDropdownListProps } from "./types";
+import {
+    CombinedFormattedOptionProps,
+    FormattedOption,
+    NestedDropdownListProps,
+} from "./types";
 import {
     Container,
     DropdownCommonButton,
@@ -23,7 +27,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     listStyleWidth,
     visible,
     mode = "default",
-    selectedKey,
+    selectedKeyPath,
     itemsLoadState = "success",
     itemTruncationType = "end",
     onBlur,
@@ -39,16 +43,14 @@ export const NestedDropdownList = <V1, V2, V3>({
         if (!_listItems || !_listItems.length) return new Map([]);
 
         const formatted = (
-            options: ItemOption<V1, V2, V3>[],
+            options: CombinedOptionProps<V1, V2, V3>[],
             parentKeys: string[]
         ): Map<string, FormattedOption<V1, V2, V3>> => {
             return options.reduce((result, option) => {
                 const { key, label, value, subItems } = option;
                 const stringKey = key.toString();
 
-                let keyPath = [];
-
-                keyPath = [...parentKeys, stringKey];
+                const keyPath = [...parentKeys, stringKey];
 
                 const item = {
                     label,
@@ -110,7 +112,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     // EVENT HANDLERS
     // =============================================================================
 
-    const handleSelect = (item: FItemOption<V1, V2, V3>) => {
+    const handleSelect = (item: CombinedFormattedOptionProps<V1, V2, V3>) => {
         onSelectItem(item);
     };
 
@@ -161,7 +163,9 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const getDefaultExpandKeys = (
-        items: Map<string, FItemOption<V1, V2, V3>> | undefined,
+        items:
+            | Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+            | undefined,
         parentKeys?: string[]
     ): string[] => {
         /**
@@ -190,7 +194,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const getItemWithSubItems = (
-        items: Map<string, FItemOption<V1, V2, V3>>
+        items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
     ) => {
         /**
          * Filter the category which has the subItems
@@ -225,7 +229,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                     key={key}
                     item={item}
                     mode={mode}
-                    selectedKey={selectedKey}
+                    selectedKeyPath={selectedKeyPath}
                     defaultExpandKeys={defaultExpandKeys}
                     itemTruncationType={itemTruncationType}
                     visible={visible}

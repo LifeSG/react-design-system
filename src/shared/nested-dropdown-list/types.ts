@@ -1,4 +1,4 @@
-import { Option } from "../../input-nested-select";
+import { L1OptionProps } from "../../input-nested-select";
 
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
@@ -9,16 +9,16 @@ export interface DropdownStyleProps {
 }
 
 export interface DropdownEventHandlerProps<V1, V2, V3> {
-    onSelectItem: (item: FItemOption<V1, V2, V3>) => void;
+    onSelectItem: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
 }
 
 export interface NestedDropdownListProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLUListElement>,
         DropdownEventHandlerProps<V1, V2, V3>,
         DropdownStyleProps {
-    listItems?: Option<V1, V2, V3>[] | undefined;
+    listItems?: L1OptionProps<V1, V2, V3>[] | undefined;
     visible?: boolean | undefined;
-    selectedKey?: string[] | undefined;
+    selectedKeyPath?: string[] | undefined;
     /** Behavior of dropdown list items once it is opened */
     mode?: Mode;
     /**
@@ -41,26 +41,26 @@ export interface ListItemSelectorProps {
 // =============================================================================
 // Recursive Types
 // =============================================================================
-interface BaseFormattedOption {
+interface BaseFormattedOptionProps {
     label: string;
     keyPath: string[];
 }
 
-export interface FormattedOption<V1, V2, V3> extends BaseFormattedOption {
+export interface FormattedOption<V1, V2, V3> extends BaseFormattedOptionProps {
     value: V1;
     subItems: Map<string, FL2<V2, V3>> | undefined;
 }
 
-export interface FL2<V2, V3> extends BaseFormattedOption {
+export interface FL2<V2, V3> extends BaseFormattedOptionProps {
     value: V2;
     subItems: Map<string, FL3<V3>> | undefined;
 }
-export interface FL3<V3> extends BaseFormattedOption {
+export interface FL3<V3> extends BaseFormattedOptionProps {
     value: V3;
     subItems: undefined;
 }
 
-export type FItemOption<V1, V2, V3> =
+export type CombinedFormattedOptionProps<V1, V2, V3> =
     | FormattedOption<V1, V2, V3>
     | FL2<V2, V3>
     | FL3<V3>;
