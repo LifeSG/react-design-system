@@ -14,7 +14,8 @@ interface ArrowButtonProps {
 }
 
 interface ListItemSelectorProps {
-    $selected?: boolean;
+    $selected: boolean;
+    $level_3: boolean;
 }
 
 interface LabelProps {
@@ -52,6 +53,15 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     :hover {
         background-color: ${Color.Accent.Light[5]};
     }
+
+    ${(props) => {
+        if (props.$level_3) {
+            return css`
+                margin-left: 0.5rem;
+                width: calc(100% - 0.5rem);
+            `;
+        }
+    }}
 
     ${(props) => {
         if (props.$selected) {
@@ -153,5 +163,5 @@ export const List = styled.ul`
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    margin-left: 2.625rem;
+    margin-left: 2.125rem;
 `;
