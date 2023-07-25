@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import isEmpty from "lodash/isEmpty";
 import { NestedDropdownList } from "../shared/nested-dropdown-list/nested-dropdown-list";
 import { DropdownWrapper } from "../shared/dropdown-wrapper";
+import { CombinedFormattedOptionProps } from "../shared/nested-dropdown-list/types";
 import {
     Divider,
     IconContainer,
@@ -10,13 +12,23 @@ import {
     StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { InputNestedSelectProps, ItemOption } from "./types";
+import {
+    InputNestedSelectProps,
+    L1OptionProps,
+    L2OptionProps,
+    L3OptionProps,
+} from "./types";
 import { StringHelper } from "../util";
-import { FItemOption } from "../shared/nested-dropdown-list/types";
 
-type SelectedItemTypes<V1, V2, V3> =
-    | ItemOption<V1, V2, V3>
-    | FItemOption<V1, V2, V3>;
+export type CombinedOptionProps<V1, V2, V3> =
+    | L1OptionProps<V1, V2, V3>
+    | L2OptionProps<V2, V3>
+    | L3OptionProps<V3>;
+
+interface SelectedItemType<V1, V2, V3> {
+    label: string;
+    value: V1 | V2 | V3;
+}
 
 export const InputNestedSelect = <V1, V2, V3>({
     placeholder = "Select",
@@ -26,11 +38,12 @@ export const InputNestedSelect = <V1, V2, V3>({
     className,
     "data-testid": testId,
     id,
-    selectedKeyPath,
+    selectedKeyPath: _selectedKeyPath,
     mode,
     valueToStringFunction,
     onSelectOption,
     listStyleWidth,
+    readOnly,
     onShowOptions,
     onHideOptions,
     onRetry,
@@ -41,9 +54,11 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selectedKey, setSelectedKey] = useState<string[]>(selectedKeyPath);
-    const [selectedItem, setSelectedItem] =
-        useState<SelectedItemTypes<V1, V2, V3>[]>();
+    const [selectedKeyPath, setSelectedKeyPath] =
+        useState<string[]>(_selectedKeyPath);
+    const [selectedItem, setSelectedItem] = useState<
+        SelectedItemType<V1, V2, V3>[]
+    >([]);
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
@@ -54,10 +69,11 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!selectedKey || !selectedKey.length) return;
+        if (!selectedKeyPath || !selectedKeyPath.length) return;
 
-        updateSelectedItemFromKey(options, selectedKey);
-    }, [selectedKey]);
+        // update the label
+        updateSelectedItemFromKey(options, selectedKeyPath);
+    }, [selectedKeyPath]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -65,7 +81,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     const handleSelectorClick = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        if (disabled || otherProps.readOnly) {
+        if (disabled || readOnly) {
             return;
         }
 
@@ -73,12 +89,13 @@ export const InputNestedSelect = <V1, V2, V3>({
         triggerOptionDisplayCallback(!showOptions);
     };
 
-    const handleListItemClick = (item: FItemOption<V1, V2, V3>) => {
-        const { keyPath, value } = item;
+    const handleListItemClick = (
+        item: CombinedFormattedOptionProps<V1, V2, V3>
+    ) => {
+        const { keyPath, value, label } = item;
 
-        setSelectedKey(keyPath);
-        setSelectedItem([item]);
-
+        setSelectedKeyPath(keyPath);
+        setSelectedItem([{ label, value }]);
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
@@ -111,58 +128,54 @@ export const InputNestedSelect = <V1, V2, V3>({
     // HELPER FUNCTION
     // =============================================================================
     const getDisplayValue = (): string => {
-        if (selectedItem.length === 1) {
-            return selectedItem[0].label;
+        const { label, value } = selectedItem[0];
+
+        if (valueToStringFunction) {
+            return valueToStringFunction(value) || value.toString();
+        } else if (selectedItem.length === 1) {
+            return label;
         }
     };
 
     const updateSelectedItemFromKey = (
-        options: ItemOption<V1, V2, V3>[],
+        options: CombinedOptionProps<V1, V2, V3>[],
         keyPaths: string[]
     ) => {
         if (!options || !options.length) return;
 
-        let selectedItem = null;
+        const findSelectedItem = (
+            items: CombinedOptionProps<V1, V2, V3>[],
+            keyPaths: string[]
+        ) => {
+            const [currentKey, ...nextKeyPath] = keyPaths;
 
-        for (const key of keyPaths) {
-            if (!selectedItem) {
-                selectedItem = options.find(
-                    (item) => item.key.toString() === key.toString()
-                );
-            } else {
-                selectedItem = selectedItem.subItems.find(
-                    (item) => item.key.toString() === key.toString()
-                );
+            if (!items || isEmpty(items) || !currentKey) {
+                return undefined;
             }
 
-            if (!selectedItem) return null;
-        }
+            const item = items.find((item) => item.key === currentKey);
 
-        setSelectedItem([selectedItem]);
+            if (!item || !nextKeyPath.length) {
+                return item;
+            }
+
+            return findSelectedItem(item.subItems, nextKeyPath);
+        };
+
+        const selectedItem = findSelectedItem(options, keyPaths);
+        const { label, value } = selectedItem;
+
+        setSelectedItem([{ label, value }]);
     };
 
-    const convertValueToString = (value: string | V1 | V2 | V3): string => {
-        if (typeof value === "string") {
-            return value;
-        } else {
-            return valueToStringFunction(value) || value.toString();
-        }
-    };
-
-    const truncateValue = (value: string | V1 | V2 | V3) => {
+    const truncateValue = (value: string) => {
         if (optionTruncationType === "middle") {
             let widthOfElement = 0;
             if (labelContainerRef && labelContainerRef.current) {
                 widthOfElement =
                     labelContainerRef.current.getBoundingClientRect().width;
             }
-
-            return StringHelper.truncateOneLine(
-                convertValueToString(value),
-                widthOfElement,
-                120,
-                8
-            );
+            return StringHelper.truncateOneLine(value, widthOfElement, 120, 6);
         }
 
         return value;
@@ -182,7 +195,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     // RENDER FUNCTION
     // =============================================================================
     const renderLabel = () => {
-        if (!selectedItem) {
+        if (!selectedItem.length) {
             return (
                 <PlaceholderLabel truncateType={optionTruncationType}>
                     {placeholder}
@@ -202,9 +215,11 @@ export const InputNestedSelect = <V1, V2, V3>({
             <LabelContainer ref={labelContainerRef}>
                 {renderLabel()}
             </LabelContainer>
-            <IconContainer expanded={showOptions}>
-                <StyledChevronIcon />
-            </IconContainer>
+            {!readOnly && (
+                <IconContainer expanded={showOptions}>
+                    <StyledChevronIcon />
+                </IconContainer>
+            )}
         </>
     );
 
@@ -217,7 +232,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                     listStyleWidth={listStyleWidth}
                     visible={showOptions}
                     mode={mode}
-                    selectedKey={selectedKey ? selectedKey : []}
+                    selectedKeyPath={selectedKeyPath ? selectedKeyPath : []}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     onDismiss={handleListDismiss}
@@ -236,7 +251,7 @@ export const InputNestedSelect = <V1, V2, V3>({
             show={showOptions}
             error={error && !showOptions}
             disabled={disabled}
-            readOnly={otherProps.readOnly}
+            readOnly={readOnly}
             testId={testId}
             onBlur={handleWrapperBlur}
         >
