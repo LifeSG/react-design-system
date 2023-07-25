@@ -98,7 +98,7 @@ export const InputNestedSelect = <V1, V2, V3>({
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
-        if (selectorRef) {
+        if (selectorRef.current) {
             selectorRef.current.focus();
         }
 
@@ -113,7 +113,7 @@ export const InputNestedSelect = <V1, V2, V3>({
             triggerOptionDisplayCallback(false);
         }
 
-        if (setSelectorFocus && selectorRef) {
+        if (setSelectorFocus && selectorRef.current) {
             selectorRef.current.focus();
         }
     };
