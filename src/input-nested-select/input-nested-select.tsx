@@ -54,8 +54,9 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selectedKeyPath, setSelectedKeyPath] =
-        useState<string[]>(_selectedKeyPath);
+    const [selectedKeyPath, setSelectedKeyPath] = useState<string[]>(
+        _selectedKeyPath || []
+    );
     const [selectedItem, setSelectedItem] =
         useState<SelectedItemType<V1, V2, V3>>();
 
@@ -68,8 +69,10 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        // update the label
-        updateSelectedItemFromKey(options, _selectedKeyPath || []);
+        const newKeyPath = _selectedKeyPath || [];
+        setSelectedKeyPath(newKeyPath);
+
+        updateSelectedItemFromKey(options, newKeyPath);
     }, [_selectedKeyPath, options]);
 
     // =============================================================================
@@ -231,7 +234,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                     listStyleWidth={listStyleWidth}
                     visible={showOptions}
                     mode={mode}
-                    selectedKeyPath={selectedKeyPath ? selectedKeyPath : []}
+                    selectedKeyPath={selectedKeyPath}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     onDismiss={handleListDismiss}
