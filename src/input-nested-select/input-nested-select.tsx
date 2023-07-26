@@ -131,7 +131,7 @@ export const InputNestedSelect = <V1, V2, V3>({
 
         if (valueToStringFunction) {
             return valueToStringFunction(value) || value.toString();
-        } else if (selectedItem) {
+        } else {
             return label;
         }
     };
@@ -163,9 +163,11 @@ export const InputNestedSelect = <V1, V2, V3>({
         };
 
         const selectedItem = findSelectedItem(options, keyPaths);
-        const { label, value } = selectedItem;
 
-        setSelectedItem({ label, value });
+        if (selectedItem) {
+            const { label, value } = selectedItem;
+            setSelectedItem({ label, value });
+        }
     };
 
     const truncateValue = (value: string) => {

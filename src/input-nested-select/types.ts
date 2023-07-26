@@ -19,7 +19,7 @@ export interface InputNestedSelectProps<V1, V2, V3>
         DropdownStyleProps {
     readOnly?: boolean | undefined;
     /** Behavior of dropdown list items once it is opened */
-    mode?: Mode;
+    mode?: Mode | undefined;
     selectedKeyPath?: string[] | undefined;
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
