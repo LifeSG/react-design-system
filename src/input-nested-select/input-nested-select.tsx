@@ -68,10 +68,8 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!selectedKeyPath || !selectedKeyPath.length) return;
-
         // update the label
-        updateSelectedItemFromKey(options, selectedKeyPath);
+        updateSelectedItemFromKey(options, _selectedKeyPath || []);
     }, [_selectedKeyPath, options]);
 
     // =============================================================================
@@ -140,17 +138,14 @@ export const InputNestedSelect = <V1, V2, V3>({
         options: CombinedOptionProps<V1, V2, V3>[],
         keyPaths: string[]
     ) => {
-        if (!options || !options.length) return;
-
         const findSelectedItem = (
             items: CombinedOptionProps<V1, V2, V3>[],
             keyPaths: string[]
-        ) => {
+        ): CombinedOptionProps<V1, V2, V3> | undefined => {
             const [currentKey, ...nextKeyPath] = keyPaths;
 
             if (isEmpty(items) || !currentKey) {
-                setSelectedItem(undefined);
-                return;
+                return undefined;
             }
 
             const item = items.find((item) => item.key === currentKey);
@@ -167,6 +162,8 @@ export const InputNestedSelect = <V1, V2, V3>({
         if (selectedItem) {
             const { label, value } = selectedItem;
             setSelectedItem({ label, value });
+        } else {
+            setSelectedItem(undefined);
         }
     };
 
