@@ -19,14 +19,14 @@ import {
 } from "./toast.styles";
 import { ToastProps } from "./types";
 
-const defaultAutoDismissTime = 4000;
+const DEFAULT_AUTO_DISMISS_TIME = 4000;
 
 export const Toast = ({
     type = "success",
     title,
     label,
     autoDismiss,
-    autoDismissTime = defaultAutoDismissTime,
+    autoDismissTime = DEFAULT_AUTO_DISMISS_TIME,
     onDismiss,
     ...otherProps
 }: ToastProps) => {

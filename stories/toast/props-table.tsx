@@ -58,8 +58,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Specifies if the <code>Toast</code> will be
-                        automatically dismissed after{" "}
-                        <strong>autoDismissTime</strong>.
+                        automatically dismissed after <code>autoDismissTime</code>.
                     </>
                 ),
                 propTypes: ["boolean"],
