@@ -217,22 +217,19 @@ export const NestedDropdownList = <V1, V2, V3>({
         targetKey = keyboardOrders[upcomingIndex];
 
         const level = targetKey.length;
-        for (const key of targetKey) {
-            switch (level) {
-                case 1:
-                    selectedItem = listItemRefs.current[key];
-                    break;
-                case 2:
-                    selectedItem =
-                        listItemRefs.current[targetKey[0]].subItems[key];
-                    break;
-                case 3:
-                    selectedItem =
-                        listItemRefs.current[targetKey[0]].subItems[
-                            targetKey[1]
-                        ].subItems[key];
-                    break;
-            }
+        switch (level) {
+            case 1:
+                selectedItem = listItemRefs.current[targetKey[0]];
+                break;
+            case 2:
+                selectedItem =
+                    listItemRefs.current[targetKey[0]].subItems[targetKey[1]];
+                break;
+            case 3:
+                selectedItem =
+                    listItemRefs.current[targetKey[0]].subItems[targetKey[1]]
+                        .subItems[targetKey[2]];
+                break;
         }
 
         selectedItem.ref.focus();
