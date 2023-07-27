@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
+import get from "lodash/get";
+import { enableMapSet, produce } from "immer";
 import { useEventListener } from "../../util/use-event-listener";
 import { Spinner } from "../../button/button.style";
 import { CombinedOptionProps } from "../../input-nested-select";
@@ -30,6 +32,7 @@ type Direction = "down" | "up";
  * NOTE: This component is not directly exportables
  * but forms part of a component
  */
+enableMapSet();
 export const NestedDropdownList = <V1, V2, V3>({
     listItems: _listItems,
     listStyleWidth,
@@ -47,7 +50,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     // CONST, REF, STATE
     // =============================================================================
-    const formattedListItem = useMemo((): Map<
+    const initialItems = useMemo((): Map<
         string,
         FormattedOption<V1, V2, V3>
     > => {
@@ -83,9 +86,9 @@ export const NestedDropdownList = <V1, V2, V3>({
     }, [_listItems]);
 
     const [contentHeight, setContentHeight] = useState<number>(0);
-    const [listItems, setListItems] =
-        useState<Map<string, FormattedOption<V1, V2, V3>>>(formattedListItem);
-    const [focusedListIndex, setFocusedIndex] = useState<number>(0);
+    const [currentItems, setCurrentItems] =
+        useState<Map<string, FormattedOption<V1, V2, V3>>>(initialItems);
+    const [focusedIndex, setFocusedIndex] = useState<number>(0);
     const [keyboardOrders, setKeyboardOrders] = useState<string[][]>([]);
 
     // React spring animation configuration
@@ -105,13 +108,14 @@ export const NestedDropdownList = <V1, V2, V3>({
             const lists = getDefaultExpandList();
             const orders = getKeyboardExpandOrder(lists);
 
-            setListItems(lists);
+            setCurrentItems(lists);
             setKeyboardOrders(orders);
 
             // TODO: if search exist focus it else focus listItemRefs.current[target]
             if (listItemRefs.current) {
-                const target = orders[focusedListIndex];
-                listItemRefs.current[target].ref.focus();
+                // focusedIndex has been reset to 0 once dropdown opened
+                const target: string[] = orders[focusedIndex];
+                listItemRefs.current[target[0]].ref.focus();
             }
 
             // Give some time for the custom call-to-action to be rendered
@@ -122,7 +126,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             setFocusedIndex(0);
             setContentHeight(0);
             listItemRefs.current = {};
-            setListItems(formattedListItem);
+            setCurrentItems(initialItems);
         }
     }, [visible]);
 
@@ -145,39 +149,26 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const handleExpand = (keyPath: string[]) => {
-        const lists = structuredClone(listItems);
-        const [keyOne, keyTwo] = keyPath;
         const level = keyPath.length;
 
-        let list: FormattedOption<V1, V2, V3> = null;
-        let item: FL2<V2, V3> = null;
+        const lists = produce(currentItems, (draft) => {
+            let item = null;
 
-        // update specific level item
-        switch (level) {
-            case 1:
-                list = lists.get(keyOne);
-                lists.set(keyOne, { ...list, expanded: !list.expanded });
-                break;
-            case 2:
-                list = lists.get(keyOne);
-                item = list.subItems.get(keyTwo);
+            switch (level) {
+                case 1:
+                    item = draft.get(keyPath[0]);
+                    break;
+                case 2:
+                    item = draft.get(keyPath[0]).subItems.get(keyPath[1]);
+                    break;
+            }
 
-                if (item) {
-                    item.expanded = !item.expanded;
-
-                    if (item.subItems instanceof Map) {
-                        // update last tier's expanded value same as tier 2
-                        for (const innermostItem of item.subItems.values()) {
-                            innermostItem.expanded = item.expanded;
-                        }
-                    }
-                }
-                break;
-        }
+            item.expanded = !item.expanded;
+        });
 
         const orders = getKeyboardExpandOrder(lists);
 
-        setListItems(lists);
+        setCurrentItems(lists);
         setKeyboardOrders(orders);
         setTimeout(() => {
             setContentHeight(getContentHeight());
@@ -186,13 +177,13 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const handleListItemRef = (
         ref: HTMLButtonElement,
-        keyPaths: string[],
+        keyPath: string[],
         currentObj: ListItemRefType = listItemRefs.current
     ) => {
-        const [currentKey, ...remainingKeys] = keyPaths;
+        const [currentKey, ...remainingKeys] = keyPath;
 
         if (!currentObj[currentKey]) {
-            currentObj[currentKey] = { ref, subItems: {} };
+            currentObj[currentKey] = { ref: undefined, subItems: {} };
         }
 
         if (remainingKeys.length) {
@@ -201,36 +192,23 @@ export const NestedDropdownList = <V1, V2, V3>({
                 remainingKeys,
                 currentObj[currentKey].subItems
             );
+        } else {
+            currentObj[currentKey].ref = ref;
         }
     };
 
     const handleArrowUpDown = (direction: Direction) => {
-        let upcomingIndex = focusedListIndex;
-        let targetKey = null;
-        let selectedItem = null;
+        const upcomingIndex =
+            direction === "down" ? focusedIndex + 1 : focusedIndex - 1;
 
-        setFocusedIndex((prev) => {
-            upcomingIndex = direction === "down" ? prev + 1 : prev - 1;
-            return upcomingIndex;
-        });
+        setFocusedIndex(upcomingIndex);
 
-        targetKey = keyboardOrders[upcomingIndex];
+        const targetKey = keyboardOrders[upcomingIndex];
 
-        const level = targetKey.length;
-        switch (level) {
-            case 1:
-                selectedItem = listItemRefs.current[targetKey[0]];
-                break;
-            case 2:
-                selectedItem =
-                    listItemRefs.current[targetKey[0]].subItems[targetKey[1]];
-                break;
-            case 3:
-                selectedItem =
-                    listItemRefs.current[targetKey[0]].subItems[targetKey[1]]
-                        .subItems[targetKey[2]];
-                break;
-        }
+        const selectedItem = get(
+            listItemRefs.current,
+            targetKey.join(".subItems.")
+        );
 
         selectedItem.ref.focus();
     };
@@ -239,11 +217,11 @@ export const NestedDropdownList = <V1, V2, V3>({
         if (nodeRef && (nodeRef.current as any).contains(event.target)) {
             switch (event.code) {
                 case "ArrowDown":
-                    if (focusedListIndex + 1 >= keyboardOrders.length) return;
+                    if (focusedIndex + 1 >= keyboardOrders.length) return;
                     handleArrowUpDown("down");
                     break;
                 case "ArrowUp":
-                    if (focusedListIndex - 1 < 0) return;
+                    if (focusedIndex - 1 < 0) return;
                     handleArrowUpDown("up");
                     break;
                 case "Escape":
@@ -307,48 +285,42 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const getDefaultExpandList = () => {
-        if (["expand", "collapse"].includes(mode)) return formattedListItem;
-        const lists = structuredClone(listItems);
-        let keys = selectedKeyPath;
-        let item: CombinedFormattedOptionProps<V1, V2, V3> = null;
+        if (["expand", "collapse"].includes(mode)) return initialItems;
+
+        let keyPath = selectedKeyPath;
 
         if (!selectedKeyPath || !selectedKeyPath.length) {
-            keys = getDefaultExpandKey(listItems);
+            keyPath = getDefaultExpandKey(currentItems);
         }
 
-        const [keyOne, keyTwo] = keys;
+        const lists = produce(currentItems, (draft) => {
+            let item = null;
 
-        for (let i = 0; i < keys.length; i++) {
-            const level = i + 1;
+            for (let i = 0; i < keyPath.length; i++) {
+                const level = i + 1;
 
-            // update each level item
-            switch (level) {
-                case 1:
-                    item = lists.get(keyOne);
-                    break;
-                case 2:
-                    item = lists.get(keyOne)?.subItems?.get(keyTwo);
-                    break;
-            }
+                // update each level item
+                switch (level) {
+                    case 1:
+                        item = draft.get(keyPath[0]);
+                        break;
+                    case 2:
+                        item = draft.get(keyPath[0])?.subItems?.get(keyPath[1]);
+                        break;
+                }
 
-            if (item) {
-                item.expanded = true;
-                // update last tier's expanded value same as tier 2
-                if (level === 2 && item.subItems instanceof Map) {
-                    for (const innermostItem of item.subItems.values()) {
-                        innermostItem.expanded = item.expanded;
-                    }
+                if (item) {
+                    item.expanded = true;
                 }
             }
-        }
+        });
 
         return lists;
     };
 
     const getKeyboardExpandOrder = (
-        _lists: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-    ) => {
-        const lists = structuredClone(_lists);
+        lists: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+    ): string[][] => {
         const elementKeys = [];
 
         const getOrders = (
@@ -379,7 +351,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     const renderItems = () => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
-            return Array.from(listItems).map(([key, item]) => (
+            return Array.from(currentItems).map(([key, item]) => (
                 <ListItem
                     key={key}
                     item={item}
