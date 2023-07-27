@@ -122,7 +122,6 @@ export const ListItem = <V1, V2, V3>({
             <li ref={labelRef}>
                 <ListItemSelector
                     ref={(ref) => onRef(ref, item.keyPath)}
-                    aria-expanded={item.expanded}
                     type="button"
                     tabIndex={visible ? 0 : -1}
                     $selected={checkListItemSelected(item.keyPath)}
