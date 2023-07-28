@@ -149,26 +149,10 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const handleExpand = (keyPath: string[]) => {
-        const level = keyPath.length;
+        const list = updateExpandItem(keyPath, keyPath.length);
+        const orders = getKeyboardExpandOrder(list);
 
-        const lists = produce(currentItems, (draft) => {
-            let item = null;
-
-            switch (level) {
-                case 1:
-                    item = draft.get(keyPath[0]);
-                    break;
-                case 2:
-                    item = draft.get(keyPath[0]).subItems.get(keyPath[1]);
-                    break;
-            }
-
-            item.expanded = !item.expanded;
-        });
-
-        const orders = getKeyboardExpandOrder(lists);
-
-        setCurrentItems(lists);
+        setCurrentItems(list);
         setKeyboardOrders(orders);
         setTimeout(() => {
             setContentHeight(getContentHeight());
@@ -293,33 +277,47 @@ export const NestedDropdownList = <V1, V2, V3>({
             keyPath = getDefaultExpandKey(currentItems);
         }
 
-        const lists = produce(currentItems, (draft) => {
+        const list = updateExpandItem(keyPath);
+
+        return list;
+    };
+
+    /**
+     * Update the expanded value
+     * @param targetLevel which updated specific level only if it been provided,
+     * if @param targetLevel is undefined, will expanded all item for keyPath.
+     */
+    const updateExpandItem = (keyPath: string[], targetLevel?: number) => {
+        const list = produce(currentItems, (draft) => {
+            const index = targetLevel || 0;
             let item = null;
 
-            for (let i = 0; i < keyPath.length; i++) {
-                const level = i + 1;
-
-                // update each level item
+            for (let i = index; i <= keyPath.length; i++) {
+                const level = targetLevel || i + 1;
                 switch (level) {
                     case 1:
                         item = draft.get(keyPath[0]);
                         break;
                     case 2:
-                        item = draft.get(keyPath[0])?.subItems?.get(keyPath[1]);
+                        item = draft.get(keyPath[0]).subItems.get(keyPath[1]);
                         break;
                 }
 
                 if (item) {
-                    item.expanded = true;
+                    if (!targetLevel) {
+                        item.expanded = true;
+                    } else {
+                        item.expanded = !item.expanded;
+                    }
                 }
             }
         });
 
-        return lists;
+        return list;
     };
 
     const getKeyboardExpandOrder = (
-        lists: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
     ): string[][] => {
         const elementKeys = [];
 
@@ -333,7 +331,6 @@ export const NestedDropdownList = <V1, V2, V3>({
             for (const item of items.values()) {
                 if (item.expanded) {
                     elementKeys.push(item.keyPath);
-
                     getOrders(item.subItems);
                 } else {
                     elementKeys.push(item.keyPath);
@@ -341,7 +338,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             }
         };
 
-        getOrders(lists);
+        getOrders(list);
 
         return elementKeys;
     };
