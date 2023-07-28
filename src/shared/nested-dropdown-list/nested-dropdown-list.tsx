@@ -113,7 +113,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             // TODO: if search exist focus it else focus listItemRefs.current[target]
             if (listItemRefs.current) {
                 // focusedIndex has been reset to 0 once dropdown opened
-                const target: string[] = keys[focusedIndex];
+                const target = keys[focusedIndex];
                 listItemRefs.current[target[0]].ref.focus();
             }
 
@@ -155,10 +155,10 @@ export const NestedDropdownList = <V1, V2, V3>({
                 item.expanded = !item.expanded;
             }
         );
-        const orders = getExpandedKey(list);
+        const keys = getExpandedKey(list);
 
         setCurrentItems(list);
-        setExpandedKeys(orders);
+        setExpandedKeys(keys);
         setTimeout(() => {
             setContentHeight(getContentHeight());
         });
