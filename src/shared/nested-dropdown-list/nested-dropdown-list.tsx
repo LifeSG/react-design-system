@@ -301,6 +301,8 @@ export const NestedDropdownList = <V1, V2, V3>({
                     case 2:
                         item = draft.get(keyPath[0]).subItems.get(keyPath[1]);
                         break;
+                    default:
+                        item = null;
                 }
 
                 if (item) {
