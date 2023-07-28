@@ -28,6 +28,8 @@ interface ListItemRefType {
 
 type Direction = "down" | "up";
 
+type MapFormattedOption<V1, V2, V3> = Map<string, FormattedOption<V1, V2, V3>>;
+
 /**
  * NOTE: This component is not directly exportables
  * but forms part of a component
@@ -50,16 +52,13 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     // CONST, REF, STATE
     // =============================================================================
-    const initialItems = useMemo((): Map<
-        string,
-        FormattedOption<V1, V2, V3>
-    > => {
+    const initialItems = useMemo((): MapFormattedOption<V1, V2, V3> => {
         if (!_listItems || !_listItems.length) return new Map([]);
 
         const formatted = (
             options: CombinedOptionProps<V1, V2, V3>[],
             parentKeys: string[]
-        ): Map<string, FormattedOption<V1, V2, V3>> => {
+        ): MapFormattedOption<V1, V2, V3> => {
             return options.reduce((result, option) => {
                 const { key, label, value, subItems } = option;
                 const stringKey = key.toString();
@@ -87,7 +86,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const [contentHeight, setContentHeight] = useState<number>(0);
     const [currentItems, setCurrentItems] =
-        useState<Map<string, FormattedOption<V1, V2, V3>>>(initialItems);
+        useState<MapFormattedOption<V1, V2, V3>>(initialItems);
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
     const [keyboardOrders, setKeyboardOrders] = useState<string[][]>([]);
 
@@ -149,7 +148,22 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const handleExpand = (keyPath: string[]) => {
-        const list = updateExpandItem(keyPath, keyPath.length);
+        const level = keyPath.length;
+
+        const list = produce(currentItems, (draft) => {
+            let item = null;
+
+            switch (level) {
+                case 1:
+                    item = draft.get(keyPath[0]);
+                    break;
+                case 2:
+                    item = draft.get(keyPath[0]).subItems.get(keyPath[1]);
+                    break;
+            }
+
+            item.expanded = !item.expanded;
+        });
         const orders = getKeyboardExpandOrder(list);
 
         setCurrentItems(list);
@@ -242,30 +256,15 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const getDefaultExpandKey = (
-        items:
-            | Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-            | undefined,
-        keyPath?: string[]
+        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>> | undefined
     ): string[] => {
-        // Get the first one which has the subItems in the list
-        let keys = [];
-
-        if (!items) return keys;
-
-        if (keyPath && keyPath.length) {
-            keys = keyPath;
-        }
-
-        for (const [key, item] of items) {
+        for (const item of list.values()) {
             if (item.subItems && item.subItems.size) {
-                keys.push(key);
-                getDefaultExpandKey(item.subItems, keys);
-
-                break;
+                const [firstItemKey] = item.subItems.keys();
+                return item.subItems.get(firstItemKey).keyPath;
             }
+            getDefaultExpandKey(item.subItems);
         }
-
-        return keys;
     };
 
     const getDefaultExpandList = () => {
@@ -277,43 +276,32 @@ export const NestedDropdownList = <V1, V2, V3>({
             keyPath = getDefaultExpandKey(currentItems);
         }
 
-        const list = updateExpandItem(keyPath);
+        const list = produce(
+            currentItems,
+            (draft: Map<string, FormattedOption<V1, V2, V3>>) => {
+                let item = null;
 
-        return list;
-    };
+                for (let i = 0; i < keyPath.length; i++) {
+                    const level = i + 1;
 
-    /**
-     * Update the expanded value
-     * @param targetLevel which updated specific level only if it been provided,
-     * if @param targetLevel is undefined, will expanded all item for keyPath.
-     */
-    const updateExpandItem = (keyPath: string[], targetLevel?: number) => {
-        const list = produce(currentItems, (draft) => {
-            const index = targetLevel || 0;
-            let item = null;
+                    // update each level item
+                    switch (level) {
+                        case 1:
+                            item = draft.get(keyPath[0]);
+                            break;
+                        case 2:
+                            item = draft
+                                .get(keyPath[0])
+                                ?.subItems?.get(keyPath[1]);
+                            break;
+                    }
 
-            for (let i = index; i <= keyPath.length; i++) {
-                const level = targetLevel || i + 1;
-                switch (level) {
-                    case 1:
-                        item = draft.get(keyPath[0]);
-                        break;
-                    case 2:
-                        item = draft.get(keyPath[0]).subItems.get(keyPath[1]);
-                        break;
-                    default:
-                        item = null;
-                }
-
-                if (item) {
-                    if (!targetLevel) {
+                    if (item) {
                         item.expanded = true;
-                    } else {
-                        item.expanded = !item.expanded;
                     }
                 }
             }
-        });
+        );
 
         return list;
     };
@@ -331,11 +319,9 @@ export const NestedDropdownList = <V1, V2, V3>({
             }
 
             for (const item of items.values()) {
+                elementKeys.push(item.keyPath);
                 if (item.expanded) {
-                    elementKeys.push(item.keyPath);
                     getOrders(item.subItems);
-                } else {
-                    elementKeys.push(item.keyPath);
                 }
             }
         };
