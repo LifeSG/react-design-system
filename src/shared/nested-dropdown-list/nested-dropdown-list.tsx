@@ -263,34 +263,19 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         let keyPath = selectedKeyPath;
 
-        if (!selectedKeyPath || !selectedKeyPath.length) {
+        if (!keyPath || !keyPath.length) {
             keyPath = getInitialSubItemDropdown(currentItems);
         }
 
         const list = produce(
             currentItems,
             (draft: Map<string, FormattedOption<V1, V2, V3>>) => {
-                let item = null;
-
-                for (let i = 0; i < keyPath.length; i++) {
-                    const level = i + 1;
-
-                    // update each level item
-                    switch (level) {
-                        case 1:
-                            item = draft.get(keyPath[0]);
-                            break;
-                        case 2:
-                            item = draft
-                                .get(keyPath[0])
-                                ?.subItems?.get(keyPath[1]);
-                            break;
-                    }
-
-                    if (item) {
-                        item.expanded = true;
-                    }
-                }
+                const targetKey = [];
+                keyPath.forEach((key) => {
+                    targetKey.push(key);
+                    const item = getItemAtKeyPath(draft, targetKey);
+                    item.expanded = true;
+                });
             }
         );
 
