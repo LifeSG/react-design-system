@@ -205,9 +205,16 @@ export const DropdownList = <T, V>({
                     typeof label === "object"
                         ? label.title.toLowerCase()
                         : label.toLowerCase();
-                const secondaryLabel = typeof label === "string" ? undefined : label.secondaryLabel.toLowerCase();;
-
-                return (title.includes(searchValue.trim().toLowerCase()) || (secondaryLabel && secondaryLabel.includes(searchValue.trim().toLowerCase())));
+                const secondaryLabel =
+                    typeof label === "string"
+                        ? undefined
+                        : label.secondaryLabel?.toLowerCase();
+                const updatedSearchValue = searchValue.trim().toLowerCase();
+                return (
+                    title.includes(updatedSearchValue) ||
+                    (secondaryLabel &&
+                        secondaryLabel.includes(updatedSearchValue))
+                );
             });
             setDisplayListItems(updated);
         }
