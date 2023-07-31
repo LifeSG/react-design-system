@@ -1,17 +1,11 @@
+import { enableMapSet, produce } from "immer";
+import get from "lodash/get";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
-import get from "lodash/get";
-import { enableMapSet, produce } from "immer";
-import { useEventListener } from "../../util/use-event-listener";
 import { Spinner } from "../../button/button.style";
 import { CombinedOptionProps } from "../../input-nested-select";
+import { useEventListener } from "../../util/use-event-listener";
 import { ListItem } from "./list-item";
-import {
-    CombinedFormattedOptionProps,
-    FL2,
-    FormattedOption,
-    NestedDropdownListProps,
-} from "./types";
 import {
     Container,
     DropdownCommonButton,
@@ -20,21 +14,27 @@ import {
     ResultStateContainer,
     ResultStateText,
 } from "./nested-dropdown-list.styles";
+import {
+    CombinedFormattedOptionProps,
+    FormattedOption,
+    NestedDropdownListProps,
+} from "./types";
 
-interface ListItemRefType {
+enableMapSet();
+
+interface ListItemRef {
     ref?: HTMLButtonElement;
-    subItems?: ListItemRefType;
+    subItems?: ListItemRef;
 }
 
 type Direction = "down" | "up";
 
-type MapFormattedOption<V1, V2, V3> = Map<string, FormattedOption<V1, V2, V3>>;
+type FormattedOptionMap<V1, V2, V3> = Map<string, FormattedOption<V1, V2, V3>>;
 
 /**
  * NOTE: This component is not directly exportables
  * but forms part of a component
  */
-enableMapSet();
 export const NestedDropdownList = <V1, V2, V3>({
     listItems: _listItems,
     listStyleWidth,
@@ -52,13 +52,13 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     // CONST, REF, STATE
     // =============================================================================
-    const initialItems = useMemo((): MapFormattedOption<V1, V2, V3> => {
+    const initialItems = useMemo((): FormattedOptionMap<V1, V2, V3> => {
         if (!_listItems || !_listItems.length) return new Map([]);
 
         const formatted = (
             options: CombinedOptionProps<V1, V2, V3>[],
             parentKeys: string[]
-        ): MapFormattedOption<V1, V2, V3> => {
+        ): FormattedOptionMap<V1, V2, V3> => {
             return options.reduce((result, option) => {
                 const { key, label, value, subItems } = option;
                 const stringKey = key.toString();
@@ -86,9 +86,9 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const [contentHeight, setContentHeight] = useState<number>(0);
     const [currentItems, setCurrentItems] =
-        useState<MapFormattedOption<V1, V2, V3>>(initialItems);
+        useState<FormattedOptionMap<V1, V2, V3>>(initialItems);
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
-    const [expandedKeys, setExpandedKeys] = useState<string[][]>([]);
+    const [visibleKeyPaths, setVisibleKeyPaths] = useState<string[][]>([]);
 
     // React spring animation configuration
     const containerStyles = useSpring({
@@ -97,23 +97,23 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const nodeRef = useRef<HTMLDivElement>();
     const listRef = useRef<HTMLUListElement>();
-    const listItemRefs = useRef<ListItemRefType>({});
+    const listItemRefs = useRef<ListItemRef>({});
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         if (visible) {
-            const lists = getInitialDropdown();
-            const keys = getExpandedKey(lists);
+            const list = getInitialDropdown();
+            const keyPaths = getVisibleKeyPaths(list);
 
-            setCurrentItems(lists);
-            setExpandedKeys(keys);
+            setCurrentItems(list);
+            setVisibleKeyPaths(keyPaths);
 
             // TODO: if search exist focus it else focus listItemRefs.current[target]
             if (listItemRefs.current) {
-                // focusedIndex has been reset to 0 once dropdown opened
-                const target = keys[focusedIndex];
+                // focus the first item (focusedIndex has been reset to 0)
+                const target = keyPaths[focusedIndex];
                 listItemRefs.current[target[0]].ref.focus();
             }
 
@@ -150,15 +150,15 @@ export const NestedDropdownList = <V1, V2, V3>({
     const handleExpand = (keyPath: string[]) => {
         const list = produce(
             currentItems,
-            (draft: MapFormattedOption<V1, V2, V3>) => {
+            (draft: FormattedOptionMap<V1, V2, V3>) => {
                 const item = getItemAtKeyPath(draft, keyPath);
                 item.expanded = !item.expanded;
             }
         );
-        const keys = getExpandedKey(list);
+        const keyPaths = getVisibleKeyPaths(list);
 
         setCurrentItems(list);
-        setExpandedKeys(keys);
+        setVisibleKeyPaths(keyPaths);
         setTimeout(() => {
             setContentHeight(getContentHeight());
         });
@@ -167,7 +167,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     const handleListItemRef = (
         ref: HTMLButtonElement,
         keyPath: string[],
-        currentObj: ListItemRefType = listItemRefs.current
+        currentObj: ListItemRef = listItemRefs.current
     ) => {
         const [currentKey, ...remainingKeys] = keyPath;
 
@@ -192,7 +192,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         setFocusedIndex(upcomingIndex);
 
-        const targetKey = expandedKeys[upcomingIndex];
+        const targetKey = visibleKeyPaths[upcomingIndex];
 
         const selectedItem = get(
             listItemRefs.current,
@@ -203,10 +203,10 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     function handleKeyboardPress(event: KeyboardEvent) {
-        if (nodeRef && (nodeRef.current as any).contains(event.target)) {
+        if (nodeRef.current && nodeRef.current.contains(event.target as Node)) {
             switch (event.code) {
                 case "ArrowDown":
-                    if (focusedIndex + 1 >= expandedKeys.length) return;
+                    if (focusedIndex + 1 >= visibleKeyPaths.length) return;
                     handleArrowUpDown("down");
                     break;
                 case "ArrowUp":
@@ -246,7 +246,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         return listHeight;
     };
 
-    const getInitialSubItemDropdown = (
+    const getInitialSubItem = (
         list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>> | undefined
     ): string[] => {
         for (const item of list.values()) {
@@ -254,17 +254,19 @@ export const NestedDropdownList = <V1, V2, V3>({
                 const [firstItemKey] = item.subItems.keys();
                 return item.subItems.get(firstItemKey).keyPath;
             }
-            getInitialSubItemDropdown(item.subItems);
+            getInitialSubItem(item.subItems);
         }
     };
 
     const getInitialDropdown = () => {
+        // use the existing expanded state if mode is specified
         if (["expand", "collapse"].includes(mode)) return initialItems;
 
+        // otherwise expand the first selected item or first subitem tree
         let keyPath = selectedKeyPath;
 
         if (!keyPath || !keyPath.length) {
-            keyPath = getInitialSubItemDropdown(currentItems);
+            keyPath = getInitialSubItem(currentItems);
         }
 
         const list = produce(
@@ -283,7 +285,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const getItemAtKeyPath = (
-        draft: MapFormattedOption<V1, V2, V3>,
+        draft: FormattedOptionMap<V1, V2, V3>,
         keyPath: string[]
     ): CombinedFormattedOptionProps<V1, V2, V3> => {
         const item = keyPath.reduce(
@@ -301,10 +303,10 @@ export const NestedDropdownList = <V1, V2, V3>({
         return item;
     };
 
-    const getExpandedKey = (
+    const getVisibleKeyPaths = (
         list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
     ): string[][] => {
-        const elementKeys = [];
+        const keyPaths = [];
 
         const getKey = (
             items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
@@ -312,7 +314,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             if (!items || !items.size) return;
 
             for (const item of items.values()) {
-                elementKeys.push(item.keyPath);
+                keyPaths.push(item.keyPath);
                 if (item.expanded) {
                     getKey(item.subItems);
                 }
@@ -321,7 +323,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         getKey(list);
 
-        return elementKeys;
+        return keyPaths;
     };
 
     // =============================================================================
