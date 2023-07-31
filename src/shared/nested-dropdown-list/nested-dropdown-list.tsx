@@ -459,7 +459,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         };
 
         getKey(list);
-        console.log("keyPaths: ", keyPaths);
 
         return keyPaths;
     };
