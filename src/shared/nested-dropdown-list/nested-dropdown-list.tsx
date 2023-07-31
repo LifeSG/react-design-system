@@ -102,6 +102,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         useState<FormattedOptionMap<V1, V2, V3>>(initialItems);
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
     const [visibleKeyPaths, setVisibleKeyPaths] = useState<string[][]>([]);
+    console.log("filteredItems: ", filteredItems);
 
     // React spring animation configuration
     const containerStyles = useSpring({
@@ -351,7 +352,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                 show = false;
 
             for (const item of subItems.values()) {
-                if (item.isSearchTerm || item.show) {
+                if (item.isSearchTerm) {
                     expanded = true;
                 }
                 if (item.show) {
@@ -445,8 +446,11 @@ export const NestedDropdownList = <V1, V2, V3>({
             for (const item of items.values()) {
                 if (!isSearch) keyPaths.push(item.keyPath);
 
-                if (isSearch && item.show) {
-                    keyPaths.push(item.keyPath);
+                if (isSearch && item.expanded) {
+                    // get it's subItems which parent is expanded
+                    for (const subItem of item.subItems.values()) {
+                        keyPaths.push(subItem.keyPath);
+                    }
                     getKey(item.subItems);
                 } else if (!isSearch && item.expanded) {
                     getKey(item.subItems);
@@ -455,6 +459,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         };
 
         getKey(list);
+        console.log("keyPaths: ", keyPaths);
 
         return keyPaths;
     };
