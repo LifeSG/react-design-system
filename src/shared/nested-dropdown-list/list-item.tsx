@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from "react";
-import { CombinedFormattedOptionProps, Mode, TruncateType } from "./types";
+import React, { useRef } from "react";
+import { CombinedFormattedOptionProps, TruncateType } from "./types";
 import { StringHelper } from "../../util";
 import {
     ArrowButton,
@@ -16,42 +16,37 @@ import {
 
 interface ListItemProps<V1, V2, V3> {
     item: CombinedFormattedOptionProps<V1, V2, V3>;
-    mode: Mode;
     selectedKeyPath?: string[] | undefined;
-    defaultExpandKeys: string[];
-    itemTruncationType: TruncateType;
+    itemTruncationType?: TruncateType | undefined;
     visible: boolean;
-    onSelect: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
-    onExpand: () => void;
     onBlur: () => void;
+    onExpand: (parentKeys: string[]) => void;
+    onRef: (ref: HTMLButtonElement, keyPaths: string[]) => void;
+    onSelect: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
 }
 
 export const ListItem = <V1, V2, V3>({
     item,
-    mode,
     selectedKeyPath,
-    defaultExpandKeys,
     itemTruncationType,
     visible,
-    onExpand,
-    onSelect,
     onBlur,
+    onExpand,
+    onRef,
+    onSelect,
 }: ListItemProps<V1, V2, V3>): JSX.Element => {
     // =============================================================================
     // CONST, REF, STATE
     // =============================================================================
-    const [expand, setExpand] = useState<boolean>(isExpand());
-
     const labelRef = useRef<HTMLLIElement>();
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleClick = useCallback(() => {
-        setExpand(!expand);
-        onExpand();
-    }, [expand]);
-
+    const handleExpand = (event: React.MouseEvent) => {
+        event.preventDefault();
+        onExpand(item.keyPath);
+    };
     const handleSelect = (event: React.MouseEvent) => {
         event.preventDefault();
         onSelect(item);
@@ -66,33 +61,6 @@ export const ListItem = <V1, V2, V3>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    function isExpand() {
-        switch (mode) {
-            case "expand":
-                return true;
-            case "collapse":
-                return false;
-            default:
-                if (selectedKeyPath && selectedKeyPath.length) {
-                    for (let i = 0; i < selectedKeyPath.length; i++) {
-                        const found = item.keyPath.every(
-                            (key, index) => selectedKeyPath[index] === key
-                        );
-
-                        if (!found) break;
-
-                        return found;
-                    }
-                } else {
-                    const found = defaultExpandKeys.includes(
-                        item.keyPath[item.keyPath.length - 1]
-                    );
-
-                    return found;
-                }
-        }
-    }
-
     const checkListItemSelected = (keyPath: string[]): boolean => {
         return JSON.stringify(selectedKeyPath) === JSON.stringify(keyPath);
     };
@@ -128,23 +96,20 @@ export const ListItem = <V1, V2, V3>({
     };
 
     const renderListItem = () => {
-        if (!expand) return;
-
         const nextSubItems = item.subItems.values();
 
         return (
-            <List>
+            <List $expanded={item.expanded}>
                 {[...nextSubItems].map((item) => (
                     <ListItem
                         key={item.keyPath.join("-")}
                         item={item}
-                        mode={mode}
                         selectedKeyPath={selectedKeyPath}
-                        defaultExpandKeys={defaultExpandKeys}
                         itemTruncationType={itemTruncationType}
                         visible={visible}
                         onBlur={onBlur}
                         onExpand={onExpand}
+                        onRef={onRef}
                         onSelect={onSelect}
                     />
                 ))}
@@ -156,6 +121,7 @@ export const ListItem = <V1, V2, V3>({
         return (
             <li ref={labelRef}>
                 <ListItemSelector
+                    ref={(ref) => onRef(ref, item.keyPath)}
                     type="button"
                     tabIndex={visible ? 0 : -1}
                     $selected={checkListItemSelected(item.keyPath)}
@@ -176,8 +142,12 @@ export const ListItem = <V1, V2, V3>({
 
     return (
         <li>
-            <Category onClick={handleClick}>
-                <ArrowButton $expand={expand}>
+            <Category onClick={handleExpand}>
+                <ArrowButton
+                    ref={(ref) => onRef(ref, item.keyPath)}
+                    $expanded={item.expanded}
+                    aria-expanded={item.expanded}
+                >
                     <TriangleIcon />
                 </ArrowButton>
                 <Title tabIndex={-1}>
