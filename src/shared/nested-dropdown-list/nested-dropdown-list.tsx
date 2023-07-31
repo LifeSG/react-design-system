@@ -1,14 +1,11 @@
+import { enableMapSet, produce } from "immer";
+import get from "lodash/get";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
-import { useEventListener } from "../../util/use-event-listener";
 import { Spinner } from "../../button/button.style";
 import { CombinedOptionProps } from "../../input-nested-select";
+import { useEventListener } from "../../util/use-event-listener";
 import { ListItem } from "./list-item";
-import {
-    CombinedFormattedOptionProps,
-    FormattedOption,
-    NestedDropdownListProps,
-} from "./types";
 import {
     Container,
     DropdownCommonButton,
@@ -17,6 +14,22 @@ import {
     ResultStateContainer,
     ResultStateText,
 } from "./nested-dropdown-list.styles";
+import {
+    CombinedFormattedOptionProps,
+    FormattedOption,
+    NestedDropdownListProps,
+} from "./types";
+
+enableMapSet();
+
+interface ListItemRef {
+    ref?: HTMLButtonElement;
+    subItems?: ListItemRef;
+}
+
+type Direction = "down" | "up";
+
+type FormattedOptionMap<V1, V2, V3> = Map<string, FormattedOption<V1, V2, V3>>;
 
 /**
  * NOTE: This component is not directly exportables
@@ -39,13 +52,13 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     // CONST, REF, STATE
     // =============================================================================
-    const listItems = useMemo((): Map<string, FormattedOption<V1, V2, V3>> => {
+    const initialItems = useMemo((): FormattedOptionMap<V1, V2, V3> => {
         if (!_listItems || !_listItems.length) return new Map([]);
 
         const formatted = (
             options: CombinedOptionProps<V1, V2, V3>[],
             parentKeys: string[]
-        ): Map<string, FormattedOption<V1, V2, V3>> => {
+        ): FormattedOptionMap<V1, V2, V3> => {
             return options.reduce((result, option) => {
                 const { key, label, value, subItems } = option;
                 const stringKey = key.toString();
@@ -55,6 +68,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                 const item = {
                     label,
                     value,
+                    expanded: mode === "expand",
                     keyPath,
                     subItems: subItems
                         ? formatted(subItems, keyPath)
@@ -71,6 +85,10 @@ export const NestedDropdownList = <V1, V2, V3>({
     }, [_listItems]);
 
     const [contentHeight, setContentHeight] = useState<number>(0);
+    const [currentItems, setCurrentItems] =
+        useState<FormattedOptionMap<V1, V2, V3>>(initialItems);
+    const [focusedIndex, setFocusedIndex] = useState<number>(0);
+    const [visibleKeyPaths, setVisibleKeyPaths] = useState<string[][]>([]);
 
     // React spring animation configuration
     const containerStyles = useSpring({
@@ -79,18 +97,35 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const nodeRef = useRef<HTMLDivElement>();
     const listRef = useRef<HTMLUListElement>();
+    const listItemRefs = useRef<ListItemRef>({});
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         if (visible) {
+            const list = getInitialDropdown();
+            const keyPaths = getVisibleKeyPaths(list);
+
+            setCurrentItems(list);
+            setVisibleKeyPaths(keyPaths);
+
+            // TODO: if search exist focus it else focus listItemRefs.current[target]
+            if (listItemRefs.current) {
+                // focus the first item (focusedIndex has been reset to 0)
+                const target = keyPaths[focusedIndex];
+                listItemRefs.current[target[0]].ref.focus();
+            }
+
             // Give some time for the custom call-to-action to be rendered
             setTimeout(() => {
                 setContentHeight(getContentHeight());
             });
         } else {
+            setFocusedIndex(0);
             setContentHeight(0);
+            listItemRefs.current = {};
+            setCurrentItems(initialItems);
         }
     }, [visible]);
 
@@ -112,18 +147,71 @@ export const NestedDropdownList = <V1, V2, V3>({
         onSelectItem(item);
     };
 
-    const handleExpand = () => {
+    const handleExpand = (keyPath: string[]) => {
+        const list = produce(
+            currentItems,
+            (draft: FormattedOptionMap<V1, V2, V3>) => {
+                const item = getItemAtKeyPath(draft, keyPath);
+                item.expanded = !item.expanded;
+            }
+        );
+        const keyPaths = getVisibleKeyPaths(list);
+
+        setCurrentItems(list);
+        setVisibleKeyPaths(keyPaths);
         setTimeout(() => {
             setContentHeight(getContentHeight());
         });
     };
 
+    const handleListItemRef = (
+        ref: HTMLButtonElement,
+        keyPath: string[],
+        currentObj: ListItemRef = listItemRefs.current
+    ) => {
+        const [currentKey, ...remainingKeys] = keyPath;
+
+        if (!currentObj[currentKey]) {
+            currentObj[currentKey] = { ref: undefined, subItems: {} };
+        }
+
+        if (remainingKeys.length) {
+            handleListItemRef(
+                ref,
+                remainingKeys,
+                currentObj[currentKey].subItems
+            );
+        } else {
+            currentObj[currentKey].ref = ref;
+        }
+    };
+
+    const handleArrowUpDown = (direction: Direction) => {
+        const upcomingIndex =
+            direction === "down" ? focusedIndex + 1 : focusedIndex - 1;
+
+        setFocusedIndex(upcomingIndex);
+
+        const targetKey = visibleKeyPaths[upcomingIndex];
+
+        const selectedItem = get(
+            listItemRefs.current,
+            targetKey.join(".subItems.")
+        );
+
+        selectedItem.ref.focus();
+    };
+
     function handleKeyboardPress(event: KeyboardEvent) {
-        if (nodeRef && (nodeRef.current as any).contains(event.target)) {
+        if (nodeRef.current && nodeRef.current.contains(event.target as Node)) {
             switch (event.code) {
                 case "ArrowDown":
+                    if (focusedIndex + 1 >= visibleKeyPaths.length) return;
+                    handleArrowUpDown("down");
                     break;
                 case "ArrowUp":
+                    if (focusedIndex - 1 < 0) return;
+                    handleArrowUpDown("up");
                     break;
                 case "Escape":
                     if (onDismiss) onDismiss(true);
@@ -158,58 +246,84 @@ export const NestedDropdownList = <V1, V2, V3>({
         return listHeight;
     };
 
-    const getDefaultExpandKeys = (
-        items:
-            | Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-            | undefined,
-        parentKeys?: string[]
+    const getInitialSubItem = (
+        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>> | undefined
     ): string[] => {
-        /**
-         * Get the keys which has the subItems on "items" tier
-         */
-        let keys = [];
-
-        if (!items) return keys;
-
-        if (parentKeys && parentKeys.length) {
-            keys = parentKeys;
-        }
-
-        for (const [key, item] of items.entries()) {
+        for (const item of list.values()) {
             if (item.subItems && item.subItems.size) {
-                keys.push(key);
-
-                getDefaultExpandKeys(item.subItems, keys);
-
-                // stop loop once hit the innermost level
-                break;
+                const [firstItemKey] = item.subItems.keys();
+                return item.subItems.get(firstItemKey).keyPath;
             }
+            getInitialSubItem(item.subItems);
         }
-
-        return keys;
     };
 
-    const getItemWithSubItems = (
-        items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-    ) => {
-        /**
-         * Filter the category which has the subItems
-         */
-        const itemWithSubItems = [];
+    const getInitialDropdown = () => {
+        // use the existing expanded state if mode is specified
+        if (["expand", "collapse"].includes(mode)) return initialItems;
 
-        for (const [key, value] of items.entries()) {
-            if (value.subItems && value.subItems.size) {
-                const item = new Map();
+        // otherwise expand the first selected item or first subitem tree
+        let keyPath = selectedKeyPath;
 
-                item.set(key, value);
-                itemWithSubItems.push(item);
-
-                // stop loop once found the item
-                break;
-            }
+        if (!keyPath || !keyPath.length) {
+            keyPath = getInitialSubItem(currentItems);
         }
 
-        return itemWithSubItems;
+        const list = produce(
+            currentItems,
+            (draft: Map<string, FormattedOption<V1, V2, V3>>) => {
+                const targetKey = [];
+                keyPath.forEach((key) => {
+                    targetKey.push(key);
+                    const item = getItemAtKeyPath(draft, targetKey);
+                    item.expanded = true;
+                });
+            }
+        );
+
+        return list;
+    };
+
+    const getItemAtKeyPath = (
+        draft: FormattedOptionMap<V1, V2, V3>,
+        keyPath: string[]
+    ): CombinedFormattedOptionProps<V1, V2, V3> => {
+        const item = keyPath.reduce(
+            (
+                item: CombinedFormattedOptionProps<V1, V2, V3>,
+                currentKey: string
+            ) => {
+                return item
+                    ? item.subItems.get(currentKey)
+                    : draft.get(currentKey);
+            },
+            null
+        );
+
+        return item;
+    };
+
+    const getVisibleKeyPaths = (
+        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+    ): string[][] => {
+        const keyPaths = [];
+
+        const getKey = (
+            items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+        ) => {
+            if (!items || !items.size) return;
+
+            for (const item of items.values()) {
+                keyPaths.push(item.keyPath);
+                if (item.expanded) {
+                    getKey(item.subItems);
+                }
+            }
+        };
+
+        getKey(list);
+
+        return keyPaths;
     };
 
     // =============================================================================
@@ -217,20 +331,16 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     const renderItems = () => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
-            const [item] = getItemWithSubItems(listItems);
-            const defaultExpandKeys = getDefaultExpandKeys(item);
-
-            return Array.from(listItems).map(([key, item]) => (
+            return Array.from(currentItems).map(([key, item]) => (
                 <ListItem
                     key={key}
                     item={item}
-                    mode={mode}
                     selectedKeyPath={selectedKeyPath}
-                    defaultExpandKeys={defaultExpandKeys}
                     itemTruncationType={itemTruncationType}
                     visible={visible}
                     onBlur={handleBlur}
                     onExpand={handleExpand}
+                    onRef={handleListItemRef}
                     onSelect={handleSelect}
                 />
             ));
