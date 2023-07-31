@@ -9,11 +9,13 @@ import { TriangleForwardFillIcon } from "@lifesg/react-icons/triangle-forward-fi
 // STYLE INTERFACES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
+
 interface ListProps {
     $expanded: boolean;
+    $show: boolean;
 }
 
-interface ListItemSelectorProps {
+interface ListItemSelectorProps extends Pick<ListProps, "$show"> {
     $selected: boolean;
     $level_3: boolean;
 }
@@ -22,10 +24,14 @@ interface LabelProps {
     $truncateType?: TruncateType;
 }
 
-interface ArrowButtonProps extends ListProps {}
+interface ArrowButtonProps extends Pick<ListProps, "$expanded"> {}
+interface SectionProps extends Pick<ListProps, "$show"> {}
 // =============================================================================
 // STYLING
 // =============================================================================
+export const Section = styled.li<SectionProps>`
+    display: ${(props) => (props.$show ? "block" : "none")};
+`;
 
 export const Category = styled.div`
     display: flex;
@@ -35,7 +41,7 @@ export const Category = styled.div`
 `;
 
 export const ListItemSelector = styled.button<ListItemSelectorProps>`
-    display: flex;
+    display: ${(props) => (props.$show ? "flex" : "none")};
     width: 100%;
     border: none;
     cursor: pointer;

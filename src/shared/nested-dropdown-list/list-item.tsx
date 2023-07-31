@@ -7,6 +7,7 @@ import {
     Label,
     List,
     ListItemSelector,
+    Section,
     Title,
     TriangleIcon,
     TruncateContainer,
@@ -99,7 +100,7 @@ export const ListItem = <V1, V2, V3>({
         const nextSubItems = item.subItems.values();
 
         return (
-            <List $expanded={item.expanded}>
+            <List $expanded={item.expanded} $show={item.show}>
                 {[...nextSubItems].map((item) => (
                     <ListItem
                         key={item.keyPath.join("-")}
@@ -125,6 +126,7 @@ export const ListItem = <V1, V2, V3>({
                     type="button"
                     tabIndex={visible ? 0 : -1}
                     $selected={checkListItemSelected(item.keyPath)}
+                    $show={item.show}
                     $level_3={item.keyPath.length === 3}
                     onBlur={handleBlur}
                     onClick={handleSelect}
@@ -141,7 +143,7 @@ export const ListItem = <V1, V2, V3>({
     }
 
     return (
-        <li>
+        <Section $show={item.show} data-expanded={item.expanded}>
             <Category onClick={handleExpand}>
                 <ArrowButton
                     ref={(ref) => onRef(ref, item.keyPath)}
@@ -155,6 +157,6 @@ export const ListItem = <V1, V2, V3>({
                 </Title>
             </Category>
             {renderListItem()}
-        </li>
+        </Section>
     );
 };
