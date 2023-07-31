@@ -12,9 +12,21 @@ export interface DropdownEventHandlerProps<V1, V2, V3> {
     onSelectItem: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
 }
 
+export interface DropdownSearchProps<V1, V2, V3> {
+    /** Specifying will render a search bar in the dropdown */
+    enableSearch?: boolean | undefined;
+    /** If specified, the default no results display will not be rendered */
+    hideNoResultsDisplay?: boolean | undefined;
+    searchPlaceholder?: string | undefined;
+    /** Custom function to perform search when a user keys in a value in the search input */
+    searchFunction?: ((searchValue: string) => (V1 | V2 | V3)[]) | undefined;
+    onSearch?: (() => void) | undefined;
+}
+
 export interface NestedDropdownListProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLUListElement>,
         DropdownEventHandlerProps<V1, V2, V3>,
+        DropdownSearchProps<V1, V2, V3>,
         DropdownStyleProps {
     listItems?: L1OptionProps<V1, V2, V3>[] | undefined;
     visible?: boolean | undefined;
@@ -41,10 +53,14 @@ export interface ListItemSelectorProps {
 // =============================================================================
 // Recursive Types
 // =============================================================================
+
 interface BaseFormattedOptionProps {
     label: string;
     keyPath: string[];
     expanded: boolean;
+    selected: boolean;
+    isSearchTerm: boolean;
+    show: boolean;
 }
 
 export interface FormattedOption<V1, V2, V3> extends BaseFormattedOptionProps {

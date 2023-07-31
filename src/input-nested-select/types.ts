@@ -2,7 +2,11 @@ import {
     InputSelectOptionsProps,
     InputSelectSharedProps,
 } from "../input-select";
-import { DropdownStyleProps, Mode } from "../shared/nested-dropdown-list/types";
+import {
+    DropdownSearchProps,
+    DropdownStyleProps,
+    Mode,
+} from "../shared/nested-dropdown-list/types";
 
 interface InputNestedSelectOptionsProps<V1, V2, V3>
     extends Omit<InputSelectOptionsProps<V1>, "options"> {
@@ -16,6 +20,7 @@ export interface InputNestedSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
         InputNestedSelectOptionsProps<V1, V2, V3>,
         Omit<InputSelectSharedProps<V1>, "options">,
+        DropdownSearchProps<V1, V2, V3>,
         DropdownStyleProps {
     readOnly?: boolean | undefined;
     /** Behavior of dropdown list items once it is opened */
