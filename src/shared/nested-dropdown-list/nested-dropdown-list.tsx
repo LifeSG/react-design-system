@@ -102,7 +102,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         useState<FormattedOptionMap<V1, V2, V3>>(initialItems);
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
     const [visibleKeyPaths, setVisibleKeyPaths] = useState<string[][]>([]);
-    console.log("filteredItems: ", filteredItems);
 
     // React spring animation configuration
     const containerStyles = useSpring({
