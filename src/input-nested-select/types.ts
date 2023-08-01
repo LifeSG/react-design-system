@@ -20,7 +20,7 @@ export interface InputNestedSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
         InputNestedSelectOptionsProps<V1, V2, V3>,
         Omit<InputSelectSharedProps<V1>, "options">,
-        DropdownSearchProps<V1, V2, V3>,
+        DropdownSearchProps,
         DropdownStyleProps {
     readOnly?: boolean | undefined;
     /** Behavior of dropdown list items once it is opened */
