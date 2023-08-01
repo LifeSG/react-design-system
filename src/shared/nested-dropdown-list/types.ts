@@ -60,7 +60,6 @@ interface BaseFormattedOptionProps {
     expanded: boolean;
     selected: boolean;
     isSearchTerm: boolean;
-    show: boolean;
 }
 
 export interface FormattedOption<V1, V2, V3> extends BaseFormattedOptionProps {
