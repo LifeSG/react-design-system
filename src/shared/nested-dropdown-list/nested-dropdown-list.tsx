@@ -236,7 +236,6 @@ export const NestedDropdownList = <V1, V2, V3>({
     const handleOnClear = () => {
         setSearchValue("");
         searchInputRef.current.focus();
-        setFilteredItems(initialItems);
         if (onSearch) onSearch();
     };
 
@@ -317,6 +316,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                 string,
                 CombinedFormattedOptionProps<V1, V2, V3>
             > = new Map();
+
             item.subItems.forEach((subItem) => {
                 const result = search(subItem, matched);
                 if (result) {
@@ -328,12 +328,15 @@ export const NestedDropdownList = <V1, V2, V3>({
             let expanded = false;
 
             for (const item of subItems.values()) {
-                if (item.isSearchTerm) {
+                if (item.isSearchTerm || item.expanded) {
                     expanded = true;
                 }
-                // if (item.show) {
-                //     show = true;
-                // }
+
+                // remove category which didn't has any subItem
+                if (item.subItems && item.subItems.size === 0) {
+                    const removeKey = item.keyPath[item.keyPath.length - 1];
+                    subItems.delete(removeKey);
+                }
             }
 
             return {
@@ -348,7 +351,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         for (const [key, item] of initialItems) {
             const result = search(item);
-            if (result) {
+            if (result && result.subItems && result.subItems.size) {
                 list.set(key, result);
             }
         }
@@ -384,6 +387,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     const filterAndUpdateList = (searchValue: string) => {
         if (searchValue === "") {
             resetVisbileKeyPaths(currentItems);
+            setFilteredItems(initialItems);
             setIsSearch(false);
         } else if (searchFunction) {
             // TODO: go take a look in regular dropdown. what is this
@@ -403,6 +407,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     const renderItems = () => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
             const list = isSearch ? filteredItems : currentItems;
+
             return Array.from(list).map(([key, item]) => (
                 <ListItem
                     key={key}
@@ -440,15 +445,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const renderNoResults = () => {
         if (isSearch) {
-            const hasItem = false;
-            for (const item of filteredItems.values()) {
-                //
-                // if (item.show) {
-                //     hasItem = true;
-                //     break;
-                // }
-            }
-            if (!hideNoResultsDisplay && !hasItem) {
+            if (!hideNoResultsDisplay && !filteredItems.size) {
                 return (
                     <ResultStateContainer
                         key="noResults"
