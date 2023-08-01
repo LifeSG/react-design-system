@@ -15,11 +15,11 @@ import {
     ResultStateContainer,
     ResultStateText,
 } from "./nested-dropdown-list.styles";
+import { CombinedFormattedOptionProps, NestedDropdownListProps } from "./types";
 import {
-    CombinedFormattedOptionProps,
-    FormattedOption,
-    NestedDropdownListProps,
-} from "./types";
+    FormattedOptionMap,
+    NestedDropdownListHelper,
+} from "./nested-dropdown-list-helper";
 
 enableMapSet();
 
@@ -29,8 +29,6 @@ interface ListItemRef {
 }
 
 type Direction = "down" | "up";
-
-type FormattedOptionMap<V1, V2, V3> = Map<string, FormattedOption<V1, V2, V3>>;
 
 /**
  * NOTE: This component is not directly exportables
@@ -77,7 +75,6 @@ export const NestedDropdownList = <V1, V2, V3>({
                     expanded: mode === "expand",
                     selected: false,
                     isSearchTerm: false,
-                    show: true,
                     keyPath,
                     subItems: subItems
                         ? formatted(subItems, keyPath)
@@ -119,7 +116,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     useEffect(() => {
         if (visible) {
             const list = getInitialDropdown();
-            const keyPaths = getVisibleKeyPaths(list);
+            const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(list);
 
             setCurrentItems(list);
             setVisibleKeyPaths(keyPaths);
@@ -150,7 +147,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             const contentHeight = getContentHeight();
             setContentHeight(contentHeight);
         }
-    }, [_listItems]);
+    }, [_listItems, currentItems, filteredItems]);
 
     useEffect(() => {
         filterAndUpdateList(searchValue);
@@ -172,11 +169,14 @@ export const NestedDropdownList = <V1, V2, V3>({
         const list = produce(
             targetList,
             (draft: FormattedOptionMap<V1, V2, V3>) => {
-                const item = getItemAtKeyPath(draft, keyPath);
+                const item = NestedDropdownListHelper.getItemAtKeyPath(
+                    draft,
+                    keyPath
+                );
                 item.expanded = !item.expanded;
             }
         );
-        const keyPaths = getVisibleKeyPaths(list);
+        const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(list);
 
         setVisibleKeyPaths(keyPaths);
         if (isSearch) {
@@ -184,9 +184,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         } else {
             setCurrentItems(list);
         }
-        setTimeout(() => {
-            setContentHeight(getContentHeight());
-        });
     };
 
     const handleListItemRef = (
@@ -237,7 +234,6 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const handleOnClear = () => {
-        resetVisbileKeyPaths(currentItems);
         setSearchValue("");
         searchInputRef.current.focus();
         setFilteredItems(initialItems);
@@ -291,18 +287,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         return listHeight;
     };
 
-    const getInitialSubItem = (
-        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>> | undefined
-    ): string[] => {
-        for (const item of list.values()) {
-            if (item.subItems && item.subItems.size) {
-                const [firstItemKey] = item.subItems.keys();
-                return item.subItems.get(firstItemKey).keyPath;
-            }
-            getInitialSubItem(item.subItems);
-        }
-    };
-
     const updateSearchState = (): FormattedOptionMap<V1, V2, V3> => {
         const search = (
             item: CombinedFormattedOptionProps<V1, V2, V3>,
@@ -317,7 +301,6 @@ export const NestedDropdownList = <V1, V2, V3>({
                         ...item,
                         expanded: false,
                         isSearchTerm: true,
-                        show: true,
                     };
                 } else if (isParentMatch) {
                     return {
@@ -326,12 +309,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                         isSearchTerm: false,
                     };
                 } else {
-                    return {
-                        ...item,
-                        expanded: false,
-                        isSearchTerm: false,
-                        show: false,
-                    };
+                    return undefined;
                 }
             }
 
@@ -347,22 +325,20 @@ export const NestedDropdownList = <V1, V2, V3>({
                 }
             });
 
-            let expanded = false,
-                show = false;
+            let expanded = false;
 
             for (const item of subItems.values()) {
                 if (item.isSearchTerm) {
                     expanded = true;
                 }
-                if (item.show) {
-                    show = true;
-                }
+                // if (item.show) {
+                //     show = true;
+                // }
             }
 
             return {
                 ...item,
                 expanded,
-                show,
                 isSearchTerm: matched,
                 subItems,
             } as CombinedFormattedOptionProps<V1, V2, V3>;
@@ -370,13 +346,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         const list = new Map();
 
-        for (const [key, item] of filteredItems) {
-            if (item.label.toLowerCase().indexOf(searchValue) != -1) {
-                // display all items under the root list if matched the root title
-                list.set(key, { ...item, isSearchTerm: true, expanded: true });
-                continue;
-            }
-
+        for (const [key, item] of initialItems) {
             const result = search(item);
             if (result) {
                 list.set(key, result);
@@ -391,86 +361,22 @@ export const NestedDropdownList = <V1, V2, V3>({
         if (["expand", "collapse"].includes(mode)) return initialItems;
 
         // otherwise expand the first selected item or first subitem tree
-        let keyPath = selectedKeyPath;
-
-        if (!keyPath || !keyPath.length) {
-            keyPath = getInitialSubItem(currentItems);
-        }
-
-        const list = produce(
+        const list = NestedDropdownListHelper.getInitialDropdown(
             currentItems,
-            (draft: Map<string, FormattedOption<V1, V2, V3>>) => {
-                const targetKey = [];
-                keyPath.forEach((key) => {
-                    targetKey.push(key);
-                    const item = getItemAtKeyPath(draft, targetKey);
-                    item.expanded = true;
-                });
-            }
+            selectedKeyPath
         );
 
         return list;
-    };
-
-    const getItemAtKeyPath = (
-        draft: FormattedOptionMap<V1, V2, V3>,
-        keyPath: string[]
-    ): CombinedFormattedOptionProps<V1, V2, V3> => {
-        const item = keyPath.reduce(
-            (
-                item: CombinedFormattedOptionProps<V1, V2, V3>,
-                currentKey: string
-            ) => {
-                return item
-                    ? item.subItems.get(currentKey)
-                    : draft.get(currentKey);
-            },
-            null
-        );
-
-        return item;
-    };
-
-    const getVisibleKeyPaths = (
-        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>,
-        isSearch?: boolean
-    ): string[][] => {
-        const keyPaths = [];
-
-        const getKey = (
-            items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-        ) => {
-            if (!items || !items.size) return;
-
-            for (const item of items.values()) {
-                if (!isSearch) keyPaths.push(item.keyPath);
-
-                if (isSearch && item.expanded) {
-                    // get it's subItems which parent is expanded
-                    for (const subItem of item.subItems.values()) {
-                        keyPaths.push(subItem.keyPath);
-                    }
-                    getKey(item.subItems);
-                } else if (!isSearch && item.expanded) {
-                    getKey(item.subItems);
-                }
-            }
-        };
-
-        getKey(list);
-
-        return keyPaths;
     };
 
     const resetVisbileKeyPaths = (
         list: FormattedOptionMap<V1, V2, V3>,
         isSearch?: boolean
     ) => {
-        if (isSearch) {
-            setFilteredItems(list);
-        } else setFilteredItems(initialItems);
-
-        const keyPaths = getVisibleKeyPaths(list, isSearch);
+        const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(
+            list,
+            isSearch
+        );
         setVisibleKeyPaths(keyPaths);
         setFocusedIndex(0);
     };
@@ -482,17 +388,13 @@ export const NestedDropdownList = <V1, V2, V3>({
         } else if (searchFunction) {
             // TODO: go take a look in regular dropdown. what is this
         } else if (searchValue.trim().length >= 3) {
-            const isSearch = true;
             listItemRefs.current = {};
+            const isSearch = true;
             const filtered = updateSearchState();
+            setFilteredItems(filtered);
             resetVisbileKeyPaths(filtered, isSearch);
             setIsSearch(isSearch);
         }
-
-        setTimeout(() => {
-            const contentHeight = getContentHeight();
-            setContentHeight(contentHeight);
-        });
     };
 
     // =============================================================================
@@ -526,7 +428,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                     value={searchValue}
                     placeholder={searchPlaceholder}
                     data-testid="search-input"
-                    aria-label="search-input"
+                    aria-label="Type to search"
                     tabIndex={visible ? 0 : -1}
                     onClear={handleOnClear}
                 />
@@ -538,12 +440,13 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const renderNoResults = () => {
         if (isSearch) {
-            let hasItem = false;
+            const hasItem = false;
             for (const item of filteredItems.values()) {
-                if (item.show) {
-                    hasItem = true;
-                    break;
-                }
+                //
+                // if (item.show) {
+                //     hasItem = true;
+                //     break;
+                // }
             }
             if (!hideNoResultsDisplay && !hasItem) {
                 return (
@@ -614,6 +517,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         3. renderSelectAll
         16. renderBottomCta
         18. bold matched character
+        19. middle truncation
      */
 
     return (
