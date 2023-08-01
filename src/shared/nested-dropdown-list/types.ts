@@ -19,7 +19,9 @@ export interface DropdownSearchProps<V1, V2, V3> {
     hideNoResultsDisplay?: boolean | undefined;
     searchPlaceholder?: string | undefined;
     /** Custom function to perform search when a user keys in a value in the search input */
-    searchFunction?: ((searchValue: string) => (V1 | V2 | V3)[]) | undefined;
+    searchFunction?: (
+        searchValue: string
+    ) => L1OptionProps<V1, V2, V3> | undefined;
     onSearch?: (() => void) | undefined;
 }
 

@@ -6,7 +6,7 @@ import { Spinner } from "../../button/button.style";
 import { CombinedOptionProps } from "../../input-nested-select";
 import { useEventListener } from "../../util/use-event-listener";
 import { ListItem } from "./list-item";
-import { DropdownSearch } from "./dropdown-search";
+import { DropdownSearch } from "../dropdown-list/dropdown-search";
 import {
     Container,
     DropdownCommonButton,
@@ -390,7 +390,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             setFilteredItems(initialItems);
             setIsSearch(false);
         } else if (searchFunction) {
-            // TODO: go take a look in regular dropdown. what is this
+            searchFunction(searchValue);
         } else if (searchValue.trim().length >= 3) {
             listItemRefs.current = {};
             const isSearch = true;
