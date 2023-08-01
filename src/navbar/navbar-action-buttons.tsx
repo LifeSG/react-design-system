@@ -9,6 +9,7 @@ import {
     DownloadAppTitle,
     DownloadAppWrapper,
     MobileWrapper,
+    UncollapsableWrapper,
     Wrapper,
 } from "./navbar-action-buttons.styles";
 import { NavbarButtonComponentProps, NavbarButtonProps } from "./types";
@@ -26,6 +27,7 @@ interface Props {
         event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<Element>,
         actionButton: NavbarButtonProps
     ) => void;
+    uncollapsible?: boolean | undefined;
 }
 
 export const NavbarActionButtons = ({
@@ -118,14 +120,23 @@ export const NavbarActionButtons = ({
         );
     };
 
-    const renderButtons = (isMobile = false) => {
+    const renderButtons = (
+        isMobile = false,
+        actionButtonList = actionButtons
+    ) => {
         /**
          * In drawer view, download app button will always be at
          * the bottom, hence we will shift it to the back
          */
-        const buttonsToRender = isMobile
-            ? moveDownloadButtonToTheBack(actionButtons)
-            : actionButtons;
+        let buttonsToRender = isMobile
+            ? moveDownloadButtonToTheBack(actionButtonList)
+            : actionButtonList;
+
+        if (isMobile) {
+            buttonsToRender = buttonsToRender.filter(
+                (item) => !item.uncollapsible
+            );
+        }
 
         return buttonsToRender.map((actionButton, index) => {
             let component: JSX.Element;
@@ -176,7 +187,10 @@ export const NavbarActionButtons = ({
 
             if (component) {
                 return (
-                    <ButtonItem key={`action-button-${index + 1}`}>
+                    <ButtonItem
+                        key={`action-button-${index + 1}`}
+                        $mobile={isMobile}
+                    >
                         {component}
                     </ButtonItem>
                 );
@@ -184,9 +198,25 @@ export const NavbarActionButtons = ({
         });
     };
 
+    const renderUncollapsableButtons = () => {
+        const uncollapsableActionButtons = actionButtons.filter(
+            (actionButton) => !!actionButton.uncollapsible
+        );
+        return (
+            <UncollapsableWrapper>
+                {renderButtons(false, uncollapsableActionButtons)}
+            </UncollapsableWrapper>
+        );
+    };
+
     if (actionButtons && actionButtons.length > 0) {
         const ContentWrapper = mobile ? MobileWrapper : Wrapper;
-        return <ContentWrapper>{renderButtons(mobile)}</ContentWrapper>;
+        return (
+            <>
+                {!mobile && renderUncollapsableButtons()}
+                <ContentWrapper>{renderButtons(mobile)}</ContentWrapper>
+            </>
+        );
     }
 
     return <></>;

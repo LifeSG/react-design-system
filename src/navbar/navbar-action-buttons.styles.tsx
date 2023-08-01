@@ -17,6 +17,17 @@ export const Wrapper = styled.ul`
     }
 `;
 
+export const UncollapsableWrapper = styled.ul`
+    display: flex;
+    list-style: none;
+    margin-left: 4rem;
+    flex-shrink: 0;
+
+    ${MediaQuery.MinWidth.tablet} {
+        display: none;
+    }
+`;
+
 export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
@@ -40,7 +51,7 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 // BUTTON ITEMS
 // =============================================================================
-export const ButtonItem = styled.li`
+export const ButtonItem = styled.li<{ $mobile?: boolean }>`
     position: relative;
     display: flex;
     align-items: center;
@@ -56,7 +67,7 @@ export const ButtonItem = styled.li`
 
         :not(:last-of-type) {
             margin-right: 0;
-            margin-bottom: 1rem;
+            margin-bottom: ${(props) => (props.$mobile ? "1rem" : "unset")};
         }
     }
 

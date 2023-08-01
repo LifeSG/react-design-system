@@ -31,6 +31,7 @@ export interface NavbarButtonComponentProps {
 export interface NavbarButtonProps {
     type: "download" | "button" | "component";
     args?: ButtonProps | NavbarButtonComponentProps | undefined;
+    uncollapsible?: boolean | undefined;
 }
 
 export interface NavbarActionButtonsProps {
