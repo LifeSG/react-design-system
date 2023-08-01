@@ -42,7 +42,6 @@ export const InputNestedSelect = <V1, V2, V3>({
     mode,
     valueToStringFunction,
     enableSearch,
-    searchFunction,
     searchPlaceholder,
     listStyleWidth,
     readOnly,
@@ -241,7 +240,6 @@ export const InputNestedSelect = <V1, V2, V3>({
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     enableSearch={enableSearch}
-                    searchFunction={searchFunction}
                     searchPlaceholder={searchPlaceholder}
                     onDismiss={handleListDismiss}
                     onSelectItem={handleListItemClick}

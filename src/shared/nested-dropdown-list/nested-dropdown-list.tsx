@@ -39,7 +39,6 @@ export const NestedDropdownList = <V1, V2, V3>({
     listStyleWidth,
     hideNoResultsDisplay,
     enableSearch,
-    searchFunction,
     searchPlaceholder = "Search",
     visible,
     mode = "default",
@@ -147,7 +146,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             const contentHeight = getContentHeight();
             setContentHeight(contentHeight);
         }
-    }, [_listItems, currentItems, filteredItems]);
+    }, [currentItems, filteredItems]);
 
     useEffect(() => {
         filterAndUpdateList(searchValue);
@@ -389,8 +388,6 @@ export const NestedDropdownList = <V1, V2, V3>({
             resetVisbileKeyPaths(currentItems);
             setFilteredItems(initialItems);
             setIsSearch(false);
-        } else if (searchFunction) {
-            searchFunction(searchValue);
         } else if (searchValue.trim().length >= 3) {
             listItemRefs.current = {};
             const isSearch = true;
@@ -425,7 +422,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const renderSearchInput = () => {
-        if ((enableSearch || searchFunction) && itemsLoadState === "success") {
+        if (enableSearch && itemsLoadState === "success") {
             return (
                 <DropdownSearch
                     ref={searchInputRef}
