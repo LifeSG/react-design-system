@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    Box,
-    CloseButton,
-    CloseIcon,
-    ContentWrapper,
-} from "./modal-box.styles";
+import { Box, CloseButton, CloseIcon } from "./modal-box.styles";
 import { ModalBoxProps } from "./types";
 
 export const ModalBox = ({
@@ -39,7 +34,7 @@ export const ModalBox = ({
     return (
         <Box data-testid={id} {...otherProps} onClick={handleOnClick}>
             {showCloseButton && renderCloseButton()}
-            <ContentWrapper>{children}</ContentWrapper>
+            {children}
         </Box>
     );
 };

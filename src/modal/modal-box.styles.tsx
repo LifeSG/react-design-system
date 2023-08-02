@@ -37,11 +37,3 @@ export const CloseIcon = styled(CrossIcon)`
     width: 1.5rem;
     color: ${Color.Neutral[4]};
 `;
-
-export const ContentWrapper = styled.div`
-    overflow-y: scroll;
-
-    ::-webkit-scrollbar {
-        display: none; /* Chrome/Safari/Webkit */
-    }
-`;
