@@ -122,3 +122,11 @@ export const HOCTrigger = styled.button`
     border: none;
     padding: 0;
 `;
+
+export const ContentWrapper = styled.div`
+    overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+        display: none; /* Chrome/Safari/Webkit */
+    }
+`;
