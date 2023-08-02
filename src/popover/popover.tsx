@@ -5,7 +5,12 @@ import { Card } from "src/card";
 import { Modal } from "../modal/modal";
 import { MediaWidths } from "../spec/media-spec";
 import { Text } from "../text/text";
-import { BubbleWrap, MobileModalBox, OffsetPosition } from "./popover.styles";
+import {
+    BubbleWrap,
+    ContentWrapper,
+    MobileModalBox,
+    OffsetPosition,
+} from "./popover.styles";
 import { PopoverProps } from "./types";
 
 export const Popover = ({
@@ -147,7 +152,7 @@ export const Popover = ({
             {isMobile && (
                 <Modal show={visible} onOverlayClick={handleMobileClose}>
                     <MobileModalBox onClose={handleMobileClose}>
-                        {renderContent()}
+                        <ContentWrapper>{renderContent()}</ContentWrapper>
                     </MobileModalBox>
                 </Modal>
             )}
