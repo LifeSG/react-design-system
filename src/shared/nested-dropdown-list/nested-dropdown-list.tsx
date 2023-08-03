@@ -292,6 +292,11 @@ export const NestedDropdownList = <V1, V2, V3>({
         ): CombinedFormattedOptionProps<V1, V2, V3> => {
             const searchTerm = searchValue.toLowerCase().trim();
             const matched = item.label.toLowerCase().indexOf(searchTerm) != -1;
+            const isRootMatch =
+                initialItems
+                    .get(item.keyPath[0])
+                    .label.toLowerCase()
+                    .indexOf(searchTerm) != -1;
 
             if (!item.subItems) {
                 if (matched) {
@@ -300,7 +305,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                         expanded: false,
                         isSearchTerm: true,
                     };
-                } else if (isParentMatch) {
+                } else if (isParentMatch || isRootMatch) {
                     return {
                         ...item,
                         expanded: false,
@@ -350,6 +355,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         for (const [key, item] of initialItems) {
             const result = search(item);
+
             if (result && result.subItems && result.subItems.size) {
                 list.set(key, result);
             }
