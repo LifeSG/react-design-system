@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
@@ -67,12 +67,18 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
 
         :not(:last-of-type) {
             margin-right: 0;
-            margin-bottom: ${(props) => (props.$mobile ? "1rem" : "unset")};
+            margin-bottom: ${(props) => (props.$mobile ? "1rem" : "0")};
         }
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        padding: 0 1rem;
+        ${(props) => {
+            if (props.$mobile) {
+                return css`
+                    padding: 0 1rem;
+                `;
+            }
+        }}
     }
 `;
 
