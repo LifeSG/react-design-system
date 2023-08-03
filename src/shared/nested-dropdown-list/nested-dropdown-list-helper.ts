@@ -33,8 +33,7 @@ export namespace NestedDropdownListHelper {
     };
 
     export const getVisibleKeyPaths = <V1, V2, V3>(
-        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>,
-        isSearch?: boolean
+        list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
     ): string[][] => {
         const keyPaths = [];
 
@@ -44,15 +43,8 @@ export namespace NestedDropdownListHelper {
             if (!items || !items.size) return;
 
             for (const item of items.values()) {
-                if (!isSearch) keyPaths.push(item.keyPath);
-
-                if (isSearch && item.expanded) {
-                    // get it's subItems which parent is expanded
-                    for (const subItem of item.subItems.values()) {
-                        keyPaths.push(subItem.keyPath);
-                    }
-                    getKey(item.subItems);
-                } else if (!isSearch && item.expanded) {
+                keyPaths.push(item.keyPath);
+                if (item.expanded) {
                     getKey(item.subItems);
                 }
             }

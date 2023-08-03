@@ -150,6 +150,7 @@ export const Title = styled.button`
     border: none;
     cursor: pointer;
     padding: 0;
+    overflow-wrap: anywhere;
 
     span {
         overflow: hidden;

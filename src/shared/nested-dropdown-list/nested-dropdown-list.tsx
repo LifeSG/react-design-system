@@ -377,14 +377,8 @@ export const NestedDropdownList = <V1, V2, V3>({
         return list;
     };
 
-    const resetVisbileKeyPaths = (
-        list: FormattedOptionMap<V1, V2, V3>,
-        isSearch?: boolean
-    ) => {
-        const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(
-            list,
-            isSearch
-        );
+    const resetVisbileKeyPaths = (list: FormattedOptionMap<V1, V2, V3>) => {
+        const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(list);
         setVisibleKeyPaths(keyPaths);
         setFocusedIndex(0);
     };
@@ -399,7 +393,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             const isSearch = true;
             const filtered = updateSearchState();
             setFilteredItems(filtered);
-            resetVisbileKeyPaths(filtered, isSearch);
+            resetVisbileKeyPaths(filtered);
             setIsSearch(isSearch);
         }
     };

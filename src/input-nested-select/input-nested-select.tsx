@@ -43,8 +43,10 @@ export const InputNestedSelect = <V1, V2, V3>({
     valueToStringFunction,
     enableSearch,
     searchPlaceholder,
+    hideNoResultsDisplay,
     listStyleWidth,
     readOnly,
+    onSearch,
     onSelectOption,
     onShowOptions,
     onHideOptions,
@@ -241,8 +243,10 @@ export const InputNestedSelect = <V1, V2, V3>({
                     itemTruncationType={optionTruncationType}
                     enableSearch={enableSearch}
                     searchPlaceholder={searchPlaceholder}
+                    hideNoResultsDisplay={hideNoResultsDisplay}
                     onDismiss={handleListDismiss}
                     onSelectItem={handleListItemClick}
+                    onSearch={onSearch}
                     onRetry={onRetry}
                 />
             );
