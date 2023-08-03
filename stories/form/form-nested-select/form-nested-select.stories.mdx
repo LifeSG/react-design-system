@@ -30,8 +30,8 @@ import { Form } from "@lifesg/react-design-system/form";
         {() => {
             const [selectedKeyPath, setSelectedKeyPath] = useState([
                 "32",
-                "52",
-                "21",
+                "101",
+                "900",
             ]);
             return (
                 <StoryContainer>
@@ -44,6 +44,35 @@ import { Form } from "@lifesg/react-design-system/form";
                                 setSelectedKeyPath(keyPaths)
                             }
                             placeholder="Select"
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With search capabilities</Heading3>
+
+<Canvas>
+    <Story name="With search">
+        {() => {
+            const [selectedKeyPath, setSelectedKeyPath] = useState([
+                "32",
+                "101",
+                "900",
+            ]);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.NestedSelect
+                            label="This has searchable options"
+                            options={options}
+                            selectedKeyPath={selectedKeyPath}
+                            onSelectOption={(keyPaths, value) =>
+                                setSelectedKeyPath(keyPaths)
+                            }
+                            enableSearch
                         />
                     </Container>
                 </StoryContainer>
@@ -66,8 +95,6 @@ import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-sele
             <Container>
                 <InputNestedSelect
                     options={options}
-                    listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.name}
                     placeholder="Select"
                     optionTruncationType="middle"
                 />

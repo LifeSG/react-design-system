@@ -8,6 +8,7 @@ import { InputSelectPartialProps } from "../input-select/types";
 import { TextareaPartialProps } from "../input-textarea/types";
 import { InputPartialProps } from "../input/types";
 import { PhoneNumberInputProps } from "../phone-number-input/types";
+import { PredictiveTextInputProps } from "../predictive-text-input/types";
 import { TimeRangePickerProps } from "../time-range-picker/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
@@ -102,4 +103,8 @@ export interface FormPhoneNumberInputProps
 
 export interface FormTimeRangePickerProps
     extends TimeRangePickerProps,
+        BaseFormElementProps {}
+
+export interface FormPredictiveTextInputProps<T, V>
+    extends PredictiveTextInputProps<T, V>,
         BaseFormElementProps {}

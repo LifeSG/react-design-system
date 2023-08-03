@@ -1,7 +1,12 @@
 import React, { useImperativeHandle, useRef } from "react";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useNextInputState } from "../util";
-import { ClearContainer, ClearIcon, InputElement } from "./input.style";
+import {
+    BasicWrapper,
+    ClearContainer,
+    ClearIcon,
+    InputElement,
+} from "./input.style";
 import { InputProps, InputRef } from "./types";
 
 const Component = (
@@ -16,6 +21,7 @@ const Component = (
         onClear,
         allowClear = false,
         className,
+        styleType = "bordered",
         ...otherProps
     }: InputProps,
     ref: InputRef
@@ -96,29 +102,45 @@ const Component = (
      */
     const updatedValue = value ? convertInputString(value) : value;
 
+    const renderInputElement = () => {
+        return (
+            <>
+                <InputElement
+                    data-testid="input"
+                    ref={elementRef}
+                    disabled={disabled}
+                    value={updatedValue}
+                    onChange={handleChange}
+                    type={type}
+                    readOnly={readOnly}
+                    {...otherProps}
+                />
+                {shouldShowClear() && (
+                    <ClearContainer onClick={handleClear} type="button">
+                        <ClearIcon aria-hidden />
+                    </ClearContainer>
+                )}
+            </>
+        );
+    };
+
     return (
-        <InputWrapper
-            $disabled={disabled}
-            $error={error}
-            $readOnly={readOnly}
-            className={className}
-        >
-            <InputElement
-                data-testid="input"
-                ref={elementRef}
-                disabled={disabled}
-                value={updatedValue}
-                onChange={handleChange}
-                type={type}
-                readOnly={readOnly}
-                {...otherProps}
-            />
-            {shouldShowClear() && (
-                <ClearContainer onClick={handleClear} type="button">
-                    <ClearIcon aria-hidden />
-                </ClearContainer>
+        <>
+            {styleType === "no-border" ? (
+                <BasicWrapper className={className}>
+                    {renderInputElement()}
+                </BasicWrapper>
+            ) : (
+                <InputWrapper
+                    $disabled={disabled}
+                    $error={error}
+                    $readOnly={readOnly}
+                    className={className}
+                >
+                    {renderInputElement()}
+                </InputWrapper>
             )}
-        </InputWrapper>
+        </>
     );
 };
 

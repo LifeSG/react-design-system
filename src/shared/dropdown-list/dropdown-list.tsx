@@ -13,11 +13,11 @@ import {
     ListCheckbox,
     ListItem,
     ListItemSelector,
+    PrimaryText,
     ResultStateContainer,
     ResultStateText,
-    SecondaryLabel,
+    SecondaryText,
     SelectAllContainer,
-    TruncateContainer,
     TruncateFirstLine,
     TruncateSecondLine,
 } from "./dropdown-list.styles";
@@ -40,12 +40,15 @@ export const DropdownList = <T, V>({
     onSearch,
     searchFunction,
     onDismiss,
+    disableItemFocus,
     multiSelect,
     selectedItems,
     onSelectAll,
     onRetry,
     itemsLoadState = "success",
     itemTruncationType = "end",
+    itemMaxLines = 2,
+    labelDisplayType = "inline",
     renderListItem,
     onBlur,
     hideNoResultsDisplay,
@@ -117,6 +120,8 @@ export const DropdownList = <T, V>({
                 setContentHeight(getContentHeight());
             });
 
+            if (disableItemFocus) return;
+
             // Focus search input if there is a search input
             if (searchInputRef && searchInputRef.current) {
                 searchInputRef.current.focus();
@@ -136,7 +141,7 @@ export const DropdownList = <T, V>({
             const contentHeight = getContentHeight();
             setContentHeight(contentHeight);
         }
-    }, [displayListItems]);
+    }, [displayListItems, itemsLoadState]);
 
     useEffect(() => {
         setDisplayListItems(listItems);
@@ -163,20 +168,21 @@ export const DropdownList = <T, V>({
         return listExtractor ? listExtractor(item) : item.toString();
     };
 
-    const hasExceededContainer = (item: T) => {
-        const displayText = listExtractor
-            ? listExtractor(item)
-            : item.toString();
+    const hasExceededContainer = (displayText: string) => {
+        if (labelDisplayType !== "inline") {
+            return false;
+        }
 
         let widthOfElement = 0;
         if (listRef && listRef.current) {
-            widthOfElement =
-                listRef.current.getBoundingClientRect().width - 100;
+            widthOfElement = listRef.current.getBoundingClientRect().width - 60;
         }
-        return StringHelper.shouldTruncateToTwoLines(
-            typeof displayText === "string" ? displayText : displayText.title,
-            widthOfElement
+
+        const textWidth = StringHelper.getTextWidth(
+            displayText,
+            "1.125rem 'Open Sans'"
         );
+        return textWidth > widthOfElement * itemMaxLines;
     };
 
     const checkListItemSelected = (item: T): boolean => {
@@ -199,18 +205,16 @@ export const DropdownList = <T, V>({
                     typeof label === "object"
                         ? label.title.toLowerCase()
                         : label.toLowerCase();
-
-                // include secondary label filter/search
-                if (typeof label === "object" && label.secondaryLabel) {
-                    return (
-                        title.includes(searchValue.trim().toLowerCase()) ||
-                        label.secondaryLabel.includes(
-                            searchValue.trim().toLowerCase()
-                        )
-                    );
-                }
-
-                return title.includes(searchValue.trim().toLowerCase());
+                const secondaryLabel =
+                    typeof label === "string"
+                        ? undefined
+                        : label.secondaryLabel?.toLowerCase();
+                const updatedSearchValue = searchValue.trim().toLowerCase();
+                return (
+                    title.includes(updatedSearchValue) ||
+                    (secondaryLabel &&
+                        secondaryLabel.includes(updatedSearchValue))
+                );
             });
             setDisplayListItems(updated);
         }
@@ -225,6 +229,15 @@ export const DropdownList = <T, V>({
             ? customCallToActionRef.current.getBoundingClientRect().height
             : 0;
         return listHeight + customCallToActionHeight;
+    };
+
+    const hasNextLineLabel = () => {
+        return (
+            labelDisplayType === "next-line" &&
+            displayListItems.length > 0 &&
+            listExtractor &&
+            typeof listExtractor(displayListItems[0]) !== "string"
+        );
     };
 
     // =============================================================================
@@ -301,31 +314,60 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderTruncatedText = (item: T): JSX.Element => {
-        const label = getOptionLabel(item);
-        const displayText = typeof label === "string" ? label : label.title;
+    const renderTruncatedText = (displayText: string): JSX.Element => {
         return (
-            <TruncateContainer data-testid="truncate-middle-container">
-                <TruncateFirstLine>{displayText}</TruncateFirstLine>
-                <TruncateSecondLine> {displayText}</TruncateSecondLine>
-            </TruncateContainer>
+            <>
+                <TruncateFirstLine $maxLines={itemMaxLines} aria-hidden>
+                    {displayText}
+                </TruncateFirstLine>
+                <TruncateSecondLine $maxLines={itemMaxLines} aria-hidden>
+                    {displayText}
+                </TruncateSecondLine>
+            </>
         );
     };
 
-    const renderLabel = (item: T): JSX.Element => {
+    const renderDropdownLabels = (item: T) => {
         const label = getOptionLabel(item);
-        if (typeof label === "string") {
-            return <>{label}</>;
-        } else {
-            return (
-                <>
-                    {label.title}
-                    {label.secondaryLabel && (
-                        <SecondaryLabel>{label.secondaryLabel}</SecondaryLabel>
-                    )}
-                </>
-            );
-        }
+        const title = typeof label === "string" ? label : label.title;
+        const secondaryLabel =
+            typeof label == "string" ? undefined : label.secondaryLabel;
+
+        const shouldTruncateTitle = hasExceededContainer(title);
+        const shouldTruncateLabel =
+            secondaryLabel && hasExceededContainer(secondaryLabel);
+
+        // css cannot truncate inline elements so if needed, render as block elements instead
+        const itemDisplayType =
+            shouldTruncateTitle || shouldTruncateLabel
+                ? "next-line"
+                : labelDisplayType;
+
+        return (
+            <Label $labelDisplayType={itemDisplayType}>
+                <PrimaryText
+                    $truncateType={itemTruncationType}
+                    $maxLines={itemMaxLines}
+                    aria-label={title}
+                >
+                    {itemTruncationType === "middle" && shouldTruncateTitle
+                        ? renderTruncatedText(title)
+                        : title}
+                </PrimaryText>
+                {secondaryLabel && (
+                    <SecondaryText
+                        $truncateType={itemTruncationType}
+                        $maxLines={itemMaxLines}
+                        $labelDisplayType={labelDisplayType}
+                        aria-label={secondaryLabel}
+                    >
+                        {itemTruncationType === "middle" && shouldTruncateLabel
+                            ? renderTruncatedText(secondaryLabel)
+                            : secondaryLabel}
+                    </SecondaryText>
+                )}
+            </Label>
+        );
     };
 
     const renderItems = () => {
@@ -334,9 +376,10 @@ export const DropdownList = <T, V>({
                 return (
                     <ListItem
                         key={getItemKey(item, index)}
-                        checked={checkListItemSelected(item) && !multiSelect}
+                        $checked={checkListItemSelected(item) && !multiSelect}
                     >
                         <ListItemSelector
+                            $hasNextLineLabel={hasNextLineLabel()}
                             onClick={(event) => {
                                 handleListItemClick(event, item);
                             }}
@@ -346,7 +389,7 @@ export const DropdownList = <T, V>({
                             data-testid={`list-item`}
                             type="button"
                             tabIndex={visible ? 0 : -1}
-                            multiSelect={multiSelect}
+                            $multiSelect={multiSelect}
                             onBlur={handleBlur}
                         >
                             {multiSelect && (
@@ -355,18 +398,11 @@ export const DropdownList = <T, V>({
                                     displaySize={"small"}
                                 />
                             )}
-                            {renderListItem ? (
-                                renderListItem(item, {
-                                    selected: checkListItemSelected(item),
-                                })
-                            ) : (
-                                <Label truncateType={itemTruncationType}>
-                                    {itemTruncationType === "middle" &&
-                                    hasExceededContainer(item)
-                                        ? renderTruncatedText(item)
-                                        : renderLabel(item)}
-                                </Label>
-                            )}
+                            {renderListItem
+                                ? renderListItem(item, {
+                                      selected: checkListItemSelected(item),
+                                  })
+                                : renderDropdownLabels(item)}
                         </ListItemSelector>
                     </ListItem>
                 );
@@ -415,8 +451,9 @@ export const DropdownList = <T, V>({
     const renderNoResults = () => {
         if (
             !hideNoResultsDisplay &&
-            searchValue &&
-            displayListItems.length === 0
+            (searchValue || !enableSearch) &&
+            displayListItems.length === 0 &&
+            itemsLoadState === "success"
         ) {
             return (
                 <ResultStateContainer

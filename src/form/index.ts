@@ -7,6 +7,7 @@ import { FormLabel } from "./form-label";
 import { FormMultiSelect } from "./form-multi-select";
 import { FormNestedSelect } from "./form-nested-select";
 import { FormPhoneNumberInput } from "./form-phone-number-input";
+import { FormPredictiveTextInput } from "./form-predictive-text-input";
 import { FormRangeSelect } from "./form-range-select";
 import { FormSelect } from "./form-select";
 import { FormTextarea } from "./form-textarea";
@@ -30,4 +31,5 @@ export const Form = {
     CustomField: FormCustomField,
     UnitNumberInput: FormUnitNumberInput,
     PhoneNumberInput: FormPhoneNumberInput,
+    PredictiveTextInput: FormPredictiveTextInput,
 };

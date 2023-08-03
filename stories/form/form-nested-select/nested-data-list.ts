@@ -5,6 +5,11 @@ export const options = [
         key: "999",
         subItems: [
             {
+                label: "Flat option 1",
+                value: { id: 502, name: "Flat option" },
+                key: 82,
+            },
+            {
                 label: "Sub-category 1",
                 value: {
                     id: 102,
@@ -18,7 +23,7 @@ export const options = [
                             id: 10001,
                             name: "Option-1",
                         },
-                        key: "997",
+                        key: "100",
                     },
                     {
                         label: "Option 2",
@@ -26,7 +31,7 @@ export const options = [
                             id: 10002,
                             name: "Option-2",
                         },
-                        key: "825",
+                        key: "101",
                     },
                     {
                         label: "Option 3",
@@ -34,14 +39,14 @@ export const options = [
                             id: 10003,
                             name: "Option-3",
                         },
-                        key: "234",
+                        key: "102",
                     },
                 ],
             },
             {
                 label: "Sub-category 2",
                 value: { id: 700, name: "sub category 2" },
-                key: "925",
+                key: "821",
                 subItems: [
                     {
                         label: "Option ",
@@ -49,17 +54,17 @@ export const options = [
                             id: 23,
                             name: "Sub option 2",
                         },
-                        key: "8821",
+                        key: "103",
                     },
                 ],
             },
             {
-                label: "Sub-category 3",
+                label: "Sub",
                 value: {
                     id: 512,
                     name: "Sub category 3",
                 },
-                key: "703",
+                key: "822",
                 subItems: [
                     {
                         label: "Mango",
@@ -67,7 +72,7 @@ export const options = [
                             id: 502,
                             name: "Mango",
                         },
-                        key: "10004",
+                        key: "104",
                     },
                     {
                         label: "Peach",
@@ -75,49 +80,73 @@ export const options = [
                             id: 221,
                             name: "Peach",
                         },
-                        key: "10005",
+                        key: "105",
                     },
                 ],
             },
         ],
     },
     {
-        label: "HQ",
+        label: "HQ Building",
         value: { id: 487, name: "HQ address" },
         key: "32",
         subItems: [
             {
                 label: "Flat option",
                 value: { id: 502, name: "Flat option" },
-                key: "81",
+                key: "100",
             },
             {
-                label: "Category Neptune",
-                value: { id: 501, name: "Neptune" },
-                key: "52",
+                label: "Mercury",
+                value: { id: 501, name: "mercury" },
+                key: "101",
                 subItems: [
                     {
-                        label: "Neptune",
+                        label: "Mars",
                         value: {
                             id: 402,
-                            name: "Neptune room",
+                            name: "mars",
                         },
-                        key: "21",
+                        key: "900",
+                    },
+                    {
+                        label: "Jupiter",
+                        value: {
+                            id: 123,
+                            name: "jupiter",
+                        },
+                        key: "901",
+                    },
+                    {
+                        label: "Another",
+                        value: {
+                            id: 123,
+                            name: "anohter",
+                        },
+                        key: "902",
                     },
                 ],
             },
             {
-                label: "Category Uranus",
-                value: { id: 401, name: "Uranus" },
-                key: "401",
+                label: "Base",
+                value: { id: 401, name: "Earth" },
+                key: "102",
                 subItems: [
                     {
-                        label: "Uranus",
+                        label: "HQ Building A",
                         value: {
                             id: 402,
                             name: "Uranus",
                         },
-                        key: "412",
+                        key: "903",
+                    },
+                    {
+                        label: "Neptune",
+                        value: {
+                            id: 123,
+                            name: "Neptune",
+                        },
+                        key: "904",
                     },
                 ],
             },

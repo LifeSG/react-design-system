@@ -126,6 +126,7 @@ export const Input = styled.input`
     /* Hide appearance but keep it focusable using keyboard interactions */
     appearance: none;
     background: transparent;
+    border: none;
 `;
 
 export const TextContainer = styled.div`
