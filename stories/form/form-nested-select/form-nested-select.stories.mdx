@@ -27,57 +27,39 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas>
     <Story name="NestedSelect">
-        {() => {
-            const [selectedKeyPath, setSelectedKeyPath] = useState([
-                "32",
-                "101",
-                "900",
-            ]);
-            return (
-                <StoryContainer>
-                    <Container>
-                        <Form.NestedSelect
-                            label="This is the nested selected field"
-                            options={options}
-                            selectedKeyPath={selectedKeyPath}
-                            onSelectOption={(keyPaths, value) =>
-                                setSelectedKeyPath(keyPaths)
-                            }
-                            placeholder="Select"
-                        />
-                    </Container>
-                </StoryContainer>
-            );
-        }}
+        <StoryContainer>
+            <Container>
+                <Form.NestedSelect
+                    label="This is the nested selected field"
+                    options={options}
+                />
+                <Form.NestedSelect
+                    label="This is allowing select on title label"
+                    options={options}
+                    selectableTitle={true}
+                />
+                <Form.NestedSelect
+                    label="This is expanded all list item"
+                    options={options}
+                    mode="expand"
+                />
+            </Container>
+        </StoryContainer>
     </Story>
 </Canvas>
 
 <Heading3>With search capabilities</Heading3>
-
 <Canvas>
     <Story name="With search">
-        {() => {
-            const [selectedKeyPath, setSelectedKeyPath] = useState([
-                "32",
-                "101",
-                "900",
-            ]);
-            return (
-                <StoryContainer>
-                    <Container>
-                        <Form.NestedSelect
-                            label="This has searchable options"
-                            options={options}
-                            selectedKeyPath={selectedKeyPath}
-                            onSelectOption={(keyPaths, value) =>
-                                setSelectedKeyPath(keyPaths)
-                            }
-                            enableSearch
-                        />
-                    </Container>
-                </StoryContainer>
-            );
-        }}
+        <StoryContainer>
+            <Container>
+                <Form.NestedSelect
+                    label="This has searchable options"
+                    options={options}
+                    enableSearch
+                />
+            </Container>
+        </StoryContainer>
     </Story>
 </Canvas>
 
@@ -93,11 +75,7 @@ import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-sele
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
-                <InputNestedSelect
-                    options={options}
-                    placeholder="Select"
-                    optionTruncationType="middle"
-                />
+                <InputNestedSelect options={options} placeholder="Select" />
             </Container>
         </StoryContainer>
     </Story>

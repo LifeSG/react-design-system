@@ -5,15 +5,15 @@ export const options = [
         key: "999",
         subItems: [
             {
-                label: "Flat option 1",
-                value: { id: 502, name: "Flat option" },
-                key: 82,
+                label: "Option 1",
+                value: { id: 502, name: "Flat option 1" },
+                key: "82",
             },
             {
-                label: "Sub-category 1",
+                label: "Sub Category A",
                 value: {
                     id: 102,
-                    name: "Sub category 1",
+                    name: "Sub category a",
                 },
                 key: "820",
                 subItems: [
@@ -44,8 +44,8 @@ export const options = [
                 ],
             },
             {
-                label: "Sub-category 2",
-                value: { id: 700, name: "sub category 2" },
+                label: "Sub Category B",
+                value: { id: 700, name: "sub category b" },
                 key: "821",
                 subItems: [
                     {
@@ -59,7 +59,7 @@ export const options = [
                 ],
             },
             {
-                label: "Sub",
+                label: "Sub category C",
                 value: {
                     id: 512,
                     name: "Sub category 3",
@@ -67,18 +67,26 @@ export const options = [
                 key: "822",
                 subItems: [
                     {
-                        label: "Mango",
+                        label: "Honey",
                         value: {
                             id: 502,
-                            name: "Mango",
+                            name: "honey",
                         },
                         key: "104",
                     },
                     {
-                        label: "Peach",
+                        label: "Nuts",
                         value: {
                             id: 221,
-                            name: "Peach",
+                            name: "nuts",
+                        },
+                        key: "105",
+                    },
+                    {
+                        label: "Butter",
+                        value: {
+                            id: 221,
+                            name: "butter",
                         },
                         key: "105",
                     },
@@ -87,41 +95,41 @@ export const options = [
         ],
     },
     {
-        label: "HQ Building",
-        value: { id: 487, name: "HQ address" },
+        label: "Hive",
+        value: { id: 487, name: "hive" },
         key: "32",
         subItems: [
             {
-                label: "Flat option",
-                value: { id: 502, name: "Flat option" },
+                label: "Level 8",
+                value: { id: 502, name: "Leavel 8" },
                 key: "100",
             },
             {
-                label: "Mercury",
-                value: { id: 501, name: "mercury" },
+                label: "Level 9 ",
+                value: { id: 501, name: "level 9" },
                 key: "101",
                 subItems: [
                     {
-                        label: "Mars",
+                        label: "Tutu kueh",
                         value: {
                             id: 402,
-                            name: "mars",
+                            name: "tutu kueh",
                         },
                         key: "900",
                     },
                     {
-                        label: "Jupiter",
+                        label: "Lychee",
                         value: {
                             id: 123,
-                            name: "jupiter",
+                            name: "lychee",
                         },
                         key: "901",
                     },
                     {
-                        label: "Another",
+                        label: "Mao Shan Wang",
                         value: {
                             id: 123,
-                            name: "anohter",
+                            name: "mao shan wang",
                         },
                         key: "902",
                     },
@@ -133,7 +141,7 @@ export const options = [
                 key: "102",
                 subItems: [
                     {
-                        label: "HQ Building A",
+                        label: "Uranus",
                         value: {
                             id: 402,
                             name: "Uranus",

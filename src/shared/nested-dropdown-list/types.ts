@@ -28,9 +28,12 @@ export interface NestedDropdownListProps<V1, V2, V3>
         DropdownStyleProps {
     listItems?: L1OptionProps<V1, V2, V3>[] | undefined;
     visible?: boolean | undefined;
+    /** Specifies key path to select particular option label */
     selectedKeyPath?: string[] | undefined;
     /** Behavior of dropdown list items once it is opened */
     mode?: Mode | undefined;
+    /** If specified, the title category label is selectable */
+    selectableTitle?: boolean | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"
