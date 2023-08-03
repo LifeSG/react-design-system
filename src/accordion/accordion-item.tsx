@@ -1,4 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+    forwardRef,
+    useContext,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { AccordionContext } from "./accordion-context";
@@ -12,38 +19,67 @@ import {
     TitleContainer,
     TitleH4,
 } from "./accordion-item.style";
-import { AccordionItemProps } from "./types";
+import { AccordionItemHandle, AccordionItemProps } from "./types";
 
-export const AccordionItem = ({
-    title,
-    children,
-    expanded = true,
-    type = "default",
-    ...otherProps
-}: AccordionItemProps) => {
+function Component(
+    {
+        title,
+        children,
+        expanded,
+        type = "default",
+        ...otherProps
+    }: AccordionItemProps,
+    ref: React.Ref<AccordionItemHandle>
+) {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const elementRef = useRef<HTMLDivElement>();
     const expandAll = useContext(AccordionContext);
-    const [expand, setExpand] = useState<boolean>(expandAll ?? expanded);
+    const [expand, setExpand] = useState<boolean>(expanded ?? expandAll);
+    const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
 
     const testId = otherProps["data-testid"] || "accordion-item";
 
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
 
+    useImperativeHandle(
+        ref,
+        () =>
+            Object.assign(elementRef.current, {
+                expand(): void {
+                    setExpand(true);
+                },
+                collapse(): void {
+                    setExpand(false);
+                },
+                isExpanded() {
+                    return expand;
+                },
+            }),
+        [expand]
+    );
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
 
     useEffect(() => {
-        setExpand(expanded);
+        if (hasFirstLoad) {
+            setExpand(expandAll);
+        }
+    }, [expandAll]);
+
+    useEffect(() => {
+        if (hasFirstLoad) {
+            setExpand(expanded);
+        }
     }, [expanded]);
 
-    // `setExpand(expandAll)` is after `setExpand(expanded)` to override its setState on initial load
     useEffect(() => {
-        setExpand(expandAll);
-    }, [expandAll]);
+        setHasFirstLoad(true);
+    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -58,14 +94,13 @@ export const AccordionItem = ({
     // RENDER FUNCTIONS
     // =============================================================================
     // React spring animation configuration
-    const expandableStyles = useSpring({
-        height: expand ? resizeDetector.height : 0,
-    });
+    const resizeHeight = { height: expand ? resizeDetector.height : 0 };
+    const expandableStyles = useSpring(resizeHeight);
 
     const renderContent = () => {
         return (
             <Expandable
-                style={expandableStyles}
+                style={hasFirstLoad ? expandableStyles : resizeHeight}
                 $isCollapsed={expand}
                 data-testid={`${testId}-expandable-container`}
             >
@@ -104,6 +139,7 @@ export const AccordionItem = ({
             data-testid={testId}
             className={otherProps.className}
             $isCollapsed={expand}
+            ref={elementRef}
         >
             <TitleContainer>
                 {renderTitle()}
@@ -121,4 +157,9 @@ export const AccordionItem = ({
             {renderContent()}
         </Container>
     );
-};
+}
+
+export const AccordionItem = forwardRef<
+    AccordionItemHandle,
+    AccordionItemProps
+>(Component);

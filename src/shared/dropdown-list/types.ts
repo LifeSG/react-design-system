@@ -1,5 +1,6 @@
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
+export type LabelDisplayType = "inline" | "next-line";
 
 export interface ListItemRenderArgs {
     selected: boolean;
@@ -61,6 +62,7 @@ export interface DropdownListProps<T, V>
     visible?: boolean | undefined;
     multiSelect?: boolean | undefined;
     selectedItems?: T[] | undefined;
+    disableItemFocus?: boolean | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"
@@ -68,6 +70,10 @@ export interface DropdownListProps<T, V>
     itemsLoadState?: ItemsLoadStateType | undefined;
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     itemTruncationType?: TruncateType | undefined;
+    /** Specifies the maximum number of lines visible before the label is truncated for "end" type */
+    itemMaxLines?: number | undefined;
+    /** Specifying flex direction within item */
+    labelDisplayType?: LabelDisplayType | undefined;
 
     onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
     onSelectAll?: (() => void) | undefined;

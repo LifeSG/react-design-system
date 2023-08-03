@@ -41,9 +41,13 @@ export const InputNestedSelect = <V1, V2, V3>({
     selectedKeyPath: _selectedKeyPath,
     mode,
     valueToStringFunction,
-    onSelectOption,
+    enableSearch,
+    searchPlaceholder,
+    hideNoResultsDisplay,
     listStyleWidth,
     readOnly,
+    onSearch,
+    onSelectOption,
     onShowOptions,
     onHideOptions,
     onRetry,
@@ -237,8 +241,12 @@ export const InputNestedSelect = <V1, V2, V3>({
                     selectedKeyPath={selectedKeyPath}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
+                    enableSearch={enableSearch}
+                    searchPlaceholder={searchPlaceholder}
+                    hideNoResultsDisplay={hideNoResultsDisplay}
                     onDismiss={handleListDismiss}
                     onSelectItem={handleListItemClick}
+                    onSearch={onSearch}
                     onRetry={onRetry}
                 />
             );

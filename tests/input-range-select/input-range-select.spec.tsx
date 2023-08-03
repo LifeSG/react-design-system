@@ -16,7 +16,7 @@ const getListItemByText = (text: string) => {
 };
 describe("InputRangeSelect", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("should render the component", () => {

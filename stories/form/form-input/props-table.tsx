@@ -60,6 +60,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The test identifier of the component",
                 propTypes: ["string"],
             },
+            {
+                name: "styleType",
+                description: "Indicates the style type of the component",
+                propTypes: [`"no-border"`, `"bordered"`],
+                defaultValue: "bordered",
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,

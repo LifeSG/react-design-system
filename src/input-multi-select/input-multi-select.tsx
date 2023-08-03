@@ -123,6 +123,10 @@ export const InputMultiSelect = <T, V>({
             return placeholder;
         }
 
+        if (options && selected.length === options.length) {
+            return "All selected";
+        }
+
         return `${selected.length} selected`;
     };
 

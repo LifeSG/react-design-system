@@ -58,11 +58,23 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Specifies if the <code>Toast</code> will be
-                        automatically dismiss after <strong>4 seconds</strong>
+                        automatically dismissed after <code>autoDismissTime</code>.
                     </>
                 ),
                 propTypes: ["boolean"],
                 defaultValue: "false",
+            },
+            {
+                name: "autoDismissTime",
+                description: (
+                    <>
+                        Time in milliseconds until the <code>Toast</code>{" "}
+                        automatically dismisses. Defaults to{" "}
+                        <strong>4 seconds</strong>.
+                    </>
+                ),
+                propTypes: ["number"],
+                defaultValue: "4000",
             },
             {
                 name: "onDismiss",

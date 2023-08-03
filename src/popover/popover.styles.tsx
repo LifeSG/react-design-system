@@ -29,7 +29,7 @@ const getVisibilityStyle = (visible: boolean) => {
             visibility: visible;
             opacity: 1;
             transition: ${Transition.Base};
-            z-index: 2;
+            z-index: 50;
         `;
     } else {
         return css`
