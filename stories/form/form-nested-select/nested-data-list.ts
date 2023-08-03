@@ -67,7 +67,7 @@ export const options = [
                 key: "822",
                 subItems: [
                     {
-                        label: "category",
+                        label: "Mango",
                         value: {
                             id: 502,
                             name: "Mango",
@@ -133,7 +133,7 @@ export const options = [
                 key: "102",
                 subItems: [
                     {
-                        label: "Uranus",
+                        label: "HQ Building A",
                         value: {
                             id: 402,
                             name: "Uranus",
