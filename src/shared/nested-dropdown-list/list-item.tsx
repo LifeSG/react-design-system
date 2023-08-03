@@ -3,6 +3,7 @@ import { CombinedFormattedOptionProps, TruncateType } from "./types";
 import { StringHelper } from "../../util";
 import {
     ArrowButton,
+    Bold,
     Category,
     Label,
     List,
@@ -17,6 +18,8 @@ import {
 interface ListItemProps<V1, V2, V3> {
     item: CombinedFormattedOptionProps<V1, V2, V3>;
     selectedKeyPath?: string[] | undefined;
+    selectableTitle?: boolean | undefined;
+    searchValue: string | undefined;
     itemTruncationType?: TruncateType | undefined;
     visible: boolean;
     onBlur: () => void;
@@ -28,6 +31,8 @@ interface ListItemProps<V1, V2, V3> {
 export const ListItem = <V1, V2, V3>({
     item,
     selectedKeyPath,
+    selectableTitle,
+    searchValue,
     itemTruncationType,
     visible,
     onBlur,
@@ -65,20 +70,6 @@ export const ListItem = <V1, V2, V3>({
         return JSON.stringify(selectedKeyPath) === JSON.stringify(keyPath);
     };
 
-    // =============================================================================
-    // RENDER FUNCTIONS
-    // =============================================================================
-    const renderTruncatedText = (
-        item: CombinedFormattedOptionProps<V1, V2, V3>
-    ): JSX.Element => {
-        return (
-            <TruncateContainer data-testid="truncate-middle-container">
-                <TruncateFirstLine>{item.label}</TruncateFirstLine>
-                <TruncateSecondLine>{item.label}</TruncateSecondLine>
-            </TruncateContainer>
-        );
-    };
-
     const hasExceededContainer = (
         item: CombinedFormattedOptionProps<V1, V2, V3>
     ) => {
@@ -95,6 +86,39 @@ export const ListItem = <V1, V2, V3>({
         );
     };
 
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+    const renderTruncatedText = (
+        item: CombinedFormattedOptionProps<V1, V2, V3>
+    ): JSX.Element => {
+        return (
+            <TruncateContainer data-testid="truncate-middle-container">
+                <TruncateFirstLine>{renderBolded(item)}</TruncateFirstLine>
+                <TruncateSecondLine>{renderBolded(item)}</TruncateSecondLine>
+            </TruncateContainer>
+        );
+    };
+
+    const renderBolded = (item: CombinedFormattedOptionProps<V1, V2, V3>) => {
+        if (!item.isSearchTerm) {
+            return <>{item.label}</>;
+        }
+
+        const label = item.label;
+        const searchTerm = searchValue.toLowerCase().trim();
+        const startIndex = label.toLowerCase().indexOf(searchTerm);
+        const endIndex = startIndex + searchTerm.length;
+
+        return (
+            <>
+                {`${label.slice(0, startIndex)}`}
+                <Bold>{label.slice(startIndex, endIndex)}</Bold>
+                {`${label.slice(endIndex)}`}
+            </>
+        );
+    };
+
     const renderListItem = () => {
         const nextSubItems = item.subItems.values();
 
@@ -105,6 +129,8 @@ export const ListItem = <V1, V2, V3>({
                         key={item.keyPath.join("-")}
                         item={item}
                         selectedKeyPath={selectedKeyPath}
+                        selectableTitle={selectableTitle}
+                        searchValue={searchValue}
                         itemTruncationType={itemTruncationType}
                         visible={visible}
                         onBlur={onBlur}
@@ -114,6 +140,41 @@ export const ListItem = <V1, V2, V3>({
                     />
                 ))}
             </List>
+        );
+    };
+
+    const renderTitleItem = () => {
+        if (selectableTitle) {
+            return (
+                <Category>
+                    <ArrowButton
+                        ref={(ref) => onRef(ref, item.keyPath)}
+                        onClick={handleExpand}
+                        $expanded={item.expanded}
+                        aria-expanded={item.expanded}
+                    >
+                        <TriangleIcon />
+                    </ArrowButton>
+                    <Title onClick={handleSelect}>
+                        <span>{item.label}</span>
+                    </Title>
+                </Category>
+            );
+        }
+
+        return (
+            <Category onClick={handleExpand}>
+                <ArrowButton
+                    ref={(ref) => onRef(ref, item.keyPath)}
+                    $expanded={item.expanded}
+                    aria-expanded={item.expanded}
+                >
+                    <TriangleIcon />
+                </ArrowButton>
+                <Title tabIndex={-1}>
+                    <span>{item.label}</span>
+                </Title>
+            </Category>
         );
     };
 
@@ -133,7 +194,7 @@ export const ListItem = <V1, V2, V3>({
                         {itemTruncationType === "middle" &&
                         hasExceededContainer(item)
                             ? renderTruncatedText(item)
-                            : item.label}
+                            : renderBolded(item)}
                     </Label>
                 </ListItemSelector>
             </li>
@@ -142,18 +203,7 @@ export const ListItem = <V1, V2, V3>({
 
     return (
         <li>
-            <Category onClick={handleExpand}>
-                <ArrowButton
-                    ref={(ref) => onRef(ref, item.keyPath)}
-                    $expanded={item.expanded}
-                    aria-expanded={item.expanded}
-                >
-                    <TriangleIcon />
-                </ArrowButton>
-                <Title tabIndex={-1}>
-                    <span>{item.label}</span>
-                </Title>
-            </Category>
+            {renderTitleItem()}
             {renderListItem()}
         </li>
     );

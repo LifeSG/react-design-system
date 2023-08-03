@@ -23,9 +23,12 @@ export interface InputNestedSelectProps<V1, V2, V3>
         DropdownSearchProps,
         DropdownStyleProps {
     readOnly?: boolean | undefined;
+    /** Specifies key path to select particular option label */
+    selectedKeyPath?: string[] | undefined;
     /** Behavior of dropdown list items once it is opened */
     mode?: Mode | undefined;
-    selectedKeyPath?: string[] | undefined;
+    /** If specified, the title category label is selectable */
+    selectableTitle?: boolean | undefined;
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;

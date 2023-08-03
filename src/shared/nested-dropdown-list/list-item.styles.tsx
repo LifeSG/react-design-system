@@ -93,6 +93,10 @@ export const Label = styled.div<LabelProps>`
     }}
 `;
 
+export const Bold = styled.span`
+    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+`;
+
 export const TruncateContainer = styled.div`
     display: flex;
     flex-direction: column;
