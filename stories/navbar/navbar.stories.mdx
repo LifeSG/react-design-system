@@ -1,9 +1,11 @@
 import { GearIcon } from "@lifesg/react-icons/gear";
 import { InboxIcon } from "@lifesg/react-icons/inbox";
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { IconButton } from "src/icon-button";
+import { Button } from "src/button";
 import { Navbar } from "src/navbar";
+import { Text } from "src/text";
 import {
     Heading3,
     Heading4,
@@ -12,6 +14,7 @@ import {
     Title,
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
+import { CustomComponentWrapper, SubLabel } from "./doc-elements";
 
 <Meta title="Modules/Navbar" component={Navbar} />
 
@@ -313,6 +316,103 @@ You can set an action button to be uncollapsible, so it remains visible in the n
             selectedId="home"
             fixed={false} /* For storybook purposes */
         />
+    </Story>
+</Canvas>
+
+<Heading3>Custom items</Heading3>
+
+You can also choose to render a custom component of your choice as an items.
+
+<Canvas>
+    <Story name="Custom items">
+        {() => {
+            const navbarRef = useRef();
+            return (
+                <Navbar
+                    ref={navbarRef}
+                    items={{
+                        desktop: [
+                            {
+                                id: "home",
+                                children: "Home",
+                                onClick: () => {
+                                    setSelected("home");
+                                },
+                            },
+                            {
+                                id: "guides",
+                                children: "Guides",
+                                subMenu: [
+                                    {
+                                        itemType: "link",
+                                        id: "guides2",
+                                        children: "Sub Guides 2",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                    {
+                                        itemType: "link",
+                                        id: "guides3",
+                                        children: "Sub Guides 3",
+                                        href: "https://www.life.gov.sg",
+                                    },
+                                ],
+                            },
+                        ],
+                        mobile: [
+                            {
+                                itemType: "component",
+                                children: (
+                                    <>
+                                        <CustomComponentWrapper>
+                                            <Text.BodySmall>
+                                                John Smith
+                                            </Text.BodySmall>
+                                            <SubLabel>
+                                                john_smith@tech.gov.sg
+                                            </SubLabel>
+                                            <Button.Small
+                                                style={{ marginTop: "1rem" }}
+                                                onClick={() => {
+                                                    navbarRef.current.dismissDrawer();
+                                                }}
+                                            >
+                                                Click to close the drawer
+                                            </Button.Small>
+                                        </CustomComponentWrapper>
+                                        <hr />
+                                    </>
+                                ),
+                            },
+                            {
+                                itemType: "link",
+                                id: "home",
+                                children: "Home",
+                                onClick: () => {
+                                    setSelected("home");
+                                },
+                            },
+                            {
+                                itemType: "link",
+                                id: "guides",
+                                children: "Guides",
+                                onClick: () => {
+                                    setSelected("guides");
+                                },
+                            },
+                        ],
+                    }}
+                    actionButtons={{
+                        desktop: [
+                            {
+                                type: "download",
+                            },
+                        ],
+                    }}
+                    fixed={false} /* For storybook purposes */
+                    layout={"stretch"}
+                />
+            );
+        }}
     </Story>
 </Canvas>
 
