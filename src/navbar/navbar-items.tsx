@@ -12,7 +12,7 @@ import {
     MobileWrapper,
     Wrapper,
 } from "./navbar-items.styles";
-import { NavItemCommonProps, NavItemProps } from "./types";
+import { NavItemLinkProps, NavItemProps } from "./types";
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -60,7 +60,7 @@ export const NavbarItems = <T,>({
         setShowSubMenu(false);
     };
 
-    const checkSelected = (item: NavItemProps<T>): boolean => {
+    const checkSelected = (item: NavItemLinkProps<T>): boolean => {
         if (item.id === selectedId) {
             return true;
         } else if (item?.subMenu && item.subMenu.length >= 1) {
@@ -86,7 +86,7 @@ export const NavbarItems = <T,>({
 
     const handleSubLinkClick = (
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemCommonProps<T>
+        item: NavItemLinkProps<T>
     ) => {
         event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
         onItemClick(event, item);
@@ -97,56 +97,67 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderItems = () => {
         return items.map((item, index) => {
-            const selected = checkSelected(item);
-            const { children, options, ...otherItemAttrs } = item;
+            switch (item.itemType) {
+                case "component": {
+                    const component = (item && item.children) || null;
+                    return <div key={index}>{component}</div>;
+                }
+                case "link":
+                default: {
+                    const selected = checkSelected(item);
+                    const { children, options, ...otherItemAttrs } = item;
 
-            const textWeight: TextWeight = selected
-                ? mobile
-                    ? "bold"
-                    : "semibold"
-                : "regular";
-            const testId = mobile
-                ? `link__mobile-${index + 1}`
-                : `link__${index + 1}`;
-            const expanded =
-                selectedIndex >= 0 && selectedIndex === index && showSubMenu;
-            return (
-                <LinkItem key={index}>
-                    <Link
-                        data-testid={testId}
-                        weight={textWeight}
-                        $selected={selected} /* for mobile */
-                        {...otherItemAttrs}
-                        onClick={handleLinkClick(item, index)}
-                        {...options}
-                    >
-                        <LinkLabel>{children}</LinkLabel>
-                        {selected && <LinkIndicator />}
-                        {mobile && item.subMenu && (
-                            <LinkIconContainer>
-                                <ExpandCollapseButton
-                                    data-testid={`${testId}-expand-collapse-button`}
-                                    $selected={expanded}
-                                    focusHighlight={false}
-                                    focusOutline="browser"
-                                    aria-label={
-                                        expanded ? "Collapse" : "Expand"
-                                    }
-                                >
-                                    <ChevronIcon />
-                                </ExpandCollapseButton>
-                            </LinkIconContainer>
-                        )}
-                    </Link>
-                    {expanded && (
-                        <Menu
-                            items={item.subMenu}
-                            mobile={mobile}
-                            onItemClick={handleSubLinkClick}
-                        />
-                    )}
-                </LinkItem>
-            );
+                    const textWeight: TextWeight = selected
+                        ? mobile
+                            ? "bold"
+                            : "semibold"
+                        : "regular";
+                    const testId = mobile
+                        ? `link__mobile-${index + 1}`
+                        : `link__${index + 1}`;
+                    const expanded =
+                        selectedIndex >= 0 &&
+                        selectedIndex === index &&
+                        showSubMenu;
+                    return (
+                        <LinkItem key={index}>
+                            <Link
+                                data-testid={testId}
+                                weight={textWeight}
+                                $selected={selected} /* for mobile */
+                                {...otherItemAttrs}
+                                onClick={handleLinkClick(item, index)}
+                                {...options}
+                            >
+                                <LinkLabel>{children}</LinkLabel>
+                                {selected && <LinkIndicator />}
+                                {mobile && item.subMenu && (
+                                    <LinkIconContainer>
+                                        <ExpandCollapseButton
+                                            data-testid={`${testId}-expand-collapse-button`}
+                                            $selected={expanded}
+                                            focusHighlight={false}
+                                            focusOutline="browser"
+                                            aria-label={
+                                                expanded ? "Collapse" : "Expand"
+                                            }
+                                        >
+                                            <ChevronIcon />
+                                        </ExpandCollapseButton>
+                                    </LinkIconContainer>
+                                )}
+                            </Link>
+                            {expanded && (
+                                <Menu
+                                    items={item.subMenu}
+                                    mobile={mobile}
+                                    onItemClick={handleSubLinkClick}
+                                />
+                            )}
+                        </LinkItem>
+                    );
+                }
+            }
         });
     };
 

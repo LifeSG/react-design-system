@@ -4,9 +4,18 @@ import { TextLinkProps } from "../text";
 // =============================================================================
 // NAV ITEM TYPES
 // =============================================================================
-export interface NavItemProps<T> extends NavItemCommonProps<T> {
+
+export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
+    itemType?: "link";
     subMenu?: NavItemCommonProps<T>[] | undefined;
 }
+
+export interface NavItemComponentProps {
+    itemType: "component";
+    children: JSX.Element;
+}
+
+export type NavItemProps<T> = NavItemLinkProps<T> | NavItemComponentProps;
 
 export interface NavItemCommonProps<T> extends TextLinkProps {
     id: string;
@@ -77,6 +86,10 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
 }
 
 export type BrandType = "primary" | "secondary";
+
+export type NavbarDrawerHandle = HTMLDivElement & {
+    dismissDrawer: () => void;
+};
 
 export interface NavbarProps<T = void> extends NavbarSharedProps {
     items: NavItemsProps<T>;
