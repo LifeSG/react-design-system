@@ -319,7 +319,7 @@ You can set an action button to be uncollapsible, so it remains visible in the n
     </Story>
 </Canvas>
 
-<Heading3>Custom items</Heading3>
+<Heading3>Custom component items</Heading3>
 
 You can also choose to render a custom component of your choice as an items.
 
@@ -327,6 +327,7 @@ You can also choose to render a custom component of your choice as an items.
     <Story name="Custom items">
         {() => {
             const navbarRef = useRef();
+            const [selected, setSelected] = useState("home");
             return (
                 <Navbar
                     ref={navbarRef}
@@ -342,18 +343,23 @@ You can also choose to render a custom component of your choice as an items.
                             {
                                 id: "guides",
                                 children: "Guides",
+                                onClick: () => {
+                                    setSelected("guides");
+                                },
                                 subMenu: [
                                     {
-                                        itemType: "link",
                                         id: "guides2",
                                         children: "Sub Guides 2",
-                                        href: "https://www.life.gov.sg",
+                                        onClick: () => {
+                                            setSelected("guides2");
+                                        },
                                     },
                                     {
-                                        itemType: "link",
                                         id: "guides3",
                                         children: "Sub Guides 3",
-                                        href: "https://www.life.gov.sg",
+                                        onClick: () => {
+                                            setSelected("guides3");
+                                        },
                                     },
                                 ],
                             },
@@ -392,12 +398,27 @@ You can also choose to render a custom component of your choice as an items.
                                 },
                             },
                             {
-                                itemType: "link",
                                 id: "guides",
                                 children: "Guides",
                                 onClick: () => {
                                     setSelected("guides");
                                 },
+                                subMenu: [
+                                    {
+                                        id: "guides2",
+                                        children: "Sub Guides 2",
+                                        onClick: () => {
+                                            setSelected("guides2");
+                                        },
+                                    },
+                                    {
+                                        id: "guides3",
+                                        children: "Sub Guides 3",
+                                        onClick: () => {
+                                            setSelected("guides3");
+                                        },
+                                    },
+                                ],
                             },
                         ],
                     }}
@@ -408,6 +429,7 @@ You can also choose to render a custom component of your choice as an items.
                             },
                         ],
                     }}
+                    selectedId={selected}
                     fixed={false} /* For storybook purposes */
                     layout={"stretch"}
                 />

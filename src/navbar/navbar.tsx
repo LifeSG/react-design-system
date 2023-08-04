@@ -68,7 +68,6 @@ const Component = <T,>(
         () =>
             Object.assign(elementRef.current, {
                 dismissDrawer(): void {
-                    console.log("dismissDrawer called");
                     dismissDrawer();
                 },
             }),
