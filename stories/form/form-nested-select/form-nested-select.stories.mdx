@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
 import { InputNestedSelect } from "src/input-nested-select";
 import { Form } from "src/form";
 import { Text } from "src/text";
@@ -29,21 +30,44 @@ import { Form } from "@lifesg/react-design-system/form";
     <Story name="NestedSelect">
         {() => {
             const [selectedKeyPath, setSelectedKeyPath] = useState([
-                "32",
-                "101",
-                "900",
+                "999",
+                "820",
+                "10001",
             ]);
             return (
                 <StoryContainer>
                     <Container>
                         <Form.NestedSelect
-                            label="This is the nested selected field"
+                            label="This is the nested select field"
+                            options={options}
+                        />
+                        <Form.NestedSelect
+                            label="This is prefilled with a selected option"
                             options={options}
                             selectedKeyPath={selectedKeyPath}
-                            onSelectOption={(keyPaths, value) =>
-                                setSelectedKeyPath(keyPaths)
-                            }
-                            placeholder="Select"
+                            onSelectOption={(keyPath, value) => {
+                                setSelectedKeyPath(keyPath);
+                            }}
+                        />
+                        <Form.NestedSelect
+                            label="This allows selection of categories"
+                            options={options}
+                            selectableCategory={true}
+                        />
+                        <Form.NestedSelect
+                            label="This is the disabled state"
+                            options={options}
+                            disabled
+                        />
+                        <Form.NestedSelect
+                            label="This is the readOnly state"
+                            options={options}
+                            readOnly
+                        />
+                        <Form.NestedSelect
+                            label="This is the error state"
+                            options={options}
+                            errorMessage="Selection is required"
                         />
                     </Container>
                 </StoryContainer>
@@ -52,32 +76,40 @@ import { Form } from "@lifesg/react-design-system/form";
     </Story>
 </Canvas>
 
+<Heading3>Specifying mode</Heading3>
+
+<Canvas>
+    <Story name="Specifying mode">
+        <StoryContainer>
+            <Container>
+                <Form.NestedSelect
+                    label="With all (sub)categories expanded "
+                    options={options}
+                    mode="expand"
+                />
+                <Form.NestedSelect
+                    label="With all (sub)categories collapsed "
+                    options={options}
+                    mode="collapse"
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
 <Heading3>With search capabilities</Heading3>
 
 <Canvas>
     <Story name="With search">
-        {() => {
-            const [selectedKeyPath, setSelectedKeyPath] = useState([
-                "32",
-                "101",
-                "900",
-            ]);
-            return (
-                <StoryContainer>
-                    <Container>
-                        <Form.NestedSelect
-                            label="This has searchable options"
-                            options={options}
-                            selectedKeyPath={selectedKeyPath}
-                            onSelectOption={(keyPaths, value) =>
-                                setSelectedKeyPath(keyPaths)
-                            }
-                            enableSearch
-                        />
-                    </Container>
-                </StoryContainer>
-            );
-        }}
+        <StoryContainer>
+            <Container>
+                <Form.NestedSelect
+                    label="This has searchable options"
+                    options={options}
+                    enableSearch
+                />
+            </Container>
+        </StoryContainer>
     </Story>
 </Canvas>
 
@@ -89,19 +121,15 @@ In the case that you require the nested select field as a standalone, you can do
 import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-select";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
-                <InputNestedSelect
-                    options={options}
-                    placeholder="Select"
-                    optionTruncationType="middle"
-                />
+                <InputNestedSelect options={options} placeholder="Select" />
             </Container>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 

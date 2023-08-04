@@ -23,13 +23,16 @@ export interface InputNestedSelectProps<V1, V2, V3>
         DropdownSearchProps,
         DropdownStyleProps {
     readOnly?: boolean | undefined;
-    /** Behavior of dropdown list items once it is opened */
-    mode?: Mode | undefined;
+    /** Specifies key path of the selected option */
     selectedKeyPath?: string[] | undefined;
+    /** Specifies if items are expanded or collapsed when the dropdown is opened */
+    mode?: Mode | undefined;
+    /** If specified, the category label is selectable */
+    selectableCategory?: boolean | undefined;
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;
-    /** Function to convert value into a string */
+    /** Function to convert selected value into a string */
     valueToStringFunction?: ((value: V1 | V2 | V3) => string) | undefined;
 }
 

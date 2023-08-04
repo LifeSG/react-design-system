@@ -1,19 +1,14 @@
 export const options = [
     {
         label: "Category 1",
-        value: { id: 101, name: "category 1" },
+        value: { id: 999, name: "category 1" },
         key: "999",
         subItems: [
             {
-                label: "Flat option 1",
-                value: { id: 502, name: "Flat option" },
-                key: 82,
-            },
-            {
-                label: "Sub-category 1",
+                label: "Sub Category A",
                 value: {
-                    id: 102,
-                    name: "Sub category 1",
+                    id: 820,
+                    name: "Sub category a",
                 },
                 key: "820",
                 subItems: [
@@ -23,7 +18,7 @@ export const options = [
                             id: 10001,
                             name: "Option-1",
                         },
-                        key: "100",
+                        key: "10001",
                     },
                     {
                         label: "Option 2",
@@ -31,7 +26,7 @@ export const options = [
                             id: 10002,
                             name: "Option-2",
                         },
-                        key: "101",
+                        key: "10002",
                     },
                     {
                         label: "Option 3",
@@ -39,19 +34,19 @@ export const options = [
                             id: 10003,
                             name: "Option-3",
                         },
-                        key: "102",
+                        key: "10003",
                     },
                 ],
             },
             {
-                label: "Sub-category 2",
-                value: { id: 700, name: "sub category 2" },
+                label: "Sub Category B",
+                value: { id: 821, name: "Sub category b" },
                 key: "821",
                 subItems: [
                     {
                         label: "Option ",
                         value: {
-                            id: 23,
+                            id: 103,
                             name: "Sub option 2",
                         },
                         key: "103",
@@ -59,69 +54,93 @@ export const options = [
                 ],
             },
             {
-                label: "Sub",
+                label: "Sub Category C",
                 value: {
-                    id: 512,
-                    name: "Sub category 3",
+                    id: 822,
+                    name: "Sub category c",
                 },
                 key: "822",
                 subItems: [
                     {
-                        label: "Mango",
+                        label: "Honey",
                         value: {
-                            id: 502,
-                            name: "Mango",
+                            id: 104,
+                            name: "honey",
                         },
                         key: "104",
                     },
                     {
-                        label: "Peach",
+                        label: "Nuts",
                         value: {
-                            id: 221,
-                            name: "Peach",
+                            id: 105,
+                            name: "nuts",
                         },
                         key: "105",
+                    },
+                    {
+                        label: "Butter",
+                        value: {
+                            id: 106,
+                            name: "butter",
+                        },
+                        key: "106",
+                    },
+                ],
+            },
+            {
+                label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin dolor ut est rutrum vulputate. Maecenas lacinia viverra metus",
+                value: {
+                    name: "Long sub category a",
+                },
+                key: "510",
+                subItems: [
+                    {
+                        label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempor varius elit nec iaculis. Sed sed mauris iaculis, pretium dui vel, lacinia est.",
+                        value: {
+                            name: "Long item a",
+                        },
+                        key: "23",
                     },
                 ],
             },
         ],
     },
     {
-        label: "HQ Building",
-        value: { id: 487, name: "HQ address" },
+        label: "Hive",
+        value: { id: 487, name: "hive" },
         key: "32",
         subItems: [
             {
-                label: "Flat option",
-                value: { id: 502, name: "Flat option" },
+                label: "Level 8",
+                value: { id: 100, name: "Level 8" },
                 key: "100",
             },
             {
-                label: "Mercury",
-                value: { id: 501, name: "mercury" },
+                label: "Level 9 ",
+                value: { id: 101, name: "Level 9" },
                 key: "101",
                 subItems: [
                     {
-                        label: "Mars",
+                        label: "Tutu kueh",
                         value: {
-                            id: 402,
-                            name: "mars",
+                            id: 900,
+                            name: "tutu kueh",
                         },
                         key: "900",
                     },
                     {
-                        label: "Jupiter",
+                        label: "Lychee",
                         value: {
-                            id: 123,
-                            name: "jupiter",
+                            id: 901,
+                            name: "lychee",
                         },
                         key: "901",
                     },
                     {
-                        label: "Another",
+                        label: "Mao Shan Wang",
                         value: {
-                            id: 123,
-                            name: "anohter",
+                            id: 902,
+                            name: "mao shan wang",
                         },
                         key: "902",
                     },
@@ -129,13 +148,13 @@ export const options = [
             },
             {
                 label: "Base",
-                value: { id: 401, name: "Earth" },
+                value: { id: 102, name: "Earth" },
                 key: "102",
                 subItems: [
                     {
-                        label: "HQ Building A",
+                        label: "Uranus",
                         value: {
-                            id: 402,
+                            id: 903,
                             name: "Uranus",
                         },
                         key: "903",
@@ -143,7 +162,7 @@ export const options = [
                     {
                         label: "Neptune",
                         value: {
-                            id: 123,
+                            id: 904,
                             name: "Neptune",
                         },
                         key: "904",

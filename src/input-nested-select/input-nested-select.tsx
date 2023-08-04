@@ -43,6 +43,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     valueToStringFunction,
     enableSearch,
     searchPlaceholder,
+    selectableCategory,
     hideNoResultsDisplay,
     listStyleWidth,
     readOnly,
@@ -239,6 +240,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                     visible={showOptions}
                     mode={mode}
                     selectedKeyPath={selectedKeyPath}
+                    selectableCategory={selectableCategory}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
                     enableSearch={enableSearch}

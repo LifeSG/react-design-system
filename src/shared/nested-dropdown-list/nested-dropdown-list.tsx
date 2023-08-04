@@ -43,6 +43,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     visible,
     mode = "default",
     selectedKeyPath,
+    selectableCategory,
     itemsLoadState = "success",
     itemTruncationType = "end",
     onBlur,
@@ -410,6 +411,8 @@ export const NestedDropdownList = <V1, V2, V3>({
                     key={key}
                     item={item}
                     selectedKeyPath={selectedKeyPath}
+                    selectableCategory={selectableCategory}
+                    searchValue={searchValue}
                     itemTruncationType={itemTruncationType}
                     visible={visible}
                     onBlur={handleBlur}
