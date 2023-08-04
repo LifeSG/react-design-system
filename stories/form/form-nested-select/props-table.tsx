@@ -15,8 +15,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "selectedKeyPath",
-                description:
-                    "Specifies key path to select particular option label",
+                description: "The key path of the selected option",
                 propTypes: ["string[]"],
             },
             {
@@ -60,9 +59,21 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "mode",
                 description:
-                    "The visual state to represent the dropdown behavior when dropdown is opened",
+                    "Determines if items are expanded or collapsed when the dropdown is opened",
                 propTypes: [`"default"`, `"expand"`, `"collapse"`],
                 defaultValue: `"default"`,
+            },
+            {
+                name: "valueToStringFunction",
+                description:
+                    "The function to convert a value to a string. Only single callback used for both selects. Assumption: values are homogenous for both selects.",
+                propTypes: ["(value: V1 | V2 | V3) => string"],
+            },
+            {
+                name: "selectableCategory",
+                description: "When specified, allows selection of categories",
+                propTypes: ["boolean"],
+                defaultValue: `"false"`,
             },
             {
                 name: "optionsLoadState",
@@ -77,6 +88,13 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies the trunction type of the options display. Truncated text will be replaced with ellipsis",
                 propTypes: [`"end"`, `"middle"`],
                 defaultValue: `"end"`,
+            },
+            {
+                name: "hideNoResultsDisplay",
+                description:
+                    "If specified, the default no results display will not be rendered",
+                propTypes: ["boolean"],
+                defaultValue: `"false"`,
             },
             {
                 name: "listStyleWidth",
