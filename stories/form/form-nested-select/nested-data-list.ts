@@ -1,13 +1,13 @@
 export const options = [
     {
         label: "Category 1",
-        value: { id: 101, name: "category 1" },
+        value: { id: 999, name: "category 1" },
         key: "999",
         subItems: [
             {
                 label: "Sub Category A",
                 value: {
-                    id: 102,
+                    id: 820,
                     name: "Sub category a",
                 },
                 key: "820",
@@ -18,7 +18,7 @@ export const options = [
                             id: 10001,
                             name: "Option-1",
                         },
-                        key: "100",
+                        key: "10001",
                     },
                     {
                         label: "Option 2",
@@ -26,7 +26,7 @@ export const options = [
                             id: 10002,
                             name: "Option-2",
                         },
-                        key: "101",
+                        key: "10002",
                     },
                     {
                         label: "Option 3",
@@ -34,19 +34,19 @@ export const options = [
                             id: 10003,
                             name: "Option-3",
                         },
-                        key: "102",
+                        key: "10003",
                     },
                 ],
             },
             {
                 label: "Sub Category B",
-                value: { id: 700, name: "sub category b" },
+                value: { id: 821, name: "Sub category b" },
                 key: "821",
                 subItems: [
                     {
                         label: "Option ",
                         value: {
-                            id: 23,
+                            id: 103,
                             name: "Sub option 2",
                         },
                         key: "103",
@@ -54,17 +54,17 @@ export const options = [
                 ],
             },
             {
-                label: "Sub category C",
+                label: "Sub Category C",
                 value: {
-                    id: 512,
-                    name: "Sub category 3",
+                    id: 822,
+                    name: "Sub category c",
                 },
                 key: "822",
                 subItems: [
                     {
                         label: "Honey",
                         value: {
-                            id: 502,
+                            id: 104,
                             name: "honey",
                         },
                         key: "104",
@@ -72,7 +72,7 @@ export const options = [
                     {
                         label: "Nuts",
                         value: {
-                            id: 221,
+                            id: 105,
                             name: "nuts",
                         },
                         key: "105",
@@ -80,26 +80,24 @@ export const options = [
                     {
                         label: "Butter",
                         value: {
-                            id: 221,
+                            id: 106,
                             name: "butter",
                         },
-                        key: "105",
+                        key: "106",
                     },
                 ],
             },
             {
-                label: "Truncated the long category label in nested select component, it will truncated into two line content only.",
+                label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin dolor ut est rutrum vulputate. Maecenas lacinia viverra metus",
                 value: {
-                    id: 12,
-                    name: "Sub category a",
+                    name: "Long sub category a",
                 },
                 key: "510",
                 subItems: [
                     {
-                        label: "i'm truncated content if the content more than 2 line. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, deserunt!",
+                        label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempor varius elit nec iaculis. Sed sed mauris iaculis, pretium dui vel, lacinia est.",
                         value: {
-                            id: 102,
-                            name: "Truncated the long content label in nested select component, it will truncated into two line content only.",
+                            name: "Long item a",
                         },
                         key: "23",
                     },
@@ -114,18 +112,18 @@ export const options = [
         subItems: [
             {
                 label: "Level 8",
-                value: { id: 502, name: "Leavel 8" },
+                value: { id: 100, name: "Level 8" },
                 key: "100",
             },
             {
                 label: "Level 9 ",
-                value: { id: 501, name: "level 9" },
+                value: { id: 101, name: "Level 9" },
                 key: "101",
                 subItems: [
                     {
                         label: "Tutu kueh",
                         value: {
-                            id: 402,
+                            id: 900,
                             name: "tutu kueh",
                         },
                         key: "900",
@@ -133,7 +131,7 @@ export const options = [
                     {
                         label: "Lychee",
                         value: {
-                            id: 123,
+                            id: 901,
                             name: "lychee",
                         },
                         key: "901",
@@ -141,7 +139,7 @@ export const options = [
                     {
                         label: "Mao Shan Wang",
                         value: {
-                            id: 123,
+                            id: 902,
                             name: "mao shan wang",
                         },
                         key: "902",
@@ -150,13 +148,13 @@ export const options = [
             },
             {
                 label: "Base",
-                value: { id: 401, name: "Earth" },
+                value: { id: 102, name: "Earth" },
                 key: "102",
                 subItems: [
                     {
                         label: "Uranus",
                         value: {
-                            id: 402,
+                            id: 903,
                             name: "Uranus",
                         },
                         key: "903",
@@ -164,7 +162,7 @@ export const options = [
                     {
                         label: "Neptune",
                         value: {
-                            id: 123,
+                            id: 904,
                             name: "Neptune",
                         },
                         key: "904",

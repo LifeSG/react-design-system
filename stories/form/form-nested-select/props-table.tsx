@@ -66,7 +66,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "valueToStringFunction",
                 description:
-                    "The function to convert a value to a string. Only single callback used for both selects. Assumption: values are homogenous for both selects.",
+                    "The function to convert the selected value to a string for display",
                 propTypes: ["(value: V1 | V2 | V3) => string"],
             },
             {

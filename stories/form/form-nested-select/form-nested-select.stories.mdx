@@ -29,12 +29,20 @@ import { Form } from "@lifesg/react-design-system/form";
 <Canvas>
     <Story name="NestedSelect">
         {() => {
-            const [selectedKeyPath, setSelectedKeyPath] = useState([]);
+            const [selectedKeyPath, setSelectedKeyPath] = useState([
+                "999",
+                "820",
+                "10001",
+            ]);
             return (
                 <StoryContainer>
                     <Container>
                         <Form.NestedSelect
                             label="This is the nested select field"
+                            options={options}
+                        />
+                        <Form.NestedSelect
+                            label="This is prefilled with a selected option"
                             options={options}
                             selectedKeyPath={selectedKeyPath}
                             onSelectOption={(keyPath, value) => {
@@ -113,7 +121,7 @@ In the case that you require the nested select field as a standalone, you can do
 import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-select";
 ```
 
-<Preview>
+<Canvas>
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
@@ -121,7 +129,7 @@ import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-sele
             </Container>
         </StoryContainer>
     </Story>
-</Preview>
+</Canvas>
 
 <Secondary>Component API</Secondary>
 
