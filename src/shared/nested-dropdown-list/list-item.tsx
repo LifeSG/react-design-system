@@ -18,7 +18,7 @@ import {
 interface ListItemProps<V1, V2, V3> {
     item: CombinedFormattedOptionProps<V1, V2, V3>;
     selectedKeyPath?: string[] | undefined;
-    selectableTitle?: boolean | undefined;
+    selectableCategory?: boolean | undefined;
     searchValue: string | undefined;
     itemTruncationType?: TruncateType | undefined;
     visible: boolean;
@@ -31,7 +31,7 @@ interface ListItemProps<V1, V2, V3> {
 export const ListItem = <V1, V2, V3>({
     item,
     selectedKeyPath,
-    selectableTitle,
+    selectableCategory,
     searchValue,
     itemTruncationType,
     visible,
@@ -110,6 +110,10 @@ export const ListItem = <V1, V2, V3>({
         const startIndex = label.toLowerCase().indexOf(searchTerm);
         const endIndex = startIndex + searchTerm.length;
 
+        if (startIndex == -1) {
+            return <>{item.label}</>;
+        }
+
         return (
             <>
                 {`${label.slice(0, startIndex)}`}
@@ -129,7 +133,7 @@ export const ListItem = <V1, V2, V3>({
                         key={item.keyPath.join("-")}
                         item={item}
                         selectedKeyPath={selectedKeyPath}
-                        selectableTitle={selectableTitle}
+                        selectableCategory={selectableCategory}
                         searchValue={searchValue}
                         itemTruncationType={itemTruncationType}
                         visible={visible}
@@ -144,7 +148,7 @@ export const ListItem = <V1, V2, V3>({
     };
 
     const renderTitleItem = () => {
-        if (selectableTitle) {
+        if (selectableCategory) {
             return (
                 <Category>
                     <ArrowButton

@@ -5,11 +5,6 @@ export const options = [
         key: "999",
         subItems: [
             {
-                label: "Option 1",
-                value: { id: 502, name: "Flat option 1" },
-                key: "82",
-            },
-            {
                 label: "Sub Category A",
                 value: {
                     id: 102,
@@ -89,6 +84,24 @@ export const options = [
                             name: "butter",
                         },
                         key: "105",
+                    },
+                ],
+            },
+            {
+                label: "Truncated the long category label in nested select component, it will truncated into two line content only.",
+                value: {
+                    id: 12,
+                    name: "Sub category a",
+                },
+                key: "510",
+                subItems: [
+                    {
+                        label: "i'm truncated content if the content more than 2 line. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, deserunt!",
+                        value: {
+                            id: 102,
+                            name: "Truncated the long content label in nested select component, it will truncated into two line content only.",
+                        },
+                        key: "23",
                     },
                 ],
             },

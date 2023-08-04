@@ -28,7 +28,7 @@ export interface InputNestedSelectProps<V1, V2, V3>
     /** Behavior of dropdown list items once it is opened */
     mode?: Mode | undefined;
     /** If specified, the title category label is selectable */
-    selectableTitle?: boolean | undefined;
+    selectableCategory?: boolean | undefined;
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;
