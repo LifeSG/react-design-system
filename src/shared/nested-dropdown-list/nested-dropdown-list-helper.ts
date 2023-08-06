@@ -81,11 +81,18 @@ export namespace NestedDropdownListHelper {
 const getInitialSubItem = <V1, V2, V3>(
     list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>> | undefined
 ): string[] => {
+    let targetItem = null;
     for (const item of list.values()) {
         if (item.subItems && item.subItems.size) {
-            const [firstItemKey] = item.subItems.keys();
-            return item.subItems.get(firstItemKey).keyPath;
+            targetItem = item;
+            break;
         }
-        getInitialSubItem(item.subItems);
     }
+
+    if (!targetItem) {
+        const value = list.values().next().value;
+        return value.keyPath.slice(0, -1);
+    }
+
+    return getInitialSubItem(targetItem.subItems);
 };
