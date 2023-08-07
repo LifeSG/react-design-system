@@ -100,7 +100,7 @@ export const NavbarItems = <T,>({
             switch (item.itemType) {
                 case "component": {
                     const component = (item && item.children) || null;
-                    return <div key={index}>{component}</div>;
+                    return <li key={index}>{component}</li>;
                 }
                 case "link":
                 default: {

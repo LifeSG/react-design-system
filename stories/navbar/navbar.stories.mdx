@@ -14,7 +14,7 @@ import {
     Title,
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
-import { CustomComponentWrapper, SubLabel } from "./doc-elements";
+import { DesktopCustomComponent, MobileCustomComponent } from "./doc-elements";
 
 <Meta title="Modules/Navbar" component={Navbar} />
 
@@ -321,7 +321,7 @@ You can set an action button to be uncollapsible, so it remains visible in the n
 
 <Heading3>Custom component items</Heading3>
 
-You can also choose to render a custom component of your choice as an items.
+You can also choose to render a custom component of your choice as a navigation bar item.
 
 <Canvas>
     <Story name="Custom items">
@@ -363,33 +363,28 @@ You can also choose to render a custom component of your choice as an items.
                                     },
                                 ],
                             },
+                            {
+                                itemType: "component",
+                                children: (
+                                    <DesktopCustomComponent
+                                        onClick={() => {
+                                            console.log(
+                                                "custom component clicked"
+                                            );
+                                        }}
+                                    />
+                                ),
+                            },
                         ],
                         mobile: [
                             {
                                 itemType: "component",
                                 children: (
-                                    <>
-                                        <CustomComponentWrapper>
-                                            <Text.BodySmall>
-                                                John Smith
-                                            </Text.BodySmall>
-                                            <SubLabel>
-                                                john_smith@tech.gov.sg
-                                            </SubLabel>
-                                            <Button.Small
-                                                style={{
-                                                    marginTop: "1rem",
-                                                    marginBottom: "1rem",
-                                                }}
-                                                onClick={() => {
-                                                    navbarRef.current.dismissDrawer();
-                                                }}
-                                            >
-                                                Click to close the drawer
-                                            </Button.Small>
-                                        </CustomComponentWrapper>
-                                        <hr />
-                                    </>
+                                    <MobileCustomComponent
+                                        onClick={() => {
+                                            navbarRef.current.dismissDrawer();
+                                        }}
+                                    />
                                 ),
                             },
                             {
