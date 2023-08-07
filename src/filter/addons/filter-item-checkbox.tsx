@@ -6,6 +6,7 @@ import {
     Group,
     Input,
     Item,
+    SelectAllButton,
     StyledFilterItem,
     StyledToggle,
     StyledToggleIcon,
@@ -46,6 +47,14 @@ export const FilterItemCheckbox = <T,>({
         }
         setSelected(newSelection);
         onSelect?.(newSelection);
+    };
+
+    const handleSelectAll = () => {
+        if (selected.length) {
+            onSelect?.([]);
+        } else {
+            onSelect?.(options);
+        }
     };
 
     // =============================================================================
@@ -178,6 +187,22 @@ export const FilterItemCheckbox = <T,>({
         );
     };
 
+    const renderSelectAllButton = () => {
+        if (options.length < 2) {
+            return null;
+        }
+
+        return (
+            <SelectAllButton
+                styleType="link"
+                type="button"
+                onClick={handleSelectAll}
+            >
+                {selected.length ? "Clear all" : "Select all"}
+            </SelectAllButton>
+        );
+    };
+
     return (
         <StyledFilterItem
             minimisable={options.length > 5}
@@ -185,17 +210,20 @@ export const FilterItemCheckbox = <T,>({
             {...filterItemProps}
         >
             {(mode, { minimised }) => (
-                <Group
-                    role="group"
-                    aria-label={filterItemProps.title}
-                    ref={parentRef}
-                >
-                    {options.map((option, i) =>
-                        mode === "default"
-                            ? renderCheckbox(option, i, minimised)
-                            : renderToggle(option, i, minimised)
-                    )}
-                </Group>
+                <>
+                    {renderSelectAllButton()}
+                    <Group
+                        role="group"
+                        aria-label={filterItemProps.title}
+                        ref={parentRef}
+                    >
+                        {options.map((option, i) =>
+                            mode === "default"
+                                ? renderCheckbox(option, i, minimised)
+                                : renderToggle(option, i, minimised)
+                        )}
+                    </Group>
+                </>
             )}
         </StyledFilterItem>
     );
