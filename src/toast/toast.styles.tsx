@@ -13,6 +13,7 @@ import { ToastType } from "./types";
 //=============================================================================
 interface StyleProps {
     $type: ToastType;
+    $sticky?: boolean;
 }
 
 const getValidationColorAttributes = (
@@ -37,7 +38,9 @@ const getValidationColorAttributes = (
 // =============================================================================
 export const Wrapper = styled(animated.div)<StyleProps>`
     display: flex;
-    position: relative;
+    position: ${(props) => (props.$sticky ? "fixed" : "relative")};
+    top: 0;
+    right: 0;
     padding: 1rem;
     border-radius: 0.5rem;
     line-height: 0;
