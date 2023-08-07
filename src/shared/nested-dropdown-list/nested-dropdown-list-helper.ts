@@ -15,6 +15,7 @@ export namespace NestedDropdownListHelper {
 
         if (!keyPath || !keyPath.length) {
             keyPath = getInitialSubItem(currentItems);
+            keyPath = keyPath.slice(0, -1);
         }
 
         const list = produce(
@@ -83,9 +84,10 @@ const getInitialSubItem = <V1, V2, V3>(
 ): string[] => {
     for (const item of list.values()) {
         if (item.subItems && item.subItems.size) {
-            const [firstItemKey] = item.subItems.keys();
-            return item.subItems.get(firstItemKey).keyPath;
+            return getInitialSubItem(item.subItems);
         }
-        getInitialSubItem(item.subItems);
     }
+
+    const value = list.values().next().value;
+    return value.keyPath;
 };
