@@ -15,7 +15,6 @@ export namespace NestedDropdownListHelper {
 
         if (!keyPath || !keyPath.length) {
             keyPath = getInitialSubItem(currentItems);
-            console.log("keyPath: ", keyPath);
         }
 
         const list = produce(
