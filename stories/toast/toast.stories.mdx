@@ -4,6 +4,8 @@ import { Toast } from "src/toast";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { Text } from "src/text";
 import { PropsTable } from "./props-table";
+import { StyledContent } from "./doc-elements";
+import { Button } from "src/button/button.tsx";
 
 <Meta
     title="Modules/Toast"
@@ -23,13 +25,29 @@ import { Toast } from "@lifesg/react-design-system/toast";
 
 <Canvas>
     <Story name="Toast">
-        <Toast type="success" label="This is a success toast message" />
+        <Toast
+            type="success"
+            label="This is a success toast message"
+            sticky={false}
+        />
         <br />
-        <Toast type="warning" label="This is a warning toast message" />
+        <Toast
+            type="warning"
+            label="This is a warning toast message"
+            sticky={false}
+        />
         <br />
-        <Toast type="error" label="This is an error toast message" />
+        <Toast
+            type="error"
+            label="This is an error toast message"
+            sticky={false}
+        />
         <br />
-        <Toast type="info" label="This is an info toast message" />
+        <Toast
+            type="info"
+            label="This is an info toast message"
+            sticky={false}
+        />
     </Story>
 </Canvas>
 
@@ -40,12 +58,14 @@ import { Toast } from "@lifesg/react-design-system/toast";
         <Toast
             type="success"
             label="Your bookings has been updated and received by the service provider."
+            sticky={false}
         />
         <br />
         <Toast
             type="success"
             title="Template successfully updated"
             label="Your bookings has been updated and received by the service provider."
+            sticky={false}
         />
         <br />
         <br />
@@ -53,6 +73,7 @@ import { Toast } from "@lifesg/react-design-system/toast";
             type="warning"
             label="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
+            sticky={false}
         />
         <br />
         <Toast
@@ -60,6 +81,7 @@ import { Toast } from "@lifesg/react-design-system/toast";
             title="Unknown characters"
             label="The template contains characters that cannot be updated. Please
                 remove the characters and try again."
+            sticky={false}
         />
         <br />
         <br />
@@ -67,6 +89,7 @@ import { Toast } from "@lifesg/react-design-system/toast";
             type="error"
             label="An internal system error had occured. Please log out and try
                 again."
+            sticky={false}
         />
         <br />
         <Toast
@@ -74,6 +97,7 @@ import { Toast } from "@lifesg/react-design-system/toast";
             title="System error"
             label="An internal system error had occured. Please log out and try
                 again."
+            sticky={false}
         />
         <br />
         <br />
@@ -81,6 +105,7 @@ import { Toast } from "@lifesg/react-design-system/toast";
             type="info"
             label="The calendar will be automatically updated when you have done
                 editing the event information."
+            sticky={false}
         />
         <br />
         <Toast
@@ -88,6 +113,7 @@ import { Toast } from "@lifesg/react-design-system/toast";
             title="Updated automatically"
             label="The calendar will be automatically updated when you have done
                 editing the event information."
+            sticky={false}
         />
     </Story>
 </Canvas>
@@ -103,6 +129,7 @@ is **4 seconds** and you can specify using the `autoDismiss` property.
             type="success"
             label="Your bookings has been updated and received by the service provider."
             autoDismiss
+            sticky={false}
         />
         <br />
         <Toast
@@ -110,7 +137,41 @@ is **4 seconds** and you can specify using the `autoDismiss` property.
             label="This toast has a custom auto dismiss time of 8 seconds."
             autoDismiss
             autoDismissTime={8000}
+            sticky={false}
         />
+    </Story>
+</Canvas>
+
+<Heading3>Toast Sticky</Heading3>
+
+Toasts that remains sticky at the top of the page and provides the user of important notification.
+
+<Canvas>
+    <Story name="Toast sticky">
+        {() => {
+            const [isVisible, setIsVisible] = useState(false);
+            const openToast = () => setIsVisible(true);
+            const closeToast = () => setIsVisible(false);
+            return (
+                <div>
+                    {isVisible ? (
+                        <Button.Default onClick={closeToast}>
+                            Click to close
+                        </Button.Default>
+                    ) : (
+                        <Button.Default onClick={openToast}>
+                            Click to open
+                        </Button.Default>
+                    )}
+                    {isVisible && (
+                        <Toast
+                            type="success"
+                            label="Your bookings has been updated and received by the service provider."
+                        />
+                    )}
+                </div>
+            );
+        }}
     </Story>
 </Canvas>
 
