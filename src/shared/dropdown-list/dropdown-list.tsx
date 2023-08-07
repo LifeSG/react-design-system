@@ -441,7 +441,7 @@ export const DropdownList = <T, V>({
                     <DropdownCommonButton onClick={onSelectAll} type="button">
                         {selectedItems.length === 0
                             ? "Select all"
-                            : "Unselect all"}
+                            : "Clear all"}
                     </DropdownCommonButton>
                 </SelectAllContainer>
             );
