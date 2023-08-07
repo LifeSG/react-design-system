@@ -16,10 +16,14 @@ import { StringHelper } from "../util";
 import { InputNestedMultiSelectProps } from "./types";
 import { CombinedOptionProps } from "../input-nested-select";
 
-interface SelectedItemType<V1, V2, V3> {
+interface SelectedItemType<V1, V2, V3> extends BaseSelectedItem {
     label: string;
     value: V1 | V2 | V3;
 }
+
+type BaseSelectedItem = {
+    keyPath: string[];
+};
 
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",
@@ -98,15 +102,18 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             setSelectedKeyPaths([...selectedKeyPaths, keyPath]);
             setSelectedItems([...selectedItems, item]);
         } else {
-            const resultKeyPaths = selectedKeyPaths.filter(
+            const filteredKeyPaths = selectedKeyPaths.filter(
                 (selectedKeyPath) =>
                     JSON.stringify(selectedKeyPath) !== JSON.stringify(keyPath)
             );
+            const filteredSelectedItems = selectedItems.filter(
+                (selectItem) =>
+                    JSON.stringify(selectItem.keyPath) !==
+                    JSON.stringify(keyPath)
+            );
 
-            setSelectedKeyPaths(resultKeyPaths);
-            // remove item, please
-            // setSelectedItems({ label, value });
-            setSelectedItems([...selectedItems, item]);
+            setSelectedKeyPaths(filteredKeyPaths);
+            setSelectedItems(filteredSelectedItems);
         }
 
         setShowOptions(false);
@@ -156,10 +163,12 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         options: CombinedOptionProps<V1, V2, V3>[],
         keyPaths: string[][]
     ) => {
+        let count = 0;
+
         const findSelectedItem = (
             items: CombinedOptionProps<V1, V2, V3>[],
             keyPaths: string[]
-        ): CombinedOptionProps<V1, V2, V3> | undefined => {
+        ): (CombinedOptionProps<V1, V2, V3> & BaseSelectedItem) | undefined => {
             const [currentKey, ...nextKeyPath] = keyPaths;
 
             if (isEmpty(items) || !currentKey) {
@@ -169,7 +178,12 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             const item = items.find((item) => item.key === currentKey);
 
             if (!item || !nextKeyPath.length) {
-                return item;
+                const result = {
+                    ...item,
+                    keyPath: selectedKeyPaths[count],
+                };
+                count = count + 1;
+                return result;
             }
 
             return findSelectedItem(item.subItems, nextKeyPath);
@@ -181,12 +195,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             selectedItems.push(item);
         }
 
-        // TODO: condition check for nested array
-        if (selectedItems) {
-            setSelectedItems(selectedItems);
-        } else {
-            setSelectedItems(undefined);
-        }
+        setSelectedItems(selectedItems);
     };
 
     const truncateValue = (value: string) => {
