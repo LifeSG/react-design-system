@@ -13,7 +13,7 @@ import { ToastType } from "./types";
 //=============================================================================
 interface StyleProps {
     $type: ToastType;
-    $sticky?: boolean;
+    $sticky?: boolean | undefined;
 }
 
 const getValidationColorAttributes = (
