@@ -71,9 +71,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "selectableCategory",
-                description: "When specified, allows selection of categories",
+                description: "Specifies if categories can be selected",
                 propTypes: ["boolean"],
-                defaultValue: `"false"`,
             },
             {
                 name: "optionsLoadState",
@@ -94,7 +93,6 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "If specified, the default no results display will not be rendered",
                 propTypes: ["boolean"],
-                defaultValue: `"false"`,
             },
             {
                 name: "listStyleWidth",
@@ -107,7 +105,6 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "When specified, it will allow a text base search for the items in the list",
                 propTypes: ["boolean"],
-                defaultValue: "false",
             },
             {
                 name: "searchPlaceholder",
