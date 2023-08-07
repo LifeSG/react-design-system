@@ -6,16 +6,11 @@ import { TextLinkProps } from "../text";
 // =============================================================================
 
 export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
-    itemType?: "link";
+    renderAs?: "link" | "component";
     subMenu?: NavItemCommonProps<T>[] | undefined;
 }
 
-export interface NavItemComponentProps {
-    itemType: "component";
-    children: JSX.Element;
-}
-
-export type NavItemProps<T> = NavItemLinkProps<T> | NavItemComponentProps;
+export type NavItemProps<T> = NavItemLinkProps<T>;
 
 export interface NavItemCommonProps<T> extends TextLinkProps {
     id: string;

@@ -364,7 +364,7 @@ You can also choose to render a custom component of your choice as a navigation 
                                 ],
                             },
                             {
-                                itemType: "component",
+                                renderAs: "component",
                                 children: (
                                     <DesktopCustomComponent
                                         onClick={() => {
@@ -378,7 +378,7 @@ You can also choose to render a custom component of your choice as a navigation 
                         ],
                         mobile: [
                             {
-                                itemType: "component",
+                                renderAs: "component",
                                 children: (
                                     <MobileCustomComponent
                                         onClick={() => {
@@ -388,7 +388,7 @@ You can also choose to render a custom component of your choice as a navigation 
                                 ),
                             },
                             {
-                                itemType: "link",
+                                renderAs: "link",
                                 id: "home",
                                 children: "Home",
                                 onClick: () => {
