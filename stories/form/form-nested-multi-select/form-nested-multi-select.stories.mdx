@@ -1,0 +1,77 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { InputNestedMultiSelect } from "src/input-nested-multi-select";
+import { Form } from "src/form";
+import { Text } from "src/text";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
+import { options } from "../form-nested-select/nested-data-list.ts";
+
+<Meta title="Form/NestedMultiSelect" component={Form.NestedMultiSelect} />
+
+<Title>Form.NestedMultiSelect</Title>
+
+<Secondary>Overview</Secondary>
+
+A field that provides a nested set of options for a user to select.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas>
+    <Story name="NestedMultiSelect">
+        {() => {
+            const [selectedKeyPaths, setSelectedKeyPaths] = useState([
+                ["999", "820", "10002"],
+            ]);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.NestedMultiSelect
+                            label="This is the nested multi select field"
+                            options={options}
+                        />
+                        <Form.NestedMultiSelect
+                            label="This is prefilled with a selected option"
+                            options={options}
+                            selectedKeyPaths={selectedKeyPaths}
+                            onSelectOptions={(keyPaths, value) => {
+                                setSelectedKeyPaths(keyPaths);
+                            }}
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the nested select field as a standalone, you can do this.
+
+```tsx
+import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-select";
+```
+
+<Preview>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <Container>
+                <NestedMultiSelect options={options} placeholder="Select" />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Preview>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
