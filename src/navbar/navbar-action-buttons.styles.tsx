@@ -17,7 +17,7 @@ export const Wrapper = styled.ul`
     }
 `;
 
-export const UncollapsableWrapper = styled.ul`
+export const MobileWrapper = styled.ul`
     display: flex;
     list-style: none;
     margin-left: 4rem;
@@ -28,7 +28,7 @@ export const UncollapsableWrapper = styled.ul`
     }
 `;
 
-export const MobileWrapper = styled.ul`
+export const DrawerWrapper = styled.ul`
     display: none;
     list-style: none;
 

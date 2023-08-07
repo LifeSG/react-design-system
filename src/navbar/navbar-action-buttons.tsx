@@ -8,8 +8,8 @@ import {
     DownloadAppImageLinkWrapper,
     DownloadAppTitle,
     DownloadAppWrapper,
+    DrawerWrapper,
     MobileWrapper,
-    UncollapsableWrapper,
     Wrapper,
 } from "./navbar-action-buttons.styles";
 import { NavbarButtonComponentProps, NavbarButtonProps } from "./types";
@@ -198,25 +198,22 @@ export const NavbarActionButtons = ({
         });
     };
 
-    const renderUncollapsableButtons = () => {
+    if (actionButtons && actionButtons.length > 0) {
         const uncollapsableActionButtons = actionButtons.filter(
             (actionButton) => !!actionButton.uncollapsible
         );
-        return (
-            <UncollapsableWrapper>
-                {renderButtons(false, uncollapsableActionButtons)}
-            </UncollapsableWrapper>
-        );
-    };
-
-    if (actionButtons && actionButtons.length > 0) {
-        const ContentWrapper = mobile ? MobileWrapper : Wrapper;
-        return (
-            <>
-                {!mobile && renderUncollapsableButtons()}
-                <ContentWrapper>{renderButtons(mobile)}</ContentWrapper>
-            </>
-        );
+        if (mobile) {
+            return <DrawerWrapper>{renderButtons(mobile)}</DrawerWrapper>;
+        } else {
+            return (
+                <>
+                    <MobileWrapper>
+                        {renderButtons(false, uncollapsableActionButtons)}
+                    </MobileWrapper>
+                    <Wrapper>{renderButtons(mobile)}</Wrapper>
+                </>
+            );
+        }
     }
 
     return <></>;
