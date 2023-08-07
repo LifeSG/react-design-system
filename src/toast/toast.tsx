@@ -5,9 +5,7 @@ import {
     TickCircleFillIcon,
 } from "@lifesg/react-icons";
 import React, { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { easings, useSpring } from "react-spring";
-import { MediaWidths } from "../spec/media-spec";
 import { Text } from "../text";
 import {
     CloseIcon,
@@ -34,11 +32,8 @@ export const Toast = ({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [isVisible, setVisible] = useState<boolean>(false);
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
 
+    const [isVisible, setVisible] = useState<boolean>(false);
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -68,13 +63,7 @@ export const Toast = ({
     // =============================================================================
     const transitions = useSpring({
         opacity: isVisible ? 1 : 0,
-        transform: isVisible
-            ? isMobile
-                ? `translateY(0%)`
-                : `translateX(0%)`
-            : isMobile
-            ? `translateY(-1500%)`
-            : `translateX(150%)`,
+        transform: (isVisible && `translateY(0%)`) || `translateY(-1500%)`,
         config: {
             easing: easings.easeInOutQuart,
             duration: 1000,
