@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="201" failures="0" errors="0" time="29.673">
+  <testsuite name="CalendarHelper" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="5.723" tests="20">
+    <testcase classname="CalendarHelper generateDays should generate 6 weeks from the specified month" name="CalendarHelper generateDays should generate 6 weeks from the specified month" time="0.005">
+    </testcase>
+    <testcase classname="CalendarHelper generateDays should generate Feb 29 in a leap year" name="CalendarHelper generateDays should generate Feb 29 in a leap year" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper generateDays should generate Feb 28 in a non leap year" name="CalendarHelper generateDays should generate Feb 28 in a non leap year" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper generateMonths should generate the date for each month in the specified year" name="CalendarHelper generateMonths should generate the date for each month in the specified year" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper generateMonths should generate Feb 29 in a leap year" name="CalendarHelper generateMonths should generate Feb 29 in a leap year" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper generateMonths should generate the last day of the month if it has less days than the specified month" name="CalendarHelper generateMonths should generate the last day of the month if it has less days than the specified month" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper generateDecadeOfYears should generate the date for the decade and 2 years before" name="CalendarHelper generateDecadeOfYears should generate the date for the decade and 2 years before" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper generateDecadeOfYears should return Feb 28 in non leap years" name="CalendarHelper generateDecadeOfYears should return Feb 28 in non leap years" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper getStartEndDecade should return correct start year and end year in this decade" name="CalendarHelper getStartEndDecade should return correct start year and end year in this decade" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isWithinRange should return true if the date is within range" name="CalendarHelper isWithinRange should return true if the date is within range" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isWithinRange should return true if the date is within range (inclusive check)" name="CalendarHelper isWithinRange should return true if the date is within range (inclusive check)" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper isWithinRange should return false if the date is out of range" name="CalendarHelper isWithinRange should return false if the date is out of range" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isWithinRange should return true if date is same or after minDate (if only minDate provided)" name="CalendarHelper isWithinRange should return true if date is same or after minDate (if only minDate provided)" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isWithinRange should return true if date is same or before maxDate (if only maxDate provided)" name="CalendarHelper isWithinRange should return true if date is same or before maxDate (if only maxDate provided)" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isPreviousMonthWithinRange should return true if the previous month of date is within minDate" name="CalendarHelper isPreviousMonthWithinRange should return true if the previous month of date is within minDate" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper isPreviousYearWithinRange should return true if the previous year of date is within minDate" name="CalendarHelper isPreviousYearWithinRange should return true if the previous year of date is within minDate" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isPreviousDecadeWithinRange should return true if the previous decade of date is within minDate" name="CalendarHelper isPreviousDecadeWithinRange should return true if the previous decade of date is within minDate" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isNextMonthWithinRange should return true if the next month of date is within maxDate" name="CalendarHelper isNextMonthWithinRange should return true if the next month of date is within maxDate" time="0.001">
+    </testcase>
+    <testcase classname="CalendarHelper isNextYearWithinRange should return true if the next year of date is within maxDate" name="CalendarHelper isNextYearWithinRange should return true if the next year of date is within maxDate" time="0">
+    </testcase>
+    <testcase classname="CalendarHelper isNextDecadeWithinRange should return true if the next decade of date is within maxDate" name="CalendarHelper isNextDecadeWithinRange should return true if the next decade of date is within maxDate" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="StringHelper" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:55" time="0.67" tests="13">
+    <testcase classname="StringHelper padValue should pad single digits with a leading 0" name="StringHelper padValue should pad single digits with a leading 0" time="0.001">
+    </testcase>
+    <testcase classname="StringHelper padValue should not pad double digits with a leading 0" name="StringHelper padValue should not pad double digits with a leading 0" time="0.001">
+    </testcase>
+    <testcase classname="StringHelper padValue should pad single 0 value with a leading 0" name="StringHelper padValue should pad single 0 value with a leading 0" time="0">
+    </testcase>
+    <testcase classname="StringHelper padValue should not pad single 0 value with a leading 0 if retainSingleZero is set to true" name="StringHelper padValue should not pad single 0 value with a leading 0 if retainSingleZero is set to true" time="0">
+    </testcase>
+    <testcase classname="StringHelper padValue should trim leading 0 from values with more than 2 characters" name="StringHelper padValue should trim leading 0 from values with more than 2 characters" time="0">
+    </testcase>
+    <testcase classname="StringHelper padValue should return empty values as is" name="StringHelper padValue should return empty values as is" time="0">
+    </testcase>
+    <testcase classname="StringHelper transformWithSpaces should transform with spaces correctly" name="StringHelper transformWithSpaces should transform with spaces correctly" time="0">
+    </testcase>
+    <testcase classname="StringHelper shouldTruncateToTwoLines should return false since there is enough width available" name="StringHelper shouldTruncateToTwoLines should return false since there is enough width available" time="0.001">
+    </testcase>
+    <testcase classname="StringHelper shouldTruncateToTwoLines should return true since there is not enough width available" name="StringHelper shouldTruncateToTwoLines should return true since there is not enough width available" time="0">
+    </testcase>
+    <testcase classname="StringHelper truncateOneLine should truncate if input text length &gt; baseline char length, and there is no additional space" name="StringHelper truncateOneLine should truncate if input text length &gt; baseline char length, and there is no additional space" time="0">
+    </testcase>
+    <testcase classname="StringHelper truncateOneLine should not truncate if input text length = baseline char length, and there is no additional space " name="StringHelper truncateOneLine should not truncate if input text length = baseline char length, and there is no additional space " time="0">
+    </testcase>
+    <testcase classname="StringHelper truncateOneLine should not truncate if input text length &lt; baseline char length, and there is no additional space " name="StringHelper truncateOneLine should not truncate if input text length &lt; baseline char length, and there is no additional space " time="0">
+    </testcase>
+    <testcase classname="StringHelper truncateOneLine should not truncate if input text length &gt; baseline char length, and there is additional space" name="StringHelper truncateOneLine should not truncate if input text length &gt; baseline char length, and there is additional space" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="InputRangeSelect" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="9.18" tests="10">
+    <testcase classname="InputRangeSelect should render the component" name="InputRangeSelect should render the component" time="0.043">
+    </testcase>
+    <testcase classname="InputRangeSelect truncation of display values should truncate long option values" name="InputRangeSelect truncation of display values should truncate long option values" time="0.008">
+    </testcase>
+    <testcase classname="InputRangeSelect truncation of display values should truncate long placeholder values" name="InputRangeSelect truncation of display values should truncate long placeholder values" time="0.027">
+    </testcase>
+    <testcase classname="InputRangeSelect select behaviour should open dropdown list when selector is clicked" name="InputRangeSelect select behaviour should open dropdown list when selector is clicked" time="0.052">
+    </testcase>
+    <testcase classname="InputRangeSelect select behaviour should open &apos;to&apos; dropdown list when &apos;from&apos; value is selected" name="InputRangeSelect select behaviour should open &apos;to&apos; dropdown list when &apos;from&apos; value is selected" time="0.021">
+    </testcase>
+    <testcase classname="InputRangeSelect select behaviour should be able to complete filling up the field by selectin from and to values respectively." name="InputRangeSelect select behaviour should be able to complete filling up the field by selectin from and to values respectively." time="0.017">
+    </testcase>
+    <testcase classname="InputRangeSelect select behaviour should open &apos;from&apos; dropdown list when &apos;to&apos; selector is clicked and &apos;from&apos; value is not selected" name="InputRangeSelect select behaviour should open &apos;from&apos; dropdown list when &apos;to&apos; selector is clicked and &apos;from&apos; value is not selected" time="0.022">
+    </testcase>
+    <testcase classname="InputRangeSelect select behaviour should be disabled when &apos;disabled&apos; prop is true" name="InputRangeSelect select behaviour should be disabled when &apos;disabled&apos; prop is true" time="0.015">
+    </testcase>
+    <testcase classname="InputRangeSelect select behaviour should be readonly when &apos;readOnly&apos; prop is true" name="InputRangeSelect select behaviour should be readonly when &apos;readOnly&apos; prop is true" time="0.018">
+    </testcase>
+    <testcase classname="InputRangeSelect select behaviour should display error message when &apos;error&apos; prop is true" name="InputRangeSelect select behaviour should display error message when &apos;error&apos; prop is true" time="0.012">
+    </testcase>
+  </testsuite>
+  <testsuite name="FileUpload" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="13.312" tests="17">
+    <testcase classname="FileUpload Basic render should render the title and description if specified" name="FileUpload Basic render should render the title and description if specified" time="0.085">
+    </testcase>
+    <testcase classname="FileUpload Basic render should render the warning banner if specified" name="FileUpload Basic render should render the warning banner if specified" time="0.021">
+    </testcase>
+    <testcase classname="FileUpload Basic render should render the file items if specified" name="FileUpload Basic render should render the file items if specified" time="0.037">
+    </testcase>
+    <testcase classname="FileUpload Basic render should render the image files in its edit mode if no description is specified for the image" name="FileUpload Basic render should render the image files in its edit mode if no description is specified for the image" time="0.06">
+    </testcase>
+    <testcase classname="FileUpload Basic render should render the image files with description in the display view while files without description to be in the edit mode" name="FileUpload Basic render should render the image files with description in the display view while files without description to be in the edit mode" time="0.017">
+    </testcase>
+    <testcase classname="FileUpload Basic render should not render image files in edit mode if progress of less than 1 is indicated" name="FileUpload Basic render should not render image files in edit mode if progress of less than 1 is indicated" time="0.021">
+    </testcase>
+    <testcase classname="FileUpload Basic render should not render image files in edit mode if there is an error for the file item" name="FileUpload Basic render should not render image files in edit mode if there is an error for the file item" time="0.024">
+    </testcase>
+    <testcase classname="FileUpload Basic render should render the thumbnail of a file if specified" name="FileUpload Basic render should render the thumbnail of a file if specified" time="0.02">
+    </testcase>
+    <testcase classname="FileUpload Upload should fire the onChange callback when a file is uploaded" name="FileUpload Upload should fire the onChange callback when a file is uploaded" time="0.009">
+    </testcase>
+    <testcase classname="FileUpload Delete should fire the onDelete callback when a file item&apos;s delete button is clicked" name="FileUpload Delete should fire the onDelete callback when a file item&apos;s delete button is clicked" time="0.008">
+    </testcase>
+    <testcase classname="FileUpload Edit should render the textarea, save and cancel buttons in edit mode, with the save button being disabled" name="FileUpload Edit should render the textarea, save and cancel buttons in edit mode, with the save button being disabled" time="0.009">
+    </testcase>
+    <testcase classname="FileUpload Edit should enable the save button if there is entry in the description textarea" name="FileUpload Edit should enable the save button if there is entry in the description textarea" time="0.019">
+    </testcase>
+    <testcase classname="FileUpload Edit should delete the file item if the cancel button is clicked on a new upload" name="FileUpload Edit should delete the file item if the cancel button is clicked on a new upload" time="0.009">
+    </testcase>
+    <testcase classname="FileUpload Edit should return the file item with the description via onEdit upon entering into the textarea" name="FileUpload Edit should return the file item with the description via onEdit upon entering into the textarea" time="0.014">
+    </testcase>
+    <testcase classname="FileUpload Sort should render the drag handles for the items if they are sortable" name="FileUpload Sort should render the drag handles for the items if they are sortable" time="0.019">
+    </testcase>
+    <testcase classname="FileUpload Sort should not render the drag handle if there are items in edit mode" name="FileUpload Sort should not render the drag handle if there are items in edit mode" time="0.012">
+    </testcase>
+    <testcase classname="FileUpload Readonly should not render the action buttons if the component is in readOnly mode" name="FileUpload Readonly should not render the action buttons if the component is in readOnly mode" time="0.011">
+    </testcase>
+  </testsuite>
+  <testsuite name="UnitNumberInput" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:03" time="1.437" tests="4">
+    <testcase classname="UnitNumberInput should render default component" name="UnitNumberInput should render default component" time="0.035">
+    </testcase>
+    <testcase classname="UnitNumberInput should render component with formatted floor and unit values" name="UnitNumberInput should render component with formatted floor and unit values" time="0.012">
+    </testcase>
+    <testcase classname="UnitNumberInput change handling should convert letters to uppercase and preserve caret position" name="UnitNumberInput change handling should convert letters to uppercase and preserve caret position" time="0.01">
+    </testcase>
+    <testcase classname="UnitNumberInput change handling should remove non-alphanumeric characters and preserve caret position" name="UnitNumberInput change handling should remove non-alphanumeric characters and preserve caret position" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="DateInputHelper" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:04" time="0.85" tests="7">
+    <testcase classname="DateInputHelper isDateDisabled should return false when no dates are disabled" name="DateInputHelper isDateDisabled should return false when no dates are disabled" time="0.001">
+    </testcase>
+    <testcase classname="DateInputHelper isDateDisabled should return false when date is not disabled" name="DateInputHelper isDateDisabled should return false when date is not disabled" time="0.001">
+    </testcase>
+    <testcase classname="DateInputHelper isDateDisabled should return true when date is disabled" name="DateInputHelper isDateDisabled should return true when date is disabled" time="0">
+    </testcase>
+    <testcase classname="DateInputHelper isDateDisabled should return false when date is within range (inclusive check)" name="DateInputHelper isDateDisabled should return false when date is within range (inclusive check)" time="0.001">
+    </testcase>
+    <testcase classname="DateInputHelper isDateDisabled should return true when date is out of range" name="DateInputHelper isDateDisabled should return true when date is out of range" time="0">
+    </testcase>
+    <testcase classname="DateInputHelper isDateDisabled should return true when date is before minDate" name="DateInputHelper isDateDisabled should return true when date is before minDate" time="0">
+    </testcase>
+    <testcase classname="DateInputHelper isDateDisabled should return true when date is after maxRange" name="DateInputHelper isDateDisabled should return true when date is after maxRange" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Alert" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:58" time="7.498" tests="8">
+    <testcase classname="Alert should render the component" name="Alert should render the component" time="0.018">
+    </testcase>
+    <testcase classname="Alert type should render background #F9FDF8 with border #95D97F for success type" name="Alert type should render background #F9FDF8 with border #95D97F for success type" time="0.019">
+    </testcase>
+    <testcase classname="Alert type should render background #FFFCF7 with border #FFFCF7 for warning type" name="Alert type should render background #FFFCF7 with border #FFFCF7 for warning type" time="0.004">
+    </testcase>
+    <testcase classname="Alert type should render background #FDF7F7 with border #FDF7F7 for error type" name="Alert type should render background #FDF7F7 with border #FDF7F7 for error type" time="0.005">
+    </testcase>
+    <testcase classname="Alert actionLink should render if the prop is provided" name="Alert actionLink should render if the prop is provided" time="0.015">
+    </testcase>
+    <testcase classname="Alert actionLink should render custom children if the prop is specified" name="Alert actionLink should render custom children if the prop is specified" time="0.021">
+    </testcase>
+    <testcase classname="Alert actionLink should not render if the prop is not provided" name="Alert actionLink should not render if the prop is not provided" time="0.004">
+    </testcase>
+    <testcase classname="Alert should render custom display if required" name="Alert should render custom display if required" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="BoxContainer" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:56" time="9.992" tests="7">
+    <testcase classname="BoxContainer should render the component" name="BoxContainer should render the component" time="0.038">
+    </testcase>
+    <testcase classname="BoxContainer should not render the expand/collapse button if disabled" name="BoxContainer should not render the expand/collapse button if disabled" time="0.004">
+    </testcase>
+    <testcase classname="BoxContainer should not be expanded if specified" name="BoxContainer should not be expanded if specified" time="0.029">
+    </testcase>
+    <testcase classname="BoxContainer Display state rendering should render default state with no color icon" name="BoxContainer Display state rendering should render default state with no color icon" time="0.008">
+    </testcase>
+    <testcase classname="BoxContainer Display state rendering should render error state with #C60000 color icon" name="BoxContainer Display state rendering should render error state with #C60000 color icon" time="0.009">
+    </testcase>
+    <testcase classname="BoxContainer Display state rendering should render warning state with #FEAB10 color icon" name="BoxContainer Display state rendering should render warning state with #FEAB10 color icon" time="0.007">
+    </testcase>
+    <testcase classname="BoxContainer should render a custom call to action component if specified" name="BoxContainer should render a custom call to action component if specified" time="0.054">
+    </testcase>
+  </testsuite>
+  <testsuite name="Sidenav" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="16.895" tests="6">
+    <testcase classname="Sidenav should render component" name="Sidenav should render component" time="0.048">
+    </testcase>
+    <testcase classname="Sidenav should render component with fixed argument" name="Sidenav should render component with fixed argument" time="0.05">
+    </testcase>
+    <testcase classname="Sidenav should render multiple groups correctly" name="Sidenav should render multiple groups correctly" time="0.039">
+    </testcase>
+    <testcase classname="Sidenav should render separator if separator value is true" name="Sidenav should render separator if separator value is true" time="0.012">
+    </testcase>
+    <testcase classname="Sidenav should trigger onClick when click on Sidenav item" name="Sidenav should trigger onClick when click on Sidenav item" time="0.02">
+    </testcase>
+    <testcase classname="Sidenav should open drawer if sidenav item contain children" name="Sidenav should open drawer if sidenav item contain children" time="0.031">
+    </testcase>
+  </testsuite>
+  <testsuite name="Accordion" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="16.904" tests="10">
+    <testcase classname="Accordion should render the relevant components correctly" name="Accordion should render the relevant components correctly" time="0.096">
+    </testcase>
+    <testcase classname="Accordion should render the accordion title if specified" name="Accordion should render the accordion title if specified" time="0.011">
+    </testcase>
+    <testcase classname="Accordion should not render the accordion title if not specified" name="Accordion should not render the accordion title if not specified" time="0.007">
+    </testcase>
+    <testcase classname="Accordion Expand/Collapse all button Default behaviour should render the button label as &apos;Hide all&apos; by default" name="Accordion Expand/Collapse all button Default behaviour should render the button label as &apos;Hide all&apos; by default" time="0.024">
+    </testcase>
+    <testcase classname="Accordion Expand/Collapse all button Default behaviour should render the button label as &apos;Show all&apos; if it has been clicked" name="Accordion Expand/Collapse all button Default behaviour should render the button label as &apos;Show all&apos; if it has been clicked" time="0.036">
+    </testcase>
+    <testcase classname="Accordion Expand/Collapse all button Default behaviour should minimise all the children items if the button has been clicked" name="Accordion Expand/Collapse all button Default behaviour should minimise all the children items if the button has been clicked" time="0.031">
+    </testcase>
+    <testcase classname="Accordion Expand/Collapse all button If expandAll is false should not render the button" name="Accordion Expand/Collapse all button If expandAll is false should not render the button" time="0.011">
+    </testcase>
+    <testcase classname="Accordion Accordion item should render the contents correctly" name="Accordion Accordion item should render the contents correctly" time="0.004">
+    </testcase>
+    <testcase classname="Accordion Accordion item should render the expand/collapse button for each item" name="Accordion Accordion item should render the expand/collapse button for each item" time="0.007">
+    </testcase>
+    <testcase classname="Accordion Accordion item should minimize the contents if the expand/collapse button is clicked" name="Accordion Accordion item should minimize the contents if the expand/collapse button is clicked" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="ErrorDisplay" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="16.956" tests="26">
+    <testcase classname="ErrorDisplay should render the component" name="ErrorDisplay should render the component" time="0.063">
+    </testcase>
+    <testcase classname="ErrorDisplay should render action button if prop is provided" name="ErrorDisplay should render action button if prop is provided" time="0.027">
+    </testcase>
+    <testcase classname="ErrorDisplay should be able to render custom title if specified" name="ErrorDisplay should be able to render custom title if specified" time="0.008">
+    </testcase>
+    <testcase classname="ErrorDisplay description should be able to render custom description" name="ErrorDisplay description should be able to render custom description" time="0.004">
+    </testcase>
+    <testcase classname="ErrorDisplay description should be able to render JSX.Element" name="ErrorDisplay description should be able to render JSX.Element" time="0.003">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 400 error correctly" name="ErrorDisplay ErrorDisplay components should render 400 error correctly" time="0.009">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 403 error correctly" name="ErrorDisplay ErrorDisplay components should render 403 error correctly" time="0.012">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 404 error correctly" name="ErrorDisplay ErrorDisplay components should render 404 error correctly" time="0.007">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 408 error correctly" name="ErrorDisplay ErrorDisplay components should render 408 error correctly" time="0.016">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 500 error correctly" name="ErrorDisplay ErrorDisplay components should render 500 error correctly" time="0.007">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 502 error correctly" name="ErrorDisplay ErrorDisplay components should render 502 error correctly" time="0.025">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 503 error correctly" name="ErrorDisplay ErrorDisplay components should render 503 error correctly" time="0.006">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render 504 error correctly" name="ErrorDisplay ErrorDisplay components should render 504 error correctly" time="0.006">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render confirmation error correctly" name="ErrorDisplay ErrorDisplay components should render confirmation error correctly" time="0.008">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render inactivity error correctly" name="ErrorDisplay ErrorDisplay components should render inactivity error correctly" time="0.006">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render insufficient-credits error correctly" name="ErrorDisplay ErrorDisplay components should render insufficient-credits error correctly" time="0.006">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render link-error error correctly" name="ErrorDisplay ErrorDisplay components should render link-error error correctly" time="0.005">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render logout error correctly" name="ErrorDisplay ErrorDisplay components should render logout error correctly" time="0.008">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render warning error correctly" name="ErrorDisplay ErrorDisplay components should render warning error correctly" time="0.008">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render maintenance error correctly" name="ErrorDisplay ErrorDisplay components should render maintenance error correctly" time="0.006">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render no-item-found error correctly" name="ErrorDisplay ErrorDisplay components should render no-item-found error correctly" time="0.012">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render payment-unsuccessful error correctly" name="ErrorDisplay ErrorDisplay components should render payment-unsuccessful error correctly" time="0.006">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render transfer-unsuccessful error correctly" name="ErrorDisplay ErrorDisplay components should render transfer-unsuccessful error correctly" time="0.005">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render unsupported-browser error correctly" name="ErrorDisplay ErrorDisplay components should render unsupported-browser error correctly" time="0.008">
+    </testcase>
+    <testcase classname="ErrorDisplay ErrorDisplay components should render partially-supported-browser error correctly" name="ErrorDisplay ErrorDisplay components should render partially-supported-browser error correctly" time="0.005">
+    </testcase>
+    <testcase classname="ErrorDisplay maintenance error should be able to render custom date string" name="ErrorDisplay maintenance error should be able to render custom date string" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Footer" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="17.041" tests="15">
+    <testcase classname="Footer should be able to render the component" name="Footer should be able to render the component" time="0.048">
+    </testcase>
+    <testcase classname="Footer children should be able to render custom JSX.Element" name="Footer children should be able to render custom JSX.Element" time="0.01">
+    </testcase>
+    <testcase classname="Footer children should be able to render custom JSX.Element[]" name="Footer children should be able to render custom JSX.Element[]" time="0.009">
+    </testcase>
+    <testcase classname="Footer showDownloadAddon should not render add ons by default" name="Footer showDownloadAddon should not render add ons by default" time="0.045">
+    </testcase>
+    <testcase classname="Footer showDownloadAddon should render add ons if enabled" name="Footer showDownloadAddon should render add ons if enabled" time="0.084">
+    </testcase>
+    <testcase classname="Footer disclaimerLinks should be able to override the link props" name="Footer disclaimerLinks should be able to override the link props" time="0.039">
+    </testcase>
+    <testcase classname="Footer disclaimerLinks should not allow overriding of link text" name="Footer disclaimerLinks should not allow overriding of link text" time="0.004">
+    </testcase>
+    <testcase classname="Footer copyrightInfo should render the copyright information by default" name="Footer copyrightInfo should render the copyright information by default" time="0.003">
+    </testcase>
+    <testcase classname="Footer copyrightInfo should allow custom copyright information" name="Footer copyrightInfo should allow custom copyright information" time="0.004">
+    </testcase>
+    <testcase classname="Footer copyrightInfo should not render lastUpdated if custom copyright information is provided" name="Footer copyrightInfo should not render lastUpdated if custom copyright information is provided" time="0.003">
+    </testcase>
+    <testcase classname="Footer logoSrc should render a logo by default" name="Footer logoSrc should render a logo by default" time="0.021">
+    </testcase>
+    <testcase classname="Footer logoSrc should be able to render a custom logo" name="Footer logoSrc should be able to render a custom logo" time="0.008">
+    </testcase>
+    <testcase classname="Footer lastUpdated should be able to render custom last updated date" name="Footer lastUpdated should be able to render custom last updated date" time="0.003">
+    </testcase>
+    <testcase classname="Footer footerLinks should be able to render custom links on the top section" name="Footer footerLinks should be able to render custom links on the top section" time="0.043">
+    </testcase>
+    <testcase classname="Footer footerLinks should be support onFooterLinkClick" name="Footer footerLinks should be support onFooterLinkClick" time="0.024">
+    </testcase>
+  </testsuite>
+  <testsuite name="TimeSlotWeekCalendar" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="17.203" tests="14">
+    <testcase classname="TimeSlotWeekCalendar should render without errors" name="TimeSlotWeekCalendar should render without errors" time="0.156">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar should render the visible week based on currentCalendarDate" name="TimeSlotWeekCalendar should render the visible week based on currentCalendarDate" time="0.039">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar should render visible week based on value" name="TimeSlotWeekCalendar should render visible week based on value" time="0.049">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Arrow behaviour calls the left arrow click handler when the left arrow button is clicked" name="TimeSlotWeekCalendar Arrow behaviour calls the left arrow click handler when the left arrow button is clicked" time="0.021">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Arrow behaviour calls the right arrow click handler when the right arrow button is clicked" name="TimeSlotWeekCalendar Arrow behaviour calls the right arrow click handler when the right arrow button is clicked" time="0.017">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Arrow behaviour with disabled minMax dates should not be able to navigate above given maxDate" name="TimeSlotWeekCalendar Arrow behaviour with disabled minMax dates should not be able to navigate above given maxDate" time="0.015">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Arrow behaviour with disabled minMax dates should not be able to navigate above given minDate" name="TimeSlotWeekCalendar Arrow behaviour with disabled minMax dates should not be able to navigate above given minDate" time="0.01">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Year/Month dropdown behaviour calls the month drop down click handler when month dropdown button is clicked and a month is selected" name="TimeSlotWeekCalendar Year/Month dropdown behaviour calls the month drop down click handler when month dropdown button is clicked and a month is selected" time="0.026">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Year/Month dropdown behaviour calls the year dropdown click handler when the year drop down button is clicked and year is selected" name="TimeSlotWeekCalendar Year/Month dropdown behaviour calls the year dropdown click handler when the year drop down button is clicked and year is selected" time="0.034">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Slots behaviour should render the given slots with correct start and end time" name="TimeSlotWeekCalendar Slots behaviour should render the given slots with correct start and end time" time="0.05">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Slots behaviour should fire onSlotClick with relevant data when slot is clickable" name="TimeSlotWeekCalendar Slots behaviour should fire onSlotClick with relevant data when slot is clickable" time="0.019">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar Slots behaviour should not fire onSlotClick when slot is not clickable" name="TimeSlotWeekCalendar Slots behaviour should not fire onSlotClick when slot is not clickable" time="0.017">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar updates the visible week when the value prop changes" name="TimeSlotWeekCalendar updates the visible week when the value prop changes" time="0.065">
+    </testcase>
+    <testcase classname="TimeSlotWeekCalendar calls the onChange callback when a date is selected" name="TimeSlotWeekCalendar calls the onChange callback when a date is selected" time="0.011">
+    </testcase>
+  </testsuite>
+  <testsuite name="Input" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:05" time="1.568" tests="5">
+    <testcase classname="Input should render default component" name="Input should render default component" time="0.013">
+    </testcase>
+    <testcase classname="Input should render component with value" name="Input should render component with value" time="0.003">
+    </testcase>
+    <testcase classname="Input tel type with spacing should format value and preserve caret position" name="Input tel type with spacing should format value and preserve caret position" time="0.002">
+    </testcase>
+    <testcase classname="Input tel type with spacing change handling should format value and preserve caret position" name="Input tel type with spacing change handling should format value and preserve caret position" time="0.007">
+    </testcase>
+    <testcase classname="Input tel type with spacing change handling should remove non-numeric characters and preserve caret position" name="Input tel type with spacing change handling should remove non-numeric characters and preserve caret position" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="FeedbackRating" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:50:49" time="17.381" tests="12">
+    <testcase classname="FeedbackRating should be able to render the component" name="FeedbackRating should be able to render the component" time="0.05">
+    </testcase>
+    <testcase classname="FeedbackRating should be able to render custom description" name="FeedbackRating should be able to render custom description" time="0.007">
+    </testcase>
+    <testcase classname="FeedbackRating should be able to render custom button label" name="FeedbackRating should be able to render custom button label" time="0.058">
+    </testcase>
+    <testcase classname="FeedbackRating rating should be able to render custom rating" name="FeedbackRating rating should be able to render custom rating" time="0.192">
+    </testcase>
+    <testcase classname="FeedbackRating rating should be able to change rating" name="FeedbackRating rating should be able to change rating" time="0.068">
+    </testcase>
+    <testcase classname="FeedbackRating rating should be able to reduce rating after selection" name="FeedbackRating rating should be able to reduce rating after selection" time="0.243">
+    </testcase>
+    <testcase classname="FeedbackRating rating should be able to support onRatingChange callback" name="FeedbackRating rating should be able to support onRatingChange callback" time="0.024">
+    </testcase>
+    <testcase classname="FeedbackRating submit should be disabled if rating is not selected" name="FeedbackRating submit should be disabled if rating is not selected" time="0.011">
+    </testcase>
+    <testcase classname="FeedbackRating submit should not be disabled if rating is provided" name="FeedbackRating submit should not be disabled if rating is provided" time="0.01">
+    </testcase>
+    <testcase classname="FeedbackRating submit should be able to support onSubmit callback" name="FeedbackRating submit should be able to support onSubmit callback" time="0.012">
+    </testcase>
+    <testcase classname="FeedbackRating imgSrc should be able to render a default banner image" name="FeedbackRating imgSrc should be able to render a default banner image" time="0.006">
+    </testcase>
+    <testcase classname="FeedbackRating imgSrc should be able to render custom banner images" name="FeedbackRating imgSrc should be able to render custom banner images" time="0.008">
+    </testcase>
+  </testsuite>
+  <testsuite name="PhoneNumberInputHelper" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:06" time="0.665" tests="6">
+    <testcase classname="PhoneNumberInputHelper getCountries should return countries correctly" name="PhoneNumberInputHelper getCountries should return countries correctly" time="0.001">
+    </testcase>
+    <testcase classname="PhoneNumberInputHelper getCountries should not return empty list" name="PhoneNumberInputHelper getCountries should not return empty list" time="0">
+    </testcase>
+    <testcase classname="PhoneNumberInputHelper formatNumber should return phone number format correctly" name="PhoneNumberInputHelper formatNumber should return phone number format correctly" time="0.001">
+    </testcase>
+    <testcase classname="PhoneNumberInputHelper formatNumber should return phone number format correctly even if number has spaces" name="PhoneNumberInputHelper formatNumber should return phone number format correctly even if number has spaces" time="0">
+    </testcase>
+    <testcase classname="PhoneNumberInputHelper formatNumber should return phone number without format" name="PhoneNumberInputHelper formatNumber should return phone number without format" time="0">
+    </testcase>
+    <testcase classname="PhoneNumberInputHelper formatNumber should return an empty string if the phone number is not provided" name="PhoneNumberInputHelper formatNumber should return an empty string if the phone number is not provided" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="useStateActions" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:06" time="0.47" tests="1">
+    <testcase classname="useStateActions should update state correctly when an action is called" name="useStateActions should update state correctly when an action is called" time="0.015">
+    </testcase>
+  </testsuite>
+  <testsuite name="Tag" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:06" time="0.518" tests="3">
+    <testcase classname="Tag should render the label correctly" name="Tag should render the label correctly" time="0.016">
+    </testcase>
+    <testcase classname="Tag should render with an icon if specified" name="Tag should render with an icon if specified" time="0.003">
+    </testcase>
+    <testcase classname="Tag should trigger onClick when the tag is clicked" name="Tag should trigger onClick when the tag is clicked" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="PhoneNumberInput" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:06" time="0.908" tests="4">
+    <testcase classname="PhoneNumberInput should render default component" name="PhoneNumberInput should render default component" time="0.04">
+    </testcase>
+    <testcase classname="PhoneNumberInput should render component with formatted value" name="PhoneNumberInput should render component with formatted value" time="0.015">
+    </testcase>
+    <testcase classname="PhoneNumberInput change handling should format number and preserve caret position" name="PhoneNumberInput change handling should format number and preserve caret position" time="0.013">
+    </testcase>
+    <testcase classname="PhoneNumberInput change handling should remove non-numeric characters and preserve caret position" name="PhoneNumberInput change handling should remove non-numeric characters and preserve caret position" time="0.01">
+    </testcase>
+  </testsuite>
+  <testsuite name="Pill" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:07" time="0.637" tests="2">
+    <testcase classname="Pill should render the label correctly" name="Pill should render the label correctly" time="0.012">
+    </testcase>
+    <testcase classname="Pill should render with an icon if specified" name="Pill should render with an icon if specified" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="TimeSlotBarHelper" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:07" time="0.491" tests="2">
+    <testcase classname="TimeSlotBarHelper formatHourlyDisplay should format the time in am/pm display" name="TimeSlotBarHelper formatHourlyDisplay should format the time in am/pm display" time="0.002">
+    </testcase>
+    <testcase classname="TimeSlotBarHelper calculateWidth should calculate the width based on the time range and cell width" name="TimeSlotBarHelper calculateWidth should calculate the width based on the time range and cell width" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="SimpleIdGenerator" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:07" time="0.417" tests="1">
+    <testcase classname="SimpleIdGenerator generate should generate 3 unique ids in quick succession" name="SimpleIdGenerator generate should generate 3 unique ids in quick succession" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Drawer" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:06" time="1.083" tests="4">
+    <testcase classname="Drawer should render the component" name="Drawer should render the component" time="0.046">
+    </testcase>
+    <testcase classname="Drawer should not display contents when the drawer not visible" name="Drawer should not display contents when the drawer not visible" time="0.011">
+    </testcase>
+    <testcase classname="Drawer should call onClose when the close button is clicked" name="Drawer should call onClose when the close button is clicked" time="0.005">
+    </testcase>
+    <testcase classname="Drawer should call onOverlayClick when the overlay is clicked" name="Drawer should call onOverlayClick when the overlay is clicked" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="Breadcrumb" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:06" time="1.113" tests="2">
+    <testcase classname="Breadcrumb should render the component" name="Breadcrumb should render the component" time="0.042">
+    </testcase>
+    <testcase classname="Breadcrumb should render the url props" name="Breadcrumb should render the url props" time="0.024">
+    </testcase>
+  </testsuite>
+  <testsuite name="Card" errors="0" failures="0" skipped="0" timestamp="2023-07-20T23:51:07" time="1.034" tests="2">
+    <testcase classname="Card should render the component" name="Card should render the component" time="0.016">
+    </testcase>
+    <testcase classname="Card should be able to render a custom JSX.Element as children" name="Card should be able to render a custom JSX.Element as children" time="0.002">
+    </testcase>
+  </testsuite>
+</testsuites>
