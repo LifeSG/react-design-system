@@ -186,7 +186,7 @@ export const FilterItemCheckbox = <T,>({
     };
 
     const renderSelectAllButton = () => {
-        if (options.length < 2) {
+        if (options.length < 3) {
             return null;
         }
 
