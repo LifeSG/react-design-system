@@ -50,11 +50,9 @@ export const FilterItemCheckbox = <T,>({
     };
 
     const handleSelectAll = () => {
-        if (selected.length) {
-            onSelect?.([]);
-        } else {
-            onSelect?.(options);
-        }
+        const newSelection = selected.length ? [] : options;
+        setSelected(newSelection);
+        onSelect?.(newSelection);
     };
 
     // =============================================================================
