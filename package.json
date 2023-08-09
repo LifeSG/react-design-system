@@ -32,6 +32,9 @@
         "url": "https://github.com/LifeSG/react-design-system/issues"
     },
     "homepage": "https://github.com/LifeSG/react-design-system#readme",
+    "dependencies": {
+        "immer": "^10.0.2"
+    },
     "devDependencies": {
         "@babel/core": "^7.17.8",
         "@babel/preset-env": "^7.16.11",
