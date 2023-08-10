@@ -46,6 +46,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     selectableCategory,
     itemsLoadState = "success",
     itemTruncationType = "end",
+    variant = "single",
     onBlur,
     onDismiss,
     onRetry,
@@ -371,6 +372,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         // otherwise expand the first selected item or first subitem tree
         const list = NestedDropdownListHelper.getInitialDropdown(
+            variant,
             currentItems,
             selectedKeyPaths
         );
@@ -414,6 +416,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                     selectableCategory={selectableCategory}
                     searchValue={searchValue}
                     itemTruncationType={itemTruncationType}
+                    variant={variant}
                     visible={visible}
                     onBlur={handleBlur}
                     onExpand={handleExpand}
@@ -513,7 +516,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         TODO:
         3. renderSelectAll
         16. renderBottomCta
-        18. bold matched character
         19. middle truncation
      */
 

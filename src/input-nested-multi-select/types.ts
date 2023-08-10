@@ -10,7 +10,7 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
     /** Specifies key path to select particular option label */
     selectedKeyPaths?: string[][] | undefined;
     onSelectOptions?:
-        | ((keyPath: string[], value: V1 | V2 | V3) => void)
+        | ((keyPaths: string[][], values: Array<V1 | V2 | V3>) => void)
         | undefined;
 }
 

@@ -3,7 +3,7 @@ import { L1OptionProps } from "../../input-nested-select/types";
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 export type Mode = "default" | "expand" | "collapse";
-
+export type Variant = "single" | "multi";
 export interface DropdownStyleProps {
     listStyleWidth?: string | undefined;
 }

@@ -1,5 +1,9 @@
 import { produce } from "immer";
-import { CombinedFormattedOptionProps, FormattedOption } from "./types";
+import {
+    CombinedFormattedOptionProps,
+    FormattedOption,
+    Variant,
+} from "./types";
 
 export type FormattedOptionMap<V1, V2, V3> = Map<
     string,
@@ -8,6 +12,7 @@ export type FormattedOptionMap<V1, V2, V3> = Map<
 
 export namespace NestedDropdownListHelper {
     export const getInitialDropdown = <V1, V2, V3>(
+        variant: Variant,
         currentItems: FormattedOptionMap<V1, V2, V3>,
         selectedKeyPaths: string[][]
     ) => {
