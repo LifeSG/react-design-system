@@ -6,21 +6,6 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "",
-                description: (
-                    <>
-                        This component also inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            HTMLButtonElement
-                        </a>
-                    </>
-                ),
-            },
-            {
                 name: "className",
                 description:
                     "The className of the component for custom styling.",
