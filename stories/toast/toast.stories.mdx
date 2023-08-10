@@ -4,12 +4,12 @@ import { Toast } from "src/toast";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { Text } from "src/text";
 import { PropsTable } from "./props-table";
-import { Button } from "src/button/button.tsx";
+import { Button } from "src/button";
 
 <Meta
     title="Modules/Toast"
     component={Toast}
-    parameters={{ layout: "padded" }}
+    parameters={{ layout: "centered" }}
 />
 
 <Title>Toast</Title>
@@ -162,12 +162,14 @@ Toasts that remains sticky at the top of the page and provides the user of impor
                             Click to open
                         </Button.Default>
                     )}
-                    {isVisible && (
-                        <Toast
-                            type="success"
-                            label="Your bookings has been updated and received by the service provider."
-                        />
-                    )}
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        {isVisible && (
+                            <Toast
+                                type="success"
+                                label="The template contains characters that cannot be updated. Please remove the characters and try again."
+                            />
+                        )}
+                    </div>
                 </div>
             );
         }}
