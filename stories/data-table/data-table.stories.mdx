@@ -66,10 +66,12 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
     </Story>
 </Canvas>
 
-<Heading3>With Checkbox</Heading3>
+<Heading3>Sort</Heading3>
+
+Table Row Sorting.
 
 <Canvas>
-    <Story name="With Checkbox">
+    <Story name="Sort">
         <DataTable
             headers={[
                 {
@@ -110,6 +112,63 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
                 },
             ]}
             isLoadingData={false}
+            sortIndicators={{ colId: "asc" }}
+        />
+    </Story>
+</Canvas>
+
+<Heading3>With checkbox selection</Heading3>
+
+Table Row with checkbox selection.
+
+<Canvas>
+    <Story name="With checkbox selection">
+        <DataTable
+            headers={[
+                {
+                    colId: "status",
+                    label: "Status",
+                    style: { width: "7.5rem" },
+                },
+                {
+                    colId: "time",
+                    label: "Time",
+                    style: { width: "15rem" },
+                },
+                {
+                    colId: "resource",
+                    label: "Resource",
+                    style: { width: "17.5rem" },
+                },
+                { colId: "title", label: "Title" },
+            ]}
+            rows={[
+                {
+                    id: "status",
+                    status: "Completed",
+                    time: "07/Aug/2023 9.30pm",
+                    resource: "Test",
+                    title: "Titile 1",
+                    colId: "status",
+                    label: "Status",
+                },
+                {
+                    id: "bookingTime",
+                    status: "Pending",
+                    time: "07/Aug/2023 10.30pm",
+                    resource: "Test",
+                    title: "Titile 2",
+                    colId: "bookingTime",
+                    label: "Booking time",
+                },
+            ]}
+            isLoadingData={false}
+            sortIndicators={{ colId: "asc" }}
+            selectionConfig={{
+                showCheckboxes: true,
+                showHeaderCheckbox: true,
+                headerWidth: "5rem",
+            }}
         />
     </Story>
 </Canvas>
