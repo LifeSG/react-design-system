@@ -1,0 +1,119 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { DataTable } from "src/data-table";
+import {
+    Heading3,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../storybook-common";
+import { PropsTable } from "./props-table";
+
+<Meta title="General/DataTable" component={DataTable} />
+
+<Title>Data Table</Title>
+
+<Secondary>Overview</Secondary>
+
+A call to action component with an icon in it.
+
+```tsx
+import { DataTable } from "@lifesg/react-design-system/data-table";
+```
+
+<Canvas>
+    <Story name="DataTable">
+        <DataTable
+            headers={[
+                {
+                    colId: "status",
+                    label: "Status",
+                    style: { width: "7.5rem" },
+                },
+                {
+                    colId: "time",
+                    label: "Time",
+                    style: { width: "15rem" },
+                },
+                {
+                    colId: "resource",
+                    label: "Resource",
+                    style: { width: "17.5rem" },
+                },
+                { colId: "title", label: "Title" },
+            ]}
+            rows={[
+                {
+                    id: "status",
+                    status: "Completed",
+                    time: "07/Aug/2023 9.30pm",
+                    resource: "Test",
+                    title: "Titile 1",
+                    colId: "status",
+                    label: "Status",
+                },
+                {
+                    id: "bookingTime",
+                    status: "Pending",
+                    time: "07/Aug/2023 10.30pm",
+                    resource: "Test",
+                    title: "Titile 2",
+                    colId: "bookingTime",
+                    label: "Booking time",
+                },
+            ]}
+            isLoadingData={false}
+        />
+    </Story>
+</Canvas>
+
+<Heading3>With Checkbox</Heading3>
+
+<Canvas>
+    <Story name="With Checkbox">
+        <DataTable
+            headers={[
+                {
+                    colId: "status",
+                    label: "Status",
+                    style: { width: "7.5rem" },
+                },
+                {
+                    colId: "time",
+                    label: "Time",
+                    style: { width: "15rem" },
+                },
+                {
+                    colId: "resource",
+                    label: "Resource",
+                    style: { width: "17.5rem" },
+                },
+                { colId: "title", label: "Title" },
+            ]}
+            rows={[
+                {
+                    id: "status",
+                    status: "Completed",
+                    time: "07/Aug/2023 9.30pm",
+                    resource: "Test",
+                    title: "Titile 1",
+                    colId: "status",
+                    label: "Status",
+                },
+                {
+                    id: "bookingTime",
+                    status: "Pending",
+                    time: "07/Aug/2023 10.30pm",
+                    resource: "Test",
+                    title: "Titile 2",
+                    colId: "bookingTime",
+                    label: "Booking time",
+                },
+            ]}
+            isLoadingData={false}
+        />
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
