@@ -225,7 +225,9 @@ const Component = <T,>(
                             />
                             <NavbarActionButtons
                                 actionButtons={
-                                    actionButtons && actionButtons.desktop
+                                    actionButtons &&
+                                    (actionButtons?.mobile ||
+                                        actionButtons.desktop)
                                 }
                                 onActionButtonClick={handleActionButtonClick}
                             />
