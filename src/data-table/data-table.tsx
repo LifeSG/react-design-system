@@ -16,7 +16,12 @@ import {
     Table,
     TableWrapper,
 } from "./data-table.styles";
-import { IDataTableProps, IRow, SortIndicator, THeader } from "./types";
+import {
+    IDataTableProps,
+    IRowProps,
+    SortIndicatorProps,
+    THeaderProps,
+} from "./types";
 
 // eslint-disable-next-line max-lines-per-function
 export const DataTable = ({
@@ -87,7 +92,7 @@ export const DataTable = ({
         </HeaderRow>
     );
 
-    const renderHeaderCell = (header: THeader) => {
+    const renderHeaderCell = (header: THeaderProps) => {
         const {
             colId,
             label,
@@ -127,7 +132,7 @@ export const DataTable = ({
 
         if (!isSorted) {
             return <></>;
-        } else if (isSorted === SortIndicator.ASC) {
+        } else if (isSorted === SortIndicatorProps.ASC) {
             return (
                 <SortArrowUpIcon
                     data-testid={getDataTestId(`header-${colId}-arrowup`)}
@@ -169,7 +174,7 @@ export const DataTable = ({
     const renderRows = () => {
         return (
             <>
-                {rows.map((row: IRow, index: number) => (
+                {rows.map((row: IRowProps, index: number) => (
                     <BodyRow
                         data-testid={getDataTestId(`row-${row.id.toString()}`)}
                         key={row.id.toString()}
@@ -210,7 +215,7 @@ export const DataTable = ({
         );
     };
 
-    const renderRowCell = (header: THeader, row: IRow) => {
+    const renderRowCell = (header: THeaderProps, row: IRowProps) => {
         const style = typeof header !== "string" ? header.style : undefined;
         const colId = typeof header === "string" ? header : header.colId;
         const cellData = row[colId];
