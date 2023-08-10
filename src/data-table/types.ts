@@ -1,19 +1,19 @@
 import { CSSProperties, ReactNode } from "react";
 
 export interface IDataTableProps {
-    testid?: string;
-    headersConfig?: IHeadersConfigProps;
+    testid?: string | undefined;
+    headersConfig?: IHeadersConfigProps | undefined;
     headers: THeaderProps[];
-    rowsConfig?: IRowsConfigProps;
-    rows: IRowProps[];
-    className?: string; // css class to put on table
-    selectionConfig?: ISelectionConfigProps;
-    selection?: string[]; // ids of all selected rows
-    sortIndicators?: ISortIndicatorsProps; // columns that want to show a sort indicator
-    actionsConfig?: IActionsConfigProps;
-    alternatingRows?: boolean;
-    customEmptyView?: () => ReactNode | string;
-    isLoadingData: boolean;
+    rowsConfig?: IRowsConfigProps | undefined;
+    rows?: IRowProps[] | undefined;
+    className?: string | undefined; // css class to put on table
+    selectionConfig?: ISelectionConfigProps | undefined;
+    selection?: string[] | undefined; // ids of all selected rows
+    sortIndicators?: ISortIndicatorsProps | undefined; // columns that want to show a sort indicator
+    actionsConfig?: IActionsConfigProps | undefined;
+    alternatingRows?: boolean | undefined;
+    customEmptyView?: () => ReactNode | string | undefined;
+    isLoadingData: boolean | undefined;
 }
 
 export enum SortIndicatorProps {
@@ -26,8 +26,8 @@ export interface ISortIndicatorsProps {
 }
 
 export interface IHeadersConfigProps {
-    className?: string; // css class to put on header row
-    onClickHeader?: (colId: string) => void;
+    className?: string | undefined; // css class to put on header row
+    onClickHeader?: ((colId: string) => void) | undefined;
 }
 
 export type THeaderProps =
@@ -36,14 +36,14 @@ export type THeaderProps =
 interface IHeaderProps {
     colId: string;
     label: string | ReactNode; // (technically ReactNode also includes string, but this makes it more obvious for devs)
-    clickable?: boolean;
-    className?: string; // css class to put on this header cell
+    clickable?: boolean | undefined;
+    className?: string | undefined; // css class to put on this header cell
     style?: CSSProperties | undefined;
 }
 
 export interface IRowsConfigProps {
-    className?: string; // css class to put on each row
-    alternatingClassName?: string;
+    className?: string | undefined; // css class to put on each row
+    alternatingClassName?: string | undefined;
 }
 
 export interface IRowProps {
@@ -53,19 +53,21 @@ export interface IRowProps {
 
 export interface ISelectionConfigProps {
     showCheckboxes: boolean;
-    showHeaderCheckbox?: boolean;
-    onClickSelect?: (colId: string, rowId: string, isSelected: boolean) => void;
-    onClickSelectAll?: (isSelected: boolean) => void;
-    className?: string; // css class to add to each cell containing the checkbox
-    headerClassName?: string; // css class to add to the header cell
-    headerWidth?: string;
+    showHeaderCheckbox?: boolean | undefined;
+    onClickSelect?:
+        | ((colId: string, rowId: string, isSelected: boolean) => void)
+        | undefined;
+    onClickSelectAll?: ((isSelected: boolean) => void) | undefined;
+    className?: string | undefined; // css class to add to each cell containing the checkbox
+    headerClassName?: string | undefined; // css class to add to the header cell
+    headerWidth?: string | undefined;
 }
 
 export interface IActionsConfigProps {
     showActions: boolean;
-    className?: string;
-    headerClassName?: string;
-    headerLabel?: string | ReactNode;
-    actions?: (row: IRowProps, isSelected: boolean) => ReactNode;
-    headerWidth?: string;
+    className?: string | undefined;
+    headerClassName?: string | undefined;
+    headerLabel?: string | ReactNode | undefined;
+    actions?: ((row: IRowProps, isSelected: boolean) => ReactNode) | undefined;
+    headerWidth?: string | undefined;
 }
