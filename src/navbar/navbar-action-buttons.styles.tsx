@@ -18,13 +18,13 @@ export const Wrapper = styled.ul`
 `;
 
 export const MobileWrapper = styled.ul`
-    display: flex;
-    list-style: none;
-    margin-left: 4rem;
-    flex-shrink: 0;
+    display: none;
 
-    ${MediaQuery.MinWidth.tablet} {
-        display: none;
+    ${MediaQuery.MaxWidth.tablet} {
+        display: flex;
+        list-style: none;
+        margin-left: 4rem;
+        flex-shrink: 0;
     }
 `;
 

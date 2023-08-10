@@ -121,22 +121,16 @@ export const NavbarActionButtons = ({
     };
 
     const renderButtons = (
-        isMobile = false,
-        actionButtonList = actionButtons
+        isMobile: boolean,
+        actionButtonList: NavbarButtonProps[]
     ) => {
         /**
          * In drawer view, download app button will always be at
          * the bottom, hence we will shift it to the back
          */
-        let buttonsToRender = isMobile
+        const buttonsToRender = isMobile
             ? moveDownloadButtonToTheBack(actionButtonList)
             : actionButtonList;
-
-        if (isMobile) {
-            buttonsToRender = buttonsToRender.filter(
-                (item) => !item.uncollapsible
-            );
-        }
 
         return buttonsToRender.map((actionButton, index) => {
             let component: JSX.Element;
@@ -202,15 +196,22 @@ export const NavbarActionButtons = ({
         const uncollapsableActionButtons = actionButtons.filter(
             (actionButton) => !!actionButton.uncollapsible
         );
+        const collapsableActionButtons = actionButtons.filter(
+            (actionButton) => !actionButton.uncollapsible
+        );
         if (mobile) {
-            return <DrawerWrapper>{renderButtons(mobile)}</DrawerWrapper>;
+            return (
+                <DrawerWrapper>
+                    {renderButtons(mobile, collapsableActionButtons)}
+                </DrawerWrapper>
+            );
         } else {
             return (
                 <>
                     <MobileWrapper>
                         {renderButtons(false, uncollapsableActionButtons)}
                     </MobileWrapper>
-                    <Wrapper>{renderButtons(mobile)}</Wrapper>
+                    <Wrapper>{renderButtons(mobile, actionButtons)}</Wrapper>
                 </>
             );
         }
