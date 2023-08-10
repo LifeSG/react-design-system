@@ -9,6 +9,7 @@ export * from "./calendar";
 export * from "./card";
 export * from "./checkbox";
 export * from "./color";
+export * from "./data-table";
 export * from "./date-input";
 export * from "./date-range-input";
 export * from "./design-token";
