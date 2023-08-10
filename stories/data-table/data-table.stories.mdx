@@ -7,6 +7,7 @@ import {
     Title,
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
+import { useState } from "react";
 
 <Meta title="General/DataTable" component={DataTable} />
 
@@ -66,12 +67,12 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
     </Story>
 </Canvas>
 
-<Heading3>Sort</Heading3>
+<Heading3>Sorting</Heading3>
 
 Table Row Sorting.
 
 <Canvas>
-    <Story name="Sort">
+    <Story name="Sorting">
         <DataTable
             headers={[
                 {
@@ -112,17 +113,174 @@ Table Row Sorting.
                 },
             ]}
             isLoadingData={false}
-            sortIndicators={{ colId: "asc" }}
+            sortIndicators={{ colId: "ASC" }}
         />
     </Story>
 </Canvas>
 
-<Heading3>With checkbox selection</Heading3>
+<Heading3>Checkbox selection</Heading3>
 
 Table Row with checkbox selection.
 
 <Canvas>
-    <Story name="With checkbox selection">
+    <Story name="Checkbox selection">
+        {() => {
+            const [selected, setSelected] = useState();
+            return (
+                <DataTable
+                    headers={[
+                        {
+                            colId: "status",
+                            label: "Status",
+                            style: { width: "7.5rem" },
+                        },
+                        {
+                            colId: "time",
+                            label: "Time",
+                            style: { width: "15rem" },
+                        },
+                        {
+                            colId: "resource",
+                            label: "Resource",
+                            style: { width: "17.5rem" },
+                        },
+                        { colId: "title", label: "Title" },
+                    ]}
+                    rows={[
+                        {
+                            id: "status",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Titile 1",
+                            colId: "status",
+                            label: "Status",
+                        },
+                        {
+                            id: "bookingTime",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 2",
+                            colId: "bookingTime",
+                            label: "Booking time",
+                        },
+                        {
+                            id: "commonRow",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 3",
+                            colId: "commonRow",
+                            label: "Common Row",
+                        },
+                    ]}
+                    selection={selected}
+                    isLoadingData={false}
+                    sortIndicators={{ colId: "ASC" }}
+                    selectionConfig={{
+                        showCheckboxes: true,
+                        showHeaderCheckbox: false,
+                        headerWidth: "5rem",
+                        onClickSelect: { setSelected },
+                        onClickSelectAll: { setSelected },
+                    }}
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Alternating Rows</Heading3>
+
+Table Alternating Row.
+
+<Canvas>
+    <Story name="Alternating Rows">
+        {() => {
+            const [selected, setSelected] = useState();
+            return (
+                <DataTable
+                    headers={[
+                        {
+                            colId: "status",
+                            label: "Status",
+                            style: { width: "7.5rem" },
+                        },
+                        {
+                            colId: "time",
+                            label: "Time",
+                            style: { width: "15rem" },
+                        },
+                        {
+                            colId: "resource",
+                            label: "Resource",
+                            style: { width: "17.5rem" },
+                        },
+                        { colId: "title", label: "Title" },
+                    ]}
+                    rows={[
+                        {
+                            id: "status",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Titile 1",
+                            colId: "status",
+                            label: "Status",
+                        },
+                        {
+                            id: "bookingTime",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 2",
+                            colId: "bookingTime",
+                            label: "Booking time",
+                        },
+                        {
+                            id: "commonRow",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 3",
+                            colId: "commonRow",
+                            label: "Common Row",
+                        },
+                        {
+                            id: "sampleRow",
+                            status: "SampleRow",
+                            time: "07/Aug/2023 12.30pm",
+                            resource: "Test",
+                            title: "Titile 4",
+                            colId: "sampleRow",
+                            label: "sample Row",
+                        },
+                        {
+                            id: "checkRow",
+                            status: "CheckRow",
+                            time: "07/Aug/2023 1.30pm",
+                            resource: "Test",
+                            title: "Titile 5",
+                            colId: "checkRow",
+                            label: "check Row",
+                        },
+                    ]}
+                    isLoadingData={false}
+                    sortIndicators={{ colId: "ASC" }}
+                    alternatingRows={true}
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Action column</Heading3>
+
+Table Column with Action selection.
+
+<Canvas>
+    <Story name="Action column">
         <DataTable
             headers={[
                 {
@@ -138,7 +296,7 @@ Table Row with checkbox selection.
                 {
                     colId: "resource",
                     label: "Resource",
-                    style: { width: "17.5rem" },
+                    style: { width: "10rem" },
                 },
                 { colId: "title", label: "Title" },
             ]}
@@ -163,7 +321,46 @@ Table Row with checkbox selection.
                 },
             ]}
             isLoadingData={false}
-            sortIndicators={{ colId: "asc" }}
+            sortIndicators={{ colId: "ASC" }}
+            actionsConfig={{
+                showActions: true,
+                className: "TestActionRowClass",
+                headerClassName: "TestActionHeaderClass",
+                headerLabel: "Actions",
+                headerWidth: "2rem",
+            }}
+        />
+    </Story>
+</Canvas>
+
+<Heading3>Empty Data View</Heading3>
+
+Table Empty Data View.
+
+<Canvas>
+    <Story name="Empty Data View">
+        <DataTable
+            headers={[
+                {
+                    colId: "status",
+                    label: "Status",
+                    style: { width: "15rem" },
+                },
+                {
+                    colId: "time",
+                    label: "Time",
+                    style: { width: "15rem" },
+                },
+                {
+                    colId: "resource",
+                    label: "Resource",
+                    style: { width: "15rem" },
+                },
+                { colId: "title", label: "Title" },
+            ]}
+            rows={[]}
+            isLoadingData={false}
+            sortIndicators={{ colId: "ASC" }}
             selectionConfig={{
                 showCheckboxes: true,
                 showHeaderCheckbox: true,
