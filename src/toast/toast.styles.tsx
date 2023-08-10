@@ -39,8 +39,8 @@ const getValidationColorAttributes = (
 export const Wrapper = styled(animated.div)<StyleProps>`
     display: flex;
     position: ${(props) => (props.$sticky ? "fixed" : "relative")};
+    margin: ${(props) => (props.$sticky ? "1rem" : 0)};
     top: 0;
-    right: 0;
     padding: 1rem;
     border-radius: 0.5rem;
     line-height: 0;
