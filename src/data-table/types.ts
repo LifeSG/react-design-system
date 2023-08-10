@@ -2,38 +2,38 @@ import { CSSProperties, ReactNode } from "react";
 
 export interface IDataTableProps {
     testid?: string;
-    headersConfig?: IHeadersConfig;
-    headers: THeader[];
-    rowsConfig?: IRowsConfig;
-    rows: IRow[];
+    headersConfig?: IHeadersConfigProps;
+    headers: THeaderProps[];
+    rowsConfig?: IRowsConfigProps;
+    rows: IRowProps[];
     className?: string; // css class to put on table
-    selectionConfig?: ISelectionConfig;
+    selectionConfig?: ISelectionConfigProps;
     selection?: string[]; // ids of all selected rows
-    sortIndicators?: ISortIndicators; // columns that want to show a sort indicator
-    actionsConfig?: IActionsConfig;
+    sortIndicators?: ISortIndicatorsProps; // columns that want to show a sort indicator
+    actionsConfig?: IActionsConfigProps;
     alternatingRows?: boolean;
     customEmptyView?: () => ReactNode | string;
     isLoadingData: boolean;
 }
 
-export enum SortIndicator {
+export enum SortIndicatorProps {
     ASC = "asc",
     DESC = "desc",
 }
 
-export interface ISortIndicators {
-    [colId: string]: SortIndicator;
+export interface ISortIndicatorsProps {
+    [colId: string]: SortIndicatorProps;
 }
 
-export interface IHeadersConfig {
+export interface IHeadersConfigProps {
     className?: string; // css class to put on header row
     onClickHeader?: (colId: string) => void;
 }
 
-export type THeader =
+export type THeaderProps =
     | string // label text. Rest defaults to colId=label, clickable=false
-    | IHeader;
-interface IHeader {
+    | IHeaderProps;
+interface IHeaderProps {
     colId: string;
     label: string | ReactNode; // (technically ReactNode also includes string, but this makes it more obvious for devs)
     clickable?: boolean;
@@ -41,17 +41,17 @@ interface IHeader {
     style?: CSSProperties | undefined;
 }
 
-export interface IRowsConfig {
+export interface IRowsConfigProps {
     className?: string; // css class to put on each row
     alternatingClassName?: string;
 }
 
-export interface IRow {
+export interface IRowProps {
     id: string | number;
     [colId: string]: string | number | ReactNode; // data with keys matching colId
 }
 
-export interface ISelectionConfig {
+export interface ISelectionConfigProps {
     showCheckboxes: boolean;
     showHeaderCheckbox?: boolean;
     onClickSelect?: (colId: string, rowId: string, isSelected: boolean) => void;
@@ -61,11 +61,11 @@ export interface ISelectionConfig {
     headerWidth?: string;
 }
 
-export interface IActionsConfig {
+export interface IActionsConfigProps {
     showActions: boolean;
     className?: string;
     headerClassName?: string;
     headerLabel?: string | ReactNode;
-    actions?: (row: IRow, isSelected: boolean) => ReactNode;
+    actions?: (row: IRowProps, isSelected: boolean) => ReactNode;
     headerWidth?: string;
 }
