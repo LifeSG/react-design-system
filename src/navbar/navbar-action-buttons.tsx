@@ -12,7 +12,11 @@ import {
     MobileWrapper,
     Wrapper,
 } from "./navbar-action-buttons.styles";
-import { NavbarButtonComponentProps, NavbarButtonProps } from "./types";
+import {
+    NavbarActionButtonsProps,
+    NavbarButtonComponentProps,
+    NavbarButtonProps,
+} from "./types";
 
 const APP_STORE_ICON =
     "https://assets.life.gov.sg/react-design-system/img/download/apple-app-store.png";
@@ -20,7 +24,7 @@ const PLAY_STORE_ICON =
     "https://assets.life.gov.sg/react-design-system/img/download/google-play-store.png";
 
 interface Props {
-    actionButtons?: NavbarButtonProps[] | undefined;
+    actionButtons?: NavbarActionButtonsProps | undefined;
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
     onActionButtonClick: (
@@ -192,11 +196,12 @@ export const NavbarActionButtons = ({
         });
     };
 
-    if (actionButtons && actionButtons.length > 0) {
-        const uncollapsableActionButtons = actionButtons.filter(
+    if (actionButtons && actionButtons.desktop.length > 0) {
+        const actionButtonList = actionButtons?.mobile || actionButtons.desktop;
+        const uncollapsableActionButtons = actionButtonList.filter(
             (actionButton) => !!actionButton.uncollapsible
         );
-        const collapsableActionButtons = actionButtons.filter(
+        const collapsableActionButtons = actionButtonList.filter(
             (actionButton) => !actionButton.uncollapsible
         );
         if (mobile) {
@@ -211,7 +216,9 @@ export const NavbarActionButtons = ({
                     <MobileWrapper>
                         {renderButtons(false, uncollapsableActionButtons)}
                     </MobileWrapper>
-                    <Wrapper>{renderButtons(mobile, actionButtons)}</Wrapper>
+                    <Wrapper>
+                        {renderButtons(mobile, actionButtons.desktop)}
+                    </Wrapper>
                 </>
             );
         }
