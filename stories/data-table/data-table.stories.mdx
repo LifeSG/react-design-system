@@ -9,7 +9,7 @@ import {
 import { PropsTable } from "./props-table";
 import { useState } from "react";
 
-<Meta title="General/DataTable" component={DataTable} />
+<Meta title="Modules/DataTable" component={DataTable} />
 
 <Title>Data Table</Title>
 
@@ -94,15 +94,6 @@ Table Row Sorting.
             ]}
             rows={[
                 {
-                    id: "status",
-                    status: "Completed",
-                    time: "07/Aug/2023 9.30pm",
-                    resource: "Test",
-                    title: "Titile 1",
-                    colId: "status",
-                    label: "Status",
-                },
-                {
                     id: "bookingTime",
                     status: "Pending",
                     time: "07/Aug/2023 10.30pm",
@@ -111,9 +102,18 @@ Table Row Sorting.
                     colId: "bookingTime",
                     label: "Booking time",
                 },
+                {
+                    id: "status",
+                    status: "Completed",
+                    time: "07/Aug/2023 9.30pm",
+                    resource: "Test",
+                    title: "Titile 1",
+                    colId: "status",
+                    label: "Status",
+                },
             ]}
             isLoadingData={false}
-            sortIndicators={{ colId: "ASC" }}
+            sortIndicators={["ASC"]}
         />
     </Story>
 </Canvas>
@@ -125,7 +125,22 @@ Table Row with checkbox selection.
 <Canvas>
     <Story name="Checkbox selection">
         {() => {
-            const [selected, setSelected] = useState();
+            const [selected, setSelected] = useState([]);
+            const handleOnClickSelect = (rowId, isSelected) => {
+                console.log("isSelected :", isSelected);
+                if (isSelected) {
+                    setSelected((selected) => [...selected, rowId]);
+                } else {
+                    setSelected(
+                        selected.filter((item) => {
+                            return item !== rowId;
+                        })
+                    );
+                }
+            };
+            const handleOnClickSelectAll = (select) => {
+                console.log("select :", select);
+            };
             return (
                 <DataTable
                     headers={[
@@ -180,10 +195,11 @@ Table Row with checkbox selection.
                     sortIndicators={{ colId: "ASC" }}
                     selectionConfig={{
                         showCheckboxes: true,
-                        showHeaderCheckbox: false,
+                        showHeaderCheckbox: true,
                         headerWidth: "5rem",
-                        onClickSelect: { setSelected },
-                        onClickSelectAll: { setSelected },
+                        onClickSelect: (colId, rowId, isSelected) => {
+                            handleOnClickSelect(rowId, isSelected);
+                        },
                     }}
                 />
             );
@@ -362,7 +378,7 @@ Table Empty Data View.
             isLoadingData={false}
             sortIndicators={{ colId: "ASC" }}
             selectionConfig={{
-                showCheckboxes: true,
+                showCheckboxes: false,
                 showHeaderCheckbox: true,
                 headerWidth: "5rem",
             }}
