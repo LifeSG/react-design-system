@@ -38,7 +38,7 @@ export const Toast = ({
     const [isVisible, setVisible] = useState<boolean>(false);
 
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: MediaWidths.tablet,
     });
     // =============================================================================
     // EFFECTS
