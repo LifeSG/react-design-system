@@ -94,15 +94,6 @@ Table Row Sorting.
             ]}
             rows={[
                 {
-                    id: "bookingTime",
-                    status: "Pending",
-                    time: "07/Aug/2023 10.30pm",
-                    resource: "Test",
-                    title: "Titile 2",
-                    colId: "bookingTime",
-                    label: "Booking time",
-                },
-                {
                     id: "status",
                     status: "Completed",
                     time: "07/Aug/2023 9.30pm",
@@ -111,9 +102,23 @@ Table Row Sorting.
                     colId: "status",
                     label: "Status",
                 },
+                {
+                    id: "bookingTime",
+                    status: "Pending",
+                    time: "07/Aug/2023 10.30pm",
+                    resource: "Test",
+                    title: "Titile 2",
+                    colId: "bookingTime",
+                    label: "Booking time",
+                },
             ]}
             isLoadingData={false}
-            sortIndicators={["ASC"]}
+            sortIndicators={{
+                ["status"]: "desc",
+                ["time"]: "desc",
+                ["resource"]: "asc",
+                ["title"]: "asc",
+            }}
         />
     </Story>
 </Canvas>
@@ -288,64 +293,6 @@ Table Alternating Row.
                 />
             );
         }}
-    </Story>
-</Canvas>
-
-<Heading3>Action column</Heading3>
-
-Table Column with Action selection.
-
-<Canvas>
-    <Story name="Action column">
-        <DataTable
-            headers={[
-                {
-                    colId: "status",
-                    label: "Status",
-                    style: { width: "7.5rem" },
-                },
-                {
-                    colId: "time",
-                    label: "Time",
-                    style: { width: "15rem" },
-                },
-                {
-                    colId: "resource",
-                    label: "Resource",
-                    style: { width: "10rem" },
-                },
-                { colId: "title", label: "Title" },
-            ]}
-            rows={[
-                {
-                    id: "status",
-                    status: "Completed",
-                    time: "07/Aug/2023 9.30pm",
-                    resource: "Test",
-                    title: "Titile 1",
-                    colId: "status",
-                    label: "Status",
-                },
-                {
-                    id: "bookingTime",
-                    status: "Pending",
-                    time: "07/Aug/2023 10.30pm",
-                    resource: "Test",
-                    title: "Titile 2",
-                    colId: "bookingTime",
-                    label: "Booking time",
-                },
-            ]}
-            isLoadingData={false}
-            sortIndicators={{ colId: "ASC" }}
-            actionsConfig={{
-                showActions: true,
-                className: "TestActionRowClass",
-                headerClassName: "TestActionHeaderClass",
-                headerLabel: "Actions",
-                headerWidth: "2rem",
-            }}
-        />
     </Story>
 </Canvas>
 
