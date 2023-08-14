@@ -141,12 +141,12 @@ is **4 seconds** and you can specify using the `autoDismiss` property.
     </Story>
 </Canvas>
 
-<Heading3>With position (fixed)</Heading3>
+<Heading3>Fixed positioning</Heading3>
 
-Toasts that remains fixed at the top of the page and provides the user of important notification.
+This example demonstrates the default positioning of the Toast. It remains fixed at the top while the page is scrolled.
 
 <Canvas>
-    <Story name="With position (fixed)">
+    <Story name="Fixed positioning">
         {() => {
             const [isVisible, setIsVisible] = useState(false);
             const openToast = () => setIsVisible(true);
@@ -162,14 +162,9 @@ Toasts that remains fixed at the top of the page and provides the user of import
                             Click to open
                         </Button.Default>
                     )}
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        {isVisible && (
-                            <Toast
-                                type="success"
-                                label="The template contains characters that cannot be updated. Please remove the characters and try again."
-                            />
-                        )}
-                    </div>
+                    {isVisible && (
+                        <Toast label="Notification" onDismiss={closeToast} />
+                    )}
                 </div>
             );
         }}
