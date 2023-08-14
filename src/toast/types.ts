@@ -15,6 +15,6 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
     autoDismissTime?: number | undefined;
     /** If given, the function will be called when the Toast is dismissed */
     onDismiss?: () => void;
-    /** If specified, the Toast will remains sticky at the top of the page */
-    sticky?: boolean | undefined;
+    /** Specifies if Toast should be fixed to left. Defaults to true */
+    fixed?: boolean | undefined;
 }

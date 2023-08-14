@@ -28,7 +28,7 @@ export const Toast = ({
     autoDismiss,
     autoDismissTime = DEFAULT_AUTO_DISMISS_TIME,
     onDismiss,
-    sticky = true,
+    fixed = true,
     ...otherProps
 }: ToastProps) => {
     // =============================================================================
@@ -107,7 +107,7 @@ export const Toast = ({
         <Wrapper
             style={transitions}
             $type={type}
-            $sticky={sticky}
+            $fixed={fixed}
             {...otherProps}
         >
             {renderIcon()}
