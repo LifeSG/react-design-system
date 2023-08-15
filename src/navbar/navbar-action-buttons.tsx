@@ -196,37 +196,41 @@ export const NavbarActionButtons = ({
         });
     };
 
-    const actionButtonList = actionButtons?.mobile || actionButtons.desktop;
-    const uncollapsableActionButtons = actionButtonList.filter(
-        (actionButton) => !!actionButton.uncollapsible
-    );
-    const collapsableActionButtons = actionButtonList.filter(
-        (actionButton) => !actionButton.uncollapsible
-    );
-    if (mobile) {
-        return (
-            <>
-                {collapsableActionButtons.length > 0 && (
-                    <DrawerWrapper>
-                        {renderButtons(mobile, collapsableActionButtons)}
-                    </DrawerWrapper>
-                )}
-            </>
+    if (actionButtons) {
+        const actionButtonList = actionButtons?.mobile || actionButtons.desktop;
+        const uncollapsableActionButtons = actionButtonList.filter(
+            (actionButton) => !!actionButton.uncollapsible
         );
-    } else {
-        return (
-            <>
-                {uncollapsableActionButtons.length > 0 && (
-                    <MobileWrapper>
-                        {renderButtons(false, uncollapsableActionButtons)}
-                    </MobileWrapper>
-                )}
-                {actionButtons.desktop.length > 0 && (
-                    <Wrapper>
-                        {renderButtons(mobile, actionButtons.desktop)}
-                    </Wrapper>
-                )}
-            </>
+        const collapsableActionButtons = actionButtonList.filter(
+            (actionButton) => !actionButton.uncollapsible
         );
+        if (mobile) {
+            return (
+                <>
+                    {collapsableActionButtons.length > 0 && (
+                        <DrawerWrapper>
+                            {renderButtons(mobile, collapsableActionButtons)}
+                        </DrawerWrapper>
+                    )}
+                </>
+            );
+        } else {
+            return (
+                <>
+                    {uncollapsableActionButtons.length > 0 && (
+                        <MobileWrapper>
+                            {renderButtons(false, uncollapsableActionButtons)}
+                        </MobileWrapper>
+                    )}
+                    {actionButtons.desktop.length > 0 && (
+                        <Wrapper>
+                            {renderButtons(mobile, actionButtons.desktop)}
+                        </Wrapper>
+                    )}
+                </>
+            );
+        }
     }
+
+    return <></>;
 };
