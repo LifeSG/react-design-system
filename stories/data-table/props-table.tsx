@@ -24,30 +24,30 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "headersConfig",
                 description: "The headers Config",
-                propTypes: ["IHeadersConfigProps<T>"],
+                propTypes: ["HeadersConfigProps<T>"],
             },
 
             {
                 name: "headers",
                 description: "The list of headers",
-                propTypes: ["THeaderProps<T>[]"],
+                propTypes: ["HeadersProps<T>[]"],
                 mandatory: true,
             },
             {
                 name: "rowsConfig",
                 description: "The rows Config",
-                propTypes: ["IRowsConfigProps<T>"],
+                propTypes: ["RowsConfigProps<T>"],
             },
             {
                 name: "rows",
                 description: "The list of rows",
-                propTypes: ["IRowProps<T>"],
+                propTypes: ["RowProps<T>"],
             },
 
             {
                 name: "selectionConfig",
                 description: "The selection config",
-                propTypes: ["ISelectionConfigProps<T>"],
+                propTypes: ["SelectionConfigProps<T>"],
             },
             {
                 name: "selection",
@@ -57,12 +57,12 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "sortIndicators",
                 description: "The sort Indicators",
-                propTypes: ["ISortIndicatorsProps<T>"],
+                propTypes: ["SortIndicatorsProps<T>"],
             },
             {
                 name: "actionsConfig",
                 description: "The selection actions Config",
-                propTypes: ["IActionsConfigProps<T>"],
+                propTypes: ["ActionsConfigProps<T>"],
             },
             {
                 name: "alternatingRows",
@@ -84,7 +84,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "IActionsConfigProps",
+        name: "ActionsConfigProps",
         attributes: [
             {
                 name: "showActions",
@@ -114,7 +114,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "actions",
                 description: "Called when a selection happen",
                 propTypes: [
-                    "(row: IRowProps, isSelected: boolean) => ReactNode",
+                    "(row: RowProps, isSelected: boolean) => ReactNode",
                 ],
             },
             {
@@ -125,18 +125,18 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "THeaderProps",
+        name: "HeadersProps",
         attributes: [
             {
-                name: "IHeaderProps",
-                description: "IHeaderProps",
-                propTypes: ["IHeaderProps"],
+                name: "HeaderProps",
+                description: "HeaderProps",
+                propTypes: ["HeaderProps"],
                 mandatory: true,
             },
         ],
     },
     {
-        name: "IHeaderProps",
+        name: "HeaderProps",
         attributes: [
             {
                 name: "colId",
@@ -168,7 +168,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "IHeadersConfigProps",
+        name: "HeadersConfigProps",
         attributes: [
             {
                 name: "className",
@@ -184,7 +184,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "IRowsConfigProps",
+        name: "RowsConfigProps",
         attributes: [
             {
                 name: "className",
@@ -199,7 +199,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "ISelectionConfigProps",
+        name: "SelectionConfigProps",
         attributes: [
             {
                 name: "showCheckboxes",
@@ -243,7 +243,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "ISortIndicatorsProps",
+        name: "SortIndicatorsProps",
         attributes: [
             {
                 name: "colId",

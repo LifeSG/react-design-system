@@ -17,10 +17,10 @@ import {
     TableWrapper,
 } from "./data-table.styles";
 import {
-    IDataTableProps,
-    IRowProps,
+    DataTableProps,
+    HeadersProps,
+    RowProps,
     SortIndicatorProps,
-    THeaderProps,
 } from "./types";
 
 // eslint-disable-next-line max-lines-per-function
@@ -38,7 +38,7 @@ export const DataTable = ({
     alternatingRows,
     customEmptyView,
     isLoadingData = false,
-}: IDataTableProps) => {
+}: DataTableProps) => {
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
@@ -92,7 +92,7 @@ export const DataTable = ({
         </HeaderRow>
     );
 
-    const renderHeaderCell = (header: THeaderProps) => {
+    const renderHeaderCell = (header: HeadersProps) => {
         const {
             colId,
             label,
@@ -174,7 +174,7 @@ export const DataTable = ({
     const renderRows = () => {
         return (
             <>
-                {rows.map((row: IRowProps, index: number) => (
+                {rows.map((row: RowProps, index: number) => (
                     <BodyRow
                         data-testid={getDataTestId(`row-${row.id.toString()}`)}
                         key={row.id.toString()}
@@ -215,7 +215,7 @@ export const DataTable = ({
         );
     };
 
-    const renderRowCell = (header: THeaderProps, row: IRowProps) => {
+    const renderRowCell = (header: HeadersProps, row: RowProps) => {
         const style = typeof header !== "string" ? header.style : undefined;
         const colId = typeof header === "string" ? header : header.colId;
         const cellData = row[colId];
