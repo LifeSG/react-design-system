@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
@@ -18,6 +18,17 @@ export const Wrapper = styled.ul`
 `;
 
 export const MobileWrapper = styled.ul`
+    display: none;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: flex;
+        list-style: none;
+        margin-left: 4rem;
+        flex-shrink: 0;
+    }
+`;
+
+export const DrawerWrapper = styled.ul`
     display: none;
     list-style: none;
 
@@ -40,7 +51,7 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 // BUTTON ITEMS
 // =============================================================================
-export const ButtonItem = styled.li`
+export const ButtonItem = styled.li<{ $mobile?: boolean }>`
     position: relative;
     display: flex;
     align-items: center;
@@ -56,12 +67,18 @@ export const ButtonItem = styled.li`
 
         :not(:last-of-type) {
             margin-right: 0;
-            margin-bottom: 1rem;
+            margin-bottom: ${(props) => (props.$mobile ? "1rem" : "0")};
         }
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        padding: 0 1rem;
+        ${(props) => {
+            if (props.$mobile) {
+                return css`
+                    padding: 0 1rem;
+                `;
+            }
+        }}
     }
 `;
 

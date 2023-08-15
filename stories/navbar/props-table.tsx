@@ -266,6 +266,12 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
             },
+            {
+                name: "uncollapsible",
+                description:
+                    "Specifies if the action button should collapse in mobile viewports",
+                propTypes: ["boolean"],
+            },
         ],
     },
     {

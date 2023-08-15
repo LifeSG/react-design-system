@@ -176,10 +176,7 @@ const Component = <T,>(
                     mobile
                 />
                 <NavbarActionButtons
-                    actionButtons={
-                        actionButtons &&
-                        (actionButtons?.mobile || actionButtons.desktop)
-                    }
+                    actionButtons={actionButtons}
                     onActionButtonClick={handleActionButtonClick}
                     mobile
                 />
@@ -224,9 +221,7 @@ const Component = <T,>(
                                 selectedId={selectedId}
                             />
                             <NavbarActionButtons
-                                actionButtons={
-                                    actionButtons && actionButtons.desktop
-                                }
+                                actionButtons={actionButtons}
                                 onActionButtonClick={handleActionButtonClick}
                             />
                             <MobileMenuButton

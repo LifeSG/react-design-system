@@ -1,4 +1,5 @@
 import { GearIcon } from "@lifesg/react-icons/gear";
+import { InboxIcon } from "@lifesg/react-icons/inbox";
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { IconButton } from "src/icon-button";
@@ -264,6 +265,57 @@ You can also choose to render a custom component of your choice as an action but
     </Story>
 </Canvas>
 
+<Heading3>Uncollapsible action buttons</Heading3>
+
+You can set an action button to be uncollapsible, so it remains visible in the navigation bar on mobile viewports.
+
+<Canvas>
+    <Story name="Uncollapsible action buttons">
+        <Navbar
+            items={{
+                desktop: [
+                    {
+                        id: "home",
+                        children: "Home",
+                        href: "https://www.life.gov.sg",
+                        target: "_blank",
+                    },
+                    {
+                        id: "guides",
+                        children: "Guides",
+                        href: "https://www.life.gov.sg",
+                    },
+                    {
+                        id: "lifesg-app",
+                        children: "LifeSG app",
+                        href: "https://www.life.gov.sg",
+                    },
+                ],
+            }}
+            actionButtons={{
+                desktop: [
+                    {
+                        type: "component",
+                        args: {
+                            render: (
+                                <InboxIcon
+                                    style={{
+                                        width: "1.25rem",
+                                        height: "1.25rem",
+                                    }}
+                                />
+                            ),
+                        },
+                        uncollapsible: true,
+                    },
+                ],
+            }}
+            selectedId="home"
+            fixed={false} /* For storybook purposes */
+        />
+    </Story>
+</Canvas>
+
 <Heading3>Prevent dismissal of drawer on specific actions</Heading3>
 
 In this example, we are preventing the drawer's dismissal on the brand logo click. We'll make use of
@@ -440,20 +492,6 @@ In this example, a co-brand is displayed next to the primary brand.
             }}
             actionButtons={{
                 desktop: [
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "link",
-                            children: "FAQ",
-                        },
-                    },
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "secondary",
-                            children: "Logout",
-                        },
-                    },
                     {
                         type: "download",
                     },
