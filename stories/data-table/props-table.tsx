@@ -128,15 +128,15 @@ const DATA: ApiTableSectionProps[] = [
         name: "HeadersProps",
         attributes: [
             {
-                name: "HeaderProps",
-                description: "HeaderProps",
-                propTypes: ["HeaderProps"],
+                name: "HeaderItemProps",
+                description: "HeaderItemProps",
+                propTypes: ["HeaderItemProps"],
                 mandatory: true,
             },
         ],
     },
     {
-        name: "HeaderProps",
+        name: "HeaderItemProps",
         attributes: [
             {
                 name: "colId",
