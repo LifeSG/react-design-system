@@ -90,6 +90,7 @@ export const options = [
             {
                 label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin dolor ut est rutrum vulputate. Maecenas lacinia viverra metus",
                 value: {
+                    id: 510,
                     name: "Long sub category a",
                 },
                 key: "510",
@@ -97,6 +98,7 @@ export const options = [
                     {
                         label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempor varius elit nec iaculis. Sed sed mauris iaculis, pretium dui vel, lacinia est.",
                         value: {
+                            id: 23,
                             name: "Long item a",
                         },
                         key: "23",

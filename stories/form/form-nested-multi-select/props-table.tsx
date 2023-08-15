@@ -14,9 +14,9 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["L1OptionProps<V1, V2, V3>[]"],
             },
             {
-                name: "selectedKeyPath",
-                description: "The key path of the selected option",
-                propTypes: ["string[]"],
+                name: "selectedKeyPaths",
+                description: "The key path of the selected options",
+                propTypes: ["string[][]"],
             },
             {
                 name: "placeholder",
@@ -115,9 +115,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "onSelectOption",
+                name: "onSelectOptions",
                 description: "Called when an option is selected",
-                propTypes: ["(keyPath: string[], value: V1 | V2 | V3) => void"],
+                propTypes: [
+                    "(keyPaths: string[][], value: Array<V1 | V2 | V3>) => void",
+                ],
             },
             {
                 name: "onShowOptions",
