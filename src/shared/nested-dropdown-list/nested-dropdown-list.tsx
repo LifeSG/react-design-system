@@ -3,10 +3,14 @@ import get from "lodash/get";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
 import { Spinner } from "../../button/button.style";
-import { CombinedOptionProps } from "../../input-nested-select";
 import { useEventListener } from "../../util/use-event-listener";
 import { ListItem } from "./list-item";
 import { DropdownSearch } from "../dropdown-list/dropdown-search";
+import {
+    FormattedOptionMap,
+    NestedDropdownListHelper,
+} from "./nested-dropdown-list-helper";
+import { CombinedFormattedOptionProps, NestedDropdownListProps } from "./types";
 import {
     Container,
     DropdownCommonButton,
@@ -14,12 +18,8 @@ import {
     List,
     ResultStateContainer,
     ResultStateText,
+    SelectAllContainer,
 } from "./nested-dropdown-list.styles";
-import { CombinedFormattedOptionProps, NestedDropdownListProps } from "./types";
-import {
-    FormattedOptionMap,
-    NestedDropdownListHelper,
-} from "./nested-dropdown-list-helper";
 
 enableMapSet();
 
@@ -42,16 +42,22 @@ export const NestedDropdownList = <V1, V2, V3>({
     searchPlaceholder = "Search",
     visible,
     mode = "default",
+<<<<<<< HEAD
+=======
+    multiSelect,
+    selectedKeyPath,
+>>>>>>> 3d333f00 ([BOOKINGSG-4362][WK] handle selectedAll and checkbox interactive)
     selectedKeyPaths,
     selectableCategory,
     itemsLoadState = "success",
     itemTruncationType = "end",
-    variant = "single",
     onBlur,
     onDismiss,
+    onSelectAll,
     onRetry,
     onSearch,
     onSelectItem,
+    onSelectItems,
     ...otherProps
 }: NestedDropdownListProps<V1, V2, V3>): JSX.Element => {
     // =============================================================================
@@ -59,36 +65,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
     const initialItems = useMemo((): FormattedOptionMap<V1, V2, V3> => {
         if (!_listItems || !_listItems.length) return new Map([]);
-
-        const formatted = (
-            options: CombinedOptionProps<V1, V2, V3>[],
-            parentKeys: string[]
-        ): FormattedOptionMap<V1, V2, V3> => {
-            return options.reduce((result, option) => {
-                const { key, label, value, subItems } = option;
-                const stringKey = key.toString();
-
-                const keyPath = [...parentKeys, stringKey];
-
-                const item = {
-                    label,
-                    value,
-                    expanded: mode === "expand",
-                    selected: false,
-                    isSearchTerm: false,
-                    keyPath,
-                    subItems: subItems
-                        ? formatted(subItems, keyPath)
-                        : undefined,
-                };
-
-                result.set(stringKey, item);
-
-                return result;
-            }, new Map());
-        };
-
-        return formatted(_listItems, []);
+        return NestedDropdownListHelper.getInitialItems(_listItems, [], mode);
     }, [_listItems]);
 
     const [searchValue, setSearchValue] = useState<string>("");
@@ -129,6 +106,16 @@ export const NestedDropdownList = <V1, V2, V3>({
                 listItemRefs.current[target[0]].ref.focus();
             }
 
+            if (multiSelect) {
+                const multiSelectList =
+                    NestedDropdownListHelper.updateCategoryChecked(
+                        list,
+                        selectedKeyPaths
+                    );
+
+                setCurrentItems(multiSelectList);
+            }
+
             // Give some time for the custom call-to-action to be rendered
             setTimeout(() => {
                 setContentHeight(getContentHeight());
@@ -154,6 +141,18 @@ export const NestedDropdownList = <V1, V2, V3>({
         filterAndUpdateList(searchValue);
     }, [searchValue]);
 
+    useEffect(() => {
+        if (visible && multiSelect) {
+            const targetList = isSearch ? filteredItems : currentItems;
+            const list = NestedDropdownListHelper.updateCategoryChecked(
+                targetList,
+                selectedKeyPaths
+            );
+
+            isSearch ? setFilteredItems(list) : setCurrentItems(list);
+        }
+    }, [selectedKeyPaths, isSearch]);
+
     useEventListener("keydown", handleKeyboardPress, "document");
 
     // =============================================================================
@@ -161,7 +160,58 @@ export const NestedDropdownList = <V1, V2, V3>({
     // =============================================================================
 
     const handleSelect = (item: CombinedFormattedOptionProps<V1, V2, V3>) => {
-        onSelectItem(item);
+        const { label, keyPath, value } = item;
+        onSelectItem({ label, keyPath, value });
+    };
+
+    const handleSelectCategory = (
+        item: CombinedFormattedOptionProps<V1, V2, V3>
+    ) => {
+        const targetList = isSearch ? filteredItems : currentItems;
+        const { keyPath } = item;
+
+        const { selectedItems, keyPaths } =
+            NestedDropdownListHelper.getSubItemKeyPathAndItem(item);
+
+        const list = produce(
+            targetList,
+            (draft: FormattedOptionMap<V1, V2, V3>) => {
+                const item = NestedDropdownListHelper.getItemAtKeyPath(
+                    draft,
+                    keyPath
+                );
+
+                item.expanded = true;
+
+                if (item.subItems && item.subItems.size) {
+                    for (const nextItem of item.subItems.values()) {
+                        nextItem.expanded = true;
+                    }
+                }
+            }
+        );
+
+        onSelectItems(selectedItems, keyPaths);
+        if (isSearch) {
+            setFilteredItems(list);
+        } else {
+            setCurrentItems(list);
+        }
+    };
+
+    const handleSelectAll = () => {
+        const isSelectedAll = !selectedKeyPaths.flat().length || false;
+
+        const { keyPaths, items, list } =
+            NestedDropdownListHelper.updateSelectedAll(
+                currentItems,
+                isSelectedAll
+            );
+
+        if (onSelectAll) {
+            setCurrentItems(list);
+            isSelectedAll ? onSelectAll(keyPaths, items) : onSelectAll([], []);
+        }
     };
 
     const handleExpand = (keyPath: string[]) => {
@@ -180,11 +230,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(list);
 
         setVisibleKeyPaths(keyPaths);
-        if (isSearch) {
-            setFilteredItems(list);
-        } else {
-            setCurrentItems(list);
-        }
+        isSearch ? setFilteredItems(list) : setCurrentItems(list);
     };
 
     const handleListItemRef = (
@@ -372,9 +418,14 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         // otherwise expand the first selected item or first subitem tree
         const list = NestedDropdownListHelper.getInitialDropdown(
-            variant,
             currentItems,
+<<<<<<< HEAD
             selectedKeyPaths
+=======
+            selectedKeyPath,
+            selectedKeyPaths,
+            multiSelect
+>>>>>>> 3d333f00 ([BOOKINGSG-4362][WK] handle selectedAll and checkbox interactive)
         );
 
         return list;
@@ -398,6 +449,16 @@ export const NestedDropdownList = <V1, V2, V3>({
             setFilteredItems(filtered);
             resetVisbileKeyPaths(filtered);
             setIsSearch(isSearch);
+
+            if (multiSelect) {
+                const multiSelectList =
+                    NestedDropdownListHelper.updateCategoryChecked(
+                        filtered,
+                        selectedKeyPaths
+                    );
+
+                setFilteredItems(multiSelectList);
+            }
         }
     };
 
@@ -412,16 +473,21 @@ export const NestedDropdownList = <V1, V2, V3>({
                 <ListItem
                     key={key}
                     item={item}
+<<<<<<< HEAD
+=======
+                    selectedKeyPath={selectedKeyPath}
+>>>>>>> 3d333f00 ([BOOKINGSG-4362][WK] handle selectedAll and checkbox interactive)
                     selectedKeyPaths={selectedKeyPaths}
                     selectableCategory={selectableCategory}
                     searchValue={searchValue}
                     itemTruncationType={itemTruncationType}
-                    variant={variant}
+                    multiSelect={multiSelect}
                     visible={visible}
                     onBlur={handleBlur}
                     onExpand={handleExpand}
                     onRef={handleListItemRef}
                     onSelect={handleSelect}
+                    onSelectCategory={handleSelectCategory}
                 />
             ));
         }
@@ -444,6 +510,28 @@ export const NestedDropdownList = <V1, V2, V3>({
         }
 
         return null;
+    };
+
+    const renderSelectAll = () => {
+        if (
+            multiSelect &&
+            initialItems.size > 0 &&
+            !isSearch &&
+            itemsLoadState === "success"
+        ) {
+            return (
+                <SelectAllContainer key="selectAll">
+                    <DropdownCommonButton
+                        onClick={handleSelectAll}
+                        type="button"
+                    >
+                        {selectedKeyPaths.flat().length === 0
+                            ? "Select all"
+                            : "Unselect all"}
+                    </DropdownCommonButton>
+                </SelectAllContainer>
+            );
+        }
     };
 
     const renderNoResults = () => {
@@ -504,6 +592,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                 {...otherProps}
             >
                 {renderSearchInput()}
+                {renderSelectAll()}
                 {renderLoading()}
                 {renderNoResults()}
                 {renderTryAgain()}
@@ -514,7 +603,6 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     /**
         TODO:
-        3. renderSelectAll
         16. renderBottomCta
         19. middle truncation
      */
