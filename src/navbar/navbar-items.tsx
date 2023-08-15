@@ -97,7 +97,7 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderItems = () => {
         return items.map((item, index) => {
-            switch (item.renderAs) {
+            switch (item.itemType) {
                 case "component": {
                     const component = (item && item.children) || null;
                     return <li key={index}>{component}</li>;
