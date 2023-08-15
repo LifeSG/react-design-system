@@ -49,7 +49,7 @@ export const FilterItemCheckbox = <T,>({
         onSelect?.(newSelection);
     };
 
-    const handleSelectAll = () => {
+    const handleSelectClearAll = () => {
         const newSelection = selected.length ? [] : options;
         setSelected(newSelection);
         onSelect?.(newSelection);
@@ -185,7 +185,7 @@ export const FilterItemCheckbox = <T,>({
         );
     };
 
-    const renderSelectAllButton = () => {
+    const renderSelectClearAllButton = () => {
         if (options.length < 3) {
             return null;
         }
@@ -194,7 +194,7 @@ export const FilterItemCheckbox = <T,>({
             <SelectAllButton
                 styleType="link"
                 type="button"
-                onClick={handleSelectAll}
+                onClick={handleSelectClearAll}
             >
                 {selected.length ? "Clear all" : "Select all"}
             </SelectAllButton>
@@ -209,7 +209,7 @@ export const FilterItemCheckbox = <T,>({
         >
             {(mode, { minimised }) => (
                 <>
-                    {renderSelectAllButton()}
+                    {renderSelectClearAllButton()}
                     <Group
                         role="group"
                         aria-label={filterItemProps.title}
