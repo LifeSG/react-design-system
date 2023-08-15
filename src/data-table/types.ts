@@ -32,8 +32,8 @@ export interface HeadersConfigProps {
 
 export type HeadersProps =
     | string // label text. Rest defaults to colId=label, clickable=false
-    | HeaderProps;
-interface HeaderProps {
+    | HeaderItemProps;
+interface HeaderItemProps {
     colId: string;
     label: string | ReactNode; // (technically ReactNode also includes string, but this makes it more obvious for devs)
     clickable?: boolean | undefined;
