@@ -152,20 +152,22 @@ This example demonstrates the default positioning of the Toast. It remains fixed
             const openToast = () => setIsVisible(true);
             const closeToast = () => setIsVisible(false);
             return (
-                <div>
-                    {isVisible ? (
-                        <Button.Default onClick={closeToast}>
-                            Click to close
-                        </Button.Default>
-                    ) : (
-                        <Button.Default onClick={openToast}>
-                            Click to open
-                        </Button.Default>
-                    )}
+                <>
+                    <div>
+                        {isVisible ? (
+                            <Button.Default onClick={closeToast}>
+                                Click to close
+                            </Button.Default>
+                        ) : (
+                            <Button.Default onClick={openToast}>
+                                Click to open
+                            </Button.Default>
+                        )}
+                    </div>
                     {isVisible && (
                         <Toast label="Notification" onDismiss={closeToast} />
                     )}
-                </div>
+                </>
             );
         }}
     </Story>
