@@ -191,16 +191,16 @@ export const NestedDropdownList = <V1, V2, V3>({
             }
         );
 
+        const visibleKeyPaths =
+            NestedDropdownListHelper.getVisibleKeyPaths(list);
+        setVisibleKeyPaths(visibleKeyPaths);
+        isSearch ? setFilteredItems(list) : setCurrentItems(list);
+
         onSelectItems(selectedItems, keyPaths);
-        if (isSearch) {
-            setFilteredItems(list);
-        } else {
-            setCurrentItems(list);
-        }
     };
 
     const handleSelectAll = () => {
-        const isSelectedAll = !selectedKeyPaths.flat().length || false;
+        const isSelectedAll = !selectedKeyPaths.flat().length;
 
         const { keyPaths, items, list } =
             NestedDropdownListHelper.updateSelectedAll(
@@ -444,11 +444,10 @@ export const NestedDropdownList = <V1, V2, V3>({
             setIsSearch(false);
         } else if (searchValue.trim().length >= 3) {
             listItemRefs.current = {};
-            const isSearch = true;
             const filtered = updateSearchState();
             setFilteredItems(filtered);
             resetVisbileKeyPaths(filtered);
-            setIsSearch(isSearch);
+            setIsSearch(true);
 
             if (multiSelect) {
                 const multiSelectList =
