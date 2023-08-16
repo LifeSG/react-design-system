@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Checkmark, Container, Input } from "./checkbox.style";
+import React from "react";
 import { CheckboxProps } from "./types";
+import {
+    Checkmark,
+    Container,
+    DisabledUncheckedIcon,
+    Input,
+    Intermediate,
+    UncheckedIcon,
+} from "./checkbox.style";
 
 export const Checkbox = ({
     className,
@@ -11,15 +18,6 @@ export const Checkbox = ({
     displaySize = "default",
     ...otherProps
 }: CheckboxProps): JSX.Element => {
-    const [selected, setSelected] = useState<boolean>(checked);
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        setSelected(checked);
-    }, [checked]);
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -27,12 +25,16 @@ export const Checkbox = ({
         event:
             | React.ChangeEvent<HTMLInputElement>
             | React.KeyboardEvent<HTMLDivElement>
+            | React.MouseEvent<HTMLDivElement>
+            | React.MouseEvent<SVGSVGElement>
     ) => {
         if (!disabled) {
             const keyboardEvent =
                 event as React.KeyboardEvent<HTMLInputElement>;
             const isValid =
-                keyboardEvent.key === " " || event.type === "change";
+                keyboardEvent.key === " " ||
+                event.type === "change" ||
+                event.type === "click";
 
             if (!isValid) {
                 return;
@@ -51,18 +53,57 @@ export const Checkbox = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+    const renderCheckMarks = () => {
+        switch (checked) {
+            case true:
+                return (
+                    <Checkmark
+                        id="checkmark"
+                        data-testid="checkmark"
+                        disabled={disabled}
+                        onClick={handleOnCheck}
+                    />
+                );
+            case "mixed":
+                return (
+                    <Intermediate
+                        id="intermediate-checkmark"
+                        data-testid="intermediate-checkmark"
+                        disabled={disabled}
+                        onClick={handleOnCheck}
+                    />
+                );
+            case false:
+                return disabled ? (
+                    <DisabledUncheckedIcon
+                        id="disabled-empty-checkbox"
+                        data-testid="disabled-empty-checkbox"
+                        displaySize={displaySize}
+                    />
+                ) : (
+                    <UncheckedIcon
+                        id="empty-checkbox"
+                        data-testid="empty-checkbox"
+                        onClick={handleOnCheck}
+                        displaySize={displaySize}
+                    />
+                );
+                break;
+            default:
+                return <></>;
+        }
+    };
+
     return (
         <Container
-            selected={selected}
-            disabled={disabled}
             className={className}
             data-testid="checkbox"
-            $displaySize={displaySize}
             role="checkbox"
-            aria-checked={selected}
+            aria-checked={checked}
             aria-labelledby="checkbox-input"
             tabIndex={disabled ? -1 : 0}
             onKeyDown={handleOnCheck}
+            $displaySize={displaySize}
         >
             <Input
                 id="checkbox-input"
@@ -72,17 +113,9 @@ export const Checkbox = ({
                 tabIndex={-1}
                 onChange={handleOnCheck}
                 disabled={disabled}
-                checked={selected}
                 {...otherProps}
             />
-            {selected && (
-                <Checkmark
-                    id="checkmark"
-                    data-testid="checkmark"
-                    disabled={disabled}
-                    $displaySize={displaySize}
-                />
-            )}
+            {renderCheckMarks()}
         </Container>
     );
 };

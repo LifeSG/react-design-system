@@ -27,20 +27,102 @@ There are 2 display sizes available for the `Checkbox`.
     <Story name="Checkbox">
         {() => {
             const [checked1, setChecked1] = useState(false);
-            const [checked2, setChecked2] = useState(false);
+            const [checked2, setChecked2] = useState(true);
+            const [checked3, setChecked3] = useState("mixed");
+            const [checked4, setChecked4] = useState(false);
+            const [checked5, setChecked5] = useState(true);
+            const [checked6, setChecked6] = useState("mixed");
+            const [checked7, setChecked7] = useState(false);
+            const [checked8, setChecked8] = useState(true);
+            const [checked9, setChecked9] = useState("mixed");
+            const [checked10, setChecked10] = useState(false);
+            const [checked11, setChecked11] = useState(true);
+            const [checked12, setChecked12] = useState("mixed");
             return (
-                <Container>
-                    <Checkbox
-                        displaySize="default"
-                        checked={checked1}
-                        onChange={() => setChecked1(!checked1)}
-                    />
-                    <Checkbox
-                        displaySize="small"
-                        checked={checked2}
-                        onChange={() => setChecked2(!checked2)}
-                    />
-                </Container>
+                <>
+                    <Container>
+                        <Checkbox
+                            displaySize="default"
+                            checked={checked1}
+                            onChange={() => setChecked1(!checked1)}
+                        />
+                        <Checkbox
+                            displaySize="default"
+                            checked={checked2}
+                            onChange={() => setChecked2(!checked2)}
+                        />
+                        <Checkbox
+                            displaySize="default"
+                            checked={checked3}
+                            onChange={() =>
+                                setChecked3(checked3 ? false : "mixed")
+                            }
+                        />
+                    </Container>
+                    <Container>
+                        <Checkbox
+                            displaySize="default"
+                            checked={checked4}
+                            disabled={true}
+                            onChange={() => setChecked4(!checked4)}
+                        />
+                        <Checkbox
+                            displaySize="default"
+                            checked={checked5}
+                            disabled={true}
+                            onChange={() => setChecked5(!checked5)}
+                        />
+                        <Checkbox
+                            displaySize="default"
+                            checked={checked6}
+                            disabled={true}
+                            onChange={() =>
+                                setChecked6(checked6 ? false : "mixed")
+                            }
+                        />
+                    </Container>
+                    <Container>
+                        <Checkbox
+                            displaySize="small"
+                            checked={checked7}
+                            onChange={() => setChecked7(!checked7)}
+                        />
+                        <Checkbox
+                            displaySize="small"
+                            checked={checked8}
+                            onChange={() => setChecked8(!checked8)}
+                        />
+                        <Checkbox
+                            displaySize="small"
+                            checked={checked9}
+                            onChange={() =>
+                                setChecked9(checked9 ? false : "mixed")
+                            }
+                        />
+                    </Container>
+                    <Container>
+                        <Checkbox
+                            displaySize="small"
+                            checked={checked10}
+                            disabled={true}
+                            onChange={() => setChecked10(!checked10)}
+                        />
+                        <Checkbox
+                            displaySize="small"
+                            checked={checked11}
+                            disabled={true}
+                            onChange={() => setChecked11(!checked11)}
+                        />
+                        <Checkbox
+                            displaySize="small"
+                            checked={checked12}
+                            disabled={true}
+                            onChange={() =>
+                                setChecked12(checked12 ? false : "mixed")
+                            }
+                        />
+                    </Container>
+                </>
             );
         }}
     </Story>

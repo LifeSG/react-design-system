@@ -17,7 +17,7 @@ export const PropsTable = () => (
         </tr>
         <tr>
             <NameCol>checked</NameCol>
-            <DescriptionCol propTypes={[`boolean`]}>
+            <DescriptionCol propTypes={[`boolean`, `"mixed"`]}>
                 The selected state of the Checkbox
             </DescriptionCol>
             <DefaultCol />
