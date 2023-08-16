@@ -3,6 +3,7 @@ import { DateRangeInputProps } from "../date-range-input/types";
 import { InputGroupPartialProps } from "../input-group/types";
 import { InputMultiSelectPartialProps } from "../input-multi-select/types";
 import { InputNestedSelectPartialProps } from "../input-nested-select";
+import { InputNestedMultiSelectPartialProps } from "../input-nested-multi-select";
 import { InputRangeSelectPartialProps } from "../input-range-select/types";
 import { InputSelectPartialProps } from "../input-select/types";
 import { TextareaPartialProps } from "../input-textarea/types";
@@ -79,6 +80,10 @@ export interface FormMultiSelectProps<T, V>
 
 export interface FormNestedSelectProps<V1, V2, V3>
     extends InputNestedSelectPartialProps<V1, V2, V3>,
+        BaseFormElementProps {}
+
+export interface FormNestedMultiSelectProps<V1, V2, V3>
+    extends InputNestedMultiSelectPartialProps<V1, V2, V3>,
         BaseFormElementProps {}
 
 export interface FormDateInputProps

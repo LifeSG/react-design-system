@@ -1,6 +1,6 @@
 import { InputNestedMultiSelect } from "../input-nested-multi-select";
 import { FormWrapper } from "./form-wrapper";
-import { FormNestedSelectProps } from "./types";
+import { FormNestedMultiSelectProps } from "./types";
 
 export const FormNestedMultiSelect = <V1, V2, V3>({
     label,
@@ -9,7 +9,7 @@ export const FormNestedMultiSelect = <V1, V2, V3>({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     ...otherProps
-}: FormNestedSelectProps<V1, V2, V3>): JSX.Element => {
+}: FormNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
     return (
         <FormWrapper
             id={id}
