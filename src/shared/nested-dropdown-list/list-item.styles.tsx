@@ -177,6 +177,7 @@ export const Title = styled.button`
     background: transparent;
     border: none;
     cursor: pointer;
+    width: 100%;
     padding: 0;
     overflow-wrap: anywhere;
 
