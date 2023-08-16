@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { ButtonProps } from "../button/types";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
@@ -20,8 +26,9 @@ import {
 import {
     BrandType,
     DrawerDismissalMethod,
-    NavItemProps,
+    NavItemLinkProps,
     NavbarButtonProps,
+    NavbarDrawerHandle,
     NavbarProps,
     NavbarResourcesProps,
 } from "./types";
@@ -52,8 +59,20 @@ const Component = <T,>(
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const isStretch = layout === "stretch";
+    const elementRef = useRef<HTMLDivElement>();
 
     const { primary = DEFAULT_RESOURCES.primary, secondary } = resources;
+
+    useImperativeHandle(
+        ref,
+        () =>
+            Object.assign(elementRef.current, {
+                dismissDrawer: () => {
+                    dismissDrawer();
+                },
+            }),
+        [showDrawer]
+    );
 
     // =============================================================================
     // EFFECTS
@@ -109,7 +128,7 @@ const Component = <T,>(
 
     const handleNavItemClick = <K extends T>(
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemProps<K>
+        item: NavItemLinkProps<K>
     ) => {
         if (item.onClick) {
             item.onClick(event);
@@ -243,7 +262,7 @@ const Component = <T,>(
 
     return (
         <Wrapper
-            ref={ref}
+            ref={elementRef}
             $fixed={fixed}
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
@@ -254,7 +273,7 @@ const Component = <T,>(
     );
 };
 
-export const Navbar = React.forwardRef(Component);
+export const Navbar = forwardRef<NavbarDrawerHandle>(Component);
 
 // =============================================================================
 // CONSTANTS

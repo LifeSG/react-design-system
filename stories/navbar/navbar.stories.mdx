@@ -1,9 +1,11 @@
 import { GearIcon } from "@lifesg/react-icons/gear";
 import { InboxIcon } from "@lifesg/react-icons/inbox";
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { IconButton } from "src/icon-button";
+import { Button } from "src/button";
 import { Navbar } from "src/navbar";
+import { Text } from "src/text";
 import {
     Heading3,
     Heading4,
@@ -12,6 +14,7 @@ import {
     Title,
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
+import { DesktopCustomComponent, MobileCustomComponent } from "./doc-elements";
 
 <Meta title="Modules/Navbar" component={Navbar} />
 
@@ -313,6 +316,123 @@ You can set an action button to be uncollapsible, so it remains visible in the n
             selectedId="home"
             fixed={false} /* For storybook purposes */
         />
+    </Story>
+</Canvas>
+
+<Heading3>Custom component items</Heading3>
+
+You can also choose to render a custom component of your choice as a navigation bar item.
+
+<Canvas>
+    <Story name="Custom items">
+        {() => {
+            const navbarRef = useRef();
+            const [selected, setSelected] = useState("home");
+            return (
+                <Navbar
+                    ref={navbarRef}
+                    items={{
+                        desktop: [
+                            {
+                                id: "home",
+                                children: "Home",
+                                onClick: () => {
+                                    setSelected("home");
+                                },
+                            },
+                            {
+                                id: "guides",
+                                children: "Guides",
+                                onClick: () => {
+                                    setSelected("guides");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "guides2",
+                                        children: "Sub Guides 2",
+                                        onClick: () => {
+                                            setSelected("guides2");
+                                        },
+                                    },
+                                    {
+                                        id: "guides3",
+                                        children: "Sub Guides 3",
+                                        onClick: () => {
+                                            setSelected("guides3");
+                                        },
+                                    },
+                                ],
+                            },
+                            {
+                                itemType: "component",
+                                children: (
+                                    <DesktopCustomComponent
+                                        onClick={() => {
+                                            console.log(
+                                                "custom component clicked"
+                                            );
+                                        }}
+                                    />
+                                ),
+                            },
+                        ],
+                        mobile: [
+                            {
+                                itemType: "component",
+                                children: (
+                                    <MobileCustomComponent
+                                        onClick={() => {
+                                            navbarRef.current.dismissDrawer();
+                                        }}
+                                    />
+                                ),
+                            },
+                            {
+                                itemType: "link",
+                                id: "home",
+                                children: "Home",
+                                onClick: () => {
+                                    setSelected("home");
+                                },
+                            },
+                            {
+                                id: "guides",
+                                children: "Guides",
+                                onClick: () => {
+                                    setSelected("guides");
+                                },
+                                subMenu: [
+                                    {
+                                        id: "guides2",
+                                        children: "Sub Guides 2",
+                                        onClick: () => {
+                                            setSelected("guides2");
+                                        },
+                                    },
+                                    {
+                                        id: "guides3",
+                                        children: "Sub Guides 3",
+                                        onClick: () => {
+                                            setSelected("guides3");
+                                        },
+                                    },
+                                ],
+                            },
+                        ],
+                    }}
+                    actionButtons={{
+                        desktop: [
+                            {
+                                type: "download",
+                            },
+                        ],
+                    }}
+                    selectedId={selected}
+                    fixed={false} /* For storybook purposes */
+                    layout={"stretch"}
+                />
+            );
+        }}
     </Story>
 </Canvas>
 

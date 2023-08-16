@@ -131,46 +131,40 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "",
-                description: (
-                    <>
-                        This also inherits props from&nbsp;
-                        <a
-                            href="/?path=/docs/general-text-introduction--introduction#component-api"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            TextLinkProps
-                        </a>
-                    </>
-                ),
+                description: "The navigation items of the navbar",
+                propTypes: ["NavItemLinkProps<T> | NavItemComponentProps"],
             },
+        ],
+    },
+    {
+        name: "NavItemLinkProps",
+        attributes: [
             {
-                name: "id",
-                description: (
-                    <>
-                        The unique identifier of the navigation item. Used for
-                        the&nbsp;
-                        <code>selectedId</code> property
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier of the navigation item",
-                propTypes: ["string"],
-            },
-            {
-                name: "options",
-                description:
-                    "Any additional props to be passed to the navigation item",
-                propTypes: ["T"],
+                name: "itemType",
+                description: "The link type of navigation items",
+                propTypes: ["link"],
             },
             {
                 name: "subMenu",
                 description:
                     "The navigation items for the mobile viewport. Uses desktop's if not specified",
                 propTypes: ["NavItemCommonProps<T>[]"],
+            },
+        ],
+    },
+    {
+        name: "NavItemComponentProps",
+        attributes: [
+            {
+                name: "itemType",
+                description: "The component type of navigation items",
+                propTypes: ["component"],
+                mandatory: true,
+            },
+            {
+                name: "children",
+                description: "The custom component to be rendered",
+                propTypes: ["JSX.Element"],
             },
         ],
     },
