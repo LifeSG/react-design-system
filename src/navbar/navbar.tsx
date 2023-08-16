@@ -65,12 +65,12 @@ const Component = <T,>(
 
     useImperativeHandle(
         ref,
-        () => ({
-            ...elementRef.current,
-            dismissDrawer: () => {
-                dismissDrawer();
-            },
-        }),
+        () =>
+            Object.assign(elementRef.current, {
+                dismissDrawer: () => {
+                    dismissDrawer();
+                },
+            }),
         [showDrawer]
     );
 
