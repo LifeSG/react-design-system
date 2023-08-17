@@ -1,12 +1,9 @@
-import { Text } from "../text";
-import { Button } from "../button";
 import { LoadingDotsSpinner } from "../animations";
 import {
     BodyCell,
     BodyRow,
     CheckBox,
     CheckBoxWrapper,
-    EmptyDataElement,
     HeaderCell,
     HeaderCellWrapper,
     HeaderRow,
@@ -17,6 +14,7 @@ import {
     TableWrapper,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
+import { ErrorDisplay } from "../error-display";
 
 export const DataTable = ({
     id,
@@ -32,6 +30,7 @@ export const DataTable = ({
     alternatingRows,
     customEmptyView,
     loadState = "success",
+    emptyView,
     ...otherProps
 }: DataTableProps) => {
     // ===========================================================================
@@ -247,12 +246,13 @@ export const DataTable = ({
 
     const basicEmptyView = () => {
         return (
-            <EmptyDataElement>
-                {/* <img src="/img/empty-data.svg"></img> */}
-                <Text.H3>No items found</Text.H3>
-                <Text.Body>This is a placeholder text</Text.Body>
-                <Button.Default styleType="secondary"> Trigger</Button.Default>
-            </EmptyDataElement>
+            <ErrorDisplay
+                type="404"
+                title={emptyView?.title}
+                description={emptyView?.description}
+                actionButton={emptyView?.actionButton}
+                img={emptyView?.img}
+            />
         );
     };
 

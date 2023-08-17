@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
-
+import { ErrorDisplayAttributes } from "../error-display/types";
 export interface DataTableProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -18,6 +18,7 @@ export interface DataTableProps {
     alternatingRows?: boolean | undefined;
     customEmptyView?: () => ReactNode | string | undefined;
     loadState: LoadingType | undefined;
+    emptyView?: ErrorDisplayAttributes | undefined;
 }
 
 export type LoadingType = "loading" | "success" | "error";
