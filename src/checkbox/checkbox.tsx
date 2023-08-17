@@ -51,7 +51,7 @@ export const Checkbox = ({
     // =============================================================================
     const renderIcon = () => {
         return indeterminate ? (
-            <MinusSquareFillIcon data-testid="intermediate-checkmark" />
+            <MinusSquareFillIcon data-testid="indeterminate" />
         ) : checked ? (
             <SquareTickFillIcon data-testid="checkmark" />
         ) : disabled ? (
@@ -72,6 +72,7 @@ export const Checkbox = ({
             onKeyDown={handleOnCheck}
             $displaySize={displaySize}
             $disabled={disabled}
+            $unchecked={!(indeterminate || checked || disabled)}
         >
             <Input
                 id="checkbox-input"

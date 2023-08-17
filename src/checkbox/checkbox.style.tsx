@@ -7,6 +7,7 @@ import { CheckboxProps, CheckboxSize } from "./types";
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
+    $unchecked?: boolean;
     $disabled?: boolean;
     $displaySize?: CheckboxSize;
 }
@@ -51,13 +52,15 @@ export const Container = styled.div<StyleProps>`
     }}
 
     svg {
-        border-radius: 4px;
-        background: transparent;
         animation: 200ms ease-in-out ${fadeIn};
         width: 100%;
         height: 100%;
         color: ${(props) =>
-            props.$disabled ? Color.Neutral[4](props) : Color.Primary(props)};
+            props.$disabled
+                ? Color.Neutral[4](props)
+                : props.$unchecked
+                ? Color.Accent.Light[2](props)
+                : Color.Primary(props)};
     }
 `;
 
