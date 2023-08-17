@@ -260,7 +260,7 @@ export const DataTable = ({
         if (rows.length === 0)
             return (
                 <tr>
-                    <td style={{ padding: "4rem" }} colSpan={getTotalColumns()}>
+                    <td colSpan={getTotalColumns()}>
                         {customEmptyView ? customEmptyView() : basicEmptyView()}
                     </td>
                 </tr>
@@ -270,7 +270,7 @@ export const DataTable = ({
     const renderLoader = () => {
         return (
             <tr>
-                <td style={{ padding: "4rem" }} colSpan={getTotalColumns()}>
+                <td colSpan={getTotalColumns()}>
                     <LoaderWrapper>
                         {loadState === "loading" && <LoadingDotsSpinner />}
                     </LoaderWrapper>

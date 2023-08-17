@@ -20,6 +20,10 @@ export const Table = styled.table<{
 }>`
     width: 100%;
     border-collapse: collapse;
+    tr,
+    td {
+        padding: 1.5rem 0;
+    }
     ${(props) => {
         if (props.$addMarginToFirstColumn) {
             return css`
