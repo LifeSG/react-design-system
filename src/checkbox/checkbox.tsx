@@ -25,16 +25,12 @@ export const Checkbox = ({
         event:
             | React.ChangeEvent<HTMLInputElement>
             | React.KeyboardEvent<HTMLDivElement>
-            | React.MouseEvent<HTMLDivElement>
-            | React.MouseEvent<SVGSVGElement>
     ) => {
         if (!disabled) {
             const keyboardEvent =
                 event as React.KeyboardEvent<HTMLInputElement>;
             const isValid =
-                keyboardEvent.key === " " ||
-                event.type === "change" ||
-                event.type === "click";
+                keyboardEvent.key === " " || event.type === "change";
 
             if (!isValid) {
                 return;
