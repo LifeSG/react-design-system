@@ -111,7 +111,6 @@ export const Checkbox = ({
                 aria-hidden="true"
                 type="checkbox"
                 tabIndex={-1}
-                onChange={handleOnCheck}
                 disabled={disabled}
                 {...otherProps}
             />
