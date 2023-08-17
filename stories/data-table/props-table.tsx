@@ -78,8 +78,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "loadState",
                 description: "The is Loading Data indicator",
-                propTypes: ["boolean"],
-                defaultValue: "false",
+                propTypes: ["LoadingType"],
+                defaultValue: "success",
+            },
+            {
+                name: "emptyView",
+                description: "The is Loading Data indicator",
+                propTypes: ["ErrorDisplayAttributes<T>"],
             },
         ],
     },
@@ -247,7 +252,7 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "fieldKey",
-                description: "The col Id",
+                description: "The field key",
                 propTypes: ["string | SortIndicatorProps"],
             },
         ],
@@ -256,16 +261,27 @@ const DATA: ApiTableSectionProps[] = [
         name: "SortIndicatorProps",
         attributes: [
             {
-                name: "ASC",
-                description: "The ASC",
+                name: "asc",
+                description: "The asc order icon",
                 propTypes: ["string"],
                 defaultValue: "asc",
             },
             {
-                name: "DESC",
-                description: "The DESC",
+                name: "desc",
+                description: "The desc order icon",
                 propTypes: ["string"],
                 defaultValue: "desc",
+            },
+        ],
+    },
+    {
+        name: "LoadingType",
+        attributes: [
+            {
+                name: "The type of Loading or success or error",
+                description: "",
+                propTypes: [`"loading"`, `"success",`, `"error",`],
+                defaultValue: "success",
             },
         ],
     },

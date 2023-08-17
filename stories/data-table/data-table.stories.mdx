@@ -309,6 +309,20 @@ Table Empty Data View.
                 showHeaderCheckbox: true,
                 headerWidth: "5rem",
             }}
+            emptyView={{
+                img: {
+                    type: "image/jpeg",
+                    srcSet: `https://assets.life.gov.sg/react-design-system/img/error/payment-unsuccessful.png`,
+                },
+                title: "Empty View",
+                description: "You can pass a JSX component here as well",
+                actionButton: {
+                    children: "Trigger",
+                    onClick: () => {
+                        alert("Clicked on continue button");
+                    },
+                },
+            }}
         />
     </Story>
 </Canvas>
