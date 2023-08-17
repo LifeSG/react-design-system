@@ -7,10 +7,13 @@ export interface DataTableProps {
     headers: HeaderProps[];
     rowsConfig?: RowsConfigProps | undefined;
     rows?: RowProps[] | undefined;
-    className?: string | undefined; // css class to put on table
+    /** css class to put on table **/
+    className?: string | undefined;
     selectionConfig?: SelectionConfigProps | undefined;
-    selection?: string[] | undefined; // ids of all selected rows
-    sortIndicators?: SortIndicatorsProps | undefined; // columns that want to show a sort indicator
+    /** ids of all selected rows **/
+    selection?: string[] | undefined;
+    /** columns that want to show a sort indicator **/
+    sortIndicators?: SortIndicatorsProps | undefined;
     actionsConfig?: ActionsConfigProps | undefined;
     alternatingRows?: boolean | undefined;
     customEmptyView?: () => ReactNode | string | undefined;
@@ -19,36 +22,40 @@ export interface DataTableProps {
 
 export type LoadingType = "loading" | "success" | "error";
 
-export type SortIndicatorProps = "asc" | "desc" | undefined;
+export type SortIndicatorProps = "asc" | "desc";
 
 export interface SortIndicatorsProps {
     [fieldKey: string]: SortIndicatorProps;
 }
 
 export interface HeadersConfigProps {
-    className?: string | undefined; // css class to put on header row
+    /** css class to put on header row **/
+    className?: string | undefined;
     onClickHeader?: ((fieldKey: string) => void) | undefined;
 }
 
-export type HeaderProps =
-    | string // label text. Rest defaults to fieldKey=label, clickable=false
-    | HeaderItemProps;
+/** label text. Rest defaults to fieldKey=label, clickable=false **/
+export type HeaderProps = string | HeaderItemProps;
 interface HeaderItemProps {
     fieldKey: string;
-    label: string | ReactNode; // (technically ReactNode also includes string, but this makes it more obvious for devs)
+    /** (technically ReactNode also includes string, but this makes it more obvious for devs) **/
+    label: string | ReactNode;
     clickable?: boolean | undefined;
-    className?: string | undefined; // css class to put on this header cell
+    /** css class to put on this header cell **/
+    className?: string | undefined;
     style?: CSSProperties | undefined;
 }
 
 export interface RowsConfigProps {
-    className?: string | undefined; // css class to put on each row
+    /** css class to put on each row **/
+    className?: string | undefined;
     alternatingClassName?: string | undefined;
 }
 
 export interface RowProps {
     id: string | number;
-    [fieldKey: string]: string | number | ReactNode; // data with keys matching fieldKey
+    /** data with keys matching fieldKey **/
+    [fieldKey: string]: string | number | ReactNode;
 }
 
 export interface SelectionConfigProps {
@@ -58,8 +65,10 @@ export interface SelectionConfigProps {
         | ((fieldKey: string, rowId: string, isSelected: boolean) => void)
         | undefined;
     onClickSelectAll?: ((isSelected: boolean) => void) | undefined;
-    className?: string | undefined; // css class to add to each cell containing the checkbox
-    headerClassName?: string | undefined; // css class to add to the header cell
+    /** css class to add to each cell containing the checkbox **/
+    className?: string | undefined;
+    /** css class to add to the header cell **/
+    headerClassName?: string | undefined;
     headerWidth?: string | undefined;
 }
 
