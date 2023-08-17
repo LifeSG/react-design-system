@@ -118,7 +118,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onSelectOptions",
                 description: "Called when an option is selected",
                 propTypes: [
-                    "(keyPaths: string[][], value: Array<V1 | V2 | V3>) => void",
+                    "(keyPaths: string[][], values: Array<V1 | V2 | V3>) => void",
                 ],
             },
             {

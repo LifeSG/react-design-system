@@ -15,9 +15,6 @@ export interface SelectedItem<V1, V2, V3> {
 
 export interface DropdownEventHandlerProps<V1, V2, V3> {
     onSelectItem: (item: SelectedItem<V1, V2, V3>) => void;
-    onSelectItems?:
-        | ((items: SelectedItem<V1, V2, V3>[], keyPaths: string[][]) => void)
-        | undefined;
 }
 
 export interface DropdownSearchProps {

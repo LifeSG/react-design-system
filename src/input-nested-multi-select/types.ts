@@ -1,12 +1,24 @@
-import { InputNestedSelectProps } from "../input-nested-select";
+import {
+    InputNestedSelectOptionsProps,
+    InputNestedSelectSharedProps,
+} from "../input-nested-select";
+import { InputSelectSharedProps } from "../input-select";
+import {
+    DropdownSearchProps,
+    DropdownStyleProps,
+} from "../shared/nested-dropdown-list/types";
 
 // =============================================================================
 // INPUT SELECT PROPS
 // =============================================================================
 
-type OmitTypes = "selectedKeyPath" | "onSelectOption" | "selectableCategory";
 export interface InputNestedMultiSelectProps<V1, V2, V3>
-    extends Omit<InputNestedSelectProps<V1, V2, V3>, OmitTypes> {
+    extends React.HTMLAttributes<HTMLElement>,
+        InputNestedSelectOptionsProps<V1, V2, V3>,
+        Omit<InputSelectSharedProps<V1>, "options">,
+        InputNestedSelectSharedProps<V1, V2, V3>,
+        DropdownSearchProps,
+        DropdownStyleProps {
     /** Specifies key path to select particular option label */
     selectedKeyPaths?: string[][] | undefined;
     onSelectOptions?:
