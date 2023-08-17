@@ -14,15 +14,12 @@ export interface DataTableProps {
     actionsConfig?: ActionsConfigProps | undefined;
     alternatingRows?: boolean | undefined;
     customEmptyView?: () => ReactNode | string | undefined;
-    loadState: LoadType | undefined;
+    loadState: LoadingType | undefined;
 }
 
-export type LoadType = "loading" | "success" | "error";
+export type LoadingType = "loading" | "success" | "error";
 
-export enum SortIndicatorProps {
-    ASC = "asc",
-    DESC = "desc",
-}
+export type SortIndicatorProps = "asc" | "desc" | undefined;
 
 export interface SortIndicatorsProps {
     [fieldKey: string]: SortIndicatorProps;

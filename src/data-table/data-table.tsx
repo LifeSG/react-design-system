@@ -133,7 +133,7 @@ export const DataTable = ({
 
         if (!isSorted) {
             return <></>;
-        } else if (isSorted === SortIndicatorProps.ASC) {
+        } else if (isSorted === "asc") {
             return (
                 <SortArrowUpIcon
                     data-testid={getDataTestId(`header-${fieldKey}-arrowup`)}
