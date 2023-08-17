@@ -23,19 +23,19 @@ export enum SortIndicatorProps {
 }
 
 export interface SortIndicatorsProps {
-    [colId: string]: SortIndicatorProps;
+    [fieldKey: string]: SortIndicatorProps;
 }
 
 export interface HeadersConfigProps {
     className?: string | undefined; // css class to put on header row
-    onClickHeader?: ((colId: string) => void) | undefined;
+    onClickHeader?: ((fieldKey: string) => void) | undefined;
 }
 
 export type HeaderProps =
-    | string // label text. Rest defaults to colId=label, clickable=false
+    | string // label text. Rest defaults to fieldKey=label, clickable=false
     | HeaderItemProps;
 interface HeaderItemProps {
-    colId: string;
+    fieldKey: string;
     label: string | ReactNode; // (technically ReactNode also includes string, but this makes it more obvious for devs)
     clickable?: boolean | undefined;
     className?: string | undefined; // css class to put on this header cell
@@ -49,14 +49,14 @@ export interface RowsConfigProps {
 
 export interface RowProps {
     id: string | number;
-    [colId: string]: string | number | ReactNode; // data with keys matching colId
+    [fieldKey: string]: string | number | ReactNode; // data with keys matching fieldKey
 }
 
 export interface SelectionConfigProps {
     showCheckboxes: boolean;
     showHeaderCheckbox?: boolean | undefined;
     onClickSelect?:
-        | ((colId: string, rowId: string, isSelected: boolean) => void)
+        | ((fieldKey: string, rowId: string, isSelected: boolean) => void)
         | undefined;
     onClickSelectAll?: ((isSelected: boolean) => void) | undefined;
     className?: string | undefined; // css class to add to each cell containing the checkbox

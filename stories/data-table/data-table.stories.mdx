@@ -26,21 +26,21 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
         <DataTable
             headers={[
                 {
-                    colId: "status",
+                    fieldKey: "status",
                     label: "Status",
                     style: { width: "7.5rem" },
                 },
                 {
-                    colId: "time",
+                    fieldKey: "time",
                     label: "Time",
                     style: { width: "15rem" },
                 },
                 {
-                    colId: "resource",
+                    fieldKey: "resource",
                     label: "Resource",
                     style: { width: "17.5rem" },
                 },
-                { colId: "title", label: "Title" },
+                { fieldKey: "title", label: "Title" },
             ]}
             rows={[
                 {
@@ -49,7 +49,7 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
                     time: "07/Aug/2023 9.30pm",
                     resource: "Test",
                     title: "Titile 1",
-                    colId: "status",
+                    fieldKey: "status",
                     label: "Status",
                 },
                 {
@@ -58,7 +58,7 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
                     time: "07/Aug/2023 10.30pm",
                     resource: "Test",
                     title: "Titile 2",
-                    colId: "bookingTime",
+                    fieldKey: "bookingTime",
                     label: "Booking time",
                 },
             ]}
@@ -76,24 +76,24 @@ Show sorting Indicator Table header.
         <DataTable
             headers={[
                 {
-                    colId: "status",
+                    fieldKey: "status",
                     label: "Status",
                     style: { width: "7.5rem" },
                     clickable: true,
                 },
                 {
-                    colId: "time",
+                    fieldKey: "time",
                     label: "Time",
                     style: { width: "15rem" },
                     clickable: true,
                 },
                 {
-                    colId: "resource",
+                    fieldKey: "resource",
                     label: "Resource",
                     style: { width: "17.5rem" },
                     clickable: true,
                 },
-                { colId: "title", label: "Title", clickable: true },
+                { fieldKey: "title", label: "Title", clickable: true },
             ]}
             rows={[
                 {
@@ -102,7 +102,7 @@ Show sorting Indicator Table header.
                     time: "07/Aug/2023 9.30pm",
                     resource: "Test",
                     title: "Titile 1",
-                    colId: "status",
+                    fieldKey: "status",
                     label: "Status",
                 },
                 {
@@ -111,7 +111,7 @@ Show sorting Indicator Table header.
                     time: "07/Aug/2023 10.30pm",
                     resource: "Test",
                     title: "Titile 2",
-                    colId: "bookingTime",
+                    fieldKey: "bookingTime",
                     label: "Booking time",
                 },
             ]}
@@ -153,24 +153,24 @@ Table Row with checkbox selection.
                 <DataTable
                     headers={[
                         {
-                            colId: "status",
+                            fieldKey: "status",
                             label: "Status",
                             style: { width: "7.5rem" },
                             clickable: true,
                         },
                         {
-                            colId: "time",
+                            fieldKey: "time",
                             label: "Time",
                             style: { width: "15rem" },
                             clickable: true,
                         },
                         {
-                            colId: "resource",
+                            fieldKey: "resource",
                             label: "Resource",
                             style: { width: "17.5rem" },
                             clickable: true,
                         },
-                        { colId: "title", label: "Title", clickable: true },
+                        { fieldKey: "title", label: "Title", clickable: true },
                     ]}
                     rows={[
                         {
@@ -179,7 +179,7 @@ Table Row with checkbox selection.
                             time: "07/Aug/2023 9.30pm",
                             resource: "Test",
                             title: "Titile 1",
-                            colId: "status",
+                            fieldKey: "status",
                             label: "Status",
                         },
                         {
@@ -188,7 +188,7 @@ Table Row with checkbox selection.
                             time: "07/Aug/2023 10.30pm",
                             resource: "Test",
                             title: "Titile 2",
-                            colId: "bookingTime",
+                            fieldKey: "bookingTime",
                             label: "Booking time",
                         },
                         {
@@ -197,7 +197,7 @@ Table Row with checkbox selection.
                             time: "07/Aug/2023 11.30pm",
                             resource: "Test",
                             title: "Titile 3",
-                            colId: "commonRow",
+                            fieldKey: "commonRow",
                             label: "Common Row",
                         },
                     ]}
@@ -207,7 +207,7 @@ Table Row with checkbox selection.
                         showCheckboxes: true,
                         showHeaderCheckbox: true,
                         headerWidth: "5rem",
-                        onClickSelect: (colId, rowId, isSelected) => {
+                        onClickSelect: (fieldKey, rowId, isSelected) => {
                             handleOnClickSelect(rowId, isSelected);
                         },
                     }}
@@ -229,21 +229,21 @@ Table Alternating Row.
                 <DataTable
                     headers={[
                         {
-                            colId: "status",
+                            fieldKey: "status",
                             label: "Status",
                             style: { width: "7.5rem" },
                         },
                         {
-                            colId: "time",
+                            fieldKey: "time",
                             label: "Time",
                             style: { width: "15rem" },
                         },
                         {
-                            colId: "resource",
+                            fieldKey: "resource",
                             label: "Resource",
                             style: { width: "17.5rem" },
                         },
-                        { colId: "title", label: "Title" },
+                        { fieldKey: "title", label: "Title" },
                     ]}
                     rows={[
                         {
@@ -252,7 +252,7 @@ Table Alternating Row.
                             time: "07/Aug/2023 9.30pm",
                             resource: "Test",
                             title: "Titile 1",
-                            colId: "status",
+                            fieldKey: "status",
                             label: "Status",
                         },
                         {
@@ -261,7 +261,7 @@ Table Alternating Row.
                             time: "07/Aug/2023 10.30pm",
                             resource: "Test",
                             title: "Titile 2",
-                            colId: "bookingTime",
+                            fieldKey: "bookingTime",
                             label: "Booking time",
                         },
                         {
@@ -270,7 +270,7 @@ Table Alternating Row.
                             time: "07/Aug/2023 11.30pm",
                             resource: "Test",
                             title: "Titile 3",
-                            colId: "commonRow",
+                            fieldKey: "commonRow",
                             label: "Common Row",
                         },
                         {
@@ -279,7 +279,7 @@ Table Alternating Row.
                             time: "07/Aug/2023 12.30pm",
                             resource: "Test",
                             title: "Titile 4",
-                            colId: "sampleRow",
+                            fieldKey: "sampleRow",
                             label: "sample Row",
                         },
                         {
@@ -288,12 +288,12 @@ Table Alternating Row.
                             time: "07/Aug/2023 1.30pm",
                             resource: "Test",
                             title: "Titile 5",
-                            colId: "checkRow",
+                            fieldKey: "checkRow",
                             label: "check Row",
                         },
                     ]}
                     isLoadingData={false}
-                    sortIndicators={{ colId: "ASC" }}
+                    sortIndicators={{ fieldKey: "ASC" }}
                     alternatingRows={true}
                 />
             );
@@ -310,21 +310,21 @@ Table Empty Data View.
         <DataTable
             headers={[
                 {
-                    colId: "status",
+                    fieldKey: "status",
                     label: "Status",
                     style: { width: "15rem" },
                 },
                 {
-                    colId: "time",
+                    fieldKey: "time",
                     label: "Time",
                     style: { width: "15rem" },
                 },
                 {
-                    colId: "resource",
+                    fieldKey: "resource",
                     label: "Resource",
                     style: { width: "15rem" },
                 },
-                { colId: "title", label: "Title" },
+                { fieldKey: "title", label: "Title" },
             ]}
             rows={[]}
             isLoadingData={false}
@@ -346,21 +346,21 @@ Table Empty Data View.
         <DataTable
             headers={[
                 {
-                    colId: "status",
+                    fieldKey: "status",
                     label: "Status",
                     style: { width: "15rem" },
                 },
                 {
-                    colId: "time",
+                    fieldKey: "time",
                     label: "Time",
                     style: { width: "15rem" },
                 },
                 {
-                    colId: "resource",
+                    fieldKey: "resource",
                     label: "Resource",
                     style: { width: "15rem" },
                 },
-                { colId: "title", label: "Title" },
+                { fieldKey: "title", label: "Title" },
             ]}
             rows={[]}
             isLoadingData={true}

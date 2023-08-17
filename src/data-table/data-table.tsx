@@ -95,14 +95,14 @@ export const DataTable = ({
 
     const renderHeaderCell = (header: HeaderProps) => {
         const {
-            colId,
+            fieldKey,
             label,
             clickable = false,
             className: headerClassName,
             style,
         } = typeof header === "string"
             ? {
-                  colId: header,
+                  fieldKey: header,
                   label: header,
                   className: undefined,
                   style: undefined,
@@ -111,38 +111,38 @@ export const DataTable = ({
 
         return (
             <HeaderCell
-                data-testid={getDataTestId(`header-${colId}`)}
-                key={colId}
+                data-testid={getDataTestId(`header-${fieldKey}`)}
+                key={fieldKey}
                 clickable={clickable}
                 className={headerClassName}
                 onClick={() =>
-                    clickable && headersConfig?.onClickHeader?.(colId)
+                    clickable && headersConfig?.onClickHeader?.(fieldKey)
                 }
                 style={style}
             >
                 <HeaderCellWrapper>
                     {label}
-                    {renderSortedArrow(colId)}
+                    {renderSortedArrow(fieldKey)}
                 </HeaderCellWrapper>
             </HeaderCell>
         );
     };
 
-    const renderSortedArrow = (colId: string) => {
-        const isSorted = sortIndicators?.[colId];
+    const renderSortedArrow = (fieldKey: string) => {
+        const isSorted = sortIndicators?.[fieldKey];
 
         if (!isSorted) {
             return <></>;
         } else if (isSorted === SortIndicatorProps.ASC) {
             return (
                 <SortArrowUpIcon
-                    data-testid={getDataTestId(`header-${colId}-arrowup`)}
+                    data-testid={getDataTestId(`header-${fieldKey}-arrowup`)}
                 />
             );
         } else {
             return (
                 <SortArrowDownIcon
-                    data-testid={getDataTestId(`header-${colId}-arrowdown`)}
+                    data-testid={getDataTestId(`header-${fieldKey}-arrowdown`)}
                 />
             );
         }
@@ -218,9 +218,9 @@ export const DataTable = ({
 
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
         const style = typeof header !== "string" ? header.style : undefined;
-        const colId = typeof header === "string" ? header : header.colId;
-        const cellData = row[colId];
-        const cellId = `${row.id.toString()}-${colId}`;
+        const fieldKey = typeof header === "string" ? header : header.fieldKey;
+        const cellData = row[fieldKey];
+        const cellId = `${row.id.toString()}-${fieldKey}`;
 
         return (
             <BodyCell

@@ -139,8 +139,8 @@ const DATA: ApiTableSectionProps[] = [
         name: "HeaderItemProps",
         attributes: [
             {
-                name: "colId",
-                description: "column Id",
+                name: "fieldKey",
+                description: "field Key Id",
                 propTypes: ["string"],
                 mandatory: true,
             },
@@ -179,7 +179,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onClickHeader",
                 description: "on Click Header click",
-                propTypes: ["(colId: string) => void"],
+                propTypes: ["(fieldKey: string) => void"],
             },
         ],
     },
@@ -217,7 +217,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onClickSelect",
                 description: "on Click Select",
                 propTypes: [
-                    "(colId: string, rowId: string, isSelected: boolean) => void",
+                    "(fieldKey: string, rowId: string, isSelected: boolean) => void",
                 ],
             },
             {
@@ -246,7 +246,7 @@ const DATA: ApiTableSectionProps[] = [
         name: "SortIndicatorsProps",
         attributes: [
             {
-                name: "colId",
+                name: "fieldKey",
                 description: "The col Id",
                 propTypes: ["string | SortIndicatorProps"],
             },
