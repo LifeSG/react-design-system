@@ -48,7 +48,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // CONST, STATE
     // =============================================================================
     const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
-        _selectedKeyPaths || [[]]
+        _selectedKeyPaths || []
     );
     const [selectedItems, setSelectedItems] = useState<
         SelectedItem<V1, V2, V3>[]
@@ -63,7 +63,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        const newKeyPath = _selectedKeyPaths || [[]];
+        const newKeyPath = _selectedKeyPaths || [];
         setSelectedKeyPaths(newKeyPath);
 
         updateSelectedItemFromKey(options, newKeyPath);
@@ -87,30 +87,57 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         item: CombinedFormattedOptionProps<V1, V2, V3>
     ) => {
         const { value, label, keyPath } = item;
-        const isRemove = selectedKeyPaths.some(
-            (key) => JSON.stringify(key) === JSON.stringify(keyPath)
-        );
         let resultSelectedKeyPaths: string[][] = [];
         let resultSelectedItems: SelectedItem<V1, V2, V3>[] = [];
 
-        if (!isRemove) {
-            resultSelectedKeyPaths = [...selectedKeyPaths, keyPath];
-            resultSelectedItems = [...selectedItems, { label, keyPath, value }];
-        } else {
-            resultSelectedKeyPaths = selectedKeyPaths.filter(
-                (key) => JSON.stringify(key) !== JSON.stringify(keyPath)
+        const selectedItem = getItemAtKeyPath(keyPath);
+
+        if (selectedItem.subItems) {
+            const { targetItems, targetKeyPaths } = getSubItemAndKeypath(
+                selectedItem,
+                keyPath
             );
-            resultSelectedItems = selectedItems
-                .map(({ keyPath: key, label, value }) => {
-                    if (JSON.stringify(key) !== JSON.stringify(keyPath)) {
-                        return {
-                            value,
-                            label,
-                            keyPath: key,
-                        };
-                    }
-                })
-                .filter(Boolean);
+
+            const isRemove = targetKeyPaths.every((keyPath) =>
+                selectedKeyPaths.some(
+                    (key) => JSON.stringify(keyPath) === JSON.stringify(key)
+                )
+            );
+
+            if (!isRemove) {
+                const { keys, items } = getAddSubItems(
+                    targetKeyPaths,
+                    targetItems
+                );
+
+                resultSelectedKeyPaths = keys;
+                resultSelectedItems = items;
+            } else {
+                const { keys, items } = getRemoveSubItems(
+                    targetKeyPaths,
+                    targetItems
+                );
+
+                resultSelectedKeyPaths = keys;
+                resultSelectedItems = items;
+            }
+        } else {
+            const isRemove = selectedKeyPaths.some(
+                (key) => JSON.stringify(key) === JSON.stringify(keyPath)
+            );
+
+            if (!isRemove) {
+                resultSelectedKeyPaths = [...selectedKeyPaths, keyPath];
+                resultSelectedItems = [
+                    ...selectedItems,
+                    { label, keyPath, value },
+                ];
+            } else {
+                const { keys, items } = getRemoveOption(keyPath);
+
+                resultSelectedKeyPaths = keys;
+                resultSelectedItems = items;
+            }
         }
 
         setSelectedKeyPaths(resultSelectedKeyPaths);
@@ -120,57 +147,6 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         if (selectorRef.current) {
             selectorRef.current.focus();
         }
-
-        performOnSelectOptions(resultSelectedKeyPaths, resultSelectedItems);
-    };
-
-    const handleSelectItems = (
-        items: SelectedItem<V1, V2, V3>[],
-        keyPaths: string[][]
-    ) => {
-        const isRemove = keyPaths.every((keyPath) =>
-            selectedKeyPaths.some(
-                (key) => JSON.stringify(keyPath) === JSON.stringify(key)
-            )
-        );
-
-        let resultSelectedKeyPaths: string[][] = [];
-        let resultSelectedItems: SelectedItem<V1, V2, V3>[] = [];
-
-        if (!isRemove) {
-            resultSelectedKeyPaths = [
-                ...new Map(
-                    [...selectedKeyPaths, ...keyPaths].map((k) => [
-                        k.join("-"),
-                        k,
-                    ])
-                ).values(),
-            ];
-            resultSelectedItems = [
-                ...new Map(
-                    [...selectedItems, ...items].map((i) => [
-                        i.keyPath.join("-"),
-                        i,
-                    ])
-                ).values(),
-            ];
-        } else {
-            resultSelectedKeyPaths = selectedKeyPaths.filter((selectedKey) =>
-                keyPaths.every(
-                    (key) => JSON.stringify(selectedKey) !== JSON.stringify(key)
-                )
-            );
-            resultSelectedItems = selectedItems.filter((selectedItem) =>
-                items.every(
-                    (item) =>
-                        JSON.stringify(selectedItem.keyPath) !==
-                        JSON.stringify(item.keyPath)
-                )
-            );
-        }
-
-        setSelectedItems(resultSelectedItems);
-        setSelectedKeyPaths(resultSelectedKeyPaths);
 
         performOnSelectOptions(resultSelectedKeyPaths, resultSelectedItems);
     };
@@ -219,6 +195,75 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         }
     };
 
+    const getAddSubItems = (
+        _keyPaths: string[][],
+        _items: SelectedItem<V1, V2, V3>[]
+    ) => {
+        const keys = [
+            ...new Map(
+                [...selectedKeyPaths, ..._keyPaths].map((k) => [k.join("-"), k])
+            ).values(),
+        ];
+        const items = [
+            ...new Map(
+                [...selectedItems, ..._items].map((i) => [
+                    i.keyPath.join("-"),
+                    i,
+                ])
+            ).values(),
+        ];
+
+        return {
+            keys,
+            items,
+        };
+    };
+
+    const getRemoveSubItems = (
+        _keyPaths: string[][],
+        _items: SelectedItem<V1, V2, V3>[]
+    ) => {
+        const keys = selectedKeyPaths.filter((selectedKey) =>
+            _keyPaths.every(
+                (key) => JSON.stringify(selectedKey) !== JSON.stringify(key)
+            )
+        );
+        const items = selectedItems.filter((selectedItem) =>
+            _items.every(
+                (item) =>
+                    JSON.stringify(selectedItem.keyPath) !==
+                    JSON.stringify(item.keyPath)
+            )
+        );
+
+        return {
+            keys,
+            items,
+        };
+    };
+
+    const getRemoveOption = (keyPath: string[]) => {
+        const keys = selectedKeyPaths.filter(
+            (key) => JSON.stringify(key) !== JSON.stringify(keyPath)
+        );
+        const items = selectedItems
+            .map(({ keyPath: key, label, value }) => {
+                if (JSON.stringify(key) !== JSON.stringify(keyPath)) {
+                    return {
+                        value,
+                        label,
+                        keyPath: key,
+                    };
+                }
+            })
+            .filter(Boolean);
+
+        return {
+            keys,
+            items,
+        };
+    };
+
     const getDisplayValue = (): string => {
         const { label, value } = selectedItems[0];
 
@@ -229,6 +274,59 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         } else {
             return label;
         }
+    };
+
+    const getItemAtKeyPath = (_keyPath: string[]) => {
+        const find = (
+            items: CombinedOptionProps<V1, V2, V3>[],
+            keyPath: string[]
+        ): CombinedOptionProps<V1, V2, V3> => {
+            const [currentKey, ...nextKeyPath] = keyPath;
+
+            if (isEmpty(items) || !currentKey) return undefined;
+
+            const item = items.find((item) => item.key === currentKey);
+
+            if (!item || !nextKeyPath.length) return item;
+
+            return find(item.subItems, nextKeyPath);
+        };
+
+        const item = find(options, _keyPath);
+
+        return item;
+    };
+
+    const getSubItemAndKeypath = (
+        _item: CombinedOptionProps<V1, V2, V3>,
+        selectedKeyPath: string[]
+    ) => {
+        const targetItems: SelectedItem<V1, V2, V3>[] = [];
+        const targetKeyPaths: string[][] = [];
+        const parentKey = selectedKeyPath.slice(0, -1);
+
+        const find = (
+            item: CombinedOptionProps<V1, V2, V3>,
+            parentKey: string[]
+        ) => {
+            const relaventKey = [...parentKey, item.key];
+
+            if (!item.subItems) {
+                const { label, value } = item;
+                targetItems.push({ label, keyPath: relaventKey, value });
+                targetKeyPaths.push(relaventKey);
+                return;
+            }
+
+            item.subItems.forEach((subItem) => find(subItem, relaventKey));
+        };
+
+        find(_item, parentKey);
+
+        return {
+            targetKeyPaths,
+            targetItems,
+        };
     };
 
     const updateSelectedItemFromKey = (
@@ -338,7 +436,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         if ((options && options.length > 0) || onRetry) {
             return (
                 <NestedDropdownList
-                    data-testid="dropdown-list"
+                    data-testid="nested-dropdown-list"
                     multiSelect={true}
                     listItems={options}
                     listStyleWidth={listStyleWidth}
@@ -353,7 +451,6 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                     onDismiss={handleListDismiss}
                     onSelectAll={handleSelectAll}
                     onSelectItem={handleSelectItem}
-                    onSelectItems={handleSelectItems}
                     onSearch={onSearch}
                     onRetry={onRetry}
                 />

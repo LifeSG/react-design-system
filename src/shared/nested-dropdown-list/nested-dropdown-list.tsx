@@ -45,8 +45,11 @@ export const NestedDropdownList = <V1, V2, V3>({
 <<<<<<< HEAD
 =======
     multiSelect,
+<<<<<<< HEAD
     selectedKeyPath,
 >>>>>>> 3d333f00 ([BOOKINGSG-4362][WK] handle selectedAll and checkbox interactive)
+=======
+>>>>>>> 7c709910 ([BOOKINGSG-4362][WK] update selectedKeyPaths and onSelectItem)
     selectedKeyPaths,
     selectableCategory,
     itemsLoadState = "success",
@@ -57,7 +60,6 @@ export const NestedDropdownList = <V1, V2, V3>({
     onRetry,
     onSearch,
     onSelectItem,
-    onSelectItems,
     ...otherProps
 }: NestedDropdownListProps<V1, V2, V3>): JSX.Element => {
     // =============================================================================
@@ -168,10 +170,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         item: CombinedFormattedOptionProps<V1, V2, V3>
     ) => {
         const targetList = isSearch ? filteredItems : currentItems;
-        const { keyPath } = item;
-
-        const { selectedItems, keyPaths } =
-            NestedDropdownListHelper.getSubItemKeyPathAndItem(item);
+        const { label, keyPath, value } = item;
 
         const list = produce(
             targetList,
@@ -196,7 +195,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         setVisibleKeyPaths(visibleKeyPaths);
         isSearch ? setFilteredItems(list) : setCurrentItems(list);
 
-        onSelectItems(selectedItems, keyPaths);
+        onSelectItem({ label, keyPath, value });
     };
 
     const handleSelectAll = () => {
@@ -420,12 +419,16 @@ export const NestedDropdownList = <V1, V2, V3>({
         const list = NestedDropdownListHelper.getInitialDropdown(
             currentItems,
 <<<<<<< HEAD
+<<<<<<< HEAD
             selectedKeyPaths
 =======
             selectedKeyPath,
             selectedKeyPaths,
             multiSelect
 >>>>>>> 3d333f00 ([BOOKINGSG-4362][WK] handle selectedAll and checkbox interactive)
+=======
+            selectedKeyPaths
+>>>>>>> 7c709910 ([BOOKINGSG-4362][WK] update selectedKeyPaths and onSelectItem)
         );
 
         return list;
@@ -473,9 +476,12 @@ export const NestedDropdownList = <V1, V2, V3>({
                     key={key}
                     item={item}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                     selectedKeyPath={selectedKeyPath}
 >>>>>>> 3d333f00 ([BOOKINGSG-4362][WK] handle selectedAll and checkbox interactive)
+=======
+>>>>>>> 7c709910 ([BOOKINGSG-4362][WK] update selectedKeyPaths and onSelectItem)
                     selectedKeyPaths={selectedKeyPaths}
                     selectableCategory={selectableCategory}
                     searchValue={searchValue}
