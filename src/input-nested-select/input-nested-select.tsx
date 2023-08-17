@@ -234,12 +234,14 @@ export const InputNestedSelect = <V1, V2, V3>({
         if ((options && options.length > 0) || onRetry) {
             return (
                 <NestedDropdownList
-                    data-testid="dropdown-list"
+                    data-testid="nested-dropdown-list"
                     listItems={options}
                     listStyleWidth={listStyleWidth}
                     visible={showOptions}
                     mode={mode}
-                    selectedKeyPath={selectedKeyPath}
+                    selectedKeyPaths={
+                        selectedKeyPath.length ? [selectedKeyPath] : []
+                    }
                     selectableCategory={selectableCategory}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
