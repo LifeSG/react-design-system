@@ -16,14 +16,8 @@ import {
     Table,
     TableWrapper,
 } from "./data-table.styles";
-import {
-    DataTableProps,
-    HeaderProps,
-    RowProps,
-    SortIndicatorProps,
-} from "./types";
+import { DataTableProps, HeaderProps, RowProps } from "./types";
 
-// eslint-disable-next-line max-lines-per-function
 export const DataTable = ({
     id,
     headersConfig,
@@ -184,13 +178,11 @@ export const DataTable = ({
                         isSelectable={selectionConfig?.showCheckboxes}
                         isSelected={isRowSelected(row.id.toString())}
                     >
-                        {/* Checkboxes for selection */}
                         {selectionConfig?.showCheckboxes &&
                             renderRowCheckBox(row.id.toString())}
 
-                        {/* Render each data cell */}
                         {headers.map((header) => renderRowCell(header, row))}
-                        {/* Actions row */}
+
                         {actionsConfig?.showActions &&
                             actionsConfig.actions && (
                                 <BodyCell
