@@ -1,18 +1,18 @@
 import React from "react";
 import { CheckboxProps } from "./types";
+import { Container, Input } from "./checkbox.style";
 import {
-    Checkmark,
-    Container,
-    DisabledUncheckedIcon,
-    Input,
-    Intermediate,
-    UncheckedIcon,
-} from "./checkbox.style";
+    MinusSquareFillIcon,
+    SquareFillIcon,
+    SquareIcon,
+    SquareTickFillIcon,
+} from "@lifesg/react-icons";
 
 export const Checkbox = ({
     className,
     checked,
     disabled,
+    indeterminate,
     onChange,
     onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
@@ -53,45 +53,16 @@ export const Checkbox = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-    const renderCheckMarks = () => {
-        switch (checked) {
-            case true:
-                return (
-                    <Checkmark
-                        id="checkmark"
-                        data-testid="checkmark"
-                        disabled={disabled}
-                        onClick={handleOnCheck}
-                    />
-                );
-            case "mixed":
-                return (
-                    <Intermediate
-                        id="intermediate-checkmark"
-                        data-testid="intermediate-checkmark"
-                        disabled={disabled}
-                        onClick={handleOnCheck}
-                    />
-                );
-            case false:
-                return disabled ? (
-                    <DisabledUncheckedIcon
-                        id="disabled-empty-checkbox"
-                        data-testid="disabled-empty-checkbox"
-                        displaySize={displaySize}
-                    />
-                ) : (
-                    <UncheckedIcon
-                        id="empty-checkbox"
-                        data-testid="empty-checkbox"
-                        onClick={handleOnCheck}
-                        displaySize={displaySize}
-                    />
-                );
-                break;
-            default:
-                return <></>;
-        }
+    const renderIcon = () => {
+        return indeterminate ? (
+            <MinusSquareFillIcon data-testid="intermediate-checkmark" />
+        ) : checked ? (
+            <SquareTickFillIcon data-testid="checkmark" />
+        ) : disabled ? (
+            <SquareFillIcon data-testid="disabled-empty-checkbox" />
+        ) : (
+            <SquareIcon data-testid="empty-checkbox" />
+        );
     };
 
     return (
@@ -99,11 +70,12 @@ export const Checkbox = ({
             className={className}
             data-testid="checkbox"
             role="checkbox"
-            aria-checked={checked}
+            aria-checked={indeterminate ? "mixed" : checked}
             aria-labelledby="checkbox-input"
             tabIndex={disabled ? -1 : 0}
             onKeyDown={handleOnCheck}
             $displaySize={displaySize}
+            $disabled={disabled}
         >
             <Input
                 id="checkbox-input"
@@ -111,10 +83,11 @@ export const Checkbox = ({
                 aria-hidden="true"
                 type="checkbox"
                 tabIndex={-1}
+                onChange={handleOnCheck}
                 disabled={disabled}
                 {...otherProps}
             />
-            {renderCheckMarks()}
+            {renderIcon()}
         </Container>
     );
 };

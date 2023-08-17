@@ -17,10 +17,17 @@ export const PropsTable = () => (
         </tr>
         <tr>
             <NameCol>checked</NameCol>
-            <DescriptionCol propTypes={[`boolean`, `"mixed"`]}>
+            <DescriptionCol propTypes={[`boolean`]}>
                 The selected state of the Checkbox
             </DescriptionCol>
             <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>indeterminate</NameCol>
+            <DescriptionCol propTypes={[`boolean`]}>
+                The selected state of the indeterminate
+            </DescriptionCol>
+            <DefaultCol>{[`false`]}</DefaultCol>
         </tr>
     </Table>
 );

@@ -1,10 +1,9 @@
 export type CheckboxSize = "small" | "default";
-export type CheckBoxStatus = boolean | "mixed";
 
 export interface CheckboxProps
-    extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "checked"> {
+    extends React.InputHTMLAttributes<HTMLInputElement> {
     /** The display sizes of the Checkbox. "small" | "default" */
     displaySize?: CheckboxSize | undefined;
-    /** Checked statues */
-    checked?: CheckBoxStatus | undefined;
+    /** indeterminate state */
+    indeterminate?: boolean | undefined;
 }

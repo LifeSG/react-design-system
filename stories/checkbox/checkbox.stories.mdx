@@ -28,16 +28,16 @@ There are 2 display sizes available for the `Checkbox`.
         {() => {
             const [checked1, setChecked1] = useState(false);
             const [checked2, setChecked2] = useState(true);
-            const [checked3, setChecked3] = useState("mixed");
+            const [indeterminate1, setIndeterminate1] = useState(true);
             const [checked4, setChecked4] = useState(false);
             const [checked5, setChecked5] = useState(true);
-            const [checked6, setChecked6] = useState("mixed");
+            const [indeterminate2, setIndeterminate2] = useState(true);
             const [checked7, setChecked7] = useState(false);
             const [checked8, setChecked8] = useState(true);
-            const [checked9, setChecked9] = useState("mixed");
+            const [indeterminate3, setIndeterminate3] = useState(true);
             const [checked10, setChecked10] = useState(false);
             const [checked11, setChecked11] = useState(true);
-            const [checked12, setChecked12] = useState("mixed");
+            const [indeterminate4, setIndeterminate4] = useState(true);
             return (
                 <>
                     <Container>
@@ -53,10 +53,9 @@ There are 2 display sizes available for the `Checkbox`.
                         />
                         <Checkbox
                             displaySize="default"
-                            checked={checked3}
-                            onChange={() =>
-                                setChecked3(checked3 ? false : "mixed")
-                            }
+                            checked={false}
+                            indeterminate={indeterminate1}
+                            onChange={() => setIndeterminate1(!indeterminate1)}
                         />
                     </Container>
                     <Container>
@@ -74,11 +73,10 @@ There are 2 display sizes available for the `Checkbox`.
                         />
                         <Checkbox
                             displaySize="default"
-                            checked={checked6}
+                            checked={false}
                             disabled={true}
-                            onChange={() =>
-                                setChecked6(checked6 ? false : "mixed")
-                            }
+                            indeterminate={indeterminate2}
+                            onChange={() => setIndeterminate2(!indeterminate2)}
                         />
                     </Container>
                     <Container>
@@ -94,10 +92,9 @@ There are 2 display sizes available for the `Checkbox`.
                         />
                         <Checkbox
                             displaySize="small"
-                            checked={checked9}
-                            onChange={() =>
-                                setChecked9(checked9 ? false : "mixed")
-                            }
+                            checked={false}
+                            indeterminate={indeterminate3}
+                            onChange={() => setIndeterminate3(!indeterminate3)}
                         />
                     </Container>
                     <Container>
@@ -115,11 +112,10 @@ There are 2 display sizes available for the `Checkbox`.
                         />
                         <Checkbox
                             displaySize="small"
-                            checked={checked12}
+                            checked={false}
+                            indeterminate={indeterminate4}
                             disabled={true}
-                            onChange={() =>
-                                setChecked12(checked12 ? false : "mixed")
-                            }
+                            onChange={() => setIndeterminate4(!indeterminate4)}
                         />
                     </Container>
                 </>
