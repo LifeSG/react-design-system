@@ -76,7 +76,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["React.ReactNode"],
             },
             {
-                name: "isLoadingData",
+                name: "loadState",
                 description: "The is Loading Data indicator",
                 propTypes: ["boolean"],
                 defaultValue: "false",

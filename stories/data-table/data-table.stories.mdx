@@ -62,7 +62,7 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
                     label: "Booking time",
                 },
             ]}
-            isLoadingData={false}
+            loadState={false}
         />
     </Story>
 </Canvas>
@@ -115,7 +115,7 @@ Show sorting Indicator Table header.
                     label: "Booking time",
                 },
             ]}
-            isLoadingData={false}
+            loadState={false}
             sortIndicators={{
                 ["status"]: "desc",
                 ["time"]: "desc",
@@ -202,7 +202,7 @@ Table Row with checkbox selection.
                         },
                     ]}
                     selection={selected}
-                    isLoadingData={false}
+                    loadState={false}
                     selectionConfig={{
                         showCheckboxes: true,
                         showHeaderCheckbox: true,
@@ -292,7 +292,7 @@ Table Alternating Row.
                             label: "check Row",
                         },
                     ]}
-                    isLoadingData={false}
+                    loadState={false}
                     sortIndicators={{ fieldKey: "ASC" }}
                     alternatingRows={true}
                 />
@@ -327,7 +327,7 @@ Table Empty Data View.
                 { fieldKey: "title", label: "Title" },
             ]}
             rows={[]}
-            isLoadingData={false}
+            loadState={false}
             selectionConfig={{
                 showCheckboxes: false,
                 showHeaderCheckbox: true,
@@ -363,7 +363,7 @@ Table Empty Data View.
                 { fieldKey: "title", label: "Title" },
             ]}
             rows={[]}
-            isLoadingData={true}
+            loadState={true}
             selectionConfig={{
                 showCheckboxes: false,
                 showHeaderCheckbox: true,
