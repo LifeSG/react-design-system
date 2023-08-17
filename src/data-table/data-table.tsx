@@ -37,7 +37,7 @@ export const DataTable = ({
     actionsConfig,
     alternatingRows,
     customEmptyView,
-    loadState = false,
+    loadState = "success",
     ...otherProps
 }: DataTableProps) => {
     // ===========================================================================
@@ -284,7 +284,7 @@ export const DataTable = ({
             <tr>
                 <td style={{ padding: "4rem" }} colSpan={getTotalColumns()}>
                     <LoaderWrapper>
-                        {loadState && <LoadingDotsSpinner />}
+                        {loadState === "loading" && <LoadingDotsSpinner />}
                     </LoaderWrapper>
                 </td>
             </tr>
@@ -302,9 +302,9 @@ export const DataTable = ({
             >
                 <tbody>
                     {renderHeaders()}
-                    {!loadState && renderRows()}
-                    {!loadState && renderEmptyView()}
-                    {loadState && renderLoader()}
+                    {loadState === "success" && renderRows()}
+                    {loadState === "success" && renderEmptyView()}
+                    {loadState === "loading" && renderLoader()}
                 </tbody>
             </Table>
         </TableWrapper>

@@ -14,7 +14,7 @@ export interface DataTableProps {
     actionsConfig?: ActionsConfigProps | undefined;
     alternatingRows?: boolean | undefined;
     customEmptyView?: () => ReactNode | string | undefined;
-    loadState: boolean | undefined;
+    loadState: "loading" | "success" | "error" | undefined;
 }
 
 export enum SortIndicatorProps {
