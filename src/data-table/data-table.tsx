@@ -72,14 +72,10 @@ export const DataTable = ({
     // RENDER FUNCTIONS
     // =============================================================================
 
-    // Render the table headers
     const renderHeaders = () => (
         <HeaderRow className={headersConfig?.className}>
-            {/* Checkboxes for selection */}
             {selectionConfig?.showCheckboxes && renderHeaderCheckBox()}
-            {/* Render each header cell */}
             {headers.map(renderHeaderCell)}
-            {/* Actions column */}
             {actionsConfig?.showActions && (
                 <HeaderCell
                     data-testid={getDataTestId("header-action")}
