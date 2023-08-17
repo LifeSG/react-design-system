@@ -18,14 +18,14 @@ import {
 } from "./data-table.styles";
 import {
     DataTableProps,
-    HeadersProps,
+    HeaderProps,
     RowProps,
     SortIndicatorProps,
 } from "./types";
 
 // eslint-disable-next-line max-lines-per-function
 export const DataTable = ({
-    testid,
+    id,
     headersConfig,
     headers,
     rowsConfig,
@@ -38,6 +38,7 @@ export const DataTable = ({
     alternatingRows,
     customEmptyView,
     isLoadingData = false,
+    ...otherProps
 }: DataTableProps) => {
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -55,8 +56,8 @@ export const DataTable = ({
     };
 
     const getDataTestId = (subStr: string) => {
-        if (!testid) return undefined;
-        return `${testid}-${subStr}`;
+        if (!otherProps["data-testid"]) return undefined;
+        return `${otherProps["data-testid"]}-${subStr}`;
     };
 
     const getTotalColumns = (): number => {
@@ -92,7 +93,7 @@ export const DataTable = ({
         </HeaderRow>
     );
 
-    const renderHeaderCell = (header: HeadersProps) => {
+    const renderHeaderCell = (header: HeaderProps) => {
         const {
             colId,
             label,
@@ -215,7 +216,7 @@ export const DataTable = ({
         );
     };
 
-    const renderRowCell = (header: HeadersProps, row: RowProps) => {
+    const renderRowCell = (header: HeaderProps, row: RowProps) => {
         const style = typeof header !== "string" ? header.style : undefined;
         const colId = typeof header === "string" ? header : header.colId;
         const cellData = row[colId];
@@ -293,7 +294,8 @@ export const DataTable = ({
     return (
         <TableWrapper>
             <Table
-                data-testid={getDataTestId("table")}
+                id={id || "table-wrapper"}
+                data-testid={otherProps["data-testid"] || "table"}
                 className={className}
                 $addMarginToFirstColumn={!selectionConfig?.showCheckboxes}
                 $addMarginToLastColumn={!actionsConfig?.showActions}
