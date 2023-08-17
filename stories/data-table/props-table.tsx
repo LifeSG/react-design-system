@@ -30,7 +30,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "headers",
                 description: "The list of headers",
-                propTypes: ["HeadersProps<T>[]"],
+                propTypes: ["HeaderProps<T>[]"],
                 mandatory: true,
             },
             {
@@ -125,7 +125,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "HeadersProps",
+        name: "HeaderProps",
         attributes: [
             {
                 name: "HeaderItemProps",

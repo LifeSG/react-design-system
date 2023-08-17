@@ -1,9 +1,10 @@
 import { CSSProperties, ReactNode } from "react";
 
 export interface DataTableProps {
-    testid?: string | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
     headersConfig?: HeadersConfigProps | undefined;
-    headers: HeadersProps[];
+    headers: HeaderProps[];
     rowsConfig?: RowsConfigProps | undefined;
     rows?: RowProps[] | undefined;
     className?: string | undefined; // css class to put on table
@@ -30,7 +31,7 @@ export interface HeadersConfigProps {
     onClickHeader?: ((colId: string) => void) | undefined;
 }
 
-export type HeadersProps =
+export type HeaderProps =
     | string // label text. Rest defaults to colId=label, clickable=false
     | HeaderItemProps;
 interface HeaderItemProps {
