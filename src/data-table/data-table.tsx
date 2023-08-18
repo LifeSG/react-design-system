@@ -14,6 +14,7 @@ import {
     TableWrapper,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
+import { ErrorDisplayAttributes } from "../error-display/types";
 import { ErrorDisplay } from "../error-display";
 
 export const DataTable = ({
@@ -30,7 +31,7 @@ export const DataTable = ({
     alternatingRows,
     customEmptyView,
     loadState = "success",
-    emptyView,
+    emptyView = DEFAULT_EMPTY_VIEW_OPTIONS,
     ...otherProps
 }: DataTableProps) => {
     // ===========================================================================
@@ -296,4 +297,18 @@ export const DataTable = ({
             </Table>
         </TableWrapper>
     );
+};
+
+const DEFAULT_EMPTY_VIEW_OPTIONS: ErrorDisplayAttributes = {
+    img: {
+        src: `https://assets.life.gov.sg/react-design-system/img/error/payment-unsuccessful.png`,
+    },
+    title: "No Results Found",
+    description: "",
+    actionButton: {
+        children: "Trigger",
+        onClick: () => {
+            console.log("Clicked on Trigger button");
+        },
+    },
 };
