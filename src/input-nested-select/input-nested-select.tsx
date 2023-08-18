@@ -59,8 +59,8 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selectedKeyPath, setSelectedKeyPath] = useState<string[]>(
-        _selectedKeyPath || []
+    const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
+        _selectedKeyPath ? [_selectedKeyPath] : []
     );
     const [selectedItem, setSelectedItem] =
         useState<SelectedItemType<V1, V2, V3>>();
@@ -74,10 +74,10 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        const newKeyPath = _selectedKeyPath || [];
-        setSelectedKeyPath(newKeyPath);
+        const newKeyPath = _selectedKeyPath ? [_selectedKeyPath] : [];
 
-        updateSelectedItemFromKey(options, newKeyPath);
+        setSelectedKeyPaths(newKeyPath);
+        updateSelectedItemFromKey(options, _selectedKeyPath || []);
     }, [_selectedKeyPath, options]);
 
     // =============================================================================
@@ -99,7 +99,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     ) => {
         const { keyPath, value, label } = item;
 
-        setSelectedKeyPath(keyPath);
+        setSelectedKeyPaths([keyPath]);
         setSelectedItem({ label, value });
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
@@ -234,12 +234,12 @@ export const InputNestedSelect = <V1, V2, V3>({
         if ((options && options.length > 0) || onRetry) {
             return (
                 <NestedDropdownList
-                    data-testid="dropdown-list"
+                    data-testid="nested-dropdown-list"
                     listItems={options}
                     listStyleWidth={listStyleWidth}
                     visible={showOptions}
                     mode={mode}
-                    selectedKeyPath={selectedKeyPath}
+                    selectedKeyPaths={selectedKeyPaths}
                     selectableCategory={selectableCategory}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}

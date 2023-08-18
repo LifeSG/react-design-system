@@ -17,7 +17,7 @@ import {
 
 interface ListItemProps<V1, V2, V3> {
     item: CombinedFormattedOptionProps<V1, V2, V3>;
-    selectedKeyPath?: string[] | undefined;
+    selectedKeyPaths: string[][];
     selectableCategory?: boolean | undefined;
     searchValue: string | undefined;
     itemTruncationType?: TruncateType | undefined;
@@ -30,7 +30,7 @@ interface ListItemProps<V1, V2, V3> {
 
 export const ListItem = <V1, V2, V3>({
     item,
-    selectedKeyPath,
+    selectedKeyPaths,
     selectableCategory,
     searchValue,
     itemTruncationType,
@@ -66,9 +66,10 @@ export const ListItem = <V1, V2, V3>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const checkListItemSelected = (keyPath: string[]): boolean => {
-        return JSON.stringify(selectedKeyPath) === JSON.stringify(keyPath);
-    };
+    const checkListItemSelected = (keyPath: string[]): boolean =>
+        selectedKeyPaths.some(
+            (key) => JSON.stringify(key) === JSON.stringify(keyPath)
+        );
 
     const hasExceededContainer = (
         item: CombinedFormattedOptionProps<V1, V2, V3>
@@ -132,7 +133,7 @@ export const ListItem = <V1, V2, V3>({
                     <ListItem
                         key={item.keyPath.join("-")}
                         item={item}
-                        selectedKeyPath={selectedKeyPath}
+                        selectedKeyPaths={selectedKeyPaths}
                         selectableCategory={selectableCategory}
                         searchValue={searchValue}
                         itemTruncationType={itemTruncationType}

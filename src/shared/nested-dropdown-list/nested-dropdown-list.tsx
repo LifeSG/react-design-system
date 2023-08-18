@@ -42,7 +42,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     searchPlaceholder = "Search",
     visible,
     mode = "default",
-    selectedKeyPath,
+    selectedKeyPaths,
     selectableCategory,
     itemsLoadState = "success",
     itemTruncationType = "end",
@@ -372,7 +372,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         // otherwise expand the first selected item or first subitem tree
         const list = NestedDropdownListHelper.getInitialDropdown(
             currentItems,
-            selectedKeyPath
+            selectedKeyPaths
         );
 
         return list;
@@ -410,7 +410,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                 <ListItem
                     key={key}
                     item={item}
-                    selectedKeyPath={selectedKeyPath}
+                    selectedKeyPaths={selectedKeyPaths}
                     selectableCategory={selectableCategory}
                     searchValue={searchValue}
                     itemTruncationType={itemTruncationType}
