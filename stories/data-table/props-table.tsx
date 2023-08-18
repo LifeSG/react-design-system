@@ -59,11 +59,11 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The sort Indicators",
                 propTypes: ["SortIndicatorsProps<T>"],
             },
-            {
-                name: "actionsConfig",
-                description: "The selection actions Config",
-                propTypes: ["ActionsConfigProps<T>"],
-            },
+            // {
+            //     name: "actionsConfig",
+            //     description: "The selection actions Config",
+            //     propTypes: ["ActionsConfigProps<T>"],
+            // },
             {
                 name: "alternatingRows",
                 description: "The alternating Rows",
@@ -88,47 +88,47 @@ const DATA: ApiTableSectionProps[] = [
             },
         ],
     },
-    {
-        name: "ActionsConfigProps",
-        attributes: [
-            {
-                name: "showActions",
-                description: "The show Actions",
-                propTypes: ["boolean"],
-                defaultValue: "false",
-                mandatory: true,
-            },
-            {
-                name: "className",
-                description:
-                    "The className of the component for custom styling.",
-                propTypes: ["string"],
-            },
-            {
-                name: "headerClassName",
-                description:
-                    "The header className of the component for custom styling.",
-                propTypes: ["string"],
-            },
-            {
-                name: "headerLabel",
-                description: "The header Label.",
-                propTypes: ["string"],
-            },
-            {
-                name: "actions",
-                description: "Called when a selection happen",
-                propTypes: [
-                    "(row: RowProps, isSelected: boolean) => ReactNode",
-                ],
-            },
-            {
-                name: "headerWidth",
-                description: "The header Width.",
-                propTypes: ["string"],
-            },
-        ],
-    },
+    // {
+    //     name: "ActionsConfigProps",
+    //     attributes: [
+    //         {
+    //             name: "showActions",
+    //             description: "The show Actions",
+    //             propTypes: ["boolean"],
+    //             defaultValue: "false",
+    //             mandatory: true,
+    //         },
+    //         {
+    //             name: "className",
+    //             description:
+    //                 "The className of the component for custom styling.",
+    //             propTypes: ["string"],
+    //         },
+    //         {
+    //             name: "headerClassName",
+    //             description:
+    //                 "The header className of the component for custom styling.",
+    //             propTypes: ["string"],
+    //         },
+    //         {
+    //             name: "headerLabel",
+    //             description: "The header Label.",
+    //             propTypes: ["string"],
+    //         },
+    //         {
+    //             name: "actions",
+    //             description: "Called when a selection happen",
+    //             propTypes: [
+    //                 "(row: RowProps, isSelected: boolean) => ReactNode",
+    //             ],
+    //         },
+    //         {
+    //             name: "headerWidth",
+    //             description: "The header Width.",
+    //             propTypes: ["string"],
+    //         },
+    //     ],
+    // },
     {
         name: "HeaderProps",
         attributes: [
@@ -185,6 +185,17 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onClickHeader",
                 description: "on Click Header click",
                 propTypes: ["(fieldKey: string) => void"],
+            },
+        ],
+    },
+    {
+        name: "LoadingType",
+        attributes: [
+            {
+                name: "The type of Loading or success or error",
+                description: "",
+                propTypes: [`"loading"`, `"success",`, `"error",`],
+                defaultValue: "success",
             },
         ],
     },
@@ -271,17 +282,6 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The desc order icon",
                 propTypes: ["string"],
                 defaultValue: "desc",
-            },
-        ],
-    },
-    {
-        name: "LoadingType",
-        attributes: [
-            {
-                name: "The type of Loading or success or error",
-                description: "",
-                propTypes: [`"loading"`, `"success",`, `"error",`],
-                defaultValue: "success",
             },
         ],
     },
