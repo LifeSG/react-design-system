@@ -14,7 +14,7 @@ export interface DataTableProps {
     selection?: string[] | undefined;
     /** columns that want to show a sort indicator **/
     sortIndicators?: SortIndicatorsProps | undefined;
-    actionsConfig?: ActionsConfigProps | undefined;
+    // actionsConfig?: ActionsConfigProps | undefined;
     alternatingRows?: boolean | undefined;
     customEmptyView?: () => ReactNode | string | undefined;
     loadState: LoadingType | undefined;
@@ -73,11 +73,11 @@ export interface SelectionConfigProps {
     headerWidth?: string | undefined;
 }
 
-export interface ActionsConfigProps {
-    showActions: boolean;
-    className?: string | undefined;
-    headerClassName?: string | undefined;
-    headerLabel?: string | ReactNode | undefined;
-    actions?: ((row: RowProps, isSelected: boolean) => ReactNode) | undefined;
-    headerWidth?: string | undefined;
-}
+// export interface ActionsConfigProps {
+//     showActions: boolean;
+//     className?: string | undefined;
+//     headerClassName?: string | undefined;
+//     headerLabel?: string | ReactNode | undefined;
+//     actions?: ((row: RowProps, isSelected: boolean) => ReactNode) | undefined;
+//     headerWidth?: string | undefined;
+// }

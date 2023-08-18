@@ -26,7 +26,7 @@ export const DataTable = ({
     selectionConfig,
     selection,
     sortIndicators,
-    actionsConfig,
+    // actionsConfig,
     alternatingRows,
     customEmptyView,
     loadState = "success",
@@ -55,9 +55,8 @@ export const DataTable = ({
 
     const getTotalColumns = (): number => {
         return (
-            headers.length +
-            (selectionConfig?.showCheckboxes ? 1 : 0) +
-            (actionsConfig?.showActions ? 1 : 0)
+            headers.length + (selectionConfig?.showCheckboxes ? 1 : 0)
+            //  + (actionsConfig?.showActions ? 1 : 0)
         );
     };
 
@@ -69,7 +68,7 @@ export const DataTable = ({
         <HeaderRow className={headersConfig?.className}>
             {selectionConfig?.showCheckboxes && renderHeaderCheckBox()}
             {headers.map(renderHeaderCell)}
-            {actionsConfig?.showActions && (
+            {/* {actionsConfig?.showActions && (
                 <HeaderCell
                     data-testid={getDataTestId("header-action")}
                     clickable={false}
@@ -78,7 +77,7 @@ export const DataTable = ({
                 >
                     {actionsConfig.headerLabel}
                 </HeaderCell>
-            )}
+            )} */}
         </HeaderRow>
     );
 
@@ -182,7 +181,7 @@ export const DataTable = ({
 
                         {headers.map((header) => renderRowCell(header, row))}
 
-                        {actionsConfig?.showActions &&
+                        {/* {actionsConfig?.showActions &&
                             actionsConfig.actions && (
                                 <BodyCell
                                     data-testid={getDataTestId(
@@ -196,7 +195,7 @@ export const DataTable = ({
                                         isRowSelected(row.id.toString())
                                     )}
                                 </BodyCell>
-                            )}
+                            )} */}
                     </BodyRow>
                 ))}
             </>
@@ -286,7 +285,7 @@ export const DataTable = ({
                 data-testid={otherProps["data-testid"] || "table"}
                 className={className}
                 $addMarginToFirstColumn={!selectionConfig?.showCheckboxes}
-                $addMarginToLastColumn={!actionsConfig?.showActions}
+                // $addMarginToLastColumn={!actionsConfig?.showActions}
             >
                 <tbody>
                     {renderHeaders()}
