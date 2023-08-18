@@ -35,7 +35,7 @@ export interface NestedDropdownListProps<V1, V2, V3>
     visible?: boolean | undefined;
     multiSelect?: boolean | undefined;
     /** Specifies key path of selected option */
-    selectedKeyPaths: string[][];
+    selectedKeyPaths: string[][] | [];
     /** Specifies if items are expanded or collapsed when the dropdown is opened */
     mode?: Mode | undefined;
     /** If specified, the category label is selectable */
