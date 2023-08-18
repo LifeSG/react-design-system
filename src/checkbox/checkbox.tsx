@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Checkmark, Container, Input } from "./checkbox.style";
+import React, { useEffect, useRef } from "react";
 import { CheckboxProps } from "./types";
+import { Container, Input } from "./checkbox.style";
+import {
+    MinusSquareFillIcon,
+    SquareFillIcon,
+    SquareIcon,
+    SquareTickFillIcon,
+} from "@lifesg/react-icons";
 
 export const Checkbox = ({
     className,
     checked,
     disabled,
+    indeterminate,
     onChange,
     onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
     ...otherProps
 }: CheckboxProps): JSX.Element => {
-    const [selected, setSelected] = useState<boolean>(checked);
+    // =============================================================================
+    // REFS, EFFECTS
+    // =============================================================================
+    const checkRef = useRef<HTMLInputElement>();
 
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
     useEffect(() => {
-        setSelected(checked);
-    }, [checked]);
+        checkRef.current.indeterminate = indeterminate;
+    }, [indeterminate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -51,38 +58,44 @@ export const Checkbox = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+    const renderIcon = () => {
+        return indeterminate ? (
+            <MinusSquareFillIcon data-testid="indeterminate" />
+        ) : checked ? (
+            <SquareTickFillIcon data-testid="checkmark" />
+        ) : disabled ? (
+            <SquareFillIcon data-testid="disabled-empty-checkbox" />
+        ) : (
+            <SquareIcon data-testid="empty-checkbox" />
+        );
+    };
+
     return (
         <Container
-            selected={selected}
-            disabled={disabled}
             className={className}
             data-testid="checkbox"
-            $displaySize={displaySize}
             role="checkbox"
-            aria-checked={selected}
+            aria-checked={indeterminate ? "mixed" : checked}
             aria-labelledby="checkbox-input"
             tabIndex={disabled ? -1 : 0}
             onKeyDown={handleOnCheck}
+            $displaySize={displaySize}
+            $disabled={disabled}
+            $unchecked={!(indeterminate || checked || disabled)}
         >
             <Input
                 id="checkbox-input"
                 data-testid="checkbox-input"
                 aria-hidden="true"
                 type="checkbox"
+                checked={checked}
+                ref={checkRef}
                 tabIndex={-1}
                 onChange={handleOnCheck}
                 disabled={disabled}
-                checked={selected}
                 {...otherProps}
             />
-            {selected && (
-                <Checkmark
-                    id="checkmark"
-                    data-testid="checkmark"
-                    disabled={disabled}
-                    $displaySize={displaySize}
-                />
-            )}
+            {renderIcon()}
         </Container>
     );
 };

@@ -1,29 +1,38 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { Color } from "../color/color";
 import { CheckboxProps, CheckboxSize } from "./types";
-import { TickIcon } from "@lifesg/react-icons/tick";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
-    selected?: boolean;
-    disabled?: boolean;
+    $unchecked?: boolean;
+    $disabled?: boolean;
     $displaySize?: CheckboxSize;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const Container = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 
     ${(props) => {
-        let height;
-        let width;
+        let height: string;
+        let width: string;
 
         switch (props.$displaySize) {
             case "small":
@@ -42,58 +51,23 @@ export const Container = styled.div<StyleProps>`
         `;
     }}
 
-    position: relative;
-    border-radius: 4px;
-    transition: all 200ms ease-in-out;
-    border: 1px solid ${Color.Accent.Light[2]};
-    background: transparent;
-
-    ${(props) => {
-        let borderColor;
-        let background;
-
-        if (props.selected) {
-            borderColor = Color.Primary(props);
-            background = Color.Primary(props);
-        }
-
-        if (props.disabled) {
-            borderColor = Color.Neutral[6](props);
-            background = Color.Neutral[6](props);
-        }
-
-        return `
-			border: 1px solid ${borderColor};
-			background: ${background};
-		`;
-    }}
+    svg {
+        animation: 200ms ease-in-out ${fadeIn};
+        width: 100%;
+        height: 100%;
+        color: ${(props) =>
+            props.$disabled
+                ? Color.Neutral[4](props)
+                : props.$unchecked
+                ? Color.Accent.Light[2](props)
+                : Color.Primary(props)};
+    }
 `;
 
 export const Input = styled.input<CheckboxProps>`
     position: absolute;
     opacity: 0;
-    height: 100%;
     width: 100%;
+    height: 100%;
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-`;
-
-export const Checkmark = styled(TickIcon)<StyleProps>`
-    ${(props) => {
-        let size;
-
-        switch (props.$displaySize) {
-            case "small":
-                size = "1.5rem";
-                break;
-            default:
-                size = "1.75rem";
-                break;
-        }
-
-        return css`
-            height: ${size};
-            width: ${size};
-        `;
-    }}
-    color: ${(props) => (props.disabled ? Color.Neutral[4] : Color.Neutral[8])};
 `;
