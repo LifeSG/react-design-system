@@ -24,9 +24,8 @@ export const Checkbox = ({
     const checkRef = useRef<HTMLInputElement>();
 
     useEffect(() => {
-        checkRef.current.checked = checked;
         checkRef.current.indeterminate = indeterminate;
-    }, [checked, indeterminate]);
+    }, [indeterminate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -89,6 +88,7 @@ export const Checkbox = ({
                 data-testid="checkbox-input"
                 aria-hidden="true"
                 type="checkbox"
+                checked={checked}
                 ref={checkRef}
                 tabIndex={-1}
                 onChange={handleOnCheck}
