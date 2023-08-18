@@ -29,7 +29,7 @@ export interface NestedDropdownListProps<V1, V2, V3>
     listItems?: L1OptionProps<V1, V2, V3>[] | undefined;
     visible?: boolean | undefined;
     /** Specifies key path of selected option */
-    selectedKeyPath?: string[] | undefined;
+    selectedKeyPaths: string[][];
     /** Specifies if items are expanded or collapsed when the dropdown is opened */
     mode?: Mode | undefined;
     /** If specified, the category label is selectable */

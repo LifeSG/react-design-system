@@ -59,8 +59,8 @@ export const InputNestedSelect = <V1, V2, V3>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selectedKeyPath, setSelectedKeyPath] = useState<string[]>(
-        _selectedKeyPath || []
+    const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
+        _selectedKeyPath?.flat().length ? [_selectedKeyPath] : []
     );
     const [selectedItem, setSelectedItem] =
         useState<SelectedItemType<V1, V2, V3>>();
@@ -74,10 +74,12 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        const newKeyPath = _selectedKeyPath || [];
-        setSelectedKeyPath(newKeyPath);
+        const newKeyPath = _selectedKeyPath?.flat().length
+            ? [_selectedKeyPath]
+            : [];
 
-        updateSelectedItemFromKey(options, newKeyPath);
+        setSelectedKeyPaths(newKeyPath);
+        updateSelectedItemFromKey(options, _selectedKeyPath || []);
     }, [_selectedKeyPath, options]);
 
     // =============================================================================
@@ -99,7 +101,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     ) => {
         const { keyPath, value, label } = item;
 
-        setSelectedKeyPath(keyPath);
+        setSelectedKeyPaths([keyPath]);
         setSelectedItem({ label, value });
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
@@ -135,7 +137,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     const getDisplayValue = (): string => {
         const { label, value } = selectedItem;
 
-        if (valueToStringFunction) {
+        if (valueToStringFunction && value) {
             return valueToStringFunction(value) || value.toString();
         } else {
             return label;
@@ -239,9 +241,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                     listStyleWidth={listStyleWidth}
                     visible={showOptions}
                     mode={mode}
-                    selectedKeyPaths={
-                        selectedKeyPath.length ? [selectedKeyPath] : []
-                    }
+                    selectedKeyPaths={selectedKeyPaths}
                     selectableCategory={selectableCategory}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}

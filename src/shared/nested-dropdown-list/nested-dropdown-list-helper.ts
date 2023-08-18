@@ -9,23 +9,27 @@ export type FormattedOptionMap<V1, V2, V3> = Map<
 export namespace NestedDropdownListHelper {
     export const getInitialDropdown = <V1, V2, V3>(
         currentItems: FormattedOptionMap<V1, V2, V3>,
-        selectedKeyPath?: string[] | undefined
+        selectedKeyPaths: string[][]
     ) => {
-        let keyPath = selectedKeyPath;
+        let keyPaths = selectedKeyPaths;
 
-        if (!keyPath || !keyPath.length) {
-            keyPath = getInitialSubItem(currentItems);
-            keyPath = keyPath.slice(0, -1);
+        if (!keyPaths || !keyPaths.length) {
+            keyPaths = getInitialSubItem(currentItems);
+            console.log("keyPaths: ", keyPaths);
         }
 
         const list = produce(
             currentItems,
-            (draft: Map<string, FormattedOption<V1, V2, V3>>) => {
-                const targetKey = [];
-                keyPath.forEach((key) => {
-                    targetKey.push(key);
-                    const item = getItemAtKeyPath(draft, targetKey);
-                    item.expanded = true;
+            (draft: FormattedOptionMap<V1, V2, V3>) => {
+                let targetKey: string[] = [];
+
+                keyPaths.forEach((keyPathArray) => {
+                    targetKey = [];
+                    keyPathArray.forEach((key) => {
+                        targetKey.push(key);
+                        const item = getItemAtKeyPath(draft, targetKey);
+                        item.expanded = true;
+                    });
                 });
             }
         );
@@ -81,7 +85,7 @@ export namespace NestedDropdownListHelper {
 // =============================================================================
 const getInitialSubItem = <V1, V2, V3>(
     list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>> | undefined
-): string[] => {
+): string[][] => {
     for (const item of list.values()) {
         if (item.subItems && item.subItems.size) {
             return getInitialSubItem(item.subItems);
@@ -89,5 +93,5 @@ const getInitialSubItem = <V1, V2, V3>(
     }
 
     const value = list.values().next().value;
-    return value.keyPath;
+    return [value.keyPath];
 };
