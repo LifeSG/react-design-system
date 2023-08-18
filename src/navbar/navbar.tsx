@@ -51,7 +51,7 @@ const Component = <T,>(
         layout = "default",
         ...otherProps
     }: NavbarProps<T>,
-    ref: React.Ref<HTMLDivElement>
+    ref: React.Ref<NavbarDrawerHandle>
 ) => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -273,7 +273,7 @@ const Component = <T,>(
     );
 };
 
-export const Navbar = forwardRef<NavbarDrawerHandle>(Component);
+export const Navbar = forwardRef(Component);
 
 // =============================================================================
 // CONSTANTS
