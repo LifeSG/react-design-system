@@ -1,33 +1,28 @@
 import React from "react";
-import {
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable } from "../storybook-common/api-table";
+import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
-export const PropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol>displaySize</NameCol>
-            <DescriptionCol propTypes={[`"default"`, `"small"`]}>
-                The display size of the component
-            </DescriptionCol>
-            <DefaultCol>{[`"default"`]}</DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>checked</NameCol>
-            <DescriptionCol propTypes={[`boolean`]}>
-                The selected state of the Checkbox
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>indeterminate</NameCol>
-            <DescriptionCol propTypes={[`boolean`]}>
-                The selected state of the indeterminate
-            </DescriptionCol>
-            <DefaultCol>{[`false`]}</DefaultCol>
-        </tr>
-    </Table>
-);
+const DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "displaySize",
+                description: "The display size of the component",
+                propTypes: [`"default"`, `"small"`],
+                defaultValue: `"default"`,
+            },
+            {
+                name: "checked",
+                description: "The selected state of the component",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "indeterminate",
+                description: "The indeterminate state of the component",
+                propTypes: ["boolean"],
+            },
+        ],
+    },
+];
+
+export const PropsTable = () => <ApiTable sections={DATA} />;

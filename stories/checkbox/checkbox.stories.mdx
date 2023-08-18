@@ -1,8 +1,8 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Checkbox } from "src/checkbox";
-import { Secondary, Title } from "../storybook-common";
-import { Container } from "./doc-elements";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import { Grid, Row, SubOption } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta title="Data Input/Checkbox" component={Checkbox} />
@@ -25,99 +25,61 @@ There are 2 display sizes available for the `Checkbox`.
 
 <Canvas>
     <Story name="Checkbox">
+        <Grid>
+            <Checkbox displaySize="default" />
+            <Checkbox displaySize="default" checked />
+            <Checkbox displaySize="default" indeterminate />
+            <Checkbox displaySize="default" disabled />
+            <Checkbox displaySize="default" disabled checked />
+            <Checkbox displaySize="default" disabled indeterminate />
+            <Checkbox displaySize="small" />
+            <Checkbox displaySize="small" checked />
+            <Checkbox displaySize="small" indeterminate />
+            <Checkbox displaySize="small" disabled />
+            <Checkbox displaySize="small" disabled checked />
+            <Checkbox displaySize="small" disabled indeterminate />
+        </Grid>
+    </Story>
+</Canvas>
+
+<Heading3>Indeterminate state</Heading3>
+
+A common use case for the indeterminate state is to represent the partial selection of sub-options.
+
+<Canvas>
+    <Story name="Indeterminate state">
         {() => {
-            const [checked1, setChecked1] = useState(false);
-            const [checked2, setChecked2] = useState(true);
-            const [indeterminate1, setIndeterminate1] = useState(true);
-            const [checked4, setChecked4] = useState(false);
-            const [checked5, setChecked5] = useState(true);
-            const [indeterminate2, setIndeterminate2] = useState(true);
-            const [checked7, setChecked7] = useState(false);
-            const [checked8, setChecked8] = useState(true);
-            const [indeterminate3, setIndeterminate3] = useState(true);
-            const [checked10, setChecked10] = useState(false);
-            const [checked11, setChecked11] = useState(true);
-            const [indeterminate4, setIndeterminate4] = useState(true);
+            const [checked1, setChecked1] = useState(true);
+            const [checked2, setChecked2] = useState(false);
             return (
                 <>
-                    <Container>
+                    <Checkbox
+                        checked={checked1 && checked2}
+                        indeterminate={checked1 !== checked2}
+                        onChange={() => {
+                            if (checked1 !== checked2) {
+                                setChecked1(true);
+                                setChecked2(true);
+                            } else {
+                                setChecked1(!checked1);
+                                setChecked2(!checked1);
+                            }
+                        }}
+                    />
+                    <SubOption>
                         <Checkbox
-                            displaySize="default"
                             checked={checked1}
                             onChange={() => setChecked1(!checked1)}
                         />
+                        Sub-option 1
+                    </SubOption>
+                    <SubOption>
                         <Checkbox
-                            displaySize="default"
                             checked={checked2}
                             onChange={() => setChecked2(!checked2)}
                         />
-                        <Checkbox
-                            displaySize="default"
-                            checked={false}
-                            indeterminate={indeterminate1}
-                            onChange={() => setIndeterminate1(!indeterminate1)}
-                        />
-                    </Container>
-                    <Container>
-                        <Checkbox
-                            displaySize="default"
-                            checked={checked4}
-                            disabled={true}
-                            onChange={() => setChecked4(!checked4)}
-                        />
-                        <Checkbox
-                            displaySize="default"
-                            checked={checked5}
-                            disabled={true}
-                            onChange={() => setChecked5(!checked5)}
-                        />
-                        <Checkbox
-                            displaySize="default"
-                            checked={false}
-                            disabled={true}
-                            indeterminate={indeterminate2}
-                            onChange={() => setIndeterminate2(!indeterminate2)}
-                        />
-                    </Container>
-                    <Container>
-                        <Checkbox
-                            displaySize="small"
-                            checked={checked7}
-                            onChange={() => setChecked7(!checked7)}
-                        />
-                        <Checkbox
-                            displaySize="small"
-                            checked={checked8}
-                            onChange={() => setChecked8(!checked8)}
-                        />
-                        <Checkbox
-                            displaySize="small"
-                            checked={false}
-                            indeterminate={indeterminate3}
-                            onChange={() => setIndeterminate3(!indeterminate3)}
-                        />
-                    </Container>
-                    <Container>
-                        <Checkbox
-                            displaySize="small"
-                            checked={checked10}
-                            disabled={true}
-                            onChange={() => setChecked10(!checked10)}
-                        />
-                        <Checkbox
-                            displaySize="small"
-                            checked={checked11}
-                            disabled={true}
-                            onChange={() => setChecked11(!checked11)}
-                        />
-                        <Checkbox
-                            displaySize="small"
-                            checked={false}
-                            indeterminate={indeterminate4}
-                            disabled={true}
-                            onChange={() => setIndeterminate4(!indeterminate4)}
-                        />
-                    </Container>
+                        Sub-option 2
+                    </SubOption>
                 </>
             );
         }}
