@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { CheckboxProps } from "./types";
 import { Container, Input } from "./checkbox.style";
 import {
@@ -18,6 +18,16 @@ export const Checkbox = ({
     displaySize = "default",
     ...otherProps
 }: CheckboxProps): JSX.Element => {
+    // =============================================================================
+    // REFS, EFFECTS
+    // =============================================================================
+    const checkRef = useRef<HTMLInputElement>();
+
+    useEffect(() => {
+        checkRef.current.checked = checked;
+        checkRef.current.indeterminate = indeterminate;
+    }, [checked, indeterminate]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -79,6 +89,7 @@ export const Checkbox = ({
                 data-testid="checkbox-input"
                 aria-hidden="true"
                 type="checkbox"
+                ref={checkRef}
                 tabIndex={-1}
                 onChange={handleOnCheck}
                 disabled={disabled}
