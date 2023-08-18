@@ -14,8 +14,7 @@ export namespace NestedDropdownListHelper {
         let keyPaths = selectedKeyPaths;
 
         if (!keyPaths || !keyPaths.length) {
-            keyPaths = getInitialSubItem(currentItems);
-            console.log("keyPaths: ", keyPaths);
+            keyPaths = [getInitialSubItem(currentItems)];
         }
 
         const list = produce(
@@ -85,7 +84,7 @@ export namespace NestedDropdownListHelper {
 // =============================================================================
 const getInitialSubItem = <V1, V2, V3>(
     list: Map<string, CombinedFormattedOptionProps<V1, V2, V3>> | undefined
-): string[][] => {
+): string[] => {
     for (const item of list.values()) {
         if (item.subItems && item.subItems.size) {
             return getInitialSubItem(item.subItems);
@@ -93,5 +92,5 @@ const getInitialSubItem = <V1, V2, V3>(
     }
 
     const value = list.values().next().value;
-    return [value.keyPath];
+    return value.keyPath;
 };

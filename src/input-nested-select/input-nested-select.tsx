@@ -60,7 +60,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     // CONST, STATE
     // =============================================================================
     const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
-        _selectedKeyPath?.flat().length ? [_selectedKeyPath] : []
+        _selectedKeyPath ? [_selectedKeyPath] : []
     );
     const [selectedItem, setSelectedItem] =
         useState<SelectedItemType<V1, V2, V3>>();
@@ -74,9 +74,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        const newKeyPath = _selectedKeyPath?.flat().length
-            ? [_selectedKeyPath]
-            : [];
+        const newKeyPath = _selectedKeyPath ? [_selectedKeyPath] : [];
 
         setSelectedKeyPaths(newKeyPath);
         updateSelectedItemFromKey(options, _selectedKeyPath || []);
@@ -137,7 +135,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     const getDisplayValue = (): string => {
         const { label, value } = selectedItem;
 
-        if (valueToStringFunction && value) {
+        if (valueToStringFunction) {
             return valueToStringFunction(value) || value.toString();
         } else {
             return label;
