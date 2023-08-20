@@ -160,7 +160,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             setSelectedItems(items);
             performOnSelectOptions(keyPaths, items);
         } else {
-            setSelectedKeyPaths([[]]);
+            setSelectedKeyPaths([]);
             setSelectedItems([]);
             performOnSelectOptions();
         }
@@ -337,9 +337,9 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
 
         const findSelectedItem = (
             items: CombinedOptionProps<V1, V2, V3>[],
-            keyPaths: string[]
+            keyPath: string[]
         ): SelectedItem<V1, V2, V3> | undefined => {
-            const [currentKey, ...nextKeyPath] = keyPaths;
+            const [currentKey, ...nextKeyPath] = keyPath;
 
             if (isEmpty(items) || !currentKey) {
                 return undefined;
@@ -365,7 +365,6 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
 
         for (let i = 0; i < selectedKeyPaths.length; i++) {
             const item = findSelectedItem(options, keyPaths[i]);
-            if (!item) break;
 
             selectedItems.push({
                 value: item.value,
