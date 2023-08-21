@@ -192,7 +192,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     };
 
     const handleSelectAll = () => {
-        const isSelectedAll = !selectedKeyPaths.flat().length;
+        const isSelectedAll = !selectedKeyPaths.length;
 
         const { keyPaths, items, list } =
             NestedDropdownListHelper.updateSelectedAll(
@@ -506,7 +506,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                         onClick={handleSelectAll}
                         type="button"
                     >
-                        {selectedKeyPaths.flat().length === 0
+                        {selectedKeyPaths.length === 0
                             ? "Select all"
                             : "Clear all"}
                     </DropdownCommonButton>
