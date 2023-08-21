@@ -247,7 +247,7 @@ export const DataTable = ({
     const basicEmptyView = () => {
         return (
             <ErrorDisplay
-                type="404"
+                type="no-item-found"
                 title={emptyView?.title}
                 description={emptyView?.description}
                 actionButton={emptyView?.actionButton}
@@ -300,9 +300,6 @@ export const DataTable = ({
 };
 
 const DEFAULT_EMPTY_VIEW_OPTIONS: ErrorDisplayAttributes = {
-    img: {
-        src: `https://assets.life.gov.sg/react-design-system/img/error/payment-unsuccessful.png`,
-    },
     title: "No Results Found",
     description: "",
     actionButton: {
