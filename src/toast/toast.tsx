@@ -1,4 +1,5 @@
 import {
+    CrossIcon,
     ExclamationCircleFillIcon,
     ExclamationTriangleFillIcon,
     ICircleFillIcon,
@@ -10,7 +11,6 @@ import { easings, useSpring } from "react-spring";
 import { MediaWidths } from "../spec/media-spec";
 import { Text } from "../text";
 import {
-    CloseIcon,
     Description,
     DismissButton,
     TextContainer,
@@ -128,7 +128,7 @@ export const Toast = ({
                 )}
             </TextContainer>
             <DismissButton $type={type} onClick={handleDismiss}>
-                <CloseIcon />
+                <CrossIcon />
             </DismissButton>
         </Wrapper>
     );

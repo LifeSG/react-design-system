@@ -1,4 +1,3 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import { animated } from "react-spring";
 import { ValidationElementAttributes } from "src/color";
 import { PropertiesToType } from "src/util/utility-types";
@@ -58,7 +57,7 @@ export const Wrapper = styled(animated.div)<StyleProps>`
             background: ${getValidationColorAttributes(props).Background};
             border: 1px solid ${getValidationColorAttributes(props).Border};
             color: ${getValidationColorAttributes(props).Text};
-            svg {
+            & > svg {
                 width: 1.5rem;
                 height: 1.5rem;
                 margin-right: 0.5rem;
@@ -97,17 +96,15 @@ export const Description = styled.div<StyleProps>`
     }}
 `;
 
-export const CloseIcon = styled(CrossIcon)`
-    margin: 0 !important;
-`;
-
 export const DismissButton = styled(ClickableIcon)<StyleProps>`
-    padding: 0 !important;
-    height: max-content;
+    padding: 0.75rem;
+    margin: -0.75rem;
 
     ${(props) => {
         return css`
             svg {
+                width: 1.5rem;
+                height: 1.5rem;
                 color: ${getValidationColorAttributes(props).Text};
             }
             :hover {
