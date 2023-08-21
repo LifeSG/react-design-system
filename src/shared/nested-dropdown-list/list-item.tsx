@@ -7,6 +7,7 @@ import {
     ButtonSection,
     Category,
     CheckboxInput,
+    Item,
     Label,
     List,
     ListItemSelector,
@@ -141,11 +142,7 @@ export const ListItem = <V1, V2, V3>({
         const nextSubItems = item.subItems.values();
 
         return (
-            <List
-                $expanded={item.expanded}
-                $level_3={item.keyPath.length + 1 === 3}
-                $multiSelect={multiSelect}
-            >
+            <List $expanded={item.expanded} $multiSelect={multiSelect}>
                 {[...nextSubItems].map((item) => (
                     <ListItem
                         key={item.keyPath.join("-")}
@@ -243,7 +240,7 @@ export const ListItem = <V1, V2, V3>({
 
     if (!item.subItems) {
         return (
-            <li ref={labelRef}>
+            <Item ref={labelRef} $level={item.keyPath.length}>
                 <ListItemSelector
                     ref={(ref) => onRef(ref, item.keyPath)}
                     type="button"
@@ -255,7 +252,7 @@ export const ListItem = <V1, V2, V3>({
                 >
                     {renderLabel()}
                 </ListItemSelector>
-            </li>
+            </Item>
         );
     }
 

@@ -13,7 +13,6 @@ import { TriangleForwardFillIcon } from "@lifesg/react-icons/triangle-forward-fi
 
 interface ListProps {
     $expanded: boolean;
-    $level_3: boolean;
     $multiSelect: boolean;
 }
 
@@ -24,6 +23,10 @@ interface ListItemSelectorProps {
 
 interface LabelProps {
     $truncateType?: TruncateType;
+}
+
+interface ItemProps {
+    $level: number;
 }
 
 interface CheckboxInputProps {
@@ -71,6 +74,18 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
             return css`
                 background: ${Color.Accent.Light[5]};
             `;
+        }
+    }}
+`;
+
+export const Item = styled.li<ItemProps>`
+    ${(props) => {
+        switch (props.$level) {
+            case 2:
+            case 3:
+                return css`
+                    margin-left: 2.125rem;
+                `;
         }
     }}
 `;
@@ -194,19 +209,4 @@ export const List = styled.ul<ListProps>`
     display: ${(props) => (props.$expanded ? "flex" : "none")};
     flex-direction: column;
     margin-left: 2.125rem;
-
-    ${(props) => {
-        const { $level_3, $multiSelect } = props;
-        if ($level_3) {
-            if ($multiSelect) {
-                return css`
-                    margin-left: 4.25rem;
-                `;
-            } else {
-                return css`
-                    margin-left: 2.625rem;
-                `;
-            }
-        }
-    }}
 `;

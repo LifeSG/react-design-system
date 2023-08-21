@@ -508,7 +508,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                     >
                         {selectedKeyPaths.flat().length === 0
                             ? "Select all"
-                            : "Unselect all"}
+                            : "Clear all"}
                     </DropdownCommonButton>
                 </SelectAllContainer>
             );
