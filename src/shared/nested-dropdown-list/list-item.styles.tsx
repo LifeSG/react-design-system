@@ -27,6 +27,7 @@ interface LabelProps {
 
 interface ItemProps {
     $level: number;
+    $multiSelect: boolean;
 }
 
 interface CheckboxInputProps {
@@ -83,9 +84,12 @@ export const Item = styled.li<ItemProps>`
         switch (props.$level) {
             case 2:
             case 3:
-                return css`
-                    margin-left: 2.125rem;
-                `;
+                if (props.$multiSelect) {
+                    return css`
+                        margin-left: 2.125rem;
+                    `;
+                }
+                break;
         }
     }}
 `;

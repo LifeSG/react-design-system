@@ -240,7 +240,11 @@ export const ListItem = <V1, V2, V3>({
 
     if (!item.subItems) {
         return (
-            <Item ref={labelRef} $level={item.keyPath.length}>
+            <Item
+                ref={labelRef}
+                $level={item.keyPath.length}
+                $multiSelect={multiSelect}
+            >
                 <ListItemSelector
                     ref={(ref) => onRef(ref, item.keyPath)}
                     type="button"
