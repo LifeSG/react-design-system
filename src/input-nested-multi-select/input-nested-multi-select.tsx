@@ -106,7 +106,13 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             );
 
             if (selectedCount < selectableOptionKeyPaths.length) {
-                newKeyPaths = selectableOptionKeyPaths;
+                newKeyPaths = [
+                    ...new Map(
+                        [...selectedKeyPaths, ...selectableOptionKeyPaths].map(
+                            (k) => [k.join("-"), k]
+                        )
+                    ).values(),
+                ];
             }
         } else {
             const selected = selectedKeyPaths.some((keyPath) =>
