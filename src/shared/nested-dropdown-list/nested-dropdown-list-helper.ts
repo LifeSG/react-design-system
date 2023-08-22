@@ -111,7 +111,8 @@ export namespace NestedDropdownListHelper {
                         item.expanded = true;
                     });
                     keyPaths.forEach((key) => {
-                        const parentKey = key.slice(0, -1);
+                        const parentKey =
+                            key.length === 1 ? key : key.slice(0, -1);
                         const item = getItemAtKeyPath(draft, parentKey);
                         item.expanded = true;
                     });
