@@ -35,7 +35,6 @@ interface ListItemProps<V1, V2, V3> {
 
 export const ListItem = <V1, V2, V3>({
     item,
-    // selectedKeyPath,
     selectedKeyPaths,
     selectableCategory,
     searchValue,
