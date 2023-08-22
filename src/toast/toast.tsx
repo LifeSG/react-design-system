@@ -1,16 +1,16 @@
 import {
+    CrossIcon,
     ExclamationCircleFillIcon,
     ExclamationTriangleFillIcon,
     ICircleFillIcon,
     TickCircleFillIcon,
 } from "@lifesg/react-icons";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { easings, useSpring } from "react-spring";
 import { MediaWidths } from "../spec/media-spec";
 import { Text } from "../text";
 import {
-    CloseIcon,
     Description,
     DismissButton,
     TextContainer,
@@ -28,16 +28,18 @@ export const Toast = ({
     autoDismiss,
     autoDismissTime = DEFAULT_AUTO_DISMISS_TIME,
     onDismiss,
+    fixed = true,
     ...otherProps
 }: ToastProps) => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [isVisible, setVisible] = useState<boolean>(false);
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
 
+    const [isVisible, setVisible] = useState<boolean>(false);
+
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.tablet,
+    });
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -102,7 +104,12 @@ export const Toast = ({
     };
 
     return (
-        <Wrapper style={transitions} $type={type} {...otherProps}>
+        <Wrapper
+            style={transitions}
+            $type={type}
+            $fixed={fixed}
+            {...otherProps}
+        >
             {renderIcon()}
             <TextContainer>
                 {title && (
@@ -121,7 +128,7 @@ export const Toast = ({
                 )}
             </TextContainer>
             <DismissButton $type={type} onClick={handleDismiss}>
-                <CloseIcon />
+                <CrossIcon />
             </DismissButton>
         </Wrapper>
     );
