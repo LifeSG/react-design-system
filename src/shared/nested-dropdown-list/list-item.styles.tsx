@@ -81,16 +81,10 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
 
 export const Item = styled.li<ItemProps>`
     ${(props) => {
-        switch (props.$level) {
-            case 1:
-            case 2:
-            case 3:
-                if (props.$multiSelect) {
-                    return css`
-                        margin-left: 2.125rem;
-                    `;
-                }
-                break;
+        if (props.$multiSelect) {
+            return css`
+                margin-left: 2.125rem;
+            `;
         }
     }}
 `;
