@@ -97,7 +97,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             );
 
             const selectedCount = selectedKeyPaths.filter((keyPath) =>
-                keyPath.join("-").startsWith(item.keyPath.join("-"))
+                isSubItem(keyPath, item.keyPath)
             ).length;
 
             newKeyPaths = selectedKeyPaths.filter(
@@ -116,7 +116,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             }
         } else {
             const selected = selectedKeyPaths.some((keyPath) =>
-                keyPath.join("-").startsWith(item.keyPath.join("-"))
+                isSubItem(keyPath, item.keyPath)
             );
 
             if (selected) {
@@ -217,6 +217,10 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
 
         return item;
     };
+
+    const isSubItem = (listItemKeyPath: string[], categoryKeyPath: string[]) =>
+        JSON.stringify(categoryKeyPath) ===
+        JSON.stringify(listItemKeyPath.slice(0, categoryKeyPath.length));
 
     const getSubItemKeyPaths = (
         _item: CombinedOptionProps<V1, V2, V3>,
