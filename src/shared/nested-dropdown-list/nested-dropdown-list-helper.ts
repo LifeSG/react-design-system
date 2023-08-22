@@ -76,7 +76,7 @@ export namespace NestedDropdownListHelper {
 
                 keyPaths.forEach((keyPathArray) => {
                     targetKey = [];
-                    keyPathArray.forEach((key) => {
+                    keyPathArray.slice(0, -1).forEach((key) => {
                         targetKey.push(key);
                         const item = getItemAtKeyPath(draft, targetKey);
                         item.expanded = true;
@@ -106,6 +106,10 @@ export namespace NestedDropdownListHelper {
             list = produce(
                 currentItems,
                 (draft: FormattedOptionMap<V1, V2, V3>) => {
+                    currentItems.forEach((i) => {
+                        const item = getItemAtKeyPath(draft, i.keyPath);
+                        item.expanded = true;
+                    });
                     keyPaths.forEach((key) => {
                         const parentKey = key.slice(0, -1);
                         const item = getItemAtKeyPath(draft, parentKey);

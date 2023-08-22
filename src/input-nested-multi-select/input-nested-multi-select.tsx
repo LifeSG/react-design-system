@@ -87,47 +87,41 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     const handleSelectItem = (
         item: CombinedFormattedOptionProps<V1, V2, V3>
     ) => {
-        const { keyPath } = item;
-        const selectedItem = getItemAtKeyPath(keyPath);
-        let newKeyPaths = [...selectedKeyPaths];
+        const selectedItem = getItemAtKeyPath(item.keyPath);
+        let newKeyPaths: string[][] = [];
 
         if (selectedItem.subItems) {
-            const keys = getSubItemKeyPaths(selectedItem, keyPath);
-            const isRemoveAll = keys.every((keyPath) =>
-                newKeyPaths.some(
-                    (key) => JSON.stringify(keyPath) === JSON.stringify(key)
-                )
+            const selectableOptionKeyPaths = getSubItemKeyPaths(
+                selectedItem,
+                item.keyPath
             );
 
-            if (isRemoveAll) {
-                newKeyPaths = newKeyPaths.filter((key) =>
-                    keys.every(
-                        (keyPath) =>
-                            JSON.stringify(key) !== JSON.stringify(keyPath)
-                    )
-                );
-            } else {
-                newKeyPaths = [
-                    ...new Map(
-                        [...newKeyPaths, ...keys].map((k) => [k.join("-"), k])
-                    ).values(),
-                ];
+            const selectedCount = selectedKeyPaths.filter((keyPath) =>
+                keyPath.join("-").startsWith(item.keyPath.join("-"))
+            ).length;
+
+            newKeyPaths = selectedKeyPaths.filter(
+                (keyPath) =>
+                    !keyPath.join("-").startsWith(item.keyPath.join("-"))
+            );
+
+            if (selectedCount < selectableOptionKeyPaths.length) {
+                newKeyPaths = selectableOptionKeyPaths;
             }
         } else {
-            let isRemove = false;
-            let removeIndex: number = null;
-            for (let i = 0; i < newKeyPaths.length; i++) {
-                if (
-                    JSON.stringify(newKeyPaths[i]) === JSON.stringify(keyPath)
-                ) {
-                    isRemove = true;
-                    removeIndex = i;
-                    break;
-                }
-            }
+            const selected = selectedKeyPaths.some((keyPath) =>
+                keyPath.join("-").startsWith(item.keyPath.join("-"))
+            );
 
-            if (isRemove) newKeyPaths.splice(removeIndex, 1);
-            else newKeyPaths.push(keyPath);
+            if (selected) {
+                const filteredItems = selectedItems.filter(
+                    ({ keyPath }) =>
+                        JSON.stringify(keyPath) !== JSON.stringify(item.keyPath)
+                );
+                newKeyPaths = filteredItems.map((i) => i.keyPath);
+            } else {
+                newKeyPaths = [...selectedKeyPaths, item.keyPath];
+            }
         }
 
         const newSelectedItems = getSelectedItemFromKey(options, newKeyPaths);
@@ -176,7 +170,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // HELPER FUNCTION
     // =============================================================================
     const performOnSelectOptions = (
-        keyPaths: string[][] = [[]],
+        keyPaths: string[][] = [],
         items: SelectedItem<V1, V2, V3>[] = []
     ) => {
         if (onSelectOptions) {
@@ -281,11 +275,13 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         for (let i = 0; i < keyPaths.length; i++) {
             const item = findSelectedItem(options, keyPaths[i]);
 
-            selectedItems.push({
-                value: item.value,
-                label: item.label,
-                keyPath: item.keyPath,
-            });
+            if (item) {
+                selectedItems.push({
+                    value: item.value,
+                    label: item.label,
+                    keyPath: item.keyPath,
+                });
+            }
         }
 
         return selectedItems;

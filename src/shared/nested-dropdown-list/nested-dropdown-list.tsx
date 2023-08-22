@@ -501,7 +501,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             itemsLoadState === "success"
         ) {
             return (
-                <SelectAllContainer key="selectAll">
+                <SelectAllContainer>
                     <DropdownCommonButton
                         onClick={handleSelectAll}
                         type="button"
