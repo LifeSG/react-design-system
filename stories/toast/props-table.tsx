@@ -58,7 +58,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Specifies if the <code>Toast</code> will be
-                        automatically dismissed after <code>autoDismissTime</code>.
+                        automatically dismissed after{" "}
+                        <code>autoDismissTime</code>.
                     </>
                 ),
                 propTypes: ["boolean"],
@@ -85,6 +86,18 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["() => void"],
+            },
+            {
+                name: "fixed",
+                description: (
+                    <>
+                        Specifies if the <code>Toast</code> is to remain
+                        displayed at the top of the page even though a scroll
+                        has happened
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "true",
             },
         ],
     },
