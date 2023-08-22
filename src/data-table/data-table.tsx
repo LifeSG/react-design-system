@@ -72,8 +72,8 @@ export const DataTable = ({
             {/* {actionsConfig?.showActions && (
                 <HeaderCell
                     data-testid={getDataTestId("header-action")}
-                    clickable={false}
-                    maxWidth={actionsConfig.headerWidth}
+                    $clickable={false}
+                    $maxWidth={actionsConfig.headerWidth}
                     className={actionsConfig.headerClassName}
                 >
                     {actionsConfig.headerLabel}
@@ -102,7 +102,7 @@ export const DataTable = ({
             <HeaderCell
                 data-testid={getDataTestId(`header-${fieldKey}`)}
                 key={fieldKey}
-                clickable={clickable}
+                $clickable={clickable}
                 className={headerClassName}
                 onClick={() =>
                     clickable && headersConfig?.onClickHeader?.(fieldKey)
@@ -142,8 +142,8 @@ export const DataTable = ({
             <HeaderCell
                 data-testid={getDataTestId("header-selection")}
                 className={selectionConfig?.headerClassName}
-                clickable={false}
-                maxWidth={selectionConfig?.headerWidth}
+                $clickable={false}
+                $maxWidth={selectionConfig?.headerWidth}
             >
                 <CheckBoxWrapper>
                     <CheckBox
@@ -173,9 +173,9 @@ export const DataTable = ({
                                 ? rowsConfig?.alternatingClassName
                                 : rowsConfig?.className
                         }
-                        alternating={isAlternatingRow(index)}
-                        isSelectable={selectionConfig?.showCheckboxes}
-                        isSelected={isRowSelected(row.id.toString())}
+                        $alternating={isAlternatingRow(index)}
+                        $isSelectable={selectionConfig?.showCheckboxes}
+                        $isSelected={isRowSelected(row.id.toString())}
                     >
                         {selectionConfig?.showCheckboxes &&
                             renderRowCheckBox(row.id.toString())}
@@ -188,7 +188,7 @@ export const DataTable = ({
                                     data-testid={getDataTestId(
                                         `row-${row.id.toString()}-action`
                                     )}
-                                    width={actionsConfig.headerWidth}
+                                    $width={actionsConfig.headerWidth}
                                     className={actionsConfig.className}
                                 >
                                     {actionsConfig?.actions(
@@ -225,7 +225,7 @@ export const DataTable = ({
             <BodyCell
                 data-testid={getDataTestId(`row-${rowId}-selection`)}
                 className={selectionConfig?.className}
-                width={selectionConfig?.headerWidth}
+                $width={selectionConfig?.headerWidth}
             >
                 <CheckBoxWrapper>
                     <CheckBox

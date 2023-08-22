@@ -3,6 +3,32 @@ import { Color } from "../color";
 import { TextStyleHelper } from "../text";
 import { Checkbox } from "../checkbox";
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
+
+// =============================================================================
+// STYLE INTERFACE, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
+interface TableStyleProps {
+    $addMarginToFirstColumn?: boolean;
+    $addMarginToLastColumn?: boolean;
+}
+interface HeaderCellProps {
+    $clickable: boolean;
+    $maxWidth?: string;
+}
+interface BodyRowProps {
+    $alternating: boolean;
+    $isSelected?: boolean;
+    $isSelectable?: boolean;
+}
+interface BodyRowProps {
+    $alternating: boolean;
+    $isSelected?: boolean;
+    $isSelectable?: boolean;
+}
+interface BodyCellProps {
+    $width?: string;
+}
 // =============================================================================
 // STYLES
 // =============================================================================
@@ -14,10 +40,7 @@ export const TableWrapper = styled.div`
     overflow: auto;
 `;
 
-export const Table = styled.table<{
-    $addMarginToFirstColumn?: boolean;
-    $addMarginToLastColumn?: boolean;
-}>`
+export const Table = styled.table<TableStyleProps>`
     width: 100%;
     border-collapse: collapse;
     tr,
@@ -52,11 +75,11 @@ export const HeaderRow = styled.tr`
     border-bottom: 2px solid ${Color.Neutral[6]};
 `;
 
-export const HeaderCell = styled.th<{ clickable: boolean; maxWidth?: string }>`
+export const HeaderCell = styled.th<HeaderCellProps>`
     padding: 1rem;
     text-align: left;
-    cursor: ${({ clickable }) => (clickable ? "pointer" : "default")};
-    max-width: ${({ maxWidth }) => maxWidth || "auto"};
+    cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
+    max-width: ${(props) => (props.$maxWidth ? props.$maxWidth : "auto")};
     vertical-align: middle;
     ${TextStyleHelper.getFontFamily("H5", "bold")}
     color: ${Color.Neutral[1]}
@@ -68,41 +91,40 @@ export const HeaderCellWrapper = styled.div`
     align-items: center;
 `;
 
-const getBackgroundColor = (isSelected = false, alternating = false) => {
-    if (isSelected) {
-        return Color.Accent.Light[5];
-    } else if (alternating) {
-        return Color.Neutral[7];
-    } else {
-        return Color.Neutral[8];
-    }
-};
-
-export const BodyRow = styled.tr<{
-    alternating: boolean;
-    isSelected?: boolean;
-    isSelectable?: boolean;
-}>`
-    ${({ alternating, isSelected }) => css`
-        background-color: ${getBackgroundColor(isSelected, alternating)};
-    `}
+export const BodyRow = styled.tr<BodyRowProps>`
+    background-color: ${(props) => {
+        if (props.$isSelected) {
+            return css`
+                ${Color.Accent.Light[5]};
+            `;
+        } else if (props.$alternating) {
+            return css`
+                ${Color.Neutral[7]};
+            `;
+        } else {
+            return css`
+                ${Color.Neutral[8]};
+            `;
+        }
+    }};
     border-top: 2px solid ${Color.Neutral[6]};
     &:hover {
-        ${({ isSelected, isSelectable }) =>
-            !isSelected &&
-            isSelectable &&
-            css`
-                background-color: ${Color.Accent.Light[4]};
-            `}
+        background-color: ${(props) => {
+            if (!props.$isSelected && props.$isSelectable) {
+                return css`
+                    ${Color.Accent.Light[4]};
+                `;
+            }
+        }};
     }
     &:first-child {
         border-top: none;
     }
 `;
 
-export const BodyCell = styled.td<{ width?: string }>`
+export const BodyCell = styled.td<BodyCellProps>`
     padding: 1.25rem 1rem;
-    width: ${({ width: width }) => width || "auto"};
+    width: ${(props) => (props.$width ? props.$width : "auto")};
     vertical-align: middle;
 `;
 
