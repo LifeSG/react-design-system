@@ -74,12 +74,14 @@ export namespace NestedDropdownListHelper {
             (draft: FormattedOptionMap<V1, V2, V3>) => {
                 let targetKey: string[] = [];
 
-                keyPaths.forEach((keyPathArray) => {
+                keyPaths.forEach((keyPath) => {
                     targetKey = [];
-                    keyPathArray.slice(0, -1).forEach((key) => {
+                    keyPath.forEach((key) => {
                         targetKey.push(key);
                         const item = getItemAtKeyPath(draft, targetKey);
-                        item.expanded = true;
+                        if (item.subItems) {
+                            item.expanded = true;
+                        }
                     });
                 });
             }
@@ -106,16 +108,21 @@ export namespace NestedDropdownListHelper {
             list = produce(
                 currentItems,
                 (draft: FormattedOptionMap<V1, V2, V3>) => {
-                    currentItems.forEach((i) => {
-                        const item = getItemAtKeyPath(draft, i.keyPath);
-                        if (item.subItems) item.expanded = true;
-                    });
-                    keyPaths.forEach((key) => {
-                        const parentKey = key.slice(0, -1);
-                        if (!parentKey.length) return;
-                        const item = getItemAtKeyPath(draft, parentKey);
-                        item.expanded = true;
-                    });
+                    for (const item of draft.values()) {
+                        const update = (
+                            item: CombinedFormattedOptionProps<V1, V2, V3>
+                        ) => {
+                            if (!item.subItems) return;
+
+                            item.expanded = true;
+
+                            return item.subItems.forEach((subItem) =>
+                                update(subItem)
+                            );
+                        };
+
+                        update(item);
+                    }
                 }
             );
         }
