@@ -100,9 +100,8 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 isSubItem(keyPath, item.keyPath)
             ).length;
 
-            newKeyPaths = selectedKeyPaths.filter(
-                (keyPath) =>
-                    !keyPath.join("-").startsWith(item.keyPath.join("-"))
+            newKeyPaths = selectedKeyPaths.filter((keyPath) =>
+                isSubItem(keyPath, item.keyPath)
             );
 
             if (selectedCount < selectableOptionKeyPaths.length) {
