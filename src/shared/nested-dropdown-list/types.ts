@@ -68,9 +68,7 @@ interface BaseFormattedOptionProps {
     label: string;
     keyPath: string[];
     expanded: boolean;
-    selected: boolean;
     checked: boolean;
-    indeterminate: boolean;
     isSearchTerm: boolean;
 }
 
