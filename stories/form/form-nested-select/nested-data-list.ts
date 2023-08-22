@@ -1,13 +1,5 @@
 export const options = [
     {
-        label: "Sub Category A",
-        value: {
-            id: 820,
-            name: "Sub category a",
-        },
-        key: "820",
-    },
-    {
         label: "Category 1",
         value: { id: 999, name: "category 1" },
         key: "999",
