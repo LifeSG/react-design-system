@@ -108,11 +108,11 @@ export namespace NestedDropdownListHelper {
                 (draft: FormattedOptionMap<V1, V2, V3>) => {
                     currentItems.forEach((i) => {
                         const item = getItemAtKeyPath(draft, i.keyPath);
-                        item.expanded = true;
+                        if (item.subItems) item.expanded = true;
                     });
                     keyPaths.forEach((key) => {
-                        const parentKey =
-                            key.length === 1 ? key : key.slice(0, -1);
+                        const parentKey = key.slice(0, -1);
+                        if (!parentKey.length) return;
                         const item = getItemAtKeyPath(draft, parentKey);
                         item.expanded = true;
                     });
