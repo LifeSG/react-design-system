@@ -21,6 +21,7 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
         DropdownStyleProps {
     /** Specifies key path to select particular option label */
     selectedKeyPaths?: string[][] | undefined;
+    /** Called when option label is selected */
     onSelectOptions?:
         | ((keyPaths: string[][], values: Array<V1 | V2 | V3>) => void)
         | undefined;

@@ -70,24 +70,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: V1 | V2 | V3) => string"],
             },
             {
-                name: "selectableCategory",
-                description: "When specified, allows selection of categories",
-                propTypes: ["boolean"],
-                defaultValue: `"false"`,
-            },
-            {
                 name: "optionsLoadState",
                 description:
                     "The visual state to represent the progress when options are loaded asynchronously",
                 propTypes: [`"success"`, `"loading"`, `"failed"`],
                 defaultValue: `"success"`,
-            },
-            {
-                name: "optionTruncationType",
-                description:
-                    "Specifies the trunction type of the options display. Truncated text will be replaced with ellipsis",
-                propTypes: [`"end"`, `"middle"`],
-                defaultValue: `"end"`,
             },
             {
                 name: "hideNoResultsDisplay",
