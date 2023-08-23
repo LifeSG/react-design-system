@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components";
+import { Button } from "../../button/button";
 import { Color } from "../../color/color";
 import { MediaQuery } from "../../media/media";
-import { TextStyleHelper } from "../../text/helper";
 import { ToggleIcon } from "../../shared/toggle-icon/toggle-icon";
-import { FilterItem } from "../filter-item";
+import { TextStyleHelper } from "../../text/helper";
 import { Toggle } from "../../toggle";
+import { FilterItem } from "../filter-item";
 
 export const StyledFilterItem = styled(FilterItem)`
     padding: 0 0 1rem;
@@ -75,4 +76,14 @@ export const StyledToggleIcon = styled(ToggleIcon)`
 
 export const StyledToggle = styled(Toggle)<{ $visible: boolean }>`
     ${(props) => !props.$visible && "visibility: hidden;"}
+`;
+
+export const SelectAllButton = styled(Button.Small)`
+    height: fit-content;
+    padding: 0;
+    margin: 1rem 0 0.5rem 0.75rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        margin: 0 0 1rem 0;
+    }
 `;

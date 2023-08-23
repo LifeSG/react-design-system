@@ -8,10 +8,15 @@ import {
     DownloadAppImageLinkWrapper,
     DownloadAppTitle,
     DownloadAppWrapper,
+    DrawerWrapper,
     MobileWrapper,
     Wrapper,
 } from "./navbar-action-buttons.styles";
-import { NavbarButtonComponentProps, NavbarButtonProps } from "./types";
+import {
+    NavbarActionButtonsProps,
+    NavbarButtonComponentProps,
+    NavbarButtonProps,
+} from "./types";
 
 const APP_STORE_ICON =
     "https://assets.life.gov.sg/react-design-system/img/download/apple-app-store.png";
@@ -19,13 +24,14 @@ const PLAY_STORE_ICON =
     "https://assets.life.gov.sg/react-design-system/img/download/google-play-store.png";
 
 interface Props {
-    actionButtons?: NavbarButtonProps[] | undefined;
+    actionButtons?: NavbarActionButtonsProps | undefined;
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
     onActionButtonClick: (
         event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<Element>,
         actionButton: NavbarButtonProps
     ) => void;
+    uncollapsible?: boolean | undefined;
 }
 
 export const NavbarActionButtons = ({
@@ -118,14 +124,17 @@ export const NavbarActionButtons = ({
         );
     };
 
-    const renderButtons = (isMobile = false) => {
+    const renderButtons = (
+        isMobile: boolean,
+        actionButtonList: NavbarButtonProps[]
+    ) => {
         /**
          * In drawer view, download app button will always be at
          * the bottom, hence we will shift it to the back
          */
         const buttonsToRender = isMobile
-            ? moveDownloadButtonToTheBack(actionButtons)
-            : actionButtons;
+            ? moveDownloadButtonToTheBack(actionButtonList)
+            : actionButtonList;
 
         return buttonsToRender.map((actionButton, index) => {
             let component: JSX.Element;
@@ -176,7 +185,10 @@ export const NavbarActionButtons = ({
 
             if (component) {
                 return (
-                    <ButtonItem key={`action-button-${index + 1}`}>
+                    <ButtonItem
+                        key={`action-button-${index + 1}`}
+                        $mobile={isMobile}
+                    >
                         {component}
                     </ButtonItem>
                 );
@@ -184,9 +196,40 @@ export const NavbarActionButtons = ({
         });
     };
 
-    if (actionButtons && actionButtons.length > 0) {
-        const ContentWrapper = mobile ? MobileWrapper : Wrapper;
-        return <ContentWrapper>{renderButtons(mobile)}</ContentWrapper>;
+    if (actionButtons) {
+        const actionButtonList = actionButtons?.mobile || actionButtons.desktop;
+        const uncollapsableActionButtons = actionButtonList.filter(
+            (actionButton) => !!actionButton.uncollapsible
+        );
+        const collapsableActionButtons = actionButtonList.filter(
+            (actionButton) => !actionButton.uncollapsible
+        );
+        if (mobile) {
+            return (
+                <>
+                    {collapsableActionButtons.length > 0 && (
+                        <DrawerWrapper>
+                            {renderButtons(mobile, collapsableActionButtons)}
+                        </DrawerWrapper>
+                    )}
+                </>
+            );
+        } else {
+            return (
+                <>
+                    {uncollapsableActionButtons.length > 0 && (
+                        <MobileWrapper>
+                            {renderButtons(false, uncollapsableActionButtons)}
+                        </MobileWrapper>
+                    )}
+                    {actionButtons.desktop.length > 0 && (
+                        <Wrapper>
+                            {renderButtons(mobile, actionButtons.desktop)}
+                        </Wrapper>
+                    )}
+                </>
+            );
+        }
     }
 
     return <></>;
