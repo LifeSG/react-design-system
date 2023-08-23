@@ -1,6 +1,7 @@
 import { DateInputProps } from "../date-input/types";
 import { DateRangeInputProps } from "../date-range-input/types";
 import { InputGroupPartialProps } from "../input-group/types";
+import { InputMaskPartialProps } from "../input-mask/types";
 import { InputMultiSelectPartialProps } from "../input-multi-select/types";
 import { InputNestedSelectPartialProps } from "../input-nested-select";
 import { InputRangeSelectPartialProps } from "../input-range-select/types";
@@ -55,6 +56,10 @@ export interface FormInputProps
 
 export interface FormInputGroupProps<T, V>
     extends InputGroupPartialProps<T, V>,
+        BaseFormElementProps {}
+
+export interface FormInputMaskProps<T, V>
+    extends InputMaskPartialProps<T, V>,
         BaseFormElementProps {}
 
 export interface FormTextareaProps
