@@ -19,9 +19,9 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
         InputNestedSelectSharedProps<V1, V2, V3>,
         DropdownSearchProps,
         DropdownStyleProps {
-    /** Specifies key path to select particular option label */
+    /** Specifies key paths to select particular option label */
     selectedKeyPaths?: string[][] | undefined;
-    /** Called when option label is selected */
+    /** Called when a selection is made. Returns the key paths and values of selected items in the next selection state */
     onSelectOptions?:
         | ((keyPaths: string[][], values: Array<V1 | V2 | V3>) => void)
         | undefined;

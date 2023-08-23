@@ -35,6 +35,7 @@ export interface InputNestedSelectProps<V1, V2, V3>
     selectedKeyPath?: string[] | undefined;
     /** If specified, the category label is selectable */
     selectableCategory?: boolean | undefined;
+    /** Called when an option is selected. Returns the option's key path and value */
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;

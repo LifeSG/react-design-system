@@ -15,7 +15,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "selectedKeyPaths",
-                description: "The key path of the selected options",
+                description: "The key paths of the selected options",
                 propTypes: ["string[][]"],
             },
             {
@@ -75,6 +75,13 @@ const DATA: ApiTableSectionProps[] = [
                     "The visual state to represent the progress when options are loaded asynchronously",
                 propTypes: [`"success"`, `"loading"`, `"failed"`],
                 defaultValue: `"success"`,
+            },
+            {
+                name: "optionTruncationType",
+                description:
+                    "Specifies the trunction type of the options display. Truncated text will be replaced with ellipsis",
+                propTypes: [`"end"`, `"middle"`],
+                defaultValue: `"end"`,
             },
             {
                 name: "hideNoResultsDisplay",
