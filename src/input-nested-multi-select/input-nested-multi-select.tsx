@@ -100,10 +100,6 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 isSubItem(keyPath, item.keyPath)
             ).length;
 
-            newKeyPaths = selectedKeyPaths.filter((keyPath) =>
-                isSubItem(keyPath, item.keyPath)
-            );
-
             if (selectedCount < selectableOptionKeyPaths.length) {
                 newKeyPaths = [
                     ...new Map(
@@ -112,6 +108,18 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                         )
                     ).values(),
                 ];
+            } else {
+                const subItemKeyPaths = selectedKeyPaths.filter((keyPath) =>
+                    isSubItem(keyPath, item.keyPath)
+                );
+
+                newKeyPaths = selectedKeyPaths.filter((keyPath) =>
+                    subItemKeyPaths.every(
+                        (removeKey) =>
+                            JSON.stringify(keyPath) !==
+                            JSON.stringify(removeKey)
+                    )
+                );
             }
         } else {
             const selected = selectedKeyPaths.some((keyPath) =>
