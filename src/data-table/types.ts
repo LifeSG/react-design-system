@@ -21,7 +21,7 @@ export interface DataTableProps {
     emptyView?: ErrorDisplayAttributes | undefined;
 }
 
-export type LoadingType = "loading" | "success" | "error";
+export type LoadingType = "loading" | "success";
 
 export type SortIndicatorProps = "asc" | "desc";
 

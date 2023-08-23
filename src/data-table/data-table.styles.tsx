@@ -35,7 +35,7 @@ interface BodyCellProps {
 
 export const TableWrapper = styled.div`
     width: 100%;
-    border: 2px solid ${Color.Neutral[6]};
+    border: 0.125rem solid ${Color.Neutral[6]};
     border-radius: 0.5rem 0.5rem 0 0;
     overflow: auto;
 `;
@@ -72,11 +72,11 @@ export const Table = styled.table<TableStyleProps>`
 export const HeaderRow = styled.tr`
     background-color: #f5f5f5;
     height: 5rem;
-    border-bottom: 2px solid ${Color.Neutral[6]};
+    border-bottom: 0.125rem solid ${Color.Neutral[6]};
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
-    padding: 1rem;
+    padding: 1rem 0;
     text-align: left;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
     max-width: ${(props) => (props.$maxWidth ? props.$maxWidth : "auto")};
@@ -107,7 +107,7 @@ export const BodyRow = styled.tr<BodyRowProps>`
             `;
         }
     }};
-    border-top: 2px solid ${Color.Neutral[6]};
+    border-top: 0.125rem solid ${Color.Neutral[6]};
     &:hover {
         background-color: ${(props) => {
             if (!props.$isSelected && props.$isSelectable) {
@@ -138,7 +138,6 @@ export const CheckBox = styled(Checkbox)``;
 
 const sortIconStyles = css`
     color: ${Color.Neutral[1]};
-    font-weight: bold;
     margin-left: 0.5rem;
 `;
 
@@ -160,11 +159,11 @@ export const EmptyDataElement = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    padding: 2rem;
     opacity: 0;
     img {
-        width: 400px;
-        height: 280px;
+        width: 25rem;
+        height: auto;
         flex: none;
         order: 0;
         flex-grow: 0;

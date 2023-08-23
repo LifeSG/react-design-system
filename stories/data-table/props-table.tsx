@@ -194,7 +194,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "The type of Loading or success or error",
                 description: "",
-                propTypes: [`"loading"`, `"success",`, `"error",`],
+                propTypes: [`"loading"`, `"success",`],
                 defaultValue: "success",
             },
         ],
