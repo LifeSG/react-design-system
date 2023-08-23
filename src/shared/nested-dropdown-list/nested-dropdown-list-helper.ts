@@ -43,7 +43,9 @@ export namespace NestedDropdownListHelper {
                     value,
                     expanded: mode === "expand",
                     isSearchTerm: false,
+                    selected: false,
                     checked: false,
+                    indeterminate: undefined,
                     keyPath,
                     subItems: subItems
                         ? formatted(subItems, keyPath)
@@ -79,9 +81,17 @@ export namespace NestedDropdownListHelper {
                     keyPath.forEach((key) => {
                         targetKey.push(key);
                         const item = getItemAtKeyPath(draft, targetKey);
-                        if (item.subItems) {
-                            item.expanded = true;
-                        }
+
+                        const selected =
+                            JSON.stringify(item.keyPath) ===
+                            JSON.stringify(
+                                selectedKeyPaths[0]?.slice(
+                                    0,
+                                    item.keyPath.length
+                                )
+                            );
+                        if (item.subItems) item.expanded = true;
+                        if (selected) item.selected = true;
                     });
                 });
             }
@@ -176,43 +186,105 @@ export namespace NestedDropdownListHelper {
         return item;
     };
 
-    export const updateCategoryChecked = <V1, V2, V3>(
-        list: FormattedOptionMap<V1, V2, V3>,
+    export const getCategoryChecked = <V1, V2, V3>(
+        targetList: FormattedOptionMap<V1, V2, V3>,
         selectedKeyPaths: string[][]
     ) => {
-        const resetList = produce(
-            list,
-            (draft: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>) => {
-                const resetChecked = (
-                    items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-                ) => {
-                    if (!items || !items.size) return;
-                    for (const item of items.values()) {
-                        item.checked = false;
-                        if (item.subItems) resetChecked(item.subItems);
-                    }
-                };
-                resetChecked(draft);
-            }
-        );
+        const update = (item: CombinedFormattedOptionProps<V1, V2, V3>) => {
+            const matched = selectedKeyPaths.some(
+                (key) => JSON.stringify(key) === JSON.stringify(item.keyPath)
+            );
 
-        return produce(resetList, (draft: FormattedOptionMap<V1, V2, V3>) => {
-            let targetKey: string[] = [];
-            selectedKeyPaths.forEach((keyPathArr) => {
-                targetKey = [];
-                const relevantKeys = keyPathArr.slice(0, -1);
-                relevantKeys.forEach((key) => {
-                    targetKey.push(key);
-                    const item = NestedDropdownListHelper.getItemAtKeyPath(
-                        draft,
-                        targetKey
-                    );
-                    if (item) {
-                        item.checked = true;
-                    }
-                });
+            if (!item.subItems) {
+                if (matched) {
+                    return {
+                        ...item,
+                        checked: true,
+                    };
+                } else {
+                    return {
+                        ...item,
+                        checked: false,
+                    };
+                }
+            }
+
+            const subItems: Map<
+                string,
+                CombinedFormattedOptionProps<V1, V2, V3>
+            > = new Map();
+
+            item.subItems.forEach((subItem) => {
+                const result = update(subItem) as CombinedFormattedOptionProps<
+                    V1,
+                    V2,
+                    V3
+                >;
+                if (result) {
+                    const key = result.keyPath[result.keyPath.length - 1];
+
+                    subItems.set(key, result);
+                }
             });
-        });
+
+            const checkedStatus = Array.from(subItems).map(
+                (item) => item[1].checked
+            );
+            const isAllChecked = checkedStatus.every(Boolean);
+
+            const someChecked =
+                checkedStatus.filter((status) => status === false).length !==
+                checkedStatus.length;
+
+            const result = {
+                ...item,
+                checked: isAllChecked,
+                indeterminate: isAllChecked
+                    ? undefined
+                    : someChecked
+                    ? true
+                    : undefined,
+                subItems,
+            };
+
+            return result;
+        };
+
+        const list = new Map();
+
+        for (const [key, item] of targetList) {
+            const result = update(item);
+
+            if (result && result.subItems && result.subItems.size) {
+                const indeterminateStatus = Array.from(result.subItems).map(
+                    (item) => item[1].indeterminate
+                );
+                const checkedStatus = Array.from(result.subItems).map(
+                    (item) => item[1].checked
+                );
+
+                const isAllIndeterminate = indeterminateStatus.every(Boolean);
+                const isAllChecked = checkedStatus.every(Boolean);
+                const someInderminate =
+                    indeterminateStatus.filter(Boolean).length;
+                const someChecked = checkedStatus.filter(Boolean).length;
+
+                const indeterminate =
+                    isAllChecked || isAllIndeterminate
+                        ? undefined
+                        : someChecked || someInderminate
+                        ? true
+                        : undefined;
+
+                list.set(key, {
+                    ...result,
+                    indeterminate,
+                    checked: isAllChecked,
+                });
+            }
+        }
+
+        return list;
     };
 }
 

@@ -91,9 +91,6 @@ export const NestedDropdownList = <V1, V2, V3>({
             const list = getInitialDropdown();
             const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(list);
 
-            setCurrentItems(list);
-            setVisibleKeyPaths(keyPaths);
-
             if (searchInputRef.current) {
                 searchInputRef.current.focus();
             } else if (listItemRefs.current) {
@@ -103,14 +100,17 @@ export const NestedDropdownList = <V1, V2, V3>({
 
             if (multiSelect) {
                 const multiSelectList =
-                    NestedDropdownListHelper.updateCategoryChecked(
+                    NestedDropdownListHelper.getCategoryChecked(
                         list,
                         selectedKeyPaths
                     );
 
                 setCurrentItems(multiSelectList);
+            } else {
+                setCurrentItems(list);
             }
 
+            setVisibleKeyPaths(keyPaths);
             // Give some time for the custom call-to-action to be rendered
             setTimeout(() => {
                 setContentHeight(getContentHeight());
@@ -139,7 +139,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     useEffect(() => {
         if (visible && multiSelect) {
             const targetList = isSearch ? filteredItems : currentItems;
-            const list = NestedDropdownListHelper.updateCategoryChecked(
+            const list = NestedDropdownListHelper.getCategoryChecked(
                 targetList,
                 selectedKeyPaths
             );
@@ -156,6 +156,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const handleSelect = (item: CombinedFormattedOptionProps<V1, V2, V3>) => {
         const { label, keyPath, value } = item;
+        updateSelectedState(keyPath);
         onSelectItem({ label, keyPath, value });
     };
 
@@ -325,6 +326,22 @@ export const NestedDropdownList = <V1, V2, V3>({
         return listHeight;
     };
 
+    const updateSelectedState = (keyPath: string[]) => {
+        const targetList = isSearch ? filteredItems : currentItems;
+        const list = produce(
+            targetList,
+            (draft: FormattedOptionMap<V1, V2, V3>) => {
+                const item = NestedDropdownListHelper.getItemAtKeyPath(
+                    draft,
+                    keyPath
+                );
+                item.selected = true;
+            }
+        );
+
+        isSearch ? setFilteredItems(list) : setCurrentItems(list);
+    };
+
     const updateSearchState = (): FormattedOptionMap<V1, V2, V3> => {
         const search = (
             item: CombinedFormattedOptionProps<V1, V2, V3>,
@@ -437,7 +454,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
             if (multiSelect) {
                 const multiSelectList =
-                    NestedDropdownListHelper.updateCategoryChecked(
+                    NestedDropdownListHelper.getCategoryChecked(
                         filtered,
                         selectedKeyPaths
                     );

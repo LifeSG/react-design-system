@@ -179,6 +179,7 @@ export const ListItem = <V1, V2, V3>({
                         displaySize="small"
                         $type="category"
                         checked={item.checked}
+                        indeterminate={item.indeterminate}
                         onChange={handleSelectParent}
                     />
                 )}
@@ -224,6 +225,7 @@ export const ListItem = <V1, V2, V3>({
                     <CheckboxInput
                         displaySize="small"
                         checked={checkListItemSelected(item.keyPath)}
+                        data-checked={item.checked}
                         $type="label"
                     />
                 )}
@@ -248,7 +250,7 @@ export const ListItem = <V1, V2, V3>({
                     ref={(ref) => onRef(ref, item.keyPath)}
                     type="button"
                     tabIndex={visible ? 0 : -1}
-                    $selected={checkListItemSelected(item.keyPath)}
+                    $selected={item.selected}
                     $multiSelect={multiSelect}
                     onBlur={handleBlur}
                     onClick={handleSelect}
