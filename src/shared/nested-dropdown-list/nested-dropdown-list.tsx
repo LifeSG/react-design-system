@@ -100,7 +100,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
             if (multiSelect) {
                 const multiSelectList =
-                    NestedDropdownListHelper.getCategoryChecked(
+                    NestedDropdownListHelper.getUpdateCheckbox(
                         list,
                         selectedKeyPaths
                     );
@@ -139,7 +139,8 @@ export const NestedDropdownList = <V1, V2, V3>({
     useEffect(() => {
         if (visible && multiSelect) {
             const targetList = isSearch ? filteredItems : currentItems;
-            const list = NestedDropdownListHelper.getCategoryChecked(
+
+            const list = NestedDropdownListHelper.getUpdateCheckbox(
                 targetList,
                 selectedKeyPaths
             );
@@ -156,7 +157,6 @@ export const NestedDropdownList = <V1, V2, V3>({
 
     const handleSelect = (item: CombinedFormattedOptionProps<V1, V2, V3>) => {
         const { label, keyPath, value } = item;
-        updateSelectedState(keyPath);
         onSelectItem({ label, keyPath, value });
     };
 
@@ -326,22 +326,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         return listHeight;
     };
 
-    const updateSelectedState = (keyPath: string[]) => {
-        const targetList = isSearch ? filteredItems : currentItems;
-        const list = produce(
-            targetList,
-            (draft: FormattedOptionMap<V1, V2, V3>) => {
-                const item = NestedDropdownListHelper.getItemAtKeyPath(
-                    draft,
-                    keyPath
-                );
-                item.selected = true;
-            }
-        );
-
-        isSearch ? setFilteredItems(list) : setCurrentItems(list);
-    };
-
     const updateSearchState = (): FormattedOptionMap<V1, V2, V3> => {
         const search = (
             item: CombinedFormattedOptionProps<V1, V2, V3>,
@@ -454,7 +438,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
             if (multiSelect) {
                 const multiSelectList =
-                    NestedDropdownListHelper.getCategoryChecked(
+                    NestedDropdownListHelper.getUpdateCheckbox(
                         filtered,
                         selectedKeyPaths
                     );

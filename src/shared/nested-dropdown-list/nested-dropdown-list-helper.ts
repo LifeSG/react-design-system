@@ -45,7 +45,7 @@ export namespace NestedDropdownListHelper {
                     isSearchTerm: false,
                     selected: false,
                     checked: false,
-                    indeterminate: undefined,
+                    indeterminate: false,
                     keyPath,
                     subItems: subItems
                         ? formatted(subItems, keyPath)
@@ -167,6 +167,79 @@ export namespace NestedDropdownListHelper {
         return keyPaths;
     };
 
+    export const getUpdateCheckbox = <V1, V2, V3>(
+        list: FormattedOptionMap<V1, V2, V3>,
+        selectedKeyPaths: string[][]
+    ) => {
+        const result = produce(
+            list,
+            (draft: FormattedOptionMap<V1, V2, V3>) => {
+                const update = (
+                    items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+                ) => {
+                    for (const item of items.values()) {
+                        if (!item.subItems) {
+                            const checked = selectedKeyPaths.some(
+                                (keyPath) =>
+                                    JSON.stringify(keyPath) ===
+                                    JSON.stringify(item.keyPath)
+                            );
+                            item.checked = checked;
+                        } else {
+                            update(item.subItems);
+
+                            const subItems: Map<
+                                string,
+                                CombinedFormattedOptionProps<V1, V2, V3>
+                            > = item.subItems;
+
+                            const { checked, indeterminate } = Array.from(
+                                subItems
+                            ).reduce(
+                                (result, subItemMap) => {
+                                    const item = subItemMap[1];
+                                    result.checked.push(item.checked);
+                                    result.indeterminate.push(
+                                        item.indeterminate
+                                    );
+
+                                    return result;
+                                },
+                                {
+                                    checked: [],
+                                    indeterminate: [],
+                                }
+                            );
+
+                            const isAllChecked = checked.every(Boolean);
+                            const isPartialChecked = checked.some(Boolean);
+                            const isPartialIndeterminate =
+                                indeterminate.some(Boolean);
+
+                            if (isAllChecked) {
+                                item.checked = true;
+                                item.indeterminate = false;
+                            } else if (
+                                isPartialChecked ||
+                                isPartialIndeterminate
+                            ) {
+                                item.indeterminate = true;
+                                item.checked = false;
+                            } else {
+                                item.indeterminate = false;
+                                item.checked = false;
+                            }
+                        }
+                    }
+                };
+
+                update(draft);
+            }
+        );
+
+        return result;
+    };
+
     export const getItemAtKeyPath = <V1, V2, V3>(
         draft: FormattedOptionMap<V1, V2, V3>,
         keyPath: string[]
@@ -184,107 +257,6 @@ export namespace NestedDropdownListHelper {
         );
 
         return item;
-    };
-
-    export const getCategoryChecked = <V1, V2, V3>(
-        targetList: FormattedOptionMap<V1, V2, V3>,
-        selectedKeyPaths: string[][]
-    ) => {
-        const update = (item: CombinedFormattedOptionProps<V1, V2, V3>) => {
-            const matched = selectedKeyPaths.some(
-                (key) => JSON.stringify(key) === JSON.stringify(item.keyPath)
-            );
-
-            if (!item.subItems) {
-                if (matched) {
-                    return {
-                        ...item,
-                        checked: true,
-                    };
-                } else {
-                    return {
-                        ...item,
-                        checked: false,
-                    };
-                }
-            }
-
-            const subItems: Map<
-                string,
-                CombinedFormattedOptionProps<V1, V2, V3>
-            > = new Map();
-
-            item.subItems.forEach((subItem) => {
-                const result = update(subItem) as CombinedFormattedOptionProps<
-                    V1,
-                    V2,
-                    V3
-                >;
-                if (result) {
-                    const key = result.keyPath[result.keyPath.length - 1];
-
-                    subItems.set(key, result);
-                }
-            });
-
-            const checkedStatus = Array.from(subItems).map(
-                (item) => item[1].checked
-            );
-            const isAllChecked = checkedStatus.every(Boolean);
-
-            const someChecked =
-                checkedStatus.filter((status) => status === false).length !==
-                checkedStatus.length;
-
-            const result = {
-                ...item,
-                checked: isAllChecked,
-                indeterminate: isAllChecked
-                    ? undefined
-                    : someChecked
-                    ? true
-                    : undefined,
-                subItems,
-            };
-
-            return result;
-        };
-
-        const list = new Map();
-
-        for (const [key, item] of targetList) {
-            const result = update(item);
-
-            if (result && result.subItems && result.subItems.size) {
-                const indeterminateStatus = Array.from(result.subItems).map(
-                    (item) => item[1].indeterminate
-                );
-                const checkedStatus = Array.from(result.subItems).map(
-                    (item) => item[1].checked
-                );
-
-                const isAllIndeterminate = indeterminateStatus.every(Boolean);
-                const isAllChecked = checkedStatus.every(Boolean);
-                const someInderminate =
-                    indeterminateStatus.filter(Boolean).length;
-                const someChecked = checkedStatus.filter(Boolean).length;
-
-                const indeterminate =
-                    isAllChecked || isAllIndeterminate
-                        ? undefined
-                        : someChecked || someInderminate
-                        ? true
-                        : undefined;
-
-                list.set(key, {
-                    ...result,
-                    indeterminate,
-                    checked: isAllChecked,
-                });
-            }
-        }
-
-        return list;
     };
 }
 
