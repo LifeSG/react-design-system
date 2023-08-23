@@ -475,7 +475,6 @@ export const NestedDropdownList = <V1, V2, V3>({
                 <ListItem
                     key={key}
                     item={item}
-                    selectedKeyPaths={selectedKeyPaths}
                     selectableCategory={selectableCategory}
                     searchValue={searchValue}
                     itemTruncationType={itemTruncationType}
