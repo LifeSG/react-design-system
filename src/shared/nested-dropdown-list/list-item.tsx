@@ -64,7 +64,7 @@ export const ListItem = <V1, V2, V3>({
     };
 
     const handleSelectParent = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
+        event.stopPropagation();
         onSelectCategory(item);
     };
 
