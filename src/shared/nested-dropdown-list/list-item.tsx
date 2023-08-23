@@ -4,7 +4,10 @@ import { StringHelper } from "../../util";
 import {
     ArrowButton,
     Bold,
+    ButtonSection,
     Category,
+    CheckboxInput,
+    Item,
     Label,
     List,
     ListItemSelector,
@@ -21,11 +24,13 @@ interface ListItemProps<V1, V2, V3> {
     selectableCategory?: boolean | undefined;
     searchValue: string | undefined;
     itemTruncationType?: TruncateType | undefined;
+    multiSelect: boolean;
     visible: boolean;
     onBlur: () => void;
     onExpand: (parentKeys: string[]) => void;
     onRef: (ref: HTMLButtonElement, keyPaths: string[]) => void;
     onSelect: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
+    onSelectCategory: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
 }
 
 export const ListItem = <V1, V2, V3>({
@@ -34,11 +39,13 @@ export const ListItem = <V1, V2, V3>({
     selectableCategory,
     searchValue,
     itemTruncationType,
+    multiSelect,
     visible,
     onBlur,
     onExpand,
     onRef,
     onSelect,
+    onSelectCategory,
 }: ListItemProps<V1, V2, V3>): JSX.Element => {
     // =============================================================================
     // CONST, REF, STATE
@@ -52,9 +59,15 @@ export const ListItem = <V1, V2, V3>({
         event.preventDefault();
         onExpand(item.keyPath);
     };
+
     const handleSelect = (event: React.MouseEvent) => {
         event.preventDefault();
         onSelect(item);
+    };
+
+    const handleSelectParent = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        onSelectCategory(item);
     };
 
     const handleBlur = () => {
@@ -112,7 +125,7 @@ export const ListItem = <V1, V2, V3>({
         const endIndex = startIndex + searchTerm.length;
 
         if (startIndex == -1) {
-            return <>{item.label}</>;
+            return <>{label}</>;
         }
 
         return (
@@ -128,7 +141,7 @@ export const ListItem = <V1, V2, V3>({
         const nextSubItems = item.subItems.values();
 
         return (
-            <List $expanded={item.expanded}>
+            <List $expanded={item.expanded} $multiSelect={multiSelect}>
                 {[...nextSubItems].map((item) => (
                     <ListItem
                         key={item.keyPath.join("-")}
@@ -137,78 +150,118 @@ export const ListItem = <V1, V2, V3>({
                         selectableCategory={selectableCategory}
                         searchValue={searchValue}
                         itemTruncationType={itemTruncationType}
+                        multiSelect={multiSelect}
                         visible={visible}
                         onBlur={onBlur}
                         onExpand={onExpand}
                         onRef={onRef}
                         onSelect={onSelect}
+                        onSelectCategory={onSelectCategory}
                     />
                 ))}
             </List>
         );
     };
 
-    const renderTitleItem = () => {
-        if (selectableCategory) {
-            return (
-                <Category>
-                    <ArrowButton
-                        ref={(ref) => onRef(ref, item.keyPath)}
-                        onClick={handleExpand}
-                        $expanded={item.expanded}
-                        aria-expanded={item.expanded}
-                    >
-                        <TriangleIcon />
-                    </ArrowButton>
-                    <Title onClick={handleSelect}>
-                        <span>{item.label}</span>
-                    </Title>
-                </Category>
-            );
-        }
-
+    const renderCategoryIcon = () => {
         return (
-            <Category onClick={handleExpand}>
+            <ButtonSection>
                 <ArrowButton
                     ref={(ref) => onRef(ref, item.keyPath)}
                     $expanded={item.expanded}
                     aria-expanded={item.expanded}
+                    onClick={handleExpand}
                 >
                     <TriangleIcon />
                 </ArrowButton>
-                <Title tabIndex={-1}>
+                {multiSelect && (
+                    <CheckboxInput
+                        displaySize="small"
+                        $type="category"
+                        checked={item.checked}
+                        onChange={handleSelectParent}
+                    />
+                )}
+            </ButtonSection>
+        );
+    };
+
+    const renderCategoryItem = () => {
+        let categoryProps = {};
+        let titleProps = {};
+
+        if (selectableCategory) {
+            titleProps = {
+                onClick: handleSelect,
+            };
+        }
+
+        if (multiSelect) {
+            titleProps = {
+                onClick: handleExpand,
+                tabIndex: -1,
+            };
+        } else {
+            categoryProps = {
+                onClick: handleExpand,
+            };
+        }
+
+        return (
+            <Category {...categoryProps}>
+                {renderCategoryIcon()}
+                <Title {...titleProps}>
                     <span>{item.label}</span>
                 </Title>
             </Category>
         );
     };
 
+    const renderLabel = () => {
+        return (
+            <>
+                {multiSelect && (
+                    <CheckboxInput
+                        displaySize="small"
+                        checked={checkListItemSelected(item.keyPath)}
+                        $type="label"
+                    />
+                )}
+                <Label $truncateType={itemTruncationType}>
+                    {itemTruncationType === "middle" &&
+                    hasExceededContainer(item)
+                        ? renderTruncatedText(item)
+                        : renderBolded(item)}
+                </Label>
+            </>
+        );
+    };
+
     if (!item.subItems) {
         return (
-            <li ref={labelRef}>
+            <Item
+                ref={labelRef}
+                $level={item.keyPath.length}
+                $multiSelect={multiSelect}
+            >
                 <ListItemSelector
                     ref={(ref) => onRef(ref, item.keyPath)}
                     type="button"
                     tabIndex={visible ? 0 : -1}
                     $selected={checkListItemSelected(item.keyPath)}
-                    $level_3={item.keyPath.length === 3}
+                    $multiSelect={multiSelect}
                     onBlur={handleBlur}
                     onClick={handleSelect}
                 >
-                    <Label $truncateType={itemTruncationType}>
-                        {itemTruncationType === "middle" &&
-                        hasExceededContainer(item)
-                            ? renderTruncatedText(item)
-                            : renderBolded(item)}
-                    </Label>
+                    {renderLabel()}
                 </ListItemSelector>
-            </li>
+            </Item>
         );
     }
 
     return (
         <li>
-            {renderTitleItem()}
+            {renderCategoryItem()}
             {renderListItem()}
         </li>
     );
