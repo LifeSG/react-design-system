@@ -109,16 +109,8 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                     ).values(),
                 ];
             } else {
-                const subItemKeyPaths = selectedKeyPaths.filter((keyPath) =>
-                    isSubItem(keyPath, item.keyPath)
-                );
-
-                newKeyPaths = selectedKeyPaths.filter((keyPath) =>
-                    subItemKeyPaths.every(
-                        (removeKey) =>
-                            JSON.stringify(keyPath) !==
-                            JSON.stringify(removeKey)
-                    )
+                newKeyPaths = selectedKeyPaths.filter(
+                    (keyPath) => !isSubItem(keyPath, item.keyPath)
                 );
             }
         } else {
