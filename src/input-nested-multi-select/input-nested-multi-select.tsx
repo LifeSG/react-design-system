@@ -133,7 +133,6 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
 
         setSelectedKeyPaths(newKeyPaths);
         setSelectedItems(newSelectedItems);
-        triggerOptionDisplayCallback(false);
 
         if (selectorRef.current) selectorRef.current.focus();
 
