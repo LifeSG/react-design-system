@@ -91,26 +91,26 @@ export const NestedDropdownList = <V1, V2, V3>({
             const list = getInitialDropdown();
             const keyPaths = NestedDropdownListHelper.getVisibleKeyPaths(list);
 
-            setCurrentItems(list);
-            setVisibleKeyPaths(keyPaths);
-
             if (searchInputRef.current) {
                 searchInputRef.current.focus();
             } else if (listItemRefs.current) {
                 const target = keyPaths[focusedIndex];
-                listItemRefs.current[target[0]].ref.focus();
+                listItemRefs.current[target[0]]?.ref.focus();
             }
 
             if (multiSelect) {
                 const multiSelectList =
-                    NestedDropdownListHelper.updateCategoryChecked(
+                    NestedDropdownListHelper.getUpdateCheckbox(
                         list,
                         selectedKeyPaths
                     );
 
                 setCurrentItems(multiSelectList);
+            } else {
+                setCurrentItems(list);
             }
 
+            setVisibleKeyPaths(keyPaths);
             // Give some time for the custom call-to-action to be rendered
             setTimeout(() => {
                 setContentHeight(getContentHeight());
@@ -139,7 +139,8 @@ export const NestedDropdownList = <V1, V2, V3>({
     useEffect(() => {
         if (visible && multiSelect) {
             const targetList = isSearch ? filteredItems : currentItems;
-            const list = NestedDropdownListHelper.updateCategoryChecked(
+
+            const list = NestedDropdownListHelper.getUpdateCheckbox(
                 targetList,
                 selectedKeyPaths
             );
@@ -437,7 +438,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
             if (multiSelect) {
                 const multiSelectList =
-                    NestedDropdownListHelper.updateCategoryChecked(
+                    NestedDropdownListHelper.getUpdateCheckbox(
                         filtered,
                         selectedKeyPaths
                     );
@@ -458,7 +459,6 @@ export const NestedDropdownList = <V1, V2, V3>({
                 <ListItem
                     key={key}
                     item={item}
-                    selectedKeyPaths={selectedKeyPaths}
                     selectableCategory={selectableCategory}
                     searchValue={searchValue}
                     itemTruncationType={itemTruncationType}

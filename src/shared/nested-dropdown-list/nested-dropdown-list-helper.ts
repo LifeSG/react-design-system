@@ -43,7 +43,9 @@ export namespace NestedDropdownListHelper {
                     value,
                     expanded: mode === "expand",
                     isSearchTerm: false,
+                    selected: false,
                     checked: false,
+                    indeterminate: false,
                     keyPath,
                     subItems: subItems
                         ? formatted(subItems, keyPath)
@@ -79,9 +81,15 @@ export namespace NestedDropdownListHelper {
                     keyPath.forEach((key) => {
                         targetKey.push(key);
                         const item = getItemAtKeyPath(draft, targetKey);
-                        if (item.subItems) {
-                            item.expanded = true;
-                        }
+
+                        const selected = selectedKeyPaths.some(
+                            (keyPath) =>
+                                JSON.stringify(keyPath) ===
+                                JSON.stringify(item.keyPath)
+                        );
+
+                        if (item.subItems) item.expanded = true;
+                        if (selected) item.selected = true;
                     });
                 });
             }
@@ -157,6 +165,79 @@ export namespace NestedDropdownListHelper {
         return keyPaths;
     };
 
+    export const getUpdateCheckbox = <V1, V2, V3>(
+        list: FormattedOptionMap<V1, V2, V3>,
+        selectedKeyPaths: string[][]
+    ) => {
+        const result = produce(
+            list,
+            (draft: FormattedOptionMap<V1, V2, V3>) => {
+                const update = (
+                    items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
+                ) => {
+                    for (const item of items.values()) {
+                        if (!item.subItems) {
+                            const checked = selectedKeyPaths.some(
+                                (keyPath) =>
+                                    JSON.stringify(keyPath) ===
+                                    JSON.stringify(item.keyPath)
+                            );
+                            item.checked = checked;
+                        } else {
+                            update(item.subItems);
+
+                            const subItems: Map<
+                                string,
+                                CombinedFormattedOptionProps<V1, V2, V3>
+                            > = item.subItems;
+
+                            const { checked, indeterminate } = Array.from(
+                                subItems
+                            ).reduce(
+                                (result, subItemMap) => {
+                                    const item = subItemMap[1];
+                                    result.checked.push(item.checked);
+                                    result.indeterminate.push(
+                                        item.indeterminate
+                                    );
+
+                                    return result;
+                                },
+                                {
+                                    checked: [],
+                                    indeterminate: [],
+                                }
+                            );
+
+                            const isAllChecked = checked.every(Boolean);
+                            const isPartialChecked = checked.some(Boolean);
+                            const isPartialIndeterminate =
+                                indeterminate.some(Boolean);
+
+                            if (isAllChecked) {
+                                item.checked = true;
+                                item.indeterminate = false;
+                            } else if (
+                                isPartialChecked ||
+                                isPartialIndeterminate
+                            ) {
+                                item.checked = false;
+                                item.indeterminate = true;
+                            } else {
+                                item.checked = false;
+                                item.indeterminate = false;
+                            }
+                        }
+                    }
+                };
+
+                update(draft);
+            }
+        );
+
+        return result;
+    };
+
     export const getItemAtKeyPath = <V1, V2, V3>(
         draft: FormattedOptionMap<V1, V2, V3>,
         keyPath: string[]
@@ -174,45 +255,6 @@ export namespace NestedDropdownListHelper {
         );
 
         return item;
-    };
-
-    export const updateCategoryChecked = <V1, V2, V3>(
-        list: FormattedOptionMap<V1, V2, V3>,
-        selectedKeyPaths: string[][]
-    ) => {
-        const resetList = produce(
-            list,
-            (draft: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>) => {
-                const resetChecked = (
-                    items: Map<string, CombinedFormattedOptionProps<V1, V2, V3>>
-                ) => {
-                    if (!items || !items.size) return;
-                    for (const item of items.values()) {
-                        item.checked = false;
-                        if (item.subItems) resetChecked(item.subItems);
-                    }
-                };
-                resetChecked(draft);
-            }
-        );
-
-        return produce(resetList, (draft: FormattedOptionMap<V1, V2, V3>) => {
-            let targetKey: string[] = [];
-            selectedKeyPaths.forEach((keyPathArr) => {
-                targetKey = [];
-                const relevantKeys = keyPathArr.slice(0, -1);
-                relevantKeys.forEach((key) => {
-                    targetKey.push(key);
-                    const item = NestedDropdownListHelper.getItemAtKeyPath(
-                        draft,
-                        targetKey
-                    );
-                    if (item) {
-                        item.checked = true;
-                    }
-                });
-            });
-        });
     };
 }
 

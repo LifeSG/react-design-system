@@ -5,7 +5,7 @@ import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
     {
-        name: "InputNestedSelect specific props",
+        name: "InputNestedMultiSelect specific props",
         attributes: [
             {
                 name: "options",
@@ -15,7 +15,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "selectedKeyPaths",
-                description: "The key path of the selected options",
+                description: "The key paths of the selected options",
                 propTypes: ["string[][]"],
             },
             {
@@ -70,12 +70,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: V1 | V2 | V3) => string"],
             },
             {
-                name: "selectableCategory",
-                description: "When specified, allows selection of categories",
-                propTypes: ["boolean"],
-                defaultValue: `"false"`,
-            },
-            {
                 name: "optionsLoadState",
                 description:
                     "The visual state to represent the progress when options are loaded asynchronously",
@@ -94,7 +88,7 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "If specified, the default no results display will not be rendered",
                 propTypes: ["boolean"],
-                defaultValue: `"false"`,
+                defaultValue: "false",
             },
             {
                 name: "listStyleWidth",

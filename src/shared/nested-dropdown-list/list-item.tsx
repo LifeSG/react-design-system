@@ -20,7 +20,6 @@ import {
 
 interface ListItemProps<V1, V2, V3> {
     item: CombinedFormattedOptionProps<V1, V2, V3>;
-    selectedKeyPaths: string[][];
     selectableCategory?: boolean | undefined;
     searchValue: string | undefined;
     itemTruncationType?: TruncateType | undefined;
@@ -35,7 +34,6 @@ interface ListItemProps<V1, V2, V3> {
 
 export const ListItem = <V1, V2, V3>({
     item,
-    selectedKeyPaths,
     selectableCategory,
     searchValue,
     itemTruncationType,
@@ -66,7 +64,7 @@ export const ListItem = <V1, V2, V3>({
     };
 
     const handleSelectParent = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
+        event.stopPropagation();
         onSelectCategory(item);
     };
 
@@ -79,11 +77,6 @@ export const ListItem = <V1, V2, V3>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const checkListItemSelected = (keyPath: string[]): boolean =>
-        selectedKeyPaths.some(
-            (key) => JSON.stringify(key) === JSON.stringify(keyPath)
-        );
-
     const hasExceededContainer = (
         item: CombinedFormattedOptionProps<V1, V2, V3>
     ) => {
@@ -146,7 +139,6 @@ export const ListItem = <V1, V2, V3>({
                     <ListItem
                         key={item.keyPath.join("-")}
                         item={item}
-                        selectedKeyPaths={selectedKeyPaths}
                         selectableCategory={selectableCategory}
                         searchValue={searchValue}
                         itemTruncationType={itemTruncationType}
@@ -179,6 +171,7 @@ export const ListItem = <V1, V2, V3>({
                         displaySize="small"
                         $type="category"
                         checked={item.checked}
+                        indeterminate={item.indeterminate}
                         onChange={handleSelectParent}
                     />
                 )}
@@ -223,7 +216,7 @@ export const ListItem = <V1, V2, V3>({
                 {multiSelect && (
                     <CheckboxInput
                         displaySize="small"
-                        checked={checkListItemSelected(item.keyPath)}
+                        checked={item.checked}
                         $type="label"
                     />
                 )}
@@ -248,7 +241,7 @@ export const ListItem = <V1, V2, V3>({
                     ref={(ref) => onRef(ref, item.keyPath)}
                     type="button"
                     tabIndex={visible ? 0 : -1}
-                    $selected={checkListItemSelected(item.keyPath)}
+                    $selected={item.selected}
                     $multiSelect={multiSelect}
                     onBlur={handleBlur}
                     onClick={handleSelect}
