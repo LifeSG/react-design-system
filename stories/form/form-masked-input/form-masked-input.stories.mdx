@@ -1,6 +1,6 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
-import { InputMask } from "src/input-mask";
+import { MaskedInput } from "src/masked-input";
 import { Form } from "src/form";
 import { Text } from "src/text";
 import {
@@ -15,9 +15,9 @@ import { PropsTable } from "./props-table";
 import { ToggleOffFillIcon } from "@lifesg/react-icons/toggle-off-fill";
 import { ToggleOffIcon } from "@lifesg/react-icons/toggle-off";
 
-<Meta title="Form/InputMask" component={Form.InputMask} />
+<Meta title="Form/MaskedInput" component={Form.MaskedInput} />
 
-<Title>Form.InputMask</Title>
+<Title>Form.MaskedInput</Title>
 
 <Secondary>Overview</Secondary>
 
@@ -31,26 +31,26 @@ import { Form } from "@lifesg/react-design-system/form";
     <Story name="Field">
         <StoryContainer>
             <Container>
-                <Form.InputMask
+                <Form.MaskedInput
                     label="This is the mask field with no input"
                     maskRange={[2, 5]}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="This is the mask field with input"
                     value="S1234567D"
                     maskRange={[2, 5]}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="This is the error state"
                     errorMessage="Input is required"
                     maskRange={[2, 5]}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="This is the readonly state with no pre-filled value"
                     maskRange={[2, 5]}
                     readOnly
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="This is the readonly state with pre-filled value"
                     value="S1234567D"
                     maskRange={[2, 5]}
@@ -69,32 +69,32 @@ You are able to specify the range of index to mask or unmask, the regex to mask 
     <Story name="Masking">
         <StoryContainer>
             <Container>
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask range to [2,5]"
                     value="S1234567D"
                     maskRange={[2, 5]}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask range to [2,100]"
                     value="S1234567D"
                     maskRange={[2, 100]}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask range to [100,2] (auto-determines start and end index)"
                     value="S1234567D"
                     maskRange={[100, 2]}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set unmask range to [1,4]"
                     value="S1234567D"
                     unmaskRange={[1, 4]}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask regex to /\D/g"
                     value="S1234567D"
                     maskRegex={/\D/g}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask transformer that replaces non-digit character with *"
                     value="S1234567D"
                     maskTransformer={(value) => value.replace(/\D/g, "*")}
@@ -112,31 +112,31 @@ You are able to make customizations to the mask icon active and inactive color, 
     <Story name="With customizations">
         <StoryContainer>
             <Container>
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask icon inactive color to #2a2b2b"
                     maskRange={[2, 5]}
                     iconInactiveColor="#2a2b2b"
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask icon active color to red"
                     value="S1234567D"
                     maskRange={[2, 5]}
                     iconActiveColor="red"
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Set mask character to '*'"
                     value="S1234567D"
                     maskRange={[2, 5]}
                     maskChar="*"
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Overwrite mask and unmask icon"
                     value="S1234567D"
                     maskRange={[2, 5]}
                     iconMask={<ToggleOffFillIcon />}
                     iconUnmask={<ToggleOffIcon />}
                 />
-                <Form.InputMask
+                <Form.MaskedInput
                     label="Overwrite mask and unmask icon and their active and inactive colors"
                     value="S1234567D"
                     maskRange={[2, 5]}
@@ -155,14 +155,14 @@ You are able to make customizations to the mask icon active and inactive color, 
 In the case that you require the input mask field as a standalone, you can do this.
 
 ```tsx
-import { InputMask } from "@lifesg/react-design-system/input-mask";
+import { MaskedInput } from "@lifesg/react-design-system/masked-input";
 ```
 
 <Canvas>
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
-                <InputMask value="S1234567D" maskRange={[2, 5]} />
+                <MaskedInput value="S1234567D" maskRange={[2, 5]} />
             </Container>
         </StoryContainer>
     </Story>

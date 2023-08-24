@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { InputGroup } from "../input-group/input-group";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
-import { IconContainer } from "./input-mask.style";
-import { InputMaskProps } from "./types";
+import { IconContainer } from "./masked-input.style";
+import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
 
 const Component = <T, V>(
@@ -25,7 +25,7 @@ const Component = <T, V>(
         onUnmask,
         error,
         ...otherProps
-    }: InputMaskProps<T, V>,
+    }: MaskedInputProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
     const [isMasked, setIsMasked] = useState(true);
@@ -134,7 +134,7 @@ const Component = <T, V>(
     return (
         <InputGroup
             ref={ref}
-            data-testid={`${dataTestId || "input-mask"}${
+            data-testid={`${dataTestId || "masked-input"}${
                 isMasked ? "-masked" : "-unmasked"
             }`}
             addon={{
@@ -155,4 +155,4 @@ const Component = <T, V>(
     );
 };
 
-export const InputMask = React.forwardRef(Component);
+export const MaskedInput = React.forwardRef(Component);

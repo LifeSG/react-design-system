@@ -5,7 +5,7 @@ import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
     {
-        name: "InputMask specific props",
+        name: "MaskedInput specific props",
         attributes: [
             {
                 name: "",

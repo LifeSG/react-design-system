@@ -1,6 +1,6 @@
 import { InputGroupProps } from "../input-group";
 
-export interface InputMaskProps<T, V>
+export interface MaskedInputProps<T, V>
     extends Omit<InputGroupProps<T, V>, "addon"> {
     maskRange?: number[] | undefined;
     unmaskRange?: number[] | undefined;
@@ -16,4 +16,7 @@ export interface InputMaskProps<T, V>
 }
 
 /** To be exposed for Form component inheritance */
-export type InputMaskPartialProps<T, V> = Omit<InputMaskProps<T, V>, "error">;
+export type MaskedInputPartialProps<T, V> = Omit<
+    MaskedInputProps<T, V>,
+    "error"
+>;

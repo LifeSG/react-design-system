@@ -1,16 +1,16 @@
 import React from "react";
 import { FormWrapper } from "./form-wrapper";
-import { FormInputMaskProps } from "./types";
-import { InputMask } from "../input-mask/input-mask";
+import { FormMaskedInputProps } from "./types";
+import { MaskedInput } from "../masked-input/masked-input";
 
 const Component = <T, V>(
-    props: FormInputMaskProps<T, V>,
+    props: FormMaskedInputProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     const {
         label,
         errorMessage,
-        id = "form-field-mask",
+        id = "form-field-masked-input",
         "data-error-testid": errorTestId,
         "data-testid": testId,
         ...otherProps
@@ -24,7 +24,7 @@ const Component = <T, V>(
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
         >
-            <InputMask
+            <MaskedInput
                 ref={ref}
                 id={`${id}-base`}
                 data-testid={testId || id}
@@ -35,4 +35,4 @@ const Component = <T, V>(
     );
 };
 
-export const FormInputMask = React.forwardRef(Component);
+export const FormMaskedInput = React.forwardRef(Component);
