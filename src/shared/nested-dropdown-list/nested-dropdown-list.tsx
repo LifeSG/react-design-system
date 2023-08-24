@@ -95,7 +95,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                 searchInputRef.current.focus();
             } else if (listItemRefs.current) {
                 const target = keyPaths[focusedIndex];
-                listItemRefs.current[target[0]].ref.focus();
+                listItemRefs.current[target[0]]?.ref.focus();
             }
 
             if (multiSelect) {
