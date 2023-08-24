@@ -5,7 +5,7 @@ import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
     {
-        name: "InputNestedSelect specific props",
+        name: "InputNestedMultiSelect specific props",
         attributes: [
             {
                 name: "options",
@@ -88,7 +88,7 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "If specified, the default no results display will not be rendered",
                 propTypes: ["boolean"],
-                defaultValue: `"false"`,
+                defaultValue: "false",
             },
             {
                 name: "listStyleWidth",
