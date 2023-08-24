@@ -149,6 +149,7 @@ const Component = <T, V>(
             onChange={handleChange}
             value={getValue()}
             readOnly={readOnly}
+            error={error}
             {...otherProps}
         />
     );
