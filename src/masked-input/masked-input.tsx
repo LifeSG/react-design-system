@@ -28,9 +28,11 @@ const Component = <T, V>(
     }: MaskedInputProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
-    const [isMasked, setIsMasked] = useState(true);
-    const [updatedValue, setUpdatedValue] = useState(value || "");
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
+    const [isMasked, setIsMasked] = useState(true);
+    const [updatedValue, setUpdatedValue] = useState(
+        isEmptyReadOnlyState ? "-" : value || ""
+    );
 
     useEffect(() => {
         if (isMasked) {
@@ -61,14 +63,6 @@ const Component = <T, V>(
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-
-    const getValue = () => {
-        if (isEmptyReadOnlyState) {
-            return "-";
-        }
-
-        return isMasked ? maskValue(updatedValue?.toString()) : updatedValue;
-    };
 
     const maskValue = (value: string): string => {
         if (!value) {
@@ -147,7 +141,9 @@ const Component = <T, V>(
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
-            value={getValue()}
+            value={
+                isMasked ? maskValue(updatedValue?.toString()) : updatedValue
+            }
             readOnly={readOnly}
             error={error}
             {...otherProps}
