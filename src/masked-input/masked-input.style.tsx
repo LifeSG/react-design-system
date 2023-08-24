@@ -9,6 +9,8 @@ interface IconProps {
 
 export const IconContainer = styled.div<IconProps>`
     display: flex;
+    width: 1.125rem;
+    height: 1.125rem;
     align-items: center;
     cursor: ${({ $isDisabled }) => (!$isDisabled ? "pointer" : "initial")};
     color: ${({
