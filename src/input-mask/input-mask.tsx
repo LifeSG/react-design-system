@@ -29,6 +29,7 @@ const Component = <T, V>(
 ) => {
     const [isMasked, setIsMasked] = useState(true);
     const [updatedValue, setUpdatedValue] = useState(value || "");
+    const isEmptyReadOnlyState = readOnly && isEmpty(value);
 
     useEffect(() => {
         if (isMasked) {
@@ -59,7 +60,7 @@ const Component = <T, V>(
     // =============================================================================
 
     const getValue = () => {
-        if (readOnly && isEmpty(value)) {
+        if (isEmptyReadOnlyState) {
             return "-";
         }
 
@@ -112,17 +113,18 @@ const Component = <T, V>(
     // RENDER FUNCTIONS
     // =============================================================================
 
-    const renderIcon = () => (
-        <IconContainer
-            data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
-            onClick={handleMaskIconClick}
-            $isDisabled={!updatedValue?.toString().length}
-            $inactiveColor={maskIconInactiveColor}
-            $activeColor={maskIconActiveColor}
-        >
-            {isMasked ? iconUnmask : iconMask}
-        </IconContainer>
-    );
+    const renderIcon = () =>
+        !isEmptyReadOnlyState && (
+            <IconContainer
+                data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
+                onClick={handleMaskIconClick}
+                $isDisabled={!updatedValue?.toString().length}
+                $inactiveColor={maskIconInactiveColor}
+                $activeColor={maskIconActiveColor}
+            >
+                {isMasked ? iconUnmask : iconMask}
+            </IconContainer>
+        );
 
     return (
         <InputGroup
