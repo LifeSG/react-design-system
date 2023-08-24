@@ -65,17 +65,19 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)`
     color: ${Color.Validation.Red.Icon};
 `;
 
+export const SelectAllContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem 0;
+`;
+
 export const DropdownCommonButton = styled.button`
     ${TextStyleHelper.getTextStyle("Body", "semibold")}
+    color: ${Color.Primary};
     background-color: transparent;
-    background-repeat: no-repeat;
     border: none;
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    ${(props) => {
-        return `
-			color: ${Color.Primary(props)};
-		`;
-    }}
 `;
