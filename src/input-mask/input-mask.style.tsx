@@ -10,7 +10,7 @@ interface IconProps {
 export const IconContainer = styled.div<IconProps>`
     display: flex;
     align-items: center;
-    cursor: pointer;
+    cursor: ${({ $isDisabled }) => (!$isDisabled ? "pointer" : "initial")};
     color: ${({
         $isDisabled,
         $inactiveColor = Color.Neutral[3],

@@ -23,6 +23,7 @@ const Component = <T, V>(
         maskChar = "•",
         onMask,
         onUnmask,
+        error,
         ...otherProps
     }: InputMaskProps<T, V>,
     ref: React.Ref<HTMLInputElement>
@@ -52,7 +53,9 @@ const Component = <T, V>(
     };
 
     const handleMaskIconClick = () => {
-        setIsMasked(!isMasked);
+        if (!isMaskIconDisabled()) {
+            setIsMasked(!isMasked);
+        }
     };
 
     // =============================================================================
@@ -109,6 +112,8 @@ const Component = <T, V>(
             : { startIndex: index1, endIndex: index0 };
     };
 
+    const isMaskIconDisabled = () => !updatedValue?.toString().length || error;
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -118,7 +123,7 @@ const Component = <T, V>(
             <IconContainer
                 data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
                 onClick={handleMaskIconClick}
-                $isDisabled={!updatedValue?.toString().length}
+                $isDisabled={isMaskIconDisabled()}
                 $inactiveColor={maskIconInactiveColor}
                 $activeColor={maskIconActiveColor}
             >
