@@ -15,8 +15,7 @@ interface LabelProps {
 export const Label = styled.label<LabelProps>`
     ${TextStyleHelper.getTextStyle("H5", "semibold")}
 
-    color: ${(props) =>
-        props.disabled ? Color.Neutral[4](props) : Color.Neutral[3](props)};
+    color: ${Color.Neutral[3]};
     margin-bottom: 0.5rem;
     display: inline-block;
 
@@ -37,6 +36,5 @@ export const ErrorMessage = styled(Text.H6)`
 `;
 
 export const Subtitle = styled(Text.BodySmall)<LabelProps>`
-    color: ${(props) =>
-        props.disabled ? Color.Neutral[4](props) : Color.Neutral[3](props)};
+    color: ${Color.Neutral[3]};
 `;
