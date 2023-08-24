@@ -82,14 +82,12 @@ export namespace NestedDropdownListHelper {
                         targetKey.push(key);
                         const item = getItemAtKeyPath(draft, targetKey);
 
-                        const selected =
-                            JSON.stringify(item.keyPath) ===
-                            JSON.stringify(
-                                selectedKeyPaths[0]?.slice(
-                                    0,
-                                    item.keyPath.length
-                                )
-                            );
+                        const selected = selectedKeyPaths.some(
+                            (keyPath) =>
+                                JSON.stringify(keyPath) ===
+                                JSON.stringify(item.keyPath)
+                        );
+
                         if (item.subItems) item.expanded = true;
                         if (selected) item.selected = true;
                     });
@@ -223,11 +221,11 @@ export namespace NestedDropdownListHelper {
                                 isPartialChecked ||
                                 isPartialIndeterminate
                             ) {
+                                item.checked = false;
                                 item.indeterminate = true;
-                                item.checked = false;
                             } else {
-                                item.indeterminate = false;
                                 item.checked = false;
+                                item.indeterminate = false;
                             }
                         }
                     }
