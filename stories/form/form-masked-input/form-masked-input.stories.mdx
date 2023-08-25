@@ -46,6 +46,12 @@ import { Form } from "@lifesg/react-design-system/form";
                     maskRange={[2, 5]}
                 />
                 <Form.MaskedInput
+                    label="This is the masking disabled state"
+                    maskRange={[2, 5]}
+                    value="S1234567D"
+                    disableMask={true}
+                />
+                <Form.MaskedInput
                     label="This is the readonly state with no pre-filled value"
                     maskRange={[2, 5]}
                     readOnly

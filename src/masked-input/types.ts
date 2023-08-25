@@ -10,8 +10,9 @@ export interface MaskedInputProps extends InputProps {
     iconActiveColor?: string | undefined;
     iconInactiveColor?: string | undefined;
     maskChar?: string | undefined;
-    onMask?: () => void;
-    onUnmask?: () => void;
+    onMask?: () => void | undefined;
+    onUnmask?: () => void | undefined;
+    disableMask?: boolean | undefined;
 }
 
 /** To be exposed for Form component inheritance */
