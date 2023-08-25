@@ -27,6 +27,6 @@ export const ErrorMessage = styled(Text.H6)`
     outline: none;
 `;
 
-export const Subtitle = styled(Text.BodySmall)<LabelProps>`
+export const Subtitle = styled(Text.BodySmall)`
     color: ${Color.Neutral[3]};
 `;
