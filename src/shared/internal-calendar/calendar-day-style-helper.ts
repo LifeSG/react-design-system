@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { FocusType } from "./types";
-import { CalendarHelper } from "../../util";
+import { CalendarHelper, DateHelper } from "../../util";
 import { StyleProps } from "./internal-calendar-day.style";
 import { OverflowCircleProps } from "./internal-week-selection-calendar-day.style";
 import { HoverDirection } from "./internal-calendar-day";
@@ -381,8 +381,12 @@ const isOutsideSelectedRange = (
 };
 
 const getDayOfWeek = (value: string) => {
-    const firstDayOfWeek = dayjs(value).startOf("week").format("YYYY-MM-DD");
-    const lastDayOfWeek = dayjs(value).endOf("week").format("YYYY-MM-DD");
+    const firstDayOfWeek = DateHelper.toDayjs(value)
+        .startOf("week")
+        .format("YYYY-MM-DD");
+    const lastDayOfWeek = DateHelper.toDayjs(value)
+        .endOf("week")
+        .format("YYYY-MM-DD");
 
     return {
         firstDayOfWeek,

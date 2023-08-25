@@ -13,6 +13,7 @@ import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
+import { DateHelper } from "../util";
 import { DateInputHelper } from "../util/date-input-helper";
 import { useStateActions } from "../util/use-state-actions";
 import {
@@ -349,7 +350,7 @@ export const DateRangeInput = ({
 
     const handleWeekSelectionInputFocus = () => {
         if (isWeekSelection) {
-            const firstDayOfWeek = dayjs(selectedStart)
+            const firstDayOfWeek = DateHelper.toDayjs(selectedStart)
                 .startOf("week")
                 .format("YYYY-MM-DD");
 
