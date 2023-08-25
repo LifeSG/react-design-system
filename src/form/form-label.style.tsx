@@ -3,18 +3,11 @@ import { Color } from "../color";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface LabelProps {
-    disabled?: boolean;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
 export const Label = styled.label<LabelProps>`
+export const Label = styled.label`
     ${TextStyleHelper.getTextStyle("H5", "semibold")}
-
     color: ${Color.Neutral[3]};
     margin-bottom: 0.5rem;
     display: inline-block;
