@@ -582,12 +582,6 @@ export const NestedDropdownList = <V1, V2, V3>({
         );
     };
 
-    /**
-        TODO:
-        16. renderBottomCta
-        19. middle truncation
-     */
-
     return (
         <>
             <Container

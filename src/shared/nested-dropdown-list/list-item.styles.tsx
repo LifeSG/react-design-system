@@ -21,7 +21,7 @@ interface ListItemSelectorProps {
     $multiSelect: boolean;
 }
 
-interface LabelProps {
+interface TruncateProps {
     $truncateType?: TruncateType;
 }
 
@@ -89,7 +89,7 @@ export const Item = styled.li<ItemProps>`
     }}
 `;
 
-export const Label = styled.div<LabelProps>`
+export const Label = styled.div<TruncateProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
     overflow: hidden;
 
@@ -182,7 +182,7 @@ export const TriangleIcon = styled(TriangleForwardFillIcon)`
     color: ${Color.Primary};
 `;
 
-export const Title = styled.button`
+export const TitleButton = styled.button`
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
     color: ${Color.Neutral[1]};
     text-align: left;
@@ -193,15 +193,24 @@ export const Title = styled.button`
     cursor: pointer;
     width: 100%;
     padding: 0;
-    overflow-wrap: anywhere;
+    overflow: hidden;
+`;
 
-    span {
-        overflow: hidden;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
+export const Title = styled.div<TruncateProps>`
+    ${(props) => {
+        switch (props.$truncateType) {
+            case "middle":
+                break;
+            case "end":
+            default:
+                return css`
+                    display: -webkit-box;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                `;
+        }
+    }}
 `;
 
 export const List = styled.ul<ListProps>`
