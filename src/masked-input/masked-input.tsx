@@ -6,7 +6,7 @@ import { IconContainer } from "./masked-input.style";
 import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
 
-const Component = <T, V>(
+const Component = (
     {
         value,
         readOnly,
@@ -15,7 +15,6 @@ const Component = <T, V>(
         unmaskRange,
         maskRegex,
         maskTransformer,
-        onChange,
         iconMask = <EyeSlashIcon />,
         iconUnmask = <EyeIcon />,
         iconActiveColor: maskIconActiveColor,
@@ -23,9 +22,12 @@ const Component = <T, V>(
         maskChar = "•",
         onMask,
         onUnmask,
+        onChange,
+        onFocus,
+        onBlur,
         error,
         ...otherProps
-    }: MaskedInputProps<T, V>,
+    }: MaskedInputProps,
     ref: React.Ref<HTMLInputElement>
 ) => {
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
@@ -46,8 +48,15 @@ const Component = <T, V>(
     // EVENT HANDLERS
     // =============================================================================
 
-    const handleFocus = () => !readOnly && setIsMasked(false);
-    const handleBlur = () => !readOnly && setIsMasked(true);
+    const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        !readOnly && setIsMasked(false);
+        onFocus && onFocus(event);
+    };
+
+    const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
+        !readOnly && setIsMasked(true);
+        onBlur && onBlur(event);
+    };
 
     const handleChange = (event) => {
         setUpdatedValue(event.target.value);

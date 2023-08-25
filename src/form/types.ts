@@ -58,8 +58,8 @@ export interface FormInputGroupProps<T, V>
     extends InputGroupPartialProps<T, V>,
         BaseFormElementProps {}
 
-export interface FormMaskedInputProps<T, V>
-    extends MaskedInputPartialProps<T, V>,
+export interface FormMaskedInputProps
+    extends MaskedInputPartialProps,
         BaseFormElementProps {}
 
 export interface FormTextareaProps

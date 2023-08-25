@@ -3,8 +3,8 @@ import { FormWrapper } from "./form-wrapper";
 import { FormMaskedInputProps } from "./types";
 import { MaskedInput } from "../masked-input/masked-input";
 
-const Component = <T, V>(
-    props: FormMaskedInputProps<T, V>,
+const Component = (
+    props: FormMaskedInputProps,
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     const {
