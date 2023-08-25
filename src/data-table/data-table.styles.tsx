@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
 import { Checkbox } from "../checkbox";
-import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
+import { ErrorDisplay } from "../error-display";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -89,6 +89,11 @@ export const HeaderCellWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    svg {
+        color: ${Color.Neutral[1]};
+        margin-left: 0.5rem;
+    }
 `;
 
 export const BodyRow = styled.tr<BodyRowProps>`
@@ -136,19 +141,6 @@ export const CheckBoxWrapper = styled.div`
 
 export const CheckBox = styled(Checkbox)``;
 
-const sortIconStyles = css`
-    color: ${Color.Neutral[1]};
-    margin-left: 0.5rem;
-`;
-
-export const SortArrowUpIcon = styled(ArrowUpIcon)`
-    ${sortIconStyles}
-`;
-
-export const SortArrowDownIcon = styled(ArrowDownIcon)`
-    ${sortIconStyles}
-`;
-
 export const LoaderWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -172,6 +164,14 @@ export const EmptyDataElement = styled.div`
     @keyframes fade-in {
         100% {
             opacity: 1;
+        }
+    }
+`;
+
+export const CustomErrorDisplay = styled(ErrorDisplay)`
+    div {
+        h1 {
+            ${TextStyleHelper.getFontFamily("H3", "bold")}
         }
     }
 `;

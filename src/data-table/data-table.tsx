@@ -4,18 +4,17 @@ import {
     BodyRow,
     CheckBox,
     CheckBoxWrapper,
+    CustomErrorDisplay,
     HeaderCell,
     HeaderCellWrapper,
     HeaderRow,
     LoaderWrapper,
-    SortArrowDownIcon,
-    SortArrowUpIcon,
     Table,
     TableWrapper,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
 import { ErrorDisplayAttributes } from "../error-display/types";
-import { ErrorDisplay } from "../error-display";
+import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 
 export const DataTable = ({
     id,
@@ -124,13 +123,13 @@ export const DataTable = ({
             return <></>;
         } else if (isSorted === "asc") {
             return (
-                <SortArrowUpIcon
+                <ArrowUpIcon
                     data-testid={getDataTestId(`header-${fieldKey}-arrowup`)}
                 />
             );
         } else {
             return (
-                <SortArrowDownIcon
+                <ArrowDownIcon
                     data-testid={getDataTestId(`header-${fieldKey}-arrowdown`)}
                 />
             );
@@ -160,11 +159,16 @@ export const DataTable = ({
         );
     };
 
-    // Render the table rows
     const renderRows = () => {
-        return (
+        return rows?.length < 1 ? (
+            <tr>
+                <td colSpan={getTotalColumns()}>
+                    {customEmptyView ? customEmptyView() : basicEmptyView()}
+                </td>
+            </tr>
+        ) : (
             <>
-                {rows.map((row: RowProps, index: number) => (
+                {rows?.map((row: RowProps, index: number) => (
                     <BodyRow
                         data-testid={getDataTestId(`row-${row.id.toString()}`)}
                         key={row.id.toString()}
@@ -246,25 +250,18 @@ export const DataTable = ({
 
     const basicEmptyView = () => {
         return (
-            <ErrorDisplay
+            <CustomErrorDisplay
                 type="no-item-found"
-                title={emptyView?.title}
-                description={emptyView?.description}
+                title={emptyView?.title ? emptyView?.title : "No data found"}
+                description={
+                    emptyView?.description
+                        ? emptyView?.description
+                        : "No matching rows"
+                }
                 actionButton={emptyView?.actionButton}
                 img={emptyView?.img}
             />
         );
-    };
-
-    const renderEmptyView = () => {
-        if (rows.length === 0)
-            return (
-                <tr>
-                    <td colSpan={getTotalColumns()}>
-                        {customEmptyView ? customEmptyView() : basicEmptyView()}
-                    </td>
-                </tr>
-            );
     };
 
     const renderLoader = () => {
@@ -291,7 +288,6 @@ export const DataTable = ({
                 <tbody>
                     {renderHeaders()}
                     {loadState === "success" && renderRows()}
-                    {loadState === "success" && renderEmptyView()}
                     {loadState === "loading" && renderLoader()}
                 </tbody>
             </Table>
@@ -300,12 +296,12 @@ export const DataTable = ({
 };
 
 const DEFAULT_EMPTY_VIEW_OPTIONS: ErrorDisplayAttributes = {
-    title: "No Results Found",
-    description: "",
+    title: "No results found",
+    description: "No matching rows",
     actionButton: {
-        children: "Trigger",
+        children: "Reload",
         onClick: () => {
-            console.log("Clicked on Trigger button");
+            console.log("Clicked on Reload button");
         },
     },
 };
