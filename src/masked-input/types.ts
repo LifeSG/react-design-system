@@ -5,7 +5,7 @@ export interface MaskedInputProps<T, V>
     maskRange?: number[] | undefined;
     unmaskRange?: number[] | undefined;
     maskRegex?: RegExp | undefined;
-    maskTransformer?: (value: string) => string | undefined;
+    maskTransformer?: ((value: string) => string) | undefined;
     iconMask?: JSX.Element;
     iconUnmask?: JSX.Element;
     iconActiveColor?: string | undefined;
