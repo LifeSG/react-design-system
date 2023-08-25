@@ -57,7 +57,7 @@ const Component = (
         onFocus && onFocus(event);
     };
 
-    const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         if (readOnly) {
             return;
         }

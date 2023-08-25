@@ -49,7 +49,9 @@ export interface AddonProps<T, V> {
 
 export interface InputGroupProps<T, V> extends InputProps {
     addon?: AddonProps<T, V> | undefined;
-    onBlur?: (() => void) | undefined;
+    // Note: the onBlur event argument is optional because the onBlur event from one
+    // of the addOn types (ListAddon) does not originate from the input element
+    onBlur?: ((event?: React.FocusEvent<HTMLInputElement>) => void) | undefined;
 }
 
 /** To be exposed for Form component inheritance */
