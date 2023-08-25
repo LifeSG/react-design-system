@@ -12,11 +12,14 @@ import {
     List,
     ListItemSelector,
     Title,
+    TitleButton,
     TriangleIcon,
     TruncateContainer,
     TruncateFirstLine,
     TruncateSecondLine,
 } from "./list-item.styles";
+
+type LabelType = "category" | "label";
 
 interface ListItemProps<V1, V2, V3> {
     item: CombinedFormattedOptionProps<V1, V2, V3>;
@@ -49,6 +52,7 @@ export const ListItem = <V1, V2, V3>({
     // CONST, REF, STATE
     // =============================================================================
     const labelRef = useRef<HTMLLIElement>();
+    const categoryRef = useRef<HTMLDivElement>();
 
     // =============================================================================
     // EVENT HANDLERS
@@ -78,13 +82,18 @@ export const ListItem = <V1, V2, V3>({
     // HELPER FUNCTIONS
     // =============================================================================
     const hasExceededContainer = (
-        item: CombinedFormattedOptionProps<V1, V2, V3>
+        item: CombinedFormattedOptionProps<V1, V2, V3>,
+        type: LabelType
     ) => {
         const displayText = item.label;
 
         let widthOfElement = 0;
-        if (labelRef && labelRef.current) {
+        if (type === "label" && labelRef && labelRef.current) {
             widthOfElement = labelRef.current.getBoundingClientRect().width;
+        }
+
+        if (type === "category" && categoryRef && categoryRef.current) {
+            widthOfElement = categoryRef.current.getBoundingClientRect().width;
         }
 
         return StringHelper.shouldTruncateToTwoLines(
@@ -203,9 +212,14 @@ export const ListItem = <V1, V2, V3>({
         return (
             <Category {...categoryProps}>
                 {renderCategoryIcon()}
-                <Title {...titleProps}>
-                    <span>{item.label}</span>
-                </Title>
+                <TitleButton {...titleProps}>
+                    <Title ref={categoryRef} $truncateType={itemTruncationType}>
+                        {itemTruncationType === "middle" &&
+                        hasExceededContainer(item, "category")
+                            ? renderTruncatedText(item)
+                            : item.label}
+                    </Title>
+                </TitleButton>
             </Category>
         );
     };
@@ -222,7 +236,7 @@ export const ListItem = <V1, V2, V3>({
                 )}
                 <Label $truncateType={itemTruncationType}>
                     {itemTruncationType === "middle" &&
-                    hasExceededContainer(item)
+                    hasExceededContainer(item, "label")
                         ? renderTruncatedText(item)
                         : renderBolded(item)}
                 </Label>
