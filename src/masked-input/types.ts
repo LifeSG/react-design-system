@@ -10,8 +10,8 @@ export interface MaskedInputProps extends InputProps {
     iconActiveColor?: string | undefined;
     iconInactiveColor?: string | undefined;
     maskChar?: string | undefined;
-    onMask?: () => void | undefined;
-    onUnmask?: () => void | undefined;
+    onMask?: (() => void) | undefined;
+    onUnmask?: (() => void) | undefined;
     disableMask?: boolean | undefined;
 }
 
