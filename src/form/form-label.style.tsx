@@ -5,7 +5,6 @@ import { Text, TextStyleHelper } from "../text";
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Label = styled.label<LabelProps>`
 export const Label = styled.label`
     ${TextStyleHelper.getTextStyle("H5", "semibold")}
     color: ${Color.Neutral[3]};
