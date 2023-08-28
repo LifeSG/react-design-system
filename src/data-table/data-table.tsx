@@ -2,9 +2,7 @@ import { LoadingDotsSpinner } from "../animations";
 import {
     BodyCell,
     BodyRow,
-    CheckBox,
     CheckBoxWrapper,
-    CustomErrorDisplay,
     HeaderCell,
     HeaderCellWrapper,
     HeaderRow,
@@ -15,6 +13,8 @@ import {
 import { DataTableProps, HeaderProps, RowProps } from "./types";
 import { ErrorDisplayAttributes } from "../error-display/types";
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
+import { Checkbox } from "../checkbox";
+import { ErrorDisplay } from "../error-display";
 
 export const DataTable = ({
     id,
@@ -145,7 +145,7 @@ export const DataTable = ({
                 $maxWidth={selectionConfig?.headerWidth}
             >
                 <CheckBoxWrapper>
-                    <CheckBox
+                    <Checkbox
                         displaySize="small"
                         checked={isAllCheckBoxSelected()}
                         onClick={() => {
@@ -232,7 +232,7 @@ export const DataTable = ({
                 $width={selectionConfig?.headerWidth}
             >
                 <CheckBoxWrapper>
-                    <CheckBox
+                    <Checkbox
                         displaySize="small"
                         checked={isRowSelected(rowId)}
                         onClick={() => {
@@ -250,7 +250,7 @@ export const DataTable = ({
 
     const basicEmptyView = () => {
         return (
-            <CustomErrorDisplay
+            <ErrorDisplay
                 type="no-item-found"
                 title={emptyView?.title ? emptyView?.title : "No data found"}
                 description={

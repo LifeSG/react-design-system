@@ -82,7 +82,7 @@ export const HeaderCell = styled.th<HeaderCellProps>`
     max-width: ${(props) => (props.$maxWidth ? props.$maxWidth : "auto")};
     vertical-align: middle;
     ${TextStyleHelper.getFontFamily("H5", "bold")}
-    color: ${Color.Neutral[1]}
+    color: ${Color.Neutral[1]};
 `;
 
 export const HeaderCellWrapper = styled.div`
@@ -139,39 +139,8 @@ export const CheckBoxWrapper = styled.div`
     justify-content: center;
 `;
 
-export const CheckBox = styled(Checkbox)``;
-
 export const LoaderWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-export const EmptyDataElement = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    opacity: 0;
-    img {
-        width: 25rem;
-        height: auto;
-        flex: none;
-        order: 0;
-        flex-grow: 0;
-    }
-    animation: fade-in 1s ease-in forwards;
-    @keyframes fade-in {
-        100% {
-            opacity: 1;
-        }
-    }
-`;
-
-export const CustomErrorDisplay = styled(ErrorDisplay)`
-    div {
-        h1 {
-            ${TextStyleHelper.getFontFamily("H3", "bold")}
-        }
-    }
 `;
