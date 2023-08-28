@@ -33,9 +33,7 @@ const Component = (
 ) => {
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState(!disableMask);
-    const [updatedValue, setUpdatedValue] = useState(
-        isEmptyReadOnlyState ? "-" : value || ""
-    );
+    const [updatedValue, setUpdatedValue] = useState(value || "");
 
     useEffect(() => {
         if (isMasked) {
@@ -71,6 +69,16 @@ const Component = (
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+
+    const getValue = () => {
+        if (isEmptyReadOnlyState) {
+            return "-";
+        }
+
+        return isMasked && !disableMask
+            ? maskValue(updatedValue?.toString())
+            : updatedValue;
+    };
 
     const maskValue = (value: string): string => {
         if (!value) {
@@ -153,11 +161,7 @@ const Component = (
             onBlur={!readOnly && handleBlur}
             onClick={readOnly && toggleMasking}
             onChange={handleChange}
-            value={
-                isMasked && !disableMask
-                    ? maskValue(updatedValue?.toString())
-                    : updatedValue
-            }
+            value={getValue()}
             readOnly={readOnly}
             error={error}
             {...otherProps}
