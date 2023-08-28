@@ -4,6 +4,7 @@ import { InputGroup } from "../input-group";
 
 interface InputGroupWrapperProps {
     readOnly: boolean;
+    isDisabled: boolean;
 }
 
 interface IconProps {
@@ -13,7 +14,11 @@ interface IconProps {
 }
 
 export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
-    padding: 0 0 0 ${({ readOnly }) => readOnly ? "0" : "1rem"};
+    padding: 0 0 0 ${({ readOnly }) => (readOnly ? "0" : "1rem")};
+    input {
+        cursor: ${({ readOnly, isDisabled }) =>
+            readOnly && !isDisabled ? "pointer" : "initial"};
+    }
 `;
 
 export const IconContainer = styled.div<IconProps>`
@@ -28,7 +33,7 @@ export const IconContainer = styled.div<IconProps>`
         $inactiveColor = Color.Neutral[3],
         $activeColor = Color.Primary,
     }) => ($isDisabled ? $inactiveColor : $activeColor)};
-    
+
     svg {
         width: 1.125rem;
         height: 1.125rem;

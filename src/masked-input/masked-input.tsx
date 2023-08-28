@@ -121,12 +121,15 @@ const Component = (
             : { startIndex: index1, endIndex: index0 };
     };
 
+    const shouldDisableMasking = () =>
+        !updatedValue?.toString().length || disableMask;
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
 
     const renderIcon = () => {
-        const isDisabled = !updatedValue?.toString().length || disableMask;
+        const isDisabled = shouldDisableMasking();
 
         return (
             !isEmptyReadOnlyState && (
@@ -163,6 +166,7 @@ const Component = (
             value={getValue()}
             readOnly={readOnly}
             error={error}
+            isDisabled={shouldDisableMasking()}
             {...otherProps}
         />
     );
