@@ -64,7 +64,7 @@ const Component = (
         onChange && onChange(event);
     };
 
-    const handleMaskIconClick = () => {
+    const toggleMasking = (event?: React.MouseEvent<HTMLInputElement>) => {
         setIsMasked(!isMasked);
     };
 
@@ -125,7 +125,7 @@ const Component = (
             !isEmptyReadOnlyState && (
                 <IconContainer
                     data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
-                    onClick={!isDisabled ? handleMaskIconClick : undefined}
+                    onClick={!isDisabled ? toggleMasking : undefined}
                     $isDisabled={isDisabled}
                     $inactiveColor={maskIconInactiveColor}
                     $activeColor={maskIconActiveColor}
@@ -151,6 +151,7 @@ const Component = (
             }}
             onFocus={!readOnly && handleFocus}
             onBlur={!readOnly && handleBlur}
+            onClick={readOnly && toggleMasking}
             onChange={handleChange}
             value={
                 isMasked && !disableMask
