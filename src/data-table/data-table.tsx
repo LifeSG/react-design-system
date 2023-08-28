@@ -283,7 +283,6 @@ export const DataTable = ({
                 data-testid={otherProps["data-testid"] || "table"}
                 className={className}
                 $addMarginToFirstColumn={!selectionConfig?.showCheckboxes}
-                // $addMarginToLastColumn={!actionsConfig?.showActions}
             >
                 <tbody>
                     {renderHeaders()}

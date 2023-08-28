@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
-import { Checkbox } from "../checkbox";
-import { ErrorDisplay } from "../error-display";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -10,7 +8,6 @@ import { ErrorDisplay } from "../error-display";
 // =============================================================================
 interface TableStyleProps {
     $addMarginToFirstColumn?: boolean;
-    $addMarginToLastColumn?: boolean;
 }
 interface HeaderCellProps {
     $clickable: boolean;
@@ -47,22 +44,16 @@ export const Table = styled.table<TableStyleProps>`
     td {
         padding: 1.5rem 0;
     }
+    th:last-child,
+    td:last-child {
+        padding-right: 1.5rem;
+    }
     ${(props) => {
         if (props.$addMarginToFirstColumn) {
             return css`
                 th:first-child,
                 td:first-child {
                     padding-left: 1.5rem;
-                }
-            `;
-        }
-    }}
-    ${(props) => {
-        if (props.$addMarginToLastColumn) {
-            return css`
-                th:last-child,
-                td:last-child {
-                    padding-right: 1.5rem;
                 }
             `;
         }
