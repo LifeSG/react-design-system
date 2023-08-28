@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { InputGroup } from "../input-group/input-group";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
-import { IconContainer } from "./masked-input.style";
+import { IconContainer, InputGroupWrapper } from "./masked-input.style";
 import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
 
@@ -145,7 +144,7 @@ const Component = (
     };
 
     return (
-        <InputGroup
+        <InputGroupWrapper
             ref={ref}
             data-testid={`${dataTestId || "masked-input"}${
                 isMasked ? "-masked" : "-unmasked"
