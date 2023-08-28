@@ -59,7 +59,7 @@ const Component = (
         onBlur && onBlur(event);
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUpdatedValue(event.target.value);
         onChange && onChange(event);
     };
