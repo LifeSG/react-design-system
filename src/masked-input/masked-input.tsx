@@ -50,18 +50,12 @@ const Component = (
     // =============================================================================
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        if (readOnly) {
-            return;
-        }
-        !disableMask && setIsMasked(false);
+        setIsMasked(false);
         onFocus && onFocus(event);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        if (readOnly) {
-            return;
-        }
-        !disableMask && setIsMasked(true);
+        setIsMasked(true);
         onBlur && onBlur(event);
     };
 
@@ -155,11 +149,13 @@ const Component = (
                 },
                 position: "right",
             }}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
+            onFocus={!readOnly && handleFocus}
+            onBlur={!readOnly && handleBlur}
             onChange={handleChange}
             value={
-                isMasked ? maskValue(updatedValue?.toString()) : updatedValue
+                isMasked && !disableMask
+                    ? maskValue(updatedValue?.toString())
+                    : updatedValue
             }
             readOnly={readOnly}
             error={error}
