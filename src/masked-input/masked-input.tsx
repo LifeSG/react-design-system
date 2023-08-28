@@ -159,9 +159,9 @@ const Component = (
                 },
                 position: "right",
             }}
-            onFocus={!readOnly && handleFocus}
-            onBlur={!readOnly && handleBlur}
-            onClick={readOnly && toggleMasking}
+            onFocus={!readOnly ? handleFocus : undefined}
+            onBlur={!readOnly ? handleBlur : undefined}
+            onClick={readOnly ? toggleMasking : undefined}
             onChange={handleChange}
             value={getValue()}
             readOnly={readOnly}
