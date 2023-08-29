@@ -16,8 +16,8 @@ interface IconProps {
 export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
     padding: 0 0 0 ${({ readOnly }) => (readOnly ? "0" : "1rem")};
     input {
-        cursor: ${({ readOnly, isDisabled }) =>
-            readOnly && !isDisabled ? "pointer" : "initial"};
+        cursor: ${({ readOnly, $isDisabled }) =>
+            readOnly && !$isDisabled ? "pointer" : "initial"};
     }
 `;
 
