@@ -3,6 +3,7 @@ import { FormDateInput } from "./form-date-input";
 import { FormDateRangeInput } from "./form-date-range-input";
 import { FormInput } from "./form-input";
 import { FormInputGroup } from "./form-input-group";
+import { FormMaskedInput } from "./form-masked-input";
 import { FormLabel } from "./form-label";
 import { FormMultiSelect } from "./form-multi-select";
 import { FormNestedSelect } from "./form-nested-select";
@@ -21,6 +22,7 @@ export const Form = {
     DateRangeInput: FormDateRangeInput,
     Input: FormInput,
     InputGroup: FormInputGroup,
+    MaskedInput: FormMaskedInput,
     Label: FormLabel,
     MultiSelect: FormMultiSelect,
     NestedSelect: FormNestedSelect,
