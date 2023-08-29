@@ -58,7 +58,6 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
                     title: "Titile 2",
                 },
             ]}
-            loadState={"success"}
         />
     </Story>
 </Canvas>
@@ -107,7 +106,6 @@ Show sorting Indicator Table header.
                     title: "Titile 2",
                 },
             ]}
-            loadState={"success"}
             sortIndicators={{
                 ["status"]: "desc",
                 ["time"]: "desc",
@@ -127,7 +125,6 @@ Table Row with checkbox selection.
         {() => {
             const [selected, setSelected] = useState([]);
             const handleOnClickSelect = (rowId, isSelected) => {
-                console.log("isSelected :", isSelected);
                 if (isSelected) {
                     setSelected((selected) => [...selected, rowId]);
                 } else {
@@ -139,7 +136,7 @@ Table Row with checkbox selection.
                 }
             };
             const handleOnClickSelectAll = (select) => {
-                console.log("select :", select);
+                setSelected(select ? [] : ["100", "102", "103"]);
             };
             return (
                 <DataTable
@@ -187,16 +184,11 @@ Table Row with checkbox selection.
                             title: "Titile 3",
                         },
                     ]}
-                    selection={selected}
-                    loadState={"success"}
-                    selectionConfig={{
-                        showCheckboxes: true,
-                        showHeaderCheckbox: true,
-                        headerWidth: "5rem",
-                        onClickSelect: (fieldKey, rowId, isSelected) => {
-                            handleOnClickSelect(rowId, isSelected);
-                        },
-                    }}
+                    selectedIds={selected}
+                    enableMultiSelect={true}
+                    enableSelectAll={true}
+                    onSelect={handleOnClickSelect}
+                    onSelectAll={handleOnClickSelectAll}
                 />
             );
         }}
@@ -268,7 +260,6 @@ Table Alternating Row.
                             title: "Titile 5",
                         },
                     ]}
-                    loadState={"success"}
                     alternatingRows={true}
                 />
             );
@@ -349,11 +340,7 @@ Table Empty Data View.
             ]}
             rows={[]}
             loadState={"loading"}
-            selectionConfig={{
-                showCheckboxes: false,
-                showHeaderCheckbox: true,
-                headerWidth: "5rem",
-            }}
+            enableSelectAll={true}
         />
     </Story>
 </Canvas>

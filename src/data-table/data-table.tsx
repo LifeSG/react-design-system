@@ -3,6 +3,8 @@ import {
     BodyCell,
     BodyRow,
     CheckBoxWrapper,
+    CheckboxElement,
+    ErrorDisplayElement,
     HeaderCell,
     HeaderCellWrapper,
     HeaderRow,
@@ -11,37 +13,36 @@ import {
     TableWrapper,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
-import { ErrorDisplayAttributes } from "../error-display/types";
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
-import { Checkbox } from "../checkbox";
-import { ErrorDisplay } from "../error-display";
+import { Text } from "../text";
 
 export const DataTable = ({
     id,
-    headersConfig,
     headers,
-    rowsConfig,
     rows,
     className,
-    selectionConfig,
-    selection,
     sortIndicators,
-    // actionsConfig,
     alternatingRows,
-    customEmptyView,
     loadState = "success",
-    emptyView = DEFAULT_EMPTY_VIEW_OPTIONS,
+    enableMultiSelect,
+    selectedIds,
+    enableSelectAll,
+    emptyView,
+    renderCustomEmptyView,
+    onClickHeader,
+    onSelect,
+    onSelectAll,
     ...otherProps
 }: DataTableProps) => {
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
     const isAllCheckBoxSelected = (): boolean => {
-        return selection?.length === rows.length;
+        return selectedIds?.length === rows.length;
     };
 
     const isRowSelected = (rowId: string): boolean => {
-        return !!selection?.includes(rowId);
+        return !!selectedIds?.includes(rowId);
     };
 
     const isAlternatingRow = (index: number): boolean => {
@@ -54,10 +55,7 @@ export const DataTable = ({
     };
 
     const getTotalColumns = (): number => {
-        return (
-            headers.length + (selectionConfig?.showCheckboxes ? 1 : 0)
-            //  + (actionsConfig?.showActions ? 1 : 0)
-        );
+        return headers.length + (enableMultiSelect ? 1 : 0);
     };
 
     // =============================================================================
@@ -65,19 +63,9 @@ export const DataTable = ({
     // =============================================================================
 
     const renderHeaders = () => (
-        <HeaderRow className={headersConfig?.className}>
-            {selectionConfig?.showCheckboxes && renderHeaderCheckBox()}
+        <HeaderRow>
+            {enableMultiSelect && renderHeaderCheckBox()}
             {headers.map(renderHeaderCell)}
-            {/* {actionsConfig?.showActions && (
-                <HeaderCell
-                    data-testid={getDataTestId("header-action")}
-                    $clickable={false}
-                    $maxWidth={actionsConfig.headerWidth}
-                    className={actionsConfig.headerClassName}
-                >
-                    {actionsConfig.headerLabel}
-                </HeaderCell>
-            )} */}
         </HeaderRow>
     );
 
@@ -103,9 +91,7 @@ export const DataTable = ({
                 key={fieldKey}
                 $clickable={clickable}
                 className={headerClassName}
-                onClick={() =>
-                    clickable && headersConfig?.onClickHeader?.(fieldKey)
-                }
+                onClick={() => clickable && onClickHeader?.(fieldKey)}
                 style={style}
             >
                 <HeaderCellWrapper>
@@ -121,39 +107,37 @@ export const DataTable = ({
 
         if (!isSorted) {
             return <></>;
-        } else if (isSorted === "asc") {
+        }
+        if (isSorted === "asc") {
             return (
                 <ArrowUpIcon
                     data-testid={getDataTestId(`header-${fieldKey}-arrowup`)}
                 />
             );
-        } else {
-            return (
-                <ArrowDownIcon
-                    data-testid={getDataTestId(`header-${fieldKey}-arrowdown`)}
-                />
-            );
         }
+        return (
+            <ArrowDownIcon
+                data-testid={getDataTestId(`header-${fieldKey}-arrowdown`)}
+            />
+        );
     };
 
     const renderHeaderCheckBox = () => {
         return (
             <HeaderCell
                 data-testid={getDataTestId("header-selection")}
-                className={selectionConfig?.headerClassName}
                 $clickable={false}
-                $maxWidth={selectionConfig?.headerWidth}
             >
                 <CheckBoxWrapper>
-                    <Checkbox
-                        displaySize="small"
-                        checked={isAllCheckBoxSelected()}
-                        onClick={() => {
-                            selectionConfig?.onClickSelectAll?.(
-                                isAllCheckBoxSelected()
-                            );
-                        }}
-                    />
+                    {enableSelectAll && (
+                        <CheckboxElement
+                            displaySize="small"
+                            checked={isAllCheckBoxSelected()}
+                            onClick={() => {
+                                onSelectAll(isAllCheckBoxSelected());
+                            }}
+                        />
+                    )}
                 </CheckBoxWrapper>
             </HeaderCell>
         );
@@ -163,7 +147,9 @@ export const DataTable = ({
         return rows?.length < 1 ? (
             <tr>
                 <td colSpan={getTotalColumns()}>
-                    {customEmptyView ? customEmptyView() : basicEmptyView()}
+                    {renderCustomEmptyView
+                        ? renderCustomEmptyView()
+                        : basicEmptyView()}
                 </td>
             </tr>
         ) : (
@@ -172,35 +158,14 @@ export const DataTable = ({
                     <BodyRow
                         data-testid={getDataTestId(`row-${row.id.toString()}`)}
                         key={row.id.toString()}
-                        className={
-                            isAlternatingRow(index)
-                                ? rowsConfig?.alternatingClassName
-                                : rowsConfig?.className
-                        }
                         $alternating={isAlternatingRow(index)}
-                        $isSelectable={selectionConfig?.showCheckboxes}
+                        $isSelectable={enableMultiSelect}
                         $isSelected={isRowSelected(row.id.toString())}
                     >
-                        {selectionConfig?.showCheckboxes &&
+                        {enableMultiSelect &&
                             renderRowCheckBox(row.id.toString())}
 
                         {headers.map((header) => renderRowCell(header, row))}
-
-                        {/* {actionsConfig?.showActions &&
-                            actionsConfig.actions && (
-                                <BodyCell
-                                    data-testid={getDataTestId(
-                                        `row-${row.id.toString()}-action`
-                                    )}
-                                    $width={actionsConfig.headerWidth}
-                                    className={actionsConfig.className}
-                                >
-                                    {actionsConfig?.actions(
-                                        row,
-                                        isRowSelected(row.id.toString())
-                                    )}
-                                </BodyCell>
-                            )} */}
                     </BodyRow>
                 ))}
             </>
@@ -226,21 +191,13 @@ export const DataTable = ({
 
     const renderRowCheckBox = (rowId: string) => {
         return (
-            <BodyCell
-                data-testid={getDataTestId(`row-${rowId}-selection`)}
-                className={selectionConfig?.className}
-                $width={selectionConfig?.headerWidth}
-            >
+            <BodyCell data-testid={getDataTestId(`row-${rowId}-selection`)}>
                 <CheckBoxWrapper>
-                    <Checkbox
+                    <CheckboxElement
                         displaySize="small"
                         checked={isRowSelected(rowId)}
                         onClick={() => {
-                            selectionConfig?.onClickSelect?.(
-                                "id",
-                                rowId,
-                                !isRowSelected(rowId)
-                            );
+                            onSelect(rowId, !isRowSelected(rowId));
                         }}
                     />
                 </CheckBoxWrapper>
@@ -250,12 +207,22 @@ export const DataTable = ({
 
     const basicEmptyView = () => {
         return (
-            <ErrorDisplay
-                type="no-item-found"
-                title={emptyView?.title ? emptyView?.title : "No data found"}
+            <ErrorDisplayElement
+                type={"no-item-found"}
+                title={
+                    emptyView?.title ? (
+                        typeof emptyView.title === "string" ? (
+                            <Text.H3>{emptyView.title}</Text.H3>
+                        ) : (
+                            emptyView.title
+                        )
+                    ) : (
+                        <Text.H3>{"No data found"}</Text.H3>
+                    )
+                }
                 description={
                     emptyView?.description
-                        ? emptyView?.description
+                        ? emptyView.description
                         : "No matching rows"
                 }
                 actionButton={emptyView?.actionButton}
@@ -282,25 +249,12 @@ export const DataTable = ({
                 id={id || "table-wrapper"}
                 data-testid={otherProps["data-testid"] || "table"}
                 className={className}
-                $addMarginToFirstColumn={!selectionConfig?.showCheckboxes}
             >
                 <tbody>
                     {renderHeaders()}
-                    {loadState === "success" && renderRows()}
-                    {loadState === "loading" && renderLoader()}
+                    {loadState === "success" ? renderRows() : renderLoader()}
                 </tbody>
             </Table>
         </TableWrapper>
     );
-};
-
-const DEFAULT_EMPTY_VIEW_OPTIONS: ErrorDisplayAttributes = {
-    title: "No results found",
-    description: "No matching rows",
-    actionButton: {
-        children: "Reload",
-        onClick: () => {
-            console.log("Clicked on Reload button");
-        },
-    },
 };

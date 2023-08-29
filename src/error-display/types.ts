@@ -27,7 +27,7 @@ export interface MaintenanceAdditionalAttributes {
 export interface ErrorDisplayAttributes {
     /** The custom image attributes */
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
-    title?: string | undefined;
+    title?: string | JSX.Element | undefined;
     description?: string | JSX.Element | undefined;
     /** The action button displayed at the bottom of the Error Display */
     actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
@@ -35,7 +35,8 @@ export interface ErrorDisplayAttributes {
 }
 
 export interface ErrorDisplayProps
-    extends React.HTMLAttributes<HTMLElement>,
+    extends Omit<React.HTMLAttributes<HTMLElement>, "title">,
         ErrorDisplayAttributes {
+    title?: string | JSX.Element | undefined;
     type: ErrorDisplayType;
 }
