@@ -23,7 +23,7 @@ export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
 
 export const IconContainer = styled.div<IconProps>`
     display: flex;
-    height: 3rem;
+    height: calc(3rem - 2px);
     width: 3.25rem;
     align-items: center;
     justify-content: center;
