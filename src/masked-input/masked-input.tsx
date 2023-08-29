@@ -166,7 +166,7 @@ const Component = (
             value={getValue()}
             readOnly={readOnly}
             error={error}
-            isDisabled={shouldDisableMasking()}
+            $isDisabled={shouldDisableMasking()}
             {...otherProps}
         />
     );

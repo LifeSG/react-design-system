@@ -4,7 +4,7 @@ import { InputGroup } from "../input-group";
 
 interface InputGroupWrapperProps {
     readOnly: boolean;
-    isDisabled: boolean;
+    $isDisabled: boolean;
 }
 
 interface IconProps {
