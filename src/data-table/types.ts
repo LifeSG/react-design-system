@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import { ReactNode } from "react";
 import { ErrorDisplayAttributes } from "../error-display/types";
 
 export interface DataTableProps {
@@ -39,9 +39,6 @@ interface HeaderItemProps {
     /** (technically ReactNode also includes string, but this makes it more obvious for devs) **/
     label: string | ReactNode;
     clickable?: boolean | undefined;
-    /** css class to put on this header cell **/
-    className?: string | undefined;
-    style?: CSSProperties | undefined;
 }
 
 export interface RowProps {

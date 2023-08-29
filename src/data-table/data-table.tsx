@@ -74,14 +74,10 @@ export const DataTable = ({
             fieldKey,
             label,
             clickable = false,
-            className: headerClassName,
-            style,
         } = typeof header === "string"
             ? {
                   fieldKey: header,
                   label: header,
-                  className: undefined,
-                  style: undefined,
               }
             : header;
 
@@ -90,9 +86,7 @@ export const DataTable = ({
                 data-testid={getDataTestId(`header-${fieldKey}`)}
                 key={fieldKey}
                 $clickable={clickable}
-                className={headerClassName}
                 onClick={() => clickable && onClickHeader?.(fieldKey)}
-                style={style}
             >
                 <HeaderCellWrapper>
                     {label}
@@ -173,17 +167,12 @@ export const DataTable = ({
     };
 
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
-        const style = typeof header !== "string" ? header.style : undefined;
         const fieldKey = typeof header === "string" ? header : header.fieldKey;
         const cellData = row[fieldKey];
         const cellId = `${row.id.toString()}-${fieldKey}`;
 
         return (
-            <BodyCell
-                data-testid={getDataTestId(`row-${cellId}`)}
-                key={cellId}
-                style={style}
-            >
+            <BodyCell data-testid={getDataTestId(`row-${cellId}`)} key={cellId}>
                 {cellData}
             </BodyCell>
         );
