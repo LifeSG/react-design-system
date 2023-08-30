@@ -10,7 +10,7 @@ import {
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
 import { MediaWidths } from "../spec/media-spec";
-import { DateInputHelper } from "../util/date-input-helper";
+import { DateInputHelper } from "../util";
 import { Container } from "./date-input.style";
 import { DateInputProps } from "./types";
 

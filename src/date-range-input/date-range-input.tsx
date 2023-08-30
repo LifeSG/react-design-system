@@ -13,8 +13,7 @@ import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
-import { DateHelper } from "../util";
-import { DateInputHelper } from "../util/date-input-helper";
+import { DateHelper, DateInputHelper } from "../util";
 import { useStateActions } from "../util/use-state-actions";
 import {
     Container,
