@@ -37,6 +37,5 @@ export interface ErrorDisplayAttributes {
 export interface ErrorDisplayProps
     extends Omit<React.HTMLAttributes<HTMLElement>, "title">,
         ErrorDisplayAttributes {
-    title?: string | JSX.Element | undefined;
     type: ErrorDisplayType;
 }

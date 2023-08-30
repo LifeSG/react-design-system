@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { ErrorDisplayAttributes } from "../error-display/types";
 
 export interface DataTableProps {
@@ -15,7 +15,7 @@ export interface DataTableProps {
     enableSelectAll?: boolean | undefined;
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
     onSelectAll?: ((isSelected: boolean) => void) | undefined;
-    onClickHeader?: ((fieldKey: string) => void) | undefined;
+    onHeaderClick?: ((fieldKey: string) => void) | undefined;
     /** columns that want to show a sort indicator **/
     sortIndicators?: SortIndicatorsProps | undefined;
     alternatingRows?: boolean | undefined;
@@ -39,13 +39,16 @@ interface HeaderItemProps {
     /** (technically ReactNode also includes string, but this makes it more obvious for devs) **/
     label: string | ReactNode;
     clickable?: boolean | undefined;
+    style?: CSSProperties | undefined;
 }
 
 export interface RowProps {
     id: string | number;
     /** data with keys matching fieldKey **/
-    [fieldKey: string]: string | number | ReactNode;
-    actions?:
+    [fieldKey: string]:
+        | string
+        | number
+        | ReactNode
         | ((row: RowProps, renderProps: RowRenderProps) => ReactNode)
         | undefined;
 }

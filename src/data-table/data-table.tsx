@@ -29,7 +29,7 @@ export const DataTable = ({
     enableSelectAll,
     emptyView,
     renderCustomEmptyView,
-    onClickHeader,
+    onHeaderClick,
     onSelect,
     onSelectAll,
     ...otherProps
@@ -74,10 +74,12 @@ export const DataTable = ({
             fieldKey,
             label,
             clickable = false,
+            style,
         } = typeof header === "string"
             ? {
                   fieldKey: header,
                   label: header,
+                  style: undefined,
               }
             : header;
 
@@ -86,7 +88,8 @@ export const DataTable = ({
                 data-testid={getDataTestId(`header-${fieldKey}`)}
                 key={fieldKey}
                 $clickable={clickable}
-                onClick={() => clickable && onClickHeader?.(fieldKey)}
+                onClick={() => clickable && onHeaderClick?.(fieldKey)}
+                style={style}
             >
                 <HeaderCellWrapper>
                     {label}
@@ -143,7 +146,7 @@ export const DataTable = ({
                 <td colSpan={getTotalColumns()}>
                     {renderCustomEmptyView
                         ? renderCustomEmptyView()
-                        : basicEmptyView()}
+                        : renderBasicEmptyView()}
                 </td>
             </tr>
         ) : (
@@ -167,12 +170,17 @@ export const DataTable = ({
     };
 
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
+        const style = typeof header !== "string" ? header.style : undefined;
         const fieldKey = typeof header === "string" ? header : header.fieldKey;
         const cellData = row[fieldKey];
         const cellId = `${row.id.toString()}-${fieldKey}`;
 
         return (
-            <BodyCell data-testid={getDataTestId(`row-${cellId}`)} key={cellId}>
+            <BodyCell
+                data-testid={getDataTestId(`row-${cellId}`)}
+                key={cellId}
+                style={style}
+            >
                 {cellData}
             </BodyCell>
         );
@@ -194,7 +202,7 @@ export const DataTable = ({
         );
     };
 
-    const basicEmptyView = () => {
+    const renderBasicEmptyView = () => {
         return (
             <ErrorDisplayElement
                 type={"no-item-found"}

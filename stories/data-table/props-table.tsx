@@ -85,7 +85,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(isSelected: boolean) => void"],
             },
             {
-                name: "onClickHeader",
+                name: "onHeaderClick",
                 description: "On header click",
                 propTypes: ["(fieldKey: string) => void"],
             },
@@ -114,15 +114,10 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "fieldKey",
                 description: "field Key with value list",
-                propTypes: ["[fieldKey: string]: string | number | ReactNode"],
-                mandatory: true,
-            },
-            {
-                name: "actions",
-                description: "Row actions",
                 propTypes: [
-                    "((row: RowProps, renderProps: RowRenderProps) => ReactNode) => void",
+                    "[fieldKey: string]: string | number | ReactNode | ((row: RowProps, renderProps: RowRenderProps) => ReactNode) | undefined;",
                 ],
+                mandatory: true,
             },
         ],
     },
@@ -155,6 +150,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "clickable",
                 description: "The column clickable or not",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "style",
+                description: "The column style ",
+                propTypes: ["CSSProperties"],
             },
         ],
     },
