@@ -13,7 +13,7 @@ import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
-import { DateInputHelper } from "../util/date-input-helper";
+import { DateHelper, DateInputHelper } from "../util";
 import { useStateActions } from "../util/use-state-actions";
 import {
     Container,
@@ -172,7 +172,10 @@ export const DateRangeInput = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        actions.resetRange({ start: value, end: valueEnd });
+        actions.resetRange({
+            start: DateInputHelper.sanitizeInput(value),
+            end: DateInputHelper.sanitizeInput(valueEnd),
+        });
     }, [value, valueEnd]);
 
     useEffect(() => {
@@ -349,7 +352,7 @@ export const DateRangeInput = ({
 
     const handleWeekSelectionInputFocus = () => {
         if (isWeekSelection) {
-            const firstDayOfWeek = dayjs(selectedStart)
+            const firstDayOfWeek = DateHelper.toDayjs(selectedStart)
                 .startOf("week")
                 .format("YYYY-MM-DD");
 

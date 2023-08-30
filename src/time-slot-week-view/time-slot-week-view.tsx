@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { CalendarManagerRef } from "../shared/internal-calendar";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
 import { TimeSlot } from "../time-slot-bar";
+import { DateHelper } from "../util";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
 import { Wrapper } from "./time-slot-week-view.styles";
 import { TimeSlotWeekViewProps } from "./types";
@@ -82,6 +83,12 @@ export const TimeSlotWeekView = ({
         }
     };
 
+    const getInitialCalendarDate = () => {
+        return DateHelper.toDayjs(selectedDate || currentCalendarDate)
+            .endOf("week")
+            .format(DATE_FORMAT);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -92,9 +99,7 @@ export const TimeSlotWeekView = ({
                 ref={calendarManagerRef}
                 type="standalone"
                 dynamicHeight
-                initialCalendarDate={dayjs(selectedDate || currentCalendarDate)
-                    .endOf("week")
-                    .format(DATE_FORMAT)}
+                initialCalendarDate={getInitialCalendarDate()}
                 selectedStartDate={selectedDate}
                 getLeftArrowDate={(day) => day.subtract(1, "week")}
                 getRightArrowDate={(day) => day.add(1, "week")}

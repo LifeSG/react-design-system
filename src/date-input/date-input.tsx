@@ -10,7 +10,7 @@ import {
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
 import { MediaWidths } from "../spec/media-spec";
-import { DateInputHelper } from "../util/date-input-helper";
+import { DateInputHelper } from "../util";
 import { Container } from "./date-input.style";
 import { DateInputProps } from "./types";
 
@@ -34,8 +34,12 @@ export const DateInput = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [initialDate, setInitialDate] = useState<string>(value);
-    const [selectedDate, setSelectedDate] = useState<string>(value);
+    const [initialDate, setInitialDate] = useState<string>(
+        DateInputHelper.sanitizeInput(value)
+    );
+    const [selectedDate, setSelectedDate] = useState<string>(
+        DateInputHelper.sanitizeInput(value)
+    );
     const [hoveredDate, setHoveredDate] = useState<string>(undefined);
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
@@ -53,8 +57,9 @@ export const DateInput = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setInitialDate(value);
-        setSelectedDate(value);
+        const newValue = DateInputHelper.sanitizeInput(value);
+        setInitialDate(newValue);
+        setSelectedDate(newValue);
     }, [value]);
 
     // =============================================================================
