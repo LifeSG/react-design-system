@@ -172,7 +172,10 @@ export const DateRangeInput = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        actions.resetRange({ start: value, end: valueEnd });
+        actions.resetRange({
+            start: DateInputHelper.sanitizeInput(value),
+            end: DateInputHelper.sanitizeInput(valueEnd),
+        });
     }, [value, valueEnd]);
 
     useEffect(() => {
