@@ -31,6 +31,7 @@ export * from "./input-select";
 export * from "./input-textarea";
 export * from "./layout";
 export * from "./link-list";
+export * from "./masked-input";
 export * from "./masonry";
 export * from "./masthead";
 export * from "./media";
