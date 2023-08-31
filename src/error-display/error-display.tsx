@@ -69,9 +69,13 @@ export const ErrorDisplay = ({
         <Container {...otherProps} data-testid={testId}>
             <Img {...updatedAssets.img} alt="" />
             <TextContainer>
-                <Title data-testid={`${testId}--title`}>
-                    {updatedAssets.title}
-                </Title>
+                {typeof updatedAssets.title === "string" ? (
+                    <Title data-testid={`${testId}--title`}>
+                        {updatedAssets.title}
+                    </Title>
+                ) : (
+                    updatedAssets.title
+                )}
                 <DescriptionContainer data-testid={`${testId}--description`}>
                     {typeof updatedAssets.description === "string" ? (
                         <p>{updatedAssets.description}</p>

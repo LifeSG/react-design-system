@@ -1,35 +1,25 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
+import { Checkbox } from "../checkbox";
+import { ErrorDisplay } from "../error-display";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface TableStyleProps {
-    $addMarginToFirstColumn?: boolean;
-}
 interface HeaderCellProps {
     $clickable: boolean;
-    $maxWidth?: string;
 }
 interface BodyRowProps {
     $alternating: boolean;
     $isSelected?: boolean;
     $isSelectable?: boolean;
 }
-interface BodyRowProps {
-    $alternating: boolean;
-    $isSelected?: boolean;
-    $isSelectable?: boolean;
-}
-interface BodyCellProps {
-    $width?: string;
-}
+
 // =============================================================================
 // STYLES
 // =============================================================================
-
 export const TableWrapper = styled.div`
     width: 100%;
     border: 0.125rem solid ${Color.Neutral[6]};
@@ -37,7 +27,7 @@ export const TableWrapper = styled.div`
     overflow: auto;
 `;
 
-export const Table = styled.table<TableStyleProps>`
+export const Table = styled.table`
     width: 100%;
     border-collapse: collapse;
     tr,
@@ -48,16 +38,10 @@ export const Table = styled.table<TableStyleProps>`
     td:last-child {
         padding-right: 1.5rem;
     }
-    ${(props) => {
-        if (props.$addMarginToFirstColumn) {
-            return css`
-                th:first-child,
-                td:first-child {
-                    padding-left: 1.5rem;
-                }
-            `;
-        }
-    }}
+    th:first-child,
+    td:first-child {
+        padding-left: 1.5rem;
+    }
 `;
 
 export const HeaderRow = styled.tr`
@@ -70,7 +54,6 @@ export const HeaderCell = styled.th<HeaderCellProps>`
     padding: 1rem 0;
     text-align: left;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
-    max-width: ${(props) => (props.$maxWidth ? props.$maxWidth : "auto")};
     vertical-align: middle;
     ${TextStyleHelper.getFontFamily("H5", "bold")}
     color: ${Color.Neutral[1]};
@@ -118,9 +101,8 @@ export const BodyRow = styled.tr<BodyRowProps>`
     }
 `;
 
-export const BodyCell = styled.td<BodyCellProps>`
+export const BodyCell = styled.td`
     padding: 1.25rem 1rem;
-    width: ${(props) => (props.$width ? props.$width : "auto")};
     vertical-align: middle;
 `;
 
@@ -134,4 +116,19 @@ export const LoaderWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+export const CheckboxElement = styled(Checkbox)`
+    margin-right: 0.5rem;
+`;
+
+export const ErrorDisplayElement = styled(ErrorDisplay)`
+    h3,
+    button {
+        margin-top: 2rem;
+    }
+
+    p {
+        margin-top: 1rem;
+    }
 `;
