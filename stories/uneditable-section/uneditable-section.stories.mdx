@@ -1,0 +1,147 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { UneditableSection } from "src/uneditable-section";
+import { Alert } from "src/alert";
+import { Button } from "src/button";
+import { Text } from "src/text";
+import {
+    Secondary,
+    Heading3,
+    Title,
+    StoryContainer,
+} from "../storybook-common";
+import { SAMPLE_ITEMS } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta
+    title="Modules/UneditableSection"
+    component={UneditableSection}
+    parameters={{
+        layout: "fullscreen",
+    }}
+/>
+
+<Title>UneditableSection</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that renders uneditable data fields and information.
+
+```tsx
+import { UneditableSection } from "@lifesg/react-design-system/uneditable-section";
+```
+
+<Canvas>
+    <Story name="UneditableSection">
+        <UneditableSection
+            title="Your personal information"
+            description="Retrieved on 27 Jun 2023"
+            items={SAMPLE_ITEMS}
+        />
+    </Story>
+</Canvas>
+
+<Heading3>With custom content</Heading3>
+
+You are able to compose custom content on the top and bottom of the details to suit
+your requirements.
+
+<Canvas>
+    <Story name="With custom content">
+        <UneditableSection
+            title="Your personal information"
+            description="Retrieved on 27 Jun 2023"
+            items={SAMPLE_ITEMS}
+            topSection={
+                <div style={{ marginBottom: "2rem" }}>
+                    <Button.Default styleType="light">
+                        Pull latest records
+                    </Button.Default>
+                </div>
+            }
+            bottomSection={
+                <div>
+                    <Alert type="warning">
+                        This will serves as a warning or disclaimer to users.
+                    </Alert>
+                </div>
+            }
+        />
+    </Story>
+</Canvas>
+
+<Heading3>Composing from scratch</Heading3>
+
+For added flexibility, you are able to compose the entire section from scratch
+without using the `items` prop. This is useful if you have additional components
+to render in each of the uneditable items.
+
+To do so, you can make use of the `UneditableSection.ItemSection` and `UneditableSection.Item`
+to render the details at any position you intend.
+
+<Canvas>
+    <Story name="Composing from scratch">
+        <UneditableSection>
+            <div
+                style={{
+                    gridColumn: "span 8",
+                    display: "flex",
+                    flexDirection: "column",
+                }}
+            >
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "2rem",
+                    }}
+                >
+                    <Text.H3>My custom content</Text.H3>
+                    <Button.Default styleType="light">
+                        Pull latest records
+                    </Button.Default>
+                </div>
+                <div style={{ marginBottom: "1rem" }}>
+                    <Alert type="warning">
+                        This will serves as a warning or disclaimer to users.
+                    </Alert>
+                </div>
+                <Text.Body style={{ marginBottom: "2rem" }}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam pellentesque enim eu neque gravida, ut pulvinar magna
+                    tristique. Aenean sed malesuada arcu. Integer convallis
+                    dapibus suscipit.
+                </Text.Body>
+                <UneditableSection.ItemSection>
+                    <UneditableSection.Item
+                        label="Name (as in NRIC or passport)"
+                        value="Tom Tan Li Ho"
+                        displayWidth="half"
+                    />
+                    <UneditableSection.Item
+                        label="NRIC or FIN"
+                        value="S••••534J"
+                        displayWidth="half"
+                    />
+                    <UneditableSection.Item
+                        label="Residential Address"
+                        value="Block 287, #05-11, Tampines street 22, Singapore 534788"
+                    />
+                </UneditableSection.ItemSection>
+                <Text.H3 style={{ marginBottom: "2rem" }}>
+                    Another section
+                </Text.H3>
+                <UneditableSection.ItemSection>
+                    <UneditableSection.Item
+                        label="Spoken languages"
+                        value="English, Mandarin, French"
+                    />
+                </UneditableSection.ItemSection>
+            </div>
+        </UneditableSection>
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
