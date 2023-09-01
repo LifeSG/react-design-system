@@ -21,7 +21,7 @@ export const UneditableSectionBase = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderItems = () => {
-        if (items.length > 0) {
+        if (items && items.length > 0) {
             const renderedItems = items.map((item, index) => {
                 return <UneditableSectionItem key={index} {...item} />;
             });

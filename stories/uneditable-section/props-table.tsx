@@ -11,7 +11,6 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 description:
                     "The uneditable items to be displayed. Items are displayed in a label and value format.",
                 propTypes: [`UneditableSectionItemProps[]`],
-                mandatory: true,
             },
             {
                 name: "title",

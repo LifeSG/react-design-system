@@ -8,7 +8,7 @@ export interface UneditableSectionItemProps {
 }
 
 export interface UneditableSectionProps {
-    items: UneditableSectionItemProps[];
+    items?: UneditableSectionItemProps[] | undefined;
     title?: string | undefined;
     description?: string | undefined;
     /** A custom section at the top of the main uneditable items section */
