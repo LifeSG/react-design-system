@@ -1,9 +1,9 @@
 import { LoadingDotsSpinner } from "../animations";
 import {
     BodyCell,
+    BodyCellContent,
     BodyRow,
     CheckBoxWrapper,
-    CheckboxElement,
     ErrorDisplayElement,
     HeaderCell,
     HeaderCellWrapper,
@@ -15,6 +15,7 @@ import {
 import { DataTableProps, HeaderProps, RowProps } from "./types";
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
+import { Checkbox } from "../checkbox";
 
 export const DataTable = ({
     id,
@@ -90,9 +91,14 @@ export const DataTable = ({
                 $clickable={clickable}
                 onClick={() => clickable && onHeaderClick?.(fieldKey)}
                 style={style}
+                $isCheckbox={false}
             >
                 <HeaderCellWrapper>
-                    {label}
+                    {typeof label === "string" ? (
+                        <Text.H4 weight="bold">{label}</Text.H4>
+                    ) : (
+                        label
+                    )}
                     {renderSortedArrow(fieldKey)}
                 </HeaderCellWrapper>
             </HeaderCell>
@@ -124,10 +130,11 @@ export const DataTable = ({
             <HeaderCell
                 data-testid={getDataTestId("header-selection")}
                 $clickable={false}
+                $isCheckbox={true}
             >
                 <CheckBoxWrapper>
                     {enableSelectAll && (
-                        <CheckboxElement
+                        <Checkbox
                             displaySize="small"
                             checked={isAllCheckBoxSelected()}
                             onClick={() => {
@@ -180,17 +187,25 @@ export const DataTable = ({
                 data-testid={getDataTestId(`row-${cellId}`)}
                 key={cellId}
                 style={style}
+                $isCheckbox={false}
             >
-                {cellData}
+                {typeof cellData === "string" ? (
+                    <BodyCellContent>{cellData}</BodyCellContent>
+                ) : (
+                    { cellData }
+                )}
             </BodyCell>
         );
     };
 
     const renderRowCheckBox = (rowId: string) => {
         return (
-            <BodyCell data-testid={getDataTestId(`row-${rowId}-selection`)}>
+            <BodyCell
+                data-testid={getDataTestId(`row-${rowId}-selection`)}
+                $isCheckbox={true}
+            >
                 <CheckBoxWrapper>
-                    <CheckboxElement
+                    <Checkbox
                         displaySize="small"
                         checked={isRowSelected(rowId)}
                         onClick={() => {

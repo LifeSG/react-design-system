@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { TextStyleHelper } from "../text";
-import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
+import { DesignToken } from "../design-token";
+import { Text } from "../text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -10,6 +10,7 @@ import { ErrorDisplay } from "../error-display";
 // =============================================================================
 interface HeaderCellProps {
     $clickable: boolean;
+    $isCheckbox: boolean;
 }
 interface BodyRowProps {
     $alternating: boolean;
@@ -17,23 +18,29 @@ interface BodyRowProps {
     $isSelectable?: boolean;
 }
 
+interface BodyCellProps {
+    $isCheckbox: boolean;
+}
+
+// =============================================================================
+// STYLES CONSTANTS
+// =============================================================================
+const borderColor = Color.Neutral[5];
+const fontColor = Color.Neutral[1];
+
 // =============================================================================
 // STYLES
 // =============================================================================
 export const TableWrapper = styled.div`
     width: 100%;
-    border: 0.125rem solid ${Color.Neutral[6]};
-    border-radius: 0.5rem 0.5rem 0 0;
+    border: 1px solid ${borderColor};
+    border-radius: 0.5rem;
     overflow: auto;
 `;
 
 export const Table = styled.table`
     width: 100%;
     border-collapse: collapse;
-    tr,
-    td {
-        padding: 1.5rem 0;
-    }
     th:last-child,
     td:last-child {
         padding-right: 1.5rem;
@@ -42,21 +49,24 @@ export const Table = styled.table`
     td:first-child {
         padding-left: 1.5rem;
     }
+    tr:nth-child(2) {
+        border-top: none;
+    }
 `;
 
 export const HeaderRow = styled.tr`
-    background-color: #f5f5f5;
-    height: 5rem;
-    border-bottom: 0.125rem solid ${Color.Neutral[6]};
+    background-color: ${DesignToken.Table.Header};
+    height: 6rem;
+    border-bottom: 1px solid ${borderColor};
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
-    padding: 1rem 0;
+    padding: ${(props) =>
+        props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     text-align: left;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
     vertical-align: middle;
-    ${TextStyleHelper.getFontFamily("H5", "bold")}
-    color: ${Color.Neutral[1]};
+    color: ${fontColor};
 `;
 
 export const HeaderCellWrapper = styled.div`
@@ -74,36 +84,46 @@ export const BodyRow = styled.tr<BodyRowProps>`
     background-color: ${(props) => {
         if (props.$isSelected) {
             return css`
-                ${Color.Accent.Light[5]};
+                ${DesignToken.Table.Cell.Selected};
             `;
         } else if (props.$alternating) {
             return css`
-                ${Color.Neutral[7]};
+                ${DesignToken.Table.Cell.Primary};
             `;
         } else {
             return css`
-                ${Color.Neutral[8]};
+                ${DesignToken.Table.Cell.Secondary};
             `;
         }
     }};
-    border-top: 0.125rem solid ${Color.Neutral[6]};
+    border-top: 1px solid ${borderColor};
     &:hover {
         background-color: ${(props) => {
             if (!props.$isSelected && props.$isSelectable) {
                 return css`
-                    ${Color.Accent.Light[4]};
+                    ${DesignToken.Table.Cell.Hover};
                 `;
             }
         }};
     }
-    &:first-child {
-        border-top: none;
-    }
 `;
 
-export const BodyCell = styled.td`
-    padding: 1.25rem 1rem;
+export const BodyCell = styled.td<BodyCellProps>`
+    padding: ${(props) =>
+        props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     vertical-align: middle;
+    color: ${fontColor};
+    min-height: 2.625rem;
+    max-height: 5.75rem;
+`;
+
+export const BodyCellContent = styled(Text.Body)`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 `;
 
 export const CheckBoxWrapper = styled.div`
@@ -116,10 +136,6 @@ export const LoaderWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-export const CheckboxElement = styled(Checkbox)`
-    margin-right: 0.5rem;
 `;
 
 export const ErrorDisplayElement = styled(ErrorDisplay)`
