@@ -148,3 +148,7 @@ export const ErrorDisplayElement = styled(ErrorDisplay)`
         margin-top: 1rem;
     }
 `;
+
+export const EmptyViewCell = styled.td`
+    padding: 4rem 0;
+`;

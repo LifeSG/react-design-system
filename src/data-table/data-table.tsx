@@ -4,6 +4,7 @@ import {
     BodyCellContent,
     BodyRow,
     CheckBoxWrapper,
+    EmptyViewCell,
     ErrorDisplayElement,
     HeaderCell,
     HeaderCellWrapper,
@@ -150,11 +151,11 @@ export const DataTable = ({
     const renderRows = () => {
         return rows?.length < 1 ? (
             <tr>
-                <td colSpan={getTotalColumns()}>
+                <EmptyViewCell colSpan={getTotalColumns()}>
                     {renderCustomEmptyView
                         ? renderCustomEmptyView()
                         : renderBasicEmptyView()}
-                </td>
+                </EmptyViewCell>
             </tr>
         ) : (
             <>
