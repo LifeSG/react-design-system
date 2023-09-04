@@ -92,6 +92,7 @@ export type NavbarDrawerHandle = HTMLDivElement & {
 
 export interface NavbarProps<T = void> extends NavbarSharedProps {
     items: NavItemsProps<T>;
+    className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
     selectedId?: string | undefined;

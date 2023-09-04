@@ -36,6 +36,7 @@ import {
 const Component = <T,>(
     {
         items,
+        className,
         id,
         selectedId,
         compress = false,
@@ -264,6 +265,7 @@ const Component = <T,>(
         <Wrapper
             ref={elementRef}
             $fixed={fixed}
+            className={className}
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
