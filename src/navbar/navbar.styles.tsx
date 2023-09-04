@@ -82,23 +82,27 @@ export const MobileMenuIcon = styled(MenuIcon)`
     color: ${Color.Neutral[1]};
 `;
 
-export const NavBrandContainer = styled.div`
+export const NavBrandContainer = styled.div<StyleProps>`
     display: flex;
-    height: 100%;
     flex-direction: row;
     align-items: center;
     flex-shrink: 0;
+
+    height: ${(props) => (props.$compress ? 1.5 : 2)}rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        height: 1.5rem;
+    }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Color.Neutral[5]};
-    height: ${(props) => (props.$compress ? 2 : 2.5)}rem;
+    height: 100%;
     width: 1px;
     margin: 0 ${(props) => (props.$compress ? 1.125 : 1.5)}rem;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 1.5rem;
         margin: 0 1rem;
     }
 `;

@@ -204,11 +204,11 @@ const Component = <T,>(
     );
 
     const renderBrand = () => (
-        <NavBrandContainer>
+        <NavBrandContainer $compress={compress} data-id="brand-container">
             <Brand
                 resources={primary}
-                compress={compress}
                 onClick={handleBrandClick}
+                data-id="brand-primary"
                 data-testid="main__brand"
                 type="primary"
             />
@@ -217,8 +217,8 @@ const Component = <T,>(
                     <NavSeparator $compress={compress} />
                     <Brand
                         resources={secondary}
-                        compress={compress}
                         onClick={handleBrandClick}
+                        data-id="brand-secondary"
                         data-testid="main__brand-secondary"
                         type="secondary"
                     />

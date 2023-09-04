@@ -18,7 +18,6 @@ interface Props {
 
 export const Brand = ({
     resources,
-    compress,
     onClick,
     "data-testid": testId = "navbar-brand",
     type,
@@ -37,7 +36,6 @@ export const Brand = ({
             role="link"
             aria-label={resources.brandName + "-app-home-page"}
             onClick={handleClick}
-            $compress={compress}
             tabIndex={0}
             data-testid={testId}
             $type={type}
