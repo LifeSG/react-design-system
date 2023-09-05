@@ -100,7 +100,7 @@ export const NavSeparator = styled.div<StyleProps>`
     background-color: ${Color.Neutral[5]};
     height: 100%;
     width: 1px;
-    margin: 0 ${(props) => (props.$compress ? 1.125 : 1.5)}rem;
+    margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         margin: 0 1rem;
