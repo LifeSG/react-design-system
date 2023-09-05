@@ -35,7 +35,6 @@ export const TableWrapper = styled.div`
     width: 100%;
     border: 1px solid ${borderColor};
     border-radius: 0.5rem;
-    overflow: auto;
 `;
 
 export const Table = styled.table`
