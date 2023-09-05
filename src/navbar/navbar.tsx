@@ -36,6 +36,7 @@ import {
 const Component = <T,>(
     {
         items,
+        className,
         id,
         selectedId,
         compress = false,
@@ -204,11 +205,11 @@ const Component = <T,>(
     );
 
     const renderBrand = () => (
-        <NavBrandContainer>
+        <NavBrandContainer $compress={compress} data-id="brand-container">
             <Brand
                 resources={primary}
-                compress={compress}
                 onClick={handleBrandClick}
+                data-id="brand-primary"
                 data-testid="main__brand"
                 type="primary"
             />
@@ -217,8 +218,8 @@ const Component = <T,>(
                     <NavSeparator $compress={compress} />
                     <Brand
                         resources={secondary}
-                        compress={compress}
                         onClick={handleBrandClick}
+                        data-id="brand-secondary"
                         data-testid="main__brand-secondary"
                         type="secondary"
                     />
@@ -264,6 +265,7 @@ const Component = <T,>(
         <Wrapper
             ref={elementRef}
             $fixed={fixed}
+            className={className}
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
