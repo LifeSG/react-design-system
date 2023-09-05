@@ -1,3 +1,5 @@
+import { ButtonProps } from "../button";
+
 export type ErrorDisplayType =
     | "400"
     | "403"
@@ -30,7 +32,7 @@ export interface ErrorDisplayAttributes {
     title?: string | JSX.Element | undefined;
     description?: string | JSX.Element | undefined;
     /** The action button displayed at the bottom of the Error Display */
-    actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
+    actionButton?: ButtonProps | undefined;
     additionalProps?: MaintenanceAdditionalAttributes | undefined;
 }
 

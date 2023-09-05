@@ -98,10 +98,10 @@ export const BodyRow = styled.tr<BodyRowProps>`
     }};
     border-top: 1px solid ${borderColor};
     &:hover {
-        background-color: ${(props) => {
+        ${(props) => {
             if (!props.$isSelected && props.$isSelectable) {
                 return css`
-                    ${DesignToken.Table.Cell.Hover};
+                    background-color: ${DesignToken.Table.Cell.Hover};
                 `;
             }
         }};
@@ -113,8 +113,6 @@ export const BodyCell = styled.td<BodyCellProps>`
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     vertical-align: middle;
     color: ${fontColor};
-    min-height: 2.625rem;
-    max-height: 5.75rem;
 `;
 
 export const BodyCellContent = styled(Text.Body)`

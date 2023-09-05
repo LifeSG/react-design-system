@@ -193,7 +193,7 @@ export const DataTable = ({
                 {typeof cellData === "string" ? (
                     <BodyCellContent>{cellData}</BodyCellContent>
                 ) : (
-                    { cellData }
+                    cellData
                 )}
             </BodyCell>
         );
