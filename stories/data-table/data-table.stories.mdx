@@ -270,6 +270,170 @@ Table Alternating Row.
     </Story>
 </Canvas>
 
+<Heading3>Selection Bar</Heading3>
+
+Table with selection bar
+
+<Canvas>
+    <Story name="Selection Bar">
+        {() => {
+            const [selected, setSelected] = useState(["100", "122", "115"]);
+            const handleOnClickSelect = (rowId, isSelected) => {
+                if (isSelected) {
+                    setSelected((selected) => [...selected, rowId]);
+                } else {
+                    setSelected(
+                        selected.filter((item) => {
+                            return item !== rowId;
+                        })
+                    );
+                }
+            };
+            return (
+                <DataTable
+                    headers={[
+                        {
+                            fieldKey: "status",
+                            label: "Status",
+                            style: { width: "7.5rem" },
+                        },
+                        {
+                            fieldKey: "time",
+                            label: "Time",
+                            style: { width: "15rem" },
+                        },
+                        {
+                            fieldKey: "resource",
+                            label: "Resource",
+                            style: { width: "17.5rem" },
+                        },
+                        {
+                            fieldKey: "title",
+                            label: "Title",
+                        },
+                    ]}
+                    rows={[
+                        {
+                            id: "100",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Title 1",
+                        },
+                        {
+                            id: "102",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 2",
+                        },
+                        {
+                            id: "103",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 3",
+                        },
+                        {
+                            id: "104",
+                            status: "SampleRow",
+                            time: "07/Aug/2023 12.30pm",
+                            resource: "Test",
+                            title: "Titile 4",
+                        },
+                        {
+                            id: "105",
+                            status: "CheckRow",
+                            time: "07/Aug/2023 1.30pm",
+                            resource: "Test",
+                            title: "Titile 5",
+                        },
+                        {
+                            id: "110",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Title 1",
+                        },
+                        {
+                            id: "112",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 2",
+                        },
+                        {
+                            id: "113",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 3",
+                        },
+                        {
+                            id: "114",
+                            status: "SampleRow",
+                            time: "07/Aug/2023 12.30pm",
+                            resource: "Test",
+                            title: "Titile 4",
+                        },
+                        {
+                            id: "115",
+                            status: "CheckRow",
+                            time: "07/Aug/2023 1.30pm",
+                            resource: "Test",
+                            title: "Titile 5",
+                        },
+                        {
+                            id: "120",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Title 1",
+                        },
+                        {
+                            id: "122",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 2",
+                        },
+                        {
+                            id: "123",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 3",
+                        },
+                        {
+                            id: "124",
+                            status: "SampleRow",
+                            time: "07/Aug/2023 12.30pm",
+                            resource: "Test",
+                            title: "Titile 4",
+                        },
+                        {
+                            id: "125",
+                            status: "CheckRow",
+                            time: "07/Aug/2023 1.30pm",
+                            resource: "Test",
+                            title: "Titile 5",
+                        },
+                    ]}
+                    alternatingRows={true}
+                    enableMultiSelect={true}
+                    enableSelectAll={true}
+                    enableSelectionBar={true}
+                    selectedIds={selected}
+                    onSelect={handleOnClickSelect}
+                    onClearSelectionClick={() => {
+                        setSelected([]);
+                    }}
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Heading3>Empty Data View</Heading3>
 
 Table Empty Data View.

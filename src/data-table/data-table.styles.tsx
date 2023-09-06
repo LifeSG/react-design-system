@@ -32,14 +32,14 @@ const fontColor = Color.Neutral[1];
 // STYLES
 // =============================================================================
 export const TableWrapper = styled.div`
-    width: 100%;
+    width: fit-content;
     border: 1px solid ${borderColor};
     border-radius: 0.5rem;
     overflow: auto;
 `;
 
 export const Table = styled.table`
-    width: 100%;
+    display: table;
     border-collapse: collapse;
     th:last-child,
     td:last-child {
@@ -52,15 +52,24 @@ export const Table = styled.table`
     tr:nth-child(2) {
         border-top: none;
     }
+    max-height: 5rem;
+    overflow-y: scroll;
+`;
+
+export const TableBody = styled.tbody`
+    display: block;
+    max-height: 80vh;
 `;
 
 export const HeaderRow = styled.tr`
+    display: table-row;
     background-color: ${DesignToken.Table.Header};
     height: 6rem;
     border-bottom: 1px solid ${borderColor};
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
+    display: table-cell;
     padding: ${(props) =>
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     text-align: left;
@@ -81,6 +90,7 @@ export const HeaderCellWrapper = styled.div`
 `;
 
 export const BodyRow = styled.tr<BodyRowProps>`
+    display: table-row;
     background-color: ${(props) => {
         if (props.$isSelected) {
             return css`
@@ -109,6 +119,7 @@ export const BodyRow = styled.tr<BodyRowProps>`
 `;
 
 export const BodyCell = styled.td<BodyCellProps>`
+    display: table-cell;
     padding: ${(props) =>
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     vertical-align: middle;
@@ -150,4 +161,25 @@ export const ErrorDisplayElement = styled(ErrorDisplay)`
 
 export const EmptyViewCell = styled.td`
     padding: 4rem 0;
+`;
+
+export const SelectionBarCell = styled.td`
+    background-color: ${DesignToken.Table.Cell.Selected};
+    position: sticky;
+    bottom: 0;
+    display: table-cell;
+    height: 3.5rem;
+    padding: 1rem;
+`;
+
+export const SelectionBar = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+`;
+
+export const ClearSelectionAction = styled(Text.H5)`
+    color: ${Color.Primary};
+    cursor: pointer;
+    margin: 0 1rem;
 `;

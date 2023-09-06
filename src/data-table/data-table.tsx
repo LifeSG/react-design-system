@@ -4,13 +4,17 @@ import {
     BodyCellContent,
     BodyRow,
     CheckBoxWrapper,
+    ClearSelectionAction,
     EmptyViewCell,
     ErrorDisplayElement,
     HeaderCell,
     HeaderCellWrapper,
     HeaderRow,
     LoaderWrapper,
+    SelectionBar,
+    SelectionBarCell,
     Table,
+    TableBody,
     TableWrapper,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
@@ -29,18 +33,25 @@ export const DataTable = ({
     enableMultiSelect,
     selectedIds,
     enableSelectAll,
+    enableSelectionBar,
     emptyView,
+    selectionBarContent,
     renderCustomEmptyView,
     onHeaderClick,
     onSelect,
     onSelectAll,
+    onClearSelectionClick,
     ...otherProps
 }: DataTableProps) => {
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
-    const isAllCheckBoxSelected = (): boolean => {
+    const isAllCheckboxSelected = (): boolean => {
         return selectedIds?.length === rows.length;
+    };
+
+    const isIndeterminateCheckbox = (): boolean => {
+        return selectedIds?.length !== 0 && !isAllCheckboxSelected();
     };
 
     const isRowSelected = (rowId: string): boolean => {
@@ -137,9 +148,10 @@ export const DataTable = ({
                     {enableSelectAll && (
                         <Checkbox
                             displaySize="small"
-                            checked={isAllCheckBoxSelected()}
+                            checked={isAllCheckboxSelected()}
+                            indeterminate={isIndeterminateCheckbox()}
                             onClick={() => {
-                                onSelectAll(isAllCheckBoxSelected());
+                                onSelectAll(isAllCheckboxSelected());
                             }}
                         />
                     )}
@@ -256,6 +268,22 @@ export const DataTable = ({
         );
     };
 
+    const renderSelectionBar = () => {
+        return (
+            <tr>
+                <SelectionBarCell colSpan={getTotalColumns()}>
+                    <SelectionBar>
+                        <Text.H5 weight="semibold">{`${selectedIds.length} items selected`}</Text.H5>
+                        <ClearSelectionAction onClick={onClearSelectionClick}>
+                            Clear Selection
+                        </ClearSelectionAction>
+                        {selectionBarContent && selectionBarContent()}
+                    </SelectionBar>
+                </SelectionBarCell>
+            </tr>
+        );
+    };
+
     return (
         <TableWrapper>
             <Table
@@ -263,10 +291,13 @@ export const DataTable = ({
                 data-testid={otherProps["data-testid"] || "table"}
                 className={className}
             >
-                <tbody>
+                <TableBody>
                     {renderHeaders()}
                     {loadState === "success" ? renderRows() : renderLoader()}
-                </tbody>
+                    {enableSelectionBar &&
+                        selectedIds?.length > 0 &&
+                        renderSelectionBar()}
+                </TableBody>
             </Table>
         </TableWrapper>
     );

@@ -13,9 +13,13 @@ export interface DataTableProps {
     enableMultiSelect?: boolean | undefined;
     /** display select all checkbox */
     enableSelectAll?: boolean | undefined;
+    /** display action bar */
+    enableSelectionBar?: boolean | undefined;
+    selectionBarContent?: (() => ReactNode) | undefined;
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
     onSelectAll?: ((isSelected: boolean) => void) | undefined;
     onHeaderClick?: ((fieldKey: string) => void) | undefined;
+    onClearSelectionClick?: (() => void) | undefined;
     /** columns that want to show a sort indicator **/
     sortIndicators?: SortIndicatorsProps | undefined;
     alternatingRows?: boolean | undefined;
