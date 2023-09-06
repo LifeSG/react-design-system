@@ -42,7 +42,7 @@ export const PropsTable = () => (
             <DefaultCol />
         </tr>
         <tr>
-            <NameCol>sizeType</NameCol>
+            <NameCol>size</NameCol>
             <DescriptionCol propTypes={[`"default"`, `"small"`]}>
                 Specifies the variant od size of alert
             </DescriptionCol>
@@ -56,7 +56,7 @@ export const PropsTable = () => (
             <DefaultCol />
         </tr>
         <tr>
-            <NameCol>linkIconType(hyperLink)</NameCol>
+            <NameCol>linkIconType (hyperLink)</NameCol>
             <DescriptionCol propTypes={[`"internalLink"`, `"externalLink"`]}>
                 Specifies if the hyperlink will be display icon
             </DescriptionCol>

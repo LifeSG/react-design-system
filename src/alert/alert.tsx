@@ -20,7 +20,7 @@ export const Alert = ({
     children,
     actionLink,
     linkIconType,
-    sizeType,
+    size = "default",
     enableIcon = false,
     ...otherProps
 }: AlertProps): JSX.Element => {
@@ -36,7 +36,7 @@ export const Alert = ({
             <ActionLinkText
                 data-testid="action-link"
                 $type={type}
-                $sizeType={sizeType}
+                $size={size}
                 {...actionLink}
             >
                 {actionLink.children}
@@ -66,7 +66,7 @@ export const Alert = ({
         <Wrapper
             className={className}
             $type={type}
-            $sizeType={sizeType}
+            $size={size}
             $enableIcon={enableIcon}
             $linkIconType={linkIconType}
             data-testid={otherProps["data-testid"]}

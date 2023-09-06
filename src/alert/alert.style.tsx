@@ -11,7 +11,7 @@ import { AlertSizeType, AlertType, LinkIconType } from "./types";
 // =============================================================================
 interface StyleProps {
     $type: AlertType;
-    $sizeType: AlertSizeType;
+    $size: AlertSizeType;
     $enableIcon?: boolean | undefined;
     $linkIconType?: LinkIconType | undefined;
 }
@@ -24,7 +24,7 @@ export const Wrapper = styled.div<StyleProps>`
     padding: 0.5rem 1rem 0.5rem 0.875rem;
     display: flex;
     flex-direction: row;
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")};
+    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
 
     ${(props) => {
         let backgroundColor: string;
@@ -69,7 +69,7 @@ export const Wrapper = styled.div<StyleProps>`
 
             svg {
                 color: ${iconColor};
-                width: ${props.$sizeType ? "1.25rem" : "1.5rem"};
+                width: ${props.$size === "small" ? "1.25rem" : "1.5rem"};
                 height: 1.5rem;
                 margin-right: 0.5rem;
             }
@@ -79,7 +79,7 @@ export const Wrapper = styled.div<StyleProps>`
     p {
         margin: 0;
         ${(props) => {
-            if (props.$sizeType === "small")
+            if (props.$size === "small")
                 return css`
                     ${TextStyleHelper.getTextStyle("H6", "regular")}
 
@@ -121,7 +121,7 @@ export const Wrapper = styled.div<StyleProps>`
 
 export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
     ${(props) => {
-        if (props.$sizeType === "small")
+        if (props.$size === "small")
             return css`
                 ${TextStyleHelper.getTextStyle("H6", "semibold")}
             `;
