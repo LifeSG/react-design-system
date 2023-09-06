@@ -47,7 +47,8 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
                     id: "100",
                     status: "Completed",
                     time: "07/Aug/2023 9.30pm",
-                    resource: "Test",
+                    resource:
+                        "Test of the new line with multiple data to be truncated and it will show only 2 lines. Hope this would be enough",
                     title: "Title 1",
                 },
                 {
@@ -261,6 +262,8 @@ Table Alternating Row.
                         },
                     ]}
                     alternatingRows={true}
+                    enableMultiSelect={true}
+                    enableSelectAll={true}
                 />
             );
         }}
@@ -304,6 +307,10 @@ Table Empty Data View.
                 description: "This is Placeholder text",
                 actionButton: {
                     children: "Trigger",
+                    styleType: "secondary",
+                    style: {
+                        width: "5rem",
+                    },
                     onClick: () => {
                         alert("Clicked on Trigger button");
                     },
