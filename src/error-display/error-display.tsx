@@ -17,6 +17,7 @@ export const ErrorDisplay = ({
     description,
     actionButton,
     additionalProps,
+    imageOnly,
     ...otherProps
 }: ErrorDisplayProps): JSX.Element => {
     // =============================================================================
@@ -99,7 +100,7 @@ export const ErrorDisplay = ({
     return (
         <Container {...otherProps} data-testid={testId}>
             <Img {...updatedAssets.img} alt="" data-id="error-display-image" />
-            {renderContentDisplay()}
+            {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}
         </Container>
     );
