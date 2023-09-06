@@ -12,9 +12,8 @@ import {
     HeaderRow,
     LoaderWrapper,
     SelectionBar,
-    SelectionBarCell,
     Table,
-    TableBody,
+    TableContainer,
     TableWrapper,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
@@ -32,6 +31,7 @@ export const DataTable = ({
     loadState = "success",
     enableMultiSelect,
     selectedIds,
+    disabledIds,
     enableSelectAll,
     enableSelectionBar,
     emptyView,
@@ -60,6 +60,10 @@ export const DataTable = ({
 
     const isAlternatingRow = (index: number): boolean => {
         return !!alternatingRows && index % 2 === 0;
+    };
+
+    const isDisabledRow = (rowId: string): boolean => {
+        return !!disabledIds?.includes(rowId);
     };
 
     const getDataTestId = (subStr: string) => {
@@ -192,8 +196,9 @@ export const DataTable = ({
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
         const style = typeof header !== "string" ? header.style : undefined;
         const fieldKey = typeof header === "string" ? header : header.fieldKey;
+        const rowId = row.id.toString();
         const cellData = row[fieldKey];
-        const cellId = `${row.id.toString()}-${fieldKey}`;
+        const cellId = `${rowId}-${fieldKey}`;
 
         return (
             <BodyCell
@@ -202,8 +207,11 @@ export const DataTable = ({
                 style={style}
                 $isCheckbox={false}
             >
-                {typeof cellData === "string" ? (
+                {typeof cellData === "string" ||
+                typeof cellData === "number" ? (
                     <BodyCellContent>{cellData}</BodyCellContent>
+                ) : typeof cellData === "function" ? (
+                    cellData(row, { isSelected: isRowSelected(rowId) })
                 ) : (
                     cellData
                 )}
@@ -224,6 +232,7 @@ export const DataTable = ({
                         onClick={() => {
                             onSelect(rowId, !isRowSelected(rowId));
                         }}
+                        disabled={isDisabledRow(rowId)}
                     />
                 </CheckBoxWrapper>
             </BodyCell>
@@ -270,35 +279,35 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         return (
-            <tr>
-                <SelectionBarCell colSpan={getTotalColumns()}>
-                    <SelectionBar>
-                        <Text.H5 weight="semibold">{`${selectedIds.length} items selected`}</Text.H5>
-                        <ClearSelectionAction onClick={onClearSelectionClick}>
-                            Clear Selection
-                        </ClearSelectionAction>
-                        {selectionBarContent && selectionBarContent()}
-                    </SelectionBar>
-                </SelectionBarCell>
-            </tr>
+            <SelectionBar>
+                <Text.H5 weight="semibold">{`${selectedIds.length} items selected`}</Text.H5>
+                <ClearSelectionAction onClick={onClearSelectionClick}>
+                    Clear Selection
+                </ClearSelectionAction>
+                {selectionBarContent && selectionBarContent()}
+            </SelectionBar>
         );
     };
 
     return (
         <TableWrapper>
-            <Table
-                id={id || "table-wrapper"}
-                data-testid={otherProps["data-testid"] || "table"}
-                className={className}
-            >
-                <TableBody>
-                    {renderHeaders()}
-                    {loadState === "success" ? renderRows() : renderLoader()}
-                    {enableSelectionBar &&
-                        selectedIds?.length > 0 &&
-                        renderSelectionBar()}
-                </TableBody>
-            </Table>
+            <TableContainer>
+                <Table
+                    id={id || "table-wrapper"}
+                    data-testid={otherProps["data-testid"] || "table"}
+                    className={className}
+                >
+                    <tbody>
+                        {renderHeaders()}
+                        {loadState === "success"
+                            ? renderRows()
+                            : renderLoader()}
+                    </tbody>
+                </Table>
+            </TableContainer>
+            {enableSelectionBar &&
+                selectedIds?.length > 0 &&
+                renderSelectionBar()}
         </TableWrapper>
     );
 };

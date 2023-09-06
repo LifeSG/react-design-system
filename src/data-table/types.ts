@@ -9,6 +9,7 @@ export interface DataTableProps {
     /** css class to put on table **/
     className?: string | undefined;
     selectedIds?: string[] | undefined;
+    disabledIds?: string[] | undefined;
     /** enable checkboxes */
     enableMultiSelect?: boolean | undefined;
     /** display select all checkbox */

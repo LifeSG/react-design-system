@@ -38,6 +38,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["String<T>[]"],
             },
             {
+                name: "disabledIds",
+                description: "The disabled item id list",
+                propTypes: ["String<T>[]"],
+            },
+            {
                 name: "sortIndicators",
                 description: "The sort Indicators",
                 propTypes: ["SortIndicatorsProps<T>"],

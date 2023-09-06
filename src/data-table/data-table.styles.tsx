@@ -32,14 +32,19 @@ const fontColor = Color.Neutral[1];
 // STYLES
 // =============================================================================
 export const TableWrapper = styled.div`
-    width: fit-content;
+    width: 100%;
     border: 1px solid ${borderColor};
     border-radius: 0.5rem;
     overflow: auto;
 `;
 
+export const TableContainer = styled.div`
+    width: 100%;
+    max-height: 90vh;
+    overflow: scroll;
+`;
+
 export const Table = styled.table`
-    display: table;
     border-collapse: collapse;
     th:last-child,
     td:last-child {
@@ -54,28 +59,29 @@ export const Table = styled.table`
     }
     max-height: 5rem;
     overflow-y: scroll;
-`;
-
-export const TableBody = styled.tbody`
-    display: block;
-    max-height: 80vh;
+    width: 100%;
 `;
 
 export const HeaderRow = styled.tr`
-    display: table-row;
     background-color: ${DesignToken.Table.Header};
     height: 6rem;
     border-bottom: 1px solid ${borderColor};
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
-    display: table-cell;
     padding: ${(props) =>
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     text-align: left;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
     vertical-align: middle;
     color: ${fontColor};
+    ${(props) => {
+        if (props.$isCheckbox) {
+            return css`
+                width: 4rem;
+            `;
+        }
+    }};
 `;
 
 export const HeaderCellWrapper = styled.div`
@@ -90,7 +96,6 @@ export const HeaderCellWrapper = styled.div`
 `;
 
 export const BodyRow = styled.tr<BodyRowProps>`
-    display: table-row;
     background-color: ${(props) => {
         if (props.$isSelected) {
             return css`
@@ -119,7 +124,6 @@ export const BodyRow = styled.tr<BodyRowProps>`
 `;
 
 export const BodyCell = styled.td<BodyCellProps>`
-    display: table-cell;
     padding: ${(props) =>
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     vertical-align: middle;
@@ -163,19 +167,14 @@ export const EmptyViewCell = styled.td`
     padding: 4rem 0;
 `;
 
-export const SelectionBarCell = styled.td`
-    background-color: ${DesignToken.Table.Cell.Selected};
-    position: sticky;
-    bottom: 0;
-    display: table-cell;
-    height: 3.5rem;
-    padding: 1rem;
-`;
-
 export const SelectionBar = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 3.5rem;
+    padding: 1rem;
+    border-top: 1px solid ${borderColor};
+    background-color: ${DesignToken.Table.Cell.Selected};
 `;
 
 export const ClearSelectionAction = styled(Text.H5)`
