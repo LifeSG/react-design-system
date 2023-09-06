@@ -10,7 +10,15 @@ export const PropsTable = () => (
     <Table>
         <tr>
             <NameCol mandatory>type</NameCol>
-            <DescriptionCol propTypes={[`"success"`, `"warning"`, `"error"`]}>
+            <DescriptionCol
+                propTypes={[
+                    `"warning"`,
+                    `"error"`,
+                    `"success"`,
+                    `"information"`,
+                    `"description"`,
+                ]}
+            >
                 The style of the Button
             </DescriptionCol>
             <DefaultCol />
@@ -30,6 +38,27 @@ export const PropsTable = () => (
             >
                 The attributes of an action link that performs an action on
                 click
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>sizeType</NameCol>
+            <DescriptionCol propTypes={[`"default"`, `"small"`]}>
+                Specifies the variant od size of alert
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>enableIcon</NameCol>
+            <DescriptionCol propTypes={[`boolean`]}>
+                Specifies if the aleet will be display icon
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>linkIconType(hyperLink)</NameCol>
+            <DescriptionCol propTypes={[`"internalLink"`, `"externalLink"`]}>
+                Specifies if the hyperlink will be display icon
             </DescriptionCol>
             <DefaultCol />
         </tr>

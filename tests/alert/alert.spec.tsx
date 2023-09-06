@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Alert } from "../../src";
-import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
+import { Color } from "../../src";
 
 // =============================================================================
 // UNIT TESTS
@@ -18,10 +18,12 @@ describe("Alert", () => {
 
     describe("type", () => {
         it.each`
-            type         | backgroundColor                              | borderColor
-            ${"success"} | ${BaseColorSet.Validation.Green.Background}  | ${BaseColorSet.Validation.Green.Border}
-            ${"warning"} | ${BaseColorSet.Validation.Orange.Background} | ${BaseColorSet.Validation.Orange.Background}
-            ${"error"}   | ${BaseColorSet.Validation.Red.Background}    | ${BaseColorSet.Validation.Red.Background}
+            type             | backgroundColor                       | borderColor
+            ${"success"}     | ${Color.Validation.Green.Background}  | ${Color.Validation.Green.Border}
+            ${"warning"}     | ${Color.Validation.Orange.Background} | ${Color.Validation.Orange.Border}
+            ${"error"}       | ${Color.Validation.Red.Background}    | ${Color.Validation.Red.Border}
+            ${"info"}        | ${Color.Validation.Blue.Background}   | ${Color.Validation.Blue.Border}
+            ${"description"} | ${Color.Neutral[7]}                   | ${Color.Neutral[4]}
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {
@@ -77,6 +79,18 @@ describe("Alert", () => {
         render(<Alert type="success">{CUSTOM_TEXT}</Alert>);
 
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
+    });
+
+    describe("sizeType", () => {
+        it("should render small variant if the prop is specified", () => {
+            render(
+                <Alert type="success" sizeType={"small"}>
+                    {DEFAULT_TEXT}
+                </Alert>
+            );
+
+            expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
+        });
     });
 });
 

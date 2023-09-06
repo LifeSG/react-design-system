@@ -30,17 +30,41 @@ import { Alert } from "@lifesg/react-design-system/alert";
                 This serves as a acknowledgement of a successful action.
             </Alert>
             <br />
-            <Alert
-                type="warning"
-                actionLink={{
-                    children: "Click here",
-                    href: "https://www.google.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                }}
-            >
-                This warning alert comes with an action link
+            <Alert type="information">
+                This will serves as a acknowledgement of a information action.
             </Alert>
+            <br />
+            <Alert type="description">
+                This will serves as a acknowledgement of a description action.
+            </Alert>
+            <br />
+        </>
+    </Story>
+</Canvas>
+
+<Canvas>
+    <Story name="With Icons">
+        <>
+            <Alert type="error" enableIcon>
+                This will notify users of an error that has occurred.
+            </Alert>
+            <br />
+            <Alert type="warning" enableIcon>
+                This will serves as a warning or disclaimer to users.
+            </Alert>
+            <br />
+            <Alert type="success" enableIcon>
+                This will serves as a acknowledgement of a successful action.
+            </Alert>
+            <br />
+            <Alert type="information" enableIcon>
+                This will serves as a acknowledgement of a information action.
+            </Alert>
+            <br />
+            <Alert type="description" enableIcon>
+                This will serves as a acknowledgement of a description action.
+            </Alert>
+            <br />
         </>
     </Story>
 </Canvas>
@@ -101,6 +125,135 @@ Or if you require a custom display, you can construct your layout and pass it in
                     Third
                 </li>
             </ul>
+        </Alert>
+    </Story>
+</Canvas>
+
+<Heading3>With default variant</Heading3>
+
+<Canvas>
+    <Story name="With default size">
+        <>
+            <Alert type="warning">
+                This will serves as a warning or disclaimer to users.
+            </Alert>
+            <br />
+            <Alert
+                type="warning"
+                linkIconType="internalLink"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                This will serves as a warning or disclaimer to users.
+            </Alert>
+            <br />
+            <Alert type="warning" enableIcon>
+                This will serves as a warning or disclaimer to users.
+            </Alert>
+            <br />
+            <Alert
+                type="description"
+                enableIcon
+                type="warning"
+                linkIconType="internalLink"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                This will serves as a warning or disclaimer to users.
+            </Alert>
+            <br />
+        </>
+    </Story>
+</Canvas>
+
+<Heading3>With small variant</Heading3>
+
+<Canvas>
+    <Story name="With small size">
+        <>
+            <Alert type="error" sizeType="small">
+                <p>This will notify users of an error that has occurred.</p>
+            </Alert>
+            <br />
+            <Alert
+                type="error"
+                sizeType="small"
+                linkIconType="internalLink"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                <p>This will notify users of an error that has occurred.</p>
+            </Alert>
+            <br />
+            <Alert type="error" enableIcon sizeType="small">
+                <p>This will notify users of an error that has occurred.</p>
+            </Alert>
+            <br />
+            <Alert
+                type="error"
+                enableIcon
+                sizeType="small"
+                linkIconType="internalLink"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                <p>This will notify users of an error that has occurred.</p>
+            </Alert>
+            <br />
+        </>
+    </Story>
+</Canvas>
+
+<Heading3>With hyperlink</Heading3>
+
+<Canvas>
+    <Story name="With hyperlink">
+        <Alert
+            type="warning"
+            linkIconType="internalLink"
+            actionLink={{
+                children: "Hyperlink",
+                href: "https://www.life.gov.sg/",
+                target: "_blank",
+                rel: "noopener noreferrer",
+            }}
+        >
+            <p>
+                An alert box with an internal hyperlink for redirection to pages
+                within the same product. E.g. LifeSG.
+            </p>
+        </Alert>
+        <br />
+        <Alert
+            type="success"
+            linkIconType="externalLink"
+            actionLink={{
+                children: "Hyperlink",
+                href: "https://www.google.com",
+                target: "_blank",
+                rel: "noopener noreferrer",
+            }}
+        >
+            <p>
+                An alert box with an external hyperlink for redirecting users to
+                pages outside of the product.
+            </p>
         </Alert>
     </Story>
 </Canvas>
