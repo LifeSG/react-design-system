@@ -35,6 +35,7 @@ export const TableWrapper = styled.div`
     width: 100%;
     border: 1px solid ${borderColor};
     border-radius: 0.5rem;
+    overflow: auto;
 `;
 
 export const Table = styled.table`
@@ -133,6 +134,7 @@ export const LoaderWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 4rem 0;
 `;
 
 export const ErrorDisplayElement = styled(ErrorDisplay)`
