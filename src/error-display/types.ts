@@ -41,4 +41,5 @@ export interface ErrorDisplayProps
     extends React.HTMLAttributes<HTMLElement>,
         ErrorDisplayAttributes {
     type: ErrorDisplayType;
+    "data-testid"?: string | undefined;
 }

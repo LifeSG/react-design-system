@@ -30,6 +30,7 @@ export interface FileInputProps {
     disabled?: boolean | undefined;
     id?: string | undefined;
     className?: string | undefined;
+    "data-testid"?: string | undefined;
     name?: string | undefined;
 }
 
