@@ -123,6 +123,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Additional properties for certain error types",
                 propTypes: ["MaintenanceAdditionalAttributes"],
             },
+            {
+                name: "imageOnly",
+                description:
+                    "Specifying will allow only the image to be rendered",
+                propTypes: ["boolean"],
+            },
         ],
     },
     {

@@ -41,6 +41,22 @@ describe("ErrorDisplay", () => {
         ).toBeInTheDocument();
     });
 
+    it("should not render any text content if the imageOnly prop is specified", () => {
+        render(
+            <ErrorDisplay
+                type="404"
+                title={CUSTOM_TITLE}
+                description={CUSTOM_DESCRIPTION}
+                imageOnly
+            />
+        );
+
+        expect(
+            screen.queryByRole("heading", { level: 1, name: CUSTOM_TITLE })
+        ).not.toBeInTheDocument();
+        expect(screen.queryByText(CUSTOM_DESCRIPTION)).not.toBeInTheDocument();
+    });
+
     describe("description", () => {
         it("should be able to render custom description", () => {
             render(

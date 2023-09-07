@@ -17,6 +17,7 @@ export const ErrorDisplay = ({
     description,
     actionButton,
     additionalProps,
+    imageOnly,
     ...otherProps
 }: ErrorDisplayProps): JSX.Element => {
     // =============================================================================
@@ -65,21 +66,41 @@ export const ErrorDisplay = ({
         ...(getCustomDescription() && { description: getCustomDescription() }),
     };
 
+    const renderContentDisplay = () => {
+        if (updatedAssets.title || updatedAssets.description) {
+            return (
+                <TextContainer>
+                    {updatedAssets.title && (
+                        <Title
+                            data-testid={`${testId}--title`}
+                            data-id="error-display-title"
+                        >
+                            {updatedAssets.title}
+                        </Title>
+                    )}
+                    {updatedAssets.description && (
+                        <DescriptionContainer
+                            data-testid={`${testId}--description`}
+                            data-id="error-display-description"
+                        >
+                            {typeof updatedAssets.description === "string" ? (
+                                <p>{updatedAssets.description}</p>
+                            ) : (
+                                updatedAssets.description
+                            )}
+                        </DescriptionContainer>
+                    )}
+                </TextContainer>
+            );
+        }
+
+        return null;
+    };
+
     return (
         <Container {...otherProps} data-testid={testId}>
-            <Img {...updatedAssets.img} alt="" />
-            <TextContainer>
-                <Title data-testid={`${testId}--title`}>
-                    {updatedAssets.title}
-                </Title>
-                <DescriptionContainer data-testid={`${testId}--description`}>
-                    {typeof updatedAssets.description === "string" ? (
-                        <p>{updatedAssets.description}</p>
-                    ) : (
-                        updatedAssets.description
-                    )}
-                </DescriptionContainer>
-            </TextContainer>
+            <Img {...updatedAssets.img} alt="" data-id="error-display-image" />
+            {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}
         </Container>
     );
