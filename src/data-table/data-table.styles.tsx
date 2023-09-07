@@ -42,7 +42,6 @@ export const TableWrapper = styled.div`
 
 export const TableContainer = styled.div`
     overflow: scroll;
-    flex-grow: 1;
 `;
 
 export const Table = styled.table`
@@ -58,13 +57,9 @@ export const Table = styled.table`
     tr:nth-child(2) {
         border-top: none;
     }
-    max-height: 5rem;
-    overflow-y: scroll;
-    width: 100%;
 `;
 
 export const SelectionBar = styled.div`
-    flex: 1;
     display: flex;
     flex-direction: row;
     width: 100%;
