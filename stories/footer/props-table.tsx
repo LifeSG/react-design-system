@@ -22,7 +22,7 @@ const DATA: ApiTableSectionProps[] = [
                         <code>Footer</code>
                     </>
                 ),
-                propTypes: ["JEX.Element", "JSX.Element[]"],
+                propTypes: ["JSX.Element", "JSX.Element[]"],
             },
             {
                 name: "showDownloadAddon",
@@ -77,6 +77,21 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies the layout type of the content in the footer",
                 propTypes: ["stretch | default"],
                 defaultValue: "default",
+            },
+            {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
             },
         ],
     },

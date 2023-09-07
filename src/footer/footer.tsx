@@ -30,6 +30,7 @@ export const Footer = <T,>({
     copyrightInfo,
     onFooterLinkClick,
     layout = "default",
+    ...otherProps
 }: FooterProps<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -132,7 +133,7 @@ export const Footer = <T,>({
     };
 
     return (
-        <BaseFooter>
+        <BaseFooter {...otherProps}>
             {renderTopSection()}
             <MobileOnlyBorder />
             <BottomSection type="grid" stretch={isStretch}>

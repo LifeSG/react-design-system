@@ -54,17 +54,17 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "id",
-                description: (
-                    <>
-                        A unique identifier for each <code>Breadcrumb</code>
-                        &nbsp;item
-                    </>
-                ),
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
                 propTypes: ["string"],
             },
             {
                 name: "data-testid",
-                description: "The id used for testing purposes",
+                description: "The test identifier for the component",
                 propTypes: ["string"],
             },
         ],

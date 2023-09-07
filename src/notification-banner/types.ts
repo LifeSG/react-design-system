@@ -7,6 +7,7 @@ export interface NotificationBannerProps
     visible?: boolean | undefined;
     sticky?: boolean | undefined;
     onDismiss?: (() => void) | undefined;
+    "data-testid"?: string | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps

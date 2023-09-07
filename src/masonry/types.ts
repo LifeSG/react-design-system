@@ -12,6 +12,7 @@ export interface ColumnCountAttribute {
 export interface MasonryGridProps extends React.HTMLAttributes<HTMLDivElement> {
     numOfCols: ColumnCountAttribute;
     children: JSX.Element | JSX.Element[];
+    "data-testid"?: string | undefined;
 }
 
 export interface MasonryTileProps extends React.HTMLAttributes<HTMLDivElement> {

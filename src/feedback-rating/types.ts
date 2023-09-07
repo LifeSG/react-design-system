@@ -3,6 +3,8 @@ export interface FeedbackRatingProps {
     description?: string | undefined;
     buttonLabel?: string | undefined;
     className?: string | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
     rating: number;
     onRatingChange: (value: number) => void;
     onSubmit: () => void;

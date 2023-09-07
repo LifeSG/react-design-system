@@ -322,12 +322,12 @@ export const UnitNumberInput = ({
 
     return (
         <InputWrapper
+            {...otherProps}
             ref={nodeRef}
             onClick={handleNodeClick}
             $disabled={disabled}
             $error={error}
             $readOnly={readOnly}
-            data-testid={otherProps["data-testid"]}
             tabIndex={-1}
             onBlur={handleNodeBlur}
         >

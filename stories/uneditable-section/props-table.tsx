@@ -50,6 +50,21 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                     "The body of the entire section. Gives flexibility for custom composition of the component",
                 propTypes: [`JSX.Element[]`, `JSX.Element`],
             },
+            {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
         ],
     },
     {
