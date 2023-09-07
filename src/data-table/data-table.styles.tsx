@@ -32,6 +32,8 @@ const fontColor = Color.Neutral[1];
 // STYLES
 // =============================================================================
 export const TableWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
     width: 100%;
     border: 1px solid ${borderColor};
     border-radius: 0.5rem;
@@ -39,9 +41,8 @@ export const TableWrapper = styled.div`
 `;
 
 export const TableContainer = styled.div`
-    width: 100%;
-    max-height: 90vh;
     overflow: scroll;
+    flex-grow: 1;
 `;
 
 export const Table = styled.table`
@@ -60,6 +61,17 @@ export const Table = styled.table`
     max-height: 5rem;
     overflow-y: scroll;
     width: 100%;
+`;
+
+export const SelectionBar = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 3.5rem;
+    padding: 1rem;
+    border-top: 1px solid ${borderColor};
+    background-color: ${DesignToken.Table.Cell.Selected};
 `;
 
 export const HeaderRow = styled.tr`
@@ -165,16 +177,6 @@ export const ErrorDisplayElement = styled(ErrorDisplay)`
 
 export const EmptyViewCell = styled.td`
     padding: 4rem 0;
-`;
-
-export const SelectionBar = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 3.5rem;
-    padding: 1rem;
-    border-top: 1px solid ${borderColor};
-    background-color: ${DesignToken.Table.Cell.Selected};
 `;
 
 export const ClearSelectionAction = styled(Text.H5)`

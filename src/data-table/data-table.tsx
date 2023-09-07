@@ -290,13 +290,13 @@ export const DataTable = ({
     };
 
     return (
-        <TableWrapper>
+        <TableWrapper
+            id={id || "table-wrapper"}
+            data-testid={otherProps["data-testid"] || "table"}
+            className={className}
+        >
             <TableContainer>
-                <Table
-                    id={id || "table-wrapper"}
-                    data-testid={otherProps["data-testid"] || "table"}
-                    className={className}
-                >
+                <Table>
                     <tbody>
                         {renderHeaders()}
                         {loadState === "success"

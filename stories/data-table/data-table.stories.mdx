@@ -8,6 +8,7 @@ import {
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
 import { useState } from "react";
+import { MaxHeightSetDataTable } from "./doc-elements.tsx";
 
 <Meta title="Modules/DataTable" component={DataTable} />
 
@@ -290,7 +291,7 @@ Table with selection bar
                 }
             };
             return (
-                <DataTable
+                <MaxHeightSetDataTable
                     headers={[
                         {
                             fieldKey: "status",
