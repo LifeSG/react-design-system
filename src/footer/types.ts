@@ -32,6 +32,9 @@ export interface FooterProps<T = void> {
     onFooterLinkClick?: ((link: FooterLinkProps<T>) => void) | undefined;
     /** Determines if the content of the footer scales with the max width */
     layout?: "default" | "stretch" | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
+    className?: string | undefined;
 }
 
 // TODO: Update component and migration

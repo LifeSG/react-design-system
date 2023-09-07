@@ -11,6 +11,7 @@ export const DropdownWrapper = ({
     testId,
     onBlur,
     readOnly,
+    className,
 }: DropdownSelectorProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -42,7 +43,7 @@ export const DropdownWrapper = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Wrapper>
+        <Wrapper className={className}>
             <ElementBoundary
                 ref={nodeRef}
                 error={error && !show}

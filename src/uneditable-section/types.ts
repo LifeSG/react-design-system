@@ -17,4 +17,7 @@ export interface UneditableSectionProps {
     bottomSection?: JSX.Element | undefined;
     /** The body of the entire section */
     children?: JSX.Element | JSX.Element[] | undefined;
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
+    id?: string | undefined;
 }

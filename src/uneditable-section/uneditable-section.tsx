@@ -16,6 +16,7 @@ export const UneditableSectionBase = ({
     topSection,
     bottomSection,
     children,
+    ...otherProps
 }: UneditableSectionProps) => {
     // =============================================================================
     // RENDER FUNCTIONS
@@ -57,7 +58,7 @@ export const UneditableSectionBase = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper {...otherProps}>
             <Container type="grid">{renderChildren()}</Container>
         </Wrapper>
     );
