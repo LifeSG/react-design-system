@@ -80,6 +80,21 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "enableSelectionBar",
+                description: "The show selection bar prop",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "selectionBarContent",
+                description: "The selection bar custom elements",
+                propTypes: ["(() => ReactNode)"],
+            },
+            {
+                name: "onClearSelectionClick",
+                description: "On clear selection click",
+                propTypes: ["() => void"],
+            },
+            {
                 name: "onSelect",
                 description: "On row select",
                 propTypes: ["(rowId: string, isSelected: boolean) => void"],
