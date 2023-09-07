@@ -90,7 +90,7 @@ const Component = (
                 accept={accept}
                 capture={capture}
                 multiple={multiple}
-                data-testid={`${testId}-input` || "dropzone-input"}
+                data-testid={testId ? `${testId}-input` : "dropzone-input"}
                 onChange={handleChange}
             />
             {children}

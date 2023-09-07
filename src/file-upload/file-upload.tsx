@@ -24,6 +24,7 @@ export const FileUpload = ({
     className,
     name,
     id,
+    "data-testid": testId,
     accept,
     capture,
     multiple,
@@ -102,6 +103,7 @@ export const FileUpload = ({
                 capture={capture}
                 border={styleType === "bordered"}
                 className={className}
+                data-testid={testId}
                 name={name}
                 multiple={multiple}
                 disabled={disabled || reachedMaxFiles() || readOnly}
