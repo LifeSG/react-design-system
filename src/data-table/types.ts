@@ -15,9 +15,9 @@ export interface DataTableProps {
     /** display select all checkbox */
     enableSelectAll?: boolean | undefined;
     /** display action bar */
-    enableSelectionBar?: boolean | undefined;
+    enableActionBar?: boolean | undefined;
     enableStickyHeader?: boolean | undefined;
-    selectionBarContent?: ReactNode | undefined;
+    actionBarContent?: ReactNode | undefined;
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
     onSelectAll?: ((isSelected: boolean) => void) | undefined;
     onHeaderClick?: ((fieldKey: string) => void) | undefined;

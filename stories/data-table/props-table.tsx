@@ -80,8 +80,8 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "enableSelectionBar",
-                description: "The show selection bar prop",
+                name: "enableActionBar",
+                description: "The show action bar prop",
                 propTypes: ["boolean"],
             },
             {
@@ -91,8 +91,8 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
-                name: "selectionBarContent",
-                description: "The selection bar custom elements",
+                name: "actionBarContent",
+                description: "The action bar custom elements",
                 propTypes: ["ReactNode"],
             },
             {

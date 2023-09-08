@@ -34,9 +34,9 @@ export const DataTable = ({
     selectedIds,
     disabledIds,
     enableSelectAll,
-    enableSelectionBar,
+    enableActionBar,
     emptyView,
-    selectionBarContent,
+    actionBarContent,
     enableStickyHeader = false,
     renderCustomEmptyView,
     onHeaderClick,
@@ -57,8 +57,11 @@ export const DataTable = ({
     // =============================================================================
     useEffect(() => {
         scrollHandler();
-        checkLastBorder();
     }, []);
+
+    useEffect(() => {
+        checkLastBorder();
+    }, [rows]);
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -68,7 +71,9 @@ export const DataTable = ({
     };
 
     const isIndeterminateCheckbox = (): boolean => {
-        return selectedIds?.length !== 0 && !isAllCheckboxSelected();
+        return (
+            selectedIds && selectedIds.length !== 0 && !isAllCheckboxSelected()
+        );
     };
 
     const isRowSelected = (rowId: string): boolean => {
@@ -314,11 +319,13 @@ export const DataTable = ({
     const renderSelectionBar = () => {
         return (
             <SelectionBar $isFloating={!isAtBottom}>
-                <Text.H5 weight="semibold">{`${selectedIds.length} items selected`}</Text.H5>
+                <Text.H5 weight="semibold">{`${selectedIds.length} item${
+                    selectedIds.length > 1 && "s"
+                } selected`}</Text.H5>
                 <Button.Small styleType="link" onClick={onClearSelectionClick}>
-                    Clear Selection
+                    Clear selection
                 </Button.Small>
-                {selectionBarContent}
+                {actionBarContent}
             </SelectionBar>
         );
     };
@@ -333,7 +340,7 @@ export const DataTable = ({
                 onScroll={scrollHandler}
                 ref={tableRef}
                 $isRoundBorder={
-                    !enableSelectionBar || !isAtBottom || !selectedIds.length
+                    !enableActionBar || !isAtBottom || !selectedIds.length
                 }
             >
                 <Table $showBorder={showLastBorder}>
@@ -345,7 +352,8 @@ export const DataTable = ({
                     </tbody>
                 </Table>
             </TableContainer>
-            {enableSelectionBar &&
+            {enableActionBar &&
+                selectedIds &&
                 selectedIds?.length > 0 &&
                 renderSelectionBar()}
         </TableWrapper>
