@@ -16,7 +16,7 @@ export interface DataTableProps {
     enableSelectAll?: boolean | undefined;
     /** display action bar */
     enableSelectionBar?: boolean | undefined;
-    selectionBarContent?: (() => ReactNode) | undefined;
+    selectionBarContent?: ReactNode | undefined;
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
     onSelectAll?: ((isSelected: boolean) => void) | undefined;
     onHeaderClick?: ((fieldKey: string) => void) | undefined;

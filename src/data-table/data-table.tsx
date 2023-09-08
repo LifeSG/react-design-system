@@ -4,7 +4,6 @@ import {
     BodyCellContent,
     BodyRow,
     CheckBoxWrapper,
-    ClearSelectionAction,
     EmptyViewCell,
     ErrorDisplayElement,
     HeaderCell,
@@ -20,6 +19,8 @@ import { DataTableProps, HeaderProps, RowProps } from "./types";
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 import { Checkbox } from "../checkbox";
+import { Button } from "../button";
+import { useEffect, useRef, useState } from "react";
 
 export const DataTable = ({
     id,
@@ -43,6 +44,19 @@ export const DataTable = ({
     onClearSelectionClick,
     ...otherProps
 }: DataTableProps) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const [atBottom, setAtBottom] = useState(false);
+    const tableRef = useRef<HTMLInputElement>();
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        scrollHandler();
+    }, []);
+
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
@@ -75,10 +89,18 @@ export const DataTable = ({
         return headers.length + (enableMultiSelect ? 1 : 0);
     };
 
+    const scrollHandler = () => {
+        if (!tableRef.current) return;
+        const bottom =
+            tableRef.current.scrollHeight -
+                Math.ceil(tableRef.current.scrollTop) ===
+            tableRef.current.clientHeight;
+        setAtBottom(bottom);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-
     const renderHeaders = () => (
         <HeaderRow>
             {enableMultiSelect && renderHeaderCheckBox()}
@@ -279,12 +301,12 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         return (
-            <SelectionBar>
+            <SelectionBar $isFloating={!atBottom}>
                 <Text.H5 weight="semibold">{`${selectedIds.length} items selected`}</Text.H5>
-                <ClearSelectionAction onClick={onClearSelectionClick}>
+                <Button.Small styleType="link" onClick={onClearSelectionClick}>
                     Clear Selection
-                </ClearSelectionAction>
-                {selectionBarContent && selectionBarContent()}
+                </Button.Small>
+                {selectionBarContent}
             </SelectionBar>
         );
     };
@@ -295,7 +317,7 @@ export const DataTable = ({
             data-testid={otherProps["data-testid"] || "table"}
             className={className}
         >
-            <TableContainer>
+            <TableContainer onScroll={scrollHandler} ref={tableRef}>
                 <Table>
                     <tbody>
                         {renderHeaders()}

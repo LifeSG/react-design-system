@@ -22,6 +22,10 @@ interface BodyCellProps {
     $isCheckbox: boolean;
 }
 
+interface SelectionBarProps {
+    $isFloating: boolean;
+}
+
 // =============================================================================
 // STYLES CONSTANTS
 // =============================================================================
@@ -59,14 +63,23 @@ export const Table = styled.table`
     }
 `;
 
-export const SelectionBar = styled.div`
+export const SelectionBar = styled.div<SelectionBarProps>`
     display: flex;
     flex-direction: row;
+    align-items: center;
     width: 100%;
     height: 3.5rem;
     padding: 1rem;
     border-top: 1px solid ${borderColor};
     background-color: ${DesignToken.Table.Cell.Selected};
+    ${(props) => {
+        if (props.$isFloating) {
+            return css`
+                border-radius: 4px;
+                box-shadow: 0px 0px 4px 0px rgba(40, 40, 40, 0.25);
+            `;
+        }
+    }};
 `;
 
 export const HeaderRow = styled.tr`
@@ -172,10 +185,4 @@ export const ErrorDisplayElement = styled(ErrorDisplay)`
 
 export const EmptyViewCell = styled.td`
     padding: 4rem 0;
-`;
-
-export const ClearSelectionAction = styled(Text.H5)`
-    color: ${Color.Primary};
-    cursor: pointer;
-    margin: 0 1rem;
 `;

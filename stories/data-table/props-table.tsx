@@ -87,7 +87,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "selectionBarContent",
                 description: "The selection bar custom elements",
-                propTypes: ["(() => ReactNode)"],
+                propTypes: ["ReactNode"],
             },
             {
                 name: "onClearSelectionClick",
