@@ -8,6 +8,15 @@ import { Text } from "../text";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
+interface TableContainerProps {
+    $isRoundBorder: boolean;
+}
+interface TableProps {
+    $showBorder: boolean;
+}
+interface HeaderRowProps {
+    $isSticky: boolean;
+}
 interface HeaderCellProps {
     $clickable: boolean;
     $isCheckbox: boolean;
@@ -38,18 +47,20 @@ const fontColor = Color.Neutral[1];
 export const TableWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    border: 1px solid ${borderColor};
-    border-radius: 0.5rem;
+    width: fit-content;
+    position: relative;
+`;
+
+export const TableContainer = styled.div<TableContainerProps>`
     overflow: auto;
+    flex: 1;
+    border: 1px solid ${borderColor};
+    border-radius: ${(props) =>
+        props.$isRoundBorder ? "0.5rem" : "0.5rem 0.5rem 0 0"};
 `;
 
-export const TableContainer = styled.div`
-    overflow: scroll;
-`;
-
-export const Table = styled.table`
-    border-collapse: collapse;
+export const Table = styled.table<TableProps>`
+    border-collapse: separate;
     th:last-child,
     td:last-child {
         padding-right: 1.5rem;
@@ -58,34 +69,54 @@ export const Table = styled.table`
     td:first-child {
         padding-left: 1.5rem;
     }
-    tr:nth-child(2) {
-        border-top: none;
+    tr:last-child {
+        td {
+            border-bottom: ${(props) =>
+                props.$showBorder ? "1px solid ${borderColor}" : "none"};
+        }
     }
 `;
 
 export const SelectionBar = styled.div<SelectionBarProps>`
+    bottom: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
     height: 3.5rem;
     padding: 1rem;
-    border-top: 1px solid ${borderColor};
+    border: 1px solid ${borderColor};
+    border-radius: 0 0 4px 4px;
+    border-top: none;
     background-color: ${DesignToken.Table.Cell.Selected};
+    transition: all 1s ease;
+
     ${(props) => {
         if (props.$isFloating) {
             return css`
+                position: absolute;
                 border-radius: 4px;
                 box-shadow: 0px 0px 4px 0px rgba(40, 40, 40, 0.25);
+                transform: translateY(-1rem) translateX(-0.5%);
+                width: 101%;
             `;
         }
     }};
 `;
 
-export const HeaderRow = styled.tr`
+export const HeaderRow = styled.tr<HeaderRowProps>`
     background-color: ${DesignToken.Table.Header};
     height: 6rem;
     border-bottom: 1px solid ${borderColor};
+    ${(props) => {
+        if (props.$isSticky) {
+            return css`
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            `;
+        }
+    }};
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
@@ -95,6 +126,7 @@ export const HeaderCell = styled.th<HeaderCellProps>`
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
     vertical-align: middle;
     color: ${fontColor};
+    border-bottom: 1px solid ${borderColor};
     ${(props) => {
         if (props.$isCheckbox) {
             return css`
@@ -148,6 +180,7 @@ export const BodyCell = styled.td<BodyCellProps>`
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     vertical-align: middle;
     color: ${fontColor};
+    border-bottom: 1px solid ${borderColor};
 `;
 
 export const BodyCellContent = styled(Text.Body)`

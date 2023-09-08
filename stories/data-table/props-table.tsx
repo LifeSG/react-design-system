@@ -85,6 +85,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "enableStickyHeader",
+                description: "The header will stick to the top",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "selectionBarContent",
                 description: "The selection bar custom elements",
                 propTypes: ["ReactNode"],

@@ -37,6 +37,7 @@ export const DataTable = ({
     enableSelectionBar,
     emptyView,
     selectionBarContent,
+    enableStickyHeader = false,
     renderCustomEmptyView,
     onHeaderClick,
     onSelect,
@@ -47,7 +48,8 @@ export const DataTable = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [atBottom, setAtBottom] = useState(false);
+    const [isAtBottom, setIsAtBottom] = useState(false);
+    const [showLastBorder, setShowLastBorder] = useState(false);
     const tableRef = useRef<HTMLInputElement>();
 
     // =============================================================================
@@ -55,6 +57,7 @@ export const DataTable = ({
     // =============================================================================
     useEffect(() => {
         scrollHandler();
+        checkLastBorder();
     }, []);
 
     // ===========================================================================
@@ -73,7 +76,7 @@ export const DataTable = ({
     };
 
     const isAlternatingRow = (index: number): boolean => {
-        return !!alternatingRows && index % 2 === 0;
+        return !!alternatingRows && index % 2 === 1;
     };
 
     const isDisabledRow = (rowId: string): boolean => {
@@ -95,17 +98,26 @@ export const DataTable = ({
             tableRef.current.scrollHeight -
                 Math.ceil(tableRef.current.scrollTop) ===
             tableRef.current.clientHeight;
-        setAtBottom(bottom);
+        setIsAtBottom(bottom);
+    };
+
+    const checkLastBorder = () => {
+        setShowLastBorder(
+            tableRef.current?.scrollHeight >
+                (tableRef.current?.childNodes[0] as HTMLElement).clientHeight
+        );
     };
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeaders = () => (
-        <HeaderRow>
-            {enableMultiSelect && renderHeaderCheckBox()}
-            {headers.map(renderHeaderCell)}
-        </HeaderRow>
+        <thead>
+            <HeaderRow $isSticky={enableStickyHeader}>
+                {enableMultiSelect && renderHeaderCheckBox()}
+                {headers.map(renderHeaderCell)}
+            </HeaderRow>
+        </thead>
     );
 
     const renderHeaderCell = (header: HeaderProps) => {
@@ -301,7 +313,7 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         return (
-            <SelectionBar $isFloating={!atBottom}>
+            <SelectionBar $isFloating={!isAtBottom}>
                 <Text.H5 weight="semibold">{`${selectedIds.length} items selected`}</Text.H5>
                 <Button.Small styleType="link" onClick={onClearSelectionClick}>
                     Clear Selection
@@ -317,10 +329,16 @@ export const DataTable = ({
             data-testid={otherProps["data-testid"] || "table"}
             className={className}
         >
-            <TableContainer onScroll={scrollHandler} ref={tableRef}>
-                <Table>
+            <TableContainer
+                onScroll={scrollHandler}
+                ref={tableRef}
+                $isRoundBorder={
+                    !enableSelectionBar || !isAtBottom || !selectedIds.length
+                }
+            >
+                <Table $showBorder={showLastBorder}>
+                    {renderHeaders()}
                     <tbody>
-                        {renderHeaders()}
                         {loadState === "success"
                             ? renderRows()
                             : renderLoader()}
