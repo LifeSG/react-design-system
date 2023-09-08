@@ -291,145 +291,169 @@ Table with selection bar
                 }
             };
             return (
-                <MaxHeightSetDataTable
-                    headers={[
-                        {
-                            fieldKey: "status",
-                            label: "Status",
-                            style: { width: "7.5rem" },
-                        },
-                        {
-                            fieldKey: "time",
-                            label: "Time",
-                            style: { width: "18rem" },
-                        },
-                        {
-                            fieldKey: "resource",
-                            label: "Resource",
-                            style: { width: "12rem" },
-                        },
-                        {
-                            fieldKey: "title",
-                            label: "Title",
-                        },
-                    ]}
-                    rows={[
-                        {
-                            id: "100",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 1",
-                        },
-                        {
-                            id: "102",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 2",
-                        },
-                        {
-                            id: "103",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 3",
-                        },
-                        {
-                            id: "104",
-                            status: "SampleRow",
-                            time: "07/Aug/2023 12.30pm",
-                            resource: "Test",
-                            title: "Titile 4",
-                        },
-                        {
-                            id: "105",
-                            status: "CheckRow",
-                            time: "07/Aug/2023 1.30pm",
-                            resource: "Test",
-                            title: "Titile 5",
-                        },
-                        {
-                            id: "110",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 6",
-                        },
-                        {
-                            id: "112",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 7",
-                        },
-                        {
-                            id: "113",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 8",
-                        },
-                        {
-                            id: "114",
-                            status: "SampleRow",
-                            time: "07/Aug/2023 12.30pm",
-                            resource: "Test",
-                            title: "Titile 9",
-                        },
-                        {
-                            id: "115",
-                            status: "CheckRow",
-                            time: "07/Aug/2023 1.30pm",
-                            resource: "Test",
-                            title: "Titile 10",
-                        },
-                        {
-                            id: "120",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 11",
-                        },
-                        {
-                            id: "122",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 12",
-                        },
-                        {
-                            id: "123",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 13",
-                        },
-                        {
-                            id: "124",
-                            status: "SampleRow",
-                            time: "07/Aug/2023 12.30pm",
-                            resource: "Test",
-                            title: "Titile 14",
-                        },
-                        {
-                            id: "125",
-                            status: "CheckRow",
-                            time: "07/Aug/2023 1.30pm",
-                            resource: "Test",
-                            title: "Titile 15",
-                        },
-                    ]}
-                    alternatingRows={true}
-                    enableMultiSelect={true}
-                    enableSelectAll={true}
-                    enableSelectionBar={true}
-                    selectedIds={selected}
-                    onSelect={handleOnClickSelect}
-                    onClearSelectionClick={() => {
-                        setSelected([]);
-                    }}
-                />
+                <>
+                    <div>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Quisque suscipit eros non suscipit rutrum. Donec mollis,
+                        tortor in efficitur suscipit, diam est malesuada urna,
+                        id convallis magna sapien a magna. Vestibulum in
+                        suscipit ligula. Vestibulum eu efficitur eros. Proin
+                        venenatis diam in lectus volutpat ultricies. Donec in
+                        elit ac quam porttitor volutpat venenatis ac nisi. Nam
+                        semper elit felis, vel pellentesque diam accumsan nec.
+                        Quisque pretium at nunc vel imperdiet.
+                    </div>
+                    <MaxHeightSetDataTable
+                        headers={[
+                            {
+                                fieldKey: "status",
+                                label: "Status",
+                                style: { width: "7.5rem" },
+                            },
+                            {
+                                fieldKey: "time",
+                                label: "Time",
+                                style: { width: "18rem" },
+                            },
+                            {
+                                fieldKey: "resource",
+                                label: "Resource",
+                                style: { width: "12rem" },
+                            },
+                            {
+                                fieldKey: "title",
+                                label: "Title",
+                            },
+                        ]}
+                        rows={[
+                            {
+                                id: "100",
+                                status: "Completed",
+                                time: "07/Aug/2023 9.30pm",
+                                resource: "Test",
+                                title: "Title 1",
+                            },
+                            {
+                                id: "102",
+                                status: "Pending",
+                                time: "07/Aug/2023 10.30pm",
+                                resource: "Test",
+                                title: "Titile 2",
+                            },
+                            {
+                                id: "103",
+                                status: "Common",
+                                time: "07/Aug/2023 11.30pm",
+                                resource: "Test",
+                                title: "Titile 3",
+                            },
+                            {
+                                id: "104",
+                                status: "SampleRow",
+                                time: "07/Aug/2023 12.30pm",
+                                resource: "Test",
+                                title: "Titile 4",
+                            },
+                            {
+                                id: "105",
+                                status: "CheckRow",
+                                time: "07/Aug/2023 1.30pm",
+                                resource: "Test",
+                                title: "Titile 5",
+                            },
+                            {
+                                id: "110",
+                                status: "Completed",
+                                time: "07/Aug/2023 9.30pm",
+                                resource: "Test",
+                                title: "Title 6",
+                            },
+                            {
+                                id: "112",
+                                status: "Pending",
+                                time: "07/Aug/2023 10.30pm",
+                                resource: "Test",
+                                title: "Titile 7",
+                            },
+                            {
+                                id: "113",
+                                status: "Common",
+                                time: "07/Aug/2023 11.30pm",
+                                resource: "Test",
+                                title: "Titile 8",
+                            },
+                            {
+                                id: "114",
+                                status: "SampleRow",
+                                time: "07/Aug/2023 12.30pm",
+                                resource: "Test",
+                                title: "Titile 9",
+                            },
+                            {
+                                id: "115",
+                                status: "CheckRow",
+                                time: "07/Aug/2023 1.30pm",
+                                resource: "Test",
+                                title: "Titile 10",
+                            },
+                            {
+                                id: "120",
+                                status: "Completed",
+                                time: "07/Aug/2023 9.30pm",
+                                resource: "Test",
+                                title: "Title 11",
+                            },
+                            {
+                                id: "122",
+                                status: "Pending",
+                                time: "07/Aug/2023 10.30pm",
+                                resource: "Test",
+                                title: "Titile 12",
+                            },
+                            {
+                                id: "123",
+                                status: "Common",
+                                time: "07/Aug/2023 11.30pm",
+                                resource: "Test",
+                                title: "Titile 13",
+                            },
+                            {
+                                id: "124",
+                                status: "SampleRow",
+                                time: "07/Aug/2023 12.30pm",
+                                resource: "Test",
+                                title: "Titile 14",
+                            },
+                            {
+                                id: "125",
+                                status: "CheckRow",
+                                time: "07/Aug/2023 1.30pm",
+                                resource: "Test",
+                                title: "Titile 15",
+                            },
+                        ]}
+                        alternatingRows={true}
+                        enableMultiSelect={true}
+                        enableSelectAll={true}
+                        enableSelectionBar={true}
+                        selectedIds={selected}
+                        onSelect={handleOnClickSelect}
+                        onClearSelectionClick={() => {
+                            setSelected([]);
+                        }}
+                    />
+                    <div>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Quisque suscipit eros non suscipit rutrum. Donec mollis,
+                        tortor in efficitur suscipit, diam est malesuada urna,
+                        id convallis magna sapien a magna. Vestibulum in
+                        suscipit ligula. Vestibulum eu efficitur eros. Proin
+                        venenatis diam in lectus volutpat ultricies. Donec in
+                        elit ac quam porttitor volutpat venenatis ac nisi. Nam
+                        semper elit felis, vel pellentesque diam accumsan nec.
+                        Quisque pretium at nunc vel imperdiet.
+                    </div>
+                </>
             );
         }}
     </Story>

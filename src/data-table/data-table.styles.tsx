@@ -38,14 +38,14 @@ const fontColor = Color.Neutral[1];
 export const TableWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    border: 1px solid ${borderColor};
-    border-radius: 0.5rem;
-    overflow: auto;
+    width: fit-content;
 `;
 
 export const TableContainer = styled.div`
-    overflow: scroll;
+    overflow: auto;
+    flex: 1;
+    border: 1px solid ${borderColor};
+    border-radius: 0.5rem 0.5rem 0 0; // also need to be rounded at the bottom when sticky bar is not visible
 `;
 
 export const Table = styled.table`
@@ -64,19 +64,27 @@ export const Table = styled.table`
 `;
 
 export const SelectionBar = styled.div<SelectionBarProps>`
+    position: sticky;
+    bottom: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
     height: 3.5rem;
     padding: 1rem;
-    border-top: 1px solid ${borderColor};
+    border: 1px solid ${borderColor};
+    border-radius: 0 0 4px 4px;
+    border-top: none;
     background-color: ${DesignToken.Table.Cell.Selected};
+    transition: all 1s ease;
+
     ${(props) => {
         if (props.$isFloating) {
             return css`
                 border-radius: 4px;
                 box-shadow: 0px 0px 4px 0px rgba(40, 40, 40, 0.25);
+                transform: translateY(-10px) translateX(-0.5%);
+                width: 101%;
             `;
         }
     }};

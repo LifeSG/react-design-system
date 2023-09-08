@@ -48,7 +48,9 @@ export const DataTable = ({
     // CONST, STATE, REF
     // =============================================================================
     const [atBottom, setAtBottom] = useState(false);
+    const [sticky, setSticky] = useState(false);
     const tableRef = useRef<HTMLInputElement>();
+    const stickyRef = useRef<HTMLDivElement>();
 
     // =============================================================================
     // EFFECTS
@@ -56,6 +58,25 @@ export const DataTable = ({
     useEffect(() => {
         scrollHandler();
     }, []);
+
+    useEffect(() => {
+        const options = {
+            root: null, // relative to the viewport
+            threshold: 1.0, // strictly visible or not
+        };
+
+        const observer = new IntersectionObserver((e) => {
+            e.forEach((entry) => {
+                // when the end of the table scrolls into view
+                // should check that it is not above the viewport
+                setSticky(entry.isIntersecting);
+            });
+        }, options);
+
+        observer.observe(stickyRef.current);
+
+        return () => observer.disconnect();
+    }, []); // likely need to detect enableSelectionBar prop
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -301,7 +322,7 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         return (
-            <SelectionBar $isFloating={!atBottom}>
+            <SelectionBar $isFloating={!sticky}>
                 <Text.H5 weight="semibold">{`${selectedIds.length} items selected`}</Text.H5>
                 <Button.Small styleType="link" onClick={onClearSelectionClick}>
                     Clear Selection
@@ -330,6 +351,7 @@ export const DataTable = ({
             {enableSelectionBar &&
                 selectedIds?.length > 0 &&
                 renderSelectionBar()}
+            <div ref={stickyRef}></div>
         </TableWrapper>
     );
 };
