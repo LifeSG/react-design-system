@@ -131,8 +131,10 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
             `;
         }
     }}
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
     display: flex;
+    flex-direction: row;
+    align-items: center;
     color: ${BookingSGColorSet.Primary};
 
     :hover {
@@ -140,20 +142,21 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 `;
 
-export const ArrowIcon = styled(ArrowRightIcon)`
+const iconStyles = css`
     display: flex;
-    height: 1rem;
-    width: 1rem;
+    height: 1rem !important;
+    width: 1rem !important;
     margin-left: 0.25rem;
+    margin-right: 0 !important;
     color: ${BookingSGColorSet.Primary} !important;
 `;
 
+export const ArrowIcon = styled(ArrowRightIcon)`
+    ${iconStyles}
+`;
+
 export const ExternalLinkIcon = styled(ExternalIcon)`
-    display: flex;
-    height: 1rem;
-    width: 1rem;
-    margin-left: 0.25rem;
-    color: ${BookingSGColorSet.Primary} !important;
+    ${iconStyles}
 `;
 
 export const TextContainer = styled.div`
