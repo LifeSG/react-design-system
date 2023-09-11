@@ -37,7 +37,6 @@ export const DataTable = ({
     enableActionBar,
     emptyView,
     actionBarContent,
-    enableStickyHeader = false,
     renderCustomEmptyView,
     onHeaderClick,
     onSelect,
@@ -118,7 +117,7 @@ export const DataTable = ({
     // =============================================================================
     const renderHeaders = () => (
         <thead>
-            <HeaderRow $isSticky={enableStickyHeader}>
+            <HeaderRow>
                 {enableMultiSelect && renderHeaderCheckBox()}
                 {headers.map(renderHeaderCell)}
             </HeaderRow>

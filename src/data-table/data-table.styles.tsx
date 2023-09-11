@@ -104,19 +104,10 @@ export const SelectionBar = styled.div<SelectionBarProps>`
     }};
 `;
 
-export const HeaderRow = styled.tr<HeaderRowProps>`
+export const HeaderRow = styled.tr`
     background-color: ${DesignToken.Table.Header};
     height: 6rem;
     border-bottom: 1px solid ${borderColor};
-    ${(props) => {
-        if (props.$isSticky) {
-            return css`
-                position: sticky;
-                top: 0;
-                z-index: 10;
-            `;
-        }
-    }};
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
