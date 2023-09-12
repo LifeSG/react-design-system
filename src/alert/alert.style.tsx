@@ -1,9 +1,7 @@
-import { ArrowRightIcon, ExternalIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { BookingSGColorSet } from "../spec/color-spec/bookingsg-color-set";
 import { Text, TextStyleHelper } from "../text";
-import { AlertSizeType, AlertType, LinkIconType } from "./types";
+import { AlertSizeType, AlertType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -12,8 +10,6 @@ import { AlertSizeType, AlertType, LinkIconType } from "./types";
 interface StyleProps {
     $type: AlertType;
     $size: AlertSizeType;
-    $enableIcon?: boolean | undefined;
-    $linkIconType?: LinkIconType | undefined;
 }
 
 // =============================================================================
@@ -23,13 +19,13 @@ interface StyleProps {
 export const Wrapper = styled.div<StyleProps>`
     padding: 0.5rem 1rem 0.5rem 0.875rem;
     display: flex;
-    flex-direction: row;
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
 
     ${(props) => {
         let backgroundColor: string;
         let borderColor: string;
         let iconColor: string;
+        const iconSize = props.$size === "small" ? "1.25rem" : "1.5rem";
         switch (props.$type) {
             case "error":
                 backgroundColor = Color.Validation.Red.Background(props);
@@ -69,8 +65,8 @@ export const Wrapper = styled.div<StyleProps>`
 
             svg {
                 color: ${iconColor};
-                width: ${props.$size === "small" ? "1.25rem" : "1.5rem"};
-                height: 1.5rem;
+                width: ${iconSize};
+                height: ${iconSize};
                 margin-right: 0.5rem;
             }
         `;
@@ -109,12 +105,6 @@ export const Wrapper = styled.div<StyleProps>`
         a {
             color: ${Color.Primary};
             text-decoration: none;
-
-            :hover,
-            :active,
-            :focus {
-                color: ${Color.Primary};
-            }
         }
     }
 `;
@@ -124,44 +114,32 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
         if (props.$size === "small")
             return css`
                 ${TextStyleHelper.getTextStyle("H6", "semibold")}
+                margin-top: 0.25rem;
             `;
         else {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                margin-top: 0.5rem;
             `;
         }
     }}
-    margin-top: 0.25rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: ${BookingSGColorSet.Primary};
+    color: ${Color.Primary};
 
-    :hover {
-        color: ${BookingSGColorSet.Primary};
+    svg {
+        display: flex;
+        height: 1rem;
+        width: 1rem;
+        margin-left: 0.25rem;
+        margin-right: 0;
+        color: ${Color.Primary};
     }
-`;
-
-const iconStyles = css`
-    display: flex;
-    height: 1rem !important;
-    width: 1rem !important;
-    margin-left: 0.25rem;
-    margin-right: 0 !important;
-    color: ${BookingSGColorSet.Primary} !important;
-`;
-
-export const ArrowIcon = styled(ArrowRightIcon)`
-    ${iconStyles}
-`;
-
-export const ExternalLinkIcon = styled(ExternalIcon)`
-    ${iconStyles}
 `;
 
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding-right: 2rem;
     flex: 1;
 `;

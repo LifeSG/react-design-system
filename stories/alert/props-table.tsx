@@ -5,6 +5,7 @@ import {
     NameCol,
     Table,
 } from "../storybook-common/api-table";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 
 export const PropsTable = () => (
     <Table>
@@ -46,21 +47,26 @@ export const PropsTable = () => (
             <DescriptionCol propTypes={[`"default"`, `"small"`]}>
                 Specifies the variant od size of alert
             </DescriptionCol>
-            <DefaultCol />
+            <DefaultCol>default</DefaultCol>
         </tr>
         <tr>
-            <NameCol>enableIcon</NameCol>
+            <NameCol>showIcon</NameCol>
             <DescriptionCol propTypes={[`boolean`]}>
-                Specifies if the aleet will be display icon
+                Specifies if the alert will be display icon
             </DescriptionCol>
-            <DefaultCol />
+            <DefaultCol>false</DefaultCol>
         </tr>
         <tr>
-            <NameCol>linkIconType (hyperLink)</NameCol>
-            <DescriptionCol propTypes={[`"internalLink"`, `"externalLink"`]}>
+            <NameCol>actionLinkIcon</NameCol>
+            <DescriptionCol propTypes={["JSX.Element"]}>
                 Specifies if the hyperlink will be display icon
             </DescriptionCol>
-            <DefaultCol />
+            <DefaultCol>
+                <>
+                    <div style={{ marginRight: "1rem" }}>ArrowRightIcon</div>
+                    <ArrowRightIcon />
+                </>
+            </DefaultCol>
         </tr>
     </Table>
 );

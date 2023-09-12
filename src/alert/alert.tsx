@@ -1,33 +1,26 @@
 import { AlertProps } from "./types";
-import {
-    ActionLinkText,
-    ArrowIcon,
-    ExternalLinkIcon,
-    TextContainer,
-    Wrapper,
-} from "./alert.style";
-import {
-    ExclamationCircleFillIcon,
-    ExclamationTriangleFillIcon,
-    ICircleFillIcon,
-    TickCircleFillIcon,
-} from "@lifesg/react-icons";
+import { ActionLinkText, TextContainer, Wrapper } from "./alert.style";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
+import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 
 export const Alert = ({
     type,
     className,
     children,
     actionLink,
-    linkIconType,
+    actionLinkIcon,
     size = "default",
-    enableIcon = false,
+    showIcon = false,
     ...otherProps
 }: AlertProps): JSX.Element => {
     const renderLinkType = () => {
-        if (linkIconType === "internalLink") {
-            return <ArrowIcon />;
+        if (actionLinkIcon) {
+            return actionLinkIcon;
         }
-        return <ExternalLinkIcon />;
+        return <ArrowRightIcon />;
     };
 
     const renderLink = () => {
@@ -66,11 +59,9 @@ export const Alert = ({
             className={className}
             $type={type}
             $size={size}
-            $enableIcon={enableIcon}
-            $linkIconType={linkIconType}
             data-testid={otherProps["data-testid"]}
         >
-            {enableIcon && renderIcon()}
+            {showIcon && renderIcon()}
             <TextContainer>
                 {children}
                 {actionLink && renderLink()}

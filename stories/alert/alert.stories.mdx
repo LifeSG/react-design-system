@@ -1,4 +1,5 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { ExternalIcon } from "@lifesg/react-icons/external";
 import { Alert } from "src/alert";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
@@ -45,23 +46,23 @@ import { Alert } from "@lifesg/react-design-system/alert";
 <Canvas>
     <Story name="With Icons">
         <>
-            <Alert type="error" enableIcon>
+            <Alert type="error" showIcon>
                 This will notify users of an error that has occurred.
             </Alert>
             <br />
-            <Alert type="warning" enableIcon>
+            <Alert type="warning" showIcon>
                 This will serves as a warning or disclaimer to users.
             </Alert>
             <br />
-            <Alert type="success" enableIcon>
+            <Alert type="success" showIcon>
                 This will serves as a acknowledgement of a successful action.
             </Alert>
             <br />
-            <Alert type="info" enableIcon>
+            <Alert type="info" showIcon>
                 This will serves as a acknowledgement of a information action.
             </Alert>
             <br />
-            <Alert type="description" enableIcon>
+            <Alert type="description" showIcon>
                 This will serves as a acknowledgement of a description action.
             </Alert>
             <br />
@@ -140,7 +141,6 @@ Or if you require a custom display, you can construct your layout and pass it in
             <br />
             <Alert
                 type="warning"
-                linkIconType="internalLink"
                 actionLink={{
                     children: "Hyperlink",
                     href: "https://www.google.com",
@@ -151,15 +151,14 @@ Or if you require a custom display, you can construct your layout and pass it in
                 This will serves as a warning or disclaimer to users.
             </Alert>
             <br />
-            <Alert type="warning" enableIcon>
+            <Alert type="warning" showIcon>
                 This will serves as a warning or disclaimer to users.
             </Alert>
             <br />
             <Alert
                 type="description"
-                enableIcon
+                showIcon
                 type="warning"
-                linkIconType="internalLink"
                 actionLink={{
                     children: "Hyperlink",
                     href: "https://www.google.com",
@@ -186,7 +185,6 @@ Or if you require a custom display, you can construct your layout and pass it in
             <Alert
                 type="error"
                 size="small"
-                linkIconType="internalLink"
                 actionLink={{
                     children: "Hyperlink",
                     href: "https://www.google.com",
@@ -197,15 +195,14 @@ Or if you require a custom display, you can construct your layout and pass it in
                 <p>This will notify users of an error that has occurred.</p>
             </Alert>
             <br />
-            <Alert type="error" enableIcon size="small">
+            <Alert type="error" showIcon size="small">
                 <p>This will notify users of an error that has occurred.</p>
             </Alert>
             <br />
             <Alert
                 type="error"
-                enableIcon
+                showIcon
                 size="small"
-                linkIconType="internalLink"
                 actionLink={{
                     children: "Hyperlink",
                     href: "https://www.google.com",
@@ -226,7 +223,6 @@ Or if you require a custom display, you can construct your layout and pass it in
     <Story name="With hyperlink">
         <Alert
             type="warning"
-            linkIconType="internalLink"
             actionLink={{
                 children: "Hyperlink",
                 href: "https://www.life.gov.sg/",
@@ -242,7 +238,7 @@ Or if you require a custom display, you can construct your layout and pass it in
         <br />
         <Alert
             type="success"
-            linkIconType="externalLink"
+            actionLinkIcon={<ExternalIcon />}
             actionLink={{
                 children: "Hyperlink",
                 href: "https://www.google.com",
