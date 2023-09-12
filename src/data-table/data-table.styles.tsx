@@ -11,11 +11,8 @@ import { Text } from "../text";
 interface TableContainerProps {
     $isRoundBorder: boolean;
 }
-interface TableProps {
-    $showBorder: boolean;
-}
-interface HeaderRowProps {
-    $isSticky: boolean;
+interface TableBodyProps {
+    $showLastRowBottomBorder: boolean;
 }
 interface HeaderCellProps {
     $clickable: boolean;
@@ -33,6 +30,8 @@ interface BodyCellProps {
 
 interface SelectionBarProps {
     $isFloating: boolean;
+    $alignWithScreen: boolean;
+    $width?: number;
 }
 
 // =============================================================================
@@ -49,6 +48,11 @@ export const TableWrapper = styled.div`
     flex-direction: column;
     width: fit-content;
     position: relative;
+
+    // Hide scrollbar
+    div::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 export const TableContainer = styled.div<TableContainerProps>`
@@ -57,9 +61,13 @@ export const TableContainer = styled.div<TableContainerProps>`
     border: 1px solid ${borderColor};
     border-radius: ${(props) =>
         props.$isRoundBorder ? "0.5rem" : "0.5rem 0.5rem 0 0"};
+
+    // Hide scrollbar
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 `;
 
-export const Table = styled.table<TableProps>`
+export const Table = styled.table`
     border-collapse: separate;
     th:last-child,
     td:last-child {
@@ -69,10 +77,15 @@ export const Table = styled.table<TableProps>`
     td:first-child {
         padding-left: 1.5rem;
     }
+`;
+
+export const TableBody = styled.tbody<TableBodyProps>`
     tr:last-child {
         td {
             border-bottom: ${(props) =>
-                props.$showBorder ? "1px solid ${borderColor}" : "none"};
+                props.$showLastRowBottomBorder
+                    ? `1px solid ${borderColor}`
+                    : "none"};
         }
     }
 `;
@@ -82,23 +95,23 @@ export const SelectionBar = styled.div<SelectionBarProps>`
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
+    width: ${(props) => (props.$width ? `${props.$width + 2}px` : "100%")};
     height: 3.5rem;
     padding: 1rem;
     border: 1px solid ${borderColor};
     border-radius: 0 0 4px 4px;
     border-top: none;
     background-color: ${DesignToken.Table.Cell.Selected};
-    transition: all 1s ease;
+    transition: all 300ms ease;
 
     ${(props) => {
         if (props.$isFloating) {
             return css`
-                position: absolute;
+                position: ${props.$alignWithScreen ? "fixed" : "absolute"};
                 border-radius: 4px;
                 box-shadow: 0px 0px 4px 0px rgba(40, 40, 40, 0.25);
-                transform: translateY(-1rem) translateX(-0.5%);
-                width: 101%;
+                transform: translateY(-1rem) translateX(0);
+                width: ${props.$width + 2}px;
             `;
         }
     }};

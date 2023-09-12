@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { LoadingDotsSpinner } from "../animations";
 import {
     BodyCell,
@@ -12,6 +14,7 @@ import {
     LoaderWrapper,
     SelectionBar,
     Table,
+    TableBody,
     TableContainer,
     TableWrapper,
 } from "./data-table.styles";
@@ -20,7 +23,6 @@ import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 import { Checkbox } from "../checkbox";
 import { Button } from "../button";
-import { useEffect, useRef, useState } from "react";
 
 export const DataTable = ({
     id,
@@ -47,20 +49,34 @@ export const DataTable = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [isAtBottom, setIsAtBottom] = useState(false);
     const [showLastBorder, setShowLastBorder] = useState(false);
-    const tableRef = useRef<HTMLInputElement>();
+    const [isFloating, setIsFloating] = useState(false);
+    const [alignActionBarWithScreen, setAlignActionBarWithScreen] =
+        useState(false);
+    const tableRef = useRef<HTMLTableElement>();
+
+    const { ref: stickyRef, inView: isLastRowInView } = useInView({
+        threshold: 0,
+    });
+    const { ref: endRef, inView: atEnd } = useInView({
+        threshold: 0,
+    });
+    const { ref: containerRef, inView: isContainerInView } = useInView({
+        threshold: 0,
+        rootMargin: "-20px",
+    });
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        scrollHandler();
-    }, []);
-
-    useEffect(() => {
         checkLastBorder();
     }, [rows]);
+
+    useEffect(() => {
+        setIsFloating(isContainerInView && !isLastRowInView);
+        setAlignActionBarWithScreen(!atEnd);
+    }, [isLastRowInView, atEnd, isContainerInView]);
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -94,15 +110,6 @@ export const DataTable = ({
 
     const getTotalColumns = (): number => {
         return headers.length + (enableMultiSelect ? 1 : 0);
-    };
-
-    const scrollHandler = () => {
-        if (!tableRef.current) return;
-        const bottom =
-            tableRef.current.scrollHeight -
-                Math.ceil(tableRef.current.scrollTop) ===
-            tableRef.current.clientHeight;
-        setIsAtBottom(bottom);
     };
 
     const checkLastBorder = () => {
@@ -225,6 +232,9 @@ export const DataTable = ({
                             renderRowCheckBox(row.id.toString())}
 
                         {headers.map((header) => renderRowCell(header, row))}
+                        {index === rows.length - 1 && (
+                            <div ref={stickyRef}></div>
+                        )}
                     </BodyRow>
                 ))}
             </>
@@ -317,7 +327,11 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         return (
-            <SelectionBar $isFloating={!isAtBottom}>
+            <SelectionBar
+                $isFloating={isFloating}
+                $alignWithScreen={alignActionBarWithScreen}
+                $width={tableRef.current?.clientWidth}
+            >
                 <Text.H5 weight="semibold">{`${selectedIds.length} item${
                     selectedIds.length > 1 && "s"
                 } selected`}</Text.H5>
@@ -334,27 +348,28 @@ export const DataTable = ({
             id={id || "table-wrapper"}
             data-testid={otherProps["data-testid"] || "table"}
             className={className}
+            ref={containerRef}
         >
             <TableContainer
-                onScroll={scrollHandler}
                 ref={tableRef}
                 $isRoundBorder={
-                    !enableActionBar || !isAtBottom || !selectedIds.length
+                    !enableActionBar || !isLastRowInView || !selectedIds.length
                 }
             >
-                <Table $showBorder={showLastBorder}>
+                <Table>
                     {renderHeaders()}
-                    <tbody>
+                    <TableBody $showLastRowBottomBorder={showLastBorder}>
                         {loadState === "success"
                             ? renderRows()
                             : renderLoader()}
-                    </tbody>
+                    </TableBody>
                 </Table>
             </TableContainer>
             {enableActionBar &&
                 selectedIds &&
                 selectedIds?.length > 0 &&
                 renderSelectionBar()}
+            <div ref={endRef}></div>
         </TableWrapper>
     );
 };
