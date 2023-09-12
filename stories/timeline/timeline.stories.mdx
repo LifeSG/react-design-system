@@ -108,6 +108,70 @@ There are a variety of contents available to be specified for each `Timeline` it
     </Story>
 </Canvas>
 
+<Heading3>Variations</Heading3>
+
+The `Timeline` component comes in 4 variants, a completed, current, upcoming-active and upcoming-inactive.
+
+<Canvas>
+    <Story name="Variants">
+        <StoryContainer>
+            <Timeline
+                title="What's next"
+                items={[
+                    {
+                        title: "Item 1",
+                        variant: "completed",
+                        content: (
+                            <Text.Body>
+                                An example with <code>completed</code> variant
+                            </Text.Body>
+                        ),
+                    },
+                    {
+                        title: "Item 2",
+                        variant: "current",
+                        content: (
+                            <Text.Body>
+                                An example with <code>current</code> variant
+                            </Text.Body>
+                        ),
+                    },
+                    {
+                        title: "Item 3",
+                        variant: "upcoming-active",
+                        content: (
+                            <Text.Body>
+                                An example with <code>upcoming-active</code>{" "}
+                                variant
+                            </Text.Body>
+                        ),
+                    },
+                    {
+                        title: "Item 4",
+                        variant: "upcoming-inactive",
+                        content: (
+                            <Text.Body>
+                                An example with <code>upcoming-inactive</code>{" "}
+                                variant
+                            </Text.Body>
+                        ),
+                    },
+                    {
+                        title: "Item 5",
+                        variant: "upcoming-inactive",
+                        content: (
+                            <Text.Body>
+                                An example with <code>upcoming-inactive</code>{" "}
+                                variant
+                            </Text.Body>
+                        ),
+                    },
+                ]}
+            />
+        </StoryContainer>
+    </Story>
+</Canvas>
+
 <Secondary>Component API</Secondary>
 
 <PropsTable />

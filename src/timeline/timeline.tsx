@@ -2,6 +2,7 @@ import { Text } from "../text";
 import {
     CircleIndicator,
     LineIndicator,
+    TickCircleIcon,
     TimelineIndicators,
     TimelineItem,
     TimelineItemContent,
@@ -36,6 +37,7 @@ export const Timeline = ({
 
         return <>{content}</>;
     };
+
     const renderTitle = (title: string | JSX.Element): JSX.Element => {
         if (typeof title === "string") {
             return (
@@ -50,6 +52,7 @@ export const Timeline = ({
 
         return <>{title}</>;
     };
+
     const renderStatusPills = (
         statuses: TimelineStatusProps[]
     ): JSX.Element[] => {
@@ -68,21 +71,27 @@ export const Timeline = ({
             );
         });
     };
+
     const renderItems = () =>
         items.map((item: TimelineItemProps, index) => {
-            const { title, content, statuses } = item;
+            const { title, content, statuses, variant: _variant } = item;
             const circleIndicatorTestId = baseIndicatorTestId
                 ? `circleindicator${index + 1}_div_${baseIndicatorTestId}`
                 : "circleindicator";
+            const variant =
+                (!_variant && index === 0 ? "current" : _variant) ||
+                "upcoming-active";
 
             return (
                 <TimelineItem key={`timeline-item-${index}`}>
                     <TimelineIndicators>
                         <CircleIndicator
                             data-testid={circleIndicatorTestId}
-                            $filled={index === 0}
-                        />
-                        <LineIndicator />
+                            $variant={variant}
+                        >
+                            <TickCircleIcon />
+                        </CircleIndicator>
+                        <LineIndicator $variant={variant} />
                     </TimelineIndicators>
                     <TimelineItemContent className="timeline-item-content">
                         {renderTitle(title)}

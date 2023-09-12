@@ -79,6 +79,21 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["TimelineStatusProps[]"],
             },
+            {
+                name: "variant",
+                description: (
+                    <>
+                        The variant includes 4 different types, each
+                        representing a unique styling
+                    </>
+                ),
+                propTypes: [
+                    `"completed"`,
+                    `"current"`,
+                    `"upcoming-active`,
+                    `"upcoming-inactive"`,
+                ],
+            },
         ],
     },
     {
