@@ -62,8 +62,7 @@ export const DataTable = ({
         threshold: 0,
     });
     const { ref: containerRef, inView: isContainerInView } = useInView({
-        threshold: 0,
-        rootMargin: "-20px",
+        threshold: 0.2,
     });
 
     // =============================================================================
