@@ -298,13 +298,13 @@ export const DataTable = ({
                             emptyView.title
                         )
                     ) : (
-                        <Text.H3>{"No data found"}</Text.H3>
+                        <Text.H3>{"No <items> found"}</Text.H3>
                     )
                 }
                 description={
                     emptyView?.description
                         ? emptyView.description
-                        : "No matching rows"
+                        : "This is a placeholder text"
                 }
                 actionButton={emptyView?.actionButton}
                 img={emptyView?.img}
