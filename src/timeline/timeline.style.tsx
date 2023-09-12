@@ -121,7 +121,7 @@ export const TimelineTitle = styled(Text.H3)`
 export const TimelineItem = styled.div`
     display: flex;
 
-    :nth-child(2) ${CircleIndicator} {
+    :first-of-type ${CircleIndicator} {
         margin-top: 0;
     }
 `;
