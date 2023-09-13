@@ -101,6 +101,13 @@ const Component = (
         }
     }, [activePage]);
 
+    useEffect(() => {
+        setPageSize(pageSize);
+        setSelectedOption(
+            options.find((option) => option.value === pageSize) ?? null
+        );
+    }, [pageSize]);
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
