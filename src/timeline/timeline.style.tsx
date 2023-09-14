@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { TickCircleFillIcon } from "@lifesg/react-icons";
+import { TickIcon } from "@lifesg/react-icons";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
@@ -23,7 +23,9 @@ interface VariantStyleProps {
 // STYLE INTERFACES
 // =============================================================================
 export const CircleIndicator = styled.div<VariantStyleProps>`
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 1.5rem;
     height: 1.5rem;
     margin-top: 4px;
@@ -45,6 +47,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                 `;
             case "completed":
                 return css`
+                    background-color: ${Color.Validation.Green.Icon};
                     svg {
                         display: block;
                     }
@@ -53,15 +56,9 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     }}
 `;
 
-export const TickCircleIcon = styled(TickCircleFillIcon)`
+export const IconTick = styled(TickIcon)`
+    color: ${Color.Neutral[8]};
     display: none;
-    width: 100%;
-    height: 100%;
-    transform: scale(1.2);
-
-    path {
-        fill: ${Color.Validation.Green.Icon};
-    }
 `;
 
 export const LineIndicator = styled.div<VariantStyleProps>`

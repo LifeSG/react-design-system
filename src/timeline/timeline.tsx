@@ -1,8 +1,8 @@
 import { Text } from "../text";
 import {
     CircleIndicator,
+    IconTick,
     LineIndicator,
-    TickCircleIcon,
     TimelineIndicators,
     TimelineItem,
     TimelineItemContent,
@@ -79,8 +79,7 @@ export const Timeline = ({
                 ? `circleindicator${index + 1}_div_${baseIndicatorTestId}`
                 : "circleindicator";
             const variant =
-                (!_variant && index === 0 ? "current" : _variant) ||
-                "upcoming-active";
+                _variant || (index === 0 ? "current" : "upcoming-active");
 
             return (
                 <TimelineItem key={`timeline-item-${index}`}>
@@ -89,7 +88,7 @@ export const Timeline = ({
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
                         >
-                            <TickCircleIcon />
+                            <IconTick />
                         </CircleIndicator>
                         <LineIndicator $variant={variant} />
                     </TimelineIndicators>
