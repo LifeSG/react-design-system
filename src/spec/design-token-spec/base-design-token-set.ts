@@ -4,10 +4,10 @@ import { DesignTokenSet } from "../../design-token/types";
 
 export const BaseDesignTokenSet: DesignTokenSet = {
     InputBoxShadow: css`
-        inset 0 0 3px 0px ${Color.Shadow.Accent}
+        inset 0 0 4px 0px ${Color.Shadow.Accent}
     `,
     InputErrorBoxShadow: css`
-        inset 0 0 3px 0px ${Color.Shadow.Red}
+        inset 0 0 4px 0px ${Color.Shadow.Red}
     `,
     ElevationBoxShadow: css`
       0px 2px 8px ${Color.Shadow.Elevation}
