@@ -62,7 +62,8 @@ export const DataTable = ({
         threshold: 0,
     });
     const { ref: containerRef, inView: isContainerInView } = useInView({
-        threshold: 0.2,
+        threshold: 0,
+        rootMargin: "0px 0px -100px 0px",
     });
 
     // =============================================================================
@@ -304,7 +305,7 @@ export const DataTable = ({
                 description={
                     emptyView?.description
                         ? emptyView.description
-                        : "This is a placeholder text"
+                        : "No matching rows"
                 }
                 actionButton={emptyView?.actionButton}
                 img={emptyView?.img}
@@ -332,7 +333,7 @@ export const DataTable = ({
                 $width={tableRef.current?.clientWidth}
             >
                 <Text.H5 weight="semibold">{`${selectedIds.length} item${
-                    selectedIds.length > 1 && "s"
+                    selectedIds.length > 1 ? "s" : ""
                 } selected`}</Text.H5>
                 <Button.Small styleType="link" onClick={onClearSelectionClick}>
                     Clear selection
@@ -352,7 +353,7 @@ export const DataTable = ({
             <TableContainer
                 ref={tableRef}
                 $isRoundBorder={
-                    !enableActionBar || !isLastRowInView || !selectedIds.length
+                    !enableActionBar || !isLastRowInView || !selectedIds?.length
                 }
             >
                 <Table>
@@ -366,7 +367,7 @@ export const DataTable = ({
             </TableContainer>
             {enableActionBar &&
                 selectedIds &&
-                selectedIds?.length > 0 &&
+                selectedIds.length > 0 &&
                 renderSelectionBar()}
             <div ref={endRef}></div>
         </TableWrapper>
