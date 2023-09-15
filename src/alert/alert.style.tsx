@@ -102,6 +102,16 @@ export const Wrapper = styled.div<StyleProps>`
 
 export const AlertIconWrapper = styled.div<StyleProps>`
     margin-right: 0.5rem;
+
+    // adds extra spacing to align the small icon with text
+    ${(props) =>
+        props.$sizeType === "small" &&
+        css`
+            display: flex;
+            align-items: center;
+            height: 1.625rem;
+        `}
+
     ${(props) => {
         let iconColor: string;
         const iconSize = props.$sizeType === "small" ? "1.25rem" : "1.5rem";
@@ -131,7 +141,6 @@ export const AlertIconWrapper = styled.div<StyleProps>`
                 color: ${iconColor};
                 width: ${iconSize};
                 height: ${iconSize};
-                ${props.$sizeType === "small" ? "flex-shrink: 0;" : ""}
             }
         `;
     }}
