@@ -16,7 +16,7 @@ export const PropsTable = () => (
                     `"warning"`,
                     `"error"`,
                     `"success"`,
-                    `"information"`,
+                    `"info"`,
                     `"description"`,
                 ]}
             >
