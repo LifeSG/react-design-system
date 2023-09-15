@@ -9,7 +9,7 @@ import { AlertSizeType, AlertType } from "./types";
 // =============================================================================
 interface StyleProps {
     $type: AlertType;
-    $size: AlertSizeType;
+    $sizeType: AlertSizeType;
 }
 
 // =============================================================================
@@ -24,58 +24,43 @@ export const Wrapper = styled.div<StyleProps>`
     ${(props) => {
         let backgroundColor: string;
         let borderColor: string;
-        let iconColor: string;
-        const iconSize = props.$size === "small" ? "1.25rem" : "1.5rem";
         switch (props.$type) {
             case "error":
                 backgroundColor = Color.Validation.Red.Background(props);
                 borderColor = Color.Validation.Red.Border(props);
-                iconColor = Color.Validation.Red.Icon(props);
                 break;
             case "success":
                 backgroundColor = Color.Validation.Green.Background(props);
                 borderColor = Color.Validation.Green.Border(props);
-                iconColor = Color.Validation.Green.Icon(props);
                 break;
             case "warning":
                 backgroundColor = Color.Validation.Orange.Background(props);
                 borderColor = Color.Validation.Orange.Border(props);
-                iconColor = Color.Validation.Orange.Icon(props);
                 break;
             case "info":
                 backgroundColor = Color.Validation.Blue.Background(props);
                 borderColor = Color.Validation.Blue.Border(props);
-                iconColor = Color.Validation.Blue.Icon(props);
                 break;
             case "description":
                 backgroundColor = Color.Neutral[7](props);
                 borderColor = Color.Neutral[4](props);
-                iconColor = Color.Neutral[4](props);
                 break;
             default:
                 backgroundColor = Color.Validation.Orange.Background(props);
                 borderColor = Color.Validation.Orange.Border(props);
-                iconColor = Color.Validation.Orange.Icon(props);
                 break;
         }
 
         return css`
             background: ${backgroundColor};
             border-left: 2pt solid ${borderColor};
-
-            svg {
-                color: ${iconColor};
-                width: ${iconSize};
-                height: ${iconSize};
-                margin-right: 0.5rem;
-            }
         `;
     }}
 
     p {
         margin: 0;
         ${(props) => {
-            if (props.$size === "small")
+            if (props.$sizeType === "small")
                 return css`
                     ${TextStyleHelper.getTextStyle("H6", "regular")}
 
@@ -105,13 +90,56 @@ export const Wrapper = styled.div<StyleProps>`
         a {
             color: ${Color.Primary};
             text-decoration: none;
+
+            :hover,
+            :active,
+            :focus {
+                color: ${Color.Secondary};
+            }
         }
     }
 `;
 
+export const AlertIconWrapper = styled.div<StyleProps>`
+    margin-right: 0.5rem;
+    ${(props) => {
+        let iconColor: string;
+        const iconSize = props.$sizeType === "small" ? "1.25rem" : "1.5rem";
+        switch (props.$type) {
+            case "error":
+                iconColor = Color.Validation.Red.Icon(props);
+                break;
+            case "success":
+                iconColor = Color.Validation.Green.Icon(props);
+                break;
+            case "warning":
+                iconColor = Color.Validation.Orange.Icon(props);
+                break;
+            case "info":
+                iconColor = Color.Validation.Blue.Icon(props);
+                break;
+            case "description":
+                iconColor = Color.Neutral[4](props);
+                break;
+            default:
+                iconColor = Color.Validation.Orange.Icon(props);
+                break;
+        }
+
+        return css`
+            svg {
+                color: ${iconColor};
+                width: ${iconSize};
+                height: ${iconSize};
+                ${props.$sizeType === "small" ? "flex-shrink: 0;" : ""}
+            }
+        `;
+    }}
+`;
+
 export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
     ${(props) => {
-        if (props.$size === "small")
+        if (props.$sizeType === "small")
             return css`
                 ${TextStyleHelper.getTextStyle("H6", "semibold")}
                 margin-top: 0.25rem;
@@ -124,16 +152,13 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
         }
     }}
     display: flex;
-    flex-direction: row;
     align-items: center;
     color: ${Color.Primary};
 
     svg {
-        display: flex;
         height: 1rem;
         width: 1rem;
         margin-left: 0.25rem;
-        margin-right: 0;
         color: ${Color.Primary};
     }
 `;
@@ -142,4 +167,5 @@ export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow-wrap: anywhere;
 `;

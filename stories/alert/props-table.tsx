@@ -43,7 +43,7 @@ export const PropsTable = () => (
             <DefaultCol />
         </tr>
         <tr>
-            <NameCol>size</NameCol>
+            <NameCol>sizeType</NameCol>
             <DescriptionCol propTypes={[`"default"`, `"small"`]}>
                 Specifies the variant od size of alert
             </DescriptionCol>

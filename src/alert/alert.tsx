@@ -1,10 +1,15 @@
 import { AlertProps } from "./types";
-import { ActionLinkText, TextContainer, Wrapper } from "./alert.style";
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import {
+    ActionLinkText,
+    AlertIconWrapper,
+    TextContainer,
+    Wrapper,
+} from "./alert.style";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
 import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 
 export const Alert = ({
     type,
@@ -12,7 +17,7 @@ export const Alert = ({
     children,
     actionLink,
     actionLinkIcon,
-    size = "default",
+    sizeType = "default",
     showIcon = false,
     ...otherProps
 }: AlertProps): JSX.Element => {
@@ -28,7 +33,7 @@ export const Alert = ({
             <ActionLinkText
                 data-testid="action-link"
                 $type={type}
-                $size={size}
+                $sizeType={sizeType}
                 {...actionLink}
             >
                 {actionLink.children}
@@ -58,10 +63,14 @@ export const Alert = ({
         <Wrapper
             className={className}
             $type={type}
-            $size={size}
+            $sizeType={sizeType}
             data-testid={otherProps["data-testid"]}
         >
-            {showIcon && renderIcon()}
+            {showIcon && (
+                <AlertIconWrapper $sizeType={sizeType} $type={type}>
+                    {renderIcon()}
+                </AlertIconWrapper>
+            )}
             <TextContainer>
                 {children}
                 {actionLink && renderLink()}

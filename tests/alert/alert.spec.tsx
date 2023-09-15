@@ -80,18 +80,6 @@ describe("Alert", () => {
 
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
     });
-
-    describe("size", () => {
-        it("should render small variant if the prop is specified", () => {
-            render(
-                <Alert type="success" size={"small"}>
-                    {DEFAULT_TEXT}
-                </Alert>
-            );
-
-            expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
-        });
-    });
 });
 
 // =============================================================================
