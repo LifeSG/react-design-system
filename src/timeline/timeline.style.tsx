@@ -28,7 +28,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    margin-top: 4px;
+    margin-top: 0.25rem;
     border-radius: 50%;
 
     ${(props) => {
@@ -48,9 +48,6 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
             case "completed":
                 return css`
                     background-color: ${Color.Validation.Green.Icon};
-                    svg {
-                        display: block;
-                    }
                 `;
         }
     }}
@@ -58,7 +55,6 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
 
 export const IconTick = styled(TickIcon)`
     color: ${Color.Neutral[8]};
-    display: none;
 `;
 
 export const LineIndicator = styled.div<VariantStyleProps>`

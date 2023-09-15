@@ -12,7 +12,12 @@ import {
     TimelineTitle,
     TimelineWrapper,
 } from "./timeline.style";
-import { TimelineItemProps, TimelineProps, TimelineStatusProps } from "./types";
+import {
+    TimelineItemProps,
+    TimelineProps,
+    TimelineStatusProps,
+    Variant,
+} from "./types";
 
 export const Timeline = ({
     items,
@@ -72,6 +77,15 @@ export const Timeline = ({
         });
     };
 
+    const renderIcon = (variant: Variant) => {
+        switch (variant) {
+            case "completed":
+                return <IconTick />;
+            default:
+                return null;
+        }
+    };
+
     const renderItems = () =>
         items.map((item: TimelineItemProps, index) => {
             const { title, content, statuses, variant: _variant } = item;
@@ -88,7 +102,7 @@ export const Timeline = ({
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
                         >
-                            <IconTick />
+                            {renderIcon(variant)}
                         </CircleIndicator>
                         <LineIndicator $variant={variant} />
                     </TimelineIndicators>
