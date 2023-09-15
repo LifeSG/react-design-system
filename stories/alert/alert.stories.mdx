@@ -28,42 +28,44 @@ import { Alert } from "@lifesg/react-design-system/alert";
             </Alert>
             <br />
             <Alert type="success">
-                This serves as a acknowledgement of a successful action.
+                This serves as an acknowledgement of a successful action.
             </Alert>
             <br />
             <Alert type="info">
-                This will serves as a acknowledgement of a information action.
+                This provides non-critical information to users.
             </Alert>
             <br />
             <Alert type="description">
-                This will serves as a acknowledgement of a description action.
+                This provides non-critical information to users.
             </Alert>
             <br />
         </>
     </Story>
 </Canvas>
 
+<Heading3>With icon</Heading3>
+
 <Canvas>
-    <Story name="With Icons">
+    <Story name="With icon">
         <>
             <Alert type="error" showIcon>
                 This will notify users of an error that has occurred.
             </Alert>
             <br />
             <Alert type="warning" showIcon>
-                This will serves as a warning or disclaimer to users.
+                This serves as a warning or disclaimer to users.
             </Alert>
             <br />
             <Alert type="success" showIcon>
-                This will serves as a acknowledgement of a successful action.
+                This serves as an acknowledgement of a successful action.
             </Alert>
             <br />
             <Alert type="info" showIcon>
-                This will serves as a acknowledgement of a information action.
+                This provides non-critical information to users.
             </Alert>
             <br />
             <Alert type="description" showIcon>
-                This will serves as a acknowledgement of a description action.
+                This provides non-critical information to users.
             </Alert>
             <br />
         </>
@@ -130,93 +132,6 @@ Or if you require a custom display, you can construct your layout and pass it in
     </Story>
 </Canvas>
 
-<Heading3>With default variant</Heading3>
-
-<Canvas>
-    <Story name="With default size">
-        <>
-            <Alert type="warning">
-                This will serves as a warning or disclaimer to users.
-            </Alert>
-            <br />
-            <Alert
-                type="warning"
-                actionLink={{
-                    children: "Hyperlink",
-                    href: "https://www.google.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                }}
-            >
-                This will serves as a warning or disclaimer to users.
-            </Alert>
-            <br />
-            <Alert type="warning" showIcon>
-                This will serves as a warning or disclaimer to users.
-            </Alert>
-            <br />
-            <Alert
-                type="description"
-                showIcon
-                type="warning"
-                actionLink={{
-                    children: "Hyperlink",
-                    href: "https://www.google.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                }}
-            >
-                This will serves as a warning or disclaimer to users.
-            </Alert>
-            <br />
-        </>
-    </Story>
-</Canvas>
-
-<Heading3>With small variant</Heading3>
-
-<Canvas>
-    <Story name="With small size">
-        <>
-            <Alert type="error" sizeType="small">
-                <p>This will notify users of an error that has occurred.</p>
-            </Alert>
-            <br />
-            <Alert
-                type="error"
-                sizeType="small"
-                actionLink={{
-                    children: "Hyperlink",
-                    href: "https://www.google.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                }}
-            >
-                <p>This will notify users of an error that has occurred.</p>
-            </Alert>
-            <br />
-            <Alert type="error" showIcon sizeType="small">
-                <p>This will notify users of an error that has occurred.</p>
-            </Alert>
-            <br />
-            <Alert
-                type="error"
-                showIcon
-                sizeType="small"
-                actionLink={{
-                    children: "Hyperlink",
-                    href: "https://www.google.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                }}
-            >
-                <p>This will notify users of an error that has occurred.</p>
-            </Alert>
-            <br />
-        </>
-    </Story>
-</Canvas>
-
 <Heading3>With hyperlink</Heading3>
 
 <Canvas>
@@ -237,7 +152,7 @@ Or if you require a custom display, you can construct your layout and pass it in
         </Alert>
         <br />
         <Alert
-            type="success"
+            type="warning"
             actionLinkIcon={<ExternalIcon />}
             actionLink={{
                 children: "Hyperlink",
@@ -251,6 +166,50 @@ Or if you require a custom display, you can construct your layout and pass it in
                 pages outside of the product.
             </p>
         </Alert>
+    </Story>
+</Canvas>
+
+<Heading3>Small size</Heading3>
+
+<Canvas>
+    <Story name="Small size">
+        <>
+            <Alert type="description" sizeType="small">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+            <Alert
+                type="description"
+                sizeType="small"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+            <Alert type="description" showIcon sizeType="small">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+            <Alert
+                type="description"
+                showIcon
+                sizeType="small"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+        </>
     </Story>
 </Canvas>
 

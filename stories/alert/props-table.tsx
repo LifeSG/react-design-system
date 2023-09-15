@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import React from "react";
 import {
     DefaultCol,
@@ -5,7 +6,6 @@ import {
     NameCol,
     Table,
 } from "../storybook-common/api-table";
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 
 export const PropsTable = () => (
     <Table>
@@ -20,7 +20,7 @@ export const PropsTable = () => (
                     `"description"`,
                 ]}
             >
-                The style of the Button
+                The style of the component
             </DescriptionCol>
             <DefaultCol />
         </tr>
@@ -45,25 +45,27 @@ export const PropsTable = () => (
         <tr>
             <NameCol>sizeType</NameCol>
             <DescriptionCol propTypes={[`"default"`, `"small"`]}>
-                Specifies the variant od size of alert
+                Specifies the size of the component
             </DescriptionCol>
-            <DefaultCol>default</DefaultCol>
+            <DefaultCol>{`"default"`}</DefaultCol>
         </tr>
         <tr>
             <NameCol>showIcon</NameCol>
             <DescriptionCol propTypes={[`boolean`]}>
-                Specifies if the alert will be display icon
+                Specifies if the icon will be displayed
             </DescriptionCol>
             <DefaultCol>false</DefaultCol>
         </tr>
         <tr>
             <NameCol>actionLinkIcon</NameCol>
             <DescriptionCol propTypes={["JSX.Element"]}>
-                Specifies if the hyperlink will be display icon
+                Specifies a custom icon for the action link
             </DescriptionCol>
             <DefaultCol>
                 <>
-                    <div style={{ marginRight: "1rem" }}>ArrowRightIcon</div>
+                    <div style={{ marginRight: "1rem" }}>
+                        <code>{`<ArrowRightIcon />`}</code>
+                    </div>
                     <ArrowRightIcon />
                 </>
             </DefaultCol>
