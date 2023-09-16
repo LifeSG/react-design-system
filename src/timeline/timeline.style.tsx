@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { TickIcon } from "@lifesg/react-icons";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
@@ -48,13 +47,12 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
             case "completed":
                 return css`
                     background-color: ${Color.Validation.Green.Icon};
+                    svg {
+                        color: ${Color.Neutral[8]};
+                    }
                 `;
         }
     }}
-`;
-
-export const IconTick = styled(TickIcon)`
-    color: ${Color.Neutral[8]};
 `;
 
 export const LineIndicator = styled.div<VariantStyleProps>`
