@@ -185,6 +185,10 @@ const Component = (
     const handleMonthYearSelect = (value: Dayjs) => {
         setCalendarDate(value);
         setViewCalendarDate(value);
+
+        if (!withButton) {
+            setCurrentView("default");
+        }
     };
 
     const handleCancelButton = () => {
