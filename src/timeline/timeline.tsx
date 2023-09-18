@@ -1,3 +1,4 @@
+import { TickIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 import {
     CircleIndicator,
@@ -11,7 +12,12 @@ import {
     TimelineTitle,
     TimelineWrapper,
 } from "./timeline.style";
-import { TimelineItemProps, TimelineProps, TimelineStatusProps } from "./types";
+import {
+    TimelineItemProps,
+    TimelineProps,
+    TimelineStatusProps,
+    Variant,
+} from "./types";
 
 export const Timeline = ({
     items,
@@ -36,6 +42,7 @@ export const Timeline = ({
 
         return <>{content}</>;
     };
+
     const renderTitle = (title: string | JSX.Element): JSX.Element => {
         if (typeof title === "string") {
             return (
@@ -50,6 +57,7 @@ export const Timeline = ({
 
         return <>{title}</>;
     };
+
     const renderStatusPills = (
         statuses: TimelineStatusProps[]
     ): JSX.Element[] => {
@@ -68,21 +76,35 @@ export const Timeline = ({
             );
         });
     };
+
+    const renderIcon = (variant: Variant) => {
+        switch (variant) {
+            case "completed":
+                return <TickIcon />;
+            default:
+                return null;
+        }
+    };
+
     const renderItems = () =>
         items.map((item: TimelineItemProps, index) => {
-            const { title, content, statuses } = item;
+            const { title, content, statuses, variant: _variant } = item;
             const circleIndicatorTestId = baseIndicatorTestId
                 ? `circleindicator${index + 1}_div_${baseIndicatorTestId}`
                 : "circleindicator";
+            const variant =
+                _variant || (index === 0 ? "current" : "upcoming-active");
 
             return (
                 <TimelineItem key={`timeline-item-${index}`}>
                     <TimelineIndicators>
                         <CircleIndicator
                             data-testid={circleIndicatorTestId}
-                            $filled={index === 0}
-                        />
-                        <LineIndicator />
+                            $variant={variant}
+                        >
+                            {renderIcon(variant)}
+                        </CircleIndicator>
+                        <LineIndicator $variant={variant} />
                     </TimelineIndicators>
                     <TimelineItemContent className="timeline-item-content">
                         {renderTitle(title)}
