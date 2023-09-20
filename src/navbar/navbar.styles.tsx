@@ -21,6 +21,7 @@ export const NAVBAR_MOBILE_HEIGHT = 3.5;
 interface StyleProps {
     $compress?: boolean;
     $fixed?: boolean;
+    $hideNavBranding?: boolean;
 }
 
 // =============================================================================
@@ -55,12 +56,13 @@ export const Nav = styled.nav<StyleProps>`
     }
 `;
 
-export const NavElementsContainer = styled.div`
+export const NavElementsContainer = styled.div<StyleProps>`
     display: flex;
     height: 100%;
-    margin-left: 5rem;
+    margin-left: ${(props) => (props.$hideNavBranding ? "0" : "5rem")};
     flex: 1;
     justify-content: flex-end;
+
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0rem;
     }

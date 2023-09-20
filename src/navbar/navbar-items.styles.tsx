@@ -13,14 +13,20 @@ interface StyleProps {
     $selected: boolean;
 }
 
+interface ItemStyleProps {
+    $alignLeft: boolean;
+}
+
 // =============================================================================
 // WRAPPER
 // =============================================================================
 
-export const Wrapper = styled.ul`
+export const Wrapper = styled.ul<ItemStyleProps>`
     display: flex;
     list-style: none;
     position: relative;
+
+    ${(props) => props.$alignLeft && "margin-right: auto;"}
 
     ${MediaQuery.MaxWidth.tablet} {
         display: none;
@@ -41,13 +47,15 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 // LINK ITEMS
 // =============================================================================
-export const LinkItem = styled.li`
+export const LinkItem = styled.li<ItemStyleProps>`
     display: flex;
     margin-left: 1rem;
 
     :first-child {
-        margin-left: 0;
+        // negative margin to preserve touch target size for link
+        margin-left: ${(props) => (props.$alignLeft ? "-0.5rem" : "0")};
     }
+
     ${MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
         padding: 0.125rem 0;

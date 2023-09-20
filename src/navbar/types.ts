@@ -64,6 +64,7 @@ export interface NavbarResourcesProps {
 export interface NavbarSharedProps {
     resources?: NavbarResourcesProps | undefined;
     actionButtons?: NavbarActionButtonsProps | undefined;
+    hideNavBranding?: boolean | undefined;
 }
 
 export type DrawerDismissalMethod =

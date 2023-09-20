@@ -19,6 +19,7 @@ interface Props<T> {
     selectedId?: string | undefined;
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
+    hideNavBranding?: boolean | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavItemProps<T>
@@ -29,6 +30,7 @@ export const NavbarItems = <T,>({
     items,
     selectedId,
     mobile = false,
+    hideNavBranding,
     onItemClick,
 }: Props<T>): JSX.Element => {
     // =============================================================================
@@ -119,8 +121,9 @@ export const NavbarItems = <T,>({
                         selectedIndex >= 0 &&
                         selectedIndex === index &&
                         showSubMenu;
+                    const alignLeft = index === 0 && hideNavBranding;
                     return (
-                        <LinkItem key={index}>
+                        <LinkItem key={index} $alignLeft={alignLeft}>
                             <Link
                                 data-testid={testId}
                                 weight={textWeight}
@@ -162,8 +165,13 @@ export const NavbarItems = <T,>({
     };
 
     if (items && items.length > 0) {
-        const ContentWrapper = mobile ? MobileWrapper : Wrapper;
-        return <ContentWrapper ref={ref}>{renderItems()}</ContentWrapper>;
+        return mobile ? (
+            <MobileWrapper ref={ref}>{renderItems()}</MobileWrapper>
+        ) : (
+            <Wrapper ref={ref} $alignLeft={hideNavBranding}>
+                {renderItems()}
+            </Wrapper>
+        );
     }
 
     return <></>;

@@ -43,6 +43,7 @@ const Component = <T,>(
         fixed = true,
         resources = DEFAULT_RESOURCES,
         hideNavElements = false,
+        hideNavBranding = false,
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
         onItemClick,
@@ -188,6 +189,7 @@ const Component = <T,>(
                 onClose={handleDrawerClose}
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
+                hideNavBranding={hideNavBranding}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -232,13 +234,16 @@ const Component = <T,>(
         return (
             <Layout.Content stretch={isStretch}>
                 <Nav $compress={compress}>
-                    {renderBrand()}
+                    {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
-                        <NavElementsContainer>
+                        <NavElementsContainer
+                            $hideNavBranding={hideNavBranding}
+                        >
                             <NavbarItems
                                 items={items.desktop}
                                 onItemClick={handleNavItemClick}
                                 selectedId={selectedId}
+                                hideNavBranding={hideNavBranding}
                             />
                             <NavbarActionButtons
                                 actionButtons={actionButtons}
