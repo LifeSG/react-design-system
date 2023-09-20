@@ -227,14 +227,12 @@ export const DataTable = ({
                         $alternating={isAlternatingRow(index)}
                         $isSelectable={enableMultiSelect}
                         $isSelected={isRowSelected(row.id.toString())}
+                        ref={rows.length - 1 === index ? stickyRef : null}
                     >
                         {enableMultiSelect &&
                             renderRowCheckBox(row.id.toString())}
 
                         {headers.map((header) => renderRowCell(header, row))}
-                        {index === rows.length - 1 && (
-                            <div ref={stickyRef}></div>
-                        )}
                     </BodyRow>
                 ))}
             </>
