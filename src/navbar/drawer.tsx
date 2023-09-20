@@ -66,6 +66,7 @@ const Component = (
                     resources={primary}
                     compress
                     onClick={onBrandClick}
+                    data-id="drawer-brand-primary"
                     data-testid="drawer__brand"
                     type="primary"
                 />
@@ -76,6 +77,7 @@ const Component = (
                             resources={secondary}
                             compress
                             onClick={onBrandClick}
+                            data-id="drawer-brand-secondary"
                             data-testid="drawer__brand-secondary"
                             type="secondary"
                         />
@@ -87,7 +89,7 @@ const Component = (
 
     const renderTopBar = () => (
         <TopBar>
-            <NavBrandContainer>
+            <NavBrandContainer data-id="drawer-brand-container">
                 {!hideNavBranding && renderBrand()}
             </NavBrandContainer>
             <CloseButton
