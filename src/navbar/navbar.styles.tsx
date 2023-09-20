@@ -95,6 +95,10 @@ export const NavBrandContainer = styled.div<StyleProps>`
     ${MediaQuery.MaxWidth.tablet} {
         height: 1.5rem;
     }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        height: 1.25rem;
+    }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
@@ -106,5 +110,10 @@ export const NavSeparator = styled.div<StyleProps>`
 
     ${MediaQuery.MaxWidth.tablet} {
         margin: 0 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 2px;
+        margin: 0 0.75rem;
     }
 `;
