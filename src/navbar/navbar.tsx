@@ -228,6 +228,27 @@ const Component = <T,>(
         </NavBrandContainer>
     );
 
+    const renderMobileMenuButton = () => {
+        if (
+            (items.mobile && items.mobile.length > 0) ||
+            (items.desktop && items.desktop.length > 0) ||
+            actionButtons
+        ) {
+            return (
+                <MobileMenuButton
+                    aria-label="Open nav menu"
+                    data-testid="button__mobile-menu"
+                    onClick={handleMobileMenuButtonClick}
+                    focusHighlight={false}
+                >
+                    <MobileMenuIcon />
+                </MobileMenuButton>
+            );
+        }
+
+        return null;
+    };
+
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
@@ -244,14 +265,7 @@ const Component = <T,>(
                                 actionButtons={actionButtons}
                                 onActionButtonClick={handleActionButtonClick}
                             />
-                            <MobileMenuButton
-                                aria-label="Open nav menu"
-                                data-testid="button__mobile-menu"
-                                onClick={handleMobileMenuButtonClick}
-                                focusHighlight={false}
-                            >
-                                <MobileMenuIcon />
-                            </MobileMenuButton>
+                            {renderMobileMenuButton()}
                         </NavElementsContainer>
                     )}
                 </Nav>
