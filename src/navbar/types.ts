@@ -64,6 +64,7 @@ export interface NavbarResourcesProps {
 export interface NavbarSharedProps {
     resources?: NavbarResourcesProps | undefined;
     actionButtons?: NavbarActionButtonsProps | undefined;
+    /** Specifies if brand logos are visible */
     hideNavBranding?: boolean | undefined;
 }
 
