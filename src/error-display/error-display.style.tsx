@@ -53,7 +53,7 @@ export const DescriptionContainer = styled.div`
 
     strong {
         ${TextStyleHelper.getFontFamily("Body", "semibold")}
-        -webkit-text-size-adjust: none;
+        text-size-adjust: none;
     }
 
     a {
