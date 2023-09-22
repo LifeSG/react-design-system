@@ -751,6 +751,47 @@ the screen with a fixed padding, ignoring the masthead's alignment.
     </Story>
 </Canvas>
 
+<Heading3>Hide branding</Heading3>
+
+When the branding elements are hidden, navigation items will be aligned to the left on desktop.
+
+<Canvas>
+    <Story name="Hidden branding">
+        <Navbar
+            items={{
+                desktop: [
+                    {
+                        id: "home",
+                        children: "Home",
+                    },
+                    {
+                        id: "guides",
+                        children: "Guides",
+                    },
+                    {
+                        id: "lifesg-app",
+                        children: "LifeSG app",
+                    },
+                ],
+            }}
+            actionButtons={{
+                desktop: [
+                    {
+                        type: "button",
+                        args: {
+                            styleType: "secondary",
+                            children: "Logout",
+                        },
+                    },
+                ],
+            }}
+            selectedId="home"
+            fixed={false} /* For storybook purposes */
+            hideNavBranding
+        />
+    </Story>
+</Canvas>
+
 <Secondary>Troubleshooting</Secondary>
 
 > The component also uses a custom script. Should you encounter a content security

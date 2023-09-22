@@ -73,6 +73,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "hideNavBranding",
+                description: "Specifies if brand logos are visible",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "hideNavElements",
                 description: "Specifies if links and buttons are hidden",
                 propTypes: ["boolean"],

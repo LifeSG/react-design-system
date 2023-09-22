@@ -18,7 +18,14 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const { show, resources, children, onClose, onBrandClick } = props;
+    const {
+        show,
+        resources,
+        children,
+        hideNavBranding,
+        onClose,
+        onBrandClick,
+    } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
 
     const { primary, secondary } = resources;
@@ -52,13 +59,14 @@ const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderTopBar = () => (
-        <TopBar>
-            <NavBrandContainer>
+    const renderBrand = () => {
+        return (
+            <>
                 <Brand
                     resources={primary}
                     compress
                     onClick={onBrandClick}
+                    data-id="drawer-brand-primary"
                     data-testid="drawer__brand"
                     type="primary"
                 />
@@ -69,13 +77,21 @@ const Component = (
                             resources={secondary}
                             compress
                             onClick={onBrandClick}
+                            data-id="drawer-brand-secondary"
                             data-testid="drawer__brand-secondary"
                             type="secondary"
                         />
                     </>
                 )}
-            </NavBrandContainer>
+            </>
+        );
+    };
 
+    const renderTopBar = () => (
+        <TopBar>
+            <NavBrandContainer data-id="drawer-brand-container">
+                {!hideNavBranding && renderBrand()}
+            </NavBrandContainer>
             <CloseButton
                 onClick={onClose}
                 focusHighlight={false}
