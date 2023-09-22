@@ -1,0 +1,83 @@
+import { useState, useRef } from "react";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import {
+    FullWidthStoryContainer,
+    Secondary,
+    Heading3,
+    Title,
+    StoryContainer,
+} from "../storybook-common";
+import { Button } from "src/button";
+import { Modal } from "/src/modal";
+import { Text } from "src/text";
+import { CountdownTimer } from "src/countdown-timer";
+import { CountdownView, NotifyModal } from "./count-down-view.tsx";
+import { PropsTable } from "./props-table";
+
+<Meta
+    title="Modules/CountdownTimer"
+    parameters={{ layout: "fullscreen" }}
+    component={CountdownTimer}
+/>
+
+<Title>Countdown Timer</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays a countdown timer on top right
+
+```tsx
+import { CountdownTimer } from "@lifesg/react-design-system/countdownTimer";
+```
+
+Countdown timer will sticky at specified position once browser scroll down to bottom.
+
+> Note: Due to the storybook environment, please view it in fullscreen for best results.
+
+<Canvas>
+    <Story name="CountdownTimer">
+        {() => {
+            const [showTimer, setShowTimer] = useState(false);
+            const [showNotifyModal, setShowNotifyModal] = useState(false);
+            const [showFinsihModal, setShowFinsihModal] = useState(false);
+            const [duration, setDuration] = useState({
+                minutes: 0,
+                seconds: 0,
+            });
+            const startTimer = () => setShowTimer(true);
+            const openNotifyModal = () => setShowNotifyModal(true);
+            const openFinishModal = () => setShowFinsihModal(true);
+            const handleDuration = (timer) => setDuration(timer);
+            return (
+                <FullWidthStoryContainer>
+                    <CountdownView>
+                        <CountdownTimer
+                            show={showTimer}
+                            timer={{ minutes: 1, seconds: 10 }}
+                            notifyTimer={{ seconds: 50 }}
+                            onDuration={(duration) => handleDuration(duration)}
+                            onFinish={() => openFinishModal()}
+                            onNotify={() => openNotifyModal()}
+                        />
+                        <Button.Default onClick={startTimer}>
+                            Start
+                        </Button.Default>
+                    </CountdownView>
+                    <NotifyModal show={showNotifyModal}>
+                        <span>
+                            {duration.minutes} minutes {duration.seconds}{" "}
+                            seconds
+                        </span>
+                    </NotifyModal>
+                    <NotifyModal show={showFinsihModal}>
+                        <span>The timer has finished</span>
+                    </NotifyModal>
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

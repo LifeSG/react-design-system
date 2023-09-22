@@ -183,6 +183,18 @@ export namespace TimeHelper {
             return "";
         }
     };
+
+    export const convertSecondsToTime = (minute: number) => {
+        const hours = Math.floor(minute / 3600);
+        const minutes = Math.floor(minute / 60) - hours * 60;
+        const seconds = minute % 60;
+
+        return {
+            hours,
+            minutes,
+            seconds,
+        };
+    };
 }
 
 // =============================================================================
