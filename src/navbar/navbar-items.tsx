@@ -121,9 +121,8 @@ export const NavbarItems = <T,>({
                         selectedIndex >= 0 &&
                         selectedIndex === index &&
                         showSubMenu;
-                    const alignLeft = index === 0 && hideNavBranding;
                     return (
-                        <LinkItem key={index} $alignLeft={alignLeft}>
+                        <LinkItem key={index} $hiddenBranding={hideNavBranding}>
                             <Link
                                 data-testid={testId}
                                 weight={textWeight}

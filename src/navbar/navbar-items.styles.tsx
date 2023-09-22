@@ -13,15 +13,19 @@ interface StyleProps {
     $selected: boolean;
 }
 
-interface ItemStyleProps {
+interface WrapperStyleProps {
     $alignLeft: boolean;
+}
+
+interface ItemStyleProps {
+    $hiddenBranding: boolean;
 }
 
 // =============================================================================
 // WRAPPER
 // =============================================================================
 
-export const Wrapper = styled.ul<ItemStyleProps>`
+export const Wrapper = styled.ul<WrapperStyleProps>`
     display: flex;
     list-style: none;
     position: relative;
@@ -53,7 +57,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
 
     :first-child {
         // negative margin to preserve touch target size for link
-        margin-left: ${(props) => (props.$alignLeft ? "-0.5rem" : "0")};
+        margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
     }
 
     ${MediaQuery.MaxWidth.tablet} {
