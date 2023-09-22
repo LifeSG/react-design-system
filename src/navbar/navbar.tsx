@@ -104,6 +104,29 @@ const Component = <T,>(
         );
     };
 
+    const hasUncollapsibleActionButtons = () => {
+        if (actionButtons.mobile) {
+            const hasUncollapsibleItems = actionButtons.mobile.some(
+                (actionButton) => {
+                    return actionButton.uncollapsible;
+                }
+            );
+
+            if (hasUncollapsibleItems) return true;
+        }
+
+        if (actionButtons.desktop) {
+            const hasUncollapsibleItems = actionButtons.desktop.some(
+                (actionButton) => {
+                    return actionButton.uncollapsible;
+                }
+            );
+
+            if (hasUncollapsibleItems) return true;
+        }
+        return false;
+    };
+
     // =============================================================================
     // EVENT HANDLER
     // =============================================================================
@@ -232,7 +255,7 @@ const Component = <T,>(
         if (
             (items.mobile && items.mobile.length > 0) ||
             (items.desktop && items.desktop.length > 0) ||
-            actionButtons
+            (actionButtons && !hasUncollapsibleActionButtons())
         ) {
             return (
                 <MobileMenuButton

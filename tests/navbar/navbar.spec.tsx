@@ -22,13 +22,7 @@ describe("Navbar", () => {
         });
 
         it("should render the mobile items even if mobile items are not specified", () => {
-            const rendered = render(
-                <Navbar
-                    items={{
-                        desktop: MOCK_ITEMS,
-                    }}
-                />
-            );
+            const rendered = render(<Navbar items={{ desktop: MOCK_ITEMS }} />);
 
             const { getByTestId } = rendered;
 
@@ -53,13 +47,7 @@ describe("Navbar", () => {
         });
 
         it("should render the primary brand", () => {
-            const rendered = render(
-                <Navbar
-                    items={{
-                        desktop: MOCK_ITEMS,
-                    }}
-                />
-            );
+            const rendered = render(<Navbar items={{ desktop: MOCK_ITEMS }} />);
 
             const { getByTestId } = rendered;
             expect(getByTestId("main__brand")).toBeInTheDocument();
@@ -86,26 +74,14 @@ describe("Navbar", () => {
         });
 
         it("should render the mobile menu button if there are items specified", () => {
-            const rendered = render(
-                <Navbar
-                    items={{
-                        desktop: MOCK_ITEMS,
-                    }}
-                />
-            );
+            const rendered = render(<Navbar items={{ desktop: MOCK_ITEMS }} />);
 
             const { getByTestId } = rendered;
             expect(getByTestId("button__mobile-menu")).toBeInTheDocument();
         });
 
         it("should not render the links and mobile menu button if there no items are specified", () => {
-            const rendered = render(
-                <Navbar
-                    items={{
-                        desktop: [],
-                    }}
-                />
-            );
+            const rendered = render(<Navbar items={{ desktop: [] }} />);
 
             const { queryByTestId } = rendered;
             expect(queryByTestId("link__1")).not.toBeInTheDocument();
@@ -116,16 +92,56 @@ describe("Navbar", () => {
 
         it("should not render the links and mobile menu button if hideNavElements is set to true", () => {
             const rendered = render(
-                <Navbar
-                    items={{
-                        desktop: MOCK_ITEMS,
-                    }}
-                    hideNavElements
-                />
+                <Navbar items={{ desktop: MOCK_ITEMS }} hideNavElements />
             );
 
             const { queryByTestId } = rendered;
             expect(queryByTestId("link__1")).not.toBeInTheDocument();
+            expect(
+                queryByTestId("button__mobile-menu")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should render the mobile menu items if no items are specified but there are action items specified", () => {
+            const rendered = render(
+                <Navbar
+                    items={{ desktop: [] }}
+                    actionButtons={{
+                        desktop: [
+                            {
+                                type: "button",
+                                args: {
+                                    children: "Test",
+                                },
+                            },
+                        ],
+                    }}
+                />
+            );
+
+            const { getByTestId } = rendered;
+            expect(getByTestId("button__mobile-menu")).toBeInTheDocument();
+        });
+
+        it("should not render the mobile menu items if no items are specified the action items are uncollapsible", () => {
+            const rendered = render(
+                <Navbar
+                    items={{ desktop: [] }}
+                    actionButtons={{
+                        desktop: [
+                            {
+                                type: "button",
+                                args: {
+                                    children: "Test",
+                                },
+                                uncollapsible: true,
+                            },
+                        ],
+                    }}
+                />
+            );
+
+            const { queryByTestId } = rendered;
             expect(
                 queryByTestId("button__mobile-menu")
             ).not.toBeInTheDocument();

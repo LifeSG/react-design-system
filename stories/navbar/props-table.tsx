@@ -262,8 +262,13 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "uncollapsible",
-                description:
-                    "Specifies if the action button should collapse in mobile viewports",
+                description: (
+                    <>
+                        If specified, the item will remain on the{" "}
+                        <code>Navbar</code> and not be collapsed to the drawer
+                        in mobile viewports
+                    </>
+                ),
                 propTypes: ["boolean"],
             },
         ],
