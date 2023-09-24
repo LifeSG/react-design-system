@@ -17,7 +17,7 @@ export default defineConfig({
     reporter: "html",
     /* Location of screenshots. See https://playwright.dev/docs/api/class-testproject#test-project-snapshot-path-template */
     snapshotPathTemplate:
-        "{testDir}/{testFileDir}/screenshots/{projectName}/{arg}{ext}",
+        "{testDir}/{testFileDir}/__screenshots__/{projectName}/{arg}{ext}",
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
@@ -34,7 +34,7 @@ export default defineConfig({
             use: { ...devices["Desktop Chrome"] },
         },
         {
-            name: "Mobile Chrome",
+            name: "chrome-mobile",
             use: { ...devices["Pixel 5"] },
         },
     ],
