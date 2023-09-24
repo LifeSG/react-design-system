@@ -1,0 +1,32 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import dayjs from "dayjs";
+import { Form } from "src/form";
+import { Layout } from "src/layout";
+import { StoryContainer } from "../../storybook-common";
+
+<Meta
+    title="Form/DateInput/E2E"
+    component={Form.DateInput}
+    parameters={{ layout: "fullscreen" }}
+/>
+
+<Canvas>
+    <Story name="Empty input">
+        <StoryContainer>
+            <Form.DateInput data-testid="e2e" label="Form label" />
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Canvas>
+    <Story name="Prefilled input">
+        <StoryContainer>
+            <Form.DateInput
+                data-testid="e2e"
+                label="Form label"
+                value="2023-12-01"
+            />
+        </StoryContainer>
+    </Story>
+</Canvas>
