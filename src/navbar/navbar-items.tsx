@@ -132,7 +132,11 @@ export const NavbarItems = <T,>({
                                 {...options}
                             >
                                 <LinkLabel>{children}</LinkLabel>
-                                {selected && <LinkIndicator />}
+                                {selected && (
+                                    <LinkIndicator
+                                        data-testid={`${testId}-indicator`}
+                                    />
+                                )}
                                 {mobile && item.subMenu && (
                                     <LinkIconContainer>
                                         <ExpandCollapseButton
