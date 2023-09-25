@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { LoadingDotsSpinner } from "../animations";
 import {
+    ActionBar,
+    ActionBarWrapper,
     BodyCell,
     BodyCellContent,
     BodyRow,
@@ -12,7 +14,6 @@ import {
     HeaderCellWrapper,
     HeaderRow,
     LoaderWrapper,
-    SelectionBar,
     Table,
     TableBody,
     TableContainer,
@@ -49,34 +50,97 @@ export const DataTable = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [showLastBorder, setShowLastBorder] = useState(false);
-    const [isFloating, setIsFloating] = useState(false);
-    const [alignActionBarWithScreen, setAlignActionBarWithScreen] =
-        useState(false);
-    const tableRef = useRef<HTMLTableElement>();
+    const tableRef = useRef<HTMLTableElement>(null);
+    const tableEndRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLTableSectionElement>(null);
+    const actionBarRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const [scrollable, setScrollable] = useState(false);
+    const [scrollEnd, setScrollEnd] = useState(false);
+    const [tableEnd, setTableEnd] = useState(false);
+    const [isFloatingActionBar, setIsFloatingActionBar] = useState(false);
 
-    const { ref: stickyRef, inView: isLastRowInView } = useInView({
-        threshold: 0,
-    });
-    const { ref: endRef, inView: atEnd } = useInView({
-        threshold: 0,
-    });
-    const { ref: containerRef, inView: isContainerInView } = useInView({
-        threshold: 0,
-        rootMargin: "0px 0px -100px 0px",
-    });
+    const { ref: endRef, inView: end } = useInView();
+
+    const calculateStickyInViewport = () => {
+        if (
+            !tableRef.current ||
+            !tableEndRef.current ||
+            !wrapperRef.current ||
+            !actionBarRef.current ||
+            !headerRef.current
+        ) {
+            return;
+        }
+
+        const endBounds = tableEndRef.current.getBoundingClientRect();
+
+        if (endBounds.top > window.innerHeight) {
+            const bottomOffset = endBounds.bottom - window.innerHeight;
+            const bottomToHeaderOffset =
+                tableRef.current.getBoundingClientRect().height -
+                headerRef.current.clientHeight -
+                32;
+            const maxBottomOffset = Math.min(
+                bottomOffset,
+                bottomToHeaderOffset
+            );
+
+            actionBarRef.current.style.transform = `translateY(-${maxBottomOffset}px)`;
+        } else {
+            actionBarRef.current.style.transform = `translateY(0)`;
+        }
+    };
 
     // =============================================================================
     // EFFECTS
-    // =============================================================================
+    // ============================================================================
     useEffect(() => {
-        checkLastBorder();
-    }, [rows]);
+        if (!wrapperRef.current) {
+            return;
+        }
+
+        const observer = new ResizeObserver(() => {
+            const scrollable =
+                wrapperRef.current.scrollHeight >
+                wrapperRef.current.clientHeight;
+            setScrollable(scrollable);
+
+            if (scrollable) {
+                actionBarRef.current.style.transform = `translateY(0)`;
+            } else {
+                calculateStickyInViewport();
+            }
+        });
+
+        observer.observe(wrapperRef.current);
+
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
-        setIsFloating(isContainerInView && !isLastRowInView);
-        setAlignActionBarWithScreen(!atEnd);
-    }, [isLastRowInView, atEnd, isContainerInView]);
+        const scrollHandler = () => {
+            requestAnimationFrame(() => {
+                if (scrollable) {
+                    // can handle case where table is partially in view here if needed
+                    // calculateStickyInPage();
+                    scrollFunction();
+                } else {
+                    calculateStickyInViewport();
+                }
+            });
+
+            if (wrapperRef.current) {
+                setTableEnd(
+                    wrapperRef.current.getBoundingClientRect().bottom <=
+                        window.innerHeight
+                );
+            }
+        };
+        window.addEventListener("scroll", scrollHandler);
+
+        return () => window.removeEventListener("scroll", scrollHandler);
+    }, [scrollable]);
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -112,10 +176,14 @@ export const DataTable = ({
         return headers.length + (enableMultiSelect ? 1 : 0);
     };
 
-    const checkLastBorder = () => {
-        setShowLastBorder(
-            tableRef.current?.scrollHeight >
-                (tableRef.current?.childNodes[0] as HTMLElement).clientHeight
+    const scrollFunction = () => {
+        if (!wrapperRef.current) {
+            return;
+        }
+        const wrapperBounds = wrapperRef.current.getBoundingClientRect();
+        setIsFloatingActionBar(
+            wrapperBounds.bottom > window.innerHeight + 30 &&
+                wrapperBounds.top < window.innerHeight - 200
         );
     };
 
@@ -123,7 +191,7 @@ export const DataTable = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeaders = () => (
-        <thead>
+        <thead ref={headerRef}>
             <HeaderRow>
                 {enableMultiSelect && renderHeaderCheckBox()}
                 {headers.map(renderHeaderCell)}
@@ -227,7 +295,6 @@ export const DataTable = ({
                         $alternating={isAlternatingRow(index)}
                         $isSelectable={enableMultiSelect}
                         $isSelected={isRowSelected(row.id.toString())}
-                        ref={rows.length - 1 === index ? stickyRef : null}
                     >
                         {enableMultiSelect &&
                             renderRowCheckBox(row.id.toString())}
@@ -325,19 +392,30 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         return (
-            <SelectionBar
-                $isFloating={isFloating}
-                $alignWithScreen={alignActionBarWithScreen}
-                $width={tableRef.current?.clientWidth}
+            <ActionBarWrapper
+                ref={actionBarRef}
+                $fixed={isFloatingActionBar}
+                $left={tableRef?.current?.getBoundingClientRect()?.left}
+                $width={tableRef?.current?.clientWidth}
             >
-                <Text.H5 weight="semibold">{`${selectedIds.length} item${
-                    selectedIds.length > 1 ? "s" : ""
-                } selected`}</Text.H5>
-                <Button.Small styleType="link" onClick={onClearSelectionClick}>
-                    Clear selection
-                </Button.Small>
-                {actionBarContent}
-            </SelectionBar>
+                <ActionBar
+                    $float={
+                        (scrollable ? !scrollEnd : !end) || isFloatingActionBar
+                    }
+                    $scrollable={scrollable}
+                >
+                    <Text.H5 weight="semibold">{`${selectedIds.length} item${
+                        selectedIds.length > 1 ? "s" : ""
+                    } selected`}</Text.H5>
+                    <Button.Small
+                        styleType="link"
+                        onClick={onClearSelectionClick}
+                    >
+                        Clear selection
+                    </Button.Small>
+                    {actionBarContent}
+                </ActionBar>
+            </ActionBarWrapper>
         );
     };
 
@@ -346,17 +424,21 @@ export const DataTable = ({
             id={id || "table-wrapper"}
             data-testid={otherProps["data-testid"] || "table"}
             className={className}
-            ref={containerRef}
-        >
-            <TableContainer
-                ref={tableRef}
-                $isRoundBorder={
-                    !enableActionBar || !isLastRowInView || !selectedIds?.length
+            ref={wrapperRef}
+            onScroll={() => {
+                if (scrollable && wrapperRef.current) {
+                    setScrollEnd(
+                        wrapperRef.current.scrollTop +
+                            wrapperRef.current.clientHeight >=
+                            wrapperRef.current.scrollHeight
+                    );
                 }
-            >
-                <Table>
+            }}
+        >
+            <TableContainer>
+                <Table $end={tableEnd} $scrollable={scrollable} ref={tableRef}>
                     {renderHeaders()}
-                    <TableBody $showLastRowBottomBorder={showLastBorder}>
+                    <TableBody $showLastRowBottomBorder={false}>
                         {loadState === "success"
                             ? renderRows()
                             : renderLoader()}
@@ -367,7 +449,12 @@ export const DataTable = ({
                 selectedIds &&
                 selectedIds.length > 0 &&
                 renderSelectionBar()}
-            <div ref={endRef}></div>
+            <div
+                ref={(r) => {
+                    tableEndRef.current = r;
+                    endRef(r);
+                }}
+            />
         </TableWrapper>
     );
 };

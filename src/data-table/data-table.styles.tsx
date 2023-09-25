@@ -8,8 +8,9 @@ import { Text } from "../text";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface TableContainerProps {
-    $isRoundBorder: boolean;
+interface TableProps {
+    $end: boolean;
+    $scrollable: boolean;
 }
 interface TableBodyProps {
     $showLastRowBottomBorder: boolean;
@@ -28,10 +29,15 @@ interface BodyCellProps {
     $isCheckbox: boolean;
 }
 
-interface SelectionBarProps {
-    $isFloating: boolean;
-    $alignWithScreen: boolean;
-    $width?: number;
+interface ActionBarWrapperProps {
+    $fixed: boolean;
+    $left?: number | undefined;
+    $width?: number | undefined;
+}
+
+interface ActionBarProps {
+    $float: boolean;
+    $scrollable: boolean;
 }
 
 // =============================================================================
@@ -44,31 +50,27 @@ const fontColor = Color.Neutral[1];
 // STYLES
 // =============================================================================
 export const TableWrapper = styled.div`
+    overflow: auto;
     display: flex;
     flex-direction: column;
-    width: fit-content;
-    position: relative;
+    border: 1px solid ${borderColor};
+    border-radius: 0.5rem;
 
     // Hide scrollbar
-    div::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         display: none;
+    }
+    * {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 `;
 
-export const TableContainer = styled.div<TableContainerProps>`
-    overflow: auto;
+export const TableContainer = styled.div`
     flex: 1;
-    border: 1px solid ${borderColor};
-    border-radius: ${(props) =>
-        props.$isRoundBorder ? "0.5rem" : "0.5rem 0.5rem 0 0"};
-
-    // Hide scrollbar
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
 `;
 
-export const Table = styled.table`
-    border-collapse: separate;
+export const Table = styled.table<TableProps>`
     th:last-child,
     td:last-child {
         padding-right: 1.5rem;
@@ -76,6 +78,16 @@ export const Table = styled.table`
     th:first-child,
     td:first-child {
         padding-left: 1.5rem;
+    }
+    text-align: left;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+
+    thead {
+        position: sticky;
+        top: 0;
+        z-index: 20;
     }
 `;
 
@@ -90,31 +102,45 @@ export const TableBody = styled.tbody<TableBodyProps>`
     }
 `;
 
-export const SelectionBar = styled.div<SelectionBarProps>`
+export const ActionBarWrapper = styled.div<ActionBarWrapperProps>`
     bottom: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: ${(props) => (props.$width ? `${props.$width + 2}px` : "100%")};
-    height: 3.5rem;
-    padding: 1rem;
-    border: 1px solid ${borderColor};
-    border-radius: 0 0 4px 4px;
-    border-top: none;
-    background-color: ${DesignToken.Table.Cell.Selected};
-    transition: all 300ms ease;
-
     ${(props) => {
-        if (props.$isFloating) {
+        if (props.$fixed) {
+            const left = props.$left ? `${props.$left}px` : "0";
+            const width = props.$width ? `${props.$width}px` : "100%";
             return css`
-                position: ${props.$alignWithScreen ? "fixed" : "absolute"};
-                border-radius: 4px;
-                box-shadow: 0px 0px 4px 0px rgba(40, 40, 40, 0.25);
-                transform: translateY(-1rem) translateX(0);
-                width: ${props.$width + 2}px;
+                position: fixed;
+                left: ${left};
+                width: ${width};
+            `;
+        } else {
+            return css`
+                position: sticky;
+                left: 0;
             `;
         }
     }};
+`;
+
+export const ActionBar = styled.div<ActionBarProps>`
+    overflow: hidden;
+    display: flex;
+    ${(props) =>
+        props.$float &&
+        `
+            transform: translateX(-0.5%) translateY(-32px);
+            border-radius: 4px;
+            box-shadow: 0 0 4px 0 rgba(40, 40, 40, 0.25);
+            width: 101%;
+            border: 1px solid ${borderColor};
+        `}
+    align-items: center;
+    height: 3.5rem;
+    padding: 1rem;
+    border-top: 1px solid ${borderColor};
+    border-radius: 0 0 4px 4px;
+    background-color: ${DesignToken.Table.Cell.Selected};
+    transition: all 300ms ease;
 `;
 
 export const HeaderRow = styled.tr`
