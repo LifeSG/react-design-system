@@ -60,6 +60,7 @@ export const DataTable = ({
     const [scrollEnd, setScrollEnd] = useState(false);
     const [tableEnd, setTableEnd] = useState(false);
     const [isFloatingActionBar, setIsFloatingActionBar] = useState(false);
+    const [showLastBorder, setShowLastBorder] = useState(false);
 
     const { ref: endRef, inView: end } = useInView();
 
@@ -143,6 +144,10 @@ export const DataTable = ({
         return () => window.removeEventListener("scroll", scrollHandler);
     }, [scrollable]);
 
+    useEffect(() => {
+        checkLastBorder();
+    }, [rows]);
+
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
@@ -185,6 +190,13 @@ export const DataTable = ({
         setIsFloatingActionBar(
             wrapperBounds.bottom > window.innerHeight + 30 &&
                 wrapperBounds.top < window.innerHeight - 200
+        );
+    };
+
+    const checkLastBorder = () => {
+        setShowLastBorder(
+            tableRef.current?.scrollHeight <
+                (tableRef.current?.childNodes[0] as HTMLElement).clientHeight
         );
     };
 
@@ -444,7 +456,7 @@ export const DataTable = ({
                     $stickyHeader={enableStickyHeader}
                 >
                     {renderHeaders()}
-                    <TableBody $showLastRowBottomBorder={false}>
+                    <TableBody $showLastRowBottomBorder={showLastBorder}>
                         {loadState === "success"
                             ? renderRows()
                             : renderLoader()}
