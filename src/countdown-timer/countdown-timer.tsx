@@ -1,26 +1,21 @@
-import debounce from "lodash/debounce";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useTimer } from "../util/use-timer";
+import { useTimer } from "./use-timer";
 import { CountdownTimerProps } from "./types";
-import {
-    Countdown,
-    PositionStyle,
-    Time,
-    TimeLeft,
-    Wrapper,
-} from "./countdown-timer.style";
+import { Countdown, Time, TimeLeft, Wrapper } from "./countdown-timer.style";
 import { TimeHelper } from "../util/time-helper";
 import { ClockIcon } from "@lifesg/react-icons";
 import { useIntersectionObserver } from "../util/use-intersection-observer";
-import { useEventListener } from "../util/use-event-listener";
 import { MediaWidths } from "../spec/media-spec";
+
+type Position = "relative" | "fixed";
 
 export const CountdownTimer = ({
     className,
     timer: _timer,
     notifyTimer,
     offset,
+    mobileOffset,
     show,
     "data-testid": testId,
     onDuration,
@@ -30,19 +25,13 @@ export const CountdownTimer = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { minutes = 0, seconds = 0 } = _timer;
-    const notifyMinutes = notifyTimer?.minutes || 0;
-    const notifySeconds = notifyTimer?.seconds || 0;
-    const notifyTiming = notifyMinutes * 60 + notifySeconds;
-    const totalSeconds = minutes * 60 + seconds;
 
     const wrapperRef = useRef<HTMLDivElement>();
     const stickyRef = useRef<HTMLDivElement>();
-
-    const [scrolling, setScrolling] = useState<boolean>(false);
+    const isNotified = useRef<boolean>(false);
     const [offsetY, setOffsetY] = useState<number>(0);
 
-    const [timer, isPlaying, setIsPlaying] = useTimer(totalSeconds);
+    const [timer, isPlaying, setIsPlaying] = useTimer(_timer);
     const onScreen = useIntersectionObserver(stickyRef, {
         threshold: 1,
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,
@@ -56,8 +45,6 @@ export const CountdownTimer = ({
     // EFFECTS
     // =============================================================================
 
-    useEventListener("scroll", handleScrollEvent);
-
     useEffect(() => {
         setIsPlaying(show);
     }, [show]);
@@ -65,10 +52,11 @@ export const CountdownTimer = ({
     useEffect(() => {
         if (timer === 0) {
             performOnFinishHandler();
-        } else if (timer === notifyTiming) {
+        } else if (timer === notifyTimer) {
             performOnDurationHandler();
             performOnNotifyHandler();
-        } else if (timer < notifyTiming) {
+        } else if (timer < notifyTimer) {
+            if (!isNotified.current) performOnNotifyHandler();
             performOnDurationHandler();
         }
     }, [timer]);
@@ -79,30 +67,20 @@ export const CountdownTimer = ({
     }, [isMobile, wrapperRef.current]);
 
     // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    function handleScrollEvent() {
-        setScrolling(true);
-        handleEndScroll();
-    }
-
-    const handleEndScroll = useMemo(
-        () => debounce(() => setScrolling(false), 250),
-        []
-    );
-
-    // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+
     const performOnDurationHandler = () => {
         if (onDuration) {
-            const { minutes, seconds } = TimeHelper.convertSecondsToTime(timer);
+            const { seconds } = TimeHelper.convertSecondsToTime(timer);
 
-            onDuration({ minutes, seconds });
+            onDuration(seconds);
         }
     };
 
     const performOnNotifyHandler = () => {
+        isNotified.current = true;
+
         if (onNotify) onNotify();
     };
 
@@ -113,14 +91,10 @@ export const CountdownTimer = ({
     };
 
     function getOffsetY() {
-        const DEFAULT_DESKTOP_TABLET_POSITION = 168;
-        const DEFAULT_MOBILE_POSITION = 80;
+        const desktopTop = offset?.top ?? 168;
+        const mobileTop = mobileOffset?.top ?? 80;
 
-        const offsetY = offset?.top
-            ? offset.top
-            : isMobile
-            ? DEFAULT_MOBILE_POSITION
-            : DEFAULT_DESKTOP_TABLET_POSITION;
+        const offsetY = !isMobile ? desktopTop : mobileTop;
 
         return offsetY;
     }
@@ -129,9 +103,12 @@ export const CountdownTimer = ({
     // RENDER FUNCTION
     // =============================================================================
 
-    const renderCountdown = (position: PositionStyle) => {
+    const renderCountdown = (position: Position) => {
         const { minutes, seconds } = TimeHelper.convertSecondsToTime(timer);
         const clientRect = wrapperRef.current?.getBoundingClientRect();
+
+        const m = minutes !== 1 ? "mins" : "min";
+        const s = seconds !== 1 ? "secs" : "sec";
 
         return (
             <Countdown
@@ -143,18 +120,17 @@ export const CountdownTimer = ({
                 }
                 ref={position === "relative" ? wrapperRef : undefined}
                 inert={onScreen ? undefined : ""}
-                $position={position}
+                $isFixed={position === "fixed"}
                 $pinned={position === "fixed" && !onScreen}
                 $opacity={position === "relative" && !onScreen}
-                $scroll={scrolling}
-                $warn={timer <= notifyTiming}
+                $warn={timer <= notifyTimer}
                 $top={offsetY}
                 $left={offset?.left ?? clientRect?.x}
             >
                 <ClockIcon />
                 <TimeLeft>Time left:</TimeLeft>
                 <Time>
-                    {minutes} mins {String(seconds).padStart(2, "0")} secs
+                    {minutes} {m} {String(seconds).padStart(2, "0")} {s}
                 </Time>
             </Countdown>
         );

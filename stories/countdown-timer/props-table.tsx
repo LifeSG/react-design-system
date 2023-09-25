@@ -25,14 +25,15 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "timer",
                 description:
-                    "Specifies the duration of the timer in minutes and seconds",
-                propTypes: ["{minutes: number, seconds: number}"],
+                    "Specifies the duration in seconds of the timer in minutes and seconds",
+                propTypes: ["number"],
                 mandatory: true,
             },
             {
                 name: "notifyTimer",
-                description: "Specifies the timer for the notification",
-                propTypes: ["{minutes: number, seconds: number}"],
+                description:
+                    "Specifies the timer in seconds for the notification",
+                propTypes: ["number"],
             },
             {
                 name: "offset",
@@ -42,6 +43,18 @@ const DATA: ApiTableSectionProps[] = [
                         to bottom
                         <br />- For tablet and desktop views, the default sticky
                         position is <code>168px</code> from the top.
+                        <br />
+                        <strong>(Note: it is pixel base)</strong>
+                    </>
+                ),
+                propTypes: ["{top: number, left: number}"],
+            },
+            {
+                name: "mobileoffset",
+                description: (
+                    <>
+                        Specifies the sitcky position once browser scroll down
+                        to bottom
                         <br />- For mobile, the default position is
                         <code>80px</code> from the top
                         <br />
@@ -55,20 +68,17 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Called when timer value becomes equal to or less than
-                        the total specified amount of <code>notifyMinutes</code>{" "}
-                        and
-                        <code>notifySeconds</code>
+                        the specified <code>notifyTimer</code>
                     </>
                 ),
-                propTypes: ["() => void"],
+                propTypes: ["(seconds: number) => void"],
             },
             {
                 name: "onNotify",
                 description: (
                     <>
-                        Called when timer value becomes less than the total
-                        specified amount <code>notifyMinutes</code> and{" "}
-                        <code>notifySeconds</code>
+                        Called when timer value becomes less than the specified
+                        <code>notifyTimer</code>
                     </>
                 ),
                 propTypes: ["() => void"],
