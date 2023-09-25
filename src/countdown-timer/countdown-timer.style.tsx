@@ -7,11 +7,9 @@ import { MediaQuery } from "../media";
 // STYLE TYPES
 // =============================================================================
 
-export type PositionStyle = "relative" | "fixed";
 interface CountdownStyleProps {
-    $position: PositionStyle;
+    $isFixed: boolean;
     $opacity: boolean;
-    $scroll: boolean;
     $warn: boolean;
     $pinned: boolean;
     $top: number;
@@ -31,7 +29,7 @@ export const Countdown = styled.div<CountdownStyleProps>`
     display: inline-flex;
     align-items: center;
     opacity: ${(props) => (props.$opacity ? 0 : 1)};
-    position: ${(props) => props.$position};
+    position: ${(props) => (props.$isFixed ? "fixed" : "relative")};
     align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 4px;
@@ -52,23 +50,13 @@ export const Countdown = styled.div<CountdownStyleProps>`
     }}
 
     ${(props) => {
-        if (props.$scroll && props.$warn) {
-            return css`
-                box-shadow: 0px 0px 4px 1px ${Color.Brand[2]};
-            `;
-        } else if (props.$scroll) {
-            return css`
-                box-shadow: 0px 0px 4px 1px ${Color.Accent.Light[2]};
-            `;
-        }
-    }}
-
-    ${(props) => {
-        const { $top, $left } = props;
+        const { $top, $left, $warn } = props;
         if (props.$pinned) {
             return css`
                 top: ${$top}px;
                 left: ${$left}px;
+                box-shadow: 0px 0px 4px 1px
+                    ${$warn ? Color.Brand[2] : Color.Accent.Light[2]};
 
                 ${MediaQuery.MaxWidth.mobileL} {
                     left: 0;
