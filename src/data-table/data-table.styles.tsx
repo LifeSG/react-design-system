@@ -11,6 +11,7 @@ import { Text } from "../text";
 interface TableProps {
     $end: boolean;
     $scrollable: boolean;
+    $stickyHeader: boolean;
 }
 interface TableBodyProps {
     $showLastRowBottomBorder: boolean;
@@ -84,11 +85,17 @@ export const Table = styled.table<TableProps>`
     border-spacing: 0;
     width: 100%;
 
-    thead {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-    }
+    ${(props) => {
+        if (props.$stickyHeader) {
+            return css`
+                thead {
+                    position: sticky;
+                    top: 0;
+                    z-index: 20;
+                }
+            `;
+        }
+    }};
 `;
 
 export const TableBody = styled.tbody<TableBodyProps>`

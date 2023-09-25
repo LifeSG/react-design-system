@@ -36,8 +36,9 @@ export const DataTable = ({
     enableMultiSelect,
     selectedIds,
     disabledIds,
-    enableSelectAll,
     enableActionBar,
+    enableSelectAll,
+    enableStickyHeader,
     emptyView,
     actionBarContent,
     renderCustomEmptyView,
@@ -436,7 +437,12 @@ export const DataTable = ({
             }}
         >
             <TableContainer>
-                <Table $end={tableEnd} $scrollable={scrollable} ref={tableRef}>
+                <Table
+                    $end={tableEnd}
+                    $scrollable={scrollable}
+                    ref={tableRef}
+                    $stickyHeader={enableStickyHeader}
+                >
                     {renderHeaders()}
                     <TableBody $showLastRowBottomBorder={false}>
                         {loadState === "success"

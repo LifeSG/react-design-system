@@ -16,6 +16,8 @@ export interface DataTableProps {
     enableSelectAll?: boolean | undefined;
     /** display action bar */
     enableActionBar?: boolean | undefined;
+    /** sticky header */
+    enableStickyHeader?: boolean | undefined;
     actionBarContent?: ReactNode | undefined;
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
     onSelectAll?: ((isSelected: boolean) => void) | undefined;
