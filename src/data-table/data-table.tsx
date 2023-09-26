@@ -182,8 +182,10 @@ export const DataTable = ({
     };
 
     const checkLastBorder = () => {
+        // 56 pixels added due to the behavior of action bar
         setShowLastBorder(
-            tableRef.current.clientHeight + 56 < wrapperRef.current.clientHeight
+            tableRef.current.clientHeight + (enableActionBar ? 56 : 0) <
+                wrapperRef.current.clientHeight
         );
     };
 
