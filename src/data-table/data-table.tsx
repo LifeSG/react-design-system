@@ -124,9 +124,7 @@ export const DataTable = ({
         const scrollHandler = () => {
             requestAnimationFrame(() => {
                 if (scrollable) {
-                    // can handle case where table is partially in view here if needed
-                    // calculateStickyInPage();
-                    scrollFunction();
+                    calculateFixedInViewport();
                 } else {
                     calculateStickyInViewport();
                 }
@@ -182,7 +180,7 @@ export const DataTable = ({
         return headers.length + (enableMultiSelect ? 1 : 0);
     };
 
-    const scrollFunction = () => {
+    const calculateFixedInViewport = () => {
         if (!wrapperRef.current) {
             return;
         }
