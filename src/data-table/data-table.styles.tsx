@@ -135,7 +135,7 @@ export const ActionBar = styled.div<ActionBarProps>`
     ${(props) =>
         props.$float &&
         `
-            transform: translateX(-0.5%) translateY(-32px);
+            transform: translateX(-0.5%) translateY(-2rem);
             border-radius: 4px;
             box-shadow: 0 0 4px 0 rgba(40, 40, 40, 0.25);
             width: 101%;

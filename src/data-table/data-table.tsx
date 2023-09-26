@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { LoadingDotsSpinner } from "../animations";
 import {
@@ -24,6 +24,8 @@ import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 import { Checkbox } from "../checkbox";
 import { Button } from "../button";
+import { useEventListener } from "../util/use-event-listener";
+import { useResizeDetector } from "react-resize-detector";
 
 export const DataTable = ({
     id,
@@ -67,50 +69,38 @@ export const DataTable = ({
     // =============================================================================
     // EFFECTS
     // ============================================================================
-    useEffect(() => {
-        if (!wrapperRef.current) {
-            return;
+    const onResize = useCallback(() => {
+        const scrollable =
+            wrapperRef.current.scrollHeight > wrapperRef.current.clientHeight;
+        setScrollable(scrollable);
+
+        if (scrollable) {
+            actionBarRef.current.style.transform = `translateY(0)`;
+        } else {
+            calculateStickyInViewport();
         }
+    }, []);
 
-        const observer = new ResizeObserver(() => {
-            const scrollable =
-                wrapperRef.current.scrollHeight >
-                wrapperRef.current.clientHeight;
-            setScrollable(scrollable);
+    useResizeDetector({ onResize });
 
+    const scrollHandler = () => {
+        requestAnimationFrame(() => {
             if (scrollable) {
-                actionBarRef.current.style.transform = `translateY(0)`;
+                calculateFixedInViewport();
             } else {
                 calculateStickyInViewport();
             }
         });
 
-        observer.observe(wrapperRef.current);
+        if (wrapperRef.current) {
+            setTableEnd(
+                wrapperRef.current.getBoundingClientRect().bottom <=
+                    window.innerHeight
+            );
+        }
+    };
 
-        return () => observer.disconnect();
-    }, []);
-
-    useEffect(() => {
-        const scrollHandler = () => {
-            requestAnimationFrame(() => {
-                if (scrollable) {
-                    calculateFixedInViewport();
-                } else {
-                    calculateStickyInViewport();
-                }
-            });
-
-            if (wrapperRef.current) {
-                setTableEnd(
-                    wrapperRef.current.getBoundingClientRect().bottom <=
-                        window.innerHeight
-                );
-            }
-        };
-        window.addEventListener("scroll", scrollHandler);
-
-        return () => window.removeEventListener("scroll", scrollHandler);
-    }, [scrollable]);
+    useEventListener("scroll", scrollHandler, "window");
 
     useEffect(() => {
         checkLastBorder();
