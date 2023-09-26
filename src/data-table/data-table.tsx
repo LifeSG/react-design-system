@@ -64,36 +64,6 @@ export const DataTable = ({
 
     const { ref: endRef, inView: end } = useInView();
 
-    const calculateStickyInViewport = () => {
-        if (
-            !tableRef.current ||
-            !tableEndRef.current ||
-            !wrapperRef.current ||
-            !actionBarRef.current ||
-            !headerRef.current
-        ) {
-            return;
-        }
-
-        const endBounds = tableEndRef.current.getBoundingClientRect();
-
-        if (endBounds.top > window.innerHeight) {
-            const bottomOffset = endBounds.bottom - window.innerHeight;
-            const bottomToHeaderOffset =
-                tableRef.current.getBoundingClientRect().height -
-                headerRef.current.clientHeight -
-                32;
-            const maxBottomOffset = Math.min(
-                bottomOffset,
-                bottomToHeaderOffset
-            );
-
-            actionBarRef.current.style.transform = `translateY(-${maxBottomOffset}px)`;
-        } else {
-            actionBarRef.current.style.transform = `translateY(0)`;
-        }
-    };
-
     // =============================================================================
     // EFFECTS
     // ============================================================================
@@ -189,6 +159,36 @@ export const DataTable = ({
             wrapperBounds.bottom > window.innerHeight + 30 &&
                 wrapperBounds.top < window.innerHeight - 200
         );
+    };
+
+    const calculateStickyInViewport = () => {
+        if (
+            !tableRef.current ||
+            !tableEndRef.current ||
+            !wrapperRef.current ||
+            !actionBarRef.current ||
+            !headerRef.current
+        ) {
+            return;
+        }
+
+        const endBounds = tableEndRef.current.getBoundingClientRect();
+
+        if (endBounds.top > window.innerHeight) {
+            const bottomOffset = endBounds.bottom - window.innerHeight;
+            const bottomToHeaderOffset =
+                tableRef.current.getBoundingClientRect().height -
+                headerRef.current.clientHeight -
+                32;
+            const maxBottomOffset = Math.min(
+                bottomOffset,
+                bottomToHeaderOffset
+            );
+
+            actionBarRef.current.style.transform = `translateY(-${maxBottomOffset}px)`;
+        } else {
+            actionBarRef.current.style.transform = `translateY(0)`;
+        }
     };
 
     const checkLastBorder = () => {
