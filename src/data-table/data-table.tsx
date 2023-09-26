@@ -67,7 +67,7 @@ export const DataTable = ({
     const { ref: endRef, inView: end } = useInView();
 
     // =============================================================================
-    // EFFECTS
+    // EFFECTS, EVENT LISTENERS
     // ============================================================================
     const onResize = useCallback(() => {
         const scrollable =
@@ -79,6 +79,10 @@ export const DataTable = ({
         } else {
             calculateStickyInViewport();
         }
+    }, []);
+
+    useEffect(() => {
+        onResize();
     }, []);
 
     useResizeDetector({ onResize });
