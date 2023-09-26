@@ -104,11 +104,17 @@ export const CountdownTimer = ({
     // =============================================================================
 
     const renderCountdown = (position: Position) => {
-        const { minutes, seconds } = TimeHelper.convertSecondsToTime(timer);
+        const {
+            hours,
+            minutes: _minutes,
+            seconds,
+        } = TimeHelper.convertSecondsToTime(timer);
         const clientRect = wrapperRef.current?.getBoundingClientRect();
 
+        const minutes = hours * 60 + _minutes;
         const m = minutes !== 1 ? "mins" : "min";
         const s = seconds !== 1 ? "secs" : "sec";
+        const offsetX = !isMobile ? offset?.left : mobileOffset?.left;
 
         return (
             <Countdown
@@ -125,7 +131,7 @@ export const CountdownTimer = ({
                 $opacity={position === "relative" && !onScreen}
                 $warn={timer <= notifyTimer}
                 $top={offsetY}
-                $left={offset?.left ?? clientRect?.x}
+                $left={offsetX ?? clientRect?.x}
             >
                 <ClockIcon />
                 <TimeLeft>Time left:</TimeLeft>
