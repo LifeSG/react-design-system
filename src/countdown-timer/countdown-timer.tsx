@@ -79,7 +79,7 @@ export const CountdownTimer = ({
     };
 
     const performOnNotifyHandler = () => {
-        isNotified.current = true;
+        if (!isNotified.current) isNotified.current = true;
 
         if (onNotify) onNotify();
     };
