@@ -183,8 +183,7 @@ export const DataTable = ({
 
     const checkLastBorder = () => {
         setShowLastBorder(
-            tableRef.current?.scrollHeight <
-                (tableRef.current?.childNodes[0] as HTMLElement).clientHeight
+            tableRef.current.clientHeight + 56 < wrapperRef.current.clientHeight
         );
     };
 
