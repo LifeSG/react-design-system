@@ -106,7 +106,7 @@ This example illustrates how column widths can be fixed by setting the `width` s
 
 A common use case is for rows to be sorted in some order.
 
-> The source code below is only an example and is not intended to be used directly in production
+> **Note:** The source code below is only an example and is not intended to be used directly in production
 
 <Canvas>
     <Story name="Sort indicators">
@@ -168,6 +168,8 @@ A common use case is for rows to be sorted in some order.
 
 <Heading3>Multi-selection of rows</Heading3>
 
+> **Note:** The updating of the selection state is handled by the consumer
+
 <Canvas>
     <Story name="Multi-selection of rows">
         {() => {
@@ -206,7 +208,7 @@ A common use case is for rows to be sorted in some order.
 <Canvas>
     <Story name="Disabled checkboxes">
         {() => {
-            const [selected, setSelected] = useState(["1"]);
+            const [selected, setSelected] = useState(["1", "3"]);
             const [disabled, setDisabled] = useState(["1", "2"]);
             return (
                 <DataTable
