@@ -292,7 +292,7 @@ export const DataTable = ({
     };
 
     const renderRows = () => {
-        return !rows || rows?.length < 1 ? (
+        return !rows || rows.length < 1 ? (
             <tr>
                 <EmptyViewCell colSpan={getTotalColumns()}>
                     {renderCustomEmptyView
