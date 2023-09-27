@@ -9,13 +9,20 @@ export interface DataTableProps {
     /** css class to put on table **/
     className?: string | undefined;
     selectedIds?: string[] | undefined;
+    disabledIds?: string[] | undefined;
     /** enable checkboxes */
     enableMultiSelect?: boolean | undefined;
     /** display select all checkbox */
     enableSelectAll?: boolean | undefined;
+    /** display action bar */
+    enableActionBar?: boolean | undefined;
+    /** sticky header */
+    enableStickyHeader?: boolean | undefined;
+    actionBarContent?: ReactNode | undefined;
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
     onSelectAll?: ((isSelected: boolean) => void) | undefined;
     onHeaderClick?: ((fieldKey: string) => void) | undefined;
+    onClearSelectionClick?: (() => void) | undefined;
     /** columns that want to show a sort indicator **/
     sortIndicators?: SortIndicatorsProps | undefined;
     alternatingRows?: boolean | undefined;

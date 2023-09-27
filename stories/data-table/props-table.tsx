@@ -38,6 +38,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["String<T>[]"],
             },
             {
+                name: "disabledIds",
+                description: "The disabled item id list",
+                propTypes: ["String<T>[]"],
+            },
+            {
                 name: "sortIndicators",
                 description: "The sort Indicators",
                 propTypes: ["SortIndicatorsProps<T>"],
@@ -73,6 +78,27 @@ const DATA: ApiTableSectionProps[] = [
                 name: "enableSelectAll",
                 description: "The show header checkbox Prop",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "enableActionBar",
+                description: "The show action bar prop",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "enableStickyHeader",
+                description: "The header will stick to the top",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "actionBarContent",
+                description: "The action bar custom elements",
+                propTypes: ["ReactNode"],
+            },
+            {
+                name: "onClearSelectionClick",
+                description: "On clear selection click",
+                propTypes: ["() => void"],
             },
             {
                 name: "onSelect",

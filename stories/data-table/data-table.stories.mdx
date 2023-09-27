@@ -8,6 +8,7 @@ import {
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
 import { useState } from "react";
+import { MaxHeightSetDataTable } from "./doc-elements.tsx";
 
 <Meta title="Modules/DataTable" component={DataTable} />
 
@@ -258,12 +259,251 @@ Table Alternating Row.
                             status: "CheckRow",
                             time: "07/Aug/2023 1.30pm",
                             resource: "Test",
-                            title: "Titile 5",
+                            title: "Title 5",
                         },
                     ]}
                     alternatingRows={true}
                     enableMultiSelect={true}
                     enableSelectAll={true}
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Selection Bar</Heading3>
+
+Table with selection bar
+
+<Canvas>
+    <Story name="Selection Bar">
+        {() => {
+            const [selected, setSelected] = useState(["100", "122", "115"]);
+            const handleOnClickSelect = (rowId, isSelected) => {
+                if (isSelected) {
+                    setSelected((selected) => [...selected, rowId]);
+                } else {
+                    setSelected(
+                        selected.filter((item) => {
+                            return item !== rowId;
+                        })
+                    );
+                }
+            };
+            return (
+                <MaxHeightSetDataTable
+                    headers={[
+                        {
+                            fieldKey: "status",
+                            label: "Status",
+                            style: { width: "7.5rem" },
+                        },
+                        {
+                            fieldKey: "time",
+                            label: "Time",
+                            style: { width: "18rem" },
+                        },
+                        {
+                            fieldKey: "resource",
+                            label: "Resource",
+                            style: { width: "12rem" },
+                        },
+                        {
+                            fieldKey: "title",
+                            label: "Title",
+                        },
+                    ]}
+                    rows={[
+                        {
+                            id: "100",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Title 1",
+                        },
+                        {
+                            id: "102",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 2",
+                        },
+                        {
+                            id: "103",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 3",
+                        },
+                        {
+                            id: "104",
+                            status: "SampleRow",
+                            time: "07/Aug/2023 12.30pm",
+                            resource: "Test",
+                            title: "Titile 4",
+                        },
+                        {
+                            id: "105",
+                            status: "CheckRow",
+                            time: "07/Aug/2023 1.30pm",
+                            resource: "Test",
+                            title: "Titile 5",
+                        },
+                        {
+                            id: "110",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Title 6",
+                        },
+                        {
+                            id: "112",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 7",
+                        },
+                        {
+                            id: "113",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 8",
+                        },
+                        {
+                            id: "114",
+                            status: "SampleRow",
+                            time: "07/Aug/2023 12.30pm",
+                            resource: "Test",
+                            title: "Titile 9",
+                        },
+                        {
+                            id: "115",
+                            status: "CheckRow",
+                            time: "07/Aug/2023 1.30pm",
+                            resource: "Test",
+                            title: "Titile 10",
+                        },
+                        {
+                            id: "120",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Title 11",
+                        },
+                        {
+                            id: "122",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 12",
+                        },
+                        {
+                            id: "123",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 13",
+                        },
+                        {
+                            id: "124",
+                            status: "SampleRow",
+                            time: "07/Aug/2023 12.30pm",
+                            resource: "Test",
+                            title: "Titile 14",
+                        },
+                        {
+                            id: "125",
+                            status: "CheckRow",
+                            time: "07/Aug/2023 1.30pm",
+                            resource: "Test",
+                            title: "Titile 15",
+                        },
+                    ]}
+                    alternatingRows={true}
+                    enableMultiSelect={true}
+                    enableSelectAll={true}
+                    enableActionBar={true}
+                    selectedIds={selected}
+                    onSelect={handleOnClickSelect}
+                    onClearSelectionClick={() => {
+                        setSelected([]);
+                    }}
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Disabled selection</Heading3>
+
+Table Row with disabled checkbox selection.
+
+<Canvas>
+    <Story name="Disabled checkbox selection">
+        {() => {
+            const [selected, setSelected] = useState(["102"]);
+            const handleOnClickSelect = (rowId, isSelected) => {
+                if (isSelected) {
+                    setSelected((selected) => [...selected, rowId]);
+                } else {
+                    setSelected(
+                        selected.filter((item) => {
+                            return item !== rowId;
+                        })
+                    );
+                }
+            };
+            return (
+                <DataTable
+                    headers={[
+                        {
+                            fieldKey: "status",
+                            label: "Status",
+                            style: { width: "7.5rem" },
+                            clickable: true,
+                        },
+                        {
+                            fieldKey: "time",
+                            label: "Time",
+                            style: { width: "15rem" },
+                            clickable: true,
+                        },
+                        {
+                            fieldKey: "resource",
+                            label: "Resource",
+                            style: { width: "17.5rem" },
+                            clickable: true,
+                        },
+                        { fieldKey: "title", label: "Title", clickable: true },
+                    ]}
+                    rows={[
+                        {
+                            id: "100",
+                            status: "Completed",
+                            time: "07/Aug/2023 9.30pm",
+                            resource: "Test",
+                            title: "Title 1",
+                        },
+                        {
+                            id: "102",
+                            status: "Pending",
+                            time: "07/Aug/2023 10.30pm",
+                            resource: "Test",
+                            title: "Titile 2",
+                        },
+                        {
+                            id: "103",
+                            status: "Common",
+                            time: "07/Aug/2023 11.30pm",
+                            resource: "Test",
+                            title: "Titile 3",
+                        },
+                    ]}
+                    selectedIds={selected}
+                    disabledIds={["102", "103"]}
+                    enableMultiSelect={true}
+                    onSelect={handleOnClickSelect}
                 />
             );
         }}
@@ -303,11 +543,8 @@ Table Empty Data View.
                 headerWidth: "5rem",
             }}
             emptyView={{
-                title: "No Results",
-                description: "This is Placeholder text",
                 actionButton: {
                     children: "Trigger",
-                    styleType: "secondary",
                     style: {
                         width: "5rem",
                     },

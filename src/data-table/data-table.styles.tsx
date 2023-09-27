@@ -8,6 +8,14 @@ import { Text } from "../text";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
+interface TableProps {
+    $end: boolean;
+    $scrollable: boolean;
+    $stickyHeader: boolean;
+}
+interface TableBodyProps {
+    $showLastRowBottomBorder: boolean;
+}
 interface HeaderCellProps {
     $clickable: boolean;
     $isCheckbox: boolean;
@@ -22,6 +30,17 @@ interface BodyCellProps {
     $isCheckbox: boolean;
 }
 
+interface ActionBarWrapperProps {
+    $fixed: boolean;
+    $left?: number | undefined;
+    $width?: number | undefined;
+}
+
+interface ActionBarProps {
+    $float: boolean;
+    $scrollable: boolean;
+}
+
 // =============================================================================
 // STYLES CONSTANTS
 // =============================================================================
@@ -32,15 +51,27 @@ const fontColor = Color.Neutral[1];
 // STYLES
 // =============================================================================
 export const TableWrapper = styled.div`
-    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
     border: 1px solid ${borderColor};
     border-radius: 0.5rem;
-    overflow: auto;
+
+    // Hide scrollbar
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    * {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
 `;
 
-export const Table = styled.table`
-    width: 100%;
-    border-collapse: collapse;
+export const TableContainer = styled.div`
+    flex: 1;
+`;
+
+export const Table = styled.table<TableProps>`
     th:last-child,
     td:last-child {
         padding-right: 1.5rem;
@@ -49,9 +80,74 @@ export const Table = styled.table`
     td:first-child {
         padding-left: 1.5rem;
     }
-    tr:nth-child(2) {
-        border-top: none;
+    text-align: left;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+
+    ${(props) => {
+        if (props.$stickyHeader) {
+            return css`
+                thead {
+                    position: sticky;
+                    top: 0;
+                    z-index: 20;
+                }
+            `;
+        }
+    }};
+`;
+
+export const TableBody = styled.tbody<TableBodyProps>`
+    tr:last-child {
+        td {
+            border-bottom: ${(props) =>
+                props.$showLastRowBottomBorder
+                    ? `1px solid ${borderColor}`
+                    : "none"};
+        }
     }
+`;
+
+export const ActionBarWrapper = styled.div<ActionBarWrapperProps>`
+    bottom: 0;
+    ${(props) => {
+        if (props.$fixed) {
+            const left = props.$left ? `${props.$left}px` : "0";
+            const width = props.$width ? `${props.$width}px` : "100%";
+            return css`
+                position: fixed;
+                left: ${left};
+                width: ${width};
+            `;
+        } else {
+            return css`
+                position: sticky;
+                left: 0;
+            `;
+        }
+    }};
+`;
+
+export const ActionBar = styled.div<ActionBarProps>`
+    overflow: hidden;
+    display: flex;
+    ${(props) =>
+        props.$float &&
+        `
+            transform: translateX(-0.5%) translateY(-2rem);
+            border-radius: 4px;
+            box-shadow: 0 0 4px 0 rgba(40, 40, 40, 0.25);
+            width: 101%;
+            border: 1px solid ${borderColor};
+        `}
+    align-items: center;
+    height: 3.5rem;
+    padding: 1rem;
+    border-top: 1px solid ${borderColor};
+    border-radius: 0 0 4px 4px;
+    background-color: ${DesignToken.Table.Cell.Selected};
+    transition: all 300ms ease;
 `;
 
 export const HeaderRow = styled.tr`
@@ -67,6 +163,14 @@ export const HeaderCell = styled.th<HeaderCellProps>`
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
     vertical-align: middle;
     color: ${fontColor};
+    border-bottom: 1px solid ${borderColor};
+    ${(props) => {
+        if (props.$isCheckbox) {
+            return css`
+                width: 4rem;
+            `;
+        }
+    }};
 `;
 
 export const HeaderCellWrapper = styled.div`
@@ -113,6 +217,7 @@ export const BodyCell = styled.td<BodyCellProps>`
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     vertical-align: middle;
     color: ${fontColor};
+    border-bottom: 1px solid ${borderColor};
 `;
 
 export const BodyCellContent = styled(Text.Body)`
