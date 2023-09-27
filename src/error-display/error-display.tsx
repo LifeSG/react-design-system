@@ -70,14 +70,17 @@ export const ErrorDisplay = ({
         if (updatedAssets.title || updatedAssets.description) {
             return (
                 <TextContainer>
-                    {updatedAssets.title && (
-                        <Title
-                            data-testid={`${testId}--title`}
-                            data-id="error-display-title"
-                        >
-                            {updatedAssets.title}
-                        </Title>
-                    )}
+                    {updatedAssets.title &&
+                        (typeof updatedAssets.title === "string" ? (
+                            <Title
+                                data-testid={`${testId}--title`}
+                                data-id="error-display-title"
+                            >
+                                {updatedAssets.title}
+                            </Title>
+                        ) : (
+                            updatedAssets.title
+                        ))}
                     {updatedAssets.description && (
                         <DescriptionContainer
                             data-testid={`${testId}--description`}

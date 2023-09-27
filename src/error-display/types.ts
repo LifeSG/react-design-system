@@ -1,3 +1,5 @@
+import { ButtonProps } from "../button";
+
 export type ErrorDisplayType =
     | "400"
     | "403"
@@ -27,10 +29,10 @@ export interface MaintenanceAdditionalAttributes {
 export interface ErrorDisplayAttributes {
     /** The custom image attributes */
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
-    title?: string | undefined;
+    title?: string | JSX.Element | undefined;
     description?: string | JSX.Element | undefined;
     /** The action button displayed at the bottom of the Error Display */
-    actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
+    actionButton?: ButtonProps | undefined;
     /** Additional pre-specified props to control specific content  */
     additionalProps?: MaintenanceAdditionalAttributes | undefined;
     /** Specifies if only the image is rendered */
@@ -38,7 +40,7 @@ export interface ErrorDisplayAttributes {
 }
 
 export interface ErrorDisplayProps
-    extends React.HTMLAttributes<HTMLElement>,
+    extends Omit<React.HTMLAttributes<HTMLElement>, "title">,
         ErrorDisplayAttributes {
     type: ErrorDisplayType;
     "data-testid"?: string | undefined;
