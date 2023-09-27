@@ -70,6 +70,9 @@ export const DataTable = ({
     // EFFECTS, EVENT LISTENERS
     // ============================================================================
     const onResize = useCallback(() => {
+        if (!wrapperRef.current || !actionBarRef.current) {
+            return;
+        }
         const scrollable =
             wrapperRef.current.scrollHeight > wrapperRef.current.clientHeight;
         setScrollable(scrollable);
@@ -186,6 +189,9 @@ export const DataTable = ({
     };
 
     const checkLastBorder = () => {
+        if (!tableRef.current || !wrapperRef.current) {
+            return;
+        }
         // 56 pixels added due to the behavior of action bar
         setShowLastBorder(
             tableRef.current.clientHeight + (enableActionBar ? 56 : 0) <
@@ -274,7 +280,9 @@ export const DataTable = ({
                             checked={isAllCheckboxSelected()}
                             indeterminate={isIndeterminateCheckbox()}
                             onClick={() => {
-                                onSelectAll(isAllCheckboxSelected());
+                                if (onSelectAll) {
+                                    onSelectAll(isAllCheckboxSelected());
+                                }
                             }}
                         />
                     )}
@@ -284,7 +292,7 @@ export const DataTable = ({
     };
 
     const renderRows = () => {
-        return rows?.length < 1 ? (
+        return !rows || rows.length < 1 ? (
             <tr>
                 <EmptyViewCell colSpan={getTotalColumns()}>
                     {renderCustomEmptyView
@@ -349,7 +357,9 @@ export const DataTable = ({
                         displaySize="small"
                         checked={isRowSelected(rowId)}
                         onClick={() => {
-                            onSelect(rowId, !isRowSelected(rowId));
+                            if (onSelect) {
+                                onSelect(rowId, !isRowSelected(rowId));
+                            }
                         }}
                         disabled={isDisabledRow(rowId)}
                     />
@@ -362,6 +372,7 @@ export const DataTable = ({
         return (
             <ErrorDisplayElement
                 type={"no-item-found"}
+                {...emptyView}
                 title={
                     emptyView?.title ? (
                         typeof emptyView.title === "string" ? (
@@ -378,8 +389,6 @@ export const DataTable = ({
                         ? emptyView.description
                         : "No matching rows"
                 }
-                actionButton={emptyView?.actionButton}
-                img={emptyView?.img}
             />
         );
     };

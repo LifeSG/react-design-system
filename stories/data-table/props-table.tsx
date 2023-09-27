@@ -7,8 +7,7 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "className",
-                description:
-                    "The className of the component for custom styling.",
+                description: "The class selector of the component",
                 propTypes: ["string"],
             },
             {
@@ -23,108 +22,145 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "headers",
-                description: "The list of headers",
-                propTypes: ["HeaderProps<T>[]"],
+                description: "The configuration for each header column",
+                propTypes: ["(string | HeaderItemProps)[]"],
                 mandatory: true,
             },
             {
                 name: "rows",
-                description: "The list of rows",
-                propTypes: ["RowProps<T>"],
+                description: "The list of data",
+                propTypes: ["RowProps[]"],
             },
             {
                 name: "selectedIds",
-                description: "The selected item id list",
-                propTypes: ["String<T>[]"],
+                description: "The ids of selected items",
+                propTypes: ["string[]"],
             },
             {
                 name: "disabledIds",
-                description: "The disabled item id list",
-                propTypes: ["String<T>[]"],
+                description: "The ids of disabled items",
+                propTypes: ["string[]"],
             },
             {
                 name: "sortIndicators",
-                description: "The sort Indicators",
-                propTypes: ["SortIndicatorsProps<T>"],
+                description: "The sort indicator display state for each column",
+                propTypes: [`{ [fieldKey]: "asc" | "desc" }`],
             },
             {
                 name: "alternatingRows",
-                description: "The alternating Rows",
+                description:
+                    "Specifies if every alternate row has a different background colour",
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
             {
                 name: "renderCustomEmptyView",
-                description: "The custom Empty View",
+                description:
+                    "Returns a custom view to be rendered when the table is empty",
                 propTypes: ["() => React.ReactNode"],
             },
             {
                 name: "loadState",
-                description: "The is Loading Data indicator",
-                propTypes: ["LoadStateType"],
+                description:
+                    "Specifies the table load state. Displays an animation when the table is loading.",
+                propTypes: [`"success"`, `"loading"`],
                 defaultValue: "success",
             },
             {
                 name: "emptyView",
-                description: "The is Loading Data indicator",
-                propTypes: ["ErrorDisplayAttributes<T>"],
+                description: "Override props for the empty view display",
+                propTypes: (
+                    <a href="./?path=/docs/modules-errordisplay--error-display">
+                        ErrorDisplayAttributes
+                    </a>
+                ),
             },
             {
                 name: "enableMultiSelect",
-                description: "The show checkboxes Prop",
+                description:
+                    "Enables a checkbox in each row for multi-selection",
                 propTypes: ["boolean"],
             },
             {
                 name: "enableSelectAll",
-                description: "The show header checkbox Prop",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "enableActionBar",
-                description: "The show action bar prop",
+                description:
+                    "Enables a checkbox in the header to select all rows or clear the current selection",
                 propTypes: ["boolean"],
             },
             {
                 name: "enableStickyHeader",
-                description: "The header will stick to the top",
+                description: "Specifies if the header is fixed to the top",
                 propTypes: ["boolean"],
-                defaultValue: "false",
+            },
+            {
+                name: "enableActionBar",
+                description:
+                    "Specifies if an action bar is visible when one or more rows are selected",
+                propTypes: ["boolean"],
             },
             {
                 name: "actionBarContent",
-                description: "The action bar custom elements",
-                propTypes: ["ReactNode"],
+                description:
+                    "Custom content to be rendered within the action bar",
+                propTypes: ["React.ReactNode"],
             },
             {
                 name: "onClearSelectionClick",
-                description: "On clear selection click",
+                description:
+                    "Called when clear button in the action bar is clicked",
                 propTypes: ["() => void"],
             },
             {
                 name: "onSelect",
-                description: "On row select",
+                description: "Called when a row is selected",
                 propTypes: ["(rowId: string, isSelected: boolean) => void"],
             },
             {
                 name: "onSelectAll",
-                description: "On select all",
-                propTypes: ["(isSelected: boolean) => void"],
+                description:
+                    "Called when all rows are selected, with the current selection state",
+                propTypes: ["(isAllSelected: boolean) => void"],
             },
             {
                 name: "onHeaderClick",
-                description: "On header click",
+                description:
+                    "Called with the corresponding column field key when a header is clicked",
                 propTypes: ["(fieldKey: string) => void"],
             },
         ],
     },
     {
-        name: "HeaderProps",
+        name: "HeaderItemProps",
         attributes: [
             {
-                name: "HeaderItemProps",
-                description: "HeaderItemProps",
-                propTypes: ["HeaderItemProps"],
+                name: "fieldKey",
+                description:
+                    "The name of the corresponding key in the row item object",
+                propTypes: ["string"],
                 mandatory: true,
+            },
+            {
+                name: "label",
+                description: "The display label for the column header",
+                propTypes: ["string", "React.ReactNode"],
+                mandatory: true,
+            },
+            {
+                name: "clickable",
+                description: (
+                    <>
+                        Specifies if the column header is clickable. When true,{" "}
+                        <code>onHeaderClick</code> will be called when the cell
+                        is clicked
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
+            {
+                name: "style",
+                description:
+                    "Specifies custom styles for the column header cell",
+                propTypes: ["CSSProperties"],
             },
         ],
     },
@@ -138,87 +174,14 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
             },
             {
-                name: "fieldKey",
-                description: "field Key with value list",
+                name: "[fieldKey]",
+                description: "Other properties on the row item object",
                 propTypes: [
-                    "[fieldKey: string]: string | number | ReactNode | ((row: RowProps, renderProps: RowRenderProps) => ReactNode) | undefined;",
+                    "string",
+                    "number",
+                    "React.ReactNode",
+                    "(row: RowProps, renderProps: RowRenderProps) => React.ReactNode",
                 ],
-                mandatory: true,
-            },
-        ],
-    },
-    {
-        name: "RowRenderProps",
-        attributes: [
-            {
-                name: "isSelected",
-                description: "Is row selected",
-                propTypes: ["boolean"],
-            },
-        ],
-    },
-    {
-        name: "HeaderItemProps",
-        attributes: [
-            {
-                name: "fieldKey",
-                description: "field Key Id",
-                propTypes: ["string"],
-                mandatory: true,
-            },
-            {
-                name: "label",
-                description: "The column label",
-                propTypes: ["string"],
-                mandatory: true,
-            },
-            {
-                name: "clickable",
-                description: "The column clickable or not",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "style",
-                description: "The column style ",
-                propTypes: ["CSSProperties"],
-            },
-        ],
-    },
-    {
-        name: "LoadStateType",
-        attributes: [
-            {
-                name: "The type of Loading or success or error",
-                description: "",
-                propTypes: [`"loading"`, `"success",`],
-                defaultValue: "success",
-            },
-        ],
-    },
-    {
-        name: "SortIndicatorsProps",
-        attributes: [
-            {
-                name: "fieldKey",
-                description: "The field key",
-                propTypes: ["SortIndicatorProps"],
-            },
-        ],
-    },
-    {
-        name: "SortIndicatorProps",
-        attributes: [
-            {
-                name: "asc",
-                description: "The asc order icon",
-                propTypes: ["string"],
-                defaultValue: "asc",
-            },
-            {
-                name: "desc",
-                description: "The desc order icon",
-                propTypes: ["string"],
-                defaultValue: "desc",
             },
         ],
     },
