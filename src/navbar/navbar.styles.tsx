@@ -21,13 +21,14 @@ export const NAVBAR_MOBILE_HEIGHT = 3.5;
 interface StyleProps {
     $compress?: boolean;
     $fixed?: boolean;
+    $hideNavBranding?: boolean;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Wrapper = styled.div<StyleProps>`
-    position: ${(props) => (props.$fixed ? "fixed" : "relative")};
+    position: ${(props) => (props.$fixed ? "sticky" : "relative")};
     background-color: white;
     z-index: 30;
     top: 0;
@@ -55,12 +56,13 @@ export const Nav = styled.nav<StyleProps>`
     }
 `;
 
-export const NavElementsContainer = styled.div`
+export const NavElementsContainer = styled.div<StyleProps>`
     display: flex;
     height: 100%;
-    margin-left: 5rem;
+    margin-left: ${(props) => (props.$hideNavBranding ? "0" : "5rem")};
     flex: 1;
     justify-content: flex-end;
+
     ${MediaQuery.MaxWidth.tablet} {
         margin-left: 0rem;
     }
@@ -82,23 +84,36 @@ export const MobileMenuIcon = styled(MenuIcon)`
     color: ${Color.Neutral[1]};
 `;
 
-export const NavBrandContainer = styled.div`
+export const NavBrandContainer = styled.div<StyleProps>`
     display: flex;
-    height: 100%;
     flex-direction: row;
     align-items: center;
     flex-shrink: 0;
+
+    height: ${(props) => (props.$compress ? 1.5 : 2)}rem;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        height: 1.5rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        height: 1.25rem;
+    }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Color.Neutral[5]};
-    height: ${(props) => (props.$compress ? 2 : 2.5)}rem;
+    height: 100%;
     width: 1px;
-    margin: 0 ${(props) => (props.$compress ? 1.125 : 1.5)}rem;
+    margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
     ${MediaQuery.MaxWidth.tablet} {
-        height: 1.5rem;
         margin: 0 1rem;
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: 2px;
+        margin: 0 0.75rem;
     }
 `;

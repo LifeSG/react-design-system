@@ -35,5 +35,5 @@ export const CloseButton = styled(ClickableIcon)`
 export const CloseIcon = styled(CrossIcon)`
     height: 1.5rem;
     width: 1.5rem;
-    color: ${Color.Neutral[4]};
+    color: ${Color.Neutral[3]};
 `;

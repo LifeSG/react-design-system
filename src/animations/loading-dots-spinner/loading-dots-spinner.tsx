@@ -6,14 +6,13 @@ import { LottieLoadingDotsSpinner } from "./lottie-animation";
 
 export const LoadingDotsSpinner = ({
     color,
-    id,
-    "data-testid": testId,
+    ...otherProps
 }: CustomisableAnimationProps) => {
     const theme = useTheme();
     const animationColor =
         color || Color.Primary({ theme: theme || BaseTheme });
     return (
-        <Container data-testid={testId} id={id}>
+        <Container {...otherProps}>
             <LottieLoadingDotsSpinner color={animationColor} />
         </Container>
     );

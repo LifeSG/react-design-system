@@ -3,13 +3,18 @@ import { L1OptionProps } from "../../input-nested-select/types";
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 export type Mode = "default" | "expand" | "collapse";
-
 export interface DropdownStyleProps {
     listStyleWidth?: string | undefined;
 }
 
+export interface SelectedItem<V1, V2, V3> {
+    label: string;
+    keyPath: string[];
+    value: V1 | V2 | V3;
+}
+
 export interface DropdownEventHandlerProps<V1, V2, V3> {
-    onSelectItem: (item: CombinedFormattedOptionProps<V1, V2, V3>) => void;
+    onSelectItem: (item: SelectedItem<V1, V2, V3>) => void;
 }
 
 export interface DropdownSearchProps {
@@ -28,8 +33,9 @@ export interface NestedDropdownListProps<V1, V2, V3>
         DropdownStyleProps {
     listItems?: L1OptionProps<V1, V2, V3>[] | undefined;
     visible?: boolean | undefined;
+    multiSelect?: boolean | undefined;
     /** Specifies key path of selected option */
-    selectedKeyPath?: string[] | undefined;
+    selectedKeyPaths: string[][];
     /** Specifies if items are expanded or collapsed when the dropdown is opened */
     mode?: Mode | undefined;
     /** If specified, the category label is selectable */
@@ -43,6 +49,9 @@ export interface NestedDropdownListProps<V1, V2, V3>
     itemTruncationType?: TruncateType | undefined;
 
     onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
+    onSelectAll?:
+        | ((keyPaths: string[][], items: SelectedItem<V1, V2, V3>[]) => void)
+        | undefined;
     onRetry?: (() => void) | undefined;
     onBlur?: (() => void) | undefined;
 }
@@ -60,6 +69,8 @@ interface BaseFormattedOptionProps {
     keyPath: string[];
     expanded: boolean;
     selected: boolean;
+    checked: boolean;
+    indeterminate: boolean;
     isSearchTerm: boolean;
 }
 

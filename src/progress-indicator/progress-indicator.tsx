@@ -20,6 +20,7 @@ export const ProgressIndicator = <T,>({
     displayExtractor,
     fadeColor,
     fadePosition = "both",
+    ...otherProps
 }: ProgressIndicatorProps<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -175,7 +176,7 @@ export const ProgressIndicator = <T,>({
     };
 
     return (
-        <Wrapper ref={wrapperRef}>
+        <Wrapper ref={wrapperRef} {...otherProps}>
             <Content ref={contentRef}>{renderSteps()}</Content>
             {showFade && renderFade()}
         </Wrapper>

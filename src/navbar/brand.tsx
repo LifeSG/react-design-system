@@ -6,6 +6,7 @@ import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fall
 interface Props {
     resources: NavbarBrandingProps;
     compress?: boolean | undefined;
+    "data-id"?: string | undefined;
     "data-testid"?: string | undefined;
     type: BrandType;
     onClick?:
@@ -18,8 +19,8 @@ interface Props {
 
 export const Brand = ({
     resources,
-    compress,
     onClick,
+    "data-id": dataId,
     "data-testid": testId = "navbar-brand",
     type,
 }: Props) => {
@@ -37,8 +38,8 @@ export const Brand = ({
             role="link"
             aria-label={resources.brandName + "-app-home-page"}
             onClick={handleClick}
-            $compress={compress}
             tabIndex={0}
+            data-id={dataId}
             data-testid={testId}
             $type={type}
         >

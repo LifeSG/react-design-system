@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import React from "react";
 import {
     DefaultCol,
@@ -10,8 +11,16 @@ export const PropsTable = () => (
     <Table>
         <tr>
             <NameCol mandatory>type</NameCol>
-            <DescriptionCol propTypes={[`"success"`, `"warning"`, `"error"`]}>
-                The style of the Button
+            <DescriptionCol
+                propTypes={[
+                    `"warning"`,
+                    `"error"`,
+                    `"success"`,
+                    `"info"`,
+                    `"description"`,
+                ]}
+            >
+                The style of the component
             </DescriptionCol>
             <DefaultCol />
         </tr>
@@ -32,6 +41,34 @@ export const PropsTable = () => (
                 click
             </DescriptionCol>
             <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>sizeType</NameCol>
+            <DescriptionCol propTypes={[`"default"`, `"small"`]}>
+                Specifies the size of the component
+            </DescriptionCol>
+            <DefaultCol>{`"default"`}</DefaultCol>
+        </tr>
+        <tr>
+            <NameCol>showIcon</NameCol>
+            <DescriptionCol propTypes={[`boolean`]}>
+                Specifies if the icon will be displayed
+            </DescriptionCol>
+            <DefaultCol>false</DefaultCol>
+        </tr>
+        <tr>
+            <NameCol>actionLinkIcon</NameCol>
+            <DescriptionCol propTypes={["JSX.Element"]}>
+                Specifies a custom icon for the action link
+            </DescriptionCol>
+            <DefaultCol>
+                <>
+                    <div style={{ marginRight: "1rem" }}>
+                        <code>{`<ArrowRightIcon />`}</code>
+                    </div>
+                    <ArrowRightIcon />
+                </>
+            </DefaultCol>
         </tr>
     </Table>
 );

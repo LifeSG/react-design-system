@@ -6,9 +6,9 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "children",
-                description: "The contents of the bubble",
-                propTypes: ["string", "JSX.Element"],
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
             },
         ],
     },

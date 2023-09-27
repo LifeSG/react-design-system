@@ -2,59 +2,89 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
-import { TimelineStatusProps } from "./types";
+import { TimelineStatusProps, Variant } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 
-interface CircleIndicatorStyleProps {
-    $filled?: boolean | undefined;
-}
-
 interface TimelineWrapperStyleProps {
     $startCol?: number | undefined;
     $colSpan?: number | undefined;
 }
 
+interface VariantStyleProps {
+    $variant: Variant;
+}
+
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-
-export const CircleIndicator = styled.div<CircleIndicatorStyleProps>`
-    width: 1rem;
-    height: 1rem;
-    margin-top: 0.5rem;
+export const CircleIndicator = styled.div<VariantStyleProps>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.25rem;
     border-radius: 50%;
-    ${(props) => {
-        if (props.$filled) {
-            return css`
-                border: none;
-                background-color: ${Color.Accent.Light[1]};
-            `;
-        }
 
-        return css`
-            border: 3.2px solid ${Color.Accent.Light[1]};
-            background-color: transparent;
-        `;
+    ${(props) => {
+        switch (props.$variant) {
+            case "current":
+                return css`
+                    background-color: ${Color.Accent.Light[1]};
+                `;
+            case "upcoming-active":
+                return css`
+                    border: 4px solid ${Color.Accent.Light[1]};
+                `;
+            case "upcoming-inactive":
+                return css`
+                    border: 4px solid ${Color.Neutral[4]};
+                `;
+            case "completed":
+                return css`
+                    background-color: ${Color.Validation.Green.Icon};
+                    svg {
+                        color: ${Color.Neutral[8]};
+                    }
+                `;
+        }
     }}
 `;
 
-export const LineIndicator = styled.div`
-    width: 0.25rem;
+export const LineIndicator = styled.div<VariantStyleProps>`
+    width: 4px;
     flex-grow: 1;
     margin-top: 0.5rem;
     border-radius: 2px;
-    background-color: ${Color.Accent.Light[1]};
+
+    ${(props) => {
+        switch (props.$variant) {
+            case "current":
+            case "upcoming-active":
+                return css`
+                    background-color: ${Color.Accent.Light[1]};
+                `;
+            case "upcoming-inactive":
+                return css`
+                    background-color: ${Color.Neutral[4]};
+                `;
+            case "completed":
+                return css`
+                    background-color: ${Color.Validation.Green.Icon};
+                `;
+        }
+    }}
 `;
 
 export const TimelineIndicators = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 2rem;
+    margin-right: 1rem;
 `;
 
 export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
@@ -81,6 +111,10 @@ export const TimelineTitle = styled(Text.H3)`
 // default is 2-8-2 on desktop
 export const TimelineItem = styled.div`
     display: flex;
+
+    :first-of-type ${CircleIndicator} {
+        margin-top: 0;
+    }
 `;
 
 export const TimelineItemContent = styled.div`

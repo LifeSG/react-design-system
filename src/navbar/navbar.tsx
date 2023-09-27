@@ -36,12 +36,14 @@ import {
 const Component = <T,>(
     {
         items,
+        className,
         id,
         selectedId,
         compress = false,
         fixed = true,
         resources = DEFAULT_RESOURCES,
         hideNavElements = false,
+        hideNavBranding = false,
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
         onItemClick,
@@ -101,6 +103,29 @@ const Component = <T,>(
             showDrawer &&
             blockDrawerDismissalMethods.indexOf(dismissalMethod) === -1
         );
+    };
+
+    const hasUncollapsibleActionButtons = () => {
+        if (actionButtons.mobile) {
+            const hasUncollapsibleItems = actionButtons.mobile.some(
+                (actionButton) => {
+                    return actionButton.uncollapsible;
+                }
+            );
+
+            if (hasUncollapsibleItems) return true;
+        }
+
+        if (actionButtons.desktop) {
+            const hasUncollapsibleItems = actionButtons.desktop.some(
+                (actionButton) => {
+                    return actionButton.uncollapsible;
+                }
+            );
+
+            if (hasUncollapsibleItems) return true;
+        }
+        return false;
     };
 
     // =============================================================================
@@ -187,6 +212,7 @@ const Component = <T,>(
                 onClose={handleDrawerClose}
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
+                hideNavBranding={hideNavBranding}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -204,11 +230,11 @@ const Component = <T,>(
     );
 
     const renderBrand = () => (
-        <NavBrandContainer>
+        <NavBrandContainer $compress={compress} data-id="brand-container">
             <Brand
                 resources={primary}
-                compress={compress}
                 onClick={handleBrandClick}
+                data-id="brand-primary"
                 data-testid="main__brand"
                 type="primary"
             />
@@ -217,8 +243,8 @@ const Component = <T,>(
                     <NavSeparator $compress={compress} />
                     <Brand
                         resources={secondary}
-                        compress={compress}
                         onClick={handleBrandClick}
+                        data-id="brand-secondary"
                         data-testid="main__brand-secondary"
                         type="secondary"
                     />
@@ -227,30 +253,47 @@ const Component = <T,>(
         </NavBrandContainer>
     );
 
+    const renderMobileMenuButton = () => {
+        if (
+            (items.mobile && items.mobile.length > 0) ||
+            (items.desktop && items.desktop.length > 0) ||
+            (actionButtons && !hasUncollapsibleActionButtons())
+        ) {
+            return (
+                <MobileMenuButton
+                    aria-label="Open nav menu"
+                    data-testid="button__mobile-menu"
+                    onClick={handleMobileMenuButtonClick}
+                    focusHighlight={false}
+                >
+                    <MobileMenuIcon />
+                </MobileMenuButton>
+            );
+        }
+
+        return null;
+    };
+
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
                 <Nav $compress={compress}>
-                    {renderBrand()}
+                    {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
-                        <NavElementsContainer>
+                        <NavElementsContainer
+                            $hideNavBranding={hideNavBranding}
+                        >
                             <NavbarItems
                                 items={items.desktop}
                                 onItemClick={handleNavItemClick}
                                 selectedId={selectedId}
+                                hideNavBranding={hideNavBranding}
                             />
                             <NavbarActionButtons
                                 actionButtons={actionButtons}
                                 onActionButtonClick={handleActionButtonClick}
                             />
-                            <MobileMenuButton
-                                aria-label="Open nav menu"
-                                data-testid="button__mobile-menu"
-                                onClick={handleMobileMenuButtonClick}
-                                focusHighlight={false}
-                            >
-                                <MobileMenuIcon />
-                            </MobileMenuButton>
+                            {renderMobileMenuButton()}
                         </NavElementsContainer>
                     )}
                 </Nav>
@@ -264,6 +307,7 @@ const Component = <T,>(
         <Wrapper
             ref={elementRef}
             $fixed={fixed}
+            className={className}
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >

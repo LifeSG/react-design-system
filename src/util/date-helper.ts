@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 const MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
 const MONTHS_WITH_30_DAYS = [4, 6, 9, 11];
@@ -79,5 +79,9 @@ export namespace DateHelper {
         const startTime = dayjs(start, format);
         const endTime = dayjs(end, format);
         return endTime.diff(startTime, "minute");
+    };
+
+    export const toDayjs = (date: string): Dayjs => {
+        return date ? dayjs(date) : dayjs();
     };
 }

@@ -1,7 +1,4 @@
 import dayjs from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
-
-dayjs.extend(isBetween);
 
 export namespace DateInputHelper {
     export const isDateDisabled = (
@@ -30,5 +27,15 @@ export namespace DateInputHelper {
         }
 
         return false;
+    };
+
+    export const sanitizeInput = (date: string): string => {
+        if (date) {
+            const day = dayjs(date);
+            if (day.isValid()) {
+                return date;
+            }
+        }
+        return "";
     };
 }

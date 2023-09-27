@@ -10,6 +10,7 @@ export interface BreadcrumbProps {
     fadeColor?: string[] | FadeColorSet | undefined;
     fadePosition?: FadePosition | undefined;
     itemStyle?: string | undefined;
+    className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
 }

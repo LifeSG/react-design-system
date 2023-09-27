@@ -1,3 +1,9 @@
+export type Variant =
+    | "completed"
+    | "current"
+    | "upcoming-active"
+    | "upcoming-inactive";
+
 export interface TimelineStatusProps {
     type: "dark" | "light";
     label: string;
@@ -7,6 +13,7 @@ export interface TimelineItemProps {
     title: string | JSX.Element;
     content: string | JSX.Element;
     statuses?: TimelineStatusProps[] | undefined;
+    variant?: Variant | undefined;
 }
 
 export interface TimelineProps {

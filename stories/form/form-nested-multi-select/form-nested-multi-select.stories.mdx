@@ -1,0 +1,132 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { InputNestedMultiSelect } from "src/input-nested-multi-select";
+import { Form } from "src/form";
+import { Text } from "src/text";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
+import { options } from "../form-nested-select/nested-data-list.ts";
+
+<Meta title="Form/NestedMultiSelect" component={Form.NestedMultiSelect} />
+
+<Title>Form.NestedMultiSelect</Title>
+
+<Secondary>Overview</Secondary>
+
+A field that provides a nested set of options for a user to select.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas>
+    <Story name="NestedMultiSelect">
+        {() => {
+            const [selectedKeyPaths, setSelectedKeyPaths] = useState([
+                ["999", "820", "10002"],
+            ]);
+            return (
+                <StoryContainer>
+                    <Container>
+                        <Form.NestedMultiSelect
+                            label="This is the nested select field"
+                            options={options}
+                        />
+                        <Form.NestedMultiSelect
+                            label="This is prefilled with a selected option"
+                            options={options}
+                            selectedKeyPaths={selectedKeyPaths}
+                            onSelectOptions={(keyPaths, values) => {
+                                setSelectedKeyPaths(keyPaths);
+                            }}
+                        />
+                        <Form.NestedMultiSelect
+                            label="This is the disabled state"
+                            options={options}
+                            disabled
+                        />
+                        <Form.NestedMultiSelect
+                            label="This is the readOnly state"
+                            options={options}
+                            readOnly
+                        />
+                        <Form.NestedMultiSelect
+                            label="This is the error state"
+                            options={options}
+                            errorMessage="Selection is required"
+                        />
+                    </Container>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Specifying mode</Heading3>
+
+<Canvas>
+    <Story name="Specifying mode">
+        <StoryContainer>
+            <Container>
+                <Form.NestedMultiSelect
+                    label="With all (sub)categories expanded "
+                    options={options}
+                    mode="expand"
+                />
+                <Form.NestedMultiSelect
+                    label="With all (sub)categories collapsed "
+                    options={options}
+                    mode="collapse"
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With search capabilities</Heading3>
+
+<Canvas>
+    <Story name="With search">
+        <StoryContainer>
+            <Container>
+                <Form.NestedMultiSelect
+                    label="This has searchable options"
+                    options={options}
+                    enableSearch
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the nested select field as a standalone, you can do this.
+
+```tsx
+import { InputNestedMultiSelect } from "@lifesg/react-design-system/input-nested-multi-select";
+```
+
+<Canvas>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <Container>
+                <InputNestedMultiSelect
+                    options={options}
+                    placeholder="Select"
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

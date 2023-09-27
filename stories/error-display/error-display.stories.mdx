@@ -74,6 +74,26 @@ The `ErrorDisplay` component is customisable according to your project's needs. 
     </Story>
 </Canvas>
 
+If you require customisations down to the style, you can use the relevant `data-id` properties of each element.
+
+| Element     | Data id                       |
+| ----------- | ----------------------------- |
+| image       | `"error-display-image"`       |
+| title       | `"error-display-title"`       |
+| description | `"error-display-description"` |
+
+> **Note**: For the title and description, you will need to use the `!important` flag when modifying the size, line height and letter spacing
+
+```tsx
+// If you are using Styled Components
+
+export const CustomErrorDisplay = styled(ErrorDisplay)`
+    [data-id="error-display-image"] {
+        /* Your styles here */
+    }
+`;
+```
+
 <Secondary>Variants</Secondary>
 
 > **Note**: Switch to the Canvas tab and use the Controls add-on to view the different error types

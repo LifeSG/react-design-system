@@ -24,7 +24,6 @@ export const BoxContainer = ({
     expanded = false,
     callToActionComponent,
     displayState = "default",
-    className,
     subComponentTestIds,
     ...otherProps
 }: BoxContainerProps) => {
@@ -92,10 +91,7 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container
-            className={className}
-            data-testid={otherProps["data-testid"]}
-        >
+        <Container {...otherProps}>
             <Header data-testid="header">
                 <LabelText
                     id="title"

@@ -18,16 +18,16 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         buttonLabel,
         description,
         rating,
-        className,
         onRatingChange,
         onSubmit,
+        ...otherProps
     } = props;
     const bannerSrc = imgSrc ?? FeedbackRatingData.IMG;
     const componentDescription =
         description ?? FeedbackRatingData.DEFAULT_DESCRIPTION;
 
     return (
-        <MainContainer className={className}>
+        <MainContainer {...otherProps}>
             {bannerSrc && (
                 <Image
                     src={bannerSrc}

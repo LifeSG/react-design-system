@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { DateHelper } from "../../util";
 import { CalendarHelper } from "../../util/calendar-helper";
 import {
     ActionButton,
@@ -61,11 +62,11 @@ const Component = (
     // =============================================================================
     // the current visible date in month/year views and header
     const [calendarDate, setCalendarDate] = useState<Dayjs>(
-        dayjs(initialCalendarDate)
+        DateHelper.toDayjs(initialCalendarDate)
     );
     // the selected date in month/year views and the current visible date in day view
     const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>(
-        dayjs(initialCalendarDate)
+        DateHelper.toDayjs(initialCalendarDate)
     );
     const [currentView, setCurrentView] = useState<View>("default");
 
@@ -82,14 +83,14 @@ const Component = (
                 setCurrentView("default");
             },
             resetView() {
-                const date = dayjs(initialCalendarDate);
+                const date = DateHelper.toDayjs(initialCalendarDate);
                 setCalendarDate(date);
                 setViewCalendarDate(date);
 
                 setCurrentView("default");
             },
             setCalendarDate(value?: string) {
-                const date = value ? dayjs(value) : dayjs();
+                const date = DateHelper.toDayjs(value);
                 setCalendarDate(date);
                 setViewCalendarDate(date);
             },
@@ -97,7 +98,7 @@ const Component = (
     });
 
     useEffect(() => {
-        const date = initialCalendarDate ? dayjs(initialCalendarDate) : dayjs();
+        const date = DateHelper.toDayjs(initialCalendarDate);
         setCalendarDate(date);
         setViewCalendarDate(date);
     }, [initialCalendarDate]);
@@ -184,11 +185,16 @@ const Component = (
     const handleMonthYearSelect = (value: Dayjs) => {
         setCalendarDate(value);
         setViewCalendarDate(value);
+
+        if (!withButton) {
+            setCurrentView("default");
+        }
     };
 
     const handleCancelButton = () => {
-        setCalendarDate(dayjs(initialCalendarDate));
-        setViewCalendarDate(dayjs(initialCalendarDate));
+        const initialValue = DateHelper.toDayjs(initialCalendarDate);
+        setCalendarDate(initialValue);
+        setViewCalendarDate(initialValue);
 
         if (currentView === "default") {
             performOnDismissHandler("reset");
@@ -279,14 +285,14 @@ const Component = (
         } else {
             return getYearHeaderLabel
                 ? getYearHeaderLabel(calendarDate)
-                : dayjs(calendarDate).format("YYYY");
+                : calendarDate.format("YYYY");
         }
     };
 
     const renderDropdownButtons = () => {
         const monthLabel = getMonthHeaderLabel
             ? getMonthHeaderLabel(calendarDate)
-            : dayjs(calendarDate).format("MMM");
+            : calendarDate.format("MMM");
         return (
             <>
                 <DropdownButton

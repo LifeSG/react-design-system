@@ -16,4 +16,5 @@ export interface BoxContainerProps {
     className?: string | undefined;
     subComponentTestIds?: BoxContainerSubComponentTestIds | undefined;
     "data-testid"?: string | undefined;
+    id?: string | undefined;
 }

@@ -50,6 +50,21 @@ const DATA: ApiTableSectionProps[] = [
                     "The function to derive the display value of the step item",
                 propTypes: ["(item: T) => string"],
             },
+            {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
         ],
     },
 ];

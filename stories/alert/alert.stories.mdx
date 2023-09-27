@@ -1,4 +1,5 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { ExternalIcon } from "@lifesg/react-icons/external";
 import { Alert } from "src/alert";
 import { Secondary, Heading3, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
@@ -23,24 +24,50 @@ import { Alert } from "@lifesg/react-design-system/alert";
             </Alert>
             <br />
             <Alert type="warning">
-                This will serves as a warning or disclaimer to users.
+                This serves as a warning or disclaimer to users.
             </Alert>
             <br />
             <Alert type="success">
-                This will serves as a acknowledgement of a successful action.
+                This serves as an acknowledgement of a successful action.
             </Alert>
             <br />
-            <Alert
-                type="warning"
-                actionLink={{
-                    children: "Click here",
-                    href: "https://www.google.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                }}
-            >
-                This warning alert comes with an action link
+            <Alert type="info">
+                This provides non-critical information to users.
             </Alert>
+            <br />
+            <Alert type="description">
+                This provides non-critical information to users.
+            </Alert>
+            <br />
+        </>
+    </Story>
+</Canvas>
+
+<Heading3>With icon</Heading3>
+
+<Canvas>
+    <Story name="With icon">
+        <>
+            <Alert type="error" showIcon>
+                This will notify users of an error that has occurred.
+            </Alert>
+            <br />
+            <Alert type="warning" showIcon>
+                This serves as a warning or disclaimer to users.
+            </Alert>
+            <br />
+            <Alert type="success" showIcon>
+                This serves as an acknowledgement of a successful action.
+            </Alert>
+            <br />
+            <Alert type="info" showIcon>
+                This provides non-critical information to users.
+            </Alert>
+            <br />
+            <Alert type="description" showIcon>
+                This provides non-critical information to users.
+            </Alert>
+            <br />
         </>
     </Story>
 </Canvas>
@@ -102,6 +129,87 @@ Or if you require a custom display, you can construct your layout and pass it in
                 </li>
             </ul>
         </Alert>
+    </Story>
+</Canvas>
+
+<Heading3>With hyperlink</Heading3>
+
+<Canvas>
+    <Story name="With hyperlink">
+        <Alert
+            type="warning"
+            actionLink={{
+                children: "Hyperlink",
+                href: "https://www.life.gov.sg/",
+                target: "_blank",
+                rel: "noopener noreferrer",
+            }}
+        >
+            <p>
+                An alert box with an internal hyperlink for redirection to pages
+                within the same product. E.g. LifeSG.
+            </p>
+        </Alert>
+        <br />
+        <Alert
+            type="warning"
+            actionLinkIcon={<ExternalIcon />}
+            actionLink={{
+                children: "Hyperlink",
+                href: "https://www.google.com",
+                target: "_blank",
+                rel: "noopener noreferrer",
+            }}
+        >
+            <p>
+                An alert box with an external hyperlink for redirecting users to
+                pages outside of the product.
+            </p>
+        </Alert>
+    </Story>
+</Canvas>
+
+<Heading3>Small size</Heading3>
+
+<Canvas>
+    <Story name="Small size">
+        <>
+            <Alert type="description" sizeType="small">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+            <Alert
+                type="description"
+                sizeType="small"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+            <Alert type="description" showIcon sizeType="small">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+            <Alert
+                type="description"
+                showIcon
+                sizeType="small"
+                actionLink={{
+                    children: "Hyperlink",
+                    href: "https://www.google.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                }}
+            >
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Alert>
+            <br />
+        </>
     </Story>
 </Canvas>
 

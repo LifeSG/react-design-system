@@ -1,6 +1,6 @@
 {
     "name": "@lifesg/react-design-system",
-    "version": "2.1.0-canary.2",
+    "version": "2.2.0-canary.1",
     "description": "A component design system for LifeSG web apps",
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
@@ -107,7 +107,7 @@
         "typescript": "^4.8.2"
     },
     "peerDependencies": {
-        "@lifesg/react-icons": "^1.3.0",
+        "@lifesg/react-icons": "^1.4.0",
         "react": "^17.0.2 || ^18.0.0",
         "react-dom": "^17.0.2 || ^18.0.0",
         "styled-components": "^5.3.5"

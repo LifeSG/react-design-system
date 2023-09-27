@@ -1,6 +1,6 @@
 export interface DrawerProps {
     children?: React.ReactNode | undefined;
-    classname?: string | undefined;
+    className?: string | undefined;
     "data-testid"?: string | undefined;
     id?: string | undefined;
     /** The drawer header text */

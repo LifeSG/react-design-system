@@ -32,6 +32,7 @@ const Component = (
         border,
         disabled,
         onChange,
+        "data-testid": testId,
     }: Props,
     ref: React.Ref<DropzoneElement>
 ) => {
@@ -75,7 +76,7 @@ const Component = (
     return (
         <Container
             id={id}
-            data-testid="dropzone"
+            data-testid={testId || "dropzone"}
             $border={border}
             className={className}
             {...getRootProps()}
@@ -89,7 +90,7 @@ const Component = (
                 accept={accept}
                 capture={capture}
                 multiple={multiple}
-                data-testid="dropzone-input"
+                data-testid={testId ? `${testId}-input` : "dropzone-input"}
                 onChange={handleChange}
             />
             {children}

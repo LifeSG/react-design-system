@@ -1,4 +1,3 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import { animated } from "react-spring";
 import { ValidationElementAttributes } from "src/color";
 import { PropertiesToType } from "src/util/utility-types";
@@ -7,12 +6,14 @@ import { Color } from "../color/color";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
 import { ToastType } from "./types";
+import { MediaQuery } from "../media";
 
 //=============================================================================
 // STYLE INTERFACE
 //=============================================================================
 interface StyleProps {
     $type: ToastType;
+    $fixed?: boolean | undefined;
 }
 
 const getValidationColorAttributes = (
@@ -37,18 +38,26 @@ const getValidationColorAttributes = (
 // =============================================================================
 export const Wrapper = styled(animated.div)<StyleProps>`
     display: flex;
-    position: relative;
+
+    position: ${(props) => (props.$fixed ? "fixed" : "relative")};
+    margin: ${(props) => (props.$fixed ? "1rem" : 0)};
+    top: 0;
+    right: 0;
     padding: 1rem;
     border-radius: 0.5rem;
     line-height: 0;
     z-index: 10;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        left: 0;
+    }
 
     ${(props) => {
         return css`
             background: ${getValidationColorAttributes(props).Background};
             border: 1px solid ${getValidationColorAttributes(props).Border};
             color: ${getValidationColorAttributes(props).Text};
-            svg {
+            & > svg {
                 width: 1.5rem;
                 height: 1.5rem;
                 margin-right: 0.5rem;
@@ -61,7 +70,6 @@ export const Wrapper = styled(animated.div)<StyleProps>`
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0 2rem 0 0;
     padding-right: 2rem;
     flex: 1;
 `;
@@ -88,22 +96,16 @@ export const Description = styled.div<StyleProps>`
     }}
 `;
 
-export const CloseIcon = styled(CrossIcon)`
-    margin-top: 0.2rem;
-`;
-
 export const DismissButton = styled(ClickableIcon)<StyleProps>`
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-left: 5px;
-    margin-right: -1rem;
-    height: max-content;
+    padding: 0.75rem;
+    margin: -0.75rem;
 
     ${(props) => {
         return css`
             svg {
+                width: 1.5rem;
+                height: 1.5rem;
                 color: ${getValidationColorAttributes(props).Text};
-                margin-right: -0.5rem !important;
             }
             :hover {
                 background: transparent;
