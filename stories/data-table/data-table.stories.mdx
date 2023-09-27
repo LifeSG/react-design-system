@@ -1,5 +1,7 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useEffect, useMemo, useState } from "react";
 import { DataTable } from "src/data-table";
+import { Pill } from "src/pill";
 import {
     Heading3,
     Secondary,
@@ -7,8 +9,8 @@ import {
     Title,
 } from "../storybook-common";
 import { PropsTable } from "./props-table";
-import { useState } from "react";
-import { MaxHeightSetDataTable } from "./doc-elements.tsx";
+import { DataTableWithCustomHeight, Controls } from "./doc-elements";
+import { DATA_HEADERS, DATA_ROWS, generateRows } from "./row-data";
 
 <Meta title="Modules/DataTable" component={DataTable} />
 
@@ -16,7 +18,7 @@ import { MaxHeightSetDataTable } from "./doc-elements.tsx";
 
 <Secondary>Overview</Secondary>
 
-A call to action component with an icon in it.
+Organises a collection of data into readable rows.
 
 ```tsx
 import { DataTable } from "@lifesg/react-design-system/data-table";
@@ -26,104 +28,148 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
     <Story name="DataTable">
         <DataTable
             headers={[
-                {
-                    fieldKey: "status",
-                    label: "Status",
-                    style: { width: "7.5rem" },
-                },
-                {
-                    fieldKey: "time",
-                    label: "Time",
-                    style: { width: "15rem" },
-                },
-                {
-                    fieldKey: "resource",
-                    label: "Resource",
-                    style: { width: "17.5rem" },
-                },
                 { fieldKey: "title", label: "Title" },
+                { fieldKey: "status", label: "Status" },
+                { fieldKey: "desc", label: "Description" },
+                { fieldKey: "time", label: "Time" },
             ]}
             rows={[
                 {
                     id: "100",
-                    status: "Completed",
-                    time: "07/Aug/2023 9.30pm",
-                    resource:
-                        "Test of the new line with multiple data to be truncated and it will show only 2 lines. Hope this would be enough",
                     title: "Title 1",
+                    status: <Pill type="outline">Completed</Pill>,
+                    desc: "Test",
+                    time: "07/Aug/2023 9.30pm",
                 },
                 {
                     id: "102",
-                    status: "Pending",
+                    title: "Title 2",
+                    status: <Pill type="outline">Pending</Pill>,
+                    desc: "Cells containing longer data may be truncated so that only a maximum of 2 lines are visible",
                     time: "07/Aug/2023 10.30pm",
-                    resource: "Test",
-                    title: "Titile 2",
                 },
             ]}
         />
     </Story>
 </Canvas>
 
-<Heading3>Sorting Indicator</Heading3>
+<Heading3>Fixed column widths</Heading3>
 
-Show sorting Indicator Table header.
+This example illustrates how column widths can be fixed by setting the `width` style on headers.
 
 <Canvas>
-    <Story name="Sorting Indicator">
+    <Story name="Fixed column widths">
         <DataTable
             headers={[
                 {
+                    fieldKey: "title",
+                    label: "Title",
+                    style: { width: "20%" },
+                },
+                {
                     fieldKey: "status",
                     label: "Status",
-                    style: { width: "7.5rem" },
-                    clickable: true,
+                    style: { width: "20%" },
+                },
+                {
+                    fieldKey: "desc",
+                    label: "Description",
+                    style: { width: "40%" },
                 },
                 {
                     fieldKey: "time",
                     label: "Time",
-                    style: { width: "15rem" },
-                    clickable: true,
+                    style: { width: "20%" },
                 },
-                {
-                    fieldKey: "resource",
-                    label: "Resource",
-                    style: { width: "17.5rem" },
-                    clickable: true,
-                },
-                { fieldKey: "title", label: "Title", clickable: true },
             ]}
             rows={[
                 {
                     id: "100",
-                    status: "Completed",
-                    time: "07/Aug/2023 9.30pm",
-                    resource: "Test",
                     title: "Title 1",
+                    status: <Pill>Completed</Pill>,
+                    desc: "Test",
+                    time: "07/Aug/2023 9.30pm",
                 },
                 {
                     id: "102",
-                    status: "Pending",
+                    title: "Title 2",
+                    status: <Pill>Pending</Pill>,
+                    desc: "Cells containing longer data may be truncated so that only a maximum of 2 lines are visible",
                     time: "07/Aug/2023 10.30pm",
-                    resource: "Test",
-                    title: "Titile 2",
                 },
             ]}
-            sortIndicators={{
-                ["status"]: "desc",
-                ["time"]: "desc",
-                ["resource"]: "asc",
-                ["title"]: "asc",
-            }}
         />
     </Story>
 </Canvas>
 
-<Heading3>Checkbox selection</Heading3>
+<Heading3>Sort indicators</Heading3>
 
-Table Row with checkbox selection.
+A common use case is for rows to be sorted in some order.
+
+> The source code below is only an example and is not intended to be used directly in production
 
 <Canvas>
-    <Story name="Checkbox selection">
+    <Story name="Sort indicators">
+        {() => {
+            const headers = [
+                {
+                    fieldKey: "colA",
+                    label: "Column A",
+                    clickable: true,
+                },
+                {
+                    fieldKey: "colB",
+                    label: "Column B",
+                    clickable: true,
+                },
+            ];
+            const rows = [
+                {
+                    id: 1,
+                    colA: "1",
+                    colB: "Content 1",
+                },
+                {
+                    id: 2,
+                    colA: "2",
+                    colB: "Content 2",
+                },
+            ];
+            const [sortState, setSortState] = useState({
+                colA: "asc",
+            });
+            const sortedRows = useMemo(() => {
+                return rows.sort((a, b) => {
+                    return sortState.colA === "asc"
+                        ? a.colA.localeCompare(b.colA)
+                        : b.colA.localeCompare(a.colA);
+                });
+            }, [sortState]);
+            const handleHeaderClick = (fieldKey) => {
+                if (fieldKey === "colA") {
+                    setSortState({
+                        colA: sortState.colA === "asc" ? "desc" : "asc",
+                    });
+                } else if (fieldKey === "colB") {
+                    alert("Column B header was clicked!");
+                }
+            };
+            return (
+                <DataTable
+                    headers={headers}
+                    rows={sortedRows}
+                    sortIndicators={sortState}
+                    onHeaderClick={handleHeaderClick}
+                />
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Multi-selection of rows</Heading3>
+
+<Canvas>
+    <Story name="Multi-selection of rows">
         {() => {
             const [selected, setSelected] = useState([]);
             const handleOnClickSelect = (rowId, isSelected) => {
@@ -137,58 +183,16 @@ Table Row with checkbox selection.
                     );
                 }
             };
-            const handleOnClickSelectAll = (select) => {
-                setSelected(select ? [] : ["100", "102", "103"]);
+            const handleOnClickSelectAll = (selected) => {
+                setSelected(selected ? [] : DATA_ROWS.map(({ id }) => id));
             };
             return (
                 <DataTable
-                    headers={[
-                        {
-                            fieldKey: "status",
-                            label: "Status",
-                            style: { width: "7.5rem" },
-                            clickable: true,
-                        },
-                        {
-                            fieldKey: "time",
-                            label: "Time",
-                            style: { width: "15rem" },
-                            clickable: true,
-                        },
-                        {
-                            fieldKey: "resource",
-                            label: "Resource",
-                            style: { width: "17.5rem" },
-                            clickable: true,
-                        },
-                        { fieldKey: "title", label: "Title", clickable: true },
-                    ]}
-                    rows={[
-                        {
-                            id: "100",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 1",
-                        },
-                        {
-                            id: "102",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 2",
-                        },
-                        {
-                            id: "103",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 3",
-                        },
-                    ]}
+                    headers={DATA_HEADERS}
+                    rows={DATA_ROWS}
                     selectedIds={selected}
-                    enableMultiSelect={true}
-                    enableSelectAll={true}
+                    enableMultiSelect
+                    enableSelectAll
                     onSelect={handleOnClickSelect}
                     onSelectAll={handleOnClickSelectAll}
                 />
@@ -197,88 +201,48 @@ Table Row with checkbox selection.
     </Story>
 </Canvas>
 
-<Heading3>Alternating Rows</Heading3>
-
-Table Alternating Row.
+<Heading3>Disabled checkboxes</Heading3>
 
 <Canvas>
-    <Story name="Alternating Rows">
+    <Story name="Disabled checkboxes">
         {() => {
-            const [selected, setSelected] = useState();
+            const [selected, setSelected] = useState(["1"]);
+            const [disabled, setDisabled] = useState(["1", "2"]);
             return (
                 <DataTable
-                    headers={[
-                        {
-                            fieldKey: "status",
-                            label: "Status",
-                            style: { width: "7.5rem" },
-                        },
-                        {
-                            fieldKey: "time",
-                            label: "Time",
-                            style: { width: "15rem" },
-                        },
-                        {
-                            fieldKey: "resource",
-                            label: "Resource",
-                            style: { width: "17.5rem" },
-                        },
-                        { fieldKey: "title", label: "Title" },
-                    ]}
-                    rows={[
-                        {
-                            id: "100",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 1",
-                        },
-                        {
-                            id: "102",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 2",
-                        },
-                        {
-                            id: "103",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 3",
-                        },
-                        {
-                            id: "104",
-                            status: "SampleRow",
-                            time: "07/Aug/2023 12.30pm",
-                            resource: "Test",
-                            title: "Titile 4",
-                        },
-                        {
-                            id: "105",
-                            status: "CheckRow",
-                            time: "07/Aug/2023 1.30pm",
-                            resource: "Test",
-                            title: "Title 5",
-                        },
-                    ]}
-                    alternatingRows={true}
-                    enableMultiSelect={true}
-                    enableSelectAll={true}
+                    headers={DATA_HEADERS}
+                    rows={DATA_ROWS}
+                    selectedIds={selected}
+                    disabledIds={disabled}
+                    enableMultiSelect
                 />
             );
         }}
     </Story>
 </Canvas>
 
-<Heading3>Selection Bar</Heading3>
-
-Table with selection bar
+<Heading3>Alternating rows</Heading3>
 
 <Canvas>
-    <Story name="Selection Bar">
+    <Story name="Alternating rows">
+        <DataTable
+            headers={DATA_HEADERS}
+            rows={DATA_ROWS}
+            selectedIds={["1"]}
+            enableMultiSelect
+            alternatingRows
+        />
+    </Story>
+</Canvas>
+
+<Heading3>Action bar</Heading3>
+
+<Canvas>
+    <Story name="Action bar">
         {() => {
-            const [selected, setSelected] = useState(["100", "122", "115"]);
+            const [selected, setSelected] = useState(["1"]);
+            const [rowCount, setRowCount] = useState(5);
+            const [height, setHeight] = useState("default");
             const handleOnClickSelect = (rowId, isSelected) => {
                 if (isSelected) {
                     setSelected((selected) => [...selected, rowId]);
@@ -291,301 +255,42 @@ Table with selection bar
                 }
             };
             return (
-                <MaxHeightSetDataTable
-                    headers={[
-                        {
-                            fieldKey: "status",
-                            label: "Status",
-                            style: { width: "7.5rem" },
-                        },
-                        {
-                            fieldKey: "time",
-                            label: "Time",
-                            style: { width: "18rem" },
-                        },
-                        {
-                            fieldKey: "resource",
-                            label: "Resource",
-                            style: { width: "12rem" },
-                        },
-                        {
-                            fieldKey: "title",
-                            label: "Title",
-                        },
-                    ]}
-                    rows={[
-                        {
-                            id: "100",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 1",
-                        },
-                        {
-                            id: "102",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 2",
-                        },
-                        {
-                            id: "103",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 3",
-                        },
-                        {
-                            id: "104",
-                            status: "SampleRow",
-                            time: "07/Aug/2023 12.30pm",
-                            resource: "Test",
-                            title: "Titile 4",
-                        },
-                        {
-                            id: "105",
-                            status: "CheckRow",
-                            time: "07/Aug/2023 1.30pm",
-                            resource: "Test",
-                            title: "Titile 5",
-                        },
-                        {
-                            id: "110",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 6",
-                        },
-                        {
-                            id: "112",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 7",
-                        },
-                        {
-                            id: "113",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 8",
-                        },
-                        {
-                            id: "114",
-                            status: "SampleRow",
-                            time: "07/Aug/2023 12.30pm",
-                            resource: "Test",
-                            title: "Titile 9",
-                        },
-                        {
-                            id: "115",
-                            status: "CheckRow",
-                            time: "07/Aug/2023 1.30pm",
-                            resource: "Test",
-                            title: "Titile 10",
-                        },
-                        {
-                            id: "120",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 11",
-                        },
-                        {
-                            id: "122",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 12",
-                        },
-                        {
-                            id: "123",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 13",
-                        },
-                        {
-                            id: "124",
-                            status: "SampleRow",
-                            time: "07/Aug/2023 12.30pm",
-                            resource: "Test",
-                            title: "Titile 14",
-                        },
-                        {
-                            id: "125",
-                            status: "CheckRow",
-                            time: "07/Aug/2023 1.30pm",
-                            resource: "Test",
-                            title: "Titile 15",
-                        },
-                    ]}
-                    alternatingRows={true}
-                    enableMultiSelect={true}
-                    enableSelectAll={true}
-                    enableActionBar={true}
-                    selectedIds={selected}
-                    onSelect={handleOnClickSelect}
-                    onClearSelectionClick={() => {
-                        setSelected([]);
-                    }}
-                />
+                <DataTableWithCustomHeight
+                    rowCount={rowCount}
+                    onRowCountChange={setRowCount}
+                >
+                    <DataTable
+                        key={height}
+                        headers={DATA_HEADERS}
+                        rows={generateRows(rowCount)}
+                        alternatingRows
+                        enableMultiSelect
+                        enableActionBar
+                        selectedIds={selected}
+                        onSelect={handleOnClickSelect}
+                        onClearSelectionClick={() => {
+                            setSelected([]);
+                        }}
+                    />
+                </DataTableWithCustomHeight>
             );
         }}
     </Story>
 </Canvas>
 
-<Heading3>Disabled selection</Heading3>
-
-Table Row with disabled checkbox selection.
+<Heading3>No rows</Heading3>
 
 <Canvas>
-    <Story name="Disabled checkbox selection">
-        {() => {
-            const [selected, setSelected] = useState(["102"]);
-            const handleOnClickSelect = (rowId, isSelected) => {
-                if (isSelected) {
-                    setSelected((selected) => [...selected, rowId]);
-                } else {
-                    setSelected(
-                        selected.filter((item) => {
-                            return item !== rowId;
-                        })
-                    );
-                }
-            };
-            return (
-                <DataTable
-                    headers={[
-                        {
-                            fieldKey: "status",
-                            label: "Status",
-                            style: { width: "7.5rem" },
-                            clickable: true,
-                        },
-                        {
-                            fieldKey: "time",
-                            label: "Time",
-                            style: { width: "15rem" },
-                            clickable: true,
-                        },
-                        {
-                            fieldKey: "resource",
-                            label: "Resource",
-                            style: { width: "17.5rem" },
-                            clickable: true,
-                        },
-                        { fieldKey: "title", label: "Title", clickable: true },
-                    ]}
-                    rows={[
-                        {
-                            id: "100",
-                            status: "Completed",
-                            time: "07/Aug/2023 9.30pm",
-                            resource: "Test",
-                            title: "Title 1",
-                        },
-                        {
-                            id: "102",
-                            status: "Pending",
-                            time: "07/Aug/2023 10.30pm",
-                            resource: "Test",
-                            title: "Titile 2",
-                        },
-                        {
-                            id: "103",
-                            status: "Common",
-                            time: "07/Aug/2023 11.30pm",
-                            resource: "Test",
-                            title: "Titile 3",
-                        },
-                    ]}
-                    selectedIds={selected}
-                    disabledIds={["102", "103"]}
-                    enableMultiSelect={true}
-                    onSelect={handleOnClickSelect}
-                />
-            );
-        }}
+    <Story name="No rows">
+        <DataTable headers={DATA_HEADERS} />
     </Story>
 </Canvas>
 
-<Heading3>Empty Data View</Heading3>
-
-Table Empty Data View.
+<Heading3>Loading state</Heading3>
 
 <Canvas>
-    <Story name="Empty Data View">
-        <DataTable
-            headers={[
-                {
-                    fieldKey: "status",
-                    label: "Status",
-                    style: { width: "15rem" },
-                },
-                {
-                    fieldKey: "time",
-                    label: "Time",
-                    style: { width: "15rem" },
-                },
-                {
-                    fieldKey: "resource",
-                    label: "Resource",
-                    style: { width: "15rem" },
-                },
-                { fieldKey: "title", label: "Title" },
-            ]}
-            rows={[]}
-            loadState={"success"}
-            selectionConfig={{
-                showCheckboxes: false,
-                showHeaderCheckbox: true,
-                headerWidth: "5rem",
-            }}
-            emptyView={{
-                actionButton: {
-                    children: "Trigger",
-                    style: {
-                        width: "5rem",
-                    },
-                    onClick: () => {
-                        alert("Clicked on Trigger button");
-                    },
-                },
-            }}
-        />
-    </Story>
-</Canvas>
-
-<Heading3>Data Loading View</Heading3>
-
-Table Empty Data View.
-
-<Canvas>
-    <Story name="Data Loading View">
-        <DataTable
-            headers={[
-                {
-                    fieldKey: "status",
-                    label: "Status",
-                    style: { width: "15rem" },
-                },
-                {
-                    fieldKey: "time",
-                    label: "Time",
-                    style: { width: "15rem" },
-                },
-                {
-                    fieldKey: "resource",
-                    label: "Resource",
-                    style: { width: "15rem" },
-                },
-                { fieldKey: "title", label: "Title" },
-            ]}
-            rows={[]}
-            loadState={"loading"}
-            enableSelectAll={true}
-        />
+    <Story name="Loading state">
+        <DataTable headers={DATA_HEADERS} loadState="loading" />
     </Story>
 </Canvas>
 
