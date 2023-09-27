@@ -51,7 +51,6 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Specifies if every alternate row has a different background colour",
                 propTypes: ["boolean"],
-                defaultValue: "false",
             },
             {
                 name: "renderCustomEmptyView",
@@ -64,7 +63,7 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Specifies the table load state. Displays an animation when the table is loading.",
                 propTypes: [`"success"`, `"loading"`],
-                defaultValue: "success",
+                defaultValue: `"success"`,
             },
             {
                 name: "emptyView",
