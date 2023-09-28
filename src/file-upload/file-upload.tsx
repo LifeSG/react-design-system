@@ -93,6 +93,27 @@ export const FileUpload = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
+    const renderInfo = () => {
+        if (!title && !description) {
+            return null;
+        }
+
+        return (
+            <TitleContainer>
+                {typeof title === "string" ? (
+                    <Title weight="regular">{title}</Title>
+                ) : (
+                    <div>{title}</div>
+                )}
+                {typeof description === "string" ? (
+                    <Description weight="semibold">{description}</Description>
+                ) : (
+                    <div>{description}</div>
+                )}
+            </TitleContainer>
+        );
+    };
+
     return (
         <FileUploadContext.Provider value={{ activeId, setActiveId }}>
             <FileUploadDropzone
@@ -108,16 +129,7 @@ export const FileUpload = ({
                 multiple={multiple}
                 disabled={disabled || reachedMaxFiles() || readOnly}
             >
-                {(title || description) && (
-                    <TitleContainer>
-                        {title && <Title weight="regular">{title}</Title>}
-                        {description && (
-                            <Description weight="semibold">
-                                {description}
-                            </Description>
-                        )}
-                    </TitleContainer>
-                )}
+                {renderInfo()}
                 {warning && (
                     <WarningAlert type="warning">{warning}</WarningAlert>
                 )}
