@@ -93,25 +93,28 @@ export const FileUpload = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderInfo = () => {
-        if (!title && !description) {
+    const renderTitle = () => {
+        if (!title) {
             return null;
         }
 
-        return (
-            <TitleContainer>
-                {typeof title === "string" ? (
-                    <Title weight="regular">{title}</Title>
-                ) : (
-                    <div>{title}</div>
-                )}
-                {typeof description === "string" ? (
-                    <Description weight="semibold">{description}</Description>
-                ) : (
-                    <div>{description}</div>
-                )}
-            </TitleContainer>
-        );
+        if (typeof title === "string") {
+            return <Title weight="regular">{title}</Title>;
+        }
+
+        return <div>{title}</div>;
+    };
+
+    const renderDescription = () => {
+        if (!description) {
+            return null;
+        }
+
+        if (typeof description === "string") {
+            return <Description weight="regular">{description}</Description>;
+        }
+
+        return <div>{description}</div>;
     };
 
     return (
@@ -129,7 +132,12 @@ export const FileUpload = ({
                 multiple={multiple}
                 disabled={disabled || reachedMaxFiles() || readOnly}
             >
-                {renderInfo()}
+                {(title || description) && (
+                    <TitleContainer>
+                        {renderTitle()}
+                        {renderDescription()}
+                    </TitleContainer>
+                )}
                 {warning && (
                     <WarningAlert type="warning">{warning}</WarningAlert>
                 )}
