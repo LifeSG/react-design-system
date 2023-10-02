@@ -48,8 +48,7 @@ Countdown timer will sticky at specified position once browser scroll down to bo
             const openNotifyModal = () => setShowNotifyModal(true);
             const openFinishModal = () => setShowFinsihModal(true);
             const handleDuration = (_seconds) => {
-                const hours = Math.floor(_seconds / 3600);
-                const minutes = Math.floor(_seconds / 60) - hours * 60;
+                const minutes = Math.floor(_seconds / 60);
                 const seconds = _seconds % 60;
                 setDuration({ minutes, seconds });
             };
@@ -69,13 +68,10 @@ Countdown timer will sticky at specified position once browser scroll down to bo
                         </Button.Default>
                     </CountdownView>
                     <NotifyModal show={showNotifyModal}>
-                        <span>
-                            {duration.minutes} minutes {duration.seconds}{" "}
-                            seconds
-                        </span>
+                        {duration.minutes} minutes {duration.seconds} seconds
                     </NotifyModal>
                     <NotifyModal show={showFinsihModal}>
-                        <span>The timer has finished</span>
+                        The timer has finished
                     </NotifyModal>
                 </FullWidthStoryContainer>
             );

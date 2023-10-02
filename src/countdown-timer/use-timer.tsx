@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const useTimer = (seconds: number) => {
+export const useTimer = (seconds: number, isPlaying: boolean) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [timer, setTimer] = useState<number>(seconds);
-    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [remainingSeconds, setRemainingSeconds] = useState<number>(seconds);
 
     // =============================================================================
     // EFFECTS
@@ -15,28 +14,28 @@ export const useTimer = (seconds: number) => {
         const cleanup = start();
 
         return () => cleanup();
-    }, [isPlaying]);
+    }, [isPlaying, seconds]);
 
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
     const start = () => {
-        const elapsed = new Date();
+        const timestamp = Date.now();
 
         const interval = setInterval(() => {
             const currentTime = Date.now();
-            const milisecond = seconds * 1000;
+            const milliseconds = seconds * 1000;
 
             const countdown = Math.ceil(
-                (elapsed.valueOf() + milisecond - currentTime) / 1000
+                (timestamp + milliseconds - currentTime) / 1000
             );
 
-            setTimer(countdown);
+            setRemainingSeconds(Math.max(countdown, 0));
             if (countdown <= 0) clearInterval(interval);
         }, 1000);
 
         return () => clearInterval(interval);
     };
 
-    return [timer, isPlaying, setIsPlaying] as const;
+    return [remainingSeconds] as const;
 };

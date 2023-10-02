@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useInView } from "react-intersection-observer";
 import { useTimer } from "./use-timer";
 import { CountdownTimerProps } from "./types";
 import { Countdown, Time, TimeLeft, Wrapper } from "./countdown-timer.style";
 import { TimeHelper } from "../util/time-helper";
 import { ClockIcon } from "@lifesg/react-icons";
-import { useIntersectionObserver } from "../util/use-intersection-observer";
 import { MediaWidths } from "../spec/media-spec";
 
 type Position = "relative" | "fixed";
 
 export const CountdownTimer = ({
     className,
-    timer: _timer,
+    timer,
     notifyTimer,
     offset,
     mobileOffset,
@@ -27,12 +27,12 @@ export const CountdownTimer = ({
     // =============================================================================
 
     const wrapperRef = useRef<HTMLDivElement>();
-    const stickyRef = useRef<HTMLDivElement>();
     const isNotified = useRef<boolean>(false);
     const [offsetY, setOffsetY] = useState<number>(0);
+    const [isPlaying, setIsPlaying] = useState(false);
 
-    const [timer, isPlaying, setIsPlaying] = useTimer(_timer);
-    const onScreen = useIntersectionObserver(stickyRef, {
+    const [remainingSeconds] = useTimer(timer, isPlaying);
+    const { ref: stickyRef, inView } = useInView({
         threshold: 1,
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,
     });
@@ -50,21 +50,23 @@ export const CountdownTimer = ({
     }, [show]);
 
     useEffect(() => {
-        if (timer === 0) {
+        if (remainingSeconds === 0) {
             performOnFinishHandler();
-        } else if (timer === notifyTimer) {
+        } else if (remainingSeconds <= notifyTimer) {
             performOnDurationHandler();
             performOnNotifyHandler();
-        } else if (timer < notifyTimer) {
-            if (!isNotified.current) performOnNotifyHandler();
-            performOnDurationHandler();
         }
-    }, [timer]);
+    }, [remainingSeconds]);
 
     useEffect(() => {
         const y = getOffsetY();
         setOffsetY(y);
-    }, [isMobile, wrapperRef.current]);
+    }, [isMobile, offset?.top]);
+
+    useEffect(() => {
+        // reset
+        isNotified.current = false;
+    }, [timer, show]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -72,16 +74,15 @@ export const CountdownTimer = ({
 
     const performOnDurationHandler = () => {
         if (onDuration) {
-            const { seconds } = TimeHelper.convertSecondsToTime(timer);
-
-            onDuration(seconds);
+            onDuration(remainingSeconds);
         }
     };
 
     const performOnNotifyHandler = () => {
-        if (!isNotified.current) isNotified.current = true;
-
-        if (onNotify) onNotify();
+        if (onNotify && !isNotified.current) {
+            isNotified.current = true;
+            onNotify();
+        }
     };
 
     const performOnFinishHandler = () => {
@@ -93,8 +94,7 @@ export const CountdownTimer = ({
     function getOffsetY() {
         const desktopTop = offset?.top ?? 168;
         const mobileTop = mobileOffset?.top ?? 80;
-
-        const offsetY = !isMobile ? desktopTop : mobileTop;
+        const offsetY = isMobile ? mobileTop : desktopTop;
 
         return offsetY;
     }
@@ -104,17 +104,13 @@ export const CountdownTimer = ({
     // =============================================================================
 
     const renderCountdown = (position: Position) => {
-        const {
-            hours,
-            minutes: _minutes,
-            seconds,
-        } = TimeHelper.convertSecondsToTime(timer);
+        const { minutes, seconds } =
+            TimeHelper.toMinutesSeconds(remainingSeconds);
         const clientRect = wrapperRef.current?.getBoundingClientRect();
 
-        const minutes = hours * 60 + _minutes;
         const m = minutes !== 1 ? "mins" : "min";
         const s = seconds !== 1 ? "secs" : "sec";
-        const offsetX = !isMobile ? offset?.left : mobileOffset?.left;
+        const offsetX = !isMobile && offset?.left;
 
         return (
             <Countdown
@@ -125,13 +121,13 @@ export const CountdownTimer = ({
                         : `fixed-countdown-wrapper`
                 }
                 ref={position === "relative" ? wrapperRef : undefined}
-                inert={onScreen ? undefined : ""}
-                $isFixed={position === "fixed"}
-                $pinned={position === "fixed" && !onScreen}
-                $opacity={position === "relative" && !onScreen}
-                $warn={timer <= notifyTimer}
+                inert={inView ? undefined : ""}
+                $pinned={position === "fixed" && !inView}
+                $opacity={position === "relative" && !inView}
+                $warn={remainingSeconds <= notifyTimer}
                 $top={offsetY}
-                $left={offsetX ?? clientRect?.x}
+                $left={offsetX || clientRect?.x}
+                $right={offset?.right}
             >
                 <ClockIcon />
                 <TimeLeft>Time left:</TimeLeft>
@@ -142,13 +138,13 @@ export const CountdownTimer = ({
         );
     };
 
-    if (!isPlaying && timer !== 0) return <></>;
+    if (!isPlaying && remainingSeconds !== 0) return <></>;
 
     return (
         <Wrapper className={className}>
             <div ref={stickyRef}></div>
             {renderCountdown("relative")}
-            {wrapperRef.current && !onScreen && renderCountdown("fixed")}
+            {wrapperRef.current && !inView && renderCountdown("fixed")}
         </Wrapper>
     );
 };

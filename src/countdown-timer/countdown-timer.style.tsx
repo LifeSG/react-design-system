@@ -8,12 +8,12 @@ import { MediaQuery } from "../media";
 // =============================================================================
 
 interface CountdownStyleProps {
-    $isFixed: boolean;
     $opacity: boolean;
     $warn: boolean;
     $pinned: boolean;
     $top: number;
     $left: number;
+    $right?: number | undefined;
 }
 
 // =============================================================================
@@ -26,15 +26,16 @@ export const Wrapper = styled.div`
 
 export const Countdown = styled.div<CountdownStyleProps>`
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
-    display: inline-flex;
+    display: flex;
     align-items: center;
     opacity: ${(props) => (props.$opacity ? 0 : 1)};
-    position: ${(props) => (props.$isFixed ? "fixed" : "relative")};
+    position: relative;
     align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     color: ${Color.Primary};
     border: 1px solid ${Color.Primary};
+    background-color: ${Color.Neutral[8]};
 
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
@@ -53,6 +54,7 @@ export const Countdown = styled.div<CountdownStyleProps>`
         const { $top, $left, $warn } = props;
         if (props.$pinned) {
             return css`
+                position: fixed;
                 top: ${$top}px;
                 left: ${$left}px;
                 box-shadow: 0px 0px 4px 1px
@@ -68,13 +70,22 @@ export const Countdown = styled.div<CountdownStyleProps>`
             `;
         }
     }}
+
+    ${(props) => {
+        const { $right } = props;
+        if (props.$pinned && $right !== undefined) {
+            return css`
+                left: unset;
+                right: ${$right}px;
+            `;
+        }
+    }}
 `;
 
 export const TimeLeft = styled.div`
     ${TextStyleHelper.getTextStyle("H4", "bold")}
-    display: inline-block;
     margin-left: 0.5rem;
-    margin-right: 1.75rem;
+    margin-right: 1.5rem;
 
     ${MediaQuery.MaxWidth.mobileL} {
         margin-right: 3rem;

@@ -47,7 +47,7 @@ const DATA: ApiTableSectionProps[] = [
                         <strong>(Note: it is pixel base)</strong>
                     </>
                 ),
-                propTypes: ["{top: number, left: number}"],
+                propTypes: ["{top: number, left: number, right: number}"],
             },
             {
                 name: "mobileoffset",
@@ -61,7 +61,7 @@ const DATA: ApiTableSectionProps[] = [
                         <strong>(Note: it is pixel base)</strong>
                     </>
                 ),
-                propTypes: ["{top: number, left: number}"],
+                propTypes: ["{top: number}"],
             },
             {
                 name: "onDuration",

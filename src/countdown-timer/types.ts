@@ -3,6 +3,11 @@ import React from "react";
 interface Offset {
     top?: number | undefined;
     left?: number | undefined;
+    right?: number | undefined;
+}
+
+interface MobileOffset {
+    top?: number | undefined;
 }
 
 export interface CountdownTimerProps
@@ -17,7 +22,7 @@ export interface CountdownTimerProps
     /** Allows customization of the sticky position in tablet/desktop view*/
     offset?: Offset | undefined;
     /** Allows customization of the sticky position in mobile only */
-    mobileOffset?: Offset | undefined;
+    mobileOffset?: MobileOffset | undefined;
     /**
      * Called when timer value becomes equal to or
      * less than the total specified amount of `notifyMinutes` and `notifySeconds`
