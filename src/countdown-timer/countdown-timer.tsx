@@ -40,6 +40,7 @@ export const CountdownTimer = ({
     const { ref: stickyRef, inView } = useInView({
         threshold: 1,
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,
+        initialInView: true,
     });
 
     const isMobile = useMediaQuery({
