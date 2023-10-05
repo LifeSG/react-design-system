@@ -3,12 +3,16 @@ import { useMediaQuery } from "react-responsive";
 import { useInView } from "react-intersection-observer";
 import { useTimer } from "./use-timer";
 import { CountdownTimerProps } from "./types";
-import { Countdown, Time, TimeLeft, Wrapper } from "./countdown-timer.style";
+import {
+    Countdown,
+    FixedCountdown,
+    TimeLeft,
+    Timer,
+    Wrapper,
+} from "./countdown-timer.style";
 import { TimeHelper } from "../util/time-helper";
 import { ClockIcon } from "@lifesg/react-icons";
 import { MediaWidths } from "../spec/media-spec";
-
-type Position = "relative" | "fixed";
 
 export const CountdownTimer = ({
     className,
@@ -18,9 +22,10 @@ export const CountdownTimer = ({
     mobileOffset,
     show,
     "data-testid": testId,
-    onDuration,
-    onNotify,
     onFinish,
+    onNotify,
+    onTick,
+    ...otherProps
 }: CountdownTimerProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -53,7 +58,7 @@ export const CountdownTimer = ({
         if (remainingSeconds === 0) {
             performOnFinishHandler();
         } else if (remainingSeconds <= notifyTimer) {
-            performOnDurationHandler();
+            performOnTickHandler();
             performOnNotifyHandler();
         }
     }, [remainingSeconds]);
@@ -61,7 +66,7 @@ export const CountdownTimer = ({
     useEffect(() => {
         const y = getOffsetY();
         setOffsetY(y);
-    }, [isMobile, offset?.top]);
+    }, [isMobile, offset?.top, mobileOffset?.top]);
 
     useEffect(() => {
         // reset
@@ -72,9 +77,9 @@ export const CountdownTimer = ({
     // HELPER FUNCTIONS
     // =============================================================================
 
-    const performOnDurationHandler = () => {
-        if (onDuration) {
-            onDuration(remainingSeconds);
+    const performOnTickHandler = () => {
+        if (onTick) {
+            onTick(remainingSeconds);
         }
     };
 
@@ -103,48 +108,70 @@ export const CountdownTimer = ({
     // RENDER FUNCTION
     // =============================================================================
 
-    const renderCountdown = (position: Position) => {
+    const renderTimer = () => {
         const { minutes, seconds } =
             TimeHelper.toMinutesSeconds(remainingSeconds);
-        const clientRect = wrapperRef.current?.getBoundingClientRect();
-
         const m = minutes !== 1 ? "mins" : "min";
         const s = seconds !== 1 ? "secs" : "sec";
+
+        return (
+            <>
+                <ClockIcon />
+                <TimeLeft>Time left:</TimeLeft>
+                <Timer>
+                    {minutes} {m} {String(seconds).padStart(2, "0")} {s}
+                </Timer>
+            </>
+        );
+    };
+
+    const renderCountdown = () => {
+        const clientRect = wrapperRef.current?.getBoundingClientRect();
         const offsetX = !isMobile && offset?.left;
 
         return (
             <Countdown
                 data-testid={testId}
-                data-id={
-                    position === "relative"
-                        ? `countdown-wrapper`
-                        : `fixed-countdown-wrapper`
-                }
-                ref={position === "relative" ? wrapperRef : undefined}
+                data-id="countdown-wrapper"
+                ref={wrapperRef}
                 inert={inView ? undefined : ""}
-                $pinned={position === "fixed" && !inView}
-                $opacity={position === "relative" && !inView}
+                $visible={!inView}
                 $warn={remainingSeconds <= notifyTimer}
                 $top={offsetY}
                 $left={offsetX || clientRect?.x}
                 $right={offset?.right}
             >
-                <ClockIcon />
-                <TimeLeft>Time left:</TimeLeft>
-                <Time>
-                    {minutes} {m} {String(seconds).padStart(2, "0")} {s}
-                </Time>
+                {renderTimer()}
             </Countdown>
+        );
+    };
+
+    const renderFixedCountdown = () => {
+        const clientRect = wrapperRef.current?.getBoundingClientRect();
+        const offsetX = !isMobile && offset?.left;
+
+        return (
+            <FixedCountdown
+                data-testid={testId}
+                data-id="fixed-countdown-wrapper"
+                $visible={inView}
+                $warn={remainingSeconds <= notifyTimer}
+                $top={offsetY}
+                $left={offsetX || clientRect?.x}
+                $right={offset?.right}
+            >
+                {renderTimer()}
+            </FixedCountdown>
         );
     };
 
     if (!isPlaying && remainingSeconds !== 0) return <></>;
 
     return (
-        <Wrapper className={className}>
+        <Wrapper className={className} {...otherProps}>
             <div ref={stickyRef}></div>
-            {renderCountdown("relative")}
-            {wrapperRef.current && !inView && renderCountdown("fixed")}
+            {renderCountdown()}
+            {wrapperRef.current && !inView && renderFixedCountdown()}
         </Wrapper>
     );
 };

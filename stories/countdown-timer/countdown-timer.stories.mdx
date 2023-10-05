@@ -24,10 +24,10 @@ import { PropsTable } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-Displays a countdown timer on top right
+Displays a countdown timer.
 
 ```tsx
-import { CountdownTimer } from "@lifesg/react-design-system/countdownTimer";
+import { CountdownTimer } from "@lifesg/react-design-system/countdown-timer";
 ```
 
 Countdown timer will sticky at specified position once browser scroll down to bottom.
@@ -47,7 +47,7 @@ Countdown timer will sticky at specified position once browser scroll down to bo
             const startTimer = () => setShowTimer(true);
             const openNotifyModal = () => setShowNotifyModal(true);
             const openFinishModal = () => setShowFinsihModal(true);
-            const handleDuration = (_seconds) => {
+            const handleTick = (_seconds) => {
                 const minutes = Math.floor(_seconds / 60);
                 const seconds = _seconds % 60;
                 setDuration({ minutes, seconds });
@@ -59,7 +59,7 @@ Countdown timer will sticky at specified position once browser scroll down to bo
                             show={showTimer}
                             timer={15}
                             notifyTimer={12}
-                            onDuration={(duration) => handleDuration(duration)}
+                            onTick={(seconds) => handleTick(seconds)}
                             onFinish={() => openFinishModal()}
                             onNotify={() => openNotifyModal()}
                         />

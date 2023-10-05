@@ -23,11 +23,8 @@ export interface CountdownTimerProps
     offset?: Offset | undefined;
     /** Allows customization of the sticky position in mobile only */
     mobileOffset?: MobileOffset | undefined;
-    /**
-     * Called when timer value becomes equal to or
-     * less than the total specified amount of `notifyMinutes` and `notifySeconds`
-     */
-    onDuration?: ((seconds: number) => void) | undefined;
+    /** Called every second with the remaining time left when the timer value falls below the `notifyTimer` threshold */
+    onTick?: ((seconds: number) => void) | undefined;
     /** Called when the timer value falls below the specified notifyTimer threshold */
     onNotify?: (() => void) | undefined;
     /** Called when timer value has finished */

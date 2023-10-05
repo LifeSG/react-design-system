@@ -8,9 +8,8 @@ import { MediaQuery } from "../media";
 // =============================================================================
 
 interface CountdownStyleProps {
-    $opacity: boolean;
+    $visible: boolean;
     $warn: boolean;
-    $pinned: boolean;
     $top: number;
     $left: number;
     $right?: number | undefined;
@@ -24,15 +23,13 @@ export const Wrapper = styled.div`
     width: 100%;
 `;
 
-export const Countdown = styled.div<CountdownStyleProps>`
+export const BaseCountdown = styled.div<CountdownStyleProps>`
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
     display: flex;
     align-items: center;
-    opacity: ${(props) => (props.$opacity ? 0 : 1)};
-    position: relative;
-    align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 4px;
+    opacity: ${(props) => (props.$visible ? 0 : 1)};
     color: ${Color.Primary};
     border: 1px solid ${Color.Primary};
     background-color: ${Color.Neutral[8]};
@@ -49,31 +46,36 @@ export const Countdown = styled.div<CountdownStyleProps>`
             `;
         }
     }}
+`;
+
+export const Countdown = styled(BaseCountdown)`
+    position: relative;
+`;
+
+export const FixedCountdown = styled(BaseCountdown)`
+    position: fixed;
 
     ${(props) => {
-        const { $top, $left, $warn } = props;
-        if (props.$pinned) {
-            return css`
-                position: fixed;
-                top: ${$top}px;
-                left: ${$left}px;
-                box-shadow: 0px 0px 4px 1px
-                    ${$warn ? Color.Brand[2] : Color.Accent.Light[2]};
+        const { $left, $top, $warn } = props;
+        return css`
+            top: ${$top}px;
+            left: ${$left}px;
+            box-shadow: 0px 0px 4px 1px
+                ${$warn ? Color.Brand[2] : Color.Accent.Light[2]};
 
-                ${MediaQuery.MaxWidth.mobileL} {
-                    left: 0;
-                    right: 0;
-                    border-radius: 0;
-                    border-left: none;
-                    border-right: none;
-                }
-            `;
-        }
+            ${MediaQuery.MaxWidth.mobileL} {
+                left: 0;
+                right: 0;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+        `;
     }}
 
     ${(props) => {
         const { $right } = props;
-        if (props.$pinned && $right !== undefined) {
+        if ($right !== undefined) {
             return css`
                 left: unset;
                 right: ${$right}px;
@@ -92,6 +94,6 @@ export const TimeLeft = styled.div`
     }
 `;
 
-export const Time = styled.div`
+export const Timer = styled.div`
     margin-left: auto;
 `;
