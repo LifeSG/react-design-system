@@ -127,20 +127,14 @@ export const CountdownTimer = ({
     };
 
     const renderCountdown = () => {
-        const clientRect = wrapperRef.current?.getBoundingClientRect();
-        const offsetX = !isMobile && offset?.left;
-
         return (
             <Countdown
                 data-testid={testId}
                 data-id="countdown-wrapper"
                 ref={wrapperRef}
                 inert={inView ? undefined : ""}
-                $visible={!inView}
+                $visible={inView}
                 $warn={remainingSeconds <= notifyTimer}
-                $top={offsetY}
-                $left={offsetX || clientRect?.x}
-                $right={offset?.right}
             >
                 {renderTimer()}
             </Countdown>
@@ -155,7 +149,6 @@ export const CountdownTimer = ({
             <FixedCountdown
                 data-testid={testId}
                 data-id="fixed-countdown-wrapper"
-                $visible={inView}
                 $warn={remainingSeconds <= notifyTimer}
                 $top={offsetY}
                 $left={offsetX || clientRect?.x}

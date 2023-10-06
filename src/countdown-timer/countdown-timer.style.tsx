@@ -8,10 +8,10 @@ import { MediaQuery } from "../media";
 // =============================================================================
 
 interface CountdownStyleProps {
-    $visible: boolean;
     $warn: boolean;
-    $top: number;
-    $left: number;
+    $visible?: boolean | undefined;
+    $top?: number | undefined;
+    $left?: number | undefined;
     $right?: number | undefined;
 }
 
@@ -29,7 +29,6 @@ export const BaseCountdown = styled.div<CountdownStyleProps>`
     align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    opacity: ${(props) => (props.$visible ? 0 : 1)};
     color: ${Color.Primary};
     border: 1px solid ${Color.Primary};
     background-color: ${Color.Neutral[8]};
@@ -50,6 +49,7 @@ export const BaseCountdown = styled.div<CountdownStyleProps>`
 
 export const Countdown = styled(BaseCountdown)`
     position: relative;
+    opacity: ${(props) => (props.$visible ? 1 : 0)};
 `;
 
 export const FixedCountdown = styled(BaseCountdown)`
