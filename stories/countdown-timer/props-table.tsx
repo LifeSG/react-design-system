@@ -50,6 +50,17 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["{top: number, left: number, right: number}"],
             },
             {
+                name: "align",
+                description: (
+                    <>
+                        To define whether the component should align itself
+                        starting from the left or right within the browser.
+                    </>
+                ),
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"right"`,
+            },
+            {
                 name: "mobileoffset",
                 description: (
                     <>

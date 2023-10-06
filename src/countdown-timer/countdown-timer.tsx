@@ -16,6 +16,7 @@ import { MediaWidths } from "../spec/media-spec";
 
 export const CountdownTimer = ({
     className,
+    align = "right",
     timer,
     notifyTimer,
     offset,
@@ -143,7 +144,17 @@ export const CountdownTimer = ({
 
     const renderFixedCountdown = () => {
         const clientRect = wrapperRef.current?.getBoundingClientRect();
-        const offsetX = !isMobile && offset?.left;
+        const left = offset?.left
+            ? offset.left
+            : align === "left"
+            ? clientRect.x
+            : undefined;
+
+        const right = offset?.right
+            ? offset.right
+            : align === "right"
+            ? Math.floor(window.innerWidth - clientRect.right)
+            : undefined;
 
         return (
             <FixedCountdown
@@ -151,13 +162,15 @@ export const CountdownTimer = ({
                 data-id="fixed-countdown-wrapper"
                 $warn={remainingSeconds <= notifyTimer}
                 $top={offsetY}
-                $left={offsetX || clientRect?.x}
-                $right={offset?.right}
+                $left={left}
+                $right={right}
             >
                 {renderTimer()}
             </FixedCountdown>
         );
     };
+
+    if (typeof window === undefined) return;
 
     if (!isPlaying && remainingSeconds !== 0) return <></>;
 

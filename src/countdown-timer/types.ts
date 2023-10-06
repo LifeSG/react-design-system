@@ -1,5 +1,7 @@
 import React from "react";
 
+type AlignPosition = "left" | "right";
+
 interface Offset {
     top?: number | undefined;
     left?: number | undefined;
@@ -21,6 +23,8 @@ export interface CountdownTimerProps
     notifyTimer?: number | undefined;
     /** Allows customization of the sticky position in tablet/desktop view*/
     offset?: Offset | undefined;
+    /** Specifies the computed direction for component alignment */
+    align?: AlignPosition | undefined;
     /** Allows customization of the sticky position in mobile only */
     mobileOffset?: MobileOffset | undefined;
     /** Called every second with the remaining time left when the timer value falls below the `notifyTimer` threshold */
