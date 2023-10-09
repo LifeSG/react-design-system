@@ -17,6 +17,7 @@ export interface CountdownTimerProps
     "data-testid"?: string | undefined;
     /** To show/play the countdown timer */
     show: boolean;
+    fixed?: boolean | undefined;
     /** Specifies the countdown timer (in seconds) */
     timer: number;
     /** Specifies a timer (in seconds) for notifications */

@@ -23,6 +23,7 @@ export const CountdownTimer = ({
     offset,
     mobileOffset,
     show,
+    fixed = true,
     "data-testid": testId,
     onFinish,
     onNotify,
@@ -46,6 +47,7 @@ export const CountdownTimer = ({
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,
         initialInView: true,
     });
+    const isVisible = !fixed || inView;
 
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
@@ -162,8 +164,8 @@ export const CountdownTimer = ({
                 data-testid={testId}
                 data-id="countdown-wrapper"
                 ref={wrapperRef}
-                inert={inView ? undefined : ""}
-                $visible={inView}
+                inert={isVisible ? undefined : ""}
+                $visible={isVisible}
                 $warn={remainingSeconds <= notifyTimer}
             >
                 {renderTimer()}
@@ -203,7 +205,7 @@ export const CountdownTimer = ({
         <Wrapper className={className} {...otherProps}>
             <div ref={stickyRef}></div>
             {renderCountdown()}
-            {wrapperRef.current && !inView && renderFixedCountdown()}
+            {wrapperRef.current && !isVisible && renderFixedCountdown()}
         </Wrapper>
     );
 };
