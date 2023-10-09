@@ -172,6 +172,7 @@ export const FilterItemCheckbox = <T,>({
 
         return (
             <StyledToggle
+                key={optionValue}
                 type="checkbox"
                 checked={checked}
                 $visible={
