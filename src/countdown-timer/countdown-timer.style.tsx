@@ -54,6 +54,7 @@ export const Countdown = styled(BaseCountdown)`
 
 export const FixedCountdown = styled(BaseCountdown)`
     position: fixed;
+    z-index: 10;
 
     ${(props) => {
         const { $top, $left, $right, $warn } = props;

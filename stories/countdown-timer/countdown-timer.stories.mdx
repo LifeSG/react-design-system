@@ -11,14 +11,10 @@ import { Button } from "src/button";
 import { Modal } from "/src/modal";
 import { Text } from "src/text";
 import { CountdownTimer } from "src/countdown-timer";
-import { CountdownView, NotifyModal } from "./count-down-view.tsx";
+import { CountdownView, NotifyModal } from "./doc-elements.tsx";
 import { PropsTable } from "./props-table";
 
-<Meta
-    title="Modules/CountdownTimer"
-    parameters={{ layout: "fullscreen" }}
-    component={CountdownTimer}
-/>
+<Meta title="Modules/CountdownTimer" component={CountdownTimer} />
 
 <Title>Countdown Timer</Title>
 
@@ -30,50 +26,83 @@ Displays a countdown timer.
 import { CountdownTimer } from "@lifesg/react-design-system/countdown-timer";
 ```
 
-Countdown timer will sticky at specified position once browser scroll down to bottom.
-
-> Note: Due to the storybook environment, please view it in fullscreen for best results.
-
 <Canvas>
     <Story name="CountdownTimer">
+        <CountdownTimer
+            show
+            timer={15}
+            notifyTimer={10}
+            fixed={false} /* For storybook purposes */
+            onNotify={() => console.log("Warning")}
+            onFinish={() => console.log("Complete")}
+            onTick={(seconds) => console.log(`Seconds remaining: ${seconds}`)}
+        />
+    </Story>
+</Canvas>
+
+<Heading3>Scroll behaviour</Heading3>
+
+The countdown timer is fixed to the top when scrolled out of view. By default it is aligned right, relative to its original position. It can also be aligned left.
+
+> Note: Due to the storybook environment, the scroll detection may not be accurate.
+> [View this canvas in a new tab](./iframe.html?args=&id=modules-countdowntimer--scroll-behaviour&viewMode=story) for best results.
+
+<Canvas>
+    <Story
+        name="Scroll behaviour"
+        parameters={{
+            layout: "fullscreen",
+            docs: { inlineStories: false, iframeHeight: 500 },
+        }}
+    >
         {() => {
             const [showTimer, setShowTimer] = useState(false);
-            const [showNotifyModal, setShowNotifyModal] = useState(false);
-            const [showFinsihModal, setShowFinsihModal] = useState(false);
-            const [duration, setDuration] = useState({
-                minutes: 0,
-                seconds: 0,
-            });
-            const startTimer = () => setShowTimer(true);
-            const openNotifyModal = () => setShowNotifyModal(true);
-            const openFinishModal = () => setShowFinsihModal(true);
-            const handleTick = (_seconds) => {
-                const minutes = Math.floor(_seconds / 60);
-                const seconds = _seconds % 60;
-                setDuration({ minutes, seconds });
-            };
             return (
-                <FullWidthStoryContainer>
-                    <CountdownView>
-                        <CountdownTimer
-                            show={showTimer}
-                            timer={15}
-                            notifyTimer={12}
-                            onTick={(seconds) => handleTick(seconds)}
-                            onFinish={() => openFinishModal()}
-                            onNotify={() => openNotifyModal()}
-                        />
-                        <Button.Default onClick={startTimer}>
-                            Start
-                        </Button.Default>
-                    </CountdownView>
-                    <NotifyModal show={showNotifyModal}>
-                        {duration.minutes} minutes {duration.seconds} seconds
-                    </NotifyModal>
-                    <NotifyModal show={showFinsihModal}>
-                        The timer has finished
-                    </NotifyModal>
-                </FullWidthStoryContainer>
+                <CountdownView>
+                    <Button.Default onClick={() => setShowTimer(true)}>
+                        Start
+                    </Button.Default>
+                    <CountdownTimer
+                        show={showTimer}
+                        timer={15}
+                        notifyTimer={10}
+                    />
+                </CountdownView>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Advanced positioning</Heading3>
+
+The position can also be customised via the offset props.
+
+> Note: Due to the storybook environment, the scroll detection may not be accurate.
+> View [this canvas in a new tab](./iframe.html?args=&id=modules-countdowntimer--scroll-behaviour&viewMode=story) for best results.
+
+<Canvas>
+    <Story
+        name="Custom offset"
+        parameters={{
+            layout: "fullscreen",
+            docs: { inlineStories: false, iframeHeight: 500 },
+        }}
+    >
+        {() => {
+            const [showTimer, setShowTimer] = useState(false);
+            return (
+                <CountdownView>
+                    <Button.Default onClick={() => setShowTimer(true)}>
+                        Start
+                    </Button.Default>
+                    <CountdownTimer
+                        show={showTimer}
+                        timer={15}
+                        notifyTimer={10}
+                        offset={{ top: 16 }}
+                        mobileOffset={{ top: 0 }}
+                    />
+                </CountdownView>
             );
         }}
     </Story>

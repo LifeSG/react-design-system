@@ -22,16 +22,16 @@ export interface CountdownTimerProps
     timer: number;
     /** Specifies a timer (in seconds) for notifications */
     notifyTimer?: number | undefined;
-    /** Allows customization of the sticky position in tablet/desktop view*/
+    /** Allows customization of the sticky position in tablet/desktop view */
     offset?: Offset | undefined;
-    /** Specifies the computed direction for component alignment */
-    align?: AlignPosition | undefined;
     /** Allows customization of the sticky position in mobile only */
     mobileOffset?: MobileOffset | undefined;
+    /** Specifies if the component is aligned to its left or right in its sticky position */
+    align?: AlignPosition | undefined;
     /** Called every second with the remaining time left when the timer value falls below the `notifyTimer` threshold */
     onTick?: ((seconds: number) => void) | undefined;
-    /** Called when the timer value falls below the specified notifyTimer threshold */
+    /** Called when the timer value falls below the specified `notifyTimer` threshold */
     onNotify?: (() => void) | undefined;
-    /** Called when timer value has finished */
+    /** Called when countdown reaches 0 */
     onFinish?: (() => void) | undefined;
 }
