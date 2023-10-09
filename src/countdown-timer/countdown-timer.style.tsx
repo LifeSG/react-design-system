@@ -56,10 +56,10 @@ export const FixedCountdown = styled(BaseCountdown)`
     position: fixed;
 
     ${(props) => {
-        const { $left, $top, $warn } = props;
+        const { $top, $left, $right, $warn } = props;
         return css`
-            top: ${$top}px;
-            left: ${$left}px;
+            /* style object will be converted to px */
+            ${{ top: $top, left: $left, right: $right }}
             box-shadow: 0px 0px 4px 1px
                 ${$warn ? Color.Brand[2] : Color.Accent.Light[2]};
 
@@ -71,16 +71,6 @@ export const FixedCountdown = styled(BaseCountdown)`
                 border-right: none;
             }
         `;
-    }}
-
-    ${(props) => {
-        const { $right } = props;
-        if ($right !== undefined) {
-            return css`
-                left: unset;
-                right: ${$right}px;
-            `;
-        }
     }}
 `;
 
