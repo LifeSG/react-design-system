@@ -144,17 +144,14 @@ export const CountdownTimer = ({
 
     const renderFixedCountdown = () => {
         const clientRect = wrapperRef.current?.getBoundingClientRect();
-        const left = offset?.left
-            ? offset.left
-            : align === "left"
-            ? clientRect.x
-            : undefined;
+        const left =
+            offset?.left ?? (align === "left" ? clientRect.x : undefined);
 
-        const right = offset?.right
-            ? offset.right
-            : align === "right"
-            ? Math.floor(window.innerWidth - clientRect.right)
-            : undefined;
+        const right =
+            offset?.right ??
+            (align === "right"
+                ? Math.floor(document.body.clientWidth - clientRect.right)
+                : undefined);
 
         return (
             <FixedCountdown
