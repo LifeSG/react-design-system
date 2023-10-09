@@ -41,6 +41,16 @@ import { Form } from "@lifesg/react-design-system/form";
                     maskRange={[2, 5]}
                 />
                 <Form.MaskedInput
+                    label="This is the mask field with uppercase input"
+                    maskRange={[2, 5]}
+                    transformInput={"uppercase"}
+                />
+                <Form.MaskedInput
+                    label="This is the mask field with lowercase input"
+                    maskRange={[2, 5]}
+                    transformInput={"lowercase"}
+                />
+                <Form.MaskedInput
                     label="This is the error state"
                     errorMessage="Input is required"
                     maskRange={[2, 5]}
