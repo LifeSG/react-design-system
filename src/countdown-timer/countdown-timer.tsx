@@ -150,7 +150,7 @@ export const CountdownTimer = ({
         const right =
             offset?.right ??
             (align === "right"
-                ? Math.floor(window.innerWidth - clientRect.right)
+                ? Math.floor(document.body.clientWidth - clientRect.right)
                 : undefined);
 
         return (
