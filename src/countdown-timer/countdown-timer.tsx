@@ -83,10 +83,7 @@ export const CountdownTimer = ({
             window.addEventListener("resize", handleResize);
 
             return () => {
-                window.removeEventListener(
-                    "resize",
-                    throttle(handleResize, 300)
-                );
+                window.removeEventListener("resize", handleResize);
             };
         }
     }, [wrapperRef.current]);
