@@ -118,6 +118,7 @@ const FilterBase = ({
         return (
             <>
                 <FilterButton
+                    data-testid="filter-show-button"
                     styleType="light"
                     onClick={handleShowFilter}
                     type="button"
@@ -125,7 +126,7 @@ const FilterBase = ({
                     <StyledFilterIcon /> {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
-                    <MobileContainer>
+                    <MobileContainer data-testid="filter-mobile">
                         {renderHeader("mobile")}
                         <FilterBody>{renderChildren("mobile")}</FilterBody>
                         <FilterFooter>
@@ -144,7 +145,7 @@ const FilterBase = ({
 
     const renderDesktop = () => {
         return (
-            <DesktopContainer>
+            <DesktopContainer data-testid="filter-desktop">
                 {renderHeader("default")}
                 {renderChildren("default")}
             </DesktopContainer>

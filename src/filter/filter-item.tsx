@@ -117,10 +117,14 @@ export const FilterItem = ({
                     )}
                 </FilterItemHeader>
             )}
-            <ExpandableItem style={itemAnimationStyles}>
+            <ExpandableItem
+                data-testid="expandable-container"
+                style={itemAnimationStyles}
+            >
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>
                         <MinimisableContent
+                            data-testid="minimisable-container"
                             $height={contentHeight}
                             $minimisable={minimisable}
                         >
