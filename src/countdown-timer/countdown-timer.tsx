@@ -1,3 +1,4 @@
+import throttle from "lodash/throttle";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useInView } from "react-intersection-observer";
@@ -35,6 +36,8 @@ export const CountdownTimer = ({
     const wrapperRef = useRef<HTMLDivElement>();
     const isNotified = useRef<boolean>(false);
     const [offsetY, setOffsetY] = useState<number>(0);
+    const [clientRectRight, setClientRectRight] = useState<number>(0);
+    const [clientRectX, setClientRectX] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState(false);
 
     const [remainingSeconds] = useTimer(timer, isPlaying);
@@ -71,9 +74,35 @@ export const CountdownTimer = ({
     }, [isMobile, offset?.top, mobileOffset?.top]);
 
     useEffect(() => {
+        if (wrapperRef.current) {
+            const handleResize = throttle(handleWindowResize, 300);
+            handleWindowResize();
+
+            window.addEventListener("resize", handleResize);
+
+            return () => {
+                window.removeEventListener(
+                    "resize",
+                    throttle(handleResize, 300)
+                );
+            };
+        }
+    }, [wrapperRef.current]);
+
+    useEffect(() => {
         // reset
         isNotified.current = false;
     }, [timer, show]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleWindowResize = () => {
+        const clientRect = wrapperRef.current?.getBoundingClientRect();
+
+        setClientRectX(clientRect.x);
+        setClientRectRight(clientRect.right);
+    };
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -143,14 +172,13 @@ export const CountdownTimer = ({
     };
 
     const renderFixedCountdown = () => {
-        const clientRect = wrapperRef.current?.getBoundingClientRect();
         const left =
-            offset?.left ?? (align === "left" ? clientRect.x : undefined);
+            offset?.left ?? (align === "left" ? clientRectX : undefined);
 
         const right =
             offset?.right ??
             (align === "right"
-                ? Math.floor(document.body.clientWidth - clientRect.right)
+                ? Math.floor(document.body.clientWidth - clientRectRight)
                 : undefined);
 
         return (
