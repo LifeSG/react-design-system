@@ -60,15 +60,15 @@ const Component = (
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
 
-        if (transformInput) {
-            switch (transformInput) {
-                case "uppercase":
-                    value = value.toUpperCase();
-                    break;
-                case "lowercase":
-                    value = value.toLowerCase();
-                    break;
-            }
+        switch (transformInput) {
+            case "uppercase":
+                value = value.toUpperCase();
+                break;
+            case "lowercase":
+                value = value.toLowerCase();
+                break;
+            default:
+                break;
         }
 
         setUpdatedValue(value);
