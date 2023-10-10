@@ -82,6 +82,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The callback function when field is not masked",
                 propTypes: ["() => void"],
             },
+            {
+                name: "transformInput",
+                description:
+                    "Specifies whether the input is tranformed into uppercase or lowercase",
+                propTypes: ["uppercase", "lowercase"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
