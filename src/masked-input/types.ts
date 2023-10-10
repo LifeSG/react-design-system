@@ -13,7 +13,7 @@ export interface MaskedInputProps extends InputProps {
     onMask?: (() => void) | undefined;
     onUnmask?: (() => void) | undefined;
     disableMask?: boolean | undefined;
-    transformInput?: "uppercase" | "lowercase" | undefined;
+    transformInput?: "uppercase" | "lowercase";
 }
 
 /** To be exposed for Form component inheritance */

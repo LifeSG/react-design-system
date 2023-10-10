@@ -85,7 +85,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "transformInput",
                 description:
-                    "Specifies whether the input is tranformed into uppercase or lowercase",
+                    "Specifies whether the input value is to be transformed into uppercase or lowercase format",
                 propTypes: ["uppercase", "lowercase"],
             },
         ],
