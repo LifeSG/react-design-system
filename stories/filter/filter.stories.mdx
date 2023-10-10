@@ -113,6 +113,49 @@ Each item can be configured with `collapsible`, `showDivider` and `showMobileDiv
     </Story>
 </Canvas>
 
+<Heading3>Expanded state</Heading3>
+
+By default, the expanded state is handled by the component. For advanced use cases, the filter item can be used as a controlled component.
+
+> Note: this example works in desktop only
+
+<Canvas>
+    <Story name="Handling expanded state">
+        {() => {
+            const [expanded, setExpanded] = useState("item-1");
+            const handleExpandChange = (item) => setExpanded(item);
+            return (
+                <StoryContainer>
+                    <Filter>
+                        <Filter.Item
+                            title="Uncontrolled"
+                            showMobileDivider={false}
+                            initialExpanded
+                        >
+                            Expanded by default with{" "}
+                            <code>initialExpanded</code> prop
+                        </Filter.Item>
+                        <Filter.Item
+                            title="Controlled Item 1"
+                            expanded={expanded === "item-1"}
+                            onExpandChange={() => handleExpandChange("item-1")}
+                        >
+                            Controlled by <code>expanded</code> prop
+                        </Filter.Item>
+                        <Filter.Item
+                            title="Controlled Item 2"
+                            expanded={expanded === "item-2"}
+                            onExpandChange={() => handleExpandChange("item-2")}
+                        >
+                            Controlled by <code>expanded</code> prop
+                        </Filter.Item>
+                    </Filter>
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Heading3>Minimising content</Heading3>
 
 For longer filter items, content can be minimised with the `minimisable` prop.

@@ -29,6 +29,12 @@ export interface FilterItemProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     collapsible?: boolean | undefined;
+    /** Specifies the initial expand state for the uncontrolled component */
+    initialExpanded?: boolean | undefined;
+    /** Specifies the expand state for the controlled component */
+    expanded?: boolean | undefined;
+    /** Called when the expand state changes */
+    onExpandChange?: ((expanded: boolean) => void) | undefined;
     minimisable?: boolean | undefined;
     minimisedHeight?: number | undefined;
 }

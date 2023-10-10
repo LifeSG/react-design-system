@@ -98,6 +98,25 @@ const FILTER_ITEM_DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
+                name: "initialExpanded",
+                description:
+                    "Specifies the initial expand state for the uncontrolled component",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "expanded",
+                description:
+                    "Specifies the expand state for the controlled component",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "onExpandChange",
+                description:
+                    "Called when the expanded state changes (desktop only)",
+                propTypes: ["(expanded: boolean) => void)"],
+            },
+            {
                 name: "showDivider",
                 description:
                     "Specifies if header divider is visible in default mode",
