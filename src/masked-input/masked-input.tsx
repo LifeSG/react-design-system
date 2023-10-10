@@ -67,6 +67,7 @@ const Component = (
             value = value.toLowerCase();
         }
         setUpdatedValue(value);
+        event.target.value = value;
         onChange && onChange(event);
     };
 
