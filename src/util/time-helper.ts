@@ -183,6 +183,16 @@ export namespace TimeHelper {
             return "";
         }
     };
+
+    export const toMinutesSeconds = (_seconds: number) => {
+        const minutes = Math.floor(_seconds / 60);
+        const seconds = _seconds % 60;
+
+        return {
+            minutes,
+            seconds,
+        };
+    };
 }
 
 // =============================================================================
