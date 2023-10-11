@@ -26,6 +26,7 @@ const Component = (
         onBlur,
         error,
         disableMask,
+        transformInput,
         ...otherProps
     }: MaskedInputProps,
     ref: React.Ref<HTMLInputElement>
@@ -57,7 +58,21 @@ const Component = (
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUpdatedValue(event.target.value);
+        let value = event.target.value;
+
+        switch (transformInput) {
+            case "uppercase":
+                value = value.toUpperCase();
+                break;
+            case "lowercase":
+                value = value.toLowerCase();
+                break;
+            default:
+                break;
+        }
+
+        setUpdatedValue(value);
+        event.target.value = value;
         onChange && onChange(event);
     };
 
