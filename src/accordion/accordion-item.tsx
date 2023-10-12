@@ -37,7 +37,9 @@ function Component(
     // =============================================================================
     const elementRef = useRef<HTMLDivElement>();
     const expandAll = useContext(AccordionContext);
-    const [expand, setExpand] = useState<boolean>(expanded ?? expandAll);
+    const [expand, setExpand] = useState<boolean>(
+        collapsible ? expanded ?? expandAll : true
+    );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
 
     const testId = otherProps["data-testid"] || "accordion-item";
@@ -68,7 +70,7 @@ function Component(
 
     useEffect(() => {
         if (hasFirstLoad) {
-            setExpand(expandAll);
+            setExpand(collapsible ? expandAll : true);
         }
     }, [expandAll]);
 
