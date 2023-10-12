@@ -27,6 +27,7 @@ function Component(
         children,
         expanded,
         type = "default",
+        collapsible = true,
         ...otherProps
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
@@ -112,6 +113,10 @@ function Component(
     };
 
     const renderTitle = () => {
+        if (typeof title !== "string") {
+            return title;
+        }
+
         switch (type) {
             case "small":
                 return (
@@ -143,16 +148,18 @@ function Component(
         >
             <TitleContainer>
                 {renderTitle()}
-                <ExpandCollapseButton
-                    data-testid={`${testId}-expand-collapse-button`}
-                    onClick={handleExpandCollapseClick}
-                    $isCollapsed={expand}
-                    focusHighlight={false}
-                    focusOutline="browser"
-                    aria-label={expand ? "Collapse" : "Expand"}
-                >
-                    <ChevronIcon />
-                </ExpandCollapseButton>
+                {collapsible && (
+                    <ExpandCollapseButton
+                        data-testid={`${testId}-expand-collapse-button`}
+                        onClick={handleExpandCollapseClick}
+                        $isCollapsed={expand}
+                        focusHighlight={false}
+                        focusOutline="browser"
+                        aria-label={expand ? "Collapse" : "Expand"}
+                    >
+                        <ChevronIcon />
+                    </ExpandCollapseButton>
+                )}
             </TitleContainer>
             {renderContent()}
         </Container>

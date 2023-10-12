@@ -213,6 +213,27 @@ describe("Accordion", () => {
                 height: 0,
             });
         });
+
+        it("should hide the expand button if collapsible=false specified", () => {
+            const ACCORDION_TITLE = "Accordion Title";
+
+            render(
+                <Accordion title={ACCORDION_TITLE}>
+                    <Accordion.Item
+                        data-testid="item1"
+                        title="Item title"
+                        collapsible={false}
+                    >
+                        <Text.Body data-testid="item1-content">
+                            {DEFAULT_TEXT_CONTENT}
+                        </Text.Body>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
+            const button = screen.queryByTestId("item1-expand-collapse-button");
+            expect(button).not.toBeInTheDocument();
+        });
     });
 });
 

@@ -68,7 +68,7 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
                         header
                     </>
                 ),
-                propTypes: ["string"],
+                propTypes: ["string", "JSX.Element"],
             },
             {
                 name: "type",
@@ -96,6 +96,12 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
                 name: "data-testid",
                 description: "The test identifier for the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "collapsible",
+                description: "Specifies if the item is collapsible.",
+                propTypes: ["boolean"],
+                defaultValue: "true",
             },
         ],
     },
