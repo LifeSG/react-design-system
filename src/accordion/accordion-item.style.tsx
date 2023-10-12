@@ -33,6 +33,7 @@ export const TitleContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 `;
 
 const TITLE_STYLE = (isCollapsed?: boolean) => css`

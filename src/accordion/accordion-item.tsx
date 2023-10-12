@@ -27,6 +27,7 @@ function Component(
         children,
         expanded,
         type = "default",
+        collapsible = true,
         ...otherProps
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
@@ -36,7 +37,9 @@ function Component(
     // =============================================================================
     const elementRef = useRef<HTMLDivElement>();
     const expandAll = useContext(AccordionContext);
-    const [expand, setExpand] = useState<boolean>(expanded ?? expandAll);
+    const [expand, setExpand] = useState<boolean>(
+        collapsible ? expanded ?? expandAll : true
+    );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
 
     const testId = otherProps["data-testid"] || "accordion-item";
@@ -67,7 +70,7 @@ function Component(
 
     useEffect(() => {
         if (hasFirstLoad) {
-            setExpand(expandAll);
+            setExpand(collapsible ? expandAll : true);
         }
     }, [expandAll]);
 
@@ -112,6 +115,10 @@ function Component(
     };
 
     const renderTitle = () => {
+        if (typeof title !== "string") {
+            return title;
+        }
+
         switch (type) {
             case "small":
                 return (
@@ -143,16 +150,18 @@ function Component(
         >
             <TitleContainer>
                 {renderTitle()}
-                <ExpandCollapseButton
-                    data-testid={`${testId}-expand-collapse-button`}
-                    onClick={handleExpandCollapseClick}
-                    $isCollapsed={expand}
-                    focusHighlight={false}
-                    focusOutline="browser"
-                    aria-label={expand ? "Collapse" : "Expand"}
-                >
-                    <ChevronIcon />
-                </ExpandCollapseButton>
+                {collapsible && (
+                    <ExpandCollapseButton
+                        data-testid={`${testId}-expand-collapse-button`}
+                        onClick={handleExpandCollapseClick}
+                        $isCollapsed={expand}
+                        focusHighlight={false}
+                        focusOutline="browser"
+                        aria-label={expand ? "Collapse" : "Expand"}
+                    >
+                        <ChevronIcon />
+                    </ExpandCollapseButton>
+                )}
             </TitleContainer>
             {renderContent()}
         </Container>

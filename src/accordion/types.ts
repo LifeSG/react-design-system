@@ -10,7 +10,7 @@ export interface AccordionProps {
 export type AccordionItemType = "default" | "small";
 
 export interface AccordionItemProps {
-    title: string;
+    title: string | JSX.Element;
     children: JSX.Element | JSX.Element[];
     /**
      * Omit or set this to undefined to allow 'Hide All'/'Show All' in parent to take precedence
@@ -20,6 +20,7 @@ export interface AccordionItemProps {
     "data-testid"?: string | undefined;
     className?: string | undefined;
     type?: AccordionItemType | undefined;
+    collapsible?: boolean | undefined;
 }
 
 export type AccordionItemHandle = HTMLDivElement & {
