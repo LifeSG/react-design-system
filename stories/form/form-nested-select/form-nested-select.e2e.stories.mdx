@@ -1,0 +1,46 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { InputNestedSelect } from "src/input-nested-select";
+import { Form } from "src/form";
+import { Text } from "src/text";
+import {
+    Heading3,
+    Heading4,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
+import { options } from "./nested-data-list.ts";
+
+<Meta
+    title="Form/NestedSelect/E2E"
+    component={Form.NestedSelect}
+    parameters={{ layout: "fullscreen" }}
+/>
+
+<Canvas>
+    <Story name="Default">
+        <StoryContainer>
+            <Form.NestedSelect
+                data-testid="e2e"
+                label="Form label"
+                options={options}
+            />
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Canvas>
+    <Story name="Prefilled">
+        <StoryContainer>
+            <Form.NestedSelect
+                data-testid="e2e"
+                label="Form label"
+                options={options}
+                selectedKeyPath={["999", "820", "10001"]}
+            />
+        </StoryContainer>
+    </Story>
+</Canvas>
