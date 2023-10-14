@@ -1,6 +1,6 @@
 import { withThemes } from "@react-theming/storybook-addon";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
-import { addDecorator } from "@storybook/react";
+// import { addDecorator } from "@storybook/react"; // TODO: migrate
 import pretty from "pretty";
 import { BaseTheme, BookingSGTheme, MyLegacyTheme, RBSTheme } from "src/theme";
 import { ThemeProvider } from "styled-components";
@@ -40,4 +40,4 @@ const themes = [
     { ...RBSTheme, name: "RBS" },
 ];
 
-addDecorator(withThemes(ThemeProvider, themes));
+// addDecorator(withThemes(ThemeProvider, themes)); // FIXME: migrate
