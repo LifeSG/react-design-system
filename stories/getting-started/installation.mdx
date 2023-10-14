@@ -1,25 +1,27 @@
 import { Meta } from "@storybook/addon-docs";
 import { Alert } from "src/alert";
-import { Text } from "src/text";
-import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
-import { PropsTable } from "./themes-props-table";
+import { Secondary, Title } from "../storybook-common";
 
 <Meta title="Getting started/Installation" />
 
 <Title>Installation</Title>
 
 <Alert type="warning">
-    <p>
-        You are referring to v2 of the design system. You can find the v1
-        documentation&nbsp;
-        <a
-            href="https://designsystem.life.gov.sg/react/v1/index.html?path=/story/getting-started-installation--page"
-            target="_blank"
-        >
-            here
-        </a>.
-    </p>
+    {
+        <p>
+            You are referring to v2 of the design system. You can find the v1
+            documentation{" "}
+            <a
+                href="https://designsystem.life.gov.sg/react/v1/index.html?path=/story/getting-started-installation--page"
+                target="_blank"
+            >
+                here
+            </a>
+            .
+        </p>
+    }
 </Alert>
+
 <br />
 
 Install the LifeSG Design System package.
