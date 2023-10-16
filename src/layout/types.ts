@@ -38,7 +38,7 @@ export interface ColDivProps extends React.HTMLAttributes<HTMLDivElement> {
      * If all column props are not specified, the div will span across a single
      * column.
      */
-    mobileCols?: MobileCol | MobileColRange[] | undefined;
+    mobileCols?: MobileCol | [MobileColRange, MobileColRange] | undefined;
     /**
      * Specifies the number of columns to be span across in tablet viewports.
      * If an array is specified, the format is as such [startCol, endCol].
@@ -48,7 +48,7 @@ export interface ColDivProps extends React.HTMLAttributes<HTMLDivElement> {
      * If all column props are not specified, the div will span across a single
      * column.
      */
-    tabletCols?: TabletCol | TabletColRange[] | undefined;
+    tabletCols?: TabletCol | [TabletColRange, TabletColRange] | undefined;
     /**
      * Specifies the number of columns to be span across in desktop viewports.
      * If an array is specified, the format is as such [startCol, endCol].
@@ -56,5 +56,5 @@ export interface ColDivProps extends React.HTMLAttributes<HTMLDivElement> {
      * If all column props are not specified, the div will span across a single
      * column.
      */
-    desktopCols?: DesktopCol | DesktopColRange[] | undefined;
+    desktopCols?: DesktopCol | [DesktopColRange, DesktopColRange] | undefined;
 }
