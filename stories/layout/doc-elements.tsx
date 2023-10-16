@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { Color } from "../../src/color";
+import { Layout } from "../../src/layout";
 import { Text } from "../../src/text";
 
 interface LabelProps {
@@ -50,6 +51,7 @@ export const PaddingLabel = ({
     </PWrapper>
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PWrapper = styled.div<any>`
     position: absolute;
     top: 0;
@@ -69,6 +71,7 @@ const PWrapper = styled.div<any>`
     background: ${Color.Brand[3]};
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker = styled.div<any>`
     position: absolute;
     top: -1rem;
@@ -93,3 +96,17 @@ const Marker = styled.div<any>`
         left: -40%;
     }
 `;
+// =============================================================================
+// COL GRID WRAPPER
+// =============================================================================
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const Wrapper = ({ children }: any) => (
+    <Layout.Section>
+        <Layout.Container
+            type="grid"
+            style={{ padding: "2rem 0", rowGap: "1rem" }}
+        >
+            {children}
+        </Layout.Container>
+    </Layout.Section>
+);
