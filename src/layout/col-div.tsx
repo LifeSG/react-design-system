@@ -53,6 +53,6 @@ const extractStartAndSpan = (value: number | number[] | undefined) => {
     } else if (typeof value === "number") {
         return { start: undefined, span: value };
     } else {
-        return { start: 0, span: undefined };
+        return { start: undefined, span: undefined };
     }
 };
