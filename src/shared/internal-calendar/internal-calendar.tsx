@@ -10,6 +10,7 @@ import {
     InternalCalendarRef,
     View,
 } from "./types";
+import { InternalFixedRangeSelectionCalendarDay } from "./internal-fixed-range-selection-calendar-day";
 
 export const Component = (
     {
@@ -118,6 +119,9 @@ export const Component = (
             case "week":
                 isDisabled = !selectedStartDate && !selectedEndDate;
                 break;
+            case "fixed-range":
+                isDisabled = !selectedStartDate && !selectedEndDate;
+                break;
         }
 
         return isDisabled;
@@ -149,6 +153,21 @@ export const Component = (
             case "week":
                 return (
                     <InternalWeekSelectionCalendarDay
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        selectedEndDate={selectedEndDate}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        currentView={currentView}
+                        allowDisabledSelection={allowDisabledSelection}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                    />
+                );
+            case "fixed-range":
+                return (
+                    <InternalFixedRangeSelectionCalendarDay
                         calendarDate={calendarDate}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
