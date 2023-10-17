@@ -133,6 +133,18 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `range`,
             },
             {
+                name: "numberOfDays",
+                description: (
+                    <>
+                        Specifies the number of days to be selected if
+                        fixed-range is specified for variant
+                        <b>Note: Only relevant for fixed-range selection</b>
+                    </>
+                ),
+                propTypes: ["number"],
+                defaultValue: `6`,
+            },
+            {
                 name: "withButton",
                 description: (
                     <>

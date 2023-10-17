@@ -24,6 +24,8 @@ export interface DateRangeInputProps extends CommonCalendarProps {
     readOnly?: boolean | undefined;
     /** Indicate calendar variant from the date input component. */
     variant?: Exclude<Variant, "single"> | undefined;
+    /** Set the number of days for fixed-range variant */
+    numberOfDays?: number;
     /**
      * Specifies if the "Done" and "Cancel" action buttons should be rendered.
      * Is restricted to `true` on mobile viewports

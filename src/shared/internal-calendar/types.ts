@@ -52,7 +52,7 @@ export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
 
 export type CalendarAction = "reset" | "confirmed";
 export type CalendarType = "standalone" | "input";
-export type Variant = "single" | "range" | "week";
+export type Variant = "single" | "range" | "week" | "fixed-range";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 
