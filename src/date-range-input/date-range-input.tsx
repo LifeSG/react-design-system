@@ -58,6 +58,7 @@ export const DateRangeInput = ({
     onYearMonthDisplayChange,
     withButton: _withButton = true,
     variant = "range",
+    numberOfDays = 6,
     readOnly,
     id,
     allowDisabledSelection,
@@ -70,6 +71,7 @@ export const DateRangeInput = ({
     const [hoverValue, setHoverValue] = useState<string>(undefined);
     const [isTouch, setIsTouch] = useState<boolean>(false);
     const isWeekSelection = variant === "week";
+    const isFixedRangeSelection = variant === "fixed-range";
 
     const [
         {
@@ -338,6 +340,21 @@ export const DateRangeInput = ({
         }
     };
 
+    const handleCustomSelectionChange = (val: string) => {
+        const start = dayjs(val).format("YYYY-MM-DD");
+        const end = dayjs(val).add(numberOfDays, "day").format("YYYY-MM-DD");
+
+        actions.changeStart(start);
+        actions.changeEnd(end);
+        isUnselectable.current = false;
+
+        if (!withButton) {
+            actions.done({ start, end });
+            onChange?.(start, end);
+            return;
+        }
+    };
+
     const handleInputFocus = (focusType: FocusType) => () => {
         if (readOnly) return;
 
@@ -381,9 +398,11 @@ export const DateRangeInput = ({
         } else if (currentFocus === "end") {
             handleEndDateChange(val);
         }
-
         if (isWeekSelection) {
             handleWeekSelectionChange(val);
+        }
+        if (isFixedRangeSelection) {
+            handleCustomSelectionChange(val);
         }
     };
 
@@ -441,8 +460,17 @@ export const DateRangeInput = ({
                     end: dayjs(hoverValue).endOf("week").format("YYYY-MM-DD"),
                 };
                 break;
-        }
+            case "fixed-range":
+                if (!hoverValue) return;
 
+                values = {
+                    start: dayjs(hoverValue).format("YYYY-MM-DD"),
+                    end: dayjs(hoverValue)
+                        .add(numberOfDays, "day")
+                        .format("YYYY-MM-DD"),
+                };
+                break;
+        }
         return values[getValue];
     };
 
