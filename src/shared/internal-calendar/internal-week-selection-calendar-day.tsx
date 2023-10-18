@@ -3,14 +3,12 @@ import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
-import { CommonCalendarProps, View } from "./types";
+import { CommonCalendarProps } from "./types";
 import { WeekDayCell } from "./week/week-day-cell";
 
 interface CalendarWeekSelectProps extends CommonCalendarProps {
     selectedStartDate: string;
-    selectedEndDate: string;
     calendarDate: Dayjs;
-    currentView: View;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
 }
@@ -19,12 +17,10 @@ export const InternalWeekSelectionCalendarDay = ({
     calendarDate,
     disabledDates,
     selectedStartDate,
-    selectedEndDate,
     onSelect,
     onHover,
     minDate,
     maxDate,
-    currentView,
     allowDisabledSelection,
 }: CalendarWeekSelectProps) => {
     // =============================================================================
