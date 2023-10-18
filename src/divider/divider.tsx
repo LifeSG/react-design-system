@@ -37,6 +37,7 @@ export const Divider = ({
                         $thickness={thickness}
                         $lineStyle={lineStyle}
                         $color={color}
+                        data-id="divider"
                     />
                 </ColDiv>
             );

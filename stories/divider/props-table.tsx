@@ -11,26 +11,12 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"
                             rel="noreferrer"
                             target="_blank"
                         >
-                            HTMLDivElement
+                            HTMLElement
                         </a>
-                        .
-                        <br />
-                        <br />
-                        Additionally, it also inherits the column props
-                        from&nbsp;
-                        <a
-                            href="/?path=/docs/getting-started-layout-column-divs--column-divs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            ColDiv
-                        </a>
-                        &nbsp;which can be helpful when using with{" "}
-                        {code(`"grid"`)} layout type
                     </>
                 ),
             },
@@ -53,6 +39,81 @@ const DATA: ApiTableSectionProps[] = [
                 description: <>The style type for the {code("Divider")} line</>,
                 propTypes: [`"flex"`, `"grid"`],
                 defaultValue: `"flex"`,
+            },
+            {
+                name: "color",
+                description: <>The color for the {code("Divider")} line</>,
+                propTypes: ["string", "(props: unknown) => string"],
+            },
+            // Copied from `layout/col-div-props-table.tsx`
+            {
+                name: "mobileCols",
+                description: (
+                    <>
+                        Refer to{" "}
+                        <a
+                            href="/?path=/docs/getting-started-layout-column-divs--column-divs#component-api"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            ColDiv
+                        </a>
+                        &nbsp; for more details
+                        <br />
+                        <em>
+                            Note: This works only if you are using the
+                            {code(`"grid"`)} layout type
+                        </em>
+                    </>
+                ),
+                propTypes: [`number`, `number[]`],
+                defaultValue: "4",
+            },
+            {
+                name: "tabletCols",
+                description: (
+                    <>
+                        Refer to{" "}
+                        <a
+                            href="/?path=/docs/getting-started-layout-column-divs--column-divs#component-api"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            ColDiv
+                        </a>
+                        &nbsp; for more details
+                        <br />
+                        <em>
+                            Note: This works only if you are using the
+                            {code(`"grid"`)} layout type
+                        </em>
+                    </>
+                ),
+                propTypes: [`number`, `number[]`],
+                defaultValue: "8",
+            },
+            {
+                name: "desktopCols",
+                description: (
+                    <>
+                        Refer to{" "}
+                        <a
+                            href="/?path=/docs/getting-started-layout-column-divs--column-divs#component-api"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            ColDiv
+                        </a>
+                        &nbsp; for more details
+                        <br />
+                        <em>
+                            Note: This works only if you are using the
+                            {code(`"grid"`)} layout type
+                        </em>
+                    </>
+                ),
+                propTypes: [`number`, `number[]`],
+                defaultValue: "12",
             },
         ],
     },

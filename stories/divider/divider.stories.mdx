@@ -1,4 +1,5 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Color } from "src/color";
 import { Divider } from "src/divider";
 import { Layout } from "src/layout";
 import { Text } from "src/text";
@@ -71,10 +72,18 @@ there are props provided to enable basic customisations.
 <Canvas>
     <Story name="Customisations">
         <Layout.Content type="grid" style={{ padding: "5rem" }}>
-            <DisplayText>Changing the color</DisplayText>
+            <DisplayText>Changing the color (pure string)</DisplayText>
             <Divider
                 layoutType="grid"
                 color="red"
+                style={{ marginBottom: "2rem" }}
+            />
+            <DisplayText>
+                Changing the color (Using the Color component)
+            </DisplayText>
+            <Divider
+                layoutType="grid"
+                color={Color.Primary}
                 style={{ marginBottom: "2rem" }}
             />
             <DisplayText>Changing the thickness</DisplayText>
@@ -90,9 +99,20 @@ there are props provided to enable basic customisations.
 <Heading4>Via the Styled Components method</Heading4>
 
 ```tsx
+import { Divider } from "@lifesg/react-design-system/divider";
+import styled from "styled-components";
+
 export const StyledDivider = styled(Divider)`
     border-top-width: 5px;
     border-top-color: #097123;
+`;
+
+// If intending to use with layoutType = "grid"
+export const StyledDivider = styled(Divider)`
+    [data-id="divider"] {
+        border-top-width: 5px;
+        border-top-color: #097123;
+    }
 `;
 ```
 
