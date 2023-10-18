@@ -2,6 +2,7 @@ import { Dayjs } from "dayjs";
 
 export type CellType =
     | "current"
+    | "current-dark"
     | "selected"
     | "selected-outline"
     | "overlap"

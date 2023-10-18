@@ -72,8 +72,7 @@ export const Cell = styled.div`
 const Half = styled.div<StyleProps>`
     position: absolute;
     height: 2.5rem;
-    width: calc(50% + 1px);
-    z-index: 1;
+    width: 50%;
 
     ${(props) => {
         if (!props.$type) {
@@ -82,6 +81,7 @@ const Half = styled.div<StyleProps>`
         const { color, border } = getCellStyle(props, props.$type);
         return css`
             background-color: ${color};
+            background-clip: content-box;
             border-top: ${border};
             border-bottom: ${border};
         `;
@@ -97,7 +97,7 @@ export const RightHalf = styled(Half)`
 `;
 
 const HalfShadow = styled.div<StyleProps>`
-    z-index: 0;
+    z-index: -1;
     box-shadow: 0 0 4px 0px ${Color.Primary}80;
     position: absolute;
     height: 100%;
@@ -129,14 +129,14 @@ export const Circle = styled.div<StyleProps>`
     border-radius: 50%;
 
     ${(props) => {
-        if (!props.$type) {
-            return;
+        if (props.$type) {
+            const { color, border } = getCellStyle(props, props.$type);
+            return css`
+                background-color: ${color};
+                background-clip: content-box;
+                border: ${border};
+            `;
         }
-        const { color, border } = getCellStyle(props, props.$type);
-        return css`
-            background-color: ${color};
-            border: ${border};
-        `;
     }}
 
     ${(props) =>
@@ -155,12 +155,12 @@ export const Circle = styled.div<StyleProps>`
 
 export const LeftCircle = styled(Circle)`
     right: calc(50% - 1.25rem);
-    clip-path: inset(-3px 1.25rem -3px -3px);
+    clip-path: inset(-3px calc(1.25rem - 1px) -3px -3px);
 `;
 
 export const RightCircle = styled(Circle)`
     left: calc(50% - 1.25rem);
-    clip-path: inset(-3px -3px -3px 1.25rem);
+    clip-path: inset(-3px -3px -3px calc(1.25rem - 1px));
 `;
 
 export const Label = styled(Text.H5)<LabelStyleProps>`

@@ -42,10 +42,16 @@ export const DayCell = ({
         <Cell>
             <LeftHalfShadow $shadow={bgLeft && shadow} />
             <LeftHalf $type={bgLeft} $shadow={bgLeft && shadow}></LeftHalf>
-            <LeftCircle $type={circleLeft} $shadow={circleLeft && shadow} />
+            <LeftCircle
+                $type={circleLeft}
+                $shadow={circleLeft && circleShadow}
+            />
             <RightHalfShadow $shadow={bgRight && shadow} />
             <RightHalf $type={bgRight} $shadow={bgRight && shadow}></RightHalf>
-            <RightCircle $type={circleRight} $shadow={circleRight && shadow} />
+            <RightCircle
+                $type={circleRight}
+                $shadow={circleRight && circleShadow}
+            />
             <Label
                 weight="regular"
                 $type={label}
