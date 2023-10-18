@@ -92,9 +92,9 @@ const ImgPaths: Record<string, ImagePathAttributes> = {
         lg: "https://assets.life.gov.sg/react-design-system/img/error/transfer-unsuccessful@3x.png",
     },
     "unsupported-browser": {
-        base: "https://assets.life.gov.sg/react-design-system/img/error/generic-error.png",
-        md: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@2x.png",
-        lg: "https://assets.life.gov.sg/react-design-system/img/error/generic-error@3x.png",
+        base: "https://assets.life.gov.sg/react-design-system/img/error/unsupported-browser.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/unsupported-browser@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/unsupported-browser@3x.png",
     },
     warning: {
         base: "https://assets.life.gov.sg/react-design-system/img/error/warning.png",
@@ -286,16 +286,18 @@ export const ERROR_DISPLAY_DATA = new Map<
         "unsupported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Browser not supported",
+            description:
+                "LifeSG works best with the latest version of Chrome, Edge, Firefox or Safari. If you continue with your browser, you may run into problems.",
         },
     ],
     [
         "partially-supported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Browser not supported",
+            description:
+                "LifeSG works best with the latest version of Chrome, Edge, Firefox or Safari. If you continue with your browser, you may run into problems.",
         },
     ],
     [
