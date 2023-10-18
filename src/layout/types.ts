@@ -27,8 +27,7 @@ type TabletColRange = TabletCol | 9;
 type DesktopCol = TabletCol | 9 | 10 | 11 | 12;
 type DesktopColRange = DesktopCol | 13;
 
-export interface ColDivProps extends React.HTMLAttributes<HTMLDivElement> {
-    "data-testid"?: string | undefined;
+export interface ColProps {
     /**
      * Specifies the number of columns to be span across in mobile viewports.
      * If an array is specified, the format is as such [startCol, endCol].
@@ -57,4 +56,10 @@ export interface ColDivProps extends React.HTMLAttributes<HTMLDivElement> {
      * column.
      */
     desktopCols?: DesktopCol | [DesktopColRange, DesktopColRange] | undefined;
+}
+
+export interface ColDivProps
+    extends React.HTMLAttributes<HTMLDivElement>,
+        ColProps {
+    "data-testid"?: string | undefined;
 }
