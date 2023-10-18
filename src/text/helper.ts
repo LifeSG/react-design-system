@@ -77,7 +77,7 @@ const getFontWeight = (weight: TextWeight) => {
 // =============================================================================
 // TEXT STYLE
 // =============================================================================
-const getMaxLinesLineStyle = (maxLines: number | undefined = undefined) => {
+const getMaxLinesLineStyle = (maxLines: number | undefined) => {
     if (maxLines > 0) {
         return css`
             display: -webkit-box !important;
