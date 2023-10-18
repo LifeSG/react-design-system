@@ -302,6 +302,71 @@ describe("CalendarHelper", () => {
             ).toBe(false);
         });
     });
+
+    describe("isDisabledDay", () => {
+        it("should return false when no dates are disabled", () => {
+            const date = dayjs("2023-04-01");
+            const result = CalendarHelper.isDisabledDay(date);
+            expect(result).toBe(false);
+        });
+
+        it("should return false when date is not disabled", () => {
+            const date = dayjs("2023-04-01");
+            const result = CalendarHelper.isDisabledDay(date, ["2023-04-02"]);
+            expect(result).toBe(false);
+        });
+
+        it("should return true when date is disabled", () => {
+            const date = dayjs("2023-04-01");
+            const result = CalendarHelper.isDisabledDay(date, ["2023-04-01"]);
+            expect(result).toBe(true);
+        });
+
+        it.each`
+            scenario          | min             | max             | expected
+            ${"within range"} | ${"2023-01-01"} | ${"2023-04-01"} | ${false}
+            ${"within range"} | ${"2023-04-01"} | ${"2023-05-01"} | ${false}
+            ${"before range"} | ${"2023-04-02"} | ${"2023-04-30"} | ${true}
+            ${"after range"}  | ${"2023-03-01"} | ${"2023-03-31"} | ${true}
+            ${"before min"}   | ${"2023-05-01"} | ${undefined}    | ${true}
+            ${"after max"}    | ${undefined}    | ${"2023-03-01"} | ${true}
+        `(
+            "should return $expected when date is $scenario",
+            ({ min, max, expected }) => {
+                const result = CalendarHelper.isDisabledDay(
+                    dayjs("2023-04-01"),
+                    undefined,
+                    min,
+                    max
+                );
+
+                expect(result).toBe(expected);
+            }
+        );
+    });
+
+    describe("getWeekStartEnd", () => {
+        it("should return start and end dates of a week", () => {
+            const startOfWeek = dayjs("2023-10-15");
+            const endOfWeek = dayjs("2023-10-21");
+            const midWeek = dayjs("2023-10-18");
+            const start = "2023-10-15";
+            const end = "2023-10-21";
+
+            expect(CalendarHelper.getWeekStartEnd(startOfWeek)).toEqual({
+                start,
+                end,
+            });
+            expect(CalendarHelper.getWeekStartEnd(endOfWeek)).toEqual({
+                start,
+                end,
+            });
+            expect(CalendarHelper.getWeekStartEnd(midWeek)).toEqual({
+                start,
+                end,
+            });
+        });
+    });
 });
 
 // =============================================================================
