@@ -77,6 +77,18 @@ const getFontWeight = (weight: TextWeight) => {
 // =============================================================================
 // TEXT STYLE
 // =============================================================================
+const getMaxLinesLineStyle = (maxLines: number | undefined) => {
+    if (maxLines > 0) {
+        return css`
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: ${maxLines};
+            line-clamp: ${maxLines};
+            overflow: hidden;
+        `;
+    }
+};
+
 const getTextStyle = (
     type: TextSizeType | TextLinkSizeType,
     weight: TextWeight,
@@ -104,10 +116,15 @@ const getTextStyle = (
     };
 };
 
-const getDisplayStyle = (inline = false, paragraph = false) => {
+const getDisplayStyle = (
+    inline = false,
+    paragraph = false,
+    maxLines: number | undefined = undefined
+) => {
     if (paragraph) {
         return css`
             display: block;
+            ${getMaxLinesLineStyle(maxLines)}
         `;
     } else if (inline) {
         return css`
@@ -116,6 +133,7 @@ const getDisplayStyle = (inline = false, paragraph = false) => {
     } else {
         return css`
             display: block;
+            ${getMaxLinesLineStyle(maxLines)}
         `;
     }
 };
