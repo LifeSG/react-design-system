@@ -80,7 +80,7 @@ const getFontWeight = (weight: TextWeight) => {
 const getMaxLinesLineStyle = (maxLines: number | undefined) => {
     if (maxLines > 0) {
         return css`
-            display: -webkit-box !important;
+            display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: ${maxLines};
             line-clamp: ${maxLines};
