@@ -27,10 +27,9 @@ import { Divider } from "@lifesg/react-design-system/divider";
     <Story name="Divider">
         <Wrapper type="flex-column">
             <DisplayText>Standard divider</DisplayText>
-            <Divider />
-            <br />
+            <Divider style={{ marginBottom: "1.5rem" }} />
             <DisplayText>Dashed styled divider</DisplayText>
-            <Divider lineStyle="dashed" />
+            <Divider lineStyle="dashed" style={{ marginBottom: "1.5rem" }} />
         </Wrapper>
     </Story>
 </Canvas>
@@ -44,21 +43,27 @@ will enable you to make use of the grid column props.
 <Canvas>
     <Story name="Using in grid layout">
         <Layout.Content type="grid" style={{ padding: "5rem" }}>
-            <DisplayText>Standard divider (grid layout)</DisplayText>
-            <Divider layoutType="grid" />
-            <br />
-            <DisplayText>Dashed divider (grid layout)</DisplayText>
-            <Divider layoutType="grid" lineStyle="dashed" />
-            <br />
-            <DisplayText>
-                With custom grid column props (grid layout)
-            </DisplayText>
+            <DisplayText>Dividers in the grid layout</DisplayText>
+            <Divider layoutType="grid" style={{ marginBottom: "1.5rem" }} />
+            <Divider
+                layoutType="grid"
+                lineStyle="dashed"
+                style={{ marginBottom: "1.5rem" }}
+            />
+            <DisplayText>With custom grid column props</DisplayText>
             <Divider
                 layoutType="grid"
                 mobileCols={3}
                 tabletCols={4}
                 desktopCols={5}
-                style={{ marginBottom: "2rem" }}
+            />
+            <br />
+            <Divider
+                layoutType="grid"
+                lineStyle="dashed"
+                mobileCols={3}
+                tabletCols={4}
+                desktopCols={5}
             />
         </Layout.Content>
     </Story>
@@ -66,8 +71,7 @@ will enable you to make use of the grid column props.
 
 <Heading3>Customisations</Heading3>
 
-Apart from implementing your own style via [Styled Components](https://styled-components.com/docs) or using style classes,
-there are props provided to enable basic customisations.
+Props like `color` and `thickness` makes it easier to customise the `Divider`.
 
 <Canvas>
     <Story name="Customisations">
@@ -76,7 +80,13 @@ there are props provided to enable basic customisations.
             <Divider
                 layoutType="grid"
                 color="red"
-                style={{ marginBottom: "2rem" }}
+                style={{ marginBottom: "1.5rem" }}
+            />
+            <Divider
+                layoutType="grid"
+                lineStyle="dashed"
+                color="red"
+                style={{ marginBottom: "1.5rem" }}
             />
             <DisplayText>
                 Changing the color (Using the Color component)
@@ -84,37 +94,29 @@ there are props provided to enable basic customisations.
             <Divider
                 layoutType="grid"
                 color={Color.Primary}
-                style={{ marginBottom: "2rem" }}
+                style={{ marginBottom: "1.5rem" }}
+            />
+            <Divider
+                layoutType="grid"
+                lineStyle="dashed"
+                color={Color.Primary}
+                style={{ marginBottom: "1.5rem" }}
             />
             <DisplayText>Changing the thickness</DisplayText>
             <Divider
                 layoutType="grid"
                 thickness={5}
-                style={{ marginBottom: "2rem" }}
+                style={{ marginBottom: "1.5rem" }}
+            />
+            <Divider
+                layoutType="grid"
+                lineStyle="dashed"
+                thickness={5}
+                style={{ marginBottom: "1.5rem" }}
             />
         </Layout.Content>
     </Story>
 </Canvas>
-
-<Heading4>Via the Styled Components method</Heading4>
-
-```tsx
-import { Divider } from "@lifesg/react-design-system/divider";
-import styled from "styled-components";
-
-export const StyledDivider = styled(Divider)`
-    border-top-width: 5px;
-    border-top-color: #097123;
-`;
-
-// If intending to use with layoutType = "grid"
-export const StyledDivider = styled(Divider)`
-    [data-id="divider"] {
-        border-top-width: 5px;
-        border-top-color: #097123;
-    }
-`;
-```
 
 <Secondary>Component API</Secondary>
 
