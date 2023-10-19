@@ -17,7 +17,7 @@ export const DayCell = ({
     circleRight,
     shadow,
     circleShadow,
-    label,
+    labelType,
     disabled,
     interactive,
     date,
@@ -54,7 +54,7 @@ export const DayCell = ({
             />
             <Label
                 weight="regular"
-                $type={label}
+                $type={labelType}
                 $disabled={disabled}
                 $interactive={interactive}
                 onClick={handleClick}

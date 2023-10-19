@@ -12,8 +12,6 @@ export type CellType =
 
 export type LabelType = "available" | "unavailable" | "current" | "selected";
 
-export type Variant = "other-month" | "today" | "default";
-
 export interface CellStyleProps {
     bgLeft?: CellType | undefined;
     bgRight?: CellType | undefined;
@@ -21,7 +19,7 @@ export interface CellStyleProps {
     circleRight?: CellType | undefined;
     shadow?: boolean | undefined;
     circleShadow?: boolean | undefined;
-    label?: LabelType | undefined;
+    labelType?: LabelType | undefined;
     disabled?: boolean | undefined;
     interactive?: boolean | undefined;
 }

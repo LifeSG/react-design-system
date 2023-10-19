@@ -105,11 +105,11 @@ export const WeekDayCell = ({
         const props: CellStyleProps = {};
 
         if (isSelected || isHover) {
-            props.label = "selected";
+            props.labelType = "selected";
         } else if (calendarDate.month() !== date.month()) {
-            props.label = "unavailable";
+            props.labelType = "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
-            props.label = "current";
+            props.labelType = "current";
             props.circleLeft = "current";
             props.circleRight = "current";
         }
