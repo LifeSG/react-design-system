@@ -53,17 +53,17 @@ will enable you to make use of the grid column props.
             <DisplayText>With custom grid column props</DisplayText>
             <Divider
                 layoutType="grid"
-                mobileCols={3}
-                tabletCols={4}
-                desktopCols={5}
+                mobileCols={[1, 3]}
+                tabletCols={[1, 4]}
+                desktopCols={[1, 5]}
+                style={{ marginBottom: "1.5rem" }}
             />
-            <br />
             <Divider
                 layoutType="grid"
                 lineStyle="dashed"
-                mobileCols={3}
-                tabletCols={4}
-                desktopCols={5}
+                mobileCols={[1, 3]}
+                tabletCols={[1, 4]}
+                desktopCols={[1, 5]}
             />
         </Layout.Content>
     </Story>
