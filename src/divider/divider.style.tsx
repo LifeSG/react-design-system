@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { Layout } from "../layout";
 import { DividerLineStyleType } from "./types";
 
 // =============================================================================
@@ -15,22 +14,23 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Line = styled.hr<StyleProps>`
+const commonStyles = css`
     width: 100%;
-    background-color: transparent;
     margin: 0;
-    height: unset;
     border: none;
+`;
+
+export const Line = styled.hr<StyleProps>`
+    ${commonStyles}
     ${(props) => {
         return css`
-            border-top-width: ${props.$thickness}px;
-            border-top-style: ${props.$lineStyle} !important; // Prevent modification easily
-            border-top-color: ${props.$color || Color.Neutral[5]};
+            height: ${props.$thickness}px;
+            background-color: ${props.$color || Color.Neutral[5]};
         `;
     }}
 `;
 
-const dashedLineStyle = (props: StyleProps) => {
+const dashedLineStyle = () => (props: StyleProps) => {
     let color;
 
     if (props.$color && typeof props.$color === "function") {
@@ -44,21 +44,14 @@ const dashedLineStyle = (props: StyleProps) => {
     const strokeWidth = thickness + 1; // best fit
 
     return css`
-        display: block;
-        width: 100%;
+        ${commonStyles}
         background-color: transparent;
-        margin: 0;
         height: ${thickness}px;
-        border: none;
         background-repeat: repeat-x;
         background-image: url('data:image/svg+xml,<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="8" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>');
     `;
 };
 
-export const DashedLineFlex = styled.div<StyleProps>`
-    ${(props) => dashedLineStyle(props)}
-`;
-
-export const DashedLineGrid = styled(Layout.ColDiv)<StyleProps>`
-    ${(props) => dashedLineStyle(props)}
+export const DashedLine = styled.hr<StyleProps>`
+    ${dashedLineStyle}
 `;

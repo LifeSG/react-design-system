@@ -1,5 +1,5 @@
 import { ColDiv } from "../layout/col-div";
-import { DashedLineFlex, DashedLineGrid, Line } from "./divider.style";
+import { DashedLine, Line } from "./divider.style";
 import { DividerProps } from "./types";
 
 export const Divider = ({
@@ -13,70 +13,42 @@ export const Divider = ({
     desktopCols = 12,
     ...otherProps
 }: DividerProps) => {
-    // =========================================================================
-    // RENDER FUNCTIONS
-    // =========================================================================
-    const renderForGridLayout = () => {
-        switch (lineStyle) {
-            case "dashed":
-                return (
-                    <DashedLineGrid
-                        className={className}
-                        mobileCols={mobileCols}
-                        tabletCols={tabletCols}
-                        desktopCols={desktopCols}
-                        $thickness={thickness}
-                        $lineStyle={lineStyle}
-                        $color={color}
-                        {...otherProps}
-                    />
-                );
-            case "solid":
-                return (
-                    <ColDiv
-                        className={className}
-                        mobileCols={mobileCols}
-                        tabletCols={tabletCols}
-                        desktopCols={desktopCols}
-                        {...otherProps}
-                    >
-                        <Line
-                            $thickness={thickness}
-                            $lineStyle={lineStyle}
-                            $color={color}
-                            data-id="divider"
-                        />
-                    </ColDiv>
-                );
-        }
-    };
+    let LineComponent;
 
-    const renderForFlexLayout = () => {
-        let LineComponent;
-
-        switch (lineStyle) {
-            case "dashed":
-                LineComponent = DashedLineFlex;
-                break;
-            case "solid":
-                LineComponent = Line;
-        }
-
-        return (
-            <LineComponent
-                className={className}
-                $thickness={thickness}
-                $lineStyle={lineStyle}
-                $color={color}
-                {...otherProps}
-            />
-        );
-    };
+    switch (lineStyle) {
+        case "dashed":
+            LineComponent = DashedLine;
+            break;
+        case "solid":
+            LineComponent = Line;
+    }
 
     switch (layoutType) {
         case "flex":
-            return renderForFlexLayout();
+            return (
+                <LineComponent
+                    className={className}
+                    $thickness={thickness}
+                    $lineStyle={lineStyle}
+                    $color={color}
+                    {...otherProps}
+                />
+            );
         case "grid":
-            return renderForGridLayout();
+            return (
+                <ColDiv
+                    className={className}
+                    mobileCols={mobileCols}
+                    tabletCols={tabletCols}
+                    desktopCols={desktopCols}
+                    {...otherProps}
+                >
+                    <LineComponent
+                        $thickness={thickness}
+                        $lineStyle={lineStyle}
+                        $color={color}
+                    />
+                </ColDiv>
+            );
     }
 };
