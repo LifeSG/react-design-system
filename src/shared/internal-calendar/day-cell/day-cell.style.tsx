@@ -98,7 +98,7 @@ export const RightHalf = styled(Half)`
 
 const HalfShadow = styled.div<StyleProps>`
     z-index: -1;
-    box-shadow: 0 0 4px 0px ${Color.Primary}80;
+    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
     position: absolute;
     height: 100%;
     width: 50%;
@@ -144,7 +144,6 @@ export const Circle = styled.div<StyleProps>`
         css`
             &:before {
                 content: "";
-                box-shadow: 0 0 4px 0px ${Color.Primary}80;
                 border-radius: 50%;
                 position: absolute;
                 height: 100%;
@@ -155,12 +154,18 @@ export const Circle = styled.div<StyleProps>`
 
 export const LeftCircle = styled(Circle)`
     right: calc(50% - 1.25rem);
-    clip-path: inset(-3px calc(1.25rem - 1px) -3px -3px);
+    clip-path: inset(-3px 1.25rem -3px -3px);
+    &:before {
+        box-shadow: -1px 0 4px 1px ${Color.Shadow.Accent};
+    }
 `;
 
 export const RightCircle = styled(Circle)`
     left: calc(50% - 1.25rem);
-    clip-path: inset(-3px -3px -3px calc(1.25rem - 1px));
+    clip-path: inset(-3px -3px -3px 1.25rem);
+    &:before {
+        box-shadow: 1px 0 4px 1px ${Color.Shadow.Accent};
+    }
 `;
 
 export const Label = styled(Text.H5)<LabelStyleProps>`
