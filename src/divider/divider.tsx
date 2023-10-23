@@ -1,5 +1,5 @@
 import { ColDiv } from "../layout/col-div";
-import { DashedLine, Line } from "./divider.style";
+import { Line } from "./divider.style";
 import { DividerProps } from "./types";
 
 export const Divider = ({
@@ -13,20 +13,10 @@ export const Divider = ({
     desktopCols = 12,
     ...otherProps
 }: DividerProps) => {
-    let LineComponent;
-
-    switch (lineStyle) {
-        case "dashed":
-            LineComponent = DashedLine;
-            break;
-        case "solid":
-            LineComponent = Line;
-    }
-
     switch (layoutType) {
         case "flex":
             return (
-                <LineComponent
+                <Line
                     className={className}
                     $thickness={thickness}
                     $lineStyle={lineStyle}
@@ -43,7 +33,7 @@ export const Divider = ({
                     desktopCols={desktopCols}
                     {...otherProps}
                 >
-                    <LineComponent
+                    <Line
                         $thickness={thickness}
                         $lineStyle={lineStyle}
                         $color={color}
