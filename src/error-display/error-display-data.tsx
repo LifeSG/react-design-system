@@ -579,7 +579,7 @@ const ERROR_DISPLAY_DATA_BSG = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>(
     ]
 );
 
-export const errorDisplayData = (
+export const getErrorDisplayData = (
     type: ErrorDisplayType,
     resourceScheme: ResourceScheme
 ) => {

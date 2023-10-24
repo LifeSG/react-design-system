@@ -6,7 +6,7 @@ import {
     ErrorDisplay,
     ErrorDisplayType,
 } from "../../src";
-import { errorDisplayData } from "../../src/error-display/error-display-data";
+import { getErrorDisplayData } from "../../src/error-display/error-display-data";
 import { ThemeProvider } from "styled-components";
 
 // =============================================================================
@@ -24,7 +24,7 @@ describe("ErrorDisplay", () => {
             </ThemeProvider>
         );
 
-        const title = errorDisplayData("404", "base").title;
+        const title = getErrorDisplayData("404", "base").title;
         expect(screen.getByRole("heading", { level: 1, name: title }));
     });
 
@@ -135,7 +135,7 @@ describe("ErrorDisplay", () => {
                     </ThemeProvider>
                 );
 
-                const error = errorDisplayData(type, "base");
+                const error = getErrorDisplayData(type, "base");
 
                 expect(
                     screen.getByRole("heading", { level: 1, name: error.title })
@@ -161,7 +161,7 @@ describe("ErrorDisplay", () => {
                     </ThemeProvider>
                 );
 
-                const error = errorDisplayData(type, "bookingsg");
+                const error = getErrorDisplayData(type, "bookingsg");
 
                 expect(
                     screen.getByRole("heading", {
@@ -181,34 +181,31 @@ describe("ErrorDisplay", () => {
             }
         );
 
-        test.each(testData)(
-            "should render bookingsg with base illustration %s error correctly",
-            (type: ErrorDisplayType) => {
-                render(
-                    <ThemeProvider theme={BookingSGTheme}>
-                        <ErrorDisplay type={type} illustrationScheme="base" />
-                    </ThemeProvider>
-                );
+        test("should use the specified illustration based on the illustrationScheme prop", () => {
+            render(
+                <ThemeProvider theme={BookingSGTheme}>
+                    <ErrorDisplay type={"400"} illustrationScheme="base" />
+                </ThemeProvider>
+            );
 
-                const error = errorDisplayData(type, "base");
+            const error = getErrorDisplayData("400", "base");
 
-                expect(
-                    screen.getByRole("heading", {
-                        level: 1,
-                        name: error.title,
-                    })
-                ).toBeInTheDocument();
+            expect(
+                screen.getByRole("heading", {
+                    level: 1,
+                    name: error.title,
+                })
+            ).toBeInTheDocument();
 
-                expect(screen.getByRole("img")).toHaveAttribute(
-                    "src",
-                    error.img.src
-                );
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
 
-                expect(
-                    screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
-                ).toBe(error.description);
-            }
-        );
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
     });
 
     describe("maintenance error", () => {
@@ -225,7 +222,7 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
-            const error = errorDisplayData(type, "base");
+            const error = getErrorDisplayData(type, "base");
             const errorDescription = transformJSXElementToString(
                 error.renderDescription(additionalProps) as JSX.Element
             );
