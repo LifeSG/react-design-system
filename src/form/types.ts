@@ -42,7 +42,7 @@ export interface FormLabelProps
 
 export type FormElementLayoutType = "flex" | "grid";
 
-export interface BaseFormElementProps {
+export interface BaseFormElementProps extends ColProps {
     label?: FormLabelProps | string | undefined;
     errorMessage?: string | undefined;
     "data-error-testid"?: string | undefined;
@@ -50,7 +50,7 @@ export interface BaseFormElementProps {
     layoutType?: FormElementLayoutType | undefined;
 }
 
-export interface FormWrapperProps extends BaseFormElementProps, ColProps {
+export interface FormWrapperProps extends BaseFormElementProps {
     children: JSX.Element | JSX.Element[];
     id?: string | undefined;
     disabled?: boolean | undefined;
@@ -58,85 +58,68 @@ export interface FormWrapperProps extends BaseFormElementProps, ColProps {
 
 export interface FormInputProps
     extends InputPartialProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormInputGroupProps<T, V>
     extends InputGroupPartialProps<T, V>,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormMaskedInputProps
     extends MaskedInputPartialProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormTextareaProps
     extends TextareaPartialProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormCustomFieldProps
     extends FormWrapperProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormInputSelectProps<T, V>
     extends InputSelectPartialProps<T, V>,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormInputRangeSelectProps<T, V>
     extends InputRangeSelectPartialProps<T, V>,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormMultiSelectProps<T, V>
     extends InputMultiSelectPartialProps<T, V>,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormNestedSelectProps<V1, V2, V3>
     extends InputNestedSelectPartialProps<V1, V2, V3>,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormNestedMultiSelectProps<V1, V2, V3>
     extends InputNestedMultiSelectPartialProps<V1, V2, V3>,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormDateInputProps
     extends DateInputProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormDateRangeInputProps
     extends DateRangeInputProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormTimepickerProps
     extends TimepickerProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormUnitNumberInputProps
     extends UnitNumberInputProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormPhoneNumberInputProps
     extends PhoneNumberInputProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormTimeRangePickerProps
     extends TimeRangePickerProps,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
 
 export interface FormPredictiveTextInputProps<T, V>
     extends PredictiveTextInputProps<T, V>,
-        BaseFormElementProps,
-        ColProps {}
+        BaseFormElementProps {}
