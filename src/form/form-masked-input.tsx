@@ -13,6 +13,10 @@ const Component = (
         id = "form-field-masked-input",
         "data-error-testid": errorTestId,
         "data-testid": testId,
+        layoutType,
+        mobileCols,
+        tabletCols,
+        desktopCols,
         ...otherProps
     } = props;
 
@@ -23,6 +27,10 @@ const Component = (
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <MaskedInput
                 ref={ref}

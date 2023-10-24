@@ -13,6 +13,10 @@ const Component = <T, V>(
         id = "form-field-group",
         "data-error-testid": errorTestId,
         "data-testid": testId,
+        layoutType,
+        mobileCols,
+        tabletCols,
+        desktopCols,
         ...otherProps
     } = props;
 
@@ -23,6 +27,10 @@ const Component = <T, V>(
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <InputGroup
                 ref={ref}

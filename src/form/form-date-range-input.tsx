@@ -8,6 +8,10 @@ export const FormDateRangeInput = ({
     id = "form-date-range-input",
     "data-error-testid": errorTestId,
     "data-testid": testId,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: FormDateRangeInputProps): JSX.Element => {
     return (
@@ -17,6 +21,10 @@ export const FormDateRangeInput = ({
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             disabled={otherProps.disabled}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <DateRangeInput
                 id={`${id}-base`}
