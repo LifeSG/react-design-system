@@ -86,14 +86,13 @@ export const WeekDayCell = ({
         if (type) {
             if (isStart) {
                 props.circleLeft = type;
-            }
-            if (isEnd) {
-                props.circleRight = type;
-            }
-            if (!isStart) {
+            } else {
                 props.bgLeft = type;
             }
-            if (!isEnd) {
+
+            if (isEnd) {
+                props.circleRight = type;
+            } else {
                 props.bgRight = type;
             }
         }
