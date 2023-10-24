@@ -2,6 +2,7 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { MaskedInput } from "src/masked-input";
 import { Form } from "src/form";
+import { Layout } from "src/layout";
 import { Text } from "src/text";
 import {
     Heading3,
@@ -163,6 +164,34 @@ You are able to make customizations to the mask icon active and inactive color, 
                 />
             </Container>
         </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Rendering in grid layouts</Heading3>
+
+You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+column props to span across the specified columns in grid layouts.
+
+<Canvas>
+    <Story
+        name="Rendering in grid layout"
+        parameters={{ layout: "fullscreen" }}
+    >
+        <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Form.MaskedInput
+                label="A shorter form input"
+                value="S1234567D"
+                maskRange={[2, 5]}
+                mobileCols={[1, 5]}
+            />
+            <Form.MaskedInput
+                label="A longer form input"
+                value="S1234567D"
+                maskRange={[2, 5]}
+                mobileCols={[1, 5]}
+                tabletCols={[1, 9]}
+            />
+        </Layout.Content>
     </Story>
 </Canvas>
 
