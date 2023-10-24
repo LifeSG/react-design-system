@@ -119,6 +119,12 @@ const DATA: ApiTableSectionProps[] = [
                 ),
             },
             {
+                name: "illustrationScheme",
+                description:
+                    "Use resource scheme provided instead of default theme",
+                propTypes: ["base", "bookingsg", "rbs"],
+            },
+            {
                 name: "additionalProps",
                 description: "Additional properties for certain error types",
                 propTypes: ["MaintenanceAdditionalAttributes"],

@@ -1,4 +1,5 @@
 import { MediaWidths } from "../spec/media-spec";
+import { ResourceScheme } from "../theme/types";
 import { ErrorDisplayType, MaintenanceAdditionalAttributes } from "./types";
 
 // =============================================================================
@@ -103,6 +104,99 @@ const ImgPaths: Record<string, ImagePathAttributes> = {
     },
 };
 
+const BsgImgPaths: Record<string, ImagePathAttributes> = {
+    "400": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400@3x.png",
+    },
+    "403": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/403.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/403@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/403@3x.png",
+    },
+    "404": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/404.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/404@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/404@3x.png",
+    },
+    "408": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/408.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/408@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/408@3x.png",
+    },
+    "500": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/generic-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/generic-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/generic-error@3x.png",
+    },
+    "502": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/502.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/502@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/502@3x.png",
+    },
+    "503": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/503.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/503@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/503@3x.png",
+    },
+    "504": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/504.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/504@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/504@3x.png",
+    },
+    confirmation: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/confirmation.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/confirmation@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/confirmation@3x.png",
+    },
+    "insufficient-credits": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/insuffcient-credit.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/insuffcient-credit@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/insuffcient-credit@3x.png",
+    },
+    inactivity: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/inactivity.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/inactivity@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/inactivity@3x.png",
+    },
+    "link-error": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/link-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/link-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/link-error@3x.png",
+    },
+    logout: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/logout.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/logout@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/logout@3x.png",
+    },
+    "no-item-found": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/no-item-found.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/no-item-found@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/no-item-found@3x.png",
+    },
+    "payment-unsuccessful": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/payment-unsuccessful.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/payment-unsuccessful@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/payment-unsuccessful@3x.png",
+    },
+    "transfer-unsuccessful": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/transfer-unsuccessful.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/transfer-unsuccessful@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/transfer-unsuccessful@3x.png",
+    },
+    "unsupported-browser": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/generic-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/generic-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/generic-error@3x.png",
+    },
+    warning: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/warning.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/warning@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/bsg/warning@3x.png",
+    },
+};
+
 const imgAttributeHelper = (
     pathAttributes: ImagePathAttributes
 ): React.ImgHTMLAttributes<HTMLImageElement> => {
@@ -128,10 +222,7 @@ interface ErrorDisplayDataAttrs {
     ) => JSX.Element | string | undefined;
 }
 
-export const ERROR_DISPLAY_DATA = new Map<
-    ErrorDisplayType,
-    ErrorDisplayDataAttrs
->([
+const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
     [
         "400",
         {
@@ -307,3 +398,193 @@ export const ERROR_DISPLAY_DATA = new Map<
         },
     ],
 ]);
+
+const ERROR_DISPLAY_DATA_BSG = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>(
+    [
+        [
+            "400",
+            {
+                img: imgAttributeHelper(BsgImgPaths["400"]),
+                title: "400 Bad Request",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "403",
+            {
+                img: imgAttributeHelper(BsgImgPaths["403"]),
+                title: "403 Forbidden",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "404",
+            {
+                img: imgAttributeHelper(BsgImgPaths["404"]),
+                title: "404 No Page Found",
+                description: "No page found.",
+            },
+        ],
+        [
+            "408",
+            {
+                img: imgAttributeHelper(BsgImgPaths["408"]),
+                title: "408 Request Timeout",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "500",
+            {
+                img: imgAttributeHelper(BsgImgPaths["500"]),
+                title: "Error state",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "502",
+            {
+                img: imgAttributeHelper(BsgImgPaths["502"]),
+                title: "502 Bad Gateway",
+                description: "An error state illustration.",
+            },
+        ],
+        [
+            "503",
+            {
+                img: imgAttributeHelper(BsgImgPaths["503"]),
+                title: "503 Service Unavailable",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "504",
+            {
+                img: imgAttributeHelper(BsgImgPaths["504"]),
+                title: "504 Gateway Timeout",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "confirmation",
+            {
+                img: imgAttributeHelper(BsgImgPaths["confirmation"]),
+                title: "Confirmation modal",
+                description:
+                    "For form-filling instances, to confirm with the user that they want to exit the form and lose their edits.",
+            },
+        ],
+        [
+            "link-error",
+            {
+                img: imgAttributeHelper(BsgImgPaths["link-error"]),
+                title: "Link Error",
+                description: "When a link is expired.",
+            },
+        ],
+        [
+            "logout",
+            {
+                img: imgAttributeHelper(BsgImgPaths["logout"]),
+                title: "Logged-out",
+                description:
+                    "When the user has been inactive for a certain period of time, and has been logged out after X minutes.",
+            },
+        ],
+        [
+            "insufficient-credits",
+            {
+                img: imgAttributeHelper(BsgImgPaths["insufficient-credits"]),
+                title: "Insufficient credits",
+                description:
+                    "When the user has insufficient credits for a transaction.",
+            },
+        ],
+        [
+            "inactivity",
+            {
+                img: imgAttributeHelper(BsgImgPaths["inactivity"]),
+                title: "Inactive state",
+                description:
+                    "When the user has been inactive for a certain period of time, and will be logged out after X minutes.",
+            },
+        ],
+        [
+            "maintenance",
+            {
+                img: imgAttributeHelper(BsgImgPaths["503"]),
+                title: "Service under maintenance",
+                description:
+                    "This service is currently unavailable. Please try again later.",
+                renderDescription: (attrs: MaintenanceAdditionalAttributes) => (
+                    <>
+                        This service is currently unavailable. Please try again
+                        after&nbsp;
+                        <strong>{attrs.dateString}</strong>.
+                    </>
+                ),
+            },
+        ],
+        [
+            "no-item-found",
+            {
+                img: imgAttributeHelper(BsgImgPaths["no-item-found"]),
+                title: "No items found",
+                description:
+                    "For instances where the no items can be found for a particular feature.",
+            },
+        ],
+        [
+            "payment-unsuccessful",
+            {
+                img: imgAttributeHelper(BsgImgPaths["payment-unsuccessful"]),
+                title: "Payment unsuccessful",
+                description:
+                    "When the user’s payment transaction is unsuccessful.",
+            },
+        ],
+        [
+            "transfer-unsuccessful",
+            {
+                img: imgAttributeHelper(BsgImgPaths["transfer-unsuccessful"]),
+                title: "Transfer unsuccessful",
+                description:
+                    "For instances where the user is unsuccessful in transferring credits.",
+            },
+        ],
+        [
+            "unsupported-browser",
+            {
+                img: imgAttributeHelper(BsgImgPaths["unsupported-browser"]),
+                title: "Error state",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "partially-supported-browser",
+            {
+                img: imgAttributeHelper(BsgImgPaths["unsupported-browser"]),
+                title: "Error state",
+                description: "A generic error state illustration.",
+            },
+        ],
+        [
+            "warning",
+            {
+                img: imgAttributeHelper(BsgImgPaths["warning"]),
+                title: "Warning states",
+                description: "Generic warning and error state illustrations.",
+            },
+        ],
+    ]
+);
+
+export const getErrorDisplayData = (
+    type: ErrorDisplayType,
+    resourceScheme: ResourceScheme
+) => {
+    if (resourceScheme === "bookingsg") {
+        return ERROR_DISPLAY_DATA_BSG.get(type);
+    }
+    return ERROR_DISPLAY_DATA.get(type);
+};

@@ -1,7 +1,13 @@
 import { render, screen } from "@testing-library/react";
 
-import { ErrorDisplay, ErrorDisplayType } from "../../src";
-import { ERROR_DISPLAY_DATA } from "../../src/error-display/error-display-data";
+import {
+    BaseTheme,
+    BookingSGTheme,
+    ErrorDisplay,
+    ErrorDisplayType,
+} from "../../src";
+import { getErrorDisplayData } from "../../src/error-display/error-display-data";
+import { ThemeProvider } from "styled-components";
 
 // =============================================================================
 // UNIT TESTS
@@ -12,9 +18,13 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the component", () => {
-        render(<ErrorDisplay type="404" />);
+        render(
+            <ThemeProvider theme={BaseTheme}>
+                <ErrorDisplay type="404" />
+            </ThemeProvider>
+        );
 
-        const title = ERROR_DISPLAY_DATA.get("404").title;
+        const title = getErrorDisplayData("404", "base").title;
         expect(screen.getByRole("heading", { level: 1, name: title }));
     });
 
@@ -26,7 +36,11 @@ describe("ErrorDisplay", () => {
             onClick: () => {},
         };
 
-        render(<ErrorDisplay type="404" actionButton={actionButton} />);
+        render(
+            <ThemeProvider theme={BaseTheme}>
+                <ErrorDisplay type="404" actionButton={actionButton} />
+            </ThemeProvider>
+        );
 
         expect(
             screen.getByRole("button", { name: buttonLabel })
@@ -34,7 +48,11 @@ describe("ErrorDisplay", () => {
     });
 
     it("should be able to render custom title if specified", () => {
-        render(<ErrorDisplay type="404" title={CUSTOM_TITLE} />);
+        render(
+            <ThemeProvider theme={BaseTheme}>
+                <ErrorDisplay type="404" title={CUSTOM_TITLE} />
+            </ThemeProvider>
+        );
 
         expect(
             screen.getByRole("heading", { level: 1, name: CUSTOM_TITLE })
@@ -43,12 +61,14 @@ describe("ErrorDisplay", () => {
 
     it("should not render any text content if the imageOnly prop is specified", () => {
         render(
-            <ErrorDisplay
-                type="404"
-                title={CUSTOM_TITLE}
-                description={CUSTOM_DESCRIPTION}
-                imageOnly
-            />
+            <ThemeProvider theme={BaseTheme}>
+                <ErrorDisplay
+                    type="404"
+                    title={CUSTOM_TITLE}
+                    description={CUSTOM_DESCRIPTION}
+                    imageOnly
+                />
+            </ThemeProvider>
         );
 
         expect(
@@ -60,7 +80,9 @@ describe("ErrorDisplay", () => {
     describe("description", () => {
         it("should be able to render custom description", () => {
             render(
-                <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
+                <ThemeProvider theme={BaseTheme}>
+                    <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
+                </ThemeProvider>
             );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
@@ -68,10 +90,12 @@ describe("ErrorDisplay", () => {
 
         it("should be able to render JSX.Element", () => {
             render(
-                <ErrorDisplay
-                    type="404"
-                    description={<div>{CUSTOM_DESCRIPTION}</div>}
-                />
+                <ThemeProvider theme={BaseTheme}>
+                    <ErrorDisplay
+                        type="404"
+                        description={<div>{CUSTOM_DESCRIPTION}</div>}
+                    />
+                </ThemeProvider>
             );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
@@ -105,9 +129,13 @@ describe("ErrorDisplay", () => {
         test.each(testData)(
             "should render %s error correctly",
             (type: ErrorDisplayType) => {
-                render(<ErrorDisplay type={type} />);
+                render(
+                    <ThemeProvider theme={BaseTheme}>
+                        <ErrorDisplay type={type} />
+                    </ThemeProvider>
+                );
 
-                const error = ERROR_DISPLAY_DATA.get(type);
+                const error = getErrorDisplayData(type, "base");
 
                 expect(
                     screen.getByRole("heading", { level: 1, name: error.title })
@@ -123,6 +151,61 @@ describe("ErrorDisplay", () => {
                 ).toBe(error.description);
             }
         );
+
+        test.each(testData)(
+            "should render bookingsg %s error correctly",
+            (type: ErrorDisplayType) => {
+                render(
+                    <ThemeProvider theme={BookingSGTheme}>
+                        <ErrorDisplay type={type} />
+                    </ThemeProvider>
+                );
+
+                const error = getErrorDisplayData(type, "bookingsg");
+
+                expect(
+                    screen.getByRole("heading", {
+                        level: 1,
+                        name: error.title,
+                    })
+                ).toBeInTheDocument();
+
+                expect(screen.getByRole("img")).toHaveAttribute(
+                    "src",
+                    error.img.src
+                );
+
+                expect(
+                    screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+                ).toBe(error.description);
+            }
+        );
+
+        test("should use the specified illustration based on the illustrationScheme prop", () => {
+            render(
+                <ThemeProvider theme={BookingSGTheme}>
+                    <ErrorDisplay type={"400"} illustrationScheme="base" />
+                </ThemeProvider>
+            );
+
+            const error = getErrorDisplayData("400", "base");
+
+            expect(
+                screen.getByRole("heading", {
+                    level: 1,
+                    name: error.title,
+                })
+            ).toBeInTheDocument();
+
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "src",
+                error.img.src
+            );
+
+            expect(
+                screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
+            ).toBe(error.description);
+        });
     });
 
     describe("maintenance error", () => {
@@ -131,10 +214,15 @@ describe("ErrorDisplay", () => {
             const additionalProps = { dateString: "01/01/2023" };
 
             render(
-                <ErrorDisplay type={type} additionalProps={additionalProps} />
+                <ThemeProvider theme={BaseTheme}>
+                    <ErrorDisplay
+                        type={type}
+                        additionalProps={additionalProps}
+                    />
+                </ThemeProvider>
             );
 
-            const error = ERROR_DISPLAY_DATA.get(type);
+            const error = getErrorDisplayData(type, "base");
             const errorDescription = transformJSXElementToString(
                 error.renderDescription(additionalProps) as JSX.Element
             );
