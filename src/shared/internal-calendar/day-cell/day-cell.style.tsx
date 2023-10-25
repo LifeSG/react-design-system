@@ -20,11 +20,11 @@ interface LabelStyleProps {
 // =============================================================================
 // HELPERS
 // =============================================================================
-const getCellStyle = (props, type: CellType) => {
+const getCellStyle = (props: StyleProps) => {
     let color = Color.Neutral[8];
     let border = "1px solid transparent";
 
-    switch (type) {
+    switch (props.$type) {
         case "current":
             color = Color.Accent.Light[5];
             break;
@@ -78,7 +78,7 @@ const Half = styled.div<StyleProps>`
         if (!props.$type) {
             return;
         }
-        const { color, border } = getCellStyle(props, props.$type);
+        const { color, border } = getCellStyle(props);
         return css`
             background-color: ${color};
             background-clip: content-box;
@@ -130,7 +130,7 @@ export const Circle = styled.div<StyleProps>`
 
     ${(props) => {
         if (props.$type) {
-            const { color, border } = getCellStyle(props, props.$type);
+            const { color, border } = getCellStyle(props);
             return css`
                 background-color: ${color};
                 background-clip: content-box;
