@@ -3,6 +3,7 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { InputGroup } from "src/input-group";
 import { Form } from "src/form";
+import { Layout } from "src/layout";
 import { Text } from "src/text";
 import {
     Heading3,
@@ -262,6 +263,42 @@ You are able to specify attributes in the `addon` property to construct advanced
                 />
             </Container>
         </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Rendering in grid layouts</Heading3>
+
+You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+column props to span across the specified columns in grid layouts.
+
+<Canvas>
+    <Story
+        name="Rendering in grid layout"
+        parameters={{ layout: "fullscreen" }}
+    >
+        <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Form.InputGroup
+                label="A shorter form input"
+                placeholder="Enter an amount"
+                addon={{
+                    attributes: {
+                        value: "$",
+                    },
+                }}
+                mobileCols={[1, 5]}
+            />
+            <Form.InputGroup
+                label="A longer form input"
+                placeholder="Enter an amount"
+                addon={{
+                    attributes: {
+                        value: "$",
+                    },
+                }}
+                mobileCols={[1, 5]}
+                tabletCols={[1, 9]}
+            />
+        </Layout.Content>
     </Story>
 </Canvas>
 

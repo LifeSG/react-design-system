@@ -2,6 +2,7 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { InputNestedMultiSelect } from "src/input-nested-multi-select";
 import { Form } from "src/form";
+import { Layout } from "src/layout";
 import { Text } from "src/text";
 import {
     Heading3,
@@ -103,6 +104,32 @@ import { Form } from "@lifesg/react-design-system/form";
                 />
             </Container>
         </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Rendering in grid layouts</Heading3>
+
+You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+column props to span across the specified columns in grid layouts.
+
+<Canvas>
+    <Story
+        name="Rendering in grid layout"
+        parameters={{ layout: "fullscreen" }}
+    >
+        <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Form.NestedMultiSelect
+                label="A shorter form input"
+                options={options}
+                mobileCols={[1, 5]}
+            />
+            <Form.NestedMultiSelect
+                label="A longer form input"
+                options={options}
+                mobileCols={[1, 5]}
+                tabletCols={[1, 9]}
+            />
+        </Layout.Content>
     </Story>
 </Canvas>
 

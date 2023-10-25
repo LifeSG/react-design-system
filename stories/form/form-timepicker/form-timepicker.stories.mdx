@@ -2,6 +2,7 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { Timepicker } from "src/timepicker";
 import { Form } from "src/form";
+import { Layout } from "src/layout";
 import {
     Heading3,
     Heading4,
@@ -79,6 +80,32 @@ import { Form } from "@lifesg/react-design-system/form";
                 </StoryContainer>
             );
         }}
+    </Story>
+</Canvas>
+
+<Heading3>Rendering in grid layouts</Heading3>
+
+You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+column props to span across the specified columns in grid layouts.
+
+<Canvas>
+    <Story
+        name="Rendering in grid layout"
+        parameters={{ layout: "fullscreen" }}
+    >
+        <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Form.Timepicker
+                label="A shorter form input"
+                format="12hr"
+                mobileCols={[1, 5]}
+            />
+            <Form.Timepicker
+                label="A longer form input"
+                format="12hr"
+                mobileCols={[1, 5]}
+                tabletCols={[1, 9]}
+            />
+        </Layout.Content>
     </Story>
 </Canvas>
 

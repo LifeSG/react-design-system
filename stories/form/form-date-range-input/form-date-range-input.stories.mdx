@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { DateRangeInput } from "src/date-range-input";
 import { Form } from "src/form";
+import { Layout } from "src/layout";
 import {
     Heading3,
     Heading4,
@@ -217,6 +218,31 @@ When `allowDisabledSelection` is set, dates are visually disabled, but still sel
                 </StoryContainer>
             );
         }}
+    </Story>
+</Canvas>
+
+<Heading3>Rendering in grid layouts</Heading3>
+
+You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+column props to span across the specified columns in grid layouts.
+
+<Canvas>
+    <Story
+        name="Rendering in grid layout"
+        parameters={{ layout: "fullscreen" }}
+    >
+        <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Form.DateRangeInput
+                label="Using grid columns"
+                mobileCols={[1, 5]}
+                tabletCols={[1, 7]}
+            />
+            <Form.DateRangeInput
+                label="Using a longer grid layout"
+                mobileCols={[1, 5]}
+                tabletCols={[1, 9]}
+            />
+        </Layout.Content>
     </Story>
 </Canvas>
 

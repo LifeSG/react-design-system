@@ -2,6 +2,7 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { useState } from "react";
 import { PhoneNumberInput } from "src/phone-number-input";
 import { Form } from "src/form";
+import { Layout } from "src/layout";
 import {
     Heading3,
     Heading4,
@@ -92,6 +93,32 @@ you can pass the prop `fixedCountry` to restrict input to only that country code
                 fixedCountry
             />
         </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Rendering in grid layouts</Heading3>
+
+You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+column props to span across the specified columns in grid layouts.
+
+<Canvas>
+    <Story
+        name="Rendering in grid layout"
+        parameters={{ layout: "fullscreen" }}
+    >
+        <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Form.PhoneNumberInput
+                label="A shorter form input"
+                placeholder="Enter phone number"
+                mobileCols={[1, 5]}
+            />
+            <Form.PhoneNumberInput
+                label="A longer form input"
+                placeholder="Enter phone number"
+                mobileCols={[1, 5]}
+                tabletCols={[1, 9]}
+            />
+        </Layout.Content>
     </Story>
 </Canvas>
 
