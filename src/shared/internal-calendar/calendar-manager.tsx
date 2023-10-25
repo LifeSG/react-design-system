@@ -8,6 +8,7 @@ import {
     ArrowLeft,
     ArrowRight,
     Container,
+    DefaultView,
     DropdownButton,
     DropdownText,
     Header,
@@ -436,7 +437,7 @@ const Component = (
         } else {
             return (
                 <>
-                    {defaultView}
+                    <DefaultView>{defaultView}</DefaultView>
                     <OptionsOverlay $visible={currentView !== "default"}>
                         {renderOptionsOverlay()}
                     </OptionsOverlay>
