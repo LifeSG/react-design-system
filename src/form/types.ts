@@ -14,6 +14,7 @@ import { PredictiveTextInputProps } from "../predictive-text-input/types";
 import { TimeRangePickerProps } from "../time-range-picker/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
+import { ColProps } from "../layout/types";
 
 export type FormLabelAddonType = "tooltip" | "popover";
 
@@ -39,10 +40,14 @@ export interface FormLabelProps
     "data-testid"?: string | undefined;
 }
 
-export interface BaseFormElementProps {
+export type FormElementLayoutType = "flex" | "grid";
+
+export interface BaseFormElementProps extends ColProps {
     label?: FormLabelProps | string | undefined;
     errorMessage?: string | undefined;
     "data-error-testid"?: string | undefined;
+    /** The layout type. Values: "flex" | "grid" */
+    layoutType?: FormElementLayoutType | undefined;
 }
 
 export interface FormWrapperProps extends BaseFormElementProps {

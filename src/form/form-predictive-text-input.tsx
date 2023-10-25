@@ -8,6 +8,10 @@ export const FormPredictiveTextInput = <T, V>({
     id = "form-predictive-text",
     "data-error-testid": errorTestId,
     "data-testid": testId,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: FormPredictiveTextInputProps<T, V>): JSX.Element => {
     return (
@@ -17,6 +21,10 @@ export const FormPredictiveTextInput = <T, V>({
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             disabled={otherProps.disabled}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <PredictiveTextInput
                 id={`${id}-base`}
