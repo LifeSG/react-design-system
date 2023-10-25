@@ -54,6 +54,7 @@ export const Wrapper = styled.div<StyleProps>`
         return css`
             background: ${backgroundColor};
             border-left: 2pt solid ${borderColor};
+            color: ${Color.Neutral[1]};
         `;
     }}
 
