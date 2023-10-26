@@ -48,6 +48,12 @@ const TEXT_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
+            {
+                name: "maxLines",
+                description:
+                    "Specifies the number of lines visible, the additional lines will be truncated",
+                propTypes: ["number"],
+            },
         ],
     },
 ];

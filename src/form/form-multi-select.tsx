@@ -9,6 +9,10 @@ export const FormMultiSelect = <T, V>({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     enableSearch = false,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: FormMultiSelectProps<T, V>): JSX.Element => {
     return (
@@ -18,6 +22,10 @@ export const FormMultiSelect = <T, V>({
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             disabled={otherProps.disabled}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <InputMultiSelect
                 id={`${id}-base`}

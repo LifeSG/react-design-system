@@ -8,6 +8,10 @@ export const FormPhoneNumberInput = ({
     id = "form-phone-number-input",
     "data-error-testid": errorTestId,
     "data-testid": testId,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: FormPhoneNumberInputProps): JSX.Element => {
     return (
@@ -17,6 +21,10 @@ export const FormPhoneNumberInput = ({
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             disabled={otherProps.disabled}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <PhoneNumberInput
                 id={`${id}-base`}

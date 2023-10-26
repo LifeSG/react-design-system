@@ -52,6 +52,8 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
     inline?: boolean | undefined;
     /** This is applicable only to non-headers */
     paragraph?: boolean | undefined;
+    /** Specify the number of lines visible, the additional lines will be truncated  */
+    maxLines?: number | undefined;
 }
 
 export interface TextLinkProps

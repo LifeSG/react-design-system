@@ -104,12 +104,17 @@ export const CustomErrorDisplay = styled(ErrorDisplay)`
         parameters={{
             controls: {
                 disabled: false,
-                exclude: /^((?!(type)).)*$/,
+                include: ["type", "illustrationScheme"],
             },
         }}
         argTypes={{
             type: {
                 defaultValue: "400",
+            },
+            illustrationScheme: {
+                control: "select",
+                defaultValue: undefined,
+                options: ["base", "bookingsg", "rbs", undefined],
             },
         }}
     >

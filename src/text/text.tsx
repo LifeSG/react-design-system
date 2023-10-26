@@ -16,7 +16,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -33,7 +34,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -50,7 +52,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -67,7 +70,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -84,7 +88,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -101,7 +106,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -118,7 +124,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -135,7 +142,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -152,7 +160,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -169,7 +178,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -186,7 +196,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -203,7 +214,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -220,7 +232,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
@@ -237,7 +250,8 @@ export namespace Text {
                 color: ${Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
-                    props.paragraph
+                    props.paragraph,
+                    props.maxLines
                 )}
             `;
         }}
