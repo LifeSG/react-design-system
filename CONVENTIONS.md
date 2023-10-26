@@ -24,6 +24,9 @@ interface Props {
     a: string;
 }
 
+/**
+ * Refrain from typing React.FC<Props>
+ */
 export const MyComponent = ({ a }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -100,7 +103,7 @@ Here are some guidelines on prop specification:
 -   For callbacks, denote with `on` and the action. E.g. `onClick`, `onDismiss`
 -   For optional props, use a Union type and add `undefined` to it
 
-```
+```tsx
 interface MyInterface {
     show?: boolean | undefined;
     onChange?: ((param) => void) | undefined;
@@ -110,7 +113,7 @@ interface MyInterface {
 -   Avoid usage of enums to ease developer use. Opt for string literals instead and
     do them in kebab-case
 
-```
+```tsx
 interface MyInterface {
     someType: "default" | "light" | "dark";
 }
@@ -125,3 +128,104 @@ interface MyInterface {
 
 We recommend that the use of state should be kept minimal unless it is meant
 for rendering purposes.
+
+## Styling practices
+
+We should to refrain from using `className` as we are using Styled Components. We
+should create the corresponding styled component instead. For the styled component,
+give them sensible names as well.
+
+Example:
+
+```tsx
+// Wrong
+
+/** component.style.tsx */
+const Wrapper = styled.div`
+    .label {
+        // styles here...
+    }
+
+    .description {
+        // styles here...
+    }
+`;
+
+/** component.tsx */
+return (
+    <Wrapper>
+        <label className="label">This is the label</label>
+        <span className="description>Lorem ipsum dolar sit amet...</span>
+    </Wrapper>
+);
+
+```
+
+```tsx
+// Correct
+
+/** component.style.tsx */
+const Wrapper = styled.div`
+    // styles here...
+`;
+
+const Label = styled.label`
+    // styles here...
+`;
+
+const Description = styled.span`
+    // styles here...
+`;
+
+/** component.tsx */
+return (
+    <Wrapper>
+        <Label>This is the label</Label>
+        <Description>Lorem ipsum dolar sit amet...</Description>
+    </Wrapper>
+);
+```
+
+## Implementation logics
+
+In cases when you are conditionally rendering based props with multiple variants
+or types, we recommend to use `switch-case` rather than `if-else` to ensure
+all variations are covered.
+
+Example:
+
+```tsx
+interface Demo {
+    variant?: "a" | "b" | "c" | "d" | undefined;
+}
+
+/** In the conditional logic */
+
+// Wrong
+
+if (variant === "a") {
+    // do something
+} else if (variant === "b") {
+    // do something
+} else if (variant === "c") {
+    // do something
+} else if (variant === "d") {
+    // do something
+} else {
+    // do something
+}
+
+// Correct
+switch (variants) {
+    case "a":
+    // do something
+    case "b":
+    // do something
+    case "c":
+    // do something
+    case "d":
+    // do something
+    default:
+    // do something
+}
+```
