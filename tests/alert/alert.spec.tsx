@@ -31,7 +31,7 @@ describe("Alert", () => {
 
                 expect(screen.getByText(DEFAULT_TEXT)).toHaveStyle({
                     backgroundColor,
-                    borderColor: `2pt solid ${borderColor}`,
+                    borderColor: `2px solid ${borderColor}`,
                 });
             }
         );
