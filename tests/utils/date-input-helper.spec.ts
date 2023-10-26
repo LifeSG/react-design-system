@@ -1,6 +1,15 @@
 import { DateInputHelper } from "../../src/util/date-input-helper";
 
 describe("DateInputHelper", () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date("26 Oct 2023 12:00:00 GMT").getTime());
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     describe("isDateDisabled", () => {
         it("should return false when no dates are disabled", () => {
             const date = "2023-04-01";
