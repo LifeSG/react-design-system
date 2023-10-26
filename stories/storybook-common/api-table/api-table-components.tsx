@@ -28,11 +28,30 @@ export const Table = ({ children }: TableProps) => {
 const StyledTable = styled.table`
     width: 100%;
     position: relative;
+    border-collapse: collapse;
+    border-spacing: 0;
+    line-height: 1.5;
+
+    code {
+        background-color: #f5f5f5;
+        color: #d0021b;
+        font-size: 0.875em;
+        font-weight: 400;
+        padding: 0.25em 0.5em;
+        white-space: pre-wrap;
+    }
 
     td,
     th {
         padding: 0.5rem;
         font-size: 14px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    thead,
+    th {
+        font-weight: bold;
     }
 
     td {
