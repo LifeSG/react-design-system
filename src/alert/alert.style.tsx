@@ -20,6 +20,7 @@ export const Wrapper = styled.div<StyleProps>`
     padding: 0.5rem 1rem 0.5rem 0.875rem;
     display: flex;
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    color: ${Color.Neutral[1]};
 
     ${(props) => {
         let backgroundColor: string;
@@ -53,8 +54,7 @@ export const Wrapper = styled.div<StyleProps>`
 
         return css`
             background: ${backgroundColor};
-            border-left: 2pt solid ${borderColor};
-            color: ${Color.Neutral[1]};
+            border-left: 2px solid ${borderColor};
         `;
     }}
 
