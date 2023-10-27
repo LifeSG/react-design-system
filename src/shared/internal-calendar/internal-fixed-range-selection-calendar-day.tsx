@@ -2,11 +2,9 @@ import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
 import { Text } from "../../text/text";
 import { CommonCalendarProps, View } from "./types";
-import { CalendarDayCell } from "./calendar-day-cell";
 import { CalendarHelper } from "../../util/calendar-helper";
-import { DayVariant } from "./internal-calendar-day";
-import { CalendarDayStyleHelper } from "./calendar-day-style-helper";
 import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
+import { FixedRangeDayCell } from "./fixed-range/fixed-range-cell";
 
 interface CalendarWeekSelectProps extends CommonCalendarProps {
     selectedStartDate: string;
@@ -15,19 +13,19 @@ interface CalendarWeekSelectProps extends CommonCalendarProps {
     currentView: View;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
+    numberOfDays: number;
 }
 
 export const InternalFixedRangeSelectionCalendarDay = ({
     calendarDate,
     disabledDates,
     selectedStartDate,
-    selectedEndDate,
     onSelect,
     onHover,
     minDate,
     maxDate,
-    currentView,
     allowDisabledSelection,
+    numberOfDays,
 }: CalendarWeekSelectProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -63,22 +61,6 @@ export const InternalFixedRangeSelectionCalendarDay = ({
     };
 
     // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
-    const generateDayStatus = (day: Dayjs) => {
-        const variant: DayVariant =
-            calendarDate.month() !== day.month()
-                ? "other-month"
-                : dayjs().isSame(day, "day")
-                ? "today"
-                : "default";
-
-        return {
-            variant,
-        };
-    };
-
-    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeader = () => {
@@ -94,41 +76,20 @@ export const InternalFixedRangeSelectionCalendarDay = ({
             return (
                 <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
                     {week.map((day, dayIndex) => {
-                        const { variant } = generateDayStatus(day);
-                        const {
-                            styleLeftProps,
-                            styleRightProps,
-                            styleCircleProps,
-                            styleLabelProps,
-                            styleOverflowCirleProps,
-                        } =
-                            CalendarDayStyleHelper.getStylePropsForFixedRangeSelection(
-                                day,
-                                selectedStartDate,
-                                selectedEndDate,
-                                hoverValue,
-                                minDate,
-                                maxDate,
-                                disabledDates,
-                                allowDisabledSelection
-                            );
-
                         return (
-                            <CalendarDayCell
+                            <FixedRangeDayCell
                                 key={`day-${dayIndex}`}
-                                type="week"
-                                dayDate={day}
-                                variant={variant}
-                                currentView={currentView}
-                                styleLeftProps={styleLeftProps}
-                                styleRightProps={styleRightProps}
-                                styleCircleProps={styleCircleProps}
-                                styleLabelProps={styleLabelProps}
-                                styleOverflowCirleProps={
-                                    styleOverflowCirleProps
-                                }
-                                onDayClick={handleDayClick}
-                                onHoverCell={handleHoverCell}
+                                date={day}
+                                calendarDate={calendarDate}
+                                selectedDate={selectedStartDate}
+                                hoverDate={hoverValue}
+                                minDate={minDate}
+                                maxDate={maxDate}
+                                disabledDates={disabledDates}
+                                allowDisabledSelection={allowDisabledSelection}
+                                onSelect={handleDayClick}
+                                onHover={handleHoverCell}
+                                numberOfDays={numberOfDays}
                             />
                         );
                     })}

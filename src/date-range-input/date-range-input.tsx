@@ -549,6 +549,7 @@ export const DateRangeInput = ({
                 onDismiss={handleCalendarDismiss}
                 onHover={handleCalendarHover}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
+                numberOfDays={numberOfDays}
             />
         </Container>
     );

@@ -43,11 +43,14 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     onSelect?: ((value: string) => void) | undefined;
     /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;
+    /** Indicate the number of days used in fixed-range variant */
+    numberOfDays?: number;
 }
 
 export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
     /** If calendar is visible. */
     isOpen?: boolean | undefined;
+    numberOfDays?: number;
 }
 
 export type CalendarAction = "reset" | "confirmed";

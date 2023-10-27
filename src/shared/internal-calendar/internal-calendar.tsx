@@ -30,6 +30,7 @@ export const Component = (
         type = "standalone",
         selectWithinRange = true,
         initialCalendarDate,
+        numberOfDays,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -176,6 +177,7 @@ export const Component = (
                         allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                        numberOfDays={numberOfDays}
                     />
                 );
             default:
