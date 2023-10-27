@@ -1,3 +1,4 @@
+process.env.TZ = "UTC";
 module.exports = {
     rootDir: ".",
     moduleFileExtensions: ["tsx", "ts", "js"],
