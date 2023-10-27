@@ -1,14 +1,13 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useMemo } from "react";
-
 import isBetween from "dayjs/plugin/isBetween";
+import { useMemo } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import {
     GrowDayCell,
     InteractiveCircle,
     RowDayCell,
     StyleProps,
-} from "../shared/internal-calendar/internal-calendar-day.style";
+} from "../shared/internal-calendar/day-of-month/calendar-day-view.style";
 import { Text } from "../text/text";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";

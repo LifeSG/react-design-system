@@ -1,48 +1,32 @@
 import dayjs, { Dayjs } from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
-import { Text } from "../../text/text";
-import { CalendarHelper } from "../../util/calendar-helper";
-import { DayMonthCell } from "./day-of-month/day-of-month-cell";
-import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
-import { CommonCalendarProps, FocusType } from "./types";
+import { Text } from "../../../text/text";
+import { CalendarHelper } from "../../../util/calendar-helper";
+import {
+    HeaderCell,
+    RowDayCell,
+    Wrapper,
+} from "../day-of-month/calendar-day-view.style";
+import { CommonCalendarProps } from "../types";
+import { WeekDayCell } from "./week-day-cell";
 
-dayjs.extend(isBetween);
-
-export type DayVariant = "default" | "other-month" | "today";
-export type HoverDirection =
-    | "hover-start"
-    | "hover-end"
-    | "overlap-start"
-    | "overlap-end"
-    | "full-overlap-start"
-    | "full-overlap-end"
-    | "reset-start"
-    | "reset-end";
-
-interface CalendarDayProps extends CommonCalendarProps {
+interface WeekCalendarDayViewProps extends CommonCalendarProps {
     selectedStartDate: string;
-    selectedEndDate: string;
     calendarDate: Dayjs;
-    currentFocus?: FocusType | undefined;
-    isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
 }
 
-export const InternalCalendarDay = ({
+export const WeekCalendarDayView = ({
     calendarDate,
-    currentFocus,
     disabledDates,
     selectedStartDate,
-    selectedEndDate,
     onSelect,
     onHover,
-    isNewSelection,
     minDate,
     maxDate,
     allowDisabledSelection,
-}: CalendarDayProps) => {
+}: WeekCalendarDayViewProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -57,8 +41,13 @@ export const InternalCalendarDay = ({
     // =============================================================================
     const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled && !allowDisabledSelection) return;
+        const firstDayOfWeek = value.startOf("week");
 
-        onSelect(value);
+        onSelect(firstDayOfWeek);
+
+        if (!!value && !dayjs(value).isSame(firstDayOfWeek, "month")) {
+            setHoverValue("");
+        }
     };
 
     const handleHoverCell = (value: string, isDisabled: boolean) => {
@@ -90,19 +79,16 @@ export const InternalCalendarDay = ({
                 <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
                     {week.map((day, dayIndex) => {
                         return (
-                            <DayMonthCell
+                            <WeekDayCell
                                 key={`day-${dayIndex}`}
                                 date={day}
                                 calendarDate={calendarDate}
-                                startDate={selectedStartDate}
-                                endDate={selectedEndDate}
+                                selectedDate={selectedStartDate}
                                 hoverDate={hoverValue}
-                                currentFocus={currentFocus}
                                 minDate={minDate}
                                 maxDate={maxDate}
                                 disabledDates={disabledDates}
                                 allowDisabledSelection={allowDisabledSelection}
-                                isNewSelection={isNewSelection}
                                 onSelect={handleDayClick}
                                 onHover={handleHoverCell}
                             />
