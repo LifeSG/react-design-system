@@ -32,6 +32,12 @@ const StyledTable = styled.table`
     border-spacing: 0;
     line-height: 1.5;
 
+    a {
+        color: #0070f2;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
     code {
         background-color: #f5f5f5;
         color: #d0021b;
