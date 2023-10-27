@@ -5,7 +5,7 @@ import { Text } from "../../text/text";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { DayMonthCell } from "./day-of-month/day-of-month-cell";
 import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
-import { CommonCalendarProps, FocusType, InternalCalendarProps } from "./types";
+import { CommonCalendarProps, FocusType } from "./types";
 
 dayjs.extend(isBetween);
 
@@ -20,9 +20,7 @@ export type HoverDirection =
     | "reset-start"
     | "reset-end";
 
-interface CalendarDayProps
-    extends CommonCalendarProps,
-        Pick<InternalCalendarProps, "variant"> {
+interface CalendarDayProps extends CommonCalendarProps {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
@@ -43,7 +41,6 @@ export const InternalCalendarDay = ({
     isNewSelection,
     minDate,
     maxDate,
-    variant,
     allowDisabledSelection,
 }: CalendarDayProps) => {
     // =============================================================================
