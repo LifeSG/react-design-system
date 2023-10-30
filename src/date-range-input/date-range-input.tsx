@@ -118,10 +118,11 @@ export const DateRangeInput = ({
             }),
             focus: (state, currentFocus: FocusType) => ({
                 ...state,
-                currentFocus:
-                    !isWeekSelection && !isFixedRangeSelection
-                        ? currentFocus
-                        : "none",
+                currentFocus: isWeekSelection
+                    ? "none"
+                    : isFixedRangeSelection
+                    ? "start"
+                    : currentFocus,
                 calendarOpen: !readOnly,
             }),
             cancel: (state) => ({
