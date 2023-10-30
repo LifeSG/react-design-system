@@ -118,7 +118,10 @@ export const DateRangeInput = ({
             }),
             focus: (state, currentFocus: FocusType) => ({
                 ...state,
-                currentFocus: !isWeekSelection ? currentFocus : "none",
+                currentFocus:
+                    !isWeekSelection && !isFixedRangeSelection
+                        ? currentFocus
+                        : "none",
                 calendarOpen: !readOnly,
             }),
             cancel: (state) => ({
@@ -344,7 +347,7 @@ export const DateRangeInput = ({
         }
     };
 
-    const handleCustomSelectionChange = (val: string) => {
+    const handleFixedRangeSelectionChange = (val: string) => {
         const start = dayjs(val).format("YYYY-MM-DD");
         const end = dayjs(val).add(numberOfDays, "day").format("YYYY-MM-DD");
 
@@ -365,6 +368,7 @@ export const DateRangeInput = ({
         actions.focus(focusType);
 
         handleWeekSelectionInputFocus();
+        handleFixedRangeSelectionInputFocus();
 
         if (onFocus) {
             onFocus();
@@ -379,6 +383,12 @@ export const DateRangeInput = ({
 
             setIsTouch(true);
             setInitialCalendarDate(firstDayOfWeek);
+        }
+    };
+
+    const handleFixedRangeSelectionInputFocus = () => {
+        if (isFixedRangeSelection) {
+            setIsTouch(true);
         }
     };
 
@@ -406,7 +416,7 @@ export const DateRangeInput = ({
             handleWeekSelectionChange(val);
         }
         if (isFixedRangeSelection) {
-            handleCustomSelectionChange(val);
+            handleFixedRangeSelectionChange(val);
         }
     };
 
