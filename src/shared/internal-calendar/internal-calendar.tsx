@@ -10,7 +10,7 @@ import {
     InternalCalendarRef,
     View,
 } from "./types";
-import { InternalFixedRangeSelectionCalendarDay } from "./internal-fixed-range-selection-calendar-day";
+import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
 
 export const Component = (
     {
@@ -166,7 +166,7 @@ export const Component = (
                 );
             case "fixed-range":
                 return (
-                    <InternalFixedRangeSelectionCalendarDay
+                    <FixedRangeCalendarDayView
                         calendarDate={calendarDate}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
