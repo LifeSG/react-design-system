@@ -142,7 +142,7 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["number"],
-                defaultValue: `6`,
+                defaultValue: `7`,
             },
             {
                 name: "withButton",

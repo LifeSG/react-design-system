@@ -25,7 +25,7 @@ export const FixedRangeDayCell = ({
     maxDate,
     disabledDates,
     allowDisabledSelection,
-    numberOfDays = 6,
+    numberOfDays,
     onSelect,
     onHover,
 }: Props) => {

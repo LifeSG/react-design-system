@@ -58,7 +58,7 @@ export const DateRangeInput = ({
     onYearMonthDisplayChange,
     withButton: _withButton = true,
     variant = "range",
-    numberOfDays = 6,
+    numberOfDays = 7,
     readOnly,
     id,
     allowDisabledSelection,
@@ -345,7 +345,7 @@ export const DateRangeInput = ({
 
     const handleFixedRangeSelectionChange = (val: string) => {
         const start = dayjs(val).format("YYYY-MM-DD");
-        const end = dayjs(val).add(numberOfDays, "day").format("YYYY-MM-DD");
+        const end = start + Math.max(numberOfDays - 1, 0);
 
         actions.changeStart(start);
         actions.changeEnd(end);
@@ -476,7 +476,7 @@ export const DateRangeInput = ({
                 values = {
                     start: dayjs(hoverValue).format("YYYY-MM-DD"),
                     end: dayjs(hoverValue)
-                        .add(numberOfDays, "day")
+                        .add(numberOfDays - 1, "day")
                         .format("YYYY-MM-DD"),
                 };
                 break;
