@@ -33,7 +33,7 @@ const StyledTable = styled.table`
     line-height: 1.5;
 
     a {
-        color: #0070f2;
+        color: ${Color.Primary};
         cursor: pointer;
         text-decoration: none;
     }
@@ -41,7 +41,7 @@ const StyledTable = styled.table`
     code {
         background-color: #f5f5f5;
         color: #d0021b;
-        font-size: 0.875em;
+        font-size: 0.875rem;
         font-weight: 400;
         padding: 0.25em 0.5em;
         white-space: pre-wrap;
