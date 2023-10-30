@@ -1,12 +1,16 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { Text } from "../../text/text";
-import { CommonCalendarProps, View } from "./types";
-import { CalendarHelper } from "../../util/calendar-helper";
-import { HeaderCell, RowDayCell, Wrapper } from "./internal-calendar-day.style";
-import { FixedRangeDayCell } from "./fixed-range/fixed-range-cell";
+import { Text } from "../../../text/text";
+import { CommonCalendarProps, View } from "../types";
+import { CalendarHelper } from "../../../util/calendar-helper";
+import {
+    HeaderCell,
+    RowDayCell,
+    Wrapper,
+} from "../internal-calendar-day.style";
+import { FixedRangeDayCell } from "./fixed-range-cell";
 
-interface CalendarWeekSelectProps extends CommonCalendarProps {
+interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {
     selectedStartDate: string;
     selectedEndDate: string;
     calendarDate: Dayjs;
@@ -16,7 +20,7 @@ interface CalendarWeekSelectProps extends CommonCalendarProps {
     numberOfDays: number;
 }
 
-export const InternalFixedRangeSelectionCalendarDay = ({
+export const FixedRangeCalendarDayView = ({
     calendarDate,
     disabledDates,
     selectedStartDate,
@@ -26,7 +30,7 @@ export const InternalFixedRangeSelectionCalendarDay = ({
     maxDate,
     allowDisabledSelection,
     numberOfDays,
-}: CalendarWeekSelectProps) => {
+}: FixedRangeCalendarDayViewProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
