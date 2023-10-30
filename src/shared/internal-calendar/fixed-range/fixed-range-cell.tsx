@@ -82,11 +82,11 @@ export const FixedRangeDayCell = ({
 
         let type: CellType = undefined;
         if (isSelected && isHover) {
-            type = "hover-over-selected";
+            type = "overlap";
         } else if (isSelected) {
-            type = "selected-outline-2";
+            type = "selected";
         } else if (isHover) {
-            type = "hover-dash-1";
+            type = "hover-dash";
         }
 
         if (type) {
@@ -95,18 +95,18 @@ export const FixedRangeDayCell = ({
                 props.circleRight = "hover-current";
                 props.circleShadow = true;
             } else if (isStart) {
-                props.circleLeft = "selected-outline-1";
-                props.circleRight = "selected-outline-1";
+                props.circleLeft = "selected-outline";
+                props.circleRight = "selected-outline";
 
                 if (isSelected && isHover && rangeStart && hoverStart) {
-                    props.circleLeft = "hover-over-selected-1";
-                    props.circleRight = "hover-over-selected-1";
+                    props.circleLeft = "overlap-outline";
+                    props.circleRight = "overlap-outline";
 
                     if (hoverStart > rangeStart) {
-                        props.bgLeft = "selected-outline-2";
+                        props.bgLeft = "selected";
                     }
                     if (rangeStart > hoverStart) {
-                        props.bgLeft = "hover-dash-1";
+                        props.bgLeft = "hover-dash";
                     }
                 }
             } else {
@@ -116,28 +116,28 @@ export const FixedRangeDayCell = ({
             if (isEnd) {
                 props.circleRight = type;
                 if (isSelected && isHover) {
-                    props.circleRight = "hover-over-selected";
+                    props.circleRight = "overlap";
                 }
 
                 if (isSelected && isHover && rangeEnd && hoverEnd) {
                     if (hoverEnd > rangeEnd) {
-                        props.bgRight = "hover-dash-1";
+                        props.bgRight = "hover-dash";
                     }
                     if (rangeStart > hoverStart) {
-                        props.bgRight = "selected-outline-2";
+                        props.bgRight = "selected";
                     }
                     if (isStart && rangeEnd === hoverStart) {
                         props.circleLeft = "hover-current";
                         props.circleRight = "hover-current";
-                        props.bgLeft = "selected-outline-2";
-                        props.bgRight = "hover-dash-1";
+                        props.bgLeft = "selected";
+                        props.bgRight = "hover-dash";
                     }
 
                     if (hoverEnd === rangeStart) {
-                        props.circleLeft = "hover-over-selected-1";
-                        props.circleRight = "hover-over-selected-1";
-                        props.bgLeft = "hover-dash-1";
-                        props.bgRight = "selected-outline-2";
+                        props.circleLeft = "overlap-outline";
+                        props.circleRight = "overlap-outline";
+                        props.bgLeft = "hover-dash";
+                        props.bgRight = "selected";
                     }
                 }
             } else {

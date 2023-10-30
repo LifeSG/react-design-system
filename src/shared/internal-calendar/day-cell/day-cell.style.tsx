@@ -52,26 +52,6 @@ const getCellStyle = (props: StyleProps) => {
             color = Color.Accent.Light[4];
             border = `1px solid ${Color.Primary(props)}`;
             break;
-        case "hover-dash-1":
-            color = Color.Validation.Blue.Background;
-            border = `1px dashed ${Color.Accent.Light[3](props)}`;
-            break;
-        case "selected-outline-1":
-            color = Color.Validation.Blue.Background;
-            border = `1px solid ${Color.Primary(props)}`;
-            break;
-        case "selected-outline-2":
-            color = Color.Accent.Light[4];
-            border = `1px solid ${Color.Accent.Light[3](props)}`;
-            break;
-        case "hover-over-selected":
-            color = Color.Accent.Light[3];
-            border = `1px solid ${Color.Accent.Light[3](props)}`;
-            break;
-        case "hover-over-selected-1":
-            color = Color.Accent.Light[3];
-            border = `1px solid ${Color.Primary(props)}`;
-            break;
     }
 
     return { color, border };

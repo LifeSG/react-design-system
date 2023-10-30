@@ -7,12 +7,7 @@ export type CellType =
     | "overlap"
     | "overlap-outline"
     | "hover-dash"
-    | "hover-current"
-    | "selected-outline-1"
-    | "selected-outline-2"
-    | "hover-dash-1"
-    | "hover-over-selected"
-    | "hover-over-selected-1";
+    | "hover-current";
 
 export type LabelType = "available" | "unavailable" | "current" | "selected";
 
