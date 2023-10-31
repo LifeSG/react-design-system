@@ -32,7 +32,7 @@ export const RangeInputInnerContainer = ({
                 {elem1}
             </ElementContainer>
             <ArrowRight />
-            <Break $wrap={wrap} />
+            {wrap && <Break />}
             <ElementContainer data-id="range-container-elem2-container">
                 {elem2}
             </ElementContainer>

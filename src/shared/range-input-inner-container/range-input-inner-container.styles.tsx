@@ -45,16 +45,8 @@ export const Wrapper = styled.div<GeneralStyleProps>`
     }}
 `;
 
-export const Break = styled.div<GeneralStyleProps>`
+export const Break = styled.div`
     width: 100%; // Force next flex item to break to next line
-    display: none;
-    ${(props) => {
-        if (props.$wrap) {
-            return css`
-                display: block;
-            `;
-        }
-    }}
 `;
 
 export const ElementContainer = styled.div`
