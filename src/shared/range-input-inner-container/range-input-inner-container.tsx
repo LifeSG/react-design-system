@@ -1,5 +1,6 @@
 import {
     ArrowRight,
+    Break,
     ElementContainer,
     Indicator,
     Wrapper,
@@ -15,7 +16,7 @@ export const RangeInputInnerContainer = ({
     currentActive,
     error,
     className,
-    minWidthBeforeWrap,
+    wrap,
 }: RangeInputInnerContainerProps) => {
     // =========================================================================
     // CONST, STATE
@@ -26,11 +27,12 @@ export const RangeInputInnerContainer = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Wrapper className={className} $minWidthBeforeWrap={minWidthBeforeWrap}>
+        <Wrapper className={className} $wrap={wrap}>
             <ElementContainer data-id="range-container-elem1-container">
                 {elem1}
             </ElementContainer>
             <ArrowRight />
+            <Break $wrap={wrap} />
             <ElementContainer data-id="range-container-elem2-container">
                 {elem2}
             </ElementContainer>
@@ -38,7 +40,7 @@ export const RangeInputInnerContainer = ({
                 data-id="range-container-indicator"
                 $position={currentActive}
                 $error={error}
-                $minWidthBeforeWrap={minWidthBeforeWrap}
+                $wrap={wrap}
             />
         </Wrapper>
     );

@@ -6,7 +6,7 @@ import { Color } from "../../color";
 // STYLE INTERFACE
 // =============================================================================
 interface GeneralStyleProps {
-    $minWidthBeforeWrap?: number;
+    $wrap?: boolean;
 }
 
 interface IndicatorStyleProps extends GeneralStyleProps {
@@ -18,10 +18,6 @@ interface IndicatorStyleProps extends GeneralStyleProps {
 // STYLING
 // =============================================================================
 
-const getDynamicMediaWidthQuery = (width: number) => {
-    return `@media screen and (max-width: ${width}px)`;
-};
-
 export const Wrapper = styled.div<GeneralStyleProps>`
     position: relative;
     height: 100%;
@@ -29,30 +25,39 @@ export const Wrapper = styled.div<GeneralStyleProps>`
     flex: 1;
 
     ${(props) => {
-        if (props.$minWidthBeforeWrap) {
+        if (props.$wrap) {
             return css`
-                ${getDynamicMediaWidthQuery(props.$minWidthBeforeWrap)} {
-                    /* Parent container need to provide space */
-                    flex-wrap: wrap;
+                /* Parent container need to provide space */
+                flex-wrap: wrap;
 
-                    [data-id="range-container-elem1-container"],
-                    [data-id="range-container-elem2-container"] {
-                        // 100% - Icon size - 2padding
-                        max-width: calc(100% - 1.125rem - 1rem);
-                        flex: unset;
-                    }
+                [data-id="range-container-elem1-container"],
+                [data-id="range-container-elem2-container"] {
+                    // 100% - Icon size - 2padding
+                    max-width: calc(100% - 1.125rem - 1rem);
+                    flex: unset;
+                }
 
-                    [data-id="range-container-elem2-container"] {
-                        margin-top: 0.5rem;
-                    }
+                [data-id="range-container-elem2-container"] {
+                    margin-top: 0.5rem;
                 }
             `;
         }
     }}
 `;
 
+export const Break = styled.div<GeneralStyleProps>`
+    width: 100%; // Force next flex item to break to next line
+    display: none;
+    ${(props) => {
+        if (props.$wrap) {
+            return css`
+                display: block;
+            `;
+        }
+    }}
+`;
+
 export const ElementContainer = styled.div`
-    height: 100%;
     display: flex;
     flex: 1;
     align-items: center;
@@ -99,11 +104,9 @@ export const Indicator = styled.div<IndicatorStyleProps>`
     }}
 
     ${(props) => {
-        if (props.$minWidthBeforeWrap) {
+        if (props.$wrap) {
             return css`
-                ${getDynamicMediaWidthQuery(props.$minWidthBeforeWrap)} {
-                    display: none;
-                }
+                display: none;
             `;
         }
     }}
