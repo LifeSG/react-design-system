@@ -70,6 +70,7 @@ export const DateRangeInput = ({
     const [initialCalendarDate, setInitialCalendarDate] = useState<string>();
     const [hoverValue, setHoverValue] = useState<string>(undefined);
     const [isTouch, setIsTouch] = useState<boolean>(false);
+    const [isEndDisabled, setIsEndDisabled] = useState<boolean>(false);
     const isWeekSelection = variant === "week";
     const isFixedRangeSelection = variant === "fixed-range";
 
@@ -118,11 +119,7 @@ export const DateRangeInput = ({
             }),
             focus: (state, currentFocus: FocusType) => ({
                 ...state,
-                currentFocus: isWeekSelection
-                    ? "none"
-                    : isFixedRangeSelection
-                    ? "start"
-                    : currentFocus,
+                currentFocus: !isWeekSelection ? currentFocus : "none",
                 calendarOpen: !readOnly,
             }),
             cancel: (state) => ({
@@ -204,6 +201,7 @@ export const DateRangeInput = ({
             actions.blur();
 
             setIsTouch(false);
+            setIsEndDisabled(false);
             startInputRef.current.resetPlaceholder();
             endInputRef.current.resetPlaceholder();
 
@@ -257,7 +255,7 @@ export const DateRangeInput = ({
             - else if !withButton, confirm the selection and "blur" the field
         */
 
-        if (!selectedEnd) {
+        if (!selectedEnd && !isFixedRangeSelection) {
             actions.focus("end");
             return;
         }
@@ -269,7 +267,7 @@ export const DateRangeInput = ({
             return;
         }
 
-        if (!isEndDirty) {
+        if (!isEndDirty && !isFixedRangeSelection) {
             actions.focus("end");
             return;
         }
@@ -278,6 +276,14 @@ export const DateRangeInput = ({
             actions.done({ start: val, end: selectedEnd });
             onChange?.(val, selectedEnd);
             return;
+        }
+
+        if (isFixedRangeSelection) {
+            const start = dayjs(val).format("YYYY-MM-DD");
+            const end = dayjs(start)
+                .add(numberOfDays - 1, "day")
+                .format("YYYY-MM-DD");
+            actions.changeEnd(end);
         }
     };
 
@@ -350,8 +356,9 @@ export const DateRangeInput = ({
 
     const handleFixedRangeSelectionChange = (val: string) => {
         const start = dayjs(val).format("YYYY-MM-DD");
-        const end = start + Math.max(numberOfDays - 1, 0);
-
+        const end = dayjs(start)
+            .add(numberOfDays - 1, "day")
+            .format("YYYY-MM-DD");
         actions.changeStart(start);
         actions.changeEnd(end);
         isUnselectable.current = false;
@@ -389,7 +396,12 @@ export const DateRangeInput = ({
 
     const handleFixedRangeSelectionInputFocus = () => {
         if (isFixedRangeSelection) {
-            setIsTouch(true);
+            setIsEndDisabled(true);
+            if (selectedStart) {
+                actions.focus("none");
+            } else {
+                actions.focus("start");
+            }
         }
     };
 
@@ -435,6 +447,13 @@ export const DateRangeInput = ({
 
     const handleCalendarHover = (val: string) => {
         setHoverValue(val);
+        if (isFixedRangeSelection) {
+            if (val) {
+                actions.focus("start");
+            } else {
+                actions.focus("none");
+            }
+        }
     };
 
     // =============================================================================
@@ -532,7 +551,7 @@ export const DateRangeInput = ({
                         names={["end-day", "end-month", "end-year"]}
                         value={selectedEnd}
                         disabled={disabled}
-                        readOnly={isTouch || readOnly}
+                        readOnly={isTouch || readOnly || isEndDisabled}
                         focused={currentFocus === "end"}
                         hoverValue={getHoverValue("end")}
                         onChange={handleEndDateChange}
