@@ -135,6 +135,30 @@ A field that only allows user to pick a week date.
     </Story>
 </Canvas>
 
+<Heading3>Fixed-range Input</Heading3>
+
+A field that only allows user to enter a date range on a fixed interval.
+
+<Canvas>
+    <Story name="Fixed-range input">
+        {() => {
+            return (
+                <StoryContainer>
+                    <Form.DateRangeInput
+                        label="This has the 7-day fixed-range selection"
+                        variant="fixed-range"
+                    />
+                    <Form.DateRangeInput
+                        label="This has the 14-day fixed-range selection"
+                        variant="fixed-range"
+                        numberOfDays={14}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
 <Heading3>With disabled dates</Heading3>
 
 You can use `disabledDates` to specify dates that are not available for selection.
