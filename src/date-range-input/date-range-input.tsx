@@ -69,7 +69,7 @@ export const DateRangeInput = ({
     // =============================================================================
     const [initialCalendarDate, setInitialCalendarDate] = useState<string>();
     const [hoverValue, setHoverValue] = useState<string>(undefined);
-    const [isTouch, setIsTouch] = useState<boolean>(false);
+    const [isStartDisabled, setIsStartDisabled] = useState<boolean>(false);
     const [isEndDisabled, setIsEndDisabled] = useState<boolean>(false);
     const isWeekSelection = variant === "week";
     const isFixedRangeSelection = variant === "fixed-range";
@@ -196,7 +196,7 @@ export const DateRangeInput = ({
         if (!nodeRef.current.contains(event.relatedTarget)) {
             actions.blur();
 
-            setIsTouch(false);
+            setIsStartDisabled(false);
             setIsEndDisabled(false);
             startInputRef.current.resetPlaceholder();
             endInputRef.current.resetPlaceholder();
@@ -385,7 +385,8 @@ export const DateRangeInput = ({
                 .startOf("week")
                 .format("YYYY-MM-DD");
 
-            setIsTouch(true);
+            setIsStartDisabled(true);
+            setIsEndDisabled(true);
             setInitialCalendarDate(firstDayOfWeek);
         }
     };
@@ -531,7 +532,7 @@ export const DateRangeInput = ({
                         names={["start-day", "start-month", "start-year"]}
                         value={selectedStart}
                         disabled={disabled}
-                        readOnly={isTouch || readOnly}
+                        readOnly={isStartDisabled || readOnly}
                         focused={currentFocus === "start"}
                         hoverValue={getHoverValue("start")}
                         onChange={handleStartDateChange}
@@ -546,7 +547,7 @@ export const DateRangeInput = ({
                         names={["end-day", "end-month", "end-year"]}
                         value={selectedEnd}
                         disabled={disabled}
-                        readOnly={isTouch || readOnly || isEndDisabled}
+                        readOnly={isEndDisabled || readOnly}
                         focused={currentFocus === "end"}
                         hoverValue={getHoverValue("end")}
                         onChange={handleEndDateChange}
