@@ -8,9 +8,5 @@ export interface RangeInputInnerContainerProps {
     children: [JSX.Element, JSX.Element];
     currentActive: "start" | "end" | "none";
     className?: string | undefined;
-    /**
-     * Defines the min width (inclusive) before the layout
-     * wraps (in px), if not defined, no wrap will occur
-     */
-    minWidthBeforeWrap?: number | undefined;
+    wrap?: boolean | undefined;
 }

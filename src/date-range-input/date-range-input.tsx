@@ -13,7 +13,7 @@ import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
-import { DateHelper, DateInputHelper } from "../util";
+import { DateHelper, DateInputHelper, useContainerQuery } from "../util";
 import { useStateActions } from "../util/use-state-actions";
 import {
     Container,
@@ -163,6 +163,10 @@ export const DateRangeInput = ({
     const endInputRef = useRef<StandaloneDateInputRef>();
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
+    });
+    const shouldWrap = useContainerQuery({
+        maxWidth: MOBILE_WRAP_WIDTH,
+        targetRef: nodeRef,
     });
 
     // show button if it is mobile view
@@ -455,6 +459,7 @@ export const DateRangeInput = ({
             $disabled={disabled}
             $readOnly={readOnly}
             $error={error}
+            $wrap={shouldWrap}
             id={id}
             data-testid={otherProps["data-testid"]}
             onBlur={handleNodeBlur}
@@ -463,10 +468,10 @@ export const DateRangeInput = ({
         >
             <RangeInputInnerContainer
                 currentActive={currentFocus}
-                minWidthBeforeWrap={MOBILE_WRAP_WIDTH}
+                wrap={shouldWrap}
                 error={error}
             >
-                <InputContainer>
+                <InputContainer $wrap={shouldWrap}>
                     <StandaloneDateInput
                         ref={startInputRef}
                         placeholder="From"
@@ -481,7 +486,7 @@ export const DateRangeInput = ({
                         onBlur={handleStartInputBlur}
                     />
                 </InputContainer>
-                <InputContainer>
+                <InputContainer $wrap={shouldWrap}>
                     <StandaloneDateInput
                         ref={endInputRef}
                         placeholder="To"
