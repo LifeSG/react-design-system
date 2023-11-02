@@ -129,7 +129,7 @@ const DATA: ApiTableSectionProps[] = [
                         is a week selection.
                     </>
                 ),
-                propTypes: ["string"],
+                propTypes: ["range", "week", "fixed-range"],
                 defaultValue: `range`,
             },
             {

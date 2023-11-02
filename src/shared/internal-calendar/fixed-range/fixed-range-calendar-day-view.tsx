@@ -12,9 +12,7 @@ import { FixedRangeDayCell } from "./fixed-range-cell";
 
 interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {
     selectedStartDate: string;
-    selectedEndDate: string;
     calendarDate: Dayjs;
-    currentView: View;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
     numberOfDays: number;
