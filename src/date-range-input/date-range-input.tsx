@@ -428,11 +428,6 @@ export const DateRangeInput = ({
     };
 
     const handleCalendarSelect = (val: string) => {
-        if (currentFocus === "start") {
-            handleStartDateChange(val);
-        } else if (currentFocus === "end") {
-            handleEndDateChange(val);
-        }
         switch (variant) {
             case "week":
                 handleWeekSelectionChange(val);
@@ -441,6 +436,11 @@ export const DateRangeInput = ({
                 handleFixedRangeSelectionChange(val);
                 break;
             default:
+                if (currentFocus === "start") {
+                    handleStartDateChange(val);
+                } else if (currentFocus === "end") {
+                    handleEndDateChange(val);
+                }
                 break;
         }
     };
