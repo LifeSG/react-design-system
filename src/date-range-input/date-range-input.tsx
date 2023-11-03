@@ -438,7 +438,6 @@ export const DateRangeInput = ({
     };
 
     const handleCalendarSelect = (val: string) => {
-        console.log("coming here");
         if (currentFocus === "start") {
             handleStartDateChange(val);
         } else if (currentFocus === "end") {

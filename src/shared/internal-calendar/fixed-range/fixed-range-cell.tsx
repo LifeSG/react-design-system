@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { CalendarHelper, DateHelper } from "../../../util";
-import { CellStyleProps, CellType, DayCell, DayCellProps } from "../day-cell";
+import { CellStyleProps, DayCell, DayCellProps } from "../day-cell";
 
 interface Props {
     date: Dayjs;
@@ -79,69 +79,62 @@ export const FixedRangeDayCell = ({
     // =========================================================================
     const getRangeStyle = (): CellStyleProps => {
         const props: CellStyleProps = {};
+        const formattedDate = date.format("YYYY-MM-DD");
 
-        let type: CellType = undefined;
-        if (isSelected && isHover) {
-            type = "overlap";
-        } else if (isSelected) {
-            type = "selected";
-        } else if (isHover) {
-            type = "hover-dash";
+        if (isHover) {
+            if (formattedDate === hoverStart) {
+                props.circleLeft = "hover-dash";
+            } else {
+                props.bgLeft = "hover-dash";
+            }
+
+            if (formattedDate === hoverEnd) {
+                props.circleRight = "hover-dash";
+            } else {
+                props.bgRight = "hover-dash";
+            }
         }
-
-        if (type) {
-            if (isStart && !isSelected) {
-                props.circleLeft = "hover-current";
-                props.circleRight = "hover-current";
-                props.circleShadow = true;
-            } else if (isStart) {
+        if (isSelected) {
+            if (formattedDate === rangeStart) {
                 props.circleLeft = "selected-outline";
                 props.circleRight = "selected-outline";
-
-                if (isSelected && isHover && rangeStart && hoverStart) {
-                    props.circleLeft = "overlap-outline";
-                    props.circleRight = "overlap-outline";
-
-                    if (hoverStart > rangeStart) {
-                        props.bgLeft = "selected";
-                    }
-                    if (rangeStart > hoverStart) {
-                        props.bgLeft = "hover-dash";
-                    }
-                }
+                props.bgRight = "selected";
             } else {
-                props.bgLeft = type;
+                props.bgLeft = "selected";
+            }
+
+            if (formattedDate === rangeEnd) {
+                props.circleRight = "selected";
+            } else {
+                props.bgRight = "selected";
+            }
+        }
+        if (isSelected && isHover) {
+            if (isStart) {
+                props.circleLeft = "overlap-outline";
+            } else {
+                props.bgLeft = "overlap";
             }
 
             if (isEnd) {
-                props.circleRight = type;
-                if (isSelected && isHover) {
-                    props.circleRight = "overlap";
-                }
-
-                if (isSelected && isHover && rangeEnd && hoverEnd) {
-                    if (hoverEnd > rangeEnd) {
-                        props.bgRight = "hover-dash";
-                    }
-                    if (rangeStart > hoverStart) {
-                        props.bgRight = "selected";
-                    }
-                    if (isStart && rangeEnd === hoverStart) {
-                        props.circleLeft = "hover-current";
-                        props.circleRight = "hover-current";
-                        props.bgLeft = "selected";
-                        props.bgRight = "hover-dash";
-                    }
-
-                    if (hoverEnd === rangeStart) {
-                        props.circleLeft = "overlap-outline";
-                        props.circleRight = "overlap-outline";
-                        props.bgLeft = "hover-dash";
-                        props.bgRight = "selected";
-                    }
-                }
+                props.circleRight = "overlap";
             } else {
-                props.bgRight = type;
+                props.bgRight = "overlap";
+            }
+
+            if (formattedDate === rangeStart) {
+                props.circleLeft = "overlap-outline";
+                props.circleRight = "overlap-outline";
+            }
+        }
+
+        if (formattedDate === hoverStart) {
+            props.circleLeft = "hover-current";
+            props.circleRight = "hover-current";
+            props.circleShadow = true;
+            if (hoverStart >= rangeStart && hoverStart < rangeEnd) {
+                props.circleLeft = "overlap-outline";
+                props.circleRight = "overlap-outline";
             }
         }
 
