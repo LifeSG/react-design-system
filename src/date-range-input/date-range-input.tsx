@@ -283,31 +283,6 @@ export const DateRangeInput = ({
         }
     };
 
-    const handleFixedRangeDateChange = (val: string) => {
-        if (isDateUnselectable(val)) {
-            isUnselectable.current = true;
-            return;
-        }
-
-        actions.changeStart(val);
-        calendarRef.current.setCalendarDate(val);
-        isUnselectable.current = false;
-
-        if (!val) {
-            if (!withButton) {
-                actions.resetRange({ start: "", end: "" });
-                onChange?.("", "");
-            }
-            return;
-        }
-
-        const start = dayjs(val).format("YYYY-MM-DD");
-        const end = dayjs(start)
-            .add(numberOfDays - 1, "day")
-            .format("YYYY-MM-DD");
-        actions.changeEnd(end);
-    };
-
     const handleEndDateChange = (val: string) => {
         if (isDateUnselectable(val)) {
             // date is invalid, remain on this input
@@ -376,6 +351,21 @@ export const DateRangeInput = ({
     };
 
     const handleFixedRangeSelectionChange = (val: string) => {
+        if (isDateUnselectable(val)) {
+            isUnselectable.current = true;
+            return;
+        }
+
+        actions.changeStart(val);
+        calendarRef.current.setCalendarDate(val);
+        isUnselectable.current = false;
+
+        if (!val) {
+            actions.resetRange({ start: "", end: "" });
+            onChange?.("", "");
+            return;
+        }
+
         const start = dayjs(val).format("YYYY-MM-DD");
         const end = dayjs(start)
             .add(numberOfDays - 1, "day")
@@ -443,11 +433,15 @@ export const DateRangeInput = ({
         } else if (currentFocus === "end") {
             handleEndDateChange(val);
         }
-        if (isWeekSelection) {
-            handleWeekSelectionChange(val);
-        }
-        if (isFixedRangeSelection) {
-            handleFixedRangeSelectionChange(val);
+        switch (variant) {
+            case "week":
+                handleWeekSelectionChange(val);
+                break;
+            case "fixed-range":
+                handleFixedRangeSelectionChange(val);
+                break;
+            default:
+                break;
         }
     };
 
@@ -552,7 +546,7 @@ export const DateRangeInput = ({
                         hoverValue={getHoverValue("start")}
                         onChange={
                             isFixedRangeSelection
-                                ? handleFixedRangeDateChange
+                                ? handleFixedRangeSelectionChange
                                 : handleStartDateChange
                         }
                         onFocus={handleInputFocus("start")}
