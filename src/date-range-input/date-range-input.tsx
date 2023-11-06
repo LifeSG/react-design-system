@@ -361,8 +361,12 @@ export const DateRangeInput = ({
         isUnselectable.current = false;
 
         if (!val) {
-            actions.resetRange({ start: "", end: "" });
-            onChange?.("", "");
+            if (withButton) {
+                actions.changeEnd("");
+            } else {
+                actions.resetRange({ start: "", end: "" });
+                onChange?.("", "");
+            }
             return;
         }
 

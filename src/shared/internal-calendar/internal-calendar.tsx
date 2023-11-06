@@ -111,10 +111,10 @@ export const Component = (
 
         switch (variant) {
             case "single":
-            case "fixed-range":
                 isDisabled = false;
                 break;
             case "range":
+            case "fixed-range":
                 // ensure both are empty or complete at the same time
                 isDisabled = !!selectedStartDate !== !!selectedEndDate;
                 break;
