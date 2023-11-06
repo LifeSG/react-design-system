@@ -57,11 +57,11 @@ export const FixedRangeDayCell = ({
     const isHover =
         hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
     const isStart =
-        (isSelected && date.isSame(rangeStart)) ||
-        (isHover && date.isSame(hoverStart));
+        (isSelected && date.isSame(rangeStart, "day")) ||
+        (isHover && date.isSame(hoverStart, "day"));
     const isEnd =
-        (isSelected && date.isSame(rangeEnd)) ||
-        (isHover && date.isSame(hoverEnd));
+        (isSelected && date.isSame(rangeEnd, "day")) ||
+        (isHover && date.isSame(hoverEnd, "day"));
 
     // =========================================================================
     // EVENT HANDLERS
@@ -77,8 +77,12 @@ export const FixedRangeDayCell = ({
     // =========================================================================
     // HELPERS
     // =========================================================================
-    const applyRange = (type: CellType, start, end) => {
-        const props: CellStyleProps = {};
+    const applyRange = (
+        props: CellStyleProps,
+        type: CellType,
+        start: boolean,
+        end: boolean
+    ) => {
         if (start) {
             props.circleLeft = type;
         } else {
@@ -90,8 +94,6 @@ export const FixedRangeDayCell = ({
         } else {
             props.bgRight = type;
         }
-
-        return props;
     };
 
     const getRangeStyle = (): CellStyleProps => {
@@ -100,36 +102,32 @@ export const FixedRangeDayCell = ({
         const formattedDate = date.format("YYYY-MM-DD");
 
         if (isHover) {
-            Object.assign(
+            applyRange(
                 props,
-                applyRange(
-                    "hover-dash",
-                    formattedDate === hoverStart,
-                    formattedDate === hoverEnd
-                )
+                "hover-dash",
+                formattedDate === hoverStart,
+                formattedDate === hoverEnd
             );
         }
         if (isSelected) {
-            Object.assign(
+            applyRange(
                 props,
-                applyRange(
-                    "selected",
-                    formattedDate === rangeStart,
-                    formattedDate === rangeEnd
-                )
+                "selected",
+                formattedDate === rangeStart,
+                formattedDate === rangeEnd
             );
         }
         if (isSelected && isHover) {
-            Object.assign(props, applyRange("overlap", isStart, isEnd));
+            applyRange(props, "overlap", isStart, isEnd);
         }
 
         if (formattedDate === rangeStart) {
-            if (!isHover) {
-                props.circleRight = "selected-outline";
-                props.circleLeft = "selected-outline";
-            } else {
+            if (isHover) {
                 props.circleLeft = "overlap-outline";
                 props.circleRight = "overlap-outline";
+            } else {
+                props.circleRight = "selected-outline";
+                props.circleLeft = "selected-outline";
             }
         }
 
