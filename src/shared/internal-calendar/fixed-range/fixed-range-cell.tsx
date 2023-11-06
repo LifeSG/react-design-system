@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { CalendarHelper, DateHelper } from "../../../util";
-import { CellStyleProps, DayCell, DayCellProps } from "../day-cell";
+import { CellStyleProps, CellType, DayCell, DayCellProps } from "../day-cell";
 
 interface Props {
     date: Dayjs;
@@ -77,52 +77,57 @@ export const FixedRangeDayCell = ({
     // =========================================================================
     // HELPERS
     // =========================================================================
+    const applyRange = (type: CellType, start, end) => {
+        const props: CellStyleProps = {};
+        if (start) {
+            props.circleLeft = type;
+        } else {
+            props.bgLeft = type;
+        }
+
+        if (end) {
+            props.circleRight = type;
+        } else {
+            props.bgRight = type;
+        }
+
+        return props;
+    };
+
     const getRangeStyle = (): CellStyleProps => {
         const props: CellStyleProps = {};
+
         const formattedDate = date.format("YYYY-MM-DD");
 
         if (isHover) {
-            if (formattedDate === hoverStart) {
-                props.circleLeft = "hover-dash";
-            } else {
-                props.bgLeft = "hover-dash";
-            }
-
-            if (formattedDate === hoverEnd) {
-                props.circleRight = "hover-dash";
-            } else {
-                props.bgRight = "hover-dash";
-            }
+            Object.assign(
+                props,
+                applyRange(
+                    "hover-dash",
+                    formattedDate === hoverStart,
+                    formattedDate === hoverEnd
+                )
+            );
         }
         if (isSelected) {
-            if (formattedDate === rangeStart) {
-                props.circleLeft = "selected-outline";
-                props.circleRight = "selected-outline";
-                props.bgRight = "selected";
-            } else {
-                props.bgLeft = "selected";
-            }
-
-            if (formattedDate === rangeEnd) {
-                props.circleRight = "selected";
-            } else {
-                props.bgRight = "selected";
-            }
+            Object.assign(
+                props,
+                applyRange(
+                    "selected",
+                    formattedDate === rangeStart,
+                    formattedDate === rangeEnd
+                )
+            );
         }
         if (isSelected && isHover) {
-            if (isStart) {
-                props.circleLeft = "overlap-outline";
-            } else {
-                props.bgLeft = "overlap";
-            }
+            Object.assign(props, applyRange("overlap", isStart, isEnd));
+        }
 
-            if (isEnd) {
-                props.circleRight = "overlap";
+        if (formattedDate === rangeStart) {
+            if (!isHover) {
+                props.circleRight = "selected-outline";
+                props.circleLeft = "selected-outline";
             } else {
-                props.bgRight = "overlap";
-            }
-
-            if (formattedDate === rangeStart) {
                 props.circleLeft = "overlap-outline";
                 props.circleRight = "overlap-outline";
             }

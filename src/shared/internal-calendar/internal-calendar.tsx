@@ -111,6 +111,7 @@ export const Component = (
 
         switch (variant) {
             case "single":
+            case "fixed-range":
                 isDisabled = false;
                 break;
             case "range":
@@ -118,9 +119,6 @@ export const Component = (
                 isDisabled = !!selectedStartDate !== !!selectedEndDate;
                 break;
             case "week":
-                isDisabled = !selectedStartDate && !selectedEndDate;
-                break;
-            case "fixed-range":
                 isDisabled = !selectedStartDate && !selectedEndDate;
                 break;
         }
@@ -131,7 +129,7 @@ export const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCalendarDay = (calendarDate: Dayjs, currentView: View) => {
+    const renderCalendarDay = (calendarDate: Dayjs) => {
         switch (variant) {
             case "single":
             case "range":
@@ -217,9 +215,7 @@ export const Component = (
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
             >
-                {({ calendarDate, currentView }) =>
-                    renderCalendarDay(calendarDate, currentView)
-                }
+                {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>
         </Container>
     );
