@@ -10,6 +10,7 @@ import {
     InternalCalendarRef,
     View,
 } from "./types";
+import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
 
 export const Component = (
     {
@@ -29,6 +30,7 @@ export const Component = (
         type = "standalone",
         selectWithinRange = true,
         initialCalendarDate,
+        numberOfDays,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -112,6 +114,7 @@ export const Component = (
                 isDisabled = false;
                 break;
             case "range":
+            case "fixed-range":
                 // ensure both are empty or complete at the same time
                 isDisabled = !!selectedStartDate !== !!selectedEndDate;
                 break;
@@ -126,7 +129,7 @@ export const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCalendarDay = (calendarDate: Dayjs, currentView: View) => {
+    const renderCalendarDay = (calendarDate: Dayjs) => {
         switch (variant) {
             case "single":
             case "range":
@@ -157,6 +160,20 @@ export const Component = (
                         allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                    />
+                );
+            case "fixed-range":
+                return (
+                    <FixedRangeCalendarDayView
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        allowDisabledSelection={allowDisabledSelection}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                        numberOfDays={numberOfDays}
                     />
                 );
             default:
@@ -198,9 +215,7 @@ export const Component = (
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
             >
-                {({ calendarDate, currentView }) =>
-                    renderCalendarDay(calendarDate, currentView)
-                }
+                {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>
         </Container>
     );

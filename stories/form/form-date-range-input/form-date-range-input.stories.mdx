@@ -108,7 +108,7 @@ A field that only allows user to pick a week date.
             return (
                 <StoryContainer>
                     <Form.DateRangeInput
-                        label="This is the date range input week selection"
+                        label="This is the week selection"
                         variant="week"
                         value={start}
                         valueEnd={end}
@@ -123,10 +123,50 @@ A field that only allows user to pick a week date.
                         withButton={false}
                     />
                     <Form.DateRangeInput
-                        label="This is the with disabled dates"
+                        label="This has disabled dates"
                         variant="week"
                         value={start}
                         valueEnd={end}
+                        disabledDates={disabledDates}
+                    />
+                </StoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Fixed range input</Heading3>
+
+A field that only allows a user to enter a date range with a fixed duration.
+
+<Canvas>
+    <Story name="Fixed range input">
+        {() => {
+            const [disabledDates] = useState([
+                dayjs().date(10).format("YYYY-MM-DD"),
+                dayjs().date(15).format("YYYY-MM-DD"),
+                dayjs().date(21).format("YYYY-MM-DD"),
+                dayjs().date(25).format("YYYY-MM-DD"),
+            ]);
+            return (
+                <StoryContainer>
+                    <Form.DateRangeInput
+                        label="This has fixed range selection (default 7 days)"
+                        variant="fixed-range"
+                    />
+                    <Form.DateRangeInput
+                        label="This has a custom range (14 days)"
+                        variant="fixed-range"
+                        numberOfDays={14}
+                    />
+                    <Form.DateRangeInput
+                        label="This has no action buttons on desktop viewports"
+                        variant="fixed-range"
+                        withButton={false}
+                    />
+                    <Form.DateRangeInput
+                        label="This has disabled dates"
+                        variant="fixed-range"
                         disabledDates={disabledDates}
                     />
                 </StoryContainer>

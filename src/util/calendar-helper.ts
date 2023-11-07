@@ -187,6 +187,13 @@ export namespace CalendarHelper {
         };
     };
 
+    export const getFixedRangeStartEnd = (day: Dayjs, numberOfDays: number) => {
+        return {
+            start: day.format("YYYY-MM-DD"),
+            end: day.add(numberOfDays - 1, "day").format("YYYY-MM-DD"),
+        };
+    };
+
     export const isDisabledDay = (
         day: Dayjs,
         disabledDates?: string[] | undefined,
