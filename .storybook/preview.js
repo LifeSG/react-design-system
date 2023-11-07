@@ -2,8 +2,8 @@ import { withThemes } from "@react-theming/storybook-addon";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { addDecorator } from "@storybook/react";
 import pretty from "pretty";
+import { BaseTheme, BookingSGTheme, MyLegacyTheme, RBSTheme } from "src/theme";
 import { ThemeProvider } from "styled-components";
-import { BaseTheme, BookingSGTheme, RBSTheme } from "src/theme";
 
 export const parameters = {
     viewport: {
@@ -36,6 +36,7 @@ export const parameters = {
 const themes = [
     { ...BaseTheme, name: "LifeSG" },
     { ...BookingSGTheme, name: "BookingSG" },
+    { ...MyLegacyTheme, name: "MyLegacy" },
     { ...RBSTheme, name: "RBS" },
 ];
 

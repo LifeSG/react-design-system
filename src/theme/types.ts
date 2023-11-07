@@ -7,7 +7,7 @@ export type ThemeLayout = "normal";
 // =============================================================================
 // COLOR THEMES
 // =============================================================================
-export type ColorScheme = "base" | "bookingsg" | "rbs";
+export type ColorScheme = "base" | "bookingsg" | "rbs" | "mylegacy";
 export type ColorCollectionsMap = {
     [key in ColorScheme]: ColorSet;
 };
