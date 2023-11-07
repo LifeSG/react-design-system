@@ -1,6 +1,7 @@
 import { ColorSet } from "../color/types";
 import { BaseColorSet } from "../spec/color-spec/base-color-set";
 import { BookingSGColorSet } from "../spec/color-spec/bookingsg-color-set";
+import { MyLegacyColorSet } from "../spec/color-spec/mylegacy-color-set";
 import { RBSColorSet } from "../spec/color-spec/rbs-color-set";
 import { getCollection, getValue } from "./helper";
 import {
@@ -19,6 +20,7 @@ const ColorSpec: ThemeCollectionSpec<ColorCollectionsMap, ColorScheme> = {
         base: BaseColorSet,
         bookingsg: BookingSGColorSet,
         rbs: RBSColorSet,
+        mylegacy: MyLegacyColorSet,
     },
     defaultValue: "base",
 };
