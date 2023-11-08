@@ -97,6 +97,7 @@ export const InputSelect = <T, V>({
     };
 
     const handleWrapperBlur = () => {
+        onBlur?.();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
