@@ -62,7 +62,7 @@ export const FixedCountdown = styled(BaseCountdown)`
             /* style object will be converted to px */
             ${{ top: $top, left: $left, right: $right }}
             box-shadow: 0px 0px 4px 1px
-                ${$warn ? Color.Brand[2] : Color.Accent.Light[2]};
+                ${$warn ? Color.Validation.Red.Border : Color.Accent.Light[2]};
 
             ${MediaQuery.MaxWidth.mobileL} {
                 left: 0;
