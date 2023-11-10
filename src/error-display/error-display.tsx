@@ -10,6 +10,7 @@ import {
     TextContainer,
     Title,
 } from "./error-display.style";
+import { Text } from "../text";
 import { ErrorDisplayProps, MaintenanceAdditionalAttributes } from "./types";
 
 export const ErrorDisplay = ({
@@ -95,7 +96,9 @@ export const ErrorDisplay = ({
                             data-id="error-display-description"
                         >
                             {typeof updatedAssets.description === "string" ? (
-                                <p>{updatedAssets.description}</p>
+                                <Text.Body>
+                                    {updatedAssets.description}
+                                </Text.Body>
                             ) : (
                                 updatedAssets.description
                             )}

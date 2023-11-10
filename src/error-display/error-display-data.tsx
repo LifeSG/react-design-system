@@ -227,64 +227,72 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "400",
         {
             img: imgAttributeHelper(ImgPaths["400"]),
-            title: "400 Bad Request",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or\ntry again later.",
         },
     ],
     [
         "403",
         {
             img: imgAttributeHelper(ImgPaths["403"]),
-            title: "403 Forbidden",
-            description: "A generic error state illustration.",
+            title: "Error loading page",
+            description:
+                "You may not have permission to view this page. If someone gave you this link, let them know about this error.",
         },
     ],
     [
         "404",
         {
             img: imgAttributeHelper(ImgPaths["404"]),
-            title: "404 No Page Found",
-            description: "No page found.",
+            title: "Page not found",
+            description:
+                "If you entered or pasted the URL, check that it’s correct. If someone gave you this link, let them know about this error.",
         },
     ],
     [
         "408",
         {
             img: imgAttributeHelper(ImgPaths["408"]),
-            title: "408 Request Timeout",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or try again later.",
         },
     ],
     [
         "500",
         {
             img: imgAttributeHelper(ImgPaths["500"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "We're working on a fix for the problem. Please try again later.",
         },
     ],
     [
         "502",
         {
             img: imgAttributeHelper(ImgPaths["502"]),
-            title: "502 Bad Gateway",
-            description: "An error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or try again later.",
         },
     ],
     [
         "503",
         {
             img: imgAttributeHelper(ImgPaths["503"]),
-            title: "503 Service Unavailable",
-            description: "A generic error state illustration.",
+            title: "Service under maintenance",
+            description:
+                "This service is currently unavailable. Please try again later.",
         },
     ],
     [
         "504",
         {
             img: imgAttributeHelper(ImgPaths["504"]),
-            title: "504 Gateway Timeout",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or \ntry again later.",
         },
     ],
     [
@@ -377,8 +385,9 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "unsupported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Browser not supported",
+            description:
+                "Download the latest version of Chrome, Edge, Firefox or Safari.",
         },
     ],
     [

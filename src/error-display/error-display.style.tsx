@@ -35,11 +35,13 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-width: 36rem;
+    white-space: pre-wrap;
 `;
 
-export const Title = styled(Text.H1)`
+export const Title = styled(Text.H2)`
+    ${TextStyleHelper.getTextStyle("H2", "semibold")}
     margin: 2rem 0 1rem;
-    letter-spacing: -0.032rem !important;
     text-align: center;
 `;
 
