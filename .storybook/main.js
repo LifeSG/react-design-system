@@ -1,4 +1,5 @@
 const path = require("path");
+import remarkGfm from "remark-gfm";
 
 module.exports = {
     stories: [
@@ -10,6 +11,16 @@ module.exports = {
         "@storybook/addon-essentials",
         "@storybook/addon-a11y",
         "@storybook/addon-themes",
+        {
+            name: "@storybook/addon-docs",
+            options: {
+                mdxPluginOptions: {
+                    mdxCompileOptions: {
+                        remarkPlugins: [remarkGfm],
+                    },
+                },
+            },
+        },
     ],
     staticDirs: ["../public"],
     webpackFinal: async (config, { configType }) => {
