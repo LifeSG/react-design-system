@@ -1,0 +1,34 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { ImageCarousel } from "src/image-carousel";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import { ImageCarouselBox } from "./ImageCarouselBox";
+import { Wrapper } from "./doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta
+    title="General/ImageCarousel"
+    component={ImageCarousel}
+    parameters={{ show: true }}
+/>
+
+<Title>ImageCarousel</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that renders a images carousel modal
+
+```tsx
+import { ImageCarousel } from "@lifesg/react-design-system/image-carousel";
+```
+
+<Canvas>
+    <Story name="Image Carousel">
+        <Wrapper type="flex-column">
+            <ImageCarouselBox />
+        </Wrapper>
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
