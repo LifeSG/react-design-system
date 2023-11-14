@@ -1,15 +1,15 @@
 import { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
-import { CalendarDayView } from "./day-of-month/calendar-day-view";
 import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
 import { Container } from "./internal-calendar.style";
+import { StandardCalendarDayView } from "./standard";
 import {
     CalendarManagerRef,
     InternalCalendarProps,
     InternalCalendarRef,
 } from "./types";
-import { WeekCalendarDayView } from "./week/week-calendar-day-view";
+import { WeekCalendarDayView } from "./week";
 
 export const Component = (
     {
@@ -161,7 +161,7 @@ export const Component = (
             case "range":
             default: // standalone type
                 return (
-                    <CalendarDayView
+                    <StandardCalendarDayView
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         disabledDates={disabledDates}

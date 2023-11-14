@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DayLabel } from "../shared/internal-calendar/day-of-month/calendar-day-view.style";
+import { DayLabel } from "../shared/internal-calendar/standard";
 import { TextStyleHelper } from "../text";
 
 export const DayLabelWeek = styled(DayLabel)`

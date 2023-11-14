@@ -7,7 +7,7 @@ import {
     InteractiveCircle,
     RowDayCell,
     StyleProps,
-} from "../shared/internal-calendar/day-of-month/calendar-day-view.style";
+} from "../shared/internal-calendar/standard";
 import { Text } from "../text/text";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";

@@ -20,7 +20,7 @@ interface Props {
     onHover: (value: string, disabled: boolean) => void;
 }
 
-export const DayMonthCell = ({
+export const StandardCell = ({
     date,
     calendarDate,
     startDate,

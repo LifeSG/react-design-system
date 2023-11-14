@@ -4,8 +4,12 @@ import { useMemo, useState } from "react";
 import { Text } from "../../../text/text";
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { CommonCalendarProps, FocusType } from "../types";
-import { HeaderCell, RowDayCell, Wrapper } from "./calendar-day-view.style";
-import { DayMonthCell } from "./day-of-month-cell";
+import {
+    HeaderCell,
+    RowDayCell,
+    Wrapper,
+} from "./standard-calendar-day-view.style";
+import { StandardCell } from "./standard-cell";
 
 dayjs.extend(isBetween);
 
@@ -22,7 +26,7 @@ interface CalendarDayViewProps extends CommonCalendarProps {
     onHover: (value: string) => void;
 }
 
-export const CalendarDayView = ({
+export const StandardCalendarDayView = ({
     calendarDate,
     currentFocus,
     disabledDates,
@@ -82,7 +86,7 @@ export const CalendarDayView = ({
                 <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
                     {week.map((day, dayIndex) => {
                         return (
-                            <DayMonthCell
+                            <StandardCell
                                 key={`day-${dayIndex}`}
                                 date={day}
                                 calendarDate={calendarDate}
