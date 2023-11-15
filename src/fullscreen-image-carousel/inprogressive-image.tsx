@@ -18,7 +18,7 @@ export const ImprogressiveImage = (props: ImprogressiveImageProps) => {
             setLoading(false);
             setError(e);
         };
-    });
+    }, []);
 
     if (children) {
         return (
@@ -34,9 +34,5 @@ export const ImprogressiveImage = (props: ImprogressiveImageProps) => {
         );
     }
 
-    return (
-        <React.Fragment>
-            <ImageBox src={src} {...rest} />
-        </React.Fragment>
-    );
+    return <ImageBox src={src} {...rest} />;
 };

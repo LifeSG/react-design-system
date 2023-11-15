@@ -108,12 +108,13 @@ export const FullscreenImageCarousel = forwardRef<
 
     useEffect(() => {
         const currentThumbnail = document.getElementById(
-            `thumbnail_${currentSlide}`
+            `thumbnail_item_${currentSlide}`
         );
-        currentThumbnail?.scrollIntoView({
-            behavior: "smooth",
-            inline: "center",
-        });
+        typeof currentThumbnail?.scrollIntoView === "function" &&
+            currentThumbnail?.scrollIntoView({
+                behavior: "smooth",
+                inline: "center",
+            });
         setZoom(1);
     }, [currentSlide]);
 
@@ -194,9 +195,9 @@ export const FullscreenImageCarousel = forwardRef<
                         </ImageGallerySlides>
                     </ImageGallerySwipe>
                     <BoxChip className="carousel-footer">
-                        <Chip className="carousel-chip">{`${currentSlide + 1}/${
-                            images.length
-                        }`}</Chip>
+                        <Chip className="carousel-chip" weight={"semibold"}>{`${
+                            currentSlide + 1
+                        }/${images.length}`}</Chip>
                     </BoxChip>
                 </ImageGalleryWrapper>
                 {!hideThumbnail && (
@@ -205,6 +206,7 @@ export const FullscreenImageCarousel = forwardRef<
                             {images.map((src, index) => (
                                 <ThumbnailItem
                                     key={index}
+                                    id={`thumbnail_item_${index}`}
                                     className="thumbnail-item"
                                     acctive={index === currentSlide}
                                     onClick={() => setCurrentSlide(index)}

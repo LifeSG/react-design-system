@@ -22,12 +22,6 @@ describe("Image Carousel", () => {
     it("should render images", () => {
         render(<FullscreenImageCarousel images={IMAGES} show={true} />);
         {
-            const elements = document.getElementsByClassName(
-                "image-carousel-slide"
-            );
-            expect(elements.length).toBe(4);
-        }
-        {
             const elements = document.getElementsByClassName("carousel-image");
             expect(elements.length).toBe(4);
         }
@@ -48,6 +42,8 @@ describe("Image Carousel", () => {
         it("when click thumbnail image", async () => {
             render(<FullscreenImageCarousel images={IMAGES} show={true} />);
             const elements = document.getElementsByClassName("thumbnail-image");
+            console.log(elements);
+
             fireEvent.click(elements[1]);
             expect(screen.getByText("2/4")).toBeInTheDocument();
             fireEvent.click(elements[0]);

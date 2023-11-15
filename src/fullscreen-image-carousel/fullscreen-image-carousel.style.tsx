@@ -3,6 +3,7 @@ import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
+import { Text } from "../text";
 
 export const ArrowIconLeft = styled(ChevronLeftIcon)`
     font-size: 1rem;
@@ -135,7 +136,7 @@ export const BoxChip = styled.div`
     width: 100px; /* Need a specific value to work */
     z-index: 3;
 `;
-export const Chip = styled.div`
+export const Chip = styled(Text.XSmall)`
     display: inline-flex;
     padding: 4px 16px;
     justify-content: center;
