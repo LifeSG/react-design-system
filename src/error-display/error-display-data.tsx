@@ -316,9 +316,9 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "logout",
         {
             img: imgAttributeHelper(ImgPaths["logout"]),
-            title: "Logged-out",
+            title: "You’ve been logged out",
             description:
-                "When the user has been inactive for a certain period of time, and has been logged out after X minutes.",
+                "Looks like you’ve left, so we signed you out to keep your information safe.",
         },
     ],
     [
@@ -334,9 +334,9 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "inactivity",
         {
             img: imgAttributeHelper(ImgPaths["inactivity"]),
-            title: "Inactive state",
+            title: "Are you still there?",
             description:
-                "When the user has been inactive for a certain period of time, and will be logged out after X minutes.",
+                "You’ve been inactive for a while. To protect your privacy, you’ll be logged out in X minutes YY seconds.\nIf you wish to stay on this page, let us know now.",
         },
     ],
     [
@@ -368,8 +368,8 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "payment-unsuccessful",
         {
             img: imgAttributeHelper(ImgPaths["payment-unsuccessful"]),
-            title: "Payment unsuccessful",
-            description: "When the user’s payment transaction is unsuccessful.",
+            title: "Unsuccessful payment",
+            description: "Your payment was unsuccessful. Please try again.",
         },
     ],
     [
