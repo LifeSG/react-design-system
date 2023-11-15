@@ -318,7 +318,7 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
             img: imgAttributeHelper(ImgPaths["logout"]),
             title: "You’ve been logged out",
             description:
-                "Looks like you’ve left, so we signed you out to keep your information safe.",
+                "It looks like you’ve left, so we logged you out to protect your privacy.",
         },
     ],
     [
@@ -394,8 +394,9 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "partially-supported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Browser not supported",
+            description:
+                "Download the latest version of Chrome, Edge, Firefox or Safari.",
         },
     ],
     [
