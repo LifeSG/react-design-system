@@ -2,15 +2,29 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 
-export const CloseButton = styled(ClickableIcon)`
+export const ArrowIconLeft = styled(ChevronLeftIcon)`
+    font-size: 1rem;
+    color: ${Color.Primary};
+`;
+export const ArrowIconRight = styled(ChevronRightIcon)`
+    font-size: 1rem;
+    color: ${Color.Primary};
+`;
+const IconButton = styled(ClickableIcon)`
     padding: 0;
-    order: -1; // show button on the left of the header
     border-radius: 100%;
     background: white;
     color: ${Color.Primary};
     height: 2.5rem;
     width: 2.5rem;
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+`;
+export const CloseButton = styled(IconButton)`
     position: absolute;
     top: 3rem;
     right: 3rem;
@@ -23,30 +37,14 @@ export const CloseButton = styled(ClickableIcon)`
         top: 1.25rem;
         right: 1.25rem;
     }
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-    }
 `;
-export const ArrowButton = styled(ClickableIcon)<{
+export const ArrowButton = styled(IconButton)<{
     position: "left" | "right";
 }>`
-    padding: 0;
-    order: -1; // show button on the left of the header
-    border-radius: 100%;
-    background: white;
-    color: ${Color.Primary};
-    height: 2.5rem;
-    width: 2.5rem;
     z-index: 4;
     position: absolute;
-    transition: all 0.3s ease-out;
     top: 50%;
-
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-    }
+    transform: translateY(-50%);
     ${(props) =>
         props.position === "left" &&
         css`
@@ -164,6 +162,8 @@ export const ThumbnailWrapper = styled.div`
     align-items: center;
     gap: 1rem;
     justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 `;
 export const ThumbnailItem = styled.div<{
     acctive?: boolean;
@@ -171,22 +171,29 @@ export const ThumbnailItem = styled.div<{
     cursor: pointer;
     background-color: ${Color.Neutral[1]};
     border-radius: 10px;
-    height: 4.24rem;
-    width: 4.24rem;
+
     flex-shrink: 0;
     overflow: hidden;
     border: 1px solid ${Color.Neutral[1]};
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6.25rem;
+    width: 6.25rem;
+    ${MediaQuery.MaxWidth.mobileL} {
+        height: 4rem;
+        width: 4rem;
+    }
     ${(props) =>
         props.acctive
             ? css`
-                  border: 1px solid ${Color.Primary};
+                  border: 4px solid ${Color.Primary};
               `
             : css`
                   :hover {
-                      border: 1px solid ${Color.Neutral[8]};
+                      border: 1px solid ${Color.Neutral[5]};
                   }
-              `}
+              `};
 `;
 
 export const ThumbnailImage = styled.img`

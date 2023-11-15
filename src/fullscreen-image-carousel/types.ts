@@ -1,12 +1,12 @@
 import { ModalProps } from "../modal";
 
-export interface IImageCarouselRef {
-    currentSilde: number;
-    setCurrentSlide: (currentSilde: number) => void;
+export interface ImageCarouselRef {
+    currentSlide: number;
+    setCurrentSlide: (currentSlide: number) => void;
     goToPrevSlide: () => void;
     goToNextSlide: () => void;
 }
-export interface IImageCarouselProps
+export interface ImageCarouselProps
     extends Pick<
         ModalProps,
         | "show"
@@ -17,12 +17,13 @@ export interface IImageCarouselProps
     > {
     images?: string[] | undefined;
     initialIndex?: number;
+    hideThumbnail?: boolean;
 }
-export interface IImageCarouselItem {
+export interface ImageCarouselItem {
     url: string;
 }
 
-export interface IImprogressiveImage
+export interface ImprogressiveImageProps
     extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "children"> {
     children?: (params: {
         loading: boolean;

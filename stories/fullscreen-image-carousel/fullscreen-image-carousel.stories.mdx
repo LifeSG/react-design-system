@@ -1,30 +1,30 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ImageCarousel } from "src/image-carousel";
+import { FullscreenImageCarousel } from "src/fullscreen-image-carousel";
 import { Heading3, Secondary, Title } from "../storybook-common";
-import { ImageCarouselBox } from "./ImageCarouselBox";
+import { FullscreenImageCarouselBox } from "./FullscreenImageCarouselBox";
 import { Wrapper } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta
-    title="General/ImageCarousel"
-    component={ImageCarousel}
+    title="General/FullscreenImageCarousel"
+    component={FullscreenImageCarousel}
     parameters={{ show: true }}
 />
 
-<Title>ImageCarousel</Title>
+<Title>FullscreenImageCarousel</Title>
 
 <Secondary>Overview</Secondary>
 
 A component that renders a images carousel modal
 
 ```tsx
-import { ImageCarousel } from "@lifesg/react-design-system/image-carousel";
+import { FullscreenImageCarousel } from "@lifesg/react-design-system/fullscreen-image-carousel";
 ```
 
 <Canvas>
-    <Story name="Image Carousel">
+    <Story name="Fullscreen Image Carousel">
         <Wrapper type="flex-column">
-            <ImageCarouselBox />
+            <FullscreenImageCarouselBox />
         </Wrapper>
     </Story>
 </Canvas>
