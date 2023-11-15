@@ -35,7 +35,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 36rem;
+    max-width: 41rem;
     white-space: pre-wrap;
 `;
 
