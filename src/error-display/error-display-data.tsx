@@ -376,7 +376,7 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "transfer-unsuccessful",
         {
             img: imgAttributeHelper(ImgPaths["transfer-unsuccessful"]),
-            title: "Transfer unsuccessful",
+            title: "Unsuccessful transfer",
             description:
                 "For instances where the user is unsuccessful in transferring credits.",
         },
