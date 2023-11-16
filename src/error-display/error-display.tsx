@@ -10,7 +10,6 @@ import {
     TextContainer,
     Title,
 } from "./error-display.style";
-import { Text } from "../text";
 import { ErrorDisplayProps, MaintenanceAdditionalAttributes } from "./types";
 
 export const ErrorDisplay = ({
@@ -84,6 +83,7 @@ export const ErrorDisplay = ({
                             <Title
                                 data-testid={`${testId}--title`}
                                 data-id="error-display-title"
+                                weight="semibold"
                             >
                                 {updatedAssets.title}
                             </Title>
@@ -96,9 +96,7 @@ export const ErrorDisplay = ({
                             data-id="error-display-description"
                         >
                             {typeof updatedAssets.description === "string" ? (
-                                <Text.Body>
-                                    {updatedAssets.description}
-                                </Text.Body>
+                                <p>{updatedAssets.description}</p>
                             ) : (
                                 updatedAssets.description
                             )}

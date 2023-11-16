@@ -40,7 +40,6 @@ export const TextContainer = styled.div`
 `;
 
 export const Title = styled(Text.H2)`
-    ${TextStyleHelper.getTextStyle("H2", "semibold")}
     margin: 2rem 0 1rem;
     text-align: center;
 `;
@@ -70,7 +69,7 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const ActionButton = styled(Button.Default)`
-    margin: 4rem auto 0;
+    margin: 2rem auto 0;
     width: 21rem;
 
     ${MediaQuery.MaxWidth.mobileL} {
