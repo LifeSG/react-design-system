@@ -46,12 +46,9 @@ export const DateInput = ({
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<InternalCalendarRef>();
     const inputRef = useRef<StandaloneDateInputRef>();
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
 
     // show button if it is mobile view
-    const withButton = _withButton || isMobile;
+    const withButton = _withButton;
 
     // =============================================================================
     // EFFECTS

@@ -112,7 +112,6 @@ const DATA: ApiTableSectionProps[] = [
                         Specifies if the {quote("Done")} and {quote("Cancel")}{" "}
                         action buttons should be rendered
                         <br />
-                        <b>Note: It appears by default in mobile viewports</b>
                     </>
                 ),
                 propTypes: ["boolean"],
