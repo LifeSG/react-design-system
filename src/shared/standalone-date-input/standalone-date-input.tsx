@@ -276,7 +276,7 @@ export const Component = (
         if (!stringVal) {
             return [undefined, undefined, undefined];
         } else {
-            const day = dayjs(stringVal);
+            const day = dayjs(new Date(stringVal));
 
             return [
                 StringHelper.padValue(day.date().toString()),
