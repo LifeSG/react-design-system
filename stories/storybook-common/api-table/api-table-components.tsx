@@ -43,7 +43,7 @@ const StyledTable = styled.table`
         color: #d0021b;
         font-size: 0.875rem;
         font-weight: 400;
-        padding: 0.25em 0.5em;
+        padding: 0.25rem 0.5rem;
         white-space: pre-wrap;
     }
 
