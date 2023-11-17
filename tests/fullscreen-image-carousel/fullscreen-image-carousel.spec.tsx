@@ -4,7 +4,7 @@ import { FullscreenImageCarousel } from "../../src";
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
-describe("Image Carousel", () => {
+describe("Fullscreen Image Carousel", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 

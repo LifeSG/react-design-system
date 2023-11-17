@@ -2,6 +2,7 @@ import { PlaceholderImageIcon } from "@lifesg/react-icons";
 import React, { useEffect, useState } from "react";
 import { ImageBox } from "./fullscreen-image-carousel.style";
 import { ImprogressiveImageProps } from "./types";
+import { LoadingDots } from "../animations";
 
 export const ImprogressiveImage = (props: ImprogressiveImageProps) => {
     const { src, children, placeholder, ...rest } = props;
@@ -31,6 +32,21 @@ export const ImprogressiveImage = (props: ImprogressiveImageProps) => {
             <ImageBox src={placeholder} {...rest} />
         ) : (
             <PlaceholderImageIcon style={{ width: "100%", height: "100%" }} />
+        );
+    }
+
+    if (loading) {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+                {...rest}
+            >
+                <LoadingDots className="h-full" />
+            </div>
         );
     }
 

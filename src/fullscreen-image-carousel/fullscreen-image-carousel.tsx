@@ -45,6 +45,7 @@ export const FullscreenImageCarousel = forwardRef<
     const [startX, setStartX] = useState(null);
     const [endX, setEndX] = useState(null);
     const containerRef = useRef(null);
+    const thumbnailRef = useRef([]);
     const diff = startX && endX ? startX - endX : 0;
 
     // =============================================================================
@@ -107,16 +108,15 @@ export const FullscreenImageCarousel = forwardRef<
     }, []);
 
     useEffect(() => {
-        const currentThumbnail = document.getElementById(
-            `thumbnail_item_${currentSlide}`
-        );
-        typeof currentThumbnail?.scrollIntoView === "function" &&
-            currentThumbnail?.scrollIntoView({
+        typeof thumbnailRef.current?.[currentSlide]?.scrollIntoView ===
+            "function" &&
+            thumbnailRef.current[currentSlide]?.scrollIntoView({
                 behavior: "smooth",
                 inline: "center",
             });
         setZoom(1);
     }, [currentSlide]);
+    console.log(thumbnailRef.current);
 
     return (
         <Modal show={show} {...rest} data-testid="image-carousel-modal">
@@ -206,10 +206,12 @@ export const FullscreenImageCarousel = forwardRef<
                             {images.map((src, index) => (
                                 <ThumbnailItem
                                     key={index}
-                                    id={`thumbnail_item_${index}`}
                                     className="thumbnail-item"
                                     acctive={index === currentSlide}
                                     onClick={() => setCurrentSlide(index)}
+                                    ref={(el) =>
+                                        (thumbnailRef.current[index] = el)
+                                    }
                                 >
                                     <ImprogressiveImage
                                         className="thumbnail-image"
