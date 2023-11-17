@@ -28,6 +28,7 @@ export const List = styled.ul<ListContainerProps>`
     overflow-y: auto;
     padding: 0.5rem;
     max-height: 20rem;
+    list-style-type: none;
 
     ::-webkit-scrollbar {
         width: 9px;
