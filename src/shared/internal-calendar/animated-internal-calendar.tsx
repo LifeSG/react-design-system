@@ -14,6 +14,7 @@ const AnimatedComponent = (
     const resizeDetector = useResizeDetector();
     const styles = useSpring({
         height: isOpen ? resizeDetector.height : 0,
+        config: { duration: 300 },
     });
 
     useEffect(() => {
