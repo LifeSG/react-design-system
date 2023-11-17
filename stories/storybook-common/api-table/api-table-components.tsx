@@ -41,7 +41,8 @@ const StyledTable = styled.table`
     code {
         background-color: #f5f5f5;
         color: #d0021b;
-        font-size: 0.875rem;
+        font-family: monospace;
+        font-size: 0.725rem;
         font-weight: 400;
         padding: 0.25rem 0.5rem;
         white-space: pre-wrap;
@@ -49,8 +50,11 @@ const StyledTable = styled.table`
 
     td,
     th {
+        font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular",
+            "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+            Helvetica, Arial, sans-serif;
         padding: 0.5rem;
-        font-size: 14px;
+        font-size: 0.875rem;
         text-align: left;
         vertical-align: top;
     }
@@ -135,6 +139,7 @@ export const NameCol = ({ children, mandatory = false }: NameColProps) => {
 
 const Label = styled.td<NameColStyleProps>`
     font-weight: bold;
+    color: #333333;
     ${(props) => {
         if (props.$isFunction) {
             return css`
@@ -202,6 +207,10 @@ const PropsContainer = styled.div`
         :not(:last-child) {
             margin-right: 0.25rem;
         }
+    }
+
+    td {
+        color: #333333;
     }
 `;
 
