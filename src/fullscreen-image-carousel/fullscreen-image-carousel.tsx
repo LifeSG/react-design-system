@@ -194,7 +194,7 @@ export const Component = (
                                     objectFit: "cover",
                                 }}
                                 src={src}
-                                alt={`Slide thumbnail ${index}`}
+                                alt={`Thumbnail ${index}`}
                             />
                         </ThumbnailItem>
                     ))}
@@ -205,8 +205,8 @@ export const Component = (
 
     return (
         <Modal {...otherProps} data-testid="image-carousel-modal">
-            <CloseButton // second element for tab focus order
-                aria-label="Close drawer"
+            <CloseButton
+                aria-label="Close image carousel"
                 onClick={onClose}
                 focusHighlight={false}
             >
@@ -215,20 +215,22 @@ export const Component = (
             <ImageGalleryContainer className="image-carousel-container">
                 <ImageGalleryWrapper className="image-carousel-wrapper">
                     <ArrowButton
+                        aria-label="View previous image"
                         className="prev-btn"
                         data-testid="prev-btn"
                         position="left"
                         onClick={goToPrevSlide}
                     >
-                        <ArrowIconLeft />
+                        <ArrowIconLeft aria-hidden />
                     </ArrowButton>
                     <ArrowButton
+                        aria-label="View next image"
                         className="forward-btn"
                         data-testid="forward-btn"
                         position="right"
                         onClick={goToNextSlide}
                     >
-                        <ArrowIconRight />
+                        <ArrowIconRight aria-hidden />
                     </ArrowButton>
                     <ImageGallerySwipe
                         ref={containerRef}
