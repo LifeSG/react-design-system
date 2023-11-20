@@ -1,16 +1,15 @@
 import { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
-import { InternalCalendarDay } from "./internal-calendar-day";
-import { InternalWeekSelectionCalendarDay } from "./internal-week-selection-calendar-day";
+import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
 import { Container } from "./internal-calendar.style";
+import { StandardCalendarDayView } from "./standard";
 import {
     CalendarManagerRef,
     InternalCalendarProps,
     InternalCalendarRef,
-    View,
 } from "./types";
-import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
+import { WeekCalendarDayView } from "./week";
 
 export const Component = (
     {
@@ -131,27 +130,9 @@ export const Component = (
     // =============================================================================
     const renderCalendarDay = (calendarDate: Dayjs) => {
         switch (variant) {
-            case "single":
-            case "range":
-                return (
-                    <InternalCalendarDay
-                        calendarDate={calendarDate}
-                        currentFocus={currentFocus}
-                        disabledDates={disabledDates}
-                        selectedStartDate={selectedStartDate}
-                        selectedEndDate={selectedEndDate}
-                        variant={variant}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        isNewSelection={selectWithinRange}
-                        allowDisabledSelection={allowDisabledSelection}
-                        onSelect={handleDateSelect}
-                        onHover={handleDateHover}
-                    />
-                );
             case "week":
                 return (
-                    <InternalWeekSelectionCalendarDay
+                    <WeekCalendarDayView
                         calendarDate={calendarDate}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
@@ -176,16 +157,16 @@ export const Component = (
                         numberOfDays={numberOfDays}
                     />
                 );
-            default:
-                // render for standalone type
+            case "single":
+            case "range":
+            default: // standalone type
                 return (
-                    <InternalCalendarDay
+                    <StandardCalendarDayView
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
-                        variant={variant}
                         minDate={minDate}
                         maxDate={maxDate}
                         isNewSelection={selectWithinRange}

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { OverlayProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 import { Root, Wrapper } from "./overlay.styles";
+import { OverlayProps } from "./types";
 
 export const Overlay = ({
     show = false,
@@ -20,9 +21,9 @@ export const Overlay = ({
     // =============================================================================
     const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
     const [isStacked, _setIsStacked] = useState<boolean>();
+    const [uid] = useState(() => SimpleIdGenerator.generate());
 
     const stacked = useRef<boolean>();
-    const mounted = useRef<boolean>(false);
 
     const childRef = useRef<HTMLDivElement>(null);
     const childWithRef =
@@ -36,55 +37,36 @@ export const Overlay = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        const isMounted = mounted.current === true;
-        if (!isMounted) {
-            mounted.current = true;
-        }
+        addStylesheetForDocumentBody();
+        setRootElement(getRootElement());
 
+        return () => removeOverlay();
+    }, []);
+
+    useEffect(() => {
         if (show) {
             const isStacked = checkIfStacked();
             setStacked(isStacked);
 
-            if (!isStacked) {
-                const timerId = setTimeout(() => {
-                    applyBodyStyleClass("add");
-                }, 200); // Allow overlay animations to complete
-                return () => clearTimeout(timerId);
-            }
-        } else {
-            // skip if the component hasn't mounted yet
-            if (!isMounted) {
-                return;
-            }
+            addOverlay();
 
-            /**
-             * Here we have to used the ref value to know if it is stacked
-             * rather than checking for the presence of the overlay class
-             * on <body>
-             */
-            if (!stacked.current) {
-                const timerId = setTimeout(() => {
+            const timerId = setTimeout(() => {
+                applyBodyStyleClass("add");
+            }, 200); // Allow overlay animations to complete
+
+            return () => clearTimeout(timerId);
+        } else {
+            removeOverlay();
+
+            const timerId = setTimeout(() => {
+                if (getOverlayOrder().length < 1) {
                     applyBodyStyleClass("remove");
-                }, 200); // Allow overlay animations to complete
-                return () => clearTimeout(timerId);
-            }
+                }
+            }, 200); // Allow overlay animations to complete
+
+            return () => clearTimeout(timerId);
         }
     }, [show]);
-
-    useEffect(() => {
-        setRootElement(getRootElement());
-
-        /**
-         * Only add stylesheet for a non-stacked overlay
-         */
-        const isStacked = checkIfStacked();
-        setStacked(isStacked);
-        if (!isStacked) addStylesheetForDocumentBody();
-
-        return () => {
-            applyBodyStyleClass("remove");
-        };
-    }, []);
 
     // =============================================================================
     // REF FUNCTIONS
@@ -109,11 +91,7 @@ export const Overlay = ({
     };
 
     const checkIfStacked = () => {
-        /**
-         * Check if the body style was altered before. If it was, then this is
-         * a stacked overlay
-         */
-        return document.body.classList.contains(OVERLAY_OPEN_CLASSNAME);
+        return getOverlayOrder().length > 0;
     };
 
     const addStylesheetForDocumentBody = () => {
@@ -158,6 +136,23 @@ export const Overlay = ({
         } else if (action === "remove" && isOverlayStyleClassApplied) {
             document.body.classList.remove(OVERLAY_OPEN_CLASSNAME);
         }
+    };
+
+    const getOverlayOrder = () => {
+        const attr = document.body.dataset.lifesgDsOverlayOrder;
+        return attr ? attr.split(",") : [];
+    };
+
+    const addOverlay = () => {
+        const order = getOverlayOrder();
+        document.body.dataset.lifesgDsOverlayOrder = [...order, uid].join(",");
+    };
+
+    const removeOverlay = () => {
+        const order = getOverlayOrder();
+        document.body.dataset.lifesgDsOverlayOrder = order
+            .filter((o) => o !== uid)
+            .join(",");
     };
 
     // =============================================================================

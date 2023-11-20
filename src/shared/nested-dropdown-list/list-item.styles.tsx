@@ -217,4 +217,5 @@ export const List = styled.ul<ListProps>`
     display: ${(props) => (props.$expanded ? "flex" : "none")};
     flex-direction: column;
     margin-left: 2.125rem;
+    list-style-type: none;
 `;

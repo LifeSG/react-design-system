@@ -2,6 +2,15 @@ import dayjs, { Dayjs } from "dayjs";
 import { CalendarHelper } from "../../src/util/calendar-helper";
 
 describe("CalendarHelper", () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date("26 Oct 2023 12:00:00 GMT"));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     describe("generateDays", () => {
         it("should generate 6 weeks from the specified month", () => {
             const date = dayjs("2023-01-10");
