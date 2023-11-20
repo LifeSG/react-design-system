@@ -1,18 +1,34 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface ArrowButtonStyleProps {
+    position: "left" | "right";
+}
+
+interface ThumbnailItemStyleProps {
+    active?: boolean;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const ArrowIconLeft = styled(ChevronLeftIcon)`
     font-size: 1rem;
     color: ${Color.Primary};
 `;
+
 export const ArrowIconRight = styled(ChevronRightIcon)`
     font-size: 1rem;
     color: ${Color.Primary};
 `;
+
 const IconButton = styled(ClickableIcon)`
     padding: 0;
     border-radius: 100%;
@@ -25,6 +41,7 @@ const IconButton = styled(ClickableIcon)`
         width: 1.5rem;
     }
 `;
+
 export const CloseButton = styled(IconButton)`
     position: absolute;
     top: 3rem;
@@ -39,9 +56,8 @@ export const CloseButton = styled(IconButton)`
         right: 1.25rem;
     }
 `;
-export const ArrowButton = styled(IconButton)<{
-    position: "left" | "right";
-}>`
+
+export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     z-index: 4;
     position: absolute;
     top: 50%;
@@ -70,12 +86,14 @@ export const ArrowButton = styled(IconButton)<{
             }
         `}
 `;
+
 export const ImageGalleryContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 `;
+
 export const ImageGalleryWrapper = styled.div`
     user-select: none;
     position: relative;
@@ -92,6 +110,7 @@ export const ImageGallerySwipe = styled.div`
     overflow: hidden;
     touch-action: pan-y;
 `;
+
 export const ImageGallerySlides = styled.div`
     display: flex;
     transition: all 450ms ease-out 0s;
@@ -101,6 +120,7 @@ export const ImageGallerySlides = styled.div`
     width: 100%;
     height: 100%;
 `;
+
 export const ImageGallerySlide = styled.div`
     flex: 0 0 100%;
     box-sizing: border-box;
@@ -115,14 +135,6 @@ export const ImageGallerySlide = styled.div`
     }
 `;
 
-export const ImageBox = styled.img`
-    max-height: 100%;
-    max-width: 100%;
-    margin: auto;
-    height: auto;
-    width: auto;
-    object-fit: contain;
-`;
 export const BoxChip = styled.div`
     display: flex;
     justify-content: center;
@@ -136,6 +148,7 @@ export const BoxChip = styled.div`
     width: 100px; /* Need a specific value to work */
     z-index: 3;
 `;
+
 export const Chip = styled(Text.XSmall)`
     display: inline-flex;
     padding: 4px 16px;
@@ -151,12 +164,17 @@ export const Chip = styled(Text.XSmall)`
     letter-spacing: 0.12px;
 `;
 
+// -----------------------------------------------------------------------------
+// THUMBNAIL STYLING
+// -----------------------------------------------------------------------------
+
 export const ThumbnailContainer = styled.div`
     display: flex;
     overflow: auto;
     padding: 1rem 0.625rem;
     background-color: ${Color.Neutral[1]};
 `;
+
 export const ThumbnailWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
@@ -166,9 +184,8 @@ export const ThumbnailWrapper = styled.div`
     margin-left: auto;
     margin-right: auto;
 `;
-export const ThumbnailItem = styled.div<{
-    acctive?: boolean;
-}>`
+
+export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     cursor: pointer;
     background-color: ${Color.Neutral[1]};
     border-radius: 10px;
@@ -186,7 +203,7 @@ export const ThumbnailItem = styled.div<{
         width: 4rem;
     }
     ${(props) =>
-        props.acctive
+        props.active
             ? css`
                   border: 4px solid ${Color.Primary};
               `

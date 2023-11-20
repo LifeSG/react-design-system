@@ -24,22 +24,22 @@ import {
     ThumbnailItem,
     ThumbnailWrapper,
 } from "./fullscreen-image-carousel.style";
-import { ImprogressiveImage } from "./inprogressive-image";
-import { ImageCarouselProps, ImageCarouselRef } from "./types";
+import { StatefulImage } from "./stateful-image";
+import {
+    FullscreenImageCarouselProps,
+    FullscreenImageCarouselRef,
+} from "./types";
 
-// eslint-disable-next-line react/display-name
-export const FullscreenImageCarousel = forwardRef<
-    ImageCarouselRef,
-    ImageCarouselProps
->((props, ref) => {
-    const {
-        show,
+export const Component = (
+    {
         images,
         initialIndex,
-        onOverlayClick,
         hideThumbnail,
-        ...rest
-    } = props;
+        onClose,
+        ...otherProps
+    }: FullscreenImageCarouselProps,
+    ref: React.Ref<FullscreenImageCarouselRef>
+) => {
     const [currentSlide, setCurrentSlide] = useState(initialIndex ?? 0);
     const [zoom, setZoom] = useState(1);
     const [startX, setStartX] = useState(null);
@@ -86,19 +86,19 @@ export const FullscreenImageCarousel = forwardRef<
         } else if (e.key === "ArrowLeft") {
             goToPrevSlide();
         } else if (e.key === "Escape") {
-            onOverlayClick && onOverlayClick();
+            onClose && onClose();
         }
     };
 
-    useImperativeHandle<Partial<ImageCarouselRef>, Partial<ImageCarouselRef>>(
-        ref,
-        () => ({
-            currentSlide: currentSlide,
-            setCurrentSlide: (value) => setCurrentSlide(value),
-            goToPrevSlide,
-            goToNextSlide,
-        })
-    );
+    useImperativeHandle<
+        Partial<FullscreenImageCarouselRef>,
+        Partial<FullscreenImageCarouselRef>
+    >(ref, () => ({
+        currentSlide: currentSlide,
+        setCurrentSlide: (value) => setCurrentSlide(value),
+        goToPrevSlide,
+        goToNextSlide,
+    }));
 
     useEffect(() => {
         document.addEventListener("keydown", keyDown);
@@ -119,10 +119,10 @@ export const FullscreenImageCarousel = forwardRef<
     console.log(thumbnailRef.current);
 
     return (
-        <Modal show={show} {...rest} data-testid="image-carousel-modal">
+        <Modal {...otherProps} data-testid="image-carousel-modal">
             <CloseButton // second element for tab focus order
                 aria-label="Close drawer"
-                onClick={onOverlayClick}
+                onClick={onClose}
                 focusHighlight={false}
             >
                 <CrossIcon aria-hidden />
@@ -182,7 +182,7 @@ export const FullscreenImageCarousel = forwardRef<
                                             }}
                                         >
                                             <TransformComponent>
-                                                <ImprogressiveImage
+                                                <StatefulImage
                                                     className="carousel-image"
                                                     src={src}
                                                     alt={`Slide ${index}`}
@@ -207,13 +207,13 @@ export const FullscreenImageCarousel = forwardRef<
                                 <ThumbnailItem
                                     key={index}
                                     className="thumbnail-item"
-                                    acctive={index === currentSlide}
+                                    active={index === currentSlide}
                                     onClick={() => setCurrentSlide(index)}
                                     ref={(el) =>
                                         (thumbnailRef.current[index] = el)
                                     }
                                 >
-                                    <ImprogressiveImage
+                                    <StatefulImage
                                         className="thumbnail-image"
                                         style={{
                                             height: "100%",
@@ -232,4 +232,9 @@ export const FullscreenImageCarousel = forwardRef<
             </ImageGalleryContainer>
         </Modal>
     );
-});
+};
+
+export const FullscreenImageCarousel = forwardRef<
+    FullscreenImageCarouselRef,
+    FullscreenImageCarouselProps
+>(Component);

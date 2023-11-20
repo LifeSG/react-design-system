@@ -1,13 +1,22 @@
 import { PlaceholderImageIcon } from "@lifesg/react-icons";
 import React, { useEffect, useState } from "react";
-import { ImageBox } from "./fullscreen-image-carousel.style";
-import { ImprogressiveImageProps } from "./types";
 import { LoadingDots } from "../animations";
+import { ImageBox } from "./stateful-image.style";
 
-export const ImprogressiveImage = (props: ImprogressiveImageProps) => {
+interface Props
+    extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "children"> {
+    children?: (params: {
+        loading: boolean;
+        error: Event | string;
+        src: string;
+        placeholder?: string;
+    }) => React.ReactNode;
+}
+
+export const StatefulImage = (props: Props) => {
     const { src, children, placeholder, ...rest } = props;
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<any>();
+    const [error, setError] = useState<Event | string>();
 
     useEffect(() => {
         const img = new Image();
@@ -15,7 +24,7 @@ export const ImprogressiveImage = (props: ImprogressiveImageProps) => {
         img.onload = () => {
             setLoading(false);
         };
-        img.onerror = (e: any) => {
+        img.onerror = (e: Event | string) => {
             setLoading(false);
             setError(e);
         };
