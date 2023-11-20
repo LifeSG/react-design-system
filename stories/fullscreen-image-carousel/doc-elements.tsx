@@ -1,20 +1,16 @@
-import React from "react";
-import styled from "styled-components";
-import { Layout } from "../../src/layout";
-import { Text } from "../../src/text";
+const RESOLUTIONS = [
+    [1600, 900],
+    [1200, 900],
+    [1000, 1000],
+    [900, 1600],
+    [900, 1200],
+];
 
-export const Wrapper = styled(Layout.Content)`
-    padding: 5rem;
-`;
-
-export const TextComponent = styled(Text.Body)`
-    margin-bottom: 1rem;
-`;
-
-export const DisplayText = ({ children }: { children: JSX.Element }) => {
-    return (
-        <Layout.ColDiv desktopCols={12} tabletCols={8} mobileCols={4}>
-            <TextComponent>{children}</TextComponent>
-        </Layout.ColDiv>
-    );
+export const getImages = (size: number) => {
+    const images: string[] = [];
+    for (let i = 0; i < size; i++) {
+        const [width, height] = RESOLUTIONS[i % RESOLUTIONS.length];
+        images.push(`https://picsum.photos/seed/picsum${i}/${width}/${height}`);
+    }
+    return images;
 };

@@ -1,31 +1,112 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { useState } from "react";
+import { Button } from "src/button";
 import { FullscreenImageCarousel } from "src/fullscreen-image-carousel";
-import { Heading3, Secondary, Title } from "../storybook-common";
-import { FullscreenImageCarouselBox } from "./FullscreenImageCarouselBox";
-import { Wrapper } from "./doc-elements";
+import {
+    FullWidthStoryContainer,
+    Heading3,
+    Secondary,
+    Title,
+} from "../storybook-common";
 import { PropsTable } from "./props-table";
+import { getImages } from "./doc-elements";
 
 <Meta
-    title="General/FullscreenImageCarousel"
+    title="Modules/FullscreenImageCarousel"
     component={FullscreenImageCarousel}
-    parameters={{ show: true }}
 />
 
 <Title>FullscreenImageCarousel</Title>
 
 <Secondary>Overview</Secondary>
 
-A component that renders a images carousel modal
+An overlay that display images in a carousel and offers the ability to zoom into the current image.
 
 ```tsx
 import { FullscreenImageCarousel } from "@lifesg/react-design-system/fullscreen-image-carousel";
 ```
 
 <Canvas>
-    <Story name="Fullscreen Image Carousel">
-        <Wrapper type="flex-column">
-            <FullscreenImageCarouselBox />
-        </Wrapper>
+    <Story name="FullscreenImageCarousel">
+        {() => {
+            const [show, setShow] = useState(false);
+            return (
+                <FullWidthStoryContainer>
+                    <Button.Default
+                        onClick={() => {
+                            setShow((old) => !old);
+                        }}
+                    >
+                        Show carousel
+                    </Button.Default>
+                    <FullscreenImageCarousel
+                        images={[
+                            "https://picsum.photos/id/157/1600/900",
+                            "https://picsum.photos/id/163/900/300",
+                            "https://picsum.photos/id/369/1000/1000",
+                            "https://picsum.photos/id/445/300/300",
+                        ]}
+                        show={show}
+                        onClose={() => setShow(false)}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>Loading and error states</Heading3>
+
+<Canvas>
+    <Story name="Loading and error states">
+        {() => {
+            const [show, setShow] = useState(false);
+            return (
+                <FullWidthStoryContainer>
+                    <Button.Default
+                        onClick={() => {
+                            setShow((old) => !old);
+                        }}
+                    >
+                        Show carousel
+                    </Button.Default>
+                    <FullscreenImageCarousel
+                        images={[
+                            "https://httpbin.org/delay/10",
+                            "https://asdfghjklqwertyuiop.com",
+                        ]}
+                        show={show}
+                        onClose={() => setShow(false)}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<Heading3>With many images</Heading3>
+
+<Canvas>
+    <Story name="With many images">
+        {() => {
+            const [show, setShow] = useState(false);
+            return (
+                <FullWidthStoryContainer>
+                    <Button.Default
+                        onClick={() => {
+                            setShow((old) => !old);
+                        }}
+                    >
+                        Show carousel
+                    </Button.Default>
+                    <FullscreenImageCarousel
+                        images={getImages(20)}
+                        show={show}
+                        onClose={() => setShow(false)}
+                    />
+                </FullWidthStoryContainer>
+            );
+        }}
     </Story>
 </Canvas>
 

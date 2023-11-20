@@ -12,7 +12,7 @@ export interface FullscreenImageCarouselProps
         ModalProps,
         "show" | "rootComponentId" | "animationFrom" | "zIndex"
     > {
-    images?: (string | CarouselItemProps)[] | undefined;
+    images: (string | CarouselItemProps)[];
     initialIndex?: number | undefined;
     hideThumbnail?: boolean | undefined;
     onClose?: (() => void) | undefined;
