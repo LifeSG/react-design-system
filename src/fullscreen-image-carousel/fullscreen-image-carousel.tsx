@@ -6,8 +6,13 @@ import {
     useRef,
     useState,
 } from "react";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import {
+    ReactZoomPanPinchRef,
+    TransformComponent,
+    TransformWrapper,
+} from "react-zoom-pan-pinch";
 import { Modal } from "../modal";
+import { useEventListener } from "../util";
 import {
     ArrowButton,
     ArrowIconLeft,
@@ -40,6 +45,9 @@ export const Component = (
     }: FullscreenImageCarouselProps,
     ref: React.Ref<FullscreenImageCarouselRef>
 ) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
     const [currentSlide, setCurrentSlide] = useState(initialIndex ?? 0);
     const [zoom, setZoom] = useState(1);
     const [startX, setStartX] = useState(null);
@@ -48,17 +56,34 @@ export const Component = (
     const thumbnailRef = useRef([]);
     const diff = startX && endX ? startX - endX : 0;
 
-    // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
-    const goToPrevSlide = () => {
-        setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    };
+    useImperativeHandle<
+        Partial<FullscreenImageCarouselRef>,
+        Partial<FullscreenImageCarouselRef>
+    >(ref, () => ({
+        currentSlide: currentSlide,
+        setCurrentSlide: (value) => setCurrentSlide(value),
+        goToPrevSlide,
+        goToNextSlide,
+    }));
 
-    const goToNextSlide = () => {
-        setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    };
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEventListener("keydown", handleKeyDown, "document");
 
+    useEffect(() => {
+        typeof thumbnailRef.current?.[currentSlide]?.scrollIntoView ===
+            "function" &&
+            thumbnailRef.current[currentSlide]?.scrollIntoView({
+                behavior: "smooth",
+                inline: "center",
+            });
+        setZoom(1);
+    }, [currentSlide]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
     const handleTouchStart = (e) => {
         if (zoom <= 1) setStartX(e.touches[0].clientX);
     };
@@ -80,7 +105,11 @@ export const Component = (
         setEndX(null);
     };
 
-    const keyDown = (e: KeyboardEvent) => {
+    const handleZoom = (e: ReactZoomPanPinchRef) => {
+        setZoom(e.state.scale);
+    };
+
+    function handleKeyDown(e: KeyboardEvent) {
         if (e.key === "ArrowRight") {
             goToNextSlide();
         } else if (e.key === "ArrowLeft") {
@@ -88,35 +117,91 @@ export const Component = (
         } else if (e.key === "Escape") {
             onClose && onClose();
         }
+    }
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const goToPrevSlide = () => {
+        setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     };
 
-    useImperativeHandle<
-        Partial<FullscreenImageCarouselRef>,
-        Partial<FullscreenImageCarouselRef>
-    >(ref, () => ({
-        currentSlide: currentSlide,
-        setCurrentSlide: (value) => setCurrentSlide(value),
-        goToPrevSlide,
-        goToNextSlide,
-    }));
+    const goToNextSlide = () => {
+        setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    };
 
-    useEffect(() => {
-        document.addEventListener("keydown", keyDown);
-        return () => {
-            document.removeEventListener("keydown", keyDown);
-        };
-    }, []);
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+    const renderSlides = () => {
+        return (
+            <ImageGallerySlides
+                className="image-carousel-slides"
+                style={{
+                    transform: `translateX(calc(${
+                        -currentSlide * 100
+                    }% - ${diff}px))`,
+                }}
+            >
+                {images.map((src, index) => {
+                    return (
+                        <ImageGallerySlide
+                            key={index}
+                            className="image-carousel-slide"
+                        >
+                            <TransformWrapper
+                                panning={{
+                                    disabled: zoom <= 1,
+                                }}
+                                initialScale={zoom}
+                                onZoom={handleZoom}
+                                onZoomStop={handleZoom}
+                                onWheel={handleZoom}
+                            >
+                                <TransformComponent>
+                                    <StatefulImage
+                                        className="carousel-image"
+                                        src={src}
+                                        alt={`Slide ${index}`}
+                                    />
+                                </TransformComponent>
+                            </TransformWrapper>
+                        </ImageGallerySlide>
+                    );
+                })}
+            </ImageGallerySlides>
+        );
+    };
 
-    useEffect(() => {
-        typeof thumbnailRef.current?.[currentSlide]?.scrollIntoView ===
-            "function" &&
-            thumbnailRef.current[currentSlide]?.scrollIntoView({
-                behavior: "smooth",
-                inline: "center",
-            });
-        setZoom(1);
-    }, [currentSlide]);
-    console.log(thumbnailRef.current);
+    const renderThumbnails = () => {
+        return (
+            <ThumbnailContainer className="thumbnail-container">
+                <ThumbnailWrapper className="thumbnail-wrapper">
+                    {images.map((src, index) => (
+                        <ThumbnailItem
+                            key={index}
+                            className="thumbnail-item"
+                            active={index === currentSlide}
+                            onClick={() => setCurrentSlide(index)}
+                            ref={(el) => (thumbnailRef.current[index] = el)}
+                        >
+                            <StatefulImage
+                                className="thumbnail-image"
+                                style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    maxHeight: "unset",
+                                    objectFit: "cover",
+                                }}
+                                src={src}
+                                alt={`Slide thumbnail ${index}`}
+                            />
+                        </ThumbnailItem>
+                    ))}
+                </ThumbnailWrapper>
+            </ThumbnailContainer>
+        );
+    };
 
     return (
         <Modal {...otherProps} data-testid="image-carousel-modal">
@@ -152,47 +237,7 @@ export const Component = (
                         onTouchMove={handleTouchMove}
                         onTouchEnd={handleTouchEnd}
                     >
-                        <ImageGallerySlides
-                            className="image-carousel-slides"
-                            style={{
-                                transform: `translateX(calc(${
-                                    -currentSlide * 100
-                                }% - ${diff}px))`,
-                            }}
-                        >
-                            {images.map((src, index) => {
-                                return (
-                                    <ImageGallerySlide
-                                        key={index}
-                                        className="image-carousel-slide"
-                                    >
-                                        <TransformWrapper
-                                            panning={{
-                                                disabled: zoom <= 1,
-                                            }}
-                                            initialScale={zoom}
-                                            onZoom={(e) => {
-                                                setZoom(e.state.scale);
-                                            }}
-                                            onZoomStop={(e) => {
-                                                setZoom(e.state.scale);
-                                            }}
-                                            onWheel={(e) => {
-                                                setZoom(e.state.scale);
-                                            }}
-                                        >
-                                            <TransformComponent>
-                                                <StatefulImage
-                                                    className="carousel-image"
-                                                    src={src}
-                                                    alt={`Slide ${index}`}
-                                                />
-                                            </TransformComponent>
-                                        </TransformWrapper>
-                                    </ImageGallerySlide>
-                                );
-                            })}
-                        </ImageGallerySlides>
+                        {renderSlides()}
                     </ImageGallerySwipe>
                     <BoxChip className="carousel-footer">
                         <Chip className="carousel-chip" weight={"semibold"}>{`${
@@ -200,35 +245,7 @@ export const Component = (
                         }/${images.length}`}</Chip>
                     </BoxChip>
                 </ImageGalleryWrapper>
-                {!hideThumbnail && (
-                    <ThumbnailContainer className="thumbnail-container">
-                        <ThumbnailWrapper className="thumbnail-wrapper">
-                            {images.map((src, index) => (
-                                <ThumbnailItem
-                                    key={index}
-                                    className="thumbnail-item"
-                                    active={index === currentSlide}
-                                    onClick={() => setCurrentSlide(index)}
-                                    ref={(el) =>
-                                        (thumbnailRef.current[index] = el)
-                                    }
-                                >
-                                    <StatefulImage
-                                        className="thumbnail-image"
-                                        style={{
-                                            height: "100%",
-                                            width: "100%",
-                                            maxHeight: "unset",
-                                            objectFit: "cover",
-                                        }}
-                                        src={src}
-                                        alt={`Slide thumbnail ${index}`}
-                                    />
-                                </ThumbnailItem>
-                            ))}
-                        </ThumbnailWrapper>
-                    </ThumbnailContainer>
-                )}
+                {!hideThumbnail && renderThumbnails()}
             </ImageGalleryContainer>
         </Modal>
     );
