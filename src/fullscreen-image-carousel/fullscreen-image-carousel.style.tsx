@@ -3,7 +3,9 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { ImagePlaceholder } from "../shared/image-placeholder";
 import { Text } from "../text";
+import { StatefulImage } from "./stateful-image";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -129,10 +131,24 @@ export const ImageGallerySlide = styled.div`
     align-items: center;
     .react-transform-wrapper {
         height: 100%;
+        width: 100%;
     }
     .react-transform-component {
         height: 100%;
+        width: 100%;
     }
+`;
+
+export const SlideImage = styled(StatefulImage)`
+    height: 100%;
+    width: 100%;
+`;
+
+export const SlidePlaceholderImage = styled(ImagePlaceholder)`
+    width: 60vw;
+    height: auto;
+    max-height: 100%;
+    aspect-ratio: 4 / 3;
 `;
 
 export const BoxChip = styled.div`
@@ -214,8 +230,7 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
               `};
 `;
 
-export const ThumbnailImage = styled.img`
-    object-fit: cover;
+export const ThumbnailImage = styled(StatefulImage)`
     height: 100%;
     width: 100%;
 `;

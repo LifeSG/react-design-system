@@ -1,10 +1,23 @@
 import styled from "styled-components";
+import { ImagePlaceholder } from "../shared/image-placeholder";
 
-export const ImageBox = styled.img`
-    max-height: 100%;
-    max-width: 100%;
-    margin: auto;
-    height: auto;
-    width: auto;
-    object-fit: contain;
+interface ImageStyleProps {
+    $fit?: React.CSSProperties["objectFit"];
+}
+
+export const ImageWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ImageBox = styled.img<ImageStyleProps>`
+    height: 100%;
+    width: 100%;
+    object-fit: ${(props) => props.$fit || "contain"};
+`;
+
+export const DefaultPlaceholder = styled(ImagePlaceholder)`
+    width: 100%;
+    height: 100%;
 `;

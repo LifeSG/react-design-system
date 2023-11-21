@@ -25,11 +25,13 @@ import {
     ImageGallerySlides,
     ImageGallerySwipe,
     ImageGalleryWrapper,
+    SlideImage,
+    SlidePlaceholderImage,
     ThumbnailContainer,
+    ThumbnailImage,
     ThumbnailItem,
     ThumbnailWrapper,
 } from "./fullscreen-image-carousel.style";
-import { StatefulImage } from "./stateful-image";
 import {
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
@@ -159,10 +161,12 @@ export const Component = (
                                 onWheel={handleZoom}
                             >
                                 <TransformComponent>
-                                    <StatefulImage
+                                    <SlideImage
                                         className="carousel-image"
                                         src={src}
                                         alt={`Slide ${index}`}
+                                        placeholder={<SlidePlaceholderImage />}
+                                        fit="scale-down"
                                     />
                                 </TransformComponent>
                             </TransformWrapper>
@@ -185,16 +189,11 @@ export const Component = (
                             onClick={() => setCurrentSlide(index)}
                             ref={(el) => (thumbnailRef.current[index] = el)}
                         >
-                            <StatefulImage
+                            <ThumbnailImage
                                 className="thumbnail-image"
-                                style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    maxHeight: "unset",
-                                    objectFit: "cover",
-                                }}
                                 src={src}
                                 alt={`Thumbnail ${index}`}
+                                fit="cover"
                             />
                         </ThumbnailItem>
                     ))}

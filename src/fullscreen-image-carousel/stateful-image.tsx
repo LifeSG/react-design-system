@@ -1,24 +1,33 @@
-import { PlaceholderImageIcon } from "@lifesg/react-icons";
 import React, { useEffect, useState } from "react";
 import { LoadingDots } from "../animations";
-import { ImageBox } from "./stateful-image.style";
+import {
+    DefaultPlaceholder,
+    ImageBox,
+    ImageWrapper,
+} from "./stateful-image.style";
 
-interface Props
-    extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "children"> {
-    children?: (params: {
-        loading: boolean;
-        error: Event | string;
-        src: string;
-        placeholder?: string;
-    }) => React.ReactNode;
+export interface StatefulImageProps {
+    src: string;
+    className?: string | undefined;
+    alt?: string | undefined;
+    fit?: React.CSSProperties["objectFit"] | undefined;
+    placeholder?: React.ReactNode | undefined;
 }
 
-export const StatefulImage = (props: Props) => {
-    const { src, children, placeholder, ...rest } = props;
+export const StatefulImage = ({
+    src,
+    className,
+    alt,
+    fit,
+    placeholder,
+}: StatefulImageProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Event | string>();
 
     useEffect(() => {
+        setLoading(true);
+        setError(undefined);
+
         const img = new Image();
         img.src = src;
         img.onload = () => {
@@ -28,36 +37,19 @@ export const StatefulImage = (props: Props) => {
             setLoading(false);
             setError(e);
         };
-    }, []);
+    }, [src]);
 
-    if (children) {
-        return (
-            <React.Fragment>{children({ loading, error, src })}</React.Fragment>
-        );
-    }
+    const renderContent = () => {
+        if (error) {
+            return placeholder ?? <DefaultPlaceholder />;
+        }
 
-    if (error) {
-        return placeholder ? (
-            <ImageBox src={placeholder} {...rest} />
-        ) : (
-            <PlaceholderImageIcon style={{ width: "100%", height: "100%" }} />
-        );
-    }
+        if (loading) {
+            return <LoadingDots />;
+        }
 
-    if (loading) {
-        return (
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-                {...rest}
-            >
-                <LoadingDots className="h-full" />
-            </div>
-        );
-    }
+        return <ImageBox src={src} alt={alt} $fit={fit} />;
+    };
 
-    return <ImageBox src={src} {...rest} />;
+    return <ImageWrapper className={className}>{renderContent()}</ImageWrapper>;
 };
