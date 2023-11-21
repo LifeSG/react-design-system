@@ -1,15 +1,15 @@
 import { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
-import { InternalCalendarDay } from "./internal-calendar-day";
-import { InternalWeekSelectionCalendarDay } from "./internal-week-selection-calendar-day";
+import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
 import { Container } from "./internal-calendar.style";
+import { StandardCalendarDayView } from "./standard";
 import {
     CalendarManagerRef,
     InternalCalendarProps,
     InternalCalendarRef,
-    View,
 } from "./types";
+import { WeekCalendarDayView } from "./week";
 
 export const Component = (
     {
@@ -29,6 +29,7 @@ export const Component = (
         type = "standalone",
         selectWithinRange = true,
         initialCalendarDate,
+        numberOfDays,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -112,6 +113,7 @@ export const Component = (
                 isDisabled = false;
                 break;
             case "range":
+            case "fixed-range":
                 // ensure both are empty or complete at the same time
                 isDisabled = !!selectedStartDate !== !!selectedEndDate;
                 break;
@@ -126,51 +128,45 @@ export const Component = (
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCalendarDay = (calendarDate: Dayjs, currentView: View) => {
+    const renderCalendarDay = (calendarDate: Dayjs) => {
         switch (variant) {
-            case "single":
-            case "range":
-                return (
-                    <InternalCalendarDay
-                        calendarDate={calendarDate}
-                        currentFocus={currentFocus}
-                        disabledDates={disabledDates}
-                        selectedStartDate={selectedStartDate}
-                        selectedEndDate={selectedEndDate}
-                        variant={variant}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        isNewSelection={selectWithinRange}
-                        allowDisabledSelection={allowDisabledSelection}
-                        onSelect={handleDateSelect}
-                        onHover={handleDateHover}
-                    />
-                );
             case "week":
                 return (
-                    <InternalWeekSelectionCalendarDay
+                    <WeekCalendarDayView
                         calendarDate={calendarDate}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
-                        selectedEndDate={selectedEndDate}
                         minDate={minDate}
                         maxDate={maxDate}
-                        currentView={currentView}
                         allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
                     />
                 );
-            default:
-                // render for standalone type
+            case "fixed-range":
                 return (
-                    <InternalCalendarDay
+                    <FixedRangeCalendarDayView
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedStartDate={selectedStartDate}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        allowDisabledSelection={allowDisabledSelection}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                        numberOfDays={numberOfDays}
+                    />
+                );
+            case "single":
+            case "range":
+            default: // standalone type
+                return (
+                    <StandardCalendarDayView
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         disabledDates={disabledDates}
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
-                        variant={variant}
                         minDate={minDate}
                         maxDate={maxDate}
                         isNewSelection={selectWithinRange}
@@ -200,9 +196,7 @@ export const Component = (
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
             >
-                {({ calendarDate, currentView }) =>
-                    renderCalendarDay(calendarDate, currentView)
-                }
+                {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>
         </Container>
     );

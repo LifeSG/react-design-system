@@ -21,4 +21,11 @@ export const RBSTheme: ThemeSpec = {
     [ThemeContextKeys.resourceScheme]: "rbs",
 };
 
+export const MyLegacyTheme: ThemeSpec = {
+    [ThemeContextKeys.colorScheme]: "mylegacy",
+    [ThemeContextKeys.textStyleScheme]: "base",
+    [ThemeContextKeys.designTokenScheme]: "base",
+    [ThemeContextKeys.resourceScheme]: "base",
+};
+
 export * from "./types";

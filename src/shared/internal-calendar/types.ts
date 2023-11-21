@@ -43,6 +43,8 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     onSelect?: ((value: string) => void) | undefined;
     /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;
+    /** Indicate the number of days used in fixed-range variant */
+    numberOfDays?: number | undefined;
 }
 
 export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
@@ -52,7 +54,7 @@ export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
 
 export type CalendarAction = "reset" | "confirmed";
 export type CalendarType = "standalone" | "input";
-export type Variant = "single" | "range" | "week";
+export type Variant = "single" | "range" | "week" | "fixed-range";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 

@@ -123,14 +123,22 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "variant",
+                description: "Specifies the selection type for the date picker",
+                propTypes: ["range", "week", "fixed-range"],
+                defaultValue: `"range"`,
+            },
+            {
+                name: "numberOfDays",
                 description: (
                     <>
-                        When the <code>week</code> is specified, the component
-                        is a week selection.
+                        Specifies the number of days to be selected if
+                        fixed-range is specified for variant
+                        <br />
+                        <b>Note: Only relevant for fixed-range selection</b>
                     </>
                 ),
-                propTypes: ["string"],
-                defaultValue: `range`,
+                propTypes: ["number"],
+                defaultValue: `7`,
             },
             {
                 name: "withButton",

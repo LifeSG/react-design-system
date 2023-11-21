@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import {
     CalendarAction,
     InternalCalendarRef,
@@ -9,7 +8,6 @@ import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
-import { MediaWidths } from "../spec/media-spec";
 import { DateInputHelper } from "../util";
 import { Container } from "./date-input.style";
 import { DateInputProps } from "./types";
@@ -25,7 +23,7 @@ export const DateInput = ({
     onFocus,
     onBlur,
     onYearMonthDisplayChange,
-    withButton: _withButton = true,
+    withButton = true,
     readOnly,
     id,
     allowDisabledSelection,
@@ -46,13 +44,6 @@ export const DateInput = ({
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<InternalCalendarRef>();
     const inputRef = useRef<StandaloneDateInputRef>();
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
-
-    // show button if it is mobile view
-    const withButton = _withButton || isMobile;
-
     // =============================================================================
     // EFFECTS
     // =============================================================================

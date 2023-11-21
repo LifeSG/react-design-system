@@ -61,6 +61,11 @@ export const ToggleZone = styled.div`
     position: relative;
 `;
 
+export const DefaultView = styled.div`
+    isolation: isolate;
+    width: 100%;
+`;
+
 export const OptionsOverlay = styled.div<OverlayStyleProps>`
     position: absolute;
     top: 0;

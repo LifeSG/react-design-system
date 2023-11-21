@@ -11,6 +11,10 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
         id = "form-field",
         "data-error-testid": errorTestId,
         "data-testid": testId,
+        layoutType,
+        mobileCols,
+        tabletCols,
+        desktopCols,
         ...otherProps
     } = props;
 
@@ -21,6 +25,10 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <Input
                 id={`${id}-base`}

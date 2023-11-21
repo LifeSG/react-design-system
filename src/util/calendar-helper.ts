@@ -176,6 +176,41 @@ export namespace CalendarHelper {
             "year"
         );
     };
+
+    export const getWeekStartEnd = (day: Dayjs) => {
+        const firstDayOfWeek = day.startOf("week").format("YYYY-MM-DD");
+        const lastDayOfWeek = day.endOf("week").format("YYYY-MM-DD");
+
+        return {
+            start: firstDayOfWeek,
+            end: lastDayOfWeek,
+        };
+    };
+
+    export const getFixedRangeStartEnd = (day: Dayjs, numberOfDays: number) => {
+        return {
+            start: day.format("YYYY-MM-DD"),
+            end: day.add(numberOfDays - 1, "day").format("YYYY-MM-DD"),
+        };
+    };
+
+    export const isDisabledDay = (
+        day: Dayjs,
+        disabledDates?: string[] | undefined,
+        minDate?: string | undefined,
+        maxDate?: string | undefined
+    ): boolean => {
+        const isWithinRange = CalendarHelper.isWithinRange(
+            day,
+            minDate ? dayjs(minDate) : undefined,
+            maxDate ? dayjs(maxDate) : undefined
+        );
+
+        const isDisabledDate =
+            disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
+
+        return !isWithinRange || !!isDisabledDate;
+    };
 }
 
 // =============================================================================

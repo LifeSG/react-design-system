@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { Text, TextStyleHelper } from "../../text";
-import { DayVariant } from "./internal-calendar-day";
+import { Color } from "../../../color";
+import { Text, TextStyleHelper } from "../../../text";
+import { DayVariant } from "./standard-calendar-day-view";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

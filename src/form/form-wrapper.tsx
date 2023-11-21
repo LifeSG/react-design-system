@@ -7,8 +7,8 @@
 import { Children, cloneElement } from "react";
 import { FormLabel } from "./form-label";
 import { ErrorMessage } from "./form-label.style";
-import { Container } from "./form-wrapper.style";
-import { FormWrapperProps } from "./types";
+import { ColDivContainer, Container } from "./form-wrapper.style";
+import { FormElementLayoutType, FormWrapperProps } from "./types";
 
 export const FormWrapper = ({
     label,
@@ -16,8 +16,17 @@ export const FormWrapper = ({
     id,
     disabled,
     children,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     "data-error-testid": errorTestId,
 }: FormWrapperProps): JSX.Element => {
+    // =============================================================================
+    // CONST, STATE, REFS
+    // =============================================================================
+    const updatedLayoutType = getLayoutType();
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -28,6 +37,29 @@ export const FormWrapper = ({
 
     const isInvalidState = (): boolean => {
         return !!errorMessage;
+    };
+
+    function getLayoutType(): FormElementLayoutType {
+        if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
+            return "grid";
+        } else if (!layoutType) {
+            return "flex";
+        } else {
+            return layoutType;
+        }
+    }
+
+    const getContainerLayoutProps = (layoutType: FormElementLayoutType) => {
+        switch (layoutType) {
+            case "grid":
+                return {
+                    mobileCols,
+                    tabletCols,
+                    desktopCols,
+                };
+            case "flex":
+                return undefined;
+        }
     };
 
     // =============================================================================
@@ -66,8 +98,11 @@ export const FormWrapper = ({
         );
     };
 
+    const ContainerComponent =
+        updatedLayoutType === "grid" ? ColDivContainer : Container;
+
     return (
-        <Container>
+        <ContainerComponent {...getContainerLayoutProps(updatedLayoutType)}>
             {label && renderFormLabel()}
             {renderChildren()}
             {errorMessage && (
@@ -80,6 +115,6 @@ export const FormWrapper = ({
                     {errorMessage}
                 </ErrorMessage>
             )}
-        </Container>
+        </ContainerComponent>
     );
 };

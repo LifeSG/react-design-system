@@ -8,6 +8,10 @@ export const FormNestedSelect = <V1, V2, V3>({
     id = "form-nested-select",
     "data-error-testid": errorTestId,
     "data-testid": testId,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: FormNestedSelectProps<V1, V2, V3>): JSX.Element => {
     return (
@@ -17,6 +21,10 @@ export const FormNestedSelect = <V1, V2, V3>({
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             disabled={otherProps.disabled}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <InputNestedSelect
                 id={`${id}-base`}

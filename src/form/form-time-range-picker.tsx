@@ -8,6 +8,10 @@ export const FormTimeRangePicker = ({
     id = "form-timepicker",
     "data-error-testid": errorTestId,
     "data-testid": testId,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: FormTimeRangePickerProps): JSX.Element => {
     return (
@@ -17,6 +21,10 @@ export const FormTimeRangePicker = ({
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <TimeRangePicker
                 id={`${id}-base`}

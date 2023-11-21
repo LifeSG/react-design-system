@@ -8,6 +8,10 @@ export const FormUnitNumberInput = ({
     id = "form-unit-number-input",
     "data-error-testid": errorTestId,
     "data-testid": testId,
+    layoutType,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: FormUnitNumberInputProps): JSX.Element => {
     return (
@@ -17,6 +21,10 @@ export const FormUnitNumberInput = ({
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             disabled={otherProps.disabled}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
         >
             <UnitNumberInput
                 id={`${id}-base`}

@@ -13,7 +13,7 @@ import {
     StandaloneDateInput,
     StandaloneDateInputRef,
 } from "../shared/standalone-date-input/standalone-date-input";
-import { DateHelper, DateInputHelper } from "../util";
+import { DateHelper, DateInputHelper, useContainerQuery } from "../util";
 import { useStateActions } from "../util/use-state-actions";
 import {
     Container,
@@ -58,6 +58,7 @@ export const DateRangeInput = ({
     onYearMonthDisplayChange,
     withButton: _withButton = true,
     variant = "range",
+    numberOfDays = 7,
     readOnly,
     id,
     allowDisabledSelection,
@@ -68,8 +69,10 @@ export const DateRangeInput = ({
     // =============================================================================
     const [initialCalendarDate, setInitialCalendarDate] = useState<string>();
     const [hoverValue, setHoverValue] = useState<string>(undefined);
-    const [isTouch, setIsTouch] = useState<boolean>(false);
+    const [isStartDisabled, setIsStartDisabled] = useState<boolean>(false);
+    const [isEndDisabled, setIsEndDisabled] = useState<boolean>(false);
     const isWeekSelection = variant === "week";
+    const isFixedRangeSelection = variant === "fixed-range";
 
     const [
         {
@@ -116,7 +119,11 @@ export const DateRangeInput = ({
             }),
             focus: (state, currentFocus: FocusType) => ({
                 ...state,
-                currentFocus: !isWeekSelection ? currentFocus : "none",
+                currentFocus: isWeekSelection
+                    ? "none"
+                    : isFixedRangeSelection
+                    ? "start"
+                    : currentFocus,
                 calendarOpen: !readOnly,
             }),
             cancel: (state) => ({
@@ -164,6 +171,10 @@ export const DateRangeInput = ({
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
+    const shouldWrap = useContainerQuery({
+        maxWidth: MOBILE_WRAP_WIDTH,
+        targetRef: nodeRef,
+    });
 
     // show button if it is mobile view
     const withButton = _withButton || isMobile;
@@ -193,7 +204,8 @@ export const DateRangeInput = ({
         if (!nodeRef.current.contains(event.relatedTarget)) {
             actions.blur();
 
-            setIsTouch(false);
+            setIsStartDisabled(false);
+            setIsEndDisabled(false);
             startInputRef.current.resetPlaceholder();
             endInputRef.current.resetPlaceholder();
 
@@ -338,12 +350,48 @@ export const DateRangeInput = ({
         }
     };
 
+    const handleFixedRangeSelectionChange = (val: string) => {
+        if (isDateUnselectable(val)) {
+            isUnselectable.current = true;
+            return;
+        }
+
+        actions.changeStart(val);
+        calendarRef.current.setCalendarDate(val);
+        isUnselectable.current = false;
+
+        if (!val) {
+            if (withButton) {
+                actions.changeEnd("");
+            } else {
+                actions.resetRange({ start: "", end: "" });
+                onChange?.("", "");
+            }
+            return;
+        }
+
+        const start = dayjs(val).format("YYYY-MM-DD");
+        const end = dayjs(start)
+            .add(numberOfDays - 1, "day")
+            .format("YYYY-MM-DD");
+        actions.changeStart(start);
+        actions.changeEnd(end);
+        isUnselectable.current = false;
+
+        if (!withButton) {
+            actions.done({ start, end });
+            onChange?.(start, end);
+            return;
+        }
+    };
+
     const handleInputFocus = (focusType: FocusType) => () => {
         if (readOnly) return;
 
         actions.focus(focusType);
 
         handleWeekSelectionInputFocus();
+        handleFixedRangeSelectionInputFocus();
 
         if (onFocus) {
             onFocus();
@@ -356,8 +404,16 @@ export const DateRangeInput = ({
                 .startOf("week")
                 .format("YYYY-MM-DD");
 
-            setIsTouch(true);
+            setIsStartDisabled(true);
+            setIsEndDisabled(true);
             setInitialCalendarDate(firstDayOfWeek);
+        }
+    };
+
+    const handleFixedRangeSelectionInputFocus = () => {
+        if (isFixedRangeSelection) {
+            setIsEndDisabled(true);
+            setInitialCalendarDate(selectedStart);
         }
     };
 
@@ -376,14 +432,20 @@ export const DateRangeInput = ({
     };
 
     const handleCalendarSelect = (val: string) => {
-        if (currentFocus === "start") {
-            handleStartDateChange(val);
-        } else if (currentFocus === "end") {
-            handleEndDateChange(val);
-        }
-
-        if (isWeekSelection) {
-            handleWeekSelectionChange(val);
+        switch (variant) {
+            case "week":
+                handleWeekSelectionChange(val);
+                break;
+            case "fixed-range":
+                handleFixedRangeSelectionChange(val);
+                break;
+            default:
+                if (currentFocus === "start") {
+                    handleStartDateChange(val);
+                } else if (currentFocus === "end") {
+                    handleEndDateChange(val);
+                }
+                break;
         }
     };
 
@@ -441,8 +503,17 @@ export const DateRangeInput = ({
                     end: dayjs(hoverValue).endOf("week").format("YYYY-MM-DD"),
                 };
                 break;
-        }
+            case "fixed-range":
+                if (!hoverValue) return;
 
+                values = {
+                    start: dayjs(hoverValue).format("YYYY-MM-DD"),
+                    end: dayjs(hoverValue)
+                        .add(numberOfDays - 1, "day")
+                        .format("YYYY-MM-DD"),
+                };
+                break;
+        }
         return values[getValue];
     };
 
@@ -455,6 +526,7 @@ export const DateRangeInput = ({
             $disabled={disabled}
             $readOnly={readOnly}
             $error={error}
+            $wrap={shouldWrap}
             id={id}
             data-testid={otherProps["data-testid"]}
             onBlur={handleNodeBlur}
@@ -463,32 +535,36 @@ export const DateRangeInput = ({
         >
             <RangeInputInnerContainer
                 currentActive={currentFocus}
-                minWidthBeforeWrap={MOBILE_WRAP_WIDTH}
+                wrap={shouldWrap}
                 error={error}
             >
-                <InputContainer>
+                <InputContainer $wrap={shouldWrap}>
                     <StandaloneDateInput
                         ref={startInputRef}
                         placeholder="From"
                         names={["start-day", "start-month", "start-year"]}
                         value={selectedStart}
                         disabled={disabled}
-                        readOnly={isTouch || readOnly}
+                        readOnly={isStartDisabled || readOnly}
                         focused={currentFocus === "start"}
                         hoverValue={getHoverValue("start")}
-                        onChange={handleStartDateChange}
+                        onChange={
+                            isFixedRangeSelection
+                                ? handleFixedRangeSelectionChange
+                                : handleStartDateChange
+                        }
                         onFocus={handleInputFocus("start")}
                         onBlur={handleStartInputBlur}
                     />
                 </InputContainer>
-                <InputContainer>
+                <InputContainer $wrap={shouldWrap}>
                     <StandaloneDateInput
                         ref={endInputRef}
                         placeholder="To"
                         names={["end-day", "end-month", "end-year"]}
                         value={selectedEnd}
                         disabled={disabled}
-                        readOnly={isTouch || readOnly}
+                        readOnly={isEndDisabled || readOnly}
                         focused={currentFocus === "end"}
                         hoverValue={getHoverValue("end")}
                         onChange={handleEndDateChange}
@@ -516,6 +592,7 @@ export const DateRangeInput = ({
                 onDismiss={handleCalendarDismiss}
                 onHover={handleCalendarHover}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
+                numberOfDays={numberOfDays}
             />
         </Container>
     );

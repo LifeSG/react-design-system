@@ -1,21 +1,35 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 
-export const MOBILE_WRAP_WIDTH = 374;
+// =============================================================================
+// STYLE INTERFACE
+// =============================================================================
+interface StyleProps {
+    $wrap: boolean;
+}
 
-export const Container = styled(InputWrapper)`
-    @media screen and (max-width: ${MOBILE_WRAP_WIDTH}px) {
-        padding: 0.75rem 1rem;
-    }
+export const MOBILE_WRAP_WIDTH = 320;
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const Container = styled(InputWrapper)<StyleProps>`
+    ${(props) =>
+        props.$wrap &&
+        css`
+            padding: 0.75rem 1rem;
+        `}
 `;
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     height: calc(3rem - 2px); // exclude top and bottom borders
     width: 100%;
 
-    @media screen and (max-width: ${MOBILE_WRAP_WIDTH}px) {
-        height: fit-content;
-    }
+    ${(props) =>
+        props.$wrap &&
+        css`
+            height: fit-content;
+        `}
 `;

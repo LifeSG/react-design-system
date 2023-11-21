@@ -25,6 +25,10 @@ const FormTextareaComponent = (
         "data-error-testid": errorTestId,
         "data-testid": testId,
         onChange,
+        layoutType,
+        mobileCols,
+        tabletCols,
+        desktopCols,
         ...otherProps
     } = props;
 
@@ -88,7 +92,15 @@ const FormTextareaComponent = (
     };
 
     return (
-        <FormWrapper id={id} label={label} disabled={otherProps.disabled}>
+        <FormWrapper
+            id={id}
+            label={label}
+            disabled={otherProps.disabled}
+            layoutType={layoutType}
+            mobileCols={mobileCols}
+            tabletCols={tabletCols}
+            desktopCols={desktopCols}
+        >
             <TextareaBase
                 id={`${id}-base`}
                 data-testid={testId || id}
