@@ -211,7 +211,7 @@ export const Component = (
                             >
                                 <ThumbnailImage
                                     src={src}
-                                    alt={`Thumbnail ${index}`}
+                                    alt={`Thumbnail ${index + 1}`}
                                     fit="cover"
                                 />
                             </ThumbnailItem>
