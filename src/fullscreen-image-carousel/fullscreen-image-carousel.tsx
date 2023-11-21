@@ -88,11 +88,11 @@ export const Component = (
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleTouchStart = (e) => {
+    const handleTouchStart = (e: React.TouchEvent) => {
         if (zoom <= 1) setStartX(e.touches[0].clientX);
     };
 
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: React.TouchEvent) => {
         if (!startX || zoom > 1) return;
         setEndX(e.touches[0].clientX);
     };
@@ -147,7 +147,6 @@ export const Component = (
     const renderSlides = () => {
         return (
             <ImageGallerySlides
-                className="image-carousel-slides"
                 style={{
                     transform: `translateX(calc(${
                         -currentSlide * 100
@@ -166,10 +165,7 @@ export const Component = (
                         }
                     }
                     return (
-                        <ImageGallerySlide
-                            key={index}
-                            className="image-carousel-slide"
-                        >
+                        <ImageGallerySlide key={index} data-testid="slide-item">
                             <TransformWrapper
                                 ref={(el) => (zoomRefs.current[index] = el)}
                                 panning={{
@@ -182,7 +178,6 @@ export const Component = (
                             >
                                 <TransformComponent>
                                     <SlideImage
-                                        className="carousel-image"
                                         src={src}
                                         alt={alt}
                                         placeholder={<SlidePlaceholderImage />}
@@ -199,15 +194,15 @@ export const Component = (
 
     const renderThumbnails = () => {
         return (
-            <ThumbnailContainer className="thumbnail-container">
-                <ThumbnailWrapper className="thumbnail-wrapper">
+            <ThumbnailContainer>
+                <ThumbnailWrapper>
                     {images.map((image, index) => {
                         const src =
                             typeof image === "string" ? image : image.src;
                         return (
                             <ThumbnailItem
+                                data-testid="thumbnail-item"
                                 key={index}
-                                className="thumbnail-item"
                                 active={index === currentSlide}
                                 onClick={() => goToSlide(index)}
                                 ref={(el) =>
@@ -215,7 +210,6 @@ export const Component = (
                                 }
                             >
                                 <ThumbnailImage
-                                    className="thumbnail-image"
                                     src={src}
                                     alt={`Thumbnail ${index}`}
                                     fit="cover"
@@ -237,11 +231,10 @@ export const Component = (
             >
                 <CrossIcon aria-hidden />
             </CloseButton>
-            <ImageGalleryContainer className="image-carousel-container">
-                <ImageGalleryWrapper className="image-carousel-wrapper">
+            <ImageGalleryContainer>
+                <ImageGalleryWrapper>
                     <ArrowButton
                         aria-label="View previous image"
-                        className="prev-btn"
                         data-testid="prev-btn"
                         position="left"
                         onClick={goToPrevSlide}
@@ -250,7 +243,6 @@ export const Component = (
                     </ArrowButton>
                     <ArrowButton
                         aria-label="View next image"
-                        className="forward-btn"
                         data-testid="forward-btn"
                         position="right"
                         onClick={goToNextSlide}
@@ -259,17 +251,16 @@ export const Component = (
                     </ArrowButton>
                     <ImageGallerySwipe
                         ref={containerRef}
-                        className="image-carousel-swipe"
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
                         onTouchEnd={handleTouchEnd}
                     >
                         {renderSlides()}
                     </ImageGallerySwipe>
-                    <BoxChip className="carousel-footer">
-                        <Chip className="carousel-chip" weight={"semibold"}>{`${
-                            currentSlide + 1
-                        }/${images.length}`}</Chip>
+                    <BoxChip>
+                        <Chip weight="semibold">{`${currentSlide + 1}/${
+                            images.length
+                        }`}</Chip>
                     </BoxChip>
                 </ImageGalleryWrapper>
                 {!hideThumbnail && renderThumbnails()}
