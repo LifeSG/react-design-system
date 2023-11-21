@@ -1,4 +1,8 @@
-import { CrossIcon } from "@lifesg/react-icons";
+import {
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    CrossIcon,
+} from "@lifesg/react-icons";
 import {
     forwardRef,
     useEffect,
@@ -16,8 +20,6 @@ import { Modal } from "../modal";
 import { useEventListener } from "../util";
 import {
     ArrowButton,
-    ArrowIconLeft,
-    ArrowIconRight,
     BoxChip,
     Chip,
     CloseButton,
@@ -244,7 +246,7 @@ export const Component = (
                         position="left"
                         onClick={goToPrevSlide}
                     >
-                        <ArrowIconLeft aria-hidden />
+                        <ChevronLeftIcon aria-hidden />
                     </ArrowButton>
                     <ArrowButton
                         aria-label="View next image"
@@ -253,7 +255,7 @@ export const Component = (
                         position="right"
                         onClick={goToNextSlide}
                     >
-                        <ArrowIconRight aria-hidden />
+                        <ChevronRightIcon aria-hidden />
                     </ArrowButton>
                     <ImageGallerySwipe
                         ref={containerRef}

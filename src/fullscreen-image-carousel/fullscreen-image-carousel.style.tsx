@@ -1,4 +1,3 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
@@ -21,27 +20,13 @@ interface ThumbnailItemStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const ArrowIconLeft = styled(ChevronLeftIcon)`
-    font-size: 1rem;
-    color: ${Color.Primary};
-`;
-
-export const ArrowIconRight = styled(ChevronRightIcon)`
-    font-size: 1rem;
-    color: ${Color.Primary};
-`;
-
 const IconButton = styled(ClickableIcon)`
     padding: 0;
     border-radius: 100%;
-    background: white;
+    background: ${Color.Neutral[8]};
     color: ${Color.Primary};
     height: 2.5rem;
     width: 2.5rem;
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-    }
 `;
 
 export const CloseButton = styled(IconButton)`
@@ -49,13 +34,15 @@ export const CloseButton = styled(IconButton)`
     top: 3rem;
     right: 3rem;
     z-index: 5;
-    ${MediaQuery.MaxWidth.tablet} {
-        top: 2rem;
-        right: 2rem;
-    }
+
     ${MediaQuery.MaxWidth.mobileL} {
         top: 1.25rem;
         right: 1.25rem;
+    }
+
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
     }
 `;
 
@@ -64,13 +51,11 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+
     ${(props) =>
         props.position === "left" &&
         css`
             left: 3rem;
-            ${MediaQuery.MaxWidth.tablet} {
-                left: 2rem;
-            }
             ${MediaQuery.MaxWidth.mobileL} {
                 left: 1.25rem;
             }
@@ -80,13 +65,15 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
         props.position === "right" &&
         css`
             right: 3rem;
-            ${MediaQuery.MaxWidth.tablet} {
-                right: 2rem;
-            }
             ${MediaQuery.MaxWidth.mobileL} {
                 right: 1.25rem;
             }
         `}
+
+    svg {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
 `;
 
 export const ImageGalleryContainer = styled.div`
@@ -161,23 +148,17 @@ export const BoxChip = styled.div`
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    width: 100px; /* Need a specific value to work */
     z-index: 3;
 `;
 
 export const Chip = styled(Text.XSmall)`
     display: inline-flex;
-    padding: 4px 16px;
+    padding: 0.25rem 1rem;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     border-radius: 20px;
     background-color: ${Color.Neutral[8]};
     text-align: center;
-    font-weight: 600;
-    font-size: 0.75rem;
-    line-height: 20px;
-    letter-spacing: 0.12px;
 `;
 
 // -----------------------------------------------------------------------------
@@ -185,10 +166,15 @@ export const Chip = styled(Text.XSmall)`
 // -----------------------------------------------------------------------------
 
 export const ThumbnailContainer = styled.div`
+    flex-shrink: 0;
     display: flex;
     overflow: auto;
-    padding: 1rem 0.625rem;
     background-color: ${Color.Neutral[1]};
+    padding: 1.5rem 1rem;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        padding: 1rem 1.25rem;
+    }
 `;
 
 export const ThumbnailWrapper = styled.div`
@@ -208,20 +194,26 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
 
     flex-shrink: 0;
     overflow: hidden;
-    border: 1px solid ${Color.Neutral[1]};
+    border: 1px solid transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 6.25rem;
     width: 6.25rem;
+
     ${MediaQuery.MaxWidth.mobileL} {
         height: 4rem;
         width: 4rem;
     }
+
     ${(props) =>
         props.active
             ? css`
                   border: 4px solid ${Color.Primary};
+
+                  ${MediaQuery.MaxWidth.mobileL} {
+                      border: 2px solid ${Color.Primary};
+                  }
               `
             : css`
                   :hover {
