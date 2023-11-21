@@ -40,6 +40,7 @@ export const InputSelect = <T, V>({
     renderListItem,
     hideNoResultsDisplay,
     renderCustomCallToAction,
+    onBlur,
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -69,6 +70,9 @@ export const InputSelect = <T, V>({
         }
         setShowOptions(!showOptions);
         triggerOptionDisplayCallback(!showOptions);
+        if (showOptions) {
+            onBlur(event);
+        }
     };
 
     const handleListItemClick = (item: T, extractedValue: V) => {
@@ -96,8 +100,8 @@ export const InputSelect = <T, V>({
         }
     };
 
-    const handleWrapperBlur = () => {
-        onBlur?.();
+    const handleWrapperBlur = (e?: React.FocusEvent<any>) => {
+        onBlur?.(e);
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };

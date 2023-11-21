@@ -1,7 +1,7 @@
 export interface DropdownSelectorProps {
     children: JSX.Element[];
     show: boolean;
-    onBlur: () => void;
+    onBlur?: (e?: any) => void;
     error?: boolean | undefined;
     disabled?: boolean | undefined;
     testId?: string | undefined;

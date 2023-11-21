@@ -34,7 +34,7 @@ export const DropdownWrapper = ({
             }
             // outside click
             if (show) {
-                onBlur();
+                onBlur(event);
             }
         }
     }
