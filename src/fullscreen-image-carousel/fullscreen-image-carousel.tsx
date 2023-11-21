@@ -7,6 +7,7 @@ import {
     useState,
 } from "react";
 import {
+    ReactZoomPanPinchContentRef,
     ReactZoomPanPinchRef,
     TransformComponent,
     TransformWrapper,
@@ -54,8 +55,9 @@ export const Component = (
     const [zoom, setZoom] = useState(1);
     const [startX, setStartX] = useState(null);
     const [endX, setEndX] = useState(null);
-    const containerRef = useRef(null);
-    const thumbnailRef = useRef([]);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const thumbnailRefs = useRef<HTMLDivElement[]>([]);
+    const zoomRefs = useRef<ReactZoomPanPinchContentRef[]>([]);
     const diff = startX && endX ? startX - endX : 0;
 
     useImperativeHandle<
@@ -63,7 +65,7 @@ export const Component = (
         Partial<FullscreenImageCarouselRef>
     >(ref, () => ({
         currentSlide: currentSlide,
-        setCurrentSlide: (value) => setCurrentSlide(value),
+        setCurrentSlide: goToSlide,
         goToPrevSlide,
         goToNextSlide,
     }));
@@ -74,12 +76,10 @@ export const Component = (
     useEventListener("keydown", handleKeyDown, "document");
 
     useEffect(() => {
-        typeof thumbnailRef.current?.[currentSlide]?.scrollIntoView ===
-            "function" &&
-            thumbnailRef.current[currentSlide]?.scrollIntoView({
-                behavior: "smooth",
-                inline: "center",
-            });
+        thumbnailRefs.current?.[currentSlide]?.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+        });
         setZoom(1);
     }, [currentSlide]);
 
@@ -125,11 +125,18 @@ export const Component = (
     // HELPER FUNCTIONS
     // =============================================================================
     const goToPrevSlide = () => {
+        zoomRefs.current?.[currentSlide]?.resetTransform();
         setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     };
 
     const goToNextSlide = () => {
+        zoomRefs.current?.[currentSlide]?.resetTransform();
         setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    };
+
+    const goToSlide = (index: number) => {
+        zoomRefs.current?.[currentSlide]?.resetTransform();
+        setCurrentSlide(index);
     };
 
     // =============================================================================
@@ -162,10 +169,11 @@ export const Component = (
                             className="image-carousel-slide"
                         >
                             <TransformWrapper
+                                ref={(el) => (zoomRefs.current[index] = el)}
                                 panning={{
                                     disabled: zoom <= 1,
                                 }}
-                                initialScale={zoom}
+                                initialScale={1}
                                 onZoom={handleZoom}
                                 onZoomStop={handleZoom}
                                 onWheel={handleZoom}
@@ -199,8 +207,10 @@ export const Component = (
                                 key={index}
                                 className="thumbnail-item"
                                 active={index === currentSlide}
-                                onClick={() => setCurrentSlide(index)}
-                                ref={(el) => (thumbnailRef.current[index] = el)}
+                                onClick={() => goToSlide(index)}
+                                ref={(el) =>
+                                    (thumbnailRefs.current[index] = el)
+                                }
                             >
                                 <ThumbnailImage
                                     className="thumbnail-image"
