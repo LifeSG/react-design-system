@@ -145,7 +145,17 @@ export const Component = (
                     }% - ${diff}px))`,
                 }}
             >
-                {images.map((src, index) => {
+                {images.map((image, index) => {
+                    let src: string;
+                    let alt = `Image ${index + 1}`;
+                    if (typeof image === "string") {
+                        src = image;
+                    } else {
+                        src = image.src;
+                        if (image.alt) {
+                            alt = image.alt;
+                        }
+                    }
                     return (
                         <ImageGallerySlide
                             key={index}
@@ -164,7 +174,7 @@ export const Component = (
                                     <SlideImage
                                         className="carousel-image"
                                         src={src}
-                                        alt={`Slide ${index}`}
+                                        alt={alt}
                                         placeholder={<SlidePlaceholderImage />}
                                         fit="scale-down"
                                     />
@@ -181,22 +191,26 @@ export const Component = (
         return (
             <ThumbnailContainer className="thumbnail-container">
                 <ThumbnailWrapper className="thumbnail-wrapper">
-                    {images.map((src, index) => (
-                        <ThumbnailItem
-                            key={index}
-                            className="thumbnail-item"
-                            active={index === currentSlide}
-                            onClick={() => setCurrentSlide(index)}
-                            ref={(el) => (thumbnailRef.current[index] = el)}
-                        >
-                            <ThumbnailImage
-                                className="thumbnail-image"
-                                src={src}
-                                alt={`Thumbnail ${index}`}
-                                fit="cover"
-                            />
-                        </ThumbnailItem>
-                    ))}
+                    {images.map((image, index) => {
+                        const src =
+                            typeof image === "string" ? image : image.src;
+                        return (
+                            <ThumbnailItem
+                                key={index}
+                                className="thumbnail-item"
+                                active={index === currentSlide}
+                                onClick={() => setCurrentSlide(index)}
+                                ref={(el) => (thumbnailRef.current[index] = el)}
+                            >
+                                <ThumbnailImage
+                                    className="thumbnail-image"
+                                    src={src}
+                                    alt={`Thumbnail ${index}`}
+                                    fit="cover"
+                                />
+                            </ThumbnailItem>
+                        );
+                    })}
                 </ThumbnailWrapper>
             </ThumbnailContainer>
         );
