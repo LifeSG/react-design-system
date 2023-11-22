@@ -57,9 +57,9 @@ export const Header = styled.div`
 
 export const LabelText = styled(Text.H3)`
     word-wrap: break-word;
-    margin-right: 2rem;
-    display: block;
+    display: flex;
     flex: 1;
+    align-items: center;
 
     ${MediaQuery.MaxWidth.mobileM} {
         ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
@@ -71,6 +71,9 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
     margin-left: 0.625rem;
     font-size: 1.5rem;
     vertical-align: middle;
+    display: flex;
+    align-items: center;
+    margin-right: 2.5rem;
 
     ${(props) => {
         switch (props.$displayState) {
@@ -89,17 +92,18 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
 `;
 
 export const AlertIcon = styled(ExclamationCircleFillIcon)`
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1.375rem;
+    width: 1.375rem;
 `;
 
 export const CallToActionContainer = styled.div<StyleProps>`
     display: flex;
+    margin-left: auto;
+
     ${(props) => {
         if (props.$collapsible) {
             return css`
-                margin-right: 2rem;
-
+                margin-right: 2.5rem;
                 ${MediaQuery.MaxWidth.mobileM} {
                     margin-right: 1rem;
                 }
@@ -133,6 +137,6 @@ export const HandleIconContainer = styled.div<StyleProps>`
 
 export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1.375rem;
+    width: 1.375rem;
 `;

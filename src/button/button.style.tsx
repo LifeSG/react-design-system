@@ -7,7 +7,7 @@ import { MainStyleProps } from "./types";
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
-    min-width: 4rem;
+    min-width: 5.375rem;
     border-radius: 4px;
     transition: all 200ms ease;
     cursor: pointer;
@@ -100,7 +100,7 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonSizeStyle) {
             case "small":
                 return css`
-                    height: 2.5rem;
+                    height: 2.625rem;
                     span {
                         ${TextStyleHelper.getTextStyle("H5", "semibold")}
                     }

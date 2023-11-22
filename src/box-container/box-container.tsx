@@ -101,6 +101,7 @@ export const BoxContainer = ({
                     {title}
                     {renderDisplayIcon()}
                 </LabelText>
+
                 {callToActionComponent && (
                     <CallToActionContainer
                         $collapsible={collapsible}
@@ -109,6 +110,7 @@ export const BoxContainer = ({
                         {callToActionComponent}
                     </CallToActionContainer>
                 )}
+
                 {collapsible && (
                     <Handle
                         onClick={onHandleClick}
