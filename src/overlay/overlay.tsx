@@ -40,7 +40,12 @@ export const Overlay = ({
         addStylesheetForDocumentBody();
         setRootElement(getRootElement());
 
-        return () => removeOverlay();
+        return () => {
+            removeOverlay();
+            if (getOverlayOrder().length < 1) {
+                applyBodyStyleClass("remove");
+            }
+        };
     }, []);
 
     useEffect(() => {
