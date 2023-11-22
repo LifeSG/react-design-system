@@ -9,7 +9,8 @@ export const Wrapper = styled(Layout.Section)`
 `;
 
 export const Container = styled(Layout.Container)`
-    padding: 2rem 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 `;
 
 export const Title = styled(Text.H3)`
