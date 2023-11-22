@@ -1,7 +1,6 @@
 import { UneditableSectionItem } from "./section-item";
 import { UneditableSectionProps } from "./types";
 import {
-    Container,
     CustomSection,
     Description,
     GridUl,
@@ -58,8 +57,8 @@ export const UneditableSectionBase = ({
     };
 
     return (
-        <Wrapper {...otherProps}>
-            <Container type="grid">{renderChildren()}</Container>
+        <Wrapper {...otherProps} type="grid">
+            {renderChildren()}
         </Wrapper>
     );
 };

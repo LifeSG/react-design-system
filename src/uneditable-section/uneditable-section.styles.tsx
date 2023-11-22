@@ -4,11 +4,8 @@ import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
 
-export const Wrapper = styled(Layout.Section)`
+export const Wrapper = styled(Layout.Content)`
     background: ${Color.Neutral[7]};
-`;
-
-export const Container = styled(Layout.Container)`
     padding-top: 2rem;
     padding-bottom: 2rem;
 `;
