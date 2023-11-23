@@ -70,6 +70,9 @@ export const InputSelect = <T, V>({
         }
         setShowOptions(!showOptions);
         triggerOptionDisplayCallback(!showOptions);
+        if (showOptions) {
+            onBlur(event);
+        }
     };
 
     const handleListItemClick = (item: T, extractedValue: V) => {
@@ -233,11 +236,6 @@ export const InputSelect = <T, V>({
                 data-testid={id || "selector"}
                 disabled={disabled}
                 onClick={handleSelectorClick}
-                onBlur={() => {
-                    if (showOptions) {
-                        onBlur();
-                    }
-                }}
                 {...otherProps}
             >
                 {renderSelectorContent()}

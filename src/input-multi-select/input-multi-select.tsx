@@ -31,6 +31,7 @@ export const InputMultiSelect = <T, V>({
     onShowOptions,
     onHideOptions,
     onRetry,
+    onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
     ...otherProps
@@ -59,6 +60,9 @@ export const InputMultiSelect = <T, V>({
         if (!disabled) {
             setShowOptions(!showOptions);
             triggerOptionDisplayCallback(!showOptions);
+            if (showOptions) {
+                onBlur(event);
+            }
         }
     };
 
@@ -111,6 +115,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     const handleWrapperBlur = () => {
+        onBlur();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
