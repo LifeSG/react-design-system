@@ -21,6 +21,10 @@ export const Main = styled.button<MainStyleProps>`
         }
     }
 
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: 100%;
+    }
+
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
     // -----------------------------------------------------------------------------

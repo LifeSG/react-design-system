@@ -6,6 +6,7 @@ import {
     CallToActionContainer,
     ChildContainer,
     Container,
+    DesktopHandleIcon,
     Expandable,
     Handle,
     HandleIcon,
@@ -13,6 +14,7 @@ import {
     Header,
     LabelIcon,
     LabelText,
+    MobileHandleIcon,
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
@@ -100,6 +102,22 @@ export const BoxContainer = ({
                 >
                     {title}
                     {renderDisplayIcon()}
+
+                    <MobileHandleIcon>
+                        {collapsible && (
+                            <Handle
+                                onClick={onHandleClick}
+                                type="button"
+                                data-testid={
+                                    subComponentTestIds?.handle || "handle"
+                                }
+                            >
+                                <HandleIconContainer $expanded={showExpanded}>
+                                    <HandleIcon />
+                                </HandleIconContainer>
+                            </Handle>
+                        )}
+                    </MobileHandleIcon>
                 </LabelText>
 
                 {callToActionComponent && (
@@ -111,17 +129,21 @@ export const BoxContainer = ({
                     </CallToActionContainer>
                 )}
 
-                {collapsible && (
-                    <Handle
-                        onClick={onHandleClick}
-                        type="button"
-                        data-testid={subComponentTestIds?.handle || "handle"}
-                    >
-                        <HandleIconContainer $expanded={showExpanded}>
-                            <HandleIcon />
-                        </HandleIconContainer>
-                    </Handle>
-                )}
+                <DesktopHandleIcon>
+                    {collapsible && (
+                        <Handle
+                            onClick={onHandleClick}
+                            type="button"
+                            data-testid={
+                                subComponentTestIds?.handle || "handle"
+                            }
+                        >
+                            <HandleIconContainer $expanded={showExpanded}>
+                                <HandleIcon />
+                            </HandleIconContainer>
+                        </Handle>
+                    )}
+                </DesktopHandleIcon>
             </Header>
             {renderChildContent()}
         </Container>

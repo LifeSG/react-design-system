@@ -51,7 +51,8 @@ export const Header = styled.div`
     justify-content: space-between;
 
     ${MediaQuery.MaxWidth.mobileM} {
-        padding: 1rem;
+        padding: 1rem 1.25rem;
+        display: block;
     }
 `;
 
@@ -63,7 +64,9 @@ export const LabelText = styled(Text.H3)`
 
     ${MediaQuery.MaxWidth.mobileM} {
         ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-        margin-right: 1rem;
+        margin-right: 0rem;
+        display: flex;
+        justify-content: space-between;
     }
 `;
 
@@ -74,6 +77,10 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
     display: flex;
     align-items: center;
     margin-right: 2.5rem;
+
+    ${MediaQuery.MaxWidth.mobileM} {
+        margin-right: 0;
+    }
 
     ${(props) => {
         switch (props.$displayState) {
@@ -105,7 +112,8 @@ export const CallToActionContainer = styled.div<StyleProps>`
             return css`
                 margin-right: 2.5rem;
                 ${MediaQuery.MaxWidth.mobileM} {
-                    margin-right: 1rem;
+                    margin-right: 0rem;
+                    margin-top: 1rem;
                 }
             `;
         }
@@ -139,4 +147,17 @@ export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
     height: 1.375rem;
     width: 1.375rem;
+`;
+
+export const MobileHandleIcon = styled.div`
+    display: none;
+    ${MediaQuery.MaxWidth.mobileM} {
+        display: block;
+    }
+`;
+
+export const DesktopHandleIcon = styled.div`
+    ${MediaQuery.MaxWidth.mobileM} {
+        display: none;
+    }
 `;
