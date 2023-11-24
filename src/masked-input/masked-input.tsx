@@ -35,6 +35,9 @@ const Component = (
     const [isMasked, setIsMasked] = useState(!disableMask);
     const [updatedValue, setUpdatedValue] = useState(value || "");
 
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
     useEffect(() => {
         if (isMasked) {
             onMask && onMask();
@@ -42,6 +45,10 @@ const Component = (
             onUnmask && onUnmask();
         }
     }, [isMasked]);
+
+    useEffect(() => {
+        setUpdatedValue(value);
+    }, [value]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -76,7 +83,7 @@ const Component = (
         onChange && onChange(event);
     };
 
-    const toggleMasking = (event?: React.MouseEvent<HTMLInputElement>) => {
+    const toggleMasking = () => {
         setIsMasked(!isMasked);
     };
 
