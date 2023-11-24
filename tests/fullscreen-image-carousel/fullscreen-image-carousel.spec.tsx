@@ -71,8 +71,8 @@ describe("Fullscreen Image Carousel", () => {
 // CONSTANTS
 // =============================================================================
 const IMAGES = [
-    "https://picsum.photos/id/157/1600/900",
-    "https://picsum.photos/id/163/900/300",
-    "https://picsum.photos/id/369/1000/1000",
-    "https://picsum.photos/id/445/300/300",
+    { src: "https://picsum.photos/id/157/1600/900" },
+    { src: "https://picsum.photos/id/163/900/300" },
+    { src: "https://picsum.photos/id/369/1000/1000" },
+    { src: "https://picsum.photos/id/445/300/300" },
 ];

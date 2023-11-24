@@ -154,16 +154,6 @@ export const Component = (
                 }}
             >
                 {images.map((image, index) => {
-                    let src: string;
-                    let alt = `Image ${index + 1}`;
-                    if (typeof image === "string") {
-                        src = image;
-                    } else {
-                        src = image.src;
-                        if (image.alt) {
-                            alt = image.alt;
-                        }
-                    }
                     return (
                         <ImageGallerySlide key={index} data-testid="slide-item">
                             <TransformWrapper
@@ -178,8 +168,8 @@ export const Component = (
                             >
                                 <TransformComponent>
                                     <SlideImage
-                                        src={src}
-                                        alt={alt}
+                                        src={image.src}
+                                        alt={image.alt ?? `Image ${index + 1}`}
                                         placeholder={<SlidePlaceholderImage />}
                                         fit="scale-down"
                                     />
@@ -197,8 +187,7 @@ export const Component = (
             <ThumbnailContainer>
                 <ThumbnailWrapper>
                     {images.map((image, index) => {
-                        const src =
-                            typeof image === "string" ? image : image.src;
+                        const src = image.thumbnailSrc ?? image.src;
                         return (
                             <ThumbnailItem
                                 data-testid="thumbnail-item"
