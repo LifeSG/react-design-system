@@ -17,7 +17,7 @@ export interface InputMultiSelectProps<T, V>
         DropdownStyleProps {
     selectedOptions?: T[] | undefined;
     onSelectOptions?: ((options: T[]) => void) | undefined;
-    onBlur?: (e?: any) => void;
+    onBlur: () => void;
 }
 
 /** To be exposed for Form component inheritance */
