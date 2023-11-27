@@ -46,13 +46,12 @@ const DATA: ApiTableSectionProps[] = [
             ...MODAL_PROPS,
             {
                 name: "images",
-                description:
-                    "List of images urls. An object can be provided for further customisation.",
-                propTypes: ["(string | CarouselItemProps)[]"],
+                description: "List of carousel items",
+                propTypes: ["FullscreenCarouselItemProps[]"],
                 mandatory: true,
             },
             {
-                name: "initialIndex",
+                name: "initialActiveItem",
                 description: "The initial image that will be displayed",
                 propTypes: ["number"],
                 defaultValue: "0",
@@ -71,7 +70,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "CarouselItemProps",
+        name: "FullscreenCarouselItemProps",
         attributes: [
             {
                 name: "src",
@@ -83,6 +82,16 @@ const DATA: ApiTableSectionProps[] = [
                 name: "alt",
                 description:
                     "Descriptive text to be set on the image for screen readers",
+                propTypes: ["string"],
+            },
+            {
+                name: "thumbnailSrc",
+                description: (
+                    <>
+                        The thumbnail image src. If not specified, the image{" "}
+                        <code>src</code> will be used
+                    </>
+                ),
                 propTypes: ["string"],
             },
         ],
