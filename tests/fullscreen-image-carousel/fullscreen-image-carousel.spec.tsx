@@ -19,7 +19,7 @@ describe("Fullscreen Image Carousel", () => {
     });
 
     it("should render the component", () => {
-        render(<FullscreenImageCarousel images={IMAGES} show={true} />);
+        render(<FullscreenImageCarousel items={IMAGES} show={true} />);
 
         expect(screen.getByTestId("image-carousel-modal")).toBeInTheDocument();
 
@@ -32,9 +32,9 @@ describe("Fullscreen Image Carousel", () => {
     it("should display the correct slide current based on the initialIndex", () => {
         render(
             <FullscreenImageCarousel
-                images={IMAGES}
+                items={IMAGES}
                 show={true}
-                initialIndex={1}
+                initialActiveItem={1}
             />
         );
 
@@ -43,7 +43,7 @@ describe("Fullscreen Image Carousel", () => {
 
     describe("Navigation", () => {
         it("should navigate to the correct slide when arrow buttons are clicked", async () => {
-            render(<FullscreenImageCarousel images={IMAGES} show={true} />);
+            render(<FullscreenImageCarousel items={IMAGES} show={true} />);
             expect(screen.getByText("1/4")).toBeInTheDocument();
 
             fireEvent.click(screen.getByTestId("forward-btn"));
@@ -54,7 +54,7 @@ describe("Fullscreen Image Carousel", () => {
         });
 
         it("should navigate to the correct slide when thumbnail is clicked", async () => {
-            render(<FullscreenImageCarousel images={IMAGES} show={true} />);
+            render(<FullscreenImageCarousel items={IMAGES} show={true} />);
 
             const elements = screen.getAllByTestId("thumbnail-item");
 

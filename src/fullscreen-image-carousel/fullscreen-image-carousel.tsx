@@ -42,8 +42,8 @@ import {
 
 export const Component = (
     {
-        images,
-        initialIndex,
+        items,
+        initialActiveItem,
         hideThumbnail,
         onClose,
         ...otherProps
@@ -53,7 +53,7 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [currentSlide, setCurrentSlide] = useState(initialIndex ?? 0);
+    const [currentSlide, setCurrentSlide] = useState(initialActiveItem ?? 0);
     const [zoom, setZoom] = useState(1);
     const [startX, setStartX] = useState(null);
     const [endX, setEndX] = useState(null);
@@ -66,10 +66,10 @@ export const Component = (
         Partial<FullscreenImageCarouselRef>,
         Partial<FullscreenImageCarouselRef>
     >(ref, () => ({
-        currentSlide: currentSlide,
-        setCurrentSlide: goToSlide,
-        goToPrevSlide,
-        goToNextSlide,
+        currentItem: currentSlide,
+        setCurrentItem: goToSlide,
+        goToPrevItem: goToPrevSlide,
+        goToNextItem: goToNextSlide,
     }));
 
     // =============================================================================
@@ -128,12 +128,12 @@ export const Component = (
     // =============================================================================
     const goToPrevSlide = () => {
         zoomRefs.current?.[currentSlide]?.resetTransform();
-        setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+        setCurrentSlide((prev) => (prev === 0 ? items.length - 1 : prev - 1));
     };
 
     const goToNextSlide = () => {
         zoomRefs.current?.[currentSlide]?.resetTransform();
-        setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+        setCurrentSlide((prev) => (prev === items.length - 1 ? 0 : prev + 1));
     };
 
     const goToSlide = (index: number) => {
@@ -153,7 +153,7 @@ export const Component = (
                     }% - ${diff}px))`,
                 }}
             >
-                {images.map((image, index) => {
+                {items.map((item, index) => {
                     return (
                         <ImageGallerySlide key={index} data-testid="slide-item">
                             <TransformWrapper
@@ -168,8 +168,8 @@ export const Component = (
                             >
                                 <TransformComponent>
                                     <SlideImage
-                                        src={image.src}
-                                        alt={image.alt ?? `Image ${index + 1}`}
+                                        src={item.src}
+                                        alt={item.alt ?? `Image ${index + 1}`}
                                         placeholder={<SlidePlaceholderImage />}
                                         fit="scale-down"
                                     />
@@ -186,8 +186,8 @@ export const Component = (
         return (
             <ThumbnailContainer>
                 <ThumbnailWrapper>
-                    {images.map((image, index) => {
-                        const src = image.thumbnailSrc ?? image.src;
+                    {items.map((item, index) => {
+                        const src = item.thumbnailSrc ?? item.src;
                         return (
                             <ThumbnailItem
                                 data-testid="thumbnail-item"
@@ -248,7 +248,7 @@ export const Component = (
                     </ImageGallerySwipe>
                     <BoxChip>
                         <Chip weight="semibold">{`${currentSlide + 1}/${
-                            images.length
+                            items.length
                         }`}</Chip>
                     </BoxChip>
                 </ImageGalleryWrapper>

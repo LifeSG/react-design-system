@@ -1,10 +1,10 @@
 import { ModalProps } from "../modal";
 
 export interface FullscreenImageCarouselRef {
-    currentSlide: number;
-    setCurrentSlide: (currentSlide: number) => void;
-    goToPrevSlide: () => void;
-    goToNextSlide: () => void;
+    currentItem: number;
+    setCurrentItem: (currentItem: number) => void;
+    goToPrevItem: () => void;
+    goToNextItem: () => void;
 }
 
 export interface FullscreenImageCarouselProps
@@ -12,8 +12,9 @@ export interface FullscreenImageCarouselProps
         ModalProps,
         "show" | "rootComponentId" | "animationFrom" | "zIndex"
     > {
-    images: FullscreenCarouselItemProps[];
-    initialIndex?: number | undefined;
+    items: FullscreenCarouselItemProps[];
+    /** The index of the visible item, starts from 0 */
+    initialActiveItem?: number | undefined;
     hideThumbnail?: boolean | undefined;
     onClose?: (() => void) | undefined;
 }
