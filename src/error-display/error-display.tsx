@@ -10,7 +10,11 @@ import {
     TextContainer,
     Title,
 } from "./error-display.style";
-import { ErrorDisplayProps, MaintenanceAdditionalAttributes } from "./types";
+import {
+    ErrorDisplayProps,
+    InactivityAdditionalAttributes,
+    MaintenanceAdditionalAttributes,
+} from "./types";
 
 export const ErrorDisplay = ({
     type,
@@ -43,6 +47,13 @@ export const ErrorDisplay = ({
                 const typecastProps =
                     additionalProps as MaintenanceAdditionalAttributes;
                 return additionalProps && typecastProps.dateString
+                    ? defaultAssets.renderDescription(typecastProps)
+                    : description || undefined;
+            }
+            case "inactivity": {
+                const typecastProps =
+                    additionalProps as InactivityAdditionalAttributes;
+                return additionalProps && typecastProps.secondsLeft
                     ? defaultAssets.renderDescription(typecastProps)
                     : description || undefined;
             }

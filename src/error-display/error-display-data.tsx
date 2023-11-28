@@ -1,6 +1,11 @@
 import { MediaWidths } from "../spec/media-spec";
 import { ResourceScheme } from "../theme/types";
-import { ErrorDisplayType, MaintenanceAdditionalAttributes } from "./types";
+import { renderDescriptionWithProps } from "./error-display-helper-comp";
+import {
+    ErrorDisplayType,
+    InactivityAdditionalAttributes,
+    MaintenanceAdditionalAttributes,
+} from "./types";
 
 // =============================================================================
 // IMAGE PATHS
@@ -218,7 +223,7 @@ interface ErrorDisplayDataAttrs {
     title?: string | undefined;
     description?: string | JSX.Element | undefined;
     renderDescription?: (
-        attrs?: MaintenanceAdditionalAttributes
+        attrs?: MaintenanceAdditionalAttributes | InactivityAdditionalAttributes
     ) => JSX.Element | string | undefined;
 }
 
@@ -337,7 +342,8 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
             img: imgAttributeHelper(ImgPaths["inactivity"]),
             title: "Are you still there?",
             description:
-                "You’ve been inactive for a while. To protect your privacy, you’ll be logged out in X minutes YY seconds.\n\nIf you wish to stay on this page, let us know now.",
+                "You’ve been inactive for a while. To protect your privacy, you’ll be logged out soon.\n\nIf you wish to stay on this page, let us know now.",
+            renderDescription: renderDescriptionWithProps("inactivity"),
         },
     ],
     [
@@ -347,13 +353,7 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
             title: "Service under maintenance",
             description:
                 "This service is currently unavailable. Please try again later.",
-            renderDescription: (attrs: MaintenanceAdditionalAttributes) => (
-                <>
-                    This service is currently unavailable. Please try again
-                    after&nbsp;
-                    <strong>{attrs.dateString}</strong>.
-                </>
-            ),
+            renderDescription: renderDescriptionWithProps("maintenance"),
         },
     ],
     [
@@ -525,7 +525,8 @@ const ERROR_DISPLAY_DATA_BSG = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>(
                 img: imgAttributeHelper(BsgImgPaths["inactivity"]),
                 title: "Are you still there?",
                 description:
-                    "You’ve been inactive for a while. To protect your privacy, you’ll be logged out in X minutes YY seconds.\n\nIf you wish to stay on this page, let us know now.",
+                    "You’ve been inactive for a while. To protect your privacy, you’ll be logged out soon.\n\nIf you wish to stay on this page, let us know now.",
+                renderDescription: renderDescriptionWithProps("inactivity"),
             },
         ],
         [
@@ -535,13 +536,7 @@ const ERROR_DISPLAY_DATA_BSG = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>(
                 title: "Service under maintenance",
                 description:
                     "This service is currently unavailable. Please try again later.",
-                renderDescription: (attrs: MaintenanceAdditionalAttributes) => (
-                    <>
-                        This service is currently unavailable. Please try again
-                        after&nbsp;
-                        <strong>{attrs.dateString}</strong>.
-                    </>
-                ),
+                renderDescription: renderDescriptionWithProps("maintenance"),
             },
         ],
         [

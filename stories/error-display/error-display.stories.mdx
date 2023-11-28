@@ -52,6 +52,35 @@ appear at the bottom of the component.
     </Story>
 </Canvas>
 
+<Heading3>With custom attributes</Heading3>
+
+Some variants of the `ErrorDisplay` accept custom attributes to alter the text content with
+dynamic variables. Currently only the types `"maintenance"` and `"inactivity"` have such a support.
+
+<Heading4>Maintenance</Heading4>
+
+<Canvas>
+    <Story name="Custom attributes - Maintenance">
+        <ErrorDisplay
+            type="maintenance"
+            additionalProps={{ dateString: "1 January 2023, 8:00am" }}
+        />
+        <br />
+    </Story>
+</Canvas>
+
+<Heading4>Inactivity</Heading4>
+
+<Canvas>
+    <Story name="Custom attributes - Inactivity">
+        <ErrorDisplay
+            type="inactivity"
+            additionalProps={{ secondsLeft: 300 }}
+        />
+        <br />
+    </Story>
+</Canvas>
+
 <Heading3>Customisation</Heading3>
 
 The `ErrorDisplay` component is customisable according to your project's needs. Customisation includes
