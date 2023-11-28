@@ -92,6 +92,22 @@ export const BoxContainer = ({
         }
     };
 
+    const renderHandleIcon = () => {
+        return (
+            collapsible && (
+                <Handle
+                    onClick={onHandleClick}
+                    type="button"
+                    data-testid={subComponentTestIds?.handle || "handle"}
+                >
+                    <HandleIconContainer $expanded={showExpanded}>
+                        <HandleIcon />
+                    </HandleIconContainer>
+                </Handle>
+            )
+        );
+    };
+
     return (
         <Container {...otherProps}>
             <Header data-testid="header">
@@ -102,22 +118,7 @@ export const BoxContainer = ({
                 >
                     {title}
                     {renderDisplayIcon()}
-
-                    <MobileHandleIcon>
-                        {collapsible && (
-                            <Handle
-                                onClick={onHandleClick}
-                                type="button"
-                                data-testid={
-                                    subComponentTestIds?.handle || "handle"
-                                }
-                            >
-                                <HandleIconContainer $expanded={showExpanded}>
-                                    <HandleIcon />
-                                </HandleIconContainer>
-                            </Handle>
-                        )}
-                    </MobileHandleIcon>
+                    <MobileHandleIcon>{renderHandleIcon()}</MobileHandleIcon>
                 </LabelText>
 
                 {callToActionComponent && (
@@ -129,21 +130,7 @@ export const BoxContainer = ({
                     </CallToActionContainer>
                 )}
 
-                <DesktopHandleIcon>
-                    {collapsible && (
-                        <Handle
-                            onClick={onHandleClick}
-                            type="button"
-                            data-testid={
-                                subComponentTestIds?.handle || "handle"
-                            }
-                        >
-                            <HandleIconContainer $expanded={showExpanded}>
-                                <HandleIcon />
-                            </HandleIconContainer>
-                        </Handle>
-                    )}
-                </DesktopHandleIcon>
+                <DesktopHandleIcon>{renderHandleIcon()}</DesktopHandleIcon>
             </Header>
             {renderChildContent()}
         </Container>
