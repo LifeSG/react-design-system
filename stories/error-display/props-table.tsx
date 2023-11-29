@@ -127,7 +127,10 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "additionalProps",
                 description: "Additional properties for certain error types",
-                propTypes: ["MaintenanceAdditionalAttributes"],
+                propTypes: [
+                    "MaintenanceAdditionalAttributes",
+                    "InactivityAdditionalAttributes",
+                ],
             },
             {
                 name: "imageOnly",
@@ -145,6 +148,18 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: "The date display for the maintenance display",
                 propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "InactivityAdditionalAttributes",
+        attributes: [
+            {
+                name: "secondsLeft",
+                mandatory: true,
+                description:
+                    "The amount of time left (in seconds) for the inactivity display",
+                propTypes: ["number"],
             },
         ],
     },

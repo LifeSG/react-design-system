@@ -27,6 +27,10 @@ export interface MaintenanceAdditionalAttributes {
     dateString: string;
 }
 
+export interface InactivityAdditionalAttributes {
+    secondsLeft: number;
+}
+
 export interface ErrorDisplayAttributes {
     /** The custom image attributes */
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
@@ -35,7 +39,10 @@ export interface ErrorDisplayAttributes {
     /** The action button displayed at the bottom of the Error Display */
     actionButton?: ButtonProps | undefined;
     /** Additional pre-specified props to control specific content  */
-    additionalProps?: MaintenanceAdditionalAttributes | undefined;
+    additionalProps?:
+        | MaintenanceAdditionalAttributes
+        | InactivityAdditionalAttributes
+        | undefined;
     /** Specifies if only the image is rendered */
     imageOnly?: boolean | undefined;
     /** Use specific resource scheme instead of theme resource scheme */

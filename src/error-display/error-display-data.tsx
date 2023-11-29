@@ -1,6 +1,11 @@
 import { MediaWidths } from "../spec/media-spec";
 import { ResourceScheme } from "../theme/types";
-import { ErrorDisplayType, MaintenanceAdditionalAttributes } from "./types";
+import { renderDescriptionWithProps } from "./error-display-helper-comp";
+import {
+    ErrorDisplayType,
+    InactivityAdditionalAttributes,
+    MaintenanceAdditionalAttributes,
+} from "./types";
 
 // =============================================================================
 // IMAGE PATHS
@@ -218,7 +223,7 @@ interface ErrorDisplayDataAttrs {
     title?: string | undefined;
     description?: string | JSX.Element | undefined;
     renderDescription?: (
-        attrs?: MaintenanceAdditionalAttributes
+        attrs?: MaintenanceAdditionalAttributes | InactivityAdditionalAttributes
     ) => JSX.Element | string | undefined;
 }
 
@@ -227,90 +232,99 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         "400",
         {
             img: imgAttributeHelper(ImgPaths["400"]),
-            title: "400 Bad Request",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or try again later.",
         },
     ],
     [
         "403",
         {
             img: imgAttributeHelper(ImgPaths["403"]),
-            title: "403 Forbidden",
-            description: "A generic error state illustration.",
+            title: "Error loading page",
+            description:
+                "You may not have permission to view this page. If someone gave you this link, let them know about this error.",
         },
     ],
     [
         "404",
         {
             img: imgAttributeHelper(ImgPaths["404"]),
-            title: "404 No Page Found",
-            description: "No page found.",
+            title: "Page not found",
+            description:
+                "If you entered or pasted the URL, check that it’s correct. If someone gave you this link, let them know about this error.",
         },
     ],
     [
         "408",
         {
             img: imgAttributeHelper(ImgPaths["408"]),
-            title: "408 Request Timeout",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or try again later.",
         },
     ],
     [
         "500",
         {
             img: imgAttributeHelper(ImgPaths["500"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "We're working on a fix for the problem. Please try again later.",
         },
     ],
     [
         "502",
         {
             img: imgAttributeHelper(ImgPaths["502"]),
-            title: "502 Bad Gateway",
-            description: "An error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or try again later.",
         },
     ],
     [
         "503",
         {
             img: imgAttributeHelper(ImgPaths["503"]),
-            title: "503 Service Unavailable",
-            description: "A generic error state illustration.",
+            title: "Service under maintenance",
+            description:
+                "This service is currently unavailable. Please try again later.",
         },
     ],
     [
         "504",
         {
             img: imgAttributeHelper(ImgPaths["504"]),
-            title: "504 Gateway Timeout",
-            description: "A generic error state illustration.",
+            title: "Something went wrong",
+            description:
+                "This could be a temporary problem, so please refresh the page or try again later.",
         },
     ],
     [
         "confirmation",
         {
             img: imgAttributeHelper(ImgPaths["confirmation"]),
-            title: "Confirmation modal",
+            title: "Leave and lose changes?",
             description:
-                "For form-filling instances, to confirm with the user that they want to exit the form and lose their edits.",
+                "You have unsaved changes. If you leave this page, you will lose the changes you’ve made.",
         },
     ],
     [
         "link-error",
         {
             img: imgAttributeHelper(ImgPaths["link-error"]),
-            title: "Link Error",
-            description: "When a link is expired.",
+            title: "Link has expired",
+            description:
+                "If you entered or pasted the URL, check that it’s correct. If someone gave you this link, let them know it has expired.",
         },
     ],
     [
         "logout",
         {
             img: imgAttributeHelper(ImgPaths["logout"]),
-            title: "Logged-out",
+            title: "You’ve been logged out",
             description:
-                "When the user has been inactive for a certain period of time, and has been logged out after X minutes.",
+                "It looks like you’ve left, so we logged you out to protect your privacy.",
         },
     ],
     [
@@ -319,16 +333,17 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
             img: imgAttributeHelper(ImgPaths["insufficient-credits"]),
             title: "Insufficient credits",
             description:
-                "When the user has insufficient credits for a transaction.",
+                "You do not have enough credits to make this transaction.",
         },
     ],
     [
         "inactivity",
         {
             img: imgAttributeHelper(ImgPaths["inactivity"]),
-            title: "Inactive state",
+            title: "Are you still there?",
             description:
-                "When the user has been inactive for a certain period of time, and will be logged out after X minutes.",
+                "You’ve been inactive for a while. To protect your privacy, you’ll be logged out soon.\n\nIf you wish to stay on this page, let us know now.",
+            renderDescription: renderDescriptionWithProps("inactivity"),
         },
     ],
     [
@@ -338,63 +353,58 @@ const ERROR_DISPLAY_DATA = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
             title: "Service under maintenance",
             description:
                 "This service is currently unavailable. Please try again later.",
-            renderDescription: (attrs: MaintenanceAdditionalAttributes) => (
-                <>
-                    This service is currently unavailable. Please try again
-                    after&nbsp;
-                    <strong>{attrs.dateString}</strong>.
-                </>
-            ),
+            renderDescription: renderDescriptionWithProps("maintenance"),
         },
     ],
     [
         "no-item-found",
         {
             img: imgAttributeHelper(ImgPaths["no-item-found"]),
-            title: "No items found",
+            title: "No results found",
             description:
-                "For instances where the no items can be found for a particular feature.",
+                "Try adjusting your search or filters to find what you’re looking for.",
         },
     ],
     [
         "payment-unsuccessful",
         {
             img: imgAttributeHelper(ImgPaths["payment-unsuccessful"]),
-            title: "Payment unsuccessful",
-            description: "When the user’s payment transaction is unsuccessful.",
+            title: "Unsuccessful payment",
+            description: "Your payment was unsuccessful. Please try again.",
         },
     ],
     [
         "transfer-unsuccessful",
         {
             img: imgAttributeHelper(ImgPaths["transfer-unsuccessful"]),
-            title: "Transfer unsuccessful",
-            description:
-                "For instances where the user is unsuccessful in transferring credits.",
+            title: "Unsuccessful transfer",
+            description: "Your transfer was unsuccessful. Please try again.",
         },
     ],
     [
         "unsupported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Browser not supported",
+            description:
+                "Download the latest version of Chrome, Edge, Firefox or Safari.",
         },
     ],
     [
         "partially-supported-browser",
         {
             img: imgAttributeHelper(ImgPaths["unsupported-browser"]),
-            title: "Error state",
-            description: "A generic error state illustration.",
+            title: "Browser version not supported",
+            description:
+                "Update to the latest version of Chrome, Edge, Firefox or Safari.",
         },
     ],
     [
         "warning",
         {
             img: imgAttributeHelper(ImgPaths["warning"]),
-            title: "Warning states",
-            description: "Generic warning and error state illustrations.",
+            title: "Are you sure?",
+            description: "You will lose your progress.",
         },
     ],
 ]);
@@ -405,90 +415,99 @@ const ERROR_DISPLAY_DATA_BSG = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>(
             "400",
             {
                 img: imgAttributeHelper(BsgImgPaths["400"]),
-                title: "400 Bad Request",
-                description: "A generic error state illustration.",
+                title: "Something went wrong",
+                description:
+                    "This could be a temporary problem, so please refresh the page or try again later.",
             },
         ],
         [
             "403",
             {
                 img: imgAttributeHelper(BsgImgPaths["403"]),
-                title: "403 Forbidden",
-                description: "A generic error state illustration.",
+                title: "Error loading page",
+                description:
+                    "You may not have permission to view this page. If someone gave you this link, let them know about this error.",
             },
         ],
         [
             "404",
             {
                 img: imgAttributeHelper(BsgImgPaths["404"]),
-                title: "404 No Page Found",
-                description: "No page found.",
+                title: "Page not found",
+                description:
+                    "If you entered or pasted the URL, check that it’s correct. If someone gave you this link, let them know about this error.",
             },
         ],
         [
             "408",
             {
                 img: imgAttributeHelper(BsgImgPaths["408"]),
-                title: "408 Request Timeout",
-                description: "A generic error state illustration.",
+                title: "Something went wrong",
+                description:
+                    "This could be a temporary problem, so please refresh the page or try again later.",
             },
         ],
         [
             "500",
             {
                 img: imgAttributeHelper(BsgImgPaths["500"]),
-                title: "Error state",
-                description: "A generic error state illustration.",
+                title: "Something went wrong",
+                description:
+                    "We're working on a fix for the problem. Please try again later.",
             },
         ],
         [
             "502",
             {
                 img: imgAttributeHelper(BsgImgPaths["502"]),
-                title: "502 Bad Gateway",
-                description: "An error state illustration.",
+                title: "Something went wrong",
+                description:
+                    "This could be a temporary problem, so please refresh the page or try again later.",
             },
         ],
         [
             "503",
             {
                 img: imgAttributeHelper(BsgImgPaths["503"]),
-                title: "503 Service Unavailable",
-                description: "A generic error state illustration.",
+                title: "Service under maintenance",
+                description:
+                    "This service is currently unavailable. Please try again later.",
             },
         ],
         [
             "504",
             {
                 img: imgAttributeHelper(BsgImgPaths["504"]),
-                title: "504 Gateway Timeout",
-                description: "A generic error state illustration.",
+                title: "Something went wrong",
+                description:
+                    "This could be a temporary problem, so please refresh the page or try again later.",
             },
         ],
         [
             "confirmation",
             {
                 img: imgAttributeHelper(BsgImgPaths["confirmation"]),
-                title: "Confirmation modal",
+                title: "Leave and lose changes?",
                 description:
-                    "For form-filling instances, to confirm with the user that they want to exit the form and lose their edits.",
+                    "You have unsaved changes. If you leave this page, you will lose the changes you’ve made.",
             },
         ],
         [
             "link-error",
             {
                 img: imgAttributeHelper(BsgImgPaths["link-error"]),
-                title: "Link Error",
-                description: "When a link is expired.",
+                title: "Link has expired",
+                description:
+                    "If you entered or pasted the URL, check that it’s correct. If someone gave you this link, let them know it has expired.",
             },
         ],
         [
             "logout",
             {
                 img: imgAttributeHelper(BsgImgPaths["logout"]),
-                title: "Logged-out",
+                title: "You’ve been logged out",
                 description:
-                    "When the user has been inactive for a certain period of time, and has been logged out after X minutes.",
+                    "It looks like you’ve left, so we logged you out to protect your privacy.",
             },
         ],
         [
@@ -497,16 +516,17 @@ const ERROR_DISPLAY_DATA_BSG = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>(
                 img: imgAttributeHelper(BsgImgPaths["insufficient-credits"]),
                 title: "Insufficient credits",
                 description:
-                    "When the user has insufficient credits for a transaction.",
+                    "You do not have enough credits to make this transaction.",
             },
         ],
         [
             "inactivity",
             {
                 img: imgAttributeHelper(BsgImgPaths["inactivity"]),
-                title: "Inactive state",
+                title: "Are you still there?",
                 description:
-                    "When the user has been inactive for a certain period of time, and will be logged out after X minutes.",
+                    "You’ve been inactive for a while. To protect your privacy, you’ll be logged out soon.\n\nIf you wish to stay on this page, let us know now.",
+                renderDescription: renderDescriptionWithProps("inactivity"),
             },
         ],
         [
@@ -516,64 +536,59 @@ const ERROR_DISPLAY_DATA_BSG = new Map<ErrorDisplayType, ErrorDisplayDataAttrs>(
                 title: "Service under maintenance",
                 description:
                     "This service is currently unavailable. Please try again later.",
-                renderDescription: (attrs: MaintenanceAdditionalAttributes) => (
-                    <>
-                        This service is currently unavailable. Please try again
-                        after&nbsp;
-                        <strong>{attrs.dateString}</strong>.
-                    </>
-                ),
+                renderDescription: renderDescriptionWithProps("maintenance"),
             },
         ],
         [
             "no-item-found",
             {
                 img: imgAttributeHelper(BsgImgPaths["no-item-found"]),
-                title: "No items found",
+                title: "No results found",
                 description:
-                    "For instances where the no items can be found for a particular feature.",
+                    "Try adjusting your search or filters to find what you’re looking for.",
             },
         ],
         [
             "payment-unsuccessful",
             {
                 img: imgAttributeHelper(BsgImgPaths["payment-unsuccessful"]),
-                title: "Payment unsuccessful",
-                description:
-                    "When the user’s payment transaction is unsuccessful.",
+                title: "Unsuccessful payment",
+                description: "Your payment was unsuccessful. Please try again.",
             },
         ],
         [
             "transfer-unsuccessful",
             {
                 img: imgAttributeHelper(BsgImgPaths["transfer-unsuccessful"]),
-                title: "Transfer unsuccessful",
+                title: "Unsuccessful transfer",
                 description:
-                    "For instances where the user is unsuccessful in transferring credits.",
+                    "Your transfer was unsuccessful. Please try again.",
             },
         ],
         [
             "unsupported-browser",
             {
                 img: imgAttributeHelper(BsgImgPaths["unsupported-browser"]),
-                title: "Error state",
-                description: "A generic error state illustration.",
+                title: "Browser not supported",
+                description:
+                    "Download the latest version of Chrome, Edge, Firefox or Safari.",
             },
         ],
         [
             "partially-supported-browser",
             {
                 img: imgAttributeHelper(BsgImgPaths["unsupported-browser"]),
-                title: "Error state",
-                description: "A generic error state illustration.",
+                title: "Browser version not supported",
+                description:
+                    "Update to the latest version of Chrome, Edge, Firefox or Safari.",
             },
         ],
         [
             "warning",
             {
                 img: imgAttributeHelper(BsgImgPaths["warning"]),
-                title: "Warning states",
-                description: "Generic warning and error state illustrations.",
+                title: "Are you sure?",
+                description: "You will lose your progress.",
             },
         ],
     ]
