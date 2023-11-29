@@ -44,6 +44,7 @@ export const DateInput = ({
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<InternalCalendarRef>();
     const inputRef = useRef<StandaloneDateInputRef>();
+    const MIN_DATE_INPUT = "1900-01-01";
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -176,7 +177,7 @@ export const DateInput = ({
                 withButton={withButton}
                 value={selectedDate}
                 disabledDates={disabledDates}
-                minDate={minDate}
+                minDate={MIN_DATE_INPUT}
                 maxDate={maxDate}
                 allowDisabledSelection={allowDisabledSelection}
                 onHover={handleHoverDayCell}
