@@ -6,7 +6,6 @@ import {
     CallToActionContainer,
     ChildContainer,
     Container,
-    DesktopHandleIcon,
     Expandable,
     Handle,
     HandleIcon,
@@ -14,10 +13,11 @@ import {
     Header,
     LabelIcon,
     LabelText,
-    MobileHandleIcon,
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
+import { useMediaQuery } from "react-responsive";
+import { MediaWidths } from "../media";
 
 export const BoxContainer = ({
     children,
@@ -37,6 +37,9 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileM,
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -116,9 +119,9 @@ export const BoxContainer = ({
                     data-testid={subComponentTestIds?.title || "title"}
                     weight="semibold"
                 >
-                    {title}
+                    <p>{title}</p>
                     {renderDisplayIcon()}
-                    <MobileHandleIcon>{renderHandleIcon()}</MobileHandleIcon>
+                    {isMobile && renderHandleIcon()}
                 </LabelText>
 
                 {callToActionComponent && (
@@ -130,7 +133,7 @@ export const BoxContainer = ({
                     </CallToActionContainer>
                 )}
 
-                <DesktopHandleIcon>{renderHandleIcon()}</DesktopHandleIcon>
+                {!isMobile && renderHandleIcon()}
             </Header>
             {renderChildContent()}
         </Container>

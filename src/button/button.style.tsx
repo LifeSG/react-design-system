@@ -7,7 +7,7 @@ import { MainStyleProps } from "./types";
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
-    min-width: 5.375rem;
+    min-width: 4rem;
     border-radius: 4px;
     transition: all 200ms ease;
     cursor: pointer;
@@ -19,10 +19,6 @@ export const Main = styled.button<MainStyleProps>`
         &:hover {
             box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
         }
-    }
-
-    ${MediaQuery.MaxWidth.mobileM} {
-        width: 100%;
     }
 
     // -----------------------------------------------------------------------------
@@ -104,7 +100,7 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonSizeStyle) {
             case "small":
                 return css`
-                    height: 2.625rem;
+                    height: 2.5rem;
                     span {
                         ${TextStyleHelper.getTextStyle("H5", "semibold")}
                     }

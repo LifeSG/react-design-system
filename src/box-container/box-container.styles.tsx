@@ -25,7 +25,6 @@ interface LabelIconStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-
 export const Container = styled.div`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
@@ -61,6 +60,9 @@ export const LabelText = styled(Text.H3)`
     display: flex;
     flex: 1;
     align-items: center;
+    p:last-child {
+        margin-right: 1rem;
+    }
 
     ${MediaQuery.MaxWidth.mobileM} {
         ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
@@ -147,13 +149,6 @@ export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
     height: 1.375rem;
     width: 1.375rem;
-`;
-
-export const MobileHandleIcon = styled.div`
-    display: none;
-    ${MediaQuery.MaxWidth.mobileM} {
-        display: block;
-    }
 `;
 
 export const DesktopHandleIcon = styled.div`
