@@ -31,6 +31,7 @@ export const InputMultiSelect = <T, V>({
     onShowOptions,
     onHideOptions,
     onRetry,
+    onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
     ...otherProps
@@ -59,6 +60,11 @@ export const InputMultiSelect = <T, V>({
         if (!disabled) {
             setShowOptions(!showOptions);
             triggerOptionDisplayCallback(!showOptions);
+
+            // This is needed for Safari as it does not fire onBlur when dropdown wrapper is closed
+            if (showOptions) {
+                onBlur?.();
+            }
         }
     };
 
@@ -111,6 +117,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     const handleWrapperBlur = () => {
+        onBlur();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -213,6 +220,11 @@ export const InputMultiSelect = <T, V>({
                 type="button"
                 data-testid="selector"
                 onClick={handleSelectorClick}
+                onBlur={() => {
+                    if (!showOptions) {
+                        onBlur?.();
+                    }
+                }}
                 {...otherProps}
             >
                 {renderSelectorContent()}

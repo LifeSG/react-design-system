@@ -40,6 +40,7 @@ export const InputSelect = <T, V>({
     renderListItem,
     hideNoResultsDisplay,
     renderCustomCallToAction,
+    onBlur,
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -69,6 +70,11 @@ export const InputSelect = <T, V>({
         }
         setShowOptions(!showOptions);
         triggerOptionDisplayCallback(!showOptions);
+
+        // This is needed for Safari as it does not fire onBlur when dropdown wrapper is closed
+        if (showOptions) {
+            onBlur?.();
+        }
     };
 
     const handleListItemClick = (item: T, extractedValue: V) => {
@@ -97,6 +103,7 @@ export const InputSelect = <T, V>({
     };
 
     const handleWrapperBlur = () => {
+        onBlur?.();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -231,6 +238,11 @@ export const InputSelect = <T, V>({
                 data-testid={id || "selector"}
                 disabled={disabled}
                 onClick={handleSelectorClick}
+                onBlur={() => {
+                    if (!showOptions) {
+                        onBlur?.();
+                    }
+                }}
                 {...otherProps}
             >
                 {renderSelectorContent()}
