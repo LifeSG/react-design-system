@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { useMediaQuery } from "react-responsive";
 import { useSpring } from "react-spring";
+import { MediaWidths } from "../media";
 import {
     AlertIcon,
     CallToActionContainer,
@@ -16,8 +18,6 @@ import {
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
-import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../media";
 
 export const BoxContainer = ({
     children,
@@ -38,7 +38,7 @@ export const BoxContainer = ({
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileM,
+        maxWidth: MediaWidths.mobileL,
     });
 
     // =============================================================================

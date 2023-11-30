@@ -49,7 +49,7 @@ export const Header = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileL} {
         padding: 1rem 1.25rem;
         display: block;
     }
@@ -64,7 +64,7 @@ export const LabelText = styled(Text.H3)`
         margin-right: 1rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileL} {
         ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
         margin-right: 0rem;
         display: flex;
@@ -80,7 +80,7 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
     align-items: center;
     margin-right: 2.5rem;
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileL} {
         margin-right: 0;
     }
 
@@ -108,12 +108,14 @@ export const AlertIcon = styled(ExclamationCircleFillIcon)`
 export const CallToActionContainer = styled.div<StyleProps>`
     display: flex;
     margin-left: auto;
-
+    ${MediaQuery.MaxWidth.mobileL} {
+        flex-direction: column;
+    }
     ${(props) => {
         if (props.$collapsible) {
             return css`
                 margin-right: 2.5rem;
-                ${MediaQuery.MaxWidth.mobileM} {
+                ${MediaQuery.MaxWidth.mobileL} {
                     margin-right: 0rem;
                     margin-top: 1rem;
                 }
@@ -131,7 +133,7 @@ export const Handle = styled.button`
     display: flex;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileL} {
         margin: -1rem -1rem -1rem 0;
     }
 `;
@@ -149,10 +151,4 @@ export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
     height: 1.375rem;
     width: 1.375rem;
-`;
-
-export const DesktopHandleIcon = styled.div`
-    ${MediaQuery.MaxWidth.mobileM} {
-        display: none;
-    }
 `;
