@@ -4,9 +4,31 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
-import { Direction, SlotStyle } from "./types";
+import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 
-export const CELL_WIDTH = 44; // NOTE in px
+const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
+
+// =============================================================================
+// STYLING HELPERS
+// =============================================================================
+
+// Function to get the width of a cell in px
+export const getCellWidth = (variant: TimeSlotBarVariant) => {
+    if (variant === "minified") {
+        return 12;
+    } else {
+        return 40;
+    }
+};
+
+// Function to get the height of a cell in px
+export const getCellHeight = (variant: TimeSlotBarVariant) => {
+    if (variant === "minified") {
+        return 12;
+    } else {
+        return 40;
+    }
+};
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -15,10 +37,12 @@ export const CELL_WIDTH = 44; // NOTE in px
 
 interface ArrowStyleProps {
     $direction?: Direction;
+    $variant: TimeSlotBarVariant;
 }
 
 interface TimeSlotStyleProps {
     $type?: "default" | "vertical";
+    $variant: TimeSlotBarVariant;
     $width?: number;
     $left?: number;
     $styleType: SlotStyle;
@@ -30,6 +54,11 @@ interface TimeSlotStyleProps {
 interface CellTextStyleProps {
     $slotWidth: number;
     $color?: string;
+}
+
+interface TimeMarkerStyleProps {
+    $isLongMarker: boolean;
+    $variant: TimeSlotBarVariant;
 }
 
 // =============================================================================
@@ -44,7 +73,7 @@ export const Container = styled.div`
 export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     z-index: 2;
     position: absolute;
-    bottom: 1rem;
+    bottom: ${({ $variant }) => ($variant === "default" ? "0.25rem" : "0rem")};
     background-color: ${Color.Neutral[8]};
     box-shadow: 0px 2px 8px rgba(104, 104, 104, 0.5);
     border-radius: 50%;
@@ -83,17 +112,20 @@ export const ArrowIconLeft = styled(ChevronLeftIcon)`
     color: ${Color.Primary};
 `;
 
-export const TimeSlotBarContainer = styled.div`
+export const TimeSlotBarContainer = styled.div<{
+    $variant: TimeSlotBarVariant;
+}>`
     overflow: hidden;
     flex-grow: 1;
     position: relative;
-    height: 5rem;
+    height: ${({ $variant }) =>
+        `${MAX_LINE_HEIGHT * 16 + getCellHeight($variant)}px`};
 `;
 
 export const TimeMarkerWrapper = styled.div`
     position: relative;
     white-space: nowrap;
-    height: 1.25rem;
+    height: ${MAX_LINE_HEIGHT}rem;
 `;
 
 export const TimeSlotWrapper = styled.div`
@@ -101,12 +133,30 @@ export const TimeSlotWrapper = styled.div`
     white-space: nowrap;
 `;
 
-export const TimeMarker = styled.div<{ isHour: boolean }>`
+export const TimeMarker = styled.div<TimeMarkerStyleProps>`
     display: inline-block;
-    width: ${CELL_WIDTH}px;
-    height: ${({ isHour }) => (isHour ? "1.25rem" : "0.625rem")};
+    width: ${({ $variant }) => `${getCellWidth($variant)}px`};
     position: relative;
-    border-left: 1px solid ${Color.Neutral[4]};
+    border-left: 1px solid ${Color.Neutral[2]};
+    ${(props) => {
+        let markerHeight = 0;
+
+        switch (props.$variant) {
+            case "default":
+                markerHeight = props.$isLongMarker ? MAX_LINE_HEIGHT : 0.625;
+                break;
+            case "minified":
+                markerHeight = props.$isLongMarker ? MAX_LINE_HEIGHT : 0;
+                break;
+            default:
+                markerHeight = 0;
+                break;
+        }
+
+        return css`
+            height: ${markerHeight}rem;
+        `;
+    }}
 `;
 
 export const TimeLabel = styled(Text.XSmall)`
@@ -130,7 +180,7 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
         } else {
             return css`
                 position: absolute;
-                height: 3.375rem;
+                height: ${getCellHeight(props.$variant)}px;
                 width: ${props.$width}px;
                 left: ${props.$left}px;
             `;
@@ -152,21 +202,21 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
         `}
 `;
 
-export const Border = styled.div`
+export const Border = styled.div<{ $variant: TimeSlotBarVariant }>`
     position: absolute;
-    top: 1.25rem;
-    height: 3.375rem;
+    top: ${MAX_LINE_HEIGHT}rem;
+    height: ${({ $variant }) => `${getCellHeight($variant)}px`};
     z-index: 1;
-    border-right: 1px solid ${Color.Neutral[4]};
+    border-right: 1px solid ${Color.Neutral[2]};
 `;
 
 export const CellText = styled(Text.XSmall)<CellTextStyleProps>`
-    color: ${(props) => props.$color || Color.Neutral[3](props)};
+    color: ${(props) => props.$color || Color.Neutral[2](props)};
     position: absolute;
     bottom: 0;
     padding-left: 4px;
     padding-bottom: 4px;
-    max-width: ${({ $slotWidth }) => `calc(${$slotWidth}px - 8px)`};
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

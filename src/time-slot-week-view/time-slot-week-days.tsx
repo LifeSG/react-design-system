@@ -208,6 +208,7 @@ export const TimeSlotWeekDays = ({
                                     return (
                                         <TimeSlotComponent
                                             $type="vertical"
+                                            $variant="default"
                                             key={id}
                                             $styleType={styleType}
                                             $bgColor={backgroundColor}
