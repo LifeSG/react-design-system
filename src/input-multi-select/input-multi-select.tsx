@@ -117,7 +117,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     const handleWrapperBlur = () => {
-        onBlur();
+        onBlur?.();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
