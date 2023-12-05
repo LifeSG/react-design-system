@@ -10,11 +10,11 @@ import { StatefulImage } from "./stateful-image";
 // STYLE INTERFACES
 // =============================================================================
 interface ArrowButtonStyleProps {
-    position: "left" | "right";
+    $position: "left" | "right";
 }
 
 interface ThumbnailItemStyleProps {
-    active?: boolean;
+    $active?: boolean;
 }
 
 // =============================================================================
@@ -53,7 +53,7 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     transform: translateY(-50%);
 
     ${(props) =>
-        props.position === "left" &&
+        props.$position === "left" &&
         css`
             left: 3rem;
             ${MediaQuery.MaxWidth.mobileL} {
@@ -62,7 +62,7 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
         `}
 
     ${(props) =>
-        props.position === "right" &&
+        props.$position === "right" &&
         css`
             right: 3rem;
             ${MediaQuery.MaxWidth.mobileL} {
@@ -207,7 +207,7 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     }
 
     ${(props) =>
-        props.active
+        props.$active
             ? css`
                   border: 4px solid ${Color.Primary};
 

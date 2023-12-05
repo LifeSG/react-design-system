@@ -192,7 +192,7 @@ export const Component = (
                             <ThumbnailItem
                                 data-testid="thumbnail-item"
                                 key={index}
-                                active={index === currentSlide}
+                                $active={index === currentSlide}
                                 onClick={() => goToSlide(index)}
                                 ref={(el) =>
                                     (thumbnailRefs.current[index] = el)
@@ -225,7 +225,7 @@ export const Component = (
                     <ArrowButton
                         aria-label="View previous image"
                         data-testid="prev-btn"
-                        position="left"
+                        $position="left"
                         onClick={goToPrevSlide}
                     >
                         <ChevronLeftIcon aria-hidden />
@@ -233,7 +233,7 @@ export const Component = (
                     <ArrowButton
                         aria-label="View next image"
                         data-testid="forward-btn"
-                        position="right"
+                        $position="right"
                         onClick={goToNextSlide}
                     >
                         <ChevronRightIcon aria-hidden />
