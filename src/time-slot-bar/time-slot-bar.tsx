@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import type { Dayjs } from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { TimeSlotBarHelper } from "./helper";
@@ -7,7 +8,6 @@ import {
     ArrowIconLeft,
     ArrowIconRight,
     Border,
-    CELL_WIDTH,
     CellText,
     Container,
     TimeLabel,
@@ -16,15 +16,16 @@ import {
     TimeSlot,
     TimeSlotBarContainer,
     TimeSlotWrapper,
+    getCellWidth,
 } from "./time-slot-bar.styles";
-import { Direction, TimeSlotBarProps } from "./types";
+import { Direction, TimeSlotBarProps, TimeSlotBarVariant } from "./types";
 
 const CELL_DURATION = 30; // In minutes
-const SCROLL_INCREMENT = CELL_WIDTH * 2.5; // In px. Each scroll increment corresponds to 75mins
 
 export const TimeSlotBar = ({
     "data-testid": testId,
     className,
+    variant = "default",
     startTime,
     endTime,
     slots,
@@ -38,6 +39,9 @@ export const TimeSlotBar = ({
     const barRef = useRef<HTMLDivElement>(null);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
     const [clientWidth, setClientWidth] = useState<number>(0);
+    const cellWidth = getCellWidth(variant);
+
+    const SCROLL_INCREMENT = cellWidth * 2.5; // In px. Each scroll increment corresponds to 75mins
 
     // =============================================================================
     // EFFECTS
@@ -98,12 +102,36 @@ export const TimeSlotBar = ({
      * 15min interval
      */
     const showFullEllipsis = (slotWidth: number) => {
-        return slotWidth <= CELL_WIDTH / 2;
+        return slotWidth <= cellWidth / 2;
     };
 
     const getDataTestId = (subStr: string) => {
         if (!testId) return undefined;
         return `${testId}-${subStr}`;
+    };
+
+    /**
+     * Function to determine if a long time marker should be displayed
+     * For minified variant the long time marker is displayed every alternate hour
+     */
+    const shouldDisplayLongTimeMarker = (
+        currentTime: Dayjs,
+        isStartHourEven: boolean, // To determine if the first hour is even or odd for minified
+        variant: TimeSlotBarVariant
+    ) => {
+        const isHour = currentTime.minute() === 0;
+
+        if (variant === "default") {
+            return isHour;
+        }
+
+        const isAlternateHour =
+            isHour &&
+            (isStartHourEven
+                ? currentTime.hour() % 2 === 0
+                : currentTime.hour() % 2 === 1);
+
+        return isAlternateHour;
     };
 
     // =============================================================================
@@ -116,15 +144,26 @@ export const TimeSlotBar = ({
         const startTimeFormatted = dayjs(startTime, "HH:mm");
         const endTimeFormatted = dayjs(endTime, "HH:mm");
 
+        const isStartHourEven = startTimeFormatted.hour() % 2 === 0;
+
         for (
             let currentTime = startTimeFormatted;
             currentTime.isBefore(endTimeFormatted);
             currentTime = currentTime.add(CELL_DURATION, "minute")
         ) {
-            const isHour = currentTime.minute() === 0;
+            const displayLongTimeMarker = shouldDisplayLongTimeMarker(
+                currentTime,
+                isStartHourEven,
+                variant
+            );
+
             timeMarkers.push(
-                <TimeMarker key={currentTime.format("HH:mm")} isHour={isHour}>
-                    {isHour && (
+                <TimeMarker
+                    key={currentTime.format("HH:mm")}
+                    $isLongMarker={displayLongTimeMarker}
+                    $variant={variant}
+                >
+                    {displayLongTimeMarker && (
                         <TimeLabel weight="semibold">
                             {TimeSlotBarHelper.formatHourlyDisplay(
                                 currentTime.format("HH:mm")
@@ -148,26 +187,25 @@ export const TimeSlotBar = ({
         const slotWidth = TimeSlotBarHelper.calculateWidth(
             startTime,
             endTime,
-            CELL_WIDTH
+            cellWidth
         );
+
+        const isClickable = !!onClick && variant === "default";
+
         return (
             <>
-                <Border />
+                <Border $variant={variant} />
                 <TimeSlot
                     key={"default-timeslot"}
                     data-testid={getDataTestId("default-timeslot")}
                     $width={slotWidth}
+                    $variant={variant}
                     $left={0}
                     $styleType={styleType}
                     $bgColor={backgroundColor}
                     $bgColor2={backgroundColor2}
-                    $clickable={!!onClick}
-                    onClick={onClick}
-                />
-                <Border
-                    style={{
-                        left: `${slotWidth}px`,
-                    }}
+                    $clickable={isClickable}
+                    onClick={isClickable ? onClick : undefined}
                 />
             </>
         );
@@ -195,33 +233,36 @@ export const TimeSlotBar = ({
             const slotWidth = TimeSlotBarHelper.calculateWidth(
                 slotStartTime,
                 slotEndTime,
-                CELL_WIDTH
+                cellWidth
             );
             const slotOffset = TimeSlotBarHelper.calculateWidth(
                 startTime,
                 slotStartTime,
-                CELL_WIDTH
+                cellWidth
             );
 
+            const isClickable = clickable && variant === "default";
+
             return (
-                <>
+                <div key={id}>
                     <Border
+                        $variant={variant}
                         style={{
                             left: `${slotOffset}px`,
                         }}
                     />
                     <TimeSlot
-                        key={id}
                         data-testid={getDataTestId(`${id}-timeslot`)}
                         $width={slotWidth}
                         $left={slotOffset}
                         $styleType={styleType}
+                        $variant={variant}
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
-                        $clickable={clickable}
-                        onClick={() => clickable && onSlotClick(slot)}
+                        $clickable={isClickable}
+                        onClick={() => isClickable && onSlotClick(slot)}
                     >
-                        {label && (
+                        {label && variant === "default" && (
                             <CellText
                                 $slotWidth={slotWidth}
                                 $color={color}
@@ -231,12 +272,15 @@ export const TimeSlotBar = ({
                             </CellText>
                         )}
                     </TimeSlot>
-                    <Border
-                        style={{
-                            left: `${slotOffset + slotWidth}px`,
-                        }}
-                    />
-                </>
+                    {endTime !== slotEndTime && (
+                        <Border
+                            $variant={variant}
+                            style={{
+                                left: `${slotOffset + slotWidth}px`,
+                            }}
+                        />
+                    )}
+                </div>
             );
         });
     };
@@ -249,6 +293,7 @@ export const TimeSlotBar = ({
                     <ArrowButton
                         data-testid={getDataTestId("arrow-left")}
                         $direction={"left"}
+                        $variant={variant}
                         focusHighlight={false}
                         focusOutline="none"
                         onClick={() => {
@@ -266,12 +311,13 @@ export const TimeSlotBar = ({
         // Show the right ArrowButton when the scroll position is less than the maximum possible scroll value
         if (
             scrollPosition + clientWidth <
-            TimeSlotBarHelper.calculateWidth(startTime, endTime, CELL_WIDTH)
+            TimeSlotBarHelper.calculateWidth(startTime, endTime, cellWidth)
         ) {
             return (
                 <ArrowButton
                     data-testid={getDataTestId("arrow-right")}
                     $direction={"right"}
+                    $variant={variant}
                     focusHighlight={false}
                     focusOutline="none"
                     onClick={() => {
@@ -288,7 +334,11 @@ export const TimeSlotBar = ({
 
     return (
         <Container className={className}>
-            <TimeSlotBarContainer data-testid={testId} ref={barRef}>
+            <TimeSlotBarContainer
+                data-testid={testId}
+                ref={barRef}
+                $variant={variant}
+            >
                 <TimeMarkerWrapper
                     data-testid={getDataTestId("time-marker-wrapper")}
                     data-id="marker-wrapper"

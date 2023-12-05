@@ -16,6 +16,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "variant",
+                description: (
+                    <>
+                        The display variant of the <code>TimeSlotBar</code>
+                    </>
+                ),
+                propTypes: [`"default"`, `"minified"`],
+                defaultValue: "default",
+            },
+            {
                 name: "slots",
                 mandatory: true,
                 description: (
@@ -131,7 +141,7 @@ const DATA: ApiTableSectionProps[] = [
         name: "TimeSlotBarStyleAttributes",
         attributes: [
             {
-                name: "color",
+                name: "backgroundColor",
                 mandatory: true,
                 description: <>The color of the slot</>,
                 propTypes: ["string"],
@@ -143,7 +153,7 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "default",
             },
             {
-                name: "secondaryColor",
+                name: "backgroundColor2",
                 description: (
                     <>
                         The secondary color of the slot. Used in conjuction

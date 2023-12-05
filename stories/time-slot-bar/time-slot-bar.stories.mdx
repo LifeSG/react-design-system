@@ -19,14 +19,14 @@ import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
     <Story name="TimeSlotBar">
         <TimeSlotBar
             startTime="08:00"
-            endTime="19:00"
+            endTime="22:00"
             slots={[
                 {
                     id: "1",
                     startTime: "09:00",
                     endTime: "09:30",
                     styleAttributes: {
-                        backgroundColor: "#B2EAD2",
+                        backgroundColor: "#6DD0A1",
                     },
                 },
                 {
@@ -34,7 +34,7 @@ import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
                     startTime: "09:30",
                     endTime: "10:00",
                     styleAttributes: {
-                        backgroundColor: "#B2EAD2",
+                        backgroundColor: "#6DD0A1",
                     },
                 },
                 {
@@ -42,7 +42,7 @@ import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
                     startTime: "13:00",
                     endTime: "14:30",
                     styleAttributes: {
-                        backgroundColor: "#B2EAD2",
+                        backgroundColor: "#6DD0A1",
                     },
                 },
                 {
@@ -50,7 +50,15 @@ import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
                     startTime: "15:15",
                     endTime: "16:45",
                     styleAttributes: {
-                        backgroundColor: "#B2EAD2",
+                        backgroundColor: "#6DD0A1",
+                    },
+                },
+                {
+                    id: "6",
+                    startTime: "20:00",
+                    endTime: "22:00",
+                    styleAttributes: {
+                        backgroundColor: "#6DD0A1",
                     },
                 },
             ]}
@@ -58,6 +66,65 @@ import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
                 styleType: "stripes",
                 backgroundColor: "#ECEFEF",
                 backgroundColor2: "#E0E4E5",
+            }}
+        />
+    </Story>
+</Canvas>
+
+<Secondary>Minified Variant</Secondary>
+
+In cases where there is a requirement to display a large number of time slots in a smaller viewport, you can make use of the minified variant of the component. To do so, set `variant="minified"`.
+
+<Canvas>
+    <Story name="Minified Vairant">
+        <TimeSlotBar
+            variant="minified"
+            startTime="08:00"
+            endTime="22:00"
+            slots={[
+                {
+                    id: "1",
+                    startTime: "09:00",
+                    endTime: "09:30",
+                    styleAttributes: {
+                        backgroundColor: "#6DD0A1",
+                    },
+                },
+                {
+                    id: "2",
+                    startTime: "09:30",
+                    endTime: "10:00",
+                    styleAttributes: {
+                        backgroundColor: "#6DD0A1",
+                    },
+                },
+                {
+                    id: "4",
+                    startTime: "13:00",
+                    endTime: "14:30",
+                    styleAttributes: {
+                        backgroundColor: "#6DD0A1",
+                    },
+                },
+                {
+                    id: "5",
+                    startTime: "15:15",
+                    endTime: "16:45",
+                    styleAttributes: {
+                        backgroundColor: "#6DD0A1",
+                    },
+                },
+                {
+                    id: "6",
+                    startTime: "20:00",
+                    endTime: "22:00",
+                    styleAttributes: {
+                        backgroundColor: "#6DD0A1",
+                    },
+                },
+            ]}
+            styleAttributes={{
+                backgroundColor: "#ECEFEF",
             }}
         />
     </Story>
@@ -90,7 +157,7 @@ Here is an example of how you can specify with different indicators and colors.
                 {
                     id: "2",
                     startTime: "09:00",
-                    endTime: "10:00",
+                    endTime: "09:30",
                     styleAttributes: {
                         backgroundColor: "#EF413D",
                         color: "#FFFFFF",
@@ -115,7 +182,7 @@ Here is an example of how you can specify with different indicators and colors.
                     startTime: "15:15",
                     endTime: "16:45",
                     styleAttributes: {
-                        backgroundColor: "#B2EAD2",
+                        backgroundColor: "#6DD0A1",
                     },
                 },
             ]}
