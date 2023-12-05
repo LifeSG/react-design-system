@@ -43,7 +43,7 @@ import {
 export const Component = (
     {
         items,
-        initialActiveItem,
+        initialActiveItemIndex,
         hideThumbnail,
         onClose,
         ...otherProps
@@ -53,7 +53,9 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [currentSlide, setCurrentSlide] = useState(initialActiveItem ?? 0);
+    const [currentSlide, setCurrentSlide] = useState(
+        initialActiveItemIndex ?? 0
+    );
     const [zoom, setZoom] = useState(1);
     const [startX, setStartX] = useState(null);
     const [endX, setEndX] = useState(null);
@@ -62,15 +64,15 @@ export const Component = (
     const zoomRefs = useRef<ReactZoomPanPinchContentRef[]>([]);
     const diff = startX && endX ? startX - endX : 0;
 
-    useImperativeHandle<
-        Partial<FullscreenImageCarouselRef>,
-        Partial<FullscreenImageCarouselRef>
-    >(ref, () => ({
-        currentItem: currentSlide,
-        setCurrentItem: goToSlide,
-        goToPrevItem: goToPrevSlide,
-        goToNextItem: goToNextSlide,
-    }));
+    useImperativeHandle<FullscreenImageCarouselRef, FullscreenImageCarouselRef>(
+        ref,
+        () => ({
+            currentItemIndex: currentSlide,
+            setCurrentItem: goToSlide,
+            goToPrevItem: goToPrevSlide,
+            goToNextItem: goToNextSlide,
+        })
+    );
 
     // =============================================================================
     // EFFECTS

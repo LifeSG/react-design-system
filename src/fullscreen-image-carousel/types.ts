@@ -1,8 +1,8 @@
 import { ModalProps } from "../modal";
 
 export interface FullscreenImageCarouselRef {
-    currentItem: number;
-    setCurrentItem: (currentItem: number) => void;
+    currentItemIndex: number;
+    setCurrentItem: (currentItemIndex: number) => void;
     goToPrevItem: () => void;
     goToNextItem: () => void;
 }
@@ -14,7 +14,7 @@ export interface FullscreenImageCarouselProps
     > {
     items: FullscreenCarouselItemProps[];
     /** The index of the visible item, starts from 0 */
-    initialActiveItem?: number | undefined;
+    initialActiveItemIndex?: number | undefined;
     hideThumbnail?: boolean | undefined;
     onClose?: (() => void) | undefined;
 }

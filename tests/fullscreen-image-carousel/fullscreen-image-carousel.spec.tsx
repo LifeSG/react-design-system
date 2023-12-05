@@ -34,7 +34,7 @@ describe("Fullscreen Image Carousel", () => {
             <FullscreenImageCarousel
                 items={IMAGES}
                 show={true}
-                initialActiveItem={1}
+                initialActiveItemIndex={1}
             />
         );
 
