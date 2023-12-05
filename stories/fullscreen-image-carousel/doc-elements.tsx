@@ -1,3 +1,5 @@
+import { FullscreenCarouselItemProps } from "../../src/fullscreen-image-carousel";
+
 const RESOLUTIONS = [
     [1600, 900],
     [1200, 900],
@@ -7,10 +9,12 @@ const RESOLUTIONS = [
 ];
 
 export const getImages = (size: number) => {
-    const images: string[] = [];
+    const images: FullscreenCarouselItemProps[] = [];
     for (let i = 0; i < size; i++) {
         const [width, height] = RESOLUTIONS[i % RESOLUTIONS.length];
-        images.push(`https://picsum.photos/seed/picsum${i}/${width}/${height}`);
+        images.push({
+            src: `https://picsum.photos/seed/picsum${i}/${width}/${height}`,
+        });
     }
     return images;
 };

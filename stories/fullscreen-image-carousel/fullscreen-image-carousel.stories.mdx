@@ -40,11 +40,11 @@ import { FullscreenImageCarousel } from "@lifesg/react-design-system/fullscreen-
                         Show carousel
                     </Button.Default>
                     <FullscreenImageCarousel
-                        images={[
-                            "https://picsum.photos/id/157/1600/900",
-                            "https://picsum.photos/id/163/900/300",
-                            "https://picsum.photos/id/369/1000/1000",
-                            "https://picsum.photos/id/445/300/300",
+                        items={[
+                            { src: "https://picsum.photos/id/157/1600/900" },
+                            { src: "https://picsum.photos/id/163/900/300" },
+                            { src: "https://picsum.photos/id/369/1000/1000" },
+                            { src: "https://picsum.photos/id/445/300/300" },
                         ]}
                         show={show}
                         onClose={() => setShow(false)}
@@ -71,9 +71,9 @@ import { FullscreenImageCarousel } from "@lifesg/react-design-system/fullscreen-
                         Show carousel
                     </Button.Default>
                     <FullscreenImageCarousel
-                        images={[
-                            "https://httpbin.org/delay/10",
-                            "https://asdfghjklqwertyuiop.com",
+                        items={[
+                            { src: "https://httpbin.org/delay/10" },
+                            { src: "https://asdfghjklqwertyuiop.com" },
                         ]}
                         show={show}
                         onClose={() => setShow(false)}
@@ -100,7 +100,7 @@ import { FullscreenImageCarousel } from "@lifesg/react-design-system/fullscreen-
                         Show carousel
                     </Button.Default>
                     <FullscreenImageCarousel
-                        images={getImages(20)}
+                        items={getImages(20)}
                         show={show}
                         onClose={() => setShow(false)}
                     />

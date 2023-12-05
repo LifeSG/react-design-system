@@ -36,7 +36,7 @@ const MODAL_PROPS: ApiTableAttributeRowProps[] = [
             </>
         ),
         propTypes: [`"top"`, `"bottom"`, `"left"`, `"right"`],
-        defaultValue: "bottom",
+        defaultValue: `"bottom"`,
     },
 ];
 
@@ -45,13 +45,13 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             ...MODAL_PROPS,
             {
-                name: "images",
+                name: "items",
                 description: "List of carousel items",
                 propTypes: ["FullscreenCarouselItemProps[]"],
                 mandatory: true,
             },
             {
-                name: "initialActiveItem",
+                name: "initialActiveItemIndex",
                 description: "The initial image that will be displayed",
                 propTypes: ["number"],
                 defaultValue: "0",
