@@ -60,7 +60,7 @@ export const LabelText = styled(Text.H3)`
     display: flex;
     flex: 1;
     align-items: center;
-    p:last-child {
+    p {
         margin-right: 1rem;
     }
 
@@ -68,12 +68,10 @@ export const LabelText = styled(Text.H3)`
         ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
         margin-right: 0rem;
         display: flex;
-        justify-content: space-between;
     }
 `;
 
 export const LabelIcon = styled.span<LabelIconStyleProps>`
-    margin-left: 0.625rem;
     font-size: 1.5rem;
     vertical-align: middle;
     display: flex;
@@ -81,7 +79,7 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
     margin-right: 2.5rem;
 
     ${MediaQuery.MaxWidth.mobileL} {
-        margin-right: 0;
+        margin-right: 0rem;
     }
 
     ${(props) => {
@@ -135,6 +133,7 @@ export const Handle = styled.button`
 
     ${MediaQuery.MaxWidth.mobileL} {
         margin: -1rem -1rem -1rem 0;
+        margin-left: auto;
     }
 `;
 
