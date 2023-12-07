@@ -1,0 +1,202 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Form } from "src/form";
+import { InputSlider } from "src/input-slider";
+import { Layout } from "src/layout";
+import { Text } from "src/text";
+import {
+    Heading3,
+    Secondary,
+    StoryContainer,
+    Title,
+} from "../../storybook-common";
+import { Container } from "../shared-doc-elements";
+import { PropsTable } from "./props-table";
+
+<Meta title="Form/Slider" component={Form.Slider} />
+
+<Title>Form.Slider</Title>
+
+<Secondary>Overview</Secondary>
+
+A field that allows a user to select a value from a numeric range.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas>
+    <Story name="Slider">
+        <StoryContainer>
+            <Container>
+                <Form.Slider label="This is the slider" />
+                <Form.Slider
+                    label="This is the disabled state"
+                    value={25}
+                    disabled
+                />
+                <Form.Slider
+                    label="This is the read-only state"
+                    value={75}
+                    readOnly
+                />
+                <Form.Slider
+                    label="This is the error state"
+                    errorMessage="Out of range"
+                    value={50}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Multiple ranges</Heading3>
+
+<Canvas>
+    <Story name="Multiple ranges">
+        <StoryContainer>
+            <Container>
+                <Form.Slider
+                    label="This has two thumbs"
+                    numOfThumbs={2}
+                    min={1}
+                    max={10}
+                />
+                <Form.Slider
+                    label="This has three thumbs"
+                    numOfThumbs={3}
+                    min={1}
+                    max={10}
+                />
+                <Form.Slider
+                    label="This is the disabled state"
+                    numOfThumbs={2}
+                    value={[25, 50]}
+                    disabled
+                />
+                <Form.Slider
+                    label="This is the read-only state"
+                    numOfThumbs={2}
+                    value={[50, 75]}
+                    readOnly
+                />
+                <Form.Slider
+                    label="This is the error state"
+                    numOfThumbs={2}
+                    value={[10, 50]}
+                    errorMessage="Out of range"
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Color customisation</Heading3>
+
+Each segment of the slider track can be individually colored.
+
+<Canvas>
+    <Story name="Color customisation">
+        <StoryContainer>
+            <Container>
+                <Form.Slider
+                    label="This has custom colors"
+                    numOfThumbs={4}
+                    value={[10, 20, 30, 80]}
+                    colors={[
+                        "red",
+                        "orange",
+                        "green",
+                        "blue",
+                        "linear-gradient(to right, blue 0%, pink 50%)",
+                    ]}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>With labels</Heading3>
+
+You can display labels for the min and max values with `showLabels`. A prefix or
+suffix can be specified to act as a unit.
+
+A render function is also supported for advanced customisation.
+
+<Canvas>
+    <Story name="With labels">
+        <StoryContainer>
+            <Container>
+                <Form.Slider
+                    label="With unit as prefix"
+                    showLabels
+                    labelPrefix="$"
+                />
+                <Form.Slider
+                    label="With unit as suffix"
+                    showLabels
+                    labelSuffix="km"
+                />
+                <Form.Slider
+                    label="With custom rendering"
+                    min={1}
+                    max={10}
+                    showLabels
+                    renderLabel={(val) =>
+                        val === 1 ? (
+                            <Text.XSmall weight="semibold">1 photo</Text.XSmall>
+                        ) : (
+                            <Text.XSmall weight="semibold">
+                                {val} photos
+                            </Text.XSmall>
+                        )
+                    }
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Rendering in grid layouts</Heading3>
+
+You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+column props to span across the specified columns in grid layouts.
+
+<Canvas>
+    <Story
+        name="Rendering in grid layout"
+        parameters={{ layout: "fullscreen" }}
+    >
+        <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Form.Slider label="A shorter form input" mobileCols={[1, 5]} />
+            <Form.Slider
+                label="A longer form input"
+                mobileCols={[1, 5]}
+                tabletCols={[1, 9]}
+            />
+        </Layout.Content>
+    </Story>
+</Canvas>
+
+<Heading3>Using the field as a standalone</Heading3>
+
+In the case that you require the slider field as a standalone, you can do this.
+
+```tsx
+import { InputSlider } from "@lifesg/react-design-system/input-slider";
+```
+
+<Canvas>
+    <Story name="Standalone usage">
+        <StoryContainer>
+            <Container>
+                <InputSlider min={1} max={10} />
+                <br />
+                <InputSlider min={1} max={10} numOfThumbs={2} />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
