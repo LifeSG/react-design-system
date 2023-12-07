@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { MediaQuery } from "../media";
 import { ModalAnimationDirection } from "./types";
 
