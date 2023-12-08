@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { useMediaQuery } from "react-responsive";
 import { useSpring } from "react-spring";
+import { MediaWidths } from "../media";
 import {
     AlertIcon,
     CallToActionContainer,
@@ -13,6 +15,7 @@ import {
     Header,
     LabelIcon,
     LabelText,
+    LabelWrapper,
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
@@ -35,6 +38,9 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -90,17 +96,36 @@ export const BoxContainer = ({
         }
     };
 
+    const renderHandleIcon = () => {
+        return (
+            collapsible && (
+                <Handle
+                    onClick={onHandleClick}
+                    type="button"
+                    data-testid={subComponentTestIds?.handle || "handle"}
+                >
+                    <HandleIconContainer $expanded={showExpanded}>
+                        <HandleIcon />
+                    </HandleIconContainer>
+                </Handle>
+            )
+        );
+    };
+
     return (
         <Container {...otherProps}>
             <Header data-testid="header">
-                <LabelText
-                    id="title"
-                    data-testid={subComponentTestIds?.title || "title"}
-                    weight="semibold"
-                >
-                    {title}
+                <LabelWrapper>
+                    <LabelText
+                        id="title"
+                        data-testid={subComponentTestIds?.title || "title"}
+                        weight="semibold"
+                    >
+                        {title}
+                    </LabelText>
                     {renderDisplayIcon()}
-                </LabelText>
+                    {isMobile && renderHandleIcon()}
+                </LabelWrapper>
                 {callToActionComponent && (
                     <CallToActionContainer
                         $collapsible={collapsible}
@@ -109,17 +134,8 @@ export const BoxContainer = ({
                         {callToActionComponent}
                     </CallToActionContainer>
                 )}
-                {collapsible && (
-                    <Handle
-                        onClick={onHandleClick}
-                        type="button"
-                        data-testid={subComponentTestIds?.handle || "handle"}
-                    >
-                        <HandleIconContainer $expanded={showExpanded}>
-                            <HandleIcon />
-                        </HandleIconContainer>
-                    </Handle>
-                )}
+
+                {!isMobile && renderHandleIcon()}
             </Header>
             {renderChildContent()}
         </Container>

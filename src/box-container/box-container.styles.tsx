@@ -25,7 +25,6 @@ interface LabelIconStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-
 export const Container = styled.div`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
@@ -50,27 +49,40 @@ export const Header = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.mobileM} {
-        padding: 1rem;
+    ${MediaQuery.MaxWidth.mobileL} {
+        padding: 1rem 1.25rem;
+        display: block;
     }
 `;
 
 export const LabelText = styled(Text.H3)`
     word-wrap: break-word;
-    margin-right: 2rem;
-    display: block;
+    overflow-wrap: anywhere;
+    display: flex;
     flex: 1;
+    align-items: center;
+    margin-right: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileL} {
         ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-        margin-right: 1rem;
+        display: flex;
     }
 `;
 
+export const LabelWrapper = styled.div`
+    display: flex;
+`;
+
 export const LabelIcon = styled.span<LabelIconStyleProps>`
-    margin-left: 0.625rem;
     font-size: 1.5rem;
     vertical-align: middle;
+    display: flex;
+    align-items: center;
+    margin-right: 2.5rem;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-right: 0rem;
+    }
 
     ${(props) => {
         switch (props.$displayState) {
@@ -89,19 +101,23 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
 `;
 
 export const AlertIcon = styled(ExclamationCircleFillIcon)`
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1.375rem;
+    width: 1.375rem;
 `;
 
 export const CallToActionContainer = styled.div<StyleProps>`
     display: flex;
+    margin-left: auto;
+    ${MediaQuery.MaxWidth.mobileL} {
+        flex-direction: column;
+    }
     ${(props) => {
         if (props.$collapsible) {
             return css`
-                margin-right: 2rem;
-
-                ${MediaQuery.MaxWidth.mobileM} {
-                    margin-right: 1rem;
+                margin-right: 2.5rem;
+                ${MediaQuery.MaxWidth.mobileL} {
+                    margin-right: 0rem;
+                    margin-top: 1rem;
                 }
             `;
         }
@@ -117,8 +133,9 @@ export const Handle = styled.button`
     display: flex;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.mobileL} {
         margin: -1rem -1rem -1rem 0;
+        margin-left: auto;
     }
 `;
 
@@ -133,6 +150,6 @@ export const HandleIconContainer = styled.div<StyleProps>`
 
 export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Color.Neutral[3]};
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1.375rem;
+    width: 1.375rem;
 `;
