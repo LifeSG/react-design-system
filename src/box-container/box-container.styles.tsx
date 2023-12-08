@@ -57,18 +57,20 @@ export const Header = styled.div`
 
 export const LabelText = styled(Text.H3)`
     word-wrap: break-word;
+    overflow-wrap: anywhere;
     display: flex;
     flex: 1;
     align-items: center;
-    p {
-        margin-right: 1rem;
-    }
+    margin-right: 1rem;
 
     ${MediaQuery.MaxWidth.mobileL} {
         ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-        margin-right: 0rem;
         display: flex;
     }
+`;
+
+export const LabelWrapper = styled.div`
+    display: flex;
 `;
 
 export const LabelIcon = styled.span<LabelIconStyleProps>`

@@ -15,6 +15,7 @@ import {
     Header,
     LabelIcon,
     LabelText,
+    LabelWrapper,
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
@@ -114,16 +115,17 @@ export const BoxContainer = ({
     return (
         <Container {...otherProps}>
             <Header data-testid="header">
-                <LabelText
-                    id="title"
-                    data-testid={subComponentTestIds?.title || "title"}
-                    weight="semibold"
-                >
-                    <p>{title}</p>
+                <LabelWrapper>
+                    <LabelText
+                        id="title"
+                        data-testid={subComponentTestIds?.title || "title"}
+                        weight="semibold"
+                    >
+                        {title}
+                    </LabelText>
                     {renderDisplayIcon()}
                     {isMobile && renderHandleIcon()}
-                </LabelText>
-
+                </LabelWrapper>
                 {callToActionComponent && (
                     <CallToActionContainer
                         $collapsible={collapsible}
