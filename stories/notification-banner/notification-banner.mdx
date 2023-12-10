@@ -162,24 +162,26 @@ The banner also supports customisation of the text styles. Here is how you can a
 <Canvas>
     <Story name="Text styling options">
         <div style={{ position: "relative", paddingTop: "1.5rem" }}>
-            <NotificationBanner>
-                This is an example of how you can style the contents. You can
-                specify an anchor tag for a normal&nbsp;
-                <a href="https://www.life.gov.sg" target="_blank">
-                    link
-                </a>. An&nbsp;
-                <NotificationBanner.Link
-                    href="https://www.tech.gov.sg"
-                    target="_blank"
-                    external
-                >
-                    external link
-                </NotificationBanner.Link>
-                &nbsp;will require the Link component. <strong>
-                    Bold text
-                </strong> or
-                <em>italicised text</em> are also accepted.
-            </NotificationBanner>
+            {
+                <NotificationBanner>
+                    This is an example of how you can style the contents. You
+                    can specify an anchor tag for a normal&nbsp;
+                    <a href="https://www.life.gov.sg" target="_blank">
+                        link
+                    </a>. An&nbsp;
+                    <NotificationBanner.Link
+                        href="https://www.tech.gov.sg"
+                        target="_blank"
+                        external
+                    >
+                        external link
+                    </NotificationBanner.Link>
+                    &nbsp;will require the Link component. <strong>
+                        Bold text
+                    </strong> or
+                    <em>italicised text</em> are also accepted.
+                </NotificationBanner>
+            }
             <StyledContent>
                 <Text.Body paragraph>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed

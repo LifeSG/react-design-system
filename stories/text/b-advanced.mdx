@@ -15,13 +15,15 @@ In certain use cases, you might need to use multiple `Text` components to achiev
 Including a hyperlink within a set of text.
 
 <Canvas>
-    <Text.Body>
-        The quick brown fox&nbsp;
-        <Text.Hyperlink.Default href="https://www.google.com">
-            jumps over
-        </Text.Hyperlink.Default>
-        &nbsp;the lazy dog
-    </Text.Body>
+    {
+        <Text.Body>
+            The quick brown fox&nbsp;
+            <Text.Hyperlink.Default href="https://www.google.com">
+                jumps over
+            </Text.Hyperlink.Default>
+            &nbsp;the lazy dog
+        </Text.Body>
+    }
 </Canvas>
 
 <Heading4>Example 2</Heading4>
@@ -30,16 +32,18 @@ Including different weights within a set of text. All you need to do is to speci
 for the child components.
 
 <Canvas>
-    <Text.Body>
-        The quick&nbsp;
-        <Text.Body weight="light" inline={true}>
-            brown fox
-        </Text.Body>&nbsp;
-        <Text.Body weight="semibold" inline={true}>
-            jumps over
+    {
+        <Text.Body>
+            The quick&nbsp;
+            <Text.Body weight="light" inline={true}>
+                brown fox
+            </Text.Body>&nbsp;
+            <Text.Body weight="semibold" inline={true}>
+                jumps over
+            </Text.Body>
+            &nbsp;the lazy dog
         </Text.Body>
-        &nbsp;the lazy dog
-    </Text.Body>
+    }
 </Canvas>
 
 <Heading3>Paragraph specification</Heading3>

@@ -33,7 +33,7 @@ import { withPopover } from "@lifesg/react-design-system/popover";
 
 <br />
 
-<!-- USAGE -->
+{/* USAGE */}
 
 <Heading3>Usage</Heading3>
 
@@ -109,7 +109,7 @@ export const CorrectExample = () => {
 };
 ```
 
-<!-- USING AS A COMPONENT -->
+{/* USING AS A COMPONENT */}
 
 <Heading3>Using as a component</Heading3>
 
@@ -128,10 +128,10 @@ import { Popover } from "@lifesg/react-design-system/popover";
                     <Item>
                         <Popover
                             visible={visible}
-                            onMobileClose={() => setVisible(false)} 						<!-- Need to handle popover close explicitly for mobile -->
+                            onMobileClose={() => setVisible(false)}
                         >
                             I am the popover content
-                        </Popover> 
+                        </Popover>
                         <Button.Default onClick={() => setVisible(!visible)}>
                             Click me to interact
                         </Button.Default>

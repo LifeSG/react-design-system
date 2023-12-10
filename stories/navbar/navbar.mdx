@@ -92,7 +92,7 @@ import { Navbar } from "@lifesg/react-design-system/navbar";
                         desktop: [{ type: "download" }],
                     }}
                     selectedId={selected}
-                    fixed={false} /* For storybook purposes */
+                    fixed={false}
                 />
             );
         }}
@@ -138,7 +138,7 @@ This is a common use case among web apps where it requires a Logout button on th
                 ],
             }}
             selectedId="home"
-            fixed={false} /* For storybook purposes */
+            fixed={false}
         />
     </Story>
 </Canvas>
@@ -211,7 +211,7 @@ This is a common use case among web apps where it requires a Logout button on th
                 ],
             }}
             selectedId="home"
-            fixed={false} /* For storybook purposes */
+            fixed={false}
         />
     </Story>
 </Canvas>
@@ -263,7 +263,7 @@ You can also choose to render a custom component of your choice as an action but
                 ],
             }}
             selectedId="home"
-            fixed={false} /* For storybook purposes */
+            fixed={false}
         />
     </Story>
 </Canvas>
@@ -314,7 +314,7 @@ You can set an action button to be uncollapsible, so it remains visible in the n
                 ],
             }}
             selectedId="home"
-            fixed={false} /* For storybook purposes */
+            fixed={false}
         />
     </Story>
 </Canvas>
@@ -428,7 +428,7 @@ You can also choose to render a custom component of your choice as a navigation 
                         ],
                     }}
                     selectedId={selected}
-                    fixed={false} /* For storybook purposes */
+                    fixed={false}
                     layout={"stretch"}
                 />
             );
@@ -474,7 +474,7 @@ the `blockDrawerDismissalMethods` prop to do just that.
                 ],
             }}
             selectedId="home"
-            fixed={false} /* For storybook purposes */
+            fixed={false}
             blockDrawerDismissalMethods={["brand-click"]}
         />
     </Story>
@@ -568,7 +568,7 @@ A sub menu is shown if the selected nav item has sublinks.
                         ],
                     }}
                     selectedId={selected}
-                    fixed={false} /* For storybook purposes */
+                    fixed={false}
                     onItemClick={(item) => {
                         setSelected(item.id);
                     }}
@@ -617,7 +617,7 @@ In this example, a co-brand is displayed next to the primary brand.
                     },
                 ],
             }}
-            fixed={false} /* For storybook purposes */
+            fixed={false}
             resources={{
                 secondary: {
                     brandName: "OneService",
@@ -685,7 +685,7 @@ In this example, the masthead is hidden.
                     },
                 ],
             }}
-            fixed={false} /* For storybook purposes */
+            fixed={false}
             masthead={false}
         />
     </Story>
@@ -745,7 +745,7 @@ the screen with a fixed padding, ignoring the masthead's alignment.
                     },
                 ],
             }}
-            fixed={false} /* For storybook purposes */
+            fixed={false}
             layout={"stretch"}
         />
     </Story>
@@ -786,7 +786,7 @@ When the branding elements are hidden, navigation items will be aligned to the l
                 ],
             }}
             selectedId="home"
-            fixed={false} /* For storybook purposes */
+            fixed={false}
             hideNavBranding
         />
     </Story>
