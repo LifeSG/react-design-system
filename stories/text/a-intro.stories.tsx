@@ -1,0 +1,58 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { Text } from "src/text";
+import { DisplayContainer, TextDisplay } from "./doc-elements";
+
+type Component = typeof Text;
+
+const meta: Meta<Component> = {
+    title: "General/Text/Introduction",
+};
+
+export default meta;
+
+const EXAMPLE_TEXT = "A quick brown fox jumps over the lazy dog";
+
+export const Introduction: StoryObj<Component> = {
+    render: () => {
+        return (
+            <DisplayContainer>
+                <TextDisplay variant="D1">
+                    <Text.D1>{EXAMPLE_TEXT}</Text.D1>
+                </TextDisplay>
+                <TextDisplay variant="D2">
+                    <Text.D2>{EXAMPLE_TEXT}</Text.D2>
+                </TextDisplay>
+                <TextDisplay variant="DBody">
+                    <Text.DBody>{EXAMPLE_TEXT}</Text.DBody>
+                </TextDisplay>
+                <TextDisplay variant="H1">
+                    <Text.H1>{EXAMPLE_TEXT}</Text.H1>
+                </TextDisplay>
+                <TextDisplay variant="H2">
+                    <Text.H2>{EXAMPLE_TEXT}</Text.H2>
+                </TextDisplay>
+                <TextDisplay variant="H3">
+                    <Text.H3>{EXAMPLE_TEXT}</Text.H3>
+                </TextDisplay>
+                <TextDisplay variant="H4">
+                    <Text.H4>{EXAMPLE_TEXT}</Text.H4>
+                </TextDisplay>
+                <TextDisplay variant="H5">
+                    <Text.H5>{EXAMPLE_TEXT}</Text.H5>
+                </TextDisplay>
+                <TextDisplay variant="H6">
+                    <Text.H6>{EXAMPLE_TEXT}</Text.H6>
+                </TextDisplay>
+                <TextDisplay variant="Body">
+                    <Text.Body>{EXAMPLE_TEXT}</Text.Body>
+                </TextDisplay>
+                <TextDisplay variant="BodySmall">
+                    <Text.BodySmall>{EXAMPLE_TEXT}</Text.BodySmall>
+                </TextDisplay>
+                <TextDisplay variant="XSmall">
+                    <Text.BodySmall>{EXAMPLE_TEXT}</Text.BodySmall>
+                </TextDisplay>
+            </DisplayContainer>
+        );
+    },
+};

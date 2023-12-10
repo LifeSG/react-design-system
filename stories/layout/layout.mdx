@@ -1,21 +1,12 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Text } from "src/text";
+import { Canvas, Meta } from "@storybook/blocks";
 import { Layout } from "src/layout";
-import {
-    Heading3,
-    Heading4,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Text } from "src/text";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import { Label, PaddingLabel } from "./doc-elements";
+import * as LayoutStories from "./layout.stories";
 import { PropsTable } from "./props-table";
 
-<Meta
-    title="Getting Started/Layout"
-    component={Layout}
-    parameters={{ layout: "fullscreen" }}
-/>
+<Meta of={LayoutStories} />
 
 <Title>Layout</Title>
 
@@ -111,27 +102,7 @@ as follow:
 
 To allow ease of use and not having to compose the two components, we have provided the `Content` that comes with the `Section` and `Container`. This is the **recommended usage** and should fit most use cases.
 
-<Canvas>
-    <Story name="General usage">
-        <Layout.Content>
-            <div
-                style={{
-                    width: "100%",
-                    padding: "2rem 0",
-                    border: "2px dotted #A4A4A4",
-                }}
-            >
-                <Text.H1>My content</Text.H1>
-                <br />
-                <Text.Body>
-                    You can adjust the viewport to see how the maximum width in
-                    the
-                    <code>Layout.Container</code> affects how the content looks.
-                </Text.Body>
-            </div>
-        </Layout.Content>
-    </Story>
-</Canvas>
+<Canvas of={LayoutStories.GeneralUsage} />
 
 <Heading3>Customising the style</Heading3>
 
@@ -195,98 +166,19 @@ export const MyComponent = () => (
 
 As mentioned above, you can separately compose the `Section` and `Container` components.
 
-<Canvas>
-    <Story name="Split usage">
-        <Layout.Section>
-            <Layout.Container>
-                <div
-                    style={{
-                        width: "100%",
-                        padding: "2rem 0",
-                        border: "2px dotted #A4A4A4",
-                    }}
-                >
-                    <Text.H1>Split usage example</Text.H1>
-                    <br />
-                    <Text.Body>
-                        You can adjust the viewport to see how the maximum width
-                        in the
-                        <code>Layout.Container</code> affects how the content looks.
-                    </Text.Body>
-                </div>
-            </Layout.Container>
-        </Layout.Section>
-    </Story>
-</Canvas>
+<Canvas of={LayoutStories.SplitUsage} />
 
 <Secondary>Flex column layout</Secondary>
 
 You can arrange content vertically with the `type` prop set to `flex-column`.
 
-<Canvas>
-    <Story name="Flex column layout">
-        {() => {
-            const renderContent = (content) => {
-                return (
-                    <div
-                        style={{
-                            padding: "2rem",
-                            border: "2px dotted #A4A4A4",
-                        }}
-                    >
-                        {content}
-                    </div>
-                );
-            };
-            return (
-                <Layout.Content type="flex-column">
-                    {renderContent(<Text.Body>First item</Text.Body>)}
-                    {renderContent(<Text.Body>Second item</Text.Body>)}
-                </Layout.Content>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={LayoutStories.FlexColumnLayout} />
 
 <Secondary>Grid layout</Secondary>
 
 You can make use of the `type` prop to specify if the layout will use the [CSS Grid](https://css-tricks.com/snippets/css/complete-guide-grid/).
 
-<Canvas>
-    <Story name="Grid layout">
-        {() => {
-            const renderColumn = (index) => (
-                <div
-                    style={{
-                        border: "2px dotted #F26664",
-                        background: "#F9B5B2",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "300px",
-                    }}
-                    key={index}
-                >
-                    <Text.BodySmall weight="semibold">
-                        {index + 1}
-                    </Text.BodySmall>
-                </div>
-            );
-            const renderColumns = () => {
-                const columns = [];
-                for (let i = 0; i < 12; i++) {
-                    columns.push(renderColumn(i));
-                }
-                return columns;
-            };
-            return (
-                <Layout.Content type="grid" style={{ background: "#FDDDD7" }}>
-                    {renderColumns()}
-                </Layout.Content>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={LayoutStories.GridLayout} />
 
 <Heading3>About the Grid</Heading3>
 

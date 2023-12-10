@@ -1,10 +1,17 @@
-import { Meta, Story } from "@storybook/addon-docs";
+import { Canvas, Meta } from "@storybook/blocks";
 import { Text } from "src/text";
-import { Secondary, Heading3, Title } from "../storybook-common";
-import { DisplayContainer, LinkDiv, TextDisplay } from "./doc-elements";
+import {
+    Heading3,
+    Heading4,
+    PreviewBox,
+    Secondary,
+    Title,
+} from "../storybook-common";
+import * as TextStories from "./a-intro.stories";
+import { LinkDiv } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
-<Meta title="General/Text/Introduction" component={Text} />
+<Meta of={TextStories} />
 
 <Title>Text</Title>
 
@@ -27,56 +34,13 @@ The `Text` component comes with 2 categories of components:
     <Heading3>Static Text</Heading3>
 </a>
 
-export const EXAMPLE_TEXT = "A quick brown fox jumps over the lazy dog";
-
-<Canvas>
-    <Story name="Introduction">
-        <DisplayContainer>
-            <TextDisplay variant="D1">
-                <Text.D1>{EXAMPLE_TEXT}</Text.D1>
-            </TextDisplay>
-            <TextDisplay variant="D2">
-                <Text.D2>{EXAMPLE_TEXT}</Text.D2>
-            </TextDisplay>
-            <TextDisplay variant="DBody">
-                <Text.DBody>{EXAMPLE_TEXT}</Text.DBody>
-            </TextDisplay>
-            <TextDisplay variant="H1">
-                <Text.H1>{EXAMPLE_TEXT}</Text.H1>
-            </TextDisplay>
-            <TextDisplay variant="H2">
-                <Text.H2>{EXAMPLE_TEXT}</Text.H2>
-            </TextDisplay>
-            <TextDisplay variant="H3">
-                <Text.H3>{EXAMPLE_TEXT}</Text.H3>
-            </TextDisplay>
-            <TextDisplay variant="H4">
-                <Text.H4>{EXAMPLE_TEXT}</Text.H4>
-            </TextDisplay>
-            <TextDisplay variant="H5">
-                <Text.H5>{EXAMPLE_TEXT}</Text.H5>
-            </TextDisplay>
-            <TextDisplay variant="H6">
-                <Text.H6>{EXAMPLE_TEXT}</Text.H6>
-            </TextDisplay>
-            <TextDisplay variant="Body">
-                <Text.Body>{EXAMPLE_TEXT}</Text.Body>
-            </TextDisplay>
-            <TextDisplay variant="BodySmall">
-                <Text.BodySmall>{EXAMPLE_TEXT}</Text.BodySmall>
-            </TextDisplay>
-            <TextDisplay variant="XSmall">
-                <Text.BodySmall>{EXAMPLE_TEXT}</Text.BodySmall>
-            </TextDisplay>
-        </DisplayContainer>
-    </Story>
-</Canvas>
+<Canvas of={TextStories.Introduction} />
 
 <a id="hyperlink">
     <Heading3>Hyperlinks</Heading3>
 </a>
 
-<Canvas>
+<PreviewBox>
     <LinkDiv>
         <Text.Hyperlink.Default href="https://www.life.gov.sg" target="_blank">
             Default link
@@ -85,11 +49,11 @@ export const EXAMPLE_TEXT = "A quick brown fox jumps over the lazy dog";
             Small link
         </Text.Hyperlink.Small>
     </LinkDiv>
-</Canvas>
+</PreviewBox>
 
 As we recommend providing an indicator for links leading to external sites, you are required to use the `external` prop to allow for the indicator to appear.
 
-<Canvas>
+<PreviewBox>
     <Text.Hyperlink.Default
         href="https://www.google.com"
         target="_blank"
@@ -97,7 +61,7 @@ As we recommend providing an indicator for links leading to external sites, you 
     >
         This is an external link with the indicator
     </Text.Hyperlink.Default>
-</Canvas>
+</PreviewBox>
 
 <Secondary>Component API</Secondary>
 

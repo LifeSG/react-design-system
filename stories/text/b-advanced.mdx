@@ -1,8 +1,14 @@
-import { Meta, Story } from "@storybook/addon-docs";
+import { Canvas, Meta } from "@storybook/blocks";
 import { Text } from "src/text";
-import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
+import {
+    Heading3,
+    Heading4,
+    PreviewBox,
+    Secondary,
+    Title,
+} from "../storybook-common";
 
-<Meta title="General/Text/Advanced Usage" component={Text} />
+<Meta title="General/Text/Advanced Usage" />
 
 <Title>Advanced Usage</Title>
 
@@ -14,7 +20,7 @@ In certain use cases, you might need to use multiple `Text` components to achiev
 
 Including a hyperlink within a set of text.
 
-<Canvas>
+<PreviewBox>
     {
         <Text.Body>
             The quick brown fox&nbsp;
@@ -24,14 +30,14 @@ Including a hyperlink within a set of text.
             &nbsp;the lazy dog
         </Text.Body>
     }
-</Canvas>
+</PreviewBox>
 
 <Heading4>Example 2</Heading4>
 
 Including different weights within a set of text. All you need to do is to specify the `inline` prop
 for the child components.
 
-<Canvas>
+<PreviewBox>
     {
         <Text.Body>
             The quick&nbsp;
@@ -44,43 +50,39 @@ for the child components.
             &nbsp;the lazy dog
         </Text.Body>
     }
-</Canvas>
+</PreviewBox>
 
 <Heading3>Paragraph specification</Heading3>
 
 You can include a paragraph styled spacing between text blocks by specifying the `paragraph` prop.
 
-<Canvas>
-    <>
-        <Text.Body paragraph={true}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-            euismod quam eget ex tincidunt dapibus. Donec vitae leo vehicula,
-            fermentum urna vitae, gravida ex.
-        </Text.Body>
-        <Text.Body paragraph={true}>
-            Aenean imperdiet faucibus velit, eu maximus libero facilisis ut.
-            Donec nulla nisi, fermentum eget lorem at, feugiat ultricies ex.
-            Aliquam volutpat nibh non suscipit rhoncus.
-        </Text.Body>
-    </>
-</Canvas>
+<PreviewBox>
+    <Text.Body paragraph={true}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod
+        quam eget ex tincidunt dapibus. Donec vitae leo vehicula, fermentum urna
+        vitae, gravida ex.
+    </Text.Body>
+    <Text.Body paragraph={true}>
+        Aenean imperdiet faucibus velit, eu maximus libero facilisis ut. Donec
+        nulla nisi, fermentum eget lorem at, feugiat ultricies ex. Aliquam
+        volutpat nibh non suscipit rhoncus.
+    </Text.Body>
+</PreviewBox>
 
 Comparing to if you did not specify it.
 
-<Canvas>
-    <>
-        <Text.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-            euismod quam eget ex tincidunt dapibus. Donec vitae leo vehicula,
-            fermentum urna vitae, gravida ex.
-        </Text.Body>
-        <Text.Body>
-            Aenean imperdiet faucibus velit, eu maximus libero facilisis ut.
-            Donec nulla nisi, fermentum eget lorem at, feugiat ultricies ex.
-            Aliquam volutpat nibh non suscipit rhoncus.
-        </Text.Body>
-    </>
-</Canvas>
+<PreviewBox>
+    <Text.Body>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod
+        quam eget ex tincidunt dapibus. Donec vitae leo vehicula, fermentum urna
+        vitae, gravida ex.
+    </Text.Body>
+    <Text.Body>
+        Aenean imperdiet faucibus velit, eu maximus libero facilisis ut. Donec
+        nulla nisi, fermentum eget lorem at, feugiat ultricies ex. Aliquam
+        volutpat nibh non suscipit rhoncus.
+    </Text.Body>
+</PreviewBox>
 
 <Heading3>Switching underlying component</Heading3>
 
@@ -90,10 +92,8 @@ rendered. You may do so using the `as` prop.
 > E.g. `Text.Body` renders a `<p>` but if you can specify another element to be
 > rendered instead. Inspect the element to find out
 
-<Canvas>
-    <>
-        <Text.Body>This is the original</Text.Body>
-        <br />
-        <Text.Body as="span">This becomes a span under the hood</Text.Body>
-    </>
-</Canvas>
+<PreviewBox>
+    <Text.Body>This is the original</Text.Body>
+    <br />
+    <Text.Body as="span">This becomes a span under the hood</Text.Body>
+</PreviewBox>
