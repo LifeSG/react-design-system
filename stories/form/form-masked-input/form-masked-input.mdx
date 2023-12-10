@@ -1,22 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { MaskedInput } from "src/masked-input";
-import { Form } from "src/form";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
-import {
-    Heading3,
-    Heading4,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../../storybook-common";
-import { Container } from "../shared-doc-elements";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as FormMaskedInputStories from "./form-masked-input.stories";
 import { PropsTable } from "./props-table";
-import { ToggleOffFillIcon } from "@lifesg/react-icons/toggle-off-fill";
-import { ToggleOffIcon } from "@lifesg/react-icons/toggle-off";
 
-<Meta title="Form/MaskedInput" component={Form.MaskedInput} />
+<Meta of={FormMaskedInputStories} />;
 
 <Title>Form.MaskedInput</Title>
 
@@ -28,172 +15,26 @@ An enhanced field that allows a user to enter a response that is masked on blur.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas>
-    <Story name="Field">
-        <StoryContainer>
-            <Container>
-                <Form.MaskedInput
-                    label="This is the mask field with no input"
-                    maskRange={[2, 5]}
-                />
-                <Form.MaskedInput
-                    label="This is the mask field with input"
-                    value="S1234567D"
-                    maskRange={[2, 5]}
-                />
-                <Form.MaskedInput
-                    label="This is set to be transformed to uppercase"
-                    maskRange={[2, 5]}
-                    transformInput={"uppercase"}
-                />
-                <Form.MaskedInput
-                    label="This is set to be transformed to lowercase"
-                    maskRange={[2, 5]}
-                    transformInput={"lowercase"}
-                />
-                <Form.MaskedInput
-                    label="This is the error state"
-                    errorMessage="Input is required"
-                    maskRange={[2, 5]}
-                />
-                <Form.MaskedInput
-                    label="This is the masking disabled state"
-                    maskRange={[2, 5]}
-                    value="S1234567D"
-                    disableMask={true}
-                />
-                <Form.MaskedInput
-                    label="This is the readonly state with no pre-filled value"
-                    maskRange={[2, 5]}
-                    readOnly
-                />
-                <Form.MaskedInput
-                    label="This is the readonly state with pre-filled value"
-                    value="S1234567D"
-                    maskRange={[2, 5]}
-                    readOnly
-                />
-            </Container>
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={FormMaskedInputStories.Field} />
 
 <Heading3>Masking</Heading3>
 
 You are able to specify the range of index to mask or unmask, the regex to mask or customize the masking logic by passing in a maskTransformer.
 
-<Canvas>
-    <Story name="Masking">
-        <StoryContainer>
-            <Container>
-                <Form.MaskedInput
-                    label="Set mask range to [2,5]"
-                    value="S1234567D"
-                    maskRange={[2, 5]}
-                />
-                <Form.MaskedInput
-                    label="Set mask range to [2,100]"
-                    value="S1234567D"
-                    maskRange={[2, 100]}
-                />
-                <Form.MaskedInput
-                    label="Set mask range to [100,2] (auto-determines start and end index)"
-                    value="S1234567D"
-                    maskRange={[100, 2]}
-                />
-                <Form.MaskedInput
-                    label="Set unmask range to [1,4]"
-                    value="S1234567D"
-                    unmaskRange={[1, 4]}
-                />
-                <Form.MaskedInput
-                    label="Set mask regex to /\D/g"
-                    value="S1234567D"
-                    maskRegex={/\D/g}
-                />
-                <Form.MaskedInput
-                    label="Set mask transformer that replaces non-digit character with *"
-                    value="S1234567D"
-                    maskTransformer={(value) => value.replace(/\D/g, "*")}
-                />
-            </Container>
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={FormMaskedInputStories.Masking} />
 
 <Heading3>Customizations</Heading3>
 
 You are able to make customizations to the mask icon active and inactive color, as well as the mask character.
 
-<Canvas>
-    <Story name="With customizations">
-        <StoryContainer>
-            <Container>
-                <Form.MaskedInput
-                    label="Set mask icon inactive color to #2a2b2b"
-                    maskRange={[2, 5]}
-                    iconInactiveColor="#2a2b2b"
-                />
-                <Form.MaskedInput
-                    label="Set mask icon active color to red"
-                    value="S1234567D"
-                    maskRange={[2, 5]}
-                    iconActiveColor="red"
-                />
-                <Form.MaskedInput
-                    label="Set mask character to '*'"
-                    value="S1234567D"
-                    maskRange={[2, 5]}
-                    maskChar="*"
-                />
-                <Form.MaskedInput
-                    label="Overwrite mask and unmask icon"
-                    value="S1234567D"
-                    maskRange={[2, 5]}
-                    iconMask={<ToggleOffFillIcon />}
-                    iconUnmask={<ToggleOffIcon />}
-                />
-                <Form.MaskedInput
-                    label="Overwrite mask and unmask icon and their active and inactive colors"
-                    value="S1234567D"
-                    maskRange={[2, 5]}
-                    iconMask={<ToggleOffFillIcon />}
-                    iconUnmask={<ToggleOffIcon />}
-                    iconActiveColor="blue"
-                    iconInactiveColor="black"
-                />
-            </Container>
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={FormMaskedInputStories.WithCustomizations} />
 
 <Heading3>Rendering in grid layouts</Heading3>
 
 You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
 column props to span across the specified columns in grid layouts.
 
-<Canvas>
-    <Story
-        name="Rendering in grid layout"
-        parameters={{ layout: "fullscreen" }}
-    >
-        <Layout.Content type="grid" style={{ padding: "2rem" }}>
-            <Form.MaskedInput
-                label="A shorter form input"
-                value="S1234567D"
-                maskRange={[2, 5]}
-                mobileCols={[1, 5]}
-            />
-            <Form.MaskedInput
-                label="A longer form input"
-                value="S1234567D"
-                maskRange={[2, 5]}
-                mobileCols={[1, 5]}
-                tabletCols={[1, 9]}
-            />
-        </Layout.Content>
-    </Story>
-</Canvas>
+<Canvas of={FormMaskedInputStories.RenderingInGridLayout} />
 
 <Heading3>Using the field as a standalone</Heading3>
 
@@ -203,15 +44,7 @@ In the case that you require the input mask field as a standalone, you can do th
 import { MaskedInput } from "@lifesg/react-design-system/masked-input";
 ```
 
-<Canvas>
-    <Story name="Standalone usage">
-        <StoryContainer>
-            <Container>
-                <MaskedInput value="S1234567D" maskRange={[2, 5]} />
-            </Container>
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={FormMaskedInputStories.StandaloneUsage} />
 
 <Secondary>Component API</Secondary>
 
