@@ -21,6 +21,15 @@ module.exports = {
                 },
             },
         },
+        {
+            name: "@storybook/addon-storysource",
+            options: {
+                loaderOptions: {
+                    parser: "typescript",
+                    injectStoryParameters: true,
+                },
+            },
+        },
     ],
     staticDirs: ["../public"],
     webpackFinal: async (config, { configType }) => {
