@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormTimeRangePickerStories from "./form-time-range-picker.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormTimeRangePickerStories} />;
+<Meta of={FormTimeRangePickerStories} />
 
 <Title>Form.TimeRangePicker</Title>
 
@@ -15,11 +15,11 @@ The field that allows a user to enter a time range.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormTimeRangePickerStories.TimeRangePicker} />
+<Canvas of={FormTimeRangePickerStories.Default} />
 
 <Heading3>12 hour format</Heading3>
 
-<Canvas of={FormTimeRangePickerStories.12HourFormat} />
+<Canvas of={FormTimeRangePickerStories.TwelveHourFormat} />
 
 <Heading3>Rendering in grid layouts</Heading3>
 

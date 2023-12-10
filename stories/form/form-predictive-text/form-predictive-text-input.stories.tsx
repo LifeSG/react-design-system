@@ -1,16 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PredictiveTextInput } from "src/predictive-text-input";
-import { Text } from "src/text";
+import { useState } from "react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
+import { PredictiveTextInput } from "src/predictive-text-input";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 import {
     mockFetchOptions,
     mockFetchOptionsWithSecondaryLabel,
-} from "./mock-fetch-options.ts";
+} from "./mock-fetch-options";
+import { StoryContainer } from "../../storybook-common";
 
 type Component = typeof Form.PredictiveTextInput;
+type StandaloneComponent = typeof PredictiveTextInput;
 
 const meta: Meta<Component> = {
     title: "Form/PredictiveTextInput",
@@ -19,7 +20,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const PredictiveTextInput: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         const [selectedOption, setSelectedOption] = useState(undefined);
         const [selectedOption2, setSelectedOption2] = useState(undefined);
@@ -130,24 +131,21 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
-        const [selectedOption, setSelectedOption] = useState(undefined);
         return (
             <StoryContainer>
                 <Container>
                     <PredictiveTextInput
                         placeholder="Start typing..."
-                        selectedOption={selectedOption}
                         fetchOptions={mockFetchOptions}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        onSelectOption={(option, extractedValue) =>
-                            setSelectedOption(option)
-                        }
                     />
                 </Container>
             </StoryContainer>

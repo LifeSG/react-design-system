@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Textarea } from "src/input-textarea";
 import { Form } from "src/form";
+import { Textarea } from "src/input-textarea";
 import { Layout } from "src/layout";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
-import { renderCustomCounter } from "./doc-elements.tsx";
+import { renderCustomCounter } from "./doc-elements";
 
 type Component = typeof Form.Textarea;
+type StandaloneComponent = typeof Textarea;
 
 const meta: Meta<Component> = {
     title: "Form/Textarea",
@@ -15,7 +16,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Textarea: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
@@ -91,9 +92,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>

@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { InputSelect } from "src/input-select";
-import { Form } from "src/form";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
 import { Button } from "src/button";
+import { Form } from "src/form";
+import { InputSelect } from "src/input-select";
+import { Layout } from "src/layout";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 import {
     Checkmark,
     CustomCTAContainer,
@@ -15,6 +14,7 @@ import {
 } from "./doc-elements";
 
 type Component = typeof Form.Select;
+type StandaloneComponent = typeof InputSelect;
 
 const meta: Meta<Component> = {
     title: "Form/Select",
@@ -23,6 +23,13 @@ const meta: Meta<Component> = {
 
 export default meta;
 
+const OPTIONS_DATA = [
+    { value: "A", label: "Option A" },
+    { value: "B", label: "Option B" },
+    { value: "C", label: "Option C" },
+    { value: "D", label: "Option D" },
+];
+
 export const Select: StoryObj<Component> = {
     render: () => {
         return (
@@ -30,24 +37,14 @@ export const Select: StoryObj<Component> = {
                 <Container>
                     <Form.Select
                         label="This is the select field"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
                     />
                     <Form.Select
                         label="This is the disabled state"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -55,12 +52,7 @@ export const Select: StoryObj<Component> = {
                     />
                     <Form.Select
                         label="This is the readonly state"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -68,12 +60,7 @@ export const Select: StoryObj<Component> = {
                     />
                     <Form.Select
                         label="This is the error state"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -158,12 +145,7 @@ export const WithSearch: StoryObj<Component> = {
                 <Container>
                     <Form.Select
                         label="This has searchable options"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -182,12 +164,7 @@ export const WithCustomCallToAction: StoryObj<Component> = {
                 <Container>
                     <Form.Select
                         label="This has a call to action at the bottom of dropdown list"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -223,12 +200,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             <Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.Select
                     label="A shorter form input"
-                    options={[
-                        { value: "A", label: "Option A" },
-                        { value: "B", label: "Option B" },
-                        { value: "C", label: "Option C" },
-                        { value: "D", label: "Option D" },
-                    ]}
+                    options={OPTIONS_DATA}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
@@ -251,20 +223,18 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>
                 <Container>
                     <InputSelect
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -272,12 +242,7 @@ export const StandaloneUsage: StoryObj<Component> = {
                     />
                     <br />
                     <InputSelect
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}

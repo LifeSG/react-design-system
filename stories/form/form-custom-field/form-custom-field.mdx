@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Secondary, Title } from "../../storybook-common";
 import * as FormCustomFieldStories from "./form-custom-field.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormCustomFieldStories} />;
+<Meta of={FormCustomFieldStories} />
 
 <Title>Form.CustomField</Title>
 
@@ -15,7 +15,7 @@ Allows for a custom form element to be specified, and still have the label and e
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormCustomFieldStories.CustomField} />
+<Canvas of={FormCustomFieldStories.Default} />
 
 <Secondary>Component API</Secondary>
 

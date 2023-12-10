@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { InputNestedMultiSelect } from "src/input-nested-multi-select";
+import { useState } from "react";
 import { Form } from "src/form";
+import { InputNestedMultiSelect } from "src/input-nested-multi-select";
 import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { StoryContainer } from "../../storybook-common";
+import { options } from "../form-nested-select/nested-data-list";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
-import { options } from "../form-nested-select/nested-data-list.ts";
 
 type Component = typeof Form.NestedMultiSelect;
+type StandaloneComponent = typeof InputNestedMultiSelect;
 
 const meta: Meta<Component> = {
     title: "Form/NestedMultiSelect",
@@ -16,7 +17,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const NestedMultiSelect: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         const [selectedKeyPaths, setSelectedKeyPaths] = useState([
             ["999", "820", "10002"],
@@ -112,9 +113,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>

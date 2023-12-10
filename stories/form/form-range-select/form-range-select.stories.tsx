@@ -1,19 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { InputRangeSelect } from "src/input-range-select";
 import { Form } from "src/form";
+import { InputRangeSelect } from "src/input-range-select";
 import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 import {
+    Checkmark,
     Image,
     ImageWrapper,
     ImageWrapperSelected,
-    Checkmark,
 } from "./doc-elements";
-import {} from "styled-components";
 
 type Component = typeof Form.RangeSelect;
+type StandaloneComponent = typeof InputRangeSelect;
 
 const meta: Meta<Component> = {
     title: "Form/RangeSelect",
@@ -26,102 +25,104 @@ export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
-                <Container>
-                    <Form.RangeSelect
-                        label="This is the range select field"
-                        options={{
-                            from: [
-                                { value: "A", label: "Option A" },
-                                { value: "B", label: "Option B" },
-                                { value: "C", label: "Option C" },
-                                { value: "D", label: "Option D" },
-                                {
-                                    value: "E",
-                                    label: "From Option E This is a long From Option that should get wrapped and truncated.",
-                                },
-                                { value: "F", label: "Option F" },
-                                { value: "G", label: "Option G" },
-                                { value: "H", label: "Option H" },
-                                { value: "I", label: "Option I" },
-                                { value: "J", label: "Option J" },
-                            ],
-                            to: [
-                                { value: "K", label: "Option K" },
-                                { value: "L", label: "Option L" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                    />
-                    <Form.RangeSelect
-                        label="This is the disabled state"
-                        options={{
-                            from: [
-                                { value: "A", label: "Option A" },
-                                { value: "B", label: "Option B" },
-                                { value: "C", label: "Option C" },
-                                { value: "D", label: "Option D" },
-                            ],
-                            to: [
-                                { value: "K", label: "Option K" },
-                                { value: "L", label: "Option L" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        disabled
-                    />
-                    <Form.RangeSelect
-                        label="This is the readonly state"
-                        options={{
-                            from: [
-                                { value: "A", label: "Option A" },
-                                { value: "B", label: "Option B" },
-                                { value: "C", label: "Option C" },
-                                { value: "D", label: "Option D" },
-                            ],
-                            to: [
-                                { value: "K", label: "Option K" },
-                                { value: "L", label: "Option L" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        selectedOptions={{
-                            from: { value: "A", label: "Option A" },
-                            to: { value: "K", label: "Option K" },
-                        }}
-                        readOnly
-                    />
-                    <Form.RangeSelect
-                        label="This is the error state"
-                        options={{
-                            from: [
-                                { value: "A", label: "Option A" },
-                                { value: "B", label: "Option B" },
-                                { value: "C", label: "Option C" },
-                                { value: "D", label: "Option D" },
-                            ],
-                            to: [
-                                { value: "K", label: "Option K" },
-                                { value: "L", label: "Option L" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        errorMessage="Selection is required"
-                    />
-                </Container>
+                <StoryContainer>
+                    <Container>
+                        <Form.RangeSelect
+                            label="This is the range select field"
+                            options={{
+                                from: [
+                                    { value: "A", label: "Option A" },
+                                    { value: "B", label: "Option B" },
+                                    { value: "C", label: "Option C" },
+                                    { value: "D", label: "Option D" },
+                                    {
+                                        value: "E",
+                                        label: "From Option E This is a long From Option that should get wrapped and truncated.",
+                                    },
+                                    { value: "F", label: "Option F" },
+                                    { value: "G", label: "Option G" },
+                                    { value: "H", label: "Option H" },
+                                    { value: "I", label: "Option I" },
+                                    { value: "J", label: "Option J" },
+                                ],
+                                to: [
+                                    { value: "K", label: "Option K" },
+                                    { value: "L", label: "Option L" },
+                                ],
+                            }}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                        />
+                        <Form.RangeSelect
+                            label="This is the disabled state"
+                            options={{
+                                from: [
+                                    { value: "A", label: "Option A" },
+                                    { value: "B", label: "Option B" },
+                                    { value: "C", label: "Option C" },
+                                    { value: "D", label: "Option D" },
+                                ],
+                                to: [
+                                    { value: "K", label: "Option K" },
+                                    { value: "L", label: "Option L" },
+                                ],
+                            }}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            disabled
+                        />
+                        <Form.RangeSelect
+                            label="This is the readonly state"
+                            options={{
+                                from: [
+                                    { value: "A", label: "Option A" },
+                                    { value: "B", label: "Option B" },
+                                    { value: "C", label: "Option C" },
+                                    { value: "D", label: "Option D" },
+                                ],
+                                to: [
+                                    { value: "K", label: "Option K" },
+                                    { value: "L", label: "Option L" },
+                                ],
+                            }}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            selectedOptions={{
+                                from: { value: "A", label: "Option A" },
+                                to: { value: "K", label: "Option K" },
+                            }}
+                            readOnly
+                        />
+                        <Form.RangeSelect
+                            label="This is the error state"
+                            options={{
+                                from: [
+                                    { value: "A", label: "Option A" },
+                                    { value: "B", label: "Option B" },
+                                    { value: "C", label: "Option C" },
+                                    { value: "D", label: "Option D" },
+                                ],
+                                to: [
+                                    { value: "K", label: "Option K" },
+                                    { value: "L", label: "Option L" },
+                                ],
+                            }}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            errorMessage="Selection is required"
+                        />
+                    </Container>
+                </StoryContainer>
             </StoryContainer>
         );
     },
 };
 
-export const WithCustomListItemDisplay: StoryObj<Component> = {
+export const WithCustomListDisplay: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
@@ -267,9 +268,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>

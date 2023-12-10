@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormMultiSelectStories from "./form-multi-select.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormMultiSelectStories} />;
+<Meta of={FormMultiSelectStories} />
 
 <Title>Form.MultiSelect</Title>
 
@@ -15,7 +15,7 @@ A field that provides a set of options for a user to select.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormMultiSelectStories.MultiSelect} />
+<Canvas of={FormMultiSelectStories.Default} />
 
 <Heading3>With search capabilities</Heading3>
 

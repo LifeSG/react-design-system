@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import {} from "dayjs";
+import dayjs from "dayjs";
+import { useState } from "react";
 import { DateInput } from "src/date-input";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.DateInput;
+type StandaloneComponent = typeof DateInput;
 
 const meta: Meta<Component> = {
     title: "Form/DateInput",
@@ -15,7 +17,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const DateInput: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
@@ -112,9 +114,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>

@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormNestedSelectStories from "./form-nested-select.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormNestedSelectStories} />;
+<Meta of={FormNestedSelectStories} />
 
 <Title>Form.NestedSelect</Title>
 
@@ -15,7 +15,7 @@ A field that provides a nested set of options for a user to select.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormNestedSelectStories.NestedSelect} />
+<Canvas of={FormNestedSelectStories.Default} />
 
 <Heading3>Specifying mode</Heading3>
 

@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormPhoneNumberInputStories from "./form-phone-number-input.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormPhoneNumberInputStories} />;
+<Meta of={FormPhoneNumberInputStories} />
 
 <Title>Form.PhoneNumberInput</Title>
 
@@ -17,7 +17,7 @@ import { Form } from "@lifesg/react-design-system/form";
 
 **Important note**: This component currently does not do phone number value validation
 
-<Canvas of={FormPhoneNumberInputStories.PhoneNumberInput} />
+<Canvas of={FormPhoneNumberInputStories.Default} />
 
 <Heading3>Fixed country</Heading3>
 

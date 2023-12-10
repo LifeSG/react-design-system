@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormMaskedInputStories from "./form-masked-input.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormMaskedInputStories} />;
+<Meta of={FormMaskedInputStories} />
 
 <Title>Form.MaskedInput</Title>
 
@@ -15,7 +15,7 @@ An enhanced field that allows a user to enter a response that is masked on blur.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormMaskedInputStories.Field} />
+<Canvas of={FormMaskedInputStories.Default} />
 
 <Heading3>Masking</Heading3>
 

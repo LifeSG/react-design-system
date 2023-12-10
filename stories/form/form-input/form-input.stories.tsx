@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Input } from "src/input";
+import { useState } from "react";
 import { Form } from "src/form";
+import { Input } from "src/input";
 import { Layout } from "src/layout";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.Input;
+type StandaloneComponent = typeof Input;
 
 const meta: Meta<Component> = {
     title: "Form/Input",
@@ -14,7 +16,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Field: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         const [input4, setInput4] = useState(undefined);
         const [input5, setInput5] = useState(undefined);
@@ -76,9 +78,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>

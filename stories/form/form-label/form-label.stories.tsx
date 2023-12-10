@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Checkbox } from "src/checkbox";
 import { Form } from "src/form";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.Label;
 
@@ -12,7 +12,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Label: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         const [checked, setChecked] = useState(false);
         return (

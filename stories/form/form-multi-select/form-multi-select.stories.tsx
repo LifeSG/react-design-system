@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { InputMultiSelect } from "src/input-multi-select";
 import { Form } from "src/form";
+import { InputMultiSelect } from "src/input-multi-select";
 import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.MultiSelect;
+type StandaloneComponent = typeof InputMultiSelect;
 
 const meta: Meta<Component> = {
     title: "Form/MultiSelect",
@@ -15,60 +15,43 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const MultiSelect: StoryObj<Component> = {
+const OPTIONS_DATA = [
+    { value: "A", label: "Option A" },
+    { value: "B", label: "Option B" },
+    { value: "C", label: "Option C" },
+    { value: "D", label: "Option D" },
+];
+
+export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
                 <Container>
                     <Form.MultiSelect
                         label="This is the select field"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
                     />
                     <Form.MultiSelect
                         label="This is the disabled state"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
                         disabled
                     />
                     <Form.MultiSelect
                         label="This is the error state"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
                         errorMessage="Selection is required"
                     />
                     <Form.MultiSelect
                         label="This has preselected items"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
                         selectedOptions={[
                             { value: "A", label: "Option A" },
                             { value: "C", label: "Option C" },
@@ -87,15 +70,9 @@ export const WithSearch: StoryObj<Component> = {
                 <Container>
                     <Form.MultiSelect
                         label="This has searchable options"
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
                         enableSearch
                     />
                 </Container>
@@ -110,60 +87,41 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             <Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.MultiSelect
                     label="A shorter form input"
-                    options={[
-                        { value: "A", label: "Option A" },
-                        { value: "B", label: "Option B" },
-                        { value: "C", label: "Option C" },
-                        { value: "D", label: "Option D" },
-                    ]}
+                    options={OPTIONS_DATA}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
                     mobileCols={[1, 5]}
                 />
                 <Form.MultiSelect
                     label="A longer form input"
-                    options={[
-                        { value: "A", label: "Option A" },
-                        { value: "B", label: "Option B" },
-                        { value: "C", label: "Option C" },
-                        { value: "D", label: "Option D" },
-                    ]}
+                    options={OPTIONS_DATA}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>
                 <Container>
                     <InputMultiSelect
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         placeholder="Default multi select"
                     />
                     <br />
                     <InputMultiSelect
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         placeholder="Searchable multi select"
@@ -171,12 +129,7 @@ export const StandaloneUsage: StoryObj<Component> = {
                     />
                     <br />
                     <InputMultiSelect
-                        options={[
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ]}
+                        options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         placeholder="Searchable multi select"

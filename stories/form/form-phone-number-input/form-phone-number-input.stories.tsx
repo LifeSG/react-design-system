@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PhoneNumberInput } from "src/phone-number-input";
+import { useState } from "react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
+import {
+    PhoneNumberInput,
+    PhoneNumberInputValue,
+} from "src/phone-number-input";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.PhoneNumberInput;
+type StandaloneComponent = typeof PhoneNumberInput;
 
 const meta: Meta<Component> = {
     title: "Form/PhoneNumberInput",
@@ -14,9 +19,9 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const PhoneNumberInput: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
-        const [value1, setValue1] = useState({
+        const [value1, setValue1] = useState<PhoneNumberInputValue>({
             number: "",
             countryCode: "",
         });
@@ -96,29 +101,17 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
-        const [value, setValue] = useState({
-            number: "",
-            countryCode: "65",
-        });
-        const handleClear = () => {
-            setValue((prevState) => ({ ...prevState, number: "" }));
-        };
         return (
             <StoryContainer>
                 <Container>
-                    <PhoneNumberInput
-                        label="This is the phone number input"
-                        placeholder="Enter phone number"
-                        allowClear={true}
-                        enableSearch={true}
-                        value={value}
-                        onChange={(value) => setValue(value)}
-                        onClear={handleClear}
-                    />
+                    <PhoneNumberInput placeholder="Enter phone number" />
                 </Container>
             </StoryContainer>
         );

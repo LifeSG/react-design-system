@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormInputGroupStories from "./form-input-group.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormInputGroupStories} />;
+<Meta of={FormInputGroupStories} />
 
 <Title>Form.InputGroup</Title>
 
@@ -15,7 +15,7 @@ An enhanced field that allows a user to enter a response and display extra infor
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormInputGroupStories.InputGroup} />
+<Canvas of={FormInputGroupStories.Default} />
 
 <Heading3>Addon variants</Heading3>
 

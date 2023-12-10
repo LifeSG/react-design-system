@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormLabelStories from "./form-label.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormLabelStories} />;
+<Meta of={FormLabelStories} />
 
 <Title>Form.Label</Title>
 
@@ -15,7 +15,7 @@ This component is also available for use individually if you require to construc
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormLabelStories.Label} />
+<Canvas of={FormLabelStories.Default} />
 
 <Heading3>With addon</Heading3>
 

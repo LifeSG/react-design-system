@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormPredictiveTextInputStories from "./form-predictive-text-input.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormPredictiveTextInputStories} />;
+<Meta of={FormPredictiveTextInputStories} />
 
 <Title>Form.PredictiveTextInput</Title>
 
@@ -15,7 +15,9 @@ A predictive text input field that provides a set of options for a user to selec
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormPredictiveTextInputStories.PredictiveTextInput} />
+<Canvas of={FormPredictiveTextInputStories.Default} />
+
+<Heading3>With secondary label</Heading3>
 
 <Canvas of={FormPredictiveTextInputStories.WithSecondaryLabel} />
 

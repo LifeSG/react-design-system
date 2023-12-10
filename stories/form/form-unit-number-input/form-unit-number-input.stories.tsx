@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { UnitNumberInput } from "src/unit-number";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
+import { UnitNumberInput } from "src/unit-number";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.UnitNumberInput;
+type StandaloneComponent = typeof UnitNumberInput;
 
 const meta: Meta<Component> = {
     title: "Form/UnitNumberInput",
@@ -14,7 +15,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const UnitNumberInput: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
@@ -59,9 +60,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>

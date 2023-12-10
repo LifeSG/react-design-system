@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormInputStories from "./form-input.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormInputStories} />;
+<Meta of={FormInputStories} />
 
 <Title>Form.Input</Title>
 
@@ -15,7 +15,7 @@ A field that allows a user to enter a response.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormInputStories.Field} />
+<Canvas of={FormInputStories.Default} />
 
 <Heading3>Rendering in grid layouts</Heading3>
 

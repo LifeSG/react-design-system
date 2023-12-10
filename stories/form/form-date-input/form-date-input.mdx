@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormDateInputStories from "./form-date-input.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormDateInputStories} />;
+<Meta of={FormDateInputStories} />
 
 <Title>Form.DateInput</Title>
 
@@ -17,7 +17,7 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Heading3>Using a default date input</Heading3>
 
-<Canvas of={FormDateInputStories.DateInput} />
+<Canvas of={FormDateInputStories.Default} />
 
 <Heading3>With disabled dates</Heading3>
 

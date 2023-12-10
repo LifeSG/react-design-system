@@ -1,9 +1,9 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormTimepickerStories from "./form-timepicker.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={FormTimepickerStories} />;
+<Meta of={FormTimepickerStories} />
 
 <Title>Form.Timepicker</Title>
 
@@ -15,11 +15,11 @@ The field that allows a user to enter a time value.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-<Canvas of={FormTimepickerStories.Timepicker} />
+<Canvas of={FormTimepickerStories.Default} />
 
 <Heading3>12hr format</Heading3>
 
-<Canvas of={FormTimepickerStories.12HourFormat} />
+<Canvas of={FormTimepickerStories.TwelveHourFormat} />
 
 <Heading3>Rendering in grid layouts</Heading3>
 

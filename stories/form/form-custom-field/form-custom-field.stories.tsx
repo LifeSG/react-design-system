@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Checkbox } from "src/checkbox";
 import { Form } from "src/form";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.CustomField;
 
@@ -13,7 +14,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const CustomField: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         const [cb1, setCb1] = useState(false);
         const [cb2, setCb2] = useState(false);

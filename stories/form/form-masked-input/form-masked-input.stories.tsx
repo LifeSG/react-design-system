@@ -1,14 +1,14 @@
+import { ToggleOffIcon } from "@lifesg/react-icons/toggle-off";
+import { ToggleOffFillIcon } from "@lifesg/react-icons/toggle-off-fill";
 import type { Meta, StoryObj } from "@storybook/react";
-import { MaskedInput } from "src/masked-input";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { MaskedInput } from "src/masked-input";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
-import { ToggleOffFillIcon } from "@lifesg/react-icons/toggle-off-fill";
-import { ToggleOffIcon } from "@lifesg/react-icons/toggle-off";
 
 type Component = typeof Form.MaskedInput;
+type StandaloneComponent = typeof MaskedInput;
 
 const meta: Meta<Component> = {
     title: "Form/MaskedInput",
@@ -17,7 +17,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Field: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
@@ -174,9 +174,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>

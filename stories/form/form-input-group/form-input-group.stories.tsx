@@ -1,13 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
-import { InputGroup } from "src/input-group";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
+import { InputGroup } from "src/input-group";
 import { Layout } from "src/layout";
 import { Text } from "src/text";
+import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { PropsTable } from "./props-table";
 
 type Component = typeof Form.InputGroup;
+type StandaloneComponent = typeof InputGroup;
 
 const meta: Meta<Component> = {
     title: "Form/InputGroup",
@@ -16,7 +17,7 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const InputGroup: StoryObj<Component> = {
+export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <StoryContainer>
@@ -101,7 +102,6 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             type: "list",
                             attributes: {
                                 placeholder: "Select",
-                                type: "list",
                                 options: [
                                     { value: "SG", display: "Singapore" },
                                     { value: "US", display: "United States" },
@@ -120,7 +120,6 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             type: "list",
                             attributes: {
                                 placeholder: "Select",
-                                type: "list",
                                 options: [
                                     { value: "SG", display: "Singapore" },
                                     { value: "US", display: "United States" },
@@ -140,7 +139,6 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             type: "list",
                             attributes: {
                                 placeholder: "Select",
-                                type: "list",
                                 options: [
                                     { value: "SG", display: "Singapore" },
                                     { value: "US", display: "United States" },
@@ -165,7 +163,6 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             type: "list",
                             attributes: {
                                 placeholder: "Select",
-                                type: "list",
                                 options: [
                                     { value: "SG", display: "Singapore" },
                                     { value: "US", display: "United States" },
@@ -189,7 +186,6 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             type: "list",
                             attributes: {
                                 placeholder: "Select",
-                                type: "list",
                                 options: [
                                     { value: "SG", display: "Singapore" },
                                     { value: "US", display: "United States" },
@@ -198,13 +194,13 @@ export const WithDifferentAddons: StoryObj<Component> = {
                                 ],
                                 valueExtractor: (option) => option.value,
                                 listExtractor: (option) => option.display,
-                                value: {
+                                selectedOption: {
                                     value: "SG",
                                     display: "Singapore",
                                 },
                             },
                         }}
-                        error
+                        errorMessage="Invalid option"
                     />
                     <Form.InputGroup
                         label="With a list addon on the right"
@@ -213,7 +209,6 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             type: "list",
                             attributes: {
                                 placeholder: "Select",
-                                type: "list",
                                 options: [
                                     { value: "SG", display: "Singapore" },
                                     { value: "US", display: "United States" },
@@ -283,9 +278,12 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             </Layout.Content>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
-export const StandaloneUsage: StoryObj<Component> = {
+export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <StoryContainer>
