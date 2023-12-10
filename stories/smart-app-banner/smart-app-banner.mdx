@@ -1,11 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { Button } from "src/button";
-import { SmartAppBanner } from "src/smart-app-banner";
-import { Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as SmartAppBannerStories from "./smart-app-banner.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/SmartAppBanner" component={SmartAppBanner} />
+<Meta of={SmartAppBannerStories} />
 
 <Title>Smart App Banner</Title>
 
@@ -18,62 +16,15 @@ to a specific destination when clicked on.
 import { SmartAppBanner } from "@lifesg/react-design-system/smart-app-banner";
 ```
 
-<Canvas>
-    <Story name="SmartAppBanner">
-        {() => {
-            const [show, setShow] = useState(false);
-            const [isAnimated, setIsAnimated] = useState(false);
-            const onButtonPress = (isAnimated) => {
-                setShow(!show);
-                setIsAnimated(!!isAnimated);
-            };
-            return (
-                <div style={{ flex: 1, justifyContent: "center" }}>
-                    <Button.Default
-                        onClick={() => {
-                            onButtonPress();
-                        }}
-                    >
-                        {show ? "Click to close" : "Click to open"}
-                    </Button.Default>
-                    <br />
-                    {!show && (
-                        <Button.Default
-                            onClick={() => {
-                                onButtonPress(true);
-                            }}
-                        >
-                            Click to open with animation
-                        </Button.Default>
-                    )}
-                    <SmartAppBanner
-                        show={show}
-                        offset={0}
-                        isAnimated={isAnimated}
-                        link="https://www.google.com"
-                        content={{
-                            title: "LifeSG App",
-                            message:
-                                "Report neighbourhood issues in 3 simple steps",
-                            buttonLabel: "Download",
-                            buttonAriaLabel: "Download LifeSG App",
-                            numberOfStars: 3.5,
-                        }}
-                        onBannerDismiss={() => setShow(false)}
-                    />
-                </div>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={SmartAppBannerStories.Default} />
 
 <Secondary>Anatomy</Secondary>
 
-1.  **Title** - The title of the banner
-2.  **Icon** - The icon displayed in the banner
-3.  **Content** - The summary information
-4.  **Button** - A call to action button that redirects to a specified destination url
-5.  **Star Ratings** - The star ratings display
+1. **Title** - The title of the banner
+2. **Icon** - The icon displayed in the banner
+3. **Content** - The summary information
+4. **Button** - A call to action button that redirects to a specified destination url
+5. **Star Ratings** - The star ratings display
 
 <br />
 

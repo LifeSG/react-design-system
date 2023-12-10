@@ -1,12 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { FeedbackRating } from "src/feedback-rating";
-import { Modal } from "src/modal";
-import { Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as FeedbackRatingStories from "./feedback-rating.stories";
 import { PropsTable } from "./props-table";
-import { ModalBoxDiv } from "./doc-elements";
 
-<Meta title="Modules/FeedbackRating" component={FeedbackRating} />
+<Meta of={FeedbackRatingStories} />
 
 <Title>FeedbackRating</Title>
 
@@ -19,34 +16,7 @@ button is only enabled when a rating is set.
 import { FeedbackRating } from "@lifesg/react-design-system/feedback-rating";
 ```
 
-<Canvas>
-    <Story name="FeedbackRating">
-        {() => {
-            const [rating, setRating] = useState(0);
-            const [show, setShow] = useState(false);
-            const openModal = () => setShow(true);
-            const closeModal = () => setShow(false);
-            return (
-                <div>
-                    <Modal show={show} onOverlayClick={closeModal}>
-                        <Modal.Box onClose={closeModal}>
-                            <ModalBoxDiv>
-                                <span>{`You have rated: ${rating} star${
-                                    rating === 1 ? "" : "s"
-                                }`}</span>
-                            </ModalBoxDiv>
-                        </Modal.Box>
-                    </Modal>
-                    <FeedbackRating
-                        rating={rating}
-                        onRatingChange={setRating}
-                        onSubmit={openModal}
-                    />
-                </div>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={FeedbackRatingStories.Default} />
 
 <Secondary>Component API</Secondary>
 

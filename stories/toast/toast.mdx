@@ -1,16 +1,9 @@
-import { useState } from "react";
-import { Canvas, Story } from "@storybook/addon-docs";
-import { Toast } from "src/toast";
-import { Secondary, Heading3, Title } from "../storybook-common";
-import { Text } from "src/text";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as ToastStories from "./toast.stories";
 import { PropsTable } from "./props-table";
-import { Button } from "src/button";
 
-<Meta
-    title="Modules/Toast"
-    component={Toast}
-    parameters={{ layout: "centered" }}
-/>
+<Meta of={ToastStories} />
 
 <Title>Toast</Title>
 
@@ -22,156 +15,25 @@ Component used to inform users of updates or changes in system status.
 import { Toast } from "@lifesg/react-design-system/toast";
 ```
 
-<Canvas>
-    <Story name="Toast">
-        <Toast
-            type="success"
-            label="This is a success toast message"
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="warning"
-            label="This is a warning toast message"
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="error"
-            label="This is an error toast message"
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="info"
-            label="This is an info toast message"
-            fixed={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={ToastStories.Default} />
 
 <Heading3>With sub label</Heading3>
 
-<Canvas>
-    <Story name="With sub label">
-        <Toast
-            type="success"
-            label="Your bookings has been updated and received by the service provider."
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="success"
-            title="Template successfully updated"
-            label="Your bookings has been updated and received by the service provider."
-            fixed={false}
-        />
-        <br />
-        <br />
-        <Toast
-            type="warning"
-            label="The template contains characters that cannot be updated. Please
-                remove the characters and try again."
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="warning"
-            title="Unknown characters"
-            label="The template contains characters that cannot be updated. Please
-                remove the characters and try again."
-            fixed={false}
-        />
-        <br />
-        <br />
-        <Toast
-            type="error"
-            label="An internal system error had occured. Please log out and try
-                again."
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="error"
-            title="System error"
-            label="An internal system error had occured. Please log out and try
-                again."
-            fixed={false}
-        />
-        <br />
-        <br />
-        <Toast
-            type="info"
-            label="The calendar will be automatically updated when you have done
-                editing the event information."
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="info"
-            title="Updated automatically"
-            label="The calendar will be automatically updated when you have done
-                editing the event information."
-            fixed={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={ToastStories.WithSubLabel} />
 
 <Heading3>Auto dismissal</Heading3>
 
 You can also specify an auto dismissal for the `Toast` component. The preset duration
 is **4 seconds** and you can specify using the `autoDismiss` property.
 
-<Canvas>
-    <Story name="Auto dismissal">
-        <Toast
-            type="success"
-            label="Your bookings has been updated and received by the service provider."
-            autoDismiss
-            fixed={false}
-        />
-        <br />
-        <Toast
-            type="info"
-            label="This toast has a custom auto dismiss time of 8 seconds."
-            autoDismiss
-            autoDismissTime={8000}
-            fixed={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={ToastStories.AutoDismissal} />
 
 <Heading3>Fixed positioning</Heading3>
 
 This example demonstrates the default positioning of the Toast. It remains fixed at the top while the page is scrolled.
 
-<Canvas>
-    <Story name="Fixed positioning">
-        {() => {
-            const [isVisible, setIsVisible] = useState(false);
-            const openToast = () => setIsVisible(true);
-            const closeToast = () => setIsVisible(false);
-            return (
-                <>
-                    <div>
-                        {isVisible ? (
-                            <Button.Default onClick={closeToast}>
-                                Click to close
-                            </Button.Default>
-                        ) : (
-                            <Button.Default onClick={openToast}>
-                                Click to open
-                            </Button.Default>
-                        )}
-                    </div>
-                    {isVisible && (
-                        <Toast label="Notification" onDismiss={closeToast} />
-                    )}
-                </>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={ToastStories.FixedPositioning} />
 
 <Secondary>Component API</Secondary>
+
 <PropsTable />

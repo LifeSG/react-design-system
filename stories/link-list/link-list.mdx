@@ -1,17 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Button } from "src/button";
-import { Text } from "src/text";
-import { LinkList } from "src/link-list";
-import {
-    Heading3,
-    Heading4,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as LinkListStories from "./link-list.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/LinkList" component={LinkList} />
+<Meta of={LinkListStories} />
 
 <Title>LinkList</Title>
 
@@ -23,90 +15,14 @@ A component that displays a continuous group of link elements.
 import { LinkList } from "@lifesg/react-design-system/link-list";
 ```
 
-<Canvas>
-    <Story name="LinkList">
-        <StoryContainer>
-            <LinkList
-                items={[
-                    {
-                        title: "LinkList with a default sized title",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        title: "Second item",
-                        description: "This is the description",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                ]}
-            />
-            <br />
-            <br />
-            <LinkList
-                style="small"
-                items={[
-                    {
-                        title: "LinkList with a smaller sized title",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        title: "Second item",
-                        description: "This is the description",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                ]}
-            />
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={LinkListStories.Default} />
 
 <Heading3>Minimizing the list</Heading3>
 
 You are able to specify the number of items to show in the minimized view by using the `maxShown` property. Specifying
 this property will allow you to show only the specified number of items while minimizing the rest.
 
-<Canvas>
-    <Story name="Minimized list">
-        <StoryContainer>
-            <LinkList
-                style="small"
-                maxShown={2}
-                items={[
-                    {
-                        title: "First item",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        title: "Second item",
-                        description: "This is the description",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        title: "Third item",
-                        description: "Lorem ipsum dolar sit amet",
-                        href: "https://www.google.com",
-                        rel: "noreferrer",
-                        target: "_blank",
-                    },
-                    {
-                        title: "Fourth item",
-                        description:
-                            "Ut enim ad minima veniam, quis nostrum exercitationem",
-                        href: "https://www.google.com",
-                        target: "_blank",
-                        rel: "noreferrer",
-                        external: true,
-                    },
-                ]}
-            />
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={LinkListStories.MinimizedList} />
 
 <Secondary>Component API</Secondary>
 

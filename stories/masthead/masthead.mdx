@@ -1,17 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Button } from "src/button";
-import { Text } from "src/text";
-import { Masthead } from "src/masthead";
-import {
-    Heading3,
-    Heading4,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as MastheadStories from "./masthead.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Masthead" component={Masthead} />
+<Meta of={MastheadStories} />
 
 <Title>Masthead</Title>
 
@@ -26,11 +18,7 @@ import { Masthead } from "@lifesg/react-design-system/masthead";
 
 > The masthead is a styled version from the original and is integrated with the [Navbar](/docs/modules-navbar--navbar) as well
 
-<Canvas>
-    <Story name="Masthead">
-        <Masthead />
-    </Story>
-</Canvas>
+<Canvas of={MastheadStories.Default} />
 
 > The component also uses a custom script. Should you encounter a content security
 > policy error, do add this script in the `scriptSrc` blob.

@@ -1,10 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Breadcrumb } from "src/breadcrumb";
-import { Text } from "src/text";
-import { Secondary, Heading3, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as BreadcrumbStories from "./breadcrumb.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Breadcrumb" component={Breadcrumb} />
+<Meta of={BreadcrumbStories} />
 
 <Title>Breadcrumb</Title>
 
@@ -19,41 +18,7 @@ import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
 > **Note**: The last item is always designed to be unclickable as it is deemed to be the current location that
 > the user is on
 
-<Canvas>
-    <Story name="Breadcrumb">
-        <Breadcrumb
-            links={[
-                {
-                    children: "Home",
-                    href: "https://life.gov.sg",
-                    target: "_blank",
-                    rel: "noreferrer",
-                },
-                {
-                    children: "Breadcrumb without url",
-                },
-                {
-                    children: "Normal breadcrumb",
-                    href: "https://life.gov.sg",
-                    target: "_blank",
-                    rel: "noreferrer",
-                },
-                {
-                    children: "Breadcrumb with a callback function",
-                    href: "https://life.gov.sg",
-                    onClick: (event) => {
-                        event.preventDefault();
-                        alert("I got clicked");
-                    },
-                },
-                {
-                    children: "Last breadcrumb (unclickable)",
-                    href: "https://www.google.com", // Unclickable even if you pass a url
-                },
-            ]}
-        />
-    </Story>
-</Canvas>
+<Canvas of={BreadcrumbStories.Default} />
 
 <Secondary>Customising the fade color</Secondary>
 
@@ -67,45 +32,7 @@ import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
 You can specify different fade colors on both ends of the `Breadcrumb` or even
 on one side.
 
-<Canvas>
-    <Story name="Different fade colors">
-        <Breadcrumb
-            links={[
-                {
-                    children: "Home",
-                    href: "https://life.gov.sg",
-                    target: "_blank",
-                    rel: "noreferrer",
-                },
-                {
-                    children: "Breadcrumb without url",
-                },
-                {
-                    children: "Normal breadcrumb",
-                    href: "https://life.gov.sg",
-                    target: "_blank",
-                    rel: "noreferrer",
-                },
-                {
-                    children: "Breadcrumb with a callback function",
-                    href: "https://life.gov.sg",
-                    onClick: (event) => {
-                        event.preventDefault();
-                        alert("I got clicked");
-                    },
-                },
-                {
-                    children: "Last breadcrumb (unclickable)",
-                    href: "https://www.google.com", // Unclickable even if you pass a url
-                },
-            ]}
-            fadeColor={{
-                left: ["red", "orange"],
-                right: ["blue", "green"],
-            }}
-        />
-    </Story>
-</Canvas>
+<Canvas of={BreadcrumbStories.DifferentFadeColors} />
 
 <Secondary>Component API</Secondary>
 

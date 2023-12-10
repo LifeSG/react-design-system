@@ -1,14 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { Heading3, Secondary, Title } from "../storybook-common";
-import { Button } from "src/button";
-import { Card } from "src/card";
-import { IconButton } from "src/icon-button";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as CardStories from "./card.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Card" component={Card} />
+<Meta of={CardStories} />
 
 <Title>Card</Title>
 
@@ -21,41 +16,14 @@ Can be used stand-alone or as part of other components (e.g. Popover, Tooltip).
 import { Card } from "@lifesg/react-design-system/card";
 ```
 
-<Canvas>
-    <Story name="Card">
-        <Card>
-            This is a Card with a string as its children. A default styling of
-            Text.Body is applied to the string.
-        </Card>
-    </Story>
-</Canvas>
+<Canvas of={CardStories.Default} />
 
 <Heading3>Custom Content</Heading3>
 
 Other than a `string`, the `Card` also accepts a `JSX.Element` as its `children`.
 The child `JSX.Element` is unaltered and is simply wrapped by the `Card`.
 
-<Canvas>
-    <Story name="Custom content">
-        <Card>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                }}
-            >
-                <ExclamationCircleFillIcon
-                    style={{ height: "1.5rem", width: "1.5rem" }}
-                />
-                <Text.BodySmall>
-                    This is a Card with a JSX.Element as its children.
-                </Text.BodySmall>
-                <Button.Small>Click me</Button.Small>
-            </div>
-        </Card>
-    </Story>
-</Canvas>
+<Canvas of={CardStories.CustomContent} />
 
 <Heading3>Customising the style</Heading3>
 

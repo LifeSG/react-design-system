@@ -1,9 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Toggle } from "src/toggle";
-import { Secondary, Heading3, Heading4 } from "../storybook-common";
-import { Headings, Wrapper } from "./doc-elements";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as ToggleNoBorderStories from "./toggle-2-no-border.stories";
+import { PropsTable } from "./props-table";
 
-<Meta title="Data Input/Toggle/No border" component={Toggle} />
+<Meta of={ToggleNoBorderStories} />
 
 [Back to main](?path=/docs/data-input-toggle--toggle#variants)
 
@@ -12,145 +12,14 @@ import { Headings, Wrapper } from "./doc-elements";
 You can specify the no border style by setting the `styleType` property to
 `"no-border"`.
 
-<Canvas>
-    <Story name="Default">
-        <Wrapper>
-            <Headings />
-            <div>
-                <Toggle styleType="no-border">Hello</Toggle>
-                <Toggle styleType="no-border" checked>
-                    Hello
-                </Toggle>
-                <Toggle styleType="no-border" disabled>
-                    Hello
-                </Toggle>
-                <Toggle styleType="no-border" disabled checked>
-                    Hello
-                </Toggle>
-                <Toggle styleType="no-border" error>
-                    Hello
-                </Toggle>
-            </div>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ToggleNoBorderStories.Default} />
 
-<Canvas>
-    <Story name="Checkbox indicator">
-        <Wrapper>
-            <Headings />
-            <div>
-                <Toggle indicator styleType="no-border">
-                    Hello
-                </Toggle>
-                <Toggle indicator styleType="no-border" checked>
-                    Hello
-                </Toggle>
-                <Toggle indicator styleType="no-border" disabled>
-                    Hello
-                </Toggle>
-                <Toggle indicator styleType="no-border" disabled checked>
-                    Hello
-                </Toggle>
-                <Toggle indicator styleType="no-border" error>
-                    Hello
-                </Toggle>
-            </div>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ToggleNoBorderStories.CheckboxIndicator} />
 
-<Canvas>
-    <Story name="Radio indicator">
-        <Wrapper>
-            <Headings />
-            <div>
-                <Toggle indicator type="radio" styleType="no-border">
-                    Hello
-                </Toggle>
-                <Toggle indicator type="radio" styleType="no-border" checked>
-                    Hello
-                </Toggle>
-                <Toggle indicator type="radio" styleType="no-border" disabled>
-                    Hello
-                </Toggle>
-                <Toggle
-                    indicator
-                    type="radio"
-                    styleType="no-border"
-                    disabled
-                    checked
-                >
-                    Hello
-                </Toggle>
-                <Toggle indicator type="radio" styleType="no-border" error>
-                    Hello
-                </Toggle>
-            </div>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ToggleNoBorderStories.RadioIndicator} />
 
-<Canvas>
-    <Story name="Yes indicator">
-        <Wrapper>
-            <Headings />
-            <div>
-                <Toggle indicator type="yes" styleType="no-border">
-                    Hello
-                </Toggle>
-                <Toggle indicator type="yes" styleType="no-border" checked>
-                    Hello
-                </Toggle>
-                <Toggle indicator type="yes" styleType="no-border" disabled>
-                    Hello
-                </Toggle>
-                <Toggle
-                    indicator
-                    type="yes"
-                    styleType="no-border"
-                    disabled
-                    checked
-                >
-                    Hello
-                </Toggle>
-                <Toggle indicator type="yes" styleType="no-border" error>
-                    Hello
-                </Toggle>
-            </div>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ToggleNoBorderStories.YesIndicator} />
 
-<Canvas>
-    <Story name="No indicator">
-        <Wrapper>
-            <Headings />
-            <div>
-                <Toggle indicator type="no" styleType="no-border">
-                    Hello
-                </Toggle>
-                <Toggle indicator type="no" styleType="no-border" checked>
-                    Hello
-                </Toggle>
-                <Toggle indicator type="no" styleType="no-border" disabled>
-                    Hello
-                </Toggle>
-                <Toggle
-                    indicator
-                    type="no"
-                    styleType="no-border"
-                    disabled
-                    checked
-                >
-                    Hello
-                </Toggle>
-                <Toggle indicator type="no" styleType="no-border" error>
-                    Hello
-                </Toggle>
-            </div>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ToggleNoBorderStories.NoIndicator} />
 
 [Back to main](?path=/docs/data-input-toggle--toggle#variants)

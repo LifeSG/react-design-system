@@ -1,19 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { Alert } from "src/alert";
-import { Text } from "src/text";
-import { ErrorDisplay } from "src/error-display";
-import {
-    Heading3,
-    Heading4,
-    PreviewBox,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as ErrorDisplayStories from "./error-display.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/ErrorDisplay" component={ErrorDisplay} />
+<Meta of={ErrorDisplayStories} />
 
 <Title>ErrorDisplay</Title>
 
@@ -25,11 +15,7 @@ A component that displays an error or issue that has occurred.
 import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 ```
 
-<Canvas>
-    <Story name="ErrorDisplay">
-        <ErrorDisplay type="404" />
-    </Story>
-</Canvas>
+<Canvas of={ErrorDisplayStories.Default} />
 
 <Secondary>Other usages</Secondary>
 
@@ -38,19 +24,7 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 You can also add an action button to be present in the `ErrorDisplay`. The action button will
 appear at the bottom of the component.
 
-<Canvas>
-    <Story name="With action button">
-        <ErrorDisplay
-            type="unsupported-browser"
-            actionButton={{
-                children: "Continue anyway",
-                onClick: () => {
-                    alert("Clicked on continue button");
-                },
-            }}
-        />
-    </Story>
-</Canvas>
+<Canvas of={ErrorDisplayStories.WithActionButton} />
 
 <Heading3>With custom attributes</Heading3>
 
@@ -89,19 +63,7 @@ The `ErrorDisplay` component is customisable according to your project's needs. 
 -   title
 -   description
 
-<Canvas>
-    <Story name="Custom error">
-        <ErrorDisplay
-            type="404"
-            title="My Custom 404"
-            description={
-                <>
-                    You can pass a <strong>JSX component</strong> here as well
-                </>
-            }
-        />
-    </Story>
-</Canvas>
+<Canvas of={ErrorDisplayStories.CustomError} />
 
 If you require customisations down to the style, you can use the relevant `data-id` properties of each element.
 
@@ -127,31 +89,7 @@ export const CustomErrorDisplay = styled(ErrorDisplay)`
 
 > **Note**: Switch to the Canvas tab and use the Controls add-on to view the different error types
 
-<Canvas>
-    <Story
-        name="Variants"
-        parameters={{
-            controls: {
-                disabled: false,
-                include: ["type", "illustrationScheme"],
-            },
-        }}
-        argTypes={{
-            type: {
-                defaultValue: "400",
-            },
-            illustrationScheme: {
-                control: "select",
-                defaultValue: undefined,
-                options: ["base", "bookingsg", "rbs", undefined],
-            },
-        }}
-    >
-        {(args) => {
-            return <ErrorDisplay {...args} />;
-        }}
-    </Story>
-</Canvas>
+<Canvas of={ErrorDisplayStories.Variants} />
 
 <Secondary>Component API</Secondary>
 

@@ -1,17 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { Button } from "src/button";
-import { Tooltip } from "src/tooltip";
-import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
-import {
-    Container,
-    Item,
-    PositionalTooltips,
-    TooltipHOCExample,
-} from "./doc-elements";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as TooltipStories from "./tooltip.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Tooltip" component={Tooltip} />
+<Meta of={TooltipStories} />
 
 <Title>Tooltip</Title>
 
@@ -26,11 +18,7 @@ displays information about a certain element in the page.
 import { withTooltip } from "@lifesg/react-design-system/tooltip";
 ```
 
-<Canvas>
-    <Story name="Tooltip">
-        <TooltipHOCExample />
-    </Story>
-</Canvas>
+<Canvas of={TooltipStories.Default} />
 
 {/* USAGE */}
 
@@ -134,25 +122,7 @@ You also have the freedom to construct the `Tooltip` as a separate component fro
 import { Tooltip } from "@lifesg/react-design-system/tooltip";
 ```
 
-<Canvas>
-    <Story name="Using as a component">
-        {() => {
-            const [visible, setVisible] = useState(false);
-            return (
-                <Container>
-                    <Item>
-                        <Tooltip visible={visible} position="top">
-                            I am a top positioned tooltip
-                        </Tooltip>
-                        <Button.Default onClick={() => setVisible(!visible)}>
-                            Click me to interact
-                        </Button.Default>
-                    </Item>
-                </Container>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={TooltipStories.UsingAsAComponent} />
 
 {/* POSITIONS */}
 
@@ -162,11 +132,7 @@ There are 4 types of positions that the `Tooltip` can appear. You can specify so
 
 In this example, click to interact with the buttons.
 
-<Canvas>
-    <Story name="Available positions">
-        <PositionalTooltips />
-    </Story>
-</Canvas>
+<Canvas of={TooltipStories.AvailablePositions} />
 
 <Secondary>Component API</Secondary>
 

@@ -1,22 +1,9 @@
-import { GearIcon } from "@lifesg/react-icons/gear";
-import { InboxIcon } from "@lifesg/react-icons/inbox";
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState, useRef } from "react";
-import { IconButton } from "src/icon-button";
-import { Button } from "src/button";
-import { Navbar } from "src/navbar";
-import { Text } from "src/text";
-import {
-    Heading3,
-    Heading4,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as NavbarStories from "./navbar.stories";
 import { PropsTable } from "./props-table";
-import { DesktopCustomComponent, MobileCustomComponent } from "./doc-elements";
 
-<Meta title="Modules/Navbar" component={Navbar} />
+<Meta of={NavbarStories} />
 
 <Title>Navbar</Title>
 
@@ -28,76 +15,7 @@ A component that displays navigation links, action buttons and a brand at the to
 import { Navbar } from "@lifesg/react-design-system/navbar";
 ```
 
-<Canvas>
-    <Story name="Navbar">
-        {() => {
-            const [selected, setSelected] = useState("home");
-            return (
-                <Navbar
-                    items={{
-                        desktop: [
-                            {
-                                id: "home",
-                                children: "Home",
-                                onClick: () => {
-                                    setSelected("home");
-                                },
-                            },
-                            {
-                                id: "guides",
-                                children: "Guides",
-                                onClick: () => {
-                                    setSelected("guides");
-                                },
-                            },
-                            {
-                                id: "lifesg-app",
-                                children: "LifeSG app",
-                                onClick: () => {
-                                    setSelected("lifesg-app");
-                                },
-                            },
-                            {
-                                id: "blog",
-                                children: "Blog",
-                                onClick: () => {
-                                    setSelected("blog");
-                                },
-                            },
-                        ],
-                        mobile: [
-                            {
-                                id: "home-mobile",
-                                children: "Home",
-                                href: "https://www.life.gov.sg",
-                            },
-                            {
-                                id: "guides-mobile",
-                                children: "Guides",
-                                href: "https://www.life.gov.sg",
-                            },
-                            {
-                                id: "lifesg-app-mobile",
-                                children: "LifeSG app",
-                                href: "https://www.life.gov.sg",
-                            },
-                            {
-                                id: "blog-mobile",
-                                children: "Blog",
-                                href: "https://www.life.gov.sg/blog",
-                            },
-                        ],
-                    }}
-                    actionButtons={{
-                        desktop: [{ type: "download" }],
-                    }}
-                    selectedId={selected}
-                    fixed={false}
-                />
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.Default} />
 
 <Heading3>Anatomy</Heading3>
 
@@ -119,322 +37,31 @@ In the mobile viewports, the navigation links are presented in a drawer and is t
 
 This is a common use case among web apps where it requires a Logout button on the navigation bar.
 
-<Canvas>
-    <Story name="Single action button">
-        <Navbar
-            items={{
-                desktop: [],
-                mobile: [],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "secondary",
-                            children: "Logout",
-                        },
-                    },
-                ],
-            }}
-            selectedId="home"
-            fixed={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.SingleActionButton} />
 
 <Heading3>Multiple action buttons</Heading3>
 
 > **Note**: In the mobile view, the `download` action button will always be positioned last
 
-<Canvas>
-    <Story name="Multiple action buttons">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                        href: "https://www.life.gov.sg",
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                        href: "https://www.life.gov.sg",
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "link",
-                            children: "FAQ",
-                        },
-                    },
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "secondary",
-                            children: "Logout",
-                        },
-                    },
-                    {
-                        type: "download",
-                    },
-                ],
-                mobile: [
-                    {
-                        type: "download",
-                    },
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "secondary",
-                            children: "Logout",
-                        },
-                    },
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "link",
-                            children: "FAQ",
-                        },
-                    },
-                ],
-            }}
-            selectedId="home"
-            fixed={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.MultipleActionButtons} />
 
 <Heading3>Custom component action buttons</Heading3>
 
 You can also choose to render a custom component of your choice as an action button.
 
-<Canvas>
-    <Story name="Custom action buttons">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                        href: "https://www.life.gov.sg",
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                        href: "https://www.life.gov.sg",
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "component",
-                        args: {
-                            render: (
-                                <IconButton>
-                                    <GearIcon
-                                        style={{
-                                            width: "1.25rem",
-                                            height: "1.25rem",
-                                        }}
-                                    />
-                                </IconButton>
-                            ),
-                        },
-                    },
-                ],
-            }}
-            selectedId="home"
-            fixed={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.CustomActionButtons} />
 
 <Heading3>Uncollapsible action buttons</Heading3>
 
 You can set an action button to be uncollapsible, so it remains visible in the navigation bar on mobile viewports.
 
-<Canvas>
-    <Story name="Uncollapsible action buttons">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                        href: "https://www.life.gov.sg",
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                        href: "https://www.life.gov.sg",
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "component",
-                        args: {
-                            render: (
-                                <InboxIcon
-                                    style={{
-                                        width: "1.25rem",
-                                        height: "1.25rem",
-                                    }}
-                                />
-                            ),
-                        },
-                        uncollapsible: true,
-                    },
-                ],
-            }}
-            selectedId="home"
-            fixed={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.UncollapsibleActionButtons} />
 
 <Heading3>Custom component items</Heading3>
 
 You can also choose to render a custom component of your choice as a navigation bar item.
 
-<Canvas>
-    <Story name="Custom items">
-        {() => {
-            const navbarRef = useRef();
-            const [selected, setSelected] = useState("home");
-            return (
-                <Navbar
-                    ref={navbarRef}
-                    items={{
-                        desktop: [
-                            {
-                                id: "home",
-                                children: "Home",
-                                onClick: () => {
-                                    setSelected("home");
-                                },
-                            },
-                            {
-                                id: "guides",
-                                children: "Guides",
-                                onClick: () => {
-                                    setSelected("guides");
-                                },
-                                subMenu: [
-                                    {
-                                        id: "guides2",
-                                        children: "Sub Guides 2",
-                                        onClick: () => {
-                                            setSelected("guides2");
-                                        },
-                                    },
-                                    {
-                                        id: "guides3",
-                                        children: "Sub Guides 3",
-                                        onClick: () => {
-                                            setSelected("guides3");
-                                        },
-                                    },
-                                ],
-                            },
-                            {
-                                itemType: "component",
-                                children: (
-                                    <DesktopCustomComponent
-                                        onClick={() => {
-                                            console.log(
-                                                "custom component clicked"
-                                            );
-                                        }}
-                                    />
-                                ),
-                            },
-                        ],
-                        mobile: [
-                            {
-                                itemType: "component",
-                                children: (
-                                    <MobileCustomComponent
-                                        onClick={() => {
-                                            navbarRef.current.dismissDrawer();
-                                        }}
-                                    />
-                                ),
-                            },
-                            {
-                                itemType: "link",
-                                id: "home",
-                                children: "Home",
-                                onClick: () => {
-                                    setSelected("home");
-                                },
-                            },
-                            {
-                                id: "guides",
-                                children: "Guides",
-                                onClick: () => {
-                                    setSelected("guides");
-                                },
-                                subMenu: [
-                                    {
-                                        id: "guides2",
-                                        children: "Sub Guides 2",
-                                        onClick: () => {
-                                            setSelected("guides2");
-                                        },
-                                    },
-                                    {
-                                        id: "guides3",
-                                        children: "Sub Guides 3",
-                                        onClick: () => {
-                                            setSelected("guides3");
-                                        },
-                                    },
-                                ],
-                            },
-                        ],
-                    }}
-                    actionButtons={{
-                        desktop: [
-                            {
-                                type: "download",
-                            },
-                        ],
-                    }}
-                    selectedId={selected}
-                    fixed={false}
-                    layout={"stretch"}
-                />
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.CustomItems} />
 
 <Heading3>Prevent dismissal of drawer on specific actions</Heading3>
 
@@ -443,354 +70,38 @@ the `blockDrawerDismissalMethods` prop to do just that.
 
 > **Note**: You will need to view this in a mobile or tablet viewport to see the interaction
 
-<Canvas>
-    <Story name="Prevent drawer dismissal">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                        href: "https://www.life.gov.sg",
-                        target: "_blank",
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                        href: "https://www.life.gov.sg",
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                        href: "https://www.life.gov.sg",
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "download",
-                    },
-                ],
-            }}
-            selectedId="home"
-            fixed={false}
-            blockDrawerDismissalMethods={["brand-click"]}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.PreventDrawerDismissal} />
 
 <Heading3>Sub menu</Heading3>
 
 A sub menu is shown if the selected nav item has sublinks.
 
-<Canvas>
-    <Story name="Sub menu">
-        {() => {
-            const [selected, setSelected] = useState("lifesg1");
-            return (
-                <Navbar
-                    items={{
-                        desktop: [
-                            {
-                                id: "home",
-                                children: "Home",
-                            },
-                            {
-                                id: "guides",
-                                children: "Guides",
-                                subMenu: [
-                                    {
-                                        id: "guides1",
-                                        children:
-                                            "Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1",
-                                        href: "https://www.life.gov.sg",
-                                    },
-                                    {
-                                        id: "guides2",
-                                        children: "Sub Guides 2",
-                                        href: "https://www.life.gov.sg",
-                                    },
-                                    {
-                                        id: "guides3",
-                                        children: "Sub Guides 3",
-                                        href: "https://www.life.gov.sg",
-                                    },
-                                ],
-                            },
-                            {
-                                id: "lifesg-app",
-                                children: "LifeSG app",
-                                subMenu: [
-                                    {
-                                        id: "lifesg1",
-                                        children: "Sub LifeSG 1",
-                                        href: "https://www.life.gov.sg",
-                                    },
-                                    {
-                                        id: "lifesg2",
-                                        children: "Sub LifeSG 2",
-                                        href: "https://www.life.gov.sg",
-                                    },
-                                    {
-                                        id: "lifesg3",
-                                        children: "Sub LifeSG 3",
-                                        href: "https://www.life.gov.sg",
-                                    },
-                                    {
-                                        id: "lifesg4",
-                                        children: "Sub LifeSG 4",
-                                        href: "https://www.life.gov.sg",
-                                    },
-                                ],
-                            },
-                        ],
-                    }}
-                    actionButtons={{
-                        desktop: [
-                            {
-                                type: "button",
-                                args: {
-                                    styleType: "link",
-                                    children: "FAQ",
-                                },
-                            },
-                            {
-                                type: "button",
-                                args: {
-                                    styleType: "secondary",
-                                    children: "Logout",
-                                },
-                            },
-                            {
-                                type: "download",
-                            },
-                        ],
-                    }}
-                    selectedId={selected}
-                    fixed={false}
-                    onItemClick={(item) => {
-                        setSelected(item.id);
-                    }}
-                />
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.SubMenu} />
 
 <Heading3>Secondary branding</Heading3>
 
 In this example, a co-brand is displayed next to the primary brand.
 
-<Canvas>
-    <Story name="Secondary branding">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                        onClick: () => {
-                            setSelected("home");
-                        },
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                        onClick: () => {
-                            setSelected("guides");
-                        },
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                        onClick: () => {
-                            setSelected("lifesg-app");
-                        },
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "download",
-                    },
-                ],
-            }}
-            fixed={false}
-            resources={{
-                secondary: {
-                    brandName: "OneService",
-                    logoSrc:
-                        "https://www.life.gov.sg/img/one-service/os-logo.png",
-                },
-            }}
-            onBrandClick={(type) => {
-                alert("Clicked on " + type + " brand");
-            }}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.SecondaryBranding} />
 
 <Heading3>Hidden masthead</Heading3>
 
 In this example, the masthead is hidden.
 
-<Canvas>
-    <Story name="Hidden masthead">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                        onClick: () => {
-                            setSelected("home");
-                        },
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                        onClick: () => {
-                            setSelected("guides");
-                        },
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                        onClick: () => {
-                            setSelected("lifesg-app");
-                        },
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "link",
-                            children: "FAQ",
-                        },
-                    },
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "secondary",
-                            children: "Logout",
-                        },
-                    },
-                    {
-                        type: "download",
-                    },
-                ],
-            }}
-            fixed={false}
-            masthead={false}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.HiddenMasthead} />
 
 <Heading3>Stretched layout</Heading3>
 
 In this example, the content of the navbar is stretched to the full width of
 the screen with a fixed padding, ignoring the masthead's alignment.
 
-<Canvas>
-    <Story name="Stretched layout">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                        onClick: () => {
-                            setSelected("home");
-                        },
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                        onClick: () => {
-                            setSelected("guides");
-                        },
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                        onClick: () => {
-                            setSelected("lifesg-app");
-                        },
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "link",
-                            children: "FAQ",
-                        },
-                    },
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "secondary",
-                            children: "Logout",
-                        },
-                    },
-                    {
-                        type: "download",
-                    },
-                ],
-            }}
-            fixed={false}
-            layout={"stretch"}
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.StretchedLayout} />
 
 <Heading3>Hide branding</Heading3>
 
 When the branding elements are hidden, navigation items will be aligned to the left on desktop.
 
-<Canvas>
-    <Story name="Hidden branding">
-        <Navbar
-            items={{
-                desktop: [
-                    {
-                        id: "home",
-                        children: "Home",
-                    },
-                    {
-                        id: "guides",
-                        children: "Guides",
-                    },
-                    {
-                        id: "lifesg-app",
-                        children: "LifeSG app",
-                    },
-                ],
-            }}
-            actionButtons={{
-                desktop: [
-                    {
-                        type: "button",
-                        args: {
-                            styleType: "secondary",
-                            children: "Logout",
-                        },
-                    },
-                ],
-            }}
-            selectedId="home"
-            fixed={false}
-            hideNavBranding
-        />
-    </Story>
-</Canvas>
+<Canvas of={NavbarStories.HiddenBranding} />
 
 <Secondary>Troubleshooting</Secondary>
 

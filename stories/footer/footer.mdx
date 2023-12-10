@@ -1,16 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Footer } from "src/footer";
-import { Layout } from "src/layout";
-import {
-    Heading3,
-    Heading4,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as FooterStories from "./footer.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Footer" component={Footer} />
+<Meta of={FooterStories} />
 
 <Title>Footer</Title>
 
@@ -22,49 +15,7 @@ A component that holds the directory and disclaimer information at the bottom of
 import { Footer } from "@lifesg/react-design-system/footer";
 ```
 
-<Canvas>
-    <Story name="Footer">
-        <Footer
-            lastUpdated={new Date()}
-            showDownloadAddon
-            links={[
-                [
-                    { children: "Home", href: "https://www.life.gov.sg" },
-                    {
-                        children: "How it works",
-                        href: "https://www.life.gov.sg/#how-it-works",
-                    },
-                    {
-                        children: "Ways we help",
-                        href: "https://www.life.gov.sg/#ways-we-help",
-                    },
-                    {
-                        children: "Campaigns",
-                        href: "https://www.life.gov.sg/#campaigns",
-                    },
-                    {
-                        children: "News and media",
-                        href: "https://www.life.gov.sg/#newsandmedia",
-                    },
-                ],
-                [
-                    {
-                        children: "About us",
-                        href: "https://www.life.gov.sg/about-us",
-                    },
-                    {
-                        children: "Help & Support",
-                        href: "https://www.life.gov.sg/help-support",
-                    },
-                    {
-                        children: "Get in touch with us",
-                        href: "https://www.life.gov.sg/get-in-touch",
-                    },
-                ],
-            ]}
-        />
-    </Story>
-</Canvas>
+<Canvas of={FooterStories.Default} />
 
 <Secondary>Other usages</Secondary>
 
@@ -72,34 +23,11 @@ import { Footer } from "@lifesg/react-design-system/footer";
 
 This version is useful to be used as footers for dedicated apps that do not have other web pages.
 
-<Canvas>
-    <Story name="Minimal version">
-        <Footer lastUpdated={new Date()} />
-    </Story>
-</Canvas>
+<Canvas of={FooterStories.MinimalVersion} />
 
 <Heading3>With custom content</Heading3>
 
-<Canvas>
-    <Story name="With custom content">
-        <Footer lastUpdated={new Date()}>
-            <Layout.Content>
-                <div
-                    style={{
-                        padding: "2rem 0",
-                        background: "yellow",
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    My custom content
-                </div>
-            </Layout.Content>
-        </Footer>
-    </Story>
-</Canvas>
+<Canvas of={FooterStories.WithCustomContent} />
 
 <Heading3>With other customisations</Heading3>
 
@@ -109,57 +37,7 @@ You are also able to customise the logo, copyright text and disclaimerLinks. In 
 -   copyright text
 -   privacy disclaimer link
 
-<Canvas>
-    <Story name="Other customisations">
-        <Footer
-            lastUpdated={new Date()}
-            copyrightInfo="This is the custom copyright information"
-            logoSrc="https://cdn-icons-png.flaticon.com/512/1055/1055666.png"
-            links={[
-                [
-                    { children: "Home", href: "https://www.life.gov.sg" },
-                    {
-                        children: "How it works",
-                        href: "https://www.life.gov.sg/#how-it-works",
-                    },
-                    {
-                        children: "Ways we help",
-                        href: "https://www.life.gov.sg/#ways-we-help",
-                    },
-                    {
-                        children: "Campaigns",
-                        href: "https://www.life.gov.sg/#campaigns",
-                    },
-                    {
-                        children: "News and media",
-                        href: "https://www.life.gov.sg/#newsandmedia",
-                    },
-                ],
-                [
-                    {
-                        children: "About us",
-                        href: "https://www.life.gov.sg/about-us",
-                    },
-                    {
-                        children: "Help & Support",
-                        href: "https://www.life.gov.sg/help-support",
-                    },
-                    {
-                        children: "Get in touch with us",
-                        href: "https://www.life.gov.sg/get-in-touch",
-                    },
-                ],
-            ]}
-            disclaimerLinks={{
-                privacy: {
-                    href: "https://www.google.com",
-                    target: "_blank",
-                    rel: "noreferrer",
-                },
-            }}
-        />
-    </Story>
-</Canvas>
+<Canvas of={FooterStories.OtherCustomisations} />
 
 <Secondary>About disclaimer links</Secondary>
 
@@ -167,16 +45,17 @@ As the disclaimer links are mandated to be in the `Footer`, the component alread
 
 <Heading3>Predefined values</Heading3>
 
-|            | privacy                                   | termsOfUse                           | reportVulnerability                      |
-| ---------- | ----------------------------------------- | ------------------------------------ | ---------------------------------------- |
-| `children` | Privacy statement                         | Terms of use                         | Report vulnerability                     |
-| `href`     | https://www.life.gov.sg/privacy-statement | https://www.life.gov.sg/terms-of-use | https://tech.gov.sg/report_vulnerability |
-| `rel`      | `noopener`                                | `noopener`                           | `noopener`                               |
-| `external` | `false`                                   | `false`                              | `true`                                   |
+|            | privacy                                   | termsOfUse                           | reportVulnerability                       |
+| ---------- | ----------------------------------------- | ------------------------------------ | ----------------------------------------- |
+| `children` | Privacy statement                         | Terms of use                         | Report vulnerability                      |
+| `href`     | https://www.life.gov.sg/privacy-statement | https://www.life.gov.sg/terms-of-use | https://tech.gov.sg/report\_vulnerability |
+| `rel`      | `noopener`                                | `noopener`                           | `noopener`                                |
+| `external` | `false`                                   | `false`                              | `true`                                    |
 
 > Refer to the Component API table below for more information on the properties
 
 <br />
+
 <Heading3>Customising the links</Heading3>
 
 You are given the flexibility to customise any of the links **except the link text**. You can do so as such:
@@ -203,50 +82,7 @@ return (
 In this example, the content of the footer is stretched to the full width of
 the screen with a fixed padding, ignoring the masthead's alignment.
 
-<Canvas>
-    <Story name="Stretched layout">
-        <Footer
-            layout={"stretch"}
-            lastUpdated={new Date()}
-            showDownloadAddon
-            links={[
-                [
-                    { children: "Home", href: "https://www.life.gov.sg" },
-                    {
-                        children: "How it works",
-                        href: "https://www.life.gov.sg/#how-it-works",
-                    },
-                    {
-                        children: "Ways we help",
-                        href: "https://www.life.gov.sg/#ways-we-help",
-                    },
-                    {
-                        children: "Campaigns",
-                        href: "https://www.life.gov.sg/#campaigns",
-                    },
-                    {
-                        children: "News and media",
-                        href: "https://www.life.gov.sg/#newsandmedia",
-                    },
-                ],
-                [
-                    {
-                        children: "About us",
-                        href: "https://www.life.gov.sg/about-us",
-                    },
-                    {
-                        children: "Help & Support",
-                        href: "https://www.life.gov.sg/help-support",
-                    },
-                    {
-                        children: "Get in touch with us",
-                        href: "https://www.life.gov.sg/get-in-touch",
-                    },
-                ],
-            ]}
-        />
-    </Story>
-</Canvas>
+<Canvas of={FooterStories.StretchedLayout} />
 
 <Secondary>Component API</Secondary>
 

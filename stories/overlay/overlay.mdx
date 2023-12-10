@@ -1,11 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { Button } from "src/button";
-import { Overlay } from "src/overlay";
-import { Secondary, Heading3, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as OverlayStories from "./overlay.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Overlay" component={Overlay} />
+<Meta of={OverlayStories} />
 
 <Title>Overlay</Title>
 
@@ -17,56 +15,7 @@ Adds a dimmed layer over the application.
 import { Overlay } from "@lifesg/react-design-system/overlay";
 ```
 
-<Canvas>
-    <Story name="Overlay">
-        {() => {
-            const [show, setShow] = useState(false);
-            const openOverlay = () => setShow(true);
-            const closeOverlay = () => setShow(false);
-            return (
-                <div>
-                    <Button.Default onClick={openOverlay}>
-                        Click to open
-                    </Button.Default>
-                    <Overlay
-                        show={show}
-                        onOverlayClick={closeOverlay}
-                        enableOverlayClick
-                    >
-                        <div
-                            id="wrapper"
-                            style={{
-                                height: "100%",
-                                width: "100%",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            <div
-                                style={{
-                                    background: "white",
-                                    padding: "2rem",
-                                    borderRadius: "4px",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                }}
-                            >
-                                Some content
-                                <br />
-                                <br />
-                                <Button.Default onClick={closeOverlay}>
-                                    Click to dismiss
-                                </Button.Default>
-                            </div>
-                        </div>
-                    </Overlay>
-                </div>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={OverlayStories.Default} />
 
 <Secondary>Component API</Secondary>
 

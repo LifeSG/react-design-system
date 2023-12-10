@@ -1,12 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { Toggle } from "src/toggle";
-import { Text } from "src/text";
-import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
-import { Headings, SimpleContainer, Wrapper } from "./doc-elements";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as ToggleStories from "./toggle.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Data Input/Toggle" component={Toggle} />
+<Meta of={ToggleStories} />
 
 <Title>Toggle</Title>
 
@@ -18,22 +15,7 @@ A button that allows a user to enter a response by clicking, and shown with a di
 import { Toggle } from "@lifesg/react-design-system/toggle";
 ```
 
-<Canvas>
-    <Story name="Toggle">
-        <Wrapper>
-            <Headings />
-            <div>
-                <Toggle>Hello</Toggle>
-                <Toggle checked>Hello</Toggle>
-                <Toggle disabled>Hello</Toggle>
-                <Toggle disabled checked>
-                    Hello
-                </Toggle>
-                <Toggle error>Hello</Toggle>
-            </div>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ToggleStories.Default} />
 
 <Heading3>Behaviours</Heading3>
 
@@ -47,28 +29,7 @@ The `Toggle` can be used as a checkbox or radio button. This can be determined b
 
 Click to see the interactions.
 
-<Canvas>
-    <Story name="Behaviours">
-        <SimpleContainer>
-            <li>
-                <Toggle>Checkbox</Toggle>
-            </li>
-            <li>
-                <Toggle type="radio">Radio</Toggle>
-            </li>
-            <li>
-                <Toggle type="yes" indicator>
-                    Yes
-                </Toggle>
-            </li>
-            <li>
-                <Toggle type="no" indicator>
-                    No
-                </Toggle>
-            </li>
-        </SimpleContainer>
-    </Story>
-</Canvas>
+<Canvas of={ToggleStories.Behaviours} />
 
 <Heading3>Variants</Heading3>
 

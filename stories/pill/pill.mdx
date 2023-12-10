@@ -1,19 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
-import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
-
-import { Pill } from "src/pill";
-import { Text } from "src/text";
-import {
-    Secondary,
-    Heading3,
-    Title,
-    StoryContainer,
-} from "../storybook-common";
-import { Grid, Row, Wrapper } from "./doc-elements";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as PillStories from "./pill.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Pill" component={Pill} />
+<Meta of={PillStories} />
 
 <Title>Pill</Title>
 
@@ -25,106 +15,17 @@ A static element that is used to communicate selections, statuses and categories
 import { Pill } from "@lifesg/react-design-system/pill";
 ```
 
-<Canvas>
-    <Story name="Pill">
-        <Wrapper>
-            <Pill type="outline" colorType="blue">
-                Outline style pill
-            </Pill>
-            <Pill type="solid" colorType="red">
-                Solid style pill
-            </Pill>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={PillStories.Default} />
 
 <Heading3>Pill with icon</Heading3>
 
-<Canvas>
-    <Story name="With Icon">
-        <Wrapper>
-            <Pill
-                type="outline"
-                icon={<PlusCircleFillIcon />}
-                data-testid="first-example"
-            >
-                Status Label
-            </Pill>
-            <Pill
-                type="solid"
-                colorType="blue"
-                icon={<PlaceholderIcon />}
-                data-testid="second-example"
-            >
-                Status Label
-            </Pill>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={PillStories.WithIcon} />
 
 <Heading3>Variations</Heading3>
 
 The `Pill` comes in 2 display formats, `outline` and `solid` and there are 6 color variations that can be denoted using the `colorType` prop.
 
-<Canvas>
-    <Story name="Variations">
-        <StoryContainer>
-            <Grid>
-                <Row>
-                    <span />
-                    <Text.H6 weight="semibold">Black</Text.H6>
-                    <Text.H6 weight="semibold">Grey</Text.H6>
-                    <Text.H6 weight="semibold">Green</Text.H6>
-                    <Text.H6 weight="semibold">Yellow</Text.H6>
-                    <Text.H6 weight="semibold">Red</Text.H6>
-                    <Text.H6 weight="semibold">Blue</Text.H6>
-                </Row>
-                <Row>
-                    <Text.H6 weight="semibold">Outline</Text.H6>
-                    <Pill type="outline" colorType="black">
-                        Label
-                    </Pill>
-                    <Pill type="outline" colorType="grey">
-                        Label
-                    </Pill>
-                    <Pill type="outline" colorType="green">
-                        Label
-                    </Pill>
-                    <Pill type="outline" colorType="yellow">
-                        Label
-                    </Pill>
-                    <Pill type="outline" colorType="red">
-                        Label
-                    </Pill>
-                    <Pill type="outline" colorType="blue">
-                        Label
-                    </Pill>
-                </Row>
-                <Row>
-                    <Text.H6 weight="semibold">Solid</Text.H6>
-                    <Pill type="solid" colorType="black">
-                        Label
-                    </Pill>
-                    <Pill type="solid" colorType="grey">
-                        Label
-                    </Pill>
-                    <Pill type="solid" colorType="green">
-                        Label
-                    </Pill>
-                    <Pill type="solid" colorType="yellow">
-                        Label
-                    </Pill>
-                    <Pill type="solid" colorType="red">
-                        Label
-                    </Pill>
-                    <Pill type="solid" colorType="blue">
-                        Label
-                    </Pill>
-                </Row>
-            </Grid>
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={PillStories.Variations} />
 
 <Secondary>Component API</Secondary>
 

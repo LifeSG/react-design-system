@@ -1,17 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { ProgressIndicator } from "src/progress-indicator";
-import {
-    Heading3,
-    Heading4,
-    PreviewBox,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as ProgressIndicatorStories from "./progress-indicator.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/ProgressIndicator" component={ProgressIndicator} />
+<Meta of={ProgressIndicatorStories} />
 
 <Title>ProgressIndicator</Title>
 
@@ -23,23 +15,7 @@ A component that displays an indication of the current progress in a step proces
 import { ProgressIndicator } from "@lifesg/react-design-system/progress-indicator";
 ```
 
-<Canvas>
-    <Story name="ProgressIndicator">
-        <StoryContainer>
-            <ProgressIndicator
-                steps={[
-                    { title: "Step 1" },
-                    { title: "Step 2" },
-                    { title: "Step 3" },
-                    { title: "Step 4" },
-                    { title: "Step 5" },
-                ]}
-                currentIndex={1}
-                displayExtractor={(item) => item.title}
-            />
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={ProgressIndicatorStories.Default} />
 
 <Secondary>Component API</Secondary>
 

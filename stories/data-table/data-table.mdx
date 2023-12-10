@@ -1,18 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useEffect, useMemo, useState } from "react";
-import { DataTable } from "src/data-table";
-import { Pill } from "src/pill";
-import {
-    Heading3,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as DataTableStories from "./data-table.stories";
 import { PropsTable } from "./props-table";
-import { DataTableWithCustomHeight, Controls } from "./doc-elements";
-import { DATA_HEADERS, DATA_ROWS, generateRows } from "./row-data";
 
-<Meta title="Modules/DataTable" component={DataTable} />
+<Meta of={DataTableStories} />
 
 <Title>Data Table</Title>
 
@@ -24,83 +15,13 @@ Organises a collection of data into readable rows.
 import { DataTable } from "@lifesg/react-design-system/data-table";
 ```
 
-<Canvas>
-    <Story name="DataTable">
-        <DataTable
-            headers={[
-                { fieldKey: "title", label: "Title" },
-                { fieldKey: "status", label: "Status" },
-                { fieldKey: "desc", label: "Description" },
-                { fieldKey: "time", label: "Time" },
-            ]}
-            rows={[
-                {
-                    id: "100",
-                    title: "Title 1",
-                    status: <Pill type="outline">Completed</Pill>,
-                    desc: "Test",
-                    time: "07/Aug/2023 9.30pm",
-                },
-                {
-                    id: "102",
-                    title: "Title 2",
-                    status: <Pill type="outline">Pending</Pill>,
-                    desc: "Cells containing longer data may be truncated so that only a maximum of 2 lines are visible",
-                    time: "07/Aug/2023 10.30pm",
-                },
-            ]}
-        />
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.Default} />
 
 <Heading3>Fixed column widths</Heading3>
 
 This example illustrates how column widths can be fixed by setting the `width` style on headers.
 
-<Canvas>
-    <Story name="Fixed column widths">
-        <DataTable
-            headers={[
-                {
-                    fieldKey: "title",
-                    label: "Title",
-                    style: { width: "20%" },
-                },
-                {
-                    fieldKey: "status",
-                    label: "Status",
-                    style: { width: "20%" },
-                },
-                {
-                    fieldKey: "desc",
-                    label: "Description",
-                    style: { width: "40%" },
-                },
-                {
-                    fieldKey: "time",
-                    label: "Time",
-                    style: { width: "20%" },
-                },
-            ]}
-            rows={[
-                {
-                    id: "100",
-                    title: "Title 1",
-                    status: <Pill>Completed</Pill>,
-                    desc: "Test",
-                    time: "07/Aug/2023 9.30pm",
-                },
-                {
-                    id: "102",
-                    title: "Title 2",
-                    status: <Pill>Pending</Pill>,
-                    desc: "Cells containing longer data may be truncated so that only a maximum of 2 lines are visible",
-                    time: "07/Aug/2023 10.30pm",
-                },
-            ]}
-        />
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.FixedColumnWidths} />
 
 <Heading3>Sort indicators</Heading3>
 
@@ -108,193 +29,33 @@ A common use case is for rows to be sorted in some order.
 
 > **Note:** The source code below is only an example and is not intended to be used directly in production
 
-<Canvas>
-    <Story name="Sort indicators">
-        {() => {
-            const headers = [
-                {
-                    fieldKey: "colA",
-                    label: "Column A",
-                    clickable: true,
-                },
-                {
-                    fieldKey: "colB",
-                    label: "Column B",
-                    clickable: true,
-                },
-            ];
-            const rows = [
-                {
-                    id: 1,
-                    colA: "1",
-                    colB: "Content 1",
-                },
-                {
-                    id: 2,
-                    colA: "2",
-                    colB: "Content 2",
-                },
-            ];
-            const [sortState, setSortState] = useState({
-                colA: "asc",
-            });
-            const sortedRows = useMemo(() => {
-                return rows.sort((a, b) => {
-                    return sortState.colA === "asc"
-                        ? a.colA.localeCompare(b.colA)
-                        : b.colA.localeCompare(a.colA);
-                });
-            }, [sortState]);
-            const handleHeaderClick = (fieldKey) => {
-                if (fieldKey === "colA") {
-                    setSortState({
-                        colA: sortState.colA === "asc" ? "desc" : "asc",
-                    });
-                } else if (fieldKey === "colB") {
-                    alert("Column B header was clicked!");
-                }
-            };
-            return (
-                <DataTable
-                    headers={headers}
-                    rows={sortedRows}
-                    sortIndicators={sortState}
-                    onHeaderClick={handleHeaderClick}
-                />
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.SortIndicators} />
 
 <Heading3>Multi-selection of rows</Heading3>
 
 > **Note:** The updating of the selection state is handled by the consumer
 
-<Canvas>
-    <Story name="Multi-selection of rows">
-        {() => {
-            const [selected, setSelected] = useState([]);
-            const handleOnClickSelect = (rowId, isSelected) => {
-                if (isSelected) {
-                    setSelected((selected) => [...selected, rowId]);
-                } else {
-                    setSelected(
-                        selected.filter((item) => {
-                            return item !== rowId;
-                        })
-                    );
-                }
-            };
-            const handleOnClickSelectAll = (selected) => {
-                setSelected(selected ? [] : DATA_ROWS.map(({ id }) => id));
-            };
-            return (
-                <DataTable
-                    headers={DATA_HEADERS}
-                    rows={DATA_ROWS}
-                    selectedIds={selected}
-                    enableMultiSelect
-                    enableSelectAll
-                    onSelect={handleOnClickSelect}
-                    onSelectAll={handleOnClickSelectAll}
-                />
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.MultiSelectionOfRows} />
 
 <Heading3>Disabled checkboxes</Heading3>
 
-<Canvas>
-    <Story name="Disabled checkboxes">
-        {() => {
-            const [selected, setSelected] = useState(["1", "3"]);
-            const [disabled, setDisabled] = useState(["1", "2"]);
-            return (
-                <DataTable
-                    headers={DATA_HEADERS}
-                    rows={DATA_ROWS}
-                    selectedIds={selected}
-                    disabledIds={disabled}
-                    enableMultiSelect
-                />
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.DisabledCheckboxes} />
 
 <Heading3>Alternating rows</Heading3>
 
-<Canvas>
-    <Story name="Alternating rows">
-        <DataTable
-            headers={DATA_HEADERS}
-            rows={DATA_ROWS}
-            selectedIds={["1"]}
-            enableMultiSelect
-            alternatingRows
-        />
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.AlternatingRows} />
 
 <Heading3>Action bar</Heading3>
 
-<Canvas>
-    <Story name="Action bar">
-        {() => {
-            const [selected, setSelected] = useState(["1"]);
-            const [rowCount, setRowCount] = useState(5);
-            const [height, setHeight] = useState("default");
-            const handleOnClickSelect = (rowId, isSelected) => {
-                if (isSelected) {
-                    setSelected((selected) => [...selected, rowId]);
-                } else {
-                    setSelected(
-                        selected.filter((item) => {
-                            return item !== rowId;
-                        })
-                    );
-                }
-            };
-            return (
-                <DataTableWithCustomHeight
-                    rowCount={rowCount}
-                    onRowCountChange={setRowCount}
-                >
-                    <DataTable
-                        key={height}
-                        headers={DATA_HEADERS}
-                        rows={generateRows(rowCount)}
-                        alternatingRows
-                        enableMultiSelect
-                        enableActionBar
-                        selectedIds={selected}
-                        onSelect={handleOnClickSelect}
-                        onClearSelectionClick={() => {
-                            setSelected([]);
-                        }}
-                    />
-                </DataTableWithCustomHeight>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.ActionBar} />
 
 <Heading3>No rows</Heading3>
 
-<Canvas>
-    <Story name="No rows">
-        <DataTable headers={DATA_HEADERS} />
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.NoRows} />
 
 <Heading3>Loading state</Heading3>
 
-<Canvas>
-    <Story name="Loading state">
-        <DataTable headers={DATA_HEADERS} loadState="loading" />
-    </Story>
-</Canvas>
+<Canvas of={DataTableStories.LoadingState} />
 
 <Secondary>Component API</Secondary>
 

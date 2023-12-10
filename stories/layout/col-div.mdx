@@ -1,21 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
-import {
-    Heading3,
-    Heading4,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as ColDivStories from "./col-div.stories";
 import { PropsTable } from "./col-div-props-table";
-import { Wrapper } from "./doc-elements";
 
-<Meta
-    title="Getting Started/Layout/Column Divs"
-    component={Layout}
-    parameters={{ layout: "fullscreen" }}
-/>
+<Meta of={ColDivStories} />
 
 <Title>Column Divs</Title>
 
@@ -61,144 +49,7 @@ responsive.
 
 > Enter the Canvas mode to play around with the different viewports
 
-<Canvas>
-    <Story name="Column Divs">
-        <Wrapper>
-            <Layout.ColDiv
-                mobileCols={1}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>1</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={2}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>2</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={3}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>3</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>4</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={5}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>5</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={6}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>6</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={7}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>7</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={8}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>8</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={8}
-                desktopCols={9}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>9</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={8}
-                desktopCols={10}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>10</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={8}
-                desktopCols={11}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>11</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={4}
-                tabletCols={8}
-                desktopCols={12}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>12</Text.BodySmall>
-            </Layout.ColDiv>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ColDivStories.ColumnDivs} />
 
 <Heading3>Specifying ranges</Heading3>
 
@@ -207,45 +58,7 @@ columns for the div for each viewports.
 
 > Enter the Canvas mode to play around with the different viewports
 
-<Canvas>
-    <Story name="Specifying ranges">
-        <Wrapper>
-            <Layout.ColDiv
-                mobileCols={[1, 5]}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>One</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={[3, 5]}
-                tabletCols={[2, 6]}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>Two</Text.BodySmall>
-            </Layout.ColDiv>
-            <Layout.ColDiv
-                mobileCols={[2, 4]}
-                tabletCols={[6, 9]}
-                desktopCols={[7, 12]}
-                style={{
-                    background: "#FDDDD7",
-                    textAlign: "center",
-                    padding: "0.5rem 0",
-                }}
-            >
-                <Text.BodySmall>Three</Text.BodySmall>
-            </Layout.ColDiv>
-        </Wrapper>
-    </Story>
-</Canvas>
+<Canvas of={ColDivStories.SpecifyingRanges} />
 
 <Secondary>Component API</Secondary>
 

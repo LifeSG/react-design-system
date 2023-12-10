@@ -1,15 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useEffect, useState } from "react";
-import { OtpInput } from "src/otp-input";
-import {
-    Heading3,
-    Secondary,
-    StoryContainer,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as OtpInputStories from "./otp-input.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/OtpInput" component={OtpInput} />
+<Meta of={OtpInputStories} />
 
 <Title>OtpInput</Title>
 
@@ -22,35 +16,17 @@ authentication methods.
 import { OtpInput } from "@lifesg/react-design-system/otp-input";
 ```
 
-<Canvas>
-    <Story name="OtpInput">
-        <StoryContainer>
-            <OtpInput numOfInput={6} cooldownDuration={60} />
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={OtpInputStories.Default} />
 
 <Heading3>With an error message</Heading3>
 
-<Canvas>
-    <Story name="with error message">
-        <StoryContainer>
-            <OtpInput
-                numOfInput={6}
-                cooldownDuration={60}
-                errorMessage="Invalid otp. Try again."
-            />
-        </StoryContainer>
-    </Story>
-</Canvas>
+<Canvas of={OtpInputStories.WithErrorMessage} />
 
 <Heading3>With a custom action button</Heading3>
 
 You can also customise the action button's props to suit your needs.
 
-<Heading4>
-    <strong>Usage of in-built countdown</strong>
-</Heading4>
+<Heading4>Usage of in-built countdown</Heading4>
 
 In this instance, you will need to handle the label when a countdown is ongoing.
 There are callback functions like `onCooldownStart` and `onCooldownEnd` to assist
@@ -58,39 +34,9 @@ you with it.
 
 > You can use `setInterval` to handle the countdown display
 
-<Canvas>
-    <Story name="With custom action button">
-        {() => {
-            const numOfInput = 4;
-            const [isInCooldown, setIsInCooldown] = useState(true);
-            const [otpValues, setOtpValues] = useState(
-                new Array(numOfInput).fill("")
-            );
-            return (
-                <StoryContainer>
-                    <OtpInput
-                        numOfInput={numOfInput}
-                        value={otpValues}
-                        cooldownDuration={5}
-                        onCooldownStart={() => setIsInCooldown(true)}
-                        onCooldownEnd={() => setIsInCooldown(false)}
-                        onChange={(value) => setOtpValues(value)}
-                        actionButtonProps={{
-                            styleType: "light",
-                            children: isInCooldown
-                                ? "Cooling down..."
-                                : "My custom button label",
-                        }}
-                    />
-                </StoryContainer>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={OtpInputStories.WithCustomActionButton} />
 
-<Heading4>
-    <strong>Usage of custom countdown mechanism</strong>
-</Heading4>
+<Heading4>Usage of custom countdown mechanism</Heading4>
 
 In this instance, you will need to handle the countdown calculation
 and rendering entirely on your own. In this example, we will just
@@ -98,38 +44,7 @@ use a simple `setTimeout` to handle the change in label.
 
 > You can use `setInterval` to handle the countdown display
 
-<Canvas>
-    <Story name="With custom action button (self-handle)">
-        {() => {
-            const [isInCooldown, setIsInCooldown] = useState(true);
-            useEffect(() => {
-                if (isInCooldown) {
-                    setTimeout(() => {
-                        setIsInCooldown(false);
-                    }, 5000);
-                }
-            }, [isInCooldown]);
-            return (
-                <StoryContainer>
-                    <OtpInput
-                        numOfInput={6}
-                        cooldownDuration={0}
-                        actionButtonProps={{
-                            styleType: "light",
-                            children: isInCooldown
-                                ? "Cooling down..."
-                                : "My custom button label",
-                            disabled: isInCooldown,
-                            onClick: () => {
-                                setIsInCooldown(true);
-                            },
-                        }}
-                    />
-                </StoryContainer>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={OtpInputStories.WithCustomActionButtonSelfHandle} />
 
 <br />
 

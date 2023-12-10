@@ -1,11 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { RadioButton } from "src/radio-button";
-import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
-import { Container, OptionContainer, Label } from "./doc-elements";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as RadioButtonStories from "./radio-button.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Data Input/RadioButton" component={RadioButton} />
+<Meta of={RadioButtonStories} />
 
 <Title>RadioButton</Title>
 
@@ -19,54 +17,11 @@ selection of a predefined set of mutually exclusive options.
 import { RadioButton } from "@lifesg/react-design-system/radio-button";
 ```
 
-<Canvas>
-    <Story name="RadioButton">
-        {() => {
-            const [checked, setChecked] = useState(false);
-            const handleChange = () => {
-                if (!checked) setChecked(true);
-            };
-            return <RadioButton checked={checked} onChange={handleChange} />;
-        }}
-    </Story>
-</Canvas>
+<Canvas of={RadioButtonStories.Default} />
 
 <Heading3>Multiple options</Heading3>
 
-<Canvas>
-    <Story name="Multiple options">
-        {() => {
-            const [value, setValue] = useState("");
-            const handleSelection = (event) => {
-                setValue(event.target.value);
-            };
-            return (
-                <Container>
-                    <OptionContainer key="A">
-                        <RadioButton
-                            value="A"
-                            id="options-a"
-                            name="options"
-                            checked={value === "A"}
-                            onChange={handleSelection}
-                        />
-                        <Label htmlFor="options-a">Option A</Label>
-                    </OptionContainer>
-                    <OptionContainer key="B">
-                        <RadioButton
-                            value="B"
-                            id="options-b"
-                            name="options"
-                            checked={value === "B"}
-                            onChange={handleSelection}
-                        />
-                        <Label htmlFor="options-b">Option B</Label>
-                    </OptionContainer>
-                </Container>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={RadioButtonStories.MultipleOptions} />
 
 <Secondary>Component API</Secondary>
 

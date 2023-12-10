@@ -1,11 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { BoxContainer } from "src/box-container";
-import { Button } from "src/button";
-import { Text } from "src/text";
-import { Secondary, Heading3, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as BoxContainerStories from "./box-container.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/BoxContainer" component={BoxContainer} />
+<Meta of={BoxContainerStories} />
 
 <Title>BoxContainer</Title>
 
@@ -17,37 +15,11 @@ Displays contents in a box styling layout that can be collapsible if specified.
 import { BoxContainer } from "@lifesg/react-design-system/box-container";
 ```
 
-<Canvas>
-    <Story name="BoxContainer">
-        <BoxContainer title="This is the title">
-            <div style={{ padding: "2rem" }}>
-                <Text.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </Text.Body>
-            </div>
-        </BoxContainer>
-    </Story>
-</Canvas>
+<Canvas of={BoxContainerStories.Default} />
 
 <Heading3>Non-collapsible</Heading3>
 
-<Canvas>
-    <Story name="Non collapsible">
-        <BoxContainer title="This is not collapsible" collapsible={false}>
-            <div style={{ padding: "2rem" }}>
-                <Text.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </Text.Body>
-            </div>
-        </BoxContainer>
-    </Story>
-</Canvas>
+<Canvas of={BoxContainerStories.NonCollapsible} />
 
 <Heading3>With a display state</Heading3>
 
@@ -62,61 +34,13 @@ There are currently 3 states:
 
 In this example, we are using the `error` display state.
 
-<Canvas>
-    <Story name="With display state">
-        <BoxContainer
-            title="This comes with an error icon"
-            displayState="error"
-        >
-            <div style={{ padding: "2rem" }}>
-                <Text.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </Text.Body>
-            </div>
-        </BoxContainer>
-        <BoxContainer
-            title="This comes with a warning icon"
-            displayState="warning"
-        >
-            <div style={{ padding: "2rem" }}>
-                <Text.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </Text.Body>
-            </div>
-        </BoxContainer>
-    </Story>
-</Canvas>
+<Canvas of={BoxContainerStories.WithDisplayState} />
 
 <Heading3>Specifying a custom call to action</Heading3>
 
 You can also specify a custom call to action that will appear on the header of the `BoxContainer`.
 
-<Canvas>
-    <Story name="With custom call to action">
-        <BoxContainer
-            title="This has a call to action button"
-            expanded={true}
-            callToActionComponent={
-                <Button.Default styleType="light">Edit</Button.Default>
-            }
-        >
-            <div style={{ padding: "2rem" }}>
-                <Text.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </Text.Body>
-            </div>
-        </BoxContainer>
-    </Story>
-</Canvas>
+<Canvas of={BoxContainerStories.WithCustomCallToAction} />
 
 <Secondary>Component API</Secondary>
 

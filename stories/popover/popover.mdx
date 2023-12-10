@@ -1,12 +1,9 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { useState } from "react";
-import { Button } from "src/button";
-import { Popover } from "src/popover";
-import { Secondary, Heading3, Heading4, Title } from "../storybook-common";
-import { Container, Item, PopoverHOCExample } from "./doc-elements";
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as PopoverStories from "./popover.stories";
 import { PropsTable } from "./props-table";
 
-<Meta title="Modules/Popover" component={Popover} />
+<Meta of={PopoverStories} />
 
 <Title>Popover</Title>
 
@@ -20,11 +17,7 @@ A component which appears when hovering or clicking on a target element and disp
 import { withPopover } from "@lifesg/react-design-system/popover";
 ```
 
-<Canvas>
-    <Story name="Popover">
-        <PopoverHOCExample />
-    </Story>
-</Canvas>
+<Canvas of={PopoverStories.Default} />
 
 <Heading4>Appearance information</Heading4>
 
@@ -119,28 +112,7 @@ You also have the freedom to construct the `Popover` as a separate component fro
 import { Popover } from "@lifesg/react-design-system/popover";
 ```
 
-<Canvas>
-    <Story name="Using as a component">
-        {() => {
-            const [visible, setVisible] = useState(false);
-            return (
-                <Container>
-                    <Item>
-                        <Popover
-                            visible={visible}
-                            onMobileClose={() => setVisible(false)}
-                        >
-                            I am the popover content
-                        </Popover>
-                        <Button.Default onClick={() => setVisible(!visible)}>
-                            Click me to interact
-                        </Button.Default>
-                    </Item>
-                </Container>
-            );
-        }}
-    </Story>
-</Canvas>
+<Canvas of={PopoverStories.UsingAsAComponent} />
 
 <Secondary>Component API</Secondary>
 
