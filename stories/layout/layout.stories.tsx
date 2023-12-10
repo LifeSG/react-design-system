@@ -1,19 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Text } from "src/text";
 import { Layout } from "src/layout";
-import { Label, PaddingLabel } from "./doc-elements";
-import { PropsTable } from "./props-table";
+import { Text } from "src/text";
 
-type Component = typeof Layout;
-
-const meta: Meta<Component> = {
+const meta: Meta = {
     title: "Getting Started/Layout",
-    component: Layout,
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
 export default meta;
 
-export const GeneralUsage: StoryObj<Component> = {
+export const GeneralUsage: StoryObj = {
     render: () => {
         return (
             <Layout.Content>
@@ -38,7 +36,7 @@ export const GeneralUsage: StoryObj<Component> = {
     },
 };
 
-export const SplitUsage: StoryObj<Component> = {
+export const SplitUsage: StoryObj = {
     render: () => {
         return (
             <Layout.Section>
@@ -65,7 +63,7 @@ export const SplitUsage: StoryObj<Component> = {
     },
 };
 
-export const FlexColumnLayout: StoryObj<Component> = {
+export const FlexColumnLayout: StoryObj = {
     render: () => {
         const renderContent = (content) => {
             return (
@@ -88,7 +86,7 @@ export const FlexColumnLayout: StoryObj<Component> = {
     },
 };
 
-export const GridLayout: StoryObj<Component> = {
+export const GridLayout: StoryObj = {
     render: () => {
         const renderColumn = (index) => (
             <div

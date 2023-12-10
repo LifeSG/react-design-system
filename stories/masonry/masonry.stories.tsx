@@ -3,16 +3,13 @@ import { Masonry } from "src/masonry";
 import { StoryContainer } from "../storybook-common";
 import { DemoContainer } from "./doc-elements";
 
-type Component = typeof Masonry;
-
-const meta: Meta<Component> = {
+const meta: Meta = {
     title: "Modules/Masonry",
-    component: Masonry,
 };
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
+export const Default: StoryObj = {
     render: () => {
         return (
             <StoryContainer>
@@ -38,7 +35,7 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const DifferentMediaWidths: StoryObj<Component> = {
+export const DifferentMediaWidths: StoryObj = {
     render: () => {
         return (
             <StoryContainer>

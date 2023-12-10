@@ -16,6 +16,9 @@ export const Default: StoryObj<Component> = {
             <TimeSlotBar
                 startTime="08:00"
                 endTime="19:00"
+                onSlotClick={() => {
+                    /* empty arrow function */
+                }}
                 slots={[
                     {
                         id: "1",
@@ -67,6 +70,9 @@ export const MinifiedVairant: StoryObj<Component> = {
                 variant="minified"
                 startTime="08:00"
                 endTime="22:00"
+                onSlotClick={() => {
+                    /* empty arrow function */
+                }}
                 slots={[
                     {
                         id: "1",
@@ -123,6 +129,9 @@ export const DifferentIndicators: StoryObj<Component> = {
             <TimeSlotBar
                 startTime="08:00"
                 endTime="17:00"
+                onSlotClick={() => {
+                    /* empty arrow function */
+                }}
                 slots={[
                     {
                         id: "block-1",

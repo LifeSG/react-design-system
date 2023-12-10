@@ -9,6 +9,9 @@ type Component = typeof Divider;
 const meta: Meta<Component> = {
     title: "General/Divider",
     component: Divider,
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
 export default meta;

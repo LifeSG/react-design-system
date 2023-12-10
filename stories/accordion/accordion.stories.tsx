@@ -94,19 +94,17 @@ export const TitleShownInMobile: StoryObj<Component> = {
                     </Text.Body>
                 </Accordion.Item>
                 <Accordion.Item title="This is the second item">
-                    {
-                        <Text.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor&nbsp;
-                            <Text.Hyperlink.Default
-                                href="https://www.google.com"
-                                target="_blank"
-                            >
-                                see more here
-                            </Text.Hyperlink.Default>
-                            .
-                        </Text.Body>
-                    }
+                    <Text.Body>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor&nbsp;
+                        <Text.Hyperlink.Default
+                            href="https://www.google.com"
+                            target="_blank"
+                        >
+                            see more here
+                        </Text.Hyperlink.Default>
+                        .
+                    </Text.Body>
                 </Accordion.Item>
             </Accordion>
         );
@@ -127,19 +125,17 @@ export const NoTitle: StoryObj<Component> = {
                     </Text.Body>
                 </Accordion.Item>
                 <Accordion.Item title="This is the second item">
-                    {
-                        <Text.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor&nbsp;
-                            <Text.Hyperlink.Default
-                                href="https://www.google.com"
-                                target="_blank"
-                            >
-                                see more here
-                            </Text.Hyperlink.Default>
-                            .
-                        </Text.Body>
-                    }
+                    <Text.Body>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor&nbsp;
+                        <Text.Hyperlink.Default
+                            href="https://www.google.com"
+                            target="_blank"
+                        >
+                            see more here
+                        </Text.Hyperlink.Default>
+                        .
+                    </Text.Body>
                 </Accordion.Item>
             </Accordion>
         );

@@ -33,6 +33,7 @@ export const CustomContent: StoryObj<Component> = {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
+                        gap: "1rem",
                     }}
                 >
                     <ExclamationCircleFillIcon

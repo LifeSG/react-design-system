@@ -10,7 +10,7 @@ export const TextComponent = styled(Text.Body)`
     margin-bottom: 1rem;
 `;
 
-export const DisplayText = ({ children }: { children: JSX.Element }) => {
+export const DisplayText = ({ children }: { children: React.ReactNode }) => {
     return (
         <Layout.ColDiv desktopCols={12} tabletCols={8} mobileCols={4}>
             <TextComponent>{children}</TextComponent>

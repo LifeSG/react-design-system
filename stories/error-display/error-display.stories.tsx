@@ -32,6 +32,30 @@ export const WithActionButton: StoryObj<Component> = {
     },
 };
 
+export const Maintenance: StoryObj<Component> = {
+    name: "Custom attributes - Maintenance",
+    render: () => {
+        return (
+            <ErrorDisplay
+                type="maintenance"
+                additionalProps={{ dateString: "1 January 2023, 8:00am" }}
+            />
+        );
+    },
+};
+
+export const Inactivity: StoryObj<Component> = {
+    name: "Custom attributes - Inactivity",
+    render: () => {
+        return (
+            <ErrorDisplay
+                type="inactivity"
+                additionalProps={{ secondsLeft: 300 }}
+            />
+        );
+    },
+};
+
 export const CustomError: StoryObj<Component> = {
     render: () => {
         return (
@@ -50,7 +74,20 @@ export const CustomError: StoryObj<Component> = {
 };
 
 export const Variants: StoryObj<Component> = {
-    render: (args) => {
-        return <ErrorDisplay {...args} />;
+    parameters: {
+        controls: {
+            disable: false,
+            include: ["type", "illustrationScheme"],
+        },
+    },
+    argTypes: {
+        illustrationScheme: {
+            control: "select",
+            options: [undefined, "base", "bookingsg", "rbs"],
+        },
+    },
+    args: {
+        type: "400",
+        illustrationScheme: undefined,
     },
 };

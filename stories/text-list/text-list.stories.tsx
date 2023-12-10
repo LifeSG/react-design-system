@@ -3,16 +3,13 @@ import { Text } from "src/text";
 import { TextList } from "src/text-list";
 import { Container, CustomOrderedList, SubContainer } from "./doc-elements";
 
-type Component = typeof TextList;
-
-const meta: Meta<Component> = {
+const meta: Meta = {
     title: "General/TextList",
-    component: TextList,
 };
 
 export default meta;
 
-export const Unordered: StoryObj<Component> = {
+export const Unordered: StoryObj = {
     render: () => {
         return (
             <Container>
@@ -44,7 +41,7 @@ export const Unordered: StoryObj<Component> = {
     },
 };
 
-export const Ordered: StoryObj<Component> = {
+export const Ordered: StoryObj = {
     render: () => {
         return (
             <Container>
@@ -73,7 +70,7 @@ export const Ordered: StoryObj<Component> = {
     },
 };
 
-export const Nested: StoryObj<Component> = {
+export const Nested: StoryObj = {
     render: () => {
         return (
             <TextList.Ol>
@@ -100,7 +97,7 @@ export const Nested: StoryObj<Component> = {
     },
 };
 
-export const OtherFeatures: StoryObj<Component> = {
+export const OtherFeatures: StoryObj = {
     render: () => {
         return (
             <Container>
@@ -127,7 +124,7 @@ export const OtherFeatures: StoryObj<Component> = {
     },
 };
 
-export const AdvancedUsage: StoryObj<Component> = {
+export const AdvancedUsage: StoryObj = {
     render: () => {
         return (
             <TextList.Ol counterSeparator=".">

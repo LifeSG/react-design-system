@@ -3,7 +3,7 @@ import { InboxIcon } from "@lifesg/react-icons/inbox";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useRef, useState } from "react";
 import { IconButton } from "src/icon-button";
-import { Navbar } from "src/navbar";
+import { NavItemLinkProps, Navbar, NavbarDrawerHandle } from "src/navbar";
 import { DesktopCustomComponent, MobileCustomComponent } from "./doc-elements";
 
 type Component = typeof Navbar;
@@ -282,7 +282,7 @@ export const UncollapsibleActionButtons: StoryObj<Component> = {
 
 export const CustomItems: StoryObj<Component> = {
     render: () => {
-        const navbarRef = useRef();
+        const navbarRef = useRef<NavbarDrawerHandle>();
         const [selected, setSelected] = useState("home");
         return (
             <Navbar
@@ -422,7 +422,7 @@ export const PreventDrawerDismissal: StoryObj<Component> = {
                 }}
                 selectedId="home"
                 fixed={false}
-                blockDrawerDismissalMethods={["brand-click"]}
+                drawerDismissalExclusions={["brand-click"]}
             />
         );
     },
@@ -512,7 +512,7 @@ export const SubMenu: StoryObj<Component> = {
                 }}
                 selectedId={selected}
                 fixed={false}
-                onItemClick={(item) => {
+                onItemClick={(item: NavItemLinkProps<undefined>) => {
                     setSelected(item.id);
                 }}
             />
@@ -529,23 +529,14 @@ export const SecondaryBranding: StoryObj<Component> = {
                         {
                             id: "home",
                             children: "Home",
-                            onClick: () => {
-                                setSelected("home");
-                            },
                         },
                         {
                             id: "guides",
                             children: "Guides",
-                            onClick: () => {
-                                setSelected("guides");
-                            },
                         },
                         {
                             id: "lifesg-app",
                             children: "LifeSG app",
-                            onClick: () => {
-                                setSelected("lifesg-app");
-                            },
                         },
                     ],
                 }}
@@ -581,23 +572,14 @@ export const HiddenMasthead: StoryObj<Component> = {
                         {
                             id: "home",
                             children: "Home",
-                            onClick: () => {
-                                setSelected("home");
-                            },
                         },
                         {
                             id: "guides",
                             children: "Guides",
-                            onClick: () => {
-                                setSelected("guides");
-                            },
                         },
                         {
                             id: "lifesg-app",
                             children: "LifeSG app",
-                            onClick: () => {
-                                setSelected("lifesg-app");
-                            },
                         },
                     ],
                 }}
@@ -638,23 +620,14 @@ export const StretchedLayout: StoryObj<Component> = {
                         {
                             id: "home",
                             children: "Home",
-                            onClick: () => {
-                                setSelected("home");
-                            },
                         },
                         {
                             id: "guides",
                             children: "Guides",
-                            onClick: () => {
-                                setSelected("guides");
-                            },
                         },
                         {
                             id: "lifesg-app",
                             children: "LifeSG app",
-                            onClick: () => {
-                                setSelected("lifesg-app");
-                            },
                         },
                     ],
                 }}

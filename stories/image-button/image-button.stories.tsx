@@ -56,7 +56,6 @@ export const Fallback: StoryObj<Component> = {
             <ImageButton
                 disabled={false}
                 imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754asdfads537.png"
-                focusOutline="browser"
             >
                 Rooms
             </ImageButton>

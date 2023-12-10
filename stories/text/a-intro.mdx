@@ -1,14 +1,6 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Text } from "src/text";
-import {
-    Heading3,
-    Heading4,
-    PreviewBox,
-    Secondary,
-    Title,
-} from "../storybook-common";
+import { Canvas, Meta, Story } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
 import * as TextStories from "./a-intro.stories";
-import { LinkDiv } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta of={TextStories} />
@@ -34,34 +26,17 @@ The `Text` component comes with 2 categories of components:
     <Heading3>Static Text</Heading3>
 </a>
 
-<Canvas of={TextStories.Introduction} />
+<Story of={TextStories.Styles} />
 
 <a id="hyperlink">
     <Heading3>Hyperlinks</Heading3>
 </a>
 
-<PreviewBox>
-    <LinkDiv>
-        <Text.Hyperlink.Default href="https://www.life.gov.sg" target="_blank">
-            Default link
-        </Text.Hyperlink.Default>
-        <Text.Hyperlink.Small href="https://www.life.gov.sg" target="_blank">
-            Small link
-        </Text.Hyperlink.Small>
-    </LinkDiv>
-</PreviewBox>
+<Canvas of={TextStories.Hyperlinks} />
 
 As we recommend providing an indicator for links leading to external sites, you are required to use the `external` prop to allow for the indicator to appear.
 
-<PreviewBox>
-    <Text.Hyperlink.Default
-        href="https://www.google.com"
-        target="_blank"
-        external
-    >
-        This is an external link with the indicator
-    </Text.Hyperlink.Default>
-</PreviewBox>
+<Canvas of={TextStories.ExternalHyperlinks} />
 
 <Secondary>Component API</Secondary>
 

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { DataTable } from "src/data-table";
+import { useMemo, useState } from "react";
+import { DataTable, SortIndicatorsProps } from "src/data-table";
 import { Pill } from "src/pill";
 import { DataTableWithCustomHeight } from "./doc-elements";
 import { DATA_HEADERS, DATA_ROWS, generateRows } from "./row-data";
-import { useMemo, useState } from "react";
 
 type Component = typeof DataTable;
 
@@ -75,14 +75,14 @@ export const FixedColumnWidths: StoryObj<Component> = {
                     {
                         id: "100",
                         title: "Title 1",
-                        status: <Pill>Completed</Pill>,
+                        status: <Pill type="outline">Completed</Pill>,
                         desc: "Test",
                         time: "07/Aug/2023 9.30pm",
                     },
                     {
                         id: "102",
                         title: "Title 2",
-                        status: <Pill>Pending</Pill>,
+                        status: <Pill type="outline">Pending</Pill>,
                         desc: "Cells containing longer data may be truncated so that only a maximum of 2 lines are visible",
                         time: "07/Aug/2023 10.30pm",
                     },
@@ -118,7 +118,7 @@ export const SortIndicators: StoryObj<Component> = {
                 colB: "Content 2",
             },
         ];
-        const [sortState, setSortState] = useState({
+        const [sortState, setSortState] = useState<SortIndicatorsProps>({
             colA: "asc",
         });
         const sortedRows = useMemo(() => {

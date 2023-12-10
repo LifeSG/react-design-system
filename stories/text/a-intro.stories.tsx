@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Text } from "src/text";
-import { DisplayContainer, TextDisplay } from "./doc-elements";
+import { DisplayContainer, LinkDiv, TextDisplay } from "./doc-elements";
 
-type Component = typeof Text;
-
-const meta: Meta<Component> = {
+const meta: Meta = {
     title: "General/Text/Introduction",
 };
 
@@ -12,7 +10,7 @@ export default meta;
 
 const EXAMPLE_TEXT = "A quick brown fox jumps over the lazy dog";
 
-export const Introduction: StoryObj<Component> = {
+export const Styles: StoryObj = {
     render: () => {
         return (
             <DisplayContainer>
@@ -55,4 +53,42 @@ export const Introduction: StoryObj<Component> = {
             </DisplayContainer>
         );
     },
+    tags: ["pattern"],
+};
+
+export const Hyperlinks: StoryObj = {
+    render: () => {
+        return (
+            <LinkDiv>
+                <Text.Hyperlink.Default
+                    href="https://www.life.gov.sg"
+                    target="_blank"
+                >
+                    Default link
+                </Text.Hyperlink.Default>
+                <Text.Hyperlink.Small
+                    href="https://www.life.gov.sg"
+                    target="_blank"
+                >
+                    Small link
+                </Text.Hyperlink.Small>
+            </LinkDiv>
+        );
+    },
+    tags: ["pattern"],
+};
+
+export const ExternalHyperlinks: StoryObj = {
+    render: () => {
+        return (
+            <Text.Hyperlink.Default
+                href="https://www.google.com"
+                target="_blank"
+                external
+            >
+                This is an external link with the indicator
+            </Text.Hyperlink.Default>
+        );
+    },
+    tags: ["pattern"],
 };

@@ -11,6 +11,9 @@ type Component = typeof TimeSlotWeekView;
 const meta: Meta<Component> = {
     title: "Modules/TimeSlotWeekView",
     component: TimeSlotWeekView,
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
 export default meta;

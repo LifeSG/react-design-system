@@ -1,10 +1,10 @@
 import { Meta } from "@storybook/blocks";
 import {
     LoadingDots,
-    LoadingSpinner,
     LoadingDotsSpinner,
+    LoadingSpinner,
 } from "src/animations";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Secondary, Title } from "../storybook-common";
 import {
     AnimationDisplay,
     AnimationItem,
@@ -33,7 +33,7 @@ import { <Component_name> } from "@lifesg/react-design-system/animations";
             <LoadingSpinner />
         </AnimationPane>
         <Content>
-            <code>{"<LoadingSpinner />"}</code>
+            `<LoadingSpinner />`
             <p>
                 An animation that can be shown in between page transitions or
                 while waiting for fetching of data.
@@ -45,7 +45,7 @@ import { <Component_name> } from "@lifesg/react-design-system/animations";
             <LoadingDots />
         </AnimationPane>
         <Content>
-            <code>{"<LoadingDots />"}</code>
+            `<LoadingDots />`
             <p>
                 An animation that can be shown in between page transitions or
                 while waiting for fetching of data.
@@ -57,16 +57,12 @@ import { <Component_name> } from "@lifesg/react-design-system/animations";
             <LoadingDotsSpinner />
         </AnimationPane>
         <Content>
-            <code>{"<LoadingDotsSpinner />"}</code>
+            `<LoadingDotsSpinner />`
             <p>
                 An animation that can be shown in between page transitions or
                 while waiting for fetching of data.
-                <br />
-                <br />
-                This is a customisable animation. <a href="/docs/general-animations-customisable-animations--loading-dots-spinner">
-                    See here
-                </a> to find out more.
             </p>
+            <p>This is a customisable animation. [See here](/docs/general-animations-customisable-animations--loading-dots-spinner) to find out more.</p>
         </Content>
     </AnimationItem>
 </AnimationDisplay>

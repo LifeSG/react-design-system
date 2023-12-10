@@ -8,6 +8,9 @@ type Component = typeof Layout.ColDiv;
 const meta: Meta<Component> = {
     title: "Getting Started/Layout/Column Divs",
     component: Layout.ColDiv,
+    parameters: {
+        layout: "fullscreen",
+    },
 };
 
 export default meta;

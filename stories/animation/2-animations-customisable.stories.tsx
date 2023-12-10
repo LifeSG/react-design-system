@@ -4,16 +4,14 @@ import { Color } from "src/color";
 import { BaseTheme } from "src/theme";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 
-type Component = typeof undefined;
-
-const meta: Meta<Component> = {
+const meta: Meta = {
     title: "General/Animations/Customisable Animations",
-    component: undefined,
 };
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
+export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
+    name: "LoadingDotsSpinner",
     render: () => {
         return (
             <AnimationDisplay>

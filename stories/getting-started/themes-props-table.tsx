@@ -1,4 +1,3 @@
-import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 

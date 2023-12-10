@@ -1,14 +1,8 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import {
-    Heading3,
-    Heading4,
-    PreviewBox,
-    Secondary,
-    Title,
-} from "../storybook-common";
-import { Text } from "src/text";
-import { ColorPalette } from "./doc-color-palette";
+import { Meta, Unstyled } from "@storybook/blocks";
 import { RBSColorSet } from "src/spec/color-spec/rbs-color-set";
+import { Text } from "src/text";
+import { PreviewBox, Secondary, Title } from "../storybook-common";
+import { ColorPalette } from "./doc-color-palette";
 
 <Meta title="General/Color/RBS Color" />
 
@@ -21,33 +15,37 @@ This will be the palette used when the `colorScheme` is `"rbs"`.
 ```tsx
 const theme: ThemeSpec = {
     colorScheme: "rbs",
-	...other specifications
+    // ...other specifications
 };
 ```
 
 <Secondary>Colors</Secondary>
 
-<ColorPalette set={RBSColorSet.Brand} category="Brand" />
-<ColorPalette
-    set={{
-        Primary: RBSColorSet.Primary,
-        PrimaryDark: RBSColorSet.PrimaryDark,
-        Secondary: RBSColorSet.Secondary,
-    }}
-/>
-<ColorPalette set={RBSColorSet.Neutral} category="Neutral" />
-<ColorPalette set={RBSColorSet.Accent.Dark} category="Accent.Dark" />
-<ColorPalette set={RBSColorSet.Accent.Light} category="Accent.Light" />
+<Unstyled>
+    <ColorPalette set={RBSColorSet.Brand} category="Brand" />
+    <ColorPalette
+        set={{
+            Primary: RBSColorSet.Primary,
+            PrimaryDark: RBSColorSet.PrimaryDark,
+            Secondary: RBSColorSet.Secondary,
+        }}
+    />
+    <ColorPalette set={RBSColorSet.Neutral} category="Neutral" />
+    <ColorPalette set={RBSColorSet.Accent.Dark} category="Accent.Dark" />
+    <ColorPalette set={RBSColorSet.Accent.Light} category="Accent.Light" />
+</Unstyled>
 
 <br />
 
 <Text.H3>Validation</Text.H3>
 
 <PreviewBox>
-    <code>{"Color.Validation.<color>"}</code>
+    `Color.Validation.<color>`
 </PreviewBox>
 
-<ColorPalette set={RBSColorSet.Validation.Green} category="Green" />
-<ColorPalette set={RBSColorSet.Validation.Orange} category="Orange" />
-<ColorPalette set={RBSColorSet.Validation.Red} category="Red" />
-<ColorPalette set={RBSColorSet.Validation.Blue} category="Blue" />
+<Unstyled>
+    <ColorPalette set={RBSColorSet.Validation.Green} category="Green" />
+    <ColorPalette set={RBSColorSet.Validation.Orange} category="Orange" />
+    <ColorPalette set={RBSColorSet.Validation.Red} category="Red" />
+    <ColorPalette set={RBSColorSet.Validation.Blue} category="Blue" />
+</Unstyled>

@@ -15,35 +15,18 @@ export default meta;
 export const Default: StoryObj<Component> = {
     render: () => {
         const [show, setShow] = useState(false);
-        const [isAnimated, setIsAnimated] = useState(false);
-        const onButtonPress = (isAnimated) => {
+        const toggleShow = () => {
             setShow(!show);
-            setIsAnimated(!!isAnimated);
         };
         return (
             <div style={{ flex: 1, justifyContent: "center" }}>
-                <Button.Default
-                    onClick={() => {
-                        onButtonPress();
-                    }}
-                >
+                <Button.Default onClick={toggleShow}>
                     {show ? "Click to close" : "Click to open"}
                 </Button.Default>
-                <br />
-                {!show && (
-                    <Button.Default
-                        onClick={() => {
-                            onButtonPress(true);
-                        }}
-                    >
-                        Click to open with animation
-                    </Button.Default>
-                )}
                 <SmartAppBanner
                     show={show}
                     offset={0}
-                    isAnimated={isAnimated}
-                    link="https://www.google.com"
+                    href="https://www.google.com"
                     content={{
                         title: "LifeSG App",
                         message:
@@ -52,7 +35,7 @@ export const Default: StoryObj<Component> = {
                         buttonAriaLabel: "Download LifeSG App",
                         numberOfStars: 3.5,
                     }}
-                    onBannerDismiss={() => setShow(false)}
+                    onDismiss={toggleShow}
                 />
             </div>
         );

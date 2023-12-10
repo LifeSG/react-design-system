@@ -9,11 +9,6 @@ export const Grid = styled.div`
     gap: 0.5rem 1.5rem;
 `;
 
-export const Row = styled.div`
-    display: contents;
-    margin-bottom: 4rem;
-`;
-
 export const SubOption = styled.div`
     display: flex;
     margin-left: 2rem;

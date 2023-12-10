@@ -33,27 +33,11 @@ dynamic variables. Currently only the types `"maintenance"` and `"inactivity"` h
 
 <Heading4>Maintenance</Heading4>
 
-<Canvas>
-    <Story name="Custom attributes - Maintenance">
-        <ErrorDisplay
-            type="maintenance"
-            additionalProps={{ dateString: "1 January 2023, 8:00am" }}
-        />
-        <br />
-    </Story>
-</Canvas>
+<Canvas of={ErrorDisplayStories.Maintenance} />
 
 <Heading4>Inactivity</Heading4>
 
-<Canvas>
-    <Story name="Custom attributes - Inactivity">
-        <ErrorDisplay
-            type="inactivity"
-            additionalProps={{ secondsLeft: 300 }}
-        />
-        <br />
-    </Story>
-</Canvas>
+<Canvas of={ErrorDisplayStories.Inactivity} />
 
 <Heading3>Customisation</Heading3>
 
@@ -87,7 +71,7 @@ export const CustomErrorDisplay = styled(ErrorDisplay)`
 
 <Secondary>Variants</Secondary>
 
-> **Note**: Switch to the Canvas tab and use the Controls add-on to view the different error types
+> **Note**: Switch to the standalone story and use the Controls add-on to view the different error types
 
 <Canvas of={ErrorDisplayStories.Variants} />
 

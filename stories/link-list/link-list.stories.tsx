@@ -86,7 +86,6 @@ export const MinimizedList: StoryObj<Component> = {
                             href: "https://www.google.com",
                             target: "_blank",
                             rel: "noreferrer",
-                            external: true,
                         },
                     ]}
                 />

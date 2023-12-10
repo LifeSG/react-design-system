@@ -1,7 +1,7 @@
-import { Canvas, Meta } from "@storybook/blocks";
+import { Meta, Unstyled } from "@storybook/blocks";
 import { Text } from "src/text";
 import { BaseTextStyleSet } from "src/spec/text-spec/base-text-style-set";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Secondary, Title } from "../storybook-common";
 import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
 
 <Meta title="General/Text/Base Style" />
@@ -15,14 +15,18 @@ This will be the collection used when the `textStyleScheme` is `base`.
 ```tsx
 const theme: ThemeSpec = {
     textStyleScheme: "base",
-    ...other specifications
+    // ...other specifications
 };
 ```
 
 <Secondary>Font Family</Secondary>
 
 <Text.D1>Open Sans</Text.D1>
-<FontDisplay />
+<Unstyled>
+    <FontDisplay />
+</Unstyled>
 
 <Secondary>Text Styles</Secondary>
-<FontSizeDisplay textStyles={BaseTextStyleSet} />
+<Unstyled>
+    <FontSizeDisplay textStyles={BaseTextStyleSet} />
+</Unstyled>

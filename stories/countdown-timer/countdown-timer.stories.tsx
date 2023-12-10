@@ -43,6 +43,10 @@ export const ScrollBehaviour: StoryObj<Component> = {
             </CountdownView>
         );
     },
+    parameters: {
+        layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 500 } },
+    },
 };
 
 export const CustomOffset: StoryObj<Component> = {
@@ -62,5 +66,9 @@ export const CustomOffset: StoryObj<Component> = {
                 />
             </CountdownView>
         );
+    },
+    parameters: {
+        layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 500 } },
     },
 };

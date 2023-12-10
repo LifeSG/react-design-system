@@ -1,14 +1,8 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import {
-    Heading3,
-    Heading4,
-    PreviewBox,
-    Secondary,
-    Title,
-} from "../storybook-common";
-import { Text } from "src/text";
-import { ColorPalette } from "./doc-color-palette";
+import { Meta, Unstyled } from "@storybook/blocks";
 import { BookingSGColorSet } from "src/spec/color-spec/bookingsg-color-set";
+import { Text } from "src/text";
+import { PreviewBox, Secondary, Title } from "../storybook-common";
+import { ColorPalette } from "./doc-color-palette";
 
 <Meta title="General/Color/BookingSG Color" />
 
@@ -27,27 +21,34 @@ const theme: ThemeSpec = {
 
 <Secondary>Colors</Secondary>
 
-<ColorPalette set={BookingSGColorSet.Brand} category="Brand" />
-<ColorPalette
-    set={{
-        Primary: BookingSGColorSet.Primary,
-        PrimaryDark: BookingSGColorSet.PrimaryDark,
-        Secondary: BookingSGColorSet.Secondary,
-    }}
-/>
-<ColorPalette set={BookingSGColorSet.Neutral} category="Neutral" />
-<ColorPalette set={BookingSGColorSet.Accent.Dark} category="Accent.Dark" />
-<ColorPalette set={BookingSGColorSet.Accent.Light} category="Accent.Light" />
+<Unstyled>
+    <ColorPalette set={BookingSGColorSet.Brand} category="Brand" />
+    <ColorPalette
+        set={{
+            Primary: BookingSGColorSet.Primary,
+            PrimaryDark: BookingSGColorSet.PrimaryDark,
+            Secondary: BookingSGColorSet.Secondary,
+        }}
+    />
+    <ColorPalette set={BookingSGColorSet.Neutral} category="Neutral" />
+    <ColorPalette set={BookingSGColorSet.Accent.Dark} category="Accent.Dark" />
+    <ColorPalette
+        set={BookingSGColorSet.Accent.Light}
+        category="Accent.Light"
+    />
+</Unstyled>
 
 <br />
 
 <Text.H3>Validation</Text.H3>
 
 <PreviewBox>
-    <code>{"Color.Validation.<color>"}</code>
+    `Color.Validation.<color>`
 </PreviewBox>
 
-<ColorPalette set={BookingSGColorSet.Validation.Green} category="Green" />
-<ColorPalette set={BookingSGColorSet.Validation.Orange} category="Orange" />
-<ColorPalette set={BookingSGColorSet.Validation.Red} category="Red" />
-<ColorPalette set={BookingSGColorSet.Validation.Blue} category="Blue" />
+<Unstyled>
+    <ColorPalette set={BookingSGColorSet.Validation.Green} category="Green" />
+    <ColorPalette set={BookingSGColorSet.Validation.Orange} category="Orange" />
+    <ColorPalette set={BookingSGColorSet.Validation.Red} category="Red" />
+    <ColorPalette set={BookingSGColorSet.Validation.Blue} category="Blue" />
+</Unstyled>

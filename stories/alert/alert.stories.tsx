@@ -197,7 +197,6 @@ export const SmallSize: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
-                <br />
             </>
         );
     },
