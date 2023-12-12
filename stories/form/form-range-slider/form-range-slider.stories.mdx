@@ -1,6 +1,6 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Form } from "src/form";
-import { InputSlider } from "src/input-slider";
+import { InputRangeSlider } from "src/input-range-slider";
 import { Layout } from "src/layout";
 import { Text } from "src/text";
 import {
@@ -12,37 +12,63 @@ import {
 import { Container } from "../shared-doc-elements";
 import { PropsTable } from "./props-table";
 
-<Meta title="Form/Slider" component={Form.Slider} />
+<Meta title="Form/RangeSlider" component={Form.RangeSlider} />
 
-<Title>Form.Slider</Title>
+<Title>Form.RangeSlider</Title>
 
 <Secondary>Overview</Secondary>
 
-A field that allows a user to select a value from a numeric range.
+A field that allows a user to select a range of values within a numeric range.
 
 ```tsx
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
 <Canvas>
-    <Story name="Slider">
+    <Story name="RangeSlider">
         <StoryContainer>
             <Container>
-                <Form.Slider label="This is the slider" />
-                <Form.Slider
+                <Form.RangeSlider
+                    label="This is the range slider"
+                    value={[10, 20]}
+                />
+                <Form.RangeSlider
+                    label="This has three thumbs"
+                    numOfThumbs={3}
+                    value={[15, 35, 55]}
+                />
+                <Form.RangeSlider
                     label="This is the disabled state"
-                    value={25}
+                    value={[25, 50]}
                     disabled
                 />
-                <Form.Slider
+                <Form.RangeSlider
                     label="This is the read-only state"
-                    value={75}
+                    value={[50, 75]}
                     readOnly
                 />
-                <Form.Slider
+                <Form.RangeSlider
                     label="This is the error state"
+                    value={[10, 30]}
                     errorMessage="Out of range"
-                    value={50}
+                />
+            </Container>
+        </StoryContainer>
+    </Story>
+</Canvas>
+
+<Heading3>Minimum range</Heading3>
+
+A minimum difference between each value can be specified.
+
+<Canvas>
+    <Story name="Minimum range">
+        <StoryContainer>
+            <Container>
+                <Form.RangeSlider
+                    label="This has a min range"
+                    value={[0, 30]}
+                    minRange={30}
                 />
             </Container>
         </StoryContainer>
@@ -57,12 +83,11 @@ Each segment of the slider track can be individually colored.
     <Story name="Color customisation">
         <StoryContainer>
             <Container>
-                <Form.Slider
+                <Form.RangeSlider
                     label="This has custom colors"
-                    colors={[
-                        "linear-gradient(to right, red 0%, blue 50%)",
-                        "linear-gradient(to right, blue 0%, red 50%)",
-                    ]}
+                    numOfThumbs={4}
+                    value={[10, 20, 30, 80]}
+                    colors={["red", "orange", "green", "blue", "purple"]}
                 />
             </Container>
         </StoryContainer>
@@ -80,17 +105,17 @@ A render function is also supported for advanced customisation.
     <Story name="With labels">
         <StoryContainer>
             <Container>
-                <Form.Slider
+                <Form.RangeSlider
                     label="With unit as prefix"
                     showLabels
                     labelPrefix="$"
                 />
-                <Form.Slider
+                <Form.RangeSlider
                     label="With unit as suffix"
                     showLabels
                     labelSuffix="km"
                 />
-                <Form.Slider
+                <Form.RangeSlider
                     label="With custom rendering"
                     min={1}
                     max={10}
@@ -121,11 +146,16 @@ column props to span across the specified columns in grid layouts.
         parameters={{ layout: "fullscreen" }}
     >
         <Layout.Content type="grid" style={{ padding: "2rem" }}>
-            <Form.Slider label="A shorter form input" mobileCols={[1, 5]} />
-            <Form.Slider
+            <Form.RangeSlider
+                label="A shorter form input"
+                mobileCols={[1, 5]}
+                value={[25, 50]}
+            />
+            <Form.RangeSlider
                 label="A longer form input"
                 mobileCols={[1, 5]}
                 tabletCols={[1, 9]}
+                value={[25, 50]}
             />
         </Layout.Content>
     </Story>
@@ -133,17 +163,17 @@ column props to span across the specified columns in grid layouts.
 
 <Heading3>Using the field as a standalone</Heading3>
 
-In the case that you require the slider field as a standalone, you can do this.
+In the case that you require the Rangeslider field as a standalone, you can do this.
 
 ```tsx
-import { InputSlider } from "@lifesg/react-design-system/input-slider";
+import { InputRangeSlider } from "@lifesg/react-design-system/input-range-slider";
 ```
 
 <Canvas>
     <Story name="Standalone usage">
         <StoryContainer>
             <Container>
-                <InputSlider step={5} />
+                <InputRangeSlider step={10} />
             </Container>
         </StoryContainer>
     </Story>

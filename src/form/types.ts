@@ -5,6 +5,7 @@ import { InputMultiSelectPartialProps } from "../input-multi-select/types";
 import { InputNestedMultiSelectPartialProps } from "../input-nested-multi-select";
 import { InputNestedSelectPartialProps } from "../input-nested-select";
 import { InputRangeSelectPartialProps } from "../input-range-select/types";
+import { InputRangeSliderProps } from "../input-range-slider/types";
 import { InputSelectPartialProps } from "../input-select/types";
 import { InputSliderProps } from "../input-slider";
 import { TextareaPartialProps } from "../input-textarea/types";
@@ -127,4 +128,8 @@ export interface FormPredictiveTextInputProps<T, V>
 
 export interface FormSliderProps
     extends InputSliderProps,
+        BaseFormElementProps {}
+
+export interface FormRangeSliderProps
+    extends InputRangeSliderProps,
         BaseFormElementProps {}

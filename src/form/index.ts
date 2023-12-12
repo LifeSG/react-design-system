@@ -11,6 +11,7 @@ import { FormNestedSelect } from "./form-nested-select";
 import { FormPhoneNumberInput } from "./form-phone-number-input";
 import { FormPredictiveTextInput } from "./form-predictive-text-input";
 import { FormRangeSelect } from "./form-range-select";
+import { FormRangeSlider } from "./form-range-slider";
 import { FormSelect } from "./form-select";
 import { FormSlider } from "./form-slider";
 import { FormTextarea } from "./form-textarea";
@@ -30,6 +31,7 @@ export const Form = {
     NestedMultiSelect: FormNestedMultiSelect,
     Select: FormSelect,
     Slider: FormSlider,
+    RangeSlider: FormRangeSlider,
     RangeSelect: FormRangeSelect,
     Textarea: FormTextarea,
     Timepicker: FormTimepicker,

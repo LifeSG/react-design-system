@@ -1,11 +1,11 @@
-import { InputSlider } from "../input-slider";
+import { InputRangeSlider } from "../input-range-slider";
 import { FormWrapper } from "./form-wrapper";
-import { FormSliderProps } from "./types";
+import { FormRangeSliderProps } from "./types";
 
-export const FormSlider = ({
+export const FormRangeSlider = ({
     label,
     errorMessage,
-    id = "form-slider",
+    id = "form-range-slider",
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -13,7 +13,7 @@ export const FormSlider = ({
     tabletCols,
     desktopCols,
     ...otherProps
-}: FormSliderProps): JSX.Element => {
+}: FormRangeSliderProps): JSX.Element => {
     return (
         <FormWrapper
             id={id}
@@ -26,7 +26,7 @@ export const FormSlider = ({
             tabletCols={tabletCols}
             desktopCols={desktopCols}
         >
-            <InputSlider
+            <InputRangeSlider
                 id={`${id}-base`}
                 data-testid={testId || id}
                 {...otherProps}
