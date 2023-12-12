@@ -4,6 +4,7 @@ import { InputSliderProps } from "./types";
 
 export const InputSlider = ({
     value,
+    ariaLabel,
     onChange,
     ...otherProps
 }: InputSliderProps) => {
@@ -40,6 +41,7 @@ export const InputSlider = ({
             value={selection}
             numOfThumbs={1}
             onChange={handleChange}
+            ariaLabels={ariaLabel ? [ariaLabel] : undefined}
         />
     );
 };

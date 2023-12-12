@@ -24,5 +24,6 @@ export interface InputRangeSliderProps extends BaseSliderProps {
     numOfThumbs?: number | undefined;
     /** The minimum difference between values */
     minRange?: number | undefined;
+    ariaLabels?: string[] | undefined;
     onChange?: ((value: number[]) => void) | undefined;
 }

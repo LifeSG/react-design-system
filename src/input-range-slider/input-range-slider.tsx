@@ -20,6 +20,7 @@ export const InputRangeSlider = ({
     colors,
     disabled,
     readOnly,
+    ariaLabels,
     showSliderLabels,
     sliderLabelPrefix,
     sliderLabelSuffix,
@@ -125,6 +126,7 @@ export const InputRangeSlider = ({
                 disabled={disabled || readOnly}
                 onChange={handleChange}
                 minDistance={minRange}
+                ariaLabel={ariaLabels}
                 renderThumb={(
                     thumbProps: React.HTMLAttributes<HTMLDivElement>,
                     state
