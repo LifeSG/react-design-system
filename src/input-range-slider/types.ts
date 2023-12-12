@@ -12,10 +12,10 @@ export interface BaseSliderProps {
     readOnly?: boolean | undefined;
     /** Customise the color of each track segment. Expected length is (number of values + 1) */
     colors?: (CustomColor | undefined)[] | undefined;
-    showLabels?: boolean | undefined;
-    labelPrefix?: string | undefined;
-    labelSuffix?: string | undefined;
-    renderLabel?: ((value: number) => React.ReactNode) | undefined;
+    showSliderLabels?: boolean | undefined;
+    sliderLabelPrefix?: string | undefined;
+    sliderLabelSuffix?: string | undefined;
+    renderSliderLabel?: ((value: number) => React.ReactNode) | undefined;
 }
 
 export interface InputRangeSliderProps extends BaseSliderProps {

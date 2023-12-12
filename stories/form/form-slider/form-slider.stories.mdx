@@ -71,7 +71,7 @@ Each segment of the slider track can be individually colored.
 
 <Heading3>With labels</Heading3>
 
-You can display labels for the min and max values with `showLabels`. A prefix or
+You can display labels for the min and max values with `showSliderLabels`. A prefix or
 suffix can be specified to act as a unit.
 
 A render function is also supported for advanced customisation.
@@ -82,20 +82,20 @@ A render function is also supported for advanced customisation.
             <Container>
                 <Form.Slider
                     label="With unit as prefix"
-                    showLabels
-                    labelPrefix="$"
+                    showSliderLabels
+                    sliderLabelPrefix="$"
                 />
                 <Form.Slider
                     label="With unit as suffix"
-                    showLabels
-                    labelSuffix="km"
+                    showSliderLabels
+                    sliderLabelSuffix="km"
                 />
                 <Form.Slider
                     label="With custom rendering"
                     min={1}
                     max={10}
-                    showLabels
-                    renderLabel={(val) =>
+                    showSliderLabels
+                    renderSliderLabel={(val) =>
                         val === 1 ? (
                             <Text.XSmall weight="semibold">1 photo</Text.XSmall>
                         ) : (

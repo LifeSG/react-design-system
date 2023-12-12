@@ -49,22 +49,22 @@ const DATA: ApiTableSectionProps[] = [
                 ],
             },
             {
-                name: "showLabels",
+                name: "showSliderLabels",
                 description: "Specifies if min and max labels are visible",
                 propTypes: ["boolean"],
             },
             {
-                name: "labelPrefix",
+                name: "sliderLabelPrefix",
                 description: "Text to be prepended to the min and max labels",
                 propTypes: ["string"],
             },
             {
-                name: "labelSuffix",
+                name: "sliderLabelSuffix",
                 description: "Text to be appended to the min and max labels",
                 propTypes: ["string"],
             },
             {
-                name: "renderLabel",
+                name: "renderSliderLabel",
                 description: "Function to render custom min or max labels",
                 propTypes: ["(value: number) => React.ReactNode"],
             },

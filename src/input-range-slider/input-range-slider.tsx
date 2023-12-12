@@ -20,10 +20,10 @@ export const InputRangeSlider = ({
     colors,
     disabled,
     readOnly,
-    showLabels,
-    labelPrefix,
-    labelSuffix,
-    renderLabel,
+    showSliderLabels,
+    sliderLabelPrefix,
+    sliderLabelSuffix,
+    renderSliderLabel,
     onChange,
     ...otherProps
 }: InputRangeSliderProps) => {
@@ -102,15 +102,15 @@ export const InputRangeSlider = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const formatLabel = (value: number) => {
-        if (renderLabel) {
-            return renderLabel(value);
+        if (renderSliderLabel) {
+            return renderSliderLabel(value);
         }
 
         return (
             <LabelText>
-                {labelPrefix}
+                {sliderLabelPrefix}
                 {value}
-                {labelSuffix}
+                {sliderLabelSuffix}
             </LabelText>
         );
     };
@@ -154,7 +154,7 @@ export const InputRangeSlider = ({
                     );
                 }}
             />
-            {showLabels && (
+            {showSliderLabels && (
                 <LabelContainer>
                     <div>{formatLabel(min)}</div>
                     <div>{formatLabel(max)}</div>

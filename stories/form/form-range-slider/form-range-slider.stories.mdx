@@ -96,7 +96,7 @@ Each segment of the slider track can be individually colored.
 
 <Heading3>With labels</Heading3>
 
-You can display labels for the min and max values with `showLabels`. A prefix or
+You can display labels for the min and max values with `showSliderLabels`. A prefix or
 suffix can be specified to act as a unit.
 
 A render function is also supported for advanced customisation.
@@ -107,20 +107,20 @@ A render function is also supported for advanced customisation.
             <Container>
                 <Form.RangeSlider
                     label="With unit as prefix"
-                    showLabels
-                    labelPrefix="$"
+                    showSliderLabels
+                    sliderLabelPrefix="$"
                 />
                 <Form.RangeSlider
                     label="With unit as suffix"
-                    showLabels
-                    labelSuffix="km"
+                    showSliderLabels
+                    sliderLabelSuffix="km"
                 />
                 <Form.RangeSlider
                     label="With custom rendering"
                     min={1}
                     max={10}
-                    showLabels
-                    renderLabel={(val) =>
+                    showSliderLabels
+                    renderSliderLabel={(val) =>
                         val === 1 ? (
                             <Text.XSmall weight="semibold">1 photo</Text.XSmall>
                         ) : (
@@ -163,7 +163,7 @@ column props to span across the specified columns in grid layouts.
 
 <Heading3>Using the field as a standalone</Heading3>
 
-In the case that you require the Rangeslider field as a standalone, you can do this.
+In the case that you require the range slider field as a standalone, you can do this.
 
 ```tsx
 import { InputRangeSlider } from "@lifesg/react-design-system/input-range-slider";
