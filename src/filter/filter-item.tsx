@@ -52,10 +52,8 @@ export const FilterItem = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!isNil(controlledExpanded)) {
-            setExpanded(controlledExpanded);
-        }
-    }, [controlledExpanded]);
+        setExpanded(getInitialExpandState());
+    }, [desktopCollapsible, controlledExpanded]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -119,6 +117,7 @@ export const FilterItem = ({
             )}
             <ExpandableItem
                 data-testid="expandable-container"
+                data-expanded={expanded}
                 style={itemAnimationStyles}
             >
                 <div ref={itemResizeDetector.ref}>

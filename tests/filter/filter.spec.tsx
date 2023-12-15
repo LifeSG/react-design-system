@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { Filter } from "../../src";
+import { FilterContext } from "../../src/filter/filter-context";
 
 describe("Filter", () => {
     beforeEach(() => {
@@ -79,13 +80,17 @@ describe("Filter", () => {
         });
 
         describe("expanded (controlled component)", () => {
-            it("should be expanded when expanded is true and not update the local state when display is toggled", () => {
+            it("should be collapsed when expanded prop is false, and not update the local state when display is toggled", () => {
                 const mockOnChange = jest.fn();
                 render(
                     <Filter.Item expanded={false} onExpandChange={mockOnChange}>
                         {ITEM_CONTENT}
                     </Filter.Item>
                 );
+
+                expect(
+                    screen.queryByTestId("expandable-container")
+                ).toHaveAttribute("data-expanded", "false");
 
                 act(() => {
                     fireEvent.click(screen.getByLabelText("Expand"));
@@ -95,7 +100,7 @@ describe("Filter", () => {
                 expect(mockOnChange).toBeCalledWith(true);
             });
 
-            it("should be collapsed when expanded is false and not update the local state when display is toggled", () => {
+            it("should be expanded when expanded prop is true, and not update the local state when display is toggled", () => {
                 const mockOnChange = jest.fn();
                 render(
                     <Filter.Item expanded={true} onExpandChange={mockOnChange}>
@@ -103,12 +108,34 @@ describe("Filter", () => {
                     </Filter.Item>
                 );
 
+                expect(
+                    screen.queryByTestId("expandable-container")
+                ).toHaveAttribute("data-expanded", "true");
+
                 act(() => {
                     fireEvent.click(screen.getByLabelText("Collapse"));
                 });
 
                 expect(screen.getByLabelText("Collapse")).toBeVisible();
                 expect(mockOnChange).toBeCalledWith(false);
+            });
+
+            it("should be always expanded on mobile even when expanded prop is false", () => {
+                const mockOnChange = jest.fn();
+                render(
+                    <FilterContext.Provider value={{ mode: "mobile" }}>
+                        <Filter.Item
+                            expanded={false}
+                            onExpandChange={mockOnChange}
+                        >
+                            {ITEM_CONTENT}
+                        </Filter.Item>
+                    </FilterContext.Provider>
+                );
+
+                expect(
+                    screen.queryByTestId("expandable-container")
+                ).toHaveAttribute("data-expanded", "true");
             });
         });
 
