@@ -21,4 +21,12 @@ export const BaseDesignTokenSet: DesignTokenSet = {
             Hover: "#E8E1F5",
         },
     },
+    Button: {
+        Danger: {
+            BackgroundColor: "#BB3524",
+            Border: "#BB3524",
+            Hover: "#A62110",
+            Primary: "#BB3524",
+        },
+    },
 };

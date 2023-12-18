@@ -21,4 +21,12 @@ export const RBSDesignTokenSet: DesignTokenSet = {
             Hover: "#DDE6FD",
         },
     },
+    Button: {
+        Danger: {
+            BackgroundColor: "#BB3524",
+            Border: "#BB3524",
+            Hover: "#A62110",
+            Primary: "#BB3524",
+        },
+    },
 };
