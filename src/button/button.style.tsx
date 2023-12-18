@@ -4,6 +4,7 @@ import { MediaQuery } from "../media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
 import { MainStyleProps } from "./types";
+import { DesignToken } from "../design-token";
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
@@ -25,14 +26,21 @@ export const Main = styled.button<MainStyleProps>`
     // BUTTON STYLE + TEXT COLOR
     // -----------------------------------------------------------------------------
     ${(props) => {
+        const isDanger = props.$buttonIsDanger;
+
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
                     background-color: ${Color.Neutral[8](props)};
-                    border: 1px solid ${Color.Primary(props)};
+                    border: 1px solid
+                        ${isDanger
+                            ? DesignToken.Button.Danger.Border
+                            : Color.Primary(props)};
 
                     span {
-                        color: ${Color.Primary(props)};
+                        color: ${isDanger
+                            ? DesignToken.Button.Danger.Primary
+                            : Color.Primary(props)};
                     }
                 `;
             case "light":
@@ -68,18 +76,24 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    color: ${Color.Primary};
+                    color: ${isDanger
+                        ? DesignToken.Button.Danger.Primary
+                        : Color.Primary};
                     :hover,
                     :active,
                     :focus {
                         span {
-                            color: ${Color.Secondary};
+                            color: ${isDanger
+                                ? DesignToken.Button.Danger.Hover
+                                : Color.Secondary};
                         }
                     }
                 `;
             default:
                 return css`
-                    background-color: ${Color.Primary(props)};
+                    background-color: ${isDanger
+                        ? DesignToken.Button.Danger.BackgroundColor
+                        : Color.Primary(props)};
                     border: 1px solid transparent;
 
                     ${MediaQuery.MaxWidth.mobileL} {
@@ -87,7 +101,7 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     span {
-                        color: ${Color.Neutral[8](props)};
+                        color: ${isDanger ? "white" : Color.Neutral[8](props)};
                     }
                 `;
         }
@@ -128,15 +142,20 @@ export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     margin-right: 0.5rem;
     ${(props) => {
         let color;
+        const isDanger = props.$buttonIsDanger;
         switch (props.$buttonStyle) {
             case "secondary":
-                color = Color.Primary(props);
+                color = isDanger
+                    ? DesignToken.Button.Danger.Primary
+                    : Color.Primary(props);
                 break;
             case "light":
                 color = Color.Primary(props);
                 break;
             case "link":
-                color = Color.Primary(props);
+                color = isDanger
+                    ? DesignToken.Button.Danger.Primary
+                    : Color.Primary(props);
                 break;
             case "disabled":
                 color = Color.Neutral[3](props);
