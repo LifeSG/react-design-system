@@ -35,6 +35,26 @@ The `Button` component comes in 2 sizes, a default and small size.
             <Button.Small styleType="link">Link</Button.Small>
             <Button.Small disabled>Disabled</Button.Small>
         </Container>
+        <br />
+        <Container>
+            <Button.Default danger={true}>Default</Button.Default>
+            <Button.Default styleType="secondary" danger={true}>
+                Secondary
+            </Button.Default>
+            <Button.Default styleType="link" danger={true}>
+                Link
+            </Button.Default>
+        </Container>
+        <br />
+        <Container>
+            <Button.Small danger={true}>Default</Button.Small>
+            <Button.Small styleType="secondary" danger={true}>
+                Secondary
+            </Button.Small>
+            <Button.Small styleType="link" danger={true}>
+                Link
+            </Button.Small>
+        </Container>
     </Story>
 </Canvas>
 
@@ -72,6 +92,30 @@ The `Button` component comes in 2 sizes, a default and small size.
             <Button.Small disabled loading>
                 Loading
             </Button.Small>
+        </Container>
+        <br />
+        <Container>
+            <Button.Default loading danger={true}>
+                Loading
+            </Button.Default>
+            <Button.Default styleType="secondary" loading danger={true}>
+                Loading
+            </Button.Default>
+            <Button.Default styleType="link" loading danger={true}>
+                Loading
+            </Button.Default>
+        </Container>
+        <br />
+        <Container>
+            <Button.Small loading danger={true}>
+                Loading
+            </Button.Small>
+            <Button.Small styleType="secondary" loading danger={true}>
+                Loading
+            </Button.Small>
+            <Button.Default styleType="link" loading danger={true}>
+                Loading
+            </Button.Default>
         </Container>
     </Story>
 </Canvas>

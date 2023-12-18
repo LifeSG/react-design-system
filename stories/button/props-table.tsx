@@ -37,6 +37,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
+            {
+                name: "danger",
+                description:
+                    "Setting will dispaly the component with the color set from DesignToken.Button.Danger",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];
