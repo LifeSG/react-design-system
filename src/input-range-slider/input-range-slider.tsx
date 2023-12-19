@@ -28,6 +28,9 @@ export const InputRangeSlider = ({
     onChange,
     ...otherProps
 }: InputRangeSliderProps) => {
+    // =========================================================================
+    // CONST, STATE, REF
+    // =========================================================================
     const [selection, setSelection] = useState<number[]>(initialiseSelection());
     const trackColors = getTrackColors();
 

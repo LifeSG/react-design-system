@@ -8,6 +8,9 @@ export const InputSlider = ({
     onChange,
     ...otherProps
 }: InputSliderProps) => {
+    // =========================================================================
+    // CONST, STATE, REF
+    // =========================================================================
     const [selection, setSelection] = useState<number[]>(initialiseSelection());
 
     // =========================================================================
