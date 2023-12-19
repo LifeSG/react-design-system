@@ -84,4 +84,21 @@ export namespace DateHelper {
     export const toDayjs = (date: string): Dayjs => {
         return date ? dayjs(date) : dayjs();
     };
+
+    /**
+     * Add time in minutes to a given start time
+     * @param start input start string
+     * @param minutes input time to be added in minutes
+     * @param format the time format, defaults to "HH:mm"
+     */
+    export const addMinutesToTime = (
+        time: string,
+        minutes: number,
+        format = "HH:mm"
+    ) => {
+        const newTime = dayjs(time, format)
+            .add(minutes, "minutes")
+            .format(format);
+        return newTime;
+    };
 }
