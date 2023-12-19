@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable, code } from "../../storybook-common/api-table";
+import { ApiTable } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
@@ -8,8 +8,23 @@ const DATA: ApiTableSectionProps[] = [
         name: "InputSlider specific props",
         attributes: [
             {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "value",
-                description: "The input values",
+                description: "The input value",
                 propTypes: ["number"],
             },
             {
@@ -33,12 +48,14 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "disabled",
-                description: "the number of controls",
+                description:
+                    "Indicates if the component is disabled and selection is not allowed",
                 propTypes: ["boolean"],
             },
             {
                 name: "readOnly",
-                description: "the number of controls",
+                description:
+                    "Indicates if the component is in the readonly state",
                 propTypes: ["boolean"],
             },
             {
@@ -69,8 +86,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: number) => React.ReactNode"],
             },
             {
+                name: "ariaLabel",
+                description: "Describes the input to screen readers",
+                propTypes: ["string"],
+            },
+            {
                 name: "onChange",
-                description: "Called when a range selection is made",
+                description: "Called when a selection is made",
                 propTypes: ["(value: number) => React.ReactNode"],
             },
         ],

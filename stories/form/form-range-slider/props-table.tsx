@@ -8,8 +8,28 @@ const DATA: ApiTableSectionProps[] = [
         name: "InputRangeSlider specific props",
         attributes: [
             {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "value",
-                description: "The input values",
+                description: (
+                    <>
+                        The input values. Expected length is{" "}
+                        {code("numOfThumbs")}
+                    </>
+                ),
                 propTypes: ["number[]"],
             },
             {
@@ -33,7 +53,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "numOfThumbs",
-                description: "the number of controls",
+                description: "The number of controls",
                 propTypes: ["number"],
                 defaultValue: "2",
             },
@@ -44,17 +64,24 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "disabled",
-                description: "the number of controls",
+                description:
+                    "Indicates if the component is disabled and selection is not allowed",
                 propTypes: ["boolean"],
             },
             {
                 name: "readOnly",
-                description: "the number of controls",
+                description:
+                    "Indicates if the component is in the readonly state",
                 propTypes: ["boolean"],
             },
             {
                 name: "colors",
-                description: "List of custom colors for each track segment",
+                description: (
+                    <>
+                        List of custom colors for each track segment. Expected
+                        length is {code("(numOfThumbs + 1)")}
+                    </>
+                ),
                 propTypes: [
                     "(string | ((props: unknown) => string | undefined))[]",
                 ],
@@ -78,6 +105,16 @@ const DATA: ApiTableSectionProps[] = [
                 name: "renderSliderLabel",
                 description: "Function to render custom min or max labels",
                 propTypes: ["(value: number) => React.ReactNode"],
+            },
+            {
+                name: "ariaLabels",
+                description: (
+                    <>
+                        Describe each thumb input to screen readers. Expected
+                        length is {code("numOfThumbs")}
+                    </>
+                ),
+                propTypes: ["string[]"],
             },
             {
                 name: "onChange",
