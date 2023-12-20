@@ -1,0 +1,38 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as TagStories from "./tag.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={TagStories} />
+
+<Title>Tag</Title>
+
+<Secondary>Overview</Secondary>
+
+A static or interactive element that is used to communicate selections, statuses and categories.
+
+```tsx
+import { Tag } from "@lifesg/react-design-system/tag";
+```
+
+<Canvas of={TagStories.Default} />
+
+<Heading3>Interactive tag</Heading3>
+
+**Note**: In tablet and mobile viewports, interactive tags are displayed in a larger size to extend the touch target.
+
+<Canvas of={TagStories.Interactive} />
+
+<Heading3>Tag with icon</Heading3>
+
+<Canvas of={TagStories.WithIcon} />
+
+<Heading3>Variations</Heading3>
+
+The `Tag` comes in 2 display formats, `outline` and `solid` and there are 6 color variations that can be denoted using the `colorType` prop.
+
+<Canvas of={TagStories.Variations} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

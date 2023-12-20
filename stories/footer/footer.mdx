@@ -1,0 +1,89 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as FooterStories from "./footer.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FooterStories} />
+
+<Title>Footer</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that holds the directory and disclaimer information at the bottom of the website.
+
+```tsx
+import { Footer } from "@lifesg/react-design-system/footer";
+```
+
+<Canvas of={FooterStories.Default} />
+
+<Secondary>Other usages</Secondary>
+
+<Heading3>Minimal version</Heading3>
+
+This version is useful to be used as footers for dedicated apps that do not have other web pages.
+
+<Canvas of={FooterStories.MinimalVersion} />
+
+<Heading3>With custom content</Heading3>
+
+<Canvas of={FooterStories.WithCustomContent} />
+
+<Heading3>With other customisations</Heading3>
+
+You are also able to customise the logo, copyright text and disclaimerLinks. In this example, we will customise the
+
+-   logo
+-   copyright text
+-   privacy disclaimer link
+
+<Canvas of={FooterStories.OtherCustomisations} />
+
+<Secondary>About disclaimer links</Secondary>
+
+As the disclaimer links are mandated to be in the `Footer`, the component already comes with a predefined set of values.
+
+<Heading3>Predefined values</Heading3>
+
+|            | privacy                                   | termsOfUse                           | reportVulnerability                       |
+| ---------- | ----------------------------------------- | ------------------------------------ | ----------------------------------------- |
+| `children` | Privacy statement                         | Terms of use                         | Report vulnerability                      |
+| `href`     | https://www.life.gov.sg/privacy-statement | https://www.life.gov.sg/terms-of-use | https://tech.gov.sg/report\_vulnerability |
+| `rel`      | `noopener`                                | `noopener`                           | `noopener`                                |
+| `external` | `false`                                   | `false`                              | `true`                                    |
+
+> Refer to the Component API table below for more information on the properties
+
+<br />
+
+<Heading3>Customising the links</Heading3>
+
+You are given the flexibility to customise any of the links **except the link text**. You can do so as such:
+
+```tsx
+import { DisclaimerLinks, Footer } from "@lifesg/react-design-system/footer";
+
+const disclaimerLinks: DisclaimerLinks = {
+    reportVulnerability: {
+        href: "https://tech.gov.sg/report_vulnerability",
+        target: "_blank",
+        rel: "noopener",
+        external: true,
+    },
+};
+
+return (
+	<Footer disclaimerLinks={disclaimerLinks} />;
+);
+```
+
+<Heading3>Stretched layout</Heading3>
+
+In this example, the content of the footer is stretched to the full width of
+the screen with a fixed padding, ignoring the masthead's alignment.
+
+<Canvas of={FooterStories.StretchedLayout} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

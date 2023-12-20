@@ -37,6 +37,7 @@ export interface FilterItemProps {
     onExpandChange?: ((expanded: boolean) => void) | undefined;
     minimisable?: boolean | undefined;
     minimisedHeight?: number | undefined;
+    style?: React.CSSProperties | undefined;
 }
 
 export interface FilterPageProps {

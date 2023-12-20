@@ -104,7 +104,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <a
-                            href="/?path=/docs/general-text-introduction--introduction#component-api"
+                            href="./?path=/docs/general-text-introduction--docs"
                             rel="noreferrer"
                             target="_blank"
                         >
@@ -143,7 +143,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: (
                     <>
                         <a
-                            href="/?path=/docs/general-text-introduction--introduction#component-api"
+                            href="./?path=/docs/general-text-introduction--docs"
                             rel="noreferrer"
                             target="_blank"
                         >
@@ -168,7 +168,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: (
                     <>
                         <a
-                            href="/?path=/docs/general-text-introduction--introduction#component-api"
+                            href="./?path=/docs/general-text-introduction--docs"
                             rel="noreferrer"
                             target="_blank"
                         >
@@ -193,7 +193,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: (
                     <>
                         <a
-                            href="/?path=/docs/general-text-introduction--introduction#component-api"
+                            href="./?path=/docs/general-text-introduction--docs"
                             rel="noreferrer"
                             target="_blank"
                         >

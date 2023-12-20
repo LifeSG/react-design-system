@@ -1,0 +1,80 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import * as ErrorDisplayStories from "./error-display.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ErrorDisplayStories} />
+
+<Title>ErrorDisplay</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that displays an error or issue that has occurred.
+
+```tsx
+import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
+```
+
+<Canvas of={ErrorDisplayStories.Default} />
+
+<Secondary>Other usages</Secondary>
+
+<Heading3>With action button</Heading3>
+
+You can also add an action button to be present in the `ErrorDisplay`. The action button will
+appear at the bottom of the component.
+
+<Canvas of={ErrorDisplayStories.WithActionButton} />
+
+<Heading3>With custom attributes</Heading3>
+
+Some variants of the `ErrorDisplay` accept custom attributes to alter the text content with
+dynamic variables. Currently only the types `"maintenance"` and `"inactivity"` have such a support.
+
+<Heading4>Maintenance</Heading4>
+
+<Canvas of={ErrorDisplayStories.Maintenance} />
+
+<Heading4>Inactivity</Heading4>
+
+<Canvas of={ErrorDisplayStories.Inactivity} />
+
+<Heading3>Customisation</Heading3>
+
+The `ErrorDisplay` component is customisable according to your project's needs. Customisation includes
+
+-   image
+-   title
+-   description
+
+<Canvas of={ErrorDisplayStories.CustomError} />
+
+If you require customisations down to the style, you can use the relevant `data-id` properties of each element.
+
+| Element     | Data id                       |
+| ----------- | ----------------------------- |
+| image       | `"error-display-image"`       |
+| title       | `"error-display-title"`       |
+| description | `"error-display-description"` |
+
+> **Note**: For the title and description, you will need to use the `!important` flag when modifying the size, line height and letter spacing
+
+```tsx
+// If you are using Styled Components
+
+export const CustomErrorDisplay = styled(ErrorDisplay)`
+    [data-id="error-display-image"] {
+        /* Your styles here */
+    }
+`;
+```
+
+<Secondary>Variants</Secondary>
+
+> **Note**: Switch to the standalone story and use the Controls add-on to view the different error types
+
+<Canvas of={ErrorDisplayStories.Variants} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

@@ -1,0 +1,28 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as ButtonStories from "./button.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ButtonStories} />
+
+<Title>Button</Title>
+
+<Secondary>Overview</Secondary>
+
+The primary call to action component.
+
+```tsx
+import { Button } from "@lifesg/react-design-system/button";
+```
+
+The `Button` component comes in 2 sizes, a default and small size.
+
+<Canvas of={ButtonStories.Default} />
+
+<Heading3>Loading</Heading3>
+
+<Canvas of={ButtonStories.LoadingState} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

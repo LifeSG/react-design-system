@@ -1,0 +1,30 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as FullscreenImageCarouselStories from "./fullscreen-image-carousel.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FullscreenImageCarouselStories} />
+
+<Title>FullscreenImageCarousel</Title>
+
+<Secondary>Overview</Secondary>
+
+An overlay that display images in a carousel and offers the ability to zoom into the current image.
+
+```tsx
+import { FullscreenImageCarousel } from "@lifesg/react-design-system/fullscreen-image-carousel";
+```
+
+<Canvas of={FullscreenImageCarouselStories.Default} />
+
+<Heading3>Loading and error states</Heading3>
+
+<Canvas of={FullscreenImageCarouselStories.LoadingAndErrorStates} />
+
+<Heading3>With many images</Heading3>
+
+<Canvas of={FullscreenImageCarouselStories.WithManyImages} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { MediaQuery } from "../../src/media";
 
@@ -29,7 +28,6 @@ const Spaces = styled.div`
 
 interface CountdownViewProps {
     children: [JSX.Element, JSX.Element];
-    onStartTimer: () => void;
 }
 
 export const CountdownView = ({ children }: CountdownViewProps) => {

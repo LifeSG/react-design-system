@@ -1,38 +1,46 @@
-const path = require("path");
+import path from "path";
+import remarkGfm from "remark-gfm";
 
 module.exports = {
-    stories: ["../stories/**/*.stories.@(ts|tsx|mdx)"],
+    stories: [
+        "../stories/**/!(*.stories).mdx",
+        "../stories/**/*.stories.@(ts|tsx)",
+    ],
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
-        "@storybook/addon-controls",
         "@storybook/addon-a11y",
-        "@react-theming/storybook-addon",
+        "@storybook/addon-themes",
+        {
+            name: "@storybook/addon-docs",
+            options: {
+                mdxPluginOptions: {
+                    mdxCompileOptions: {
+                        remarkPlugins: [remarkGfm],
+                    },
+                },
+            },
+        },
+        {
+            name: "@storybook/addon-storysource",
+            options: {
+                loaderOptions: {
+                    parser: "typescript",
+                    injectStoryParameters: true,
+                },
+            },
+        },
     ],
     staticDirs: ["../public"],
-    typescript: {
-        reactDocgen: "react-docgen-typescript",
-    },
-    webpackFinal: async (config, { configType }) => {
+    webpackFinal: async (config) => {
         config.resolve.modules = [
             path.resolve(__dirname, ".."),
             "node_modules",
         ];
-        // removing the existing storybook css loaders because -> https://lifesaver.codes/answer/a-working-example-with-postcss-for-storybook-v5
-        config.module.rules = config.module.rules.filter(
-            (f) => f.test.toString() !== "/\\.css$/"
-        );
-        config.module.rules.push({
-            test: /\.css$/,
-            use: [
-                "style-loader",
-                {
-                    loader: "css-loader",
-                    options: { modules: false, importLoaders: 1 },
-                },
-            ],
-            include: path.resolve(__dirname, "../"),
-        });
         return config;
+    },
+    framework: "@storybook/react-webpack5",
+    docs: {
+        autodocs: true,
     },
 };
