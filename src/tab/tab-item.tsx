@@ -37,5 +37,7 @@ export const TabItem = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    return currentActiveIndex === index ? <>{children}</> : null;
+    return currentActiveIndex === index ? (
+        <div role="tabpanel">{children}</div>
+    ) : null;
 };

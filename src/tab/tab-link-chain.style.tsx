@@ -37,9 +37,12 @@ export const ChainItem = styled.li<ChainStyleProps>`
     }}
 `;
 
-export const ChainLink = styled.a`
+export const ChainLink = styled.button`
     position: relative;
     padding: 1rem 1rem 1.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
 `;
 
 export const Label = styled(Text.Body)<LabelStyleProps>`

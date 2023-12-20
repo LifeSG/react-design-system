@@ -30,7 +30,7 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
     // EVENT HANDLERS
     // =========================================================================
     const handleChainLinkClick =
-        (index: number) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+        (index: number) => (event: React.MouseEvent<HTMLButtonElement>) => {
             event.preventDefault();
             if (!controlledMode) {
                 setCurrentActiveIndex(index);
@@ -55,14 +55,15 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
     // =========================================================================
     return (
         <CustomFadeWrapper>
-            <Chain>
-                {linkChainProps.map((linkChain, index) => {
+            <Chain role="tablist">
+                {tabLinks.map((linkChain, index) => {
                     const isActive = currentActiveIndex === index;
 
                     return (
                         <ChainItem key={index} $active={isActive}>
                             <ChainLink
-                                href=""
+                                role="tab"
+                                aria-selected={isActive}
                                 onClick={handleChainLinkClick(index)}
                             >
                                 <Label $active={isActive} weight="regular">
