@@ -39,7 +39,9 @@ const TabBase = ({
     // =========================================================================
     const renderChildren = () => {
         return Children.map(children, (child, index) => {
-            return cloneElement(child, { index });
+            if (child) {
+                return cloneElement(child, { index });
+            }
         });
     };
 
