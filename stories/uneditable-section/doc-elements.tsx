@@ -1,4 +1,6 @@
-export const SAMPLE_ITEMS = [
+import { UneditableSectionItemProps } from "src/uneditable-section";
+
+export const SAMPLE_ITEMS: UneditableSectionItemProps[] = [
     {
         label: "Name (as in NRIC or passport)",
         value: "Tom Tan Li Ho",

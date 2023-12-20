@@ -1,0 +1,22 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Secondary, Title } from "../storybook-common";
+import * as ProgressIndicatorStories from "./progress-indicator.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ProgressIndicatorStories} />
+
+<Title>ProgressIndicator</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that displays an indication of the current progress in a step process.
+
+```tsx
+import { ProgressIndicator } from "@lifesg/react-design-system/progress-indicator";
+```
+
+<Canvas of={ProgressIndicatorStories.Default} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

@@ -1,0 +1,34 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../../storybook-common";
+import * as FormLabelStories from "./form-label.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FormLabelStories} />
+
+<Title>Form.Label</Title>
+
+<Secondary>Overview</Secondary>
+
+This component is also available for use individually if you require to construct customised layouts.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas of={FormLabelStories.Default} />
+
+<Heading3>With addon</Heading3>
+
+Form labels come with an optional addon that you can use by specifying the `addon` prop.
+
+<Canvas of={FormLabelStories.WithAddon} />
+
+<Heading3>With subtitle</Heading3>
+
+Form labels come with an optional subtitle that you can use by specifying the `subtitle` prop.
+
+<Canvas of={FormLabelStories.WithSubtitle} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

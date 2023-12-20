@@ -1,0 +1,30 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as RadioButtonStories from "./radio-button.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={RadioButtonStories} />
+
+<Title>RadioButton</Title>
+
+<Secondary>Overview</Secondary>
+
+A field that allows a user to enter a response by clicking, and shown with a
+graphical component when activated. Usually Radio Buttons are used to allow
+selection of a predefined set of mutually exclusive options.
+
+```tsx
+import { RadioButton } from "@lifesg/react-design-system/radio-button";
+```
+
+<Canvas of={RadioButtonStories.Default} />
+
+<Heading3>Multiple options</Heading3>
+
+<Canvas of={RadioButtonStories.MultipleOptions} />
+
+<Secondary>Component API</Secondary>
+
+The component also inherits the [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
+
+<PropsTable />
