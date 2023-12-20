@@ -1,0 +1,29 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as AnimationsCustomisableStories from "./2-animations-customisable.stories";
+import { CustomisedPropsTable } from "./props-table";
+
+<Meta of={AnimationsCustomisableStories} />
+
+<Title>Customisable Animations</Title>
+
+> Not all animations
+> are able to do that at the moment and only these animations support the
+> customisations.
+
+<br />
+
+<Heading3>LoadingDotsSpinner</Heading3>
+
+```tsx
+import { LoadingDotsSpinner } from "@lifesg/react-design-system/animations";
+```
+
+For this component, if no color is specified, it will use the `Primary` color of
+the theme.
+
+<Canvas of={AnimationsCustomisableStories.CustomLoadingDotsSpinner} />
+
+<Secondary>Component API</Secondary>
+
+<CustomisedPropsTable />

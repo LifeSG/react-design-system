@@ -1,0 +1,39 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as BreadcrumbStories from "./breadcrumb.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={BreadcrumbStories} />
+
+<Title>Breadcrumb</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays the current page location in a hierarchy of pages.
+
+```tsx
+import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
+```
+
+> **Note**: The last item is always designed to be unclickable as it is deemed to be the current location that
+> the user is on
+
+<Canvas of={BreadcrumbStories.Default} />
+
+<Secondary>Customising the fade color</Secondary>
+
+> Note that the fade effect appears only if the `Breadcrumbs` are compressed and
+> becomes scrollable
+
+<br />
+
+<Heading3>Different fade colors</Heading3>
+
+You can specify different fade colors on both ends of the `Breadcrumb` or even
+on one side.
+
+<Canvas of={BreadcrumbStories.DifferentFadeColors} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

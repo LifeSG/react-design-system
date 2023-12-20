@@ -35,11 +35,12 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-width: 41rem;
+    white-space: pre-wrap;
 `;
 
-export const Title = styled(Text.H1)`
+export const Title = styled(Text.H2)`
     margin: 2rem 0 1rem;
-    letter-spacing: -0.032rem !important;
     text-align: center;
 `;
 
@@ -68,7 +69,7 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const ActionButton = styled(Button.Default)`
-    margin: 4rem auto 0;
+    margin: 2rem auto 0;
     width: 21rem;
 
     ${MediaQuery.MaxWidth.mobileL} {

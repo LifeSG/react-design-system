@@ -13,7 +13,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         This also inherits props from&nbsp;
                         <a
-                            href="/?path=/docs/form-input--field#component-api"
+                            href="./?path=/docs/form-input--docs#component-api"
                             rel="noreferrer"
                         >
                             Input

@@ -1,0 +1,51 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+import { MyLegacyColorSet } from "src/spec/color-spec/mylegacy-color-set";
+import { Text } from "src/text";
+import { PreviewBox, Secondary, Title } from "../storybook-common";
+import { ColorPalette } from "./doc-color-palette";
+
+<Meta title="General/Color/MyLegacy Color" />
+
+<Title>MyLegacy Colors</Title>
+
+<Secondary>Overview</Secondary>
+
+This will be the palette used when the `colorScheme` is `"mylegacy"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colorScheme: "mylegacy",
+    // ...other specifications
+};
+```
+
+<Secondary>Colors</Secondary>
+
+<Unstyled>
+    <ColorPalette set={MyLegacyColorSet.Brand} category="Brand" />
+    <ColorPalette
+        set={{
+            Primary: MyLegacyColorSet.Primary,
+            PrimaryDark: MyLegacyColorSet.PrimaryDark,
+            Secondary: MyLegacyColorSet.Secondary,
+        }}
+    />
+    <ColorPalette set={MyLegacyColorSet.Neutral} category="Neutral" />
+    <ColorPalette set={MyLegacyColorSet.Accent.Dark} category="Accent.Dark" />
+    <ColorPalette set={MyLegacyColorSet.Accent.Light} category="Accent.Light" />
+</Unstyled>
+
+<br />
+
+<Text.H3>Validation</Text.H3>
+
+<PreviewBox>
+    `Color.Validation.<color>`
+</PreviewBox>
+
+<Unstyled>
+    <ColorPalette set={MyLegacyColorSet.Validation.Green} category="Green" />
+    <ColorPalette set={MyLegacyColorSet.Validation.Orange} category="Orange" />
+    <ColorPalette set={MyLegacyColorSet.Validation.Red} category="Red" />
+    <ColorPalette set={MyLegacyColorSet.Validation.Blue} category="Blue" />
+</Unstyled>

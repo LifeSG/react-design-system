@@ -5,10 +5,14 @@ import styled from "styled-components";
 // =============================================================================
 export const Container = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    :not(:last-child) {
+        margin-bottom: 1.5rem;
+    }
 
     button {
-        :not(:last-of-type) {
-            margin-right: 1.5rem;
-        }
+        flex: 0 fit-content;
     }
 `;

@@ -1,0 +1,48 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as PaginationStories from "./pagination.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={PaginationStories} />
+
+<Title>Pagination</Title>
+
+<Secondary>Overview</Secondary>
+
+A component to provide navigation between pages.
+
+```tsx
+import { Pagination } from "@lifesg/react-design-system/pagination";
+```
+
+<Canvas of={PaginationStories.Default} />
+
+<Secondary>Usage examples</Secondary>
+
+<Heading3>With many pages</Heading3>
+
+When there are more items to display, only some pages are visible.
+
+<Canvas of={PaginationStories.WithManyPages} />
+
+<Heading3>With first and last nav</Heading3>
+
+The `showFirstAndLastNav` prop allows the user to jump directly to the first and last page.
+
+<Canvas of={PaginationStories.WithFirstAndLastNav} />
+
+<Heading3>With Page Size Changer</Heading3>
+
+The `showPageSizeChanger` prop allows the user to show page size changer dropdown.
+
+<Canvas of={PaginationStories.WithPageSizeChanger} />
+
+<Heading3>With custom page size options</Heading3>
+
+The `showPageSizeChanger` prop allows the user to show page size changer dropdown.
+
+<Canvas of={PaginationStories.WithCustomPageSizeOptions} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

@@ -1,4 +1,5 @@
 import { LinkIcon as DSLinkIcon } from "@lifesg/react-icons/link";
+import { Unstyled } from "@storybook/blocks";
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../../src/color";
@@ -18,17 +19,19 @@ const withLink =
         const linkId = convertToLinkId(children);
 
         return (
-            <Component id={linkId}>
-                <Link
-                    aria-hidden="true"
-                    href={`#${linkId}`}
-                    tabIndex={-1}
-                    target="_self"
-                >
-                    <LinkIcon />
-                </Link>
-                {children}
-            </Component>
+            <Unstyled>
+                <Component id={linkId}>
+                    <Link
+                        aria-hidden="true"
+                        href={`#${linkId}`}
+                        tabIndex={-1}
+                        target="_self"
+                    >
+                        <LinkIcon />
+                    </Link>
+                    {children}
+                </Component>
+            </Unstyled>
         );
     };
 

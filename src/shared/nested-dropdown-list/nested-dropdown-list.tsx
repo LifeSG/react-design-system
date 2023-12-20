@@ -411,7 +411,7 @@ export const NestedDropdownList = <V1, V2, V3>({
 
         // otherwise expand the first selected item or first subitem tree
         const list = NestedDropdownListHelper.getInitialDropdown(
-            currentItems,
+            initialItems,
             selectedKeyPaths
         );
 
