@@ -49,7 +49,9 @@ export const Main = styled.button<MainStyleProps>`
                     border: 1px solid ${Color.Neutral[5](props)};
 
                     span {
-                        color: ${Color.Primary(props)};
+                        color: ${isDanger
+                            ? DesignToken.Button.Danger.Primary
+                            : Color.Primary(props)};
                     }
                 `;
             case "disabled":
@@ -141,21 +143,13 @@ export const Main = styled.button<MainStyleProps>`
 export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     margin-right: 0.5rem;
     ${(props) => {
-        let color;
-        const isDanger = props.$buttonIsDanger;
+        let color = props.$buttonIsDanger
+            ? DesignToken.Button.Danger.Primary
+            : Color.Primary(props);
         switch (props.$buttonStyle) {
             case "secondary":
-                color = isDanger
-                    ? DesignToken.Button.Danger.Primary
-                    : Color.Primary(props);
-                break;
             case "light":
-                color = Color.Primary(props);
-                break;
             case "link":
-                color = isDanger
-                    ? DesignToken.Button.Danger.Primary
-                    : Color.Primary(props);
                 break;
             case "disabled":
                 color = Color.Neutral[3](props);
