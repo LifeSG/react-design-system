@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../media";
 import { TabContext } from "./tab-context";
@@ -10,6 +10,7 @@ import {
     CustomFadeWrapper,
     Label,
 } from "./tab-link-chain.style";
+import { ResizeCallbackParams } from "../shared/fade-wrapper";
 
 interface Props {
     controlledMode?: boolean | undefined;
@@ -26,6 +27,8 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
         maxWidth: MediaWidths.mobileL,
     });
 
+    const activeLinkRef = useRef<HTMLLIElement>(null);
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -38,6 +41,18 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
                 onTabClick(tabLinks[index].title, index);
             }
         };
+
+    const handleResize = ({ content, wrapper }: ResizeCallbackParams) => {
+        if (
+            content &&
+            wrapper &&
+            window.innerWidth <= MediaWidths.tablet &&
+            activeLinkRef
+        ) {
+            content.scrollLeft =
+                activeLinkRef.current.getBoundingClientRect().left;
+        }
+    };
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -54,13 +69,17 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <CustomFadeWrapper>
+        <CustomFadeWrapper onResize={handleResize}>
             <Chain role="tablist">
                 {tabLinks.map((linkChain, index) => {
                     const isActive = currentActiveIndex === index;
 
                     return (
-                        <ChainItem key={index} $active={isActive}>
+                        <ChainItem
+                            key={index}
+                            $active={isActive}
+                            ref={isActive ? activeLinkRef : null}
+                        >
                             <ChainLink
                                 role="tab"
                                 aria-selected={isActive}

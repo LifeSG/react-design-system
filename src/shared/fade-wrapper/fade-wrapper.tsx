@@ -9,7 +9,6 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { MediaWidths } from "../../media";
 import {
     Content,
     Fade,
@@ -24,6 +23,7 @@ const Component = (
         fadeColor,
         fadePosition = "both",
         showIndicator = false,
+        onResize,
         ...otherProps
     }: FadeWrapperProps,
     ref: React.Ref<FadeWrapperRef>
@@ -43,7 +43,7 @@ const Component = (
 
     // To scroll left when wrapper resizes
     useResizeDetector({
-        onResize,
+        onResize: handleResize,
         targetRef: wrapperRef,
         refreshMode: "debounce",
         refreshRate: 50,
@@ -52,7 +52,7 @@ const Component = (
     useImperativeHandle(ref, () => {
         return {
             resize() {
-                onResize();
+                handleResize();
             },
         };
     });
@@ -106,12 +106,18 @@ const Component = (
         }
     };
 
-    function onResize() {
-        const content = contentRef.current;
-        const wrapper = wrapperRef.current;
-        if (content && wrapper && window.innerWidth <= MediaWidths.tablet) {
-            content.scrollLeft = content.scrollWidth - wrapper.offsetWidth;
+    function handleResize() {
+        if (onResize) {
+            onResize({
+                content: contentRef.current,
+                wrapper: wrapperRef.current,
+            });
         }
+
+        // TODO: Will move this out to Breadcrumb when it uses this component
+        // if (content && wrapper && window.innerWidth <= MediaWidths.tablet) {
+        //     content.scrollLeft = content.scrollWidth - wrapper.offsetWidth;
+        // }
     }
 
     // =========================================================================

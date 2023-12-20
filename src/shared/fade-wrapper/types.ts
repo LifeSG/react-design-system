@@ -5,6 +5,11 @@ export interface FadeColorSet {
     right?: string[] | undefined;
 }
 
+export interface ResizeCallbackParams {
+    content: HTMLDivElement;
+    wrapper: HTMLDivElement;
+}
+
 export interface FadeWrapperProps {
     children: JSX.Element | JSX.Element[];
     fadeColor?: string[] | FadeColorSet | undefined;
@@ -13,6 +18,7 @@ export interface FadeWrapperProps {
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
+    onResize?: ((params: ResizeCallbackParams) => void) | undefined;
 }
 
 export interface FadeWrapperRef {
