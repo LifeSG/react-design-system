@@ -103,7 +103,7 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     span {
-                        color: ${isDanger ? "white" : Color.Neutral[8](props)};
+                        color: ${Color.Neutral[8](props)};
                     }
                 `;
         }
