@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { FadeWrapper } from "../shared/fade-wrapper";
 import { Text } from "../text";
+import { MediaQuery } from "../media";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -35,6 +36,11 @@ export const ChainItem = styled.li<ChainStyleProps>`
             `;
         }
     }}
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        flex: 1;
+        justify-content: center;
+    }
 `;
 
 export const ChainLink = styled.button`
@@ -49,7 +55,7 @@ export const Label = styled(Text.Body)<LabelStyleProps>`
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -59%); // Based on testing
+    transform: translate(-50%, calc(-50% - 0.125rem)); // Based on testing
     color: ${Color.Neutral[3]};
     opacity: 1;
 
