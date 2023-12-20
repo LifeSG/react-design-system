@@ -1,17 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
 
-export interface SetTabLinkProps {
-    index: number;
-    title: string;
-    counter?: number | undefined;
-}
-
-export interface TabContextProps {
-    currentActiveIndex: number;
-    setCurrentActiveIndex: Dispatch<SetStateAction<number>>;
-    setLinkProps: Dispatch<SetStateAction<SetTabLinkProps>>;
-}
-
 export type TabItemRenderMode = "default" | "controlled";
 
 export interface TabProps {
@@ -35,4 +23,9 @@ export interface TabItemProps {
     title: string;
     show?: boolean | undefined;
     children: JSX.Element | JSX.Element[];
+}
+
+export interface TabLinkProps {
+    title: string;
+    counter?: number | undefined;
 }

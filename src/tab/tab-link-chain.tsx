@@ -10,25 +10,17 @@ import {
     CustomFadeWrapper,
     Label,
 } from "./tab-link-chain.style";
-import { SetTabLinkProps } from "./types";
-
-export type TabLinkChainProps = Omit<SetTabLinkProps, "index">;
 
 interface Props {
-    linkChainProps: TabLinkChainProps[];
     controlledMode?: boolean | undefined;
     onTabClick?: ((title: string, order: number) => void) | undefined;
 }
 
-export const TabLinkChain = ({
-    linkChainProps,
-    controlledMode,
-    onTabClick,
-}: Props) => {
+export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { setCurrentActiveIndex, currentActiveIndex } =
+    const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
         useContext(TabContext);
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
@@ -43,7 +35,7 @@ export const TabLinkChain = ({
             if (!controlledMode) {
                 setCurrentActiveIndex(index);
             } else if (onTabClick) {
-                onTabClick(linkChainProps[index].title, index);
+                onTabClick(tabLinks[index].title, index);
             }
         };
 

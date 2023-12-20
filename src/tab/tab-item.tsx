@@ -15,8 +15,11 @@ export const TabItem = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { setCurrentActiveIndex, currentActiveIndex, setLinkProps } =
-        useContext(TabContext);
+    const {
+        setCurrentActiveIndex,
+        currentActiveIndex,
+        setTabLinkProps: setLinkProps,
+    } = useContext(TabContext);
 
     // =========================================================================
     // EFFECTS
