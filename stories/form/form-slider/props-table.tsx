@@ -60,7 +60,12 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "colors",
-                description: "List of custom colors for each track segment",
+                description: (
+                    <>
+                        Custom colors for each track segment. The format is as
+                        such <code>[leftTrack, rightTrack]</code>
+                    </>
+                ),
                 propTypes: [
                     "(string | ((props: unknown) => string | undefined))[]",
                 ],
