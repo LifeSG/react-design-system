@@ -1,17 +1,19 @@
 import { ResourceScheme } from "../theme/types";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
-import { ImagePathAttributes, imgAttributeHelper } from "./helper";
+import { ErrorDisplayHelper } from "./helper";
 import {
     ErrorDisplayType,
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,
 } from "./types";
 
+const { imgAttributeHelper } = ErrorDisplayHelper;
+
 // =============================================================================
 // IMAGE PATHS
 // =============================================================================
 
-const ImgPaths: Record<string, ImagePathAttributes> = {
+const ImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/400.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/400@2x.png",
@@ -140,7 +142,7 @@ const ImgPaths: Record<string, ImagePathAttributes> = {
     },
 };
 
-const BsgImgPaths: Record<string, ImagePathAttributes> = {
+const BsgImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400@2x.png",
