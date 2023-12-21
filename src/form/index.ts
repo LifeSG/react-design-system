@@ -3,15 +3,17 @@ import { FormDateInput } from "./form-date-input";
 import { FormDateRangeInput } from "./form-date-range-input";
 import { FormInput } from "./form-input";
 import { FormInputGroup } from "./form-input-group";
-import { FormMaskedInput } from "./form-masked-input";
 import { FormLabel } from "./form-label";
+import { FormMaskedInput } from "./form-masked-input";
 import { FormMultiSelect } from "./form-multi-select";
-import { FormNestedSelect } from "./form-nested-select";
 import { FormNestedMultiSelect } from "./form-nested-multi-select";
+import { FormNestedSelect } from "./form-nested-select";
 import { FormPhoneNumberInput } from "./form-phone-number-input";
 import { FormPredictiveTextInput } from "./form-predictive-text-input";
 import { FormRangeSelect } from "./form-range-select";
+import { FormRangeSlider } from "./form-range-slider";
 import { FormSelect } from "./form-select";
+import { FormSlider } from "./form-slider";
 import { FormTextarea } from "./form-textarea";
 import { FormTimeRangePicker } from "./form-time-range-picker";
 import { FormTimepicker } from "./form-timepicker";
@@ -28,6 +30,8 @@ export const Form = {
     NestedSelect: FormNestedSelect,
     NestedMultiSelect: FormNestedMultiSelect,
     Select: FormSelect,
+    Slider: FormSlider,
+    RangeSlider: FormRangeSlider,
     RangeSelect: FormRangeSelect,
     Textarea: FormTextarea,
     Timepicker: FormTimepicker,
