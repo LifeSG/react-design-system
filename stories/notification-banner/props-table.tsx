@@ -66,7 +66,7 @@ const LINK_DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <a
-                            href="./?path=/docs/general-text-introduction--docs#component-api"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -105,7 +105,7 @@ const HOC_DATA: ApiTableSectionProps[] = [
                 propTypes: (
                     <>
                         <a
-                            href="./?path=/docs/general-text-introduction--docs#component-api"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -113,7 +113,7 @@ const HOC_DATA: ApiTableSectionProps[] = [
                         </a>
                         &nbsp;
                         <a
-                            href="./?path=/docs/general-text-introduction--docs#component-api"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
                             target="_blank"
                             rel="noreferrer"
                         >

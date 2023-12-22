@@ -101,7 +101,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The attributes to modify the text style. For the
                         different keys available, refer to the text sizes&nbsp;
-                        <a href="./?path=/docs/general-text-introduction--docs#static">
+                        <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#static">
                             specification
                         </a>
                         .
