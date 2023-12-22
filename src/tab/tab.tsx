@@ -1,4 +1,4 @@
-import { Children, cloneElement, useRef, useState } from "react";
+import { Children, ReactElement, cloneElement, useRef, useState } from "react";
 import { SetTabLinkProps, TabContext } from "./tab-context";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
@@ -17,13 +17,15 @@ const TabBase = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const validChildren = Children.toArray(children).filter(Boolean);
+
     const [currentActive, setCurrentActive] = useState<number>(0);
     const [tabLinks, _setTabLinks] = useState<TabLinkProps[]>(
-        Array<TabLinkProps>(Children.count(children))
+        Array<TabLinkProps>(validChildren.length)
     );
 
     const tabLinksRef = useRef<TabLinkProps[]>(
-        Array<TabLinkProps>(Children.count(children))
+        Array<TabLinkProps>(validChildren.length)
     );
 
     // =========================================================================
@@ -38,10 +40,11 @@ const TabBase = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderChildren = () => {
-        return Children.map(children, (child, index) => {
-            if (child) {
-                return cloneElement(child, { index });
-            }
+        return validChildren.map((child, index) => {
+            return cloneElement(child as ReactElement<any>, {
+                key: index,
+                index,
+            });
         });
     };
 
