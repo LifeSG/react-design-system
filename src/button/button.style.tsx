@@ -26,19 +26,17 @@ export const Main = styled.button<MainStyleProps>`
     // BUTTON STYLE + TEXT COLOR
     // -----------------------------------------------------------------------------
     ${(props) => {
-        const isDanger = props.$buttonIsDanger;
-
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
                     background-color: ${Color.Neutral[8](props)};
                     border: 1px solid
-                        ${isDanger
+                        ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Border
                             : Color.Primary(props)};
 
                     span {
-                        color: ${isDanger
+                        color: ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Primary
                             : Color.Primary(props)};
                     }
@@ -49,7 +47,7 @@ export const Main = styled.button<MainStyleProps>`
                     border: 1px solid ${Color.Neutral[5](props)};
 
                     span {
-                        color: ${isDanger
+                        color: ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Primary
                             : Color.Primary(props)};
                     }
@@ -78,14 +76,14 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    color: ${isDanger
+                    color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.Primary
                         : Color.Primary};
                     :hover,
                     :active,
                     :focus {
                         span {
-                            color: ${isDanger
+                            color: ${props.$buttonIsDanger
                                 ? DesignToken.Button.Danger.Hover
                                 : Color.Secondary};
                         }
@@ -93,7 +91,7 @@ export const Main = styled.button<MainStyleProps>`
                 `;
             default:
                 return css`
-                    background-color: ${isDanger
+                    background-color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.BackgroundColor
                         : Color.Primary(props)};
                     border: 1px solid transparent;

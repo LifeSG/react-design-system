@@ -8,6 +8,7 @@ export interface ButtonProps
     styleType?: StyleType | undefined;
     /** Indicates if a loading spinner is to be displayed */
     loading?: boolean | undefined;
+    /** Indicates if the component is to have a red color scheme applied */
     danger?: boolean | undefined;
 }
 
