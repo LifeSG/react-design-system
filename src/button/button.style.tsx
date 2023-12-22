@@ -29,32 +29,32 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${Color.Neutral[8](props)};
+                    background-color: ${Color.Neutral[8]};
                     border: 1px solid
                         ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Border
-                            : Color.Primary(props)};
+                            : Color.Primary};
 
                     span {
                         color: ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Primary
-                            : Color.Primary(props)};
+                            : Color.Primary};
                     }
                 `;
             case "light":
                 return css`
-                    background-color: ${Color.Neutral[8](props)};
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    background-color: ${Color.Neutral[8]};
+                    border: 1px solid ${Color.Neutral[5]};
 
                     span {
                         color: ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Primary
-                            : Color.Primary(props)};
+                            : Color.Primary};
                     }
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Color.Neutral[6](props)};
+                    background-color: ${Color.Neutral[6]};
                     border: 1px solid transparent;
                     cursor: not-allowed;
 
@@ -63,7 +63,7 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     span {
-                        color: ${Color.Neutral[3](props)};
+                        color: ${Color.Neutral[3]};
                     }
                 `;
             case "link":
@@ -93,7 +93,7 @@ export const Main = styled.button<MainStyleProps>`
                 return css`
                     background-color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.BackgroundColor
-                        : Color.Primary(props)};
+                        : Color.Primary};
                     border: 1px solid transparent;
 
                     ${MediaQuery.MaxWidth.mobileL} {
@@ -101,7 +101,7 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     span {
-                        color: ${Color.Neutral[8](props)};
+                        color: ${Color.Neutral[8]};
                     }
                 `;
         }
