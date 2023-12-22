@@ -74,16 +74,19 @@ The component also comes in a `fixed` variant (`flexible` by default).
     </Story>
 </Canvas>
 
-<Heading3>Truncated height</Heading3>
+<Heading3>Max visible cell height</Heading3>
 
-You can use `truncatedHeight` to set the maximum height of the combined cells (pixels) before truncation.
+You can use `maxVisibleCellHeight` to set the maximum height (pixels) for the combined cells within the component, before truncation occurs.
 
 <Canvas>
-    <Story name="Truncated height">
+    <Story name="Max visible cell height">
         {() => {
             return (
                 <Wrapper>
-                    <TimeSlotBarWeek slots={getSlots()} truncatedHeight={136} />
+                    <TimeSlotBarWeek
+                        slots={getSlots()}
+                        maxVisibleCellHeight={136}
+                    />
                 </Wrapper>
             );
         }}
@@ -103,8 +106,8 @@ _(If unspecified, `startTime` and `endTime` will be determined based on earliest
                 <Wrapper>
                     <TimeSlotBarWeek
                         slots={getSlots()}
-                        startTime="10:30"
-                        endTime="15:30"
+                        startTime="11:00"
+                        endTime="16:00"
                     />
                 </Wrapper>
             );

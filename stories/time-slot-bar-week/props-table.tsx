@@ -51,8 +51,9 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"flexible"`, `"fixed"`],
             },
             {
-                name: "truncatedHeight",
-                description: "The maximum height of cells before truncation",
+                name: "maxVisibleCellHeight",
+                description:
+                    "The maximum height of the combined cells before truncation",
                 propTypes: ["number"],
             },
             {
@@ -60,6 +61,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The minimum time to be displayed in <code>HH:mm</code>
+                        <br />(<strong>Note</strong>: Time to be specified in
+                        full hours. E.g. 08:00, 13:00)
                     </>
                 ),
                 propTypes: ["string"],
@@ -69,6 +72,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The maximum time to be displayed in <code>HH:mm</code>
+                        <br />(<strong>Note</strong>: Time to be specified in
+                        full hours. E.g. 08:00, 13:00)
                     </>
                 ),
                 propTypes: ["string"],

@@ -50,7 +50,7 @@ interface TimeSlotWeekDaysProps
     slots: { [date: string]: TimeSlot[] } | undefined;
     startTime?: string | undefined;
     endTime?: string | undefined;
-    truncatedHeight?: number | undefined;
+    maxVisibleCellHeight?: number | undefined;
     interval?: number | undefined;
     variant?: TimeSlotCellsVariant | undefined;
     enableSelection?: boolean | undefined;
@@ -71,7 +71,7 @@ export const TimeSlotBarWeekDays = ({
     maxDate,
     startTime,
     endTime,
-    truncatedHeight,
+    maxVisibleCellHeight,
     slots: daySlots,
     interval = 30,
     variant = "flexible",
@@ -353,6 +353,8 @@ export const TimeSlotBarWeekDays = ({
     };
 
     const renderTimeColumn = () => {
+        let hasSetFirstAfternoonHour = false;
+
         const formatTime = (index: number) => {
             const parsedTime = dayjs(minStartTime, "HH:mm").add(
                 index * 4 * interval,
@@ -362,9 +364,18 @@ export const TimeSlotBarWeekDays = ({
             const minutes = parsedTime.format("mm");
             const amPm = parsedTime.format("a");
 
-            const formattedTime = `${hour} ${minutes !== "00" ? minutes : ""} ${
-                hour === "12" && minutes === "00" ? amPm : ""
+            let formattedTime = `${hour}${
+                minutes !== "00" ? `:${minutes}` : ""
             }`;
+
+            if (
+                !hasSetFirstAfternoonHour &&
+                amPm === "pm" &&
+                minutes === "00"
+            ) {
+                formattedTime += ` ${amPm}`;
+                hasSetFirstAfternoonHour = true;
+            }
 
             return formattedTime;
         };
@@ -372,7 +383,7 @@ export const TimeSlotBarWeekDays = ({
         return (
             <TimeColumn
                 $isExpanded={expandAll}
-                $truncatedHeight={truncatedHeight}
+                $maxVisibleCellHeight={maxVisibleCellHeight}
             >
                 {times(Math.ceil(numberOfCells / 4), (index) => (
                     <TimeColumnWrapper key={`time-${index}`}>
@@ -389,7 +400,7 @@ export const TimeSlotBarWeekDays = ({
                 ref={cellsRef}
                 key={`week-cell-${calendarDate.format(dateFormat)}`}
                 $isExpanded={expandAll}
-                $truncatedHeight={truncatedHeight}
+                $maxVisibleCellHeight={maxVisibleCellHeight}
             >
                 {currentCalendarWeek.map((day, dayIndex) => {
                     const formattedDate = day.format(dateFormat);
@@ -451,9 +462,10 @@ export const TimeSlotBarWeekDays = ({
 
     const renderCollapseExpandAll = () => {
         if (
-            !truncatedHeight ||
+            !maxVisibleCellHeight ||
             !cellsRef.current ||
-            cellsRef.current.getBoundingClientRect().height < truncatedHeight
+            cellsRef.current.getBoundingClientRect().height <
+                maxVisibleCellHeight
         )
             return;
         return (

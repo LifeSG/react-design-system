@@ -22,7 +22,7 @@ export const TimeSlotBarWeek = ({
     slots,
     interval,
     variant,
-    truncatedHeight,
+    maxVisibleCellHeight,
     showNavigationHeader = true,
     enableSelection,
     onSlotClick,
@@ -97,6 +97,27 @@ export const TimeSlotBarWeek = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const renderTimeSlotWeekDays = (calendarDate: dayjs.Dayjs) => {
+        return (
+            <TimeSlotBarWeekDays
+                calendarDate={calendarDate}
+                disabledDates={disabledDates}
+                selectedDate={selectedDate}
+                minDate={minDate}
+                maxDate={maxDate}
+                startTime={startTime}
+                endTime={endTime}
+                onSelect={handleDateSelect}
+                slots={slots}
+                interval={interval}
+                variant={variant}
+                maxVisibleCellHeight={maxVisibleCellHeight}
+                enableSelection={enableSelection}
+                onSlotClick={handleOnSlotClick}
+            />
+        );
+    };
+
     return (
         <Wrapper {...otherProps}>
             <CalendarManager
@@ -129,24 +150,7 @@ export const TimeSlotBarWeek = ({
                 }
             >
                 {({ calendarDate }) => {
-                    return (
-                        <TimeSlotBarWeekDays
-                            calendarDate={calendarDate}
-                            disabledDates={disabledDates}
-                            selectedDate={selectedDate}
-                            minDate={minDate}
-                            maxDate={maxDate}
-                            startTime={startTime}
-                            endTime={endTime}
-                            onSelect={handleDateSelect}
-                            slots={slots}
-                            interval={interval}
-                            variant={variant}
-                            truncatedHeight={truncatedHeight}
-                            enableSelection={enableSelection}
-                            onSlotClick={handleOnSlotClick}
-                        />
-                    );
+                    return renderTimeSlotWeekDays(calendarDate);
                 }}
             </CalendarManager>
         </Wrapper>

@@ -8,7 +8,7 @@ import { Transition } from "../transition";
 
 interface StyleProps {
     $isExpanded: boolean;
-    $truncatedHeight?: number;
+    $maxVisibleCellHeight?: number;
 }
 
 export const DayLabelWeek = styled(DayLabel)`
@@ -54,10 +54,10 @@ export const ColumnWeekCell = styled.div<StyleProps>`
     max-height: 100rem;
 
     ${(props) =>
-        props.$truncatedHeight &&
+        props.$maxVisibleCellHeight &&
         !props.$isExpanded &&
         css`
-            max-height: ${props.$truncatedHeight}px;
+            max-height: ${props.$maxVisibleCellHeight}px;
             overflow: hidden;
         `}
 `;
@@ -72,10 +72,10 @@ export const TimeColumn = styled.div<StyleProps>`
     max-height: 100rem;
 
     ${(props) =>
-        props.$truncatedHeight &&
+        props.$maxVisibleCellHeight &&
         !props.$isExpanded &&
         css`
-            max-height: ${props.$truncatedHeight}px;
+            max-height: ${props.$maxVisibleCellHeight}px;
             overflow: hidden;
         `};
 `;

@@ -22,7 +22,7 @@ export interface TimeSlotBarWeekProps extends CommonCalendarProps {
     /** Variant for the timeslot cells that will be rendered */
     variant?: TimeSlotCellsVariant | undefined;
     /** Maximum height (px) of the entire timeslot component before it becomes truncated */
-    truncatedHeight?: number | undefined;
+    maxVisibleCellHeight?: number | undefined;
     /**  Specifies if the month/year dropdown and navigation arrows should be displayed. */
     showNavigationHeader?: boolean | undefined;
     /** Specifies if date can be selected */
