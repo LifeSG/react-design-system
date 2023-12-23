@@ -53,7 +53,7 @@ const App = () => {
 export default App;
 ```
 
-For more information on the usage of themes, you can visit our [documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-themes--page) about it.
+For more information on the usage of themes, you can visit our [documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-themes--docs) about it.
 
 <br />
 
@@ -67,7 +67,7 @@ import { Button } from "@lifesg/react-design-system/button";
 import { Button } from "@lifesg/react-design-system";
 ```
 
-To see the full suite of components available, visit our [Storybook documentation](https://designsystem.life.gov.sg/react/index.html?path=/story/getting-started-installation--page).
+To see the full suite of components available, visit our [Storybook documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-installation--docs).
 
 <br />
 

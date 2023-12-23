@@ -183,7 +183,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         This also inherits props from&nbsp;
                         <a
-                            href="./?path=/docs/general-text-introduction--docs#component-api"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
                             rel="noreferrer"
                             target="_blank"
                         >
@@ -258,7 +258,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The props for the action button",
                 propTypes: (
                     <>
-                        <a href="./?path=/docs/general-button--docs#component-api">
+                        <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-button--docs#component-api">
                             <code>ButtonProps</code>
                         </a>
                         &nbsp;
