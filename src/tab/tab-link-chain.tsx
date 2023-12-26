@@ -82,6 +82,7 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
                         >
                             <ChainLink
                                 role="tab"
+                                type="button"
                                 aria-selected={isActive}
                                 onClick={handleChainLinkClick(index)}
                             >
