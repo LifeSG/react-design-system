@@ -41,6 +41,8 @@ const Component = (
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
 
+    const throttledScrollHandler = throttle(handleScroll, 50);
+
     // To scroll left when wrapper resizes
     useResizeDetector({
         onResize: handleResize,
@@ -65,18 +67,13 @@ const Component = (
 
         handleScroll();
 
-        window.addEventListener("resize", handleScroll);
         if (content) {
-            content.addEventListener("scroll", throttle(handleScroll, 50));
+            content.addEventListener("scroll", throttledScrollHandler);
         }
 
         return () => {
-            window.removeEventListener("resize", handleScroll);
             if (content) {
-                content.removeEventListener(
-                    "scroll",
-                    throttle(handleScroll, 50)
-                );
+                content.removeEventListener("scroll", throttledScrollHandler);
             }
         };
     }, []);
@@ -85,7 +82,7 @@ const Component = (
     // EVENT HANDLERS
     // =========================================================================
 
-    const handleScroll = () => {
+    function handleScroll() {
         const wrapper = wrapperRef.current;
         const content = contentRef.current;
 
@@ -104,9 +101,11 @@ const Component = (
             setShowFadeRight(false);
             setShowFadeLeft(false);
         }
-    };
+    }
 
     function handleResize() {
+        handleScroll();
+
         if (onResize) {
             onResize({
                 content: contentRef.current,
