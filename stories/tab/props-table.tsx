@@ -24,10 +24,21 @@ const TAB_DATA: ApiTableSectionProps[] = [
                 description:
                     "Specify the initial tab index that is to be displayed",
                 propTypes: ["number"],
+                defaultValue: "0",
             },
             {
                 name: "className",
                 description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
                 propTypes: ["string"],
             },
             {
@@ -50,14 +61,24 @@ const TAB_ITEM_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "title",
+                mandatory: true,
                 description: "The tab selector label",
                 propTypes: ["string"],
             },
             {
-                name: "show",
-                description:
-                    "If specified, the particular tab's content will be displayed",
-                propTypes: ["boolean"],
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
             },
         ],
     },

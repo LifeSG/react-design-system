@@ -6,7 +6,11 @@ export interface TabItemComponentProps extends TabItemProps {
     index?: number | undefined; // injected
 }
 
-export const TabItem = ({ index, children }: TabItemComponentProps) => {
+export const TabItem = ({
+    index,
+    children,
+    ...otherProps
+}: TabItemComponentProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -16,6 +20,8 @@ export const TabItem = ({ index, children }: TabItemComponentProps) => {
     // RENDER FUNCTIONS
     // =========================================================================
     return currentActiveIndex === index ? (
-        <div role="tabpanel">{children}</div>
+        <div role="tabpanel" {...otherProps}>
+            {children}
+        </div>
     ) : null;
 };

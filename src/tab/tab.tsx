@@ -18,8 +18,9 @@ const TabBase = ({
     children,
     currentActive: currentActiveIndex,
     initialActive = 0,
-    className,
     onTabClick,
+    "data-testid": testId,
+    ...otherProps
 }: TabProps) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -67,7 +68,7 @@ const TabBase = ({
     };
 
     return (
-        <Wrapper className={className}>
+        <Wrapper data-testid={testId} {...otherProps}>
             <TabContext.Provider
                 value={{
                     tabLinks,
@@ -78,6 +79,7 @@ const TabBase = ({
                 <TabLinkChain
                     controlledMode={!!currentActiveIndex}
                     onTabClick={onTabClick}
+                    data-testid={`${testId}-tabs`}
                 />
                 {renderChildren()}
             </TabContext.Provider>

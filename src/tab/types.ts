@@ -8,12 +8,17 @@ export interface TabProps {
      */
     currentActive?: number;
     className?: string | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
     onTabClick?: ((title: string, index: number) => void) | undefined;
 }
 
 export interface TabItemProps {
     title: string;
     children: JSX.Element | JSX.Element[];
+    className?: string | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
 }
 
 export interface TabLinkProps {

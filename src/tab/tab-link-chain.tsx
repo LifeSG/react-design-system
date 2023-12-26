@@ -14,10 +14,15 @@ import { ResizeCallbackParams } from "../shared/fade-wrapper";
 
 interface Props {
     controlledMode?: boolean | undefined;
+    "data-testid"?: string | undefined;
     onTabClick?: ((title: string, order: number) => void) | undefined;
 }
 
-export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
+export const TabLinkChain = ({
+    controlledMode,
+    "data-testid": testId,
+    onTabClick,
+}: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -69,7 +74,7 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <CustomFadeWrapper onResize={handleResize}>
+        <CustomFadeWrapper onResize={handleResize} data-testid={testId}>
             <Chain role="tablist">
                 {tabLinks.map((linkChain, index) => {
                     const isActive = currentActiveIndex === index;
@@ -85,6 +90,7 @@ export const TabLinkChain = ({ controlledMode, onTabClick }: Props) => {
                                 type="button"
                                 aria-selected={isActive}
                                 onClick={handleChainLinkClick(index)}
+                                data-testid={`${testId}-link-${index}`}
                             >
                                 <Label $active={isActive} weight="regular">
                                     {truncateText(linkChain.title)}
