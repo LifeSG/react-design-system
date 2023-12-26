@@ -1,4 +1,10 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor,
+} from "@testing-library/react";
 import { Tab } from "src/tab";
 
 describe("Tab", () => {
@@ -30,9 +36,9 @@ describe("Tab", () => {
         expect(screen.queryByText("Contents of B")).not.toBeInTheDocument();
     });
 
-    it("should render the correct tab item if show is specified", () => {
+    it("should render the correct tab item if initialActive is specified", () => {
         render(
-            <Tab>
+            <Tab initialActive={1}>
                 <Tab.Item title="Section A">
                     <p>Contents of A</p>
                 </Tab.Item>
@@ -44,6 +50,38 @@ describe("Tab", () => {
 
         expect(screen.queryByText("Contents of A")).not.toBeInTheDocument();
         expect(screen.queryByText("Contents of B")).toBeInTheDocument();
+    });
+
+    it("should render the correct tab item if currentActive is specified", () => {
+        render(
+            <Tab currentActive={1}>
+                <Tab.Item title="Section A">
+                    <p>Contents of A</p>
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <p>Contents of B</p>
+                </Tab.Item>
+            </Tab>
+        );
+
+        expect(screen.queryByText("Contents of A")).not.toBeInTheDocument();
+        expect(screen.queryByText("Contents of B")).toBeInTheDocument();
+    });
+
+    it("should render the correct tab item if both initialActive and currentActive are specified. (currentActive to take precedence)", async () => {
+        render(
+            <Tab initialActive={1} currentActive={0}>
+                <Tab.Item title="Section A">
+                    <p>Contents of A</p>
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <p>Contents of B</p>
+                </Tab.Item>
+            </Tab>
+        );
+
+        expect(screen.queryByText("Contents of A")).toBeInTheDocument();
+        expect(screen.queryByText("Contents of B")).not.toBeInTheDocument();
     });
 
     it("should render the correct tab item when clicked", () => {

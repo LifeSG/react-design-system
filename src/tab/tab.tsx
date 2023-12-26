@@ -25,7 +25,9 @@ const TabBase = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const [currentActive, setCurrentActive] = useState<number>(initialActive);
+    const [currentActive, setCurrentActive] = useState<number>(
+        currentActiveIndex || initialActive
+    );
     const [tabLinks, setTabLinks] = useState<TabLinkProps[]>([]);
 
     // =========================================================================
@@ -39,7 +41,9 @@ const TabBase = ({
     }, [children]);
 
     useEffect(() => {
-        setCurrentActive(currentActiveIndex || initialActive);
+        if (typeof currentActiveIndex === "number") {
+            setCurrentActive(currentActiveIndex);
+        }
     }, [currentActiveIndex]);
 
     // =========================================================================
