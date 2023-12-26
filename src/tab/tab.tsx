@@ -1,9 +1,15 @@
-import { Children, ReactElement, cloneElement, useRef, useState } from "react";
-import { SetTabLinkProps, TabContext } from "./tab-context";
+import {
+    Children,
+    ReactElement,
+    cloneElement,
+    useEffect,
+    useState,
+} from "react";
+import { TabContext } from "./tab-context";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
 import { Wrapper } from "./tab.style";
-import { TabLinkProps, TabProps } from "./types";
+import { TabItemProps, TabLinkProps, TabProps } from "./types";
 
 // =============================================================================
 // COMPONENT
@@ -17,29 +23,36 @@ const TabBase = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const validChildren = Children.toArray(children).filter(Boolean);
-
     const [currentActive, setCurrentActive] = useState<number>(0);
-    const [tabLinks, _setTabLinks] = useState<TabLinkProps[]>(
-        Array<TabLinkProps>(validChildren.length)
-    );
+    const [tabLinks, setTabLinks] = useState<TabLinkProps[]>([]);
 
-    const tabLinksRef = useRef<TabLinkProps[]>(
-        Array<TabLinkProps>(validChildren.length)
-    );
+    // =========================================================================
+    // EFFECTS
+    // =========================================================================
+    useEffect(() => {
+        const validChildren = Children.toArray(children).filter(
+            Boolean
+        ) as ReactElement<TabItemProps>[];
+        updateTabLinks(validChildren);
+    }, [children]);
 
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const setLinkProps = ({ title, index }: SetTabLinkProps) => {
-        tabLinksRef.current[index] = { title };
-        _setTabLinks(tabLinksRef.current);
+    const updateTabLinks = (children: ReactElement<TabItemProps>[]) => {
+        const tabLinks: TabLinkProps[] = children.map((child) => {
+            return { title: child.props.title };
+        });
+
+        setTabLinks(tabLinks);
     };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     const renderChildren = () => {
+        const validChildren = Children.toArray(children).filter(Boolean);
+
         return validChildren.map((child, index) => {
             return cloneElement(child as ReactElement<any>, {
                 key: index,
@@ -55,7 +68,6 @@ const TabBase = ({
                     tabLinks,
                     currentActiveIndex: currentActive,
                     setCurrentActiveIndex: setCurrentActive,
-                    setTabLinkProps: setLinkProps,
                 }}
             >
                 <TabLinkChain

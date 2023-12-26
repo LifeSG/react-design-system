@@ -6,20 +6,12 @@ export interface TabItemComponentProps extends TabItemProps {
     index?: number | undefined; // injected
 }
 
-export const TabItem = ({
-    index,
-    title,
-    show,
-    children,
-}: TabItemComponentProps) => {
+export const TabItem = ({ index, show, children }: TabItemComponentProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const {
-        setCurrentActiveIndex,
-        currentActiveIndex,
-        setTabLinkProps: setLinkProps,
-    } = useContext(TabContext);
+    const { setCurrentActiveIndex, currentActiveIndex } =
+        useContext(TabContext);
 
     // =========================================================================
     // EFFECTS
@@ -29,10 +21,6 @@ export const TabItem = ({
             setCurrentActiveIndex(index);
         }
     }, [show]);
-
-    useEffect(() => {
-        setLinkProps({ index, title });
-    }, [title]);
 
     // =========================================================================
     // RENDER FUNCTIONS
