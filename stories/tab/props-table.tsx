@@ -14,23 +14,15 @@ const TAB_DATA: ApiTableSectionProps[] = [
                 propTypes: ["JSX.Element", "JSX.Element[]"],
             },
             {
-                name: "tabItemRenderMode",
-                description: (
-                    <>
-                        Specifies the render mode of the tab contents. By
-                        default, the {code("Tab")} handles the rendering
-                        automatically based on each tab item&rsquo;s selector
-                        click. Specify {code("controlled")}
-                        if you wish for full control of the rendering
-                    </>
-                ),
-                propTypes: [`"default"`, `"controlled`],
-                defaultValue: `"default"`,
-            },
-            {
                 name: "currentActive",
                 description:
-                    "Specify the current tab index that is to be displayed",
+                    "Specify the current tab index that is to be displayed. By specifying this prop, the tab rendering will be manually controlled by you",
+                propTypes: ["number"],
+            },
+            {
+                name: "initialActive",
+                description:
+                    "Specify the initial tab index that is to be displayed",
                 propTypes: ["number"],
             },
             {
@@ -41,7 +33,7 @@ const TAB_DATA: ApiTableSectionProps[] = [
             {
                 name: "onTabClick",
                 description: "Called when a tab item selector is clicked",
-                propTypes: ["(title: string, order: number) => void"],
+                propTypes: ["(title: string, index: number) => void"],
             },
         ],
     },

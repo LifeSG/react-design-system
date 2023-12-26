@@ -1,27 +1,18 @@
-import { Dispatch, SetStateAction } from "react";
-
-export type TabItemRenderMode = "default" | "controlled";
-
 export interface TabProps {
     children: JSX.Element | JSX.Element[];
+    /** Specify the initial tab index that is to be displayed */
+    initialActive?: number | undefined;
     /**
-     * Specifies the render mode of the tab items.
-     *
-     * Specify `"controlled"` if you want to control the
-     * rendering of each time item.
-     *
-     * Leave undefined or specify `"default"` if you want
-     * the `Tab` component to control instead.
+     * Specify the current tab index that is to be displayed. By specifying
+     * this prop, the tab rendering will be manually controlled by you
      */
-    tabItemRenderMode?: TabItemRenderMode | undefined;
     currentActive?: number;
     className?: string | undefined;
-    onTabClick?: ((title: string, order: number) => void) | undefined;
+    onTabClick?: ((title: string, index: number) => void) | undefined;
 }
 
 export interface TabItemProps {
     title: string;
-    show?: boolean | undefined;
     children: JSX.Element | JSX.Element[];
 }
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { TabItemProps } from "./types";
 import { TabContext } from "./tab-context";
 
@@ -6,21 +6,11 @@ export interface TabItemComponentProps extends TabItemProps {
     index?: number | undefined; // injected
 }
 
-export const TabItem = ({ index, show, children }: TabItemComponentProps) => {
+export const TabItem = ({ index, children }: TabItemComponentProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { setCurrentActiveIndex, currentActiveIndex } =
-        useContext(TabContext);
-
-    // =========================================================================
-    // EFFECTS
-    // =========================================================================
-    useEffect(() => {
-        if (show) {
-            setCurrentActiveIndex(index);
-        }
-    }, [show]);
+    const { currentActiveIndex } = useContext(TabContext);
 
     // =========================================================================
     // RENDER FUNCTIONS

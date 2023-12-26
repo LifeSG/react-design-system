@@ -15,10 +15,10 @@ describe("Tab", () => {
     it("should render the correct tab item", () => {
         render(
             <Tab>
-                <Tab.Item key={1} title="Section A">
+                <Tab.Item title="Section A">
                     <p>Contents of A</p>
                 </Tab.Item>
-                <Tab.Item key={2} title="Section B">
+                <Tab.Item title="Section B">
                     <p>Contents of B</p>
                 </Tab.Item>
             </Tab>
@@ -33,10 +33,10 @@ describe("Tab", () => {
     it("should render the correct tab item if show is specified", () => {
         render(
             <Tab>
-                <Tab.Item key={1} title="Section A">
+                <Tab.Item title="Section A">
                     <p>Contents of A</p>
                 </Tab.Item>
-                <Tab.Item key={2} title="Section B" show>
+                <Tab.Item title="Section B">
                     <p>Contents of B</p>
                 </Tab.Item>
             </Tab>
@@ -49,10 +49,10 @@ describe("Tab", () => {
     it("should render the correct tab item when clicked", () => {
         render(
             <Tab>
-                <Tab.Item key={1} title="Section A">
+                <Tab.Item title="Section A">
                     <p>Contents of A</p>
                 </Tab.Item>
-                <Tab.Item key={2} title="Section B">
+                <Tab.Item title="Section B">
                     <p>Contents of B</p>
                 </Tab.Item>
             </Tab>

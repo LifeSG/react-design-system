@@ -16,14 +16,15 @@ import { TabItemProps, TabLinkProps, TabProps } from "./types";
 // =============================================================================
 const TabBase = ({
     children,
-    tabItemRenderMode = "default",
+    currentActive: currentActiveIndex,
+    initialActive = 0,
     className,
     onTabClick,
 }: TabProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const [currentActive, setCurrentActive] = useState<number>(0);
+    const [currentActive, setCurrentActive] = useState<number>(initialActive);
     const [tabLinks, setTabLinks] = useState<TabLinkProps[]>([]);
 
     // =========================================================================
@@ -35,6 +36,10 @@ const TabBase = ({
         ) as ReactElement<TabItemProps>[];
         updateTabLinks(validChildren);
     }, [children]);
+
+    useEffect(() => {
+        setCurrentActive(currentActiveIndex || initialActive);
+    }, [currentActiveIndex]);
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -71,7 +76,7 @@ const TabBase = ({
                 }}
             >
                 <TabLinkChain
-                    controlledMode={tabItemRenderMode === "controlled"}
+                    controlledMode={!!currentActiveIndex}
                     onTabClick={onTabClick}
                 />
                 {renderChildren()}

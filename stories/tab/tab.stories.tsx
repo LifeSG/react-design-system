@@ -20,7 +20,7 @@ export const Default: StoryObj<Component> = {
     render: () => {
         return (
             <Tab>
-                <Tab.Item key={1} title="Section A">
+                <Tab.Item title="Section A">
                     <Content>
                         <Text.H1>Section A</Text.H1>
                         <br />
@@ -33,7 +33,7 @@ export const Default: StoryObj<Component> = {
                         </Text.Body>
                     </Content>
                 </Tab.Item>
-                <Tab.Item key={2} title="Section B">
+                <Tab.Item title="Section B">
                     <Content>
                         <Text.H1>Section B</Text.H1>
                         <br />
@@ -47,7 +47,7 @@ export const Default: StoryObj<Component> = {
                         </Text.Body>
                     </Content>
                 </Tab.Item>
-                <Tab.Item key={3} title="Section C">
+                <Tab.Item title="Section C">
                     <Content>
                         <Text.H1>Section C</Text.H1>
                         <br />
@@ -60,7 +60,7 @@ export const Default: StoryObj<Component> = {
                         </Text.Body>
                     </Content>
                 </Tab.Item>
-                <Tab.Item key={4} title="Section D">
+                <Tab.Item title="Section D">
                     <Content>
                         <Text.H1>Section D</Text.H1>
                         <br />
@@ -83,10 +83,7 @@ export const LongerLabels: StoryObj<Component> = {
     render: () => {
         return (
             <Tab>
-                <Tab.Item
-                    key={1}
-                    title="This is a significantly longer label that will truncate"
-                >
+                <Tab.Item title="This is a significantly longer label that will truncate">
                     <Content>
                         <Text.H1>Section A</Text.H1>
                         <br />
@@ -99,7 +96,7 @@ export const LongerLabels: StoryObj<Component> = {
                         </Text.Body>
                     </Content>
                 </Tab.Item>
-                <Tab.Item key={2} title="Shorter label">
+                <Tab.Item title="Shorter label">
                     <Content>
                         <Text.H1>Section B</Text.H1>
                         <br />
@@ -113,7 +110,7 @@ export const LongerLabels: StoryObj<Component> = {
                         </Text.Body>
                     </Content>
                 </Tab.Item>
-                <Tab.Item key={3} title="Section C">
+                <Tab.Item title="Section C">
                     <Content>
                         <Text.H1>Section C</Text.H1>
                         <br />
@@ -140,8 +137,8 @@ export const ControlledMode: StoryObj<Component> = {
         };
 
         return (
-            <Tab tabItemRenderMode="controlled" onTabClick={handleTabClick}>
-                <Tab.Item key={1} title="Section A" show={currentIndex === 0}>
+            <Tab onTabClick={handleTabClick} currentActive={currentIndex}>
+                <Tab.Item title="Section A">
                     <Content>
                         <Text.H1>Section A</Text.H1>
                         <br />
@@ -154,7 +151,7 @@ export const ControlledMode: StoryObj<Component> = {
                         </Text.Body>
                     </Content>
                 </Tab.Item>
-                <Tab.Item key={2} title="Section B" show={currentIndex === 1}>
+                <Tab.Item title="Section B">
                     <Content>
                         <Text.H1>Section B</Text.H1>
                         <br />
@@ -168,7 +165,7 @@ export const ControlledMode: StoryObj<Component> = {
                         </Text.Body>
                     </Content>
                 </Tab.Item>
-                <Tab.Item key={3} title="Section C" show={currentIndex === 2}>
+                <Tab.Item title="Section C">
                     <Content>
                         <Text.H1>Section C</Text.H1>
                         <br />
