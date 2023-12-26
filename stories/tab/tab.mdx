@@ -35,10 +35,11 @@ to ensure that all tab items are accessible within a few scrolls. Here is an exa
 
 <Secondary>Controlled mode</Secondary>
 
-While the `Tab` handles the rendering logic, upon each tab click, automatically, it also
-offers the ability to control the behaviour entirely yourself. You can set the
-`tabItemRenderMode` to `"controlled"` and you will have full control of how the tab items
-are rendered. Here is a simple example where we control the state on our own.
+While the `Tab` handles the rendering logic automatically upon a tab link click,
+it also offers the ability to control the behaviour entirely yourself. You will
+just have to specify the `currentActive` prop and you will have full control of
+how the tab items are rendered. Here is a simple example where we control the
+state on our own.
 
 <Canvas of={TabStories.ControlledMode} />
 
