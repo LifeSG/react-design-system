@@ -74,3 +74,64 @@ export const LoadingState: StoryObj<Component> = {
         );
     },
 };
+
+export const Danger: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Container>
+                    <Button.Default danger>Default</Button.Default>
+                    <Button.Default styleType="secondary" danger>
+                        Secondary
+                    </Button.Default>
+                    <Button.Default styleType="light" danger>
+                        Light
+                    </Button.Default>
+                    <Button.Default styleType="link" danger>
+                        Link
+                    </Button.Default>
+                </Container>
+                <Container>
+                    <Button.Small danger>Small</Button.Small>
+                    <Button.Small styleType="secondary" danger>
+                        Secondary
+                    </Button.Small>
+                    <Button.Small styleType="light" danger>
+                        Light
+                    </Button.Small>
+                    <Button.Small styleType="link" danger>
+                        Link
+                    </Button.Small>
+                </Container>
+                <Container>
+                    <Button.Default loading danger>
+                        Loading
+                    </Button.Default>
+                    <Button.Default styleType="secondary" loading danger>
+                        Loading
+                    </Button.Default>
+                    <Button.Default styleType="light" loading danger>
+                        Loading
+                    </Button.Default>
+                    <Button.Default styleType="link" loading danger>
+                        Loading
+                    </Button.Default>
+                </Container>
+                <Container>
+                    <Button.Small loading danger>
+                        Small
+                    </Button.Small>
+                    <Button.Small styleType="secondary" loading danger>
+                        Loading
+                    </Button.Small>
+                    <Button.Small styleType="light" loading danger>
+                        Loading
+                    </Button.Small>
+                    <Button.Small styleType="link" loading danger>
+                        Loading
+                    </Button.Small>
+                </Container>
+            </>
+        );
+    },
+};

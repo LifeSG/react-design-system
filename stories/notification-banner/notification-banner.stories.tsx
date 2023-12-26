@@ -152,7 +152,11 @@ export const TextStylingOptions: StoryObj<Component> = {
                     <>
                         This is an example of how you can style the contents.
                         You can specify an anchor tag for a normal&nbsp;
-                        <a href="https://www.life.gov.sg" target="_blank" rel="noreferrer">
+                        <a
+                            href="https://www.life.gov.sg"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
                             link
                         </a>
                         . An&nbsp;

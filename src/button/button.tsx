@@ -14,12 +14,14 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
         disabled = false,
         loading = false,
         styleType = "default",
+        danger = false,
         ...otherProps
     } = props;
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "default",
+        $buttonIsDanger: danger,
     };
 
     return (
@@ -42,12 +44,14 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
         disabled = false,
         loading = false,
         styleType = "default",
+        danger = false,
         ...otherProps
     } = props;
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "small",
+        $buttonIsDanger: danger,
     };
 
     return (
