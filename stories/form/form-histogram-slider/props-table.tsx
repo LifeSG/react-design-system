@@ -1,4 +1,4 @@
-import { ApiTable } from "../../storybook-common/api-table";
+import { ApiTable, code } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
@@ -36,7 +36,11 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "value",
-                description: "The selection range",
+                description: (
+                    <>
+                        The selected range, in the format {code("[start, end]")}
+                    </>
+                ),
                 propTypes: ["[number, number]"],
             },
             {
@@ -73,6 +77,16 @@ const DATA: ApiTableSectionProps[] = [
                 name: "renderRangeLabel",
                 description: "Function to render custom selection range labels",
                 propTypes: ["(value: number) => React.ReactNode"],
+            },
+            {
+                name: "onChange",
+                description: (
+                    <>
+                        Called when selection range changes. Returns value in
+                        the format {code("[start, end]")}
+                    </>
+                ),
+                propTypes: ["(value: [number, number]) => void"],
             },
         ],
     },

@@ -11,11 +11,13 @@ export interface HistogramSliderProps {
     interval: number;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
+    /** The selected range, in the format `[start, end]` */
     value?: [number, number] | undefined;
     showRangeLabels?: boolean | undefined;
     rangeLabelPrefix?: string | undefined;
     rangeLabelSuffix?: string | undefined;
     renderRangeLabel?: ((value: number) => React.ReactNode) | undefined;
-    onChange?: (value: [number, number]) => void;
+    /** Called when selection range changes. Returns the value in the format `[start, end]` */
+    onChange?: ((value: [number, number]) => void) | undefined;
     renderEmptyView?: (() => React.ReactNode) | undefined;
 }
