@@ -81,7 +81,7 @@ const TabBase = ({
                 }}
             >
                 <TabLinkChain
-                    controlledMode={!!currentActiveIndex}
+                    controlledMode={typeof currentActiveIndex === "number"}
                     onTabClick={onTabClick}
                     data-testid={`${testId}-tabs`}
                 />

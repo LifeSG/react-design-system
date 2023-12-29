@@ -105,4 +105,25 @@ describe("Tab", () => {
 
         expect(screen.queryByText("Contents of B")).toBeInTheDocument();
     });
+
+    it("should call the onTabClick if specified when a tab item is clicked", () => {
+        const mockFn = jest.fn();
+        render(
+            <Tab onTabClick={mockFn}>
+                <Tab.Item title="Section A">
+                    <p>Contents of A</p>
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <p>Contents of B</p>
+                </Tab.Item>
+            </Tab>
+        );
+
+        const button = screen.getByRole("tab", { name: /Section B/i });
+        act(() => {
+            fireEvent.click(button);
+        });
+
+        expect(mockFn).toBeCalledWith("Section B", 1);
+    });
 });

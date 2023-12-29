@@ -42,7 +42,9 @@ export const TabLinkChain = ({
             event.preventDefault();
             if (!controlledMode) {
                 setCurrentActiveIndex(index);
-            } else if (onTabClick) {
+            }
+
+            if (onTabClick) {
                 onTabClick(tabLinks[index].title, index);
             }
         };
