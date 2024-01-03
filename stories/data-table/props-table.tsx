@@ -69,7 +69,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "emptyView",
                 description: "Override props for the empty view display",
                 propTypes: (
-                    <a href="./?path=/docs/modules-errordisplay--error-display">
+                    <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-errordisplay--docs">
                         ErrorDisplayAttributes
                     </a>
                 ),

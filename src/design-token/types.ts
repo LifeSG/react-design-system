@@ -15,6 +15,14 @@ export interface DesignTokenSet {
             Hover: CssValue;
         };
     };
+    Button: {
+        Danger: {
+            Hover: CssValue;
+            BackgroundColor: CssValue;
+            Primary: CssValue;
+            Border: CssValue;
+        };
+    };
 }
 
 export type DesignTokenSetOptions = Partial<DesignTokenSet>;

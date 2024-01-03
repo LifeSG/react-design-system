@@ -73,6 +73,7 @@ export const HeadingLabel = styled(Text.H6)`
 
 export const SimpleContainer = styled.ul`
     display: flex;
+    list-style: none;
 
     li {
         :not(:last-child) {

@@ -1,0 +1,22 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Secondary, Title } from "../../storybook-common";
+import * as FormCustomFieldStories from "./form-custom-field.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FormCustomFieldStories} />
+
+<Title>Form.CustomField</Title>
+
+<Secondary>Overview</Secondary>
+
+Allows for a custom form element to be specified, and still have the label and error message.
+
+```tsx
+import { Form } from "@lifesg/react-design-system/form";
+```
+
+<Canvas of={FormCustomFieldStories.Default} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

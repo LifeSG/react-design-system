@@ -9,7 +9,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "actionButtonProps",
                 description: "The call to action custom button props",
                 propTypes: (
-                    <a href="/?path=/docs/general-button--button#component-api">
+                    <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-button--docs#component-api">
                         ButtonProps
                     </a>
                 ),

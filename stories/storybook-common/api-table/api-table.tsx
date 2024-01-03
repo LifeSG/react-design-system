@@ -1,5 +1,5 @@
+import { Unstyled } from "@storybook/blocks";
 import orderBy from "lodash/orderBy";
-import React from "react";
 import {
     DefaultCol,
     DescriptionCol,
@@ -58,5 +58,9 @@ export const ApiTable = (props: ApiTableProps): JSX.Element => {
         });
     };
 
-    return <Table>{renderContents()}</Table>;
+    return (
+        <Unstyled style={{ width: "100%" }}>
+            <Table>{renderContents()}</Table>
+        </Unstyled>
+    );
 };

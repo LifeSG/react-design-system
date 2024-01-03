@@ -1,0 +1,51 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+import { RBSColorSet } from "src/spec/color-spec/rbs-color-set";
+import { Text } from "src/text";
+import { PreviewBox, Secondary, Title } from "../storybook-common";
+import { ColorPalette } from "./doc-color-palette";
+
+<Meta title="General/Color/RBS Color" />
+
+<Title>RBS Colors</Title>
+
+<Secondary>Overview</Secondary>
+
+This will be the palette used when the `colorScheme` is `"rbs"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colorScheme: "rbs",
+    // ...other specifications
+};
+```
+
+<Secondary>Colors</Secondary>
+
+<Unstyled>
+    <ColorPalette set={RBSColorSet.Brand} category="Brand" />
+    <ColorPalette
+        set={{
+            Primary: RBSColorSet.Primary,
+            PrimaryDark: RBSColorSet.PrimaryDark,
+            Secondary: RBSColorSet.Secondary,
+        }}
+    />
+    <ColorPalette set={RBSColorSet.Neutral} category="Neutral" />
+    <ColorPalette set={RBSColorSet.Accent.Dark} category="Accent.Dark" />
+    <ColorPalette set={RBSColorSet.Accent.Light} category="Accent.Light" />
+</Unstyled>
+
+<br />
+
+<Text.H3>Validation</Text.H3>
+
+<PreviewBox>
+    `Color.Validation.<color>`
+</PreviewBox>
+
+<Unstyled>
+    <ColorPalette set={RBSColorSet.Validation.Green} category="Green" />
+    <ColorPalette set={RBSColorSet.Validation.Orange} category="Orange" />
+    <ColorPalette set={RBSColorSet.Validation.Red} category="Red" />
+    <ColorPalette set={RBSColorSet.Validation.Blue} category="Blue" />
+</Unstyled>

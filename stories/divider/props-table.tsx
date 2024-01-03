@@ -52,7 +52,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Refer to{" "}
                         <a
-                            href="/?path=/docs/getting-started-layout-column-divs--column-divs#component-api"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-layout-column-divs--docs"
                             rel="noreferrer"
                             target="_blank"
                         >
@@ -75,7 +75,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Refer to{" "}
                         <a
-                            href="/?path=/docs/getting-started-layout-column-divs--column-divs#component-api"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-layout-column-divs--docs"
                             rel="noreferrer"
                             target="_blank"
                         >
@@ -98,7 +98,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Refer to{" "}
                         <a
-                            href="/?path=/docs/getting-started-layout-column-divs--column-divs#component-api"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-layout-column-divs--docs"
                             rel="noreferrer"
                             target="_blank"
                         >

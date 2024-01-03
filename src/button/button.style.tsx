@@ -4,6 +4,7 @@ import { MediaQuery } from "../media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
 import { MainStyleProps } from "./types";
+import { DesignToken } from "../design-token";
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
@@ -28,25 +29,32 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${Color.Neutral[8](props)};
-                    border: 1px solid ${Color.Primary(props)};
+                    background-color: ${Color.Neutral[8]};
+                    border: 1px solid
+                        ${props.$buttonIsDanger
+                            ? DesignToken.Button.Danger.Border
+                            : Color.Primary};
 
                     span {
-                        color: ${Color.Primary(props)};
+                        color: ${props.$buttonIsDanger
+                            ? DesignToken.Button.Danger.Primary
+                            : Color.Primary};
                     }
                 `;
             case "light":
                 return css`
-                    background-color: ${Color.Neutral[8](props)};
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    background-color: ${Color.Neutral[8]};
+                    border: 1px solid ${Color.Neutral[5]};
 
                     span {
-                        color: ${Color.Primary(props)};
+                        color: ${props.$buttonIsDanger
+                            ? DesignToken.Button.Danger.Primary
+                            : Color.Primary};
                     }
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Color.Neutral[6](props)};
+                    background-color: ${Color.Neutral[6]};
                     border: 1px solid transparent;
                     cursor: not-allowed;
 
@@ -55,7 +63,7 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     span {
-                        color: ${Color.Neutral[3](props)};
+                        color: ${Color.Neutral[3]};
                     }
                 `;
             case "link":
@@ -68,18 +76,24 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    color: ${Color.Primary};
+                    color: ${props.$buttonIsDanger
+                        ? DesignToken.Button.Danger.Primary
+                        : Color.Primary};
                     :hover,
                     :active,
                     :focus {
                         span {
-                            color: ${Color.Secondary};
+                            color: ${props.$buttonIsDanger
+                                ? DesignToken.Button.Danger.Hover
+                                : Color.Secondary};
                         }
                     }
                 `;
             default:
                 return css`
-                    background-color: ${Color.Primary(props)};
+                    background-color: ${props.$buttonIsDanger
+                        ? DesignToken.Button.Danger.BackgroundColor
+                        : Color.Primary};
                     border: 1px solid transparent;
 
                     ${MediaQuery.MaxWidth.mobileL} {
@@ -87,7 +101,7 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     span {
-                        color: ${Color.Neutral[8](props)};
+                        color: ${Color.Neutral[8]};
                     }
                 `;
         }
@@ -127,16 +141,13 @@ export const Main = styled.button<MainStyleProps>`
 export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     margin-right: 0.5rem;
     ${(props) => {
-        let color;
+        let color = props.$buttonIsDanger
+            ? DesignToken.Button.Danger.Primary
+            : Color.Primary(props);
         switch (props.$buttonStyle) {
             case "secondary":
-                color = Color.Primary(props);
-                break;
             case "light":
-                color = Color.Primary(props);
-                break;
             case "link":
-                color = Color.Primary(props);
                 break;
             case "disabled":
                 color = Color.Neutral[3](props);

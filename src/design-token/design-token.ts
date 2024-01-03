@@ -18,4 +18,14 @@ export const DesignToken: PropertiesToType<
             Hover: getThemeDesignToken("Table.Cell.Hover"),
         },
     },
+    Button: {
+        Danger: {
+            BackgroundColor: getThemeDesignToken(
+                "Button.Danger.BackgroundColor"
+            ),
+            Hover: getThemeDesignToken("Button.Danger.Hover"),
+            Primary: getThemeDesignToken("Button.Danger.Primary"),
+            Border: getThemeDesignToken("Button.Danger.Border"),
+        },
+    },
 };

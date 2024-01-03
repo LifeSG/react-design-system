@@ -1,4 +1,3 @@
-import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
@@ -102,7 +101,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The attributes to modify the text style. For the
                         different keys available, refer to the text sizes&nbsp;
-                        <a href="/?path=/docs/general-text-base-style--page#text-styles">
+                        <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#static">
                             specification
                         </a>
                         .

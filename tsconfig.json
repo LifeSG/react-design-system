@@ -26,6 +26,6 @@
         "alwaysStrict": true, // ensures files are parsed in ECMAScript strict mode
         "noFallthroughCasesInSwitch": true // report error for fallthrough cases
     },
-    "include": ["src/**/*", "tests/**/*", "custom-types/*"],
+    "include": ["src/**/*", "tests/**/*", "custom-types/*", "stories"],
     "exclude": ["node_modules", "rollup.config.js"]
 }

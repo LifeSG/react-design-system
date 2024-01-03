@@ -37,6 +37,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
+            {
+                name: "danger",
+                description:
+                    "If specified, the component will have a red color scheme being applied",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];

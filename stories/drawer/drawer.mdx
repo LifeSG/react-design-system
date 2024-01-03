@@ -1,0 +1,26 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as DrawerStories from "./drawer.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={DrawerStories} />
+
+<Title>Drawer</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays content in a side panel overlay that slides in from the right.
+
+```tsx
+import { Drawer } from "@lifesg/react-design-system/drawer";
+```
+
+<Canvas of={DrawerStories.Default} />
+
+<Heading3>Handling content overflow</Heading3>
+
+<Canvas of={DrawerStories.HandlingContentOverflow} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

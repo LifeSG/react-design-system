@@ -1,0 +1,50 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as TimeSlotWeekViewStories from "./time-slot-week-view.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={TimeSlotWeekViewStories} />
+
+<Title>TimeSlotWeekView</Title>
+
+<Secondary>Overview</Secondary>
+
+Displays a calendar component to view available time slots in a week.
+
+```tsx
+import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
+```
+
+<Canvas of={TimeSlotWeekViewStories.Default} />
+
+<Heading3>With disabled dates</Heading3>
+
+You can use `disabledDates` to specify dates that are not available for selection.
+
+_(In this example,2 days before today and 2 days after today are disabled)_
+
+<Canvas of={TimeSlotWeekViewStories.WithDisabledDates} />
+
+<Heading3>Within minimum and maximum dates</Heading3>
+
+You can specify the `minDate` and/or `maxDate` to control the selection range.
+
+<Canvas of={TimeSlotWeekViewStories.MinAndMaxDates} />
+
+<Heading3>Hiding nav header</Heading3>
+
+You can remove the navigation header, including the month, year dropdown.
+
+<Canvas of={TimeSlotWeekViewStories.HideNavHeader} />
+
+<Heading3>Disable day selection</Heading3>
+
+<Canvas of={TimeSlotWeekViewStories.DisableDaySelection} />
+
+<Heading3>Handle slot selection</Heading3>
+
+<Canvas of={TimeSlotWeekViewStories.SlotSelection} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

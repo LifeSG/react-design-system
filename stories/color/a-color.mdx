@@ -1,0 +1,57 @@
+import { Meta } from "@storybook/blocks";
+import { Secondary, Title } from "../storybook-common";
+
+<Meta title="General/Color/Introduction" />
+
+<Title>Color</Title>
+
+<Secondary>Overview</Secondary>
+
+Colors provide a visual identity to the user interface in the LifeSG and BookingSG apps.
+
+```tsx
+import { Color } from "@lifesg/react-design-system/color";
+```
+
+<Secondary>Usage</Secondary>
+
+You can use the `Color` component to declare colours within style declarations.
+
+```tsx
+import { Color } from "@lifesg/react-design-system/color";
+import styled, { css } from "styled-components";
+
+const Container = styled.div`
+    background: ${Color.Primary};
+
+    // If you extract props, remember to wrap nested interpolations with the css helper
+    ${(props) => {
+        return css`
+            color: ${Color.Secondary};
+        `;
+    }}
+
+    // Otherwise, you have to pass the props down manually (not recommended)
+	${(props) => {
+        return `
+			color: ${Color.Secondary(props)};
+		`;
+    }}
+`;
+```
+
+If you require the color as a constant value, you could do this
+
+```tsx
+import { Color } from "@lifesg/react-design-system/color";
+import { BaseTheme } from "@lifesg/react-design-system/theme";
+
+const PrimaryColor = Color.Primary({ theme: BaseTheme });
+```
+
+<Secondary>Collections</Secondary>
+
+[Base Set](/docs/general-color-lifesg-color--docs) |
+[BookingSG Set](/docs/general-color-bookingsg-color--docs) |
+[MyLegacy Set](/docs/general-color-mylegacy-color--docs) |
+[RBS Set](/docs/general-color-rbs-color--docs)

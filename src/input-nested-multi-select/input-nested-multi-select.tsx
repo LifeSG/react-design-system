@@ -263,9 +263,14 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             }
 
             const item = items.find((item) => item.key === currentKey);
+
+            if (!item) {
+                return undefined;
+            }
+
             const { label, value, subItems } = item;
 
-            if (!item || !nextKeyPath.length) {
+            if (!nextKeyPath.length) {
                 const result = {
                     label,
                     value,

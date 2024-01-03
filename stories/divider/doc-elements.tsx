@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Layout } from "../../src/layout";
 import { Text } from "../../src/text";
@@ -11,7 +10,7 @@ export const TextComponent = styled(Text.Body)`
     margin-bottom: 1rem;
 `;
 
-export const DisplayText = ({ children }: { children: JSX.Element }) => {
+export const DisplayText = ({ children }: { children: React.ReactNode }) => {
     return (
         <Layout.ColDiv desktopCols={12} tabletCols={8} mobileCols={4}>
             <TextComponent>{children}</TextComponent>
