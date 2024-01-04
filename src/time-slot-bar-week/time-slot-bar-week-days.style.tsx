@@ -5,12 +5,14 @@ import { TextStyleHelper } from "../text";
 import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
 import { Transition } from "../transition";
-import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
+import {
+    TimeSlot,
+    TimeSlotStyleProps,
+} from "../time-slot-bar/time-slot-bar.styles";
 import { animated } from "react-spring";
 
-interface StyleProps {
-    $isExpanded?: boolean;
-    $height?: number;
+interface TimeSlotCellProps extends TimeSlotStyleProps {
+    $halfFill?: "top" | "bottom";
 }
 
 export const DayLabelWeek = styled(DayLabel)`
@@ -53,14 +55,14 @@ export const Expandable = styled(animated.div)`
     overflow: hidden;
 `;
 
-export const ColumnWeekCell = styled.div<StyleProps>`
+export const ColumnWeekCell = styled.div`
     display: flex;
     gap: 0.25rem;
     transition: ${Transition.Base};
     overflow: hidden;
 `;
 
-export const TimeColumn = styled.div<StyleProps>`
+export const TimeColumn = styled.div<{ $height?: number }>`
     display: flex;
     flex-direction: column;
     grid-row: 3 / auto;
@@ -114,12 +116,12 @@ export const CollapseExpandAllButton = styled(Button.Small)`
     }
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
+export const ChevronIcon = styled(ChevronUpIcon)<{ $isExpanded?: boolean }>`
     transform: rotate(${(props) => (props.$isExpanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
 `;
 
-export const TimeSlotComponent = styled(TimeSlot)`
+export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
     ${(props) => {
         if (props.$type === "vertical") {
             return css`
