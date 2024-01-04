@@ -7,7 +7,6 @@ import {
     StyleProps,
 } from "../shared/internal-calendar/standard";
 import { Text } from "../text/text";
-import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
@@ -20,6 +19,7 @@ import {
     TimeColumn,
     TimeColumnText,
     TimeColumnWrapper,
+    TimeSlotComponent,
     TimeSlotWrapper,
     Wrapper,
 } from "./time-slot-bar-week-days.style";

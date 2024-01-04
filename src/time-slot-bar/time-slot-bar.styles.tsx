@@ -177,10 +177,7 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
                 align-items: center;
                 justify-content: center;
                 width: 100%;
-                max-width: 200px;
-                height: ${props.$height}px;
-                min-height: ${props.$height}px;
-                border-radius: 0.125rem;
+                margin: 1px 0px;
             `;
         } else {
             return css`
@@ -191,23 +188,7 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
             `;
         }
     }}
-
-    ${(props) => {
-        if (!props.$halfFill) {
-            return css`
-                background-color: ${props.$bgColor};
-            `;
-        } else {
-            return css`
-                background: linear-gradient(
-                    to ${props.$halfFill},
-                    ${props.$bgColor} 50%,
-                    ${Color.Neutral[5]} 0%
-                );
-            `;
-        }
-    }}
-
+    background-color: ${({ $bgColor }) => $bgColor};
     cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
 
     ${(props) =>

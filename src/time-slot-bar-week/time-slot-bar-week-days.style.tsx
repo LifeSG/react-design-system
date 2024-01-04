@@ -5,6 +5,7 @@ import { TextStyleHelper } from "../text";
 import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
 import { Transition } from "../transition";
+import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
 
 interface StyleProps {
     $isExpanded: boolean;
@@ -127,4 +128,34 @@ export const CollapseExpandAllButton = styled(Button.Default)`
 export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
     transform: rotate(${(props) => (props.$isExpanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
+`;
+
+export const TimeSlotComponent = styled(TimeSlot)`
+    ${(props) => {
+        if (props.$type === "vertical") {
+            return css`
+                max-width: 200px;
+                ${props.$height && `height: ${props.$height}px;`}
+                ${props.$height && `min-height: ${props.$height}px;`}
+                margin: 0;
+                border-radius: 0.125rem;
+            `;
+        }
+    }}
+
+    ${(props) => {
+        if (!props.$halfFill) {
+            return css`
+                background-color: ${props.$bgColor};
+            `;
+        } else {
+            return css`
+                background: linear-gradient(
+                    to ${props.$halfFill},
+                    ${props.$bgColor} 50%,
+                    ${Color.Neutral[5]} 0%
+                );
+            `;
+        }
+    }}
 `;
