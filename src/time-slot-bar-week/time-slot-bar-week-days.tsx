@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import {
     GrowDayCell,
@@ -24,22 +24,14 @@ import {
     TimeSlotWrapper,
     Wrapper,
 } from "./time-slot-bar-week-days.style";
-import {
-    flatMapDeep,
-    isEmpty,
-    last,
-    mapValues,
-    maxBy,
-    minBy,
-    reduce,
-    times,
-    values,
-} from "lodash";
-import { DateHelper } from "src/util";
+import { DateHelper } from "../util";
 import { TimeSlotCellsVariant } from "./types";
 import { ChevronIcon } from "./time-slot-bar-week-days.style";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
+import isEmpty from "lodash/isEmpty";
+import minBy from "lodash/minBy";
+import maxBy from "lodash/maxBy";
 
 export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
@@ -89,7 +81,8 @@ export const TimeSlotBarWeekDays = ({
     const currentCalendarWeek = useMemo((): Dayjs[] => {
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
-    const flattenedSlots = flatMapDeep(values(daySlots)) ?? [];
+
+    const flattenedSlots = Object.values(daySlots ?? {}).flat();
     const minStartTime =
         startTime ?? minBy(flattenedSlots, "startTime")?.startTime ?? "00:00";
     const maxEndTime =
@@ -108,7 +101,7 @@ export const TimeSlotBarWeekDays = ({
     };
 
     const handleSlotClick = (date: string, slot: TimeSlot) => {
-        onSlotClick(date, slot);
+        onSlotClick && onSlotClick(date, slot);
     };
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
@@ -140,7 +133,8 @@ export const TimeSlotBarWeekDays = ({
         );
 
         const isDisabledDate =
-            disabledDates && disabledDates.includes(day.format(dateFormat));
+            (disabledDates && disabledDates.includes(day.format(dateFormat))) ??
+            false;
 
         return !isWithinRange || isDisabledDate;
     };
@@ -238,10 +232,12 @@ export const TimeSlotBarWeekDays = ({
         switch (variant) {
             case "fixed":
                 // Truncate consecutive empty cells into 1 [{},{},{...},{},{}] -> [{},{...},{}]
-                cellsArray = reduce(
-                    cellsArray,
+                cellsArray = cellsArray.reduce(
                     (result, obj) => {
-                        const lastObj = last(result);
+                        const lastObj =
+                            result.length > 0
+                                ? result[result.length - 1]
+                                : result[0];
                         if (isEmpty(obj) && isEmpty(lastObj)) {
                             return result;
                         }
@@ -292,10 +288,15 @@ export const TimeSlotBarWeekDays = ({
     const generatedDaySlots = useMemo((): {
         [date: string]: TimeSlotCell[];
     } => {
-        return mapValues(daySlots, (slots) => {
-            const cellsArray = initializeAndFillSlots(slots);
-            return populateEmptyCells(cellsArray);
-        });
+        if (daySlots) {
+            const transformedDaySlots = {};
+            Object.entries(daySlots).forEach(([key, slots]) => {
+                const cellsArray = initializeAndFillSlots(slots);
+                transformedDaySlots[key] = populateEmptyCells(cellsArray);
+            });
+            return transformedDaySlots;
+        }
+        return {};
     }, [daySlots]);
 
     // =============================================================================
@@ -376,7 +377,7 @@ export const TimeSlotBarWeekDays = ({
             const amPm = parsedTime.format("a");
 
             let formattedTime = `${hour}${
-                minutes !== "00" ? `:${minutes}` : ""
+                minutes !== "00" ? ` ${minutes}` : ""
             }`;
 
             if (
@@ -393,11 +394,14 @@ export const TimeSlotBarWeekDays = ({
 
         return (
             <TimeColumn $height={height}>
-                {times(Math.ceil(numberOfCells / 4), (index) => (
-                    <TimeColumnWrapper key={`time-${index}`}>
-                        <TimeColumnText>{formatTime(index)}</TimeColumnText>
-                    </TimeColumnWrapper>
-                ))}
+                {Array.from(
+                    { length: Math.ceil(numberOfCells / 4) },
+                    (_, index) => (
+                        <TimeColumnWrapper key={`time-${index}`}>
+                            <TimeColumnText>{formatTime(index)}</TimeColumnText>
+                        </TimeColumnWrapper>
+                    )
+                )}
             </TimeColumn>
         );
     };
@@ -413,11 +417,15 @@ export const TimeSlotBarWeekDays = ({
                         const formattedDate = day.format(dateFormat);
                         const cellsArray =
                             generatedDaySlots[formattedDate] ??
-                            times(
-                                variant === "flexible" ? numberOfCells : 1,
-                                (index) => generateFallbackCell(index)
+                            Array.from(
+                                {
+                                    length:
+                                        variant === "flexible"
+                                            ? numberOfCells
+                                            : 1,
+                                },
+                                (_, index) => generateFallbackCell(index)
                             );
-
                         return (
                             <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
                                 {cellsArray &&
