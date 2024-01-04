@@ -55,7 +55,7 @@ export const Expandable = styled(animated.div)`
 
 export const ColumnWeekCell = styled.div<StyleProps>`
     display: flex;
-    gap: 0.125rem;
+    gap: 0.25rem;
     transition: ${Transition.Base};
     overflow: hidden;
 `;
@@ -94,7 +94,6 @@ export const TimeSlotWrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin: 0.0625rem;
     gap: 0.25rem;
 `;
 
@@ -105,11 +104,10 @@ export const CollapseExpandAllWrapper = styled.div`
     margin-top: 0.5rem;
 `;
 
-export const CollapseExpandAllButton = styled(Button.Default)`
+export const CollapseExpandAllButton = styled(Button.Small)`
     width: 100%;
     height: 2.5rem;
     span {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
         display: flex;
         align-items: center;
         gap: 0.5rem;
