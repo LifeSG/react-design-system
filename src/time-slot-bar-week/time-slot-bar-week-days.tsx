@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import {
     GrowDayCell,
@@ -14,6 +14,7 @@ import {
     CollapseExpandAllWrapper,
     ColumnWeekCell,
     DayLabelWeek,
+    Expandable,
     HeaderCellWeek,
     HeaderCellWeekColumn,
     TimeColumn,
@@ -37,6 +38,8 @@ import {
 import { DateHelper } from "src/util";
 import { TimeSlotCellsVariant } from "./types";
 import { ChevronIcon } from "./time-slot-bar-week-days.style";
+import { useResizeDetector } from "react-resize-detector";
+import { useSpring } from "react-spring";
 
 export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
@@ -86,7 +89,6 @@ export const TimeSlotBarWeekDays = ({
     const currentCalendarWeek = useMemo((): Dayjs[] => {
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
-    const cellsRef = useRef<HTMLDivElement>();
     const flattenedSlots = flatMapDeep(values(daySlots)) ?? [];
     const minStartTime =
         startTime ?? minBy(flattenedSlots, "startTime")?.startTime ?? "00:00";
@@ -299,6 +301,15 @@ export const TimeSlotBarWeekDays = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    // React spring animation configuration
+    const { height: actualHeight, ref: cellsRef } = useResizeDetector();
+    const height = maxVisibleCellHeight
+        ? expandAll
+            ? actualHeight
+            : maxVisibleCellHeight
+        : actualHeight;
+    const expandableStyles = useSpring({ height });
+
     const renderWeek = () => {
         return (
             <HeaderCellWeekColumn>
@@ -381,10 +392,7 @@ export const TimeSlotBarWeekDays = ({
         };
 
         return (
-            <TimeColumn
-                $isExpanded={expandAll}
-                $maxVisibleCellHeight={maxVisibleCellHeight}
-            >
+            <TimeColumn $height={height}>
                 {times(Math.ceil(numberOfCells / 4), (index) => (
                     <TimeColumnWrapper key={`time-${index}`}>
                         <TimeColumnText>{formatTime(index)}</TimeColumnText>
@@ -396,67 +404,67 @@ export const TimeSlotBarWeekDays = ({
 
     const renderTimeSlotBarCells = () => {
         return (
-            <ColumnWeekCell
-                ref={cellsRef}
-                key={`week-cell-${calendarDate.format(dateFormat)}`}
-                $isExpanded={expandAll}
-                $maxVisibleCellHeight={maxVisibleCellHeight}
-            >
-                {currentCalendarWeek.map((day, dayIndex) => {
-                    const formattedDate = day.format(dateFormat);
-                    const cellsArray =
-                        generatedDaySlots[formattedDate] ??
-                        times(
-                            variant === "flexible" ? numberOfCells : 1,
-                            (index) => generateFallbackCell(index)
-                        );
+            <Expandable style={expandableStyles}>
+                <ColumnWeekCell
+                    ref={cellsRef}
+                    key={`week-cell-${calendarDate.format(dateFormat)}`}
+                >
+                    {currentCalendarWeek.map((day, dayIndex) => {
+                        const formattedDate = day.format(dateFormat);
+                        const cellsArray =
+                            generatedDaySlots[formattedDate] ??
+                            times(
+                                variant === "flexible" ? numberOfCells : 1,
+                                (index) => generateFallbackCell(index)
+                            );
 
-                    return (
-                        <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
-                            {cellsArray &&
-                                cellsArray.map((slot) => {
-                                    const {
-                                        id,
-                                        clickable = true,
-                                        styleAttributes,
-                                        cellLength,
-                                        halfFill,
-                                    } = slot;
-                                    const {
-                                        styleType = "default",
-                                        backgroundColor,
-                                        backgroundColor2,
-                                    } = styleAttributes;
-                                    return (
-                                        <TimeSlotComponent
-                                            $type="vertical"
-                                            $variant="default"
-                                            key={id}
-                                            $styleType={styleType}
-                                            $bgColor={backgroundColor}
-                                            $bgColor2={backgroundColor2}
-                                            $halfFill={halfFill}
-                                            $clickable={clickable}
-                                            $height={
-                                                variant === "fixed"
-                                                    ? cellLength * 12 +
-                                                      (cellLength - 1) * 4
-                                                    : 12
-                                            }
-                                            onClick={() =>
-                                                clickable &&
-                                                handleSlotClick(
-                                                    formattedDate,
-                                                    slot
-                                                )
-                                            }
-                                        ></TimeSlotComponent>
-                                    );
-                                })}
-                        </TimeSlotWrapper>
-                    );
-                })}
-            </ColumnWeekCell>
+                        return (
+                            <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
+                                {cellsArray &&
+                                    cellsArray.map((slot) => {
+                                        const {
+                                            id,
+                                            clickable = true,
+                                            styleAttributes,
+                                            cellLength,
+                                            halfFill,
+                                        } = slot;
+                                        const {
+                                            styleType = "default",
+                                            backgroundColor,
+                                            backgroundColor2,
+                                        } = styleAttributes;
+                                        return (
+                                            <TimeSlotComponent
+                                                $type="vertical"
+                                                $variant="default"
+                                                key={id}
+                                                $styleType={styleType}
+                                                $bgColor={backgroundColor}
+                                                $bgColor2={backgroundColor2}
+                                                $halfFill={halfFill}
+                                                $clickable={clickable}
+                                                $height={
+                                                    variant === "fixed"
+                                                        ? cellLength * 12 +
+                                                          (cellLength - 1) * 4
+                                                        : 12
+                                                }
+                                                onClick={() =>
+                                                    clickable &&
+                                                    handleSlotClick(
+                                                        formattedDate,
+                                                        slot
+                                                    )
+                                                }
+                                            ></TimeSlotComponent>
+                                        );
+                                    })}
+                            </TimeSlotWrapper>
+                        );
+                    })}
+                </ColumnWeekCell>
+            </Expandable>
         );
     };
 

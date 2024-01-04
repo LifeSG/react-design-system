@@ -6,10 +6,11 @@ import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
 import { Transition } from "../transition";
 import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
+import { animated } from "react-spring";
 
 interface StyleProps {
-    $isExpanded: boolean;
-    $maxVisibleCellHeight?: number;
+    $isExpanded?: boolean;
+    $height?: number;
 }
 
 export const DayLabelWeek = styled(DayLabel)`
@@ -47,20 +48,16 @@ export const Wrapper = styled.div`
     column-gap: 0.25rem;
 `;
 
-export const ColumnWeekCell = styled.div<StyleProps>`
+export const Expandable = styled(animated.div)`
     grid-column: 2 / -1;
+    overflow: hidden;
+`;
+
+export const ColumnWeekCell = styled.div<StyleProps>`
     display: flex;
     gap: 0.125rem;
     transition: ${Transition.Base};
-    max-height: 100rem;
-
-    ${(props) =>
-        props.$maxVisibleCellHeight &&
-        !props.$isExpanded &&
-        css`
-            max-height: ${props.$maxVisibleCellHeight}px;
-            overflow: hidden;
-        `}
+    overflow: hidden;
 `;
 
 export const TimeColumn = styled.div<StyleProps>`
@@ -70,15 +67,9 @@ export const TimeColumn = styled.div<StyleProps>`
     gap: 0.25rem;
     width: 1.375rem;
     transition: ${Transition.Base};
-    max-height: 100rem;
+    overflow: hidden;
 
-    ${(props) =>
-        props.$maxVisibleCellHeight &&
-        !props.$isExpanded &&
-        css`
-            max-height: ${props.$maxVisibleCellHeight}px;
-            overflow: hidden;
-        `};
+    ${(props) => props.$height && `height: ${props.$height}px;`}
 `;
 
 export const TimeColumnWrapper = styled.div`
