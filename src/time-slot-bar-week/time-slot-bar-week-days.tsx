@@ -49,7 +49,7 @@ interface TimeSlotWeekDaysProps
     interval?: number | undefined;
     variant?: TimeSlotCellsVariant | undefined;
     enableSelection?: boolean | undefined;
-    onSlotClick?: (date: string, timeSlot: TimeSlot) => void | undefined;
+    onSlotClick?: ((date: string, timeSlot: TimeSlot) => void) | undefined;
 }
 
 interface TimeSlotCell extends TimeSlot {

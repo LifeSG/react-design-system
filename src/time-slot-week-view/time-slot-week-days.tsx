@@ -34,7 +34,7 @@ interface TimeSlotWeekDaysProps
     onSelect: (value: Dayjs) => void;
     slots?: { [date: string]: TimeSlot[] } | undefined;
     enableSelection?: boolean | undefined;
-    onSlotClick?: (date: string, timeSlot: TimeSlot) => void | undefined;
+    onSlotClick?: ((date: string, timeSlot: TimeSlot) => void) | undefined;
 }
 
 const fallbackSlot = {
