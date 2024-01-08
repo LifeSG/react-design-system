@@ -12,6 +12,7 @@ import {
 import { animated } from "react-spring";
 
 interface TimeSlotCellProps extends TimeSlotStyleProps {
+    $height: number;
     $halfFill?: "top" | "bottom";
 }
 
@@ -126,8 +127,8 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
         if (props.$type === "vertical") {
             return css`
                 max-width: 200px;
-                ${props.$height && `height: ${props.$height}px;`}
-                ${props.$height && `min-height: ${props.$height}px;`}
+                height: ${props.$height}px;
+                min-height: ${props.$height}px;
                 margin: 0;
                 border-radius: 0.125rem;
             `;

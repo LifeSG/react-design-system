@@ -44,7 +44,6 @@ export interface TimeSlotStyleProps {
     $type?: "default" | "vertical";
     $variant: TimeSlotBarVariant;
     $width?: number;
-    $height?: number;
     $left?: number;
     $styleType: SlotStyle;
     $bgColor: string;
