@@ -143,10 +143,21 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
         } else {
             return css`
                 background: linear-gradient(
-                    to ${props.$halfFill},
-                    ${props.$bgColor} 50%,
-                    ${Color.Neutral[5]} 0%
-                );
+                        to ${props.$halfFill},
+                        ${props.$styleType === "stripes"
+                                ? "transparent"
+                                : props.$bgColor}
+                            50%,
+                        ${Color.Neutral[5]} 0%
+                    )
+                    ${props.$styleType === "stripes" &&
+                    `, repeating-linear-gradient(
+                            135deg,
+                            ${props.$bgColor2 || Color.Neutral[5]} 0px,
+                            ${props.$bgColor2 || Color.Neutral[5]} 10px,
+                            ${props.$bgColor} 10px,
+                            ${props.$bgColor} 20px
+                        )`};
             `;
         }
     }}
