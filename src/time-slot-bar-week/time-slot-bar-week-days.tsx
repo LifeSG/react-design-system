@@ -175,7 +175,10 @@ export const TimeSlotBarWeekDays = ({
         };
     };
 
-    function generateFallbackCell(prefix: string | number): TimeSlotCell {
+    function generateFallbackCell(
+        prefix: string | number,
+        cellLength = 1
+    ): TimeSlotCell {
         return {
             id: `${prefix.toString()}-${new Date().getTime()}`,
             startTime: "",
@@ -184,7 +187,7 @@ export const TimeSlotBarWeekDays = ({
             styleAttributes: {
                 backgroundColor: "#E0E4E5",
             },
-            cellLength: 1,
+            cellLength,
         };
     }
 
@@ -418,7 +421,14 @@ export const TimeSlotBarWeekDays = ({
                             generatedDaySlots[formattedDate] ??
                             Array(variant === "flexible" ? numberOfCells : 1)
                                 .fill(undefined)
-                                .map((_, index) => generateFallbackCell(index));
+                                .map((_, index) =>
+                                    generateFallbackCell(
+                                        index,
+                                        variant === "fixed"
+                                            ? numberOfCells
+                                            : undefined
+                                    )
+                                );
                         return (
                             <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
                                 {cellsArray.map((slot) => {
