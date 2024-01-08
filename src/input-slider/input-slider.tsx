@@ -6,6 +6,7 @@ export const InputSlider = ({
     value,
     ariaLabel,
     onChange,
+    onChangeEnd,
     ...otherProps
 }: InputSliderProps) => {
     // =========================================================================
@@ -31,6 +32,12 @@ export const InputSlider = ({
         onChange?.(newVal);
     };
 
+    const handleChangeEnd = (value: number[]) => {
+        const [newVal] = value;
+        setSelection([newVal]);
+        onChangeEnd?.(newVal);
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -44,6 +51,7 @@ export const InputSlider = ({
             value={selection}
             numOfThumbs={1}
             onChange={handleChange}
+            onChangeEnd={handleChange}
             ariaLabels={ariaLabel ? [ariaLabel] : undefined}
         />
     );
