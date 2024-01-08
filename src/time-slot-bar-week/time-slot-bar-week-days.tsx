@@ -42,7 +42,7 @@ interface TimeSlotWeekDaysProps
     selectedDate: string;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
-    slots: { [date: string]: TimeSlot[] } | undefined;
+    slots: { [date: string]: TimeSlot[] };
     startTime?: string | undefined;
     endTime?: string | undefined;
     maxVisibleCellHeight?: number | undefined;
@@ -91,6 +91,29 @@ export const TimeSlotBarWeekDays = ({
         DateHelper.getTimeDiffInMinutes(minStartTime, maxEndTime) / interval
     );
 
+    // React spring animation configuration
+    const { height: actualHeight, ref: cellsRef } = useResizeDetector();
+    const height = maxVisibleCellHeight
+        ? expandAll
+            ? actualHeight
+            : maxVisibleCellHeight
+        : actualHeight;
+    const expandableStyles = useSpring({ height });
+
+    const generatedDaySlots = useMemo((): {
+        [date: string]: TimeSlotCell[];
+    } => {
+        if (daySlots) {
+            const transformedDaySlots = {};
+            Object.entries(daySlots).forEach(([key, slots]) => {
+                const cellsArray = initializeAndFillSlots(slots);
+                transformedDaySlots[key] = populateEmptyCells(cellsArray);
+            });
+            return transformedDaySlots;
+        }
+        return {};
+    }, [daySlots]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -112,19 +135,6 @@ export const TimeSlotBarWeekDays = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const generateFallbackCell = (prefix: string | number): TimeSlotCell => {
-        return {
-            id: `${prefix.toString()}-${new Date().getTime()}`,
-            startTime: "",
-            endTime: "",
-            clickable: false,
-            styleAttributes: {
-                backgroundColor: "#E0E4E5",
-            },
-            cellLength: 1,
-        };
-    };
-
     const isDisabled = (day: Dayjs): boolean => {
         const isWithinRange = CalendarHelper.isWithinRange(
             day,
@@ -165,7 +175,20 @@ export const TimeSlotBarWeekDays = ({
         };
     };
 
-    const initializeAndFillSlots = (slots: TimeSlot[]) => {
+    function generateFallbackCell(prefix: string | number): TimeSlotCell {
+        return {
+            id: `${prefix.toString()}-${new Date().getTime()}`,
+            startTime: "",
+            endTime: "",
+            clickable: false,
+            styleAttributes: {
+                backgroundColor: "#E0E4E5",
+            },
+            cellLength: 1,
+        };
+    }
+
+    function initializeAndFillSlots(slots: TimeSlot[]): TimeSlotCell[] {
         const cellsArray = Array(numberOfCells).fill({});
 
         slots.forEach((slot) => {
@@ -225,9 +248,9 @@ export const TimeSlotBarWeekDays = ({
             }
         });
         return cellsArray;
-    };
+    }
 
-    const populateEmptyCells = (cellsArray: any[]): TimeSlotCell[] => {
+    function populateEmptyCells(cellsArray: any[]): TimeSlotCell[] {
         let i = 0;
         switch (variant) {
             case "fixed":
@@ -283,34 +306,11 @@ export const TimeSlotBarWeekDays = ({
                 break;
         }
         return cellsArray.filter((slot) => !isEmpty(slot));
-    };
-
-    const generatedDaySlots = useMemo((): {
-        [date: string]: TimeSlotCell[];
-    } => {
-        if (daySlots) {
-            const transformedDaySlots = {};
-            Object.entries(daySlots).forEach(([key, slots]) => {
-                const cellsArray = initializeAndFillSlots(slots);
-                transformedDaySlots[key] = populateEmptyCells(cellsArray);
-            });
-            return transformedDaySlots;
-        }
-        return {};
-    }, [daySlots]);
+    }
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    // React spring animation configuration
-    const { height: actualHeight, ref: cellsRef } = useResizeDetector();
-    const height = maxVisibleCellHeight
-        ? expandAll
-            ? actualHeight
-            : maxVisibleCellHeight
-        : actualHeight;
-    const expandableStyles = useSpring({ height });
-
     const renderWeek = () => {
         return (
             <HeaderCellWeekColumn>
@@ -394,14 +394,13 @@ export const TimeSlotBarWeekDays = ({
 
         return (
             <TimeColumn $height={height}>
-                {Array.from(
-                    { length: Math.ceil(numberOfCells / 4) },
-                    (_, index) => (
+                {Array(Math.ceil(numberOfCells / 4))
+                    .fill(undefined)
+                    .map((_, index) => (
                         <TimeColumnWrapper key={`time-${index}`}>
                             <TimeColumnText>{formatTime(index)}</TimeColumnText>
                         </TimeColumnWrapper>
-                    )
-                )}
+                    ))}
             </TimeColumn>
         );
     };
@@ -417,57 +416,50 @@ export const TimeSlotBarWeekDays = ({
                         const formattedDate = day.format(dateFormat);
                         const cellsArray =
                             generatedDaySlots[formattedDate] ??
-                            Array.from(
-                                {
-                                    length:
-                                        variant === "flexible"
-                                            ? numberOfCells
-                                            : 1,
-                                },
-                                (_, index) => generateFallbackCell(index)
-                            );
+                            Array(variant === "flexible" ? numberOfCells : 1)
+                                .fill(undefined)
+                                .map((_, index) => generateFallbackCell(index));
                         return (
                             <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
-                                {cellsArray &&
-                                    cellsArray.map((slot) => {
-                                        const {
-                                            id,
-                                            clickable = true,
-                                            styleAttributes,
-                                            cellLength,
-                                            halfFill,
-                                        } = slot;
-                                        const {
-                                            styleType = "default",
-                                            backgroundColor,
-                                            backgroundColor2,
-                                        } = styleAttributes;
-                                        return (
-                                            <TimeSlotComponent
-                                                $type="vertical"
-                                                $variant="default"
-                                                key={id}
-                                                $styleType={styleType}
-                                                $bgColor={backgroundColor}
-                                                $bgColor2={backgroundColor2}
-                                                $halfFill={halfFill}
-                                                $clickable={clickable}
-                                                $height={
-                                                    variant === "fixed"
-                                                        ? cellLength * 12 +
-                                                          (cellLength - 1) * 4
-                                                        : 12
-                                                }
-                                                onClick={() =>
-                                                    clickable &&
-                                                    handleSlotClick(
-                                                        formattedDate,
-                                                        slot
-                                                    )
-                                                }
-                                            ></TimeSlotComponent>
-                                        );
-                                    })}
+                                {cellsArray.map((slot) => {
+                                    const {
+                                        id,
+                                        clickable = true,
+                                        styleAttributes,
+                                        cellLength,
+                                        halfFill,
+                                    } = slot;
+                                    const {
+                                        styleType = "default",
+                                        backgroundColor,
+                                        backgroundColor2,
+                                    } = styleAttributes;
+                                    return (
+                                        <TimeSlotComponent
+                                            $type="vertical"
+                                            $variant="default"
+                                            key={id}
+                                            $styleType={styleType}
+                                            $bgColor={backgroundColor}
+                                            $bgColor2={backgroundColor2}
+                                            $halfFill={halfFill}
+                                            $clickable={clickable}
+                                            $height={
+                                                variant === "fixed"
+                                                    ? cellLength * 12 +
+                                                      (cellLength - 1) * 4
+                                                    : 12
+                                            }
+                                            onClick={() =>
+                                                clickable &&
+                                                handleSlotClick(
+                                                    formattedDate,
+                                                    slot
+                                                )
+                                            }
+                                        ></TimeSlotComponent>
+                                    );
+                                })}
                             </TimeSlotWrapper>
                         );
                     })}
@@ -480,8 +472,7 @@ export const TimeSlotBarWeekDays = ({
         if (
             !maxVisibleCellHeight ||
             !cellsRef.current ||
-            cellsRef.current.getBoundingClientRect().height <
-                maxVisibleCellHeight
+            (actualHeight && actualHeight < maxVisibleCellHeight)
         )
             return;
         return (
