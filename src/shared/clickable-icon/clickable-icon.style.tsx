@@ -20,6 +20,11 @@ export const Main = styled.button<StyleProps>`
         width: 1rem;
     }
 
+    svg {
+        height: 1.125rem;
+        width: 1.125rem;
+    }
+
     &:active,
     &:focus {
         ${({ $outline }) => $outline === "none" && "outline: none;"}
