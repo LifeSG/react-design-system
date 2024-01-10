@@ -82,8 +82,19 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onChange",
                 description: (
                     <>
-                        Called when selection range changes. Returns value in
-                        the format {code("[start, end]")}
+                        Called on every selection change. Returns value in the
+                        format {code("[start, end]")}
+                    </>
+                ),
+                propTypes: ["(value: [number, number]) => void"],
+            },
+            {
+                name: "onChangeEnd",
+                description: (
+                    <>
+                        Called when a thumb is released after selection is
+                        complete. Returns value in the format{" "}
+                        {code("[start, end]")}
                     </>
                 ),
                 propTypes: ["(value: [number, number]) => void"],

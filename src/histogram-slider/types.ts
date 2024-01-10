@@ -17,7 +17,9 @@ export interface HistogramSliderProps {
     rangeLabelPrefix?: string | undefined;
     rangeLabelSuffix?: string | undefined;
     renderRangeLabel?: ((value: number) => React.ReactNode) | undefined;
-    /** Called when selection range changes. Returns the value in the format `[start, end]` */
+    /** Called on every selection change. Returns the value in the format `[start, end]` */
     onChange?: ((value: [number, number]) => void) | undefined;
+    /** Called when a thumb is released after selection is complete. Returns the value in the format `[start, end]` */
+    onChangeEnd?: ((value: [number, number]) => void) | undefined;
     renderEmptyView?: (() => React.ReactNode) | undefined;
 }
