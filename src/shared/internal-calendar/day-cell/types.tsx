@@ -20,7 +20,7 @@ export interface CellStyleProps {
     circleShadow?: boolean | undefined;
     labelType?: LabelType | undefined;
     disabled?: boolean | undefined;
-    interactive?: boolean | undefined;
+    interactive?: boolean | null | undefined;
 }
 
 export interface DayCellProps extends CellStyleProps {
