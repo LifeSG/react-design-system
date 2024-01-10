@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DayLabel } from "../shared/internal-calendar/standard";
+import { Text } from "../text/text";
 import { TextStyleHelper } from "../text";
 import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
@@ -24,6 +24,14 @@ export const HeaderCellWeek = styled.div`
     user-select: none;
     margin-bottom: 0.5rem;
     flex: 1;
+`;
+
+export const CellWeekText = styled(Text.XSmall)<{ $disabled?: boolean }>`
+    ${(props) =>
+        props.$disabled &&
+        css`
+            color: ${Color.Neutral[4]};
+        `}
 `;
 
 export const HeaderCellWeekColumn = styled.div`

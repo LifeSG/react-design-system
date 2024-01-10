@@ -2,10 +2,10 @@ import dayjs, { Dayjs } from "dayjs";
 import React, { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
-import { Text } from "../text/text";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
+    CellWeekText,
     CollapseExpandAllButton,
     CollapseExpandAllWrapper,
     ColumnWeekCell,
@@ -157,14 +157,17 @@ export const TimeSlotBarWeekDays = ({
         const dateStartWithYear = day.format(dateFormat);
         const disabled = isDisabled(day);
         const dayCellStyleProps: CellStyleProps = {};
+        const isHoverEnabled = enableSelection && !disabled;
 
         if (disabled) {
             dayCellStyleProps.disabled = true;
         }
 
-        dayCellStyleProps.interactive = enableSelection && !disabled;
+        dayCellStyleProps.interactive = !enableSelection
+            ? null
+            : isHoverEnabled;
 
-        if (day === hoverDay) {
+        if (isHoverEnabled && day === hoverDay) {
             dayCellStyleProps.circleLeft = "hover-dash";
             dayCellStyleProps.circleRight = "hover-dash";
             dayCellStyleProps.circleShadow = true;
@@ -324,9 +327,12 @@ export const TimeSlotBarWeekDays = ({
             <HeaderCellWeekColumn>
                 {currentCalendarWeek.map((day, index) => (
                     <HeaderCellWeek key={`week-day-${index}`}>
-                        <Text.XSmall weight={"semibold"}>
+                        <CellWeekText
+                            weight={"semibold"}
+                            $disabled={isDisabled(day)}
+                        >
                             {dayjs(day).format("ddd")}
-                        </Text.XSmall>
+                        </CellWeekText>
                     </HeaderCellWeek>
                 ))}
             </HeaderCellWeekColumn>
