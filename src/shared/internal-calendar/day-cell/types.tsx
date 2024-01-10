@@ -28,4 +28,5 @@ export interface DayCellProps extends CellStyleProps {
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: Dayjs) => void;
+    onMouseout?: ((value: Dayjs) => void) | undefined;
 }
