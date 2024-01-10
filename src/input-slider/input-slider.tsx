@@ -51,7 +51,7 @@ export const InputSlider = ({
             value={selection}
             numOfThumbs={1}
             onChange={handleChange}
-            onChangeEnd={handleChange}
+            onChangeEnd={handleChangeEnd}
             ariaLabels={ariaLabel ? [ariaLabel] : undefined}
         />
     );
