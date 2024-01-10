@@ -16,19 +16,6 @@ interface TimeSlotCellProps extends TimeSlotStyleProps {
     $halfFill?: "top" | "bottom";
 }
 
-export const DayLabelWeek = styled(DayLabel)`
-    ${(props) => {
-        const { $variant } = props;
-        switch ($variant) {
-            case "default":
-                return css`
-                    ${TextStyleHelper.getFontFamily("H5", "semibold")}
-                    color: ${Color.Neutral[1]};
-                `;
-        }
-    }}
-`;
-
 export const HeaderCellWeek = styled.div`
     display: flex;
     align-items: center;

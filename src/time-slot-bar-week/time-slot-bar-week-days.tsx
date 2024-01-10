@@ -1,11 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
-import {
-    GrowDayCell,
-    InteractiveCircle,
-    StyleProps,
-} from "../shared/internal-calendar/standard";
+import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
 import { Text } from "../text/text";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
@@ -13,7 +9,6 @@ import {
     CollapseExpandAllButton,
     CollapseExpandAllWrapper,
     ColumnWeekCell,
-    DayLabelWeek,
     Expandable,
     HeaderCellWeek,
     HeaderCellWeekColumn,
@@ -78,6 +73,7 @@ export const TimeSlotBarWeekDays = ({
     // =============================================================================
     const dateFormat = "YYYY-MM-DD";
     const [expandAll, setExpandAll] = useState<boolean>(false);
+    const [hoverDay, setHoverDay] = useState<Dayjs>();
     const currentCalendarWeek = useMemo((): Dayjs[] => {
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
@@ -123,6 +119,14 @@ export const TimeSlotBarWeekDays = ({
         onSelect(value);
     };
 
+    const handleDayHover = (value: Dayjs) => {
+        setHoverDay(value);
+    };
+
+    const handleDayMouseout = () => {
+        setHoverDay(undefined);
+    };
+
     const handleSlotClick = (date: string, slot: TimeSlot) => {
         onSlotClick && onSlotClick(date, slot);
     };
@@ -152,27 +156,28 @@ export const TimeSlotBarWeekDays = ({
     const generateStyleProps = (day: Dayjs) => {
         const dateStartWithYear = day.format(dateFormat);
         const disabled = isDisabled(day);
-
-        const styleCircleProps: StyleProps = {},
-            styleLabelProps: StyleProps = {};
+        const dayCellStyleProps: CellStyleProps = {};
 
         if (disabled) {
-            styleCircleProps.$disabledDisplay = true;
-            styleLabelProps.$disabledDisplay = true;
+            dayCellStyleProps.disabled = true;
         }
 
-        styleCircleProps.$interactive = enableSelection && !disabled;
+        dayCellStyleProps.interactive = enableSelection && !disabled;
+
+        if (day === hoverDay) {
+            dayCellStyleProps.circleLeft = "hover-dash";
+            dayCellStyleProps.circleRight = "hover-dash";
+            dayCellStyleProps.circleShadow = true;
+        }
 
         // Apply selected styles
         if ([selectedDate].includes(dateStartWithYear)) {
-            styleCircleProps.$selected = true;
-            styleLabelProps.$selected = true;
+            dayCellStyleProps.labelType = "selected";
+            dayCellStyleProps.circleLeft = "selected-outline";
+            dayCellStyleProps.circleRight = "selected-outline";
         }
 
-        return {
-            styleCircleProps,
-            styleLabelProps,
-        };
+        return dayCellStyleProps;
     };
 
     function generateFallbackCell(
@@ -332,35 +337,23 @@ export const TimeSlotBarWeekDays = ({
         return (
             <HeaderCellWeekColumn>
                 {currentCalendarWeek.map((day, dayIndex) => {
-                    const variant = "default";
-                    const { styleCircleProps, styleLabelProps } =
-                        generateStyleProps(day);
+                    const dayCellStyleProps = generateStyleProps(day);
 
                     return (
-                        <GrowDayCell key={`day-${dayIndex}`}>
-                            <InteractiveCircle
-                                $variant={variant}
-                                onClick={() =>
-                                    handleDayClick(
-                                        day,
-                                        !styleCircleProps.$interactive
-                                    )
-                                }
-                                {...styleCircleProps}
-                            >
-                                <DayLabelWeek
-                                    weight={
-                                        styleLabelProps["$selected"]
-                                            ? "semibold"
-                                            : "regular"
-                                    }
-                                    $variant={variant}
-                                    {...styleLabelProps}
-                                >
-                                    {day.format("D")}
-                                </DayLabelWeek>
-                            </InteractiveCircle>
-                        </GrowDayCell>
+                        <DayCell
+                            key={`day-${dayIndex}`}
+                            date={day}
+                            calendarDate={dayjs(selectedDate)}
+                            onSelect={() => {
+                                handleDayClick(
+                                    day,
+                                    !dayCellStyleProps.interactive
+                                );
+                            }}
+                            onHover={handleDayHover}
+                            onMouseout={handleDayMouseout}
+                            {...dayCellStyleProps}
+                        ></DayCell>
                     );
                 })}
             </HeaderCellWeekColumn>
