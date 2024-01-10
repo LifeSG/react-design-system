@@ -97,8 +97,14 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "onChange",
-                description: "Called when a selection is made",
-                propTypes: ["(value: number) => React.ReactNode"],
+                description: "Called on every selection change",
+                propTypes: ["(value: number) => void"],
+            },
+            {
+                name: "onChangeEnd",
+                description:
+                    "Called when the thumb is released after selection is complete",
+                propTypes: ["(value: number) => void"],
             },
         ],
     },
