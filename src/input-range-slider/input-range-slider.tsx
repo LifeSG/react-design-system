@@ -26,6 +26,7 @@ export const InputRangeSlider = ({
     sliderLabelSuffix,
     renderSliderLabel,
     onChange,
+    onChangeEnd,
     ...otherProps
 }: InputRangeSliderProps) => {
     // =========================================================================
@@ -58,6 +59,17 @@ export const InputRangeSlider = ({
             }
             setSelection(value);
             onChange?.(value);
+        }
+    };
+
+    const handleChangeEnd = (value: number | number[]) => {
+        if (typeof value === "number") {
+            const val = [value];
+            setSelection(val);
+            onChangeEnd?.(val);
+        } else {
+            setSelection(value);
+            onChangeEnd?.(value);
         }
     };
 
@@ -128,6 +140,7 @@ export const InputRangeSlider = ({
                 value={selection}
                 disabled={disabled || readOnly}
                 onChange={handleChange}
+                onAfterChange={handleChangeEnd}
                 minDistance={minRange}
                 ariaLabel={ariaLabels}
                 renderThumb={(

@@ -19,6 +19,7 @@ export const HistogramSlider = ({
     rangeLabelPrefix,
     rangeLabelSuffix,
     onChange,
+    onChangeEnd,
     renderEmptyView,
     renderRangeLabel,
     ...otherProps
@@ -70,6 +71,11 @@ export const HistogramSlider = ({
     const handleChange = (values: [number, number]) => {
         setSelection(values);
         onChange?.(values);
+    };
+
+    const handleChangeEnd = (values: [number, number]) => {
+        setSelection(values);
+        onChangeEnd?.(values);
     };
 
     // =========================================================================
@@ -128,6 +134,7 @@ export const HistogramSlider = ({
                     disabled={disabled}
                     readOnly={readOnly}
                     onChange={handleChange}
+                    onChangeEnd={handleChangeEnd}
                 />
             </>
         );
