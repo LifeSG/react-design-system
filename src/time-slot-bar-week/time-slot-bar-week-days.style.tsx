@@ -16,6 +16,18 @@ interface TimeSlotCellProps extends TimeSlotStyleProps {
     $halfFill?: "top" | "bottom";
 }
 
+interface TimeColumnStyleProps {
+    $height?: number;
+}
+
+interface CellWeekTextStyleProps {
+    $disabled?: boolean;
+}
+
+interface ChevronIconStyleProps {
+    $isExpanded?: boolean;
+}
+
 export const HeaderCellWeek = styled.div`
     display: flex;
     align-items: center;
@@ -26,7 +38,7 @@ export const HeaderCellWeek = styled.div`
     flex: 1;
 `;
 
-export const CellWeekText = styled(Text.XSmall)<{ $disabled?: boolean }>`
+export const CellWeekText = styled(Text.XSmall)<CellWeekTextStyleProps>`
     ${(props) =>
         props.$disabled &&
         css`
@@ -58,7 +70,7 @@ export const ColumnWeekCell = styled.div`
     overflow: hidden;
 `;
 
-export const TimeColumn = styled.div<{ $height?: number }>`
+export const TimeColumn = styled.div<TimeColumnStyleProps>`
     display: flex;
     flex-direction: column;
     grid-row: 3 / auto;
@@ -112,7 +124,7 @@ export const CollapseExpandAllButton = styled(Button.Small)`
     }
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)<{ $isExpanded?: boolean }>`
+export const ChevronIcon = styled(ChevronUpIcon)<ChevronIconStyleProps>`
     transform: rotate(${(props) => (props.$isExpanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
 `;

@@ -167,9 +167,9 @@ export const TimeSlotBarWeekDays = ({
             ? null
             : isHoverEnabled;
 
-        if (isHoverEnabled && day === hoverDay) {
-            dayCellStyleProps.circleLeft = "hover-dash";
-            dayCellStyleProps.circleRight = "hover-dash";
+        if (isHoverEnabled && hoverDay && day.isSame(hoverDay, "day")) {
+            dayCellStyleProps.circleLeft = "hover-current";
+            dayCellStyleProps.circleRight = "hover-current";
             dayCellStyleProps.circleShadow = true;
         }
 
@@ -357,7 +357,7 @@ export const TimeSlotBarWeekDays = ({
                                 );
                             }}
                             onHover={handleDayHover}
-                            onMouseout={handleDayMouseout}
+                            onHoverEnd={handleDayMouseout}
                             {...dayCellStyleProps}
                         ></DayCell>
                     );

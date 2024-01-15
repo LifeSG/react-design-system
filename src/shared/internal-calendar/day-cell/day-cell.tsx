@@ -23,7 +23,7 @@ export const DayCell = ({
     date,
     onSelect,
     onHover,
-    onMouseout,
+    onHoverEnd,
 }: DayCellProps) => {
     // =========================================================================
     // EVENT HANDLERS
@@ -37,7 +37,7 @@ export const DayCell = ({
     };
 
     const handleMouseout = () => {
-        onMouseout && onMouseout(date);
+        onHoverEnd && onHoverEnd(date);
     };
 
     // =========================================================================
