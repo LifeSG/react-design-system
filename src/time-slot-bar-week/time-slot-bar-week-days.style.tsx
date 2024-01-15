@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DayLabel } from "../shared/internal-calendar/standard";
+import { Text } from "../text/text";
 import { TextStyleHelper } from "../text";
 import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
@@ -16,18 +16,17 @@ interface TimeSlotCellProps extends TimeSlotStyleProps {
     $halfFill?: "top" | "bottom";
 }
 
-export const DayLabelWeek = styled(DayLabel)`
-    ${(props) => {
-        const { $variant } = props;
-        switch ($variant) {
-            case "default":
-                return css`
-                    ${TextStyleHelper.getFontFamily("H5", "semibold")}
-                    color: ${Color.Neutral[1]};
-                `;
-        }
-    }}
-`;
+interface TimeColumnStyleProps {
+    $height?: number;
+}
+
+interface CellWeekTextStyleProps {
+    $disabled?: boolean;
+}
+
+interface ChevronIconStyleProps {
+    $isExpanded?: boolean;
+}
 
 export const HeaderCellWeek = styled.div`
     display: flex;
@@ -37,6 +36,14 @@ export const HeaderCellWeek = styled.div`
     user-select: none;
     margin-bottom: 0.5rem;
     flex: 1;
+`;
+
+export const CellWeekText = styled(Text.XSmall)<CellWeekTextStyleProps>`
+    ${(props) =>
+        props.$disabled &&
+        css`
+            color: ${Color.Neutral[4]};
+        `}
 `;
 
 export const HeaderCellWeekColumn = styled.div`
@@ -63,7 +70,7 @@ export const ColumnWeekCell = styled.div`
     overflow: hidden;
 `;
 
-export const TimeColumn = styled.div<{ $height?: number }>`
+export const TimeColumn = styled.div<TimeColumnStyleProps>`
     display: flex;
     flex-direction: column;
     grid-row: 3 / auto;
@@ -117,7 +124,7 @@ export const CollapseExpandAllButton = styled(Button.Small)`
     }
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)<{ $isExpanded?: boolean }>`
+export const ChevronIcon = styled(ChevronUpIcon)<ChevronIconStyleProps>`
     transform: rotate(${(props) => (props.$isExpanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
 `;

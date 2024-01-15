@@ -23,6 +23,7 @@ export const DayCell = ({
     date,
     onSelect,
     onHover,
+    onHoverEnd,
 }: DayCellProps) => {
     // =========================================================================
     // EVENT HANDLERS
@@ -33,6 +34,10 @@ export const DayCell = ({
 
     const handleHover = () => {
         onHover(date);
+    };
+
+    const handleMouseout = () => {
+        onHoverEnd && onHoverEnd(date);
     };
 
     // =========================================================================
@@ -59,6 +64,7 @@ export const DayCell = ({
                 $interactive={interactive}
                 onClick={handleClick}
                 onMouseEnter={handleHover}
+                onMouseLeave={handleMouseout}
             >
                 {date.date()}
             </Label>
