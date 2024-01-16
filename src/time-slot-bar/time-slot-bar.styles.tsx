@@ -40,7 +40,7 @@ interface ArrowStyleProps {
     $variant: TimeSlotBarVariant;
 }
 
-interface TimeSlotStyleProps {
+export interface TimeSlotStyleProps {
     $type?: "default" | "vertical";
     $variant: TimeSlotBarVariant;
     $width?: number;

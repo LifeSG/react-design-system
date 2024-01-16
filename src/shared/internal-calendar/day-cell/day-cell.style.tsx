@@ -14,7 +14,7 @@ interface StyleProps {
 interface LabelStyleProps {
     $type: LabelType;
     $disabled: boolean;
-    $interactive: boolean;
+    $interactive: boolean | null;
 }
 
 // =============================================================================
@@ -184,6 +184,8 @@ export const Label = styled(Text.H5)<LabelStyleProps>`
     cursor: ${(props) => {
         if (props.$interactive) {
             return "pointer";
+        } else if (props.$interactive === null) {
+            return "default";
         } else {
             return "not-allowed";
         }
