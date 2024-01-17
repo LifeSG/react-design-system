@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Checkbox } from "src/checkbox";
+import { Input } from "src/input";
 import { Form } from "src/form";
 
 type Component = typeof Form.Label;
@@ -21,9 +22,10 @@ export const Default: StoryObj<Component> = {
                     <Checkbox
                         checked={checked}
                         onClick={() => setChecked(!checked)}
+                        id="checkbox"
                     />
                 </div>
-                <Form.Label style={{ marginBottom: "0" }}>
+                <Form.Label htmlFor="checkbox" style={{ marginBottom: "0" }}>
                     The form label
                 </Form.Label>
             </div>
@@ -40,6 +42,7 @@ export const WithAddon: StoryObj<Component> = {
                     <Checkbox
                         checked={checked}
                         onClick={() => setChecked(!checked)}
+                        id="checkbox"
                     />
                 </div>
                 <Form.Label
@@ -49,6 +52,7 @@ export const WithAddon: StoryObj<Component> = {
                             "This is the form label's popover. And this will only be visible if you specify the addon prop",
                         type: "popover",
                     }}
+                    htmlFor="checkbox"
                 >
                     The form label with an addon
                 </Form.Label>
@@ -66,14 +70,31 @@ export const WithSubtitle: StoryObj<Component> = {
                     <Checkbox
                         checked={checked}
                         onClick={() => setChecked(!checked)}
+                        id="checkbox"
                     />
                 </div>
                 <Form.Label
                     style={{ marginBottom: "0" }}
                     subtitle="This is subtitle"
+                    htmlFor="checkbox"
                 >
                     The form label with a subtitle
                 </Form.Label>
+            </div>
+        );
+    },
+};
+
+export const NestedChildren: StoryObj<Component> = {
+    render: () => {
+        return (
+            <div style={{ display: "flex", flexDirection: "column" }}>
+                <Form.Label htmlFor="my-input">
+                    <span>Label with a</span>&nbsp;<a href="">hyperlink</a>
+                    <br />
+                    <p>and some additional text on a new line</p>
+                </Form.Label>
+                <Input placeholder="Input here" id="my-input" />
             </div>
         );
     },
