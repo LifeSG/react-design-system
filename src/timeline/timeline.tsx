@@ -2,6 +2,7 @@ import { TickIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 import {
     CircleIndicator,
+    ErrorIcon,
     LineIndicator,
     TimelineIndicators,
     TimelineItem,
@@ -81,6 +82,8 @@ export const Timeline = ({
         switch (variant) {
             case "completed":
                 return <TickIcon />;
+            case "error":
+                return <ErrorIcon />;
             default:
                 return null;
         }
