@@ -18,6 +18,27 @@ export const Label = styled.label`
     #popover-hoc-button {
         vertical-align: bottom;
     }
+
+    a,
+    span,
+    p {
+        ${TextStyleHelper.getTextStyle("H5", "semibold")}
+    }
+
+    a {
+        color: ${Color.Primary};
+        text-decoration: none;
+
+        :hover,
+        :active,
+        :focus {
+            color: ${Color.Secondary};
+
+            svg {
+                color: ${Color.Secondary};
+            }
+        }
+    }
 `;
 
 export const ErrorMessage = styled(Text.H6)`
