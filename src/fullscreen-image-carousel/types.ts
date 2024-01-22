@@ -16,6 +16,8 @@ export interface FullscreenImageCarouselProps
     /** The index of the visible item, starts from 0 */
     initialActiveItemIndex?: number | undefined;
     hideThumbnail?: boolean | undefined;
+    hideNavigation?: boolean | undefined;
+    hideCounter?: boolean | undefined;
     onClose?: (() => void) | undefined;
 }
 

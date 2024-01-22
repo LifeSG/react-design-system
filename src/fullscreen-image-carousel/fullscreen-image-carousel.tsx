@@ -45,6 +45,8 @@ export const Component = (
         items,
         initialActiveItemIndex,
         hideThumbnail,
+        hideNavigation,
+        hideCounter,
         onClose,
         ...otherProps
     }: FullscreenImageCarouselProps,
@@ -224,22 +226,26 @@ export const Component = (
             </CloseButton>
             <ImageGalleryContainer>
                 <ImageGalleryWrapper>
-                    <ArrowButton
-                        aria-label="View previous image"
-                        data-testid="prev-btn"
-                        $position="left"
-                        onClick={goToPrevSlide}
-                    >
-                        <ChevronLeftIcon aria-hidden />
-                    </ArrowButton>
-                    <ArrowButton
-                        aria-label="View next image"
-                        data-testid="forward-btn"
-                        $position="right"
-                        onClick={goToNextSlide}
-                    >
-                        <ChevronRightIcon aria-hidden />
-                    </ArrowButton>
+                    {!hideNavigation && (
+                        <>
+                            <ArrowButton
+                                aria-label="View previous image"
+                                data-testid="prev-btn"
+                                $position="left"
+                                onClick={goToPrevSlide}
+                            >
+                                <ChevronLeftIcon aria-hidden />
+                            </ArrowButton>
+                            <ArrowButton
+                                aria-label="View next image"
+                                data-testid="forward-btn"
+                                $position="right"
+                                onClick={goToNextSlide}
+                            >
+                                <ChevronRightIcon aria-hidden />
+                            </ArrowButton>
+                        </>
+                    )}
                     <ImageGallerySwipe
                         ref={containerRef}
                         onTouchStart={handleTouchStart}
@@ -248,11 +254,13 @@ export const Component = (
                     >
                         {renderSlides()}
                     </ImageGallerySwipe>
-                    <BoxChip>
-                        <Chip weight="semibold">{`${currentSlide + 1}/${
-                            items.length
-                        }`}</Chip>
-                    </BoxChip>
+                    {!hideCounter && (
+                        <BoxChip>
+                            <Chip weight="semibold">{`${currentSlide + 1}/${
+                                items.length
+                            }`}</Chip>
+                        </BoxChip>
+                    )}
                 </ImageGalleryWrapper>
                 {!hideThumbnail && renderThumbnails()}
             </ImageGalleryContainer>

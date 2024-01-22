@@ -62,6 +62,17 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "hideNavigation",
+                description:
+                    "Specifies if the left righit navigation are visible",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "hideCounter",
+                description: "Specifies if the image counter pill is visible",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "onClose",
                 description:
                     "The callback when the carousel overlay is dimissed via the close button or Esc key",

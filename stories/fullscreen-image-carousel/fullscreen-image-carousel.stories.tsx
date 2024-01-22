@@ -81,6 +81,8 @@ export const WithManyImages: StoryObj<Component> = {
                 <FullscreenImageCarousel
                     items={getImages(20)}
                     show={show}
+                    hideNavigation
+                    hideCounter
                     onClose={() => setShow(false)}
                 />
             </FullWidthStoryContainer>
