@@ -3,7 +3,7 @@ import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
 import { TimelineStatusProps, Variant } from "./types";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
