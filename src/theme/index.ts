@@ -28,4 +28,11 @@ export const MyLegacyTheme: ThemeSpec = {
     [ThemeContextKeys.resourceScheme]: "base",
 };
 
+export const CCubeTheme: ThemeSpec = {
+    [ThemeContextKeys.colorScheme]: "ccube",
+    [ThemeContextKeys.textStyleScheme]: "base",
+    [ThemeContextKeys.designTokenScheme]: "base",
+    [ThemeContextKeys.resourceScheme]: "base",
+};
+
 export * from "./types";

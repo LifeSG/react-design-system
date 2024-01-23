@@ -3,6 +3,7 @@ import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import {
     BaseTheme,
     BookingSGTheme,
+    CCubeTheme,
     MyLegacyTheme,
     RBSTheme,
 } from "../src/theme";
@@ -14,6 +15,7 @@ const preview = {
             themes: {
                 LifeSG: BaseTheme,
                 BookingSG: BookingSGTheme,
+                CCube: CCubeTheme,
                 MyLegacy: MyLegacyTheme,
                 RBS: RBSTheme,
             },
