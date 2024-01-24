@@ -51,6 +51,7 @@ export * from "./pagination";
 export * from "./phone-number-input";
 export * from "./pill";
 export * from "./popover";
+export * from "./popover-v2";
 export * from "./predictive-text-input";
 export * from "./progress-indicator";
 export * from "./radio-button";
