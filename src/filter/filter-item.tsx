@@ -35,7 +35,7 @@ export const FilterItem = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { mode } = useContext(FilterContext);
+    const { mode, rootNode } = useContext(FilterContext);
     const isMobile = mode === "mobile";
     const [expanded, setExpanded] = useState(getInitialExpandState());
     const [contentMinimised, setContentMinimised] = useState(minimisable);
@@ -96,7 +96,12 @@ export const FilterItem = ({
     const renderAddon = () => {
         switch (addon.type) {
             case "popover":
-                return <PopoverAddon addon={addon} />;
+                return (
+                    <PopoverAddon
+                        addon={addon}
+                        rootNode={isMobile ? rootNode : undefined}
+                    />
+                );
             default:
                 return null;
         }

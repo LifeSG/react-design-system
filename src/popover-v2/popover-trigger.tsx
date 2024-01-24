@@ -17,6 +17,7 @@ export const PopoverTrigger = ({
     children,
     popoverContent,
     trigger = "click",
+    rootNode,
     onPopoverAppear,
     onPopoverDismiss,
     ...otherProps
@@ -92,7 +93,7 @@ export const PopoverTrigger = ({
     return (
         <>
             {visible && (
-                <FloatingPortal>
+                <FloatingPortal root={rootNode}>
                     <div ref={refs.setFloating} style={{ ...floatingStyles }}>
                         <PopoverV2
                             visible

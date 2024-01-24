@@ -123,7 +123,9 @@ describe("Filter", () => {
             it("should be always expanded on mobile even when expanded prop is false", () => {
                 const mockOnChange = jest.fn();
                 render(
-                    <FilterContext.Provider value={{ mode: "mobile" }}>
+                    <FilterContext.Provider
+                        value={{ mode: "mobile", rootNode: null }}
+                    >
                         <Filter.Item
                             expanded={false}
                             onExpandChange={mockOnChange}

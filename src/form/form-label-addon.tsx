@@ -1,4 +1,5 @@
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
+import { RefObject } from "react";
 import { PopoverTrigger } from "../popover-v2/popover-trigger";
 import { AddonWrapper, TriggerArea } from "./form-label-addon.style";
 import { FormLabelAddonProps } from "./types";
@@ -10,9 +11,13 @@ import { FormLabelAddonProps } from "./types";
 // =============================================================================
 interface PopoverAddonProps {
     addon: FormLabelAddonProps;
+    rootNode?: RefObject<HTMLElement>;
 }
 
-export const PopoverAddon = ({ addon }: PopoverAddonProps): JSX.Element => {
+export const PopoverAddon = ({
+    addon,
+    rootNode,
+}: PopoverAddonProps): JSX.Element => {
     // =========================================================================
     // CONST, STATE, RE
     // =========================================================================
@@ -35,6 +40,7 @@ export const PopoverAddon = ({ addon }: PopoverAddonProps): JSX.Element => {
             id={id}
             data-testid={dataTestid}
             popoverContent={content}
+            rootNode={rootNode}
         >
             <AddonWrapper>
                 <TriggerArea>{renderIcon()}</TriggerArea>
