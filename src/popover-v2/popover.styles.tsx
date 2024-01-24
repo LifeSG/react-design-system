@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Card } from "../card";
+import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ModalBox } from "../modal/modal-box";
+import { TextStyleHelper } from "../text";
 
 // =============================================================================
 // STYLING
@@ -13,8 +15,25 @@ export const PopoverContainer = styled.div`
 `;
 
 export const PopoverCard = styled(Card)`
+    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;
+    }
+
+    a {
+        color: ${Color.Primary};
+        text-decoration: none;
+
+        :hover,
+        :active,
+        :focus {
+            color: ${Color.Secondary};
+
+            svg {
+                color: ${Color.Secondary};
+            }
+        }
     }
 `;
 
