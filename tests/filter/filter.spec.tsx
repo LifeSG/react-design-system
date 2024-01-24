@@ -1,6 +1,9 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { useMediaQuery } from "react-responsive";
 import { Filter } from "../../src";
 import { FilterContext } from "../../src/filter/filter-context";
+
+jest.mock("react-responsive");
 
 describe("Filter", () => {
     beforeEach(() => {
@@ -11,6 +14,8 @@ describe("Filter", () => {
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
+
+        (useMediaQuery as jest.Mock).mockReturnValue(false);
     });
 
     it("should render the relevant components correctly on desktop", () => {
@@ -27,6 +32,8 @@ describe("Filter", () => {
     });
 
     it("should render the relevant components correctly on mobile", () => {
+        (useMediaQuery as jest.Mock).mockReturnValue(true);
+
         render(
             <Filter>
                 <Filter.Item data-testid="item1">{ITEM_CONTENT}</Filter.Item>
