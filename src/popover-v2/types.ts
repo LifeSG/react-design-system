@@ -11,10 +11,17 @@ export interface PopoverV2Props {
 
 export type PopoverV2TriggerType = "click" | "hover";
 
+type Position = "top" | "right" | "bottom" | "left";
+type Alignment = "start" | "end";
+type AlignedPosition = `${Position}-${Alignment}`;
+
+export type PopoverV2Position = Position | AlignedPosition;
+
 export interface PopoverV2TriggerProps {
     children: React.ReactNode;
     popoverContent: string | JSX.Element;
     trigger?: PopoverV2TriggerType | undefined;
+    position?: PopoverV2Position | undefined;
     id?: string | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;

@@ -1,5 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading4, Secondary, Title } from "../storybook-common";
+import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import * as PopoverStories from "./popover.stories";
 import { PropsTable } from "./props-table";
 
@@ -23,8 +23,10 @@ import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 
 <Heading4>Appearance information</Heading4>
 
--   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself on top of the trigger component by default
+-   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself at the preferred position by default
 -   The `Popover` appears as a modal in mobile viewports
+
+The example below illustrates the default behaviour.
 
 <Canvas of={PopoverStories.Appearance} />
 
