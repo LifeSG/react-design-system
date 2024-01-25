@@ -38,7 +38,7 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                         The content of the <code>Popover</code>
                     </>
                 ),
-                propTypes: ["string", "JSX.Element"],
+                propTypes: ["string", "JSX.Element", "() => React.ReactNode"],
                 mandatory: true,
             },
             {

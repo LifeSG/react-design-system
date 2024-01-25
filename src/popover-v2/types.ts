@@ -19,7 +19,7 @@ export type PopoverV2Position = Position | AlignedPosition;
 
 export interface PopoverV2TriggerProps {
     children: React.ReactNode;
-    popoverContent: string | JSX.Element;
+    popoverContent: string | JSX.Element | (() => React.ReactNode);
     trigger?: PopoverV2TriggerType | undefined;
     position?: PopoverV2Position | undefined;
     id?: string | undefined;

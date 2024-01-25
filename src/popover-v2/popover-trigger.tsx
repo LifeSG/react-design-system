@@ -99,19 +99,26 @@ export const PopoverTrigger = ({
     };
 
     // =========================================================================
-    // RENDER
+    // RENDER FUNCTIONS
     // =========================================================================
+    const renderPopover = () => {
+        if (typeof popoverContent === "function") {
+            return popoverContent();
+        }
+
+        return (
+            <PopoverV2 visible onMobileClose={handlePopoverMobileClose}>
+                {popoverContent}
+            </PopoverV2>
+        );
+    };
+
     return (
         <>
             {visible && (
                 <FloatingPortal root={rootNode}>
                     <div ref={refs.setFloating} style={{ ...floatingStyles }}>
-                        <PopoverV2
-                            visible
-                            onMobileClose={handlePopoverMobileClose}
-                        >
-                            {popoverContent}
-                        </PopoverV2>
+                        {renderPopover()}
                     </div>
                 </FloatingPortal>
             )}
