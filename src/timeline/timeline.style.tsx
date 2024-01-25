@@ -3,7 +3,6 @@ import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
 import { TimelineStatusProps, Variant } from "./types";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -54,8 +53,16 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                 `;
             case "error":
                 return css`
+                    width: 1.8rem;
+                    height: 1.8rem;
+                    margin-left: -0.15rem;
+                    margin-top: 0.1rem;
+                    margin-bottom: -0.15rem;
+
                     svg {
                         color: ${Color.Validation.Red.Icon};
+                        height: 100%;
+                        width: 100%;
                     }
                 `;
         }
@@ -85,6 +92,7 @@ export const LineIndicator = styled.div<VariantStyleProps>`
                 `;
             case "error":
                 return css`
+                    margin-left: -0.15rem;
                     background-color: ${Color.Validation.Red.Icon};
                 `;
         }
@@ -167,9 +175,4 @@ export const TimelinePill = styled.div<TimelineStatusProps>`
             }
         `;
     }}
-`;
-
-export const ErrorIcon = styled(ExclamationCircleFillIcon)`
-    height: 1.5rem;
-    width: 1.5rem;
 `;
