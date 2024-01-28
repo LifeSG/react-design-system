@@ -1,11 +1,15 @@
+import { PillColorType, PillProps, PillType } from "../pill";
+
 export type Variant =
     | "completed"
     | "current"
     | "upcoming-active"
     | "upcoming-inactive";
 
-export interface TimelineStatusProps {
-    type: "dark" | "light";
+export type TimelineStatusType = PillType | "dark" | "light";
+
+export interface TimelineStatusProps extends Omit<PillProps, "type"> {
+    type: TimelineStatusType;
     label: string;
 }
 

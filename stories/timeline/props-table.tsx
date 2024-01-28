@@ -103,10 +103,26 @@ const DATA: ApiTableSectionProps[] = [
         name: "TimelineStatusProps",
         attributes: [
             {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://designsystem.life.gov.sg/?path=/docs/modules-pill--docs"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            PillProps
+                        </a>
+                    </>
+                ),
+            },
+            {
                 name: "type",
                 mandatory: true,
-                description: "The color style of the pill",
-                propTypes: [`"dark"`, `"light"`],
+                description:
+                    "The style of the pill, `outline` `solid` are from PillType, `dark` `light` are retained for backward compatibility",
+                propTypes: [`"dark"`, `"light"`, `"outline"`, `"solid"`],
             },
             {
                 name: "label",

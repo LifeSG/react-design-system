@@ -2,7 +2,8 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
-import { TimelineStatusProps, Variant } from "./types";
+import { Variant } from "./types";
+import { Pill } from "../pill";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -131,29 +132,7 @@ export const TimelinePills = styled(Text.H3)`
     margin-bottom: 0.5rem;
 `;
 
-export const TimelinePill = styled.div<TimelineStatusProps>`
-    border-radius: 1rem;
+export const TimelinePill = styled(Pill)`
     padding: 0.125rem 0.5rem;
     margin-right: 0.5rem;
-
-    ${(props) => {
-        if (props.type === "dark") {
-            return css`
-                background-color: ${Color.Neutral[1]};
-
-                & > span {
-                    color: ${Color.Neutral[8]};
-                }
-            `;
-        }
-
-        return css`
-            background-color: ${Color.Neutral[8]};
-            border: 1px solid ${Color.Neutral[5]};
-
-            & > span {
-                color: ${Color.Neutral[1]};
-            }
-        `;
-    }}
 `;
