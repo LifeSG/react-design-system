@@ -86,11 +86,12 @@ export const TimeSlotBarWeekDays = ({
     const numberOfCells = Math.ceil(
         DateHelper.getTimeDiffInMinutes(minStartTime, maxEndTime) / interval
     );
+    console.log(minStartTime, maxEndTime, numberOfCells);
 
     // React spring animation configuration
     const { height: actualHeight, ref: cellsRef } = useResizeDetector();
     const height = maxVisibleCellHeight
-        ? expandAll
+        ? actualHeight < maxVisibleCellHeight || expandAll
             ? actualHeight
             : maxVisibleCellHeight
         : actualHeight;
@@ -316,7 +317,9 @@ export const TimeSlotBarWeekDays = ({
                 }
                 break;
         }
-        return cellsArray.filter((slot) => !isEmpty(slot));
+        return cellsArray.filter(
+            (slot) => !isEmpty(slot) && slot.cellLength > 0
+        );
     }
 
     // =============================================================================
