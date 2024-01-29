@@ -27,7 +27,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
     border-radius: 50%;
 
     ${(props) => {
@@ -49,6 +49,18 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                     background-color: ${Color.Validation.Green.Icon};
                     svg {
                         color: ${Color.Neutral[8]};
+                    }
+                `;
+            case "error":
+                return css`
+                    width: 1.8rem;
+                    height: 1.8rem;
+                    margin: 0.3rem 0 -0.15rem -0.15rem;
+
+                    svg {
+                        color: ${Color.Validation.Red.Icon};
+                        height: 100%;
+                        width: 100%;
                     }
                 `;
         }
@@ -75,6 +87,11 @@ export const LineIndicator = styled.div<VariantStyleProps>`
             case "completed":
                 return css`
                     background-color: ${Color.Validation.Green.Icon};
+                `;
+            case "error":
+                return css`
+                    margin-left: -0.15rem;
+                    background-color: ${Color.Validation.Red.Icon};
                 `;
         }
     }}

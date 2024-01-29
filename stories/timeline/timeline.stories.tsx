@@ -148,11 +148,10 @@ export const Variants: StoryObj<Component> = {
                         },
                         {
                             title: "Item 5",
-                            variant: "upcoming-inactive",
+                            variant: "error",
                             content: (
                                 <Text.Body>
-                                    An example with{" "}
-                                    <code>upcoming-inactive</code> variant
+                                    An example with <code>error</code> variant
                                 </Text.Body>
                             ),
                         },

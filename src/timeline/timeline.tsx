@@ -1,4 +1,4 @@
-import { TickIcon } from "@lifesg/react-icons";
+import { ExclamationCircleFillIcon, TickIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 import {
     CircleIndicator,
@@ -81,6 +81,8 @@ export const Timeline = ({
         switch (variant) {
             case "completed":
                 return <TickIcon />;
+            case "error":
+                return <ExclamationCircleFillIcon />;
             default:
                 return null;
         }

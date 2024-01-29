@@ -2,7 +2,8 @@ export type Variant =
     | "completed"
     | "current"
     | "upcoming-active"
-    | "upcoming-inactive";
+    | "upcoming-inactive"
+    | "error";
 
 export interface TimelineStatusProps {
     type: "dark" | "light";
