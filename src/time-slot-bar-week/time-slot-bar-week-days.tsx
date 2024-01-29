@@ -86,7 +86,6 @@ export const TimeSlotBarWeekDays = ({
     const numberOfCells = Math.ceil(
         DateHelper.getTimeDiffInMinutes(minStartTime, maxEndTime) / interval
     );
-    console.log(minStartTime, maxEndTime, numberOfCells);
 
     // React spring animation configuration
     const { height: actualHeight, ref: cellsRef } = useResizeDetector();
