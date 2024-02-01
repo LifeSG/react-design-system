@@ -108,7 +108,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <a
-                            href="https://designsystem.life.gov.sg/?path=/docs/modules-pill--docs"
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
                             rel="noreferrer"
                             target="_blank"
                         >
