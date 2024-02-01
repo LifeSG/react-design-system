@@ -113,13 +113,13 @@ export const Default: StoryObj<Component> = {
                                 {
                                     type: "outline",
                                     colorType: "red",
-                                    label: "Status outline red",
+                                    children: "Status outline red",
                                     icon: <PlusCircleFillIcon />,
                                 },
                                 {
                                     type: "solid",
                                     colorType: "blue",
-                                    label: "Status solid blue",
+                                    children: "Status solid blue",
                                     icon: <PlaceholderIcon />,
                                 },
                             ],

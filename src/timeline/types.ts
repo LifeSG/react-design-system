@@ -1,4 +1,4 @@
-import { PillColorType, PillProps, PillType } from "../pill";
+import { PillProps, PillType } from "../pill";
 
 export type Variant =
     | "completed"
@@ -8,14 +8,17 @@ export type Variant =
 
 export type TimelineStatusType = PillType | "dark" | "light";
 
+/** @deprecated This component is deprecated, use PillProps instead */
 export interface TimelineStatusProps extends Omit<PillProps, "type"> {
     type: TimelineStatusType;
-    label: string;
+    /** @deprecated This field is deprecated */
+    label?: string;
 }
 
 export interface TimelineItemProps {
     title: string | JSX.Element;
     content: string | JSX.Element;
+    // statuses?: PillProps[] | undefined;
     statuses?: TimelineStatusProps[] | undefined;
     variant?: Variant | undefined;
 }

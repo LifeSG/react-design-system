@@ -77,7 +77,7 @@ const DATA: ApiTableSectionProps[] = [
                         &nbsp; regardless how many statuses are specified
                     </>
                 ),
-                propTypes: ["TimelineStatusProps[]"],
+                propTypes: ["PillProps[]", "TimelineStatusProps[]"],
             },
             {
                 name: "variant",
@@ -106,7 +106,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        <b>DEPRECATED</b>. This component will be replaced
+                        by&nbsp;
                         <a
                             href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
                             rel="noreferrer"
@@ -120,14 +121,33 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "type",
                 mandatory: true,
-                description:
-                    "The style of the pill, `outline` `solid` are from PillType, `dark` `light` are retained for backward compatibility",
-                propTypes: [`"dark"`, `"light"`, `"outline"`, `"solid"`],
+                description: (
+                    <>
+                        The color style of the pill
+                        <br />
+                        <b>DEPRECATED</b>. Use&nbsp;
+                        <a
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            PillType&nbsp;
+                        </a>
+                        instead
+                    </>
+                ),
+                propTypes: [`"dark"`, `"light"`],
             },
             {
                 name: "label",
                 mandatory: true,
-                description: "The text to be rendered on the pill",
+                description: (
+                    <>
+                        The text to be rendered on the pill.
+                        <br />
+                        <b>DEPRECATED</b>
+                    </>
+                ),
                 propTypes: ["string"],
             },
         ],
