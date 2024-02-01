@@ -88,17 +88,17 @@ export const Default: StoryObj<Component> = {
                             content: (
                                 <Text.Body>
                                     This one comes with light and black status
-                                    icons.
+                                    pill.
                                 </Text.Body>
                             ),
                             statuses: [
                                 {
-                                    type: "light",
-                                    label: "Status light",
+                                    type: "outline",
+                                    children: "Status light",
                                 },
                                 {
-                                    type: "dark",
-                                    label: "Status dark",
+                                    type: "solid",
+                                    children: "Status dark",
                                 },
                             ],
                         },
@@ -106,20 +106,20 @@ export const Default: StoryObj<Component> = {
                             title: "Item 6",
                             content: (
                                 <Text.Body>
-                                    This one comes with Pill DS icons.
+                                    This one comes with icon status pill.
                                 </Text.Body>
                             ),
                             statuses: [
                                 {
                                     type: "outline",
                                     colorType: "red",
-                                    label: "Status outline red",
+                                    children: "Status outline red",
                                     icon: <PlusCircleFillIcon />,
                                 },
                                 {
                                     type: "solid",
                                     colorType: "blue",
-                                    label: "Status solid blue",
+                                    children: "Status solid blue",
                                     icon: <PlaceholderIcon />,
                                 },
                             ],
