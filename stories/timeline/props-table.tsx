@@ -77,7 +77,7 @@ const DATA: ApiTableSectionProps[] = [
                         &nbsp; regardless how many statuses are specified
                     </>
                 ),
-                propTypes: ["PillProps[]"],
+                propTypes: ["TimelineStatusProps[]"],
             },
             {
                 name: "variant",
@@ -106,7 +106,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        <b>DEPRECATED</b>, Use&nbsp;
+                        This component also inherits props from&nbsp;
                         <a
                             href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
                             rel="noreferrer"
@@ -114,28 +114,20 @@ const DATA: ApiTableSectionProps[] = [
                         >
                             PillProps
                         </a>
-                        &nbsp;instead
                     </>
                 ),
             },
             {
                 name: "type",
                 mandatory: true,
-                description: (
-                    <>
-                        <b>DEPRECATED</b>, The color style of the pill
-                    </>
-                ),
-                propTypes: [`"dark"`, `"light"`],
+                description:
+                    "The style of the pill, `outline` `solid` are from PillType, `dark` `light` are retained for backward compatibility",
+                propTypes: [`"dark"`, `"light"`, `"outline"`, `"solid"`],
             },
             {
                 name: "label",
                 mandatory: true,
-                description: (
-                    <>
-                        <b>DEPRECATED</b>, The text to be rendered on the pill
-                    </>
-                ),
+                description: "The text to be rendered on the pill",
                 propTypes: ["string"],
             },
         ],

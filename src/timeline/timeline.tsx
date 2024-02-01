@@ -12,8 +12,13 @@ import {
     TimelineTitle,
     TimelineWrapper,
 } from "./timeline.style";
-import { TimelineItemProps, TimelineProps, Variant } from "./types";
-import { PillProps } from "../pill/types";
+import {
+    TimelineItemProps,
+    TimelineProps,
+    TimelineStatusProps,
+    TimelineStatusType,
+    Variant,
+} from "./types";
 
 export const Timeline = ({
     items,
@@ -54,18 +59,34 @@ export const Timeline = ({
         return <>{title}</>;
     };
 
-    const renderStatusPills = (statuses: PillProps[]): JSX.Element[] => {
+    const renderStatusPills = (
+        statuses: TimelineStatusProps[]
+    ): JSX.Element[] => {
         // maximum 2 pills allowed
         const renderableStatuses = statuses.slice(0, 2);
-        return renderableStatuses.map((status: PillProps, index) => {
+        return renderableStatuses.map((status: TimelineStatusProps, index) => {
+            let type: TimelineStatusType;
+
+            switch (status.type) {
+                case "dark":
+                    type = "solid";
+                    break;
+                case "light":
+                    type = "outline";
+                    break;
+                default:
+                    type = status.type;
+            }
+
             return (
                 <TimelinePill
                     {...status}
+                    type={type}
                     key={`status-pill-${index}`}
                     data-testid="status-pill"
                     className="timeline-status-pill"
                 >
-                    {status.children}
+                    {status.children ? status.children : status.label}
                 </TimelinePill>
             );
         });
