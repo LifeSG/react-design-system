@@ -22,6 +22,9 @@ export const PopoverTrigger = ({
     onPopoverDismiss,
     ...otherProps
 }: PopoverV2TriggerProps) => {
+    // =========================================================================
+    // CONST, STATE, REF
+    // =========================================================================
     const [visible, setVisible] = useState<boolean>(false);
     const nodeRef = useRef<HTMLDivElement>();
     const isMobile = useMediaQuery({
@@ -34,9 +37,9 @@ export const PopoverTrigger = ({
         middleware: [offset(16), flip(), shift()],
     });
 
-    // =============================================================================
+    // =========================================================================
     // EFFECTS
-    // =============================================================================
+    // =========================================================================
     useEffect(() => {
         // NOTE: Do not add mouse down event if it's mobile
         if (isMobile || !visible) {

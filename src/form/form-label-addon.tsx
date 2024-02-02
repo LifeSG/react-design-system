@@ -19,9 +19,9 @@ export const PopoverAddon = ({
     rootNode,
 }: PopoverAddonProps): JSX.Element => {
     // =========================================================================
-    // CONST, STATE, RE
+    // CONST, STATE, REF
     // =========================================================================
-    const { content, type, icon, id, "data-testid": dataTestid } = addon;
+    const { content, type, icon, id, "data-testid": testId } = addon;
 
     // =========================================================================
     // RENDER FUNCTION
@@ -38,7 +38,7 @@ export const PopoverAddon = ({
         <PopoverTrigger
             trigger="click"
             id={id}
-            data-testid={dataTestid}
+            data-testid={testId}
             popoverContent={content}
             rootNode={rootNode}
         >
