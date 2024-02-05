@@ -77,7 +77,7 @@ const DATA: ApiTableSectionProps[] = [
                         &nbsp; regardless how many statuses are specified
                     </>
                 ),
-                propTypes: ["PillProps[]", "TimelineStatusProps[]"],
+                propTypes: ["TimelineStatusProps[]"],
             },
             {
                 name: "variant",
@@ -106,14 +106,13 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        <b>DEPRECATED</b>. This component will be replaced
-                        by&nbsp;
+                        This component also inherits props from&nbsp;
                         <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
                             rel="noreferrer"
                             target="_blank"
                         >
-                            PillProps
+                            HTMLDivAttributes
                         </a>
                     </>
                 ),
@@ -123,32 +122,52 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The color style of the pill
-                        <br />
-                        <b>DEPRECATED</b>. Use&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            PillType&nbsp;
-                        </a>
-                        instead
+                        The color style of the pill.{" "}
+                        <b>
+                            Note: from v2.4.0 onwards, values `dark`` and
+                            `light` will no longer be supported in favour of
+                            `solid` and `outline` respectively
+                        </b>
                     </>
                 ),
-                propTypes: [`"dark"`, `"light"`],
+                propTypes: [`"dark"`, `"light"`, `"solid"`, `"outline"`],
             },
             {
-                name: "label",
+                name: "label (deprecated)",
                 mandatory: true,
                 description: (
                     <>
-                        The text to be rendered on the pill.
-                        <br />
-                        <b>DEPRECATED</b>
+                        The text to be rendered on the pill.{" "}
+                        <b>
+                            Note: from v2.4.0 onwards, this attribute will no
+                            longer be available.
+                        </b>
                     </>
                 ),
+
                 propTypes: ["string"],
+            },
+            {
+                name: "colorType",
+                description: (
+                    <>
+                        The color style of the <code>Pill</code>
+                    </>
+                ),
+                propTypes: [
+                    `"black"`,
+                    `"grey"`,
+                    `"green"`,
+                    `"yellow"`,
+                    `"red"`,
+                    `"blue"`,
+                ],
+                defaultValue: `"black"`,
+            },
+            {
+                name: "icon",
+                description: "A component to be displayed as the icon",
+                propTypes: ["JSX.Element"],
             },
         ],
     },

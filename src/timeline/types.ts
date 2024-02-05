@@ -8,17 +8,15 @@ export type Variant =
 
 export type TimelineStatusType = PillType | "dark" | "light";
 
-/** @deprecated This component is deprecated, use PillProps instead */
 export interface TimelineStatusProps extends Omit<PillProps, "type"> {
     type: TimelineStatusType;
-    /** @deprecated This field is deprecated */
+    /** @deprecated This attribute has been deprecated in favour of the children attribute of `PillProps` */
     label?: string;
 }
 
 export interface TimelineItemProps {
     title: string | JSX.Element;
     content: string | JSX.Element;
-    // statuses?: PillProps[] | undefined;
     statuses?: TimelineStatusProps[] | undefined;
     variant?: Variant | undefined;
 }
