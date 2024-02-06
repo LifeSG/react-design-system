@@ -1,3 +1,5 @@
+import { FormLabelAddonProps } from "../form/types";
+
 export type Mode = "default" | "mobile";
 
 export interface FilterProps {
@@ -25,6 +27,7 @@ export interface FilterItemProps {
     /** Specifies if divider is visible in mobile mode */
     showMobileDivider?: boolean | undefined;
     title?: string | undefined;
+    addon?: FormLabelAddonProps | undefined;
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -54,7 +57,7 @@ export interface FilterItemCheckboxProps<T>
     selectedOptions?: T[] | undefined;
     onSelect?: ((options: T[]) => void) | undefined;
     /** Function to derive display value from an item. If not set, checks `item.label`. */
-    labelExtractor?: ((item: T) => string) | undefined;
+    labelExtractor?: ((item: T) => React.ReactNode) | undefined;
     /** Function to derive value from an item. If not set, checks `item.value`. */
     valueExtractor?: ((item: T) => string) | undefined;
 }

@@ -158,6 +158,27 @@ export const Minimised: StoryObj<Component> = {
     },
 };
 
+export const FilterItemTooltip: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Filter>
+                    <Filter.Item
+                        title="Filter item"
+                        addon={{
+                            type: "popover",
+                            content: "This is popover content",
+                        }}
+                        showMobileDivider={false}
+                    >
+                        This has a tooltip in the filter item title
+                    </Filter.Item>
+                </Filter>
+            </StoryContainer>
+        );
+    },
+};
+
 export const AccessingMode: StoryObj<Component> = {
     render: () => {
         return (

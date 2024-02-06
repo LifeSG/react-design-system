@@ -11,7 +11,7 @@ module.exports = {
             "<rootDir>/src/__mocks__/fileMock.js",
         "\\.(css|less)$": "identity-obj-proxy",
     },
-    moduleDirectories: ["node_modules", "."],
+    moduleDirectories: ["node_modules", "<rootDir>"],
     setupFilesAfterEnv: ["jest-canvas-mock", "@testing-library/jest-dom"],
     reporters: ["default", ["jest-junit", { outputName: "junit.xml" }]],
 };

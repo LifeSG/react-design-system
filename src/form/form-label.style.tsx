@@ -11,14 +11,6 @@ export const Label = styled.label`
     margin-bottom: 0.5rem;
     display: inline-block;
 
-    #popover-hoc-wrapper {
-        display: inline;
-    }
-
-    #popover-hoc-button {
-        vertical-align: bottom;
-    }
-
     a,
     span,
     p {
