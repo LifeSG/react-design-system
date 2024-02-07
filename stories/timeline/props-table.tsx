@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
 const DATA: ApiTableSectionProps[] = [
@@ -122,11 +122,12 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The color style of the pill.{" "}
+                        The color style of the pill. <br />
                         <b>
-                            Note: from v2.4.0 onwards, values `dark`` and
-                            `light` will no longer be supported in favour of
-                            `solid` and `outline` respectively
+                            Note: from v2.4.0 onwards, values {code("dark")} and{" "}
+                            {code("light")}
+                            will no longer be supported in favour of `solid` and
+                            `outline` respectively.
                         </b>
                     </>
                 ),
@@ -137,7 +138,8 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The text to be rendered on the pill.{" "}
+                        The text to be rendered on the pill.
+                        <br />
                         <b>
                             Note: from v2.4.0 onwards, this attribute will no
                             longer be available.
