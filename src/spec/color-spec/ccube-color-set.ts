@@ -2,7 +2,7 @@ import { ColorSet, ValidationTypes } from "../../color";
 
 export const CCubeColorSet: ColorSet = {
     Brand: {
-        1: "#9856A1",
+        1: "#8D5197",
         2: "#FE3399",
         3: "#F58E8B",
         4: "#F9B5B2",
@@ -11,7 +11,7 @@ export const CCubeColorSet: ColorSet = {
     },
     Primary: "#8D5197",
     PrimaryDark: "#6B3E73",
-    Secondary: "#C02572",
+    Secondary: "#C02673",
     Accent: {
         Dark: {
             1: "#921D58",
@@ -65,8 +65,8 @@ export const CCubeColorSet: ColorSet = {
         },
     } as ValidationTypes,
     Shadow: {
-        Accent: "rgba(176, 125, 183, 0.5)",
+        Accent: "rgba(210, 77, 255, 0.5)",
         Red: "rgba(221, 102, 102, 0.8)",
-        Elevation: "rgba(146, 29, 88, 0.24)",
+        Elevation: "rgba(75, 83, 159, 0.24)",
     },
 };
