@@ -31,7 +31,7 @@ export type DesignTokenCollectionsMap = {
 // =============================================================================
 // RESOURCE THEMES
 // =============================================================================
-export type ResourceScheme = "base" | "bookingsg" | "rbs";
+export type ResourceScheme = "base" | "bookingsg" | "rbs" | "ccube";
 
 // =============================================================================
 // GENERAL

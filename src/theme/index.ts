@@ -32,7 +32,7 @@ export const CCubeTheme: ThemeSpec = {
     [ThemeContextKeys.colorScheme]: "ccube",
     [ThemeContextKeys.textStyleScheme]: "base",
     [ThemeContextKeys.designTokenScheme]: "base",
-    [ThemeContextKeys.resourceScheme]: "base",
+    [ThemeContextKeys.resourceScheme]: "ccube",
 };
 
 export * from "./types";
