@@ -3,6 +3,8 @@ import { Button } from "src/button";
 import { Text } from "src/text";
 import { Timeline } from "src/timeline";
 import { StoryContainer } from "../storybook-common";
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
+import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 
 type Component = typeof Timeline;
 
@@ -85,12 +87,41 @@ export const Default: StoryObj<Component> = {
                             title: "Item 5",
                             content: (
                                 <Text.Body>
-                                    This one comes with status icons.
+                                    This one comes with light and black status
+                                    icons.
                                 </Text.Body>
                             ),
                             statuses: [
-                                { type: "light", label: "Status light" },
-                                { type: "dark", label: "Status dark" },
+                                {
+                                    type: "light",
+                                    label: "Status light",
+                                },
+                                {
+                                    type: "dark",
+                                    label: "Status dark",
+                                },
+                            ],
+                        },
+                        {
+                            title: "Item 6",
+                            content: (
+                                <Text.Body>
+                                    This one comes with Pill DS icons.
+                                </Text.Body>
+                            ),
+                            statuses: [
+                                {
+                                    type: "outline",
+                                    colorType: "red",
+                                    children: "Status outline red",
+                                    icon: <PlusCircleFillIcon />,
+                                },
+                                {
+                                    type: "solid",
+                                    colorType: "blue",
+                                    children: "Status solid blue",
+                                    icon: <PlaceholderIcon />,
+                                },
                             ],
                         },
                     ]}
