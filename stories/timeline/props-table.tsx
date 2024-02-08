@@ -122,12 +122,13 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The color style of the pill. <br />
+                        The color style of the {code("Pill")}. <br />
                         <b>
-                            Note: from v2.4.0 onwards, values {code("dark")} and{" "}
-                            {code("light")}
-                            will no longer be supported in favour of `solid` and
-                            `outline` respectively.
+                            Note: from v2.4.0 onwards, values {code(`"dark"`)}{" "}
+                            and {code(`"light"`)}
+                            will no longer be supported in favour of{" "}
+                            {code(`"solid"`)} and
+                            {code(`"outline"`)} respectively.
                         </b>
                     </>
                 ),
@@ -138,7 +139,7 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The text to be rendered on the pill.
+                        The text to be rendered on the {code("Pill")}.
                         <br />
                         <b>
                             Note: from v2.4.0 onwards, this attribute will no
@@ -151,11 +152,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "colorType",
-                description: (
-                    <>
-                        The color style of the <code>Pill</code>
-                    </>
-                ),
+                description: <>The color style of the {code("Pill")}</>,
                 propTypes: [
                     `"black"`,
                     `"grey"`,
