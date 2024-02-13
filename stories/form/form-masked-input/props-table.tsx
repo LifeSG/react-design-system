@@ -88,6 +88,23 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies whether the input value is to be transformed into uppercase or lowercase format",
                 propTypes: ["uppercase", "lowercase"],
             },
+            {
+                name: "renderLoadingOnUnmask",
+                description:
+                    "Specifies if a loading spinner should appear when unmasking happens",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "unmaskError",
+                description: "Specifies if there is an error during unmasking",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "onTryAgain",
+                description:
+                    "The callback function when the 'Try again' button is clicked in error state",
+                propTypes: ["() => void"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,

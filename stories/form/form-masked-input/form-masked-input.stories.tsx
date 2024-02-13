@@ -6,6 +6,7 @@ import { Layout } from "src/layout";
 import { MaskedInput } from "src/masked-input";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
+import { useState } from "react";
 
 type Component = typeof Form.MaskedInput;
 type StandaloneComponent = typeof MaskedInput;
@@ -65,6 +66,47 @@ export const Default: StoryObj<Component> = {
                     />
                 </Container>
             </StoryContainer>
+        );
+    },
+};
+
+export const LoadingDisplay: StoryObj<Component> = {
+    render: () => {
+        const DEFAULT_VALUE = "S•••567D";
+        const [value, setValue] = useState<string>(DEFAULT_VALUE);
+        const [attempt, setAttempt] = useState<number>(0);
+        const [hasError, setHasError] = useState<boolean>(false);
+
+        const handleUnmask = () => {
+            setHasError(false);
+            const currentAttempt = attempt + 1;
+            setTimeout(() => {
+                const errorCondition =
+                    currentAttempt < 3 || currentAttempt % 2 === 0;
+                setHasError(errorCondition);
+
+                if (!errorCondition) {
+                    setValue("S1234567D");
+                }
+            }, 500);
+            setAttempt(currentAttempt);
+        };
+
+        const handleMask = () => {
+            setValue(DEFAULT_VALUE);
+        };
+
+        return (
+            <Form.MaskedInput
+                label="This simulates an async unmasking behaviour"
+                value={value}
+                readOnly
+                renderLoadingOnUnmask
+                unmaskError={hasError}
+                onUnmask={handleUnmask}
+                onMask={handleMask}
+                onTryAgain={handleUnmask}
+            />
         );
     },
 };
