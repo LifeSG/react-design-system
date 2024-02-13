@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
-import { IconContainer, InputGroupWrapper } from "./masked-input.style";
+import {
+    ClickableErrorWrapper,
+    ErrorIcon,
+    ErrorLabel,
+    ErrorTextContainer,
+    IconContainer,
+    InputGroupWrapper,
+    LoadingLabel,
+    LoadingWrapper,
+    Spinner,
+    TryAgainLabel,
+} from "./masked-input.style";
 import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
 
@@ -19,35 +30,35 @@ const Component = (
         iconActiveColor: maskIconActiveColor,
         iconInactiveColor: maskIconInactiveColor,
         maskChar = "•",
+        renderLoadingOnUnmask,
+        error,
+        disableMask,
+        transformInput,
+        unmaskError,
         onMask,
         onUnmask,
         onChange,
         onFocus,
         onBlur,
-        error,
-        disableMask,
-        transformInput,
+        onTryAgain,
         ...otherProps
     }: MaskedInputProps,
     ref: React.Ref<HTMLInputElement>
 ) => {
+    // =============================================================================
+    // CONST, STATE, REFS
+    // =============================================================================
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState(!disableMask);
     const [updatedValue, setUpdatedValue] = useState(value || "");
+    const [loading, setLoading] = useState(false);
 
     // =============================================================================
-    // EVENT HANDLERS
+    // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        if (isMasked) {
-            onMask && onMask();
-        } else {
-            onUnmask && onUnmask();
-        }
-    }, [isMasked]);
-
     useEffect(() => {
         setUpdatedValue(value);
+        setLoading(false);
     }, [value]);
 
     // =============================================================================
@@ -83,13 +94,24 @@ const Component = (
         onChange && onChange(event);
     };
 
-    const toggleMasking = () => {
-        setIsMasked(!isMasked);
+    const handleTryAgain = () => {
+        setLoading(true);
+        onTryAgain && onTryAgain();
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const toggleMasking = () => {
+        if (isMasked) {
+            onUnmask && onUnmask();
+            setLoading(renderLoadingOnUnmask);
+        } else {
+            onMask && onMask();
+        }
+
+        setIsMasked(!isMasked);
+    };
 
     const getValue = () => {
         if (isEmptyReadOnlyState) {
@@ -168,29 +190,62 @@ const Component = (
         );
     };
 
+    const renderElement = () => {
+        // NOTE: Order matters. Error display takes precedence
+        if (unmaskError) {
+            return (
+                <ClickableErrorWrapper
+                    onClick={handleTryAgain}
+                    data-testid="try-again-button"
+                >
+                    <ErrorTextContainer>
+                        <ErrorIcon />
+                        <ErrorLabel>Error</ErrorLabel>
+                    </ErrorTextContainer>
+                    <TryAgainLabel weight="semibold">Try again?</TryAgainLabel>
+                </ClickableErrorWrapper>
+            );
+        }
+
+        if (loading) {
+            return (
+                <LoadingWrapper>
+                    <Spinner />
+                    <LoadingLabel>Retrieving...</LoadingLabel>
+                </LoadingWrapper>
+            );
+        }
+
+        return (
+            <InputGroupWrapper
+                ref={ref}
+                data-testid={`${dataTestId || "masked-input"}${
+                    isMasked ? "-masked" : "-unmasked"
+                }`}
+                addon={{
+                    type: "custom",
+                    attributes: {
+                        children: renderIcon(),
+                    },
+                    position: "right",
+                }}
+                onFocus={!readOnly ? handleFocus : undefined}
+                onBlur={!readOnly ? handleBlur : undefined}
+                onClick={readOnly ? toggleMasking : undefined}
+                onChange={handleChange}
+                value={getValue()}
+                readOnly={readOnly}
+                error={error}
+                $isDisabled={shouldDisableMasking()}
+                {...otherProps}
+            />
+        );
+    };
+
     return (
-        <InputGroupWrapper
-            ref={ref}
-            data-testid={`${dataTestId || "masked-input"}${
-                isMasked ? "-masked" : "-unmasked"
-            }`}
-            addon={{
-                type: "custom",
-                attributes: {
-                    children: renderIcon(),
-                },
-                position: "right",
-            }}
-            onFocus={!readOnly ? handleFocus : undefined}
-            onBlur={!readOnly ? handleBlur : undefined}
-            onClick={readOnly ? toggleMasking : undefined}
-            onChange={handleChange}
-            value={getValue()}
-            readOnly={readOnly}
-            error={error}
-            $isDisabled={shouldDisableMasking()}
-            {...otherProps}
-        />
+        <div aria-busy={loading} aria-live="polite">
+            {renderElement()}
+        </div>
     );
 };
 
