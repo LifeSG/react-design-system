@@ -19,6 +19,7 @@ interface FadeProps {
 
 interface IndicatorProps {
     highlighted: boolean;
+    isMobile?: boolean;
 }
 
 // =============================================================================
@@ -119,8 +120,12 @@ export const IndicatorTitle = styled(Text.BodySmall)<IndicatorProps>`
     margin-right: 0.5rem;
 
     ${(props) => {
-        const { highlighted } = props;
-        const color = highlighted ? Color.Primary : Color.Neutral[4];
+        const { highlighted, isMobile } = props;
+        const color = isMobile
+            ? Color.Neutral[1]
+            : highlighted
+            ? Color.Primary
+            : Color.Neutral[4];
         return `color: ${color(props)};`;
     }};
 `;

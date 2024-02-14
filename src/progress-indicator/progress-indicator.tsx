@@ -13,6 +13,7 @@ import {
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
 import kebabCase from "lodash/kebabCase";
+import { useMediaQuery } from "react-responsive";
 
 export const ProgressIndicator = <T,>({
     steps,
@@ -34,6 +35,9 @@ export const ProgressIndicator = <T,>({
     );
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.tablet,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -151,9 +155,20 @@ export const ProgressIndicator = <T,>({
                     id={getId(stepIndex, currentIndex)}
                 >
                     <IndicatorBar highlighted={highlighted}></IndicatorBar>
+
+                    {isMobile && (
+                        <IndicatorTitle
+                            highlighted={highlighted}
+                            weight={"semibold"}
+                            isMobile={isMobile}
+                        >
+                            Step {stepIndex + 1} of {steps.length}
+                        </IndicatorTitle>
+                    )}
                     <IndicatorTitle
-                        highlighted={highlighted}
-                        weight={fontWeight}
+                        highlighted={isMobile ? false : highlighted}
+                        weight={isMobile ? "regular" : fontWeight}
+                        isMobile={isMobile}
                     >
                         {getDisplayValue(step)}
                     </IndicatorTitle>
