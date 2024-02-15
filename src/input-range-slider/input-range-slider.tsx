@@ -7,6 +7,7 @@ import {
     Slider,
     SliderThumb,
     SliderTrack,
+    Wrapper,
 } from "./input-range-slider.styles";
 import { InputRangeSliderProps } from "./types";
 
@@ -132,7 +133,7 @@ export const InputRangeSlider = ({
     };
 
     return (
-        <div {...otherProps}>
+        <Wrapper {...otherProps}>
             <Slider
                 step={step}
                 min={min}
@@ -178,6 +179,6 @@ export const InputRangeSlider = ({
                     <div>{formatLabel(max)}</div>
                 </LabelContainer>
             )}
-        </div>
+        </Wrapper>
     );
 };
