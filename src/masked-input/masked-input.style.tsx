@@ -49,7 +49,7 @@ export const IconContainer = styled.div<IconProps>`
 export const LoadingWrapper = styled.div`
     display: flex;
     align-items: center;
-    height: calc(3rem - 2px);
+    height: 3rem;
 `;
 
 export const LoadingLabel = styled(Text.Body)`
@@ -94,7 +94,7 @@ export const ErrorLabel = styled(Text.Body)`
 
 export const ClickableErrorWrapper = styled.button`
     width: 100%;
-    height: calc(3rem - 2px);
+    height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
