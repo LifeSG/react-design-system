@@ -30,11 +30,10 @@ const Component = (
         iconActiveColor: maskIconActiveColor,
         iconInactiveColor: maskIconInactiveColor,
         maskChar = "•",
-        renderLoadingOnUnmask,
         error,
         disableMask,
         transformInput,
-        unmaskError,
+        loadState,
         onMask,
         onUnmask,
         onChange,
@@ -51,14 +50,12 @@ const Component = (
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState(!disableMask);
     const [updatedValue, setUpdatedValue] = useState(value || "");
-    const [loading, setLoading] = useState(false);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         setUpdatedValue(value);
-        setLoading(false);
     }, [value]);
 
     // =============================================================================
@@ -95,8 +92,7 @@ const Component = (
     };
 
     const handleTryAgain = () => {
-        setLoading(true);
-        onTryAgain && onTryAgain();
+        readOnly && onTryAgain && onTryAgain();
     };
 
     // =============================================================================
@@ -105,7 +101,6 @@ const Component = (
     const toggleMasking = () => {
         if (isMasked) {
             onUnmask && onUnmask();
-            setLoading(renderLoadingOnUnmask);
         } else {
             onMask && onMask();
         }
@@ -191,29 +186,34 @@ const Component = (
     };
 
     const renderElement = () => {
-        // NOTE: Order matters. Error display takes precedence
-        if (unmaskError) {
-            return (
-                <ClickableErrorWrapper
-                    onClick={handleTryAgain}
-                    data-testid="try-again-button"
-                >
-                    <ErrorTextContainer>
-                        <ErrorIcon />
-                        <ErrorLabel>Error</ErrorLabel>
-                    </ErrorTextContainer>
-                    <TryAgainLabel weight="semibold">Try again?</TryAgainLabel>
-                </ClickableErrorWrapper>
-            );
-        }
-
-        if (loading) {
-            return (
-                <LoadingWrapper>
-                    <Spinner />
-                    <LoadingLabel>Retrieving...</LoadingLabel>
-                </LoadingWrapper>
-            );
+        if (readOnly) {
+            switch (loadState) {
+                case "fail":
+                    return (
+                        <ClickableErrorWrapper
+                            onClick={handleTryAgain}
+                            data-testid="try-again-button"
+                        >
+                            <ErrorTextContainer>
+                                <ErrorIcon />
+                                <ErrorLabel>Error</ErrorLabel>
+                            </ErrorTextContainer>
+                            <TryAgainLabel weight="semibold">
+                                Try again?
+                            </TryAgainLabel>
+                        </ClickableErrorWrapper>
+                    );
+                case "loading":
+                    return (
+                        <LoadingWrapper>
+                            <Spinner />
+                            <LoadingLabel>Retrieving...</LoadingLabel>
+                        </LoadingWrapper>
+                    );
+                case "success":
+                default:
+                    break;
+            }
         }
 
         return (
@@ -243,7 +243,7 @@ const Component = (
     };
 
     return (
-        <div aria-busy={loading} aria-live="polite">
+        <div aria-busy={loadState === "loading"} aria-live="polite">
             {renderElement()}
         </div>
     );

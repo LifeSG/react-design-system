@@ -1,5 +1,6 @@
 import { InputProps } from "../input/types";
 
+export type MaskedInputLoadState = "loading" | "fail" | "success";
 export interface MaskedInputProps extends InputProps {
     maskRange?: number[] | undefined;
     unmaskRange?: number[] | undefined;
@@ -12,10 +13,14 @@ export interface MaskedInputProps extends InputProps {
     maskChar?: string | undefined;
     disableMask?: boolean | undefined;
     transformInput?: "uppercase" | "lowercase" | undefined;
-    /** Specifies if a loading spinner should appear when unmasking happens */
-    renderLoadingOnUnmask?: boolean | undefined;
-    /** Specifies if there is an error during unmasking */
-    unmaskError?: boolean | undefined;
+    /**
+     * Specifies the state of the component when there is a
+     * loading behaviour. Note that this only applies if
+     * the component is in `readOnly` mode.
+     *
+     * Values: "loading" | "fail" | "success"
+     */
+    loadState?: MaskedInputLoadState | undefined;
     onMask?: (() => void) | undefined;
     onUnmask?: (() => void) | undefined;
     /** The callback function when the "Try again" button is clicked in error state */

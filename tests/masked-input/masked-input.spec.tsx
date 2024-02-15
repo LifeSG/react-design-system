@@ -36,25 +36,38 @@ describe("MaskedInput", () => {
             expect(screen.getByDisplayValue("*1234567*")).toBeInTheDocument();
         });
 
-        it("should render the error display if there is an unmaskError", () => {
-            const mockTryAgainFn = jest.fn();
-
+        it("should render the loading display if the component is in loading state", () => {
             render(
-                <MaskedInput
-                    value="S1234567D"
-                    unmaskError
-                    onTryAgain={mockTryAgainFn}
-                />
+                <MaskedInput value="S1234567D" loadState="loading" readOnly />
             );
+
+            expect(
+                screen.queryByTestId("masked-input-masked")
+            ).not.toBeInTheDocument();
+            expect(screen.getByText("Retrieving...")).toBeInTheDocument();
+        });
+
+        it("should render the error display if there is an error", () => {
+            render(<MaskedInput value="S1234567D" loadState="fail" readOnly />);
 
             expect(
                 screen.queryByTestId("masked-input-masked")
             ).not.toBeInTheDocument();
             expect(screen.getByText("Error")).toBeInTheDocument();
             expect(screen.getByText("Try again?")).toBeInTheDocument();
+        });
 
-            fireEvent.click(screen.getByTestId("try-again-button"));
-            expect(mockTryAgainFn).toBeCalled();
+        it("should not render the loading display if the component is in loading state but not in readOnly mode", () => {
+            render(<MaskedInput value="S1234567D" loadState="loading" />);
+
+            expect(screen.queryByText("Retrieving...")).not.toBeInTheDocument();
+        });
+
+        it("should not render the error display if the component is in loading state but not in readOnly mode", () => {
+            render(<MaskedInput value="S1234567D" loadState="fail" />);
+
+            expect(screen.queryByText("Error")).not.toBeInTheDocument();
+            expect(screen.queryByText("Try again?")).not.toBeInTheDocument();
         });
     });
 
@@ -89,7 +102,8 @@ describe("MaskedInput", () => {
             render(
                 <MaskedInput
                     value="S1234567D"
-                    unmaskError
+                    loadState="fail"
+                    readOnly
                     onTryAgain={tryAgainFn}
                 />
             );

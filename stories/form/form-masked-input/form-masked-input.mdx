@@ -23,7 +23,8 @@ In some cases where the unmasking requires an asynchronous process, you might wa
 a loading indicator for the users. As such this component comes with a loading display. Here is
 an example of how you can set things up.
 
-> Note: You will have to handle the masking and unmasking manually to ensure the value changes
+> Note: This only applies if the component is in `readOnly` mode.
+> You will also have to handle the masking and unmasking manually to ensure the value changes
 > are being reflected accurately
 
 <Canvas of={FormMaskedInputStories.LoadingDisplay} />

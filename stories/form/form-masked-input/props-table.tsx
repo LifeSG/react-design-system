@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
+import { ApiTable, code } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
@@ -89,20 +89,25 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["uppercase", "lowercase"],
             },
             {
-                name: "renderLoadingOnUnmask",
-                description:
-                    "Specifies if a loading spinner should appear when unmasking happens",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "unmaskError",
-                description: "Specifies if there is an error during unmasking",
-                propTypes: ["boolean"],
+                name: "loadState",
+                description: (
+                    <>
+                        Specifies the state of the component when there is
+                        loading behaviour. Note that the load state only applies
+                        if the component is in {code("readOnly")} mode.
+                    </>
+                ),
+                propTypes: [`"loading"`, `"fail"`, `"success"`],
             },
             {
                 name: "onTryAgain",
-                description:
-                    "The callback function when the 'Try again' button is clicked in error state",
+                description: (
+                    <>
+                        The callback function when the &lsquo;Try again&rsquo;
+                        button is clicked in error state. Only applies if the
+                        component is in {code("readOnly")} mode.
+                    </>
+                ),
                 propTypes: ["() => void"],
             },
         ],
