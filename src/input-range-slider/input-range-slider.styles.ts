@@ -18,6 +18,10 @@ interface ThumbStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+export const Wrapper = styled.div`
+    isolation: isolate;
+`;
+
 export const LabelContainer = styled.div`
     margin-top: 0.25rem;
     display: flex;
