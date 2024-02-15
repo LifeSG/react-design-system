@@ -72,6 +72,41 @@ describe("MaskedInput", () => {
     });
 
     describe("Event callbacks", () => {
+        it("should fire the onUnmask callback and the onFocus callback if specified, when the input is focused", () => {
+            const unmaskFn = jest.fn();
+            const focusFn = jest.fn();
+
+            render(
+                <MaskedInput
+                    value="S1234567D"
+                    onFocus={focusFn}
+                    onUnmask={unmaskFn}
+                />
+            );
+
+            fireEvent.focus(screen.getByTestId("input"));
+            expect(unmaskFn).toBeCalled();
+            expect(focusFn).toBeCalled();
+        });
+
+        it("should fire the onMask callback and the onBlur callback if specified, when the input is blurred", () => {
+            const maskFn = jest.fn();
+            const blurFn = jest.fn();
+
+            render(
+                <MaskedInput
+                    value="S1234567D"
+                    onBlur={blurFn}
+                    onMask={maskFn}
+                />
+            );
+
+            fireEvent.focus(screen.getByTestId("input"));
+            fireEvent.blur(screen.getByTestId("input"));
+            expect(maskFn).toBeCalled();
+            expect(blurFn).toBeCalled();
+        });
+
         it("should fire the onMask and onUnmask callbacks when the masked or unmasked icon is clicked", () => {
             const maskFn = jest.fn();
             const unmaskFn = jest.fn();

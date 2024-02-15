@@ -63,13 +63,15 @@ const Component = (
     // =============================================================================
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        setIsMasked(false);
+        triggerMaskUnmaskCallbacks();
         onFocus && onFocus(event);
+        setIsMasked(false);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        setIsMasked(true);
+        triggerMaskUnmaskCallbacks();
         onBlur && onBlur(event);
+        setIsMasked(true);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,17 +97,20 @@ const Component = (
         readOnly && onTryAgain && onTryAgain();
     };
 
+    const handleToggleMask = () => {
+        triggerMaskUnmaskCallbacks();
+        setIsMasked(!isMasked);
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const toggleMasking = () => {
+    const triggerMaskUnmaskCallbacks = () => {
         if (isMasked) {
             onUnmask && onUnmask();
         } else {
             onMask && onMask();
         }
-
-        setIsMasked(!isMasked);
     };
 
     const getValue = () => {
@@ -174,7 +179,7 @@ const Component = (
             !isEmptyReadOnlyState && (
                 <IconContainer
                     data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
-                    onClick={!isDisabled ? toggleMasking : undefined}
+                    onClick={!isDisabled ? handleToggleMask : undefined}
                     $isDisabled={isDisabled}
                     $inactiveColor={maskIconInactiveColor}
                     $activeColor={maskIconActiveColor}
@@ -231,7 +236,7 @@ const Component = (
                 }}
                 onFocus={!readOnly ? handleFocus : undefined}
                 onBlur={!readOnly ? handleBlur : undefined}
-                onClick={readOnly ? toggleMasking : undefined}
+                onClick={readOnly ? handleToggleMask : undefined}
                 onChange={handleChange}
                 value={getValue()}
                 readOnly={readOnly}
