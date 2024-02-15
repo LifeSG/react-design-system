@@ -23,7 +23,6 @@ interface ItemStyleProps {
 export const Wrapper = styled.div`
     position: relative;
     width: 100%;
-    z-index: 1;
 
     margin: 2rem 0;
 

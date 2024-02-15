@@ -46,6 +46,9 @@ export const Default: StoryObj<Component> = {
             />
         );
     },
+    parameters: {
+        layout: "padded",
+    },
 };
 
 export const DifferentFadeColors: StoryObj<Component> = {
@@ -87,5 +90,8 @@ export const DifferentFadeColors: StoryObj<Component> = {
                 }}
             />
         );
+    },
+    parameters: {
+        layout: "padded",
     },
 };
