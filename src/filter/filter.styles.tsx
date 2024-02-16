@@ -27,6 +27,7 @@ export const MobileContainer = styled.div`
 `;
 
 export const MobileOverlayContainer = styled.div`
+    background-color: ${Color.Neutral[8]};
     height: 100%;
     width: 100%;
 `;
