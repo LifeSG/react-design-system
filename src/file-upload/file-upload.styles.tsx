@@ -3,7 +3,7 @@ import { Alert } from "../alert";
 import { Button } from "../button";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
-import { HtmlContentMixin } from "../shared/html-content/html-content";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
@@ -20,7 +20,7 @@ export const Title = styled(Text.H4)`
 `;
 
 export const TitleContainer = styled.div`
-    ${HtmlContentMixin("Body")}
+    ${applyHtmlContentStyle("Body")}
 `;
 
 export const Description = styled(Text.BodySmall)`
@@ -29,7 +29,7 @@ export const Description = styled(Text.BodySmall)`
 `;
 
 export const DescriptionContainer = styled.div`
-    ${HtmlContentMixin("BodySmall", {
+    ${applyHtmlContentStyle("BodySmall", {
         textColor: Color.Neutral[3],
     })}
 `;

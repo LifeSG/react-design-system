@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Card } from "../card";
 import { MediaQuery } from "../media";
 import { ModalBox } from "../modal/modal-box";
-import { HtmlContentMixin } from "../shared/html-content/html-content";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 
 // =============================================================================
 // STYLING
@@ -14,7 +14,7 @@ export const PopoverContainer = styled.div`
 `;
 
 export const PopoverCard = styled(Card)`
-    ${HtmlContentMixin("BodySmall")}
+    ${applyHtmlContentStyle("BodySmall")}
 
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;

@@ -2,13 +2,13 @@ import { css } from "styled-components";
 import { Color } from "../../color";
 import { TextLinkSizeType, TextSizeType, TextStyleHelper } from "../../text";
 
-interface HtmlContentMixinOptions {
+interface HtmlContentStyleOptions {
     textColor?: string | ((props: any) => string);
 }
 
-export const HtmlContentMixin = (
+export const applyHtmlContentStyle = (
     textStyle: TextSizeType | TextLinkSizeType,
-    options?: HtmlContentMixinOptions
+    options?: HtmlContentStyleOptions
 ) => {
     const { textColor = Color.Neutral[1] } = options || {};
 

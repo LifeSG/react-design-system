@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 import { AlertSizeType, AlertType } from "./types";
-import { HtmlContentMixin } from "../shared/html-content/html-content";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -59,9 +59,9 @@ export const Wrapper = styled.div<StyleProps>`
 
     ${(props) => {
         if (props.$sizeType === "small") {
-            return HtmlContentMixin("H6");
+            return applyHtmlContentStyle("H6");
         }
-        return HtmlContentMixin("BodySmall");
+        return applyHtmlContentStyle("BodySmall");
     }}
 `;
 
