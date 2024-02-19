@@ -2,51 +2,60 @@ import { css } from "styled-components";
 import { Color } from "../../color";
 import { TextLinkSizeType, TextSizeType, TextStyleHelper } from "../../text";
 
+interface HtmlContentMixinOptions {
+    textColor?: string | ((props: any) => string);
+}
+
 export const HtmlContentMixin = (
-    textStyle: TextSizeType | TextLinkSizeType
-) => css`
-    // Text
-    ${TextStyleHelper.getTextStyle(textStyle, "regular")}
-    color: ${Color.Neutral[1]};
+    textStyle: TextSizeType | TextLinkSizeType,
+    options?: HtmlContentMixinOptions
+) => {
+    const { textColor = Color.Neutral[1] } = options || {};
 
-    a,
-    strong {
-        ${TextStyleHelper.getTextStyle(textStyle, "semibold")}
-    }
+    return css`
+        // Text
+        ${TextStyleHelper.getTextStyle(textStyle, "regular")}
+        color: ${textColor};
 
-    p {
-        margin: 0;
-    }
+        a,
+        strong {
+            ${TextStyleHelper.getTextStyle(textStyle, "semibold")}
+        }
 
-    // Link styling
-    a {
-        color: ${Color.Primary};
-        text-decoration: none;
+        p {
+            margin: 0;
+        }
 
-        :hover,
-        :active,
-        :focus {
-            color: ${Color.Secondary};
+        // Link styling
+        a {
+            color: ${Color.Primary};
+            text-decoration: none;
 
-            svg {
+            :hover,
+            :active,
+            :focus {
                 color: ${Color.Secondary};
+
+                svg {
+                    color: ${Color.Secondary};
+                }
             }
         }
-    }
 
-    // List styling
-    ul,
-    ol {
-        margin: 0;
-        padding: 0;
-        margin-left: 2.5rem;
-    }
+        // List styling
+        ul,
+        ol {
+            margin: 0;
+            padding: 0;
+            margin-left: 2.5rem;
+        }
 
-    ol {
-        list-style: decimal;
-    }
+        ol {
+            list-style: decimal;
+        }
 
-    ul {
-        list-style: disc;
-    }
-`;
+        ul {
+            list-style: disc;
+        }
+    `;
+};

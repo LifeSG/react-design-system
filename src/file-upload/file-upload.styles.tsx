@@ -3,12 +3,13 @@ import { Alert } from "../alert";
 import { Button } from "../button";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
+import { HtmlContentMixin } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const TitleContainer = styled.div`
+export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin-bottom: 2rem;
@@ -18,9 +19,19 @@ export const Title = styled(Text.H4)`
     margin-bottom: 0.5rem;
 `;
 
+export const TitleContainer = styled.div`
+    ${HtmlContentMixin("Body")}
+`;
+
 export const Description = styled(Text.BodySmall)`
     margin-bottom: 0;
     color: ${Color.Neutral[3]};
+`;
+
+export const DescriptionContainer = styled.div`
+    ${HtmlContentMixin("BodySmall", {
+        textColor: Color.Neutral[3],
+    })}
 `;
 
 export const WarningAlert = styled(Alert)`
