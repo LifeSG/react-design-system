@@ -84,6 +84,15 @@ export const WithBoldText: StoryObj<Component> = {
                     </a>
                     &nbsp;to direct users to some external source.
                 </p>
+                <br />
+                <p>You can list bullet points:</p>
+                <ul>
+                    <li>List item</li>
+                </ul>
+                <p>Or display numbered lists:</p>
+                <ol>
+                    <li>List item</li>
+                </ol>
             </Alert>
         );
     },
