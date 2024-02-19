@@ -33,6 +33,34 @@ export const HoverInteraction: StoryObj<Component> = {
     },
 };
 
+export const DefaultStyling: StoryObj<Component> = {
+    render: () => {
+        return (
+            <PopoverTrigger
+                popoverContent={
+                    <>
+                        <p>
+                            You can add <strong>bold text</strong> and{" "}
+                            <a>links</a>.
+                        </p>
+                        <br />
+                        <p>You can list bullet points:</p>
+                        <ul>
+                            <li>List item</li>
+                        </ul>
+                        <p>Or display numbered lists:</p>
+                        <ol>
+                            <li>List item</li>
+                        </ol>
+                    </>
+                }
+            >
+                <Button.Default>Click me</Button.Default>
+            </PopoverTrigger>
+        );
+    },
+};
+
 export const Appearance: StoryObj<Component> = {
     render: () => {
         return (
