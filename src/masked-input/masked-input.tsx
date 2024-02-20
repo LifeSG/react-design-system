@@ -63,15 +63,13 @@ const Component = (
     // =============================================================================
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        triggerMaskUnmaskCallbacks();
+        toggleMasking(false);
         onFocus && onFocus(event);
-        setIsMasked(false);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        triggerMaskUnmaskCallbacks();
+        toggleMasking(true);
         onBlur && onBlur(event);
-        setIsMasked(true);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,18 +96,18 @@ const Component = (
     };
 
     const handleToggleMask = () => {
-        triggerMaskUnmaskCallbacks();
-        setIsMasked(!isMasked);
+        toggleMasking(!isMasked);
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const triggerMaskUnmaskCallbacks = () => {
-        if (isMasked) {
-            onUnmask && onUnmask();
-        } else {
+    const toggleMasking = (mask: boolean) => {
+        setIsMasked(mask);
+        if (mask) {
             onMask && onMask();
+        } else {
+            onUnmask && onUnmask();
         }
     };
 
