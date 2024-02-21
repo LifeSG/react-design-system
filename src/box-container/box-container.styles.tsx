@@ -62,11 +62,6 @@ export const LabelText = styled(Text.H3)`
     flex: 1;
     align-items: center;
     margin-right: 1rem;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-        display: flex;
-    }
 `;
 
 export const LabelWrapper = styled.div`
