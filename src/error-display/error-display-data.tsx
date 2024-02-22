@@ -530,11 +530,12 @@ export const getErrorDisplayData = (
     type: ErrorDisplayType,
     resourceScheme: ResourceScheme
 ) => {
-    if (resourceScheme === "bookingsg") {
-        return generateErrorDisplayData(BsgImgPaths).get(type);
+    switch (resourceScheme) {
+        case "bookingsg":
+            return generateErrorDisplayData(BsgImgPaths).get(type);
+        case "ccube":
+            return generateErrorDisplayData(CCubeImgPaths).get(type);
+        default:
+            return generateErrorDisplayData(ImgPaths).get(type);
     }
-    if (resourceScheme === "ccube") {
-        return generateErrorDisplayData(CCubeImgPaths).get(type);
-    }
-    return generateErrorDisplayData(ImgPaths).get(type);
 };
