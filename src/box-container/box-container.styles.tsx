@@ -4,7 +4,6 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
-import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
 import { Transition } from "../transition";
 import { BoxContainerDisplayState } from "./types";
@@ -51,7 +50,6 @@ export const Header = styled.div`
 
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 1rem 1.25rem;
-        display: block;
     }
 `;
 
