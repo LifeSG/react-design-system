@@ -31,4 +31,6 @@ export const ContentWrapper = styled.div`
     ::-webkit-scrollbar {
         display: none; /* Chrome/Safari/Webkit */
     }
+
+    ${applyHtmlContentStyle("BodySmall")}
 `;
