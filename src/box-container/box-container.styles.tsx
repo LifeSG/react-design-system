@@ -4,7 +4,6 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
-import { TextStyleHelper } from "../text/helper";
 import { Text } from "../text/text";
 import { Transition } from "../transition";
 import { BoxContainerDisplayState } from "./types";
@@ -59,7 +58,6 @@ export const LabelText = styled(Text.H3)`
     word-wrap: break-word;
     overflow-wrap: anywhere;
     display: flex;
-    flex: 1;
     align-items: center;
     margin-right: 1rem;
 `;
