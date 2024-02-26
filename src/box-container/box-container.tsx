@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { useMediaQuery } from "react-responsive";
 import { useSpring } from "react-spring";
+import { MediaWidths } from "../media";
 import {
     AlertIcon,
     CallToActionContainer,
@@ -36,6 +38,9 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -119,6 +124,7 @@ export const BoxContainer = ({
                         {title}
                     </LabelText>
                     {renderDisplayIcon()}
+                    {isMobile && renderHandleIcon()}
                 </LabelWrapper>
                 {callToActionComponent && (
                     <CallToActionContainer
@@ -129,7 +135,7 @@ export const BoxContainer = ({
                     </CallToActionContainer>
                 )}
 
-                {renderHandleIcon()}
+                {!isMobile && renderHandleIcon()}
             </Header>
             {renderChildContent()}
         </Container>
