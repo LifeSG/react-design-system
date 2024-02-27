@@ -53,10 +53,7 @@ export const WithDisplayState: StoryObj<Component> = {
     render: () => {
         return (
             <>
-                <BoxContainer
-                    title="This comes with an error icon"
-                    displayState="error"
-                >
+                <BoxContainer title="Error icon" displayState="error">
                     <div style={{ padding: "2rem" }}>
                         <Text.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
