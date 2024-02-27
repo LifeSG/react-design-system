@@ -7,7 +7,7 @@ export type ThemeLayout = "normal";
 // =============================================================================
 // COLOR THEMES
 // =============================================================================
-export type ColorScheme = "base" | "bookingsg" | "rbs" | "mylegacy";
+export type ColorScheme = "base" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
 export type ColorCollectionsMap = {
     [key in ColorScheme]: ColorSet;
 };
@@ -31,7 +31,7 @@ export type DesignTokenCollectionsMap = {
 // =============================================================================
 // RESOURCE THEMES
 // =============================================================================
-export type ResourceScheme = "base" | "bookingsg" | "rbs";
+export type ResourceScheme = "base" | "bookingsg" | "rbs" | "ccube";
 
 // =============================================================================
 // GENERAL

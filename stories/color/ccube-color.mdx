@@ -1,0 +1,51 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+import { CCubeColorSet } from "src/spec/color-spec/ccube-color-set";
+import { Text } from "src/text";
+import { PreviewBox, Secondary, Title } from "../storybook-common";
+import { ColorPalette } from "./doc-color-palette";
+
+<Meta title="General/Color/CCube Color" />
+
+<Title>CCube Colors</Title>
+
+<Secondary>Overview</Secondary>
+
+This will be the palette used when the `colorScheme` is `"ccube"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colorScheme: "ccube",
+    // ...other specifications
+};
+```
+
+<Secondary>Colors</Secondary>
+
+<Unstyled>
+    <ColorPalette set={CCubeColorSet.Brand} category="Brand" />
+    <ColorPalette
+        set={{
+            Primary: CCubeColorSet.Primary,
+            PrimaryDark: CCubeColorSet.PrimaryDark,
+            Secondary: CCubeColorSet.Secondary,
+        }}
+    />
+    <ColorPalette set={CCubeColorSet.Neutral} category="Neutral" />
+    <ColorPalette set={CCubeColorSet.Accent.Dark} category="Accent.Dark" />
+    <ColorPalette set={CCubeColorSet.Accent.Light} category="Accent.Light" />
+</Unstyled>
+
+<br />
+
+<Text.H3>Validation</Text.H3>
+
+<PreviewBox>
+    `Color.Validation.<color>`
+</PreviewBox>
+
+<Unstyled>
+    <ColorPalette set={CCubeColorSet.Validation.Green} category="Green" />
+    <ColorPalette set={CCubeColorSet.Validation.Orange} category="Orange" />
+    <ColorPalette set={CCubeColorSet.Validation.Red} category="Red" />
+    <ColorPalette set={CCubeColorSet.Validation.Blue} category="Blue" />
+</Unstyled>
