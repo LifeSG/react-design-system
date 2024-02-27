@@ -39,7 +39,7 @@ export const UneditableSectionBase = ({
 
         return (
             <>
-                {title && <Title weight={"semibold"}>{title}</Title>}
+                {title && <Title weight="semibold">{title}</Title>}
                 {description && <Description>{description}</Description>}
                 {topSection && (
                     <CustomSection data-id="top-section">
