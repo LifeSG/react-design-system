@@ -31,21 +31,25 @@ export const ComponentLoadingSpinner = ({
                 id="inner1"
                 $size={size - borderWidth}
                 $borderWidth={borderWidth}
+                $color={color}
             />
             <InnerRing2
                 id="inner2"
                 $size={size - borderWidth}
                 $borderWidth={borderWidth}
+                $color={color}
             />
             <InnerRing3
                 id="inner3"
                 $size={size - borderWidth}
                 $borderWidth={borderWidth}
+                $color={color}
             />
             <InnerRing4
                 id="inner4"
                 $size={size - borderWidth}
                 $borderWidth={borderWidth}
+                $color={color}
             />
         </OuterRing>
     );
