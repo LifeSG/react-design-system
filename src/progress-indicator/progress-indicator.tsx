@@ -142,11 +142,40 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     if (!steps.length) return null;
 
-    const renderSteps = () => {
+    const renderStepTitle = (stepIndex: number) => {
+        const highlighted = stepIndex <= currentIndex;
+        const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
+
+        return (
+            <Indicator
+                key={stepIndex}
+                aria-label={getAriaLabel(stepIndex, currentIndex)}
+                id={getId(stepIndex, currentIndex)}
+            >
+                {isMobile && (
+                    <IndicatorTitle
+                        highlighted={highlighted}
+                        weight={"semibold"}
+                        isMobile={isMobile}
+                    >
+                        Step {stepIndex + 1} of {steps.length}
+                    </IndicatorTitle>
+                )}
+                <IndicatorTitle
+                    highlighted={isMobile ? false : highlighted}
+                    weight={isMobile ? "regular" : fontWeight}
+                    isMobile={isMobile}
+                >
+                    {getDisplayValue(steps[stepIndex])}
+                </IndicatorTitle>
+            </Indicator>
+        );
+    };
+
+    const renderBars = () => {
         return steps.map((step: T, stepIndex: number) => {
             // previous and current index elements are highlighted
             const highlighted = stepIndex <= currentIndex;
-            const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
 
             return (
                 <Indicator
@@ -155,26 +184,19 @@ export const ProgressIndicator = <T,>({
                     id={getId(stepIndex, currentIndex)}
                 >
                     <IndicatorBar highlighted={highlighted}></IndicatorBar>
-
-                    {isMobile && (
-                        <IndicatorTitle
-                            highlighted={highlighted}
-                            weight={"semibold"}
-                            isMobile={isMobile}
-                        >
-                            Step {stepIndex + 1} of {steps.length}
-                        </IndicatorTitle>
-                    )}
-                    <IndicatorTitle
-                        highlighted={isMobile ? false : highlighted}
-                        weight={isMobile ? "regular" : fontWeight}
-                        isMobile={isMobile}
-                    >
-                        {getDisplayValue(step)}
-                    </IndicatorTitle>
                 </Indicator>
             );
         });
+    };
+
+    const renderSteps = () => {
+        if (!isMobile) {
+            return steps.map((step: T, stepIndex: number) =>
+                renderStepTitle(stepIndex)
+            );
+        }
+
+        return renderStepTitle(currentIndex);
     };
 
     const renderFade = () => {
@@ -192,6 +214,7 @@ export const ProgressIndicator = <T,>({
 
     return (
         <Wrapper ref={wrapperRef} {...otherProps}>
+            <Content ref={contentRef}>{renderBars()}</Content>
             <Content ref={contentRef}>{renderSteps()}</Content>
             {showFade && renderFade()}
         </Wrapper>
