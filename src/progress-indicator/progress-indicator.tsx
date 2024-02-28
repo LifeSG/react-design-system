@@ -1,11 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import { MediaWidths } from "../media";
 import {
     Content,
-    Fade,
-    INDICATOR_BAR_FADE_WIDTH_MOBILE,
-    INDICATOR_BAR_MARGIN_RIGHT_MOBILE,
-    INDICATOR_BAR_WIDTH_MOBILE,
     Indicator,
     IndicatorBar,
     IndicatorTitle,
@@ -26,15 +21,6 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const [showFade, setShowFade] = useState<boolean>(!!fadePosition);
-    const [showFadeLeft, setShowFadeLeft] = useState<boolean>(
-        fadePosition === "left" || fadePosition === "both"
-    );
-    const [showFadeRight, setShowFadeRight] = useState<boolean>(
-        fadePosition === "right" || fadePosition === "both"
-    );
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.tablet,
     });
@@ -42,77 +28,10 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        handleProgressIndicatorScroll();
-        window.addEventListener("resize", handleProgressIndicatorScroll);
-        const content = contentRef.current;
-        if (content) {
-            content.addEventListener("scroll", handleProgressIndicatorScroll);
-        }
-        // cleanup
-        return () => {
-            window.removeEventListener("resize", handleProgressIndicatorScroll);
-
-            if (content) {
-                content.removeEventListener(
-                    "scroll",
-                    handleProgressIndicatorScroll
-                );
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        handleMobileProgressIndicatorScroll();
-        window.addEventListener("resize", handleMobileProgressIndicatorScroll);
-
-        return () => {
-            window.removeEventListener(
-                "resize",
-                handleMobileProgressIndicatorScroll
-            );
-        };
-    }, [currentIndex]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleMobileProgressIndicatorScroll = () => {
-        if (window.innerWidth > MediaWidths.mobileL) return;
-
-        const content = contentRef.current;
-        if (content) {
-            const scrollLeftRem =
-                (INDICATOR_BAR_WIDTH_MOBILE +
-                    INDICATOR_BAR_MARGIN_RIGHT_MOBILE) *
-                    currentIndex -
-                INDICATOR_BAR_FADE_WIDTH_MOBILE;
-            content.scrollLeft = 16 * scrollLeftRem; // convert to px
-        }
-    };
-    const handleProgressIndicatorScroll = () => {
-        if (showFade) {
-            // Set fade if the media is smaller than or equal to mobile
-            setShowFade(window.innerWidth < MediaWidths.mobileL);
-
-            const content = contentRef.current;
-            const wrapper = wrapperRef.current;
-            if (content && wrapper) {
-                if (content.scrollWidth > wrapper.offsetWidth) {
-                    setShowFade(true);
-                    setShowFadeLeft(content.scrollLeft >= 1);
-                    setShowFadeRight(
-                        content.scrollWidth - content.scrollLeft >
-                            wrapper.offsetWidth
-                    );
-                } else {
-                    setShowFade(false);
-                }
-            } else {
-                setShowFade(false);
-            }
-        }
-    };
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -199,24 +118,10 @@ export const ProgressIndicator = <T,>({
         return renderStepTitle(currentIndex);
     };
 
-    const renderFade = () => {
-        return (
-            <>
-                {showFadeLeft && (
-                    <Fade backgroundColor={fadeColor} position={"left"} />
-                )}
-                {showFadeRight && (
-                    <Fade backgroundColor={fadeColor} position={"right"} />
-                )}
-            </>
-        );
-    };
-
     return (
-        <Wrapper ref={wrapperRef} {...otherProps}>
-            <Content ref={contentRef}>{renderBars()}</Content>
-            <Content ref={contentRef}>{renderSteps()}</Content>
-            {showFade && renderFade()}
+        <Wrapper {...otherProps}>
+            <Content>{renderBars()}</Content>
+            <Content>{renderSteps()}</Content>
         </Wrapper>
     );
 };
