@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 import { AlertSizeType, AlertType } from "./types";
 
@@ -19,8 +20,6 @@ interface StyleProps {
 export const Wrapper = styled.div<StyleProps>`
     padding: 0.5rem 1rem 0.5rem 0.875rem;
     display: flex;
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
-    color: ${Color.Neutral[1]};
 
     ${(props) => {
         let backgroundColor: string;
@@ -58,47 +57,12 @@ export const Wrapper = styled.div<StyleProps>`
         `;
     }}
 
-    p {
-        margin: 0;
-        ${(props) => {
-            if (props.$sizeType === "small")
-                return css`
-                    ${TextStyleHelper.getTextStyle("H6", "regular")}
-
-                    strong {
-                        ${TextStyleHelper.getTextStyle("H6", "semibold")}
-                    }
-
-                    a {
-                        ${TextStyleHelper.getTextStyle("H6", "semibold")}
-                    }
-                `;
-            else {
-                return css`
-                    ${TextStyleHelper.getTextStyle("H5", "regular")}
-
-                    strong {
-                        ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    }
-
-                    a {
-                        ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    }
-                `;
-            }
-        }}
-
-        a {
-            color: ${Color.Primary};
-            text-decoration: none;
-
-            :hover,
-            :active,
-            :focus {
-                color: ${Color.Secondary};
-            }
+    ${(props) => {
+        if (props.$sizeType === "small") {
+            return applyHtmlContentStyle("H6");
         }
-    }
+        return applyHtmlContentStyle("BodySmall");
+    }}
 `;
 
 export const AlertIconWrapper = styled.div<StyleProps>`
