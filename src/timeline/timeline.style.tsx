@@ -126,6 +126,11 @@ export const TimelineTitle = styled(Text.H3)`
     }
 `;
 
+export const TimelineItemTitle = styled(Text.H4)`
+    margin-top: 0.375rem;
+    margin-bottom: 0.5rem;
+`;
+
 // default is 2-8-2 on desktop
 export const TimelineItem = styled.div`
     display: flex;
@@ -133,15 +138,15 @@ export const TimelineItem = styled.div`
     :first-of-type ${CircleIndicator} {
         margin-top: 0;
     }
+
+    :first-of-type ${TimelineItemTitle} {
+        margin-top: -2px;
+    }
 `;
 
 export const TimelineItemContent = styled.div`
     margin-bottom: 2rem;
     width: 100%;
-`;
-
-export const TimelineItemTitle = styled(Text.H4)`
-    margin-bottom: 0.5rem;
 `;
 
 export const TimelinePills = styled(Text.H3)`
