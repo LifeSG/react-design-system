@@ -146,10 +146,11 @@ export const TimelineItemTitle = styled(Text.H4)`
 
 export const TimelinePills = styled(Text.H3)`
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 0.5rem;
+    gap: 0.5rem;
 `;
 
 export const TimelinePill = styled(Pill)`
     padding: 0.125rem 0.5rem;
-    margin-right: 0.5rem;
 `;

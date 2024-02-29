@@ -124,6 +124,29 @@ export const Default: StoryObj<Component> = {
                                 },
                             ],
                         },
+                        {
+                            title: "Item 7",
+                            content: (
+                                <Text.Body>
+                                    This one comes with Pill DS icons with long
+                                    status text.
+                                </Text.Body>
+                            ),
+                            statuses: [
+                                {
+                                    type: "outline",
+                                    colorType: "red",
+                                    children: "Status outline red long text",
+                                    icon: <PlusCircleFillIcon />,
+                                },
+                                {
+                                    type: "solid",
+                                    colorType: "blue",
+                                    children: "Status solid blue",
+                                    icon: <PlaceholderIcon />,
+                                },
+                            ],
+                        },
                     ]}
                 />
             </StoryContainer>
