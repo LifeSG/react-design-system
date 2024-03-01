@@ -140,7 +140,7 @@ export const TimelineItem = styled.div`
     }
 
     :first-of-type ${TimelineItemTitle} {
-        margin-top: -2px;
+        margin-top: -0.125rem;
     }
 `;
 
