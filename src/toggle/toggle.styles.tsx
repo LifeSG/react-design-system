@@ -134,6 +134,7 @@ export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow-wrap: anywhere;
+    width: 100%;
 `;
 
 export const Label = styled.label<LabelStyleProps>`
