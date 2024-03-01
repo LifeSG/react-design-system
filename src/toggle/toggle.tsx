@@ -112,7 +112,11 @@ export const Toggle = ({
         }
 
         return (
-            <SubLabel $disabled={disabled} $selected={selected}>
+            <SubLabel
+                data-id="toggle-sublabel"
+                $disabled={disabled}
+                $selected={selected}
+            >
                 {component}
             </SubLabel>
         );
