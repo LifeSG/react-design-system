@@ -1,16 +1,20 @@
 import { InputProps } from "../input/types";
 
 export type MaskedInputLoadState = "loading" | "fail" | "success";
-export interface MaskedInputProps extends InputProps {
+
+export interface MaskAttributeProps {
     maskRange?: number[] | undefined;
     unmaskRange?: number[] | undefined;
     maskRegex?: RegExp | undefined;
     maskTransformer?: ((value: string) => string) | undefined;
+    maskChar?: string | undefined;
+}
+
+export interface MaskedInputProps extends InputProps, MaskAttributeProps {
     iconMask?: JSX.Element;
     iconUnmask?: JSX.Element;
     iconActiveColor?: string | undefined;
     iconInactiveColor?: string | undefined;
-    maskChar?: string | undefined;
     disableMask?: boolean | undefined;
     transformInput?: "uppercase" | "lowercase" | undefined;
     /**

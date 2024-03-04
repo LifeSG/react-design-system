@@ -15,6 +15,7 @@ import {
 } from "./masked-input.style";
 import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
+import { StringHelper } from "../util";
 
 const Component = (
     {
@@ -117,50 +118,14 @@ const Component = (
         }
 
         return isMasked && !disableMask
-            ? maskValue(updatedValue?.toString())
+            ? StringHelper.maskValue(updatedValue?.toString(), {
+                  maskChar,
+                  maskRange,
+                  unmaskRange,
+                  maskRegex,
+                  maskTransformer,
+              })
             : updatedValue;
-    };
-
-    const maskValue = (value: string): string => {
-        if (!value) {
-            return value;
-        }
-
-        if (maskRange) {
-            const { startIndex, endIndex } = determineStartAndEndIndex(
-                maskRange[0],
-                maskRange[1]
-            );
-            return (
-                value.substring(0, startIndex) +
-                maskChar.repeat(
-                    value.substring(startIndex, endIndex + 1).length
-                ) +
-                value.substring(endIndex + 1)
-            );
-        } else if (unmaskRange) {
-            const { startIndex, endIndex } = determineStartAndEndIndex(
-                unmaskRange[0],
-                unmaskRange[1]
-            );
-            return (
-                maskChar.repeat(value.substring(0, startIndex).length) +
-                value.substring(startIndex, endIndex + 1) +
-                maskChar.repeat(value.substring(endIndex + 1).length)
-            );
-        } else if (maskRegex) {
-            return value.replace(maskRegex, maskChar);
-        } else if (maskTransformer) {
-            return maskTransformer(value);
-        }
-
-        return value;
-    };
-
-    const determineStartAndEndIndex = (index0: number, index1: number) => {
-        return index0 < index1
-            ? { startIndex: index0, endIndex: index1 }
-            : { startIndex: index1, endIndex: index0 };
     };
 
     const shouldDisableMasking = () =>
