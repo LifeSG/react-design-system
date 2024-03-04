@@ -1,10 +1,32 @@
-export type UneditableSectionItemDisplayWidth = "half" | "full";
+import { MaskAttributeProps } from "../masked-input";
 
-export interface UneditableSectionItemProps {
+export type UneditableSectionItemDisplayWidth = "half" | "full";
+export type UneditableSectionItemMaskState = "masked" | "unmasked";
+export type UneditableSectionItemMaskLoadingState = "loading" | "fail";
+
+export interface UneditableSectionItemProps extends MaskAttributeProps {
+    id?: string | undefined;
     label: string;
     value: string;
     /** The width that the item can span across. Values: "half", "full" */
     displayWidth?: UneditableSectionItemDisplayWidth | undefined;
+    /**
+     * Specifies if value is masked or unmasked.
+     * If undefined, no masking or unmasking controls will be rendered.
+     *
+     * Values: "masked" | "unmasked"
+     */
+    maskState?: UneditableSectionItemMaskState | undefined;
+    /**
+     * Specifies the state of the component when there is a
+     * loading behaviour from a mask/unmask action. If undefined
+     * the value will be rendered out.
+     *
+     * Values: "loading" | "fail"
+     */
+    maskLoadingState?: UneditableSectionItemMaskLoadingState | undefined;
+    /** If specified, one is unable to mask or unmask the value */
+    disableMaskUnmask?: boolean | undefined;
 }
 
 export interface UneditableSectionProps {
@@ -20,4 +42,10 @@ export interface UneditableSectionProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     id?: string | undefined;
+    /** The callback function when the mask icon is clicked */
+    onMask?: ((item: UneditableSectionItemProps) => void) | undefined;
+    /** The callback function when the unmask icon is clicked */
+    onUnmask?: ((item: UneditableSectionItemProps) => void) | undefined;
+    /** The callback function when the "Try again" button is clicked in error state */
+    onTryAgain?: ((item: UneditableSectionItemProps) => void) | undefined;
 }
