@@ -65,6 +65,22 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "onMask",
+                description: "Called when the mask icon is clicked",
+                propTypes: ["(item: UneditableSectionItemProps) => void"],
+            },
+            {
+                name: "onUnmask",
+                description: "Called when the unmask icon is clicked",
+                propTypes: ["(item: UneditableSectionItemProps) => void"],
+            },
+            {
+                name: "onTryAgain",
+                description:
+                    "Called when there is an error state with a Try again? indicator",
+                propTypes: ["(item: UneditableSectionItemProps) => void"],
+            },
         ],
     },
     {
@@ -88,6 +104,56 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                     "The width that the item can span across the entire section",
                 propTypes: [`"half"`, `"full"`],
                 defaultValue: `"full"`,
+            },
+            {
+                name: "id",
+                description: "The unique identifier of the uneditable item",
+                propTypes: [`string`],
+            },
+            {
+                name: "maskRange",
+                description: "The range (start and end index) to mask",
+                propTypes: ["number[]"],
+            },
+            {
+                name: "unmaskRange",
+                description: "The range (start and end index) to NOT mask",
+                propTypes: ["number[]"],
+            },
+            {
+                name: "maskRegex",
+                description:
+                    "The regular expression to be replaced / masked with <maskChar>",
+                propTypes: ["RegExp"],
+            },
+            {
+                name: "maskTransformer",
+                description: "The function to transform the value",
+                propTypes: ["(value) => string"],
+            },
+            {
+                name: "maskChar",
+                description: "The character to mask with",
+                defaultValue: "•",
+                propTypes: ["string"],
+            },
+            {
+                name: "maskState",
+                description:
+                    "Specifies if value is masked or unmasked. If undefined, no masking or unmasking controls will be rendered.",
+                propTypes: [`"masked"`, `"unmasked"`],
+            },
+            {
+                name: "maskLoadingState",
+                description:
+                    "Specifies the state of the component when there is a loading behaviour from a mask/unmask action. If undefined, the value will be displayed.",
+                propTypes: [`"loading"`, `"fail"`],
+            },
+            {
+                name: "disableMaskUnmask",
+                description:
+                    "If specified, the value will be masked or unmasked but no indicator will be rendered",
+                propTypes: ["boolean"],
             },
         ],
     },
@@ -118,25 +184,25 @@ const SECTION_DATA: ApiTableSectionProps[] = [
 const ITEM_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
-            {
-                name: "label",
-                description: "The label of the uneditable item",
-                propTypes: [`string`],
-                mandatory: true,
-            },
-            {
-                name: "value",
-                description: "The value of the uneditable item",
-                propTypes: [`string`],
-                mandatory: true,
-            },
-            {
-                name: "displayWidth",
-                description:
-                    "The width that the item can span across the entire section",
-                propTypes: [`"half"`, `"full"`],
-                defaultValue: `"full"`,
-            },
+            ...MAIN_DATA[1].attributes,
+            ...[
+                {
+                    name: "onMask",
+                    description: "Called when the mask icon is clicked",
+                    propTypes: ["() => void"],
+                },
+                {
+                    name: "onUnmask",
+                    description: "Called when the unmask icon is clicked",
+                    propTypes: ["() => void"],
+                },
+                {
+                    name: "onTryAgain",
+                    description:
+                        "Called when there is an error state with a Try again? indicator",
+                    propTypes: ["() => void"],
+                },
+            ],
         ],
     },
 ];

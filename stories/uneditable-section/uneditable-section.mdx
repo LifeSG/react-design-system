@@ -17,6 +17,32 @@ import { UneditableSection } from "@lifesg/react-design-system/uneditable-sectio
 
 <Canvas of={UneditableSectionStories.Default} />
 
+<Heading3>With masked values</Heading3>
+
+You can render values that are masked, with various customisations. Here is an
+example of the different variations.
+
+<Canvas of={UneditableSectionStories.WithMaskedItems} />
+
+You can also handle the masked or unmasked values on your own. To do so, you will
+need to intercept the `onMask` and `onUnmask` callbacks.
+
+<Canvas of={UneditableSectionStories.ControlledMaskUnmask} />
+
+<Heading3>With loading indicator</Heading3>
+
+In some cases, the mask or unmask action requires an API call or an action that has
+some loading time. The component also supports such instances.
+
+<Canvas of={UneditableSectionStories.MaskUnmaskWithLoading} />
+
+<Heading3>With error display</Heading3>
+
+In the event that there is an error, a display will appear with the ability to
+try again.
+
+<Canvas of={UneditableSectionStories.MaskUnmaskWithError} />
+
 <Heading3>With custom content</Heading3>
 
 You are able to compose custom content on the top and bottom of the details to suit
