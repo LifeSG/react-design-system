@@ -56,8 +56,8 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 name: "position",
                 description: (
                     <>
-                        The visual of the <code>Popover</code> in relation to
-                        it&rsquo;s trigger
+                        The visual position of the <code>Popover</code> in
+                        relation to it&rsquo;s trigger
                     </>
                 ),
                 propTypes: [
