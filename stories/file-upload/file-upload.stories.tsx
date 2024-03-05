@@ -310,3 +310,63 @@ export const ReadonlyState: StoryObj<Component> = {
         );
     },
 };
+
+export const TextStyling: StoryObj<Component> = {
+    render: (args) => {
+        const [fileItems, setFileItems] = useState([]);
+        const handleChange = (files) => {
+            const newFileItems = files.map((file) => {
+                return {
+                    id: SimpleIdGenerator.generate(),
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                };
+            });
+            setFileItems((prevItems) => {
+                return prevItems.concat(newFileItems);
+            });
+        };
+        const handleDelete = (fileItem) => {
+            const newArr = [...fileItems];
+            newArr.splice(newArr.indexOf(fileItem), 1);
+            setFileItems(newArr);
+        };
+        return (
+            <FileUpload
+                fileItems={fileItems}
+                onChange={handleChange}
+                onDelete={handleDelete}
+                title={
+                    <>
+                        <p>
+                            You can add <strong>bold text</strong>, <a>links</a>{" "}
+                            and list items to the title:
+                        </p>
+                        <ul>
+                            <li>List item</li>
+                        </ul>
+                        <ol>
+                            <li>List item</li>
+                        </ol>
+                    </>
+                }
+                description={
+                    <>
+                        <p>
+                            You can also add <strong>bold text</strong>,{" "}
+                            <a>links</a> and list items to the description:
+                        </p>
+                        <ul>
+                            <li>List item</li>
+                        </ul>
+                        <ol>
+                            <li>List item</li>
+                        </ol>
+                    </>
+                }
+                {...args}
+            />
+        );
+    },
+};

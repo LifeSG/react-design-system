@@ -83,7 +83,7 @@ export const Variants: StoryObj<Component> = {
     argTypes: {
         illustrationScheme: {
             control: "select",
-            options: [undefined, "base", "bookingsg", "rbs"],
+            options: [undefined, "base", "bookingsg", "ccube", "rbs"],
         },
     },
     args: {

@@ -4,7 +4,9 @@ import { DropzoneElement, FileUploadDropzone } from "./dropzone";
 import { FileList } from "./file-list";
 import {
     Description,
+    DescriptionContainer,
     ErrorAlert,
+    TextContainer,
     Title,
     TitleContainer,
     UploadButton,
@@ -102,7 +104,7 @@ export const FileUpload = ({
             return <Title weight="regular">{title}</Title>;
         }
 
-        return <div>{title}</div>;
+        return <TitleContainer>{title}</TitleContainer>;
     };
 
     const renderDescription = () => {
@@ -114,7 +116,7 @@ export const FileUpload = ({
             return <Description weight="regular">{description}</Description>;
         }
 
-        return <div>{description}</div>;
+        return <DescriptionContainer>{description}</DescriptionContainer>;
     };
 
     return (
@@ -133,10 +135,10 @@ export const FileUpload = ({
                 disabled={disabled || reachedMaxFiles() || readOnly}
             >
                 {(title || description) && (
-                    <TitleContainer>
+                    <TextContainer>
                         {renderTitle()}
                         {renderDescription()}
-                    </TitleContainer>
+                    </TextContainer>
                 )}
                 {warning && (
                     <WarningAlert type="warning">{warning}</WarningAlert>

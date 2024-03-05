@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { Text, TextStyle, TextStyleHelper, TextWeight } from "../text";
+import { TextStyleHelper } from "../text";
 import { ToggleStyleType } from "./types";
 
 // =============================================================================
@@ -32,6 +32,7 @@ export const Container = styled.div<ContainerStyleProps>`
     border-style: solid;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     padding: 0.6875rem 1rem;
+    isolation: isolate;
 
     // Content positioning style
     ${(props) => {
@@ -133,6 +134,7 @@ export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow-wrap: anywhere;
+    width: 100%;
 `;
 
 export const Label = styled.label<LabelStyleProps>`
@@ -166,6 +168,9 @@ export const Label = styled.label<LabelStyleProps>`
 export const SubLabel = styled.div<LabelStyleProps>`
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
     margin-top: 0.5rem;
+
+    z-index: 1; // forces sublabel to render above the input
+    pointer-events: none; // to allow click events to be passed to the input
 
     strong,
     b {
