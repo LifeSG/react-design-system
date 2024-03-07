@@ -176,13 +176,13 @@ describe("UneditableSection", () => {
 
             act(() => {
                 fireEvent.click(screen.getByTestId("clickable-label"));
-                expect(onUnmaskFn).toHaveBeenCalledWith(ITEMS[0]);
             });
+            expect(onUnmaskFn).toHaveBeenCalledWith(ITEMS[0]);
 
             act(() => {
                 fireEvent.click(screen.getByTestId("clickable-label"));
-                expect(onMaskFn).toHaveBeenCalledWith(ITEMS[0]);
             });
+            expect(onMaskFn).toHaveBeenCalledWith(ITEMS[0]);
         });
 
         it("should fire the onTryAgain callback if specified", () => {
@@ -207,8 +207,8 @@ describe("UneditableSection", () => {
 
             act(() => {
                 fireEvent.click(screen.getByTestId("clickable-label"));
-                expect(onTryAgainFn).toHaveBeenCalledWith(ITEMS[0]);
             });
+            expect(onTryAgainFn).toHaveBeenCalledWith(ITEMS[0]);
         });
     });
 });
