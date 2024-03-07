@@ -1,10 +1,10 @@
+import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { Text } from "../text";
+import { TextStyleHelper } from "../text";
 import { UneditableSectionItemDisplayWidth } from "./types";
-import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 
 // =============================================================================
 // STYLING INTERFACES
@@ -57,18 +57,26 @@ export const IconContainer = styled.div`
 `;
 
 export const Clickable = styled.button`
+    ${TextStyleHelper.getTextStyle("Body", "regular")}
     border: none;
     background: transparent;
     padding: 0;
     display: flex;
     cursor: pointer;
     align-items: center;
+    overflow-wrap: anywhere;
+    text-align: left;
+
+    span {
+        overflow-wrap: anywhere;
+        text-align: left;
+    }
 `;
 
 // -----------------------------------------------------------------------------
 // LOADING DISPLAY
 // -----------------------------------------------------------------------------
-export const LoadingLabel = styled(Text.Body)`
+export const LoadingLabel = styled.span`
     color: ${Color.Neutral[3]};
 `;
 
@@ -92,11 +100,12 @@ export const ErrorIcon = styled(ExclamationTriangleIcon)`
     width: 1.125rem;
 `;
 
-export const ErrorLabel = styled(Text.Body)`
+export const ErrorLabel = styled.span`
     color: ${Color.Validation.Orange.Text};
 `;
 
-export const TryAgainLabel = styled(Text.Body)`
+export const TryAgainLabel = styled.span`
+    ${TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${Color.Primary};
     text-decoration: underline;
     margin-left: 0.5rem;
