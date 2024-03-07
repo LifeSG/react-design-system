@@ -15,6 +15,7 @@ export const UneditableSectionBase = ({
     topSection,
     bottomSection,
     children,
+    background = true,
     onMask,
     onUnmask,
     onTryAgain,
@@ -83,7 +84,7 @@ export const UneditableSectionBase = ({
     };
 
     return (
-        <Wrapper {...otherProps} type="grid">
+        <Wrapper $background={background} {...otherProps} type="grid">
             {renderChildren()}
         </Wrapper>
     );

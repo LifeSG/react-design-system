@@ -31,6 +31,19 @@ export const Default: StoryObj<Component> = {
     },
 };
 
+export const NoBackground: StoryObj<Component> = {
+    render: () => {
+        return (
+            <UneditableSection
+                title="Your personal information"
+                description="Retrieved on 27 Jun 2023"
+                items={SAMPLE_ITEMS}
+                background={false}
+            />
+        );
+    },
+};
+
 export const WithMaskedItems: StoryObj<Component> = {
     render: () => {
         const ITEMS: UneditableSectionItemProps[] = [

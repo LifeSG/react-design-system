@@ -60,10 +60,17 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 description: "The class selector of the component",
                 propTypes: ["string"],
             },
+
             {
                 name: "data-testid",
                 description: "The test identifier for the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "background",
+                description: "Specifies if a background should be rendered",
+                propTypes: ["boolean"],
+                defaultValue: "true",
             },
             {
                 name: "onMask",

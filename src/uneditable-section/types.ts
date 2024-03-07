@@ -42,6 +42,8 @@ export interface UneditableSectionProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     id?: string | undefined;
+    /** If specified false, the background will be transparent. Else it is grey by default */
+    background?: boolean | undefined;
     /** The callback function when the mask icon is clicked */
     onMask?: ((item: UneditableSectionItemProps) => void) | undefined;
     /** The callback function when the unmask icon is clicked */
