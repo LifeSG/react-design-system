@@ -45,13 +45,9 @@ export const UneditableSectionBase = ({
                     <UneditableSectionItem
                         key={index}
                         {...item}
-                        {...(onMask ? { onMask: handleItemMask(item) } : {})}
-                        {...(onUnmask
-                            ? { onUnmask: handleItemUnmask(item) }
-                            : {})}
-                        {...(onTryAgain
-                            ? { onTryAgain: handleTryAgain(item) }
-                            : {})}
+                        onMask={handleItemMask(item)}
+                        onUnmask={handleItemUnmask(item)}
+                        onTryAgain={handleTryAgain(item)}
                     />
                 );
             });
