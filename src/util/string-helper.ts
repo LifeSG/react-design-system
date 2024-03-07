@@ -1,5 +1,17 @@
-import { MaskAttributeProps } from "../masked-input";
+// =============================================================================
+// TYPINGS
+// =============================================================================
+interface MaskValueOptions {
+    maskRange?: number[] | undefined;
+    unmaskRange?: number[] | undefined;
+    maskRegex?: RegExp | undefined;
+    maskTransformer?: ((value: string) => string) | undefined;
+    maskChar?: string | undefined;
+}
 
+// =============================================================================
+// EXPORTS
+// =============================================================================
 export namespace StringHelper {
     export const transformWithSpaces = (
         value: string | any,
@@ -108,7 +120,7 @@ export namespace StringHelper {
         return metrics.width;
     };
 
-    export const maskValue = (value: string, options?: MaskAttributeProps) => {
+    export const maskValue = (value: string, options?: MaskValueOptions) => {
         if (!value) {
             return value;
         }
