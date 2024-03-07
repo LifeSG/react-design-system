@@ -19,7 +19,8 @@ import { Text } from "../text";
 import { StringHelper } from "../util/string-helper";
 import { useEffect, useState } from "react";
 
-interface Props extends UneditableSectionItemProps {
+export interface UneditableSectionItemComponentProps
+    extends UneditableSectionItemProps {
     onMask?: (() => void) | undefined;
     onUnmask?: (() => void) | undefined;
     onTryAgain?: (() => void) | undefined;
@@ -40,7 +41,7 @@ export const UneditableSectionItem = ({
     onMask,
     onUnmask,
     onTryAgain,
-}: Props) => {
+}: UneditableSectionItemComponentProps) => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
