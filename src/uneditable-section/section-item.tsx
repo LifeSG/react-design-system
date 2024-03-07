@@ -84,14 +84,16 @@ export const UneditableSectionItem = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const getMaskedValue = () => {
-        return StringHelper.maskValue(value, {
-            maskChar,
-            maskRange,
-            unmaskRange,
-            maskRegex,
-            maskTransformer,
-        });
+    const getValue = () => {
+        return displayMaskState === "masked"
+            ? StringHelper.maskValue(value, {
+                  maskChar,
+                  maskRange,
+                  unmaskRange,
+                  maskRegex,
+                  maskTransformer,
+              })
+            : value;
     };
 
     // =========================================================================
@@ -119,11 +121,7 @@ export const UneditableSectionItem = ({
             default:
                 return (
                     <>
-                        <Text.Body>
-                            {displayMaskState === "masked"
-                                ? getMaskedValue()
-                                : value}
-                        </Text.Body>
+                        {getValue()}
                         <IconContainer>
                             {displayMaskState === "masked" ? (
                                 <EyeIcon data-testid="masked-icon" />
@@ -142,7 +140,7 @@ export const UneditableSectionItem = ({
         }
 
         if (disableMaskUnmask) {
-            return <Text.Body>{getMaskedValue()}</Text.Body>;
+            return <Text.Body>{getValue()}</Text.Body>;
         }
 
         return (
