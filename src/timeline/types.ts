@@ -1,4 +1,4 @@
-import { PillProps, PillType } from "../pill";
+import { PillProps } from "../pill";
 
 export type Variant =
     | "completed"
@@ -7,18 +7,10 @@ export type Variant =
     | "upcoming-inactive"
     | "error";
 
-export type TimelineStatusType = PillType | "dark" | "light";
-
-export interface TimelineStatusProps extends Omit<PillProps, "type"> {
-    type: TimelineStatusType;
-    /** @deprecated This attribute has been deprecated in favour of the children attribute of `PillProps` */
-    label?: string;
-}
-
 export interface TimelineItemProps {
     title: string | JSX.Element;
     content: string | JSX.Element;
-    statuses?: TimelineStatusProps[] | undefined;
+    statuses?: PillProps[] | undefined;
     variant?: Variant | undefined;
 }
 

@@ -87,25 +87,6 @@ export const Default: StoryObj<Component> = {
                             title: "Item 5",
                             content: (
                                 <Text.Body>
-                                    This one comes with light and black status
-                                    icons.
-                                </Text.Body>
-                            ),
-                            statuses: [
-                                {
-                                    type: "light",
-                                    label: "Status light",
-                                },
-                                {
-                                    type: "dark",
-                                    label: "Status dark",
-                                },
-                            ],
-                        },
-                        {
-                            title: "Item 6",
-                            content: (
-                                <Text.Body>
                                     This one comes with Pill DS icons.
                                 </Text.Body>
                             ),
@@ -125,7 +106,7 @@ export const Default: StoryObj<Component> = {
                             ],
                         },
                         {
-                            title: "Item 7",
+                            title: "Item 6",
                             content: (
                                 <Text.Body>
                                     This one comes with Pill DS icons with long
