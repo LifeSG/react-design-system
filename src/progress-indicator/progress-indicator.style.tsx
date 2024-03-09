@@ -55,8 +55,6 @@ export const IndicatorBar = styled.div<IndicatorProps>`
 `;
 
 export const IndicatorTitle = styled(Text.BodySmall)<IndicatorProps>`
-    margin-right: 0.5rem;
-
     ${(props) => {
         const { highlighted, isMobile } = props;
         const color = isMobile
