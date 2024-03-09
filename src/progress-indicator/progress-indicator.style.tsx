@@ -4,9 +4,7 @@ import { MediaQuery } from "../media";
 import { Text } from "../text";
 
 // Units in rem
-export const INDICATOR_BAR_WIDTH_MOBILE = 10;
 export const INDICATOR_BAR_MARGIN_RIGHT_MOBILE = 0.5;
-export const INDICATOR_BAR_FADE_WIDTH_MOBILE = 4;
 
 // =============================================================================
 // STYLE TYPES
