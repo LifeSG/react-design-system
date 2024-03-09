@@ -1,14 +1,6 @@
-import React from "react";
-import {
-    ApiTable,
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Section,
-    Table,
-} from "../storybook-common/api-table";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
     {
@@ -46,7 +38,7 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                         The content of the <code>Popover</code>
                     </>
                 ),
-                propTypes: ["string", "JSX.Element"],
+                propTypes: ["string", "JSX.Element", "() => React.ReactNode"],
                 mandatory: true,
             },
             {
@@ -59,6 +51,30 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: [`"click"`, `"hover"`],
                 defaultValue: `"click"`,
+            },
+            {
+                name: "position",
+                description: (
+                    <>
+                        The visual position of the <code>Popover</code> in
+                        relation to it&rsquo;s trigger
+                    </>
+                ),
+                propTypes: [
+                    `"top"`,
+                    `"top-start"`,
+                    `"top-end"`,
+                    `"bottom"`,
+                    `"bottom-start"`,
+                    `"bottom-end"`,
+                    `"left"`,
+                    `"left-start"`,
+                    `"left-end"`,
+                    `"right"`,
+                    `"right-start"`,
+                    `"right-end"`,
+                ],
+                defaultValue: `"top"`,
             },
             {
                 name: "rootNode",

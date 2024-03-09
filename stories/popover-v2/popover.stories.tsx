@@ -94,3 +94,19 @@ export const Appearance: StoryObj<Component> = {
         layout: "fullscreen",
     },
 };
+
+export const Customisation: StoryObj<Component> = {
+    render: () => {
+        return (
+            <PopoverTrigger
+                popoverContent={() => (
+                    <div style={{ background: "aliceblue", padding: "1rem" }}>
+                        A custom popover!
+                    </div>
+                )}
+            >
+                <Button.Default>Click me</Button.Default>
+            </PopoverTrigger>
+        );
+    },
+};

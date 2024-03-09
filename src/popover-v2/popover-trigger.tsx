@@ -2,6 +2,7 @@ import {
     FloatingPortal,
     autoUpdate,
     flip,
+    limitShift,
     offset,
     shift,
     useFloating,
@@ -17,6 +18,7 @@ export const PopoverTrigger = ({
     children,
     popoverContent,
     trigger = "click",
+    position = "top",
     rootNode,
     onPopoverAppear,
     onPopoverDismiss,
@@ -32,9 +34,15 @@ export const PopoverTrigger = ({
     });
     const { refs, floatingStyles } = useFloating({
         open: visible,
-        placement: "top",
+        placement: position,
         whileElementsMounted: autoUpdate,
-        middleware: [offset(16), flip(), shift()],
+        middleware: [
+            offset(16),
+            flip(),
+            shift({
+                limiter: limitShift(),
+            }),
+        ],
     });
 
     // =========================================================================
@@ -91,19 +99,26 @@ export const PopoverTrigger = ({
     };
 
     // =========================================================================
-    // RENDER
+    // RENDER FUNCTIONS
     // =========================================================================
+    const renderPopover = () => {
+        if (typeof popoverContent === "function") {
+            return popoverContent();
+        }
+
+        return (
+            <PopoverV2 visible onMobileClose={handlePopoverMobileClose}>
+                {popoverContent}
+            </PopoverV2>
+        );
+    };
+
     return (
         <>
             {visible && (
                 <FloatingPortal root={rootNode}>
                     <div ref={refs.setFloating} style={{ ...floatingStyles }}>
-                        <PopoverV2
-                            visible
-                            onMobileClose={handlePopoverMobileClose}
-                        >
-                            {popoverContent}
-                        </PopoverV2>
+                        {renderPopover()}
                     </div>
                 </FloatingPortal>
             )}

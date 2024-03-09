@@ -23,8 +23,10 @@ import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 
 <Heading4>Appearance information</Heading4>
 
--   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself on top of the trigger component by default
+-   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself at the preferred position by default
 -   The `Popover` appears as a modal in mobile viewports
+
+The example below illustrates the default behaviour.
 
 <Canvas of={PopoverStories.Appearance} />
 
@@ -33,5 +35,11 @@ import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 The component comes with basic styling for commonly used markup such as `<strong>` or `<a>`.
 
 <Canvas of={PopoverStories.DefaultStyling} />
+
+<Heading3>Customisation</Heading3>
+
+You can opt out of the default appearance to display custom content such as menus and dialogs.
+
+<Canvas of={PopoverStories.Customisation} />
 
 <PropsTable />
