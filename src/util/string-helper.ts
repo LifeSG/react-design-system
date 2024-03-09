@@ -1,3 +1,17 @@
+// =============================================================================
+// TYPINGS
+// =============================================================================
+interface MaskValueOptions {
+    maskRange?: number[] | undefined;
+    unmaskRange?: number[] | undefined;
+    maskRegex?: RegExp | undefined;
+    maskTransformer?: ((value: string) => string) | undefined;
+    maskChar?: string | undefined;
+}
+
+// =============================================================================
+// EXPORTS
+// =============================================================================
 export namespace StringHelper {
     export const transformWithSpaces = (
         value: string | any,
@@ -104,5 +118,55 @@ export namespace StringHelper {
 
         const metrics = context.measureText(text);
         return metrics.width;
+    };
+
+    export const maskValue = (value: string, options?: MaskValueOptions) => {
+        if (!value) {
+            return value;
+        }
+
+        const {
+            maskRange,
+            unmaskRange,
+            maskChar = "•",
+            maskRegex,
+            maskTransformer,
+        } = options;
+
+        if (maskTransformer) {
+            return maskTransformer(value);
+        } else if (maskRegex) {
+            return value.replace(maskRegex, maskChar);
+        } else if (maskRange) {
+            const { startIndex, endIndex } = determineStartAndEndIndex(
+                maskRange[0],
+                maskRange[1]
+            );
+            return (
+                value.substring(0, startIndex) +
+                maskChar.repeat(
+                    value.substring(startIndex, endIndex + 1).length
+                ) +
+                value.substring(endIndex + 1)
+            );
+        } else if (unmaskRange) {
+            const { startIndex, endIndex } = determineStartAndEndIndex(
+                unmaskRange[0],
+                unmaskRange[1]
+            );
+            return (
+                maskChar.repeat(value.substring(0, startIndex).length) +
+                value.substring(startIndex, endIndex + 1) +
+                maskChar.repeat(value.substring(endIndex + 1).length)
+            );
+        }
+
+        return value;
+    };
+
+    const determineStartAndEndIndex = (index0: number, index1: number) => {
+        return index0 < index1
+            ? { startIndex: index0, endIndex: index1 }
+            : { startIndex: index1, endIndex: index0 };
     };
 }
