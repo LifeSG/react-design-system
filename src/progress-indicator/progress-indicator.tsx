@@ -3,7 +3,8 @@ import {
     Content,
     Indicator,
     IndicatorBar,
-    IndicatorTitle,
+    IndicatorTitleDesktop,
+    IndicatorTitleMobile,
     Wrapper,
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
@@ -61,36 +62,6 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     if (!steps.length) return null;
 
-    const renderStepTitle = (stepIndex: number) => {
-        const highlighted = stepIndex <= currentIndex;
-        const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
-
-        return (
-            <Indicator
-                key={stepIndex}
-                aria-label={getAriaLabel(stepIndex, currentIndex)}
-                id={getId(stepIndex, currentIndex)}
-            >
-                {isMobile && (
-                    <IndicatorTitle
-                        highlighted={highlighted}
-                        weight={"semibold"}
-                        isMobile={isMobile}
-                    >
-                        Step {stepIndex + 1} of {steps.length}
-                    </IndicatorTitle>
-                )}
-                <IndicatorTitle
-                    highlighted={isMobile ? false : highlighted}
-                    weight={isMobile ? "regular" : fontWeight}
-                    isMobile={isMobile}
-                >
-                    {getDisplayValue(steps[stepIndex])}
-                </IndicatorTitle>
-            </Indicator>
-        );
-    };
-
     const renderBars = () => {
         return steps.map((step: T, stepIndex: number) => {
             // previous and current index elements are highlighted
@@ -108,20 +79,51 @@ export const ProgressIndicator = <T,>({
         });
     };
 
-    const renderSteps = () => {
-        if (!isMobile) {
-            return steps.map((step: T, stepIndex: number) =>
-                renderStepTitle(stepIndex)
-            );
-        }
+    const renderStepTitleDesktop = () => {
+        return steps.map((step: T, stepIndex: number) => {
+            const highlighted = stepIndex <= currentIndex;
+            const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
 
-        return renderStepTitle(currentIndex);
+            return (
+                <Indicator
+                    key={stepIndex}
+                    aria-label={getAriaLabel(stepIndex, currentIndex)}
+                    id={getId(stepIndex, currentIndex)}
+                >
+                    <IndicatorTitleDesktop
+                        highlighted={highlighted}
+                        weight={fontWeight}
+                    >
+                        {getDisplayValue(step)}
+                    </IndicatorTitleDesktop>
+                </Indicator>
+            );
+        });
+    };
+
+    const renderStepTitleMobile = () => {
+        return (
+            <Indicator
+                key={currentIndex}
+                aria-label={getAriaLabel(currentIndex, currentIndex)}
+                id={getId(currentIndex, currentIndex)}
+            >
+                <IndicatorTitleMobile weight={"semibold"}>
+                    Step {currentIndex + 1} of {steps.length}
+                </IndicatorTitleMobile>
+                <IndicatorTitleMobile weight={"regular"}>
+                    {getDisplayValue(steps[currentIndex])}
+                </IndicatorTitleMobile>
+            </Indicator>
+        );
     };
 
     return (
         <Wrapper {...otherProps}>
             <Content>{renderBars()}</Content>
-            <Content>{renderSteps()}</Content>
+            <Content>
+                {isMobile ? renderStepTitleMobile() : renderStepTitleDesktop()}
+            </Content>
         </Wrapper>
     );
 };

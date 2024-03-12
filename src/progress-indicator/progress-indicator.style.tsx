@@ -54,15 +54,17 @@ export const IndicatorBar = styled.div<IndicatorProps>`
     }};
 `;
 
-export const IndicatorTitle = styled(Text.BodySmall)<IndicatorProps>`
+export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
     ${(props) => {
-        const { highlighted, isMobile } = props;
-        const color = isMobile
-            ? Color.Neutral[1]
-            : highlighted
-            ? Color.Primary
-            : Color.Neutral[4];
+        const { highlighted } = props;
+        const color = highlighted ? Color.Primary : Color.Neutral[4];
         return `color: ${color(props)};`;
+    }};
+`;
+
+export const IndicatorTitleMobile = styled(Text.BodySmall)`
+    ${(props) => {
+        return `color: ${Color.Neutral[1](props)};`;
     }};
 `;
 
