@@ -55,6 +55,7 @@ export const IndicatorBar = styled.div<IndicatorProps>`
 `;
 
 export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
+    overflow-wrap: anywhere;
     ${(props) => {
         const { highlighted } = props;
         const color = highlighted ? Color.Primary : Color.Neutral[4];
@@ -63,6 +64,7 @@ export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
 `;
 
 export const IndicatorTitleMobile = styled(Text.BodySmall)`
+    overflow-wrap: anywhere;
     ${(props) => {
         return `color: ${Color.Neutral[1](props)};`;
     }};
