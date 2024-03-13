@@ -28,7 +28,6 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    margin-top: 0.5rem;
     border-radius: 50%;
 
     ${(props) => {
@@ -56,7 +55,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                 return css`
                     width: 1.8rem;
                     height: 1.8rem;
-                    margin: 0.3rem 0 -0.15rem -0.15rem;
+                    margin: -0.15rem 0 -0.15rem -0.15rem;
 
                     svg {
                         color: ${Color.Validation.Red.Icon};
@@ -72,6 +71,7 @@ export const LineIndicator = styled.div<VariantStyleProps>`
     width: 4px;
     flex-grow: 1;
     margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     border-radius: 2px;
 
     ${(props) => {
@@ -127,7 +127,7 @@ export const TimelineTitle = styled(Text.H3)`
 `;
 
 export const TimelineItemTitle = styled(Text.H4)`
-    margin-top: 0.375rem;
+    margin-top: -0.125rem;
     margin-bottom: 0.5rem;
 `;
 
@@ -135,12 +135,8 @@ export const TimelineItemTitle = styled(Text.H4)`
 export const TimelineItem = styled.div`
     display: flex;
 
-    :first-of-type ${CircleIndicator} {
-        margin-top: 0;
-    }
-
-    :first-of-type ${TimelineItemTitle} {
-        margin-top: -0.125rem;
+    :last-of-type ${LineIndicator} {
+        margin-bottom: 0;
     }
 `;
 
