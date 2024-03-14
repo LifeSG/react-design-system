@@ -57,7 +57,7 @@ export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
     overflow-wrap: anywhere;
     ${(props) => {
         const { highlighted } = props;
-        const color = highlighted ? Color.Primary : Color.Neutral[4];
+        const color = highlighted ? Color.Primary : Color.Neutral[3];
         return `color: ${color(props)};`;
     }};
 `;
