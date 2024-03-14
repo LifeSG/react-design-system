@@ -12,7 +12,6 @@ export const INDICATOR_BAR_MARGIN_RIGHT_MOBILE = 0.5;
 
 interface IndicatorProps {
     highlighted: boolean;
-    isMobile?: boolean;
 }
 
 // =============================================================================
