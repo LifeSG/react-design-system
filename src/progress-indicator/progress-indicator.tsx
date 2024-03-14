@@ -88,7 +88,7 @@ export const ProgressIndicator = <T,>({
                 <Indicator
                     key={stepIndex}
                     aria-label={getAriaLabel(stepIndex, currentIndex)}
-                    id={getId(stepIndex, currentIndex)}
+                    id={`${getId(stepIndex, currentIndex)}-title`}
                 >
                     <IndicatorTitleDesktop
                         highlighted={highlighted}
