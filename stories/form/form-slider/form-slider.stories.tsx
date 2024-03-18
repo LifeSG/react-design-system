@@ -92,6 +92,14 @@ export const WithLabels: StoryObj<Component> = {
                             )
                         }
                     />
+                    <Form.Slider
+                        label="With indicator"
+                        min={1}
+                        max={10}
+                        showIndicatorLabel
+                        indicatorLabelPrefix="Showing "
+                        indicatorLabelSuffix=" item(s)"
+                    />
                 </Container>
             </StoryContainer>
         );

@@ -108,7 +108,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "showIndicatorLabel",
-                description: "Specifies if indicator labels are visible",
+                description: "Specifies if indicator label is visible",
                 propTypes: ["boolean"],
             },
             {
