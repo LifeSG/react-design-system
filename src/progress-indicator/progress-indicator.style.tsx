@@ -64,9 +64,7 @@ export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
 
 export const IndicatorTitleMobile = styled(Text.BodySmall)`
     overflow-wrap: anywhere;
-    ${(props) => {
-        return `color: ${Color.Neutral[1](props)};`;
-    }};
+    color: ${Color.Neutral[1]};
 `;
 
 export const Indicator = styled.div`
