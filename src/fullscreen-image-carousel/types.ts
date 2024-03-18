@@ -18,6 +18,7 @@ export interface FullscreenImageCarouselProps
     hideThumbnail?: boolean | undefined;
     hideNavigation?: boolean | undefined;
     hideCounter?: boolean | undefined;
+    hideMagnifier?: boolean | undefined;
     onClose?: (() => void) | undefined;
 }
 

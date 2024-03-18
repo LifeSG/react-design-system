@@ -2,6 +2,8 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     CrossIcon,
+    MagnifierMinusIcon,
+    MagnifierPlusIcon,
 } from "@lifesg/react-icons";
 import {
     forwardRef,
@@ -28,6 +30,7 @@ import {
     ImageGallerySlides,
     ImageGallerySwipe,
     ImageGalleryWrapper,
+    MagnifierButton,
     SlideImage,
     SlidePlaceholderImage,
     ThumbnailContainer,
@@ -45,8 +48,9 @@ export const Component = (
         items,
         initialActiveItemIndex,
         hideThumbnail,
-        hideNavigation,
-        hideCounter,
+        hideNavigation = false,
+        hideCounter = false,
+        hideMagnifier = false,
         onClose,
         ...otherProps
     }: FullscreenImageCarouselProps,
@@ -224,6 +228,19 @@ export const Component = (
             >
                 <CrossIcon aria-hidden />
             </CloseButton>
+            {!hideMagnifier && (
+                <MagnifierButton
+                    aria-label="Magnify image"
+                    onClick={handleMagnifier}
+                    focusHighlight={false}
+                >
+                    {zoom === 1 ? (
+                        <MagnifierPlusIcon aria-hidden />
+                    ) : (
+                        <MagnifierMinusIcon aria-hidden />
+                    )}
+                </MagnifierButton>
+            )}
             <ImageGalleryContainer>
                 <ImageGalleryWrapper>
                     {!hideNavigation && (
