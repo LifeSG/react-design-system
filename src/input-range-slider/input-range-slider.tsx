@@ -26,9 +26,9 @@ export const InputRangeSlider = ({
     showSliderLabels,
     sliderLabelPrefix,
     sliderLabelSuffix,
-    showIndicationLabels,
-    indicationLabelPrefix,
-    indicationLabelSuffix,
+    showIndicatorLabel,
+    indicatorLabelPrefix,
+    indicatorLabelSuffix,
     renderSliderLabel,
     onChange,
     onChangeEnd,
@@ -137,21 +137,32 @@ export const InputRangeSlider = ({
     };
 
     const formatIndicationLabel = () => {
+        let formattedSelection = "";
+
+        if (selection.length === 1) {
+            formattedSelection = `${selection[0]}`;
+        } else if (selection.length === 2) {
+            formattedSelection = `${selection[0]} - ${selection[1]}`;
+        } else if (selection.length > 2) {
+            const min = Math.min(...selection);
+            const max = Math.max(...selection);
+            formattedSelection = `${min} - ${max}`;
+        }
+
         return (
             <LabelText>
-                Searching within&nbsp;
-                {indicationLabelPrefix}
-                {selection}
-                {indicationLabelSuffix}
+                {indicatorLabelPrefix}
+                {formattedSelection}
+                {indicatorLabelSuffix}
             </LabelText>
         );
     };
 
     return (
         <Wrapper {...otherProps}>
-            {showIndicationLabels && (
+            {showIndicatorLabel && (
                 <IndicationLabelContainer>
-                    <div>{formatIndicationLabel()}</div>
+                    {formatIndicationLabel()}
                 </IndicationLabelContainer>
             )}
             <Slider

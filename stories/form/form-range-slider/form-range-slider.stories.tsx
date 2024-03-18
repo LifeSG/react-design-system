@@ -131,8 +131,8 @@ export const WithLabels: StoryObj<Component> = {
                                 </Text.XSmall>
                             )
                         }
-                        showIndicationLabels
-                        indicationLabelSuffix="photos"
+                        showIndicatorLabel
+                        indicatorLabelSuffix="photos"
                     />
                 </Container>
             </StoryContainer>

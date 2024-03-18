@@ -15,9 +15,9 @@ export interface BaseSliderProps {
     showSliderLabels?: boolean | undefined;
     sliderLabelPrefix?: string | undefined;
     sliderLabelSuffix?: string | undefined;
-    showIndicationLabels?: boolean | undefined;
-    indicationLabelPrefix?: string | undefined;
-    indicationLabelSuffix?: string | undefined;
+    showIndicatorLabel?: boolean | undefined;
+    indicatorLabelPrefix?: string | undefined;
+    indicatorLabelSuffix?: string | undefined;
     renderSliderLabel?: ((value: number) => React.ReactNode) | undefined;
 }
 
