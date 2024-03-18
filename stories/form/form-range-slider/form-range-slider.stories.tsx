@@ -115,6 +115,25 @@ export const WithLabels: StoryObj<Component> = {
                             )
                         }
                     />
+                    <Form.RangeSlider
+                        label="With indicator rendering"
+                        min={1}
+                        max={10}
+                        showSliderLabels
+                        renderSliderLabel={(val) =>
+                            val === 1 ? (
+                                <Text.XSmall weight="semibold">
+                                    1 photo
+                                </Text.XSmall>
+                            ) : (
+                                <Text.XSmall weight="semibold">
+                                    {val} photos
+                                </Text.XSmall>
+                            )
+                        }
+                        showIndicationLabels
+                        indicationLabelSuffix="photos"
+                    />
                 </Container>
             </StoryContainer>
         );

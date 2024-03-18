@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Color } from "../color";
 import {
+    IndicationLabelContainer,
     Knob,
     LabelContainer,
     LabelText,
@@ -25,6 +26,9 @@ export const InputRangeSlider = ({
     showSliderLabels,
     sliderLabelPrefix,
     sliderLabelSuffix,
+    showIndicationLabels,
+    indicationLabelPrefix,
+    indicationLabelSuffix,
     renderSliderLabel,
     onChange,
     onChangeEnd,
@@ -132,8 +136,24 @@ export const InputRangeSlider = ({
         );
     };
 
+    const formatIndicationLabel = () => {
+        return (
+            <LabelText>
+                Searching within&nbsp;
+                {indicationLabelPrefix}
+                {selection}
+                {indicationLabelSuffix}
+            </LabelText>
+        );
+    };
+
     return (
         <Wrapper {...otherProps}>
+            {showIndicationLabels && (
+                <IndicationLabelContainer>
+                    <div>{formatIndicationLabel()}</div>
+                </IndicationLabelContainer>
+            )}
             <Slider
                 step={step}
                 min={min}

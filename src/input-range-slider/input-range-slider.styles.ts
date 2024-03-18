@@ -29,6 +29,10 @@ export const LabelContainer = styled.div`
     gap: 1rem;
 `;
 
+export const IndicationLabelContainer = styled.div`
+    margin-bottom: 0.25rem;
+`;
+
 export const LabelText = styled(Text.BodySmall)`
     overflow-wrap: anywhere;
 `;
