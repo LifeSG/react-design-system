@@ -5,6 +5,7 @@ import { Popover } from "./popover";
 import { HOCTrigger, HOCWrapper } from "./popover.styles";
 import { PopoverHOCOptionsProps, PopoverHOCProps } from "./types";
 
+/** @deprecated Use `PopoverTrigger` for improved positioning behaviour. This component will be removed in DS v3. */
 export const withPopover =
     <T,>(Component: React.ComponentType<T>, options: PopoverHOCOptionsProps) =>
     // eslint-disable-next-line react/display-name

@@ -2,8 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "src/alert";
 import { Button } from "src/button";
 import { Text } from "src/text";
-import { UneditableSection } from "src/uneditable-section";
+import {
+    UneditableSection,
+    UneditableSectionItemMaskState,
+    UneditableSectionItemProps,
+} from "src/uneditable-section";
 import { SAMPLE_ITEMS } from "./doc-elements";
+import { useState } from "react";
 
 type Component = typeof UneditableSection;
 
@@ -21,6 +26,211 @@ export const Default: StoryObj<Component> = {
                 title="Your personal information"
                 description="Retrieved on 27 Jun 2023"
                 items={SAMPLE_ITEMS}
+            />
+        );
+    },
+};
+
+export const NoBackground: StoryObj<Component> = {
+    render: () => {
+        return (
+            <UneditableSection
+                title="Your personal information"
+                description="Retrieved on 27 Jun 2023"
+                items={SAMPLE_ITEMS}
+                background={false}
+            />
+        );
+    },
+};
+
+export const WithMaskedItems: StoryObj<Component> = {
+    render: () => {
+        const ITEMS: UneditableSectionItemProps[] = [
+            {
+                label: "Plain value",
+                value: "S1234567D",
+                displayWidth: "half",
+            },
+            {
+                label: "With mask range",
+                value: "S1234567D",
+                maskRange: [1, 4],
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
+                label: "With unmask range",
+                value: "S1234567D",
+                unmaskRange: [1, 4],
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
+                label: "With mask regex",
+                value: "S1234567D",
+                maskRegex: /\D/g,
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
+                label: "With mask transformer",
+                value: "S1234567D",
+                maskTransformer: (value) => value.replace(/\D/g, "*"),
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
+                label: "With mask range but disabled unmasking",
+                value: "S1234567D",
+                maskRange: [1, 4],
+                maskState: "masked",
+                displayWidth: "half",
+                disableMaskUnmask: true,
+            },
+        ];
+
+        return (
+            <UneditableSection
+                title="Your personal information"
+                description="Retrieved on 27 Jun 2023"
+                items={ITEMS}
+            />
+        );
+    },
+};
+
+export const ControlledMaskUnmask: StoryObj<Component> = {
+    render: () => {
+        const [item, setItem] = useState<UneditableSectionItemProps>({
+            id: "item1",
+            label: "This has controlled masking/unmasking of values",
+            value: "S1••••67D",
+            maskState: "masked",
+        });
+
+        const handleItemUnmask = (_item: UneditableSectionItemProps) => {
+            setItem((current) => {
+                return {
+                    ...current,
+                    value: "S1234567D",
+                };
+            });
+        };
+
+        const handleItemMask = (_item: UneditableSectionItemProps) => {
+            setItem((current) => {
+                return {
+                    ...current,
+                    value: "S1••••67D",
+                };
+            });
+        };
+
+        return (
+            <UneditableSection
+                title="Your personal information"
+                items={[item]}
+                onMask={handleItemMask}
+                onUnmask={handleItemUnmask}
+            />
+        );
+    },
+};
+
+export const MaskUnmaskWithLoading: StoryObj<Component> = {
+    render: () => {
+        const [item, setItem] = useState<UneditableSectionItemProps>({
+            id: "item1",
+            label: "This has a loading display when unmasking",
+            value: "S1••••67D",
+            maskState: "masked",
+        });
+
+        const handleItemUnmask = (_item: UneditableSectionItemProps) => {
+            setItem((current) => {
+                return {
+                    ...current,
+                    maskLoadingState: "loading",
+                };
+            });
+
+            // This is mocking an api call made
+            setTimeout(() => {
+                setItem((current) => {
+                    return {
+                        ...current,
+                        value: "S1234567D",
+                        maskLoadingState: undefined, // or don't even specify the property
+                    };
+                });
+            }, 2000);
+        };
+
+        const handleItemMask = (_item: UneditableSectionItemProps) => {
+            setItem((current) => {
+                return {
+                    ...current,
+                    value: "S1••••67D",
+                };
+            });
+        };
+
+        return (
+            <UneditableSection
+                title="Your personal information"
+                items={[item]}
+                onMask={handleItemMask}
+                onUnmask={handleItemUnmask}
+            />
+        );
+    },
+};
+
+export const MaskUnmaskWithError: StoryObj<Component> = {
+    render: () => {
+        const [item, setItem] = useState<UneditableSectionItemProps>({
+            id: "item1",
+            label: "This has an error display when unmasking",
+            value: "S1••••67D",
+            maskState: "masked",
+        });
+
+        const handleItemUnmask = (_item: UneditableSectionItemProps) => {
+            setItem((current) => {
+                return {
+                    ...current,
+                    maskLoadingState: "loading",
+                };
+            });
+
+            // This is mocking an api call made
+            setTimeout(() => {
+                setItem((current) => {
+                    return {
+                        ...current,
+                        maskLoadingState: "fail",
+                    };
+                });
+            }, 2000);
+        };
+
+        const handleItemMask = (_item: UneditableSectionItemProps) => {
+            setItem((current) => {
+                return {
+                    ...current,
+                    value: "S1••••67D",
+                };
+            });
+        };
+
+        return (
+            <UneditableSection
+                title="Your personal information"
+                items={[item]}
+                onMask={handleItemMask}
+                onUnmask={handleItemUnmask}
+                onTryAgain={handleItemUnmask}
             />
         );
     },

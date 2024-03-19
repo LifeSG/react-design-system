@@ -2,6 +2,7 @@ import isNil from "lodash/isNil";
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
+import { PopoverAddon } from "../form/form-label-addon";
 import { FilterContext } from "./filter-context";
 import {
     ChevronIcon,
@@ -27,13 +28,14 @@ export const FilterItem = ({
     showDivider = true,
     showMobileDivider = true,
     title,
+    addon,
     children,
     ...otherProps
 }: FilterItemProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { mode } = useContext(FilterContext);
+    const { mode, rootNode } = useContext(FilterContext);
     const isMobile = mode === "mobile";
     const [expanded, setExpanded] = useState(getInitialExpandState());
     const [contentMinimised, setContentMinimised] = useState(minimisable);
@@ -90,6 +92,21 @@ export const FilterItem = ({
     // =============================================================================
     // RENDER
     // =============================================================================
+
+    const renderAddon = () => {
+        switch (addon.type) {
+            case "popover":
+                return (
+                    <PopoverAddon
+                        addon={addon}
+                        rootNode={isMobile ? rootNode : undefined}
+                    />
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <FilterItemWrapper $collapsible={collapsible}>
             <Divider
@@ -100,7 +117,7 @@ export const FilterItem = ({
                 <FilterItemHeader>
                     {title && (
                         <FilterItemTitle weight="semibold">
-                            {title}
+                            {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
                     {collapsible && (

@@ -20,7 +20,7 @@ export interface ToggleProps
     /** The style type of the Toggle. Values: "default" | "no-border" */
     styleType?: ToggleStyleType | undefined;
     /** The Toggle label */
-    children: string;
+    children: React.ReactNode;
     // /** The description label displayed below the main label */
     subLabel?: (() => JSX.Element) | string | undefined;
     disabled?: boolean | undefined;

@@ -16,7 +16,7 @@ export const FormLabel = ({
     const renderAddon = () => {
         switch (addon.type) {
             case "popover":
-                return addon && <PopoverAddon addon={addon} />;
+                return <PopoverAddon addon={addon} />;
             default:
                 return null;
         }

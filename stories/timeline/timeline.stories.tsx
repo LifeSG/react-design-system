@@ -3,6 +3,8 @@ import { Button } from "src/button";
 import { Text } from "src/text";
 import { Timeline } from "src/timeline";
 import { StoryContainer } from "../storybook-common";
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
+import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 
 type Component = typeof Timeline;
 
@@ -85,12 +87,64 @@ export const Default: StoryObj<Component> = {
                             title: "Item 5",
                             content: (
                                 <Text.Body>
-                                    This one comes with status icons.
+                                    This one comes with light and black status
+                                    icons.
                                 </Text.Body>
                             ),
                             statuses: [
-                                { type: "light", label: "Status light" },
-                                { type: "dark", label: "Status dark" },
+                                {
+                                    type: "light",
+                                    label: "Status light",
+                                },
+                                {
+                                    type: "dark",
+                                    label: "Status dark",
+                                },
+                            ],
+                        },
+                        {
+                            title: "Item 6",
+                            content: (
+                                <Text.Body>
+                                    This one comes with Pill DS icons.
+                                </Text.Body>
+                            ),
+                            statuses: [
+                                {
+                                    type: "outline",
+                                    colorType: "red",
+                                    children: "Status outline red",
+                                    icon: <PlusCircleFillIcon />,
+                                },
+                                {
+                                    type: "solid",
+                                    colorType: "blue",
+                                    children: "Status solid blue",
+                                    icon: <PlaceholderIcon />,
+                                },
+                            ],
+                        },
+                        {
+                            title: "Item 7",
+                            content: (
+                                <Text.Body>
+                                    This one comes with Pill DS icons with long
+                                    status text.
+                                </Text.Body>
+                            ),
+                            statuses: [
+                                {
+                                    type: "outline",
+                                    colorType: "red",
+                                    children: "Status outline red long text",
+                                    icon: <PlusCircleFillIcon />,
+                                },
+                                {
+                                    type: "solid",
+                                    colorType: "blue",
+                                    children: "Status solid blue",
+                                    icon: <PlaceholderIcon />,
+                                },
                             ],
                         },
                     ]}
@@ -148,11 +202,10 @@ export const Variants: StoryObj<Component> = {
                         },
                         {
                             title: "Item 5",
-                            variant: "upcoming-inactive",
+                            variant: "error",
                             content: (
                                 <Text.Body>
-                                    An example with{" "}
-                                    <code>upcoming-inactive</code> variant
+                                    An example with <code>error</code> variant
                                 </Text.Body>
                             ),
                         },

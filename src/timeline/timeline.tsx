@@ -1,4 +1,4 @@
-import { TickIcon } from "@lifesg/react-icons";
+import { ExclamationCircleFillIcon, TickIcon } from "@lifesg/react-icons";
 import { Text } from "../text";
 import {
     CircleIndicator,
@@ -16,6 +16,7 @@ import {
     TimelineItemProps,
     TimelineProps,
     TimelineStatusProps,
+    TimelineStatusType,
     Variant,
 } from "./types";
 
@@ -64,14 +65,28 @@ export const Timeline = ({
         // maximum 2 pills allowed
         const renderableStatuses = statuses.slice(0, 2);
         return renderableStatuses.map((status: TimelineStatusProps, index) => {
+            let type: TimelineStatusType;
+
+            switch (status.type) {
+                case "dark":
+                    type = "solid";
+                    break;
+                case "light":
+                    type = "outline";
+                    break;
+                default:
+                    type = status.type;
+            }
+
             return (
                 <TimelinePill
                     {...status}
+                    type={type}
                     key={`status-pill-${index}`}
                     data-testid="status-pill"
                     className="timeline-status-pill"
                 >
-                    <Text.XSmall>{status.label}</Text.XSmall>
+                    {status.children ? status.children : status.label}
                 </TimelinePill>
             );
         });
@@ -81,6 +96,8 @@ export const Timeline = ({
         switch (variant) {
             case "completed":
                 return <TickIcon />;
+            case "error":
+                return <ExclamationCircleFillIcon />;
             default:
                 return null;
         }

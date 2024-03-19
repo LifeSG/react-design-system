@@ -147,4 +147,63 @@ describe("StringHelper", () => {
             ).toEqual("123456789");
         });
     });
+
+    describe("maskValue", () => {
+        it("should mask the value basked on the mask range and mask char", () => {
+            const testString = "S1234567D";
+            const options = {
+                maskRange: [2, 5],
+                maskChar: "•",
+            };
+
+            expect(StringHelper.maskValue(testString, options)).toEqual(
+                "S1••••67D"
+            );
+        });
+
+        it("should mask the value basked on the mask range", () => {
+            const testString = "S1234567D";
+            const options = {
+                maskRange: [2, 5],
+                maskChar: "-",
+            };
+
+            expect(StringHelper.maskValue(testString, options)).toEqual(
+                "S1----67D"
+            );
+        });
+
+        it("should mask the value basked on the unmask range", () => {
+            const testString = "S1234567D";
+            const options = {
+                unmaskRange: [1, 4],
+            };
+
+            expect(StringHelper.maskValue(testString, options)).toEqual(
+                "•1234••••"
+            );
+        });
+
+        it("should render the correct masked value based on the mask transformer", () => {
+            const testString = "S1234567D";
+            const options = {
+                maskTransformer: (value) => value.replace(/\D/g, "*"),
+            };
+
+            expect(StringHelper.maskValue(testString, options)).toEqual(
+                "*1234567*"
+            );
+        });
+
+        it("should render the correct masked value based on the mask regex", () => {
+            const testString = "S1234567D";
+            const options = {
+                maskRegex: /\D/g,
+            };
+
+            expect(StringHelper.maskValue(testString, options)).toEqual(
+                "•1234567•"
+            );
+        });
+    });
 });

@@ -2,7 +2,8 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
-import { TimelineStatusProps, Variant } from "./types";
+import { Variant } from "./types";
+import { Pill } from "../pill";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -27,7 +28,6 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    margin-top: 0.25rem;
     border-radius: 50%;
 
     ${(props) => {
@@ -51,6 +51,18 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                         color: ${Color.Neutral[8]};
                     }
                 `;
+            case "error":
+                return css`
+                    width: 1.8rem;
+                    height: 1.8rem;
+                    margin: -0.15rem 0 -0.15rem -0.15rem;
+
+                    svg {
+                        color: ${Color.Validation.Red.Icon};
+                        height: 100%;
+                        width: 100%;
+                    }
+                `;
         }
     }}
 `;
@@ -59,6 +71,7 @@ export const LineIndicator = styled.div<VariantStyleProps>`
     width: 4px;
     flex-grow: 1;
     margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     border-radius: 2px;
 
     ${(props) => {
@@ -75,6 +88,11 @@ export const LineIndicator = styled.div<VariantStyleProps>`
             case "completed":
                 return css`
                     background-color: ${Color.Validation.Green.Icon};
+                `;
+            case "error":
+                return css`
+                    margin-left: -0.15rem;
+                    background-color: ${Color.Validation.Red.Icon};
                 `;
         }
     }}
@@ -108,12 +126,17 @@ export const TimelineTitle = styled(Text.H3)`
     }
 `;
 
+export const TimelineItemTitle = styled(Text.H4)`
+    margin-top: -0.125rem;
+    margin-bottom: 0.5rem;
+`;
+
 // default is 2-8-2 on desktop
 export const TimelineItem = styled.div`
     display: flex;
 
-    :first-of-type ${CircleIndicator} {
-        margin-top: 0;
+    :last-of-type ${LineIndicator} {
+        margin-bottom: 0;
     }
 `;
 
@@ -122,38 +145,13 @@ export const TimelineItemContent = styled.div`
     width: 100%;
 `;
 
-export const TimelineItemTitle = styled(Text.H4)`
-    margin-bottom: 0.5rem;
-`;
-
 export const TimelinePills = styled(Text.H3)`
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 0.5rem;
+    gap: 0.5rem;
 `;
 
-export const TimelinePill = styled.div<TimelineStatusProps>`
-    border-radius: 1rem;
+export const TimelinePill = styled(Pill)`
     padding: 0.125rem 0.5rem;
-    margin-right: 0.5rem;
-
-    ${(props) => {
-        if (props.type === "dark") {
-            return css`
-                background-color: ${Color.Neutral[1]};
-
-                & > span {
-                    color: ${Color.Neutral[8]};
-                }
-            `;
-        }
-
-        return css`
-            background-color: ${Color.Neutral[8]};
-            border: 1px solid ${Color.Neutral[5]};
-
-            & > span {
-                color: ${Color.Neutral[1]};
-            }
-        `;
-    }}
 `;

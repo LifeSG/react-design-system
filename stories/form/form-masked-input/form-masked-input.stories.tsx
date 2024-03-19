@@ -3,9 +3,10 @@ import { ToggleOffFillIcon } from "@lifesg/react-icons/toggle-off-fill";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import { MaskedInput } from "src/masked-input";
+import { MaskedInput, MaskedInputLoadState } from "src/masked-input";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
+import { useState } from "react";
 
 type Component = typeof Form.MaskedInput;
 type StandaloneComponent = typeof MaskedInput;
@@ -65,6 +66,53 @@ export const Default: StoryObj<Component> = {
                     />
                 </Container>
             </StoryContainer>
+        );
+    },
+};
+
+export const LoadingDisplay: StoryObj<Component> = {
+    render: () => {
+        const DEFAULT_VALUE = "S•••567D";
+        const [value, setValue] = useState<string>(DEFAULT_VALUE);
+        const [attempt, setAttempt] = useState<number>(0);
+        const [loadState, setLoadState] =
+            useState<MaskedInputLoadState>(undefined);
+
+        const handleUnmask = () => {
+            setLoadState("loading");
+            /**
+             * NOTE: This is to simulate an async action
+             * that fails for the first 2 attempts and fails
+             * on every even number occurrence
+             */
+            const currentAttempt = attempt + 1;
+            setTimeout(() => {
+                const errorCondition =
+                    currentAttempt < 3 || currentAttempt % 2 === 0;
+                setLoadState("fail");
+
+                if (!errorCondition) {
+                    setValue("S1234567D");
+                    setLoadState("success");
+                }
+            }, 500);
+            setAttempt(currentAttempt);
+        };
+
+        const handleMask = () => {
+            setValue(DEFAULT_VALUE);
+        };
+
+        return (
+            <Form.MaskedInput
+                label="This simulates an async unmasking behaviour"
+                value={value}
+                readOnly
+                loadState={loadState}
+                onUnmask={handleUnmask}
+                onMask={handleMask}
+                onTryAgain={handleUnmask}
+            />
         );
     },
 };

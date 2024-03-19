@@ -11,12 +11,25 @@ export const Label = styled.label`
     margin-bottom: 0.5rem;
     display: inline-block;
 
-    #popover-hoc-wrapper {
-        display: inline;
+    a,
+    span,
+    p {
+        ${TextStyleHelper.getTextStyle("H5", "semibold")}
     }
 
-    #popover-hoc-button {
-        vertical-align: bottom;
+    a {
+        color: ${Color.Primary};
+        text-decoration: none;
+
+        :hover,
+        :active,
+        :focus {
+            color: ${Color.Secondary};
+
+            svg {
+                color: ${Color.Secondary};
+            }
+        }
     }
 `;
 

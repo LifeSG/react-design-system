@@ -1,5 +1,5 @@
 import { UneditableSectionItem } from "./section-item";
-import { UneditableSectionProps } from "./types";
+import { UneditableSectionItemProps, UneditableSectionProps } from "./types";
 import {
     CustomSection,
     Description,
@@ -15,15 +15,42 @@ export const UneditableSectionBase = ({
     topSection,
     bottomSection,
     children,
+    background = true,
+    onMask,
+    onUnmask,
+    onTryAgain,
     ...otherProps
 }: UneditableSectionProps) => {
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleItemMask = (item: UneditableSectionItemProps) => () => {
+        if (onMask) onMask(item);
+    };
+
+    const handleItemUnmask = (item: UneditableSectionItemProps) => () => {
+        if (onUnmask) onUnmask(item);
+    };
+
+    const handleTryAgain = (item: UneditableSectionItemProps) => () => {
+        if (onTryAgain) onTryAgain(item);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderItems = () => {
         if (items && items.length > 0) {
             const renderedItems = items.map((item, index) => {
-                return <UneditableSectionItem key={index} {...item} />;
+                return (
+                    <UneditableSectionItem
+                        key={index}
+                        {...item}
+                        onMask={handleItemMask(item)}
+                        onUnmask={handleItemUnmask(item)}
+                        onTryAgain={handleTryAgain(item)}
+                    />
+                );
             });
 
             return <GridUl>{renderedItems}</GridUl>;
@@ -39,7 +66,7 @@ export const UneditableSectionBase = ({
 
         return (
             <>
-                {title && <Title>{title}</Title>}
+                {title && <Title weight="semibold">{title}</Title>}
                 {description && <Description>{description}</Description>}
                 {topSection && (
                     <CustomSection data-id="top-section">
@@ -57,7 +84,7 @@ export const UneditableSectionBase = ({
     };
 
     return (
-        <Wrapper {...otherProps} type="grid">
+        <Wrapper $background={background} {...otherProps} type="grid">
             {renderChildren()}
         </Wrapper>
     );

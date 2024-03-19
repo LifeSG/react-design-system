@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Color } from "../color";
 import {
+    IndicatorLabelContainer,
     Knob,
     LabelContainer,
     LabelText,
     Slider,
     SliderThumb,
     SliderTrack,
+    Wrapper,
 } from "./input-range-slider.styles";
 import { InputRangeSliderProps } from "./types";
 
@@ -24,6 +26,9 @@ export const InputRangeSlider = ({
     showSliderLabels,
     sliderLabelPrefix,
     sliderLabelSuffix,
+    showIndicatorLabel,
+    indicatorLabelPrefix,
+    indicatorLabelSuffix,
     renderSliderLabel,
     onChange,
     onChangeEnd,
@@ -131,8 +136,35 @@ export const InputRangeSlider = ({
         );
     };
 
+    const formatIndicationLabel = () => {
+        let formattedSelection = "";
+
+        if (selection.length === 1) {
+            formattedSelection = `${selection[0]}`;
+        } else if (selection.length === 2) {
+            formattedSelection = `${selection[0]} - ${selection[1]}`;
+        } else if (selection.length > 2) {
+            const min = Math.min(...selection);
+            const max = Math.max(...selection);
+            formattedSelection = `${min} - ${max}`;
+        }
+
+        return (
+            <LabelText>
+                {indicatorLabelPrefix}
+                {formattedSelection}
+                {indicatorLabelSuffix}
+            </LabelText>
+        );
+    };
+
     return (
-        <div {...otherProps}>
+        <Wrapper {...otherProps}>
+            {showIndicatorLabel && (
+                <IndicatorLabelContainer>
+                    {formatIndicationLabel()}
+                </IndicatorLabelContainer>
+            )}
             <Slider
                 step={step}
                 min={min}
@@ -178,6 +210,6 @@ export const InputRangeSlider = ({
                     <div>{formatLabel(max)}</div>
                 </LabelContainer>
             )}
-        </div>
+        </Wrapper>
     );
 };

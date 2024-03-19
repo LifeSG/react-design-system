@@ -4,8 +4,19 @@ import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text } from "../text";
 
-export const Wrapper = styled(Layout.Content)`
-    background: ${Color.Neutral[7]};
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface WrapperStyleProps {
+    $background: boolean;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
+    background: ${({ $background }) =>
+        $background ? Color.Neutral[7] : "transparent"};
     padding-top: 2rem;
     padding-bottom: 2rem;
 `;

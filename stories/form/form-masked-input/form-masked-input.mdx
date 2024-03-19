@@ -17,6 +17,18 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormMaskedInputStories.Default} />
 
+<Heading3>Loading display</Heading3>
+
+In some cases where the unmasking requires an asynchronous process, you might want to display
+a loading indicator for the users. As such this component comes with a loading display. Here is
+an example of how you can set things up.
+
+> Note: This only applies if the component is in `readOnly` mode.
+> You may also have to handle the masking and unmasking manually to ensure the value changes
+> are being reflected accurately
+
+<Canvas of={FormMaskedInputStories.LoadingDisplay} />
+
 <Heading3>Masking</Heading3>
 
 You are able to specify the range of index to mask or unmask, the regex to mask or customize the masking logic by passing in a maskTransformer.

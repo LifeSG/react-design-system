@@ -18,14 +18,22 @@ interface ThumbStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+export const Wrapper = styled.div`
+    isolation: isolate;
+`;
+
 export const LabelContainer = styled.div`
-    margin-top: 0.25rem;
+    margin-top: 1rem;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
 `;
 
-export const LabelText = styled(Text.BodySmall)`
+export const IndicatorLabelContainer = styled.div`
+    margin-bottom: 1rem;
+`;
+
+export const LabelText = styled(Text.Body)`
     overflow-wrap: anywhere;
 `;
 

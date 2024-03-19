@@ -1,5 +1,5 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Overlay } from "../overlay/overlay";
 import { MediaWidths } from "../spec/media-spec";
@@ -9,7 +9,6 @@ import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";
 import {
     DesktopContainer,
-    DesktopView,
     FilterBody,
     FilterButton,
     FilterClearButton,
@@ -19,7 +18,7 @@ import {
     FilterHeaderButton,
     FilterTitle,
     MobileContainer,
-    MobileView,
+    MobileOverlayContainer,
     StyledFilterIcon,
 } from "./filter.styles";
 import { FilterProps, Mode } from "./types";
@@ -38,21 +37,20 @@ const FilterBase = ({
     // CONST, STATE, REF
     // =============================================================================
     const [visible, setVisible] = useState(false);
+    const mobileNodeRef = useRef<HTMLDivElement>(null);
+    const desktopNodeRef = useRef<HTMLDivElement>(null);
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.tablet,
+    });
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useMediaQuery(
-        {
-            maxWidth: MediaWidths.tablet,
-        },
-        undefined,
-        (isMobile) => {
-            if (!isMobile) {
-                handleDismissFilter();
-            }
+    useEffect(() => {
+        if (!isMobile) {
+            handleDismissFilter();
         }
-    );
+    }, [isMobile]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -126,18 +124,23 @@ const FilterBase = ({
                     <StyledFilterIcon /> {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
-                    <MobileContainer data-testid="filter-mobile">
-                        {renderHeader("mobile")}
-                        <FilterBody>{renderChildren("mobile")}</FilterBody>
-                        <FilterFooter>
-                            <FilterDoneButton
-                                onClick={handleDoneClick}
-                                type="button"
-                            >
-                                Done
-                            </FilterDoneButton>
-                        </FilterFooter>
-                    </MobileContainer>
+                    <MobileOverlayContainer
+                        data-id="filter-mobile"
+                        data-testid="filter-mobile"
+                    >
+                        <MobileContainer ref={mobileNodeRef}>
+                            {renderHeader("mobile")}
+                            <FilterBody>{renderChildren("mobile")}</FilterBody>
+                            <FilterFooter>
+                                <FilterDoneButton
+                                    onClick={handleDoneClick}
+                                    type="button"
+                                >
+                                    Done
+                                </FilterDoneButton>
+                            </FilterFooter>
+                        </MobileContainer>
+                    </MobileOverlayContainer>
                 </Overlay>
             </>
         );
@@ -145,7 +148,11 @@ const FilterBase = ({
 
     const renderDesktop = () => {
         return (
-            <DesktopContainer data-testid="filter-desktop">
+            <DesktopContainer
+                data-id="filter-desktop"
+                data-testid="filter-desktop"
+                ref={desktopNodeRef}
+            >
                 {renderHeader("default")}
                 {renderChildren("default")}
             </DesktopContainer>
@@ -154,16 +161,19 @@ const FilterBase = ({
 
     return (
         <div {...otherProps}>
-            <MobileView>
-                <FilterContext.Provider value={{ mode: "mobile" }}>
+            {isMobile ? (
+                <FilterContext.Provider
+                    value={{ mode: "mobile", rootNode: mobileNodeRef }}
+                >
                     {renderMobile()}
                 </FilterContext.Provider>
-            </MobileView>
-            <DesktopView>
-                <FilterContext.Provider value={{ mode: "default" }}>
+            ) : (
+                <FilterContext.Provider
+                    value={{ mode: "default", rootNode: desktopNodeRef }}
+                >
                     {renderDesktop()}
                 </FilterContext.Provider>
-            </DesktopView>
+            )}
         </div>
     );
 };

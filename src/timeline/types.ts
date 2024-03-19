@@ -1,12 +1,18 @@
+import { PillProps, PillType } from "../pill";
+
 export type Variant =
     | "completed"
     | "current"
     | "upcoming-active"
-    | "upcoming-inactive";
+    | "upcoming-inactive"
+    | "error";
 
-export interface TimelineStatusProps {
-    type: "dark" | "light";
-    label: string;
+export type TimelineStatusType = PillType | "dark" | "light";
+
+export interface TimelineStatusProps extends Omit<PillProps, "type"> {
+    type: TimelineStatusType;
+    /** @deprecated This attribute has been deprecated in favour of the children attribute of `PillProps` */
+    label?: string;
 }
 
 export interface TimelineItemProps {

@@ -203,6 +203,7 @@ export const DescriptionCol = ({
 
 const PropsContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
     code {
         :not(:last-child) {
             margin-right: 0.25rem;

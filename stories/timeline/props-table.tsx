@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
 const DATA: ApiTableSectionProps[] = [
@@ -95,6 +95,7 @@ const DATA: ApiTableSectionProps[] = [
                     `"current"`,
                     `"upcoming-active`,
                     `"upcoming-inactive"`,
+                    `"error"`,
                 ],
             },
         ],
@@ -103,16 +104,70 @@ const DATA: ApiTableSectionProps[] = [
         name: "TimelineStatusProps",
         attributes: [
             {
-                name: "type",
-                mandatory: true,
-                description: "The color style of the pill",
-                propTypes: [`"dark"`, `"light"`],
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            HTMLDivAttributes
+                        </a>
+                    </>
+                ),
             },
             {
-                name: "label",
+                name: "type",
                 mandatory: true,
-                description: "The text to be rendered on the pill",
+                description: (
+                    <>
+                        The color style of the {code("Pill")}. <br />
+                        <b>
+                            Note: from v2.4.0 onwards, values {code(`"dark"`)}{" "}
+                            and {code(`"light"`)}
+                            will no longer be supported in favour of{" "}
+                            {code(`"solid"`)} and
+                            {code(`"outline"`)} respectively.
+                        </b>
+                    </>
+                ),
+                propTypes: [`"dark"`, `"light"`, `"solid"`, `"outline"`],
+            },
+            {
+                name: "label (deprecated)",
+                mandatory: true,
+                description: (
+                    <>
+                        The text to be rendered on the {code("Pill")}.
+                        <br />
+                        <b>
+                            Note: from v2.4.0 onwards, this attribute will no
+                            longer be available.
+                        </b>
+                    </>
+                ),
+
                 propTypes: ["string"],
+            },
+            {
+                name: "colorType",
+                description: <>The color style of the {code("Pill")}</>,
+                propTypes: [
+                    `"black"`,
+                    `"grey"`,
+                    `"green"`,
+                    `"yellow"`,
+                    `"red"`,
+                    `"blue"`,
+                ],
+                defaultValue: `"black"`,
+            },
+            {
+                name: "icon",
+                description: "A component to be displayed as the icon",
+                propTypes: ["JSX.Element"],
             },
         ],
     },

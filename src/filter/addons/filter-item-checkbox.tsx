@@ -58,7 +58,7 @@ export const FilterItemCheckbox = <T,>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const getLabel = (item: T): string => {
+    const getLabel = (item: T): React.ReactNode => {
         return labelExtractor
             ? labelExtractor(item)
             : (item as any).label ?? item.toString();

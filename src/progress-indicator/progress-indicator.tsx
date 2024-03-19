@@ -1,18 +1,15 @@
-import { useEffect, useRef, useState } from "react";
 import { MediaWidths } from "../media";
 import {
     Content,
-    Fade,
-    INDICATOR_BAR_FADE_WIDTH_MOBILE,
-    INDICATOR_BAR_MARGIN_RIGHT_MOBILE,
-    INDICATOR_BAR_WIDTH_MOBILE,
     Indicator,
     IndicatorBar,
-    IndicatorTitle,
+    IndicatorTitleDesktop,
+    IndicatorTitleMobile,
     Wrapper,
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
 import kebabCase from "lodash/kebabCase";
+import { useMediaQuery } from "react-responsive";
 
 export const ProgressIndicator = <T,>({
     steps,
@@ -25,90 +22,17 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const [showFade, setShowFade] = useState<boolean>(!!fadePosition);
-    const [showFadeLeft, setShowFadeLeft] = useState<boolean>(
-        fadePosition === "left" || fadePosition === "both"
-    );
-    const [showFadeRight, setShowFadeRight] = useState<boolean>(
-        fadePosition === "right" || fadePosition === "both"
-    );
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.tablet,
+    });
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        handleProgressIndicatorScroll();
-        window.addEventListener("resize", handleProgressIndicatorScroll);
-        const content = contentRef.current;
-        if (content) {
-            content.addEventListener("scroll", handleProgressIndicatorScroll);
-        }
-        // cleanup
-        return () => {
-            window.removeEventListener("resize", handleProgressIndicatorScroll);
-
-            if (content) {
-                content.removeEventListener(
-                    "scroll",
-                    handleProgressIndicatorScroll
-                );
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        handleMobileProgressIndicatorScroll();
-        window.addEventListener("resize", handleMobileProgressIndicatorScroll);
-
-        return () => {
-            window.removeEventListener(
-                "resize",
-                handleMobileProgressIndicatorScroll
-            );
-        };
-    }, [currentIndex]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleMobileProgressIndicatorScroll = () => {
-        if (window.innerWidth > MediaWidths.mobileL) return;
-
-        const content = contentRef.current;
-        if (content) {
-            const scrollLeftRem =
-                (INDICATOR_BAR_WIDTH_MOBILE +
-                    INDICATOR_BAR_MARGIN_RIGHT_MOBILE) *
-                    currentIndex -
-                INDICATOR_BAR_FADE_WIDTH_MOBILE;
-            content.scrollLeft = 16 * scrollLeftRem; // convert to px
-        }
-    };
-    const handleProgressIndicatorScroll = () => {
-        if (showFade) {
-            // Set fade if the media is smaller than or equal to mobile
-            setShowFade(window.innerWidth < MediaWidths.mobileL);
-
-            const content = contentRef.current;
-            const wrapper = wrapperRef.current;
-            if (content && wrapper) {
-                if (content.scrollWidth > wrapper.offsetWidth) {
-                    setShowFade(true);
-                    setShowFadeLeft(content.scrollLeft >= 1);
-                    setShowFadeRight(
-                        content.scrollWidth - content.scrollLeft >
-                            wrapper.offsetWidth
-                    );
-                } else {
-                    setShowFade(false);
-                }
-            } else {
-                setShowFade(false);
-            }
-        }
-    };
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -138,11 +62,10 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     if (!steps.length) return null;
 
-    const renderSteps = () => {
+    const renderBars = () => {
         return steps.map((step: T, stepIndex: number) => {
             // previous and current index elements are highlighted
             const highlighted = stepIndex <= currentIndex;
-            const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
 
             return (
                 <Indicator
@@ -151,34 +74,56 @@ export const ProgressIndicator = <T,>({
                     id={getId(stepIndex, currentIndex)}
                 >
                     <IndicatorBar highlighted={highlighted}></IndicatorBar>
-                    <IndicatorTitle
-                        highlighted={highlighted}
-                        weight={fontWeight}
-                    >
-                        {getDisplayValue(step)}
-                    </IndicatorTitle>
                 </Indicator>
             );
         });
     };
 
-    const renderFade = () => {
+    const renderStepTitleDesktop = () => {
+        return steps.map((step: T, stepIndex: number) => {
+            const highlighted = stepIndex <= currentIndex;
+            const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
+
+            return (
+                <Indicator
+                    key={stepIndex}
+                    aria-label={getAriaLabel(stepIndex, currentIndex)}
+                    id={`${getId(stepIndex, currentIndex)}-title`}
+                >
+                    <IndicatorTitleDesktop
+                        highlighted={highlighted}
+                        weight={fontWeight}
+                    >
+                        {getDisplayValue(step)}
+                    </IndicatorTitleDesktop>
+                </Indicator>
+            );
+        });
+    };
+
+    const renderStepTitleMobile = () => {
         return (
-            <>
-                {showFadeLeft && (
-                    <Fade backgroundColor={fadeColor} position={"left"} />
-                )}
-                {showFadeRight && (
-                    <Fade backgroundColor={fadeColor} position={"right"} />
-                )}
-            </>
+            <Indicator
+                key={currentIndex}
+                aria-label={getAriaLabel(currentIndex, currentIndex)}
+                id={getId(currentIndex, currentIndex)}
+            >
+                <IndicatorTitleMobile weight={"semibold"}>
+                    Step {currentIndex + 1} of {steps.length}
+                </IndicatorTitleMobile>
+                <IndicatorTitleMobile weight={"regular"}>
+                    {getDisplayValue(steps[currentIndex])}
+                </IndicatorTitleMobile>
+            </Indicator>
         );
     };
 
     return (
-        <Wrapper ref={wrapperRef} {...otherProps}>
-            <Content ref={contentRef}>{renderSteps()}</Content>
-            {showFade && renderFade()}
+        <Wrapper {...otherProps}>
+            <Content>{renderBars()}</Content>
+            <Content>
+                {isMobile ? renderStepTitleMobile() : renderStepTitleDesktop()}
+            </Content>
         </Wrapper>
     );
 };

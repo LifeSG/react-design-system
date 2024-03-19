@@ -10,19 +10,6 @@ import { Text } from "../text/text";
 // CONTAINER STYLES
 // =============================================================================
 
-export const DesktopView = styled.div`
-    ${MediaQuery.MaxWidth.tablet} {
-        display: none;
-    }
-`;
-
-export const MobileView = styled.div`
-    display: none;
-    ${MediaQuery.MaxWidth.tablet} {
-        display: block;
-    }
-`;
-
 export const DesktopContainer = styled.div`
     background-color: ${Color.Neutral[8]};
     border: 1px solid ${Color.Neutral[5]};
@@ -37,6 +24,12 @@ export const MobileContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+`;
+
+export const MobileOverlayContainer = styled.div`
+    background-color: ${Color.Neutral[8]};
+    height: 100%;
+    width: 100%;
 `;
 
 export const FilterBody = styled.div`
