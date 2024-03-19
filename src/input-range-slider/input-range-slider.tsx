@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Color } from "../color";
 import {
-    IndicationLabelContainer,
+    IndicatorLabelContainer,
     Knob,
     LabelContainer,
     LabelText,
@@ -161,9 +161,9 @@ export const InputRangeSlider = ({
     return (
         <Wrapper {...otherProps}>
             {showIndicatorLabel && (
-                <IndicationLabelContainer>
+                <IndicatorLabelContainer>
                     {formatIndicationLabel()}
-                </IndicationLabelContainer>
+                </IndicatorLabelContainer>
             )}
             <Slider
                 step={step}

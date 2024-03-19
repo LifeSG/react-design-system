@@ -29,7 +29,7 @@ export const LabelContainer = styled.div`
     gap: 1rem;
 `;
 
-export const IndicationLabelContainer = styled.div`
+export const IndicatorLabelContainer = styled.div`
     margin-bottom: 1rem;
 `;
 
