@@ -9,6 +9,7 @@ import {
     forwardRef,
     useEffect,
     useImperativeHandle,
+    useReducer,
     useRef,
     useState,
 } from "react";
@@ -42,6 +43,11 @@ import {
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
 } from "./types";
+import {
+    DEFAULT_VALUES,
+    FullscreenImageCarouselContext,
+    fullscreenImageCarouselReducer,
+} from "./fullscreen-image-carousel-context";
 
 export const Component = (
     {
@@ -59,6 +65,11 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [fullscreenImageCarouselState, saveImageDimension] = useReducer(
+        fullscreenImageCarouselReducer,
+        DEFAULT_VALUES
+    );
+
     const [currentSlide, setCurrentSlide] = useState(
         initialActiveItemIndex ?? 0
     );
@@ -131,6 +142,36 @@ export const Component = (
         }
     }
 
+    const handleMagnifier = () => {
+        if (zoom === 1) {
+            const zoomRatio = getZoomRatio();
+            zoomRefs.current?.[currentSlide]?.centerView(zoomRatio);
+            setZoom(zoomRatio);
+        } else {
+            setZoom(1);
+            zoomRefs.current?.[currentSlide]?.resetTransform();
+        }
+    };
+
+    const getZoomRatio = () => {
+        const src = items[currentSlide].src;
+        const { width, height } =
+            fullscreenImageCarouselState.imagesDimension.find(
+                (i) => i.src == src
+            );
+
+        const isImgLandscapeRelativeToDevice =
+            height / width <
+            containerRef?.current.clientHeight /
+                containerRef?.current.clientWidth;
+
+        return isImgLandscapeRelativeToDevice
+            ? containerRef?.current.clientHeight /
+                  (height / (width / containerRef?.current.clientWidth))
+            : containerRef?.current.clientWidth /
+                  (width / (height / containerRef?.current.clientHeight));
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -179,7 +220,7 @@ export const Component = (
                                         src={item.src}
                                         alt={item.alt ?? `Image ${index + 1}`}
                                         placeholder={<SlidePlaceholderImage />}
-                                        fit="scale-down"
+                                        retrieveImageDimension
                                     />
                                 </TransformComponent>
                             </TransformWrapper>
@@ -220,68 +261,75 @@ export const Component = (
     };
 
     return (
-        <Modal {...otherProps} data-testid="image-carousel-modal">
-            <CloseButton
-                aria-label="Close image carousel"
-                onClick={onClose}
-                focusHighlight={false}
-            >
-                <CrossIcon aria-hidden />
-            </CloseButton>
-            {!hideMagnifier && (
-                <MagnifierButton
-                    aria-label="Magnify image"
-                    onClick={handleMagnifier}
+        <FullscreenImageCarouselContext.Provider
+            value={{
+                state: fullscreenImageCarouselState,
+                saveImageDimension,
+            }}
+        >
+            <Modal {...otherProps} data-testid="image-carousel-modal">
+                <CloseButton
+                    aria-label="Close image carousel"
+                    onClick={onClose}
                     focusHighlight={false}
                 >
-                    {zoom === 1 ? (
-                        <MagnifierPlusIcon aria-hidden />
-                    ) : (
-                        <MagnifierMinusIcon aria-hidden />
-                    )}
-                </MagnifierButton>
-            )}
-            <ImageGalleryContainer>
-                <ImageGalleryWrapper>
-                    {!hideNavigation && (
-                        <>
-                            <ArrowButton
-                                aria-label="View previous image"
-                                data-testid="prev-btn"
-                                $position="left"
-                                onClick={goToPrevSlide}
-                            >
-                                <ChevronLeftIcon aria-hidden />
-                            </ArrowButton>
-                            <ArrowButton
-                                aria-label="View next image"
-                                data-testid="forward-btn"
-                                $position="right"
-                                onClick={goToNextSlide}
-                            >
-                                <ChevronRightIcon aria-hidden />
-                            </ArrowButton>
-                        </>
-                    )}
-                    <ImageGallerySwipe
-                        ref={containerRef}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
+                    <CrossIcon aria-hidden />
+                </CloseButton>
+                {!hideMagnifier && (
+                    <MagnifierButton
+                        aria-label="Magnify image"
+                        onClick={handleMagnifier}
+                        focusHighlight={false}
                     >
-                        {renderSlides()}
-                    </ImageGallerySwipe>
-                    {!hideCounter && (
-                        <BoxChip>
-                            <Chip weight="semibold">{`${currentSlide + 1}/${
-                                items.length
-                            }`}</Chip>
-                        </BoxChip>
-                    )}
-                </ImageGalleryWrapper>
-                {!hideThumbnail && renderThumbnails()}
-            </ImageGalleryContainer>
-        </Modal>
+                        {zoom === 1 ? (
+                            <MagnifierPlusIcon aria-hidden />
+                        ) : (
+                            <MagnifierMinusIcon aria-hidden />
+                        )}
+                    </MagnifierButton>
+                )}
+                <ImageGalleryContainer>
+                    <ImageGalleryWrapper>
+                        {!hideNavigation && (
+                            <>
+                                <ArrowButton
+                                    aria-label="View previous image"
+                                    data-testid="prev-btn"
+                                    $position="left"
+                                    onClick={goToPrevSlide}
+                                >
+                                    <ChevronLeftIcon aria-hidden />
+                                </ArrowButton>
+                                <ArrowButton
+                                    aria-label="View next image"
+                                    data-testid="forward-btn"
+                                    $position="right"
+                                    onClick={goToNextSlide}
+                                >
+                                    <ChevronRightIcon aria-hidden />
+                                </ArrowButton>
+                            </>
+                        )}
+                        <ImageGallerySwipe
+                            ref={containerRef}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                        >
+                            {renderSlides()}
+                        </ImageGallerySwipe>
+                        {!hideCounter && (
+                            <BoxChip>
+                                <Chip weight="semibold">{`${currentSlide + 1}/${
+                                    items.length
+                                }`}</Chip>
+                            </BoxChip>
+                        )}
+                    </ImageGalleryWrapper>
+                    {!hideThumbnail && renderThumbnails()}
+                </ImageGalleryContainer>
+            </Modal>
+        </FullscreenImageCarouselContext.Provider>
     );
 };
 
