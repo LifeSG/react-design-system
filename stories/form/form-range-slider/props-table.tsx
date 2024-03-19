@@ -107,6 +107,21 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: number) => React.ReactNode"],
             },
             {
+                name: "showIndicatorLabel",
+                description: "Specifies if indicator label is visible",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "indicatorLabelPrefix",
+                description: "Text to be prepended to the indicator labels",
+                propTypes: ["string"],
+            },
+            {
+                name: "indicatorLabelSuffix",
+                description: "Text to be appended to the indicator labels",
+                propTypes: ["string"],
+            },
+            {
                 name: "ariaLabels",
                 description: (
                     <>
