@@ -53,7 +53,7 @@ export const Component = (
     {
         items,
         initialActiveItemIndex,
-        hideThumbnail,
+        hideThumbnail = false,
         hideNavigation = false,
         hideCounter = false,
         hideMagnifier = false,
