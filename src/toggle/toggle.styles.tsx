@@ -32,7 +32,6 @@ export const Container = styled.div<ContainerStyleProps>`
     border-style: solid;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     padding: 0.6875rem 1rem;
-    isolation: isolate;
 
     // Content positioning style
     ${(props) => {
