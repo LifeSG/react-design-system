@@ -5,7 +5,6 @@ import {
     ImageBox,
     ImageWrapper,
 } from "./stateful-image.style";
-import { useFullscreenImageCarousel } from "./fullscreen-image-carousel-context";
 
 export interface StatefulImageProps {
     src: string;
@@ -14,6 +13,15 @@ export interface StatefulImageProps {
     fit?: React.CSSProperties["objectFit"] | undefined;
     placeholder?: React.ReactNode | undefined;
     retrieveImageDimension?: boolean;
+    setDimension?: ({
+        src,
+        width,
+        height,
+    }: {
+        src: string;
+        width: number;
+        height: number;
+    }) => void;
 }
 
 export const StatefulImage = ({
@@ -23,10 +31,10 @@ export const StatefulImage = ({
     fit,
     placeholder,
     retrieveImageDimension,
+    setDimension,
 }: StatefulImageProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Event | string>();
-    const fullscreenImageCarousel = useFullscreenImageCarousel();
 
     useEffect(() => {
         setLoading(true);
@@ -36,7 +44,7 @@ export const StatefulImage = ({
         img.src = src;
         img.onload = () => {
             !!retrieveImageDimension &&
-                fullscreenImageCarousel.saveImageDimension({
+                setDimension({
                     src: img.src,
                     width: img.width,
                     height: img.height,
