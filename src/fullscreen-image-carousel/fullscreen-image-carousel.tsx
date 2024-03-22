@@ -159,9 +159,16 @@ export const Component = (
         if (containerRef && !!imageDimension) {
             const { clientHeight, clientWidth } = containerRef.current;
             const { width, height } = imageDimension;
+            const isSmallImg = width < clientWidth && height < clientHeight;
 
             const isImgLandscapeRelativeToDevice =
                 height / width < clientHeight / clientWidth;
+
+            if (isSmallImg) {
+                return isImgLandscapeRelativeToDevice
+                    ? clientWidth / width
+                    : clientHeight / height;
+            }
 
             return isImgLandscapeRelativeToDevice
                 ? clientHeight / (height / (width / clientWidth))
