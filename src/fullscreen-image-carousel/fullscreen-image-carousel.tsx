@@ -269,7 +269,7 @@ export const Component = (
             </CloseButton>
             {!hideMagnifier && (
                 <MagnifierButton
-                    aria-label="Magnify image"
+                    aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
                     onClick={handleMagnifier}
                     focusHighlight={false}
                 >
