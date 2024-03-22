@@ -77,7 +77,7 @@ const DATA: ApiTableSectionProps[] = [
                         &nbsp; regardless how many statuses are specified
                     </>
                 ),
-                propTypes: ["TimelineStatusProps[]"],
+                propTypes: ["PillProps[]"],
             },
             {
                 name: "variant",
@@ -101,7 +101,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "TimelineStatusProps",
+        name: "PillProps",
         attributes: [
             {
                 name: "",
