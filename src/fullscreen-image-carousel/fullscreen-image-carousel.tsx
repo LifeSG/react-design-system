@@ -217,6 +217,7 @@ export const Component = (
                                         src={item.src}
                                         alt={item.alt ?? `Image ${index + 1}`}
                                         placeholder={<SlidePlaceholderImage />}
+                                        fit="scale-down"
                                         retrieveImageDimension
                                         setDimension={setDimension}
                                     />
