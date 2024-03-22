@@ -27,3 +27,8 @@ export interface FullscreenCarouselItemProps {
     alt?: string | undefined;
     thumbnailSrc?: string | undefined;
 }
+
+export interface ImageDimension {
+    width: number;
+    height: number;
+}

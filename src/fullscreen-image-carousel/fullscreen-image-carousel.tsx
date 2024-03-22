@@ -41,6 +41,7 @@ import {
 import {
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
+    ImageDimension,
 } from "./types";
 
 export const Component = (
@@ -63,7 +64,9 @@ export const Component = (
     const [currentSlide, setCurrentSlide] = useState(
         initialActiveItemIndex ?? 0
     );
-    const [imagesDimension, setImageDimension] = useState({});
+    const [imagesDimension, setImageDimension] = useState<
+        Record<string, ImageDimension>
+    >({});
     const [zoom, setZoom] = useState(1);
     const [startX, setStartX] = useState(null);
     const [endX, setEndX] = useState(null);
@@ -151,19 +154,19 @@ export const Component = (
     };
 
     const getZoomRatio = () => {
-        const src = items[currentSlide].src;
-        const { width, height } = imagesDimension[src];
+        const imageDimension = imagesDimension[items[currentSlide].src];
 
-        const isImgLandscapeRelativeToDevice =
-            height / width <
-            containerRef?.current.clientHeight /
-                containerRef?.current.clientWidth;
+        if (containerRef && !!imageDimension) {
+            const { clientHeight, clientWidth } = containerRef.current;
+            const { width, height } = imageDimension;
 
-        return isImgLandscapeRelativeToDevice
-            ? containerRef?.current.clientHeight /
-                  (height / (width / containerRef?.current.clientWidth))
-            : containerRef?.current.clientWidth /
-                  (width / (height / containerRef?.current.clientHeight));
+            const isImgLandscapeRelativeToDevice =
+                height / width < clientHeight / clientWidth;
+
+            return isImgLandscapeRelativeToDevice
+                ? clientHeight / (height / (width / clientWidth))
+                : clientWidth / (width / (height / clientHeight));
+        }
     };
 
     // =============================================================================
