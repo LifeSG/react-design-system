@@ -87,3 +87,29 @@ export const WithManyImages: StoryObj<Component> = {
         );
     },
 };
+
+export const Configurable: StoryObj<Component> = {
+    render: () => {
+        const [show, setShow] = useState(false);
+        return (
+            <FullWidthStoryContainer>
+                <Button.Default
+                    onClick={() => {
+                        setShow((old) => !old);
+                    }}
+                >
+                    Show carousel
+                </Button.Default>
+                <FullscreenImageCarousel
+                    items={[{ src: "https://picsum.photos/id/157/1600/900" }]}
+                    show={show}
+                    hideNavigation
+                    hideCounter
+                    hideMagnifier
+                    hideThumbnail
+                    onClose={() => setShow(false)}
+                />
+            </FullWidthStoryContainer>
+        );
+    },
+};

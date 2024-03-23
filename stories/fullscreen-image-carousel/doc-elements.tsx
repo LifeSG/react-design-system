@@ -6,6 +6,8 @@ const RESOLUTIONS = [
     [1000, 1000],
     [900, 1600],
     [900, 1200],
+    [300, 500],
+    [500, 300],
 ];
 
 export const getImages = (size: number) => {
