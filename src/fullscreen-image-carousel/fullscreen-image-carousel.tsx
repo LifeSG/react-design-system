@@ -156,7 +156,7 @@ export const Component = (
     const getZoomRatio = () => {
         const imageDimension = imagesDimension[items[currentSlide].src];
 
-        if (containerRef && !!imageDimension) {
+        if (containerRef?.current && !!imageDimension) {
             const { clientHeight, clientWidth } = containerRef.current;
             const { width, height } = imageDimension;
             const isSmallImg = width < clientWidth && height < clientHeight;
