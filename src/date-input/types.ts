@@ -11,6 +11,7 @@ export interface DateInputProps extends CommonCalendarProps {
     // Input-specific Attributes
     "data-testid"?: string | undefined;
     readOnly?: boolean | undefined;
+    hideKeyboard?: boolean | undefined;
     /**
      * The value of the date input in "YYYY-MM-DD" or "YYYY-M-D" string format.
      */
