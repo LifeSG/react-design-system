@@ -108,10 +108,16 @@ export const ProgressIndicator = <T,>({
                 aria-label={getAriaLabel(currentIndex, currentIndex)}
                 id={getId(currentIndex, currentIndex)}
             >
-                <IndicatorTitleMobile weight={"semibold"}>
+                <IndicatorTitleMobile
+                    weight={"semibold"}
+                    id={`${getId(currentIndex, currentIndex)}-counter`}
+                >
                     Step {currentIndex + 1} of {steps.length}
                 </IndicatorTitleMobile>
-                <IndicatorTitleMobile weight={"regular"}>
+                <IndicatorTitleMobile
+                    weight={"regular"}
+                    id={`${getId(currentIndex, currentIndex)}-title`}
+                >
                     {getDisplayValue(steps[currentIndex])}
                 </IndicatorTitleMobile>
             </Indicator>
