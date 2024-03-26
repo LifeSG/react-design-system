@@ -77,6 +77,11 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 defaultValue: `"top"`,
             },
             {
+                name: "zIndex",
+                description: "The custom z-index of the popover",
+                propTypes: ["number"],
+            },
+            {
                 name: "rootNode",
                 description: (
                     <>

@@ -21,7 +21,7 @@ export const PopoverAddon = ({
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
-    const { content, type, icon, id, "data-testid": testId } = addon;
+    const { content, type, icon, id, zIndex, "data-testid": testId } = addon;
 
     // =========================================================================
     // RENDER FUNCTION
@@ -41,6 +41,7 @@ export const PopoverAddon = ({
             data-testid={testId}
             popoverContent={content}
             rootNode={rootNode}
+            zIndex={zIndex}
         >
             <AddonWrapper>
                 <TriggerArea>{renderIcon()}</TriggerArea>
