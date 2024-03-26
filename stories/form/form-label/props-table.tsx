@@ -69,6 +69,11 @@ export const FORM_LABEL_ADDON_PROPS_DATA: ApiTableSectionProps = {
             propTypes: ["string"],
         },
         {
+            name: "zIndex",
+            description: "The custom z-index of the popover addon",
+            propTypes: ["number"],
+        },
+        {
             name: "data-testid",
             description: "The test identifier of the addon",
             propTypes: ["string"],

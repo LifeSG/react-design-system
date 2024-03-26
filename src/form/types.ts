@@ -32,6 +32,7 @@ export interface FormLabelAddonProps {
     type?: FormLabelAddonType | undefined;
     icon?: JSX.Element | undefined;
     id?: string | undefined;
+    zIndex?: number | undefined;
     "data-testid"?: string | undefined;
 }
 

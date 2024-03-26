@@ -23,6 +23,7 @@ export interface PopoverV2TriggerProps {
     trigger?: PopoverV2TriggerType | undefined;
     position?: PopoverV2Position | undefined;
     id?: string | undefined;
+    zIndex?: number | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
     /**
