@@ -123,33 +123,10 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The color style of the {code("Pill")}. <br />
-                        <b>
-                            Note: from v2.4.0 onwards, values {code(`"dark"`)}{" "}
-                            and {code(`"light"`)}
-                            will no longer be supported in favour of{" "}
-                            {code(`"solid"`)} and
-                            {code(`"outline"`)} respectively.
-                        </b>
+                        The type style of the {code("Pill")}. <br />
                     </>
                 ),
-                propTypes: [`"dark"`, `"light"`, `"solid"`, `"outline"`],
-            },
-            {
-                name: "label (deprecated)",
-                mandatory: true,
-                description: (
-                    <>
-                        The text to be rendered on the {code("Pill")}.
-                        <br />
-                        <b>
-                            Note: from v2.4.0 onwards, this attribute will no
-                            longer be available.
-                        </b>
-                    </>
-                ),
-
-                propTypes: ["string"],
+                propTypes: [`"solid"`, `"outline"`],
             },
             {
                 name: "colorType",
