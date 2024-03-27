@@ -50,6 +50,7 @@ export const DateRangeInput = ({
     disabled,
     disabledDates,
     error,
+    hideInputKeyboard,
     value,
     valueEnd,
     onChange,
@@ -555,6 +556,7 @@ export const DateRangeInput = ({
                         }
                         onFocus={handleInputFocus("start")}
                         onBlur={handleStartInputBlur}
+                        hideInputKeyboard={hideInputKeyboard}
                     />
                 </InputContainer>
                 <InputContainer $wrap={shouldWrap}>
@@ -570,6 +572,7 @@ export const DateRangeInput = ({
                         onChange={handleEndDateChange}
                         onFocus={handleInputFocus("end")}
                         onBlur={handleEndInputBlur}
+                        hideInputKeyboard={hideInputKeyboard}
                     />
                 </InputContainer>
             </RangeInputInnerContainer>
