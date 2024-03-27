@@ -18,7 +18,7 @@ export const DateInput = ({
     disabled,
     disabledDates,
     error,
-    hideKeyboard,
+    hideInputKeyboard,
     value,
     onChange,
     onFocus,
@@ -167,7 +167,7 @@ export const DateInput = ({
                 names={["start-day", "start-month", "start-year"]}
                 value={selectedDate}
                 hoverValue={hoveredDate}
-                hideKeyboard={hideKeyboard}
+                hideInputKeyboard={hideInputKeyboard}
             />
             <AnimatedInternalCalendar
                 ref={calendarRef}
