@@ -34,7 +34,7 @@ export const Default: StoryObj<Component> = {
                     }}
                 />
                 <Form.DateRangeInput
-                    label="This is hideInputKeyboard set to true"
+                    label="This has the input keyboard hidden"
                     hideInputKeyboard
                 />
                 <Form.DateRangeInput

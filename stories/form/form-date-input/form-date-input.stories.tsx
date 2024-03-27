@@ -23,7 +23,7 @@ export const Default: StoryObj<Component> = {
             <StoryContainer>
                 <Form.DateInput label="This is the default date input" />
                 <Form.DateInput
-                    label="This is hideInputKeyboard set to true"
+                    label="This has the input keyboard hidden"
                     hideInputKeyboard
                 />
                 <Form.DateInput
