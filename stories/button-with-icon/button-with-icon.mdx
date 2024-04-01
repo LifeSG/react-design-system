@@ -1,0 +1,37 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as ButtonWithIconStories from "./button-with-icon.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ButtonWithIconStories} />
+
+<Title>Button With Icon</Title>
+
+<Secondary>Overview</Secondary>
+
+The primary call to action component.
+
+```tsx
+import { ButtonWithIcon } from "@lifesg/react-design-system/button-with-icon";
+```
+
+The `ButtonWithIcon` component comes in 2 sizes, a default and small size.
+
+<Canvas of={ButtonWithIconStories.Default} />
+
+You can also specify the icon to be on the right side.
+
+<Canvas of={ButtonWithIconStories.IconPositionRight} />
+
+<Heading3>Danger</Heading3>
+
+In some cases, when there is a requirement to display an enhanced display for
+destructive or important actions, you can make use of the `danger` prop which will
+apply a red scheme over the buttons.
+
+<Canvas of={ButtonWithIconStories.Danger} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
+import {ButtonWithIcon} from "../../src/button-with-icon";
