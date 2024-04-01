@@ -77,11 +77,21 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 defaultValue: `"top"`,
             },
             {
+                name: "zIndex",
+                description: (
+                    <>
+                        The custom z-index of the <code>Popover</code>. Try
+                        specifying this if you encounter z-index conflicts.
+                    </>
+                ),
+                propTypes: ["number"],
+            },
+            {
                 name: "rootNode",
                 description: (
                     <>
                         The root element that hosts the popover element. Try
-                        specifying this if you encounter z-index conflicts.
+                        specifying this if <code>zIndex</code> does not work.
                         <br />
                         <br />
                         For example, if the parent of the trigger element has a
