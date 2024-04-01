@@ -46,6 +46,23 @@ export const CloseButton = styled(IconButton)`
     }
 `;
 
+export const MagnifierButton = styled(IconButton)`
+    position: absolute;
+    top: 3rem;
+    right: 6.5rem;
+    z-index: 5;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        top: 1.25rem;
+        right: 4.75rem;
+    }
+
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+`;
+
 export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     z-index: 4;
     position: absolute;

@@ -12,6 +12,16 @@ export interface StatefulImageProps {
     alt?: string | undefined;
     fit?: React.CSSProperties["objectFit"] | undefined;
     placeholder?: React.ReactNode | undefined;
+    retrieveImageDimension?: boolean;
+    setDimension?: ({
+        src,
+        width,
+        height,
+    }: {
+        src: string;
+        width: number;
+        height: number;
+    }) => void;
 }
 
 export const StatefulImage = ({
@@ -20,6 +30,8 @@ export const StatefulImage = ({
     alt,
     fit,
     placeholder,
+    retrieveImageDimension,
+    setDimension,
 }: StatefulImageProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Event | string>();
@@ -31,6 +43,12 @@ export const StatefulImage = ({
         const img = new Image();
         img.src = src;
         img.onload = () => {
+            !!retrieveImageDimension &&
+                setDimension({
+                    src: img.src,
+                    width: img.width,
+                    height: img.height,
+                });
             setLoading(false);
         };
         img.onerror = (e: Event | string) => {

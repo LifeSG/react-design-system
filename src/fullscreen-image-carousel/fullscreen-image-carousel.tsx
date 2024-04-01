@@ -2,6 +2,8 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     CrossIcon,
+    MagnifierMinusIcon,
+    MagnifierPlusIcon,
 } from "@lifesg/react-icons";
 import {
     forwardRef,
@@ -28,6 +30,7 @@ import {
     ImageGallerySlides,
     ImageGallerySwipe,
     ImageGalleryWrapper,
+    MagnifierButton,
     SlideImage,
     SlidePlaceholderImage,
     ThumbnailContainer,
@@ -38,13 +41,17 @@ import {
 import {
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
+    ImageDimension,
 } from "./types";
 
 export const Component = (
     {
         items,
         initialActiveItemIndex,
-        hideThumbnail,
+        hideThumbnail = false,
+        hideNavigation = false,
+        hideCounter = false,
+        hideMagnifier = false,
         onClose,
         ...otherProps
     }: FullscreenImageCarouselProps,
@@ -53,9 +60,13 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+
     const [currentSlide, setCurrentSlide] = useState(
         initialActiveItemIndex ?? 0
     );
+    const [imagesDimension, setImageDimension] = useState<
+        Record<string, ImageDimension>
+    >({});
     const [zoom, setZoom] = useState(1);
     const [startX, setStartX] = useState(null);
     const [endX, setEndX] = useState(null);
@@ -125,6 +136,46 @@ export const Component = (
         }
     }
 
+    const handleMagnifier = () => {
+        if (zoom === 1) {
+            const zoomRatio = getZoomRatio();
+            zoomRefs.current?.[currentSlide]?.centerView(zoomRatio);
+            setZoom(zoomRatio);
+        } else {
+            setZoom(1);
+            zoomRefs.current?.[currentSlide]?.resetTransform();
+        }
+    };
+
+    const setDimension = ({ src, height, width }) => {
+        setImageDimension((oldState) => {
+            return { ...oldState, [src]: { height, width } };
+        });
+    };
+
+    const getZoomRatio = () => {
+        const imageDimension = imagesDimension[items[currentSlide].src];
+
+        if (containerRef?.current && !!imageDimension) {
+            const { clientHeight, clientWidth } = containerRef.current;
+            const { width, height } = imageDimension;
+            const isSmallImg = width < clientWidth && height < clientHeight;
+
+            const isImgLandscapeRelativeToDevice =
+                height / width < clientHeight / clientWidth;
+
+            if (isSmallImg) {
+                return isImgLandscapeRelativeToDevice
+                    ? clientWidth / width
+                    : clientHeight / height;
+            }
+
+            return isImgLandscapeRelativeToDevice
+                ? clientHeight / (height / (width / clientWidth))
+                : clientWidth / (width / (height / clientHeight));
+        }
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -174,6 +225,8 @@ export const Component = (
                                         alt={item.alt ?? `Image ${index + 1}`}
                                         placeholder={<SlidePlaceholderImage />}
                                         fit="scale-down"
+                                        retrieveImageDimension
+                                        setDimension={setDimension}
                                     />
                                 </TransformComponent>
                             </TransformWrapper>
@@ -222,24 +275,41 @@ export const Component = (
             >
                 <CrossIcon aria-hidden />
             </CloseButton>
+            {!hideMagnifier && (
+                <MagnifierButton
+                    aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
+                    onClick={handleMagnifier}
+                    focusHighlight={false}
+                >
+                    {zoom === 1 ? (
+                        <MagnifierPlusIcon aria-hidden />
+                    ) : (
+                        <MagnifierMinusIcon aria-hidden />
+                    )}
+                </MagnifierButton>
+            )}
             <ImageGalleryContainer>
                 <ImageGalleryWrapper>
-                    <ArrowButton
-                        aria-label="View previous image"
-                        data-testid="prev-btn"
-                        $position="left"
-                        onClick={goToPrevSlide}
-                    >
-                        <ChevronLeftIcon aria-hidden />
-                    </ArrowButton>
-                    <ArrowButton
-                        aria-label="View next image"
-                        data-testid="forward-btn"
-                        $position="right"
-                        onClick={goToNextSlide}
-                    >
-                        <ChevronRightIcon aria-hidden />
-                    </ArrowButton>
+                    {!hideNavigation && (
+                        <>
+                            <ArrowButton
+                                aria-label="View previous image"
+                                data-testid="prev-btn"
+                                $position="left"
+                                onClick={goToPrevSlide}
+                            >
+                                <ChevronLeftIcon aria-hidden />
+                            </ArrowButton>
+                            <ArrowButton
+                                aria-label="View next image"
+                                data-testid="forward-btn"
+                                $position="right"
+                                onClick={goToNextSlide}
+                            >
+                                <ChevronRightIcon aria-hidden />
+                            </ArrowButton>
+                        </>
+                    )}
                     <ImageGallerySwipe
                         ref={containerRef}
                         onTouchStart={handleTouchStart}
@@ -248,11 +318,13 @@ export const Component = (
                     >
                         {renderSlides()}
                     </ImageGallerySwipe>
-                    <BoxChip>
-                        <Chip weight="semibold">{`${currentSlide + 1}/${
-                            items.length
-                        }`}</Chip>
-                    </BoxChip>
+                    {!hideCounter && (
+                        <BoxChip>
+                            <Chip weight="semibold">{`${currentSlide + 1}/${
+                                items.length
+                            }`}</Chip>
+                        </BoxChip>
+                    )}
                 </ImageGalleryWrapper>
                 {!hideThumbnail && renderThumbnails()}
             </ImageGalleryContainer>
