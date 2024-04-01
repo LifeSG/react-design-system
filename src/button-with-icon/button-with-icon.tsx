@@ -1,10 +1,6 @@
 import React from "react";
-import {
-    ButtonWithIconProps,
-    ButtonWithIconRef,
-    MainStyleProps,
-} from "./types";
-import { Main } from "./button-with-icon.style";
+import { ButtonWithIconProps, ButtonWithIconRef } from "./types";
+import { Main, MainStyleProps } from "./button-with-icon.style";
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour
@@ -42,9 +38,8 @@ const DefaultComponent = (
             {...mainStyle}
             {...otherProps}
         >
-            <span>
-                {icon} {children}
-            </span>
+            {icon}
+            <span>{children}</span>
         </Main>
     );
 };
@@ -76,9 +71,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            <span>
-                {icon} {children}
-            </span>
+            {icon} <span>{children}</span>
         </Main>
     );
 };

@@ -23,10 +23,3 @@ export type MainButtonStyle =
     | "link";
 export type MainButtonSize = "default" | "small";
 export type ButtonIconPosition = "left" | "right";
-export interface MainStyleProps {
-    $buttonStyle: MainButtonStyle;
-    $buttonIcon: JSX.Element;
-    $buttonIconPosition?: ButtonIconPosition | undefined;
-    $buttonSizeStyle?: MainButtonSize | undefined;
-    $buttonIsDanger?: boolean;
-}

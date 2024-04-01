@@ -3,9 +3,23 @@ import { Color } from "../color/color";
 import { MediaQuery } from "../media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
-import { MainStyleProps } from "./types";
+import { ButtonIconPosition, MainButtonSize, MainButtonStyle } from "./types";
 import { DesignToken } from "../design-token";
 
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+export interface MainStyleProps {
+    $buttonStyle: MainButtonStyle;
+    $buttonIcon: JSX.Element;
+    $buttonIconPosition?: ButtonIconPosition | undefined;
+    $buttonSizeStyle?: MainButtonSize | undefined;
+    $buttonIsDanger?: boolean;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
     min-width: 4rem;
@@ -15,13 +29,15 @@ export const Main = styled.button<MainStyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: ${(props) =>
+        props.$buttonIconPosition === "right" ? "row-reverse" : "row"};
+    gap: 0.5rem;
 
     @media (hover: hover) {
         &:hover {
             box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
         }
     }
-
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
     // -----------------------------------------------------------------------------
@@ -34,54 +50,27 @@ export const Main = styled.button<MainStyleProps>`
                         ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Border
                             : Color.Primary};
-
-                    span {
-                        color: ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Primary
-                            : Color.Primary};
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        flex-direction: ${props.$buttonIconPosition === "right"
-                            ? "row-reverse"
-                            : ""};
-                    }
+                    color: ${props.$buttonIsDanger
+                        ? DesignToken.Button.Danger.Primary
+                        : Color.Primary};
                 `;
             case "light":
                 return css`
                     background-color: ${Color.Neutral[8]};
                     border: 1px solid ${Color.Neutral[5]};
-
-                    span {
-                        color: ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Primary
-                            : Color.Primary};
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        flex-direction: ${props.$buttonIconPosition === "right"
-                            ? "row-reverse"
-                            : ""};
-                    }
+                    color: ${props.$buttonIsDanger
+                        ? DesignToken.Button.Danger.Primary
+                        : Color.Primary};
                 `;
             case "disabled":
                 return css`
                     background-color: ${Color.Neutral[6]};
                     border: 1px solid transparent;
                     cursor: not-allowed;
+                    color: ${Color.Neutral[3]};
 
                     &:hover {
                         box-shadow: none;
-                    }
-
-                    span {
-                        color: ${Color.Neutral[3]};
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        flex-direction: ${props.$buttonIconPosition === "right"
-                            ? "row-reverse"
-                            : ""};
                     }
                 `;
             case "link":
@@ -89,31 +78,20 @@ export const Main = styled.button<MainStyleProps>`
                     background-color: transparent;
                     border: none;
                     border-radius: unset;
-
-                    span {
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        flex-direction: ${props.$buttonIconPosition === "right"
-                            ? "row-reverse"
-                            : ""};
-                    }
+                    color: ${props.$buttonIsDanger
+                        ? DesignToken.Button.Danger.Primary
+                        : Color.Primary};
 
                     &:hover {
                         box-shadow: none;
                     }
 
-                    color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
-                        : Color.Primary};
                     :hover,
                     :active,
                     :focus {
-                        span {
-                            color: ${props.$buttonIsDanger
-                                ? DesignToken.Button.Danger.Hover
-                                : Color.Secondary};
-                        }
+                        color: ${props.$buttonIsDanger
+                            ? DesignToken.Button.Danger.Hover
+                            : Color.Secondary};
                     }
                 `;
             default:
@@ -127,15 +105,7 @@ export const Main = styled.button<MainStyleProps>`
                         width: 100%;
                     }
 
-                    span {
-                        color: ${Color.Neutral[8]};
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        flex-direction: ${props.$buttonIconPosition === "right"
-                            ? "row-reverse"
-                            : ""};
-                    }
+                    color: ${Color.Neutral[8]};
                 `;
         }
     }}
@@ -150,11 +120,6 @@ export const Main = styled.button<MainStyleProps>`
                     height: 2.5rem;
                     span {
                         ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                        display: flex;
-                        align-items: center;
-                        flex-direction: ${props.$buttonIconPosition === "right"
-                            ? "row-reverse"
-                            : ""};
                     }
 
                     ${MediaQuery.MaxWidth.mobileS} {
@@ -166,11 +131,6 @@ export const Main = styled.button<MainStyleProps>`
                     height: 3rem;
                     span {
                         ${TextStyleHelper.getTextStyle("H4", "semibold")}
-                        display: flex;
-                        align-items: center;
-                        flex-direction: ${props.$buttonIconPosition === "right"
-                            ? "row-reverse"
-                            : ""};
                     }
 
                     ${MediaQuery.MaxWidth.mobileS} {
