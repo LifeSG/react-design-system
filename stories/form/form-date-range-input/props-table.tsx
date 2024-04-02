@@ -101,7 +101,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "hideInputKeyboard",
                 description:
-                    "Indicates if the component should hide input keyboard when user clicks on input field",
+                    "If specified, the input keyboard will be hidden when the user focuses on the input field",
                 propTypes: ["boolean"],
             },
             {
