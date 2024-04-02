@@ -63,6 +63,8 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const inputMode = hideInputKeyboard ? "none" : "numeric";
+
     const [dayValue, setDayValue, dayValueRef] = useStateRef<string>("");
     const [monthValue, setMonthValue, monthValueRef] = useStateRef<string>("");
     const [yearValue, setYearValue, yearValueRef] = useStateRef<string>("");
@@ -320,7 +322,7 @@ export const Component = (
                     onBlur={handleInputBlur}
                     onChange={handleInputChange}
                     type="text"
-                    inputMode={hideInputKeyboard ? "none" : "numeric"}
+                    inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[0]}-input`}
                     aria-label="day"
@@ -343,7 +345,7 @@ export const Component = (
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     type="text"
-                    inputMode={hideInputKeyboard ? "none" : "numeric"}
+                    inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[1]}-input`}
                     aria-label="month"
@@ -366,7 +368,7 @@ export const Component = (
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     type="text"
-                    inputMode={hideInputKeyboard ? "none" : "numeric"}
+                    inputMode={inputMode}
                     pattern="[0-9]{4}"
                     data-testid={`${names[2]}-input`}
                     aria-label="year"
