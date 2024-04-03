@@ -25,6 +25,7 @@ export type FieldType =
 interface Props {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
+    hideInputKeyboard?: boolean | undefined;
     names: StartInputNames | EndInputNames;
     value: string | undefined;
     hoverValue?: string | undefined;
@@ -55,12 +56,15 @@ export const Component = (
         onChange,
         onFocus,
         onBlur,
+        hideInputKeyboard,
     }: Props,
     ref: React.ForwardedRef<StandaloneDateInputRef>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const inputMode = hideInputKeyboard ? "none" : "numeric";
+
     const [dayValue, setDayValue, dayValueRef] = useStateRef<string>("");
     const [monthValue, setMonthValue, monthValueRef] = useStateRef<string>("");
     const [yearValue, setYearValue, yearValueRef] = useStateRef<string>("");
@@ -318,7 +322,7 @@ export const Component = (
                     onBlur={handleInputBlur}
                     onChange={handleInputChange}
                     type="text"
-                    inputMode="numeric"
+                    inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[0]}-input`}
                     aria-label="day"
@@ -341,7 +345,7 @@ export const Component = (
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     type="text"
-                    inputMode="numeric"
+                    inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[1]}-input`}
                     aria-label="month"
@@ -364,7 +368,7 @@ export const Component = (
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     type="text"
-                    inputMode="numeric"
+                    inputMode={inputMode}
                     pattern="[0-9]{4}"
                     data-testid={`${names[2]}-input`}
                     aria-label="year"

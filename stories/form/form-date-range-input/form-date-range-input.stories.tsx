@@ -34,6 +34,10 @@ export const Default: StoryObj<Component> = {
                     }}
                 />
                 <Form.DateRangeInput
+                    label="This has the input keyboard hidden"
+                    hideInputKeyboard
+                />
+                <Form.DateRangeInput
                     label="This has no action buttons on desktop viewports"
                     withButton={false}
                 />

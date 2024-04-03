@@ -99,6 +99,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "hideInputKeyboard",
+                description:
+                    "If specified, the input keyboard will be hidden when the user focuses on the input field",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "value",
                 description: (
                     <>The value of the date input in the {STRING_FORMAT}</>
