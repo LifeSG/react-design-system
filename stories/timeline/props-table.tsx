@@ -123,14 +123,32 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The type style of the {code("Pill")}. <br />
+                        The type style of the&nbsp;
+                        <a
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            {code("Pill")}. <br />
+                        </a>
                     </>
                 ),
                 propTypes: [`"solid"`, `"outline"`],
             },
             {
                 name: "colorType",
-                description: <>The color style of the {code("Pill")}</>,
+                description: (
+                    <>
+                        The color style of the&nbsp;
+                        <a
+                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            {code("Pill")}. <br />
+                        </a>
+                    </>
+                ),
                 propTypes: [
                     `"black"`,
                     `"grey"`,
