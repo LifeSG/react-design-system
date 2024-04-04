@@ -1,6 +1,9 @@
 import React from "react";
+import {
+    MainButtonWithIcon,
+    MainStylePropsWithIcon,
+} from "./button-with-icon.style";
 import { ButtonWithIconProps, ButtonWithIconRef } from "./types";
-import { Main, MainStyleProps } from "./button-with-icon.style";
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour
@@ -22,7 +25,7 @@ const DefaultComponent = (
         ...otherProps
     } = props;
 
-    const mainStyle: MainStyleProps = {
+    const mainStyle: MainStylePropsWithIcon = {
         $buttonIcon: icon,
         $buttonIconPosition: iconPosition,
         $buttonStyle: disabled ? "disabled" : styleType,
@@ -31,7 +34,7 @@ const DefaultComponent = (
     };
 
     return (
-        <Main
+        <MainButtonWithIcon
             ref={ref}
             data-testid={otherProps["data-testid"] || "button-with-icon"}
             disabled={disabled}
@@ -40,7 +43,7 @@ const DefaultComponent = (
         >
             {icon}
             <span>{children}</span>
-        </Main>
+        </MainButtonWithIcon>
     );
 };
 
@@ -55,7 +58,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         ...otherProps
     } = props;
 
-    const mainStyle: MainStyleProps = {
+    const mainStyle: MainStylePropsWithIcon = {
         $buttonIcon: icon,
         $buttonIconPosition: iconPosition,
         $buttonStyle: disabled ? "disabled" : styleType,
@@ -64,7 +67,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
     };
 
     return (
-        <Main
+        <MainButtonWithIcon
             ref={ref}
             data-testid={otherProps["data-testid"] || "button-with-icon"}
             disabled={disabled}
@@ -72,7 +75,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             {...otherProps}
         >
             {icon} <span>{children}</span>
-        </Main>
+        </MainButtonWithIcon>
     );
 };
 
