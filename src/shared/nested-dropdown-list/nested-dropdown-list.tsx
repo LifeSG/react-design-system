@@ -400,6 +400,8 @@ export const NestedDropdownList = <V1, V2, V3>({
             if (result && result.subItems && result.subItems.size) {
                 list.set(key, result);
             }
+            // if a result is a matching searchTerm with no subItems
+            else if (result && result.isSearchTerm) list.set(key, result);
         }
 
         return list;
