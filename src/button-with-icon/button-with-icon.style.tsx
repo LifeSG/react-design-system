@@ -7,7 +7,6 @@ import { ButtonIconPosition } from "./types";
 // STYLE INTERFACES
 // =============================================================================
 export interface MainStylePropsWithIcon extends MainStyleProps {
-    $buttonIcon: JSX.Element;
     $buttonIconPosition?: ButtonIconPosition | undefined;
 }
 

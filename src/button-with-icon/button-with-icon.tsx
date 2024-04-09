@@ -26,7 +26,6 @@ const DefaultComponent = (
     } = props;
 
     const mainStyle: MainStylePropsWithIcon = {
-        $buttonIcon: icon,
         $buttonIconPosition: iconPosition,
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "default",
@@ -59,7 +58,6 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
     } = props;
 
     const mainStyle: MainStylePropsWithIcon = {
-        $buttonIcon: icon,
         $buttonIconPosition: iconPosition,
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "small",
@@ -74,7 +72,8 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {icon} <span>{children}</span>
+            {icon}
+            <span>{children}</span>
         </MainButtonWithIcon>
     );
 };

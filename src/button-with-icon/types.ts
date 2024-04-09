@@ -1,7 +1,6 @@
 import React from "react";
 import { ButtonProps } from "../button/types";
 
-type StyleType = "default" | "secondary" | "light" | "link";
 export interface ButtonWithIconProps extends ButtonProps {
     /** The icon to be added to the button */
     icon: JSX.Element;
