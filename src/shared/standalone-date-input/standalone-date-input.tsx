@@ -38,7 +38,7 @@ interface Props {
 }
 
 export interface StandaloneDateInputRef {
-    ref: React.Ref<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement>;
     resetPlaceholder: () => void;
     resetInput: () => void;
 }

@@ -1,23 +1,14 @@
-import {
-    FloatingPortal,
-    autoUpdate,
-    flip,
-    limitShift,
-    offset,
-    shift,
-    size,
-    useFloating,
-} from "@floating-ui/react";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../media";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     CalendarAction,
+    CalendarDropdown,
     FocusType,
     InternalCalendarRef,
 } from "../shared/internal-calendar";
-import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import {
     StandaloneDateInput,
@@ -191,26 +182,6 @@ export const DateRangeInput = ({
     // show button if it is mobile view
     const withButton = _withButton || isMobile;
 
-    const { refs, floatingStyles, elements, update } = useFloating({
-        open: calendarOpen,
-        placement: "bottom-start",
-        middleware: [
-            offset(16),
-            flip(),
-            shift({
-                limiter: limitShift(),
-            }),
-            size({
-                // match calendar width to input
-                apply({ rects, elements }) {
-                    Object.assign(elements.floating.style, {
-                        width: `${rects.reference.width}px`,
-                    });
-                },
-            }),
-        ],
-    });
-
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -229,44 +200,10 @@ export const DateRangeInput = ({
         }
     }, [currentFocus]);
 
-    // ensure calendar remains anchored to its reference element when scrolling
-    // ref: https://floating-ui.com/docs/autoUpdate#usage
-    useEffect(() => {
-        if (calendarOpen && elements.reference && elements.floating) {
-            const cleanup = autoUpdate(
-                elements.reference,
-                elements.floating,
-                update
-            );
-            return cleanup;
-        }
-    }, [calendarOpen, elements, update]);
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleNodeBlur = (event: React.FocusEvent) => {
-        if (
-            !nodeRef.current?.contains(event.relatedTarget) &&
-            !calendarRef.current?.rootElementRef.current?.contains(
-                event.relatedTarget
-            )
-        ) {
-            actions.blur();
-
-            setIsStartDisabled(false);
-            setIsEndDisabled(false);
-            startInputRef.current.resetPlaceholder();
-            endInputRef.current.resetPlaceholder();
-
-            onBlur?.();
-        }
-    };
-
     const handleNodeKeyDown = (event: React.KeyboardEvent) => {
-        if (event.code === "Escape") {
-            actions.blur();
-        }
         if (event.code === "Enter" && !withButton) {
             if (selectedStart && selectedEnd) {
                 actions.done({
@@ -278,6 +215,21 @@ export const DateRangeInput = ({
                 actions.blur();
             }
         }
+    };
+
+    const handleClose = () => {
+        actions.blur();
+
+        setIsStartDisabled(false);
+        setIsEndDisabled(false);
+        startInputRef.current.resetPlaceholder();
+        endInputRef.current.resetPlaceholder();
+
+        onBlur?.();
+    };
+
+    const handleDismiss = () => {
+        actions.blur();
     };
 
     const handleStartDateChange = (val: string) => {
@@ -573,17 +525,13 @@ export const DateRangeInput = ({
     const renderInput = () => {
         return (
             <Container
-                ref={(node) => {
-                    nodeRef.current = node;
-                    refs.setReference(node);
-                }}
+                ref={nodeRef}
                 $disabled={disabled}
                 $readOnly={readOnly}
                 $error={error}
                 $wrap={shouldWrap}
                 id={id}
                 data-testid={otherProps["data-testid"]}
-                onBlur={handleNodeBlur}
                 onKeyDown={handleNodeKeyDown}
                 {...otherProps}
             >
@@ -635,41 +583,38 @@ export const DateRangeInput = ({
 
     const renderCalendar = () => {
         return (
-            <FloatingPortal>
-                <div
-                    ref={refs.setFloating}
-                    style={{ ...floatingStyles, zIndex }}
-                >
-                    <AnimatedInternalCalendar
-                        ref={calendarRef}
-                        type="input"
-                        variant={variant}
-                        initialCalendarDate={initialCalendarDate}
-                        isOpen={calendarOpen}
-                        withButton={withButton}
-                        value={selectedStart}
-                        endValue={selectedEnd}
-                        selectWithinRange={isStartDirty || isEndDirty}
-                        currentFocus={currentFocus}
-                        disabledDates={disabledDates}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        allowDisabledSelection={allowDisabledSelection}
-                        onSelect={handleCalendarSelect}
-                        onDismiss={handleCalendarDismiss}
-                        onHover={handleCalendarHover}
-                        onYearMonthDisplayChange={onYearMonthDisplayChange}
-                        numberOfDays={numberOfDays}
-                    />
-                </div>
-            </FloatingPortal>
+            <CalendarDropdown
+                ref={calendarRef}
+                type="input"
+                variant={variant}
+                initialCalendarDate={initialCalendarDate}
+                withButton={withButton}
+                value={selectedStart}
+                endValue={selectedEnd}
+                selectWithinRange={isStartDirty || isEndDirty}
+                currentFocus={currentFocus}
+                disabledDates={disabledDates}
+                minDate={minDate}
+                maxDate={maxDate}
+                allowDisabledSelection={allowDisabledSelection}
+                onSelect={handleCalendarSelect}
+                onDismiss={handleCalendarDismiss}
+                onHover={handleCalendarHover}
+                onYearMonthDisplayChange={onYearMonthDisplayChange}
+                numberOfDays={numberOfDays}
+            />
         );
     };
 
     return (
-        <>
-            {renderInput()}
-            {renderCalendar()}
-        </>
+        <ElementWithDropdown
+            enabled={!readOnly && !disabled}
+            isOpen={calendarOpen}
+            onClose={handleClose}
+            onDismiss={handleDismiss}
+            renderElement={renderInput}
+            renderDropdown={renderCalendar}
+            zIndex={zIndex}
+        />
     );
 };

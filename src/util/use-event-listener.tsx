@@ -7,7 +7,8 @@ export const useEventListener = <K extends keyof WindowEventMap>(
     eventName: K,
     handler: (event: WindowEventMap[K]) => void,
     target: Target = "window",
-    options?: AddEventListenerOptions | boolean
+    options?: AddEventListenerOptions | boolean,
+    enabled = true
 ) => {
     // Create a ref that stores handler
     const savedHandler = useRef<(event: WindowEventMap[K]) => void>();
@@ -19,6 +20,10 @@ export const useEventListener = <K extends keyof WindowEventMap>(
 
     useEffect(
         () => {
+            if (!enabled) {
+                return;
+            }
+
             let element: Element;
             switch (target) {
                 case "window":
@@ -45,6 +50,6 @@ export const useEventListener = <K extends keyof WindowEventMap>(
                 element.removeEventListener(eventName, eventListener, options);
             };
         },
-        [eventName, target] // Re-run if eventName or element changes
+        [eventName, target, enabled] // Re-run if eventName or element changes
     );
 };
