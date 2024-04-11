@@ -5,11 +5,11 @@ import { PropsTable } from "./props-table";
 
 <Meta of={ButtonWithIconStories} />
 
-<Title>Button With Icon</Title>
+<Title>ButtonWithIcon</Title>
 
 <Secondary>Overview</Secondary>
 
-The primary call to action component.
+The primary call to action component with an icon.
 
 ```tsx
 import { ButtonWithIcon } from "@lifesg/react-design-system/button-with-icon";
@@ -19,7 +19,8 @@ The `ButtonWithIcon` component comes in 2 sizes, a default and small size.
 
 <Canvas of={ButtonWithIconStories.Default} />
 
-You can also specify the icon to be on the right side.
+By default, the icon will be rendered on the left of the component.
+You can also indicate to render on the right using the `iconPosition` prop.
 
 <Canvas of={ButtonWithIconStories.IconPositionRight} />
 
