@@ -21,13 +21,13 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "icon",
-                description: "specifies the icon to be in the button ",
+                description: <>The icon component to be rendered</>,
                 propTypes: ["JSX.Element"],
             },
             {
                 name: "iconPosition",
                 description:
-                    "specifies whether the icon is displayed on the left or right of the label ",
+                    "Specifies whether the icon is rendered on the left or right of the label",
                 propTypes: [`"left"`, `"right"`],
                 defaultValue: `"left"`,
             },
@@ -36,7 +36,7 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The style of the <code>Button</code>
+                        The style of the <code>ButtonWithIcon</code>
                     </>
                 ),
                 propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
