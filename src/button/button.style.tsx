@@ -35,22 +35,18 @@ export const Main = styled.button<MainStyleProps>`
                             ? DesignToken.Button.Danger.Border
                             : Color.Primary};
 
-                    span {
-                        color: ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Primary
-                            : Color.Primary};
-                    }
+                    color: ${props.$buttonIsDanger
+                        ? DesignToken.Button.Danger.Primary
+                        : Color.Primary};
                 `;
             case "light":
                 return css`
                     background-color: ${Color.Neutral[8]};
                     border: 1px solid ${Color.Neutral[5]};
 
-                    span {
-                        color: ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Primary
-                            : Color.Primary};
-                    }
+                    color: ${props.$buttonIsDanger
+                        ? DesignToken.Button.Danger.Primary
+                        : Color.Primary};
                 `;
             case "disabled":
                 return css`
@@ -62,9 +58,7 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    span {
-                        color: ${Color.Neutral[3]};
-                    }
+                    color: ${Color.Neutral[3]};
                 `;
             case "link":
                 return css`
@@ -82,11 +76,9 @@ export const Main = styled.button<MainStyleProps>`
                     :hover,
                     :active,
                     :focus {
-                        span {
-                            color: ${props.$buttonIsDanger
-                                ? DesignToken.Button.Danger.Hover
-                                : Color.Secondary};
-                        }
+                        color: ${props.$buttonIsDanger
+                            ? DesignToken.Button.Danger.Hover
+                            : Color.Secondary};
                     }
                 `;
             default:
@@ -100,9 +92,7 @@ export const Main = styled.button<MainStyleProps>`
                         width: 100%;
                     }
 
-                    span {
-                        color: ${Color.Neutral[8]};
-                    }
+                    color: ${Color.Neutral[8]};
                 `;
         }
     }}
@@ -115,9 +105,7 @@ export const Main = styled.button<MainStyleProps>`
             case "small":
                 return css`
                     height: 2.5rem;
-                    span {
-                        ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    }
+                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
 
                     ${MediaQuery.MaxWidth.mobileS} {
                         height: auto;
@@ -126,9 +114,7 @@ export const Main = styled.button<MainStyleProps>`
             default:
                 return css`
                     height: 3rem;
-                    span {
-                        ${TextStyleHelper.getTextStyle("H4", "semibold")}
-                    }
+                    ${TextStyleHelper.getTextStyle("H4", "semibold")}
 
                     ${MediaQuery.MaxWidth.mobileS} {
                         height: auto;
