@@ -1,13 +1,12 @@
-import React from "react";
-import { ButtonProps } from "../button/types";
+import { ButtonBaseProps, ButtonRef } from "../button/types";
 
-export interface ButtonWithIconProps extends ButtonProps {
+export interface ButtonWithIconProps extends ButtonBaseProps {
     /** The icon to be added to the button */
     icon: JSX.Element;
     /** Specifies where the icon will be positioned */
     iconPosition?: "left" | "right";
 }
 
-export type ButtonWithIconRef = React.Ref<HTMLButtonElement>;
+export type ButtonWithIconRef = ButtonRef;
 
 export type ButtonIconPosition = "left" | "right";
