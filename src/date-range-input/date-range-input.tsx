@@ -1,3 +1,13 @@
+import {
+    FloatingPortal,
+    autoUpdate,
+    flip,
+    limitShift,
+    offset,
+    shift,
+    size,
+    useFloating,
+} from "@floating-ui/react";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -180,6 +190,26 @@ export const DateRangeInput = ({
     // show button if it is mobile view
     const withButton = _withButton || isMobile;
 
+    const { refs, floatingStyles, elements, update } = useFloating({
+        open: calendarOpen,
+        placement: "bottom-start",
+        middleware: [
+            offset(16),
+            flip(),
+            shift({
+                limiter: limitShift(),
+            }),
+            size({
+                // match calendar width to input
+                apply({ rects, elements }) {
+                    Object.assign(elements.floating.style, {
+                        width: `${rects.reference.width}px`,
+                    });
+                },
+            }),
+        ],
+    });
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -197,6 +227,19 @@ export const DateRangeInput = ({
             setInitialCalendarDate(selectedEnd);
         }
     }, [currentFocus]);
+
+    // ensure calendar remains anchored to its reference element when scrolling
+    // ref: https://floating-ui.com/docs/autoUpdate#usage
+    useEffect(() => {
+        if (calendarOpen && elements.reference && elements.floating) {
+            const cleanup = autoUpdate(
+                elements.reference,
+                elements.floating,
+                update
+            );
+            return cleanup;
+        }
+    }, [calendarOpen, elements, update]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -519,84 +562,105 @@ export const DateRangeInput = ({
     };
 
     // =============================================================================
-    // RENDER FUNCTION
+    // RENDER FUNCTIONS
     // =============================================================================
-    return (
-        <Container
-            ref={nodeRef}
-            $disabled={disabled}
-            $readOnly={readOnly}
-            $error={error}
-            $wrap={shouldWrap}
-            id={id}
-            data-testid={otherProps["data-testid"]}
-            onBlur={handleNodeBlur}
-            onKeyDown={handleNodeKeyDown}
-            {...otherProps}
-        >
-            <RangeInputInnerContainer
-                currentActive={currentFocus}
-                wrap={shouldWrap}
-                error={error}
+    const renderInput = () => {
+        return (
+            <Container
+                ref={(node) => {
+                    nodeRef.current = node;
+                    refs.setReference(node);
+                }}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+                $wrap={shouldWrap}
+                id={id}
+                data-testid={otherProps["data-testid"]}
+                onBlur={handleNodeBlur}
+                onKeyDown={handleNodeKeyDown}
+                {...otherProps}
             >
-                <InputContainer $wrap={shouldWrap}>
-                    <StandaloneDateInput
-                        ref={startInputRef}
-                        placeholder="From"
-                        names={["start-day", "start-month", "start-year"]}
+                <RangeInputInnerContainer
+                    currentActive={currentFocus}
+                    wrap={shouldWrap}
+                    error={error}
+                >
+                    <InputContainer $wrap={shouldWrap}>
+                        <StandaloneDateInput
+                            ref={startInputRef}
+                            placeholder="From"
+                            names={["start-day", "start-month", "start-year"]}
+                            value={selectedStart}
+                            disabled={disabled}
+                            readOnly={isStartDisabled || readOnly}
+                            focused={currentFocus === "start"}
+                            hoverValue={getHoverValue("start")}
+                            onChange={
+                                isFixedRangeSelection
+                                    ? handleFixedRangeSelectionChange
+                                    : handleStartDateChange
+                            }
+                            onFocus={handleInputFocus("start")}
+                            onBlur={handleStartInputBlur}
+                            hideInputKeyboard={hideInputKeyboard}
+                        />
+                    </InputContainer>
+                    <InputContainer $wrap={shouldWrap}>
+                        <StandaloneDateInput
+                            ref={endInputRef}
+                            placeholder="To"
+                            names={["end-day", "end-month", "end-year"]}
+                            value={selectedEnd}
+                            disabled={disabled}
+                            readOnly={isEndDisabled || readOnly}
+                            focused={currentFocus === "end"}
+                            hoverValue={getHoverValue("end")}
+                            onChange={handleEndDateChange}
+                            onFocus={handleInputFocus("end")}
+                            onBlur={handleEndInputBlur}
+                            hideInputKeyboard={hideInputKeyboard}
+                        />
+                    </InputContainer>
+                </RangeInputInnerContainer>
+            </Container>
+        );
+    };
+
+    const renderCalendar = () => {
+        return (
+            <FloatingPortal>
+                <div ref={refs.setFloating} style={{ ...floatingStyles }}>
+                    <AnimatedInternalCalendar
+                        ref={calendarRef}
+                        type="input"
+                        variant={variant}
+                        initialCalendarDate={initialCalendarDate}
+                        isOpen={calendarOpen}
+                        withButton={withButton}
                         value={selectedStart}
-                        disabled={disabled}
-                        readOnly={isStartDisabled || readOnly}
-                        focused={currentFocus === "start"}
-                        hoverValue={getHoverValue("start")}
-                        onChange={
-                            isFixedRangeSelection
-                                ? handleFixedRangeSelectionChange
-                                : handleStartDateChange
-                        }
-                        onFocus={handleInputFocus("start")}
-                        onBlur={handleStartInputBlur}
-                        hideInputKeyboard={hideInputKeyboard}
+                        endValue={selectedEnd}
+                        selectWithinRange={isStartDirty || isEndDirty}
+                        currentFocus={currentFocus}
+                        disabledDates={disabledDates}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        allowDisabledSelection={allowDisabledSelection}
+                        onSelect={handleCalendarSelect}
+                        onDismiss={handleCalendarDismiss}
+                        onHover={handleCalendarHover}
+                        onYearMonthDisplayChange={onYearMonthDisplayChange}
+                        numberOfDays={numberOfDays}
                     />
-                </InputContainer>
-                <InputContainer $wrap={shouldWrap}>
-                    <StandaloneDateInput
-                        ref={endInputRef}
-                        placeholder="To"
-                        names={["end-day", "end-month", "end-year"]}
-                        value={selectedEnd}
-                        disabled={disabled}
-                        readOnly={isEndDisabled || readOnly}
-                        focused={currentFocus === "end"}
-                        hoverValue={getHoverValue("end")}
-                        onChange={handleEndDateChange}
-                        onFocus={handleInputFocus("end")}
-                        onBlur={handleEndInputBlur}
-                        hideInputKeyboard={hideInputKeyboard}
-                    />
-                </InputContainer>
-            </RangeInputInnerContainer>
-            <AnimatedInternalCalendar
-                ref={calendarRef}
-                type="input"
-                variant={variant}
-                initialCalendarDate={initialCalendarDate}
-                isOpen={calendarOpen}
-                withButton={withButton}
-                value={selectedStart}
-                endValue={selectedEnd}
-                selectWithinRange={isStartDirty || isEndDirty}
-                currentFocus={currentFocus}
-                disabledDates={disabledDates}
-                minDate={minDate}
-                maxDate={maxDate}
-                allowDisabledSelection={allowDisabledSelection}
-                onSelect={handleCalendarSelect}
-                onDismiss={handleCalendarDismiss}
-                onHover={handleCalendarHover}
-                onYearMonthDisplayChange={onYearMonthDisplayChange}
-                numberOfDays={numberOfDays}
-            />
-        </Container>
+                </div>
+            </FloatingPortal>
+        );
+    };
+
+    return (
+        <>
+            {renderInput()}
+            {renderCalendar()}
+        </>
     );
 };
