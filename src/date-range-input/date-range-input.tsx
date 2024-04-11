@@ -245,7 +245,12 @@ export const DateRangeInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleNodeBlur = (event: React.FocusEvent) => {
-        if (!nodeRef.current.contains(event.relatedTarget)) {
+        if (
+            !nodeRef.current?.contains(event.relatedTarget) &&
+            !calendarRef.current?.rootElementRef.current?.contains(
+                event.relatedTarget
+            )
+        ) {
             actions.blur();
 
             setIsStartDisabled(false);

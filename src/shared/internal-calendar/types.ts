@@ -1,4 +1,5 @@
 import type { Dayjs } from "dayjs";
+import { RefObject } from "react";
 
 export interface CommonCalendarProps {
     /**
@@ -66,6 +67,7 @@ export interface YearMonthDisplay {
 export interface InternalCalendarRef {
     reset: () => void;
     setCalendarDate: (value?: string) => void;
+    rootElementRef: RefObject<HTMLElement>;
 }
 
 // =============================================================================

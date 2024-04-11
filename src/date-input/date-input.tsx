@@ -102,7 +102,12 @@ export const DateInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleContainerBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-        if (nodeRef && !nodeRef.current.contains(event.relatedTarget)) {
+        if (
+            !nodeRef.current?.contains(event.relatedTarget) &&
+            !calendarRef.current?.rootElementRef.current?.contains(
+                event.relatedTarget
+            )
+        ) {
             inputRef.current.resetInput();
             setSelectedDate(initialDate);
             setCalendarOpen(false);
