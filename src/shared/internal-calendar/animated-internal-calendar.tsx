@@ -13,7 +13,7 @@ const AnimatedComponent = (
     const calendarRef = useRef<InternalCalendarRef>();
     const resizeDetector = useResizeDetector();
     const styles = useSpring({
-        height: isOpen ? resizeDetector.height : 0,
+        opacity: isOpen ? 1 : 0,
         config: { duration: 300 },
     });
 
@@ -26,8 +26,15 @@ const AnimatedComponent = (
     useImperativeHandle(ref, () => calendarRef.current);
 
     return (
-        <AnimatedDiv style={styles}>
-            <div ref={resizeDetector.ref} inert={isOpen ? undefined : ""}>
+        <AnimatedDiv
+            style={{
+                opacity: styles.opacity,
+                display: styles.opacity.to((v) =>
+                    v === 0 ? "none" : undefined
+                ),
+            }}
+        >
+            <div ref={resizeDetector.ref}>
                 <InternalCalendar ref={calendarRef} {...remainingProps} />
             </div>
         </AnimatedDiv>
