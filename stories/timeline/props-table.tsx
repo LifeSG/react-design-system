@@ -77,7 +77,15 @@ const DATA: ApiTableSectionProps[] = [
                         &nbsp; regardless how many statuses are specified
                     </>
                 ),
-                propTypes: ["PillProps[]"],
+                propTypes: (
+                    <a
+                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs#component-api"
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        PillProps[]
+                    </a>
+                ),
             },
             {
                 name: "variant",
@@ -97,72 +105,6 @@ const DATA: ApiTableSectionProps[] = [
                     `"upcoming-inactive"`,
                     `"error"`,
                 ],
-            },
-        ],
-    },
-    {
-        name: "PillProps",
-        attributes: [
-            {
-                name: "",
-                description: (
-                    <>
-                        This component also inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            HTMLDivAttributes
-                        </a>
-                    </>
-                ),
-            },
-            {
-                name: "type",
-                mandatory: true,
-                description: (
-                    <>
-                        The type style of the&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            {code("Pill")}. <br />
-                        </a>
-                    </>
-                ),
-                propTypes: [`"solid"`, `"outline"`],
-            },
-            {
-                name: "colorType",
-                description: (
-                    <>
-                        The color style of the&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            {code("Pill")}. <br />
-                        </a>
-                    </>
-                ),
-                propTypes: [
-                    `"black"`,
-                    `"grey"`,
-                    `"green"`,
-                    `"yellow"`,
-                    `"red"`,
-                    `"blue"`,
-                ],
-                defaultValue: `"black"`,
-            },
-            {
-                name: "icon",
-                description: "A component to be displayed as the icon",
-                propTypes: ["JSX.Element"],
             },
         ],
     },
