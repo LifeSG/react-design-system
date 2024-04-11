@@ -6,7 +6,7 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 type Component = typeof ButtonWithIcon.Default;
 
 const meta: Meta<Component> = {
-    title: "General/ButtonWithIcon",
+    title: "General/Button/With Icon",
     component: ButtonWithIcon.Default,
 };
 
@@ -73,7 +73,7 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const IconPositionRight: StoryObj<Component> = {
+export const RightPositioned: StoryObj<Component> = {
     render: () => {
         return (
             <>
