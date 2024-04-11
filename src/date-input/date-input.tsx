@@ -38,6 +38,7 @@ export const DateInput = ({
     readOnly,
     id,
     allowDisabledSelection,
+    zIndex = 50,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -229,7 +230,10 @@ export const DateInput = ({
     const renderCalendar = () => {
         return (
             <FloatingPortal>
-                <div ref={refs.setFloating} style={{ ...floatingStyles }}>
+                <div
+                    ref={refs.setFloating}
+                    style={{ ...floatingStyles, zIndex }}
+                >
                     <AnimatedInternalCalendar
                         ref={calendarRef}
                         type="input"
