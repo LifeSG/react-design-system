@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Alert } from "../../src";
 import { Color } from "../../src";
+import { StarIcon } from "@lifesg/react-icons/star";
 
 // =============================================================================
 // UNIT TESTS
@@ -73,6 +74,28 @@ describe("Alert", () => {
         });
     });
 
+    describe("customAlertIcon", () => {
+        it("should render if the prop is provided", () => {
+            render(
+                <Alert
+                    type="success"
+                    showIcon={true}
+                    customAlertIcon={<StarIcon data-testid="star-test" />}
+                >
+                    {DEFAULT_TEXT}
+                </Alert>
+            );
+
+            expect(getCustomIcon()).toBeInTheDocument();
+        });
+
+        it("should not render if the prop is not provided", () => {
+            render(<Alert type="success" />);
+
+            expect(getCustomIcon()).not.toBeInTheDocument();
+        });
+    });
+
     it("should render custom display if required", () => {
         const CUSTOM_TEXT = "this is a custom component";
 
@@ -95,4 +118,8 @@ const getActionLink = (isQuery = false, children?: string) => {
         return screen.queryByRole("link", children && { name: children });
     }
     return screen.getByRole("link", children && { name: children });
+};
+
+const getCustomIcon = () => {
+    return screen.queryByTestId("star-test");
 };
