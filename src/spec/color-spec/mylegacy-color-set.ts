@@ -52,7 +52,7 @@ export const MyLegacyColorSet: ColorSet = {
             Badge: "#F57F17", // Orange Badge Notification
         },
         Red: {
-            Text: "#8F0E0E", // Validation Text
+            Text: "#CB2213", // Validation Text
             Icon: "#CB2213",
             Border: "#DC6363",
             Background: "#FAF0F0", // Validation Background
