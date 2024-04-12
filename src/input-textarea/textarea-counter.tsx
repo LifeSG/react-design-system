@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CounterLabel } from "./textara-counter.style";
 
 interface Props {
@@ -40,7 +39,7 @@ export const TextareaCounter = ({
             return renderCustomCounter(maxLength, value.toString().length);
         } else {
             const remainingLength = maxLength - value.toString().length;
-            if (remainingLength <= 1) {
+            if (remainingLength === 1) {
                 return `${remainingLength} character left`;
             } else {
                 return `${remainingLength.toLocaleString()} characters left`;
