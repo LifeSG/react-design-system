@@ -70,5 +70,12 @@ export const PropsTable = () => (
                 </>
             </DefaultCol>
         </tr>
+        <tr>
+            <NameCol>customAlertIcon</NameCol>
+            <DescriptionCol propTypes={["JSX.Element"]}>
+                Specifies a custom replacement icon for the alert
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
     </Table>
 );

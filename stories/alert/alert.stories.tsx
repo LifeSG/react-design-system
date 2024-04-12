@@ -1,3 +1,4 @@
+import { CalendarEventIcon } from "@lifesg/react-icons/calendar-event";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "src/alert";
 
@@ -206,6 +207,24 @@ export const SmallSize: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
+            </>
+        );
+    },
+};
+
+export const WithCustomIcon: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Alert
+                    type="warning"
+                    showIcon
+                    customAlertIcon={<CalendarEventIcon />}
+                >
+                    An alert box with a custom icon that can be passed in using
+                    customAlertIcon.
+                </Alert>
+                <br />
             </>
         );
     },
