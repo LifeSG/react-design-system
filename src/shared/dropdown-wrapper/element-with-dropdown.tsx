@@ -47,8 +47,10 @@ export const ElementWithDropdown = ({
         onOpenChange: (open, event, reason) => {
             if (reason === "escape-key") {
                 onDismiss?.();
-            } else {
-                open ? onOpen?.() : onClose?.();
+            } else if (open && !isOpen) {
+                onOpen?.();
+            } else if (!open && isOpen) {
+                onClose?.();
             }
         },
         whileElementsMounted: autoUpdate,

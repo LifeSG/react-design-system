@@ -150,6 +150,11 @@ export const Component = (
         }
     };
 
+    const handlePlaceholderClick = (event: React.MouseEvent) => {
+        event.preventDefault();
+        dayInputRef.current?.focus();
+    };
+
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.select();
         const targetName = event.target.name as FieldType;
@@ -299,7 +304,11 @@ export const Component = (
         }
 
         return (
-            <Placeholder $hide={hidePlaceholder} $disabled={disabled}>
+            <Placeholder
+                $hide={hidePlaceholder}
+                $disabled={disabled}
+                onMouseDown={handlePlaceholderClick}
+            >
                 {placeholder}
             </Placeholder>
         );
