@@ -14,4 +14,5 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
     showIcon?: boolean | undefined;
     actionLinkIcon?: JSX.Element | undefined;
     sizeType?: AlertSizeType | undefined;
+    customAlertIcon?: JSX.Element | undefined;
 }

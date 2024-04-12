@@ -19,6 +19,7 @@ export const Alert = ({
     actionLinkIcon,
     sizeType = "default",
     showIcon = false,
+    customAlertIcon,
     ...otherProps
 }: AlertProps): JSX.Element => {
     const renderLinkType = () => {
@@ -43,6 +44,7 @@ export const Alert = ({
     };
 
     const renderIcon = () => {
+        if (type && customAlertIcon) return customAlertIcon;
         switch (type) {
             case "success":
                 return <TickCircleFillIcon />;
