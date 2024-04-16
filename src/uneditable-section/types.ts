@@ -1,3 +1,4 @@
+import { AlertProps } from "../alert";
 import { MaskAttributeProps } from "../masked-input";
 
 export type UneditableSectionItemDisplayWidth = "half" | "full";
@@ -27,6 +28,7 @@ export interface UneditableSectionItemProps extends MaskAttributeProps {
     maskLoadingState?: UneditableSectionItemMaskLoadingState | undefined;
     /** If specified, one is unable to mask or unmask the value */
     disableMaskUnmask?: boolean | undefined;
+    alert?: AlertProps | undefined;
 }
 
 export interface UneditableSectionProps {

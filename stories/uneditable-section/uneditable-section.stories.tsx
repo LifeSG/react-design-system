@@ -236,6 +236,29 @@ export const MaskUnmaskWithError: StoryObj<Component> = {
     },
 };
 
+export const MaskUnmaskWithAlert: StoryObj<Component> = {
+    render: () => {
+        const [item, setItem] = useState<UneditableSectionItemProps>({
+            id: "item1",
+            label: "This has an error display when unmasking",
+            value: "S1••••67D",
+            maskState: "masked",
+            maskLoadingState: "fail",
+            alert: {
+                type: "warning",
+                children: "This is an alert message",
+            },
+        });
+
+        return (
+            <UneditableSection
+                title="Your personal information"
+                items={[item]}
+            />
+        );
+    },
+};
+
 export const WithCustomContent: StoryObj<Component> = {
     render: () => {
         return (
