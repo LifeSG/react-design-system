@@ -45,7 +45,7 @@ export const StatefulImage = ({
         img.onload = () => {
             !!retrieveImageDimension &&
                 setDimension({
-                    src: img.src,
+                    src,
                     width: img.width,
                     height: img.height,
                 });
