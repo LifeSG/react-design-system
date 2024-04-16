@@ -12,6 +12,10 @@ interface StyleProps {
     $type: AlertType;
     $sizeType: AlertSizeType;
 }
+export interface TextContentProps {
+    $showMore: boolean;
+    $maxNoOfLines?: number;
+}
 
 // =============================================================================
 // STYLING
@@ -142,4 +146,33 @@ export const TextContainer = styled.div`
     flex-direction: column;
     flex: 1;
     overflow-wrap: anywhere;
+`;
+/*
+ * Height is calculated based on text line height
+ * max-height: text-line-height * maximum number of lines
+ */
+
+export const TextWrapperContainer = styled.div<TextContentProps>`
+    ${(props) => {
+        const gradient =
+            "linear-gradient(to bottom, black 50%, transparent 100%)";
+        if (!props.$showMore && props.$maxNoOfLines)
+            return `
+				display: -webkit-box;
+				-webkit-line-clamp: ${props.$maxNoOfLines};
+				line-clamp: ${props.$maxNoOfLines};
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+                
+                -webkit-mask-image: ${gradient};
+                mask-image: ${gradient};
+			`;
+    }}
+`;
+
+export const ShowMoreButton = styled(Text.BodySmall)`
+    cursor: pointer;
+    margin-top: 0.5rem;
+    color: ${Color.Primary};
+    user-select: none;
 `;

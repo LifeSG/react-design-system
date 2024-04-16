@@ -2,7 +2,9 @@ import { AlertProps } from "./types";
 import {
     ActionLinkText,
     AlertIconWrapper,
+    ShowMoreButton,
     TextContainer,
+    TextWrapperContainer,
     Wrapper,
 } from "./alert.style";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
@@ -10,6 +12,7 @@ import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-tri
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { useEffect, useRef, useState } from "react";
 
 export const Alert = ({
     type,
@@ -20,8 +23,35 @@ export const Alert = ({
     sizeType = "default",
     showIcon = false,
     customAlertIcon,
+    maxLines,
     ...otherProps
 }: AlertProps): JSX.Element => {
+    const [isShowMore, setIsShowMore] = useState(false);
+    const contentContainerHeightRef = useRef<HTMLDivElement>(null);
+    const [displayShowMore, setDisplayShowMore] = useState<boolean>(false);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+
+    useEffect(() => {
+        // forces line-clamp to trigger so that we can determine if content is collapsible
+        setIsShowMore(!maxLines);
+        setDisplayShowMore(!!maxLines);
+        if (!maxLines || !contentContainerHeightRef.current) return;
+
+        // calculate whether to show more after line-clamp is triggered
+        const clientHeight = contentContainerHeightRef.current.clientHeight;
+        const scrollHeight = contentContainerHeightRef.current.scrollHeight;
+
+        // Note: when using DS Text.H3 or Text.H1, the calculated scrollHeight and clientHeight differs by 1 without any overflow
+
+        setDisplayShowMore(scrollHeight - clientHeight > 1);
+    }, [children]);
+
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     const renderLinkType = () => {
         if (actionLinkIcon) {
             return actionLinkIcon;
@@ -74,7 +104,21 @@ export const Alert = ({
                 </AlertIconWrapper>
             )}
             <TextContainer>
-                {children}
+                <TextWrapperContainer
+                    ref={contentContainerHeightRef}
+                    $maxNoOfLines={maxLines}
+                    $showMore={isShowMore}
+                >
+                    {children}
+                </TextWrapperContainer>
+                {maxLines !== undefined && displayShowMore && (
+                    <ShowMoreButton
+                        weight="semibold"
+                        onClick={() => setIsShowMore(!isShowMore)}
+                    >
+                        {isShowMore ? "Show less" : "Show more"}
+                    </ShowMoreButton>
+                )}
                 {actionLink && renderLink()}
             </TextContainer>
         </Wrapper>
