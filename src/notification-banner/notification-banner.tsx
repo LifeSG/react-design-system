@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Container,
     Content,
@@ -6,6 +6,8 @@ import {
     StyledIcon,
     StyledIconButton,
     TextContainer,
+    TextWrapperContainer,
+    ViewMoreButton,
     Wrapper,
 } from "./notification-banner.styles";
 import {
@@ -21,6 +23,7 @@ export const NBComponent = ({
     onDismiss,
     id,
     forwardedRef,
+    maxLines,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps): JSX.Element => {
     // =============================================================================
@@ -29,6 +32,9 @@ export const NBComponent = ({
     const testId = otherProps["data-testid"];
 
     const [isVisible, setVisible] = useState<boolean>(visible);
+    const [isViewMore, setIsViewMore] = useState(false);
+    const contentContainerHeightRef = useRef<HTMLDivElement>(null);
+    const [displayShowMore, setDisplayShowMore] = useState<boolean>(false);
 
     // =============================================================================
     // EFFECTS
@@ -36,6 +42,25 @@ export const NBComponent = ({
     useEffect(() => {
         setVisible(visible);
     }, [visible]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+
+    useEffect(() => {
+        // forces line-clamp to trigger so that we can determine if content is collapsible
+        setIsViewMore(!maxLines);
+        setDisplayShowMore(!!maxLines);
+        if (!maxLines || !contentContainerHeightRef.current) return;
+
+        // calculate whether to show more after line-clamp is triggered
+        const clientHeight = contentContainerHeightRef.current.clientHeight;
+        const scrollHeight = contentContainerHeightRef.current.scrollHeight;
+
+        // Note: when using DS Text.H3 or Text.H1, the calculated scrollHeight and clientHeight differs by 1 without any overflow
+
+        setDisplayShowMore(scrollHeight - clientHeight > 1);
+    }, [children]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -56,7 +81,20 @@ export const NBComponent = ({
             <Container id={formatId("container", id)}>
                 <TextContainer>
                     <Content data-testid={formatId("text-content", testId)}>
-                        {children}
+                        <TextWrapperContainer
+                            $maxNoOfLines={maxLines}
+                            $showMore={isViewMore}
+                        >
+                            {children}
+                        </TextWrapperContainer>
+                        {maxLines !== undefined && displayShowMore && (
+                            <ViewMoreButton
+                                weight="semibold"
+                                onClick={() => setIsViewMore(!isViewMore)}
+                            >
+                                {isViewMore ? "View less" : "View more"}
+                            </ViewMoreButton>
+                        )}
                     </Content>
                 </TextContainer>
                 {dismissible && (

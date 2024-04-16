@@ -8,6 +8,7 @@ export interface NotificationBannerProps
     sticky?: boolean | undefined;
     onDismiss?: (() => void) | undefined;
     "data-testid"?: string | undefined;
+    maxLines?: number | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps

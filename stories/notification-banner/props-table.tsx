@@ -53,6 +53,16 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["() => void"],
             },
+            {
+                name: "maxLines",
+                description: (
+                    <>
+                        Specifies the max number of lines to be displayed in the{" "}
+                        <code>NotificationBanner</code>
+                    </>
+                ),
+                propTypes: ["number"],
+            },
         ],
     },
 ];

@@ -14,6 +14,11 @@ interface WrapperStyleProps {
     $sticky: boolean;
 }
 
+interface TextContentProps {
+    $showMore: boolean;
+    $maxNoOfLines?: number;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -93,4 +98,29 @@ export const StyledIcon = styled(CrossIcon)`
     height: 1.875rem;
     width: 1.875rem;
     color: ${Color.Neutral[8]};
+`;
+
+export const TextWrapperContainer = styled.div<TextContentProps>`
+    ${(props) => {
+        const gradient =
+            "linear-gradient(to bottom, black 50%, transparent 100%)";
+        if (!props.$showMore && props.$maxNoOfLines)
+            return `
+				display: -webkit-box;
+				-webkit-line-clamp: ${props.$maxNoOfLines};
+				line-clamp: ${props.$maxNoOfLines};
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+                
+                -webkit-mask-image: ${gradient};
+                mask-image: ${gradient};
+			`;
+    }}
+`;
+
+export const ViewMoreButton = styled(Text.BodySmall)`
+    cursor: pointer;
+    margin-top: 0.5rem;
+    color: ${Color.Primary};
+    user-select: none;
 `;
