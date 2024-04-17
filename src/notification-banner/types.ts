@@ -9,6 +9,7 @@ export interface NotificationBannerProps
     onDismiss?: (() => void) | undefined;
     "data-testid"?: string | undefined;
     maxLines?: number | undefined;
+    onClick?: (() => void) | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps

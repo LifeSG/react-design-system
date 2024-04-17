@@ -24,6 +24,7 @@ export const NBComponent = ({
     id,
     forwardedRef,
     maxLines,
+    onClick,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps): JSX.Element => {
     // =============================================================================
@@ -77,7 +78,15 @@ export const NBComponent = ({
     if (!isVisible) return null;
 
     return (
-        <Wrapper ref={forwardedRef} $sticky={sticky} {...otherProps}>
+        <Wrapper
+            ref={forwardedRef}
+            $sticky={sticky}
+            onClick={(event: React.MouseEvent<HTMLInputElement>) => {
+                event.stopPropagation();
+                onClick();
+            }}
+            {...otherProps}
+        >
             <Container id={formatId("container", id)}>
                 <TextContainer>
                     <Content data-testid={formatId("text-content", testId)}>
@@ -90,7 +99,12 @@ export const NBComponent = ({
                         {maxLines !== undefined && displayShowMore && (
                             <ViewMoreButton
                                 weight="semibold"
-                                onClick={() => setIsViewMore(!isViewMore)}
+                                onClick={(
+                                    event: React.MouseEvent<HTMLInputElement>
+                                ) => {
+                                    event.stopPropagation();
+                                    setIsViewMore(!isViewMore);
+                                }}
                             >
                                 {isViewMore ? "View less" : "View more"}
                             </ViewMoreButton>
@@ -99,7 +113,12 @@ export const NBComponent = ({
                 </TextContainer>
                 {dismissible && (
                     <StyledIconButton
-                        onClick={handleDismiss}
+                        onClick={(
+                            event: React.MouseEvent<HTMLButtonElement>
+                        ) => {
+                            event.stopPropagation();
+                            handleDismiss();
+                        }}
                         id={formatId("dismiss-button", id)}
                         data-testid={formatId("dismiss-button", testId)}
                         focusHighlight={false}
