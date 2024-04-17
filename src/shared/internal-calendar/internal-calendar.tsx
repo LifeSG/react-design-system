@@ -38,7 +38,6 @@ export const Component = (
     // =============================================================================
     const calendarManagerRef = useRef<CalendarManagerRef>();
     const previousCalendarDate = useRef<Dayjs>(undefined);
-    const containerRef = useRef<HTMLDivElement>(undefined);
 
     // =============================================================================
     // HOOKS
@@ -51,7 +50,6 @@ export const Component = (
             setCalendarDate(value?: string) {
                 calendarManagerRef.current.setCalendarDate(value);
             },
-            rootElementRef: containerRef,
         };
     });
 
@@ -181,7 +179,7 @@ export const Component = (
     };
 
     return (
-        <Container $type={type} ref={containerRef}>
+        <Container $type={type}>
             <CalendarManager
                 type={type}
                 ref={calendarManagerRef}

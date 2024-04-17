@@ -44,7 +44,7 @@ export const ElementWithDropdown = ({
     const floatingRef = useRef<HTMLDivElement>(null);
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
-        onOpenChange: (open, event, reason) => {
+        onOpenChange: (open, _event, reason) => {
             if (reason === "escape-key") {
                 onDismiss?.();
             } else if (open && !isOpen) {
