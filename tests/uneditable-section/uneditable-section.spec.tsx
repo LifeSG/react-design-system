@@ -211,6 +211,24 @@ describe("UneditableSection", () => {
             expect(onTryAgainFn).toHaveBeenCalledWith(ITEMS[0]);
         });
     });
+
+    describe("With alert", () => {
+        it("should render the Alert in the section item if specified", () => {
+            const ITEMS: UneditableSectionItemProps[] = [
+                {
+                    label: "NRIC or FIN",
+                    value: "S••••534J",
+                    alert: {
+                        type: "warning",
+                        children: "This is an alert",
+                    },
+                },
+            ];
+
+            render(<UneditableSection items={ITEMS} title="Test" />);
+            expect(screen.getByText("This is an alert")).toBeInTheDocument();
+        });
+    });
 });
 // =============================================================================
 // MOCKS
