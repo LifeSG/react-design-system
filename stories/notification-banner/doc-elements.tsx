@@ -2,9 +2,13 @@ import styled from "styled-components";
 import { Layout } from "../../src/layout";
 import { withNotificationBanner } from "../../src/notification-banner";
 
-export const StyledContent = styled(Layout.Content)`
+interface ContentProps {
+    $color?: string | undefined;
+}
+export const StyledContent = styled(Layout.Content)<ContentProps>`
     [data-id="container"] {
         flex-direction: column;
+        background-color: ${(props) => props?.$color};
     }
 `;
 

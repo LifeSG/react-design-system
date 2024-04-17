@@ -54,6 +54,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
+                name: "onClick",
+                description: (
+                    <>
+                        Called when the <code>NotificationBanner</code> is
+                        clicked
+                    </>
+                ),
+                propTypes: ["() => void"],
+            },
+            {
                 name: "maxLines",
                 description: (
                     <>
