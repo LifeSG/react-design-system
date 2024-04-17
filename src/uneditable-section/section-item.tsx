@@ -160,7 +160,7 @@ export const UneditableSectionItem = ({
         <Container $widthStyle={displayWidth}>
             <FormLabel>{label}</FormLabel>
             {renderContent()}
-            {alert && <StyledAlert {...alert} />}
+            {alert && <StyledAlert sizeType="small" {...alert} />}
         </Container>
     );
 };
