@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     CalendarAction,
+    CalendarDropdown,
     InternalCalendarRef,
 } from "../shared/internal-calendar";
-import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import {
     StandaloneDateInput,
     StandaloneDateInputRef,
@@ -28,6 +29,7 @@ export const DateInput = ({
     readOnly,
     id,
     allowDisabledSelection,
+    zIndex = 50,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -45,6 +47,7 @@ export const DateInput = ({
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<InternalCalendarRef>();
     const inputRef = useRef<StandaloneDateInputRef>();
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -57,22 +60,17 @@ export const DateInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleContainerBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-        if (nodeRef && !nodeRef.current.contains(event.relatedTarget)) {
-            inputRef.current.resetInput();
-            setSelectedDate(initialDate);
-            setCalendarOpen(false);
-            performOnBlurHandler();
-        }
+    const handleClose = () => {
+        setCalendarOpen(false);
+        performOnBlurHandler();
     };
 
-    function handleContainerKeyDown(event: React.KeyboardEvent) {
-        if (event.code === "Escape") {
-            inputRef.current.resetInput();
-            setSelectedDate(initialDate);
-            setCalendarOpen(false);
-        }
-    }
+    const handleDismiss = () => {
+        inputRef.current.resetInput();
+        setSelectedDate(initialDate);
+        setCalendarOpen(false);
+        performOnBlurHandler();
+    };
 
     const handleChange = (val: string) => {
         if (
@@ -93,6 +91,7 @@ export const DateInput = ({
             setInitialDate(val);
             if (val) {
                 setCalendarOpen(false);
+                performOnBlurHandler();
             }
         }
     };
@@ -124,6 +123,7 @@ export const DateInput = ({
         }
 
         setCalendarOpen(false);
+        performOnBlurHandler();
     };
 
     // =============================================================================
@@ -142,39 +142,42 @@ export const DateInput = ({
     };
 
     // =============================================================================
-    // RENDER FUNCTION
+    // RENDER FUNCTIONS
     // =============================================================================
-    return (
-        <Container
-            ref={nodeRef}
-            $disabled={disabled}
-            $readOnly={readOnly}
-            $error={error}
-            id={id}
-            data-testid={otherProps["data-testid"]}
-            tabIndex={-1}
-            onBlur={handleContainerBlur}
-            onKeyDown={handleContainerKeyDown}
-            {...otherProps}
-        >
-            <StandaloneDateInput
-                ref={inputRef}
-                disabled={disabled}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                readOnly={readOnly}
-                focused={calendarOpen}
-                names={["start-day", "start-month", "start-year"]}
-                value={selectedDate}
-                hoverValue={hoveredDate}
-                hideInputKeyboard={hideInputKeyboard}
-            />
-            <AnimatedInternalCalendar
+    const renderInput = () => {
+        return (
+            <Container
+                ref={nodeRef}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+                id={id}
+                data-testid={otherProps["data-testid"]}
+                {...otherProps}
+            >
+                <StandaloneDateInput
+                    ref={inputRef}
+                    disabled={disabled}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    readOnly={readOnly}
+                    focused={calendarOpen}
+                    names={["start-day", "start-month", "start-year"]}
+                    value={selectedDate}
+                    hoverValue={hoveredDate}
+                    hideInputKeyboard={hideInputKeyboard}
+                />
+            </Container>
+        );
+    };
+
+    const renderCalendar = () => {
+        return (
+            <CalendarDropdown
                 ref={calendarRef}
                 type="input"
                 variant="single"
                 initialCalendarDate={selectedDate}
-                isOpen={calendarOpen}
                 withButton={withButton}
                 value={selectedDate}
                 disabledDates={disabledDates}
@@ -186,6 +189,18 @@ export const DateInput = ({
                 onDismiss={handleCalendarAction}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
             />
-        </Container>
+        );
+    };
+
+    return (
+        <ElementWithDropdown
+            enabled={!readOnly && !disabled}
+            isOpen={calendarOpen}
+            renderElement={renderInput}
+            renderDropdown={renderCalendar}
+            onClose={handleClose}
+            onDismiss={handleDismiss}
+            zIndex={zIndex}
+        />
     );
 };

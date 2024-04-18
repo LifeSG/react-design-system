@@ -160,6 +160,13 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `true`,
             },
             {
+                name: "zIndex",
+                description:
+                    "The custom z-index of the calendar dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
+            },
+            {
                 name: "onChange",
                 description: (
                     <>
