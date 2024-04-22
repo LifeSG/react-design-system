@@ -40,7 +40,6 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const elementRef = useRef<HTMLDivElement>(null);
     const floatingRef = useRef<HTMLDivElement>(null);
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
@@ -92,13 +91,7 @@ export const ElementWithDropdown = ({
     // =============================================================================
     return (
         <>
-            <div
-                ref={(node) => {
-                    elementRef.current = node;
-                    refs.setReference(node);
-                }}
-                {...getReferenceProps()}
-            >
+            <div ref={refs.setReference} {...getReferenceProps()}>
                 {renderElement()}
             </div>
             {isMounted && (
