@@ -1,9 +1,9 @@
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
-import {
-    UneditableSectionItemMaskState,
-    UneditableSectionItemProps,
-} from "./types";
+import { useEffect, useState } from "react";
+import { FormLabel } from "../form/form-label";
+import { Text } from "../text";
+import { StringHelper } from "../util/string-helper";
 import {
     Clickable,
     Container,
@@ -12,12 +12,13 @@ import {
     IconContainer,
     LoadingLabel,
     Spinner,
+    StyledAlert,
     TryAgainLabel,
 } from "./section-item.styles";
-import { FormLabel } from "../form/form-label";
-import { Text } from "../text";
-import { StringHelper } from "../util/string-helper";
-import { useEffect, useState } from "react";
+import {
+    UneditableSectionItemMaskState,
+    UneditableSectionItemProps,
+} from "./types";
 
 export interface UneditableSectionItemComponentProps
     extends UneditableSectionItemProps {
@@ -37,6 +38,7 @@ export const UneditableSectionItem = ({
     unmaskRange,
     maskRegex,
     disableMaskUnmask,
+    alert,
     maskTransformer,
     onMask,
     onUnmask,
@@ -158,6 +160,7 @@ export const UneditableSectionItem = ({
         <Container $widthStyle={displayWidth}>
             <FormLabel>{label}</FormLabel>
             {renderContent()}
+            {alert && <StyledAlert sizeType="small" {...alert} />}
         </Container>
     );
 };
