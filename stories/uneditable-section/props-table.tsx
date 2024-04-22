@@ -73,24 +73,6 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
-                name: "alert",
-                description: (
-                    <>
-                        Specifies if an {code("Alert")} should be rendered under
-                        the section item
-                    </>
-                ),
-                propTypes: (
-                    <a
-                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-alert--docs#component-api"
-                        rel="noreferrer"
-                        target="_blank"
-                    >
-                        AlertProps
-                    </a>
-                ),
-            },
-            {
                 name: "onMask",
                 description: "Called when the mask icon is clicked",
                 propTypes: ["(item: UneditableSectionItemProps) => void"],
@@ -179,6 +161,24 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 description:
                     "If specified, the value will be masked or unmasked but no indicator will be rendered",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "alert",
+                description: (
+                    <>
+                        Specifies if an {code("Alert")} should be rendered under
+                        the section item
+                    </>
+                ),
+                propTypes: (
+                    <a
+                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-alert--docs#component-api"
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        AlertProps
+                    </a>
+                ),
             },
         ],
     },
