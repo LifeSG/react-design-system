@@ -67,9 +67,8 @@ export const PopoverTrigger = ({
     // =========================================================================
     const handleMouseDownEvent = (event: MouseEvent) => {
         if (
-            nodeRef &&
-            !(nodeRef.current as any).contains(event.target) &&
-            !(popoverRef.current as any).contains(event.target)
+            !nodeRef.current?.contains(event.target as Node) &&
+            !popoverRef.current?.contains(event.target as Node)
         ) {
             // outside click
             setVisible(false);
