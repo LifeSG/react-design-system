@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
@@ -71,6 +71,24 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 description: "Specifies if a background should be rendered",
                 propTypes: ["boolean"],
                 defaultValue: "true",
+            },
+            {
+                name: "alert",
+                description: (
+                    <>
+                        Specifies if an {code("Alert")} should be rendered under
+                        the section item
+                    </>
+                ),
+                propTypes: (
+                    <a
+                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-alert--docs#component-api"
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        AlertProps
+                    </a>
+                ),
             },
             {
                 name: "onMask",
