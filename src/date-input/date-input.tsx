@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import {
-    CalendarAction,
-    CalendarDropdown,
-    InternalCalendarRef,
-} from "../shared/internal-calendar";
+import { CalendarAction, CalendarDropdown } from "../shared/internal-calendar";
 import {
     StandaloneDateInput,
     StandaloneDateInputRef,
@@ -45,7 +41,6 @@ export const DateInput = ({
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const calendarRef = useRef<InternalCalendarRef>();
     const inputRef = useRef<StandaloneDateInputRef>();
 
     // =============================================================================
@@ -174,7 +169,6 @@ export const DateInput = ({
     const renderCalendar = () => {
         return (
             <CalendarDropdown
-                ref={calendarRef}
                 type="input"
                 variant="single"
                 initialCalendarDate={selectedDate}
