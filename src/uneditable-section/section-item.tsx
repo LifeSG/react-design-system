@@ -150,6 +150,7 @@ export const UneditableSectionItem = ({
                 onClick={handleClickableClick}
                 aria-busy={maskLoadingState === "loading"}
                 aria-live="polite"
+                type="button"
             >
                 {renderMaskingState()}
             </Clickable>
