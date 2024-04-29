@@ -12,10 +12,10 @@ import { Transition } from "../transition";
 // =============================================================================
 interface WrapperStyleProps {
     $sticky: boolean;
+    $onClickEnabled: boolean;
 }
 
 interface TextContentProps {
-    $showMore: boolean;
     $maxNoOfLines?: number;
 }
 
@@ -48,6 +48,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     transition: ${Transition.Base};
     background: ${Color.Neutral[2]};
     z-index: 25;
+    cursor: ${(props) => (props.$onClickEnabled ? "pointer" : "default")};
 `;
 
 export const Container = styled(Layout.Content)`
@@ -104,7 +105,7 @@ export const TextWrapperContainer = styled.div<TextContentProps>`
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
-        if (!props.$showMore && props.$maxNoOfLines)
+        if (props.$maxNoOfLines)
             return `
 				display: -webkit-box;
 				-webkit-line-clamp: ${props.$maxNoOfLines};
@@ -118,9 +119,12 @@ export const TextWrapperContainer = styled.div<TextContentProps>`
     }}
 `;
 
-export const ViewMoreButton = styled(Text.BodySmall)`
-    cursor: pointer;
+export const ViewMoreWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    column-gap: 0.25rem;
+`;
+export const ViewMoreText = styled(Text.BodySmall)`
     margin-top: 0.5rem;
-    color: ${Color.Primary};
-    user-select: none;
+    color: ${Color.Validation.Orange.Icon};
 `;

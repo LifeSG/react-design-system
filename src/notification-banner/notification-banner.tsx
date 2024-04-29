@@ -7,13 +7,15 @@ import {
     StyledIconButton,
     TextContainer,
     TextWrapperContainer,
-    ViewMoreButton,
+    ViewMoreText,
+    ViewMoreWrapper,
     Wrapper,
 } from "./notification-banner.styles";
 import {
     NotificationBannerProps,
     NotificationBannerWithForwardedRefProps,
 } from "./types";
+import { ArrowRightIcon } from "@lifesg/react-icons";
 
 export const NBComponent = ({
     children,
@@ -33,9 +35,6 @@ export const NBComponent = ({
     const testId = otherProps["data-testid"];
 
     const [isVisible, setVisible] = useState<boolean>(visible);
-    const [isViewMore, setIsViewMore] = useState(false);
-    const contentContainerHeightRef = useRef<HTMLDivElement>(null);
-    const [displayShowMore, setDisplayShowMore] = useState<boolean>(false);
 
     // =============================================================================
     // EFFECTS
@@ -43,25 +42,6 @@ export const NBComponent = ({
     useEffect(() => {
         setVisible(visible);
     }, [visible]);
-
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-
-    useEffect(() => {
-        // forces line-clamp to trigger so that we can determine if content is collapsible
-        setIsViewMore(!maxLines);
-        setDisplayShowMore(!!maxLines);
-        if (!maxLines || !contentContainerHeightRef.current) return;
-
-        // calculate whether to show more after line-clamp is triggered
-        const clientHeight = contentContainerHeightRef.current.clientHeight;
-        const scrollHeight = contentContainerHeightRef.current.scrollHeight;
-
-        // Note: when using DS Text.H3 or Text.H1, the calculated scrollHeight and clientHeight differs by 1 without any overflow
-
-        setDisplayShowMore(scrollHeight - clientHeight > 1);
-    }, [children]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -81,7 +61,10 @@ export const NBComponent = ({
         <Wrapper
             ref={forwardedRef}
             $sticky={sticky}
-            onClick={(event: React.MouseEvent<HTMLInputElement>) => {
+            $onClickEnabled={!!onClick}
+            onClickCapture={(event: React.MouseEvent<HTMLInputElement>) => {
+                if (!onClick) return;
+                event.preventDefault();
                 event.stopPropagation();
                 onClick();
             }}
@@ -90,24 +73,16 @@ export const NBComponent = ({
             <Container id={formatId("container", id)}>
                 <TextContainer>
                     <Content data-testid={formatId("text-content", testId)}>
-                        <TextWrapperContainer
-                            $maxNoOfLines={maxLines}
-                            $showMore={isViewMore}
-                        >
+                        <TextWrapperContainer $maxNoOfLines={maxLines}>
                             {children}
                         </TextWrapperContainer>
-                        {maxLines !== undefined && displayShowMore && (
-                            <ViewMoreButton
-                                weight="semibold"
-                                onClick={(
-                                    event: React.MouseEvent<HTMLInputElement>
-                                ) => {
-                                    event.stopPropagation();
-                                    setIsViewMore(!isViewMore);
-                                }}
-                            >
-                                {isViewMore ? "View less" : "View more"}
-                            </ViewMoreButton>
+                        {maxLines !== undefined && (
+                            <ViewMoreText weight="semibold">
+                                <ViewMoreWrapper>
+                                    View more
+                                    <ArrowRightIcon />
+                                </ViewMoreWrapper>
+                            </ViewMoreText>
                         )}
                     </Content>
                 </TextContainer>
