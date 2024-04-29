@@ -5,6 +5,7 @@ import { MediaQuery } from "../media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
 import { UneditableSectionItemDisplayWidth } from "./types";
+import { Alert } from "../alert";
 
 // =============================================================================
 // STYLING INTERFACES
@@ -109,4 +110,8 @@ export const TryAgainLabel = styled.span`
     color: ${Color.Primary};
     text-decoration: underline;
     margin-left: 0.5rem;
+`;
+
+export const StyledAlert = styled(Alert)`
+    margin-top: 0.5rem;
 `;

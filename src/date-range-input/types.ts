@@ -32,6 +32,8 @@ export interface DateRangeInputProps extends CommonCalendarProps {
      * Is restricted to `true` on mobile viewports
      */
     withButton?: boolean | undefined;
+    /** The z-index of the calendar dropdown */
+    zIndex?: number | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start and
      * end date in "YYYY-MM-DD" string format.

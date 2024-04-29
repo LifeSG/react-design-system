@@ -449,7 +449,6 @@ const Component = (
     return (
         <Container
             ref={containerRef}
-            tabIndex={-1}
             data-id="calendar-container"
             data-testid="calendar-container"
             {...otherProps}
