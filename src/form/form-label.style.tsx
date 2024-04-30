@@ -41,5 +41,8 @@ export const ErrorMessage = styled(Text.H6)`
 `;
 
 export const Subtitle = styled(Text.BodySmall)`
-    color: ${Color.Neutral[3]};
+    && {
+        color: ${Color.Neutral[3]};
+        ${TextStyleHelper.getFontFamily("BodySmall", "regular")}
+    }
 `;

@@ -30,6 +30,7 @@ export const PopoverTrigger = ({
     // =========================================================================
     const [visible, setVisible] = useState<boolean>(false);
     const nodeRef = useRef<HTMLDivElement>();
+    const popoverRef = useRef<HTMLDivElement>();
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
@@ -65,7 +66,10 @@ export const PopoverTrigger = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleMouseDownEvent = (event: MouseEvent) => {
-        if (nodeRef && !(nodeRef.current as any).contains(event.target)) {
+        if (
+            !nodeRef.current?.contains(event.target as Node) &&
+            !popoverRef.current?.contains(event.target as Node)
+        ) {
             // outside click
             setVisible(false);
 
@@ -119,7 +123,10 @@ export const PopoverTrigger = ({
             {visible && (
                 <FloatingPortal root={rootNode}>
                     <div
-                        ref={refs.setFloating}
+                        ref={(node) => {
+                            popoverRef.current = node;
+                            refs.setFloating(node);
+                        }}
                         style={{ ...floatingStyles, zIndex }}
                     >
                         {renderPopover()}

@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
+import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
@@ -161,6 +161,24 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 description:
                     "If specified, the value will be masked or unmasked but no indicator will be rendered",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "alert",
+                description: (
+                    <>
+                        Specifies if an {code("Alert")} should be rendered under
+                        the section item
+                    </>
+                ),
+                propTypes: (
+                    <a
+                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-alert--docs#component-api"
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        AlertProps
+                    </a>
+                ),
             },
         ],
     },

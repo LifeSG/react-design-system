@@ -38,7 +38,7 @@ interface Props {
 }
 
 export interface StandaloneDateInputRef {
-    ref: React.Ref<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement>;
     resetPlaceholder: () => void;
     resetInput: () => void;
 }
@@ -148,6 +148,11 @@ export const Component = (
         if (!focused) {
             onFocus();
         }
+    };
+
+    const handlePlaceholderClick = (event: React.MouseEvent) => {
+        event.preventDefault();
+        dayInputRef.current?.focus();
     };
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -299,7 +304,11 @@ export const Component = (
         }
 
         return (
-            <Placeholder $hide={hidePlaceholder} $disabled={disabled}>
+            <Placeholder
+                $hide={hidePlaceholder}
+                $disabled={disabled}
+                onMouseDown={handlePlaceholderClick}
+            >
                 {placeholder}
             </Placeholder>
         );
