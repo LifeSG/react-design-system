@@ -235,8 +235,8 @@ export const WithMaxLines: StoryObj<Component> = {
         return (
             <>
                 <Alert type="warning" showIcon maxLines={3}>
-                    An alert box with a limit to the max amount of lines to be
-                    rendered, with a text button to expand the box. Lorem ipsum
+                    An alert box with a limit to the maximum amount of lines to
+                    render, with a text button to expand the box. Lorem ipsum
                     dolor sit amet, consectetur adipiscing elit. Pellentesque
                     lacinia auctor tellus, eget tempor diam finibus vel. Integer
                     non enim vehicula, malesuada lectus a, lobortis magna.

@@ -106,7 +106,7 @@ export const Alert = ({
             <TextContainer>
                 <TextWrapperContainer
                     ref={contentContainerHeightRef}
-                    $maxNoOfLines={maxLines}
+                    $maxLines={maxLines}
                     $showMore={isShowMore}
                 >
                     {children}
