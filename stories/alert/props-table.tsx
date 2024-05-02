@@ -81,7 +81,7 @@ export const PropsTable = () => (
             <NameCol>maxHeight</NameCol>
             <DescriptionCol propTypes={[`boolean`]}>
                 Specifies the maximum height of the content to be displayed
-                outside of the collapsible zone
+                outside of the collapsible zone, in px
             </DescriptionCol>
             <DefaultCol />
         </tr>
