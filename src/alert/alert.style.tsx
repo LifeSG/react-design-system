@@ -174,4 +174,7 @@ export const ShowMoreButton = styled(Text.BodySmall)`
     margin-top: 0.5rem;
     color: ${Color.Primary};
     user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 `;

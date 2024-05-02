@@ -13,6 +13,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import { useEffect, useRef, useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "@lifesg/react-icons";
 
 export const Alert = ({
     type,
@@ -116,7 +117,17 @@ export const Alert = ({
                         weight="semibold"
                         onClick={() => setIsShowMore(!isShowMore)}
                     >
-                        {isShowMore ? "Show less" : "Show more"}
+                        {isShowMore ? (
+                            <>
+                                Show less
+                                <ChevronUpIcon />
+                            </>
+                        ) : (
+                            <>
+                                Show more
+                                <ChevronDownIcon />
+                            </>
+                        )}
                     </ShowMoreButton>
                 )}
                 {actionLink && renderLink()}
