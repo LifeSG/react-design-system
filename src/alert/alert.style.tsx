@@ -14,7 +14,7 @@ interface StyleProps {
 }
 export interface TextContentProps {
     $showMore: boolean;
-    $maxLines?: number;
+    $maxHeight?: number;
 }
 
 // =============================================================================
@@ -155,13 +155,10 @@ export const TextContainer = styled.div`
 export const TextWrapperContainer = styled.div<TextContentProps>`
     ${(props) => {
         const gradient =
-            "linear-gradient(to bottom, black 50%, transparent 110%)";
-        if (!props.$showMore && props.$maxLines)
+            "linear-gradient(to bottom, black 50%, transparent 100%)";
+        if (!props.$showMore && props.$maxHeight)
             return `
-				display: -webkit-box;
-				-webkit-line-clamp: ${props.$maxLines};
-				line-clamp: ${props.$maxLines};
-				-webkit-box-orient: vertical;
+                height: ${props.$maxHeight}px;
 				overflow: hidden;
                 -webkit-mask-image: ${gradient};
                 mask-image: ${gradient};

@@ -78,10 +78,10 @@ export const PropsTable = () => (
             <DefaultCol />
         </tr>
         <tr>
-            <NameCol>maxLines</NameCol>
+            <NameCol>maxHeight</NameCol>
             <DescriptionCol propTypes={[`boolean`]}>
-                Specifies the maximum number of lines to be displayed outside of
-                the collapsible zone
+                Specifies the maximum height of the content to be displayed
+                outside of the collapsible zone
             </DescriptionCol>
             <DefaultCol />
         </tr>

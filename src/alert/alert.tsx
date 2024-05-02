@@ -24,7 +24,7 @@ export const Alert = ({
     sizeType = "default",
     showIcon = false,
     customAlertIcon,
-    maxLines,
+    maxHeight,
     ...otherProps
 }: AlertProps): JSX.Element => {
     const [isShowMore, setIsShowMore] = useState(false);
@@ -37,9 +37,9 @@ export const Alert = ({
 
     useEffect(() => {
         // forces line-clamp to trigger so that we can determine if content is collapsible
-        setIsShowMore(!maxLines);
-        setDisplayShowMore(!!maxLines);
-        if (!maxLines || !contentContainerHeightRef.current) return;
+        setIsShowMore(!maxHeight);
+        setDisplayShowMore(!!maxHeight);
+        if (!maxHeight || !contentContainerHeightRef.current) return;
 
         // calculate whether to show more after line-clamp is triggered
         const clientHeight = contentContainerHeightRef.current.clientHeight;
@@ -107,12 +107,12 @@ export const Alert = ({
             <TextContainer>
                 <TextWrapperContainer
                     ref={contentContainerHeightRef}
-                    $maxLines={maxLines}
+                    $maxHeight={maxHeight}
                     $showMore={isShowMore}
                 >
                     {children}
                 </TextWrapperContainer>
-                {maxLines !== undefined && displayShowMore && (
+                {maxHeight !== undefined && displayShowMore && (
                     <ShowMoreButton
                         weight="semibold"
                         onClick={() => setIsShowMore(!isShowMore)}

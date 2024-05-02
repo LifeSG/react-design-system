@@ -230,22 +230,66 @@ export const WithCustomIcon: StoryObj<Component> = {
     },
 };
 
-export const WithMaxLines: StoryObj<Component> = {
+export const WithMaxHeight: StoryObj<Component> = {
     render: () => {
         return (
             <>
-                <Alert type="warning" showIcon maxLines={3}>
-                    An alert box with a limit to the maximum amount of lines to
-                    render, with a text button to expand the box. Lorem ipsum
-                    dolor sit amet, consectetur adipiscing elit. Pellentesque
-                    lacinia auctor tellus, eget tempor diam finibus vel. Integer
-                    non enim vehicula, malesuada lectus a, lobortis magna.
-                    Aliquam in sodales enim. Ut id condimentum magna. Ut aliquet
-                    tincidunt nunc eu cursus. Vestibulum id maximus nulla.
-                    Phasellus lacinia risus neque, eget tincidunt dui maximus
-                    sed. Morbi eu vestibulum massa. Suspendisse potenti. Donec
-                    faucibus condimentum nibh, non tempus augue bibendum non.
-                    Cras in mattis ex.
+                <Alert type="warning" showIcon maxHeight={80}>
+                    An alert box with a maximum height of content to render,
+                    outside the collapsible zone with a text button to expand
+                    it. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Pellentesque lacinia auctor tellus, eget tempor diam finibus
+                    vel. Integer non enim vehicula, malesuada lectus a, lobortis
+                    magna. Aliquam in sodales enim. Ut id condimentum magna. Ut
+                    aliquet tincidunt nunc eu cursus. Vestibulum id maximus
+                    nulla. Phasellus lacinia risus neque, eget tincidunt dui
+                    maximus sed. Morbi eu vestibulum massa. Suspendisse potenti.
+                    Donec faucibus condimentum nibh, non tempus augue bibendum
+                    non. Cras in mattis ex.
+                </Alert>
+                <br />
+                <Alert type="error" showIcon maxHeight={50}>
+                    <ul
+                        style={{
+                            display: "flex",
+                            listStyle: "none",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "1rem",
+                        }}
+                    >
+                        Custom content
+                        <li
+                            style={{
+                                marginRight: "1rem",
+                                border: "1px solid red",
+                                padding: "1rem",
+                                color: "red",
+                            }}
+                        >
+                            First
+                        </li>
+                        <li
+                            style={{
+                                marginRight: "1rem",
+                                border: "1px solid blue",
+                                padding: "1rem",
+                                color: "blue",
+                            }}
+                        >
+                            Second
+                        </li>
+                        <li
+                            style={{
+                                marginRight: "1rem",
+                                border: "1px solid green",
+                                padding: "1rem",
+                                color: "green",
+                            }}
+                        >
+                            Third
+                        </li>
+                    </ul>
                 </Alert>
                 <br />
             </>
