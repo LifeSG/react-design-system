@@ -74,13 +74,13 @@ describe("Alert", () => {
         });
     });
 
-    describe("customAlertIcon", () => {
-        it("should render if the prop is provided", () => {
+    describe("customIcon", () => {
+        it("should render a custom icon if specified", () => {
             render(
                 <Alert
                     type="success"
                     showIcon={true}
-                    customAlertIcon={<StarIcon data-testid="star-test" />}
+                    customIcon={<StarIcon data-testid="star-test" />}
                 >
                     {DEFAULT_TEXT}
                 </Alert>
@@ -89,7 +89,7 @@ describe("Alert", () => {
             expect(getCustomIcon()).toBeInTheDocument();
         });
 
-        it("should not render if the prop is not provided", () => {
+        it("should not render a custom icon by default", () => {
             render(<Alert type="success" />);
 
             expect(getCustomIcon()).not.toBeInTheDocument();

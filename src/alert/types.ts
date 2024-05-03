@@ -15,8 +15,10 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
     actionLinkIcon?: JSX.Element | undefined;
     sizeType?: AlertSizeType | undefined;
     /** Custom alert icon to be rendered, replacing the default alert icons */
-    customAlertIcon?: JSX.Element | undefined;
-    /** Specifies the maximum height of the element to be
-     * displayed outside of the collapsible zone, in px */
-    maxHeight?: number | undefined;
+    customIcon?: JSX.Element | undefined;
+    /** 
+     * Specifies the maximum height of the element to be
+     * displayed outside of the collapsible zone, in px 
+    */
+    collapsedHeight?: number | undefined;
 }

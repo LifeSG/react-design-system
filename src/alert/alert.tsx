@@ -1,4 +1,11 @@
-import { AlertProps } from "./types";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
+import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
+import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
+import { useEffect, useRef, useState } from "react";
 import {
     ActionLinkText,
     AlertIconWrapper,
@@ -7,13 +14,7 @@ import {
     TextWrapperContainer,
     Wrapper,
 } from "./alert.style";
-import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
-import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
-import { useEffect, useRef, useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@lifesg/react-icons";
+import { AlertProps } from "./types";
 
 export const Alert = ({
     type,
@@ -23,23 +24,27 @@ export const Alert = ({
     actionLinkIcon,
     sizeType = "default",
     showIcon = false,
-    customAlertIcon,
-    maxHeight,
+    customIcon,
+    collapsedHeight,
     ...otherProps
 }: AlertProps): JSX.Element => {
-    const [isShowMore, setIsShowMore] = useState(false);
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const [showHiddenContent, setShowHiddenContent] = useState(false);
     const contentContainerHeightRef = useRef<HTMLDivElement>(null);
-    const [displayShowMore, setDisplayShowMore] = useState<boolean>(false);
+    const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
 
     // =============================================================================
-    // EVENT HANDLERS
+    // EFFECTS
     // =============================================================================
 
     useEffect(() => {
+        console.log("test");
         // forces line-clamp to trigger so that we can determine if content is collapsible
-        setIsShowMore(!maxHeight);
-        setDisplayShowMore(!!maxHeight);
-        if (!maxHeight || !contentContainerHeightRef.current) return;
+        setShowHiddenContent(!collapsedHeight);
+        setRenderShowMore(!!collapsedHeight);
+        if (!collapsedHeight || !contentContainerHeightRef.current) return;
 
         // calculate whether to show more after line-clamp is triggered
         const clientHeight = contentContainerHeightRef.current.clientHeight;
@@ -47,12 +52,31 @@ export const Alert = ({
 
         // Note: when using DS Text.H3 or Text.H1, the calculated scrollHeight and clientHeight differs by 1 without any overflow
 
-        setDisplayShowMore(scrollHeight - clientHeight > 1);
+        setRenderShowMore(scrollHeight - clientHeight > 1);
     }, [children]);
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+
+    const renderShowMoreButton = () => (
+        <ShowMoreButton
+            onClick={() => setShowHiddenContent(!showHiddenContent)}
+        >
+            {showHiddenContent ? (
+                <>
+                    Show less
+                    <ChevronUpIcon />
+                </>
+            ) : (
+                <>
+                    Show more
+                    <ChevronDownIcon />
+                </>
+            )}
+        </ShowMoreButton>
+    );
+
     const renderLinkType = () => {
         if (actionLinkIcon) {
             return actionLinkIcon;
@@ -75,7 +99,7 @@ export const Alert = ({
     };
 
     const renderIcon = () => {
-        if (type && customAlertIcon) return customAlertIcon;
+        if (type && customIcon) return customIcon;
         switch (type) {
             case "success":
                 return <TickCircleFillIcon />;
@@ -107,29 +131,12 @@ export const Alert = ({
             <TextContainer>
                 <TextWrapperContainer
                     ref={contentContainerHeightRef}
-                    $maxHeight={maxHeight}
-                    $showMore={isShowMore}
+                    $collapsedHeight={collapsedHeight}
+                    $showMore={showHiddenContent}
                 >
                     {children}
                 </TextWrapperContainer>
-                {maxHeight !== undefined && displayShowMore && (
-                    <ShowMoreButton
-                        weight="semibold"
-                        onClick={() => setIsShowMore(!isShowMore)}
-                    >
-                        {isShowMore ? (
-                            <>
-                                Show less
-                                <ChevronUpIcon />
-                            </>
-                        ) : (
-                            <>
-                                Show more
-                                <ChevronDownIcon />
-                            </>
-                        )}
-                    </ShowMoreButton>
-                )}
+                {renderShowMore && renderShowMoreButton()}
                 {actionLink && renderLink()}
             </TextContainer>
         </Wrapper>

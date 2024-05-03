@@ -219,10 +219,10 @@ export const WithCustomIcon: StoryObj<Component> = {
                 <Alert
                     type="warning"
                     showIcon
-                    customAlertIcon={<CalendarEventIcon />}
+                    customIcon={<CalendarEventIcon />}
                 >
                     An alert box with a custom icon that can be passed in using
-                    customAlertIcon.
+                    customIcon.
                 </Alert>
                 <br />
             </>
@@ -230,11 +230,11 @@ export const WithCustomIcon: StoryObj<Component> = {
     },
 };
 
-export const WithMaxHeight: StoryObj<Component> = {
+export const WithCollapsedHeight: StoryObj<Component> = {
     render: () => {
         return (
             <>
-                <Alert type="warning" showIcon maxHeight={80}>
+                <Alert type="warning" showIcon collapsedHeight={80}>
                     An alert box with a maximum height of content to render,
                     outside the collapsible zone with a text button to expand
                     it. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -248,7 +248,7 @@ export const WithMaxHeight: StoryObj<Component> = {
                     non. Cras in mattis ex.
                 </Alert>
                 <br />
-                <Alert type="error" showIcon maxHeight={50}>
+                <Alert type="error" showIcon collapsedHeight={50}>
                     <ul
                         style={{
                             display: "flex",

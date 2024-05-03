@@ -12,9 +12,9 @@ interface StyleProps {
     $type: AlertType;
     $sizeType: AlertSizeType;
 }
-export interface TextContentProps {
+export interface TextWrapperContainerStyleProps {
     $showMore: boolean;
-    $maxHeight?: number;
+    $collapsedHeight?: number;
 }
 
 // =============================================================================
@@ -152,13 +152,13 @@ export const TextContainer = styled.div`
  * max-height: text-line-height * maximum number of lines
  */
 
-export const TextWrapperContainer = styled.div<TextContentProps>`
+export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
-        if (!props.$showMore && props.$maxHeight)
+        if (!props.$showMore && props.$collapsedHeight)
             return `
-                height: ${props.$maxHeight}px;
+                height: ${props.$collapsedHeight}px;
 				overflow: hidden;
                 -webkit-mask-image: ${gradient};
                 mask-image: ${gradient};
@@ -166,11 +166,12 @@ export const TextWrapperContainer = styled.div<TextContentProps>`
     }}
 `;
 
-export const ShowMoreButton = styled(Text.BodySmall)`
+export const ShowMoreButton = styled.div`
     cursor: pointer;
     margin-top: 0.5rem;
     color: ${Color.Primary};
     user-select: none;
+    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
     display: flex;
     align-items: center;
     gap: 0.25rem;
