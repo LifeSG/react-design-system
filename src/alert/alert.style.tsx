@@ -3,6 +3,7 @@ import { Color } from "../color/color";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 import { AlertSizeType, AlertType } from "./types";
+import { ChevronUpIcon } from "@lifesg/react-icons";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -17,6 +18,9 @@ export interface TextWrapperContainerStyleProps {
     $collapsedHeight?: number;
 }
 
+export interface ShowMoreIconStyleProps {
+    $expanded: boolean;
+}
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -147,10 +151,6 @@ export const TextContainer = styled.div`
     flex: 1;
     overflow-wrap: anywhere;
 `;
-/*
- * Height is calculated based on text line height
- * max-height: text-line-height * maximum number of lines
- */
 
 export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     ${(props) => {
@@ -167,12 +167,19 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
 `;
 
 export const ShowMoreButton = styled.div`
-    cursor: pointer;
-    margin-top: 0.5rem;
-    color: ${Color.Primary};
-    user-select: none;
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    margin-top: 0.5rem;
+
+    cursor: pointer;
+    user-select: none;
+
+    color: ${Color.Primary};
+    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+`;
+
+export const ChevronIcon = styled(ChevronUpIcon)<ShowMoreIconStyleProps>`
+    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
+    transition: transform 300ms ease-in-out;
 `;

@@ -1,20 +1,21 @@
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     ActionLinkText,
     AlertIconWrapper,
+    ChevronIcon,
     ShowMoreButton,
     TextContainer,
     TextWrapperContainer,
     Wrapper,
 } from "./alert.style";
 import { AlertProps } from "./types";
+import { useResizeDetector } from "react-resize-detector";
+import { isNil } from "lodash";
 
 export const Alert = ({
     type,
@@ -31,29 +32,22 @@ export const Alert = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [showHiddenContent, setShowHiddenContent] = useState(false);
-    const contentContainerHeightRef = useRef<HTMLDivElement>(null);
-    const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
+    const [showHiddenContent, setShowHiddenContent] = useState<boolean>(
+        isNil(collapsedHeight)
+    );
+    const [renderShowMore, setRenderShowMore] = useState<boolean>(
+        !isNil(collapsedHeight)
+    );
+    const contentResizeDetector = useResizeDetector<HTMLDivElement>();
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
 
     useEffect(() => {
-        console.log("test");
-        // forces line-clamp to trigger so that we can determine if content is collapsible
         setShowHiddenContent(!collapsedHeight);
         setRenderShowMore(!!collapsedHeight);
-        if (!collapsedHeight || !contentContainerHeightRef.current) return;
-
-        // calculate whether to show more after line-clamp is triggered
-        const clientHeight = contentContainerHeightRef.current.clientHeight;
-        const scrollHeight = contentContainerHeightRef.current.scrollHeight;
-
-        // Note: when using DS Text.H3 or Text.H1, the calculated scrollHeight and clientHeight differs by 1 without any overflow
-
-        setRenderShowMore(scrollHeight - clientHeight > 1);
-    }, [children]);
+    }, [collapsedHeight]);
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -63,17 +57,8 @@ export const Alert = ({
         <ShowMoreButton
             onClick={() => setShowHiddenContent(!showHiddenContent)}
         >
-            {showHiddenContent ? (
-                <>
-                    Show less
-                    <ChevronUpIcon />
-                </>
-            ) : (
-                <>
-                    Show more
-                    <ChevronDownIcon />
-                </>
-            )}
+            Show {showHiddenContent ? "less" : "more"}
+            <ChevronIcon $expanded={showHiddenContent} />
         </ShowMoreButton>
     );
 
@@ -130,7 +115,7 @@ export const Alert = ({
             )}
             <TextContainer>
                 <TextWrapperContainer
-                    ref={contentContainerHeightRef}
+                    ref={contentResizeDetector.ref}
                     $collapsedHeight={collapsedHeight}
                     $showMore={showHiddenContent}
                 >
