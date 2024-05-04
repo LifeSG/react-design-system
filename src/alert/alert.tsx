@@ -32,12 +32,8 @@ export const Alert = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [showHiddenContent, setShowHiddenContent] = useState<boolean>(
-        isNil(collapsedHeight)
-    );
-    const [renderShowMore, setRenderShowMore] = useState<boolean>(
-        !isNil(collapsedHeight)
-    );
+    const [showHiddenContent, setShowHiddenContent] = useState<boolean>(false);
+    const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
     const contentResizeDetector = useResizeDetector<HTMLDivElement>();
 
     // =============================================================================
@@ -45,9 +41,17 @@ export const Alert = ({
     // =============================================================================
 
     useEffect(() => {
-        setShowHiddenContent(!collapsedHeight);
-        setRenderShowMore(!!collapsedHeight);
+        setInitialCollapsedState();
     }, [collapsedHeight]);
+
+    // =============================================================================
+    // HELPERS
+    // =============================================================================
+
+    const setInitialCollapsedState = () => {
+        setShowHiddenContent(isNil(collapsedHeight));
+        setRenderShowMore(!isNil(collapsedHeight));
+    };
 
     // =============================================================================
     // RENDER FUNCTIONS
