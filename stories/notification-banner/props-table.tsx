@@ -64,11 +64,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
-                name: "maxLines",
+                name: "collapsedHeight",
                 description: (
                     <>
-                        Specifies the max number of lines to be displayed in the{" "}
-                        <code>NotificationBanner</code>
+                        Specifies the height of the{" "}
+                        <code>NotificationBanner</code>to be displayed outside
+                        of the collapsible zone
                     </>
                 ),
                 propTypes: ["number"],

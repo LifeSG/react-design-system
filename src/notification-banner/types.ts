@@ -8,7 +8,12 @@ export interface NotificationBannerProps
     sticky?: boolean | undefined;
     onDismiss?: (() => void) | undefined;
     "data-testid"?: string | undefined;
-    maxLines?: number | undefined;
+    /**
+     * Specifies the height to be displayed outside of
+     * the collapsible zone
+     */
+    collapsedHeight?: number | undefined;
+    /** Called when the banner is selected */
     onClick?: (() => void) | undefined;
 }
 

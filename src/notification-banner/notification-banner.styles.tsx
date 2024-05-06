@@ -12,11 +12,11 @@ import { Transition } from "../transition";
 // =============================================================================
 interface WrapperStyleProps {
     $sticky: boolean;
-    $onClickEnabled: boolean;
+    $clickable: boolean;
 }
 
-interface TextContentProps {
-    $maxNoOfLines?: number;
+interface TextWrapperContainerStyleProps {
+    $collapsedHeight?: number;
 }
 
 // =============================================================================
@@ -48,7 +48,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     transition: ${Transition.Base};
     background: ${Color.Neutral[2]};
     z-index: 25;
-    cursor: ${(props) => (props.$onClickEnabled ? "pointer" : "default")};
+    cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
 
 export const Container = styled(Layout.Content)`
@@ -101,21 +101,17 @@ export const StyledIcon = styled(CrossIcon)`
     color: ${Color.Neutral[8]};
 `;
 
-export const TextWrapperContainer = styled.div<TextContentProps>`
+export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
-        if (props.$maxNoOfLines)
-            return `
-				display: -webkit-box;
-				-webkit-line-clamp: ${props.$maxNoOfLines};
-				line-clamp: ${props.$maxNoOfLines};
-				-webkit-box-orient: vertical;
-				overflow: hidden;
-                
+        if (props.$collapsedHeight)
+            return css`
+                height: ${props.$collapsedHeight}px;
+                overflow: hidden;
                 -webkit-mask-image: ${gradient};
                 mask-image: ${gradient};
-			`;
+            `;
     }}
 `;
 

@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { ArrowRightIcon } from "@lifesg/react-icons";
+import { isNil } from "lodash";
+import React, { useEffect, useState } from "react";
 import {
     Container,
     Content,
@@ -15,7 +17,6 @@ import {
     NotificationBannerProps,
     NotificationBannerWithForwardedRefProps,
 } from "./types";
-import { ArrowRightIcon } from "@lifesg/react-icons";
 
 export const NBComponent = ({
     children,
@@ -25,7 +26,7 @@ export const NBComponent = ({
     onDismiss,
     id,
     forwardedRef,
-    maxLines,
+    collapsedHeight,
     onClick,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps): JSX.Element => {
@@ -52,6 +53,12 @@ export const NBComponent = ({
         if (dismissible && onDismiss) onDismiss();
     };
 
+    const handleBannerClick = (event: React.MouseEvent<HTMLInputElement>) => {
+        if (!onClick) return;
+        event.stopPropagation();
+        onClick();
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -61,22 +68,19 @@ export const NBComponent = ({
         <Wrapper
             ref={forwardedRef}
             $sticky={sticky}
-            $onClickEnabled={!!onClick}
-            onClickCapture={(event: React.MouseEvent<HTMLInputElement>) => {
-                if (!onClick) return;
-                event.preventDefault();
-                event.stopPropagation();
-                onClick();
-            }}
+            $clickable={!!onClick}
+            onClick={handleBannerClick}
             {...otherProps}
         >
             <Container id={formatId("container", id)}>
                 <TextContainer>
                     <Content data-testid={formatId("text-content", testId)}>
-                        <TextWrapperContainer $maxNoOfLines={maxLines}>
+                        <TextWrapperContainer
+                            $collapsedHeight={collapsedHeight}
+                        >
                             {children}
                         </TextWrapperContainer>
-                        {maxLines !== undefined && (
+                        {!isNil(collapsedHeight) && (
                             <ViewMoreText weight="semibold">
                                 <ViewMoreWrapper>
                                     View more
