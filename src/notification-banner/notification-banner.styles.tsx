@@ -15,7 +15,7 @@ interface WrapperStyleProps {
     $clickable: boolean;
 }
 
-interface TextWrapperContainerStyleProps {
+interface ContentWrapperContainerStyleProps {
     $collapsedHeight?: number;
 }
 
@@ -101,7 +101,7 @@ export const StyledIcon = styled(CrossIcon)`
     color: ${Color.Neutral[8]};
 `;
 
-export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
+export const ContentWrapperContainer = styled.div<ContentWrapperContainerStyleProps>`
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
@@ -115,12 +115,13 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     }}
 `;
 
-export const ViewMoreWrapper = styled.div`
+export const ViewMoreButton = styled.div`
     display: flex;
     align-items: center;
-    column-gap: 0.25rem;
-`;
-export const ViewMoreText = styled(Text.BodySmall)`
+    gap: 0.25rem;
+
     margin-top: 0.5rem;
+
     color: ${Color.Validation.Orange.Icon};
+    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
 `;

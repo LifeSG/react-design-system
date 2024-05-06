@@ -4,13 +4,12 @@ import React, { useEffect, useState } from "react";
 import {
     Container,
     Content,
+    ContentWrapperContainer,
     ContentLink as NBLink,
     StyledIcon,
     StyledIconButton,
     TextContainer,
-    TextWrapperContainer,
-    ViewMoreText,
-    ViewMoreWrapper,
+    ViewMoreButton,
     Wrapper,
 } from "./notification-banner.styles";
 import {
@@ -47,7 +46,8 @@ export const NBComponent = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleDismiss = () => {
+    const handleDismiss = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
         setVisible(false);
 
         if (dismissible && onDismiss) onDismiss();
@@ -64,6 +64,13 @@ export const NBComponent = ({
     // =============================================================================
     if (!isVisible) return null;
 
+    const renderViewMore = () => (
+        <ViewMoreButton>
+            View more
+            <ArrowRightIcon />
+        </ViewMoreButton>
+    );
+
     return (
         <Wrapper
             ref={forwardedRef}
@@ -75,29 +82,17 @@ export const NBComponent = ({
             <Container id={formatId("container", id)}>
                 <TextContainer>
                     <Content data-testid={formatId("text-content", testId)}>
-                        <TextWrapperContainer
+                        <ContentWrapperContainer
                             $collapsedHeight={collapsedHeight}
                         >
                             {children}
-                        </TextWrapperContainer>
-                        {!isNil(collapsedHeight) && (
-                            <ViewMoreText weight="semibold">
-                                <ViewMoreWrapper>
-                                    View more
-                                    <ArrowRightIcon />
-                                </ViewMoreWrapper>
-                            </ViewMoreText>
-                        )}
+                        </ContentWrapperContainer>
+                        {!isNil(collapsedHeight) && renderViewMore()}
                     </Content>
                 </TextContainer>
                 {dismissible && (
                     <StyledIconButton
-                        onClick={(
-                            event: React.MouseEvent<HTMLButtonElement>
-                        ) => {
-                            event.stopPropagation();
-                            handleDismiss();
-                        }}
+                        onClick={handleDismiss}
                         id={formatId("dismiss-button", id)}
                         data-testid={formatId("dismiss-button", testId)}
                         focusHighlight={false}
