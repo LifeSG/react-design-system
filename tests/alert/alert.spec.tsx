@@ -7,8 +7,14 @@ import { StarIcon } from "@lifesg/react-icons/star";
 // UNIT TESTS
 // =============================================================================
 describe("Alert", () => {
-    beforeEach(() => {
+    beforeEach(() => { 
         jest.resetAllMocks();
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
+    });
     });
 
     it("should render the component", () => {
