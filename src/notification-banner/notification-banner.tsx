@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
     Container,
     Content,
-    ContentWrapperContainer,
+    ContentWrapper,
     ContentLink as NBLink,
     StyledIcon,
     StyledIconButton,
@@ -82,11 +82,11 @@ export const NBComponent = ({
             <Container id={formatId("container", id)}>
                 <TextContainer>
                     <Content data-testid={formatId("text-content", testId)}>
-                        <ContentWrapperContainer
+                        <ContentWrapper
                             $collapsedHeight={collapsedHeight}
                         >
                             {children}
-                        </ContentWrapperContainer>
+                        </ContentWrapper>
                         {!isNil(collapsedHeight) && renderViewMore()}
                     </Content>
                 </TextContainer>

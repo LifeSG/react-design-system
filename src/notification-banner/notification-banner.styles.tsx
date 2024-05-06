@@ -15,7 +15,7 @@ interface WrapperStyleProps {
     $clickable: boolean;
 }
 
-interface ContentWrapperContainerStyleProps {
+interface ContentWrapperStyleProps {
     $collapsedHeight?: number;
 }
 
@@ -101,7 +101,7 @@ export const StyledIcon = styled(CrossIcon)`
     color: ${Color.Neutral[8]};
 `;
 
-export const ContentWrapperContainer = styled.div<ContentWrapperContainerStyleProps>`
+export const ContentWrapper = styled.div<ContentWrapperStyleProps>`
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
