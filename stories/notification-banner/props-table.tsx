@@ -67,7 +67,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "collapsedHeight",
                 description: (
                     <>
-                        Specifies the height of the{" "}
+                        Specifies the height of the &nbsp;
                         <code>NotificationBanner</code>to be displayed outside
                         of the collapsible zone
                     </>
