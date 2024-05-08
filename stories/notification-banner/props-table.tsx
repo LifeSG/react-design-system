@@ -64,7 +64,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
-                name: "collapsedHeight",
+                name: "maxCollapsedHeight",
                 description: (
                     <>
                         Specifies the height of the &nbsp;
@@ -73,6 +73,46 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["number"],
+            },
+            {
+                name: "actionButton",
+                description:
+                    "The properties of the action button that appears at the bottom of the component",
+                propTypes: ["ActionButtonProps"],
+            },
+        ],
+    },
+    {
+        name: "ActionButtonProps",
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <code>HTMLButtonElement</code>
+                        </a>
+                    </>
+                ),
+            },
+            {
+                name: "children",
+                description: "The content of the ActionButton",
+                propTypes: ["JSX.Element", "JSX.Element[]", "string"],
+            },
+            {
+                name: "onClick",
+                description: (
+                    <>
+                        Called when the <code>ActionButton</code> is clicked
+                    </>
+                ),
+                propTypes: ["() => void"],
             },
         ],
     },

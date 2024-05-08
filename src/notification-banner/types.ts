@@ -12,9 +12,11 @@ export interface NotificationBannerProps
      * Specifies the height to be displayed outside of
      * the collapsible zone
      */
-    collapsedHeight?: number | undefined;
+    maxCollapsedHeight?: number | undefined;
     /** Called when the banner is selected */
     onClick?: (() => void) | undefined;
+    /** Action button that will be displayed */
+    actionButton?: ActionButtonProps | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps
@@ -31,4 +33,11 @@ export interface NotificationContentAttributes {
     type: ContentType;
     content: string;
     otherAttributes?: TextLinkProps | TextProps | undefined;
+}
+
+export interface ActionButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    children?: JSX.Element | JSX.Element[] | string | undefined;
+    /** Called when the action button is selected, if specified */
+    onClick?: () => void | undefined;
 }

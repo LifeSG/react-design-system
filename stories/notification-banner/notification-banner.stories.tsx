@@ -3,7 +3,8 @@ import { NotificationBanner } from "src/notification-banner";
 import { Text } from "src/text";
 import { StyledContent } from "./doc-elements";
 import { useState } from "react";
-import { GearFillIcon } from "@lifesg/react-icons";
+import { GearFillIcon } from "@lifesg/react-icons/gear-fill";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 
 type Component = typeof NotificationBanner;
 
@@ -282,8 +283,8 @@ export const CollapsedHeight: StoryObj<Component> = {
                     maxHeight: "21rem",
                 }}
             >
-                <NotificationBanner collapsedHeight={80}>
-                    This is a notification banner with collapsedHeight set.
+                <NotificationBanner maxCollapsedHeight={80}>
+                    This is a notification banner with maxCollapsedHeight set.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -305,6 +306,56 @@ export const CollapsedHeight: StoryObj<Component> = {
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
                     </Text.Body>
+                </StyledContent>
+            </div>
+        );
+    },
+};
+
+const actionButton = () => (
+    <>
+        View More
+        <ArrowRightIcon />
+    </>
+);
+
+export const ActionButton: StoryObj<Component> = {
+    render: () => {
+        const [showParagraph, setShowParagraph] = useState(false);
+        const onClick = () => {
+            setShowParagraph(!showParagraph);
+        };
+        return (
+            <div
+                style={{
+                    position: "relative",
+                    paddingTop: "1.5rem",
+                }}
+            >
+                <NotificationBanner
+                    actionButton={{ children: actionButton(), onClick }}
+                >
+                    This is a notification banner with an action button set.
+                </NotificationBanner>
+                <StyledContent>
+                    <Text.Body paragraph>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </Text.Body>
+                    {showParagraph && (
+                        <Text.Body paragraph>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua
+                        </Text.Body>
+                    )}
                 </StyledContent>
             </div>
         );

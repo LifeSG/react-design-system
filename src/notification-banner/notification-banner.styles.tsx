@@ -16,7 +16,7 @@ interface WrapperStyleProps {
 }
 
 interface ContentWrapperStyleProps {
-    $collapsedHeight?: number;
+    $maxCollapsedHeight?: number;
 }
 
 // =============================================================================
@@ -105,9 +105,9 @@ export const ContentWrapper = styled.div<ContentWrapperStyleProps>`
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
-        if (props.$collapsedHeight)
+        if (props.$maxCollapsedHeight)
             return css`
-                height: ${props.$collapsedHeight}px;
+                max-height: ${props.$maxCollapsedHeight}px;
                 overflow: hidden;
                 -webkit-mask-image: ${gradient};
                 mask-image: ${gradient};
@@ -115,13 +115,17 @@ export const ContentWrapper = styled.div<ContentWrapperStyleProps>`
     }}
 `;
 
-export const ViewMoreButton = styled.div`
+export const ActionButton = styled.button`
     display: flex;
     align-items: center;
     gap: 0.25rem;
 
     margin-top: 0.5rem;
 
+    border: none;
+    background: transparent;
     color: ${Color.Validation.Orange.Icon};
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
+
+    cursor: pointer;
 `;

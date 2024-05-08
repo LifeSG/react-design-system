@@ -60,10 +60,16 @@ The `NotificationBanner` allows performing of an action when clicked.
 
 <Heading3>With collapsed height setting</Heading3>
 
-You can restrict the height of the `NotificationBanner` by setting the `collapsedHeight` to a
+You can restrict the height of the `NotificationBanner` by setting the `maxCollapsedHeight` to a
 desired value in px.
 
 <Canvas of={NotificationBannerStories.CollapsedHeight} />
+
+<Heading3>Action button</Heading3>
+
+You can choose to render a custom component of your choice as an action button.
+
+<Canvas of={NotificationBannerStories.ActionButton} />
 
 <Secondary>Using as a Higher Order Component (HOC)</Secondary>
 

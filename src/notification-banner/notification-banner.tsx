@@ -1,7 +1,7 @@
-import { ArrowRightIcon } from "@lifesg/react-icons";
-import { isNil } from "lodash";
 import React, { useEffect, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import {
+    ActionButton,
     Container,
     Content,
     ContentWrapper,
@@ -9,7 +9,6 @@ import {
     StyledIcon,
     StyledIconButton,
     TextContainer,
-    ViewMoreButton,
     Wrapper,
 } from "./notification-banner.styles";
 import {
@@ -25,8 +24,9 @@ export const NBComponent = ({
     onDismiss,
     id,
     forwardedRef,
-    collapsedHeight,
+    maxCollapsedHeight,
     onClick,
+    actionButton,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps): JSX.Element => {
     // =============================================================================
@@ -35,6 +35,7 @@ export const NBComponent = ({
     const testId = otherProps["data-testid"];
 
     const [isVisible, setVisible] = useState<boolean>(visible);
+    const { height: contentHeight, ref: contentRef } = useResizeDetector();
 
     // =============================================================================
     // EFFECTS
@@ -53,10 +54,19 @@ export const NBComponent = ({
         if (dismissible && onDismiss) onDismiss();
     };
 
-    const handleBannerClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    const handleBannerClick = (event: React.MouseEvent) => {
         if (!onClick) return;
         event.stopPropagation();
         onClick();
+    };
+
+    const handleActionButtonOnClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        if (!actionButton.onClick) {
+            handleBannerClick(event);
+            return;
+        }
+        actionButton.onClick();
     };
 
     // =============================================================================
@@ -64,12 +74,43 @@ export const NBComponent = ({
     // =============================================================================
     if (!isVisible) return null;
 
-    const renderViewMore = () => (
-        <ViewMoreButton>
-            View more
-            <ArrowRightIcon />
-        </ViewMoreButton>
+    const renderDismiss = () => (
+        <StyledIconButton
+            onClick={handleDismiss}
+            id={formatId("dismiss-button", id)}
+            data-testid={formatId("dismiss-button", testId)}
+            focusHighlight={false}
+        >
+            <StyledIcon />
+        </StyledIconButton>
     );
+
+    const renderActionButton = () => (
+        <ActionButton
+            id={formatId("action-button", id)}
+            data-testid={formatId("action-button", testId)}
+            onClick={handleActionButtonOnClick}
+            {...actionButton}
+        >
+            {actionButton.children}
+        </ActionButton>
+    );
+
+    const renderChildren = () => {
+        if (
+            !maxCollapsedHeight ||
+            !contentRef.current ||
+            (contentHeight && contentHeight < maxCollapsedHeight)
+        ) {
+            return children;
+        } else {
+            return (
+                <ContentWrapper $maxCollapsedHeight={maxCollapsedHeight}>
+                    {children}
+                </ContentWrapper>
+            );
+        }
+    };
 
     return (
         <Wrapper
@@ -81,25 +122,15 @@ export const NBComponent = ({
         >
             <Container id={formatId("container", id)}>
                 <TextContainer>
-                    <Content data-testid={formatId("text-content", testId)}>
-                        <ContentWrapper
-                            $collapsedHeight={collapsedHeight}
-                        >
-                            {children}
-                        </ContentWrapper>
-                        {!isNil(collapsedHeight) && renderViewMore()}
+                    <Content
+                        data-testid={formatId("text-content", testId)}
+                        ref={contentRef}
+                    >
+                        {renderChildren()}
+                        {actionButton && renderActionButton()}
                     </Content>
                 </TextContainer>
-                {dismissible && (
-                    <StyledIconButton
-                        onClick={handleDismiss}
-                        id={formatId("dismiss-button", id)}
-                        data-testid={formatId("dismiss-button", testId)}
-                        focusHighlight={false}
-                    >
-                        <StyledIcon />
-                    </StyledIconButton>
-                )}
+                {dismissible && renderDismiss()}
             </Container>
         </Wrapper>
     );
