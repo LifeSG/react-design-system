@@ -114,6 +114,7 @@ export const NBComponent = ({
 
     return (
         <Wrapper
+            role={handleBannerClick ? "button" : "banner"}
             ref={forwardedRef}
             $sticky={sticky}
             $clickable={!!onClick}
