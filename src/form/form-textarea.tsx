@@ -67,6 +67,7 @@ const FormTextareaComponent = (
     // RENDER FUNCTIONS
     // =============================================================================
     const renderBottomLabels = () => {
+        if (!errorMessage && !otherProps.maxLength) return <></>;
         return (
             <LabelContainer>
                 {errorMessage && (
