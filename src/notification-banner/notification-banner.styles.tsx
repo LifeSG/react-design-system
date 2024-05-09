@@ -61,7 +61,7 @@ export const TextContainer = styled.div`
     padding: 1.5rem 0;
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<ContentWrapperStyleProps>`
     display: inline-block;
     width: 100%;
 
@@ -81,6 +81,18 @@ export const Content = styled.div`
         ${TextStyleHelper.getTextStyle("Body", "regular")}
         ${commonLinkStyle}
     }
+
+    ${(props) => {
+        const gradient =
+            "linear-gradient(to bottom, black 50%, transparent 100%)";
+        if (props.$maxCollapsedHeight)
+            return css`
+                max-height: ${props.$maxCollapsedHeight}px;
+                overflow: hidden;
+                -webkit-mask-image: ${gradient};
+                mask-image: ${gradient};
+            `;
+    }}
 `;
 
 export const ContentLink = styled(Text.Hyperlink.Default)`
@@ -101,20 +113,6 @@ export const StyledIcon = styled(CrossIcon)`
     color: ${Color.Neutral[8]};
 `;
 
-export const ContentWrapper = styled.div<ContentWrapperStyleProps>`
-    ${(props) => {
-        const gradient =
-            "linear-gradient(to bottom, black 50%, transparent 100%)";
-        if (props.$maxCollapsedHeight)
-            return css`
-                max-height: ${props.$maxCollapsedHeight}px;
-                overflow: hidden;
-                -webkit-mask-image: ${gradient};
-                mask-image: ${gradient};
-            `;
-    }}
-`;
-
 export const ActionButton = styled.button`
     display: flex;
     align-items: center;
@@ -128,4 +126,14 @@ export const ActionButton = styled.button`
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
 
     cursor: pointer;
+`;
+
+export const AccessibleBannerButton = styled.button`
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 `;

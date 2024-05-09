@@ -36,8 +36,4 @@ export interface NotificationContentAttributes {
 }
 
 export interface ActionButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children?: JSX.Element | JSX.Element[] | string | undefined;
-    /** Called when the action button is selected, if specified */
-    onClick?: () => void | undefined;
-}
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {}

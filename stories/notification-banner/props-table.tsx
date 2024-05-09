@@ -76,7 +76,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "actionButton",
-                description:
+                description: 
                     "The properties of the action button that appears at the bottom of the component",
                 propTypes: ["ActionButtonProps"],
             },
@@ -89,7 +89,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component inherits props from&nbsp;
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
                             target="_blank"
@@ -99,20 +99,6 @@ const DATA: ApiTableSectionProps[] = [
                         </a>
                     </>
                 ),
-            },
-            {
-                name: "children",
-                description: "The content of the ActionButton",
-                propTypes: ["JSX.Element", "JSX.Element[]", "string"],
-            },
-            {
-                name: "onClick",
-                description: (
-                    <>
-                        Called when the <code>ActionButton</code> is clicked
-                    </>
-                ),
-                propTypes: ["() => void"],
             },
         ],
     },

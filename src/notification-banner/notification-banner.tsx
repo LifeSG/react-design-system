@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import {
+    AccessibleBannerButton,
     ActionButton,
     Container,
     Content,
-    ContentWrapper,
     ContentLink as NBLink,
     StyledIcon,
     StyledIconButton,
@@ -60,13 +60,13 @@ export const NBComponent = ({
         onClick();
     };
 
-    const handleActionButtonOnClick = (event: React.MouseEvent) => {
+    const handleActionButtonOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         if (!actionButton.onClick) {
             handleBannerClick(event);
             return;
         }
-        actionButton.onClick();
+        actionButton.onClick(event);
     };
 
     // =============================================================================
@@ -74,7 +74,7 @@ export const NBComponent = ({
     // =============================================================================
     if (!isVisible) return null;
 
-    const renderDismiss = () => (
+    const renderDismissButton = () => (
         <StyledIconButton
             onClick={handleDismiss}
             id={formatId("dismiss-button", id)}
@@ -105,16 +105,17 @@ export const NBComponent = ({
             return children;
         } else {
             return (
-                <ContentWrapper $maxCollapsedHeight={maxCollapsedHeight}>
+                <div ref={contentRef}>
                     {children}
-                </ContentWrapper>
+                </div>
             );
         }
     };
 
+    const renderAccessibleBannerButton = () => (<AccessibleBannerButton onClick={handleBannerClick} aria-label={"Clickable banner"}/>);
+
     return (
         <Wrapper
-            role={handleBannerClick ? "button" : "banner"}
             ref={forwardedRef}
             $sticky={sticky}
             $clickable={!!onClick}
@@ -125,14 +126,15 @@ export const NBComponent = ({
                 <TextContainer>
                     <Content
                         data-testid={formatId("text-content", testId)}
-                        ref={contentRef}
+                        $maxCollapsedHeight={maxCollapsedHeight} 
                     >
                         {renderChildren()}
                         {actionButton && renderActionButton()}
                     </Content>
                 </TextContainer>
-                {dismissible && renderDismiss()}
+                {dismissible && renderDismissButton()}
             </Container>
+            {onClick && renderAccessibleBannerButton()}
         </Wrapper>
     );
 };
