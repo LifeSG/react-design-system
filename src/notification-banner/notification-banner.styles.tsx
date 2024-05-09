@@ -15,7 +15,7 @@ interface WrapperStyleProps {
     $clickable: boolean;
 }
 
-interface ContentWrapperStyleProps {
+interface ContentStyleProps {
     $maxCollapsedHeight?: number;
 }
 
@@ -61,7 +61,7 @@ export const TextContainer = styled.div`
     padding: 1.5rem 0;
 `;
 
-export const Content = styled.div<ContentWrapperStyleProps>`
+export const Content = styled.div<ContentStyleProps>`
     display: inline-block;
     width: 100%;
 
