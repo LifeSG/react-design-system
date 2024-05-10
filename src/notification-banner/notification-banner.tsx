@@ -5,10 +5,10 @@ import {
     ActionButton,
     Container,
     Content,
+    ContentContainer,
     ContentLink as NBLink,
     StyledIcon,
     StyledIconButton,
-    TextContainer,
     Wrapper,
 } from "./notification-banner.styles";
 import {
@@ -54,18 +54,13 @@ export const NBComponent = ({
         if (dismissible && onDismiss) onDismiss();
     };
 
-    const handleBannerClick = (event: React.MouseEvent) => {
-        if (!onClick) return;
-        event.stopPropagation();
-        onClick();
-    };
-
-    const handleActionButtonOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.stopPropagation();
+    const handleActionButtonOnClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
         if (!actionButton.onClick) {
-            handleBannerClick(event);
             return;
         }
+        event.stopPropagation();
         actionButton.onClick(event);
     };
 
@@ -89,49 +84,43 @@ export const NBComponent = ({
         <ActionButton
             id={formatId("action-button", id)}
             data-testid={formatId("action-button", testId)}
-            onClick={handleActionButtonOnClick}
             {...actionButton}
+            onClick={handleActionButtonOnClick}
         >
             {actionButton.children}
         </ActionButton>
     );
 
-    const renderChildren = () => {
-        if (
-            !maxCollapsedHeight ||
-            !contentRef.current ||
-            (contentHeight && contentHeight < maxCollapsedHeight)
-        ) {
-            return children;
-        } else {
-            return (
-                <div ref={contentRef}>
-                    {children}
-                </div>
-            );
-        }
-    };
+    const renderContent = () => (
+        <Content
+            data-testid={formatId("text-content", testId)}
+            $maxCollapsedHeight={
+                maxCollapsedHeight && contentHeight > maxCollapsedHeight
+                    ? maxCollapsedHeight
+                    : undefined
+            }
+        >
+            <div ref={contentRef}>{children}</div>
+        </Content>
+    );
 
-    const renderAccessibleBannerButton = () => (<AccessibleBannerButton onClick={handleBannerClick} aria-label={"Clickable banner"}/>);
+    const renderAccessibleBannerButton = () => (
+        <AccessibleBannerButton aria-label={"Clickable banner"} />
+    );
 
     return (
         <Wrapper
             ref={forwardedRef}
             $sticky={sticky}
             $clickable={!!onClick}
-            onClick={handleBannerClick}
+            onClick={onClick}
             {...otherProps}
         >
             <Container id={formatId("container", id)}>
-                <TextContainer>
-                    <Content
-                        data-testid={formatId("text-content", testId)}
-                        $maxCollapsedHeight={maxCollapsedHeight} 
-                    >
-                        {renderChildren()}
-                        {actionButton && renderActionButton()}
-                    </Content>
-                </TextContainer>
+                <ContentContainer>
+                    {renderContent()}
+                    {actionButton && renderActionButton()}
+                </ContentContainer>
                 {dismissible && renderDismissButton()}
             </Container>
             {onClick && renderAccessibleBannerButton()}

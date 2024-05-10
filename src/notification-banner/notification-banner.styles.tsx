@@ -55,9 +55,12 @@ export const Container = styled(Layout.Content)`
     display: flex;
 `;
 
-export const TextContainer = styled.div`
-    display: flex;
+export const ContentContainer = styled.div`
     flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 1.5rem 0;
 `;
 
