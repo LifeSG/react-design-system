@@ -8,6 +8,10 @@ export interface NotificationBannerProps
     sticky?: boolean | undefined;
     onDismiss?: (() => void) | undefined;
     "data-testid"?: string | undefined;
+    /** Specifies the maximum height of content, after which it is collapsed */
+    maxCollapsedHeight?: number | undefined;
+    /** Action button that will be displayed */
+    actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import {
+    AccessibleBannerButton,
+    ActionButton,
     Container,
     Content,
+    ContentContainer,
     ContentLink as NBLink,
     StyledIcon,
     StyledIconButton,
-    TextContainer,
     Wrapper,
 } from "./notification-banner.styles";
 import {
@@ -21,6 +24,9 @@ export const NBComponent = ({
     onDismiss,
     id,
     forwardedRef,
+    maxCollapsedHeight,
+    onClick,
+    actionButton,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps): JSX.Element => {
     // =============================================================================
@@ -29,6 +35,7 @@ export const NBComponent = ({
     const testId = otherProps["data-testid"];
 
     const [isVisible, setVisible] = useState<boolean>(visible);
+    const { height: contentHeight, ref: contentRef } = useResizeDetector();
 
     // =============================================================================
     // EFFECTS
@@ -40,10 +47,22 @@ export const NBComponent = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleDismiss = () => {
+    const handleDismiss = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
         setVisible(false);
 
         if (dismissible && onDismiss) onDismiss();
+    };
+
+    const handleActionButtonOnClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        if (!actionButton.onClick) {
+            // let it bubble
+            return;
+        }
+        event.stopPropagation();
+        actionButton.onClick(event);
     };
 
     // =============================================================================
@@ -51,25 +70,63 @@ export const NBComponent = ({
     // =============================================================================
     if (!isVisible) return null;
 
+    const renderDismissButton = () => (
+        <StyledIconButton
+            onClick={handleDismiss}
+            id={formatId("dismiss-button", id)}
+            data-testid={formatId("dismiss-button", testId)}
+            focusHighlight={false}
+            type="button"
+        >
+            <StyledIcon />
+        </StyledIconButton>
+    );
+
+    const renderActionButton = () => (
+        <ActionButton
+            id={formatId("action-button", id)}
+            data-testid={formatId("action-button", testId)}
+            type="button"
+            {...actionButton}
+            onClick={handleActionButtonOnClick}
+        >
+            {actionButton.children}
+        </ActionButton>
+    );
+
+    const renderContent = () => (
+        <Content
+            data-testid={formatId("text-content", testId)}
+            $maxCollapsedHeight={
+                maxCollapsedHeight && contentHeight > maxCollapsedHeight
+                    ? maxCollapsedHeight
+                    : undefined
+            }
+        >
+            <div ref={contentRef}>{children}</div>
+        </Content>
+    );
+
+    const renderAccessibleBannerButton = () => (
+        <AccessibleBannerButton aria-label={"Clickable banner"} type="button" />
+    );
+
     return (
-        <Wrapper ref={forwardedRef} $sticky={sticky} {...otherProps}>
+        <Wrapper
+            ref={forwardedRef}
+            $sticky={sticky}
+            $clickable={!!onClick}
+            onClick={onClick}
+            {...otherProps}
+        >
             <Container id={formatId("container", id)}>
-                <TextContainer>
-                    <Content data-testid={formatId("text-content", testId)}>
-                        {children}
-                    </Content>
-                </TextContainer>
-                {dismissible && (
-                    <StyledIconButton
-                        onClick={handleDismiss}
-                        id={formatId("dismiss-button", id)}
-                        data-testid={formatId("dismiss-button", testId)}
-                        focusHighlight={false}
-                    >
-                        <StyledIcon />
-                    </StyledIconButton>
-                )}
+                <ContentContainer>
+                    {renderContent()}
+                    {actionButton && renderActionButton()}
+                </ContentContainer>
+                {dismissible && renderDismissButton()}
             </Container>
+            {onClick && renderAccessibleBannerButton()}
         </Wrapper>
     );
 };

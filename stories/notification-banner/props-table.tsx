@@ -53,6 +53,34 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["() => void"],
             },
+            {
+                name: "onClick",
+                description: (
+                    <>
+                        Called when the <code>NotificationBanner</code> is
+                        clicked
+                    </>
+                ),
+                propTypes: [
+                    "(event: React.MouseEvent<HTMLDivElement>) => void",
+                ],
+            },
+            {
+                name: "maxCollapsedHeight",
+                description: (
+                    <>
+                        Specifies the maximum visible height of the
+                        <code>NotificationBanner</code> content
+                    </>
+                ),
+                propTypes: ["number"],
+            },
+            {
+                name: "actionButton",
+                description:
+                    "The properties of the action button that appears at the bottom of the component",
+                propTypes: ["React.ButtonHTMLAttributes<HTMLButtonElement>"],
+            },
         ],
     },
 ];
