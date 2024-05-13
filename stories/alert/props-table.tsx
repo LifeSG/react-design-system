@@ -74,7 +74,7 @@ const DATA: ApiTableSectionProps[] = [
                 
             },
             {
-                name: "collapsedHeight",
+                name: "maxCollapsedHeight",
                 description: "Specifies the maximum height of the content to be displayed outside of the collapsible zone, in px",
                 propTypes: ["number"],
             },

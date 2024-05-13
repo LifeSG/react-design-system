@@ -234,7 +234,7 @@ export const WithCollapsedHeight: StoryObj<Component> = {
     render: () => {
         return (
             <>
-                <Alert type="warning" showIcon collapsedHeight={80}>
+                <Alert type="warning" showIcon maxCollapsedHeight={80}>
                     An alert box with a maximum height of content to render,
                     outside the collapsible zone with a text button to expand
                     it. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -248,7 +248,7 @@ export const WithCollapsedHeight: StoryObj<Component> = {
                     non. Cras in mattis ex.
                 </Alert>
                 <br />
-                <Alert type="error" showIcon collapsedHeight={50}>
+                <Alert type="error" showIcon maxCollapsedHeight={50}>
                     <ul
                         style={{
                             display: "flex",

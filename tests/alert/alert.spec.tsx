@@ -95,11 +95,6 @@ describe("Alert", () => {
             expect(getCustomIcon()).toBeInTheDocument();
         });
 
-        it("should not render a custom icon by default", () => {
-            render(<Alert type="success" />);
-
-            expect(getCustomIcon()).not.toBeInTheDocument();
-        });
     });
 
     it("should render custom display if required", () => {

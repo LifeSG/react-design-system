@@ -15,7 +15,7 @@ interface StyleProps {
 }
 export interface TextWrapperContainerStyleProps {
     $showMore: boolean;
-    $collapsedHeight?: number;
+    $maxCollapsedHeight?: number;
 }
 
 export interface ShowMoreIconStyleProps {
@@ -156,9 +156,9 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
-        if (!props.$showMore && props.$collapsedHeight)
+        if (!props.$showMore && props.$maxCollapsedHeight)
             return `
-                height: ${props.$collapsedHeight}px;
+                max-height: ${props.$maxCollapsedHeight}px;
 				overflow: hidden;
                 -webkit-mask-image: ${gradient};
                 mask-image: ${gradient};
@@ -166,7 +166,7 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     }}
 `;
 
-export const ShowMoreButton = styled.div`
+export const ShowMoreButton = styled.button`
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -174,6 +174,8 @@ export const ShowMoreButton = styled.div`
 
     cursor: pointer;
     user-select: none;
+    border: none;
+    background: transparent;
 
     color: ${Color.Primary};
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}

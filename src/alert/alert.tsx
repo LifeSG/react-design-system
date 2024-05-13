@@ -15,7 +15,6 @@ import {
 } from "./alert.style";
 import { AlertProps } from "./types";
 import { useResizeDetector } from "react-resize-detector";
-import { isNil } from "lodash";
 
 export const Alert = ({
     type,
@@ -26,7 +25,7 @@ export const Alert = ({
     sizeType = "default",
     showIcon = false,
     customIcon,
-    collapsedHeight,
+    maxCollapsedHeight,
     ...otherProps
 }: AlertProps): JSX.Element => {
     // =============================================================================
@@ -34,23 +33,31 @@ export const Alert = ({
     // =============================================================================
     const [showHiddenContent, setShowHiddenContent] = useState<boolean>(false);
     const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
-    const contentResizeDetector = useResizeDetector<HTMLDivElement>();
+    const { height: contentHeight, ref: contentRef } =
+        useResizeDetector<HTMLDivElement>();
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
 
     useEffect(() => {
-        setInitialCollapsedState();
-    }, [collapsedHeight]);
+        setCollapsedState();
+    }, [maxCollapsedHeight, contentHeight]);
 
     // =============================================================================
     // HELPERS
     // =============================================================================
 
-    const setInitialCollapsedState = () => {
-        setShowHiddenContent(isNil(collapsedHeight));
-        setRenderShowMore(!isNil(collapsedHeight));
+    const setCollapsedState = () => {
+        setShowHiddenContent(!maxCollapsedHeight); 
+        setRenderShowMore(isContentOutsideCollapsibleZone());
+    };
+
+    const isContentOutsideCollapsibleZone = () => {
+        if(maxCollapsedHeight) {
+            return contentHeight > maxCollapsedHeight;
+        }
+        return false;
     };
 
     // =============================================================================
@@ -59,6 +66,7 @@ export const Alert = ({
 
     const renderShowMoreButton = () => (
         <ShowMoreButton
+            type="button"
             onClick={() => setShowHiddenContent(!showHiddenContent)}
         >
             Show {showHiddenContent ? "less" : "more"}
@@ -105,6 +113,19 @@ export const Alert = ({
         }
     };
 
+    const renderContent = () => (
+        <TextWrapperContainer
+            $maxCollapsedHeight={
+                isContentOutsideCollapsibleZone()
+                    ? maxCollapsedHeight
+                    : undefined
+            }
+            $showMore={showHiddenContent}
+        >
+            <div ref={contentRef}>{children}</div>
+        </TextWrapperContainer>
+    );
+
     return (
         <Wrapper
             className={className}
@@ -118,13 +139,7 @@ export const Alert = ({
                 </AlertIconWrapper>
             )}
             <TextContainer>
-                <TextWrapperContainer
-                    ref={contentResizeDetector.ref}
-                    $collapsedHeight={collapsedHeight}
-                    $showMore={showHiddenContent}
-                >
-                    {children}
-                </TextWrapperContainer>
+                {renderContent()}
                 {renderShowMore && renderShowMoreButton()}
                 {actionLink && renderLink()}
             </TextContainer>

@@ -20,5 +20,5 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
      * Specifies the maximum height of the element to be
      * displayed outside of the collapsible zone, in px 
     */
-    collapsedHeight?: number | undefined;
+    maxCollapsedHeight?: number | undefined;
 }
