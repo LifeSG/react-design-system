@@ -43,11 +43,12 @@ Or if you require a custom display, you can construct your layout and pass it in
 
 <Canvas of={AlertStories.WithCustomIcon} />
 
-<Heading3>With maximum height setting</Heading3>
-You can restrict the height of the `Alert` by setting the `maxCollapsedHeight` to
-a desired value in px.
+<Heading3>With max collapsed height</Heading3>
 
-<Canvas of={AlertStories.WithCollapsedHeight} />
+You can restrict the height of content by setting `maxCollapsedHeight` to a
+desired value in px. This also works with custom content.
+
+<Canvas of={AlertStories.WithMaxCollapsedHeight} />
 
 <Secondary>Component API</Secondary>
 

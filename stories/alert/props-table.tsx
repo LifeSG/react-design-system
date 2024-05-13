@@ -33,14 +33,17 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "actionLink",
-                description: "The attributes of an action link that performs an action on click",
-                propTypes: (<a
-                    href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <code>HTMLAnchorAttributes</code>
-                </a>),
+                description:
+                    "The attributes of an action link that performs an action on click",
+                propTypes: (
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <code>HTMLAnchorAttributes</code>
+                    </a>
+                ),
             },
             {
                 name: "sizeType",
@@ -69,13 +72,14 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "customIcon",
-                description: "Specifies a custom replacement icon for the alert",
+                description:
+                    "Specifies a custom replacement icon for the alert",
                 propTypes: ["JSX.Element"],
-                
             },
             {
                 name: "maxCollapsedHeight",
-                description: "Specifies the maximum height of the content to be displayed outside of the collapsible zone, in px",
+                description:
+                    "Specifies the maximum visible height of the content in px",
                 propTypes: ["number"],
             },
         ],

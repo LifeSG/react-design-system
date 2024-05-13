@@ -230,7 +230,7 @@ export const WithCustomIcon: StoryObj<Component> = {
     },
 };
 
-export const WithCollapsedHeight: StoryObj<Component> = {
+export const WithMaxCollapsedHeight: StoryObj<Component> = {
     render: () => {
         return (
             <>
@@ -249,47 +249,15 @@ export const WithCollapsedHeight: StoryObj<Component> = {
                 </Alert>
                 <br />
                 <Alert type="error" showIcon maxCollapsedHeight={50}>
-                    <ul
+                    <div
                         style={{
-                            display: "flex",
-                            listStyle: "none",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            gap: "1rem",
+                            border: "1px solid red",
+                            padding: "1.5rem",
+                            color: "red",
                         }}
                     >
                         Custom content
-                        <li
-                            style={{
-                                marginRight: "1rem",
-                                border: "1px solid red",
-                                padding: "1rem",
-                                color: "red",
-                            }}
-                        >
-                            First
-                        </li>
-                        <li
-                            style={{
-                                marginRight: "1rem",
-                                border: "1px solid blue",
-                                padding: "1rem",
-                                color: "blue",
-                            }}
-                        >
-                            Second
-                        </li>
-                        <li
-                            style={{
-                                marginRight: "1rem",
-                                border: "1px solid green",
-                                padding: "1rem",
-                                color: "green",
-                            }}
-                        >
-                            Third
-                        </li>
-                    </ul>
+                    </div>
                 </Alert>
                 <br />
             </>
