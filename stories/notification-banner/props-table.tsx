@@ -61,44 +61,25 @@ const DATA: ApiTableSectionProps[] = [
                         clicked
                     </>
                 ),
-                propTypes: ["() => void"],
+                propTypes: [
+                    "(event: React.MouseEvent<HTMLDivElement>) => void",
+                ],
             },
             {
                 name: "maxCollapsedHeight",
                 description: (
                     <>
-                        Specifies the height of the &nbsp;
-                        <code>NotificationBanner</code>to be displayed outside
-                        of the collapsible zone
+                        Specifies the maximum visible height of the
+                        <code>NotificationBanner</code> content
                     </>
                 ),
                 propTypes: ["number"],
             },
             {
                 name: "actionButton",
-                description: 
+                description:
                     "The properties of the action button that appears at the bottom of the component",
-                propTypes: ["ActionButtonProps"],
-            },
-        ],
-    },
-    {
-        name: "ActionButtonProps",
-        attributes: [
-            {
-                name: "",
-                description: (
-                    <>
-                        This component inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <code>HTMLButtonElement</code>
-                        </a>
-                    </>
-                ),
+                propTypes: ["React.ButtonHTMLAttributes<HTMLButtonElement>"],
             },
         ],
     },

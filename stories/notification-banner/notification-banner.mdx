@@ -52,24 +52,22 @@ The `NotificationBanner` also allows custom content to be displayed.
 
 <Canvas of={NotificationBannerStories.CustomContent} />
 
-<Heading3>On Click</Heading3>
+<Heading3>Banner click</Heading3>
 
 The `NotificationBanner` allows performing of an action when clicked.
 
-<Canvas of={NotificationBannerStories.OnClick} />
+<Canvas of={NotificationBannerStories.ClickableBanner} />
 
-<Heading3>With collapsed height setting</Heading3>
+<Heading3>With max collapsed height</Heading3>
 
-You can restrict the height of the `NotificationBanner` by setting the `maxCollapsedHeight` to a
+You can restrict the height of content by setting `maxCollapsedHeight` to a
 desired value in px.
 
-<Canvas of={NotificationBannerStories.CollapsedHeight} />
+<Canvas of={NotificationBannerStories.WithMaxCollapsedHeight} />
 
-<Heading3>Action button</Heading3>
+<Heading3>With action button</Heading3>
 
-You can choose to render a custom component of your choice as an action button.
-
-<Canvas of={NotificationBannerStories.ActionButton} />
+<Canvas of={NotificationBannerStories.WithActionButton} />
 
 <Secondary>Using as a Higher Order Component (HOC)</Secondary>
 

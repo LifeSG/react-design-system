@@ -8,15 +8,10 @@ export interface NotificationBannerProps
     sticky?: boolean | undefined;
     onDismiss?: (() => void) | undefined;
     "data-testid"?: string | undefined;
-    /**
-     * Specifies the height to be displayed outside of
-     * the collapsible zone
-     */
+    /** Specifies the maximum height of content, after which it is collapsed */
     maxCollapsedHeight?: number | undefined;
-    /** Called when the banner is selected */
-    onClick?: (() => void) | undefined;
     /** Action button that will be displayed */
-    actionButton?: ActionButtonProps | undefined;
+    actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps
@@ -34,6 +29,3 @@ export interface NotificationContentAttributes {
     content: string;
     otherAttributes?: TextLinkProps | TextProps | undefined;
 }
-
-export interface ActionButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement> {}

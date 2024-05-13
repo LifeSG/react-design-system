@@ -236,22 +236,12 @@ export const CustomContent: StoryObj<Component> = {
     },
 };
 
-export const OnClick: StoryObj<Component> = {
+export const ClickableBanner: StoryObj<Component> = {
     render: () => {
         const [swapColor, setSwapColor] = useState(true);
         return (
-            <div
-                style={{
-                    position: "relative",
-                    paddingTop: "1.5rem",
-                    maxHeight: "21rem",
-                }}
-            >
-                <NotificationBanner
-                    onClick={() => {
-                        setSwapColor(!swapColor);
-                    }}
-                >
+            <div>
+                <NotificationBanner onClick={() => setSwapColor(!swapColor)}>
                     This is a notification banner that can be clicked to perform
                     an action.
                 </NotificationBanner>
@@ -273,17 +263,11 @@ export const OnClick: StoryObj<Component> = {
     },
 };
 
-export const CollapsedHeight: StoryObj<Component> = {
+export const WithMaxCollapsedHeight: StoryObj<Component> = {
     render: () => {
         return (
-            <div
-                style={{
-                    position: "relative",
-                    paddingTop: "1.5rem",
-                    maxHeight: "21rem",
-                }}
-            >
-                <NotificationBanner maxCollapsedHeight={80}>
+            <div>
+                <NotificationBanner maxCollapsedHeight={100}>
                     This is a notification banner with maxCollapsedHeight set.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -312,28 +296,21 @@ export const CollapsedHeight: StoryObj<Component> = {
     },
 };
 
-const actionButton = () => (
-    <>
-        View More
-        <ArrowRightIcon />
-    </>
-);
-
-export const ActionButton: StoryObj<Component> = {
+export const WithActionButton: StoryObj<Component> = {
     render: () => {
         const [showParagraph, setShowParagraph] = useState(false);
-        const onClick = () => {
-            setShowParagraph(!showParagraph);
-        };
         return (
-            <div
-                style={{
-                    position: "relative",
-                    paddingTop: "1.5rem",
-                }}
-            >
+            <div>
                 <NotificationBanner
-                    actionButton={{ children: actionButton(), onClick }}
+                    actionButton={{
+                        children: (
+                            <>
+                                View More
+                                <ArrowRightIcon />
+                            </>
+                        ),
+                        onClick: () => setShowParagraph(!showParagraph),
+                    }}
                 >
                     This is a notification banner with an action button set.
                 </NotificationBanner>
