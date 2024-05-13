@@ -58,6 +58,7 @@ export const NBComponent = ({
         event: React.MouseEvent<HTMLButtonElement>
     ) => {
         if (!actionButton.onClick) {
+            // let it bubble
             return;
         }
         event.stopPropagation();
@@ -75,6 +76,7 @@ export const NBComponent = ({
             id={formatId("dismiss-button", id)}
             data-testid={formatId("dismiss-button", testId)}
             focusHighlight={false}
+            type="button"
         >
             <StyledIcon />
         </StyledIconButton>
@@ -84,6 +86,7 @@ export const NBComponent = ({
         <ActionButton
             id={formatId("action-button", id)}
             data-testid={formatId("action-button", testId)}
+            type="button"
             {...actionButton}
             onClick={handleActionButtonOnClick}
         >
@@ -105,7 +108,7 @@ export const NBComponent = ({
     );
 
     const renderAccessibleBannerButton = () => (
-        <AccessibleBannerButton aria-label={"Clickable banner"} />
+        <AccessibleBannerButton aria-label={"Clickable banner"} type="button" />
     );
 
     return (
