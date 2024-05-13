@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { NotificationBanner } from "src/notification-banner";
 import { Text } from "src/text";
 import { StyledContent } from "./doc-elements";
+import { useState } from "react";
+import { GearFillIcon } from "@lifesg/react-icons/gear-fill";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 
 type Component = typeof NotificationBanner;
 
@@ -207,8 +210,11 @@ export const CustomContent: StoryObj<Component> = {
                             background: "yellow",
                             color: "black",
                             padding: "1rem",
+                            alignItems: "center",
+                            gap: "1rem",
                         }}
                     >
+                        <GearFillIcon />
                         This is my custom content
                     </div>
                 </NotificationBanner>
@@ -224,6 +230,109 @@ export const CustomContent: StoryObj<Component> = {
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
                     </Text.Body>
+                </StyledContent>
+            </div>
+        );
+    },
+};
+
+export const ClickableBanner: StoryObj<Component> = {
+    render: () => {
+        const [swapColor, setSwapColor] = useState(true);
+        return (
+            <div>
+                <NotificationBanner onClick={() => setSwapColor(!swapColor)}>
+                    This is a notification banner that can be clicked to perform
+                    an action.
+                </NotificationBanner>
+                <StyledContent $color={swapColor ? "green" : "yellow"}>
+                    <Text.Body paragraph>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </Text.Body>
+                </StyledContent>
+            </div>
+        );
+    },
+};
+
+export const WithMaxCollapsedHeight: StoryObj<Component> = {
+    render: () => {
+        return (
+            <div>
+                <NotificationBanner maxCollapsedHeight={100}>
+                    This is a notification banner with maxCollapsedHeight set.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                </NotificationBanner>
+                <StyledContent>
+                    <Text.Body paragraph>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </Text.Body>
+                </StyledContent>
+            </div>
+        );
+    },
+};
+
+export const WithActionButton: StoryObj<Component> = {
+    render: () => {
+        const [showParagraph, setShowParagraph] = useState(false);
+        return (
+            <div>
+                <NotificationBanner
+                    actionButton={{
+                        children: (
+                            <>
+                                View More
+                                <ArrowRightIcon />
+                            </>
+                        ),
+                        onClick: () => setShowParagraph(!showParagraph),
+                    }}
+                >
+                    This is a notification banner with an action button set.
+                </NotificationBanner>
+                <StyledContent>
+                    <Text.Body paragraph>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </Text.Body>
+                    {showParagraph && (
+                        <Text.Body paragraph>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua
+                        </Text.Body>
+                    )}
                 </StyledContent>
             </div>
         );
