@@ -39,8 +39,17 @@ Or if you require a custom display, you can construct your layout and pass it in
 
 <Canvas of={AlertStories.SmallSize} />
 
-<Secondary>Component API</Secondary>
+<Heading3>With custom icon</Heading3>
 
-This component also inherits the [HTMLDivAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement)
+<Canvas of={AlertStories.WithCustomIcon} />
+
+<Heading3>With max collapsed height</Heading3>
+
+You can restrict the height of content by setting `maxCollapsedHeight` to a
+desired value in px. This also works with custom content.
+
+<Canvas of={AlertStories.WithMaxCollapsedHeight} />
+
+<Secondary>Component API</Secondary>
 
 <PropsTable />

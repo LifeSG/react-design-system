@@ -1,3 +1,4 @@
+import { CalendarEventIcon } from "@lifesg/react-icons/calendar-event";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "src/alert";
 
@@ -206,6 +207,59 @@ export const SmallSize: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
+            </>
+        );
+    },
+};
+
+export const WithCustomIcon: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Alert
+                    type="warning"
+                    showIcon
+                    customIcon={<CalendarEventIcon />}
+                >
+                    An alert box with a custom icon that can be passed in using
+                    customIcon.
+                </Alert>
+                <br />
+            </>
+        );
+    },
+};
+
+export const WithMaxCollapsedHeight: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Alert type="warning" showIcon maxCollapsedHeight={80}>
+                    An alert box with a maximum height of content to render,
+                    outside the collapsible zone with a text button to expand
+                    it. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Pellentesque lacinia auctor tellus, eget tempor diam finibus
+                    vel. Integer non enim vehicula, malesuada lectus a, lobortis
+                    magna. Aliquam in sodales enim. Ut id condimentum magna. Ut
+                    aliquet tincidunt nunc eu cursus. Vestibulum id maximus
+                    nulla. Phasellus lacinia risus neque, eget tincidunt dui
+                    maximus sed. Morbi eu vestibulum massa. Suspendisse potenti.
+                    Donec faucibus condimentum nibh, non tempus augue bibendum
+                    non. Cras in mattis ex.
+                </Alert>
+                <br />
+                <Alert type="error" showIcon maxCollapsedHeight={50}>
+                    <div
+                        style={{
+                            border: "1px solid red",
+                            padding: "1.5rem",
+                            color: "red",
+                        }}
+                    >
+                        Custom content
+                    </div>
+                </Alert>
+                <br />
             </>
         );
     },

@@ -5,6 +5,16 @@ import {
 } from "src/uneditable-section";
 
 describe("UneditableSection", () => {
+    beforeEach(() => {
+        
+        jest.resetAllMocks();
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
+    });
+    
     it("should render the elements correctly", () => {
         render(
             <UneditableSection

@@ -1,13 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import { Alert } from "../../src";
 import { Color } from "../../src";
+import { StarIcon } from "@lifesg/react-icons/star";
 
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
 describe("Alert", () => {
     beforeEach(() => {
+        
         jest.resetAllMocks();
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     it("should render the component", () => {
@@ -73,6 +80,23 @@ describe("Alert", () => {
         });
     });
 
+    describe("customIcon", () => {
+        it("should render a custom icon if specified", () => {
+            render(
+                <Alert
+                    type="success"
+                    showIcon={true}
+                    customIcon={<StarIcon data-testid="star-test" />}
+                >
+                    {DEFAULT_TEXT}
+                </Alert>
+            );
+
+            expect(getCustomIcon()).toBeInTheDocument();
+        });
+
+    });
+
     it("should render custom display if required", () => {
         const CUSTOM_TEXT = "this is a custom component";
 
@@ -95,4 +119,8 @@ const getActionLink = (isQuery = false, children?: string) => {
         return screen.queryByRole("link", children && { name: children });
     }
     return screen.getByRole("link", children && { name: children });
+};
+
+const getCustomIcon = () => {
+    return screen.queryByTestId("star-test");
 };
