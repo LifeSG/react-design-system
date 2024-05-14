@@ -135,6 +135,7 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
     }}
     display: flex;
     align-items: center;
+    align-self: flex-start;
     color: ${Color.Primary};
 
     svg {
@@ -145,7 +146,7 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
     }
 `;
 
-export const TextContainer = styled.div`
+export const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -153,6 +154,10 @@ export const TextContainer = styled.div`
 `;
 
 export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
@@ -169,6 +174,7 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
 export const ShowMoreButton = styled.button`
     display: flex;
     align-items: center;
+    align-self: flex-start;
     gap: 0.25rem;
     margin-top: 0.5rem;
 
