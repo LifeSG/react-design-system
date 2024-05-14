@@ -4,17 +4,17 @@ import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-tri
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
 import { useEffect, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import {
     ActionLinkText,
     AlertIconWrapper,
     ChevronIcon,
+    ContentContainer,
     ShowMoreButton,
-    TextContainer,
     TextWrapperContainer,
     Wrapper,
 } from "./alert.style";
 import { AlertProps } from "./types";
-import { useResizeDetector } from "react-resize-detector";
 
 export const Alert = ({
     type,
@@ -123,6 +123,7 @@ export const Alert = ({
             $showMore={showHiddenContent}
         >
             <div ref={contentRef}>{children}</div>
+            {actionLink && renderLink()}
         </TextWrapperContainer>
     );
 
@@ -138,11 +139,10 @@ export const Alert = ({
                     {renderIcon()}
                 </AlertIconWrapper>
             )}
-            <TextContainer>
+            <ContentContainer>
                 {renderContent()}
                 {renderShowMore && renderShowMoreButton()}
-                {actionLink && renderLink()}
-            </TextContainer>
+            </ContentContainer>
         </Wrapper>
     );
 };
