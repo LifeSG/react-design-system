@@ -3,7 +3,7 @@ import { Color } from "../color/color";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 import { AlertSizeType, AlertType } from "./types";
-import { ChevronUpIcon } from "@lifesg/react-icons";
+import { ChevronDownIcon } from "@lifesg/react-icons";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -181,7 +181,7 @@ export const ShowMoreButton = styled.button`
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)<ShowMoreIconStyleProps>`
-    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
+export const ChevronIcon = styled(ChevronDownIcon)<ShowMoreIconStyleProps>`
+    transform: rotate(${(props) => (props.$expanded ? -180 : 0)}deg);
     transition: transform 300ms ease-in-out;
 `;
