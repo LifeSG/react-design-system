@@ -66,6 +66,8 @@ export const Alert = ({
 
     const renderShowMoreButton = () => (
         <ShowMoreButton
+            $sizeType={sizeType}
+            $type={type}
             type="button"
             onClick={() => setShowHiddenContent(!showHiddenContent)}
         >

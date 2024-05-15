@@ -207,6 +207,23 @@ export const SmallSize: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
+                <br />
+                <Alert
+                    type="description"
+                    showIcon
+                    sizeType="small"
+                    actionLink={{
+                        children: "Hyperlink",
+                        href: "https://www.google.com",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                    }}
+                    maxCollapsedHeight={20}
+                >
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </p>
+                </Alert>
             </>
         );
     },
@@ -234,12 +251,17 @@ export const WithMaxCollapsedHeight: StoryObj<Component> = {
     render: () => {
         return (
             <>
-                <Alert type="warning" showIcon maxCollapsedHeight={80} actionLink={{
-                    children: "Hyperlink",
-                    href: "https://www.life.gov.sg/",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                }}>
+                <Alert
+                    type="warning"
+                    showIcon
+                    maxCollapsedHeight={80}
+                    actionLink={{
+                        children: "Hyperlink",
+                        href: "https://www.life.gov.sg/",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                    }}
+                >
                     An alert box with a maximum height of content to render,
                     outside the collapsible zone with a text button to expand
                     it. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
