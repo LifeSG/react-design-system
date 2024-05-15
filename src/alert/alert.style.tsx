@@ -15,6 +15,7 @@ interface StyleProps {
 }
 export interface TextWrapperContainerStyleProps {
     $showMore: boolean;
+    $hasActionLink: boolean;
     $maxCollapsedHeight?: number;
 }
 
@@ -157,12 +158,17 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     display: flex;
     flex-direction: column;
     flex: 1;
-
+    ${(props) => {
+        if(props.$showMore && props.$hasActionLink)
+            return css`
+            margin-bottom: 0.5rem;
+        `;
+    }}
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
         if (!props.$showMore && props.$maxCollapsedHeight)
-            return `
+            return css`
                 max-height: ${props.$maxCollapsedHeight}px;
 				overflow: hidden;
                 -webkit-mask-image: ${gradient};
@@ -170,6 +176,7 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
 			`;
     }}
 `;
+
 
 export const ShowMoreButton = styled.button`
     display: flex;

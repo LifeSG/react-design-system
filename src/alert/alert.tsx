@@ -121,6 +121,7 @@ export const Alert = ({
                     : undefined
             }
             $showMore={showHiddenContent}
+            $hasActionLink={!!actionLink}
         >
             <div ref={contentRef}>{children}</div>
             {actionLink && renderLink()}
