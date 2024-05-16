@@ -1,9 +1,9 @@
+import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 import { AlertSizeType, AlertType } from "./types";
-import { ChevronDownIcon } from "@lifesg/react-icons";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -15,6 +15,7 @@ interface StyleProps {
 }
 export interface TextWrapperContainerStyleProps {
     $showMore: boolean;
+    $hasActionLink: boolean;
     $maxCollapsedHeight?: number;
 }
 
@@ -157,7 +158,12 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     display: flex;
     flex-direction: column;
     flex: 1;
-
+    ${(props) => {
+        if (props.$showMore && props.$hasActionLink)
+            return `
+            margin-bottom: 0.5rem;
+        `;
+    }}
     ${(props) => {
         const gradient =
             "linear-gradient(to bottom, black 50%, transparent 100%)";
@@ -171,7 +177,19 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     }}
 `;
 
-export const ShowMoreButton = styled.button`
+export const ShowMoreButton = styled.button<StyleProps>`
+    ${(props) => {
+        if (props.$sizeType === "small")
+            return css`
+                ${TextStyleHelper.getTextStyle("H6", "semibold")}
+            `;
+        else {
+            return css`
+                ${TextStyleHelper.getTextStyle("H5", "semibold")}
+            `;
+        }
+    }}
+
     display: flex;
     align-items: center;
     align-self: flex-start;
@@ -184,7 +202,6 @@ export const ShowMoreButton = styled.button`
     background: transparent;
 
     color: ${Color.Primary};
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
 `;
 
 export const ChevronIcon = styled(ChevronDownIcon)<ShowMoreIconStyleProps>`

@@ -305,7 +305,7 @@ export const WithActionButton: StoryObj<Component> = {
                     actionButton={{
                         children: (
                             <>
-                                View More
+                                View more
                                 <ArrowRightIcon />
                             </>
                         ),
