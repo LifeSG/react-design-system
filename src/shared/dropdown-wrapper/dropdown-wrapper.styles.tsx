@@ -168,6 +168,7 @@ export const Divider = styled.div`
 export const LabelContainer = styled.div`
     display: flex;
     flex: 1;
+    word-break: break-all;
 `;
 
 export const ValueLabel = styled(Text.Body)<ValueLabelStyleProps>`
