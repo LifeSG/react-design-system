@@ -1,25 +1,27 @@
 import { css } from "styled-components";
 import { Color } from "../../color";
+import { FontFamily } from "../../spec/text-spec/font-spec";
 import { TextLinkSizeType, TextSizeType, TextStyleHelper } from "../../text";
 
-interface HtmlContentStyleOptions {
-    textColor?: string | ((props: any) => string);
+export interface HtmlContentStyleOptions {
+    textSize?: TextSizeType | TextLinkSizeType | undefined;
+    textColor?: string | ((props: any) => string) | undefined;
 }
 
-export const applyHtmlContentStyle = (
-    textStyle: TextSizeType | TextLinkSizeType,
-    options?: HtmlContentStyleOptions
-) => {
-    const { textColor = Color.Neutral[1] } = options || {};
+export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
+    const { textSize, textColor } = options || {};
 
     return css`
-        // Text
-        ${TextStyleHelper.getTextStyle(textStyle, "regular")}
-        color: ${textColor};
-
-        a,
+        // Text styling
+        ${textSize && TextStyleHelper.getTextStyle(textSize, "regular")}
+        ${textColor &&
+        css`
+            color: ${textColor};
+        `}
+        
         strong {
-            ${TextStyleHelper.getTextStyle(textStyle, "semibold")}
+            font-family: ${FontFamily.OpenSans.Semibold};
+            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
         }
 
         p {
@@ -28,11 +30,22 @@ export const applyHtmlContentStyle = (
 
         // Link styling
         a {
+            font-family: ${FontFamily.OpenSans.Semibold};
+            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
             color: ${Color.Primary};
             text-decoration: none;
 
+            svg {
+                color: ${Color.Primary};
+                height: 1rem;
+                width: 1rem;
+                margin-left: 0.4rem;
+                vertical-align: baseline;
+            }
+
             :hover,
             :active,
+            :visited,
             :focus {
                 color: ${Color.Secondary};
 

@@ -1,0 +1,17 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Secondary, Title } from "../storybook-common";
+import * as MarkupStories from "./markup.stories";
+
+<Meta of={MarkupStories} />
+
+<Title>Markup</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that sets styling for commonly used markup such as `<strong>` or `<a>`.
+
+```tsx
+import { Markup } from "@lifesg/react-design-system/markup";
+```
+
+<Canvas of={MarkupStories.Default} />

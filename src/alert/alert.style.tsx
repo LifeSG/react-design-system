@@ -68,9 +68,15 @@ export const Wrapper = styled.div<StyleProps>`
 
     ${(props) => {
         if (props.$sizeType === "small") {
-            return applyHtmlContentStyle("H6");
+            return applyHtmlContentStyle({
+                textSize: "H6",
+                textColor: Color.Neutral[1],
+            });
         }
-        return applyHtmlContentStyle("BodySmall");
+        return applyHtmlContentStyle({
+            textSize: "BodySmall",
+            textColor: Color.Neutral[1],
+        });
     }}
 `;
 

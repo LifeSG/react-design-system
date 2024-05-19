@@ -20,7 +20,10 @@ export const Title = styled(Text.H4)`
 `;
 
 export const TitleContainer = styled.div`
-    ${applyHtmlContentStyle("Body")}
+    ${applyHtmlContentStyle({
+        textSize: "Body",
+        textColor: Color.Neutral[1],
+    })}
 `;
 
 export const Description = styled(Text.BodySmall)`
@@ -29,7 +32,8 @@ export const Description = styled(Text.BodySmall)`
 `;
 
 export const DescriptionContainer = styled.div`
-    ${applyHtmlContentStyle("BodySmall", {
+    ${applyHtmlContentStyle({
+        textSize: "BodySmall",
         textColor: Color.Neutral[3],
     })}
 `;
