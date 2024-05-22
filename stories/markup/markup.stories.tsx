@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Color } from "src/color";
 import { Markup } from "src/markup";
 
 type Component = typeof Markup;
@@ -12,7 +13,7 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => (
-        <Markup>
+        <Markup baseTextColor={Color.Neutral[1]} baseTextSize="Body">
             <p>
                 You can use <strong>bold text</strong> to emphasise important
                 information
@@ -40,5 +41,16 @@ export const Default: StoryObj<Component> = {
                 <li>List item</li>
             </ol>
         </Markup>
+    ),
+};
+
+export const Inheritance: StoryObj<Component> = {
+    render: () => (
+        <div style={{ color: "red", fontSize: "14px" }}>
+            <Markup>
+                Font style and color are inherited. In particular, this is what{" "}
+                <strong>bolded</strong> and <a>link</a> elements look like
+            </Markup>
+        </div>
     ),
 };
