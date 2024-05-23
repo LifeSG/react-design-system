@@ -39,6 +39,7 @@ export * from "./input-slider";
 export * from "./input-textarea";
 export * from "./layout";
 export * from "./link-list";
+export * from "./markup";
 export * from "./masked-input";
 export * from "./masonry";
 export * from "./masthead";
