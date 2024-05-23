@@ -265,9 +265,20 @@ export const ClickableBanner: StoryObj<Component> = {
 
 export const WithMaxCollapsedHeight: StoryObj<Component> = {
     render: () => {
+        const [showParagraph, setShowParagraph] = useState(false);
+
         return (
             <div>
-                <NotificationBanner maxCollapsedHeight={100}>
+                <NotificationBanner maxCollapsedHeight={100}
+                actionButton={{
+                    children: (
+                        <>
+                            View more
+                            <ArrowRightIcon />
+                        </>
+                    ),
+                    onClick: () => setShowParagraph(!showParagraph),
+                }}>
                     This is a notification banner with maxCollapsedHeight set.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -279,17 +290,13 @@ export const WithMaxCollapsedHeight: StoryObj<Component> = {
                     deserunt mollit anim id est laborum.
                 </NotificationBanner>
                 <StyledContent>
-                    <Text.Body paragraph>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
-                    </Text.Body>
+                    {showParagraph && (
+                        <Text.Body paragraph>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua
+                        </Text.Body>
+                    )}
                 </StyledContent>
             </div>
         );
