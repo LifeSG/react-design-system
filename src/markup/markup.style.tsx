@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
     HtmlContentStyleOptions,
     applyHtmlContentStyle,
@@ -8,12 +8,18 @@ import {
 // STYLE INTERFACES
 // =============================================================================
 interface ContainerStyleProps {
-    $options?: HtmlContentStyleOptions | undefined;
+    $textSize?: HtmlContentStyleOptions["textSize"] | undefined;
+    $textColor?: string | ((props: unknown) => string) | undefined;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Container = styled.div<ContainerStyleProps>`
-    ${(props) => applyHtmlContentStyle(props.$options)}
+    ${(props) => applyHtmlContentStyle({ textSize: props.$textSize })}
+    ${(props) =>
+        props.color &&
+        css`
+            color: ${props.color};
+        `}
 `;

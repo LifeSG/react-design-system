@@ -15,7 +15,8 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
         <Container
             ref={ref}
             as={inline ? "span" : "div"}
-            $options={{ textSize: baseTextSize, textColor: baseTextColor }}
+            $textSize={baseTextSize}
+            $textColor={baseTextColor}
             {...otherProps}
         />
     );

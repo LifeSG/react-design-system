@@ -15,10 +15,8 @@ export const PopoverContainer = styled.div`
 `;
 
 export const PopoverCard = styled(Card)`
-    ${applyHtmlContentStyle({
-        textSize: "BodySmall",
-        textColor: Color.Neutral[1],
-    })}
+    color: ${Color.Neutral[1]};
+    ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 
     ${MediaQuery.MaxWidth.mobileL} {
         display: none;
@@ -36,8 +34,6 @@ export const ContentWrapper = styled.div`
         display: none; /* Chrome/Safari/Webkit */
     }
 
-    ${applyHtmlContentStyle({
-        textSize: "BodySmall",
-        textColor: Color.Neutral[1],
-    })}
+    color: ${Color.Neutral[1]};
+    ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 `;

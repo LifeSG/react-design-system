@@ -1,24 +1,19 @@
 import { css } from "styled-components";
 import { Color } from "../../color";
 import { FontFamily } from "../../spec/text-spec/font-spec";
-import { TextLinkSizeType, TextSizeType, TextStyleHelper } from "../../text";
+import { TextSizeType, TextStyleHelper } from "../../text";
 
 export interface HtmlContentStyleOptions {
-    textSize?: TextSizeType | TextLinkSizeType | undefined;
-    textColor?: string | ((props: any) => string) | undefined;
+    textSize?: TextSizeType | undefined;
 }
 
 export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
-    const { textSize, textColor } = options || {};
+    const { textSize } = options || {};
 
     return css`
         // Text styling
         ${textSize && TextStyleHelper.getTextStyle(textSize, "regular")}
-        ${textColor &&
-        css`
-            color: ${textColor};
-        `}
-        
+
         strong {
             font-family: ${FontFamily.OpenSans.Semibold};
             ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
