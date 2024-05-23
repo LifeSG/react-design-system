@@ -66,11 +66,12 @@ export const Wrapper = styled.div<StyleProps>`
         `;
     }}
 
+    color: ${Color.Neutral[1]};
     ${(props) => {
         if (props.$sizeType === "small") {
-            return applyHtmlContentStyle("H6");
+            return applyHtmlContentStyle({ textSize: "H6" });
         }
-        return applyHtmlContentStyle("BodySmall");
+        return applyHtmlContentStyle({ textSize: "BodySmall" });
     }}
 `;
 
