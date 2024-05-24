@@ -58,16 +58,15 @@ The `NotificationBanner` allows performing of an action when clicked.
 
 <Canvas of={NotificationBannerStories.ClickableBanner} />
 
-<Heading3>With max collapsed height</Heading3>
+<Heading3>Handling long content</Heading3>
 
 You can restrict the height of content by setting `maxCollapsedHeight` to a
 desired value in px.
 
-<Canvas of={NotificationBannerStories.WithMaxCollapsedHeight} />
+A button can also be configured to perform some action,
+such as redirecting the user to another page.
 
-<Heading3>With action button</Heading3>
-
-<Canvas of={NotificationBannerStories.WithActionButton} />
+<Canvas of={NotificationBannerStories.HandlingLongContent} />
 
 <Secondary>Using as a Higher Order Component (HOC)</Secondary>
 
