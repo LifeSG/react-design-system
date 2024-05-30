@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+import { Alert } from "../alert";
 import { Color } from "../color";
-import { TextStyleHelper } from "../text";
+import { Text, TextStyleHelper } from "../text";
 import { ToggleStyleType } from "./types";
 
 // =============================================================================
@@ -18,7 +19,21 @@ interface ContainerStyleProps extends StyleProps {
     $error?: boolean;
 }
 
-interface LabelStyleProps extends StyleProps {}
+interface IndicatorContainerStyleProps {
+    $addPadding?: boolean;
+}
+
+interface LabelStyleProps extends StyleProps {
+    $maxLines?: { desktop?: number; mobile?: number };
+}
+
+interface ButtonStyleProps extends StyleProps {
+    $show?: boolean;
+}
+
+interface ChildrenStyleProps extends StyleProps {
+    $isNotFinalItem?: boolean;
+}
 
 // =============================================================================
 // STYLING
@@ -30,8 +45,11 @@ export const Container = styled.div<ContainerStyleProps>`
     border-radius: 4px;
     border-width: 1px;
     border-style: solid;
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-    padding: 0.6875rem 1rem;
+    overflow: hidden;
+    border-width: 0.063rem;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
 
     // Content positioning style
     ${(props) => {
@@ -49,7 +67,6 @@ export const Container = styled.div<ContainerStyleProps>`
                 if (props.$error) {
                     return css`
                         border-color: ${Color.Validation.Red.Icon};
-                        background: ${Color.Neutral[8]};
 
                         :hover {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
@@ -73,17 +90,14 @@ export const Container = styled.div<ContainerStyleProps>`
             default: {
                 if (props.$disabled && !props.$selected) {
                     return css`
-                        background: ${Color.Neutral[6]};
                         border-color: ${Color.Neutral[5]};
                     `;
                 } else if (props.$disabled && props.$selected) {
                     return css`
-                        background: ${Color.Neutral[6]};
                         border-color: ${Color.Neutral[4]};
                     `;
                 } else if (props.$error) {
                     return css`
-                        background: ${Color.Neutral[8]};
                         border-color: ${Color.Validation.Red.Border};
 
                         :hover {
@@ -92,7 +106,6 @@ export const Container = styled.div<ContainerStyleProps>`
                     `;
                 } else if (props.$selected) {
                     return css`
-                        background: ${Color.Accent.Light[5]};
                         border-color: ${Color.Primary};
 
                         :hover {
@@ -192,4 +205,159 @@ export const SubLabel = styled.div<LabelStyleProps>`
             `;
         }
     }}
+`;
+
+export const HeaderContainer = styled.div<ContainerStyleProps>`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    // Background, Hover and Border style
+    ${(props) => {
+        switch (props.$styleType) {
+            case "no-border": {
+                if (props.$error) {
+                    return css`
+                        background: ${Color.Neutral[8]};
+                    `;
+                } else if (!props.$disabled) {
+                    return css`
+                        :hover {
+                            background: ${Color.Accent.Light[6]};
+                        }
+                    `;
+                } else {
+                    return css``;
+                }
+            }
+            default: {
+                if (props.$disabled && !props.$selected) {
+                    return css`
+                        background: ${Color.Neutral[6]};
+                    `;
+                } else if (props.$disabled && props.$selected) {
+                    return css`
+                        background: ${Color.Neutral[6]};
+                    `;
+                } else if (props.$error) {
+                    return css`
+                        background: ${Color.Neutral[8]};
+                    `;
+                } else if (props.$selected) {
+                    return css`
+                        background: ${Color.Accent.Light[5]};
+                    `;
+                } else {
+                    return css`
+                        background: ${Color.Neutral[8]};
+                    `;
+                }
+            }
+        }
+    }}
+`;
+
+export const IndicatorLabelContainer = styled.div<IndicatorContainerStyleProps>`
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding: ${(props) =>
+        props.$addPadding ? "0.6875rem 0rem 0.6875rem 1rem" : "0.6875rem 1rem"};
+`;
+
+export const ButtonContainer = styled.button<ContainerStyleProps>`
+    color: ${(props) =>
+        props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Icon};
+    white-space: nowrap;
+    height: fit-content;
+    padding: 0.6875rem 1rem 0.6875rem 0.5rem;
+    border: none;
+    background: none;
+
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+`;
+export const ButtonLabel = styled.label<StyleProps>`
+    ${TextStyleHelper.getTextStyle("H4", "semibold")};
+    line-height: 1.375rem;
+    color: ${Color.Validation.Red[1]};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+`;
+export const ViewMoreOrLessButtonLabel = styled(Text.H4)<StyleProps>`
+    color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
+    margin-right: 0.5rem;
+`;
+export const ViewMoreOrLessButtonContainer = styled.button<ButtonStyleProps>`
+    color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 0.6875rem;
+    border: none;
+    background: none;
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    float: right;
+    display: ${(props) => (props.$show ? "flex" : "none")};
+`;
+export const ErrorListContainer = styled.div<ButtonStyleProps>`
+    width: 100%;
+    color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
+    border: none;
+    background: none;
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    display: ${(props) => (props.$show ? "flex" : "none")};
+    padding-top: 0.6875rem;
+    padding-bottom: ${(props) => (!props.$show ? "0.6875rem" : "0.5rem")};
+`;
+
+export const AlertContainer = styled(Alert)`
+    width: 100%;
+    user-select: none;
+`;
+export const ChildrenContainer = styled.div`
+    padding: 0 1rem;
+`;
+
+export const Children = styled.div<ChildrenStyleProps>`
+    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    padding-top: 0.6875rem;
+    padding-bottom: ${(props) =>
+        props.$isNotFinalItem ? "0.5rem" : "0.6875rem"};
+    display: ${(props) => (props.$selected ? "flex" : "none")};
+    strong,
+    b {
+        ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
+        color: inherit;
+    }
+
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Color.Neutral[3]};
+            `;
+        } else if (props.$selected) {
+            return css`
+                color: ${Color.Primary};
+            `;
+        } else {
+            return css`
+                color: ${Color.Neutral[1]};
+            `;
+        }
+    }}
+`;
+
+export const ErrorListItem = styled(Text.H5)<StyleProps>`
+    color: ${(props) => (props.$disabled ? Color.Neutral[3] : "#C60000")};
+`;
+export const ErrorListli = styled.li<StyleProps>`
+    color: ${(props) =>
+        props.$disabled ? Color.Neutral[3] : "#C60000"} !important;
+`;
+
+export const ErrorMessage = styled(Text.H6)`
+    color: ${Color.Validation.Red.Text};
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    outline: none;
 `;

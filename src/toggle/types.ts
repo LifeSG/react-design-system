@@ -22,7 +22,7 @@ export interface ToggleProps
     /** The Toggle label */
     children: React.ReactNode;
     // /** The description label displayed below the main label */
-    subLabel?: (() => JSX.Element) | string | undefined;
+    subLabel?: (() => JSX.Element) | JSX.Element | string | undefined;
     disabled?: boolean | undefined;
     /** Specifies if the error display should be present */
     error?: boolean | undefined;
@@ -33,4 +33,14 @@ export interface ToggleProps
     onChange?:
         | ((event: React.ChangeEvent<HTMLInputElement>) => void)
         | undefined;
+    /** specifies to show or hide view more or less button when remove button is not present */
+    hideMoreOrLessButton?: boolean;
+    /** specifies the list of errors that has to be shown inside the composite-option container when the show less button is clicked*/
+    errorList?: string[] | JSX.Element | undefined;
+    errorMessage?: string;
+    remove?: boolean | undefined;
+    onRemove?: (() => void) | undefined;
+    /** The children inside the composite option */
+    compositeOptionSection?: React.ReactNode;
+    showCompositeOptionSection?: boolean | undefined;
 }

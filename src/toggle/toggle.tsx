@@ -1,14 +1,30 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { useEffect, useRef, useState } from "react";
+import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
+import { TextList } from "../text-list";
+import { SimpleIdGenerator } from "../util";
 import {
+    AlertContainer,
+    ButtonContainer,
+    ButtonLabel,
+    Children,
+    ChildrenContainer,
     Container,
+    ErrorListContainer,
+    ErrorListItem,
+    ErrorListli,
+    ErrorMessage,
+    HeaderContainer,
+    IndicatorLabelContainer,
     Input,
     Label,
     SubLabel,
     TextContainer,
+    ViewMoreOrLessButtonContainer,
+    ViewMoreOrLessButtonLabel,
 } from "./toggle.styles";
 import { ToggleProps } from "./types";
-import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
-import { SimpleIdGenerator } from "../util";
 
 export const Toggle = ({
     type = "checkbox",
@@ -22,13 +38,25 @@ export const Toggle = ({
     name,
     id,
     className,
+    hideMoreOrLessButton,
+    errorList,
+    errorMessage,
+    remove,
+    onRemove,
+    compositeOptionSection,
+    showCompositeOptionSection,
     "data-testid": testId,
     onChange,
 }: ToggleProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selected, setSelected] = useState<boolean>(checked);
+    const [selected, setSelected] = useState<boolean | undefined>(checked);
+    const [showMore, setShowMore] = useState<boolean>(
+        !!showCompositeOptionSection
+    );
+
+    const [showErrorList, setShowErrorList] = useState<boolean>(false);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
     const generatedInputId = id ? `${id}-input` : `tg-${uniqueId}-input`;
 
@@ -41,6 +69,28 @@ export const Toggle = ({
         setSelected(checked);
     }, [checked]);
 
+    useEffect(() => {
+        if (
+            selected !== undefined &&
+            showCompositeOptionSection === undefined
+        ) {
+            setShowMore(selected);
+        }
+    }, [selected, showCompositeOptionSection]);
+
+    useEffect(() => {
+        if (errorList) {
+            const showErrorIfString =
+                !showMore && Array.isArray(errorList) && errorList?.length > 0;
+            const showErrorIfElement = !showMore && !Array.isArray(errorList);
+            if (!selected) {
+                setShowErrorList(!selected);
+            } else {
+                setShowErrorList(showErrorIfString || showErrorIfElement);
+            }
+        }
+    }, [showMore, errorList, selected]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -50,7 +100,6 @@ export const Toggle = ({
                 onChange(event);
                 return;
             }
-
             switch (type) {
                 case "checkbox":
                     setSelected((prevSelected) => {
@@ -67,6 +116,12 @@ export const Toggle = ({
                     }
                     break;
             }
+        }
+    };
+
+    const handleView = () => {
+        if (!disabled) {
+            setShowMore(!showMore);
         }
     };
 
@@ -97,7 +152,14 @@ export const Toggle = ({
             />
         );
     };
-
+    const handleOnRemove = () => {
+        if (!disabled) {
+            if (onRemove) {
+                onRemove();
+                return;
+            }
+        }
+    };
     const renderSubLabel = () => {
         if (!subLabel) {
             return null;
@@ -105,10 +167,10 @@ export const Toggle = ({
 
         let component: string | JSX.Element;
 
-        if (typeof subLabel === "string") {
-            component = subLabel;
-        } else if (typeof subLabel === "function") {
+        if (typeof subLabel === "function") {
             component = subLabel();
+        } else {
+            component = subLabel;
         }
 
         return (
@@ -122,40 +184,192 @@ export const Toggle = ({
         );
     };
 
+    const renderCompositeOptionSection = () => {
+        if (!compositeOptionSection) {
+            return null;
+        }
+        const ChildrenisFinalItem = hideMoreOrLessButton || remove;
+        return (
+            <Children
+                $selected={showMore}
+                $isNotFinalItem={
+                    ChildrenisFinalItem ? !ChildrenisFinalItem : selected
+                }
+                $disabled={disabled}
+            >
+                {compositeOptionSection}
+            </Children>
+        );
+    };
+
+    const renderViewMoreOrLessButton = () => {
+        const errorMssgOrChildrenShown = showMore || showErrorList;
+        return (
+            <>
+                <div
+                    style={{
+                        paddingTop:
+                            !selected || errorMssgOrChildrenShown
+                                ? "0rem"
+                                : "0.6875rem",
+                    }}
+                ></div>
+                <ViewMoreOrLessButtonContainer
+                    $show={hideMoreOrLessButton ? false : selected}
+                    $disabled={disabled}
+                    onClick={() => handleView()}
+                    data-testid="toggle-button"
+                >
+                    <ViewMoreOrLessButtonLabel
+                        weight="semibold"
+                        $disabled={disabled}
+                        data-testid="toggle-button-label"
+                    >
+                        {showMore ? "Show less" : "Show more"}
+                    </ViewMoreOrLessButtonLabel>
+                    {showMore ? (
+                        <ChevronUpIcon height={18} width={18} />
+                    ) : (
+                        <ChevronDownIcon height={18} width={18} />
+                    )}
+                </ViewMoreOrLessButtonContainer>
+            </>
+        );
+    };
+
+    const renderErrorsList = () => {
+        return (
+            !showMore &&
+            showErrorList && (
+                <ErrorListContainer
+                    $show={hideMoreOrLessButton ? false : selected}
+                    $disabled={disabled}
+                    onClick={() => handleView()}
+                    data-testid="error-alert"
+                >
+                    <AlertContainer
+                        type={!disabled ? "error" : "description"}
+                        className={className}
+                        showIcon
+                    >
+                        {Array.isArray(errorList) ? (
+                            <>
+                                <ErrorListItem
+                                    weight="semibold"
+                                    $disabled={disabled}
+                                >
+                                    Error
+                                </ErrorListItem>
+                                <TextList.Ul>
+                                    {errorList?.map((item, index) => {
+                                        return (
+                                            <ErrorListli
+                                                $disabled={disabled}
+                                                key={index}
+                                            >
+                                                <ErrorListItem
+                                                    weight="semibold"
+                                                    $disabled={disabled}
+                                                >
+                                                    {item}
+                                                </ErrorListItem>
+                                            </ErrorListli>
+                                        );
+                                    })}
+                                </TextList.Ul>
+                            </>
+                        ) : (
+                            errorList
+                        )}
+                    </AlertContainer>
+                </ErrorListContainer>
+            )
+        );
+    };
+
     return (
-        <Container
-            $selected={selected}
-            $disabled={disabled}
-            className={className}
-            $styleType={styleType}
-            $error={error}
-            $indicator={indicator}
-            id={id}
-            data-testid={testId}
-        >
-            {indicator && renderIndicator()}
-            <Input
-                ref={inputRef}
-                name={name}
-                id={generatedInputId}
-                type={type === "checkbox" ? "checkbox" : "radio"}
-                data-testid="toggle-input"
-                disabled={disabled}
-                onChange={handleOnChange}
-                checked={selected}
-            />
-            <TextContainer>
-                <Label
-                    htmlFor={generatedInputId}
+        <>
+            <Container
+                $selected={selected}
+                $disabled={disabled}
+                className={className}
+                $styleType={styleType}
+                $error={error}
+                $indicator={indicator}
+                id={id}
+                data-testid={testId}
+            >
+                <HeaderContainer
+                    id={"header-container"}
+                    $disabled={disabled}
+                    $error={error}
                     $selected={selected}
                     $indicator={indicator}
-                    $disabled={disabled}
-                    data-testid="toggle-label"
+                    $styleType={styleType}
                 >
-                    {children}
-                </Label>
-                {subLabel && renderSubLabel()}
-            </TextContainer>
-        </Container>
+                    <IndicatorLabelContainer $addPadding={remove}>
+                        <Input
+                            ref={inputRef}
+                            name={name}
+                            id={generatedInputId}
+                            type={type === "checkbox" ? "checkbox" : "radio"}
+                            data-testid="toggle-input"
+                            disabled={disabled}
+                            onChange={handleOnChange}
+                            checked={selected}
+                        />
+                        {indicator && renderIndicator()}
+                        <TextContainer>
+                            <Label
+                                htmlFor={generatedInputId}
+                                $selected={selected}
+                                $indicator={indicator}
+                                $disabled={disabled}
+                                data-testid="toggle-label"
+                            >
+                                {children}
+                            </Label>
+                            {subLabel && renderSubLabel()}
+                        </TextContainer>
+                    </IndicatorLabelContainer>
+
+                    {remove && (
+                        <>
+                            <ButtonContainer
+                                $disabled={disabled}
+                                onClick={handleOnRemove}
+                                id={`remove-${id}`}
+                            >
+                                <ButtonLabel $disabled={disabled}>
+                                    Remove
+                                </ButtonLabel>
+                            </ButtonContainer>
+                        </>
+                    )}
+                </HeaderContainer>
+                {compositeOptionSection && (
+                    <ChildrenContainer>
+                        {renderCompositeOptionSection()}
+                        {!remove && (
+                            <>
+                                {renderErrorsList()}
+                                {renderViewMoreOrLessButton()}
+                            </>
+                        )}
+                    </ChildrenContainer>
+                )}
+            </Container>
+
+            {errorMessage && (
+                <ErrorMessage
+                    id={"error-message"}
+                    weight="semibold"
+                    tabIndex={0}
+                    data-testid={"error-message"}
+                >
+                    {errorMessage}
+                </ErrorMessage>
+            )}
+        </>
     );
 };
