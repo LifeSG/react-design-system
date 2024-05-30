@@ -129,8 +129,15 @@ export const RadioRemovable: StoryObj<Component> = {
                         type={"radio"}
                         remove
                         showCompositeOptionSection
+                        compositeOptionSection={
+                            <Form.Input
+                                label="This is the error state"
+                                placeholder="Enter here..."
+                                onChange={() => ({})}
+                            />
+                        }
                     >
-                        Hello
+                        Text
                     </Toggle>
                     <Toggle
                         indicator
