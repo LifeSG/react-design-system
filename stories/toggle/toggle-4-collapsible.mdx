@@ -1,0 +1,11 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as ToggleCollapsibleStories from "./toggle-4-collapsible.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ToggleCollapsibleStories} />
+
+<Title>Collapsible</Title>
+
+<Canvas of={ToggleCollapsibleStories.CheckboxCollapsible} />
+<Canvas of={ToggleCollapsibleStories.RadioCollapsible} />

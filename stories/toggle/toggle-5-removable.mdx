@@ -1,0 +1,11 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as ToggleRemovableStories from "./toggle-5-removable.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ToggleRemovableStories} />
+
+<Title>Removable</Title>
+
+<Canvas of={ToggleRemovableStories.CheckboxRemovable} />
+<Canvas of={ToggleRemovableStories.RadioRemovable} />

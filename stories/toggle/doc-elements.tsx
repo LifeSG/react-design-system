@@ -96,3 +96,19 @@ export const Headings = () => {
         </div>
     );
 };
+
+export const HeadingsNextLine = () => {
+    return (
+        <div>
+            <HeadingLabel weight="semibold">
+                Hide Show more or less button
+            </HeadingLabel>
+            <HeadingLabel weight="semibold">
+                Selected with error list
+            </HeadingLabel>
+            <HeadingLabel weight="semibold">
+                Disabled Selected with error list
+            </HeadingLabel>
+        </div>
+    );
+};
