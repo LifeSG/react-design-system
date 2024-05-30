@@ -83,7 +83,7 @@ const DATA: ApiTableSectionProps[] = [
                         displayed below the main label.
                     </>
                 ),
-                propTypes: ["string", "() => JSX.Element"],
+                propTypes: ["string", "() => JSX.Element", "JSX.Element"],
             },
             {
                 name: "onChange",
@@ -96,6 +96,73 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [
                     "(event: React.ChangeEvent<HTMLInputElement>) => void",
                 ],
+            },
+            {
+                name: "compositeOptionSection",
+                description: (
+                    <>
+                        The description label of the{" "}
+                        <code>composite Option Section</code> displayed below
+                        the main label.
+                    </>
+                ),
+                propTypes: ["string", "JSX.Element"],
+            },
+            {
+                name: "showCompositeOption",
+                description: (
+                    <>specifies if the CompositeOption have to be shown</>
+                ),
+                propTypes: ["boolean"],
+            },
+            {
+                name: "hideMoreOrLessButton",
+                description: (
+                    <>
+                        specifies if <code>show More</code> Or{" "}
+                        <code>show Less </code>Button is shown/hidden. if remove
+                        prop is true then this props doesnt affect.{" "}
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
+
+            {
+                name: "errorList",
+                description:
+                    "Specifies if the internal errors should be displayed inside the container error list has to be displayed inside the container.",
+                propTypes: ["string[]", "JSX.Element"],
+            },
+
+            {
+                name: "errorMessage",
+                description:
+                    "specifies error message to be displayed in error Color.",
+                propTypes: ["string"],
+            },
+            {
+                name: "remove",
+                description: (
+                    <>
+                        Specifies if the element has Remove button on top. if
+                        remove is true then <code>hideMoreOrLessButton</code>{" "}
+                        will not have anyeffect. it will always be true(hidden).
+                        set <code>showChildren</code> to <code>true</code> if
+                        the children have to be shown with <code>remove</code>{" "}
+                        button.
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: `false`,
+            },
+            {
+                name: "onRemove",
+                description: (
+                    <>
+                        Called when the <code>Remove button</code> is clicked
+                    </>
+                ),
+                propTypes: ["() => void"],
             },
         ],
     },
