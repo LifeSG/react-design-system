@@ -120,9 +120,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string", "JSX.Element"],
             },
             {
-                name: "showCompositeOption",
+                name: "show",
                 description: (
-                    <>specifies if the CompositeOption have to be shown</>
+                    <>
+                        specifies if the CompositeOption children have to be
+                        shown
+                    </>
                 ),
                 propTypes: ["boolean"],
             },
@@ -153,9 +156,8 @@ const DATA: ApiTableSectionProps[] = [
                         Specifies if the element has Remove button on top. if
                         removable is true then <code>collapsible</code> will not
                         have anyeffect. it will always be true(hidden). set{" "}
-                        <code>showCompositeOption</code> to <code>true</code> if
-                        the children have to be shown with{" "}
-                        <code>removable</code> button.
+                        <code>show</code> to <code>true</code> if the children
+                        have to be shown with <code>removable</code> button.
                     </>
                 ),
                 propTypes: ["boolean"],

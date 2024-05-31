@@ -23,9 +23,9 @@ const renderCompositeSection = () => {
 };
 
 const compositeOption: ToggleCompositeSectionProps = {
-    compositeOptionSection: renderCompositeSection(),
+    children: renderCompositeSection(),
     errorList: undefined,
-    showCompositeOptionSection: undefined,
+    show: undefined,
     collapsible: undefined,
 };
 
@@ -138,8 +138,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         subLabel={"this is helper text"}
                         compositeSection={{
                             ...compositeOption,
-                            compositeOptionSection:
-                                compositeOptionSectionWithErrorList(),
+                            children: compositeOptionSectionWithErrorList(),
                             errorList: checkboxError,
                         }}
                     >
@@ -152,9 +151,8 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         disabled={true}
                         compositeSection={{
                             ...compositeOption,
-                            showCompositeOptionSection: false,
-                            compositeOptionSection:
-                                compositeOptionSectionWithErrorList(),
+                            show: false,
+                            children: compositeOptionSectionWithErrorList(),
                             errorList: ["Type inline error here"],
                         }}
                     >
@@ -275,8 +273,7 @@ export const RadioCollapsible: StoryObj<Component> = {
                         compositeSection={{
                             ...compositeOption,
                             errorList: radioError,
-                            compositeOptionSection:
-                                renderCompositeOptionErrorList(),
+                            children: renderCompositeOptionErrorList(),
                         }}
                     >
                         Text
@@ -288,7 +285,7 @@ export const RadioCollapsible: StoryObj<Component> = {
                         disabled={true}
                         compositeSection={{
                             ...compositeOption,
-                            showCompositeOptionSection: false,
+                            show: false,
                             errorList: ["Enter a label"],
                         }}
                     >

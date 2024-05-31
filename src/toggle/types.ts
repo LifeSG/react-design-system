@@ -44,6 +44,6 @@ export interface ToggleCompositeSectionProps {
     removable?: boolean | undefined;
     onRemove?: (() => void) | undefined;
     /** The children inside the composite option */
-    compositeOptionSection?: React.ReactNode;
-    showCompositeOptionSection?: boolean | undefined;
+    children?: React.ReactNode;
+    show?: boolean | undefined;
 }

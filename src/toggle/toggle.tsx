@@ -49,8 +49,8 @@ export const Toggle = ({
         errorList,
         removable,
         onRemove,
-        compositeOptionSection,
-        showCompositeOptionSection,
+        children: compositeOptionSection,
+        show: showCompositeOptionSection,
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
     const [showMore, setShowMore] = useState<boolean>(
