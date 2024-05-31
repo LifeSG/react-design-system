@@ -14,7 +14,6 @@ import {
     ErrorListContainer,
     ErrorListItem,
     ErrorListli,
-    ErrorMessage,
     HeaderContainer,
     IndicatorLabelContainer,
     Input,
@@ -288,7 +287,6 @@ export const Toggle = ({
     };
 
     return (
-        <>
             <Container
                 $selected={selected}
                 $disabled={disabled}
@@ -359,17 +357,5 @@ export const Toggle = ({
                     </ChildrenContainer>
                 )}
             </Container>
-
-            {errorMessage && (
-                <ErrorMessage
-                    id={"error-message"}
-                    weight="semibold"
-                    tabIndex={0}
-                    data-testid={"error-message"}
-                >
-                    {errorMessage}
-                </ErrorMessage>
-            )}
-        </>
     );
 };

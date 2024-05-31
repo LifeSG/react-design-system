@@ -354,10 +354,3 @@ export const ErrorListli = styled.li<StyleProps>`
     color: ${(props) =>
         props.$disabled ? Color.Neutral[3] : "#C60000"} !important;
 `;
-
-export const ErrorMessage = styled(Text.H6)`
-    color: ${Color.Validation.Red.Text};
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    outline: none;
-`;
