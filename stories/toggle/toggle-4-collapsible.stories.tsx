@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "../../src/form";
 import { Headings, HeadingsNextLine, Wrapper } from "./doc-elements";
-import { Toggle } from "../../src";
+import { Toggle, ToggleCompositeSectionProps } from "../../src";
 
 type Component = typeof Toggle;
 
@@ -12,11 +12,39 @@ const meta: Meta<Component> = {
 };
 export default meta;
 
+const renderCompositeSection = () => {
+    return (
+        <Form.Input
+            label="This is the error state"
+            placeholder="Enter here..."
+            onChange={() => ({})}
+        />
+    );
+};
+
+const compositeOption: ToggleCompositeSectionProps = {
+    compositeOptionSection: renderCompositeSection(),
+    errorList: undefined,
+    showCompositeOptionSection: undefined,
+    collapsible: undefined,
+};
+
 export const CheckboxCollapsible: StoryObj<Component> = {
     render: () => {
         const [checkboxError, setCheckboxError] = useState<
             string[] | undefined
         >(["Enter a label"]);
+
+        const compositeOptionSectionWithErrorList = () => {
+            return (
+                <Form.Input
+                    label="This is the error state"
+                    errorMessage={checkboxError ? checkboxError[0] : undefined}
+                    placeholder="Enter here..."
+                    onChange={(event) => onChangeHandler(event.target.value)}
+                />
+            );
+        };
 
         const onChangeHandler = (inputVal) => {
             if (inputVal === "") {
@@ -40,13 +68,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                     <Toggle
                         indicator
                         subLabel={"this is helper text"}
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
@@ -54,13 +76,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         indicator
                         checked
                         subLabel={"this is helper text"}
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
@@ -69,13 +85,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         indicator
                         subLabel={"this is helper text"}
                         disabled
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
@@ -84,13 +94,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         subLabel={"this is helper text"}
                         disabled
                         checked
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
@@ -99,14 +103,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                             indicator
                             subLabel={"this is helper text"}
                             error
-                            compositeOptionSection={
-                                <Form.Input
-                                    label="This is the error state"
-                                    placeholder="Enter here..."
-                                    onChange={() => ({})}
-                                />
-                            }
-                            errorMessage={"this is the error"}
+                            compositeSection={compositeOption}
                         >
                             Text
                         </Toggle>
@@ -125,51 +122,41 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                 >
                     <Toggle
                         indicator
-                        hideMoreOrLessButton
                         checked
                         subLabel={"this is helper text"}
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={{
+                            ...compositeOption,
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
 
                     <Toggle
                         indicator
-                        remove={false}
                         checked
                         subLabel={"this is helper text"}
-                        errorList={checkboxError}
-                        showCompositeOptionSection={false}
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                errorMessage={
-                                    checkboxError ? checkboxError[0] : undefined
-                                }
-                                placeholder="Enter here..."
-                                onChange={(event) =>
-                                    onChangeHandler(event.target.value)
-                                }
-                            />
-                        }
+                        compositeSection={{
+                            ...compositeOption,
+                            compositeOptionSection:
+                                compositeOptionSectionWithErrorList(),
+                            errorList: checkboxError,
+                        }}
                     >
                         Text
                     </Toggle>
                     <Toggle
                         indicator
-                        remove={false}
                         checked
-                        compositeOptionSection={"Text"}
                         subLabel={"this is helper text"}
-                        errorList={["Type inline error here"]}
-                        showCompositeOptionSection={false}
                         disabled={true}
+                        compositeSection={{
+                            ...compositeOption,
+                            showCompositeOptionSection: false,
+                            compositeOptionSection:
+                                compositeOptionSectionWithErrorList(),
+                            errorList: ["Type inline error here"],
+                        }}
                     >
                         Hello
                     </Toggle>
@@ -192,6 +179,16 @@ export const RadioCollapsible: StoryObj<Component> = {
                 setRadioError([]);
             }
         };
+        const renderCompositeOptionErrorList = () => {
+            return (
+                <Form.Input
+                    label="This is the error state"
+                    errorMessage={radioError ? radioError[0] : undefined}
+                    placeholder="Enter here..."
+                    onChange={(event) => onChangeHandler(event.target.value)}
+                />
+            );
+        };
         return (
             <Wrapper>
                 <Headings />
@@ -207,28 +204,15 @@ export const RadioCollapsible: StoryObj<Component> = {
                     <Toggle
                         indicator
                         type={"radio"}
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
                     <Toggle
                         indicator
                         type={"radio"}
-                        remove={false}
                         checked
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
@@ -237,13 +221,7 @@ export const RadioCollapsible: StoryObj<Component> = {
                         indicator
                         type={"radio"}
                         disabled
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
@@ -252,13 +230,7 @@ export const RadioCollapsible: StoryObj<Component> = {
                         type={"radio"}
                         disabled
                         checked
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={compositeOption}
                     >
                         Text
                     </Toggle>
@@ -266,15 +238,8 @@ export const RadioCollapsible: StoryObj<Component> = {
                         <Toggle
                             indicator
                             type={"radio"}
-                            compositeOptionSection={
-                                <Form.Input
-                                    label="This is the error state"
-                                    placeholder="Enter here..."
-                                    onChange={() => ({})}
-                                />
-                            }
+                            compositeSection={compositeOption}
                             error
-                            errorMessage={"this is the error"}
                         >
                             Text
                         </Toggle>
@@ -294,50 +259,38 @@ export const RadioCollapsible: StoryObj<Component> = {
                     <Toggle
                         indicator
                         type={"radio"}
-                        hideMoreOrLessButton
                         checked
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                placeholder="Enter here..."
-                                onChange={() => ({})}
-                            />
-                        }
+                        compositeSection={{
+                            ...compositeOption,
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
 
                     <Toggle
                         indicator
-                        remove={false}
                         checked
-                        errorList={radioError}
-                        showCompositeOptionSection={false}
                         type="radio"
-                        compositeOptionSection={
-                            <Form.Input
-                                label="This is the error state"
-                                errorMessage={
-                                    radioError ? radioError[0] : undefined
-                                }
-                                placeholder="Enter here..."
-                                onChange={(event) =>
-                                    onChangeHandler(event.target.value)
-                                }
-                            />
-                        }
+                        compositeSection={{
+                            ...compositeOption,
+                            errorList: radioError,
+                            compositeOptionSection:
+                                renderCompositeOptionErrorList(),
+                        }}
                     >
                         Text
                     </Toggle>
                     <Toggle
                         indicator
                         type={"radio"}
-                        remove={false}
                         checked
-                        compositeOptionSection={"Text"}
-                        errorList={["Enter a label"]}
-                        showCompositeOptionSection={false}
                         disabled={true}
+                        compositeSection={{
+                            ...compositeOption,
+                            showCompositeOptionSection: false,
+                            errorList: ["Enter a label"],
+                        }}
                     >
                         Hello
                     </Toggle>
