@@ -37,19 +37,21 @@ export const Toggle = ({
     name,
     id,
     className,
-    hideMoreOrLessButton,
-    errorList,
-    errorMessage,
-    remove,
-    onRemove,
-    compositeOptionSection,
-    showCompositeOptionSection,
+    compositeSection,
     "data-testid": testId,
     onChange,
 }: ToggleProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const {
+        collapsible = true,
+        errorList,
+        removable,
+        onRemove,
+        compositeOptionSection,
+        showCompositeOptionSection,
+    } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
     const [showMore, setShowMore] = useState<boolean>(
         !!showCompositeOptionSection
@@ -187,7 +189,7 @@ export const Toggle = ({
         if (!compositeOptionSection) {
             return null;
         }
-        const ChildrenisFinalItem = hideMoreOrLessButton || remove;
+        const ChildrenisFinalItem = !collapsible || removable;
         return (
             <Children
                 $selected={showMore}
@@ -214,7 +216,7 @@ export const Toggle = ({
                     }}
                 ></div>
                 <ViewMoreOrLessButtonContainer
-                    $show={hideMoreOrLessButton ? false : selected}
+                    $show={!collapsible ? false : selected}
                     $disabled={disabled}
                     onClick={() => handleView()}
                     data-testid="toggle-button"
@@ -236,12 +238,80 @@ export const Toggle = ({
         );
     };
 
+    const renderToggleWithRemoveButton = () => {
+        return (
+            <HeaderContainer
+                id={`header-container-${id}`}
+                $disabled={disabled}
+                $error={error}
+                $selected={selected}
+                $indicator={indicator}
+                $styleType={styleType}
+            >
+                <IndicatorLabelContainer $addPadding={removable}>
+                    <Input
+                        ref={inputRef}
+                        name={name}
+                        id={generatedInputId}
+                        type={type === "checkbox" ? "checkbox" : "radio"}
+                        data-testid="toggle-input"
+                        disabled={disabled}
+                        onChange={handleOnChange}
+                        checked={selected}
+                    />
+                    {indicator && renderIndicator()}
+                    <TextContainer>
+                        <Label
+                            htmlFor={generatedInputId}
+                            $selected={selected}
+                            $indicator={indicator}
+                            $disabled={disabled}
+                            data-testid={`toggle-label-${id}`}
+                        >
+                            {children}
+                        </Label>
+                        {subLabel && renderSubLabel()}
+                    </TextContainer>
+                </IndicatorLabelContainer>
+
+                {removable && (
+                    <>
+                        <ButtonContainer
+                            $disabled={disabled}
+                            onClick={handleOnRemove}
+                            id={`remove-${id}`}
+                        >
+                            <ButtonLabel $disabled={disabled}>
+                                Remove
+                            </ButtonLabel>
+                        </ButtonContainer>
+                    </>
+                )}
+            </HeaderContainer>
+        );
+    };
+
+    const renderCompositeSection = () => {
+        return (
+            compositeOptionSection && (
+                <ChildrenContainer>
+                    {renderCompositeOptionSection()}
+                    {!removable && (
+                        <>
+                            {renderErrorsList()}
+                            {renderViewMoreOrLessButton()}
+                        </>
+                    )}
+                </ChildrenContainer>
+            )
+        );
+    };
     const renderErrorsList = () => {
         return (
             !showMore &&
             showErrorList && (
                 <ErrorListContainer
-                    $show={hideMoreOrLessButton ? false : selected}
+                    $show={!collapsible ? false : selected}
                     $disabled={disabled}
                     onClick={() => handleView()}
                     data-testid="error-alert"
@@ -287,75 +357,18 @@ export const Toggle = ({
     };
 
     return (
-            <Container
-                $selected={selected}
-                $disabled={disabled}
-                className={className}
-                $styleType={styleType}
-                $error={error}
-                $indicator={indicator}
-                id={id}
-                data-testid={testId}
-            >
-                <HeaderContainer
-                    id={"header-container"}
-                    $disabled={disabled}
-                    $error={error}
-                    $selected={selected}
-                    $indicator={indicator}
-                    $styleType={styleType}
-                >
-                    <IndicatorLabelContainer $addPadding={remove}>
-                        <Input
-                            ref={inputRef}
-                            name={name}
-                            id={generatedInputId}
-                            type={type === "checkbox" ? "checkbox" : "radio"}
-                            data-testid="toggle-input"
-                            disabled={disabled}
-                            onChange={handleOnChange}
-                            checked={selected}
-                        />
-                        {indicator && renderIndicator()}
-                        <TextContainer>
-                            <Label
-                                htmlFor={generatedInputId}
-                                $selected={selected}
-                                $indicator={indicator}
-                                $disabled={disabled}
-                                data-testid="toggle-label"
-                            >
-                                {children}
-                            </Label>
-                            {subLabel && renderSubLabel()}
-                        </TextContainer>
-                    </IndicatorLabelContainer>
-
-                    {remove && (
-                        <>
-                            <ButtonContainer
-                                $disabled={disabled}
-                                onClick={handleOnRemove}
-                                id={`remove-${id}`}
-                            >
-                                <ButtonLabel $disabled={disabled}>
-                                    Remove
-                                </ButtonLabel>
-                            </ButtonContainer>
-                        </>
-                    )}
-                </HeaderContainer>
-                {compositeOptionSection && (
-                    <ChildrenContainer>
-                        {renderCompositeOptionSection()}
-                        {!remove && (
-                            <>
-                                {renderErrorsList()}
-                                {renderViewMoreOrLessButton()}
-                            </>
-                        )}
-                    </ChildrenContainer>
-                )}
-            </Container>
+        <Container
+            $selected={selected}
+            $disabled={disabled}
+            className={className}
+            $styleType={styleType}
+            $error={error}
+            $indicator={indicator}
+            id={id}
+            data-testid={testId}
+        >
+            {renderToggleWithRemoveButton()}
+            {renderCompositeSection()}
+        </Container>
     );
 };

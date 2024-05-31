@@ -33,12 +33,15 @@ export interface ToggleProps
     onChange?:
         | ((event: React.ChangeEvent<HTMLInputElement>) => void)
         | undefined;
+    compositeSection?: ToggleCompositeSectionProps | undefined;
+}
+
+export interface ToggleCompositeSectionProps {
     /** specifies to show or hide view more or less button when remove button is not present */
-    hideMoreOrLessButton?: boolean;
+    collapsible?: boolean;
     /** specifies the list of errors that has to be shown inside the composite-option container when the show less button is clicked*/
     errorList?: string[] | JSX.Element | undefined;
-    errorMessage?: string;
-    remove?: boolean | undefined;
+    removable?: boolean | undefined;
     onRemove?: (() => void) | undefined;
     /** The children inside the composite option */
     compositeOptionSection?: React.ReactNode;

@@ -98,7 +98,18 @@ const DATA: ApiTableSectionProps[] = [
                 ],
             },
             {
-                name: "compositeOptionSection",
+                name: "compositeSection",
+                description: <>The section below the Toggle.</>,
+                propTypes: ["compositeSectionProps"],
+            },
+        ],
+    },
+
+    {
+        name: "Props",
+        attributes: [
+            {
+                name: "compositeSectionProps",
                 description: (
                     <>
                         The description label of the{" "}
@@ -116,11 +127,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "hideMoreOrLessButton",
+                name: "collapsible",
                 description: (
                     <>
                         specifies if <code>show More</code> Or{" "}
-                        <code>show Less </code>Button is shown/hidden. if remove
+                        <code>show Less </code>Button is shown/hidden. if{" "}
+                        <code>removable</code>
                         prop is true then this props doesnt affect.{" "}
                     </>
                 ),
@@ -135,15 +147,15 @@ const DATA: ApiTableSectionProps[] = [
             },
 
             {
-                name: "remove",
+                name: "removable",
                 description: (
                     <>
                         Specifies if the element has Remove button on top. if
-                        remove is true then <code>hideMoreOrLessButton</code>{" "}
-                        will not have anyeffect. it will always be true(hidden).
-                        set <code>showChildren</code> to <code>true</code> if
-                        the children have to be shown with <code>remove</code>{" "}
-                        button.
+                        removable is true then <code>collapsible</code> will not
+                        have anyeffect. it will always be true(hidden). set{" "}
+                        <code>showCompositeOption</code> to <code>true</code> if
+                        the children have to be shown with{" "}
+                        <code>removable</code> button.
                     </>
                 ),
                 propTypes: ["boolean"],
