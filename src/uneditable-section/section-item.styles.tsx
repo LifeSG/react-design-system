@@ -59,6 +59,7 @@ export const IconContainer = styled.div`
 
 export const Clickable = styled.button`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${Color.Neutral[1]};
     border: none;
     background: transparent;
     padding: 0;
