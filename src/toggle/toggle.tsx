@@ -127,6 +127,14 @@ export const Toggle = ({
             setShowMore(!showMore);
         }
     };
+    const handleOnRemove = () => {
+        if (!disabled) {
+            if (onRemove) {
+                onRemove();
+                return;
+            }
+        }
+    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -155,14 +163,6 @@ export const Toggle = ({
             />
         );
     };
-    const handleOnRemove = () => {
-        if (!disabled) {
-            if (onRemove) {
-                onRemove();
-                return;
-            }
-        }
-    };
     const renderSubLabel = () => {
         if (!subLabel) {
             return null;
@@ -188,9 +188,6 @@ export const Toggle = ({
     };
 
     const renderCompositeOptionSection = () => {
-        if (!compositeOptionSection) {
-            return null;
-        }
         const ChildrenisFinalItem = !collapsible || removable;
         return (
             <Children
