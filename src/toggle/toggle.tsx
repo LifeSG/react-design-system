@@ -230,11 +230,7 @@ export const Toggle = ({
                     >
                         {showMore ? "Show less" : "Show more"}
                     </ViewMoreOrLessButtonLabel>
-                    {showMore ? (
-                        <ChevronUpIcon height={18} width={18} />
-                    ) : (
-                        <ChevronDownIcon height={18} width={18} />
-                    )}
+                    {showMore ? <ChevronUpIcon /> : <ChevronDownIcon />}
                 </ViewMoreOrLessButtonContainer>
             </>
         );
@@ -291,29 +287,29 @@ export const Toggle = ({
 
     const renderErrorList = (errors: string[]) => {
         return (
-                            <>
+            <>
                 <ErrorListItem weight="semibold" $disabled={disabled}>
-                                    Error
+                    Error
+                </ErrorListItem>
+                <TextList.Ul>
+                    {errors?.map((item, index) => {
+                        return (
+                            <ErrorListli
+                                $disabled={disabled}
+                                key={index}
+                                id={`list-item-${index}`}
+                            >
+                                <ErrorListItem
+                                    weight="semibold"
+                                    $disabled={disabled}
+                                >
+                                    {item}
                                 </ErrorListItem>
-                                <TextList.Ul>
-                                    {errors?.map((item, index) => {
-                                        return (
-                                            <ErrorListli
-                                                $disabled={disabled}
-                                                key={index}
-                                                id={`list-item-${index}`}
-                                            >
-                                                <ErrorListItem
-                                                    weight="semibold"
-                                                    $disabled={disabled}
-                                                >
-                                                    {item}
-                                                </ErrorListItem>
-                                            </ErrorListli>
-                                        );
-                                    })}
-                                </TextList.Ul>
-                            </>
+                            </ErrorListli>
+                        );
+                    })}
+                </TextList.Ul>
+            </>
         );
     };
 

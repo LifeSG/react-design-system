@@ -288,6 +288,10 @@ export const ViewMoreOrLessButtonLabel = styled(Text.H4)<StyleProps>`
     margin-right: 0.5rem;
 `;
 export const ViewMoreOrLessButtonContainer = styled.button<ButtonStyleProps>`
+    svg {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
     color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
     width: 100%;
     justify-content: flex-end;
