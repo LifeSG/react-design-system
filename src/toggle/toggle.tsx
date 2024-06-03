@@ -122,7 +122,7 @@ export const Toggle = ({
         }
     };
 
-    const handleView = () => {
+    const handleExpandCollapseClick = () => {
         if (!disabled) {
             setShowMore(!showMore);
         }
@@ -220,7 +220,7 @@ export const Toggle = ({
                 <ViewMoreOrLessButtonContainer
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
-                    onClick={() => handleView()}
+                    onClick={() => handleExpandCollapseClick()}
                     data-testid="toggle-button"
                 >
                     <ViewMoreOrLessButtonLabel
@@ -324,7 +324,7 @@ export const Toggle = ({
                 <ErrorListContainer
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
-                    onClick={() => handleView()}
+                    onClick={() => handleExpandCollapseClick()}
                     id={`${generatedId}-error-alert`}
                 >
                     <AlertContainer
