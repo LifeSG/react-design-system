@@ -220,7 +220,7 @@ export const Toggle = ({
                 <ViewMoreOrLessButtonContainer
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
-                    onClick={() => handleExpandCollapseClick()}
+                    onClick={handleExpandCollapseClick}
                     data-testid="toggle-button"
                 >
                     <ViewMoreOrLessButtonLabel
@@ -274,6 +274,7 @@ export const Toggle = ({
 
                 {removable && (
                     <ButtonContainer
+                        type="button"
                         $disabled={disabled}
                         onClick={handleOnRemove}
                         id={`${generatedId}-remove-button`}
@@ -320,7 +321,7 @@ export const Toggle = ({
                 <ErrorListContainer
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
-                    onClick={() => handleExpandCollapseClick()}
+                    onClick={handleExpandCollapseClick}
                     id={`${generatedId}-error-alert`}
                 >
                     <AlertContainer
