@@ -61,7 +61,7 @@ export const Toggle = ({
 
     const [showErrorList, setShowErrorList] = useState<boolean>(false);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
-    const generatedInputId = id ? `${id}-input` : `tg-${uniqueId}-input`;
+    const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
     const inputRef = useRef<HTMLInputElement>();
 
@@ -243,7 +243,7 @@ export const Toggle = ({
     const renderToggleWithRemoveButton = () => {
         return (
             <HeaderContainer
-                id={`header-container-${id}`}
+                id={`${generatedId}-header-container`}
                 $disabled={disabled}
                 $error={error}
                 $selected={selected}
@@ -254,7 +254,7 @@ export const Toggle = ({
                     <Input
                         ref={inputRef}
                         name={name}
-                        id={generatedInputId}
+                        id={`${generatedId}-input`}
                         type={type === "checkbox" ? "checkbox" : "radio"}
                         data-testid="toggle-input"
                         disabled={disabled}
@@ -264,11 +264,11 @@ export const Toggle = ({
                     {indicator && renderIndicator()}
                     <TextContainer>
                         <Label
-                            htmlFor={generatedInputId}
+                            htmlFor={`${generatedId}-input`}
                             $selected={selected}
                             $indicator={indicator}
                             $disabled={disabled}
-                            data-testid={`toggle-label-${id}`}
+                            data-testid={`${generatedId}-toggle-label`}
                         >
                             {children}
                         </Label>
@@ -277,17 +277,13 @@ export const Toggle = ({
                 </IndicatorLabelContainer>
 
                 {removable && (
-                    <>
-                        <ButtonContainer
-                            $disabled={disabled}
-                            onClick={handleOnRemove}
-                            id={`remove-${id}`}
-                        >
-                            <ButtonLabel $disabled={disabled}>
-                                Remove
-                            </ButtonLabel>
-                        </ButtonContainer>
-                    </>
+                    <ButtonContainer
+                        $disabled={disabled}
+                        onClick={handleOnRemove}
+                        id={`${generatedId}-remove-button`}
+                    >
+                        <ButtonLabel $disabled={disabled}>Remove</ButtonLabel>
+                    </ButtonContainer>
                 )}
             </HeaderContainer>
         );
@@ -301,7 +297,7 @@ export const Toggle = ({
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
                     onClick={() => handleView()}
-                    id={`error-alert-${id}`}
+                    id={`${generatedId}-error-alert`}
                 >
                     <AlertContainer
                         type={!disabled ? "error" : "description"}
@@ -377,10 +373,10 @@ export const Toggle = ({
             </Container>
             {errorMessage && (
                 <ErrorMessage
-                    id={`error-message-${id}`}
+                    id={`${generatedId}-error-message`}
                     weight="semibold"
                     tabIndex={0}
-                    data-testid={`error-message-${id}`}
+                    data-testid={`${generatedId}-error-message`}
                 >
                     {errorMessage}
                 </ErrorMessage>
