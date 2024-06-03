@@ -289,27 +289,10 @@ export const Toggle = ({
         );
     };
 
-    const renderError = () => {
+    const renderErrorList = (errors: string[]) => {
         return (
-            !showMore &&
-            showErrorList && (
-                <ErrorListContainer
-                    $show={!collapsible ? false : selected}
-                    $disabled={disabled}
-                    onClick={() => handleView()}
-                    id={`${generatedId}-error-alert`}
-                >
-                    <AlertContainer
-                        type={!disabled ? "error" : "description"}
-                        className={className}
-                        showIcon
-                    >
-                        {Array.isArray(errors) ? (
                             <>
-                                <ErrorListItem
-                                    weight="semibold"
-                                    $disabled={disabled}
-                                >
+                <ErrorListItem weight="semibold" $disabled={disabled}>
                                     Error
                                 </ErrorListItem>
                                 <TextList.Ul>
@@ -331,9 +314,27 @@ export const Toggle = ({
                                     })}
                                 </TextList.Ul>
                             </>
-                        ) : (
-                            errors
-                        )}
+        );
+    };
+
+    const renderError = () => {
+        return (
+            !showMore &&
+            showErrorList && (
+                <ErrorListContainer
+                    $show={!collapsible ? false : selected}
+                    $disabled={disabled}
+                    onClick={() => handleView()}
+                    id={`${generatedId}-error-alert`}
+                >
+                    <AlertContainer
+                        type={disabled ? "description" : "error"}
+                        className={className}
+                        showIcon
+                    >
+                        {Array.isArray(errors)
+                            ? renderErrorList(errors)
+                            : errors}
                     </AlertContainer>
                 </ErrorListContainer>
             )
