@@ -48,7 +48,7 @@ export const Toggle = ({
     // =============================================================================
     const {
         collapsible = true,
-        errorList,
+        errors,
         removable,
         onRemove,
         children: compositeOptionSection,
@@ -82,17 +82,17 @@ export const Toggle = ({
     }, [selected, showCompositeOptionSection]);
 
     useEffect(() => {
-        if (errorList) {
+        if (errors) {
             const showErrorIfString =
-                !showMore && Array.isArray(errorList) && errorList?.length > 0;
-            const showErrorIfElement = !showMore && !Array.isArray(errorList);
+                !showMore && Array.isArray(errors) && errors?.length > 0;
+            const showErrorIfElement = !showMore && !Array.isArray(errors);
             if (!selected) {
                 setShowErrorList(!selected);
             } else {
                 setShowErrorList(showErrorIfString || showErrorIfElement);
             }
         }
-    }, [showMore, errorList, selected]);
+    }, [showMore, errors, selected]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -323,7 +323,7 @@ export const Toggle = ({
                         className={className}
                         showIcon
                     >
-                        {Array.isArray(errorList) ? (
+                        {Array.isArray(errors) ? (
                             <>
                                 <ErrorListItem
                                     weight="semibold"
@@ -332,7 +332,7 @@ export const Toggle = ({
                                     Error
                                 </ErrorListItem>
                                 <TextList.Ul>
-                                    {errorList?.map((item, index) => {
+                                    {errors?.map((item, index) => {
                                         return (
                                             <ErrorListli
                                                 $disabled={disabled}
@@ -351,7 +351,7 @@ export const Toggle = ({
                                 </TextList.Ul>
                             </>
                         ) : (
-                            errorList
+                            errors
                         )}
                     </AlertContainer>
                 </ErrorListContainer>

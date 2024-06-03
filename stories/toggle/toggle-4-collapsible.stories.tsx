@@ -24,7 +24,7 @@ const renderCompositeSection = () => {
 
 const compositeOption: ToggleCompositeSectionProps = {
     children: renderCompositeSection(),
-    errorList: undefined,
+    errors: undefined,
     show: undefined,
     collapsible: undefined,
 };
@@ -140,7 +140,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         compositeSection={{
                             ...compositeOption,
                             children: compositeOptionSectionWithErrorList(),
-                            errorList: checkboxError,
+                            errors: checkboxError,
                         }}
                     >
                         Text
@@ -154,7 +154,7 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                             ...compositeOption,
                             show: false,
                             children: compositeOptionSectionWithErrorList(),
-                            errorList: ["Type inline error here"],
+                            errors: ["Type inline error here"],
                         }}
                     >
                         Hello
@@ -274,7 +274,7 @@ export const RadioCollapsible: StoryObj<Component> = {
                         type="radio"
                         compositeSection={{
                             ...compositeOption,
-                            errorList: radioError,
+                            errors: radioError,
                             children: renderCompositeOptionErrorList(),
                         }}
                     >
@@ -288,7 +288,7 @@ export const RadioCollapsible: StoryObj<Component> = {
                         compositeSection={{
                             ...compositeOption,
                             show: false,
-                            errorList: ["Enter a label"],
+                            errors: ["Enter a label"],
                         }}
                     >
                         Hello
