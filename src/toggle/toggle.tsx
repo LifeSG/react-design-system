@@ -293,22 +293,7 @@ export const Toggle = ({
         );
     };
 
-    const renderCompositeSection = () => {
-        return (
-            compositeOptionSection && (
-                <ChildrenContainer>
-                    {renderCompositeOptionSection()}
-                    {!removable && (
-                        <>
-                            {renderErrorsList()}
-                            {renderViewMoreOrLessButton()}
-                        </>
-                    )}
-                </ChildrenContainer>
-            )
-        );
-    };
-    const renderErrorsList = () => {
+    const renderError = () => {
         return (
             !showMore &&
             showErrorList && (
@@ -355,6 +340,22 @@ export const Toggle = ({
                         )}
                     </AlertContainer>
                 </ErrorListContainer>
+            )
+        );
+    };
+
+    const renderCompositeSection = () => {
+        return (
+            compositeOptionSection && (
+                <ChildrenContainer>
+                    {renderCompositeOptionSection()}
+                    {!removable && (
+                        <>
+                            {renderError()}
+                            {renderViewMoreOrLessButton()}
+                        </>
+                    )}
+                </ChildrenContainer>
             )
         );
     };
