@@ -71,6 +71,7 @@ export const CheckboxRemovable: StoryObj<Component> = {
                         <Toggle
                             indicator
                             error
+                            errorMessage="Error message required"
                             compositeSection={compositeOption}
                         >
                             Text
@@ -135,6 +136,7 @@ export const RadioRemovable: StoryObj<Component> = {
                             type={"radio"}
                             compositeSection={compositeOption}
                             error
+                            errorMessage="Error message required"
                         >
                             Text
                         </Toggle>

@@ -14,6 +14,7 @@ import {
     ErrorListContainer,
     ErrorListItem,
     ErrorListli,
+    ErrorMessage,
     HeaderContainer,
     IndicatorLabelContainer,
     Input,
@@ -38,6 +39,7 @@ export const Toggle = ({
     id,
     className,
     compositeSection,
+    errorMessage,
     "data-testid": testId,
     onChange,
 }: ToggleProps) => {
@@ -358,18 +360,30 @@ export const Toggle = ({
     };
 
     return (
-        <Container
-            $selected={selected}
-            $disabled={disabled}
-            className={className}
-            $styleType={styleType}
-            $error={error}
-            $indicator={indicator}
-            id={id}
-            data-testid={testId}
-        >
-            {renderToggleWithRemoveButton()}
-            {renderCompositeSection()}
-        </Container>
+        <>
+            <Container
+                $selected={selected}
+                $disabled={disabled}
+                className={className}
+                $styleType={styleType}
+                $error={error}
+                $indicator={indicator}
+                id={id}
+                data-testid={testId}
+            >
+                {renderToggleWithRemoveButton()}
+                {renderCompositeSection()}
+            </Container>
+            {errorMessage && (
+                <ErrorMessage
+                    id={`error-message-${id}`}
+                    weight="semibold"
+                    tabIndex={0}
+                    data-testid={`error-message-${id}`}
+                >
+                    {errorMessage}
+                </ErrorMessage>
+            )}
+        </>
     );
 };
