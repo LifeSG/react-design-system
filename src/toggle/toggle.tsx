@@ -314,7 +314,7 @@ export const Toggle = ({
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
                     onClick={() => handleView()}
-                    data-testid="error-alert"
+                    id={`error-alert-${id}`}
                 >
                     <AlertContainer
                         type={!disabled ? "error" : "description"}
@@ -335,6 +335,7 @@ export const Toggle = ({
                                             <ErrorListli
                                                 $disabled={disabled}
                                                 key={index}
+                                                id={`list-item-${index}`}
                                             >
                                                 <ErrorListItem
                                                     weight="semibold"
