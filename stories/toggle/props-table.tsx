@@ -98,12 +98,6 @@ const DATA: ApiTableSectionProps[] = [
                 ],
             },
             {
-                name: "errorMessage",
-                description:
-                    "specifies error message to be displayed in error Color.",
-                propTypes: ["string"],
-            },
-            {
                 name: "removable",
                 description: (
                     <>

@@ -74,17 +74,14 @@ export const CheckboxRemovable: StoryObj<Component> = {
                     >
                         Text
                     </Toggle>
-                    <div>
-                        <Toggle
-                            removable
-                            indicator
-                            error
-                            errorMessage="Error message required"
-                            compositeSection={compositeOption}
-                        >
-                            Text
-                        </Toggle>
-                    </div>
+                    <Toggle
+                        removable
+                        indicator
+                        error
+                        compositeSection={compositeOption}
+                    >
+                        Text
+                    </Toggle>
                 </div>
             </Wrapper>
         );
@@ -142,18 +139,15 @@ export const RadioRemovable: StoryObj<Component> = {
                     >
                         Text
                     </Toggle>
-                    <div>
-                        <Toggle
-                            removable
-                            indicator
-                            type={"radio"}
-                            compositeSection={compositeOption}
-                            error
-                            errorMessage="Error message required"
-                        >
-                            Text
-                        </Toggle>
-                    </div>
+                    <Toggle
+                        removable
+                        indicator
+                        type={"radio"}
+                        compositeSection={compositeOption}
+                        error
+                    >
+                        Text
+                    </Toggle>
                 </div>
             </Wrapper>
         );

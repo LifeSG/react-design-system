@@ -98,17 +98,14 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                     >
                         Text
                     </Toggle>
-                    <div>
-                        <Toggle
-                            indicator
-                            subLabel={"this is helper text"}
-                            error
-                            errorMessage="Error message required"
-                            compositeSection={compositeOption}
-                        >
-                            Text
-                        </Toggle>
-                    </div>
+                    <Toggle
+                        indicator
+                        subLabel={"this is helper text"}
+                        error
+                        compositeSection={compositeOption}
+                    >
+                        Text
+                    </Toggle>
                 </div>
 
                 <HeadingsNextLine />
@@ -233,17 +230,14 @@ export const RadioCollapsible: StoryObj<Component> = {
                     >
                         Text
                     </Toggle>
-                    <div>
-                        <Toggle
-                            indicator
-                            type={"radio"}
-                            compositeSection={compositeOption}
-                            error
-                            errorMessage="Error message required"
-                        >
-                            Text
-                        </Toggle>
-                    </div>
+                    <Toggle
+                        indicator
+                        type={"radio"}
+                        compositeSection={compositeOption}
+                        error
+                    >
+                        Text
+                    </Toggle>
                 </div>
 
                 <HeadingsNextLine />

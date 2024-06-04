@@ -33,7 +33,6 @@ export interface ToggleProps
     onChange?:
         | ((event: React.ChangeEvent<HTMLInputElement>) => void)
         | undefined;
-    errorMessage?: string;
     compositeSection?: ToggleCompositeSectionProps | undefined;
     removable?: boolean | undefined;
     onRemove?: (() => void) | undefined;
