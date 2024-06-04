@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { Color } from "../color";
+import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
 import { ToggleStyleType } from "./types";
 
@@ -148,6 +149,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     overflow-wrap: anywhere;
     width: 100%;
+    overflow: hidden;
 `;
 
 export const Label = styled.label<LabelStyleProps>`
@@ -162,7 +164,15 @@ export const Label = styled.label<LabelStyleProps>`
             `;
         }
     }}
-
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    overflow-wrap: break-word;
+    -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
+    ${MediaQuery.MaxWidth.tablet} {
+        -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
+    }
     color: ${Color.Neutral[1]};
 
     ${(props) => {

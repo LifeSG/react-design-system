@@ -30,6 +30,7 @@ export const Toggle = ({
     checked,
     styleType = "default",
     children,
+    childrenMaxLines,
     subLabel,
     disabled,
     error,
@@ -247,6 +248,7 @@ export const Toggle = ({
                             $indicator={indicator}
                             $disabled={disabled}
                             data-testid={`${generatedId}-toggle-label`}
+                            $maxLines={childrenMaxLines}
                         >
                             {children}
                         </Label>

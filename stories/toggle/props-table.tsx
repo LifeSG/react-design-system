@@ -44,6 +44,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "childrenMaxLines",
+                description: (
+                    <>Maximum number of lines to be shown in the main label</>
+                ),
+                propTypes: ["{desktop: number, mobile: number}"],
+            },
+            {
                 name: "disabled",
                 description:
                     "Specifies if the element is disabled and non-interactable",

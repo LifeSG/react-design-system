@@ -21,6 +21,7 @@ export interface ToggleProps
     styleType?: ToggleStyleType | undefined;
     /** The Toggle label */
     children: React.ReactNode;
+    childrenMaxLines?: { mobile?: number; desktop?: number } | undefined;
     // /** The description label displayed below the main label */
     subLabel?: (() => JSX.Element) | JSX.Element | string | undefined;
     disabled?: boolean | undefined;
