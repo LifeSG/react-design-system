@@ -199,33 +199,24 @@ export const Toggle = ({
     };
 
     const renderViewMoreOrLessButton = () => {
-        const errorMssgOrChildrenShown = showMore || showErrors;
+        const showLessWithoutErrors = !showMore && !showErrors;
         return (
-            <>
-                <div
-                    style={{
-                        paddingTop:
-                            !selected || errorMssgOrChildrenShown
-                                ? "0rem"
-                                : "0.6875rem",
-                    }}
-                ></div>
-                <ViewMoreOrLessButtonContainer
-                    $show={!collapsible ? false : selected}
+            <ViewMoreOrLessButtonContainer
+                $paddingTopRequired={showLessWithoutErrors}
+                $show={!collapsible ? false : selected}
+                $disabled={disabled}
+                onClick={handleExpandCollapseClick}
+                data-testid="toggle-button"
+            >
+                <ViewMoreOrLessButtonLabel
+                    weight="semibold"
                     $disabled={disabled}
-                    onClick={handleExpandCollapseClick}
-                    data-testid="toggle-button"
+                    data-testid="toggle-button-label"
                 >
-                    <ViewMoreOrLessButtonLabel
-                        weight="semibold"
-                        $disabled={disabled}
-                        data-testid="toggle-button-label"
-                    >
-                        {showMore ? "Show less" : "Show more"}
-                    </ViewMoreOrLessButtonLabel>
-                    {showMore ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                </ViewMoreOrLessButtonContainer>
-            </>
+                    {showMore ? "Show less" : "Show more"}
+                </ViewMoreOrLessButtonLabel>
+                {showMore ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </ViewMoreOrLessButtonContainer>
         );
     };
 

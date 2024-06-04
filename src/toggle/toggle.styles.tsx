@@ -29,6 +29,7 @@ interface LabelStyleProps extends StyleProps {
 
 interface ButtonStyleProps extends StyleProps {
     $show?: boolean;
+    $paddingTopRequired?: boolean;
 }
 
 interface ChildrenStyleProps extends StyleProps {
@@ -297,6 +298,8 @@ export const ViewMoreOrLessButtonContainer = styled.button<ButtonStyleProps>`
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     float: right;
     display: ${(props) => (props.$show ? "flex" : "none")};
+    padding-top: ${(props) =>
+        props.$paddingTopRequired ? "0.6875rem" : "0rem"};
 `;
 export const ErrorListContainer = styled.div<ButtonStyleProps>`
     width: 100%;
