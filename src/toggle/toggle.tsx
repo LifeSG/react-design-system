@@ -58,7 +58,7 @@ export const Toggle = ({
         !!showCompositeOptionSection
     );
 
-    const [showErrorList, setShowErrorList] = useState<boolean>(false);
+    const [showErrors, setShowErrors] = useState<boolean>(false);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
@@ -86,9 +86,9 @@ export const Toggle = ({
                 !showMore && Array.isArray(errors) && errors?.length > 0;
             const showErrorIfElement = !showMore && !Array.isArray(errors);
             if (!selected) {
-                setShowErrorList(!selected);
+                setShowErrors(!selected);
             } else {
-                setShowErrorList(showErrorIfString || showErrorIfElement);
+                setShowErrors(showErrorIfString || showErrorIfElement);
             }
         }
     }, [showMore, errors, selected]);
@@ -199,7 +199,7 @@ export const Toggle = ({
     };
 
     const renderViewMoreOrLessButton = () => {
-        const errorMssgOrChildrenShown = showMore || showErrorList;
+        const errorMssgOrChildrenShown = showMore || showErrors;
         return (
             <>
                 <div
@@ -310,7 +310,7 @@ export const Toggle = ({
     const renderError = () => {
         return (
             !showMore &&
-            showErrorList && (
+            showErrors && (
                 <ErrorListContainer
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
