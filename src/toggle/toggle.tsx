@@ -40,6 +40,8 @@ export const Toggle = ({
     className,
     compositeSection,
     errorMessage,
+    removable,
+    onRemove,
     "data-testid": testId,
     onChange,
 }: ToggleProps) => {
@@ -49,8 +51,6 @@ export const Toggle = ({
     const {
         collapsible = true,
         errors,
-        removable,
-        onRemove,
         children: compositeOptionSection,
         show: showCompositeOptionSection,
     } = compositeSection || {};

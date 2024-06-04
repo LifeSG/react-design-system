@@ -22,7 +22,6 @@ const renderCompositeSection = () => {
     );
 };
 const compositeOption: ToggleCompositeSectionProps = {
-    removable: true,
     show: true,
     children: renderCompositeSection(),
 };
@@ -41,10 +40,15 @@ export const CheckboxRemovable: StoryObj<Component> = {
                         gridTemplate: "auto / repeat(5,minmax(0,1fr))",
                     }}
                 >
-                    <Toggle indicator compositeSection={compositeOption}>
+                    <Toggle
+                        removable
+                        indicator
+                        compositeSection={compositeOption}
+                    >
                         Text
                     </Toggle>
                     <Toggle
+                        removable
                         indicator
                         compositeSection={compositeOption}
                         checked
@@ -53,6 +57,7 @@ export const CheckboxRemovable: StoryObj<Component> = {
                     </Toggle>
 
                     <Toggle
+                        removable
                         indicator
                         disabled
                         compositeSection={compositeOption}
@@ -60,6 +65,7 @@ export const CheckboxRemovable: StoryObj<Component> = {
                         Text
                     </Toggle>
                     <Toggle
+                        removable
                         indicator
                         disabled
                         checked
@@ -69,6 +75,7 @@ export const CheckboxRemovable: StoryObj<Component> = {
                     </Toggle>
                     <div>
                         <Toggle
+                            removable
                             indicator
                             error
                             errorMessage="Error message required"
@@ -98,6 +105,7 @@ export const RadioRemovable: StoryObj<Component> = {
                     }}
                 >
                     <Toggle
+                        removable
                         indicator
                         type={"radio"}
                         compositeSection={compositeOption}
@@ -105,6 +113,7 @@ export const RadioRemovable: StoryObj<Component> = {
                         Text
                     </Toggle>
                     <Toggle
+                        removable
                         indicator
                         type={"radio"}
                         checked
@@ -114,6 +123,7 @@ export const RadioRemovable: StoryObj<Component> = {
                     </Toggle>
 
                     <Toggle
+                        removable
                         indicator
                         type={"radio"}
                         disabled
@@ -122,6 +132,7 @@ export const RadioRemovable: StoryObj<Component> = {
                         Text
                     </Toggle>
                     <Toggle
+                        removable
                         indicator
                         type={"radio"}
                         disabled
@@ -132,6 +143,7 @@ export const RadioRemovable: StoryObj<Component> = {
                     </Toggle>
                     <div>
                         <Toggle
+                            removable
                             indicator
                             type={"radio"}
                             compositeSection={compositeOption}
