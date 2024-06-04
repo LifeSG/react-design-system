@@ -2,9 +2,9 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
 import { Color } from "../../color";
 import { DesignToken } from "../../design-token";
-import { Text, TextStyle } from "../../text";
+import { TextStyle, TextStyleHelper } from "../../text";
 import { Transition } from "../../transition";
-import { TruncateType } from "../dropdown-list/types";
+import { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -18,6 +18,11 @@ export interface DropdownWrapperStyleProps {
 
 export interface ValueLabelStyleProps {
     truncateType?: TruncateType;
+    $variant?: DropdownVariantType | undefined;
+}
+
+export interface SelectorStyleProps {
+    $variant?: DropdownVariantType | undefined;
 }
 
 // =============================================================================
@@ -25,20 +30,30 @@ export interface ValueLabelStyleProps {
 // =============================================================================
 const BORDER_RADIUS = "4px";
 
-export const Wrapper = styled.div`
+const getHeight = (variant?: DropdownVariantType | undefined) => {
+    return variant === "small" ? 2.5 : 3;
+};
+
+export const Wrapper = styled.div<SelectorStyleProps>`
     position: relative;
-    min-height: 3rem;
-    height: 3rem; // Need this to persist the height when expanding or collapsing list
     width: 100%;
+    ${(props) => {
+        const height = getHeight(props.$variant);
+        return css`
+            min-height: ${height}rem;
+            height: ${height}rem; // Need this to persist the height when expanding or collapsing list
+        `;
+    }}
 `;
 
-export const baseSelectorCSS = css`
+export const baseSelectorCSS = css<SelectorStyleProps>`
     display: flex;
     position: relative;
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
-    height: calc(3rem - 2px); // exclude top and bottom borders
+    // exclude top and bottom borders
+    height: calc(${(props) => getHeight(props.$variant)}rem - 2px);
     width: 100%;
     border-radius: ${BORDER_RADIUS};
     border: none;
@@ -54,12 +69,12 @@ export const baseSelectorCSS = css`
     }
 `;
 
-export const Selector = styled.button`
+export const Selector = styled.button<SelectorStyleProps>`
     ${baseSelectorCSS}
     cursor: pointer;
 `;
 
-export const SelectorDiv = styled.div`
+export const SelectorDiv = styled.div<SelectorStyleProps>`
     ${baseSelectorCSS}
 `;
 
@@ -153,10 +168,18 @@ export const IconContainer = styled.div<DropdownWrapperStyleProps>`
     margin-left: 1rem;
 `;
 
-export const StyledChevronIcon = styled(ChevronDownIcon)`
+export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
     color: ${Color.Neutral[3]};
-    height: ${TextStyle.Body.fontSize}rem;
-    width: ${TextStyle.Body.fontSize}rem;
+    ${(props) => {
+        let size = TextStyle.Body.fontSize;
+        if (props.$variant === "small") {
+            size = TextStyle.BodySmall.fontSize;
+        }
+        return css`
+            height: ${size}rem;
+            width: ${size}rem;
+        `;
+    }}
 `;
 
 export const Divider = styled.div`
@@ -171,7 +194,12 @@ export const LabelContainer = styled.div`
     word-break: break-all;
 `;
 
-export const ValueLabel = styled(Text.Body)<ValueLabelStyleProps>`
+export const ValueLabel = styled.div<ValueLabelStyleProps>`
+    ${(props) =>
+        TextStyleHelper.getTextStyle(
+            props.$variant === "small" ? "BodySmall" : "Body",
+            "regular"
+        )}
     text-align: left;
     line-height: 1.375rem;
     ${(props) => {

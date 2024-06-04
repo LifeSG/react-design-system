@@ -126,6 +126,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a search is being executed",
                 propTypes: ["() => void"],
             },
+            {
+                name: "variant",
+                description: "Style option: The size of the component.",
+                propTypes: [`"small"`, `"default"`],
+                defaultValue: `"default"`,
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,

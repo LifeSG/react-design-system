@@ -4,8 +4,13 @@ import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
 import { Color } from "../../color";
 import { MediaQuery } from "../../media";
-import { Text, TextStyleHelper } from "../../text";
-import { LabelDisplayType, TruncateType } from "./types";
+import { TextStyleHelper } from "../../text";
+import {
+    DropdownVariantType,
+    IconProps,
+    LabelDisplayType,
+    TruncateType,
+} from "./types";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -21,12 +26,18 @@ interface ListItemProps {
 interface ListItemSelectorProps {
     $multiSelect?: boolean;
     $hasNextLineLabel?: boolean;
+    $variant?: DropdownVariantType;
 }
 
 interface LabelProps {
     $truncateType?: TruncateType;
     $maxLines?: number;
     $labelDisplayType?: LabelDisplayType;
+    $variant?: DropdownVariantType;
+}
+
+interface ResultStateProps {
+    $variant?: DropdownVariantType;
 }
 
 // =============================================================================
@@ -87,6 +98,19 @@ export const ListItem = styled.li<ListItemProps>`
     }}
 `;
 
+const getMinHeight = (props: ListItemSelectorProps) => {
+    let minHeight = 3.5;
+    if (props.$variant === "small") {
+        minHeight = 3.25;
+    }
+
+    if (props.$hasNextLineLabel) {
+        minHeight = 4.255;
+    }
+
+    return minHeight;
+};
+
 export const ListItemSelector = styled.button<ListItemSelectorProps>`
     display: flex;
     ${(props) => {
@@ -97,7 +121,7 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
         } else {
             return css`
                 padding: 0 1rem;
-                min-height: ${props.$hasNextLineLabel ? "4.255rem" : "3.5rem"};
+                min-height: ${getMinHeight(props)}rem;
                 align-items: center;
             `;
         }
@@ -134,7 +158,11 @@ const lineClampCss = css<LabelProps>`
 `;
 
 export const PrimaryText = styled.div<LabelProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    ${(props) =>
+        TextStyleHelper.getTextStyle(
+            props.$variant === "small" ? "BodySmall" : "Body",
+            "regular"
+        )}
     color: ${Color.Neutral[1]};
     width: 100%;
 
@@ -223,8 +251,12 @@ export const SelectAllContainer = styled.div`
     padding: 1rem 0 0.5rem 0;
 `;
 
-export const DropdownCommonButton = styled.button`
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+export const DropdownCommonButton = styled.button<LabelProps>`
+    ${(props) =>
+        TextStyleHelper.getTextStyle(
+            props.$variant === "small" ? "BodySmall" : "Body",
+            "semibold"
+        )}
     background-color: transparent;
     background-repeat: no-repeat;
     border: none;
@@ -245,11 +277,22 @@ export const ResultStateContainer = styled.div`
     align-items: center;
 `;
 
-export const ResultStateText = styled(Text.Body)``;
+export const ResultStateText = styled.div<ResultStateProps>`
+    ${(props) =>
+        TextStyleHelper.getTextStyle(
+            props.$variant === "small" ? "BodySmall" : "Body",
+            "regular"
+        )}
+`;
 
-export const LabelIcon = styled(ExclamationCircleFillIcon)`
+export const LabelIcon = styled(ExclamationCircleFillIcon)<IconProps>`
+    ${(props) => {
+        const size = props.$variant === "small" ? 1 : 1.5;
+        return css`
+            height: ${size}rem;
+            width: ${size}rem;
+        `;
+    }}
     margin-right: 0.625rem;
-    height: 1.5rem;
-    width: 1.5rem;
     color: ${Color.Validation.Red.Icon};
 `;

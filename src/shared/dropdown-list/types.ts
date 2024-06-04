@@ -1,6 +1,7 @@
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 export type LabelDisplayType = "inline" | "next-line";
+export type DropdownVariantType = "small" | "default";
 
 export interface ListItemRenderArgs {
     selected: boolean;
@@ -74,6 +75,8 @@ export interface DropdownListProps<T, V>
     itemMaxLines?: number | undefined;
     /** Specifying flex direction within item */
     labelDisplayType?: LabelDisplayType | undefined;
+    /** Specifies the variant type. Small type will have shorter height. Values: "default" | "small" */
+    variant?: DropdownVariantType | undefined;
 
     onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
     onSelectAll?: (() => void) | undefined;
@@ -83,4 +86,8 @@ export interface DropdownListProps<T, V>
 
 export interface ListItemSelectorProps {
     onClick?: (() => void) | undefined;
+}
+
+export interface IconProps {
+    $variant?: DropdownVariantType | undefined;
 }

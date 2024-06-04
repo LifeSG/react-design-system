@@ -141,3 +141,33 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
         );
     },
 };
+
+export const StandaloneUsageVariant: StoryObj<StandaloneComponent> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <label>Default</label>
+                    <InputMultiSelect
+                        variant="default"
+                        options={OPTIONS_DATA}
+                        valueExtractor={(item) => item.value}
+                        listExtractor={(item) => item.label}
+                        placeholder="Searchable multi select"
+                        enableSearch
+                    />
+                    <br />
+                    <label>Small</label>
+                    <InputMultiSelect
+                        variant="small"
+                        options={OPTIONS_DATA}
+                        valueExtractor={(item) => item.value}
+                        listExtractor={(item) => item.label}
+                        placeholder="Searchable multi select"
+                        enableSearch
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};

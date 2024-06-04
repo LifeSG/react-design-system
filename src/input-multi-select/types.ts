@@ -6,6 +6,7 @@ import {
     DropdownDisplayProps,
     DropdownSearchProps,
     DropdownStyleProps,
+    DropdownVariantType,
 } from "../shared/dropdown-list/types";
 
 export interface InputMultiSelectProps<T, V>
@@ -18,6 +19,7 @@ export interface InputMultiSelectProps<T, V>
     selectedOptions?: T[] | undefined;
     onSelectOptions?: ((options: T[]) => void) | undefined;
     onBlur?: (() => void) | undefined;
+    variant?: DropdownVariantType | undefined;
 }
 
 /** To be exposed for Form component inheritance */

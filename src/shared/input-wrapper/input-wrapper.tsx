@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { DesignToken } from "../../design-token";
 import { TextStyleHelper } from "../../text";
+import { DropdownVariantType } from "../dropdown-list/types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -12,6 +13,10 @@ export interface InputWrapperStyleProps {
     $error?: boolean | undefined;
     $readOnly?: boolean | undefined;
     $position?: "left" | "right" | undefined;
+}
+
+export interface InputStyleProps {
+    $variant?: DropdownVariantType | undefined;
 }
 
 // =============================================================================
@@ -74,8 +79,12 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
  * standalone native input with stripped-down styles, intended to be used in
  * combination with `InputWrapper` or other wrappers to build composite widgets
  */
-export const BasicInput = styled.input`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+export const BasicInput = styled.input<InputStyleProps>`
+    ${(props) =>
+        TextStyleHelper.getTextStyle(
+            props.$variant === "small" ? "BodySmall" : "Body",
+            "regular"
+        )}
     color: ${Color.Neutral[1]};
     display: block;
     background: transparent;
