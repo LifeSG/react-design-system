@@ -104,6 +104,31 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "removable",
+                description: (
+                    <>
+                        Specifies if the element has Remove button on top. if
+                        removable is true then <code>collapsible</code> will not
+                        have anyeffect. it will always be true(hidden). set{" "}
+                        <code>show</code> to <code>true</code> and{" "}
+                        <code>collapsible</code> to <code>false</code> if the
+                        children have to be shown without show more or less
+                        button with <code>removable</code> button.
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: `false`,
+            },
+            {
+                name: "onRemove",
+                description: (
+                    <>
+                        Called when the <code>Remove button</code> is clicked
+                    </>
+                ),
+                propTypes: ["() => void"],
+            },
+            {
                 name: "compositeSection",
                 description: <>The section below the Toggle.</>,
                 propTypes: ["compositeSectionProps"],
@@ -140,9 +165,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         specifies if <code>show More</code> Or{" "}
-                        <code>show Less </code>Button is shown/hidden. if{" "}
-                        <code>removable</code>
-                        prop is true then this props doesnt affect.{" "}
+                        <code>show Less </code>Button is shown/hidden.
                     </>
                 ),
                 propTypes: ["boolean"],
@@ -153,30 +176,6 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Specifies if the internal errors should be displayed inside the container error list has to be displayed inside the container.",
                 propTypes: ["string[]", "JSX.Element"],
-            },
-
-            {
-                name: "removable",
-                description: (
-                    <>
-                        Specifies if the element has Remove button on top. if
-                        removable is true then <code>collapsible</code> will not
-                        have anyeffect. it will always be true(hidden). set{" "}
-                        <code>show</code> to <code>true</code> if the children
-                        have to be shown with <code>removable</code> button.
-                    </>
-                ),
-                propTypes: ["boolean"],
-                defaultValue: `false`,
-            },
-            {
-                name: "onRemove",
-                description: (
-                    <>
-                        Called when the <code>Remove button</code> is clicked
-                    </>
-                ),
-                propTypes: ["() => void"],
             },
         ],
     },

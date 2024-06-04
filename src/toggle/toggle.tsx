@@ -187,13 +187,10 @@ export const Toggle = ({
     };
 
     const renderCompositeOptionSection = () => {
-        const ChildrenisFinalItem = !collapsible || removable;
         return (
             <Children
                 $selected={showMore}
-                $isNotFinalItem={
-                    ChildrenisFinalItem ? !ChildrenisFinalItem : selected
-                }
+                $isFinalItem={!collapsible}
                 $disabled={disabled}
             >
                 {compositeOptionSection}
@@ -339,12 +336,8 @@ export const Toggle = ({
             compositeOptionSection && (
                 <ChildrenContainer>
                     {renderCompositeOptionSection()}
-                    {!removable && (
-                        <>
-                            {renderError()}
-                            {renderViewMoreOrLessButton()}
-                        </>
-                    )}
+                    {renderError()}
+                    {renderViewMoreOrLessButton()}
                 </ChildrenContainer>
             )
         );

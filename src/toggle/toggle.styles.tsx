@@ -32,7 +32,7 @@ interface ButtonStyleProps extends StyleProps {
 }
 
 interface ChildrenStyleProps extends StyleProps {
-    $isNotFinalItem?: boolean;
+    $isFinalItem?: boolean;
 }
 
 // =============================================================================
@@ -320,8 +320,7 @@ export const ChildrenContainer = styled.div`
 export const Children = styled.div<ChildrenStyleProps>`
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
     padding-top: 0.6875rem;
-    padding-bottom: ${(props) =>
-        props.$isNotFinalItem ? "0.5rem" : "0.6875rem"};
+    padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
     display: ${(props) => (props.$selected ? "flex" : "none")};
     strong,
     b {

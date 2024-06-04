@@ -24,6 +24,7 @@ const renderCompositeSection = () => {
 const compositeOption: ToggleCompositeSectionProps = {
     show: true,
     children: renderCompositeSection(),
+    collapsible: false,
 };
 
 export const CheckboxRemovable: StoryObj<Component> = {
