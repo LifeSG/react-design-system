@@ -266,21 +266,16 @@ export const IndicatorLabelContainer = styled.div<IndicatorContainerStyleProps>`
         props.$addPadding ? "0.6875rem 0rem 0.6875rem 1rem" : "0.6875rem 1rem"};
 `;
 
-export const ButtonContainer = styled.button<ContainerStyleProps>`
+export const RemoveButton = styled.button<ContainerStyleProps>`
     color: ${(props) =>
         props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Icon};
     white-space: nowrap;
+    ${TextStyleHelper.getTextStyle("H4", "semibold")}
     height: fit-content;
     padding: 0.6875rem 1rem 0.6875rem 0.5rem;
     border: none;
     background: none;
 
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-`;
-export const ButtonLabel = styled.label<StyleProps>`
-    ${TextStyleHelper.getTextStyle("H4", "semibold")};
-    line-height: 1.375rem;
-    color: ${Color.Validation.Red[1]};
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 `;
 export const ViewMoreOrLessButtonLabel = styled(Text.H4)<StyleProps>`

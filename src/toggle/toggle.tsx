@@ -6,8 +6,6 @@ import { TextList } from "../text-list";
 import { SimpleIdGenerator } from "../util";
 import {
     AlertContainer,
-    ButtonContainer,
-    ButtonLabel,
     Children,
     ChildrenContainer,
     Container,
@@ -19,6 +17,7 @@ import {
     IndicatorLabelContainer,
     Input,
     Label,
+    RemoveButton,
     SubLabel,
     TextContainer,
     ViewMoreOrLessButtonContainer,
@@ -270,14 +269,14 @@ export const Toggle = ({
                 </IndicatorLabelContainer>
 
                 {removable && (
-                    <ButtonContainer
+                    <RemoveButton
                         type="button"
                         $disabled={disabled}
                         onClick={handleOnRemove}
                         id={`${generatedId}-remove-button`}
                     >
-                        <ButtonLabel $disabled={disabled}>Remove</ButtonLabel>
-                    </ButtonContainer>
+                        Remove
+                    </RemoveButton>
                 )}
             </HeaderContainer>
         );
