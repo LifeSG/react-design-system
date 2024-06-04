@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+import { Toggle } from "../../src";
 import { Form } from "../../src/form";
 import { Headings, HeadingsNextLine, Wrapper } from "./doc-elements";
-import { Toggle, ToggleCompositeSectionProps } from "../../src";
 
 type Component = typeof Toggle;
 
@@ -12,39 +12,11 @@ const meta: Meta<Component> = {
 };
 export default meta;
 
-const renderCompositeSection = () => {
-    return (
-        <Form.Input
-            label="This is the error state"
-            placeholder="Enter here..."
-            onChange={() => ({})}
-        />
-    );
-};
-
-const compositeOption: ToggleCompositeSectionProps = {
-    children: renderCompositeSection(),
-    errors: undefined,
-    show: undefined,
-    collapsible: undefined,
-};
-
 export const CheckboxCollapsible: StoryObj<Component> = {
     render: () => {
         const [checkboxError, setCheckboxError] = useState<
             string[] | undefined
         >(["Enter a label"]);
-
-        const compositeOptionSectionWithErrorList = () => {
-            return (
-                <Form.Input
-                    label="This is the error state"
-                    errorMessage={checkboxError ? checkboxError[0] : undefined}
-                    placeholder="Enter here..."
-                    onChange={(event) => onChangeHandler(event.target.value)}
-                />
-            );
-        };
 
         const onChangeHandler = (inputVal) => {
             if (inputVal === "") {
@@ -68,7 +40,15 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                     <Toggle
                         indicator
                         subLabel={"this is helper text"}
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -76,7 +56,15 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         indicator
                         checked
                         subLabel={"this is helper text"}
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -85,7 +73,15 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         indicator
                         subLabel={"this is helper text"}
                         disabled
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -94,7 +90,15 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         subLabel={"this is helper text"}
                         disabled
                         checked
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -102,7 +106,15 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         indicator
                         subLabel={"this is helper text"}
                         error
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -123,7 +135,13 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         checked
                         subLabel={"this is helper text"}
                         compositeSection={{
-                            ...compositeOption,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
                             collapsible: false,
                         }}
                     >
@@ -135,8 +153,20 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         checked
                         subLabel={"this is helper text"}
                         compositeSection={{
-                            ...compositeOption,
-                            children: compositeOptionSectionWithErrorList(),
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    errorMessage={
+                                        checkboxError
+                                            ? checkboxError[0]
+                                            : undefined
+                                    }
+                                    placeholder="Enter here..."
+                                    onChange={(event) =>
+                                        onChangeHandler(event.target.value)
+                                    }
+                                />
+                            ),
                             errors: checkboxError,
                         }}
                     >
@@ -148,9 +178,21 @@ export const CheckboxCollapsible: StoryObj<Component> = {
                         subLabel={"this is helper text"}
                         disabled={true}
                         compositeSection={{
-                            ...compositeOption,
                             show: false,
-                            children: compositeOptionSectionWithErrorList(),
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    errorMessage={
+                                        checkboxError
+                                            ? checkboxError[0]
+                                            : undefined
+                                    }
+                                    placeholder="Enter here..."
+                                    onChange={(event) =>
+                                        onChangeHandler(event.target.value)
+                                    }
+                                />
+                            ),
                             errors: ["Type inline error here"],
                         }}
                     >
@@ -175,16 +217,6 @@ export const RadioCollapsible: StoryObj<Component> = {
                 setRadioError([]);
             }
         };
-        const renderCompositeOptionErrorList = () => {
-            return (
-                <Form.Input
-                    label="This is the error state"
-                    errorMessage={radioError ? radioError[0] : undefined}
-                    placeholder="Enter here..."
-                    onChange={(event) => onChangeHandler(event.target.value)}
-                />
-            );
-        };
         return (
             <Wrapper>
                 <Headings />
@@ -200,7 +232,15 @@ export const RadioCollapsible: StoryObj<Component> = {
                     <Toggle
                         indicator
                         type={"radio"}
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -208,7 +248,15 @@ export const RadioCollapsible: StoryObj<Component> = {
                         indicator
                         type={"radio"}
                         checked
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -217,7 +265,15 @@ export const RadioCollapsible: StoryObj<Component> = {
                         indicator
                         type={"radio"}
                         disabled
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
@@ -226,14 +282,30 @@ export const RadioCollapsible: StoryObj<Component> = {
                         type={"radio"}
                         disabled
                         checked
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                     >
                         Text
                     </Toggle>
                     <Toggle
                         indicator
                         type={"radio"}
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                        }}
                         error
                     >
                         Text
@@ -255,7 +327,13 @@ export const RadioCollapsible: StoryObj<Component> = {
                         type={"radio"}
                         checked
                         compositeSection={{
-                            ...compositeOption,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
                             collapsible: false,
                         }}
                     >
@@ -267,9 +345,19 @@ export const RadioCollapsible: StoryObj<Component> = {
                         checked
                         type="radio"
                         compositeSection={{
-                            ...compositeOption,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    errorMessage={
+                                        radioError ? radioError[0] : undefined
+                                    }
+                                    placeholder="Enter here..."
+                                    onChange={(event) =>
+                                        onChangeHandler(event.target.value)
+                                    }
+                                />
+                            ),
                             errors: radioError,
-                            children: renderCompositeOptionErrorList(),
                         }}
                     >
                         Text
@@ -280,7 +368,13 @@ export const RadioCollapsible: StoryObj<Component> = {
                         checked
                         disabled={true}
                         compositeSection={{
-                            ...compositeOption,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
                             show: false,
                             errors: ["Enter a label"],
                         }}

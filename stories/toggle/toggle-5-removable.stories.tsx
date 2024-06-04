@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Toggle } from "../../src";
 import { Form } from "../../src/form";
 import { Headings, Wrapper } from "./doc-elements";
-import { Toggle, ToggleCompositeSectionProps } from "../../src";
 
 type Component = typeof Toggle;
 
@@ -11,21 +11,6 @@ const meta: Meta<Component> = {
 };
 
 export default meta;
-
-const renderCompositeSection = () => {
-    return (
-        <Form.Input
-            label="This is the error state"
-            placeholder="Enter here..."
-            onChange={() => ({})}
-        />
-    );
-};
-const compositeOption: ToggleCompositeSectionProps = {
-    show: true,
-    children: renderCompositeSection(),
-    collapsible: false,
-};
 
 export const CheckboxRemovable: StoryObj<Component> = {
     render: () => {
@@ -44,14 +29,34 @@ export const CheckboxRemovable: StoryObj<Component> = {
                     <Toggle
                         removable
                         indicator
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
                     <Toggle
                         removable
                         indicator
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                         checked
                     >
                         Text
@@ -61,7 +66,17 @@ export const CheckboxRemovable: StoryObj<Component> = {
                         removable
                         indicator
                         disabled
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
@@ -70,7 +85,17 @@ export const CheckboxRemovable: StoryObj<Component> = {
                         indicator
                         disabled
                         checked
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
@@ -78,7 +103,17 @@ export const CheckboxRemovable: StoryObj<Component> = {
                         removable
                         indicator
                         error
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
@@ -106,7 +141,17 @@ export const RadioRemovable: StoryObj<Component> = {
                         removable
                         indicator
                         type={"radio"}
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
@@ -115,7 +160,17 @@ export const RadioRemovable: StoryObj<Component> = {
                         indicator
                         type={"radio"}
                         checked
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
@@ -125,7 +180,17 @@ export const RadioRemovable: StoryObj<Component> = {
                         indicator
                         type={"radio"}
                         disabled
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
@@ -135,7 +200,17 @@ export const RadioRemovable: StoryObj<Component> = {
                         type={"radio"}
                         disabled
                         checked
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                     >
                         Text
                     </Toggle>
@@ -143,7 +218,17 @@ export const RadioRemovable: StoryObj<Component> = {
                         removable
                         indicator
                         type={"radio"}
-                        compositeSection={compositeOption}
+                        compositeSection={{
+                            show: true,
+                            children: (
+                                <Form.Input
+                                    label="This is the error state"
+                                    placeholder="Enter here..."
+                                    onChange={() => ({})}
+                                />
+                            ),
+                            collapsible: false,
+                        }}
                         error
                     >
                         Text
