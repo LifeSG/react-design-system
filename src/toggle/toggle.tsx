@@ -49,10 +49,10 @@ export const Toggle = ({
         collapsible = true,
         errors,
         children: compositeSectionChildren,
-        show: showCompositeSection,
+        defaultExpanded,
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
-    const [expanded, setExpanded] = useState<boolean>(!!showCompositeSection);
+    const [expanded, setExpanded] = useState<boolean>(!!defaultExpanded);
 
     const [showErrors, setShowErrors] = useState<boolean>(false);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
@@ -68,10 +68,10 @@ export const Toggle = ({
     }, [checked]);
 
     useEffect(() => {
-        if (selected !== undefined && showCompositeSection === undefined) {
+        if (selected !== undefined && defaultExpanded === undefined) {
             setExpanded(selected);
         }
-    }, [selected, showCompositeSection]);
+    }, [selected, defaultExpanded]);
 
     useEffect(() => {
         if (errors) {
@@ -201,8 +201,8 @@ export const Toggle = ({
                 $disabled={disabled}
                 onClick={handleExpandCollapseClick}
                 data-testid={expanded ? "collapse-button" : "expand-button"}
-                >
-                    {expanded ? "Show less" : "Show more"}
+            >
+                {expanded ? "Show less" : "Show more"}
                 {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
             </ExpandButtonContainer>
         );

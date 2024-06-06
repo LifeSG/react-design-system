@@ -21,7 +21,13 @@ export interface ToggleProps
     styleType?: ToggleStyleType | undefined;
     /** The Toggle label */
     children: React.ReactNode;
-    childrenMaxLines?: { mobile?: number; desktop?: number } | undefined;
+    childrenMaxLines?:
+        | {
+              mobile?: number | undefined;
+              desktop?: number | undefined;
+              tablet?: number | undefined;
+          }
+        | undefined;
     // /** The description label displayed below the main label */
     subLabel?: (() => JSX.Element) | JSX.Element | string | undefined;
     disabled?: boolean | undefined;
@@ -47,5 +53,5 @@ export interface ToggleCompositeSectionProps {
     errors?: string[] | JSX.Element | undefined;
     /** The children inside the composite option */
     children: React.ReactNode;
-    show?: boolean | undefined;
+    defaultExpanded?: boolean | undefined;
 }
