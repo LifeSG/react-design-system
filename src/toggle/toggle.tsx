@@ -9,9 +9,10 @@ import {
     Children,
     ChildrenContainer,
     Container,
-    ErrorListContainer,
+    ErrorContainer,
     ErrorListItem,
-    ErrorListli,
+    ErrorText,
+    ExpandButtonContainer,
     HeaderContainer,
     IndicatorLabelContainer,
     Input,
@@ -19,8 +20,6 @@ import {
     RemoveButton,
     SubLabel,
     TextContainer,
-    ViewMoreOrLessButtonContainer,
-    ViewMoreOrLessButtonLabel,
 } from "./toggle.styles";
 import { ToggleProps } from "./types";
 
@@ -49,13 +48,11 @@ export const Toggle = ({
     const {
         collapsible = true,
         errors,
-        children: compositeOptionSection,
-        show: showCompositeOptionSection,
+        children: compositeSectionChildren,
+        show: showCompositeSection,
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
-    const [showMore, setShowMore] = useState<boolean>(
-        !!showCompositeOptionSection
-    );
+    const [expanded, setExpanded] = useState<boolean>(!!showCompositeSection);
 
     const [showErrors, setShowErrors] = useState<boolean>(false);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
@@ -71,26 +68,23 @@ export const Toggle = ({
     }, [checked]);
 
     useEffect(() => {
-        if (
-            selected !== undefined &&
-            showCompositeOptionSection === undefined
-        ) {
-            setShowMore(selected);
+        if (selected !== undefined && showCompositeSection === undefined) {
+            setExpanded(selected);
         }
-    }, [selected, showCompositeOptionSection]);
+    }, [selected, showCompositeSection]);
 
     useEffect(() => {
         if (errors) {
             const showErrorIfString =
-                !showMore && Array.isArray(errors) && errors?.length > 0;
-            const showErrorIfElement = !showMore && !Array.isArray(errors);
+                !expanded && Array.isArray(errors) && errors?.length > 0;
+            const showErrorIfElement = !expanded && !Array.isArray(errors);
             if (!selected) {
                 setShowErrors(!selected);
             } else {
                 setShowErrors(showErrorIfString || showErrorIfElement);
             }
         }
-    }, [showMore, errors, selected]);
+    }, [expanded, errors, selected]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -123,7 +117,7 @@ export const Toggle = ({
 
     const handleExpandCollapseClick = () => {
         if (!disabled) {
-            setShowMore(!showMore);
+            setExpanded(!expanded);
         }
     };
     const handleOnRemove = () => {
@@ -186,37 +180,31 @@ export const Toggle = ({
         );
     };
 
-    const renderCompositeOptionSection = () => {
+    const renderCompositeChildren = () => {
         return (
             <Children
-                $selected={showMore}
+                $selected={expanded}
                 $isFinalItem={!collapsible}
                 $disabled={disabled}
             >
-                {compositeOptionSection}
+                {compositeSectionChildren}
             </Children>
         );
     };
 
-    const renderViewMoreOrLessButton = () => {
-        const showLessWithoutErrors = !showMore && !showErrors;
+    const renderExpandButton = () => {
+        const expandedWithoutErrors = !expanded && !showErrors;
         return (
-            <ViewMoreOrLessButtonContainer
-                $paddingTopRequired={showLessWithoutErrors}
+            <ExpandButtonContainer
+                $paddingTopRequired={expandedWithoutErrors}
                 $show={!collapsible ? false : selected}
                 $disabled={disabled}
                 onClick={handleExpandCollapseClick}
-                data-testid="toggle-button"
-            >
-                <ViewMoreOrLessButtonLabel
-                    weight="semibold"
-                    $disabled={disabled}
-                    data-testid="toggle-button-label"
+                data-testid={expanded ? "collapse-button" : "expand-button"}
                 >
-                    {showMore ? "Show less" : "Show more"}
-                </ViewMoreOrLessButtonLabel>
-                {showMore ? <ChevronUpIcon /> : <ChevronDownIcon />}
-            </ViewMoreOrLessButtonContainer>
+                    {expanded ? "Show less" : "Show more"}
+                {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </ExpandButtonContainer>
         );
     };
 
@@ -274,24 +262,24 @@ export const Toggle = ({
     const renderErrorList = (errors: string[]) => {
         return (
             <>
-                <ErrorListItem weight="semibold" $disabled={disabled}>
+                <ErrorText weight="semibold" $disabled={disabled}>
                     Error
-                </ErrorListItem>
+                </ErrorText>
                 <TextList.Ul>
                     {errors?.map((item, index) => {
                         return (
-                            <ErrorListli
+                            <ErrorListItem
                                 $disabled={disabled}
                                 key={index}
                                 id={`list-item-${index}`}
                             >
-                                <ErrorListItem
+                                <ErrorText
                                     weight="semibold"
                                     $disabled={disabled}
                                 >
                                     {item}
-                                </ErrorListItem>
-                            </ErrorListli>
+                                </ErrorText>
+                            </ErrorListItem>
                         );
                     })}
                 </TextList.Ul>
@@ -301,9 +289,9 @@ export const Toggle = ({
 
     const renderError = () => {
         return (
-            !showMore &&
+            !expanded &&
             showErrors && (
-                <ErrorListContainer
+                <ErrorContainer
                     $show={!collapsible ? false : selected}
                     $disabled={disabled}
                     onClick={handleExpandCollapseClick}
@@ -318,18 +306,18 @@ export const Toggle = ({
                             ? renderErrorList(errors)
                             : errors}
                     </AlertContainer>
-                </ErrorListContainer>
+                </ErrorContainer>
             )
         );
     };
 
     const renderCompositeSection = () => {
         return (
-            compositeOptionSection && (
+            compositeSectionChildren && (
                 <ChildrenContainer>
-                    {renderCompositeOptionSection()}
+                    {renderCompositeChildren()}
                     {renderError()}
-                    {renderViewMoreOrLessButton()}
+                    {renderExpandButton()}
                 </ChildrenContainer>
             )
         );

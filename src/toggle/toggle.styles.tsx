@@ -4,6 +4,7 @@ import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { Text, TextStyleHelper } from "../text";
 import { ToggleStyleType } from "./types";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -48,7 +49,6 @@ export const Container = styled.div<ContainerStyleProps>`
     border-width: 1px;
     border-style: solid;
     overflow: hidden;
-    border-width: 0.063rem;
     flex-direction: column;
     height: fit-content;
     width: 100%;
@@ -289,16 +289,15 @@ export const RemoveButton = styled.button<ContainerStyleProps>`
 
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 `;
-export const ViewMoreOrLessButtonLabel = styled(Text.H4)<StyleProps>`
-    color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
-    margin-right: 0.5rem;
-`;
-export const ViewMoreOrLessButtonContainer = styled.button<ButtonStyleProps>`
+
+export const ExpandButtonContainer = styled.button<ButtonStyleProps>`
     svg {
         width: 1.125rem;
         height: 1.125rem;
+        margin-left: 0.5rem;
     }
     color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
+    ${TextStyleHelper.getTextStyle("H4", "semibold")}
     width: 100%;
     justify-content: flex-end;
     align-items: center;
@@ -311,7 +310,7 @@ export const ViewMoreOrLessButtonContainer = styled.button<ButtonStyleProps>`
     padding-top: ${(props) =>
         props.$paddingTopRequired ? "0.6875rem" : "0rem"};
 `;
-export const ErrorListContainer = styled.div<ButtonStyleProps>`
+export const ErrorContainer = styled.div<ButtonStyleProps>`
     width: 100%;
     color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
     border: none;
@@ -334,12 +333,8 @@ export const Children = styled.div<ChildrenStyleProps>`
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
     padding-top: 0.6875rem;
     padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
-    display: ${(props) => (props.$selected ? "flex" : "none")};
-    strong,
-    b {
-        ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
-        color: inherit;
-    }
+    display: ${(props) => (props.$selected ? "block" : "none")};
+    ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 
     ${(props) => {
         if (props.$disabled) {
@@ -358,10 +353,13 @@ export const Children = styled.div<ChildrenStyleProps>`
     }}
 `;
 
-export const ErrorListItem = styled(Text.H5)<StyleProps>`
-    color: ${(props) => (props.$disabled ? Color.Neutral[3] : "#C60000")};
-`;
-export const ErrorListli = styled.li<StyleProps>`
+export const ErrorText = styled(Text.H5)<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? Color.Neutral[3] : "#C60000"} !important;
+        props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Text};
+`;
+export const ErrorListItem = styled.li<StyleProps>`
+    color: ${(props) =>
+        props.$disabled
+            ? Color.Neutral[3]
+            : Color.Validation.Red.Text} !important;
 `;
