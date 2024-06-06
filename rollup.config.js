@@ -5,7 +5,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "rollup-plugin-typescript2";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import pkg from "./package.json";
 import { getFolders } from "./scripts/build-util";
