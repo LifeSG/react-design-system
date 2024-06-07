@@ -10,7 +10,8 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
         "prettier",
-        "plugin:mdx/recommended"
+        "plugin:mdx/recommended",
+        "plugin:react-hooks/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 11,
