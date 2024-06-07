@@ -1,0 +1,25 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import { PropsTable } from "./props-table";
+import * as ToggleExampleStories from "./toggle-6-examples.stories";
+
+<Meta of={ToggleExampleStories} />
+
+[Back to main](/docs/data-input-toggle--docs#variants)
+
+<Secondary>Common Patterns</Secondary>
+
+<Heading3>Additional inputs if selected</Heading3>
+
+A common use case is to request follow-up inputs from the user only when the
+option is selected. These inputs are shown in a collapsible sub-section. When
+expanded, errors are shown inline. When collapsed, an error alert is shown.
+
+<Canvas of={ToggleExampleStories.AdditionalInputs} />
+
+<Heading3>Dynamic option</Heading3>
+
+A common use case is for users to add their own options to a list. The user can
+also remove this custom option afterwards. This variant cannot be collapsed.
+
+<Canvas of={ToggleExampleStories.DynamicOption} />

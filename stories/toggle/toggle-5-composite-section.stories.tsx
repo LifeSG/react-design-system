@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
 import { Toggle } from "../../src";
 import { Form } from "../../src/form";
 import { Variants } from "./doc-elements";
@@ -12,6 +11,17 @@ const meta: Meta<Component> = {
 };
 export default meta;
 
+const ChildComponent = () => (
+    <>
+        Additional content can be shown here. You can add{" "}
+        <strong>bold text</strong> or{" "}
+        <a href="https://life.gov.sg" target="_blank" rel="noreferrer">
+            links
+        </a>
+        .
+    </>
+);
+
 export const CheckboxType: StoryObj<Component> = {
     render: () => {
         return (
@@ -19,8 +29,8 @@ export const CheckboxType: StoryObj<Component> = {
                 <Toggle
                     indicator
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
@@ -28,8 +38,8 @@ export const CheckboxType: StoryObj<Component> = {
                 <Toggle
                     indicator
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                     checked
                 >
@@ -39,8 +49,8 @@ export const CheckboxType: StoryObj<Component> = {
                     indicator
                     disabled
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
@@ -50,8 +60,8 @@ export const CheckboxType: StoryObj<Component> = {
                     disabled
                     checked
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
@@ -60,8 +70,8 @@ export const CheckboxType: StoryObj<Component> = {
                     indicator
                     error
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
@@ -77,54 +87,54 @@ export const RadioType: StoryObj<Component> = {
             <Variants>
                 <Toggle
                     indicator
-                    type={"radio"}
+                    type="radio"
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
                 </Toggle>
                 <Toggle
                     indicator
-                    type={"radio"}
+                    type="radio"
                     checked
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
                 </Toggle>
                 <Toggle
                     indicator
-                    type={"radio"}
+                    type="radio"
                     disabled
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
                 </Toggle>
                 <Toggle
                     indicator
-                    type={"radio"}
+                    type="radio"
                     disabled
                     checked
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                 >
                     Text
                 </Toggle>
                 <Toggle
                     indicator
-                    type={"radio"}
+                    type="radio"
                     compositeSection={{
-                        children: <Form.Input label="Label" />,
-                        show: true,
+                        children: <ChildComponent />,
+                        collapsible: false,
                     }}
                     error
                 >
@@ -142,8 +152,7 @@ export const Collapsible: StoryObj<Component> = {
                 indicator
                 checked
                 compositeSection={{
-                    children: <Form.Input label="Label" />,
-                    show: true,
+                    children: <ChildComponent />,
                     collapsible: true,
                 }}
             >
@@ -167,7 +176,6 @@ export const CollapsibleWithError: StoryObj<Component> = {
                             errorMessage="Invalid field"
                         />
                     ),
-                    show: true,
                     collapsible: true,
                     errors: ["Something went wrong"],
                 }}
@@ -193,7 +201,6 @@ export const CollapsibleWithErrorAndDisabled: StoryObj<Component> = {
                             errorMessage="Invalid field"
                         />
                     ),
-                    show: true,
                     collapsible: true,
                     errors: ["Something went wrong"],
                 }}
