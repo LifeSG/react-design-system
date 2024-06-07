@@ -1,5 +1,5 @@
 import throttle from "lodash/throttle";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useInView } from "react-intersection-observer";
 import { useTimer } from "./use-timer";
@@ -54,9 +54,38 @@ export const CountdownTimer = ({
     });
 
     // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const performOnTickHandler = useCallback(() => {
+        if (onTick) {
+            onTick(remainingSeconds);
+        }
+    }, [onTick, remainingSeconds]);
+
+    const performOnNotifyHandler = useCallback(() => {
+        if (onNotify && !isNotified.current) {
+            isNotified.current = true;
+            onNotify();
+        }
+    }, [onNotify]);
+
+    const performOnFinishHandler = useCallback(() => {
+        setIsPlaying(false);
+
+        if (onFinish) onFinish();
+    }, [onFinish]);
+
+    function getOffsetY() {
+        const desktopTop = offset?.top ?? 168;
+        const mobileTop = mobileOffset?.top ?? 80;
+        const offsetY = isMobile ? mobileTop : desktopTop;
+
+        return offsetY;
+    }
+
+    // =============================================================================
     // EFFECTS
     // =============================================================================
-
     useEffect(() => {
         setIsPlaying(show);
     }, [show]);
@@ -68,7 +97,13 @@ export const CountdownTimer = ({
             performOnTickHandler();
             performOnNotifyHandler();
         }
-    }, [remainingSeconds]);
+    }, [
+        notifyTimer,
+        performOnFinishHandler,
+        performOnNotifyHandler,
+        performOnTickHandler,
+        remainingSeconds,
+    ]);
 
     useEffect(() => {
         const y = getOffsetY();
@@ -102,37 +137,6 @@ export const CountdownTimer = ({
         setClientRectX(clientRect.x);
         setClientRectRight(clientRect.right);
     };
-
-    // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
-
-    const performOnTickHandler = () => {
-        if (onTick) {
-            onTick(remainingSeconds);
-        }
-    };
-
-    const performOnNotifyHandler = () => {
-        if (onNotify && !isNotified.current) {
-            isNotified.current = true;
-            onNotify();
-        }
-    };
-
-    const performOnFinishHandler = () => {
-        setIsPlaying(false);
-
-        if (onFinish) onFinish();
-    };
-
-    function getOffsetY() {
-        const desktopTop = offset?.top ?? 168;
-        const mobileTop = mobileOffset?.top ?? 80;
-        const offsetY = isMobile ? mobileTop : desktopTop;
-
-        return offsetY;
-    }
 
     // =============================================================================
     // RENDER FUNCTION
