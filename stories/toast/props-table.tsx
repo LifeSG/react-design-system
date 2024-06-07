@@ -38,7 +38,7 @@ const DATA: ApiTableSectionProps[] = [
                         The title of the <code>Toast</code>
                     </>
                 ),
-                propTypes: [`string`],
+                propTypes: [`string | JSX.Element`],
                 defaultValue: "",
             },
             {
@@ -49,7 +49,7 @@ const DATA: ApiTableSectionProps[] = [
                         display the content information.
                     </>
                 ),
-                propTypes: [`string`],
+                propTypes: [`string | JSX.Element`],
                 defaultValue: "",
                 mandatory: true,
             },
@@ -78,16 +78,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "4000",
             },
             {
-                name: "onDismiss",
-                description: (
-                    <>
-                        Called when the <code>Toast</code> is dismissed, either
-                        by user action or from auto dismiss.
-                    </>
-                ),
-                propTypes: ["() => void"],
-            },
-            {
                 name: "fixed",
                 description: (
                     <>
@@ -98,6 +88,35 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["boolean"],
                 defaultValue: "true",
+            },
+            {
+                name: "actionButton",
+                description: (
+                    <>
+                        Consist of <code>label</code> and <code>onClick</code>,
+                        which dictates what the label of the button is and what
+                        happens when the button is clicked on
+                    </>
+                ),
+                propTypes: ["ActionButtonProps"],
+            },
+        ],
+    },
+    {
+        name: "ActionButtonProps",
+        attributes: [
+            {
+                name: "label",
+                mandatory: true,
+                description: "The label of the button",
+                propTypes: ["string"],
+            },
+            {
+                name: "onClick",
+                mandatory: true,
+                description:
+                    "The function that should be rendered when the action button is clicked.",
+                propTypes: ["() => void"],
             },
         ],
     },

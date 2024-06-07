@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Toast } from "src/toast";
+import { Text } from "src/text";
+import { Card } from "src/card";
+import { Color } from "src/color";
 
 type Component = typeof Toast;
 
@@ -14,6 +17,10 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
+        const customActionButton = {
+            label: "Click me",
+            onClick: () => console.log("This function is called"),
+        };
         return (
             <>
                 <Toast
@@ -167,5 +174,106 @@ export const FixedPositioning: StoryObj<Component> = {
     parameters: {
         layout: "fullscreen",
         docs: { story: { inline: false, iframeHeight: 300 } },
+    },
+};
+
+export const WithJSXTitleAndLabel: StoryObj<Component> = {
+    render: () => {
+        const title = (
+            <Text.H4
+                weight={"regular"}
+                style={{
+                    color: "grey",
+                    fontSize: "2rem",
+                }}
+            >
+                This is a <strong>JSX Element</strong>
+            </Text.H4>
+        );
+
+        const label = (
+            <Text.Body
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                }}
+            >
+                The
+                <a
+                    style={{
+                        margin: "0 0.25rem",
+                        color: "#1C76D5",
+                    }}
+                >
+                    label
+                </a>
+                and title were passed in as JSX Elements
+            </Text.Body>
+        );
+        return (
+            <>
+                <Toast
+                    type="success"
+                    title={title}
+                    label={label}
+                    fixed={false}
+                />
+                <br />
+                <Toast type="error" title={title} label={label} fixed={false} />
+                <br />
+                <Toast
+                    type="warning"
+                    title={title}
+                    label={label}
+                    fixed={false}
+                />
+                <br />
+                <Toast type="info" label={label} fixed={false} />
+            </>
+        );
+    },
+};
+
+export const WithActionButton: StoryObj<Component> = {
+    render: () => {
+        const customActionButton = {
+            label: "Click me",
+            onClick: () => console.log("This function is called"),
+        };
+        return (
+            <>
+                <Toast
+                    type="success"
+                    title="Template successfully updated"
+                    label="Your bookings has been updated and received by the service provider."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+                <br />
+                <Toast
+                    type="warning"
+                    label="Your bookings has been updated and received by the service provider."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+                <br />
+                <Toast
+                    type="error"
+                    label="An internal system error had occured. Please log out and try
+                again."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+                <br />
+                <Toast
+                    type="info"
+                    title="Updated automatically"
+                    label="The calendar will be automatically updated when you have done
+                editing the event information."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+            </>
+        );
     },
 };

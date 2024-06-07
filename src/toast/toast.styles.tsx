@@ -1,12 +1,13 @@
+import { Button } from "@lifesg/react-design-system";
 import { animated } from "react-spring";
 import { ValidationElementAttributes } from "src/color";
 import { PropertiesToType } from "src/util/utility-types";
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
+import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
 import { ToastType } from "./types";
-import { MediaQuery } from "../media";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -38,7 +39,7 @@ const getValidationColorAttributes = (
 // =============================================================================
 export const Wrapper = styled(animated.div)<StyleProps>`
     display: flex;
-
+    flex-direction: row;
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};
     margin: ${(props) => (props.$fixed ? "1rem" : 0)};
     top: 0;
@@ -47,6 +48,8 @@ export const Wrapper = styled(animated.div)<StyleProps>`
     border-radius: 0.5rem;
     line-height: 0;
     z-index: 10;
+    align-items: center;
+    gap: 2rem;
 
     ${MediaQuery.MaxWidth.tablet} {
         left: 0;
@@ -57,9 +60,35 @@ export const Wrapper = styled(animated.div)<StyleProps>`
             background: ${getValidationColorAttributes(props).Background};
             border: 1px solid ${getValidationColorAttributes(props).Border};
             color: ${getValidationColorAttributes(props).Text};
+        `;
+    }};
+`;
+
+export const ContentWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex: 1;
+    justify-content: space-between;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+`;
+
+export const TextIconWrapper = styled(animated.div)<StyleProps>`
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+
+    ${(props) => {
+        return css`
             & > svg {
+                flex-shrink: 0;
                 width: 1.5rem;
-                height: 1.5rem;
+                height: 1.625rem;
                 margin-right: 0.5rem;
                 color: ${getValidationColorAttributes(props).Icon};
             }
@@ -70,8 +99,6 @@ export const Wrapper = styled(animated.div)<StyleProps>`
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding-right: 2rem;
-    flex: 1;
 `;
 
 export const Title = styled(Text.H4)<StyleProps>`
@@ -94,6 +121,17 @@ export const Description = styled.div<StyleProps>`
             }
         `;
     }}
+`;
+
+export const ActionButton = styled(Button.Small)`
+    font-weight: 600;
+    align-self: center;
+    white-space: nowrap;
+
+    ${MediaQuery.MaxWidth.tablet} {
+        align-self: start;
+        margin-left: 2rem;
+    }
 `;
 
 export const DismissButton = styled(ClickableIcon)<StyleProps>`
