@@ -10,7 +10,7 @@ export const BookingSGColorSet: ColorSet = {
         6: "#FFEEEA",
     },
     Primary: "#6F4AB8",
-    PrimaryDark: "#6443A6",
+    PrimaryDark: "#422D6E",
     Secondary: "#6443A6",
     Accent: {
         Dark: {

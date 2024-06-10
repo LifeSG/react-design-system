@@ -10,7 +10,7 @@ export const CCubeColorSet: ColorSet = {
         6: "#FFEEEA",
     },
     Primary: "#8D5197",
-    PrimaryDark: "#6B3E73",
+    PrimaryDark: "#4E2C53",
     Secondary: "#C02673",
     Accent: {
         Dark: {

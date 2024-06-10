@@ -10,7 +10,7 @@ export const RBSColorSet: ColorSet = {
         6: "#FFEEEA",
     },
     Primary: "#4855D4",
-    PrimaryDark: "#3E49B2",
+    PrimaryDark: "#28356C",
     Secondary: "#364891",
     Accent: {
         Dark: {

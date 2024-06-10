@@ -10,7 +10,7 @@ export const MyLegacyColorSet: ColorSet = {
         6: "#FFEEEA",
     },
     Primary: "#0C7BB3",
-    PrimaryDark: "#066391",
+    PrimaryDark: "#043D5A",
     Secondary: "#066391",
     Accent: {
         Dark: {

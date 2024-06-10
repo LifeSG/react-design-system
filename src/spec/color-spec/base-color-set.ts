@@ -10,7 +10,7 @@ export const BaseColorSet: ColorSet = {
         6: "#FFEEEA",
     },
     Primary: "#1C76D5",
-    PrimaryDark: "#1869BF",
+    PrimaryDark: "#003874",
     Secondary: "#0056b3",
     Accent: {
         Dark: {

@@ -16,11 +16,11 @@ export const Main = styled.button<MainStyleProps>`
     align-items: center;
     justify-content: center;
 
-    @media (hover: hover) {
+    /* @media (hover: hover) { 
         &:hover {
             box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
         }
-    }
+    } */
 
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
@@ -38,11 +38,19 @@ export const Main = styled.button<MainStyleProps>`
                     color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.Primary
                         : Color.Primary};
+
+                    &:hover {
+                        background-color: ${Color.Neutral[7]};
+                    }
                 `;
             case "light":
                 return css`
                     background-color: ${Color.Neutral[8]};
                     border: 1px solid ${Color.Neutral[5]};
+
+                    &:hover {
+                        background-color: ${Color.Neutral[7]};
+                    }
 
                     color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.Primary
@@ -55,7 +63,8 @@ export const Main = styled.button<MainStyleProps>`
                     cursor: not-allowed;
 
                     &:hover {
-                        box-shadow: none;
+                        /* box-shadow: none; */
+                        background-color: ${Color.Neutral[6]};
                     }
 
                     color: ${Color.Neutral[3]};
@@ -66,9 +75,9 @@ export const Main = styled.button<MainStyleProps>`
                     border: none;
                     border-radius: unset;
 
-                    &:hover {
+                    /* &:hover {
                         box-shadow: none;
-                    }
+                    } */
 
                     color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.Primary
@@ -78,7 +87,7 @@ export const Main = styled.button<MainStyleProps>`
                     :focus {
                         color: ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Hover
-                            : Color.Secondary};
+                            : Color.PrimaryDark};
                     }
                 `;
             default:
@@ -90,6 +99,12 @@ export const Main = styled.button<MainStyleProps>`
 
                     ${MediaQuery.MaxWidth.mobileL} {
                         width: 100%;
+                    }
+
+                    &:hover {
+                        background-color: ${props.$buttonIsDanger
+                            ? DesignToken.Button.Danger.Hover
+                            : Color.PrimaryDark};
                     }
 
                     color: ${Color.Neutral[8]};
