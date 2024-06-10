@@ -33,6 +33,9 @@ interface ButtonStyleProps extends StyleProps {
     $show?: boolean;
     $paddingTopRequired?: boolean;
 }
+interface ErrorContainerProps extends StyleProps {
+    $show?: boolean;
+}
 
 interface ChildrenStyleProps extends StyleProps {
     $isFinalItem?: boolean;
@@ -311,7 +314,7 @@ export const ExpandButtonContainer = styled.button<ButtonStyleProps>`
     padding-top: ${(props) =>
         props.$paddingTopRequired ? "0.6875rem" : "0rem"};
 `;
-export const ErrorContainer = styled.div<ButtonStyleProps>`
+export const ErrorContainer = styled.div<ErrorContainerProps>`
     width: 100%;
     color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
     border: none;
