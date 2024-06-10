@@ -152,7 +152,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string", "JSX.Element"],
             },
             {
-                name: "defaultExpanded",
+                name: "initialExpanded",
                 description: (
                     <>
                         specifies if the CompositeOption children have to be
@@ -160,6 +160,7 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["boolean"],
+                defaultValue: `true`,
             },
             {
                 name: "collapsible",
