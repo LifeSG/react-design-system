@@ -1,26 +1,17 @@
+import type { StorybookConfig } from "@storybook/react-webpack5";
 import path from "path";
 import remarkGfm from "remark-gfm";
 
-module.exports = {
-    stories: [
-        "../stories/**/!(*.stories).mdx",
-        "../stories/**/*.stories.@(ts|tsx)",
-    ],
+const config: StorybookConfig = {
+    stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(ts|tsx)"],
     addons: [
+        "@storybook/addon-webpack5-compiler-swc",
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@storybook/addon-a11y",
         "@storybook/addon-themes",
-        {
-            name: "@storybook/addon-docs",
-            options: {
-                mdxPluginOptions: {
-                    mdxCompileOptions: {
-                        remarkPlugins: [remarkGfm],
-                    },
-                },
-            },
-        },
+        "@storybook/addon-interactions",
+        "@storybook/addon-docs",
         {
             name: "@storybook/addon-storysource",
             options: {
@@ -33,14 +24,24 @@ module.exports = {
     ],
     staticDirs: ["../public"],
     webpackFinal: async (config) => {
-        config.resolve.modules = [
+        config.resolve!.modules = [
             path.resolve(__dirname, ".."),
             "node_modules",
         ];
         return config;
     },
-    framework: "@storybook/react-webpack5",
-    docs: {
-        autodocs: true,
+    framework: {
+        name: "@storybook/react-webpack5",
+        options: {},
     },
+    swc: () => ({
+        jsc: {
+            transform: {
+                react: {
+                    runtime: "automatic",
+                },
+            },
+        },
+    }),
 };
+export default config;

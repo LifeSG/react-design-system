@@ -11,7 +11,8 @@
         "plugin:react/recommended",
         "prettier",
         "plugin:mdx/recommended",
-        "plugin:react-hooks/recommended"
+        "plugin:react-hooks/recommended",
+        "plugin:storybook/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 11,
