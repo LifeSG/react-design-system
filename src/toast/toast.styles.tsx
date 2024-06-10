@@ -1,4 +1,4 @@
-import { Button } from "@lifesg/react-design-system";
+import { Button } from "../button";
 import { animated } from "react-spring";
 import { ValidationElementAttributes } from "src/color";
 import { PropertiesToType } from "src/util/utility-types";

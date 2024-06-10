@@ -38,7 +38,7 @@ const DATA: ApiTableSectionProps[] = [
                         The title of the <code>Toast</code>
                     </>
                 ),
-                propTypes: [`string | JSX.Element`],
+                propTypes: [`string`, `JSX.Element`],
                 defaultValue: "",
             },
             {
@@ -49,7 +49,7 @@ const DATA: ApiTableSectionProps[] = [
                         display the content information.
                     </>
                 ),
-                propTypes: [`string | JSX.Element`],
+                propTypes: [`string`, `JSX.Element`],
                 defaultValue: "",
                 mandatory: true,
             },
@@ -76,6 +76,16 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["number"],
                 defaultValue: "4000",
+            },
+            {
+                name: "onDismiss",
+                description: (
+                    <>
+                        Called when the <code>Toast</code> is dismissed, either
+                        by user action or from auto dismiss.
+                    </>
+                ),
+                propTypes: ["() => void"],
             },
             {
                 name: "fixed",
