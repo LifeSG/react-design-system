@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Text } from "src/text";
+import { ButtonContainer } from "./doc-elements";
 
 const meta: Meta = {
     title: "General/Text/Advanced Usage",
@@ -71,6 +72,17 @@ export const RenderAs: StoryObj = {
                     This becomes a span under the hood
                 </Text.Body>
             </>
+        );
+    },
+    tags: ["pattern"],
+};
+
+export const TextStyleHelper: StoryObj = {
+    render: () => {
+        return (
+            <ButtonContainer>
+                The quick brown fox jumps over the lazy dog
+            </ButtonContainer>
         );
     },
     tags: ["pattern"],

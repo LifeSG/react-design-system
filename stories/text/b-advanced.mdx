@@ -63,3 +63,20 @@ rendered. You may do so using the `as` prop.
 > rendered instead. Inspect the element to find out
 
 <Canvas of={TextStories.RenderAs} />
+
+<Heading3>CSS styling</Heading3>
+
+Use `TextStyleHelper.getTextStyle()` to apply the relevant font properties to
+an element for the specified size and weight. This is useful for containers that
+contain text children but do not require a text element.
+
+```ts
+import { TextStyleHelper } from "@lifesg/react-design-system/text";
+
+export const ButtonContainer = styled.button`
+    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+    padding: 0.5rem;
+`;
+```
+
+<Canvas of={TextStories.TextStyleHelper} />
