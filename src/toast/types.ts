@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from "react";
 
 export type ToastType = "success" | "warning" | "error" | "info";
 
-export interface ActionButtonProps {
+export interface ToastActionButtonProps {
     label: string;
     onClick: () => void;
 }
@@ -24,5 +24,5 @@ export interface ToastProps
     /** Specifies if Toast should be fixed to top. Defaults to true */
     fixed?: boolean | undefined;
     /** If given, will display an actionButton with the given title and run the given function upon clicking of the button */
-    actionButton?: ActionButtonProps | undefined;
+    actionButton?: ToastActionButtonProps | undefined;
 }

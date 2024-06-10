@@ -51,7 +51,7 @@ export const Wrapper = styled(animated.div)<StyleProps>`
     align-items: center;
     gap: 2rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.mobileL} {
         left: 0;
     }
 
@@ -113,7 +113,8 @@ export const Title = styled(Text.H4)<StyleProps>`
 
 export const Description = styled.div<StyleProps>`
     display: flex;
-
+    align-items: center;
+    position: relative;
     ${(props) => {
         return css`
             p {
@@ -127,8 +128,9 @@ export const ActionButton = styled(Button.Small)`
     font-weight: 600;
     align-self: center;
     white-space: nowrap;
+    margin-left: auto;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.mobileL} {
         align-self: start;
         margin-left: 2rem;
     }
@@ -147,6 +149,10 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
             }
             :hover {
                 background: transparent;
+            }
+            ${MediaQuery.MaxWidth.mobileL} {
+                align-self: center;
+                margin-left: 2rem;
             }
         `;
     }};
