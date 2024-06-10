@@ -36,6 +36,7 @@ interface ButtonStyleProps extends StyleProps {
 
 interface ChildrenStyleProps extends StyleProps {
     $isFinalItem?: boolean;
+    $expanded?: boolean;
 }
 
 // =============================================================================
@@ -333,7 +334,7 @@ export const Children = styled.div<ChildrenStyleProps>`
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
     padding-top: 0.6875rem;
     padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
-    display: ${(props) => (props.$selected ? "block" : "none")};
+    display: ${(props) => (props.$expanded ? "block" : "none")};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 
     ${(props) => {

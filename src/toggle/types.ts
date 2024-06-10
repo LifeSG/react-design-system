@@ -53,5 +53,5 @@ export interface ToggleCompositeSectionProps {
     errors?: string[] | JSX.Element | undefined;
     /** The children inside the composite option */
     children: React.ReactNode;
-    defaultExpanded?: boolean | undefined;
+    initialExpanded?: boolean | undefined;
 }

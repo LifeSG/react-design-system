@@ -49,10 +49,10 @@ export const Toggle = ({
         collapsible = true,
         errors,
         children: compositeSectionChildren,
-        defaultExpanded,
+        initialExpanded = true,
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
-    const [expanded, setExpanded] = useState<boolean>(!!defaultExpanded);
+    const [expanded, setExpanded] = useState<boolean>(initialExpanded);
 
     const [showErrors, setShowErrors] = useState<boolean>(false);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
@@ -68,10 +68,10 @@ export const Toggle = ({
     }, [checked]);
 
     useEffect(() => {
-        if (selected !== undefined && defaultExpanded === undefined) {
-            setExpanded(selected);
+        if (selected) {
+            setExpanded(initialExpanded ? initialExpanded : true);
         }
-    }, [selected, defaultExpanded]);
+    }, [selected]);
 
     useEffect(() => {
         if (errors) {
@@ -183,7 +183,7 @@ export const Toggle = ({
     const renderCompositeChildren = () => {
         return (
             <Children
-                $selected={expanded}
+                $expanded={!collapsible || expanded}
                 $isFinalItem={!collapsible}
                 $disabled={disabled}
             >
