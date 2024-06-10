@@ -1,6 +1,6 @@
 {
     "name": "@lifesg/react-design-system",
-    "version": "2.6.0-canary.2",
+    "version": "2.6.0-canary.3",
     "description": "A component design system for LifeSG web apps",
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
