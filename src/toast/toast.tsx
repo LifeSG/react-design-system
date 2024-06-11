@@ -108,6 +108,16 @@ export const Toast = ({
         }
     };
 
+    const renderDesc = () => {
+        if (React.isValidElement(label)) {
+            return label;
+        } else if (title) {
+            return <Text.BodySmall>{label}</Text.BodySmall>;
+        } else {
+            return <Text.Body>{label}</Text.Body>;
+        }
+    };
+
     return (
         <Wrapper
             style={transitions}
@@ -129,17 +139,7 @@ export const Toast = ({
                             ))}
                         {label && (
                             <Description $type={type}>
-                                {!title ? (
-                                    React.isValidElement(label) ? (
-                                        label
-                                    ) : (
-                                        <Text.Body>{label}</Text.Body>
-                                    )
-                                ) : React.isValidElement(label) ? (
-                                    label
-                                ) : (
-                                    <Text.BodySmall>{label}</Text.BodySmall>
-                                )}
+                                {renderDesc()}
                             </Description>
                         )}
                     </TextContainer>

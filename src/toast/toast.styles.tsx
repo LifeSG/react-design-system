@@ -71,24 +71,25 @@ export const ContentWrapper = styled.div`
     flex: 1;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.mobileL} {
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
     }
 `;
 
-export const TextIconWrapper = styled(animated.div)<StyleProps>`
+export const TextIconWrapper = styled.div<StyleProps>`
     display: flex;
     flex-direction: row;
-    align-items: start;
+    align-items: flex-start;
 
     ${(props) => {
         return css`
             & > svg {
                 flex-shrink: 0;
                 width: 1.5rem;
-                height: 1.625rem;
+                height: 1.5rem;
+                margin-top: 0.0625rem;
                 margin-right: 0.5rem;
                 color: ${getValidationColorAttributes(props).Icon};
             }
@@ -112,7 +113,6 @@ export const Title = styled(Text.H4)<StyleProps>`
 `;
 
 export const Description = styled.div<StyleProps>`
-    position: relative;
     ${(props) => {
         return css`
             p {
@@ -123,13 +123,13 @@ export const Description = styled.div<StyleProps>`
 `;
 
 export const ActionButton = styled(Button.Small)`
-    font-weight: 600;
     align-self: center;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
     margin-left: auto;
+    height: auto;
 
     ${MediaQuery.MaxWidth.mobileL} {
-        align-self: start;
+        align-self: flex-start;
         margin-left: 2rem;
     }
 `;
