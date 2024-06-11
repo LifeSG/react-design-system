@@ -1,5 +1,5 @@
-import React from "react";
 import styled, { css } from "styled-components";
+import { TextStyleHelper } from "../../src";
 import { Color } from "../../src/color/color";
 import { Text } from "../../src/text/text";
 
@@ -138,4 +138,9 @@ export const LinkDiv = styled.div`
             margin-bottom: 1rem;
         }
     }
+`;
+
+export const ButtonContainer = styled.button`
+    ${TextStyleHelper.getTextStyle("BodySmall", "bold")}
+    padding: 0.5rem;
 `;
