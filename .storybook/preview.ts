@@ -1,5 +1,7 @@
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
+import type { Preview } from "@storybook/react";
+import { ThemeProvider } from "styled-components";
 import {
     BaseTheme,
     BookingSGTheme,
@@ -7,9 +9,8 @@ import {
     MyLegacyTheme,
     RBSTheme,
 } from "../src/theme";
-import { ThemeProvider } from "styled-components";
 
-const preview = {
+const preview: Preview = {
     decorators: [
         withThemeFromJSXProvider({
             themes: {
