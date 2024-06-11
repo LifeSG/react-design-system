@@ -109,7 +109,7 @@
         "react-resize-detector": "^7.0.0",
         "react-responsive": "^9.0.0-beta.10",
         "react-spring": "~9.7.3",
-        "remark-gfm": "^3.0.1",
+        "remark-gfm": "^4.0.0",
         "rollup": "^3.29.4",
         "rollup-plugin-generate-package-json": "^3.2.0",
         "rollup-plugin-peer-deps-external": "^2.2.4",

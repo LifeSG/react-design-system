@@ -11,7 +11,16 @@ const config: StorybookConfig = {
         "@storybook/addon-a11y",
         "@storybook/addon-themes",
         "@storybook/addon-interactions",
-        "@storybook/addon-docs",
+        {
+            name: "@storybook/addon-docs",
+            options: {
+                mdxPluginOptions: {
+                    mdxCompileOptions: {
+                        remarkPlugins: [remarkGfm],
+                    },
+                },
+            },
+        },
         {
             name: "@storybook/addon-storysource",
             options: {
