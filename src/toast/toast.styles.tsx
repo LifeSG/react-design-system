@@ -112,8 +112,6 @@ export const Title = styled(Text.H4)<StyleProps>`
 `;
 
 export const Description = styled.div<StyleProps>`
-    display: flex;
-    align-items: center;
     position: relative;
     ${(props) => {
         return css`
