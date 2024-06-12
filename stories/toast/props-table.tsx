@@ -103,9 +103,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "actionButton",
                 description: (
                     <>
-                        Consist of <code>label</code> and <code>onClick</code>,
-                        which dictates what the label of the button is and what
-                        happens when the button is clicked on
+                        Renders a call to action in the <code>Toast</code>
                     </>
                 ),
                 propTypes: ["ActionButtonProps"],
@@ -118,14 +116,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "label",
                 mandatory: true,
-                description: "The label of the button",
+                description: "The label of the action button",
                 propTypes: ["string"],
             },
             {
                 name: "onClick",
                 mandatory: true,
-                description:
-                    "The function that should be rendered when the action button is clicked.",
+                description: "Called when the action button is clicked",
                 propTypes: ["() => void"],
             },
         ],

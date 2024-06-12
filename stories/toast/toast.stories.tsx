@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
-import { Toast } from "src/toast";
 import { Text } from "src/text";
-import { Card } from "src/card";
-import { Color } from "src/color";
+import { Toast } from "src/toast";
 
 type Component = typeof Toast;
 
@@ -177,59 +175,24 @@ export const FixedPositioning: StoryObj<Component> = {
     },
 };
 
-export const WithJSXTitleAndLabel: StoryObj<Component> = {
+export const WithCustomDisplay: StoryObj<Component> = {
     render: () => {
-        const title = (
-            <Text.H4
-                weight={"regular"}
-                style={{
-                    color: "grey",
-                    fontSize: "2rem",
-                }}
-            >
-                This is a <strong>JSX Element</strong>
-            </Text.H4>
-        );
-
-        const label = (
-            <Text.Body
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                }}
-            >
-                The
-                <a
-                    style={{
-                        margin: "0 0.25rem",
-                        color: "#1C76D5",
-                    }}
-                >
-                    label
-                </a>
-                and title were passed in as JSX Elements
-            </Text.Body>
-        );
         return (
-            <>
-                <Toast
-                    type="success"
-                    title={title}
-                    label={label}
-                    fixed={false}
-                />
-                <br />
-                <Toast type="error" title={title} label={label} fixed={false} />
-                <br />
-                <Toast
-                    type="warning"
-                    title={title}
-                    label={label}
-                    fixed={false}
-                />
-                <br />
-                <Toast type="info" label={label} fixed={false} />
-            </>
+            <Toast
+                type="warning"
+                title={
+                    <Text.H4 weight="regular" style={{ color: "grey" }}>
+                        This is a <strong>JSX Element</strong>
+                    </Text.H4>
+                }
+                label={
+                    <Text.BodySmall>
+                        This is a JSX element that contains a{" "}
+                        <Text.Hyperlink.Small>link</Text.Hyperlink.Small>
+                    </Text.BodySmall>
+                }
+                fixed={false}
+            />
         );
     },
 };
