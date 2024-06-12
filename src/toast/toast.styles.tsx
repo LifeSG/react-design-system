@@ -46,12 +46,11 @@ export const Wrapper = styled(animated.div)<StyleProps>`
     right: 0;
     padding: 1rem;
     border-radius: 0.5rem;
-    line-height: 0;
     z-index: 10;
     align-items: center;
     gap: 2rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.tablet} {
         left: 0;
     }
 
@@ -150,7 +149,6 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
             }
             ${MediaQuery.MaxWidth.mobileL} {
                 align-self: center;
-                margin-left: 2rem;
             }
         `;
     }};
