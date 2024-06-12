@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
+import { Text } from "src/text";
 import { Toast } from "src/toast";
 
 type Component = typeof Toast;
@@ -14,6 +15,10 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
+        const customActionButton = {
+            label: "Click me",
+            onClick: () => console.log("This function is called"),
+        };
         return (
             <>
                 <Toast
@@ -167,5 +172,71 @@ export const FixedPositioning: StoryObj<Component> = {
     parameters: {
         layout: "fullscreen",
         docs: { story: { inline: false, iframeHeight: 300 } },
+    },
+};
+
+export const WithCustomDisplay: StoryObj<Component> = {
+    render: () => {
+        return (
+            <Toast
+                type="warning"
+                title={
+                    <Text.H4 weight="regular" style={{ color: "grey" }}>
+                        This is a <strong>JSX Element</strong>
+                    </Text.H4>
+                }
+                label={
+                    <Text.BodySmall>
+                        This is a JSX element that contains a{" "}
+                        <Text.Hyperlink.Small>link</Text.Hyperlink.Small>
+                    </Text.BodySmall>
+                }
+                fixed={false}
+            />
+        );
+    },
+};
+
+export const WithActionButton: StoryObj<Component> = {
+    render: () => {
+        const customActionButton = {
+            label: "Click me",
+            onClick: () => console.log("This function is called"),
+        };
+        return (
+            <>
+                <Toast
+                    type="success"
+                    title="Template successfully updated"
+                    label="Your bookings has been updated and received by the service provider."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+                <br />
+                <Toast
+                    type="warning"
+                    label="Your bookings has been updated and received by the service provider."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+                <br />
+                <Toast
+                    type="error"
+                    label="An internal system error had occured. Please log out and try
+                again."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+                <br />
+                <Toast
+                    type="info"
+                    title="Updated automatically"
+                    label="The calendar will be automatically updated when you have done
+                editing the event information."
+                    actionButton={customActionButton}
+                    fixed={false}
+                />
+            </>
+        );
     },
 };

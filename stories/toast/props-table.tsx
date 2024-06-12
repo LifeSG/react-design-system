@@ -38,7 +38,7 @@ const DATA: ApiTableSectionProps[] = [
                         The title of the <code>Toast</code>
                     </>
                 ),
-                propTypes: [`string`],
+                propTypes: [`string`, `JSX.Element`],
                 defaultValue: "",
             },
             {
@@ -49,7 +49,7 @@ const DATA: ApiTableSectionProps[] = [
                         display the content information.
                     </>
                 ),
-                propTypes: [`string`],
+                propTypes: [`string`, `JSX.Element`],
                 defaultValue: "",
                 mandatory: true,
             },
@@ -98,6 +98,32 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["boolean"],
                 defaultValue: "true",
+            },
+            {
+                name: "actionButton",
+                description: (
+                    <>
+                        Renders a call to action in the <code>Toast</code>
+                    </>
+                ),
+                propTypes: ["ActionButtonProps"],
+            },
+        ],
+    },
+    {
+        name: "ActionButtonProps",
+        attributes: [
+            {
+                name: "label",
+                mandatory: true,
+                description: "The label of the action button",
+                propTypes: ["string"],
+            },
+            {
+                name: "onClick",
+                mandatory: true,
+                description: "Called when the action button is clicked",
+                propTypes: ["() => void"],
             },
         ],
     },

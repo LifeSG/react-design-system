@@ -11,13 +11,17 @@ import { easings, useSpring } from "react-spring";
 import { MediaWidths } from "../spec/media-spec";
 import { Text } from "../text";
 import {
+    ActionButton,
+    ContentWrapper,
     Description,
     DismissButton,
     TextContainer,
+    TextIconWrapper,
     Title,
     Wrapper,
 } from "./toast.styles";
 import { ToastProps } from "./types";
+import React from "react";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
 
@@ -29,6 +33,7 @@ export const Toast = ({
     autoDismissTime = DEFAULT_AUTO_DISMISS_TIME,
     onDismiss,
     fixed = true,
+    actionButton,
     ...otherProps
 }: ToastProps) => {
     // =============================================================================
@@ -103,6 +108,16 @@ export const Toast = ({
         }
     };
 
+    const renderDesc = () => {
+        if (React.isValidElement(label)) {
+            return label;
+        } else if (title) {
+            return <Text.BodySmall>{label}</Text.BodySmall>;
+        } else {
+            return <Text.Body>{label}</Text.Body>;
+        }
+    };
+
     return (
         <Wrapper
             style={transitions}
@@ -110,23 +125,35 @@ export const Toast = ({
             $fixed={fixed}
             {...otherProps}
         >
-            {renderIcon()}
-            <TextContainer>
-                {title && (
-                    <Title $type={type} weight="semibold">
-                        {title}
-                    </Title>
-                )}
-                {label && (
-                    <Description $type={type}>
-                        {!title ? (
-                            <Text.Body>{label}</Text.Body>
-                        ) : (
-                            <Text.BodySmall>{label}</Text.BodySmall>
+            <ContentWrapper>
+                <TextIconWrapper $type={type}>
+                    {renderIcon()}
+                    <TextContainer>
+                        {title &&
+                            (React.isValidElement(title) ? (
+                                title
+                            ) : (
+                                <Title $type={type} weight="semibold">
+                                    {title}
+                                </Title>
+                            ))}
+                        {label && (
+                            <Description $type={type}>
+                                {renderDesc()}
+                            </Description>
                         )}
-                    </Description>
+                    </TextContainer>
+                </TextIconWrapper>
+
+                {actionButton && (
+                    <ActionButton
+                        styleType="light"
+                        onClick={actionButton.onClick}
+                    >
+                        {actionButton.label}
+                    </ActionButton>
                 )}
-            </TextContainer>
+            </ContentWrapper>
             <DismissButton $type={type} onClick={handleDismiss}>
                 <CrossIcon />
             </DismissButton>
