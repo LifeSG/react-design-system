@@ -2,15 +2,14 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
-import { TextList } from "../text-list";
 import { SimpleIdGenerator } from "../util";
 import {
     AlertContainer,
     Children,
-    ChildrenContainer,
+    CompositeSectionContainer,
     Container,
     ErrorContainer,
-    ErrorListItem,
+    ErrorList,
     ErrorText,
     ExpandButton,
     HeaderContainer,
@@ -53,10 +52,10 @@ export const Toggle = ({
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
     const [expanded, setExpanded] = useState<boolean>(initialExpanded);
-    const showErrors = useMemo(() => {
-        const showErrorIfString = Array.isArray(errors) && errors?.length > 0;
-        const showErrorIfElement = !Array.isArray(errors) && !!errors;
-        return showErrorIfString || showErrorIfElement;
+    const hasCompositeSectionError = useMemo(() => {
+        const hasErrorList = Array.isArray(errors) && errors?.length > 0;
+        const hasErrorElement = !Array.isArray(errors) && !!errors;
+        return hasErrorList || hasErrorElement;
     }, [errors]);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
@@ -181,7 +180,7 @@ export const Toggle = ({
     };
 
     const renderExpandButton = () => {
-        const collapsedWithoutErrors = !expanded && !showErrors;
+        const collapsedWithoutErrors = !expanded && !hasCompositeSectionError;
         return (
             collapsible && (
                 <ExpandButton
@@ -191,7 +190,11 @@ export const Toggle = ({
                     data-testid={expanded ? "collapse-button" : "expand-button"}
                 >
                     {expanded ? "Show less" : "Show more"}
-                    {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                    {expanded ? (
+                        <ChevronUpIcon aria-hidden />
+                    ) : (
+                        <ChevronDownIcon aria-hidden />
+                    )}
                 </ExpandButton>
             )
         );
@@ -254,13 +257,12 @@ export const Toggle = ({
                 <ErrorText weight="semibold" $disabled={disabled}>
                     Error
                 </ErrorText>
-                <TextList.Ul>
+                <ErrorList $disabled={disabled}>
                     {errors?.map((item, index) => {
                         return (
-                            <ErrorListItem
-                                $disabled={disabled}
+                            <li
                                 key={index}
-                                id={`${generatedId}-list-item-${index}`}
+                                id={`${generatedId}-error-list-item-${index}`}
                             >
                                 <ErrorText
                                     weight="semibold"
@@ -268,10 +270,10 @@ export const Toggle = ({
                                 >
                                     {item}
                                 </ErrorText>
-                            </ErrorListItem>
+                            </li>
                         );
                     })}
-                </TextList.Ul>
+                </ErrorList>
             </>
         );
     };
@@ -280,7 +282,7 @@ export const Toggle = ({
         return (
             collapsible &&
             !expanded &&
-            showErrors && (
+            hasCompositeSectionError && (
                 <ErrorContainer
                     $disabled={disabled}
                     onClick={handleExpandCollapseClick}
@@ -303,11 +305,11 @@ export const Toggle = ({
     const renderCompositeSection = () => {
         return (
             compositeSectionChildren && (
-                <ChildrenContainer>
+                <CompositeSectionContainer>
                     {renderCompositeChildren()}
                     {renderError()}
                     {renderExpandButton()}
-                </ChildrenContainer>
+                </CompositeSectionContainer>
             )
         );
     };

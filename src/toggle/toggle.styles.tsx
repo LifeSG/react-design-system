@@ -2,9 +2,10 @@ import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
-import { ToggleStyleType } from "./types";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Text, TextStyleHelper } from "../text";
+import { TextList } from "../text-list";
+import { ToggleStyleType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -279,7 +280,7 @@ export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStylePr
         props.$addPadding ? "0.6875rem 0rem 0.6875rem 1rem" : "0.6875rem 1rem"};
 `;
 
-export const RemoveButton = styled.button<ContainerStyleProps>`
+export const RemoveButton = styled.button<StyleProps>`
     color: ${(props) =>
         props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Icon};
     white-space: nowrap;
@@ -293,23 +294,24 @@ export const RemoveButton = styled.button<ContainerStyleProps>`
 `;
 
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
+    color: ${(props) => (props.disabled ? Color.Neutral[3] : Color.Primary)};
+    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 0.6875rem;
+    border: none;
+    background: none;
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    padding-top: ${(props) =>
+        props.$paddingTopRequired ? "0.6875rem" : "0rem"};
+
     svg {
         width: 1.125rem;
         height: 1.125rem;
         margin-left: 0.5rem;
     }
-    color: ${(props) => (props.disabled ? Color.Neutral[3] : Color.Primary)};
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
-    width: 100%;
-    justify-content: flex-end;
-    align-items: center;
-    padding-bottom: 0.6875rem;
-    border: none;
-    background: none;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-    float: right;
-    padding-top: ${(props) =>
-        props.$paddingTopRequired ? "0.6875rem" : "0rem"};
 `;
 
 export const ErrorContainer = styled.div<StyleProps>`
@@ -327,7 +329,7 @@ export const AlertContainer = styled(Alert)`
     user-select: none;
 `;
 
-export const ChildrenContainer = styled.div`
+export const CompositeSectionContainer = styled.div`
     padding: 0 1rem;
 `;
 
@@ -353,14 +355,14 @@ export const Children = styled.div<ChildrenStyleProps>`
     }}
 `;
 
-export const ErrorText = styled(Text.H5)<StyleProps>`
+export const ErrorText = styled(Text.BodySmall)<StyleProps>`
     color: ${(props) =>
         props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Text};
 `;
 
-export const ErrorListItem = styled.li<StyleProps>`
-    color: ${(props) =>
-        props.$disabled
-            ? Color.Neutral[3]
-            : Color.Validation.Red.Text} !important;
+export const ErrorList = styled(TextList.Ul)<StyleProps>`
+    li {
+        color: ${(props) =>
+            props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Text};
+    }
 `;
