@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Navbar } from "src/navbar";
 
 describe("Navbar", () => {
@@ -7,8 +7,8 @@ describe("Navbar", () => {
             const rendered = render(
                 <Navbar
                     items={{
-                        desktop: MOCK_ITEMS,
-                        mobile: MOCK_ITEMS,
+                        desktop: MOCK_ITEMS(),
+                        mobile: MOCK_ITEMS(),
                     }}
                 />
             );
@@ -22,7 +22,9 @@ describe("Navbar", () => {
         });
 
         it("should render the mobile items even if mobile items are not specified", () => {
-            const rendered = render(<Navbar items={{ desktop: MOCK_ITEMS }} />);
+            const rendered = render(
+                <Navbar items={{ desktop: MOCK_ITEMS() }} />
+            );
 
             const { getByTestId } = rendered;
 
@@ -36,7 +38,7 @@ describe("Navbar", () => {
             const rendered = render(
                 <Navbar
                     items={{
-                        desktop: MOCK_ITEMS,
+                        desktop: MOCK_ITEMS(),
                     }}
                     selectedId="first"
                 />
@@ -47,7 +49,9 @@ describe("Navbar", () => {
         });
 
         it("should render the primary brand", () => {
-            const rendered = render(<Navbar items={{ desktop: MOCK_ITEMS }} />);
+            const rendered = render(
+                <Navbar items={{ desktop: MOCK_ITEMS() }} />
+            );
 
             const { getByTestId } = rendered;
             expect(getByTestId("main__brand")).toBeInTheDocument();
@@ -57,7 +61,7 @@ describe("Navbar", () => {
             const rendered = render(
                 <Navbar
                     items={{
-                        desktop: MOCK_ITEMS,
+                        desktop: MOCK_ITEMS(),
                     }}
                     resources={{
                         secondary: {
@@ -73,26 +77,9 @@ describe("Navbar", () => {
             expect(getByTestId("main__brand-secondary")).toBeInTheDocument();
         });
 
-        it("should render the mobile menu button if there are items specified", () => {
-            const rendered = render(<Navbar items={{ desktop: MOCK_ITEMS }} />);
-
-            const { getByTestId } = rendered;
-            expect(getByTestId("button__mobile-menu")).toBeInTheDocument();
-        });
-
-        it("should not render the links and mobile menu button if there no items are specified", () => {
-            const rendered = render(<Navbar items={{ desktop: [] }} />);
-
-            const { queryByTestId } = rendered;
-            expect(queryByTestId("link__1")).not.toBeInTheDocument();
-            expect(
-                queryByTestId("button__mobile-menu")
-            ).not.toBeInTheDocument();
-        });
-
         it("should not render the links and mobile menu button if hideNavElements is set to true", () => {
             const rendered = render(
-                <Navbar items={{ desktop: MOCK_ITEMS }} hideNavElements />
+                <Navbar items={{ desktop: MOCK_ITEMS() }} hideNavElements />
             );
 
             const { queryByTestId } = rendered;
@@ -102,62 +89,102 @@ describe("Navbar", () => {
             ).not.toBeInTheDocument();
         });
 
-        it("should render the mobile menu items if no items are specified but there are action items specified", () => {
-            const rendered = render(
-                <Navbar
-                    items={{ desktop: [] }}
-                    actionButtons={{
-                        desktop: [
-                            {
-                                type: "button",
-                                args: {
-                                    children: "Test",
-                                },
-                            },
-                        ],
-                    }}
-                />
+        describe("mobile menu button", () => {
+            it.each`
+                scenario                             | desktopItems | mobileItems  | desktopButtons                   | mobileButtons
+                ${"there are no items"}              | ${[]}        | ${[]}        | ${[]}                            | ${[]}
+                ${"desktop buttons are uncollapsed"} | ${[]}        | ${undefined} | ${[MOCK_UNCOLLAPSIBLE_BUTTON()]} | ${undefined}
+                ${"mobile buttons are uncollapsed"}  | ${[]}        | ${undefined} | ${[MOCK_COLLAPSIBLE_BUTTON()]}   | ${[MOCK_UNCOLLAPSIBLE_BUTTON()]}
+            `(
+                "should hide the mobile menu button given $scenario",
+                ({
+                    desktopItems,
+                    mobileItems,
+                    desktopButtons,
+                    mobileButtons,
+                }) => {
+                    render(
+                        <Navbar
+                            items={{
+                                desktop: desktopItems,
+                                mobile: mobileItems,
+                            }}
+                            actionButtons={{
+                                desktop: desktopButtons,
+                                mobile: mobileButtons,
+                            }}
+                        />
+                    );
+
+                    expect(
+                        screen.queryByTestId("button__mobile-menu")
+                    ).not.toBeInTheDocument();
+                }
             );
 
-            const { getByTestId } = rendered;
-            expect(getByTestId("button__mobile-menu")).toBeInTheDocument();
-        });
+            it.each`
+                scenario                           | desktopItems    | mobileItems     | desktopButtons                   | mobileButtons
+                ${"there are desktop items"}       | ${MOCK_ITEMS()} | ${undefined}    | ${[]}                            | ${undefined}
+                ${"there are mobile items"}        | ${[]}           | ${MOCK_ITEMS()} | ${[]}                            | ${undefined}
+                ${"desktop buttons are collapsed"} | ${[]}           | ${undefined}    | ${[MOCK_COLLAPSIBLE_BUTTON()]}   | ${undefined}
+                ${"mobile buttons are collapsed"}  | ${[]}           | ${undefined}    | ${[MOCK_UNCOLLAPSIBLE_BUTTON()]} | ${[MOCK_COLLAPSIBLE_BUTTON()]}
+            `(
+                "should show the mobile menu button given $scenario",
+                ({
+                    desktopItems,
+                    mobileItems,
+                    desktopButtons,
+                    mobileButtons,
+                }) => {
+                    render(
+                        <Navbar
+                            items={{
+                                desktop: desktopItems,
+                                mobile: mobileItems,
+                            }}
+                            actionButtons={{
+                                desktop: desktopButtons,
+                                mobile: mobileButtons,
+                            }}
+                        />
+                    );
 
-        it("should not render the mobile menu items if no items are specified the action items are uncollapsible", () => {
-            const rendered = render(
-                <Navbar
-                    items={{ desktop: [] }}
-                    actionButtons={{
-                        desktop: [
-                            {
-                                type: "button",
-                                args: {
-                                    children: "Test",
-                                },
-                                uncollapsible: true,
-                            },
-                        ],
-                    }}
-                />
+                    expect(
+                        screen.queryByTestId("button__mobile-menu")
+                    ).toBeInTheDocument();
+                }
             );
-
-            const { queryByTestId } = rendered;
-            expect(
-                queryByTestId("button__mobile-menu")
-            ).not.toBeInTheDocument();
         });
     });
 });
+
 // =============================================================================
 // MOCKS
 // =============================================================================
-const MOCK_ITEMS = [
-    {
-        id: "first",
-        children: "First",
-    },
-    {
-        id: "second",
-        children: "Second",
-    },
-];
+function MOCK_ITEMS() {
+    return [
+        {
+            id: "first",
+            children: "First",
+        },
+        {
+            id: "second",
+            children: "Second",
+        },
+    ];
+}
+
+function MOCK_UNCOLLAPSIBLE_BUTTON() {
+    return {
+        type: "button",
+        args: { children: "Collapsible" },
+        uncollapsible: true,
+    };
+}
+
+function MOCK_COLLAPSIBLE_BUTTON() {
+    return {
+        type: "button",
+        args: { children: "Uncollapsible" },
+    };
+}
