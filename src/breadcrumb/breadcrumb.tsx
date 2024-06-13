@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { MediaWidths } from "../spec/media-spec";
+import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import {
     Caret,
     Content,
@@ -23,13 +24,9 @@ export const Breadcrumb = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const [showFade, setShowFade] = useState<boolean>(!!fadePosition);
-    const [showFadeLeft, setShowFadeLeft] = useState<boolean>(
-        fadePosition === "left" || fadePosition === "both"
-    );
-    const [showFadeRight, setShowFadeRight] = useState<boolean>(
-        fadePosition === "right" || fadePosition === "both"
-    );
+    const [showFade, setShowFade] = useState<boolean>(false);
+    const [showFadeLeft, setShowFadeLeft] = useState<boolean>(false);
+    const [showFadeRight, setShowFadeRight] = useState<boolean>(false);
 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLUListElement>(null);
@@ -37,7 +34,7 @@ export const Breadcrumb = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const onResize = useCallback(() => {
+    const onResize = useEvent(() => {
         const content = contentRef.current;
         const wrapper = wrapperRef.current;
 
@@ -50,7 +47,40 @@ export const Breadcrumb = ({
         ) {
             content.scrollLeft = content.scrollWidth - wrapper.offsetWidth;
         }
-    }, [links.length]);
+    });
+
+    const handleShowFadeToggle = useEvent(() => {
+        const nextShowFade = window.innerWidth <= MediaWidths.tablet;
+        setShowFade(nextShowFade);
+
+        const content = contentRef.current;
+        const wrapper = wrapperRef.current;
+        if (content && wrapper && nextShowFade) {
+            if (content.scrollWidth > wrapper.offsetWidth) {
+                // set 1px margin of error to handle sub-pixel differences
+                setShowFadeLeft(content.scrollLeft >= 1);
+                setShowFadeRight(
+                    content.scrollWidth - content.scrollLeft - 1 >
+                        wrapper.offsetWidth
+                );
+                return;
+            }
+        }
+
+        setShowFadeLeft(false);
+        setShowFadeRight(false);
+    });
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEventListener("resize", handleShowFadeToggle);
+    useEventListener("scroll", handleShowFadeToggle, contentRef.current);
+
+    useIsomorphicLayoutEffect(() => {
+        onResize();
+        handleShowFadeToggle();
+    }, []);
 
     // To scroll left when wrapper resizes
     useResizeDetector({
@@ -58,52 +88,8 @@ export const Breadcrumb = ({
         targetRef: wrapperRef,
         refreshMode: "debounce",
         refreshRate: 50,
+        skipOnMount: true,
     });
-
-    const handleShowFadeToggle = () => {
-        if (showFade) {
-            // Set fade if the media is smaller than or equal to tablet
-            setShowFade(window.innerWidth < MediaWidths.tablet);
-
-            const content = contentRef.current;
-            const wrapper = wrapperRef.current;
-            if (content && wrapper) {
-                if (content.scrollWidth > wrapper.offsetWidth) {
-                    setShowFade(true);
-                    setShowFadeLeft(content.scrollLeft >= 1);
-                    setShowFadeRight(
-                        content.scrollWidth - content.scrollLeft >
-                            wrapper.offsetWidth
-                    );
-                } else {
-                    setShowFade(false);
-                }
-            } else {
-                setShowFade(false);
-            }
-        }
-    };
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        const content = contentRef.current;
-
-        handleShowFadeToggle();
-
-        window.addEventListener("resize", handleShowFadeToggle);
-        if (content) {
-            content.addEventListener("scroll", handleShowFadeToggle);
-        }
-
-        return () => {
-            window.removeEventListener("resize", handleShowFadeToggle);
-            if (content) {
-                content.removeEventListener("scroll", handleShowFadeToggle);
-            }
-        };
-    }, []);
 
     // =========================================================================
     // RENDER
