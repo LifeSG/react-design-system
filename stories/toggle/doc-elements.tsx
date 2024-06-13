@@ -47,10 +47,10 @@ export const Wrapper = styled.div<StyleProps>`
                     margin: 1rem 0;
                 }
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                @media only screen and (max-width: 900px) {
                     width: 100%;
                     display: grid;
-                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-columns: max-content 1fr;
                     column-gap: 2rem;
 
                     > div {
@@ -82,9 +82,41 @@ export const SimpleContainer = styled.ul`
     }
 `;
 
+const VariantWrapper = styled.div`
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        ${HeadingLabel} {
+            margin: 1rem;
+            min-width: 100px;
+        }
+    }
+
+    @media only screen and (max-width: 1200px) {
+        grid-template-columns: 1fr;
+
+        > div {
+            flex-direction: row;
+        }
+    }
+`;
+
 // =============================================================================
 // COMPONENTS
 // =============================================================================
+const VARIANTS = [
+    "Default",
+    "Selected",
+    "Disabled",
+    "Disabled Selected",
+    "Error",
+];
+
 export const Headings = () => {
     return (
         <div>
@@ -94,5 +126,18 @@ export const Headings = () => {
             <HeadingLabel weight="semibold">Disabled Selected</HeadingLabel>
             <HeadingLabel weight="semibold">Error</HeadingLabel>
         </div>
+    );
+};
+
+export const Variants = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <VariantWrapper>
+            {React.Children.map(children, (child, i) => (
+                <div>
+                    <HeadingLabel>{VARIANTS[i]}</HeadingLabel>
+                    {child}
+                </div>
+            ))}
+        </VariantWrapper>
     );
 };

@@ -40,8 +40,14 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "children",
                 mandatory: true,
-                description: "The main selector label ",
+                description: "The main selector label",
                 propTypes: ["string"],
+            },
+            {
+                name: "childrenMaxLines",
+                description:
+                    "The number of lines visible in the main label. Additional lines will be truncated",
+                propTypes: ["{desktop: number, mobile: number}"],
             },
             {
                 name: "disabled",
@@ -83,7 +89,7 @@ const DATA: ApiTableSectionProps[] = [
                         displayed below the main label.
                     </>
                 ),
-                propTypes: ["string", "() => JSX.Element"],
+                propTypes: ["string", "JSX.Element", "() => JSX.Element"],
             },
             {
                 name: "onChange",
@@ -96,6 +102,65 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [
                     "(event: React.ChangeEvent<HTMLInputElement>) => void",
                 ],
+            },
+            {
+                name: "removable",
+                description: "Specifies if the remove button is displayed",
+                propTypes: ["boolean"],
+                defaultValue: `false`,
+            },
+            {
+                name: "onRemove",
+                description: "Called when the remove button is clicked",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "compositeSection",
+                description: (
+                    <>
+                        The subsection of the <code>Toggle</code>, displayed
+                        below the main label and sublabel
+                    </>
+                ),
+                propTypes: ["CompositeSectionProps"],
+            },
+        ],
+    },
+
+    {
+        name: "CompositeSectionProps",
+        attributes: [
+            {
+                name: "children",
+                description: "The contents of the subsection",
+                propTypes: ["string", "JSX.Element"],
+                mandatory: true,
+            },
+            {
+                name: "collapsible",
+                description: "Specifies if the subsection is collapsible",
+                propTypes: ["boolean"],
+                defaultValue: `true`,
+            },
+            {
+                name: "initialExpanded",
+                description:
+                    "Specifies the initial expanded state. Only applicable if the subsection is collapsible",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "errors",
+                description: (
+                    <>
+                        Specifies errors to be displayed when the subsection is
+                        collapsed
+                        <br />
+                        <br />
+                        If a list of strings is provided, an error alert is
+                        automatically constructed
+                    </>
+                ),
+                propTypes: ["string[]", "JSX.Element"],
             },
         ],
     },
