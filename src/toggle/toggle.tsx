@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
 import { TextList } from "../text-list";
 import { SimpleIdGenerator } from "../util";
@@ -12,7 +12,7 @@ import {
     ErrorContainer,
     ErrorListItem,
     ErrorText,
-    ExpandButtonContainer,
+    ExpandButton,
     HeaderContainer,
     IndicatorLabelContainer,
     Input,
@@ -49,12 +49,15 @@ export const Toggle = ({
         collapsible = true,
         errors,
         children: compositeSectionChildren,
-        initialExpanded = true,
+        initialExpanded,
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
     const [expanded, setExpanded] = useState<boolean>(initialExpanded);
-
-    const [showErrors, setShowErrors] = useState<boolean>(false);
+    const showErrors = useMemo(() => {
+        const showErrorIfString = Array.isArray(errors) && errors?.length > 0;
+        const showErrorIfElement = !Array.isArray(errors) && !!errors;
+        return showErrorIfString || showErrorIfElement;
+    }, [errors]);
     const [uniqueId] = useState(SimpleIdGenerator.generate());
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
@@ -69,22 +72,9 @@ export const Toggle = ({
 
     useEffect(() => {
         if (selected) {
-            setExpanded(initialExpanded ? initialExpanded : true);
+            setExpanded(initialExpanded ?? true);
         }
     }, [selected]);
-
-    useEffect(() => {
-        if (errors) {
-            const showErrorIfString =
-                !expanded && Array.isArray(errors) && errors?.length > 0;
-            const showErrorIfElement = !expanded && !Array.isArray(errors);
-            if (!selected) {
-                setShowErrors(!selected);
-            } else {
-                setShowErrors(showErrorIfString || showErrorIfElement);
-            }
-        }
-    }, [expanded, errors, selected]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -182,29 +172,28 @@ export const Toggle = ({
 
     const renderCompositeChildren = () => {
         return (
-            <Children
-                $expanded={!collapsible || expanded}
-                $isFinalItem={!collapsible}
-                $disabled={disabled}
-            >
-                {compositeSectionChildren}
-            </Children>
+            (!collapsible || expanded) && (
+                <Children $isFinalItem={!collapsible} $disabled={disabled}>
+                    {compositeSectionChildren}
+                </Children>
+            )
         );
     };
 
     const renderExpandButton = () => {
-        const expandedWithoutErrors = !expanded && !showErrors;
+        const collapsedWithoutErrors = !expanded && !showErrors;
         return (
-            <ExpandButtonContainer
-                $paddingTopRequired={expandedWithoutErrors}
-                $show={!collapsible ? false : selected}
-                $disabled={disabled}
-                onClick={handleExpandCollapseClick}
-                data-testid={expanded ? "collapse-button" : "expand-button"}
-            >
-                {expanded ? "Show less" : "Show more"}
-                {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
-            </ExpandButtonContainer>
+            collapsible && (
+                <ExpandButton
+                    $paddingTopRequired={collapsedWithoutErrors}
+                    disabled={disabled}
+                    onClick={handleExpandCollapseClick}
+                    data-testid={expanded ? "collapse-button" : "expand-button"}
+                >
+                    {expanded ? "Show less" : "Show more"}
+                    {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                </ExpandButton>
+            )
         );
     };
 
@@ -271,7 +260,7 @@ export const Toggle = ({
                             <ErrorListItem
                                 $disabled={disabled}
                                 key={index}
-                                id={`list-item-${index}`}
+                                id={`${generatedId}-list-item-${index}`}
                             >
                                 <ErrorText
                                     weight="semibold"
@@ -289,10 +278,10 @@ export const Toggle = ({
 
     const renderError = () => {
         return (
+            collapsible &&
             !expanded &&
             showErrors && (
                 <ErrorContainer
-                    $show={!collapsible ? false : selected}
                     $disabled={disabled}
                     onClick={handleExpandCollapseClick}
                     id={`${generatedId}-error-alert`}

@@ -21,25 +21,20 @@ interface ContainerStyleProps extends StyleProps {
     $error?: boolean;
 }
 
-interface IndicatorContainerStyleProps {
+interface IndicatorLabelContainerStyleProps {
     $addPadding?: boolean;
 }
 
 interface LabelStyleProps extends StyleProps {
-    $maxLines?: { desktop?: number; mobile?: number };
+    $maxLines?: { desktop?: number; mobile?: number; tablet?: number };
 }
 
-interface ButtonStyleProps extends StyleProps {
-    $show?: boolean;
+interface ExpandButtonStyleProps extends StyleProps {
     $paddingTopRequired?: boolean;
-}
-interface ErrorContainerProps extends StyleProps {
-    $show?: boolean;
 }
 
 interface ChildrenStyleProps extends StyleProps {
     $isFinalItem?: boolean;
-    $expanded?: boolean;
 }
 
 // =============================================================================
@@ -175,6 +170,9 @@ export const Label = styled.label<LabelStyleProps>`
     overflow-wrap: break-word;
     -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
     ${MediaQuery.MaxWidth.tablet} {
+        -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
+    }
+    ${MediaQuery.MaxWidth.mobileL} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
     color: ${Color.Neutral[1]};
@@ -272,7 +270,7 @@ export const HeaderContainer = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const IndicatorLabelContainer = styled.div<IndicatorContainerStyleProps>`
+export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStyleProps>`
     display: flex;
     height: 100%;
     width: 100%;
@@ -294,13 +292,13 @@ export const RemoveButton = styled.button<ContainerStyleProps>`
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 `;
 
-export const ExpandButtonContainer = styled.button<ButtonStyleProps>`
+export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     svg {
         width: 1.125rem;
         height: 1.125rem;
         margin-left: 0.5rem;
     }
-    color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
+    color: ${(props) => (props.disabled ? Color.Neutral[3] : Color.Primary)};
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
     width: 100%;
     justify-content: flex-end;
@@ -308,36 +306,34 @@ export const ExpandButtonContainer = styled.button<ButtonStyleProps>`
     padding-bottom: 0.6875rem;
     border: none;
     background: none;
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
     float: right;
-    display: ${(props) => (props.$show ? "flex" : "none")};
     padding-top: ${(props) =>
         props.$paddingTopRequired ? "0.6875rem" : "0rem"};
 `;
-export const ErrorContainer = styled.div<ErrorContainerProps>`
+
+export const ErrorContainer = styled.div<StyleProps>`
     width: 100%;
     color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
     border: none;
     background: none;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-    display: ${(props) => (props.$show ? "flex" : "none")};
     padding-top: 0.6875rem;
-    padding-bottom: ${(props) => (!props.$show ? "0.6875rem" : "0.5rem")};
+    padding-bottom: 0.5rem;
 `;
 
 export const AlertContainer = styled(Alert)`
     width: 100%;
     user-select: none;
 `;
+
 export const ChildrenContainer = styled.div`
     padding: 0 1rem;
 `;
 
 export const Children = styled.div<ChildrenStyleProps>`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
     padding-top: 0.6875rem;
     padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
-    display: ${(props) => (props.$expanded ? "block" : "none")};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 
     ${(props) => {
@@ -361,6 +357,7 @@ export const ErrorText = styled(Text.H5)<StyleProps>`
     color: ${(props) =>
         props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Text};
 `;
+
 export const ErrorListItem = styled.li<StyleProps>`
     color: ${(props) =>
         props.$disabled
