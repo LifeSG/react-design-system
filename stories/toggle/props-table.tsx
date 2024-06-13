@@ -40,14 +40,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "children",
                 mandatory: true,
-                description: "The main selector label ",
+                description: "The main selector label",
                 propTypes: ["string"],
             },
             {
                 name: "childrenMaxLines",
-                description: (
-                    <>Maximum number of lines to be shown in the main label</>
-                ),
+                description:
+                    "The number of lines visible in the main label. Additional lines will be truncated",
                 propTypes: ["{desktop: number, mobile: number}"],
             },
             {
@@ -90,7 +89,7 @@ const DATA: ApiTableSectionProps[] = [
                         displayed below the main label.
                     </>
                 ),
-                propTypes: ["string", "() => JSX.Element", "JSX.Element"],
+                propTypes: ["string", "JSX.Element", "() => JSX.Element"],
             },
             {
                 name: "onChange",
@@ -106,77 +105,61 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "removable",
-                description: (
-                    <>
-                        Specifies if the element has Remove button on top. if
-                        removable is true then <code>collapsible</code> will not
-                        have anyeffect. it will always be true(hidden). set{" "}
-                        <code>show</code> to <code>true</code> and{" "}
-                        <code>collapsible</code> to <code>false</code> if the
-                        children have to be shown without show more or less
-                        button with <code>removable</code> button.
-                    </>
-                ),
+                description: "Specifies if the remove button is displayed",
                 propTypes: ["boolean"],
                 defaultValue: `false`,
             },
             {
                 name: "onRemove",
-                description: (
-                    <>
-                        Called when the <code>Remove button</code> is clicked
-                    </>
-                ),
+                description: "Called when the remove button is clicked",
                 propTypes: ["() => void"],
             },
             {
                 name: "compositeSection",
-                description: <>The section below the Toggle.</>,
-                propTypes: ["compositeSectionProps"],
+                description: (
+                    <>
+                        The subsection of the <code>Toggle</code>, displayed
+                        below the main label and sublabel
+                    </>
+                ),
+                propTypes: ["CompositeSectionProps"],
             },
         ],
     },
 
     {
-        name: "Props",
+        name: "CompositeSectionProps",
         attributes: [
             {
-                name: "compositeSectionProps",
-                description: (
-                    <>
-                        The description label of the{" "}
-                        <code>composite Option Section</code> displayed below
-                        the main label.
-                    </>
-                ),
+                name: "children",
+                description: "The contents of the subsection",
                 propTypes: ["string", "JSX.Element"],
+                mandatory: true,
             },
             {
-                name: "initialExpanded",
-                description: (
-                    <>
-                        specifies if the CompositeOption children have to be
-                        shown
-                    </>
-                ),
+                name: "collapsible",
+                description: "Specifies if the subsection is collapsible",
                 propTypes: ["boolean"],
                 defaultValue: `true`,
             },
             {
-                name: "collapsible",
-                description: (
-                    <>
-                        specifies if <code>show More</code> Or{" "}
-                        <code>show Less </code>Button is shown/hidden.
-                    </>
-                ),
+                name: "initialExpanded",
+                description:
+                    "Specifies the initial expanded state. Only applicable if the subsection is collapsible",
                 propTypes: ["boolean"],
             },
-
             {
-                name: "errorList",
-                description:
-                    "Specifies if the internal errors should be displayed inside the container error list has to be displayed inside the container.",
+                name: "errors",
+                description: (
+                    <>
+                        Specifies errors to be displayed when the subsection is
+                        collapsed
+                        <br />
+                        <br />
+                        If a list of strings is provided, an error alert is
+                        automatically constructed
+                    </>
+                ),
                 propTypes: ["string[]", "JSX.Element"],
             },
         ],

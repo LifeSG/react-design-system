@@ -21,6 +21,7 @@ export interface ToggleProps
     styleType?: ToggleStyleType | undefined;
     /** The Toggle label */
     children: React.ReactNode;
+    /** The number of lines visible. Additional lines will be truncated */
     childrenMaxLines?:
         | {
               mobile?: number | undefined;
@@ -40,18 +41,19 @@ export interface ToggleProps
     onChange?:
         | ((event: React.ChangeEvent<HTMLInputElement>) => void)
         | undefined;
+    /** The Toggle subsection */
     compositeSection?: ToggleCompositeSectionProps | undefined;
+    /** Specifies if the remove button should be displayed */
     removable?: boolean | undefined;
     onRemove?: (() => void) | undefined;
 }
 
 export interface ToggleCompositeSectionProps {
-    /** specifies to show or hide view more or less button when remove button is not present */
-    collapsible?: boolean | undefined;
-    // showmore or less button
-    /** specifies the list of errors that has to be shown inside the composite-option container when the show less button is clicked*/
-    errors?: string[] | JSX.Element | undefined;
-    /** The children inside the composite option */
     children: React.ReactNode;
+    /** Specifies if the subsection is collapsible */
+    collapsible?: boolean | undefined;
+    /** The initial expanded state. Only applicable if collapsible */
     initialExpanded?: boolean | undefined;
+    /** Specifies errors to be displayed when the subsection is collapsed */
+    errors?: string[] | JSX.Element | undefined;
 }

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Toggle } from "../../src";
 import { Form } from "../../src/form";
+import { StoryContainer } from "../storybook-common";
 import { Variants } from "./doc-elements";
 
 type Component = typeof Toggle;
@@ -148,65 +149,73 @@ export const RadioType: StoryObj<Component> = {
 export const Collapsible: StoryObj<Component> = {
     render: () => {
         return (
-            <Toggle
-                indicator
-                checked
-                compositeSection={{
-                    children: <ChildComponent />,
-                    collapsible: true,
-                }}
-            >
-                Sample text
-            </Toggle>
+            <StoryContainer>
+                <Toggle
+                    indicator
+                    checked
+                    compositeSection={{
+                        children: <ChildComponent />,
+                        collapsible: true,
+                    }}
+                >
+                    Sample text
+                </Toggle>
+            </StoryContainer>
         );
     },
 };
 
-export const CollapsibleWithError: StoryObj<Component> = {
+export const CollapsedWithError: StoryObj<Component> = {
     render: () => {
         return (
-            <Toggle
-                indicator
-                checked
-                error
-                compositeSection={{
-                    children: (
-                        <Form.Input
-                            label="Label"
-                            errorMessage="Invalid field"
-                        />
-                    ),
-                    collapsible: true,
-                    errors: ["Something went wrong"],
-                }}
-            >
-                Sample text
-            </Toggle>
+            <StoryContainer>
+                <Toggle
+                    indicator
+                    checked
+                    error
+                    compositeSection={{
+                        children: (
+                            <Form.Input
+                                label="Label"
+                                errorMessage="Invalid field"
+                            />
+                        ),
+                        collapsible: true,
+                        initialExpanded: false,
+                        errors: ["Something went wrong"],
+                    }}
+                >
+                    Sample text
+                </Toggle>
+            </StoryContainer>
         );
     },
 };
 
-export const CollapsibleWithErrorAndDisabled: StoryObj<Component> = {
+export const CollapsedWithErrorAndDisabled: StoryObj<Component> = {
     render: () => {
         return (
-            <Toggle
-                indicator
-                checked
-                disabled
-                error
-                compositeSection={{
-                    children: (
-                        <Form.Input
-                            label="Label"
-                            errorMessage="Invalid field"
-                        />
-                    ),
-                    collapsible: true,
-                    errors: ["Something went wrong"],
-                }}
-            >
-                Sample text
-            </Toggle>
+            <StoryContainer>
+                <Toggle
+                    indicator
+                    checked
+                    disabled
+                    error
+                    compositeSection={{
+                        children: (
+                            <Form.Input
+                                label="Label"
+                                errorMessage="Invalid field"
+                            />
+                        ),
+                        collapsible: true,
+                        initialExpanded: false,
+                        errors: ["Something went wrong"],
+                    }}
+                >
+                    Sample text
+                </Toggle>
+            </StoryContainer>
         );
     },
 };

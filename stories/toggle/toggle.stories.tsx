@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Text } from "src/text";
 import { Toggle } from "src/toggle";
 import { Headings, SimpleContainer, Wrapper } from "./doc-elements";
 
@@ -52,35 +51,6 @@ export const Behaviours: StoryObj<Component> = {
                     </Toggle>
                 </li>
             </SimpleContainer>
-        );
-    },
-};
-
-export const InteractiveSublabel: StoryObj<Component> = {
-    render: () => {
-        return (
-            <Toggle
-                indicator
-                subLabel={() => (
-                    <div>
-                        Clicking here toggles the button.
-                        <div style={{ pointerEvents: "auto" }}>
-                            Clicking here does not and{" "}
-                            <Text.Hyperlink.Small
-                                href="https://example.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                external
-                            >
-                                this link
-                            </Text.Hyperlink.Small>{" "}
-                            is accessible
-                        </div>
-                    </div>
-                )}
-            >
-                Hello
-            </Toggle>
         );
     },
 };

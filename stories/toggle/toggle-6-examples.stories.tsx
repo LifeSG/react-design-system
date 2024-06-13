@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Toggle } from "../../src";
 import { Form } from "../../src/form";
-import { useState } from "react";
+import { Text } from "../../src/text";
 
 type Component = typeof Toggle;
 
@@ -91,6 +92,35 @@ export const DynamicOption: StoryObj<Component> = {
                     Text
                 </Toggle>
             </div>
+        );
+    },
+};
+
+export const InteractiveSublabel: StoryObj<Component> = {
+    render: () => {
+        return (
+            <Toggle
+                indicator
+                subLabel={() => (
+                    <div>
+                        Clicking here toggles the button.
+                        <div style={{ pointerEvents: "auto" }}>
+                            Clicking here does not and{" "}
+                            <Text.Hyperlink.Small
+                                href="https://example.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                external
+                            >
+                                this link
+                            </Text.Hyperlink.Small>{" "}
+                            is accessible
+                        </div>
+                    </div>
+                )}
+            >
+                Hello
+            </Toggle>
         );
     },
 };
