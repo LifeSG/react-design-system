@@ -1,6 +1,7 @@
 import { FormCustomField } from "./form-custom-field";
 import { FormDateInput } from "./form-date-input";
 import { FormDateRangeInput } from "./form-date-range-input";
+import { FormESignature } from "./form-e-signature";
 import { FormHistogramSlider } from "./form-histogram";
 import { FormInput } from "./form-input";
 import { FormInputGroup } from "./form-input-group";
@@ -23,6 +24,7 @@ import { FormUnitNumberInput } from "./form-unit-number-input";
 export const Form = {
     DateInput: FormDateInput,
     DateRangeInput: FormDateRangeInput,
+    ESignature: FormESignature,
     HistogramSlider: FormHistogramSlider,
     Input: FormInput,
     InputGroup: FormInputGroup,
