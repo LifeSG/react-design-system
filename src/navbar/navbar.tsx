@@ -105,26 +105,18 @@ const Component = <T,>(
         );
     };
 
-    const hasUncollapsibleActionButtons = () => {
-        if (actionButtons.mobile) {
-            const hasUncollapsibleItems = actionButtons.mobile.some(
-                (actionButton) => {
-                    return actionButton.uncollapsible;
-                }
+    const hasCollapsibleActionButtons = () => {
+        const drawerActionButtons =
+            actionButtons.mobile || actionButtons.desktop;
+        if (drawerActionButtons) {
+            return (
+                drawerActionButtons.length &&
+                drawerActionButtons.some(
+                    (actionButton) => !actionButton.uncollapsible
+                )
             );
-
-            if (hasUncollapsibleItems) return true;
         }
 
-        if (actionButtons.desktop) {
-            const hasUncollapsibleItems = actionButtons.desktop.some(
-                (actionButton) => {
-                    return actionButton.uncollapsible;
-                }
-            );
-
-            if (hasUncollapsibleItems) return true;
-        }
         return false;
     };
 
@@ -254,10 +246,10 @@ const Component = <T,>(
     );
 
     const renderMobileMenuButton = () => {
+        const drawerItems = items.mobile || items.desktop;
         if (
-            (items.mobile && items.mobile.length > 0) ||
-            (items.desktop && items.desktop.length > 0) ||
-            (actionButtons && !hasUncollapsibleActionButtons())
+            (drawerItems && drawerItems.length > 0) ||
+            (actionButtons && hasCollapsibleActionButtons())
         ) {
             return (
                 <MobileMenuButton
