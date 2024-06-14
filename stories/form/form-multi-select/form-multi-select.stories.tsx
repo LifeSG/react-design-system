@@ -108,6 +108,25 @@ export const RenderingInGridLayout: StoryObj<Component> = {
     },
 };
 
+export const SmallVariant: StoryObj<StandaloneComponent> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.MultiSelect
+                        variant="small"
+                        label="This is the small variant"
+                        options={OPTIONS_DATA}
+                        valueExtractor={(item) => item.value}
+                        listExtractor={(item) => item.label}
+                        enableSearch
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
@@ -134,36 +153,6 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
                         listExtractor={(item) => item.label}
                         placeholder="Searchable multi select"
                         selectedOptions={[{ value: "B", label: "Option B" }]}
-                        enableSearch
-                    />
-                </Container>
-            </StoryContainer>
-        );
-    },
-};
-
-export const StandaloneUsageVariant: StoryObj<StandaloneComponent> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <Container>
-                    <label>Default</label>
-                    <InputMultiSelect
-                        variant="default"
-                        options={OPTIONS_DATA}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        placeholder="Searchable multi select"
-                        enableSearch
-                    />
-                    <br />
-                    <label>Small</label>
-                    <InputMultiSelect
-                        variant="small"
-                        options={OPTIONS_DATA}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        placeholder="Searchable multi select"
                         enableSearch
                     />
                 </Container>

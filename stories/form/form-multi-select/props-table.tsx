@@ -128,7 +128,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "variant",
-                description: "Style option: The size of the component.",
+                description: "The display variant of the component",
                 propTypes: [`"small"`, `"default"`],
                 defaultValue: `"default"`,
             },

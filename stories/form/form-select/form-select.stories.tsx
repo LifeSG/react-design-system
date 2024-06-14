@@ -228,6 +228,26 @@ export const RenderingInGridLayout: StoryObj<Component> = {
     },
 };
 
+export const SmallVariant: StoryObj<StandaloneComponent> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.Select
+                        variant="small"
+                        label="This is the small variant"
+                        options={OPTIONS_DATA}
+                        valueExtractor={(item) => item.value}
+                        listExtractor={(item) => item.label}
+                        displayValueExtractor={(item) => item.label}
+                        enableSearch
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
@@ -242,38 +262,6 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
                     />
                     <br />
                     <InputSelect
-                        options={OPTIONS_DATA}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholder="Searchable select"
-                        enableSearch
-                    />
-                </Container>
-            </StoryContainer>
-        );
-    },
-};
-
-export const StandaloneUsageVariant: StoryObj<StandaloneComponent> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <Container>
-                    <label>Default</label>
-                    <InputSelect
-                        variant="default"
-                        options={OPTIONS_DATA}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholder="Searchable select"
-                        enableSearch
-                    />
-                    <br></br>
-                    <label>Small</label>
-                    <InputSelect
-                        variant="small"
                         options={OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
