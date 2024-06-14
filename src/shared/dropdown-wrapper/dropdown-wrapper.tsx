@@ -12,6 +12,7 @@ export const DropdownWrapper = ({
     onBlur,
     readOnly,
     className,
+    variant,
 }: DropdownSelectorProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -43,7 +44,7 @@ export const DropdownWrapper = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Wrapper className={className}>
+        <Wrapper className={className} $variant={variant}>
             <ElementBoundary
                 ref={nodeRef}
                 error={error && !show}

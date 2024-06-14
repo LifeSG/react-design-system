@@ -2,6 +2,7 @@ import {
     DropdownDisplayProps,
     DropdownSearchProps,
     DropdownStyleProps,
+    DropdownVariantType,
     ItemsLoadStateType,
     TruncateType,
 } from "../shared/dropdown-list/types";
@@ -55,6 +56,7 @@ export interface InputSelectProps<T, V>
     /** Function to render selected custom component */
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
     onBlur?: (() => void) | undefined;
+    variant?: DropdownVariantType | undefined;
 }
 
 /** To be exposed for Form component inheritance */

@@ -13,6 +13,7 @@ export const FormMultiSelect = <T, V>({
     mobileCols,
     tabletCols,
     desktopCols,
+    variant,
     ...otherProps
 }: FormMultiSelectProps<T, V>): JSX.Element => {
     return (
@@ -32,6 +33,7 @@ export const FormMultiSelect = <T, V>({
                 data-testid={testId || id}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
+                variant={variant}
                 {...otherProps}
             />
         </FormWrapper>

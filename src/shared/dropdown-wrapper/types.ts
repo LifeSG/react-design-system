@@ -1,3 +1,5 @@
+import { DropdownVariantType } from "../dropdown-list/types";
+
 export interface DropdownSelectorProps {
     children: JSX.Element[];
     show: boolean;
@@ -7,4 +9,5 @@ export interface DropdownSelectorProps {
     testId?: string | undefined;
     readOnly?: boolean | undefined;
     className?: string | undefined;
+    variant?: DropdownVariantType | undefined;
 }

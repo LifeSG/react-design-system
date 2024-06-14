@@ -34,6 +34,7 @@ export const InputMultiSelect = <T, V>({
     onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
+    variant = "default",
     ...otherProps
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -159,12 +160,17 @@ export const InputMultiSelect = <T, V>({
     const renderLabel = () => {
         if (!selected || selected.length === 0) {
             return (
-                <PlaceholderLabel truncateType={optionTruncationType}>
+                <PlaceholderLabel
+                    truncateType={optionTruncationType}
+                    $variant={variant}
+                >
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
-            return <ValueLabel>{getDisplayValue()}</ValueLabel>;
+            return (
+                <ValueLabel $variant={variant}>{getDisplayValue()}</ValueLabel>
+            );
         }
     };
 
@@ -172,7 +178,7 @@ export const InputMultiSelect = <T, V>({
         <>
             <LabelContainer>{renderLabel()}</LabelContainer>
             <IconContainer expanded={showOptions}>
-                <StyledChevronIcon />
+                <StyledChevronIcon $variant={variant} />
             </IconContainer>
         </>
     );
@@ -199,6 +205,7 @@ export const InputMultiSelect = <T, V>({
                     onRetry={onRetry}
                     itemsLoadState={optionsLoadState}
                     itemTruncationType={optionTruncationType}
+                    variant={variant}
                 />
             );
         }
@@ -214,6 +221,7 @@ export const InputMultiSelect = <T, V>({
             testId={testId}
             className={className}
             onBlur={handleWrapperBlur}
+            variant={variant}
         >
             <Selector
                 ref={selectorRef}
@@ -225,6 +233,7 @@ export const InputMultiSelect = <T, V>({
                         onBlur?.();
                     }
                 }}
+                $variant={variant}
                 {...otherProps}
             >
                 {renderSelectorContent()}

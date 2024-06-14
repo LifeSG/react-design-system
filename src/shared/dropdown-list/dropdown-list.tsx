@@ -53,6 +53,7 @@ export const DropdownList = <T, V>({
     onBlur,
     hideNoResultsDisplay,
     renderCustomCallToAction,
+    variant = "default",
     ...otherProps
 }: DropdownListProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -348,6 +349,7 @@ export const DropdownList = <T, V>({
                 <PrimaryText
                     $truncateType={itemTruncationType}
                     $maxLines={itemMaxLines}
+                    $variant={variant}
                     aria-label={title}
                 >
                     {itemTruncationType === "middle" && shouldTruncateTitle
@@ -391,6 +393,7 @@ export const DropdownList = <T, V>({
                             tabIndex={visible ? 0 : -1}
                             $multiSelect={multiSelect}
                             onBlur={handleBlur}
+                            $variant={variant}
                         >
                             {multiSelect && (
                                 <ListCheckbox
@@ -422,6 +425,7 @@ export const DropdownList = <T, V>({
                     aria-label="search-input"
                     tabIndex={visible ? 0 : -1}
                     onClear={handleOnClear}
+                    variant={variant}
                 />
             );
         }
@@ -438,7 +442,11 @@ export const DropdownList = <T, V>({
         ) {
             return (
                 <SelectAllContainer key="selectAll">
-                    <DropdownCommonButton onClick={onSelectAll} type="button">
+                    <DropdownCommonButton
+                        onClick={onSelectAll}
+                        type="button"
+                        $variant={variant}
+                    >
                         {selectedItems.length === 0
                             ? "Select all"
                             : "Clear all"}
@@ -460,8 +468,13 @@ export const DropdownList = <T, V>({
                     key="noResults"
                     data-testid="list-no-results"
                 >
-                    <LabelIcon data-testid="no-result-icon" />
-                    <ResultStateText>No results found.</ResultStateText>
+                    <LabelIcon
+                        data-testid="no-result-icon"
+                        $variant={variant}
+                    />
+                    <ResultStateText $variant={variant}>
+                        No results found.
+                    </ResultStateText>
                 </ResultStateContainer>
             );
         }
@@ -469,10 +482,14 @@ export const DropdownList = <T, V>({
 
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
+            const spinnerSize = variant === "small" ? 16 : 24;
+
             return (
                 <ResultStateContainer key="loading" data-testid="list-loading">
-                    <Spinner $buttonStyle="secondary" size={24} />
-                    <ResultStateText>Loading...</ResultStateText>
+                    <Spinner $buttonStyle="secondary" size={spinnerSize} />
+                    <ResultStateText $variant={variant}>
+                        Loading...
+                    </ResultStateText>
                 </ResultStateContainer>
             );
         }
@@ -482,11 +499,18 @@ export const DropdownList = <T, V>({
         if (onRetry && itemsLoadState === "fail") {
             return (
                 <ResultStateContainer key="noResults" data-testid="list-fail">
-                    <LabelIcon data-testid="load-error-icon" />
-                    <ResultStateText>Failed to load.</ResultStateText>
+                    <LabelIcon
+                        data-testid="load-error-icon"
+                        $variant={variant}
+                    />
+                    <ResultStateText $variant={variant}>
+                        Failed to load.
+                    </ResultStateText>
+                    &nbsp;
                     <DropdownCommonButton
                         onClick={handleTryAgain}
                         type="button"
+                        $variant={variant}
                     >
                         Try again.
                     </DropdownCommonButton>

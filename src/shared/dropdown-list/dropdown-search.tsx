@@ -1,15 +1,17 @@
 import React, { forwardRef } from "react";
 import {
     CancelButton,
-    CancelIcon,
     Container,
     SearchIcon,
     SearchInput,
 } from "./dropdown-search.styles";
+import { DropdownVariantType } from "./types";
+import { CrossIcon } from "@lifesg/react-icons";
 
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
     value: string /** override to cast type */;
     onClear?: () => void | undefined;
+    variant?: DropdownVariantType | undefined;
 }
 
 const Component = (
@@ -17,17 +19,19 @@ const Component = (
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     const { onClear, ...otherProps } = props;
+
     return (
         <Container key="search">
-            <SearchIcon />
-            <SearchInput ref={ref} {...otherProps} />
+            <SearchIcon $variant={props.variant} />
+            <SearchInput ref={ref} $variant={props.variant} {...otherProps} />
             {otherProps.value && (
                 <CancelButton
                     aria-label="Clear search"
                     focusOutline="browser"
                     onClick={onClear}
+                    $variant={props.variant}
                 >
-                    <CancelIcon />
+                    <CrossIcon />
                 </CancelButton>
             )}
         </Container>

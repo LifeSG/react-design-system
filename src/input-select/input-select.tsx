@@ -41,6 +41,7 @@ export const InputSelect = <T, V>({
     hideNoResultsDisplay,
     renderCustomCallToAction,
     onBlur,
+    variant = "default",
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -165,7 +166,10 @@ export const InputSelect = <T, V>({
     const renderLabel = () => {
         if (!selected) {
             return (
-                <PlaceholderLabel truncateType={optionTruncationType}>
+                <PlaceholderLabel
+                    truncateType={optionTruncationType}
+                    $variant={variant}
+                >
                     {placeholder}
                 </PlaceholderLabel>
             );
@@ -173,7 +177,10 @@ export const InputSelect = <T, V>({
             return renderCustomSelectedOption(selected);
         } else {
             return (
-                <ValueLabel truncateType={optionTruncationType}>
+                <ValueLabel
+                    truncateType={optionTruncationType}
+                    $variant={variant}
+                >
                     {truncateValue(getDisplayValue())}
                 </ValueLabel>
             );
@@ -187,7 +194,7 @@ export const InputSelect = <T, V>({
             </LabelContainer>
             {!otherProps.readOnly && (
                 <IconContainer expanded={showOptions}>
-                    <StyledChevronIcon />
+                    <StyledChevronIcon $variant={variant} />
                 </IconContainer>
             )}
         </>
@@ -215,6 +222,7 @@ export const InputSelect = <T, V>({
                     renderListItem={renderListItem}
                     hideNoResultsDisplay={hideNoResultsDisplay}
                     renderCustomCallToAction={renderCustomCallToAction}
+                    variant={variant}
                 />
             );
         }
@@ -231,6 +239,7 @@ export const InputSelect = <T, V>({
             readOnly={otherProps.readOnly}
             testId={testId}
             onBlur={handleWrapperBlur}
+            variant={variant}
         >
             <Selector
                 ref={selectorRef}
@@ -243,6 +252,7 @@ export const InputSelect = <T, V>({
                         onBlur?.();
                     }
                 }}
+                $variant={variant}
                 {...otherProps}
             >
                 {renderSelectorContent()}

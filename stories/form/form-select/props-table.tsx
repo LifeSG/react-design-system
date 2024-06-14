@@ -170,6 +170,12 @@ const DATA: ApiTableSectionProps[] = [
                     "(hideOptions: () => void, options: T[]) => JSX.Element",
                 ],
             },
+            {
+                name: "variant",
+                description: "The display variant of the component",
+                propTypes: [`"small"`, `"default"`],
+                defaultValue: `"default"`,
+            },
         ],
     },
     {
