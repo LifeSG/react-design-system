@@ -16,12 +16,6 @@ export const Main = styled.button<MainStyleProps>`
     align-items: center;
     justify-content: center;
 
-    /* @media (hover: hover) { 
-        &:hover {
-            box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
-        }
-    } */
-
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
     // -----------------------------------------------------------------------------
@@ -63,7 +57,6 @@ export const Main = styled.button<MainStyleProps>`
                     cursor: not-allowed;
 
                     &:hover {
-                        /* box-shadow: none; */
                         background-color: ${Color.Neutral[6]};
                     }
 
@@ -74,10 +67,6 @@ export const Main = styled.button<MainStyleProps>`
                     background-color: transparent;
                     border: none;
                     border-radius: unset;
-
-                    /* &:hover {
-                        box-shadow: none;
-                    } */
 
                     color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.Primary
