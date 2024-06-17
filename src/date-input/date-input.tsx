@@ -117,6 +117,7 @@ export const DateInput = ({
                 break;
         }
 
+        nodeRef.current.focus();
         setCalendarOpen(false);
         performOnBlurHandler();
     };
@@ -142,6 +143,7 @@ export const DateInput = ({
     const renderInput = () => {
         return (
             <Container
+                tabIndex={-1}
                 ref={nodeRef}
                 $disabled={disabled}
                 $readOnly={readOnly}
