@@ -7,5 +7,7 @@ export * from "./use-container-query";
 export * from "./use-event";
 export * from "./use-event-listener";
 export * from "./use-isomorphic-layout-effect";
+export * from "./use-mount";
 export * from "./use-next-input-state";
+export * from "./use-previous";
 export * from "./use-state-ref";
