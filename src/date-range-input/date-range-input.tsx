@@ -452,6 +452,8 @@ export const DateRangeInput = ({
     };
 
     const handleCalendarDismiss = (action: CalendarAction) => {
+        nodeRef.current.focus();
+
         switch (action) {
             case "reset":
                 actions.cancel();
@@ -526,6 +528,7 @@ export const DateRangeInput = ({
         return (
             <Container
                 ref={nodeRef}
+                tabIndex={-1}
                 $disabled={disabled}
                 $readOnly={readOnly}
                 $error={error}
