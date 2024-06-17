@@ -43,18 +43,14 @@ const errorFocusCss = css`
     box-shadow: ${DesignToken.InputErrorBoxShadow};
 `;
 
-export const InputWrapper = styled.div<InputWrapperStyleProps>`
-    display: flex;
-    align-items: center;
-    position: relative;
+/**
+ * basic wrapper for input fields that provides the border style but does not
+ * prescibe any layout for content
+ */
+export const InputBox = styled.div<InputWrapperStyleProps>`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     background: ${Color.Neutral[8]};
-    height: max-content;
-    width: 100%;
-    padding: 0 1rem;
-    flex-direction: ${(props) =>
-        props.$position === "right" ? "row-reverse" : "row"};
 
     :focus-within {
         ${defaultFocusCss}
@@ -94,6 +90,17 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
             `;
         }
     }}
+`;
+
+export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: max-content;
+    width: 100%;
+    padding: 0 1rem;
+    flex-direction: ${(props) =>
+        props.$position === "right" ? "row-reverse" : "row"};
 `;
 
 /**
