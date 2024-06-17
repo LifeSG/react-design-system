@@ -1,0 +1,450 @@
+import find from "lodash/find";
+import isEqual from "lodash/isEqual";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Spinner } from "../../button/button.style";
+import {
+    useCompare,
+    useEvent,
+    useEventListener,
+    useIsMounted,
+} from "../../util";
+import { DropdownLabel } from "./dropdown-label";
+import { DropdownListStateContext } from "./dropdown-list-state";
+import {
+    CheckboxSelectedIndicator,
+    CheckboxUnselectedIndicator,
+    Container,
+    DropdownCommonButton,
+    LabelIcon,
+    List,
+    ListItem,
+    ResultStateContainer,
+    ResultStateText,
+    SelectAllContainer,
+    SelectedIndicator,
+    UnselectedIndicator,
+} from "./dropdown-list.styles";
+import { DropdownSearch } from "./dropdown-search";
+import { DropdownListProps, ListItemDisplayProps } from "./types";
+
+/**
+ * NOTE: This component is not directly exportable but forms part of a component
+ */
+export const DropdownList = <T, V>({
+    listItems,
+    multiSelect,
+    selectedItems,
+    disableItemFocus,
+    itemsLoadState = "success",
+    itemTruncationType = "end",
+    itemMaxLines = 2,
+    labelDisplayType = "inline",
+    variant = "default",
+    onSelectItem,
+    onSelectAll,
+    onDismiss,
+    onRetry,
+    /* DropdownDisplayProps */
+    valueExtractor,
+    listExtractor,
+    renderListItem,
+    renderCustomCallToAction,
+    /* DropdownSearchProps */
+    enableSearch,
+    hideNoResultsDisplay,
+    searchPlaceholder = "Search",
+    searchFunction,
+    onSearch,
+}: DropdownListProps<T, V>): JSX.Element => {
+    // =========================================================================
+    // CONST, REF, STATE
+    // =========================================================================
+    const { focusedIndex, setFocusedIndex } = useContext(
+        DropdownListStateContext
+    );
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [displayListItems, setDisplayListItems] = useState(listItems);
+    const searchValueChanged = useCompare(searchValue);
+    const itemsLoadStateChanged = useCompare(itemsLoadState);
+    const mounted = useIsMounted();
+
+    const nodeRef = useRef<HTMLDivElement>();
+    const listRef = useRef<HTMLDivElement>();
+    const listItemRefs = useRef<HTMLElement[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>();
+
+    // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const getValue = (item: T): V => {
+        return valueExtractor ? valueExtractor(item) : (item as unknown as V);
+    };
+
+    const getItemKey = (item: T, index: number) => {
+        const formattedValue = valueExtractor ? valueExtractor(item) : item;
+        // This is needed as some items might have the same value
+        return `item_${index}__${formattedValue}`;
+    };
+
+    const getOptionLabel = (item: T): string | ListItemDisplayProps => {
+        return listExtractor ? listExtractor(item) : item.toString();
+    };
+
+    const checkListItemSelected = (item: T): boolean => {
+        return !!find(selectedItems, (arrItem) => {
+            return isEqual(arrItem, item);
+        });
+    };
+
+    const filterItems = useEvent((searchInput: string) => {
+        if (searchInput === "") {
+            return listItems;
+        } else if (searchFunction) {
+            return searchFunction(searchInput);
+        } else {
+            return listItems.filter((item) => {
+                const label = getOptionLabel(item);
+                const title =
+                    typeof label === "object"
+                        ? label.title.toLowerCase()
+                        : label.toLowerCase();
+                const secondaryLabel =
+                    typeof label === "string"
+                        ? undefined
+                        : label.secondaryLabel?.toLowerCase();
+                const updatedSearchValue = searchInput.trim().toLowerCase();
+                return (
+                    title.includes(updatedSearchValue) ||
+                    (secondaryLabel &&
+                        secondaryLabel.includes(updatedSearchValue))
+                );
+            });
+        }
+    });
+
+    const hasNextLineLabel = () => {
+        return (
+            labelDisplayType === "next-line" &&
+            displayListItems.length > 0 &&
+            listExtractor &&
+            typeof listExtractor(displayListItems[0]) !== "string"
+        );
+    };
+
+    // =========================================================================
+    // EVENT HANDLERS
+    // =========================================================================
+    const handleKeyboardPress = (event: KeyboardEvent) => {
+        switch (event.code) {
+            case "ArrowDown":
+                event.preventDefault();
+                // Cannot go further than last element
+                if (focusedIndex < displayListItems.length - 1) {
+                    const upcomingIndex = focusedIndex + 1;
+                    listItemRefs.current[upcomingIndex].focus();
+
+                    setFocusedIndex(upcomingIndex);
+                }
+                break;
+            case "ArrowUp":
+                event.preventDefault();
+                // Cannot go further than first element
+                if (focusedIndex > 0) {
+                    const upcomingIndex = focusedIndex - 1;
+                    listItemRefs.current[upcomingIndex].focus();
+
+                    setFocusedIndex(upcomingIndex);
+                }
+                break;
+            case "Space":
+                event.preventDefault();
+                handleListItemClick(displayListItems[focusedIndex]);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleListItemClick = (item: T) => {
+        if (onSelectItem) {
+            onSelectItem(item, getValue(item));
+        }
+    };
+
+    const handleSearchInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const value = event.target.value;
+        setSearchValue(value);
+
+        if (onSearch) onSearch();
+    };
+
+    const handleOnClear = () => {
+        setSearchValue("");
+        searchInputRef.current.focus();
+
+        if (onSearch) onSearch();
+    };
+
+    const handleTryAgain = () => {
+        if (onRetry) onRetry();
+    };
+
+    // =========================================================================
+    // EFFECTS
+    // =========================================================================
+    useEventListener("keydown", handleKeyboardPress);
+
+    useEffect(() => {
+        if (mounted) {
+            // only run on mount
+            return;
+        }
+
+        if (disableItemFocus) return;
+
+        // Focus search input if there is one
+        if (searchInputRef.current) {
+            setFocusedIndex(-1);
+            setTimeout(() => searchInputRef.current.focus(), 200); // wait for animation
+        } else {
+            // Else focus on the specified element
+            const target =
+                listItemRefs.current[focusedIndex] || listItemRefs.current[0];
+            if (target) {
+                setTimeout(() => target.focus(), 200); // wait for animation
+            }
+        }
+    }, [disableItemFocus, focusedIndex, mounted, setFocusedIndex]);
+
+    useEffect(() => {
+        if (!mounted || !itemsLoadStateChanged) {
+            // skip effect as dependency did not change
+            return;
+        }
+
+        if (disableItemFocus) return;
+
+        // Reset focus when options are loaded
+        if (itemsLoadState === "success") {
+            if (searchInputRef.current) {
+                setFocusedIndex(-1);
+                searchInputRef.current.focus();
+            }
+        }
+    }, [
+        mounted,
+        itemsLoadStateChanged,
+        itemsLoadState,
+        setFocusedIndex,
+        disableItemFocus,
+    ]);
+
+    useEffect(() => {
+        if (!mounted || !searchValueChanged) {
+            // skip effect as dependency did not change
+            return;
+        }
+
+        setDisplayListItems(filterItems(searchValue));
+    }, [filterItems, mounted, searchValueChanged, searchValue]);
+
+    // =========================================================================
+    // RENDER FUNCTIONS
+    // =========================================================================
+    const renderListItemIcon = (selected: boolean) => {
+        if (multiSelect) {
+            return selected ? (
+                <CheckboxSelectedIndicator aria-hidden />
+            ) : (
+                <CheckboxUnselectedIndicator aria-hidden />
+            );
+        }
+
+        return selected ? (
+            <SelectedIndicator aria-hidden />
+        ) : (
+            <UnselectedIndicator />
+        );
+    };
+
+    const renderDropdownLabel = (item: T, selected: boolean) => {
+        const label = getOptionLabel(item);
+        const title = typeof label === "string" ? label : label.title;
+        const secondaryLabel =
+            typeof label == "string" ? undefined : label.secondaryLabel;
+
+        return (
+            <DropdownLabel
+                displayType={labelDisplayType}
+                label={title}
+                maxLines={itemMaxLines}
+                selected={selected}
+                sublabel={secondaryLabel}
+                truncationType={itemTruncationType}
+                variant={variant}
+            />
+        );
+    };
+
+    const renderItems = () => {
+        if (!onRetry || (onRetry && itemsLoadState === "success")) {
+            return displayListItems.map((item, index) => {
+                const selected = checkListItemSelected(item);
+                return (
+                    <ListItem
+                        aria-selected={selected}
+                        aria-multiselectable={multiSelect}
+                        data-testid="list-item"
+                        key={getItemKey(item, index)}
+                        onClick={() => handleListItemClick(item)}
+                        ref={(element) =>
+                            (listItemRefs.current[index] = element)
+                        }
+                        role="option"
+                        tabIndex={-1}
+                        $variant={variant}
+                    >
+                        {renderListItemIcon(selected)}
+                        {renderListItem
+                            ? renderListItem(item, { selected })
+                            : renderDropdownLabel(item, selected)}
+                    </ListItem>
+                );
+            });
+        }
+    };
+
+    const renderSearchInput = () => {
+        if ((enableSearch || searchFunction) && itemsLoadState === "success") {
+            return (
+                <DropdownSearch
+                    ref={searchInputRef}
+                    onChange={handleSearchInputChange}
+                    value={searchValue}
+                    placeholder={searchPlaceholder}
+                    data-testid="search-input"
+                    aria-label="Enter text to search"
+                    onClear={handleOnClear}
+                    variant={variant}
+                />
+            );
+        }
+    };
+
+    const renderSelectAll = () => {
+        if (
+            multiSelect &&
+            displayListItems.length > 0 &&
+            !searchValue &&
+            itemsLoadState === "success"
+        ) {
+            return (
+                <SelectAllContainer>
+                    <DropdownCommonButton
+                        onClick={onSelectAll}
+                        type="button"
+                        $variant={variant}
+                    >
+                        {selectedItems.length === 0
+                            ? "Select all"
+                            : "Clear all"}
+                    </DropdownCommonButton>
+                </SelectAllContainer>
+            );
+        }
+    };
+
+    const renderNoResults = () => {
+        if (
+            !hideNoResultsDisplay &&
+            (searchValue || !enableSearch) &&
+            displayListItems.length === 0 &&
+            itemsLoadState === "success"
+        ) {
+            return (
+                <ResultStateContainer data-testid="list-no-results">
+                    <LabelIcon
+                        data-testid="no-result-icon"
+                        $variant={variant}
+                    />
+                    <ResultStateText $variant={variant}>
+                        No results found.
+                    </ResultStateText>
+                </ResultStateContainer>
+            );
+        }
+    };
+
+    const renderLoading = () => {
+        if (onRetry && itemsLoadState === "loading") {
+            const spinnerSize = variant === "small" ? 16 : 24;
+
+            return (
+                <ResultStateContainer data-testid="list-loading">
+                    <Spinner $buttonStyle="secondary" size={spinnerSize} />
+                    <ResultStateText $variant={variant}>
+                        Loading...
+                    </ResultStateText>
+                </ResultStateContainer>
+            );
+        }
+    };
+
+    const renderTryAgain = () => {
+        if (onRetry && itemsLoadState === "fail") {
+            return (
+                <ResultStateContainer data-testid="list-fail">
+                    <LabelIcon
+                        data-testid="load-error-icon"
+                        $variant={variant}
+                    />
+                    <ResultStateText $variant={variant}>
+                        Failed to load.
+                    </ResultStateText>
+                    &nbsp;
+                    <DropdownCommonButton
+                        onClick={handleTryAgain}
+                        type="button"
+                        $variant={variant}
+                    >
+                        Try again.
+                    </DropdownCommonButton>
+                </ResultStateContainer>
+            );
+        }
+    };
+
+    const renderList = () => {
+        return (
+            <List ref={listRef} data-testid="dropdown-list">
+                {renderSearchInput()}
+                {renderSelectAll()}
+                {renderNoResults()}
+                {renderLoading()}
+                {renderTryAgain()}
+                <ul role="listbox">{renderItems()}</ul>
+            </List>
+        );
+    };
+
+    const renderBottomCta = () => {
+        if (!renderCustomCallToAction) {
+            return;
+        }
+
+        return (
+            <div data-testid="custom-cta">
+                {renderCustomCallToAction(onDismiss, displayListItems)}
+            </div>
+        );
+    };
+
+    return (
+        <Container data-testid="dropdown-container" ref={nodeRef}>
+            {renderList()}
+            {renderBottomCta()}
+        </Container>
+    );
+};
