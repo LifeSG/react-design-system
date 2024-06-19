@@ -7,6 +7,7 @@ import { ESignatureCanvas, ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
     ESignatureContainer,
+    ESignatureDrawable,
     EditSignatureButton,
     GrowContainer,
     Instructions,
@@ -91,13 +92,15 @@ export const ESignature = (props: EsignatureProps) => {
                     <ModalBox onClose={() => setShowModal(false)}>
                         <ModalTitle>Signature</ModalTitle>
                         <ESignatureContainer>
-                            <SignatureLine />
-                            {showModal && (
-                                <ESignatureCanvas
-                                    ref={eSignatureCanvasRef}
-                                    baseImageDataURL={dataURL}
-                                />
-                            )}
+                            <ESignatureDrawable>
+                                <SignatureLine />
+                                {showModal && (
+                                    <ESignatureCanvas
+                                        ref={eSignatureCanvasRef}
+                                        baseImageDataURL={dataURL}
+                                    />
+                                )}
+                            </ESignatureDrawable>
                         </ESignatureContainer>
                         <ModalButtons>
                             <ModalActionButton

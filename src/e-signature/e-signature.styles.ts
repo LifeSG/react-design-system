@@ -99,16 +99,37 @@ export const ModalTitle = styled.h4`
     }
 `;
 export const ESignatureContainer = styled.div`
-    position: relative;
     width: 100%;
     height: 20rem;
-    background: ${Color.Neutral[6]};
     border-radius: 0.75rem;
     overflow: hidden;
 
     ${mobileMediaQuery} {
         border-radius: 0;
         flex: 1;
+    }
+
+    ${mobileLandscapeMediaQuery} {
+        background: ${Color.Neutral[7]};
+    }
+`;
+export const ESignatureDrawable = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: ${Color.Neutral[6]};
+    margin: auto;
+
+    ${mobileMediaQuery} {
+        aspect-ratio: 4/3;
+    }
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 100%;
+        height: auto;
+    }
+    ${mobileLandscapeMediaQuery} {
+        width: auto;
+        height: 100%;
     }
 `;
 export const SignatureLine = styled.div`
