@@ -9,12 +9,21 @@ import {
 } from "react";
 import { useTheme } from "styled-components";
 import { Color } from "../color";
+import { BaseTheme } from "../theme";
 import {
     SignatureCanvas,
     SignatureCanvasContainer,
 } from "./e-signature.styles";
-import { ESignatureCanvasProps, ESignatureCanvasRef } from "./types";
-import { BaseTheme } from "../theme";
+
+interface ESignatureCanvasProps {
+    baseImageDataURL?: string | undefined;
+    forwardedRef?: Ref<ESignatureCanvasRef> | undefined;
+}
+
+export interface ESignatureCanvasRef {
+    clear: VoidFunction;
+    export: () => string;
+}
 
 const Component = (
     props: ESignatureCanvasProps,

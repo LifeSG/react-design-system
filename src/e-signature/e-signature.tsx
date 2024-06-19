@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ButtonWithIcon } from "../button-with-icon";
 import { MediaWidths } from "../media";
-import { ESignatureCanvas } from "./e-signature-canvas";
+import { ESignatureCanvas, ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
     ESignatureContainer,
@@ -19,7 +19,7 @@ import {
     SignatureLine,
     SignaturePreviewImage,
 } from "./e-signature.styles";
-import { ESignatureCanvasRef, EsignatureProps } from "./types";
+import { EsignatureProps } from "./types";
 
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================
