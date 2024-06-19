@@ -124,7 +124,11 @@ export const ESignature = (props: EsignatureProps) => {
 
     const renderDescription = () => {
         if (!description) return null;
-        return <Instructions weight={400}>{description}</Instructions>;
+        return (
+            <Instructions weight="regular" as="p">
+                {description}
+            </Instructions>
+        );
     };
 
     return (
