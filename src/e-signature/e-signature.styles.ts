@@ -26,12 +26,12 @@ export const SignatureArea = styled.div`
             Color.Neutral[5](props)
         )}' stroke-width='4' stroke-dasharray='8%2c 8' stroke-dashoffset='8' stroke-linecap='round'/%3e%3c/svg%3e");`};
     background-color: ${Color.Neutral[8]};
-    border-radius: 0.25rem;
+    border-radius: 4px;
     height: 14.125rem;
 `;
 export const AddSignatureButton = styled(Button.Default)`
-    max-width: 10.875rem;
-    width: 100%;
+    width: fit-content;
+    padding: 0 2rem;
     margin: 0 2rem;
 `;
 export const EditSignatureButton = styled(IconButton)`
@@ -141,8 +141,7 @@ export const ModalButtons = styled.div`
 
     ${mobileLandscapeMediaQuery} {
         flex-direction: row;
-        padding: 0 1.25rem 1rem;
-        gap: 0;
+        margin: 1rem 1.25rem 1rem;
     }
 `;
 export const ModalActionButton = styled(Button.Default)`
