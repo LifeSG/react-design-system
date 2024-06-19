@@ -69,6 +69,7 @@ export const ContentWrapper = styled.div`
     gap: 2rem;
     flex: 1;
     justify-content: space-between;
+    margin-right: 4rem;
 
     ${MediaQuery.MaxWidth.mobileL} {
         display: flex;
@@ -123,9 +124,10 @@ export const Description = styled.div<StyleProps>`
 
 export const ActionButton = styled(Button.Small)`
     align-self: center;
-    overflow-wrap: anywhere;
     margin-left: auto;
     height: auto;
+    width: fit-content;
+    flex-shrink: 0;
 
     ${MediaQuery.MaxWidth.mobileL} {
         align-self: flex-start;
@@ -136,6 +138,7 @@ export const ActionButton = styled(Button.Small)`
 export const DismissButton = styled(ClickableIcon)<StyleProps>`
     padding: 0.75rem;
     margin: -0.75rem;
+    align-items: stretch;
 
     ${(props) => {
         return css`
