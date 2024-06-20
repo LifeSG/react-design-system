@@ -79,7 +79,6 @@ export const Toggle = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event?.preventDefault();
         if (!disabled) {
             if (onChange) {
                 onChange(event);
