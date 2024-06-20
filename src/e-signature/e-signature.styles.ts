@@ -101,7 +101,7 @@ export const ModalTitle = styled.h4`
 export const ESignatureContainer = styled.div`
     width: 100%;
     height: 20rem;
-    border-radius: 0.75rem;
+    border-radius: 12px;
     overflow: hidden;
 
     ${mobileMediaQuery} {
