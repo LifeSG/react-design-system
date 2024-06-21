@@ -26,11 +26,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "errorMessage",
-                description: "Error message to be displayed below description",
-                propTypes: ["boolean"],
-            },
-            {
                 name: "id",
                 description: "The unique identifier of the component",
                 propTypes: ["string"],
