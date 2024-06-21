@@ -120,7 +120,7 @@ const Component = (
                     fabricCanvas.current?.clear();
                     img.selectable = false;
                     img.hoverCursor = "default";
-                    img.scale(0.5);
+                    img.scale(fabricCanvas.current.width / img.width);
 
                     const viewport = fabricCanvas.current.viewportTransform;
                     img.left = -viewport[4];
