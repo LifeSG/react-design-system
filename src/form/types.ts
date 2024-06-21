@@ -1,5 +1,6 @@
 import { DateInputProps } from "../date-input/types";
 import { DateRangeInputProps } from "../date-range-input/types";
+import { EsignatureProps } from "../e-signature/types";
 import { HistogramSliderProps } from "../histogram-slider";
 import { InputGroupPartialProps } from "../input-group/types";
 import { InputMultiSelectPartialProps } from "../input-multi-select/types";
@@ -138,4 +139,8 @@ export interface FormRangeSliderProps
 
 export interface FormHistogramSliderProps
     extends HistogramSliderProps,
+        BaseFormElementProps {}
+
+export interface FormESignatureProps
+    extends EsignatureProps,
         BaseFormElementProps {}
