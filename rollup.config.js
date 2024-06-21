@@ -12,7 +12,7 @@ import { getFolders } from "./scripts/build-util";
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
-    nodeResolve(), // Locates modules in the project's node_modules directory
+    nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules
     typescript({
         useTsconfigDeclarationDir: true,
@@ -87,7 +87,7 @@ export default [
             },
         ],
         plugins,
-        external: ["react", "react-dom", "styled-components"],
+        external: ["react", "react-dom", "styled-components", "fabric"],
     },
     ...folderBuildConfigs,
 ];
