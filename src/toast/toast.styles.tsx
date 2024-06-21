@@ -123,9 +123,10 @@ export const Description = styled.div<StyleProps>`
 
 export const ActionButton = styled(Button.Small)`
     align-self: center;
-    overflow-wrap: anywhere;
     margin-left: auto;
     height: auto;
+    width: fit-content;
+    flex-shrink: 0;
 
     ${MediaQuery.MaxWidth.mobileL} {
         align-self: flex-start;
@@ -136,6 +137,7 @@ export const ActionButton = styled(Button.Small)`
 export const DismissButton = styled(ClickableIcon)<StyleProps>`
     padding: 0.75rem;
     margin: -0.75rem;
+    align-self: stretch;
 
     ${(props) => {
         return css`
