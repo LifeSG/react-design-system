@@ -57,10 +57,11 @@ const folderBuildConfigs = getFolders("./src").map((folder) => {
     return {
         input: `src/${folder}/index.ts`,
         output: {
-            file: `dist/${folder}/index.js`,
+            dir: `dist/${folder}`,
             sourcemap: true,
             exports: "named",
             format: "esm",
+            chunkFileNames: "chunks/[name].[hash].js",
         },
         plugins: subfolderPlugins(folder),
         external: ["react", "react-dom", "styled-components"],
@@ -72,22 +73,24 @@ export default [
         input: "src/index.ts",
         output: [
             {
-                file: pkg.module,
+                dir: "dist",
                 format: "esm",
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
             },
             {
-                file: pkg.main,
+                dir: "dist/cjs",
                 format: "cjs",
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
             },
         ],
         plugins,
-        external: ["react", "react-dom", "styled-components", "fabric"],
+        external: ["react", "react-dom", "styled-components"],
     },
     ...folderBuildConfigs,
 ];
