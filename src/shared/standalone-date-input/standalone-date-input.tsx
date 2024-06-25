@@ -33,7 +33,7 @@ interface Props {
     placeholder?: string | undefined;
     label?: string | undefined;
     onChange: (value: string) => void;
-    onFocus: () => void;
+    onFocus?: (() => void) | undefined;
     onBlur?: ((valid: boolean) => void) | undefined;
 }
 
@@ -146,7 +146,7 @@ export const Component = (
         setHidePlaceholder(true);
 
         if (!focused) {
-            onFocus();
+            onFocus?.();
         }
     };
 

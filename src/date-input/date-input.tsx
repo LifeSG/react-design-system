@@ -56,15 +56,17 @@ export const DateInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleClose = () => {
+        inputRef.current.resetInput();
+        setSelectedDate(initialDate);
         setCalendarOpen(false);
         performOnBlurHandler();
     };
 
     const handleDismiss = () => {
         inputRef.current.resetInput();
+        nodeRef.current.focus();
         setSelectedDate(initialDate);
         setCalendarOpen(false);
-        performOnBlurHandler();
     };
 
     const handleChange = (val: string) => {
@@ -86,7 +88,19 @@ export const DateInput = ({
             setInitialDate(val);
             if (val) {
                 setCalendarOpen(false);
-                performOnBlurHandler();
+            }
+        }
+    };
+
+    const handleSelect = (val: string) => {
+        setSelectedDate(val);
+
+        if (!withButton) {
+            performOnChangeHandler(val);
+            setInitialDate(val);
+            if (val) {
+                nodeRef.current.focus();
+                setCalendarOpen(false);
             }
         }
     };
@@ -98,6 +112,15 @@ export const DateInput = ({
 
         if (onFocus) {
             onFocus();
+        }
+    };
+
+    const handleBlur = (e: React.FocusEvent) => {
+        if (
+            !calendarOpen &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            performOnBlurHandler();
         }
     };
 
@@ -119,7 +142,6 @@ export const DateInput = ({
 
         nodeRef.current.focus();
         setCalendarOpen(false);
-        performOnBlurHandler();
     };
 
     // =============================================================================
@@ -145,6 +167,8 @@ export const DateInput = ({
             <Container
                 tabIndex={-1}
                 ref={nodeRef}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
                 $disabled={disabled}
                 $readOnly={readOnly}
                 $error={error}
@@ -156,7 +180,6 @@ export const DateInput = ({
                     ref={inputRef}
                     disabled={disabled}
                     onChange={handleChange}
-                    onFocus={handleFocus}
                     readOnly={readOnly}
                     focused={calendarOpen}
                     names={["start-day", "start-month", "start-year"]}
@@ -181,7 +204,7 @@ export const DateInput = ({
                 maxDate={maxDate}
                 allowDisabledSelection={allowDisabledSelection}
                 onHover={handleHoverDayCell}
-                onSelect={handleChange}
+                onSelect={handleSelect}
                 onDismiss={handleCalendarAction}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
             />
