@@ -41,18 +41,7 @@ export const SearchFilter = ({ mode, value, onChange }: Props<string>) => {
 };
 
 export const DateFilter = ({ value, onChange }: Props<string>) => {
-    const [isFocused, setIsFocused] = useState(false);
-
-    return (
-        <div style={{ height: isFocused ? "33rem" : undefined }}>
-            <Form.DateInput
-                value={value}
-                onChange={(date) => onChange(date)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-            />
-        </div>
-    );
+    return <Form.DateInput value={value} onChange={(date) => onChange(date)} />;
 };
 
 export const TextFilter = () => {
