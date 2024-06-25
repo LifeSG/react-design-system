@@ -17,6 +17,7 @@ export * from "./date-range-input";
 export * from "./design-token";
 export * from "./divider";
 export * from "./drawer";
+export * from "./e-signature";
 export * from "./error-display";
 export * from "./feedback-rating";
 export * from "./file-upload";

@@ -1,9 +1,9 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ButtonWithIcon } from "../button-with-icon";
 import { MediaWidths } from "../media";
-import { ESignatureCanvas, ESignatureCanvasRef } from "./e-signature-canvas";
+import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
     ESignatureContainer,
@@ -21,6 +21,11 @@ import {
     SignaturePreviewImage,
 } from "./e-signature.styles";
 import { EsignatureProps } from "./types";
+
+// lazy load to fix next.js SSR errors
+const ESignatureCanvas = lazy(async () => ({
+    default: (await import("./e-signature-canvas")).ESignatureCanvas,
+}));
 
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================
@@ -94,12 +99,14 @@ export const ESignature = (props: EsignatureProps) => {
                         <ESignatureContainer>
                             <ESignatureDrawable>
                                 <SignatureLine />
-                                {showModal && (
-                                    <ESignatureCanvas
-                                        ref={eSignatureCanvasRef}
-                                        baseImageDataURL={dataURL}
-                                    />
-                                )}
+                                <Suspense fallback={null}>
+                                    {showModal && (
+                                        <ESignatureCanvas
+                                            ref={eSignatureCanvasRef}
+                                            baseImageDataURL={dataURL}
+                                        />
+                                    )}
+                                </Suspense>
                             </ESignatureDrawable>
                         </ESignatureContainer>
                         <ModalButtons>

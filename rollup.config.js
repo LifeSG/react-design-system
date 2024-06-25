@@ -12,7 +12,7 @@ import { getFolders } from "./scripts/build-util";
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
-    nodeResolve(), // Locates modules in the project's node_modules directory
+    nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules
     typescript({
         useTsconfigDeclarationDir: true,
@@ -57,10 +57,11 @@ const folderBuildConfigs = getFolders("./src").map((folder) => {
     return {
         input: `src/${folder}/index.ts`,
         output: {
-            file: `dist/${folder}/index.js`,
+            dir: `dist/${folder}`,
             sourcemap: true,
             exports: "named",
             format: "esm",
+            chunkFileNames: "chunks/[name].[hash].js",
         },
         plugins: subfolderPlugins(folder),
         external: ["react", "react-dom", "styled-components"],
@@ -72,18 +73,20 @@ export default [
         input: "src/index.ts",
         output: [
             {
-                file: pkg.module,
+                dir: "dist",
                 format: "esm",
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
             },
             {
-                file: pkg.main,
+                dir: "dist/cjs",
                 format: "cjs",
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
             },
         ],
         plugins,
