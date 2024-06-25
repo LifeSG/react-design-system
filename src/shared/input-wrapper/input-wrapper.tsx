@@ -12,6 +12,7 @@ export interface InputWrapperStyleProps {
     $disabled?: boolean | undefined;
     $error?: boolean | undefined;
     $readOnly?: boolean | undefined;
+    $focused?: boolean | undefined;
     $position?: "left" | "right" | undefined;
 }
 
@@ -22,6 +23,26 @@ export interface InputStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+const defaultFocusCss = css`
+    border: 1px solid ${Color.Accent.Light[1]};
+    box-shadow: ${DesignToken.InputBoxShadow};
+`;
+
+const readOnlyFocusCss = css`
+    border: 1px solid transparent;
+    box-shadow: none;
+`;
+
+const disabledFocusCss = css`
+    border: 1px solid ${Color.Neutral[5]};
+    box-shadow: none;
+`;
+
+const errorFocusCss = css`
+    border: 1px solid ${Color.Validation.Red.Border};
+    box-shadow: ${DesignToken.InputErrorBoxShadow};
+`;
+
 export const InputWrapper = styled.div<InputWrapperStyleProps>`
     display: flex;
     align-items: center;
@@ -36,9 +57,9 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
         props.$position === "right" ? "row-reverse" : "row"};
 
     :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+        ${defaultFocusCss}
     }
+    ${(props) => props.$focused && defaultFocusCss}
 
     ${(props) => {
         if (props.$readOnly) {
@@ -48,9 +69,9 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
                 background: transparent !important;
 
                 :focus-within {
-                    border: 1px solid transparent;
-                    box-shadow: none;
+                    ${readOnlyFocusCss}
                 }
+                ${props.$focused && readOnlyFocusCss}
             `;
         } else if (props.$disabled) {
             return css`
@@ -58,18 +79,18 @@ export const InputWrapper = styled.div<InputWrapperStyleProps>`
                 cursor: not-allowed;
 
                 :focus-within {
-                    border: 1px solid ${Color.Neutral[5]};
-                    box-shadow: none;
+                    ${disabledFocusCss}
                 }
+                ${props.$focused && disabledFocusCss}
             `;
         } else if (props.$error) {
             return css`
                 border: 1px solid ${Color.Validation.Red.Border};
 
                 :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                    ${errorFocusCss}
                 }
+                ${props.$focused && errorFocusCss}
             `;
         }
     }}
