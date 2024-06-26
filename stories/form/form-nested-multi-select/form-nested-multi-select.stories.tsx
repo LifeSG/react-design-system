@@ -4,7 +4,10 @@ import { Form } from "src/form";
 import { InputNestedMultiSelect } from "src/input-nested-multi-select";
 import { Layout } from "src/layout";
 import { StoryContainer } from "../../storybook-common";
-import { options } from "../form-nested-select/nested-data-list";
+import {
+    options,
+    twoTierOptions,
+} from "../form-nested-select/nested-data-list";
 import { Container } from "../shared-doc-elements";
 
 type Component = typeof Form.NestedMultiSelect;
@@ -36,6 +39,10 @@ export const Default: StoryObj<Component> = {
                         onSelectOptions={(keyPaths, values) => {
                             setSelectedKeyPaths(keyPaths);
                         }}
+                    />
+                    <Form.NestedMultiSelect
+                        label="This contains a 2 tier option"
+                        options={twoTierOptions}
                     />
                     <Form.NestedMultiSelect
                         label="This is the disabled state"

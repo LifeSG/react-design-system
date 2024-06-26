@@ -174,3 +174,72 @@ export const options = [
         ],
     },
 ];
+
+export const twoTierOptions = [
+    {
+        label: "Level 7",
+        value: { id: "1001", name: "L7" },
+        key: "1001",
+        subItems: [
+            {
+                label: "Teh Peng",
+                value: { id: "2001", name: "Teh Peng" },
+                key: "2001",
+            },
+            {
+                label: "Milo",
+                value: { id: "2002", name: "Milo" },
+                key: "2002",
+            },
+            {
+                label: "Horlick",
+                value: { id: "2003", name: "Horlick" },
+                key: "2003",
+            },
+        ],
+    },
+    {
+        label: "Level 8",
+        value: { id: "1002", name: "L8" },
+        key: "1002",
+        subItems: [
+            {
+                label: "FGD",
+                value: { id: "2100", name: "FGD" },
+                key: "2100",
+            },
+            {
+                label: "Bumblebee",
+                value: { id: "2102", name: "Bumblebee" },
+                key: "2102",
+            },
+            {
+                label: "Drone",
+                value: { id: "2103", name: "Drone" },
+                key: "2103",
+            },
+        ],
+    },
+    {
+        label: "Level 9",
+        value: { id: "1003", name: "L9" },
+        key: "1003",
+        subItems: [
+            {
+                label: "Ang Ku Kueh",
+                value: { id: "2200", name: "Ang Ku Kueh" },
+                key: "2200",
+            },
+            {
+                label: "Soon Kueh",
+                value: { id: "2202", name: "Soon Kueh" },
+                key: "2202",
+            },
+            {
+                label: "Huat Kueh",
+                value: { id: "2203", name: "Huat Kueh" },
+                key: "2203",
+            },
+        ],
+    },
+];

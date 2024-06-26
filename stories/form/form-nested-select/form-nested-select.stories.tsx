@@ -5,7 +5,7 @@ import { InputNestedSelect } from "src/input-nested-select";
 import { Layout } from "src/layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { options } from "./nested-data-list";
+import { options, twoTierOptions } from "./nested-data-list";
 
 type Component = typeof Form.NestedSelect;
 type StandaloneComponent = typeof InputNestedSelect;
@@ -43,6 +43,10 @@ export const Default: StoryObj<Component> = {
                         label="This allows selection of categories"
                         options={options}
                         selectableCategory={true}
+                    />
+                    <Form.NestedSelect
+                        label="This contains a 2 tier option"
+                        options={twoTierOptions}
                     />
                     <Form.NestedSelect
                         label="This is the disabled state"
