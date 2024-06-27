@@ -32,6 +32,7 @@ interface DateRangeInputState {
     calendarOpen: boolean;
     isStartDirty: boolean;
     isEndDirty: boolean;
+    focused: boolean;
 }
 
 const INITIAL_STATE: DateRangeInputState = {
@@ -43,6 +44,7 @@ const INITIAL_STATE: DateRangeInputState = {
     calendarOpen: false,
     isStartDirty: false,
     isEndDirty: false,
+    focused: false,
 };
 
 export const DateRangeInput = ({
@@ -85,6 +87,7 @@ export const DateRangeInput = ({
             calendarOpen,
             isStartDirty,
             isEndDirty,
+            focused,
         },
         actions,
     ] = useStateActions({
@@ -92,6 +95,16 @@ export const DateRangeInput = ({
         initialState: INITIAL_STATE,
         reducers: {
             blur: (state) => ({
+                ...state,
+                selectedStart: state.initialStart,
+                selectedEnd: state.initialEnd,
+                currentFocus: "none",
+                calendarOpen: false,
+                isStartDirty: false,
+                isEndDirty: false,
+                focused: false,
+            }),
+            dismiss: (state) => ({
                 ...state,
                 selectedStart: state.initialStart,
                 selectedEnd: state.initialEnd,
@@ -128,6 +141,7 @@ export const DateRangeInput = ({
                     ? "start"
                     : currentFocus,
                 calendarOpen: !readOnly,
+                focused: true,
             }),
             cancel: (state) => ({
                 ...state,
@@ -212,7 +226,10 @@ export const DateRangeInput = ({
                 });
                 onChange?.(selectedStart, selectedEnd);
             } else {
-                actions.blur();
+                actions.dismiss();
+                nodeRef.current.focus();
+                startInputRef.current.resetPlaceholder();
+                endInputRef.current.resetPlaceholder();
             }
         }
     };
@@ -229,7 +246,11 @@ export const DateRangeInput = ({
     };
 
     const handleDismiss = () => {
-        actions.blur();
+        actions.dismiss();
+
+        nodeRef.current.focus();
+        startInputRef.current.resetPlaceholder();
+        endInputRef.current.resetPlaceholder();
     };
 
     const handleStartDateChange = (val: string) => {
@@ -387,18 +408,45 @@ export const DateRangeInput = ({
         }
     };
 
-    const handleInputFocus = (focusType: FocusType) => () => {
-        if (readOnly) return;
+    const handleFocus = () => {
+        if (readOnly || focused) return;
 
-        actions.focus(focusType);
+        actions.focus("start");
+        onFocus?.();
+    };
 
-        handleWeekSelectionInputFocus();
-        handleFixedRangeSelectionInputFocus();
+    const handleBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !calendarOpen &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            actions.blur();
 
-        if (onFocus) {
-            onFocus();
+            setIsStartDisabled(false);
+            setIsEndDisabled(false);
+            startInputRef.current.resetPlaceholder();
+            endInputRef.current.resetPlaceholder();
+
+            onBlur?.();
         }
     };
+
+    const handleInputFocus =
+        (focusType: FocusType) => (event: React.FocusEvent) => {
+            event.stopPropagation();
+
+            if (readOnly) return;
+
+            actions.focus(focusType);
+
+            handleWeekSelectionInputFocus();
+            handleFixedRangeSelectionInputFocus();
+
+            if (!focused) {
+                onFocus?.();
+            }
+        };
 
     const handleWeekSelectionInputFocus = () => {
         if (isWeekSelection) {
@@ -529,6 +577,9 @@ export const DateRangeInput = ({
             <Container
                 ref={nodeRef}
                 tabIndex={-1}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                $focused={focused}
                 $disabled={disabled}
                 $readOnly={readOnly}
                 $error={error}
