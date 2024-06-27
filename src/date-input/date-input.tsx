@@ -127,6 +127,8 @@ export const DateInput = ({
             !calendarOpen &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
+            inputRef.current.resetInput();
+            setSelectedDate(initialDate);
             setFocused(false);
             performOnBlurHandler();
         }
