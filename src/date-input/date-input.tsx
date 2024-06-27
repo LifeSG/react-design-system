@@ -108,9 +108,12 @@ export const DateInput = ({
     };
 
     const handleFocus = () => {
-        if (readOnly || focused) return;
+        if (readOnly) return;
 
         setCalendarOpen(true);
+
+        if (focused) return;
+
         setFocused(true);
 
         if (onFocus) {
