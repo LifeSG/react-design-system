@@ -10,7 +10,6 @@ import {
     useClick,
     useDismiss,
     useFloating,
-    useFocus,
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
@@ -25,6 +24,7 @@ interface ElementWithDropdownProps {
     renderElement: () => React.ReactNode;
     renderDropdown: () => React.ReactNode;
     zIndex?: number | undefined;
+    clickToToggle?: boolean | undefined;
 }
 
 export const ElementWithDropdown = ({
@@ -36,6 +36,7 @@ export const ElementWithDropdown = ({
     renderElement,
     renderDropdown,
     zIndex = 50,
+    clickToToggle = false,
 }: ElementWithDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -76,13 +77,11 @@ export const ElementWithDropdown = ({
         duration: 300,
     });
 
-    const click = useClick(context, { enabled });
-    const focus = useFocus(context, { enabled });
+    const click = useClick(context, { enabled, toggle: clickToToggle });
     const dismiss = useDismiss(context, { enabled });
 
     const { getReferenceProps, getFloatingProps } = useInteractions([
         click,
-        focus,
         dismiss,
     ]);
 

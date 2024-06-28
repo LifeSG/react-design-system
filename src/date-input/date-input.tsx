@@ -39,6 +39,7 @@ export const DateInput = ({
     );
     const [hoveredDate, setHoveredDate] = useState<string>(undefined);
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<StandaloneDateInputRef>();
@@ -56,15 +57,18 @@ export const DateInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleClose = () => {
+        inputRef.current.resetInput();
+        setSelectedDate(initialDate);
         setCalendarOpen(false);
+        setFocused(false);
         performOnBlurHandler();
     };
 
     const handleDismiss = () => {
         inputRef.current.resetInput();
+        nodeRef.current.focus();
         setSelectedDate(initialDate);
         setCalendarOpen(false);
-        performOnBlurHandler();
     };
 
     const handleChange = (val: string) => {
@@ -86,7 +90,19 @@ export const DateInput = ({
             setInitialDate(val);
             if (val) {
                 setCalendarOpen(false);
-                performOnBlurHandler();
+            }
+        }
+    };
+
+    const handleSelect = (val: string) => {
+        setSelectedDate(val);
+
+        if (!withButton) {
+            performOnChangeHandler(val);
+            setInitialDate(val);
+            if (val) {
+                nodeRef.current.focus();
+                setCalendarOpen(false);
             }
         }
     };
@@ -96,8 +112,25 @@ export const DateInput = ({
 
         setCalendarOpen(true);
 
+        if (focused) return;
+
+        setFocused(true);
+
         if (onFocus) {
             onFocus();
+        }
+    };
+
+    const handleBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !calendarOpen &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            inputRef.current.resetInput();
+            setSelectedDate(initialDate);
+            setFocused(false);
+            performOnBlurHandler();
         }
     };
 
@@ -117,8 +150,8 @@ export const DateInput = ({
                 break;
         }
 
+        nodeRef.current.focus();
         setCalendarOpen(false);
-        performOnBlurHandler();
     };
 
     // =============================================================================
@@ -142,9 +175,13 @@ export const DateInput = ({
     const renderInput = () => {
         return (
             <Container
+                tabIndex={-1}
                 ref={nodeRef}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
                 $disabled={disabled}
                 $readOnly={readOnly}
+                $focused={focused}
                 $error={error}
                 id={id}
                 data-testid={otherProps["data-testid"]}
@@ -154,7 +191,6 @@ export const DateInput = ({
                     ref={inputRef}
                     disabled={disabled}
                     onChange={handleChange}
-                    onFocus={handleFocus}
                     readOnly={readOnly}
                     focused={calendarOpen}
                     names={["start-day", "start-month", "start-year"]}
@@ -179,7 +215,7 @@ export const DateInput = ({
                 maxDate={maxDate}
                 allowDisabledSelection={allowDisabledSelection}
                 onHover={handleHoverDayCell}
-                onSelect={handleChange}
+                onSelect={handleSelect}
                 onDismiss={handleCalendarAction}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
             />
