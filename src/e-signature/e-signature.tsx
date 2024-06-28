@@ -80,6 +80,7 @@ export const ESignature = (props: EsignatureProps) => {
                 <AddSignatureButton
                     type="button"
                     styleType="secondary"
+                    id={id}
                     onClick={() => setShowModal(true)}
                 >
                     Add signature
@@ -93,6 +94,7 @@ export const ESignature = (props: EsignatureProps) => {
                 <EditSignatureButton
                     styleType="light"
                     onClick={() => setShowModal(true)}
+                    id={id}
                     aria-label="Edit signature"
                 >
                     <PencilIcon />
