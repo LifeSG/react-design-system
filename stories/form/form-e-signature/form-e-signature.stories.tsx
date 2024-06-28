@@ -40,6 +40,21 @@ export const Default: StoryObj<Component> = {
     },
 };
 
+export const WithLoadingIndicator: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.ESignature
+                        label="This comes with a loading indicator"
+                        loadingProgress={0.5}
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (

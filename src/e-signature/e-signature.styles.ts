@@ -46,6 +46,18 @@ export const SignaturePreviewImage = styled.img`
     width: calc(100% - 8rem);
     height: 100%;
 `;
+export const ProgressBox = styled.div`
+    background: ${Color.Accent.Light[6]};
+    border: 1px solid ${Color.Neutral[5]};
+    border-radius: 4px;
+    margin: 0 2rem;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+`;
 export const Instructions = styled(Text.H6)`
     margin-top: 1rem;
 `;
