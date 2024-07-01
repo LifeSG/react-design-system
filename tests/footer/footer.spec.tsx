@@ -8,7 +8,7 @@ import { FooterHelper } from "../../src/footer/footer-helper";
 describe("Footer", () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.useFakeTimers("modern");
+        jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 0, 1));
     });
 

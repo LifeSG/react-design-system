@@ -7,7 +7,7 @@ describe("TimeSlotBarWeekCalendar", () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.useFakeTimers("modern").setSystemTime(new Date("2023-03-01"));
+        jest.useFakeTimers().setSystemTime(new Date("2023-03-01"));
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
