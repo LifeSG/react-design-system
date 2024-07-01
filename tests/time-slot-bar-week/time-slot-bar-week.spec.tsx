@@ -16,6 +16,10 @@ describe("TimeSlotBarWeekCalendar", () => {
         }));
     });
 
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
     it("should render without errors", () => {
         const onWeekDisplayChange = jest.fn();
         render(

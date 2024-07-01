@@ -24,6 +24,10 @@ describe("DateInput", () => {
         }).setSystemTime(new Date("2024-02-01T12:00:00"));
     });
 
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
     it("should render the field with calendar not shown by default", async () => {
         render(<DateInput data-testid="e2e" />);
 
@@ -32,7 +36,9 @@ describe("DateInput", () => {
     });
 
     it("should show calendar for current month by default", async () => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
 
         render(<DateInput data-testid="e2e" />);
 
@@ -50,7 +56,9 @@ describe("DateInput", () => {
     });
 
     it("should show calendar for selected month", async () => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
 
         render(<DateInput data-testid="e2e" value="2023-01-01" />);
 
@@ -65,7 +73,9 @@ describe("DateInput", () => {
 
     describe("focus/blur behaviour", () => {
         it("should call onFocus on click and onBlur via outside click", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnFocus = jest.fn();
             const mockOnBlur = jest.fn();
 
@@ -100,7 +110,9 @@ describe("DateInput", () => {
         });
 
         it("should dismiss calendar if it is open", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnFocus = jest.fn();
             const mockOnBlur = jest.fn();
 
@@ -132,7 +144,9 @@ describe("DateInput", () => {
         });
 
         it("should dismiss calendar via Esc key", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnFocus = jest.fn();
             const mockOnBlur = jest.fn();
 
@@ -164,7 +178,9 @@ describe("DateInput", () => {
         });
 
         it("should call onFocus and onBlur when cycling through the tab sequence", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnFocus = jest.fn();
             const mockOnBlur = jest.fn();
 
@@ -229,7 +245,9 @@ describe("DateInput", () => {
 
     describe("with buttons", () => {
         it("should handle date selection by click", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(<DateInput data-testid="e2e" onChange={mockOnChange} />);
@@ -256,7 +274,9 @@ describe("DateInput", () => {
         });
 
         it("should handle date selection by manual input", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(<DateInput data-testid="e2e" onChange={mockOnChange} />);
@@ -291,7 +311,9 @@ describe("DateInput", () => {
         });
 
         it("should reset to initial value if selection by click is not confirmed", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(
@@ -322,7 +344,9 @@ describe("DateInput", () => {
         });
 
         it("should reset to initial value if manual input is not confirmed", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(
@@ -355,7 +379,9 @@ describe("DateInput", () => {
         });
 
         it("should handle clearing of date", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(
@@ -394,7 +420,9 @@ describe("DateInput", () => {
 
     describe("without buttons", () => {
         it("should handle date selection by click", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(
@@ -422,7 +450,9 @@ describe("DateInput", () => {
         });
 
         it("should handle date selection by keyboard input", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(
@@ -452,7 +482,9 @@ describe("DateInput", () => {
         });
 
         it("should handle clearing of date", async () => {
-            const user = userEvent.setup();
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
             const mockOnChange = jest.fn();
 
             render(
