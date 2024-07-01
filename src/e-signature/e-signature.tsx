@@ -80,6 +80,7 @@ export const ESignature = (props: EsignatureProps) => {
                 <AddSignatureButton
                     type="button"
                     styleType="secondary"
+                    aria-label="Add signature"
                     id={id}
                     onClick={() => setShowModal(true)}
                 >
