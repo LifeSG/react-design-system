@@ -3,6 +3,8 @@ export interface EsignatureProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     description?: string | undefined;
+    loadingLabel?: string | undefined;
+    loadingProgress?: number | undefined;
     /** image dataURL */
     value?: string | undefined;
     onChange?: ((value: string) => void) | undefined;

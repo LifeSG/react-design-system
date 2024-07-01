@@ -31,6 +31,23 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "loadingProgress",
+                description:
+                    "Number between 0 and 1 to mark the progress in a progress indicator",
+                propTypes: ["number"],
+            },
+            {
+                name: "loadingLabel",
+                description: (
+                    <>
+                        Text above progress indicator, requires{" "}
+                        <code>loadingProgress</code> prop to be defined.
+                    </>
+                ),
+                propTypes: ["string"],
+                defaultValue: `"Uploading..."`,
+            },
+            {
                 name: "value",
                 description: <>The signature data in {STRING_FORMAT}</>,
                 propTypes: ["string"],

@@ -3,6 +3,8 @@ import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ButtonWithIcon } from "../button-with-icon";
 import { MediaWidths } from "../media";
+import { ProgressBar } from "../shared/progress-bar";
+import { Text } from "../text";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
@@ -15,6 +17,7 @@ import {
     ModalBox,
     ModalButtons,
     ModalTitle,
+    ProgressBox,
     ScrollableModal,
     SignatureArea,
     SignatureLine,
@@ -31,7 +34,15 @@ export const ESignature = (props: EsignatureProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { description, onChange, value, ...otherProps } = props;
+    const {
+        description,
+        id,
+        loadingProgress,
+        loadingLabel = "Uploading...",
+        onChange,
+        value,
+        ...otherProps
+    } = props;
     const [showModal, setShowModal] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string>(value);
@@ -69,6 +80,8 @@ export const ESignature = (props: EsignatureProps) => {
                 <AddSignatureButton
                     type="button"
                     styleType="secondary"
+                    aria-label="Add signature"
+                    id={id}
                     onClick={() => setShowModal(true)}
                 >
                     Add signature
@@ -82,11 +95,26 @@ export const ESignature = (props: EsignatureProps) => {
                 <EditSignatureButton
                     styleType="light"
                     onClick={() => setShowModal(true)}
+                    id={id}
                     aria-label="Edit signature"
                 >
                     <PencilIcon />
                 </EditSignatureButton>
             </>
+        );
+    };
+
+    const renderLoadingIndicator = () => {
+        return (
+            <ProgressBox>
+                {loadingLabel && (
+                    <Text.BodySmall>{loadingLabel}</Text.BodySmall>
+                )}
+                <ProgressBar
+                    progress={loadingProgress}
+                    data-testid={`${id || "e-signature"}-progress-bar`}
+                />
+            </ProgressBox>
         );
     };
 
@@ -143,7 +171,11 @@ export const ESignature = (props: EsignatureProps) => {
 
     return (
         <div {...otherProps}>
-            <SignatureArea>{renderSignatureArea()}</SignatureArea>
+            <SignatureArea>
+                {isNaN(loadingProgress)
+                    ? renderSignatureArea()
+                    : renderLoadingIndicator()}
+            </SignatureArea>
             {renderModal()}
             {renderDescription()}
         </div>

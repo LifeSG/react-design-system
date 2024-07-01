@@ -21,18 +21,39 @@ export const Default: StoryObj<Component> = {
         return (
             <StoryContainer>
                 <Container>
-                    <Form.ESignature label="This is the default state" />
+                    <Form.ESignature
+                        label="This is the default state"
+                        id="default"
+                    />
                     <Form.ESignature
                         label="This is prefilled"
+                        id="prefill"
                         value={signatureDataURL}
                     />
                     <Form.ESignature
                         label="This comes with a description"
+                        id="description"
                         description="Description"
                     />
                     <Form.ESignature
                         label="This comes with an error message"
+                        id="error"
                         errorMessage="Error message"
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const WithLoadingIndicator: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.ESignature
+                        label="This comes with a loading indicator"
+                        loadingProgress={0.5}
                     />
                 </Container>
             </StoryContainer>

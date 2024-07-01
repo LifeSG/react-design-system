@@ -61,11 +61,10 @@ const Component = (
     };
 
     const handleResize = useCallback(async () => {
+        // slight delay for fabricjs to update on orientation change
+        await new Promise((resolve) => setTimeout(resolve));
         if (containerRef.current && canvasRef.current && fabricCanvas.current) {
-            // slight delay for fabricjs to update on orientation change
-            await new Promise((resolve) => setTimeout(resolve));
-
-            const canvasWidth = containerRef.current?.clientWidth;
+            const canvasWidth = containerRef.current.clientWidth;
             const canvasHeight = containerRef.current.clientHeight;
             canvasRef.current.width = canvasWidth;
             canvasRef.current.height = canvasHeight;

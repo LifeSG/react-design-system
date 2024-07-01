@@ -20,6 +20,22 @@ describe("ESignature", () => {
         );
     });
 
+    it("should show the progress indicator if loadingProgress is specified", () => {
+        render(<ESignature loadingProgress={0.5} />);
+
+        expect(
+            screen.getByTestId("e-signature-progress-bar")
+        ).toBeInTheDocument();
+        expect(screen.getByText("Uploading...")).toBeInTheDocument();
+        expect(getAddSignatureButton(true)).not.toBeInTheDocument();
+    });
+
+    it("should render the loading text according to the loadingLabel", () => {
+        render(<ESignature loadingLabel="Loading" loadingProgress={0.5} />);
+
+        expect(screen.getByText("Loading")).toBeInTheDocument();
+    });
+
     it("should show edit button instead of add signature button if field has a value", () => {
         render(<ESignature value={PNG_BASE64} />);
 
