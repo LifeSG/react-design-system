@@ -1,4 +1,3 @@
-import pkg from "./package.json";
 import { plugins } from "./rollup.config";
 
 export default [
@@ -6,16 +5,18 @@ export default [
         input: "src/index.ts",
         output: [
             {
-                file: pkg.module,
+                dir: "dist",
                 format: "esm",
                 sourcemap: true,
                 exports: "named",
+                chunkFileNames: "chunks/[name].[hash].js",
             },
             {
-                file: pkg.main,
+                dir: "dist/cjs",
                 format: "cjs",
                 sourcemap: true,
                 exports: "named",
+                chunkFileNames: "chunks/[name].[hash].js",
             },
         ],
         plugins,
