@@ -8,7 +8,7 @@ const Component = (
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
     return (
-        <CalendarWrapper>
+        <CalendarWrapper data-testid="calendar-dropdown">
             <InternalCalendar ref={ref} {...props} />
         </CalendarWrapper>
     );
