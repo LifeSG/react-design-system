@@ -83,6 +83,29 @@ export const FixedCountry: StoryObj<Component> = {
     },
 };
 
+export const AllowClear: StoryObj<Component> = {
+    render: () => {
+        const [value, setValue] = useState({
+            countryCode: "65",
+            number: "88888888",
+        });
+        return (
+            <StoryContainer>
+                <Form.PhoneNumberInput
+                    label="This has a clear button"
+                    placeholder="Enter phone number"
+                    allowClear
+                    value={value}
+                    onChange={({ countryCode, number }) =>
+                        setValue({ countryCode, number })
+                    }
+                    onClear={() => setValue({ countryCode: "", number: "" })}
+                />
+            </StoryContainer>
+        );
+    },
+};
+
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
