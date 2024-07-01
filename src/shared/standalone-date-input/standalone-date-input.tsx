@@ -287,6 +287,10 @@ export const Component = (
         } else {
             const day = dayjs(new Date(stringVal));
 
+            if (!day.isValid()) {
+                return [undefined, undefined, undefined];
+            }
+
             return [
                 StringHelper.padValue(day.date().toString()),
                 StringHelper.padValue((day.month() + 1).toString()),
