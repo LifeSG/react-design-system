@@ -1,5 +1,6 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
 import { Layout } from "src/layout";
@@ -243,6 +244,31 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             },
                             position: "right",
                         }}
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const AllowClear: StoryObj<Component> = {
+    render: () => {
+        const [value, setValue] = useState("1");
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.InputGroup
+                        label="This has a clear button"
+                        placeholder="Enter an amount"
+                        allowClear
+                        addon={{
+                            attributes: {
+                                value: "$",
+                            },
+                        }}
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        onClear={() => setValue("")}
                     />
                 </Container>
             </StoryContainer>
