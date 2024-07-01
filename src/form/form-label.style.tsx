@@ -7,7 +7,7 @@ import { Text, TextStyleHelper } from "../text";
 // =============================================================================
 export const Label = styled.label`
     ${TextStyleHelper.getTextStyle("H5", "semibold")}
-    color: ${Color.Neutral[3]};
+    color: ${Color.Neutral[2]};
     margin-bottom: 0.5rem;
     display: inline-block;
 

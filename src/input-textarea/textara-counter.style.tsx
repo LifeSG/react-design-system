@@ -14,6 +14,7 @@ interface StyleProps {
 // =============================================================================
 export const CounterLabel = styled(Text.H6)<StyleProps>`
     text-align: right;
+    color: ${Color.Neutral[3]};
 
     ${(props) => {
         if (props.disabled) {
