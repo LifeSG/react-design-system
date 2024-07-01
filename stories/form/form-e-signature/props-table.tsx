@@ -48,11 +48,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"Uploading..."`,
             },
             {
-                name: "id",
-                description: "The unique identifier of the component",
-                propTypes: ["string"],
-            },
-            {
                 name: "value",
                 description: <>The signature data in {STRING_FORMAT}</>,
                 propTypes: ["string"],
