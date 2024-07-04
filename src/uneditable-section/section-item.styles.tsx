@@ -41,6 +41,8 @@ export const Container = styled.li<ContainerStyleProps>`
     ${MediaQuery.MaxWidth.mobileL} {
         grid-column: auto / span 4;
     }
+
+    overflow-wrap: break-word;
 `;
 
 export const IconContainer = styled.div`
