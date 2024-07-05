@@ -28,7 +28,7 @@ export const BoxContainer = ({
     callToActionComponent,
     displayState = "default",
     subComponentTestIds,
-    wholeBoxClickable,
+    isHeaderContainerClickable,
     ...otherProps
 }: BoxContainerProps) => {
     // =============================================================================
@@ -116,8 +116,8 @@ export const BoxContainer = ({
     return (
         <Container
             {...otherProps}
-            onClick={wholeBoxClickable && onHandleClick}
-            $displayCursor={wholeBoxClickable && collapsible}
+            onClick={isHeaderContainerClickable && onHandleClick}
+            $displayCursor={isHeaderContainerClickable && collapsible}
         >
             <Header data-testid="header">
                 <LabelWrapper>
