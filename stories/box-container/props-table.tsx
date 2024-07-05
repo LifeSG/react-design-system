@@ -68,6 +68,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "wholeBoxClickable",
+                description:
+                    "Specifies whole box container clickable to expanded",
+                propTypes: ["string"],
+            },
         ],
     },
     {

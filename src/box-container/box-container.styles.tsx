@@ -21,13 +21,25 @@ interface LabelIconStyleProps {
     $displayState?: BoxContainerDisplayState;
 }
 
+interface ContainerStyleProps {
+    $displayCursor?: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
+export const Container = styled.div<ContainerStyleProps>`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     margin-bottom: 2rem;
+
+    ${(props) => {
+        if (props.$displayCursor) {
+            return css`
+                cursor: pointer;
+            `;
+        }
+    }}
 `;
 
 export const Expandable = styled(animated.div)`
