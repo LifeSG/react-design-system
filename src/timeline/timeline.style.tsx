@@ -63,6 +63,10 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                         width: 100%;
                     }
                 `;
+            case "disabled":
+                return css`
+                    background-color: ${Color.Neutral[4]};
+                `;
         }
     }}
 `;
@@ -82,6 +86,7 @@ export const LineIndicator = styled.div<VariantStyleProps>`
                     background-color: ${Color.Accent.Light[1]};
                 `;
             case "upcoming-inactive":
+            case "disabled":
                 return css`
                     background-color: ${Color.Neutral[4]};
                 `;
