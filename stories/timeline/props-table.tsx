@@ -104,6 +104,7 @@ const DATA: ApiTableSectionProps[] = [
                     `"upcoming-active`,
                     `"upcoming-inactive"`,
                     `"error"`,
+                    `"disabled"`,
                 ],
             },
         ],
