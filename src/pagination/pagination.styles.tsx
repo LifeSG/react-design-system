@@ -233,10 +233,8 @@ export const Hover = styled.div`
     border-radius: ${Radius["sm"]};
     color: ${Colour["text-hover"]};
     align-items: center;
-    position: fixed;
     display: flex;
     justify-content: center;
-    margin-top: 6rem;
     padding: 0.25rem 0.75rem;
 `;
 
