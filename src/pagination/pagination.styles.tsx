@@ -272,10 +272,8 @@ export const Hover = styled.div`
     border-radius: 0.25rem;
     color: ${Color.Neutral[8]};
     align-items: center;
-    position: fixed;
     display: flex;
     justify-content: center;
-    margin-top: 6rem;
     padding: 0.25rem 0.75rem;
 `;
 
