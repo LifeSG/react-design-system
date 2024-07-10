@@ -104,6 +104,11 @@ export const DateInput = ({
                 nodeRef.current.focus();
                 setCalendarOpen(false);
             }
+
+            // clear hover value for mobile when onMouseLeave={handleMouseLeaveCell} is not triggered due to touch input
+            if (hoveredDate) {
+                setHoveredDate(undefined);
+            }
         }
     };
 
