@@ -5,10 +5,11 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
 import { InputSelect } from "../input-select";
+import { Breakpoint } from "../theme";
 import {
     EllipsisContainer,
     Hover,
@@ -25,8 +26,6 @@ import {
     PaginationWrapper,
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
-import { useTheme } from "styled-components";
-import { Breakpoint } from "../theme";
 
 const Component = (
     {
@@ -91,10 +90,6 @@ const Component = (
             ? () =>
                   handlePaginationItemClick(parseInt(activePage.toString()) + 1)
             : undefined;
-    const hoverAction = (isStart: boolean) =>
-        isStart ? () => onHoverLeftButton() : () => onHoverRightButton();
-    const blurAction = (isStart: boolean) =>
-        isStart ? () => onBlurLeftButton() : () => onBlurRightButton();
 
     // =============================================================================
     // EFFECTS
@@ -199,6 +194,7 @@ const Component = (
             onPageSizeChange(page, pagesize);
         }
     };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -228,12 +224,15 @@ const Component = (
             const ellipsisStart =
                 activePage + siblingRange > startRange &&
                 pageIndex === boundaryRange + 1;
+            if (ellipsisStart) {
+                return renderStartEllipsis(pageIndex);
+            }
+
             const ellipsisEnd =
                 activePage - siblingRange <= endRange &&
                 pageIndex === totalPages - boundaryRange - 1;
-
-            if (ellipsisStart || ellipsisEnd) {
-                return renderEllipsis(ellipsisStart, ellipsisEnd, pageIndex);
+            if (ellipsisEnd) {
+                return renderEndEllipsis(pageIndex);
             }
 
             const paginationStart =
@@ -267,38 +266,48 @@ const Component = (
             return null;
         });
     };
-    const renderEllipsis = (
-        ellipsisStart: boolean,
-        ellipsisEnd: boolean,
-        pageIndex: number
-    ) => (
+
+    const renderStartEllipsis = (pageIndex: number) => (
         <EllipsisContainer key={pageIndex}>
             <NavigationItem
                 focusHighlight={false}
                 focusOutline="browser"
-                aria-label={ellipsisStart ? "Previous 5 pages" : "Next 5 pages"}
-                onMouseOver={hoverAction(ellipsisStart)}
-                onMouseOut={blurAction(ellipsisStart)}
-                onFocus={hoverAction(ellipsisStart)}
-                onBlur={blurAction(ellipsisStart)}
-                onClick={
-                    ellipsisStart
-                        ? handleFastBackwardClick
-                        : handleFastForwardClick
-                }
+                aria-label={"Previous 5 pages"}
+                onMouseEnter={onHoverLeftButton}
+                onMouseLeave={onBlurLeftButton}
+                onFocus={onHoverLeftButton}
+                onBlur={onBlurLeftButton}
+                onClick={handleFastBackwardClick}
             >
-                {ellipsisStart && hoverLeftButton ? (
+                {hoverLeftButton ? (
                     <Chevron2LeftIcon aria-hidden />
-                ) : ellipsisEnd && hoverRightButton ? (
+                ) : (
+                    <EllipsisHorizontalIcon aria-hidden />
+                )}
+            </NavigationItem>
+            {hoverLeftButton && <Hover>Previous 5 pages</Hover>}
+        </EllipsisContainer>
+    );
+
+    const renderEndEllipsis = (pageIndex: number) => (
+        <EllipsisContainer key={pageIndex}>
+            <NavigationItem
+                focusHighlight={false}
+                focusOutline="browser"
+                aria-label={"Next 5 pages"}
+                onMouseEnter={onHoverRightButton}
+                onMouseLeave={onBlurRightButton}
+                onFocus={onHoverRightButton}
+                onBlur={onBlurRightButton}
+                onClick={handleFastForwardClick}
+            >
+                {hoverRightButton ? (
                     <Chevron2RightIcon aria-hidden />
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
             </NavigationItem>
-            {ellipsisStart && hoverLeftButton && (
-                <Hover>Previous 5 pages</Hover>
-            )}
-            {ellipsisEnd && hoverRightButton && <Hover>Next 5 pages</Hover>}
+            {hoverRightButton && <Hover>Next 5 pages</Hover>}
         </EllipsisContainer>
     );
 
