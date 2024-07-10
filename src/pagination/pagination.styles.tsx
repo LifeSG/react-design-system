@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Font, MediaQuery, Radius } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -25,7 +25,6 @@ export const PaginationList = styled.div`
     display: flex;
     align-items: center;
     align-self: flex-start;
-    overflow: auto;
 
     ${MediaQuery.MaxWidth.lg} {
         align-self: center;
@@ -233,11 +232,14 @@ export const Hover = styled.div`
     border-radius: ${Radius["sm"]};
     color: ${Colour["text-hover"]};
     align-items: center;
-    position: fixed;
     display: flex;
     justify-content: center;
-    margin-top: 6rem;
     padding: 0.25rem 0.75rem;
+
+    position: absolute;
+    top: -${Spacing["spacing-8"]};
+    transform: translateY(-100%);
+    width: max-content;
 `;
 
 export const InputSelectWrapper = styled.div`
