@@ -5,37 +5,19 @@ import { IconButton as DSIconButton } from "../../icon-button";
 import { MediaQuery } from "../../media";
 import { Text } from "../../text";
 import { ClickableIcon } from "../../shared/clickable-icon";
+import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner/component-loading-spinner";
+import { MainStyleProps } from "../../button";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-export type ItemFocusType = "self" | "others" | "none";
-interface ItemStyleProps {
-    $sortable: boolean;
-    $disabled?: boolean | undefined;
-    $focusType: ItemFocusType;
-}
 
 interface DragHandleIconStyleProps {
     $disabled?: boolean | undefined;
 }
 
-interface BoxStyleProps {
-    $error?: boolean | undefined;
-    $disabled?: boolean | undefined;
-    $focused?: boolean | undefined;
-    $loading?: boolean | undefined;
-    $editable?: boolean | undefined;
-}
-
 interface ContentSectionStyleProps {
     $hasThumbnail?: boolean | undefined;
-}
-
-interface ActionContainerStyleProps {
-    $editable?: boolean | undefined;
-    $error?: boolean | undefined;
-    $loading?: boolean | undefined;
 }
 
 interface FileSizeSectionStyleProps {
@@ -45,7 +27,7 @@ interface FileSizeSectionStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Item = styled.li<ItemStyleProps>`
+export const Item = styled.li`
     display: flex;
     align-items: center;
     width: 100%;
@@ -54,31 +36,6 @@ export const Item = styled.li<ItemStyleProps>`
     :not(:last-child) {
         margin-bottom: 1rem;
     }
-
-    ${(props) => {
-        if (props.$disabled && props.$focusType === "none") {
-            // Show disabled cursor only if no dragging is happening
-            return css`
-                cursor: not-allowed;
-            `;
-        } else if (props.$sortable && props.$focusType === "self") {
-            return css`
-                cursor: grabbing;
-                // Following recommendation by the library for touch events
-                // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
-                touch-action: manipulation;
-            `;
-        } else if (props.$sortable) {
-            return css`
-                :hover {
-                    cursor: grab;
-                }
-                // Following recommendation by the library for touch events
-                // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
-                touch-action: manipulation;
-            `;
-        }
-    }}
 `;
 
 export const DragHandleIcon = styled(
@@ -98,7 +55,7 @@ export const DragHandleIcon = styled(
     }}
 `;
 
-export const Box = styled.div<BoxStyleProps>`
+export const Box = styled.div`
     background: ${Color.Accent.Light[6]};
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
@@ -106,39 +63,13 @@ export const Box = styled.div<BoxStyleProps>`
     display: flex;
     align-items: center;
     width: 100%;
-
+    cursor: pointer;
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
     }
-
-    ${(props) => {
-        if (props.$focused) {
-            return css`
-                border-color: ${Color.Accent.Light[1]};
-                box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
-            `;
-        } else if (props.$disabled) {
-            return css`
-                background: ${Color.Neutral[7]};
-            `;
-        } else if (props.$error) {
-            return css`
-                background: ${Color.Validation.Red.Background};
-                border-color: ${Color.Validation.Red.Border};
-            `;
-        }
-    }}
-
-    ${(props) => {
-        if (!props.$error && (props.$loading || props.$editable)) {
-            return css`
-                ${MediaQuery.MaxWidth.mobileL} {
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-            `;
-        }
-    }}
+    :hover {
+        background: ${Color.Accent.Light[5]};
+    }
 `;
 
 export const ContentSection = styled.div<ContentSectionStyleProps>`
@@ -169,6 +100,7 @@ export const NameSection = styled.div`
     flex: 1;
     flex-direction: column;
     width: 100%;
+    max-width: 22.688rem;
 `;
 
 export const ExtendedNameSection = styled.div`
@@ -236,7 +168,34 @@ export const MobileErrorMessage = styled(BaseErrorMessage)`
     }
 `;
 
-export const ActionContainer = styled.div<ActionContainerStyleProps>`
+export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
+    ${(props) => {
+        let color = Color.Primary(props);
+        switch (props.$buttonStyle) {
+            case "secondary":
+            case "light":
+            case "link":
+                break;
+            case "disabled":
+                color = Color.Neutral[3](props);
+                break;
+            default:
+                color = Color.Neutral[8](props);
+                break;
+        }
+
+        return css`
+            #inner1,
+            #inner2,
+            #inner3,
+            #inner4 {
+                border-color: ${color} transparent transparent transparent;
+            }
+        `;
+    }}
+`;
+
+export const ActionContainer = styled.div`
     width: 6rem;
     margin-left: 2rem;
     display: flex;
@@ -245,22 +204,6 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: fit-content;
-
-        ${(props) => {
-            if (props.$loading && !props.$error) {
-                return css`
-                    margin-left: 0;
-                    margin-top: 1rem;
-                    width: 100%;
-                `;
-            } else if (props.$editable && !props.$error) {
-                return css`
-                    margin-left: 0;
-                    margin-top: 1rem;
-                    align-self: flex-end;
-                `;
-            }
-        }}
     }
 `;
 
@@ -269,16 +212,5 @@ export const IconButton = styled(DSIconButton)`
 
     :not(:last-child) {
         margin-right: 1rem;
-    }
-`;
-
-export const ErrorIconButton = styled(ClickableIcon)`
-    height: 2.5rem;
-    width: 2.5rem;
-    padding: unset;
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-        color: ${Color.Neutral[3]};
     }
 `;
