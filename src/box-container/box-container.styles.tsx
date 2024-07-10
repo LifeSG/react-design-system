@@ -22,7 +22,7 @@ interface LabelIconStyleProps {
 }
 
 interface ContainerStyleProps {
-    $displayCursor?: boolean;
+    $interactive?: boolean;
 }
 
 // =============================================================================
@@ -34,7 +34,7 @@ export const Container = styled.div<ContainerStyleProps>`
     margin-bottom: 2rem;
 
     ${(props) => {
-        if (props.$displayCursor) {
+        if (props.$interactive) {
             return css`
                 cursor: pointer;
             `;

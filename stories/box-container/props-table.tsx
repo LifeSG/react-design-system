@@ -69,10 +69,10 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "isHeaderContainerClickable",
+                name: "clickableHeader",
                 description:
-                    "Specify if the entire header container should clickable, to expand or close the box container",
-                propTypes: ["string"],
+                    "Specifies if clicking on any part of the header expands or closes the contents",
+                propTypes: ["boolean"],
             },
         ],
     },
