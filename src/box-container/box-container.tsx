@@ -116,12 +116,12 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container
-            {...otherProps}
-            onClick={clickableHeader && collapsible && onHandleClick}
-            $interactive={clickableHeader && collapsible}
-        >
-            <Header data-testid="header">
+        <Container {...otherProps}>
+            <Header
+                data-testid="header"
+                onClick={clickableHeader && collapsible && onHandleClick}
+                $interactive={clickableHeader && collapsible}
+            >
                 <LabelWrapper>
                     <LabelText
                         id="title"

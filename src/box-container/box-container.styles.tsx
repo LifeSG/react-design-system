@@ -21,25 +21,17 @@ interface LabelIconStyleProps {
     $displayState?: BoxContainerDisplayState;
 }
 
-interface ContainerStyleProps {
+interface HeaderStyleProps {
     $interactive?: boolean;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<ContainerStyleProps>`
+export const Container = styled.div`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     margin-bottom: 2rem;
-
-    ${(props) => {
-        if (props.$interactive) {
-            return css`
-                cursor: pointer;
-            `;
-        }
-    }}
 `;
 
 export const Expandable = styled(animated.div)`
@@ -54,7 +46,7 @@ export const ChildContainer = styled.div`
     border-top: 1px solid ${Color.Neutral[5]};
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<HeaderStyleProps>`
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
@@ -64,6 +56,14 @@ export const Header = styled.div`
         padding: 1rem 1.25rem;
         display: block;
     }
+
+    ${(props) => {
+        if (props.$interactive) {
+            return css`
+                cursor: pointer;
+            `;
+        }
+    }}
 `;
 
 export const LabelText = styled(Text.H3)`
