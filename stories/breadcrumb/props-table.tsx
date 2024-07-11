@@ -36,7 +36,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         When the breadcrumbs are too long, there will be a fade
                         effect at the ends of the breadcrumb. This will control
-                        the color of the fade.
+                        if the fade is shown.
                     </>
                 ),
                 propTypes: [`"left"`, `"right"`, `"both"`],

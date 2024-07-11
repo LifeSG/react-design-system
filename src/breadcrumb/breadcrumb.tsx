@@ -27,6 +27,10 @@ export const Breadcrumb = ({
     const [showFade, setShowFade] = useState<boolean>(false);
     const [showFadeLeft, setShowFadeLeft] = useState<boolean>(false);
     const [showFadeRight, setShowFadeRight] = useState<boolean>(false);
+    const shouldShowFadeLeft =
+        fadePosition === "left" || fadePosition === "both";
+    const shouldShowFadeRight =
+        fadePosition === "right" || fadePosition === "both";
 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLUListElement>(null);
@@ -142,13 +146,13 @@ export const Breadcrumb = ({
 
         return (
             <>
-                {showFadeLeft && (
+                {showFadeLeft && shouldShowFadeLeft && (
                     <Fade
                         $backgroundColor={fadeColorSet.left}
                         $position="left"
                     />
                 )}
-                {showFadeRight && (
+                {showFadeRight && shouldShowFadeRight && (
                     <Fade
                         $backgroundColor={fadeColorSet.right}
                         $position="right"
