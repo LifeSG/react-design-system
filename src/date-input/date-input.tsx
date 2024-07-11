@@ -236,6 +236,7 @@ export const DateInput = ({
             onClose={handleClose}
             onDismiss={handleDismiss}
             zIndex={zIndex}
+            offset={16}
         />
     );
 };

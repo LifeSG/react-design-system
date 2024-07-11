@@ -25,6 +25,7 @@ interface ElementWithDropdownProps {
     renderDropdown: () => React.ReactNode;
     zIndex?: number | undefined;
     clickToToggle?: boolean | undefined;
+    offset?: number | undefined;
 }
 
 export const ElementWithDropdown = ({
@@ -37,6 +38,7 @@ export const ElementWithDropdown = ({
     renderDropdown,
     zIndex = 50,
     clickToToggle = false,
+    offset: dropdownOffset = 0,
 }: ElementWithDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -56,7 +58,7 @@ export const ElementWithDropdown = ({
         whileElementsMounted: autoUpdate,
         placement: "bottom-start",
         middleware: [
-            offset(16),
+            offset(dropdownOffset),
             flip(),
             shift({
                 limiter: limitShift(),

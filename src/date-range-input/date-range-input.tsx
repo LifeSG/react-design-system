@@ -669,6 +669,7 @@ export const DateRangeInput = ({
             renderElement={renderInput}
             renderDropdown={renderCalendar}
             zIndex={zIndex}
+            offset={16}
         />
     );
 };
