@@ -157,8 +157,12 @@ export const DropdownList = <T, V>({
                 }
                 break;
             case "Space":
-                event.preventDefault();
-                handleListItemClick(displayListItems[focusedIndex]);
+                if (document.activeElement !== searchInputRef.current) {
+                    event.preventDefault();
+                    if (displayListItems[focusedIndex]) {
+                        handleListItemClick(displayListItems[focusedIndex]);
+                    }
+                }
                 break;
             default:
                 break;
