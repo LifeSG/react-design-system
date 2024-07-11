@@ -86,6 +86,12 @@
             }
         ],
         "react/react-in-jsx-scope": "off",
-        "react/no-unknown-property": ["error", { "ignore": ["inert"] }]
+        "react/no-unknown-property": ["error", { "ignore": ["inert"] }],
+        "react-hooks/exhaustive-deps": [
+            "warn",
+            {
+                "additionalHooks": "useIsomorphicLayoutEffect"
+            }
+        ]
     }
 }

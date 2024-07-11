@@ -80,7 +80,7 @@ export const Breadcrumb = ({
     useIsomorphicLayoutEffect(() => {
         onResize();
         handleShowFadeToggle();
-    }, []);
+    }, [onResize, handleShowFadeToggle]);
 
     // To scroll left when wrapper resizes
     useResizeDetector({
