@@ -46,7 +46,7 @@ export const BoxContainer = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const onHandleClick = () => {
+    const onHandleClick = (event: React.MouseEvent) => {
         // to prevent it triggers twice when click on button as clickableHeader enable
         event.stopPropagation();
         setShowExpanded(!showExpanded);
