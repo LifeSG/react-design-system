@@ -137,6 +137,19 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
             },
             {
+                name: "show",
+                description: (
+                    <>
+                        Specifies if the subsection is visible.{" "}
+                        <strong>Note:</strong> remains mounted when set to{" "}
+                        <code>false</code>. If it is preferred to unmount the
+                        subsection, omit <code>compositeSection</code> instead
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: `true`,
+            },
+            {
                 name: "collapsible",
                 description: "Specifies if the subsection is collapsible",
                 propTypes: ["boolean"],

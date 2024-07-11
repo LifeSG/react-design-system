@@ -36,6 +36,7 @@ interface ExpandButtonStyleProps extends StyleProps {
 
 interface ChildrenStyleProps extends StyleProps {
     $isFinalItem?: boolean;
+    $show?: boolean;
 }
 
 // =============================================================================
@@ -353,6 +354,8 @@ export const Children = styled.div<ChildrenStyleProps>`
             `;
         }
     }}
+
+    ${(props) => !props.$show && `display: none;`}
 `;
 
 export const ErrorText = styled(Text.BodySmall)<StyleProps>`

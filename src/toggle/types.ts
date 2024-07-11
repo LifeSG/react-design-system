@@ -50,6 +50,8 @@ export interface ToggleProps
 
 export interface ToggleCompositeSectionProps {
     children: React.ReactNode;
+    /** Specifies if the subsection is visible. Remains mounted */
+    show?: boolean | undefined;
     /** Specifies if the subsection is collapsible */
     collapsible?: boolean | undefined;
     /** The initial expanded state. Only applicable if collapsible */

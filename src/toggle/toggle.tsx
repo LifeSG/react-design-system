@@ -46,6 +46,7 @@ export const Toggle = ({
     // =============================================================================
     const {
         collapsible = true,
+        show = true,
         errors,
         children: compositeSectionChildren,
         initialExpanded,
@@ -171,7 +172,11 @@ export const Toggle = ({
     const renderCompositeChildren = () => {
         return (
             (!collapsible || expanded) && (
-                <Children $isFinalItem={!collapsible} $disabled={disabled}>
+                <Children
+                    $isFinalItem={!collapsible}
+                    $disabled={disabled}
+                    $show={show}
+                >
                     {compositeSectionChildren}
                 </Children>
             )
