@@ -28,6 +28,7 @@ export const BoxContainer = ({
     callToActionComponent,
     displayState = "default",
     subComponentTestIds,
+    clickableHeader,
     ...otherProps
 }: BoxContainerProps) => {
     // =============================================================================
@@ -45,7 +46,9 @@ export const BoxContainer = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const onHandleClick = () => {
+    const onHandleClick = (event: React.MouseEvent) => {
+        // to prevent it triggers twice when click on button as clickableHeader enable
+        event.stopPropagation();
         setShowExpanded(!showExpanded);
     };
 
@@ -114,7 +117,11 @@ export const BoxContainer = ({
 
     return (
         <Container {...otherProps}>
-            <Header data-testid="header">
+            <Header
+                data-testid="header"
+                onClick={clickableHeader && collapsible && onHandleClick}
+                $interactive={clickableHeader && collapsible}
+            >
                 <LabelWrapper>
                     <LabelText
                         id="title"

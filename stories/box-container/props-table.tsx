@@ -68,6 +68,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "clickableHeader",
+                description:
+                    "Specifies if clicking on any part of the header expands or closes the contents",
+                propTypes: ["boolean"],
+            },
         ],
     },
     {

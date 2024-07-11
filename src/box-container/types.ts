@@ -17,4 +17,5 @@ export interface BoxContainerProps {
     subComponentTestIds?: BoxContainerSubComponentTestIds | undefined;
     "data-testid"?: string | undefined;
     id?: string | undefined;
+    clickableHeader?: boolean | undefined;
 }
