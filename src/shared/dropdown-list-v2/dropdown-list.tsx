@@ -64,7 +64,6 @@ export const DropdownList = <T, V>({
     );
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, setDisplayListItems] = useState(listItems);
-    const searchValueChanged = useCompare(searchValue);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
     const mounted = useIsMounted();
 
@@ -96,30 +95,27 @@ export const DropdownList = <T, V>({
         });
     };
 
-    const filterItems = useEvent((searchInput: string) => {
-        if (searchInput === "") {
-            return listItems;
-        } else if (searchFunction) {
-            return searchFunction(searchInput);
-        } else {
-            return listItems.filter((item) => {
-                const label = getOptionLabel(item);
-                const title =
-                    typeof label === "object"
-                        ? label.title.toLowerCase()
-                        : label.toLowerCase();
-                const secondaryLabel =
-                    typeof label === "string"
-                        ? undefined
-                        : label.secondaryLabel?.toLowerCase();
-                const updatedSearchValue = searchInput.trim().toLowerCase();
-                return (
-                    title.includes(updatedSearchValue) ||
-                    (secondaryLabel &&
-                        secondaryLabel.includes(updatedSearchValue))
-                );
-            });
-        }
+    const filterItemsByCustomSearch = useEvent(() => {
+        return searchFunction(searchValue);
+    });
+
+    const filterItemsByLabel = useEvent(() => {
+        return listItems.filter((item) => {
+            const label = getOptionLabel(item);
+            const title =
+                typeof label === "object"
+                    ? label.title.toLowerCase()
+                    : label.toLowerCase();
+            const secondaryLabel =
+                typeof label === "string"
+                    ? undefined
+                    : label.secondaryLabel?.toLowerCase();
+            const updatedSearchValue = searchValue.trim().toLowerCase();
+            return (
+                title.includes(updatedSearchValue) ||
+                (secondaryLabel && secondaryLabel.includes(updatedSearchValue))
+            );
+        });
     });
 
     const hasNextLineLabel = () => {
@@ -246,13 +242,24 @@ export const DropdownList = <T, V>({
     ]);
 
     useEffect(() => {
-        if (!mounted || !searchValueChanged) {
-            // skip effect as dependency did not change
-            return;
-        }
+        const filterItems = () => {
+            if (searchValue === "") {
+                return listItems;
+            } else if (searchFunction) {
+                return filterItemsByCustomSearch();
+            } else {
+                return filterItemsByLabel();
+            }
+        };
 
-        setDisplayListItems(filterItems(searchValue));
-    }, [filterItems, mounted, searchValueChanged, searchValue]);
+        setDisplayListItems(filterItems());
+    }, [
+        filterItemsByCustomSearch,
+        filterItemsByLabel,
+        listItems,
+        searchFunction,
+        searchValue,
+    ]);
 
     // =========================================================================
     // RENDER FUNCTIONS

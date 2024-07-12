@@ -263,4 +263,139 @@ describe("InputSelect", () => {
             });
         });
     });
+
+    describe("search behaviour", () => {
+        it("should support default search for string options", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <InputSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    enableSearch
+                />
+            );
+
+            await user.click(screen.queryByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+            await waitFor(() => {
+                expect(
+                    screen.getByLabelText("Enter text to search")
+                ).toHaveFocus();
+            });
+
+            await act(async () => {
+                await user.keyboard("1");
+            });
+
+            expect(screen.queryByText("Option 1")).toBeVisible();
+            expect(screen.queryByText("Option 2")).not.toBeInTheDocument();
+        });
+
+        it("should support default search for title", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <InputSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    listExtractor={(item) => ({
+                        title: item + " title",
+                        secondaryLabel: item + " label",
+                    })}
+                    enableSearch
+                />
+            );
+
+            await user.click(screen.queryByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+            await waitFor(() => {
+                expect(
+                    screen.getByLabelText("Enter text to search")
+                ).toHaveFocus();
+            });
+
+            await act(async () => {
+                await user.keyboard("1 t");
+            });
+
+            expect(screen.getByText("Option 1 title")).toBeVisible();
+            expect(
+                screen.queryByText("Option 2 title")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should support default search for label", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <InputSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    listExtractor={(item) => ({
+                        title: item + " title",
+                        secondaryLabel: item + " label",
+                    })}
+                    enableSearch
+                />
+            );
+
+            await user.click(screen.queryByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+            await waitFor(() => {
+                expect(
+                    screen.getByLabelText("Enter text to search")
+                ).toHaveFocus();
+            });
+
+            await act(async () => {
+                await user.keyboard("1 l");
+            });
+
+            expect(screen.getByText("Option 1 label")).toBeVisible();
+            expect(
+                screen.queryByText("Option 2 label")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should support custom search", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <InputSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    enableSearch
+                    searchFunction={() => ["custom 1"]}
+                />
+            );
+
+            await user.click(screen.queryByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+            await waitFor(() => {
+                expect(
+                    screen.getByLabelText("Enter text to search")
+                ).toHaveFocus();
+            });
+
+            await act(async () => {
+                await user.keyboard("custom");
+            });
+
+            expect(screen.queryByText("custom 1")).toBeVisible();
+            expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
+        });
+    });
 });
