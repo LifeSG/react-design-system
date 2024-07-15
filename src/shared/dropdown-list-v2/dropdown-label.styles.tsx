@@ -67,6 +67,7 @@ export const SecondaryText = styled.div<LabelStyleProps>`
 export const Label = styled.div<LabelStyleProps>`
     text-align: left;
     width: 100%;
+    overflow: hidden;
     overflow-wrap: break-word;
 
     ${(props) => {
