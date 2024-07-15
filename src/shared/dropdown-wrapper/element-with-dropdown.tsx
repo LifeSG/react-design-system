@@ -1,6 +1,7 @@
 import {
     FloatingFocusManager,
     FloatingPortal,
+    OpenChangeReason,
     autoUpdate,
     flip,
     limitShift,
@@ -19,7 +20,7 @@ interface ElementWithDropdownProps {
     enabled: boolean;
     isOpen: boolean;
     onOpen?: () => void | undefined;
-    onClose?: () => void | undefined;
+    onClose?: (reason: OpenChangeReason) => void | undefined;
     onDismiss?: () => void | undefined;
     renderElement: () => React.ReactNode;
     renderDropdown: () => React.ReactNode;
@@ -52,7 +53,7 @@ export const ElementWithDropdown = ({
             } else if (open && !isOpen) {
                 onOpen?.();
             } else if (!open && isOpen) {
-                onClose?.();
+                onClose?.(reason);
             }
         },
         whileElementsMounted: autoUpdate,

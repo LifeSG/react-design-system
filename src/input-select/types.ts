@@ -1,11 +1,10 @@
 import {
     DropdownDisplayProps,
     DropdownSearchProps,
-    DropdownStyleProps,
     DropdownVariantType,
     ItemsLoadStateType,
     TruncateType,
-} from "../shared/dropdown-list/types";
+} from "../shared/dropdown-list-v2/types";
 
 // =============================================================================
 // SHARED PROPS
@@ -44,8 +43,8 @@ export interface InputSelectProps<T, V>
         InputSelectOptionsProps<T>,
         InputSelectSharedProps<T>,
         DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
+        DropdownSearchProps<T> {
+    // TODO: should be a common state once all variants implement this
     readOnly?: boolean | undefined;
     selectedOption?: T | undefined;
     onSelectOption?: ((option: T, extractedValue: V) => void) | undefined;
