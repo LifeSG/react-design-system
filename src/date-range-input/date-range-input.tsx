@@ -2,7 +2,10 @@ import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../media";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
 import {
     CalendarAction,
     CalendarDropdown,
@@ -635,7 +638,7 @@ export const DateRangeInput = ({
         );
     };
 
-    const renderCalendar = () => {
+    const renderCalendar = ({ elementWidth }: DropdownRenderProps) => {
         return (
             <CalendarDropdown
                 ref={calendarRef}
@@ -656,6 +659,7 @@ export const DateRangeInput = ({
                 onHover={handleCalendarHover}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
                 numberOfDays={numberOfDays}
+                width={elementWidth}
             />
         );
     };

@@ -28,6 +28,12 @@ export const Container = styled.div`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     background: ${Color.Neutral[8]};
+
+    width: 23rem;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: calc(100vw - 2.5rem);
+    }
 `;
 
 export const List = styled.div`

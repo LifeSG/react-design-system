@@ -8,7 +8,6 @@ import {
     limitShift,
     offset,
     shift,
-    size,
     useClick,
     useDismiss,
     useFloating,
@@ -16,7 +15,12 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react";
 import { useRef } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import { DropdownAlignmentType } from "./types";
+
+export interface DropdownRenderProps {
+    elementWidth: number;
+}
 
 interface ElementWithDropdownProps {
     enabled: boolean;
@@ -25,7 +29,7 @@ interface ElementWithDropdownProps {
     onClose?: (reason: OpenChangeReason) => void | undefined;
     onDismiss?: () => void | undefined;
     renderElement: () => React.ReactNode;
-    renderDropdown: () => React.ReactNode;
+    renderDropdown: (props: DropdownRenderProps) => React.ReactNode;
     zIndex?: number | undefined;
     clickToToggle?: boolean | undefined;
     /* the distance between the reference element and the dropdown */
@@ -60,7 +64,12 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const floatingRef = useRef<HTMLDivElement>(null);
+    const elementRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const { width: referenceWidth } = useResizeDetector({
+        targetRef: elementRef,
+        handleHeight: false,
+    });
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
         onOpenChange: (open, _event, reason) => {
@@ -80,16 +89,9 @@ export const ElementWithDropdown = ({
             shift({
                 limiter: limitShift(),
             }),
-            size({
-                // match dropdown width to input
-                apply({ rects, elements }) {
-                    Object.assign(elements.floating.style, {
-                        width: `${rects.reference.width}px`,
-                    });
-                },
-            }),
         ],
     });
+
     const { isMounted, styles } = useTransitionStyles(context, {
         initial: { opacity: 0 },
         open: { opacity: 1 },
@@ -109,7 +111,13 @@ export const ElementWithDropdown = ({
     // =============================================================================
     return (
         <>
-            <div ref={refs.setReference} {...getReferenceProps()}>
+            <div
+                ref={(node) => {
+                    elementRef.current = node;
+                    refs.setReference(node);
+                }}
+                {...getReferenceProps()}
+            >
                 {renderElement()}
             </div>
             {isMounted && (
@@ -117,7 +125,7 @@ export const ElementWithDropdown = ({
                     <FloatingFocusManager
                         context={context}
                         modal={false}
-                        initialFocus={floatingRef}
+                        initialFocus={dropdownRef}
                         returnFocus={false} // leads to focus trap. parent to handle the final focus state
                     >
                         <div
@@ -126,7 +134,7 @@ export const ElementWithDropdown = ({
                             {...getFloatingProps()}
                         >
                             <div
-                                ref={floatingRef}
+                                ref={dropdownRef}
                                 style={{ ...styles }}
                                 inert={
                                     (styles.opacity as number) < 1
@@ -134,7 +142,9 @@ export const ElementWithDropdown = ({
                                         : undefined
                                 }
                             >
-                                {renderDropdown()}
+                                {renderDropdown({
+                                    elementWidth: referenceWidth,
+                                })}
                             </div>
                         </div>
                     </FloatingFocusManager>

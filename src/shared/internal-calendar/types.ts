@@ -47,9 +47,8 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     numberOfDays?: number | undefined;
 }
 
-export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
-    /** If calendar is visible. */
-    isOpen?: boolean | undefined;
+export interface CalendarDropdownProps extends InternalCalendarProps {
+    width: number;
 }
 
 export type CalendarAction = "reset" | "confirmed";
