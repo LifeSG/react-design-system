@@ -44,7 +44,7 @@ export const List = styled.div`
     list-style-type: none;
 
     ::-webkit-scrollbar {
-        width: 9px;
+        width: 14px;
     }
 
     ::-webkit-scrollbar-track {
@@ -53,9 +53,9 @@ export const List = styled.div`
 
     ::-webkit-scrollbar-thumb {
         background: ${Color.Neutral[4]};
-        border-right: 5px solid ${Color.Neutral[8]};
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
+        border: 5px solid transparent;
+        border-radius: 9999px;
+        background-clip: padding-box;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
