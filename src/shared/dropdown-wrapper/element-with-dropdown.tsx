@@ -8,6 +8,7 @@ import {
     limitShift,
     offset,
     shift,
+    size,
     useClick,
     useDismiss,
     useFloating,
@@ -16,6 +17,7 @@ import {
 } from "@floating-ui/react";
 import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
@@ -36,6 +38,7 @@ interface ElementWithDropdownProps {
     offset?: number | undefined;
     /* the alignment of the dropdown to the left or right of the reference element */
     alignment?: DropdownAlignmentType | undefined;
+    fitAvailableHeight?: boolean | undefined;
 }
 
 const getFloatingPlacement = (alignment: DropdownAlignmentType): Placement => {
@@ -60,6 +63,7 @@ export const ElementWithDropdown = ({
     clickToToggle = false,
     offset: dropdownOffset = 0,
     alignment = "left",
+    fitAvailableHeight,
 }: ElementWithDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -88,6 +92,17 @@ export const ElementWithDropdown = ({
             flip(),
             shift({
                 limiter: limitShift(),
+            }),
+            size({
+                // shrink to fit available vertical space
+                apply({ availableHeight }) {
+                    Object.assign(dropdownRef.current.style, {
+                        maxHeight: fitAvailableHeight
+                            ? `${availableHeight}px`
+                            : undefined,
+                        overflowY: fitAvailableHeight ? "hidden" : undefined,
+                    });
+                },
             }),
         ],
     });
@@ -130,10 +145,13 @@ export const ElementWithDropdown = ({
                     >
                         <div
                             ref={refs.setFloating}
-                            style={{ ...floatingStyles, zIndex }}
+                            style={{
+                                ...floatingStyles,
+                                zIndex,
+                            }}
                             {...getFloatingProps()}
                         >
-                            <div
+                            <DropdownContainer
                                 ref={dropdownRef}
                                 style={{ ...styles }}
                                 inert={
@@ -145,7 +163,7 @@ export const ElementWithDropdown = ({
                                 {renderDropdown({
                                     elementWidth: referenceWidth,
                                 })}
-                            </div>
+                            </DropdownContainer>
                         </div>
                     </FloatingFocusManager>
                 </FloatingPortal>

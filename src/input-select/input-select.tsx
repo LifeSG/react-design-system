@@ -283,6 +283,7 @@ export const InputSelect = <T, V>({
                 clickToToggle
                 offset={8}
                 alignment={alignment}
+                fitAvailableHeight
             />
         </DropdownListState>
     );

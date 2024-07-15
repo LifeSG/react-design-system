@@ -30,18 +30,13 @@ export const Container = styled.div`
     background: ${Color.Neutral[8]};
 
     width: 23rem;
+    max-height: 27rem;
+    overflow-y: auto;
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: calc(100vw - 2.5rem);
+        max-height: 15rem;
     }
-`;
-
-export const List = styled.div`
-    background: transparent;
-    max-height: 27rem;
-    overflow-y: auto;
-    padding: 0.5rem;
-    list-style-type: none;
 
     ::-webkit-scrollbar {
         width: 14px;
@@ -57,10 +52,12 @@ export const List = styled.div`
         border-radius: 9999px;
         background-clip: padding-box;
     }
+`;
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        max-height: 15rem;
-    }
+export const List = styled.div`
+    background: transparent;
+    padding: 0.5rem;
+    list-style-type: none;
 `;
 
 // -----------------------------------------------------------------------------
