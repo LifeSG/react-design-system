@@ -2,6 +2,7 @@ import {
     FloatingFocusManager,
     FloatingPortal,
     OpenChangeReason,
+    Placement,
     autoUpdate,
     flip,
     limitShift,
@@ -15,6 +16,7 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react";
 import { useRef } from "react";
+import { DropdownAlignmentType } from "./types";
 
 interface ElementWithDropdownProps {
     enabled: boolean;
@@ -26,8 +28,21 @@ interface ElementWithDropdownProps {
     renderDropdown: () => React.ReactNode;
     zIndex?: number | undefined;
     clickToToggle?: boolean | undefined;
+    /* the distance between the reference element and the dropdown */
     offset?: number | undefined;
+    /* the alignment of the dropdown to the left or right of the reference element */
+    alignment?: DropdownAlignmentType | undefined;
 }
+
+const getFloatingPlacement = (alignment: DropdownAlignmentType): Placement => {
+    switch (alignment) {
+        case "right":
+            return "bottom-end";
+        case "left":
+        default:
+            return "bottom-start";
+    }
+};
 
 export const ElementWithDropdown = ({
     enabled,
@@ -40,6 +55,7 @@ export const ElementWithDropdown = ({
     zIndex = 50,
     clickToToggle = false,
     offset: dropdownOffset = 0,
+    alignment = "left",
 }: ElementWithDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -57,7 +73,7 @@ export const ElementWithDropdown = ({
             }
         },
         whileElementsMounted: autoUpdate,
-        placement: "bottom-start",
+        placement: getFloatingPlacement(alignment),
         middleware: [
             offset(dropdownOffset),
             flip(),

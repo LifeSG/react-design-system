@@ -5,6 +5,7 @@ import {
     ItemsLoadStateType,
     TruncateType,
 } from "../shared/dropdown-list-v2/types";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 // =============================================================================
 // SHARED PROPS
@@ -56,6 +57,7 @@ export interface InputSelectProps<T, V>
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
     onBlur?: (() => void) | undefined;
     variant?: DropdownVariantType | undefined;
+    alignment?: DropdownAlignmentType | undefined;
 }
 
 /** To be exposed for Form component inheritance */

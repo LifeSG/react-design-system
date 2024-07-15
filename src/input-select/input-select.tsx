@@ -43,6 +43,7 @@ export const InputSelect = <T, V>({
     onBlur,
     variant = "default",
     readOnly,
+    alignment,
     ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -281,6 +282,7 @@ export const InputSelect = <T, V>({
                 onDismiss={handleDismiss}
                 clickToToggle
                 offset={8}
+                alignment={alignment}
             />
         </DropdownListState>
     );
