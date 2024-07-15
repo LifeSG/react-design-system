@@ -8,7 +8,7 @@ export interface BoxContainerSubComponentTestIds {
 
 export interface BoxContainerProps {
     children: JSX.Element | JSX.Element[];
-    title: string;
+    title: string | JSX.Element;
     collapsible?: boolean | undefined;
     expanded?: boolean | undefined;
     callToActionComponent?: JSX.Element | undefined;
