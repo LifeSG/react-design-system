@@ -19,7 +19,7 @@ const Component = (
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     return (
-        <Container>
+        <Container $variant={variant}>
             <SearchIcon $variant={variant} />
             <SearchInput
                 ref={ref}

@@ -36,6 +36,7 @@ export const Component = (
             disabled={disabled}
             aria-controls={id}
             $readOnly={readOnly}
+            $variant={variant}
         >
             {children}
             {!readOnly && (

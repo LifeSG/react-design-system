@@ -396,7 +396,7 @@ export const DropdownList = <T, V>({
 
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
-            const spinnerSize = variant === "small" ? 16 : 24;
+            const spinnerSize = variant === "small" ? 16 : 18;
 
             return (
                 <ResultStateContainer data-testid="list-loading">

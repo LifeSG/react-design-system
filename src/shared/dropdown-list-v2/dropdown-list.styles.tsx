@@ -156,7 +156,7 @@ export const ResultStateText = styled.div<ListStyleProps>`
 
 export const LabelIcon = styled(ExclamationCircleFillIcon)<ListStyleProps>`
     ${(props) => {
-        const size = props.$variant === "small" ? 1 : 1.5;
+        const size = props.$variant === "small" ? 1 : 1.125;
         return css`
             height: ${size}rem;
             width: ${size}rem;
