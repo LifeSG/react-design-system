@@ -7,6 +7,7 @@ import { Color } from "../../color";
 import { MediaQuery } from "../../media";
 import { TextStyleHelper } from "../../text";
 import { DropdownVariantType } from "../dropdown-list/types";
+import { BasicButton } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -128,22 +129,21 @@ export const SelectAllContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    padding: 1rem 0 0.5rem 0;
 `;
 
-export const DropdownCommonButton = styled.button<ListStyleProps>`
+export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
     ${(props) =>
         TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "semibold"
         )}
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
     cursor: pointer;
     overflow: hidden;
-    outline: none;
     color: ${Color.Primary};
+`;
+
+export const SelectAllButton = styled(DropdownCommonButton)`
+    padding: 0.5rem 1rem;
 `;
 
 export const ResultStateContainer = styled.div`

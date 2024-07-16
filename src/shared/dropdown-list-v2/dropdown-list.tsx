@@ -21,6 +21,7 @@ import {
     Listbox,
     ResultStateContainer,
     ResultStateText,
+    SelectAllButton,
     SelectAllContainer,
     SelectedIndicator,
     UnselectedIndicator,
@@ -358,7 +359,7 @@ export const DropdownList = <T, V>({
         ) {
             return (
                 <SelectAllContainer>
-                    <DropdownCommonButton
+                    <SelectAllButton
                         onClick={onSelectAll}
                         type="button"
                         $variant={variant}
@@ -366,7 +367,7 @@ export const DropdownList = <T, V>({
                         {selectedItems.length === 0
                             ? "Select all"
                             : "Clear all"}
-                    </DropdownCommonButton>
+                    </SelectAllButton>
                 </SelectAllContainer>
             );
         }
