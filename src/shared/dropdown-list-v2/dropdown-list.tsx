@@ -157,7 +157,10 @@ export const DropdownList = <T, V>({
                 if (document.activeElement !== searchInputRef.current) {
                     event.preventDefault();
                     if (displayListItems[focusedIndex]) {
-                        handleListItemClick(displayListItems[focusedIndex]);
+                        handleListItemClick(
+                            displayListItems[focusedIndex],
+                            focusedIndex
+                        );
                     }
                 }
                 break;
@@ -166,7 +169,8 @@ export const DropdownList = <T, V>({
         }
     };
 
-    const handleListItemClick = (item: T) => {
+    const handleListItemClick = (item: T, upcomingIndex: number) => {
+        setFocusedIndex(upcomingIndex);
         if (onSelectItem) {
             onSelectItem(item, getValue(item));
         }
@@ -310,7 +314,7 @@ export const DropdownList = <T, V>({
                         aria-multiselectable={multiSelect}
                         data-testid="list-item"
                         key={getItemKey(item, index)}
-                        onClick={() => handleListItemClick(item)}
+                        onClick={() => handleListItemClick(item, index)}
                         ref={(element) =>
                             (listItemRefs.current[index] = element)
                         }
