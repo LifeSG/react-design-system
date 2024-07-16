@@ -9,7 +9,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "title",
                 mandatory: true,
                 description: "The label text for the header",
-                propTypes: ["string"],
+                propTypes: ["string", "JSX.Element"],
             },
             {
                 name: "children",
