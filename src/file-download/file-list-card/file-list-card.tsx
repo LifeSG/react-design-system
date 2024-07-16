@@ -75,7 +75,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <ExtendedNameSection>
                 <NameSection>{renderNameDescription()}</NameSection>
                 <FileSizeSection>
-                    <ItemText>{fileSize}</ItemText>
+                    <ItemText>{fileSize ? fileSize : "-"}</ItemText>
                 </FileSizeSection>
             </ExtendedNameSection>
         </>

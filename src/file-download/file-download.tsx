@@ -1,4 +1,5 @@
 import {
+    Container,
     Description,
     DescriptionContainer,
     TextContainer,
@@ -13,6 +14,9 @@ export const FileDownload = ({
     title,
     description,
     onDownload,
+    "data-testid": testId,
+    className,
+    styleType = "bordered",
 }: FileDownloadProps) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -57,7 +61,11 @@ export const FileDownload = ({
     };
 
     return (
-        <>
+        <Container
+            className={className}
+            data-testid={testId}
+            $border={styleType === "bordered"}
+        >
             {(title || description) && (
                 <TextContainer>
                     {renderTitle()}
@@ -73,6 +81,6 @@ export const FileDownload = ({
                         onDownload={handleDownloadItem}
                     />
                 ))}
-        </>
+        </Container>
     );
 };

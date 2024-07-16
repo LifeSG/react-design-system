@@ -1,6 +1,7 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import * as FileDownloadStories from "./file-download.stories";
+import { PropsTable } from "./props-table";
 
 <Meta of={FileDownloadStories} />
 
@@ -15,3 +16,21 @@ import { FileDownload } from "@lifesg/react-design-system/file-download";
 ```
 
 <Canvas of={FileDownloadStories.Default} />
+
+<Heading3>Download failed</Heading3>
+
+Each file item comes with an error display to indicate when download has failed.
+
+<Canvas of={FileDownloadStories.WhenDownloadFailed} />
+
+Can display custom error message when error with download.
+
+<Canvas of={FileDownloadStories.WhenDownloadFailed} />
+
+<Heading3>File Has Thumbnails</Heading3>
+
+Display Thumbnails of image file download if the file has.
+
+<Canvas of={FileDownloadStories.FileHasThumbnail} />
+
+<PropsTable />
