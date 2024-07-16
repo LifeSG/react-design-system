@@ -6,7 +6,6 @@ import { SimpleIdGenerator } from "../util";
 import {
     AlertContainer,
     Children,
-    CompositeSectionContainer,
     Container,
     ErrorContainer,
     ErrorList,
@@ -171,7 +170,11 @@ export const Toggle = ({
     const renderCompositeChildren = () => {
         return (
             (!collapsible || expanded) && (
-                <Children $isFinalItem={!collapsible} $disabled={disabled}>
+                <Children
+                    data-id="toggle-composite-children"
+                    $isFinalItem={!collapsible}
+                    $disabled={disabled}
+                >
                     {compositeSectionChildren}
                 </Children>
             )
@@ -304,11 +307,11 @@ export const Toggle = ({
     const renderCompositeSection = () => {
         return (
             compositeSectionChildren && (
-                <CompositeSectionContainer>
+                <div>
                     {renderCompositeChildren()}
                     {renderError()}
                     {renderExpandButton()}
-                </CompositeSectionContainer>
+                </div>
             )
         );
     };
