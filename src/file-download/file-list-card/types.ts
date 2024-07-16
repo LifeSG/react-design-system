@@ -1,6 +1,6 @@
-import { FileItemProps } from "../types";
+import { FileItemDownloadProps } from "../types";
 
 export interface FileListItemProps {
-    fileItem: FileItemProps;
-    onDownload: (fileItem: FileItemProps) => void;
+    fileItem: FileItemDownloadProps;
+    onDownload: (fileItem: FileItemDownloadProps) => void;
 }

@@ -20,6 +20,7 @@ export * from "./drawer";
 export * from "./e-signature";
 export * from "./error-display";
 export * from "./feedback-rating";
+export * from "./file-download";
 export * from "./file-upload";
 export * from "./filter";
 export * from "./footer";

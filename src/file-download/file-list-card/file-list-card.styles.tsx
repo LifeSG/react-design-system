@@ -1,20 +1,15 @@
-import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
+import { MainStyleProps } from "../../button";
 import { Color } from "../../color";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { MediaQuery } from "../../media";
-import { Text } from "../../text";
-import { ClickableIcon } from "../../shared/clickable-icon";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner/component-loading-spinner";
-import { MainStyleProps } from "../../button";
+import { Text } from "../../text";
+import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-
-interface DragHandleIconStyleProps {
-    $disabled?: boolean | undefined;
-}
 
 interface ContentSectionStyleProps {
     $hasThumbnail?: boolean | undefined;
@@ -36,23 +31,6 @@ export const Item = styled.li`
     :not(:last-child) {
         margin-bottom: 1rem;
     }
-`;
-
-export const DragHandleIcon = styled(
-    DSDragHandleIcon
-)<DragHandleIconStyleProps>`
-    // Temp icon
-    margin-right: 1rem;
-    height: 1.5rem;
-    width: 1.5rem;
-
-    ${(props) => {
-        if (props.$disabled) {
-            return css`
-                color: ${Color.Neutral[4]};
-            `;
-        }
-    }}
 `;
 
 export const Box = styled.div`
@@ -139,7 +117,6 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
         }}
     }
 `;
-
 export const ItemText = styled(Text.BodySmall)``;
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: 0.25rem;
@@ -212,5 +189,28 @@ export const IconButton = styled(DSIconButton)`
 
     :not(:last-child) {
         margin-right: 1rem;
+    }
+`;
+
+export const ThumbnailContainer = styled.div`
+    width: auto;
+    margin-right: 2rem;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+export const Thumbnail = styled(ImageWithFallback)`
+    width: 6rem;
+    height: 6rem;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    border: 1px solid ${Color.Neutral[5]};
+    object-fit: cover;
+
+    ${MediaQuery.MaxWidth.mobileL} {
+        width: 4rem;
+        height: 4rem;
     }
 `;

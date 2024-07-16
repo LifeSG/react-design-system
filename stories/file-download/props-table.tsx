@@ -30,12 +30,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "fileItems",
                 description: "The files to be rendered",
+                mandatory: true,
                 propTypes: ["FileItemProps[]"],
             },
             {
                 name: "onDownload",
-                description: `Called when click on the component to open save as file popup if browser support, else just download base on default save directory.
-                    Using Try Catch remember to throw Error`,
+                description: `Called when click on the component. Remember to throw Error on error`,
+                mandatory: true,
                 propTypes: ["boolean"],
             },
         ],

@@ -1,7 +1,6 @@
 import { DownloadIcon } from "@lifesg/react-icons";
 import { memo, useState } from "react";
 import { FileUploadHelper } from "../../file-upload/helper";
-import { FileListItemThumbnail } from "./file-list-card-thumbnail";
 import {
     ActionContainer,
     Box,
@@ -12,10 +11,14 @@ import {
     IconButton,
     Item,
     ItemText,
+    MobileErrorMessage,
     NameSection,
     Spinner,
+    Thumbnail,
+    ThumbnailContainer,
 } from "./file-list-card.styles";
 import { FileListItemProps } from "./types";
+import { FileListItemThumbnail } from "./file-list-card-thumbnail";
 
 const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
@@ -63,11 +66,22 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </DesktopErrorMessage>
             )}
+            {/* {isError && (
+                <MobileErrorMessage weight="semibold">
+                    {errorMessage ? errorMessage : "Something went wrong"}
+                </MobileErrorMessage>
+            )} */}
         </>
     );
 
     const renderWithThumbnail = () => (
         <>
+            {/* <ThumbnailContainer data-testid={`${id}-thumbnail`}>
+                <Thumbnail
+                    data-testid={`${id}-thumbnail-image`}
+                    src={thumbnailImageDataUrl}
+                />
+            </ThumbnailContainer> */}
             <FileListItemThumbnail
                 thumbnailImageDataUrl={thumbnailImageDataUrl}
                 data-testid={`${id}-thumbnail`}
@@ -84,7 +98,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const renderDefault = () => (
         <>
             <NameSection>{renderNameDescription()}</NameSection>
-            <FileSizeSection $hideInMobile={isLoading}>
+            <FileSizeSection>
                 <ItemText>{fileSize ? fileSize : "-"}</ItemText>
             </FileSizeSection>
         </>
@@ -110,9 +124,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         return (
             <ActionContainer>
                 <IconButton
-                    key="download"
-                    data-testid={`${id}-dowload-button`}
-                    data-no-dnd="true"
+                    data-testid={`${id}-download-button`}
                     type="button"
                     styleType="light"
                     sizeType="small"

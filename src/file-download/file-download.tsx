@@ -7,7 +7,7 @@ import {
     TitleContainer,
 } from "./file-download.styles";
 import { FileListCard } from "./file-list-card";
-import { FileDownloadProps, FileItemProps } from "./types";
+import { FileDownloadProps, FileItemDownloadProps } from "./types";
 
 export const FileDownload = ({
     fileItems,
@@ -19,19 +19,13 @@ export const FileDownload = ({
     styleType = "bordered",
 }: FileDownloadProps) => {
     // =========================================================================
-    // CONST, STATE, REFS
-    // =========================================================================
-    // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleDownloadItem = async (item: FileItemProps) => {
+    const handleDownloadItem = async (item: FileItemDownloadProps) => {
         if (onDownload) {
             await onDownload(item);
         }
     };
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
 
     // =========================================================================
     // RENDER FUNCTIONS

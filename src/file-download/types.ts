@@ -1,13 +1,11 @@
-import { Readable } from "stream";
-
-export interface FileItemProps {
+export interface FileItemDownloadProps {
     id: string;
     /** The name of the file */
     name: string;
     /** The MIME type of the file */
-    type: string;
+    mimeType: string;
     /** The size of the file in bytes */
-    size?: number;
+    size?: number | undefined;
     /** The path of the file in S3 server*/
     filePath: string;
     /** The custom error message when file download failed */
@@ -22,11 +20,12 @@ export interface FileDownloadProps {
     /** Component specific */
     title?: string | JSX.Element | undefined;
     description?: string | JSX.Element | undefined;
-    fileItems: FileItemProps[] | undefined;
+    fileItems: FileItemDownloadProps[];
     /** The style type for the component. Values "bordered" | "no-border" */
     styleType?: FileDownloadStyle | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
+    id?: string | undefined;
     /** Called when click on download button  */
-    onDownload: ((files: FileItemProps) => void) | undefined;
+    onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
 }
