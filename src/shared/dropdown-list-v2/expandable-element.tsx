@@ -7,7 +7,7 @@ interface ExpandableElementProps {
     children: React.ReactNode;
     disabled: boolean;
     expanded: boolean;
-    id: string;
+    listboxId: string;
     readOnly: boolean;
     variant: DropdownVariantType;
 }
@@ -17,7 +17,7 @@ export const Component = (
         children,
         disabled,
         expanded,
-        id,
+        listboxId,
         readOnly,
         variant,
     }: ExpandableElementProps,
@@ -34,7 +34,7 @@ export const Component = (
             aria-haspopup="listbox"
             data-testid="selector"
             disabled={disabled}
-            aria-controls={id}
+            aria-controls={listboxId}
             $variant={variant}
         >
             {children}
