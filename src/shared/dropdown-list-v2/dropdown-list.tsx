@@ -170,6 +170,10 @@ export const DropdownList = <T, V>({
         onSelectItem?.(item, getValue(item));
     };
 
+    const handleListItemHover = (index: number) => {
+        setFocusedIndex(index);
+    };
+
     const handleSearchInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -302,6 +306,7 @@ export const DropdownList = <T, V>({
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
             return displayListItems.map((item, index) => {
                 const selected = checkListItemSelected(item);
+                const active = index === focusedIndex;
                 return (
                     <ListItem
                         aria-selected={selected}
@@ -309,12 +314,13 @@ export const DropdownList = <T, V>({
                         data-testid="list-item"
                         key={getItemKey(item, index)}
                         onClick={() => handleListItemClick(item, index)}
+                        onMouseEnter={() => handleListItemHover(index)}
                         ref={(element) =>
                             (listItemRefs.current[index] = element)
                         }
                         role="option"
-                        tabIndex={-1}
-                        $variant={variant}
+                        tabIndex={active ? 0 : -1}
+                        $active={active}
                     >
                         {renderListItemIcon(selected)}
                         {renderListItem

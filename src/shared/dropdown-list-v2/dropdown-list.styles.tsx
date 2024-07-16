@@ -19,6 +19,10 @@ interface ListStyleProps {
     $variant?: DropdownVariantType;
 }
 
+interface ListItemStyleProps {
+    $active?: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -73,7 +77,7 @@ export const Listbox = styled.ul`
 // LIST ITEM STYLES
 // -----------------------------------------------------------------------------
 
-export const ListItem = styled.li<ListStyleProps>`
+export const ListItem = styled.li<ListItemStyleProps>`
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
@@ -82,11 +86,11 @@ export const ListItem = styled.li<ListStyleProps>`
 
     outline-color: ${Color.Accent.Light[3]};
 
-    :hover,
-    :focus,
-    :active {
-        background: ${Color.Accent.Light[5]};
-    }
+    ${(props) =>
+        props.$active &&
+        css`
+            background: ${Color.Accent.Light[5]};
+        `}
 `;
 
 export const SelectedIndicator = styled(TickIcon)`
