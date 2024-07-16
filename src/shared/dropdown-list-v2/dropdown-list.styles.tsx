@@ -11,6 +11,10 @@ import { DropdownVariantType } from "../dropdown-list/types";
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
+interface ContainerStyleProps {
+    $width?: number;
+}
+
 interface ListStyleProps {
     $variant?: DropdownVariantType;
 }
@@ -23,17 +27,19 @@ interface ListStyleProps {
 // MAIN STYLES
 // -----------------------------------------------------------------------------
 
-export const Container = styled.div`
+export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
     background: ${Color.Neutral[8]};
 
-    width: 23rem;
+    min-width: 23rem;
+    ${(props) => props.$width && `width: ${props.$width}px;`}
     max-height: 27rem;
     overflow-y: auto;
 
     ${MediaQuery.MaxWidth.mobileL} {
+        min-width: unset;
         width: calc(100vw - 2.5rem);
         max-height: 15rem;
     }

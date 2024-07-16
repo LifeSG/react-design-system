@@ -51,6 +51,7 @@ export interface DropdownListProps<T, V>
     selectedItems?: T[] | undefined;
     disableItemFocus?: boolean | undefined;
     listboxId?: string | undefined;
+    width?: number | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"

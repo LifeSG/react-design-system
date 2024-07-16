@@ -5,7 +5,10 @@ import {
     DropdownListState,
     ExpandableElement,
 } from "../shared/dropdown-list-v2";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
@@ -238,7 +241,7 @@ export const InputSelect = <T, V>({
         );
     };
 
-    const renderDropdown = () => {
+    const renderDropdown = ({ elementWidth }: DropdownRenderProps) => {
         return (
             <DropdownList
                 listboxId={internalId}
@@ -258,6 +261,7 @@ export const InputSelect = <T, V>({
                 hideNoResultsDisplay={hideNoResultsDisplay}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
+                width={elementWidth}
             />
         );
     };

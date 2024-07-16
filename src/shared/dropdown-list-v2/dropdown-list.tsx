@@ -41,6 +41,7 @@ export const DropdownList = <T, V>({
     labelDisplayType = "inline",
     variant = "default",
     listboxId,
+    width,
     onSelectItem,
     onSelectAll,
     onDismiss,
@@ -460,7 +461,11 @@ export const DropdownList = <T, V>({
     };
 
     return (
-        <Container data-testid="dropdown-container" ref={nodeRef}>
+        <Container
+            data-testid="dropdown-container"
+            ref={nodeRef}
+            $width={width}
+        >
             {renderList()}
             {renderBottomCta()}
         </Container>
