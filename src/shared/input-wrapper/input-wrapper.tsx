@@ -29,7 +29,7 @@ const defaultFocusCss = css`
 `;
 
 const readOnlyFocusCss = css`
-    border: 1px solid transparent;
+    border: 1px solid ${Color.Accent.Light[1]};
     box-shadow: none;
 `;
 
@@ -145,4 +145,18 @@ export const BasicInput = styled.input<InputStyleProps>`
 
     // Firefox
     --moz-appearance: textfield;
+`;
+
+/**
+ * standalone native button with stripped-down styles
+ */
+export const BasicButton = styled.button<InputStyleProps>`
+    background: transparent;
+    border: none;
+    outline: none;
+
+    :focus,
+    :active {
+        outline: none;
+    }
 `;

@@ -50,6 +50,7 @@ export interface DropdownListProps<T, V>
     multiSelect?: boolean | undefined;
     selectedItems?: T[] | undefined;
     disableItemFocus?: boolean | undefined;
+    listboxId?: string | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"

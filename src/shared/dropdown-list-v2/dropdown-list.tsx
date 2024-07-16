@@ -40,6 +40,7 @@ export const DropdownList = <T, V>({
     itemMaxLines = 2,
     labelDisplayType = "inline",
     variant = "default",
+    listboxId,
     onSelectItem,
     onSelectAll,
     onDismiss,
@@ -435,7 +436,9 @@ export const DropdownList = <T, V>({
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                <ul role="listbox">{renderItems()}</ul>
+                <ul role="listbox" id={listboxId}>
+                    {renderItems()}
+                </ul>
             </List>
         );
     };

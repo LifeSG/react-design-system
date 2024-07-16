@@ -1,16 +1,18 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
+import {
+    DropdownList,
+    DropdownListState,
+    ExpandableElement,
+} from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
-    IconContainer,
     LabelContainer,
     PlaceholderLabel,
-    Selector,
-    StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { SimpleIdGenerator } from "../util";
 import { StringHelper } from "../util/string-helper";
 import { InputSelectProps } from "./types";
 
@@ -44,7 +46,6 @@ export const InputSelect = <T, V>({
     variant = "default",
     readOnly,
     alignment,
-    ...otherProps
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -52,6 +53,7 @@ export const InputSelect = <T, V>({
     const [selected, setSelected] = useState<T>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
     const nodeRef = useRef<HTMLDivElement>();
     const selectorRef = useRef<HTMLButtonElement>();
@@ -204,16 +206,7 @@ export const InputSelect = <T, V>({
     };
 
     const renderSelectorContent = () => (
-        <>
-            <LabelContainer ref={labelContainerRef}>
-                {renderLabel()}
-            </LabelContainer>
-            {!readOnly && (
-                <IconContainer expanded={showOptions}>
-                    <StyledChevronIcon $variant={variant} />
-                </IconContainer>
-            )}
-        </>
+        <LabelContainer ref={labelContainerRef}>{renderLabel()}</LabelContainer>
     );
 
     const renderElement = () => {
@@ -231,18 +224,16 @@ export const InputSelect = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
             >
-                <Selector
+                <ExpandableElement
                     ref={selectorRef}
-                    type="button"
-                    aria-haspopup="listbox"
-                    aria-expanded={showOptions}
-                    data-testid={"selector"}
                     disabled={disabled}
-                    $variant={variant}
-                    {...otherProps}
+                    expanded={showOptions}
+                    id={internalId}
+                    readOnly={readOnly}
+                    variant={variant}
                 >
                     {renderSelectorContent()}
-                </Selector>
+                </ExpandableElement>
             </InputBox>
         );
     };
@@ -250,6 +241,7 @@ export const InputSelect = <T, V>({
     const renderDropdown = () => {
         return (
             <DropdownList
+                listboxId={internalId}
                 listItems={options}
                 onSelectItem={handleListItemClick}
                 onDismiss={handleListDismiss}
