@@ -22,6 +22,12 @@ describe("DateInput", () => {
         jest.useFakeTimers({
             doNotFake: ["setInterval", "setTimeout", "requestAnimationFrame"],
         }).setSystemTime(new Date("2024-02-01T12:00:00"));
+
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     afterEach(() => {
