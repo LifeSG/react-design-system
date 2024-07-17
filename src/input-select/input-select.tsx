@@ -49,6 +49,7 @@ export const InputSelect = <T, V>({
     variant = "default",
     readOnly,
     alignment,
+    dropdownZIndex,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -280,6 +281,7 @@ export const InputSelect = <T, V>({
                 offset={8}
                 alignment={alignment}
                 fitAvailableHeight
+                zIndex={dropdownZIndex}
             />
         </DropdownListState>
     );

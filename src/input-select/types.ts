@@ -58,6 +58,7 @@ export interface InputSelectProps<T, V>
     onBlur?: (() => void) | undefined;
     variant?: DropdownVariantType | undefined;
     alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
 }
 
 /** To be exposed for Form component inheritance */
