@@ -71,6 +71,34 @@ describe("DateInput", () => {
         expect(screen.getByText("2023")).toBeVisible();
     });
 
+    it("should not open calendar for readOnly field", async () => {
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
+        const mockOnFocus = jest.fn();
+
+        render(<DateInput data-testid="e2e" readOnly onFocus={mockOnFocus} />);
+
+        await user.click(screen.queryByTestId(FIELD_TESTID));
+
+        expect(screen.queryByTestId(CALENDAR_TESTID)).not.toBeInTheDocument();
+        expect(mockOnFocus).not.toHaveBeenCalled();
+    });
+
+    it("should not open calendar for disabled field", async () => {
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
+        const mockOnFocus = jest.fn();
+
+        render(<DateInput data-testid="e2e" disabled onFocus={mockOnFocus} />);
+
+        await user.click(screen.queryByTestId(FIELD_TESTID));
+
+        expect(screen.queryByTestId(CALENDAR_TESTID)).not.toBeInTheDocument();
+        expect(mockOnFocus).not.toHaveBeenCalled();
+    });
+
     describe("focus/blur behaviour", () => {
         it("should call onFocus on click and onBlur via outside click", async () => {
             const user = userEvent.setup({
