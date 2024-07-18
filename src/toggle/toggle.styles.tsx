@@ -51,7 +51,6 @@ export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
     flex-direction: column;
     height: fit-content;
-    width: 100%;
 
     // Content positioning style
     ${(props) => {
