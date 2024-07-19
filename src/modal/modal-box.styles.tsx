@@ -25,7 +25,6 @@ export const CloseButton = styled(ClickableIcon)`
     top: 1rem;
     right: 1rem;
     padding: 0;
-    border-top-right-radius: 0.75rem;
     color: ${Color.Neutral[3]};
 
     :focus-visible {
