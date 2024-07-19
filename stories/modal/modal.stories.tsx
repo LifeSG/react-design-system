@@ -26,7 +26,7 @@ export const Default: StoryObj<Component> = {
                     <Modal.Box onClose={closeModal}>
                         <div
                             style={{
-                                padding: "2rem",
+                                padding: "4rem 2rem",
                                 height: "10rem",
                                 overflow: "auto",
                             }}
@@ -89,7 +89,7 @@ export const StackedModals: StoryObj<Component> = {
                     <Modal.Box onClose={handleFirst(false)}>
                         <div
                             style={{
-                                padding: "2rem",
+                                padding: "4rem 2rem",
                             }}
                         >
                             <span>I am the first Modal</span>
@@ -109,7 +109,7 @@ export const StackedModals: StoryObj<Component> = {
                     <Modal.Box onClose={handleStacked(false)}>
                         <div
                             style={{
-                                padding: "2rem",
+                                padding: "4rem 2rem",
                                 height: "10rem",
                             }}
                         >
