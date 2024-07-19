@@ -106,9 +106,10 @@ export const BoxContainer = ({
                     onClick={onHandleClick}
                     type="button"
                     data-testid={subComponentTestIds?.handle || "handle"}
+                    aria-label={showExpanded ? "Collapse" : "Expand"}
                 >
                     <HandleIconContainer $expanded={showExpanded}>
-                        <HandleIcon />
+                        <HandleIcon aria-hidden />
                     </HandleIconContainer>
                 </Handle>
             )
