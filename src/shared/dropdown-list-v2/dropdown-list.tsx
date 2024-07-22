@@ -18,6 +18,7 @@ import {
     LabelIcon,
     List,
     ListItem,
+    Listbox,
     ResultStateContainer,
     ResultStateText,
     SelectAllContainer,
@@ -430,9 +431,9 @@ export const DropdownList = <T, V>({
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                <ul role="listbox" id={listboxId}>
+                <Listbox role="listbox" id={listboxId}>
                     {renderItems()}
-                </ul>
+                </Listbox>
             </List>
         );
     };

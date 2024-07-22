@@ -63,6 +63,9 @@ export const Container = styled.div<ContainerStyleProps>`
 export const List = styled.div`
     background: transparent;
     padding: 0.5rem;
+`;
+
+export const Listbox = styled.ul`
     list-style-type: none;
 `;
 
