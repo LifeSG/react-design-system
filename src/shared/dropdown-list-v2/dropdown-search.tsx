@@ -4,6 +4,7 @@ import { DropdownVariantType } from "../dropdown-list/types";
 import {
     ClearButton,
     Container,
+    SearchBox,
     SearchIcon,
     SearchInput,
 } from "./dropdown-search.styles";
@@ -19,14 +20,16 @@ const Component = (
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     return (
-        <Container $variant={variant}>
-            <SearchIcon $variant={variant} />
-            <SearchInput
-                ref={ref}
-                value={value}
-                $variant={variant}
-                {...otherProps}
-            />
+        <Container>
+            <SearchBox>
+                <SearchIcon $variant={variant} aria-hidden />
+                <SearchInput
+                    ref={ref}
+                    value={value}
+                    $variant={variant}
+                    {...otherProps}
+                />
+            </SearchBox>
             {value && (
                 <ClearButton
                     aria-label="Clear search"

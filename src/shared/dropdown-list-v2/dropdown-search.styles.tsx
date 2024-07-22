@@ -26,16 +26,20 @@ const getIconDimensions = (variant?: DropdownVariantType) => {
     `;
 };
 
-export const Container = styled.div<StyleProps>`
+export const Container = styled.div`
     background: ${Color.Neutral[7]};
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+`;
 
+export const SearchBox = styled.label<StyleProps>`
+    flex: 1;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: ${(props) =>
-        props.$variant === "small" ? "0.4375rem 0.5rem" : "0.75rem 0.5rem"};
-    margin: 0.5rem 0;
+        props.$variant === "small" ? "0.4375rem 0.5rem" : "0.6875rem 0.5rem"};
 `;
 
 export const SearchInput = styled(BasicInput)<InputStyleProps>`
@@ -54,8 +58,10 @@ export const SearchIcon = styled(MagnifierIcon)<StyleProps>`
 `;
 
 export const ClearButton = styled(ClickableIcon)<StyleProps>`
-    margin: -0.9375rem -0.4375rem;
-    padding: 0.9375rem 0.4375rem;
+    align-self: stretch;
+    box-sizing: content-box;
+    padding: 0 0.5rem;
+    margin-left: -0.5rem;
     color: ${Color.Neutral[3]};
     cursor: pointer;
 
