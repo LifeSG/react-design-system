@@ -35,4 +35,11 @@ export const CCubeTheme: ThemeSpec = {
     [ThemeContextKeys.resourceScheme]: "ccube",
 };
 
+export const OneServiceTheme: ThemeSpec = {
+    [ThemeContextKeys.colorScheme]: "oneservice",
+    [ThemeContextKeys.textStyleScheme]: "oneservice",
+    [ThemeContextKeys.designTokenScheme]: "base",
+    [ThemeContextKeys.resourceScheme]: "base",
+};
+
 export * from "./types";
