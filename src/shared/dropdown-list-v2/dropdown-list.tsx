@@ -163,9 +163,7 @@ export const DropdownList = <T, V>({
 
     const handleListItemClick = (item: T, upcomingIndex: number) => {
         setFocusedIndex(upcomingIndex);
-        if (onSelectItem) {
-            onSelectItem(item, getValue(item));
-        }
+        onSelectItem?.(item, getValue(item));
     };
 
     const handleSearchInputChange = (
@@ -174,18 +172,18 @@ export const DropdownList = <T, V>({
         const value = event.target.value;
         setSearchValue(value);
 
-        if (onSearch) onSearch();
+        onSearch?.();
     };
 
     const handleOnClear = () => {
         setSearchValue("");
         searchInputRef.current.focus();
 
-        if (onSearch) onSearch();
+        onSearch?.();
     };
 
     const handleTryAgain = () => {
-        if (onRetry) onRetry();
+        onRetry?.();
     };
 
     // =========================================================================

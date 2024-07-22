@@ -79,9 +79,7 @@ export const InputSelect = <T, V>({
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
-        if (onSelectOption) {
-            onSelectOption(item, extractedValue);
-        }
+        onSelectOption?.(item, extractedValue);
     };
 
     const handleListDismiss = () => {
@@ -173,12 +171,10 @@ export const InputSelect = <T, V>({
     };
 
     const triggerOptionDisplayCallback = (show: boolean) => {
-        if (!show && onHideOptions) {
-            onHideOptions();
-        }
-
-        if (show && onShowOptions) {
-            onShowOptions();
+        if (show) {
+            onShowOptions?.();
+        } else {
+            onHideOptions?.();
         }
     };
 
