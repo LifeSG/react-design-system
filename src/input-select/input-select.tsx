@@ -1,15 +1,21 @@
+import { OpenChangeReason } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
-    Divider,
-    IconContainer,
+    DropdownList,
+    DropdownListState,
+    ExpandableElement,
+} from "../shared/dropdown-list-v2";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import {
     LabelContainer,
     PlaceholderLabel,
-    Selector,
-    StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { SimpleIdGenerator } from "../util";
 import { StringHelper } from "../util/string-helper";
 import { InputSelectProps } from "./types";
 
@@ -30,7 +36,6 @@ export const InputSelect = <T, V>({
     listExtractor,
     displayValueExtractor,
     onSelectOption,
-    listStyleWidth,
     onShowOptions,
     onHideOptions,
     onRetry,
@@ -42,14 +47,19 @@ export const InputSelect = <T, V>({
     renderCustomCallToAction,
     onBlur,
     variant = "default",
-    ...otherProps
+    readOnly,
+    alignment,
+    dropdownZIndex,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
     const [selected, setSelected] = useState<T>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
+    const nodeRef = useRef<HTMLDivElement>();
     const selectorRef = useRef<HTMLButtonElement>();
     const labelContainerRef = useRef<HTMLDivElement>();
 
@@ -63,48 +73,58 @@ export const InputSelect = <T, V>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleSelectorClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-
-        if (disabled || otherProps.readOnly) {
-            return;
-        }
-        setShowOptions(!showOptions);
-        triggerOptionDisplayCallback(!showOptions);
-
-        // This is needed for Safari as it does not fire onBlur when dropdown wrapper is closed
-        if (showOptions) {
-            onBlur?.();
-        }
-    };
-
     const handleListItemClick = (item: T, extractedValue: V) => {
+        selectorRef.current.focus();
         setSelected(item);
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
-        if (selectorRef) {
-            selectorRef.current.focus();
-        }
-
-        if (onSelectOption) {
-            onSelectOption(item, extractedValue);
-        }
+        onSelectOption?.(item, extractedValue);
     };
 
-    const handleListDismiss = (setSelectorFocus?: boolean | undefined) => {
+    const handleListDismiss = () => {
         if (showOptions) {
             setShowOptions(false);
             triggerOptionDisplayCallback(false);
         }
+    };
 
-        if (setSelectorFocus && selectorRef) {
-            selectorRef.current.focus();
+    const handleNodeFocus = () => {
+        if (!focused && !showOptions) {
+            setFocused(true);
         }
     };
 
-    const handleWrapperBlur = () => {
-        onBlur?.();
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !showOptions &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
+
+    const handleOpen = () => {
+        setShowOptions(true);
+        triggerOptionDisplayCallback(true);
+        setFocused(true);
+    };
+
+    const handleClose = (reason: OpenChangeReason) => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+
+        // click to toggle should not blur the input
+        if (reason !== "click") {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
+
+    const handleDismiss = () => {
+        selectorRef.current.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -151,17 +171,15 @@ export const InputSelect = <T, V>({
     };
 
     const triggerOptionDisplayCallback = (show: boolean) => {
-        if (!show && onHideOptions) {
-            onHideOptions();
-        }
-
-        if (show && onShowOptions) {
-            onShowOptions();
+        if (show) {
+            onShowOptions?.();
+        } else {
+            onHideOptions?.();
         }
     };
 
     // =============================================================================
-    // RENDER FUNCTION
+    // RENDER FUNCTIONS
     // =============================================================================
     const renderLabel = () => {
         if (!selected) {
@@ -188,77 +206,79 @@ export const InputSelect = <T, V>({
     };
 
     const renderSelectorContent = () => (
-        <>
-            <LabelContainer ref={labelContainerRef}>
-                {renderLabel()}
-            </LabelContainer>
-            {!otherProps.readOnly && (
-                <IconContainer expanded={showOptions}>
-                    <StyledChevronIcon $variant={variant} />
-                </IconContainer>
-            )}
-        </>
+        <LabelContainer ref={labelContainerRef}>{renderLabel()}</LabelContainer>
     );
 
-    const renderOptionList = () => {
-        if (options && options.length > 0) {
-            return (
-                <DropdownList
-                    listItems={options}
-                    onSelectItem={handleListItemClick}
-                    onDismiss={handleListDismiss}
-                    valueExtractor={valueExtractor}
-                    listExtractor={listExtractor}
-                    listStyleWidth={listStyleWidth}
-                    visible={showOptions}
-                    enableSearch={enableSearch}
-                    searchPlaceholder={searchPlaceholder}
-                    searchFunction={searchFunction}
-                    data-testid="dropdown-list"
-                    selectedItems={selected ? [selected] : []}
-                    onRetry={onRetry}
-                    itemsLoadState={optionsLoadState}
-                    itemTruncationType={optionTruncationType}
-                    renderListItem={renderListItem}
-                    hideNoResultsDisplay={hideNoResultsDisplay}
-                    renderCustomCallToAction={renderCustomCallToAction}
+    const renderElement = () => {
+        return (
+            <InputBox
+                className={className}
+                data-testid={testId}
+                id={id}
+                ref={nodeRef}
+                tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={focused}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+            >
+                <ExpandableElement
+                    ref={selectorRef}
+                    disabled={disabled}
+                    expanded={showOptions}
+                    id={internalId}
+                    readOnly={readOnly}
                     variant={variant}
-                />
-            );
-        }
+                >
+                    {renderSelectorContent()}
+                </ExpandableElement>
+            </InputBox>
+        );
+    };
 
-        return null;
+    const renderDropdown = ({ elementWidth }: DropdownRenderProps) => {
+        return (
+            <DropdownList
+                listboxId={internalId}
+                listItems={options}
+                onSelectItem={handleListItemClick}
+                onDismiss={handleListDismiss}
+                valueExtractor={valueExtractor}
+                listExtractor={listExtractor}
+                enableSearch={enableSearch}
+                searchPlaceholder={searchPlaceholder}
+                searchFunction={searchFunction}
+                selectedItems={selected ? [selected] : []}
+                onRetry={onRetry}
+                itemsLoadState={optionsLoadState}
+                itemTruncationType={optionTruncationType}
+                renderListItem={renderListItem}
+                hideNoResultsDisplay={hideNoResultsDisplay}
+                renderCustomCallToAction={renderCustomCallToAction}
+                variant={variant}
+                width={elementWidth}
+            />
+        );
     };
 
     return (
-        <DropdownWrapper
-            className={className}
-            show={showOptions}
-            error={error && !showOptions}
-            disabled={disabled}
-            readOnly={otherProps.readOnly}
-            testId={testId}
-            onBlur={handleWrapperBlur}
-            variant={variant}
-        >
-            <Selector
-                ref={selectorRef}
-                type="button"
-                data-testid={id || "selector"}
-                disabled={disabled}
-                onClick={handleSelectorClick}
-                onBlur={() => {
-                    if (!showOptions) {
-                        onBlur?.();
-                    }
-                }}
-                $variant={variant}
-                {...otherProps}
-            >
-                {renderSelectorContent()}
-            </Selector>
-            {showOptions && <Divider />}
-            {renderOptionList()}
-        </DropdownWrapper>
+        <DropdownListState>
+            <ElementWithDropdown
+                enabled={!readOnly && !disabled}
+                isOpen={showOptions}
+                renderElement={renderElement}
+                renderDropdown={renderDropdown}
+                onOpen={handleOpen}
+                onClose={handleClose}
+                onDismiss={handleDismiss}
+                clickToToggle
+                offset={8}
+                alignment={alignment}
+                fitAvailableHeight
+                zIndex={dropdownZIndex}
+            />
+        </DropdownListState>
     );
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { ComponentProps, useEffect, useState } from "react";
 import { Button } from "src/button";
 import { Form } from "src/form";
 import { InputSelect } from "src/input-select";
@@ -187,6 +188,84 @@ export const WithCustomCallToAction: StoryObj<Component> = {
                                 </CustomCTAContainer>
                             );
                         }}
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const LabelTruncation: StoryObj<Component> = {
+    render: () => {
+        const options = [
+            "fringilla urna porttitor rhoncus dolor purus non enim",
+            "fringilla urna porttitor rhoncus dolor purus non enim praesent",
+            "fringilla urna porttitor rhoncus dolor purus non enim praesent ele",
+            "fringilla urna porttitor rhoncus dolor purus non enim praesent elem",
+            "fringilla urna porttitor rhoncus dolor purus non enim praesent elementum",
+        ];
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.Select
+                        label="This has truncation at the end"
+                        options={options}
+                        listExtractor={(item) => ({
+                            title: item,
+                            secondaryLabel: item,
+                        })}
+                    />
+                    <Form.Select
+                        label="This has truncation in the middle"
+                        optionTruncationType="middle"
+                        options={options}
+                        listExtractor={(item) => ({
+                            title: item,
+                            secondaryLabel: item,
+                        })}
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const LoadState: StoryObj<Component> = {
+    render: () => {
+        const [loadState, setLoadState] =
+            useState<ComponentProps<typeof Form.Select>["optionsLoadState"]>(
+                "loading"
+            );
+        const [results, setResults] = useState([]);
+
+        useEffect(() => {
+            const timer = setTimeout(() => {
+                setLoadState("fail");
+            }, 1500);
+            return () => clearTimeout(timer);
+        }, []);
+
+        const handleRetry = () => {
+            setLoadState("loading");
+            setTimeout(() => {
+                setLoadState("success");
+                setResults(
+                    Array(10)
+                        .fill(0)
+                        .map((_, i) => `Option ${i + 1}`)
+                );
+            }, 1500);
+        };
+
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.Select
+                        label="This has different load states"
+                        options={results}
+                        enableSearch
+                        optionsLoadState={loadState}
+                        onRetry={handleRetry}
                     />
                 </Container>
             </StoryContainer>

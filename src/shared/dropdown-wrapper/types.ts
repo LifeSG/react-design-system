@@ -11,3 +11,5 @@ export interface DropdownSelectorProps {
     className?: string | undefined;
     variant?: DropdownVariantType | undefined;
 }
+
+export type DropdownAlignmentType = "left" | "right";

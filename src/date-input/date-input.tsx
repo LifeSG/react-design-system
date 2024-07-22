@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
 import { CalendarAction, CalendarDropdown } from "../shared/internal-calendar";
 import {
     StandaloneDateInput,
@@ -207,7 +210,7 @@ export const DateInput = ({
         );
     };
 
-    const renderCalendar = () => {
+    const renderCalendar = ({ elementWidth }: DropdownRenderProps) => {
         return (
             <CalendarDropdown
                 type="input"
@@ -223,6 +226,7 @@ export const DateInput = ({
                 onSelect={handleSelect}
                 onDismiss={handleCalendarAction}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
+                width={elementWidth}
             />
         );
     };
@@ -236,6 +240,7 @@ export const DateInput = ({
             onClose={handleClose}
             onDismiss={handleDismiss}
             zIndex={zIndex}
+            offset={16}
         />
     );
 };
