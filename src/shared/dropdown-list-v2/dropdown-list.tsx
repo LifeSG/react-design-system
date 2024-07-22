@@ -120,15 +120,6 @@ export const DropdownList = <T, V>({
         });
     });
 
-    const hasNextLineLabel = () => {
-        return (
-            labelDisplayType === "next-line" &&
-            displayListItems.length > 0 &&
-            listExtractor &&
-            typeof listExtractor(displayListItems[0]) !== "string"
-        );
-    };
-
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================

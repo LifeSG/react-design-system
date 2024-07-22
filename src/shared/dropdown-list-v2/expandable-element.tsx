@@ -35,7 +35,6 @@ export const Component = (
             data-testid="selector"
             disabled={disabled}
             aria-controls={id}
-            $readOnly={readOnly}
             $variant={variant}
         >
             {children}

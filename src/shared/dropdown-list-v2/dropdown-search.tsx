@@ -11,7 +11,7 @@ import {
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
     value: string /** override to cast type */;
     variant?: DropdownVariantType | undefined;
-    onClear?: () => void | undefined;
+    onClear?: (() => void) | undefined;
 }
 
 const Component = (

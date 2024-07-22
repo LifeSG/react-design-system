@@ -8,10 +8,8 @@ import { DropdownVariantType } from "./types";
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
-export interface StyleProps {
-    $disabled?: boolean;
+interface StyleProps {
     $expanded?: boolean;
-    $readOnly?: boolean;
     $variant?: DropdownVariantType;
 }
 
