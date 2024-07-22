@@ -1,0 +1,57 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+import { OneServiceColorSet } from "src/spec/color-spec/oneservice-color-set";
+import { Text } from "src/text";
+import { PreviewBox, Secondary, Title } from "../storybook-common";
+import { ColorPalette } from "./doc-color-palette";
+
+<Meta title="General/Color/OneService Color" />
+
+<Title>OneService Colors</Title>
+
+<Secondary>Overview</Secondary>
+
+This will be the palette used when the `colorScheme` is `"oneservice"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colorScheme: "oneservice",
+    // ...other specifications
+};
+```
+
+<Secondary>Colors</Secondary>
+
+<Unstyled>
+    <ColorPalette set={OneServiceColorSet.Brand} category="Brand" />
+    <ColorPalette
+        set={{
+            Primary: OneServiceColorSet.Primary,
+            PrimaryDark: OneServiceColorSet.PrimaryDark,
+            Secondary: OneServiceColorSet.Secondary,
+        }}
+    />
+    <ColorPalette set={OneServiceColorSet.Neutral} category="Neutral" />
+    <ColorPalette set={OneServiceColorSet.Accent.Dark} category="Accent.Dark" />
+    <ColorPalette
+        set={OneServiceColorSet.Accent.Light}
+        category="Accent.Light"
+    />
+</Unstyled>
+
+<br />
+
+<Text.H3>Validation</Text.H3>
+
+<PreviewBox>
+    `Color.Validation.<color>`
+</PreviewBox>
+
+<Unstyled>
+    <ColorPalette set={OneServiceColorSet.Validation.Green} category="Green" />
+    <ColorPalette
+        set={OneServiceColorSet.Validation.Orange}
+        category="Orange"
+    />
+    <ColorPalette set={OneServiceColorSet.Validation.Red} category="Red" />
+    <ColorPalette set={OneServiceColorSet.Validation.Blue} category="Blue" />
+</Unstyled>

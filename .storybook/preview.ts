@@ -7,6 +7,7 @@ import {
     BookingSGTheme,
     CCubeTheme,
     MyLegacyTheme,
+    OneServiceTheme,
     RBSTheme,
 } from "../src/theme";
 
@@ -19,6 +20,7 @@ const preview: Preview = {
                 CCube: CCubeTheme,
                 MyLegacy: MyLegacyTheme,
                 RBS: RBSTheme,
+                OneService: OneServiceTheme,
             },
             Provider: ThemeProvider,
         }),

@@ -1,4 +1,5 @@
 import { BaseTextStyleSet } from "../spec/text-spec/base-text-style-set";
+import { OneServiceTextStyleSet } from "../spec/text-spec/oneservice-text-style-set";
 import { TextStyleSetType } from "../text/types";
 import { getCollection, getValue } from "./helper";
 import {
@@ -18,6 +19,7 @@ const TextStyleSpec: ThemeCollectionSpec<
 > = {
     collections: {
         base: BaseTextStyleSet,
+        oneservice: OneServiceTextStyleSet,
     },
     defaultValue: "base",
 };
