@@ -69,7 +69,7 @@ export const Default: StoryObj<Component> = {
         const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
-                name: "A super duper long text that it for what is it what this longer.txt",
+                name: "A super duper long text that it he who remain stay for what is it what This longer.txt",
                 mimeType: "application/txt",
                 size: 1000,
                 filePath: "https://loripsum.net/api/html",
@@ -84,7 +84,7 @@ export const Default: StoryObj<Component> = {
             },
             {
                 id: "3",
-                name: "sample-image.jpeg",
+                name: "sample image maybe it will be long title maybe haha it will be long title maybe it will be long title maybe it will be long title maybe.jpeg",
                 mimeType: "image/jpeg",
                 size: 6000,
                 filePath:
@@ -159,7 +159,7 @@ export const FileHasThumbnail: StoryObj<Component> = {
         const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
-                name: "sample-image.jpeg",
+                name: "A super duper long text that it he who remain stay for what is it what This longer.jpeg",
                 mimeType: "image/jpeg",
                 size: 6000,
                 filePath:

@@ -1,6 +1,9 @@
 import { DownloadIcon } from "@lifesg/react-icons";
-import { memo, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { FileUploadHelper } from "../../file-upload/helper";
+import { MediaWidths } from "../../media";
+import { StringHelper } from "../../util";
 import {
     ActionContainer,
     Box,
@@ -18,22 +21,51 @@ import {
     ThumbnailContainer,
 } from "./file-list-card.styles";
 import { FileListItemProps } from "./types";
-import { FileListItemThumbnail } from "./file-list-card-thumbnail";
 
 const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { id, name, size, errorMessage, thumbnailImageDataUrl } = fileItem;
+    const {
+        id,
+        name,
+        size,
+        errorMessage,
+        thumbnailImageDataUrl,
+        truncateText = true,
+    } = fileItem;
 
     // Local variables
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
+    const isMobile = useMediaQuery({
+        maxWidth: MediaWidths.mobileL,
+    });
+    const [displayText, setDisplayText] = useState<string>();
+    const containerRef = useRef<HTMLDivElement>();
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
+
+    const getTruncatedText = (value: string) => {
+        if (!truncateText) return value;
+
+        const widthOfElement =
+            containerRef && containerRef.current
+                ? containerRef.current.getBoundingClientRect().width
+                : 0;
+
+        return StringHelper.truncateTwoLines(value, widthOfElement, 16, 1.5);
+    };
+
+    useEffect(() => {
+        if (!containerRef.current) return;
+        isMobile
+            ? setDisplayText(getTruncatedText(name))
+            : setDisplayText(name);
+    }, [name, isMobile]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -58,34 +90,33 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
     const renderNameDescription = () => (
         <>
-            <ItemText weight={isError ? "semibold" : "regular"}>
-                {name}
+            <ItemText
+                weight={isError ? "semibold" : "regular"}
+                ref={containerRef}
+            >
+                {displayText}
             </ItemText>
-            {isError && (
-                <DesktopErrorMessage>
-                    {errorMessage ? errorMessage : "Something went wrong"}
-                </DesktopErrorMessage>
-            )}
-            {/* {isError && (
-                <MobileErrorMessage weight="semibold">
-                    {errorMessage ? errorMessage : "Something went wrong"}
-                </MobileErrorMessage>
-            )} */}
+            {isError &&
+                (isMobile ? (
+                    <DesktopErrorMessage>
+                        {errorMessage ? errorMessage : "Something went wrong"}
+                    </DesktopErrorMessage>
+                ) : (
+                    <MobileErrorMessage weight="semibold">
+                        {errorMessage ? errorMessage : "Something went wrong"}
+                    </MobileErrorMessage>
+                ))}
         </>
     );
 
     const renderWithThumbnail = () => (
         <>
-            {/* <ThumbnailContainer data-testid={`${id}-thumbnail`}>
+            <ThumbnailContainer data-testid={`${id}-thumbnail`}>
                 <Thumbnail
                     data-testid={`${id}-thumbnail-image`}
                     src={thumbnailImageDataUrl}
                 />
-            </ThumbnailContainer> */}
-            <FileListItemThumbnail
-                thumbnailImageDataUrl={thumbnailImageDataUrl}
-                data-testid={`${id}-thumbnail`}
-            />
+            </ThumbnailContainer>
             <ExtendedNameSection>
                 <NameSection>{renderNameDescription()}</NameSection>
                 <FileSizeSection>

@@ -84,6 +84,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The thumbnail of the file that will be rendered",
                 propTypes: ["string"],
             },
+            {
+                name: "truncateText",
+                description: "Indicates if text should be truncated",
+                propTypes: ["boolean"],
+                defaultValue: `true`,
+            },
         ],
     },
 ];

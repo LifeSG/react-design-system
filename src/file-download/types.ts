@@ -12,6 +12,8 @@ export interface FileItemDownloadProps {
     errorMessage?: string | undefined;
     /** The thumbnail of the file that will be rendered */
     thumbnailImageDataUrl?: string | undefined;
+    /** Indicates if text should be truncated */
+    truncateText?: boolean | undefined;
 }
 
 export type FileDownloadStyle = "bordered" | "no-border";

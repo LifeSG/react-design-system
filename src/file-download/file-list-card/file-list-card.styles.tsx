@@ -117,7 +117,17 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
         }}
     }
 `;
-export const ItemText = styled(Text.BodySmall)``;
+
+export const ItemText = styled(Text.BodySmall)`
+    ${MediaQuery.MaxWidth.mobileL} {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: normal;
+    }
+`;
+
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: 0.25rem;
 `;
@@ -181,6 +191,7 @@ export const ActionContainer = styled.div`
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: fit-content;
+        margin-left: 1rem;
     }
 `;
 
@@ -199,6 +210,9 @@ export const ThumbnailContainer = styled.div`
     flex-shrink: 0;
     flex-direction: column;
     justify-content: center;
+    ${MediaQuery.MaxWidth.mobileL} {
+        margin-right: 1rem;
+    }
 `;
 
 export const Thumbnail = styled(ImageWithFallback)`
