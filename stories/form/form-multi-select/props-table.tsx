@@ -132,6 +132,20 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"small"`, `"default"`],
                 defaultValue: `"default"`,
             },
+            {
+                name: "alignment",
+                description:
+                    "Specifies if the dropdown is aligned to the left or right of the main field",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
