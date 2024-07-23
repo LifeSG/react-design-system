@@ -147,7 +147,10 @@ export const DropdownList = <T, V>({
                 }
                 break;
             case "Space":
-                if (document.activeElement !== searchInputRef.current) {
+                if (
+                    document.activeElement ===
+                    listItemRefs.current[focusedIndex]
+                ) {
                     event.preventDefault();
                     if (displayListItems[focusedIndex]) {
                         handleListItemClick(
@@ -204,13 +207,13 @@ export const DropdownList = <T, V>({
         if (searchInputRef.current) {
             setFocusedIndex(-1);
             setTimeout(() => searchInputRef.current.focus(), 200); // wait for animation
-        } else {
+        } else if (listItemRefs.current[focusedIndex]) {
             // Else focus on the specified element
-            const target =
-                listItemRefs.current[focusedIndex] || listItemRefs.current[0];
-            if (target) {
-                setTimeout(() => target.focus(), 200); // wait for animation
-            }
+            setTimeout(() => listItemRefs.current[focusedIndex].focus(), 200);
+        } else {
+            // Else focus on the first list item
+            setFocusedIndex(0);
+            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
     }, [disableItemFocus, focusedIndex, mounted, setFocusedIndex]);
 

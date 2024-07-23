@@ -1,48 +1,62 @@
+import { OpenChangeReason } from "@floating-ui/react";
 import findIndex from "lodash/findIndex";
 import React, { useEffect, useRef, useState } from "react";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
-    Divider,
-    IconContainer,
+    DropdownList,
+    DropdownListState,
+    ExpandableElement,
+} from "../shared/dropdown-list-v2";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import {
     LabelContainer,
     PlaceholderLabel,
-    Selector,
-    StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { SimpleIdGenerator } from "../util";
 import { InputMultiSelectProps } from "./types";
 
 export const InputMultiSelect = <T, V>({
     selectedOptions,
     placeholder = "Select",
     options,
-    className,
     disabled,
     error,
+    className,
     "data-testid": testId,
+    id,
     enableSearch = false,
     searchFunction,
     searchPlaceholder,
     valueExtractor,
     listExtractor,
     onSelectOptions,
-    listStyleWidth,
     onShowOptions,
     onHideOptions,
     onRetry,
-    onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
+    renderListItem,
+    hideNoResultsDisplay,
+    renderCustomCallToAction,
+    onBlur,
     variant = "default",
-    ...otherProps
+    readOnly,
+    alignment,
+    dropdownZIndex,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
     const [selected, setSelected] = useState<T[]>(selectedOptions || []);
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
+    const nodeRef = useRef<HTMLDivElement>();
     const selectorRef = useRef<HTMLButtonElement>();
 
     // =============================================================================
@@ -55,17 +69,13 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleSelectorClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-
-        if (!disabled) {
-            setShowOptions(!showOptions);
-            triggerOptionDisplayCallback(!showOptions);
-
-            // This is needed for Safari as it does not fire onBlur when dropdown wrapper is closed
-            if (showOptions) {
-                onBlur?.();
-            }
+    const handleSelectAllClick = () => {
+        if (selected && selected.length > 0) {
+            setSelected([]);
+            performOnSelectOptions([]);
+        } else {
+            setSelected(options);
+            performOnSelectOptions(options);
         }
     };
 
@@ -87,12 +97,6 @@ export const InputMultiSelect = <T, V>({
         }
 
         setSelected(selectedCopy);
-        triggerOptionDisplayCallback(false);
-
-        if (selectorRef) {
-            selectorRef.current.focus();
-        }
-
         performOnSelectOptions(selectedCopy);
     };
 
@@ -101,24 +105,44 @@ export const InputMultiSelect = <T, V>({
             setShowOptions(false);
             triggerOptionDisplayCallback(false);
         }
+    };
 
-        if (selectorRef) {
-            selectorRef.current.focus();
+    const handleNodeFocus = () => {
+        if (!focused && !showOptions) {
+            setFocused(true);
         }
     };
 
-    const handleSelectAllClick = () => {
-        if (selected && selected.length > 0) {
-            setSelected([]);
-            performOnSelectOptions([]);
-        } else {
-            setSelected(options);
-            performOnSelectOptions(options);
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !showOptions &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setFocused(false);
+            onBlur?.();
         }
     };
 
-    const handleWrapperBlur = () => {
-        onBlur?.();
+    const handleOpen = () => {
+        setShowOptions(true);
+        triggerOptionDisplayCallback(true);
+        setFocused(true);
+    };
+
+    const handleClose = (reason: OpenChangeReason) => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+
+        // click to toggle should not blur the input
+        if (reason !== "click") {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
+
+    const handleDismiss = () => {
+        selectorRef.current.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -127,10 +151,6 @@ export const InputMultiSelect = <T, V>({
     // HELPER FUNCTION
     // =============================================================================
     const getDisplayValue = () => {
-        if (!selected || selected.length == 0) {
-            return placeholder;
-        }
-
         if (options && selected.length === options.length) {
             return "All selected";
         }
@@ -155,7 +175,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     // =============================================================================
-    // RENDER FUNCTION
+    // RENDER FUNCTIONS
     // =============================================================================
     const renderLabel = () => {
         if (!selected || selected.length === 0) {
@@ -175,71 +195,81 @@ export const InputMultiSelect = <T, V>({
     };
 
     const renderSelectorContent = () => (
-        <>
-            <LabelContainer>{renderLabel()}</LabelContainer>
-            <IconContainer expanded={showOptions}>
-                <StyledChevronIcon $variant={variant} />
-            </IconContainer>
-        </>
+        <LabelContainer>{renderLabel()}</LabelContainer>
     );
 
-    const renderOptionList = () => {
-        // Cater for sync and async load
-        if ((options && options.length > 0) || onRetry) {
-            return (
-                <DropdownList
-                    listItems={options}
-                    onSelectItem={handleListItemClick}
-                    onDismiss={handleListDismiss}
-                    valueExtractor={valueExtractor}
-                    listExtractor={listExtractor}
-                    listStyleWidth={listStyleWidth}
-                    visible={showOptions}
-                    enableSearch={enableSearch}
-                    searchFunction={searchFunction}
-                    searchPlaceholder={searchPlaceholder}
-                    data-testid="dropdown-list"
-                    multiSelect={true}
-                    selectedItems={selected}
-                    onSelectAll={handleSelectAllClick}
-                    onRetry={onRetry}
-                    itemsLoadState={optionsLoadState}
-                    itemTruncationType={optionTruncationType}
+    const renderElement = () => {
+        return (
+            <InputBox
+                className={className}
+                data-testid={testId}
+                id={id}
+                ref={nodeRef}
+                tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={focused}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+            >
+                <ExpandableElement
+                    ref={selectorRef}
+                    disabled={disabled}
+                    expanded={showOptions}
+                    id={internalId}
+                    readOnly={readOnly}
                     variant={variant}
-                />
-            );
-        }
+                >
+                    {renderSelectorContent()}
+                </ExpandableElement>
+            </InputBox>
+        );
+    };
 
-        return null;
+    const renderDropdown = ({ elementWidth }: DropdownRenderProps) => {
+        return (
+            <DropdownList
+                listboxId={internalId}
+                listItems={options}
+                onSelectItem={handleListItemClick}
+                onDismiss={handleListDismiss}
+                valueExtractor={valueExtractor}
+                listExtractor={listExtractor}
+                enableSearch={enableSearch}
+                searchFunction={searchFunction}
+                searchPlaceholder={searchPlaceholder}
+                multiSelect
+                selectedItems={selected}
+                onSelectAll={handleSelectAllClick}
+                onRetry={onRetry}
+                itemsLoadState={optionsLoadState}
+                itemTruncationType={optionTruncationType}
+                renderListItem={renderListItem}
+                hideNoResultsDisplay={hideNoResultsDisplay}
+                renderCustomCallToAction={renderCustomCallToAction}
+                variant={variant}
+                width={elementWidth}
+            />
+        );
     };
 
     return (
-        <DropdownWrapper
-            show={showOptions}
-            error={error && !showOptions}
-            disabled={disabled}
-            testId={testId}
-            className={className}
-            onBlur={handleWrapperBlur}
-            variant={variant}
-        >
-            <Selector
-                ref={selectorRef}
-                type="button"
-                data-testid="selector"
-                onClick={handleSelectorClick}
-                onBlur={() => {
-                    if (!showOptions) {
-                        onBlur?.();
-                    }
-                }}
-                $variant={variant}
-                {...otherProps}
-            >
-                {renderSelectorContent()}
-            </Selector>
-            {showOptions && <Divider />}
-            {renderOptionList()}
-        </DropdownWrapper>
+        <DropdownListState>
+            <ElementWithDropdown
+                enabled={!readOnly && !disabled}
+                isOpen={showOptions}
+                renderElement={renderElement}
+                renderDropdown={renderDropdown}
+                onOpen={handleOpen}
+                onClose={handleClose}
+                onDismiss={handleDismiss}
+                clickToToggle
+                offset={8}
+                alignment={alignment}
+                fitAvailableHeight
+                zIndex={dropdownZIndex}
+            />
+        </DropdownListState>
     );
 };
