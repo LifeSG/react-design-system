@@ -73,6 +73,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const handleDownload = async () => {
         setIsLoading(true);
         try {
+            setIsError(false);
             await onDownload(fileItem);
         } catch (error) {
             setIsError(true);
@@ -177,7 +178,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     };
 
     return (
-        <Item id={id}>
+        <Item data-testid={id}>
             <Box onClick={handleDownload}>
                 {renderContents()}
                 {renderActions()}

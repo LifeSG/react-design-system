@@ -2,6 +2,7 @@ import {
     Container,
     Description,
     DescriptionContainer,
+    ListWrapper,
     TextContainer,
     Title,
     TitleContainer,
@@ -10,6 +11,7 @@ import { FileListCard } from "./file-list-card";
 import { FileDownloadProps, FileItemDownloadProps } from "./types";
 
 export const FileDownload = ({
+    id,
     fileItems,
     title,
     description,
@@ -56,6 +58,7 @@ export const FileDownload = ({
 
     return (
         <Container
+            id={id ? `${id}-file-download` : "file-download"}
             className={className}
             data-testid={testId}
             $border={styleType === "bordered"}
@@ -66,15 +69,18 @@ export const FileDownload = ({
                     {renderDescription()}
                 </TextContainer>
             )}
-            {fileItems &&
-                fileItems.length > 0 &&
-                fileItems.map((item) => (
-                    <FileListCard
-                        key={item.id}
-                        fileItem={item}
-                        onDownload={handleDownloadItem}
-                    />
-                ))}
+            <ListWrapper>
+                {fileItems &&
+                    fileItems.length > 0 &&
+                    fileItems.map((item) => (
+                        <FileListCard
+                            key={item.id}
+                            fileItem={item}
+                            onDownload={handleDownloadItem}
+                        />
+                    ))}
+            </ListWrapper>
+
         </Container>
     );
 };

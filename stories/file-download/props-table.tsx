@@ -82,6 +82,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "filePath",
                 description: "The remote path of the file",
+                mandatory: true,
                 propTypes: ["string"],
             },
             {

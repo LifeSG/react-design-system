@@ -15,10 +15,6 @@ interface ContentSectionStyleProps {
     $hasThumbnail?: boolean | undefined;
 }
 
-interface FileSizeSectionStyleProps {
-    $hideInMobile?: boolean | undefined;
-}
-
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -93,28 +89,17 @@ export const ExtendedNameSection = styled.div`
     }
 `;
 
-export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
+export const FileSizeSection = styled.div`
     display: flex;
     width: 5rem;
     margin-left: 0.5rem;
     justify-content: flex-end;
-
     ${MediaQuery.MaxWidth.mobileL} {
-        ${(props) => {
-            if (props.$hideInMobile) {
-                return css`
-                    display: none;
-                    visibility: hidden;
-                `;
-            } else {
-                return css`
-                    width: 100%;
-                    margin-left: 0;
-                    margin-top: 0.5rem;
-                    justify-content: flex-start;
-                `;
-            }
-        }}
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.5rem;
+        justify-content: flex-start;
+    }}
     }
 `;
 
@@ -155,7 +140,7 @@ export const MobileErrorMessage = styled(BaseErrorMessage)`
     }
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
+export const Spinner = styled(ComponentLoadingSpinner) <MainStyleProps>`
     ${(props) => {
         let color = Color.Primary(props);
         switch (props.$buttonStyle) {

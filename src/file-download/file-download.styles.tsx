@@ -57,3 +57,7 @@ export const DescriptionContainer = styled.div`
     color: ${Color.Neutral[3]};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 `;
+
+export const ListWrapper = styled.ul`
+    list-style-type: none;
+`;
