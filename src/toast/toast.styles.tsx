@@ -72,6 +72,7 @@ export const ContentWrapper = styled.div`
 
     ${MediaQuery.MaxWidth.mobileL} {
         display: flex;
+        align-items: flex-start;
         flex-direction: column;
         gap: 0.75rem;
     }
