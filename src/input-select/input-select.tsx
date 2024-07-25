@@ -228,7 +228,7 @@ export const InputSelect = <T, V>({
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
-                    id={internalId}
+                    listboxId={internalId}
                     readOnly={readOnly}
                     variant={variant}
                 >
