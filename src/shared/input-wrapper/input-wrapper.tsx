@@ -159,4 +159,8 @@ export const BasicButton = styled.button<InputStyleProps>`
     :active {
         outline: none;
     }
+
+    :focus-visible {
+        outline: 2px auto ${Color.Primary};
+    }
 `;

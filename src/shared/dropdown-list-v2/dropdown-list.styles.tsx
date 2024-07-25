@@ -142,6 +142,10 @@ export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
     color: ${Color.Primary};
 `;
 
+export const TryAgainButton = styled(DropdownCommonButton)`
+    outline-offset: 0.25rem;
+`;
+
 export const SelectAllButton = styled(DropdownCommonButton)`
     padding: 0.5rem 1rem;
 `;

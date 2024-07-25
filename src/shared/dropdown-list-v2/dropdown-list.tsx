@@ -14,7 +14,6 @@ import {
     CheckboxSelectedIndicator,
     CheckboxUnselectedIndicator,
     Container,
-    DropdownCommonButton,
     LabelIcon,
     List,
     ListItem,
@@ -24,6 +23,7 @@ import {
     SelectAllButton,
     SelectAllContainer,
     SelectedIndicator,
+    TryAgainButton,
     UnselectedIndicator,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
@@ -421,13 +421,13 @@ export const DropdownList = <T, V>({
                         Failed to load.
                     </ResultStateText>
                     &nbsp;
-                    <DropdownCommonButton
+                    <TryAgainButton
                         onClick={handleTryAgain}
                         type="button"
                         $variant={variant}
                     >
                         Try again.
-                    </DropdownCommonButton>
+                    </TryAgainButton>
                 </ResultStateContainer>
             );
         }
