@@ -145,6 +145,9 @@ export const DropdownList = <T, V>({
                     listItemRefs.current[upcomingIndex].focus();
 
                     setFocusedIndex(upcomingIndex);
+                } else if (focusedIndex === 0 && searchInputRef.current) {
+                    searchInputRef.current.focus();
+                    setFocusedIndex(-1);
                 }
                 break;
             case "Space":
