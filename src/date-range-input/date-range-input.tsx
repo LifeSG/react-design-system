@@ -412,7 +412,7 @@ export const DateRangeInput = ({
     };
 
     const handleFocus = () => {
-        if (readOnly || focused) return;
+        if (readOnly || disabled || focused) return;
 
         actions.focus("start");
         onFocus?.();

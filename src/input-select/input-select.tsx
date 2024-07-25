@@ -49,6 +49,7 @@ export const InputSelect = <T, V>({
     variant = "default",
     readOnly,
     alignment,
+    dropdownZIndex,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -78,9 +79,7 @@ export const InputSelect = <T, V>({
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
-        if (onSelectOption) {
-            onSelectOption(item, extractedValue);
-        }
+        onSelectOption?.(item, extractedValue);
     };
 
     const handleListDismiss = () => {
@@ -172,12 +171,10 @@ export const InputSelect = <T, V>({
     };
 
     const triggerOptionDisplayCallback = (show: boolean) => {
-        if (!show && onHideOptions) {
-            onHideOptions();
-        }
-
-        if (show && onShowOptions) {
-            onShowOptions();
+        if (show) {
+            onShowOptions?.();
+        } else {
+            onHideOptions?.();
         }
     };
 
@@ -231,7 +228,7 @@ export const InputSelect = <T, V>({
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
-                    id={internalId}
+                    listboxId={internalId}
                     readOnly={readOnly}
                     variant={variant}
                 >
@@ -280,6 +277,7 @@ export const InputSelect = <T, V>({
                 offset={8}
                 alignment={alignment}
                 fitAvailableHeight
+                zIndex={dropdownZIndex}
             />
         </DropdownListState>
     );

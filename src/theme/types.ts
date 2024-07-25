@@ -7,7 +7,13 @@ export type ThemeLayout = "normal";
 // =============================================================================
 // COLOR THEMES
 // =============================================================================
-export type ColorScheme = "base" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
+export type ColorScheme =
+    | "base"
+    | "bookingsg"
+    | "rbs"
+    | "mylegacy"
+    | "ccube"
+    | "oneservice";
 export type ColorCollectionsMap = {
     [key in ColorScheme]: ColorSet;
 };
@@ -15,7 +21,7 @@ export type ColorCollectionsMap = {
 // =============================================================================
 // FONT STYLE THEMES
 // =============================================================================
-export type TextStyleScheme = "base";
+export type TextStyleScheme = "base" | "oneservice";
 export type FontStyleCollectionsMap = {
     [key in TextStyleScheme]: TextStyleSetType;
 };

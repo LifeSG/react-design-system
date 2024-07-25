@@ -1,7 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { MediaQuery } from "../../src/media";
 import { Text, TextStyleHelper, TextStyleSetType } from "../../src/text";
+import { BaseTheme, ThemeSpec } from "../../src";
 
 export const FontDisplay = () => {
     return (
@@ -30,9 +31,13 @@ const FontDisplayContainer = styled.div`
 // =============================================================================
 interface FontSizeDisplayProps {
     textStyles: TextStyleSetType;
+    theme?: ThemeSpec;
 }
 
-export const FontSizeDisplay = ({ textStyles }: FontSizeDisplayProps) => {
+export const FontSizeDisplay = ({
+    textStyles,
+    theme,
+}: FontSizeDisplayProps) => {
     const getComponent = (key: string) => {
         switch (key) {
             case "D1":
@@ -111,7 +116,9 @@ export const FontSizeDisplay = ({ textStyles }: FontSizeDisplayProps) => {
 
     return (
         <FontSizeDisplayWrapper>
-            <FontSizeList>{renderFontSizes()}</FontSizeList>
+            <ThemeProvider theme={theme || BaseTheme}>
+                <FontSizeList>{renderFontSizes()}</FontSizeList>
+            </ThemeProvider>
         </FontSizeDisplayWrapper>
     );
 };

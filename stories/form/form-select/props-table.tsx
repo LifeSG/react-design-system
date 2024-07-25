@@ -183,6 +183,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"left"`, `"right"`],
                 defaultValue: `"left"`,
             },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
+            },
         ],
     },
     {

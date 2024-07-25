@@ -1,12 +1,13 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { SquareIcon } from "@lifesg/react-icons/square";
-import { SquareFillIcon } from "@lifesg/react-icons/square-fill";
+import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { MediaQuery } from "../../media";
 import { TextStyleHelper } from "../../text";
 import { DropdownVariantType } from "../dropdown-list/types";
+import { BasicButton } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -17,6 +18,10 @@ interface ContainerStyleProps {
 
 interface ListStyleProps {
     $variant?: DropdownVariantType;
+}
+
+interface ListItemStyleProps {
+    $active?: boolean;
 }
 
 // =============================================================================
@@ -63,6 +68,9 @@ export const Container = styled.div<ContainerStyleProps>`
 export const List = styled.div`
     background: transparent;
     padding: 0.5rem;
+`;
+
+export const Listbox = styled.ul`
     list-style-type: none;
 `;
 
@@ -70,7 +78,7 @@ export const List = styled.div`
 // LIST ITEM STYLES
 // -----------------------------------------------------------------------------
 
-export const ListItem = styled.li<ListStyleProps>`
+export const ListItem = styled.li<ListItemStyleProps>`
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
@@ -79,11 +87,11 @@ export const ListItem = styled.li<ListStyleProps>`
 
     outline-color: ${Color.Accent.Light[3]};
 
-    :hover,
-    :focus,
-    :active {
-        background: ${Color.Accent.Light[5]};
-    }
+    ${(props) =>
+        props.$active &&
+        css`
+            background: ${Color.Accent.Light[5]};
+        `}
 `;
 
 export const SelectedIndicator = styled(TickIcon)`
@@ -99,7 +107,7 @@ export const UnselectedIndicator = styled.div`
     width: 1rem;
 `;
 
-export const CheckboxSelectedIndicator = styled(SquareFillIcon)`
+export const CheckboxSelectedIndicator = styled(SquareTickFillIcon)`
     flex-shrink: 0;
     height: 1.625rem;
     width: 1.625rem;
@@ -121,22 +129,25 @@ export const SelectAllContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    padding: 1rem 0 0.5rem 0;
 `;
 
-export const DropdownCommonButton = styled.button<ListStyleProps>`
+export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
     ${(props) =>
         TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "semibold"
         )}
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
     cursor: pointer;
     overflow: hidden;
-    outline: none;
     color: ${Color.Primary};
+`;
+
+export const TryAgainButton = styled(DropdownCommonButton)`
+    outline-offset: 0.25rem;
+`;
+
+export const SelectAllButton = styled(DropdownCommonButton)`
+    padding: 0.5rem 1rem;
 `;
 
 export const ResultStateContainer = styled.div`
@@ -156,7 +167,7 @@ export const ResultStateText = styled.div<ListStyleProps>`
 
 export const LabelIcon = styled(ExclamationCircleFillIcon)<ListStyleProps>`
     ${(props) => {
-        const size = props.$variant === "small" ? 1 : 1.5;
+        const size = props.$variant === "small" ? 1 : 1.125;
         return css`
             height: ${size}rem;
             width: ${size}rem;

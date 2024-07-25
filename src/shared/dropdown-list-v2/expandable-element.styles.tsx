@@ -8,10 +8,8 @@ import { DropdownVariantType } from "./types";
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
-export interface StyleProps {
-    $disabled?: boolean;
+interface StyleProps {
     $expanded?: boolean;
-    $readOnly?: boolean;
     $variant?: DropdownVariantType;
 }
 
@@ -23,7 +21,8 @@ export const Selector = styled(BasicButton)<StyleProps>`
     align-items: center;
     gap: 0.5rem;
     width: 100%;
-    padding: 0.6875rem 1rem;
+    padding: ${(props) =>
+        props.$variant === "small" ? "0.4375rem 1rem" : "0.6875rem 1rem"};
 
     ${(props) =>
         TextStyleHelper.getTextStyle(

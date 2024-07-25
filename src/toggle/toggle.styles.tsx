@@ -51,7 +51,6 @@ export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
     flex-direction: column;
     height: fit-content;
-    width: 100%;
 
     // Content positioning style
     ${(props) => {
@@ -296,16 +295,16 @@ export const RemoveButton = styled.button<StyleProps>`
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     color: ${(props) => (props.disabled ? Color.Neutral[3] : Color.Primary)};
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-bottom: 0.6875rem;
     border: none;
     background: none;
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    padding: 0 1rem 0.6875rem 1rem;
     padding-top: ${(props) =>
         props.$paddingTopRequired ? "0.6875rem" : "0rem"};
+    width: 100%;
 
     svg {
         width: 1.125rem;
@@ -320,8 +319,7 @@ export const ErrorContainer = styled.div<StyleProps>`
     border: none;
     background: none;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-    padding-top: 0.6875rem;
-    padding-bottom: 0.5rem;
+    padding: 0.6875rem 1rem 0.5rem 1rem;
 `;
 
 export const AlertContainer = styled(Alert)`
@@ -329,11 +327,8 @@ export const AlertContainer = styled(Alert)`
     user-select: none;
 `;
 
-export const CompositeSectionContainer = styled.div`
-    padding: 0 1rem;
-`;
-
 export const Children = styled.div<ChildrenStyleProps>`
+    padding: 0 1rem;
     padding-top: 0.6875rem;
     padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}

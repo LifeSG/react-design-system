@@ -4,6 +4,7 @@ import { DropdownVariantType } from "../dropdown-list/types";
 import {
     ClearButton,
     Container,
+    SearchBox,
     SearchIcon,
     SearchInput,
 } from "./dropdown-search.styles";
@@ -11,7 +12,7 @@ import {
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
     value: string /** override to cast type */;
     variant?: DropdownVariantType | undefined;
-    onClear?: () => void | undefined;
+    onClear?: (() => void) | undefined;
 }
 
 const Component = (
@@ -20,13 +21,15 @@ const Component = (
 ): JSX.Element => {
     return (
         <Container>
-            <SearchIcon $variant={variant} />
-            <SearchInput
-                ref={ref}
-                value={value}
-                $variant={variant}
-                {...otherProps}
-            />
+            <SearchBox>
+                <SearchIcon $variant={variant} aria-hidden />
+                <SearchInput
+                    ref={ref}
+                    value={value}
+                    $variant={variant}
+                    {...otherProps}
+                />
+            </SearchBox>
             {value && (
                 <ClearButton
                     aria-label="Clear search"

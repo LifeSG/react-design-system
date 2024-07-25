@@ -14,14 +14,16 @@ import {
     CheckboxSelectedIndicator,
     CheckboxUnselectedIndicator,
     Container,
-    DropdownCommonButton,
     LabelIcon,
     List,
     ListItem,
+    Listbox,
     ResultStateContainer,
     ResultStateText,
+    SelectAllButton,
     SelectAllContainer,
     SelectedIndicator,
+    TryAgainButton,
     UnselectedIndicator,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
@@ -120,15 +122,6 @@ export const DropdownList = <T, V>({
         });
     });
 
-    const hasNextLineLabel = () => {
-        return (
-            labelDisplayType === "next-line" &&
-            displayListItems.length > 0 &&
-            listExtractor &&
-            typeof listExtractor(displayListItems[0]) !== "string"
-        );
-    };
-
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -152,10 +145,16 @@ export const DropdownList = <T, V>({
                     listItemRefs.current[upcomingIndex].focus();
 
                     setFocusedIndex(upcomingIndex);
+                } else if (focusedIndex === 0 && searchInputRef.current) {
+                    searchInputRef.current.focus();
+                    setFocusedIndex(-1);
                 }
                 break;
             case "Space":
-                if (document.activeElement !== searchInputRef.current) {
+                if (
+                    document.activeElement ===
+                    listItemRefs.current[focusedIndex]
+                ) {
                     event.preventDefault();
                     if (displayListItems[focusedIndex]) {
                         handleListItemClick(
@@ -172,9 +171,11 @@ export const DropdownList = <T, V>({
 
     const handleListItemClick = (item: T, upcomingIndex: number) => {
         setFocusedIndex(upcomingIndex);
-        if (onSelectItem) {
-            onSelectItem(item, getValue(item));
-        }
+        onSelectItem?.(item, getValue(item));
+    };
+
+    const handleListItemHover = (index: number) => {
+        setFocusedIndex(index);
     };
 
     const handleSearchInputChange = (
@@ -183,18 +184,18 @@ export const DropdownList = <T, V>({
         const value = event.target.value;
         setSearchValue(value);
 
-        if (onSearch) onSearch();
+        onSearch?.();
     };
 
     const handleOnClear = () => {
         setSearchValue("");
         searchInputRef.current.focus();
 
-        if (onSearch) onSearch();
+        onSearch?.();
     };
 
     const handleTryAgain = () => {
-        if (onRetry) onRetry();
+        onRetry?.();
     };
 
     // =========================================================================
@@ -214,13 +215,13 @@ export const DropdownList = <T, V>({
         if (searchInputRef.current) {
             setFocusedIndex(-1);
             setTimeout(() => searchInputRef.current.focus(), 200); // wait for animation
-        } else {
+        } else if (listItemRefs.current[focusedIndex]) {
             // Else focus on the specified element
-            const target =
-                listItemRefs.current[focusedIndex] || listItemRefs.current[0];
-            if (target) {
-                setTimeout(() => target.focus(), 200); // wait for animation
-            }
+            setTimeout(() => listItemRefs.current[focusedIndex].focus(), 200);
+        } else {
+            // Else focus on the first list item
+            setFocusedIndex(0);
+            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
     }, [disableItemFocus, focusedIndex, mounted, setFocusedIndex]);
 
@@ -309,6 +310,7 @@ export const DropdownList = <T, V>({
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
             return displayListItems.map((item, index) => {
                 const selected = checkListItemSelected(item);
+                const active = index === focusedIndex;
                 return (
                     <ListItem
                         aria-selected={selected}
@@ -316,12 +318,13 @@ export const DropdownList = <T, V>({
                         data-testid="list-item"
                         key={getItemKey(item, index)}
                         onClick={() => handleListItemClick(item, index)}
+                        onMouseEnter={() => handleListItemHover(index)}
                         ref={(element) =>
                             (listItemRefs.current[index] = element)
                         }
                         role="option"
-                        tabIndex={-1}
-                        $variant={variant}
+                        tabIndex={active ? 0 : -1}
+                        $active={active}
                     >
                         {renderListItemIcon(selected)}
                         {renderListItem
@@ -359,7 +362,7 @@ export const DropdownList = <T, V>({
         ) {
             return (
                 <SelectAllContainer>
-                    <DropdownCommonButton
+                    <SelectAllButton
                         onClick={onSelectAll}
                         type="button"
                         $variant={variant}
@@ -367,7 +370,7 @@ export const DropdownList = <T, V>({
                         {selectedItems.length === 0
                             ? "Select all"
                             : "Clear all"}
-                    </DropdownCommonButton>
+                    </SelectAllButton>
                 </SelectAllContainer>
             );
         }
@@ -396,7 +399,7 @@ export const DropdownList = <T, V>({
 
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
-            const spinnerSize = variant === "small" ? 16 : 24;
+            const spinnerSize = variant === "small" ? 16 : 18;
 
             return (
                 <ResultStateContainer data-testid="list-loading">
@@ -421,13 +424,13 @@ export const DropdownList = <T, V>({
                         Failed to load.
                     </ResultStateText>
                     &nbsp;
-                    <DropdownCommonButton
+                    <TryAgainButton
                         onClick={handleTryAgain}
                         type="button"
                         $variant={variant}
                     >
                         Try again.
-                    </DropdownCommonButton>
+                    </TryAgainButton>
                 </ResultStateContainer>
             );
         }
@@ -441,9 +444,9 @@ export const DropdownList = <T, V>({
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                <ul role="listbox" id={listboxId}>
+                <Listbox role="listbox" id={listboxId}>
                     {renderItems()}
-                </ul>
+                </Listbox>
             </List>
         );
     };

@@ -5,21 +5,23 @@ import {
 import {
     DropdownDisplayProps,
     DropdownSearchProps,
-    DropdownStyleProps,
     DropdownVariantType,
-} from "../shared/dropdown-list/types";
+} from "../shared/dropdown-list-v2/types";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface InputMultiSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
         InputSelectSharedProps<T>,
         DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
+        DropdownSearchProps<T> {
+    readOnly?: boolean | undefined;
     selectedOptions?: T[] | undefined;
     onSelectOptions?: ((options: T[]) => void) | undefined;
     onBlur?: (() => void) | undefined;
     variant?: DropdownVariantType | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
 }
 
 /** To be exposed for Form component inheritance */
