@@ -6,11 +6,11 @@ export interface FileItemDownloadProps {
     mimeType: string;
     /** The size of the file in bytes */
     size?: number | undefined;
-    /** The path of the file in S3 server*/
+    /** The remote path of the file */
     filePath: string;
-    /** The custom error message when file download failed */
+    /** The custom error message to display when file download fails */
     errorMessage?: string | undefined;
-    /** The thumbnail of the file that will be rendered */
+    /** The thumbnail of the file */
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */
     truncateText?: boolean | undefined;
@@ -28,6 +28,6 @@ export interface FileDownloadProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     id?: string | undefined;
-    /** Called when click on download button  */
+    /** Called when file item is clicked  */
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
 }

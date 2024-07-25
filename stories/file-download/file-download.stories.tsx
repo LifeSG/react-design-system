@@ -1,27 +1,132 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useEffect, useState } from "react";
-import { FileUpload } from "src/file-upload";
-import { SimpleIdGenerator } from "src/util/simple-id-generator";
-import { FileDownload } from "../../src/file-download/file-download";
-import { FileItemDownloadProps } from "../../src/file-download";
+import { useState } from "react";
+import { FileDownload, FileItemDownloadProps } from "../../src/file-download";
 
-type Component = typeof FileUpload;
+type Component = typeof FileDownload;
 
 const meta: Meta<Component> = {
     title: "Modules/FileDownload",
-    component: FileUpload,
+    component: FileDownload,
 };
 
 export default meta;
 
+export const Default: StoryObj<Component> = {
+    render: () => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "lorem.pdf",
+                mimeType: "application/pdf",
+                size: 150000,
+                filePath:
+                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            },
+            {
+                id: "2",
+                name: "lorem ipsum odor amet consectetuer adipiscing elit.txt",
+                mimeType: "application/txt",
+                size: 1000,
+                filePath:
+                    "https://raw.githubusercontent.com/LifeSG/react-design-system/master/README.md",
+            },
+            {
+                id: "3",
+                name: "lorem.jpeg",
+                mimeType: "image/jpeg",
+                size: 6000,
+                filePath: "https://picsum.photos/200",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/picsum/200/300",
+            },
+            {
+                id: "4",
+                name: "lorem_ipsum_odor_amet_consectetuer_adipiscing_elit_viverra_diam_sociosqu_rutrum_conubia_rhoncus_netus_nostra_montes_massa_rhoncus_condimentum.jpeg",
+                mimeType: "image/jpeg",
+                size: 6000,
+                filePath: "https://picsum.photos/200",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/picsum/200/300",
+            },
+        ]);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                onDownload={handleDemoDownload}
+                title={"Content title"}
+                description={
+                    "Additional description for the user to consider when downloading files."
+                }
+            />
+        );
+    },
+};
+
+export const ErrorDisplay: StoryObj<Component> = {
+    render: () => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "error.txt",
+                mimeType: "application/txt",
+                filePath: "",
+            },
+            {
+                id: "2",
+                name: "error.txt",
+                mimeType: "application/txt",
+                filePath: "",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/picsum/200/300",
+            },
+        ]);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                title={"Content title"}
+                description={"File download will fail after 3 seconds"}
+                onDownload={handleDemoError}
+            />
+        );
+    },
+};
+
+export const WithCustomError: StoryObj<Component> = {
+    render: () => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "error.txt",
+                mimeType: "application/txt",
+                filePath: "",
+                errorMessage: "This is custom error message!",
+            },
+        ]);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                title={"Content title"}
+                description={
+                    "File download will fail after 3 seconds. A custom error message can be set"
+                }
+                onDownload={handleDemoError}
+            />
+        );
+    },
+};
+
+// The following code is meant for simulation purposes and is not intended for production
+
 const handleDemoDownload = async (file: FileItemDownloadProps) => {
-    //Noted demo is using some public api for fetching download
     const response = await fetch(file.filePath);
     const blob = await response.blob();
     if ("showSaveFilePicker" in window) {
         const fileExtension = file.name.split(".").pop() || "";
-        // Open the file picker
         try {
+            // Open the file picker
             const fileHandle = await (window as any).showSaveFilePicker({
                 suggestedName: file.name,
                 types: [
@@ -40,10 +145,7 @@ const handleDemoDownload = async (file: FileItemDownloadProps) => {
             // Close the stream
             await writable.close();
         } catch (error) {
-            if (error.name === "AbortError") {
-                console.log("File save cancelled by the user");
-                return; // Exit the function without throwing an error
-            }
+            return; // Fail silently
         }
     } else {
         alert(
@@ -60,124 +162,6 @@ const handleDemoDownload = async (file: FileItemDownloadProps) => {
 };
 
 const handleDemoError = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     throw new Error("Download error");
-};
-
-export const Default: StoryObj<Component> = {
-    render: () => {
-        const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
-            {
-                id: "1",
-                name: "A super duper long text that it he who remain stay for what is it what This longer.txt",
-                mimeType: "application/txt",
-                size: 1000,
-                filePath: "https://loripsum.net/api/html",
-            },
-            {
-                id: "2",
-                name: "Sample.pdf",
-                mimeType: "application/pdf",
-                size: 150000,
-                filePath:
-                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-            },
-            {
-                id: "3",
-                name: "sample image maybe it will be long title maybe haha it will be long title maybe it will be long title maybe it will be long title maybe.jpeg",
-                mimeType: "image/jpeg",
-                size: 6000,
-                filePath:
-                    "https://cors-anywhere.herokuapp.com/https://picsum.photos/200/300",
-            },
-        ]);
-
-        return (
-            <FileDownload
-                fileItems={fileItems}
-                onDownload={handleDemoDownload}
-                title={"Content title"}
-                description={
-                    "Additional description for the user to consider when downloading files."
-                }
-            />
-        );
-    },
-};
-
-export const WhenDownloadFailed: StoryObj<Component> = {
-    render: () => {
-        const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
-            {
-                id: "1",
-                name: "This file is error.txt",
-                mimeType: "application/txt",
-                filePath: "",
-            },
-        ]);
-
-        return (
-            <FileDownload
-                fileItems={fileItems}
-                description={
-                    "In this section is file download that has error when download after 5s"
-                }
-                title={"Testing Download File Error"}
-                onDownload={handleDemoError}
-            />
-        );
-    },
-};
-
-export const WithCustomErrorMessage: StoryObj<Component> = {
-    render: () => {
-        const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
-            {
-                id: "1",
-                name: "This file is error.txt",
-                mimeType: "application/txt",
-                filePath: "",
-                errorMessage: "This is custom error message!",
-            },
-        ]);
-
-        return (
-            <FileDownload
-                fileItems={fileItems}
-                description={
-                    "In this section is file download that has error when download after 5s"
-                }
-                title={"Downloading Error with custom error message"}
-                onDownload={handleDemoError}
-            />
-        );
-    },
-};
-
-export const FileHasThumbnail: StoryObj<Component> = {
-    render: () => {
-        const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
-            {
-                id: "1",
-                name: "A super duper long text that it he who remain stay for what is it what This longer.jpeg",
-                mimeType: "image/jpeg",
-                size: 6000,
-                filePath:
-                    "https://cors-anywhere.herokuapp.com/https://picsum.photos/seed/picsum/200/300",
-                thumbnailImageDataUrl:
-                    "https://picsum.photos/seed/picsum/200/300",
-            },
-        ]);
-
-        return (
-            <FileDownload
-                fileItems={fileItems}
-                description={
-                    "In this section is file download that has thumbnail"
-                }
-                title={"Testing Download File Has Thumbnail"}
-                onDownload={handleDemoDownload}
-            />
-        );
-    },
 };

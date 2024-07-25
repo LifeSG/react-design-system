@@ -8,24 +8,18 @@ const DATA: ApiTableSectionProps[] = [
             // Component specific
             {
                 name: "className",
-                description: "The class identifier of the component",
+                description: "The class selector of the component",
                 propTypes: ["string"],
             },
             {
-                name: "title",
-                description: "A title to be displayed for the component",
-                propTypes: ["string", "JSX.Element"],
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
             },
             {
                 name: "description",
                 description: "The description to be displayed",
                 propTypes: ["string", "JSX.Element"],
-            },
-            {
-                name: "styleType",
-                description: "The style type for the component",
-                propTypes: [`"bordered"`, `"no-border"`],
-                defaultValue: `"bordered"`,
             },
             {
                 name: "fileItems",
@@ -34,10 +28,28 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["FileItemProps[]"],
             },
             {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "styleType",
+                description: "The style type for the component",
+                propTypes: [`"bordered"`, `"no-border"`],
+                defaultValue: `"bordered"`,
+            },
+            {
+                name: "title",
+                description: "A title to be displayed for the component",
+                propTypes: ["string", "JSX.Element"],
+            },
+            {
                 name: "onDownload",
-                description: `Called when click on the component. Remember to throw Error on error`,
+                description: "Called when file item is clicked",
                 mandatory: true,
-                propTypes: ["boolean"],
+                propTypes: [
+                    "(file: FileItemDownloadProps) => void | Promise<void>",
+                ],
             },
         ],
     },
@@ -46,7 +58,7 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "id",
-                description: "The unique identifier for a file",
+                description: "The unique identifier of the file",
                 mandatory: true,
                 propTypes: ["string"],
             },
@@ -57,7 +69,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "type",
+                name: "mimeType",
                 description: "The MIME type of the file",
                 mandatory: true,
                 propTypes: ["string"],
@@ -65,23 +77,22 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "size",
                 description: "The size of the file in bytes",
-                mandatory: true,
                 propTypes: ["number"],
             },
             {
                 name: "filePath",
-                description: "The path of the file in S3 server",
+                description: "The remote path of the file",
                 propTypes: ["string"],
             },
             {
                 name: "errorMessage",
                 description:
-                    "The custom error message when file download failed ",
+                    "The custom error message to display when file download fails",
                 propTypes: ["string"],
             },
             {
                 name: "thumbnailImageDataUrl",
-                description: "The thumbnail of the file that will be rendered",
+                description: "The thumbnail of the file",
                 propTypes: ["string"],
             },
             {
