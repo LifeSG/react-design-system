@@ -49,6 +49,17 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // EFFECTS
     // =========================================================================
 
+    useEffect(() => {
+        if (!containerRef.current) return;
+        isMobile
+            ? setDisplayText(getTruncatedText(name))
+            : setDisplayText(name);
+    }, [name, isMobile]);
+
+    // =========================================================================
+    // EVENT HANDLERS
+    // =========================================================================
+
     const getTruncatedText = (value: string) => {
         if (!truncateText) return value;
 
@@ -60,16 +71,6 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         return StringHelper.truncateTwoLines(value, widthOfElement, 16, 1.5);
     };
 
-    useEffect(() => {
-        if (!containerRef.current) return;
-        isMobile
-            ? setDisplayText(getTruncatedText(name))
-            : setDisplayText(name);
-    }, [name, isMobile]);
-
-    // =========================================================================
-    // EVENT HANDLERS
-    // =========================================================================
     const handleDownload = async () => {
         setIsLoading(true);
         try {

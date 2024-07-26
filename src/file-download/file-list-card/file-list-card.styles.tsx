@@ -74,7 +74,9 @@ export const NameSection = styled.div`
     flex: 1;
     flex-direction: column;
     width: 100%;
-    max-width: 22.688rem;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
 `;
 
 export const ExtendedNameSection = styled.div`
@@ -99,7 +101,6 @@ export const FileSizeSection = styled.div`
         margin-left: 0;
         margin-top: 0.5rem;
         justify-content: flex-start;
-    }}
     }
 `;
 
@@ -140,7 +141,7 @@ export const MobileErrorMessage = styled(BaseErrorMessage)`
     }
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner) <MainStyleProps>`
+export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     ${(props) => {
         let color = Color.Primary(props);
         switch (props.$buttonStyle) {
