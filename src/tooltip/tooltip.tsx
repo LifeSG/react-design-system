@@ -4,6 +4,7 @@ import { Text } from "../text/text";
 import { Arrow, Bubble, BubbleWrap } from "./tooltip.styles";
 import { TooltipPosition, TooltipProps } from "./types";
 
+/** @deprecated Use `PopoverV2` */
 export const Tooltip = ({
     visible,
     position = "top",

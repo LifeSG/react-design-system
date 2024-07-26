@@ -1,4 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
+import { Alert } from "src/alert";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import * as MasonryStories from "./masonry.stories";
 import { PropsTable } from "./props-table";
@@ -6,6 +7,13 @@ import { PropsTable } from "./props-table";
 <Meta of={MasonryStories} />
 
 <Title>Masonry</Title>
+
+<Alert type="warning">
+    This component is deprecated and will be removed in a future version.
+    Consider switching to
+    [Layout.ColDiv](/docs/getting-started-layout-column-divs--docs) to manage
+    grid layouts
+</Alert>
 
 <Secondary>Overview</Secondary>
 

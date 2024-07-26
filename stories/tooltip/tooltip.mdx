@@ -1,4 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
+import { Alert } from "src/alert";
 import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import * as TooltipStories from "./tooltip.stories";
 import { PropsTable } from "./props-table";
@@ -6,6 +7,11 @@ import { PropsTable } from "./props-table";
 <Meta of={TooltipStories} />
 
 <Title>Tooltip</Title>
+
+<Alert type="warning">
+    This component is deprecated and will be removed in a future version. Switch
+    to [PopoverV2](/docs/modules-popoverv2--docs) instead.
+</Alert>
 
 <Secondary>Overview</Secondary>
 
