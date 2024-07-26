@@ -81,13 +81,12 @@ export namespace StringHelper {
         baselineCharLength: number,
         incrementFactor = 8 // Arbitrary based on tests and applies to font size of 18px or 1.125rem
     ): string => {
-        let additionalCharAllowed = 0;
-        if (widthOfElement > minDivSize) {
-            additionalCharAllowed = Math.floor(
-                (widthOfElement - minDivSize) / incrementFactor
-            );
-        }
-        const allowedCharLength = baselineCharLength + additionalCharAllowed;
+        const allowedCharLength = getAllowedCharLength(
+            widthOfElement,
+            minDivSize,
+            baselineCharLength,
+            incrementFactor
+        );
         if (allowedCharLength < text.length) {
             const thresholdIndex = Math.floor(allowedCharLength / 2); // We will cut it halfway to derive x num of characters
             return (
@@ -98,6 +97,74 @@ export namespace StringHelper {
         }
 
         return text;
+    };
+
+    const getAllowedCharLength = (
+        widthOfElement: number,
+        minDivSize: number,
+        baselineCharLength: number,
+        incrementFactor: number
+    ) => {
+        let additionalCharAllowed = 0;
+        if (widthOfElement > minDivSize) {
+            additionalCharAllowed = Math.floor(
+                (widthOfElement - minDivSize) / incrementFactor
+            );
+        }
+        return baselineCharLength + additionalCharAllowed;
+    };
+
+    /**
+     * Wraps text to the number of `lines` and performs truncation by adding ellipsis in the middle of the last line of text.
+     *
+     * @param lines number of lines to be displayed
+     * @param text input text
+     * @param widthOfElement the dynamic width of the container in px
+     * @param minDivSize the minimum container size (using size on mobileS viewport as baseline)
+     * @param baselineCharLength the baseline amount of characters to be displayed before truncation kicks. This
+     * will be increased if there is more space available (derived from `widthOfElement`)
+     * @param incrementFactor the size (in px).
+     */
+    export const truncateToLines = (
+        lines: number,
+        text: string,
+        widthOfElement: number,
+        minDivSize: number,
+        baselineCharLength: number,
+        incrementFactor = 8 // Arbitrary based on tests and applies to font size of 18px or 1.125rem
+    ): string[] => {
+        const allowedCharLength = getAllowedCharLength(
+            widthOfElement,
+            minDivSize,
+            baselineCharLength,
+            incrementFactor
+        );
+
+        const formattedText: string[] = [];
+        let remainingText = text;
+        //Fill lines with text based on allowedCharLength per line
+        while (formattedText.length < lines - 1) {
+            formattedText.push(remainingText.substring(0, allowedCharLength));
+            remainingText = remainingText.substring(
+                allowedCharLength,
+                remainingText.length
+            );
+        }
+
+        //Push whatever remaining text to the last line
+        formattedText.push(remainingText);
+
+        //Truncate the last line
+        const lastLine = formattedText[formattedText.length - 1];
+        formattedText[formattedText.length - 1] = truncateOneLine(
+            lastLine,
+            widthOfElement,
+            minDivSize,
+            baselineCharLength,
+            incrementFactor
+        );
+
+        return formattedText;
     };
 
     /**

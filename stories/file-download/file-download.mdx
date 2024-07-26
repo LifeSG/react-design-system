@@ -1,0 +1,26 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as FileDownloadStories from "./file-download.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FileDownloadStories} />
+
+<Title>FileDownload</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that allows for downloading of files
+
+```tsx
+import { FileDownload } from "@lifesg/react-design-system/file-download";
+```
+
+<Canvas of={FileDownloadStories.Default} />
+
+<Heading3>Loading state</Heading3>
+
+Loading state of file download component
+
+<Canvas of={FileDownloadStories.LoadingState} />
+
+<PropsTable />
