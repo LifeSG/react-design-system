@@ -76,9 +76,15 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"end"`,
             },
             {
-                name: "listStyleWidth",
-                description:
-                    "Style option: The width of the option display. (E.g. '100%' or '12rem')",
+                name: "listStyleWidth (deprecated)",
+                description: (
+                    <>
+                        Style option: The width of the option display.
+                        <br />
+                        <b>Note:</b> This attribute has no effect and will be
+                        removed in a future version
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
