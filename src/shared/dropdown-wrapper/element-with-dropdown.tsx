@@ -96,6 +96,9 @@ export const ElementWithDropdown = ({
             size({
                 // shrink to fit available vertical space
                 apply({ availableHeight }) {
+                    if (!dropdownRef.current) {
+                        return;
+                    }
                     Object.assign(dropdownRef.current.style, {
                         maxHeight: fitAvailableHeight
                             ? `${availableHeight}px`

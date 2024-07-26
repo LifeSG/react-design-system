@@ -132,7 +132,7 @@ export const DropdownList = <T, V>({
                 // Cannot go further than last element
                 if (focusedIndex < displayListItems.length - 1) {
                     const upcomingIndex = focusedIndex + 1;
-                    listItemRefs.current[upcomingIndex].focus();
+                    listItemRefs.current[upcomingIndex]?.focus();
 
                     setFocusedIndex(upcomingIndex);
                 }
@@ -142,7 +142,7 @@ export const DropdownList = <T, V>({
                 // Cannot go further than first element
                 if (focusedIndex > 0) {
                     const upcomingIndex = focusedIndex - 1;
-                    listItemRefs.current[upcomingIndex].focus();
+                    listItemRefs.current[upcomingIndex]?.focus();
 
                     setFocusedIndex(upcomingIndex);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
@@ -189,7 +189,7 @@ export const DropdownList = <T, V>({
 
     const handleOnClear = () => {
         setSearchValue("");
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         onSearch?.();
     };
@@ -214,10 +214,10 @@ export const DropdownList = <T, V>({
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current.focus(), 200); // wait for animation
+            setTimeout(() => searchInputRef.current?.focus(), 200); // wait for animation
         } else if (listItemRefs.current[focusedIndex]) {
             // Else focus on the specified element
-            setTimeout(() => listItemRefs.current[focusedIndex].focus(), 200);
+            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
         } else {
             // Else focus on the first list item
             setFocusedIndex(0);
