@@ -92,22 +92,14 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
     const renderNameDescription = () => (
         <>
-            <ItemText
-                weight={isError ? "semibold" : "regular"}
-                ref={containerRef}
-            >
+            <ItemText weight={"regular"} ref={containerRef}>
                 {displayText}
             </ItemText>
-            {isError &&
-                (isMobile ? (
-                    <DesktopErrorMessage>
-                        {errorMessage ? errorMessage : "Something went wrong"}
-                    </DesktopErrorMessage>
-                ) : (
-                    <MobileErrorMessage weight="semibold">
-                        {errorMessage ? errorMessage : "Something went wrong"}
-                    </MobileErrorMessage>
-                ))}
+            {isError && (
+                <DesktopErrorMessage weight="semibold">
+                    {errorMessage ? errorMessage : "Something went wrong"}
+                </DesktopErrorMessage>
+            )}
         </>
     );
 
@@ -124,6 +116,11 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                 <FileSizeSection>
                     <ItemText>{fileSize ? fileSize : "-"}</ItemText>
                 </FileSizeSection>
+                {isError && (
+                    <MobileErrorMessage weight="semibold">
+                        {errorMessage ? errorMessage : "Something went wrong"}
+                    </MobileErrorMessage>
+                )}
             </ExtendedNameSection>
         </>
     );
@@ -134,6 +131,11 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <FileSizeSection>
                 <ItemText>{fileSize ? fileSize : "-"}</ItemText>
             </FileSizeSection>
+            {isError && (
+                <MobileErrorMessage weight="semibold">
+                    {errorMessage ? errorMessage : "Something went wrong"}
+                </MobileErrorMessage>
+            )}
         </>
     );
 
