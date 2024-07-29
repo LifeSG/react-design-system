@@ -1,5 +1,6 @@
 import React from "react";
 
+/** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface ColumnCountAttribute {
     /** number of columns on desktop resolutions */
     lg?: number | undefined;
@@ -9,12 +10,14 @@ export interface ColumnCountAttribute {
     sm?: number | undefined;
 }
 
+/** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface MasonryGridProps extends React.HTMLAttributes<HTMLDivElement> {
     numOfCols: ColumnCountAttribute;
     children: JSX.Element | JSX.Element[];
     "data-testid"?: string | undefined;
 }
 
+/** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface MasonryTileProps extends React.HTMLAttributes<HTMLDivElement> {
     children: JSX.Element;
     /** the column to start on desktop resolutions */
