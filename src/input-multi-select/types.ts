@@ -22,6 +22,8 @@ export interface InputMultiSelectProps<T, V>
     variant?: DropdownVariantType | undefined;
     alignment?: DropdownAlignmentType | undefined;
     dropdownZIndex?: number | undefined;
+    /** @deprecated this has no effect as the dropdown will automatically resize */
+    listStyleWidth?: string | undefined;
 }
 
 /** To be exposed for Form component inheritance */
