@@ -101,6 +101,42 @@ export namespace StringHelper {
     };
 
     /**
+     * Performs a truncation by adding ellipsis in the middle of the text.
+     * @param text input text
+     * @param widthOfElement the dynamic width of the container in px
+     * @param fontSize the fontsize of the text
+     * @param lineHeight the line height of the text
+     */
+    export const truncateTwoLines = (
+        text: string,
+        widthOfElement: number,
+        fontSize: number,
+        lineHeight = 1.2
+    ): string => {
+        // Estimate characters per line based on width and font size
+        const charsPerLine = Math.floor(
+            (widthOfElement * 2) / (fontSize * 0.6) // 0.6 is an approximation for average char width
+        );
+
+        // Calculate total characters allowed in two lines
+        const totalCharsAllowed = charsPerLine * (2 / lineHeight);
+
+        if (text.length <= totalCharsAllowed) {
+            return text; // No truncation needed
+        }
+
+        // Calculate the number of characters to keep
+        const keepFromStart = Math.floor(totalCharsAllowed * 0.6); // Keep 60% from start
+        const keepFromEnd = Math.floor(totalCharsAllowed * 0.2); // Keep 20% from end
+
+        // Truncate the text
+        const start = text.substring(0, keepFromStart);
+        const end = text.substring(text.length - keepFromEnd);
+
+        return `${start}...${end}`;
+    };
+
+    /**
      * Returns the width of the text in the specified font
      * https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
      */

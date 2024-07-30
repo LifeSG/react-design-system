@@ -1,0 +1,32 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as FileDownloadStories from "./file-download.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FileDownloadStories} />
+
+<Title>FileDownload</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that allows for downloading files.
+
+```tsx
+import { FileDownload } from "@lifesg/react-design-system/file-download";
+```
+
+<Canvas of={FileDownloadStories.Default} />
+
+<Heading3>With error display</Heading3>
+
+An error will be displayed when the file download has failed.
+
+<Canvas of={FileDownloadStories.ErrorDisplay} />
+
+A custom error message can be specified for each item.
+
+<Canvas of={FileDownloadStories.WithCustomError} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
