@@ -423,7 +423,7 @@ const MyLegacyImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> =
             md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful@2x.png",
             lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful@3x.png",
             width: 400,
-            height: 281,
+            height: 280,
         },
     };
 
