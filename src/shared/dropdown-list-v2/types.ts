@@ -1,3 +1,6 @@
+// =============================================================================
+// SHARED PROPS
+// =============================================================================
 export type TruncateType = "middle" | "end";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 export type LabelDisplayType = "inline" | "next-line";
@@ -43,14 +46,8 @@ export interface DropdownSearchProps<T> {
     onSearch?: (() => void) | undefined;
 }
 
-export interface DropdownListProps<T, V>
-    extends DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T> {
-    listItems?: T[] | undefined;
+export interface DropdownConfigProps {
     multiSelect?: boolean | undefined;
-    selectedItems?: T[] | undefined;
-    disableItemFocus?: boolean | undefined;
-    listboxId?: string | undefined;
     width?: number | undefined;
     /**
      * Used when items are loaded from an api call.
@@ -61,15 +58,89 @@ export interface DropdownListProps<T, V>
     itemTruncationType?: TruncateType | undefined;
     /** Specifies the maximum number of lines visible before the label is truncated for "end" type */
     itemMaxLines?: number | undefined;
-    /** Specifying flex direction within item */
-    labelDisplayType?: LabelDisplayType | undefined;
     /** Specifies the variant type. Small type will have shorter height. Values: "default" | "small" */
     variant?: DropdownVariantType | undefined;
+}
+
+// =============================================================================
+// DROPDOWN PROPS
+// =============================================================================
+
+export interface DropdownListProps<T, V>
+    extends DropdownDisplayProps<T, V>,
+        DropdownSearchProps<T>,
+        DropdownConfigProps {
+    listItems?: T[] | undefined;
+    selectedItems?: T[] | undefined;
+    disableItemFocus?: boolean | undefined;
+    listboxId?: string | undefined;
+    /** Specifying flex direction within item */
+    labelDisplayType?: LabelDisplayType | undefined;
     /** Specifies the item for which the dropdown’s scroll position will be automatically adjusted */
     topScrollItem?: T | undefined;
 
     onSelectItem?: ((item: T, extractedValue: V) => void) | undefined;
     onSelectAll?: (() => void) | undefined;
     onDismiss?: ((setSelectorFocus?: boolean | undefined) => void) | undefined;
+    onRetry?: (() => void) | undefined;
+}
+
+// =============================================================================
+// NESTED DROPDOWN PROPS
+// =============================================================================
+
+export interface NestedDropdownListLeafItem<T> {
+    key: string;
+    label: string;
+    value: T;
+    subItems?: never | undefined;
+}
+
+export interface NestedDropdownListParentItem<T> {
+    key: string;
+    label: string;
+    value: T;
+    subItems: NestedDropdownListItemProps<T>[];
+}
+
+export type NestedDropdownListItemProps<T> =
+    | NestedDropdownListLeafItem<T>
+    | NestedDropdownListParentItem<T>;
+
+// internal representation of a list item
+export interface NestedDropdownListLocalItem<T> {
+    item: NestedDropdownListItemProps<T>;
+    index: number;
+    indexInParent: number;
+    parentSetSize: number;
+    keyPath: string[];
+    parentIndex: number;
+    parentKeyPath: string[];
+    level: number;
+    visible: boolean;
+    expanded: boolean;
+    checked: "mixed" | true | false;
+    hasSubItems: boolean;
+    subItemIndexes: number[];
+    hasNestedSiblings: boolean;
+    matched: boolean;
+    hasMatchedSubItems: boolean;
+}
+
+export type ExpandMode = "default" | "expand" | "collapse";
+
+export interface NestedDropdownListProps<T>
+    extends DropdownSearchProps<NestedDropdownListItemProps<T>>,
+        DropdownConfigProps {
+    listItems: NestedDropdownListItemProps<T>[];
+    selectedKeyPaths: string[][];
+    listboxId?: string | undefined;
+    /** Specifies if items are expanded or collapsed when the dropdown is opened */
+    mode?: ExpandMode | undefined;
+    /** If specified, the category label is selectable */
+    selectableCategory?: boolean | undefined;
+
+    onSelectItem?: ((keyPath: string[]) => void) | undefined;
+    onSelectAll?: (() => void) | undefined;
     onRetry?: (() => void) | undefined;
 }
