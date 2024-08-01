@@ -38,6 +38,7 @@
     "dependencies": {
         "@floating-ui/dom": "^1.5.4",
         "@floating-ui/react": "^0.26.6",
+        "@lifesg/react-design-system": "^2.7.0-canary.3",
         "fabric": "^5.3.0",
         "immer": "^10.0.2",
         "react-slider": "^2.0.6",
@@ -74,6 +75,7 @@
         "@testing-library/user-event": "^14.5.2",
         "@types/fabric": "^5.3.7",
         "@types/jest": "^29.5.12",
+        "@types/jscodeshift": "^0.11.11",
         "@types/lodash": "^4.14.180",
         "@types/node": "^20.6.4",
         "@types/react": "^17.0.43",
@@ -101,6 +103,7 @@
         "jest-environment-jsdom": "^29.7.0",
         "jest-junit": "^16.0.0",
         "jest-styled-components": "^7.0.8",
+        "jscodeshift": "^0.16.1",
         "lint-staged": "^12.3.7",
         "lodash": "^4.17.21",
         "lottie-colorify": "^0.8.0",
