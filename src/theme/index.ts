@@ -25,7 +25,7 @@ export const MyLegacyTheme: ThemeSpec = {
     [ThemeContextKeys.colorScheme]: "mylegacy",
     [ThemeContextKeys.textStyleScheme]: "base",
     [ThemeContextKeys.designTokenScheme]: "base",
-    [ThemeContextKeys.resourceScheme]: "base",
+    [ThemeContextKeys.resourceScheme]: "mylegacy",
 };
 
 export const CCubeTheme: ThemeSpec = {
