@@ -415,8 +415,8 @@ const MyLegacyImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> =
             base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning.png",
             md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning@2x.png",
             lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning@3x.png",
-            width: 160,
-            height: 160,
+            width: 400,
+            height: 280,
         },
         "payment-unsuccessful": {
             base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful.png",
