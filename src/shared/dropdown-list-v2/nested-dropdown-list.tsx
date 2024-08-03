@@ -512,9 +512,9 @@ export const NestedDropdownList = <T,>({
                         )}
                         {renderSelectionIcon(listItem)}
                         <DropdownLabel
+                            bold={hasSubItems}
                             label={item.label}
                             selected={!!checked}
-                            sublabel={undefined}
                             truncationType={itemTruncationType}
                             maxLines={itemMaxLines}
                         ></DropdownLabel>
