@@ -14,16 +14,18 @@ import {
 } from "./dropdown-label.styles";
 
 interface DropdownLabelProps {
+    bold?: boolean | undefined;
     displayType?: LabelDisplayType | undefined;
     label: string;
     maxLines?: number | undefined;
     selected?: boolean | undefined;
-    sublabel: string;
+    sublabel?: string | undefined;
     truncationType?: "middle" | "end" | undefined;
     variant?: DropdownVariantType | undefined;
 }
 
 export const DropdownLabel = ({
+    bold,
     displayType = "inline",
     label,
     maxLines = 2,
@@ -98,6 +100,7 @@ export const DropdownLabel = ({
         <Label ref={ref} $labelDisplayType={itemDisplayType}>
             <PrimaryText
                 aria-label={label}
+                $bold={bold}
                 $maxLines={maxLines}
                 $selected={selected}
                 $truncateType={truncationType}
