@@ -61,7 +61,6 @@ export const NestedDropdownList = <T,>({
     enableSearch,
     hideNoResultsDisplay,
     searchPlaceholder = "Search",
-    searchFunction,
     onSearch,
 }: NestedDropdownListProps<T>) => {
     // =========================================================================
@@ -157,7 +156,7 @@ export const NestedDropdownList = <T,>({
                     if (target.hasSubItems && !selectableCategory) {
                         return;
                     }
-                    onSelectItem?.(target.keyPath);
+                    onSelectItem?.(target);
                 }
                 break;
             }
@@ -191,9 +190,13 @@ export const NestedDropdownList = <T,>({
         onRetry?.();
     };
 
-    const handleListItemClick = (index: number, keyPath: string[]) => {
+    const handleListItemClick = (index: number) => {
         setFocusedIndex(index);
-        onSelectItem?.(keyPath);
+
+        const activeList = searchActive
+            ? filteredListItems
+            : unfilteredListItems;
+        onSelectItem?.(activeList[index]);
     };
 
     const handleListItemHover = (index: number) => {
@@ -334,7 +337,7 @@ export const NestedDropdownList = <T,>({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderSearchInput = () => {
-        if ((enableSearch || searchFunction) && itemsLoadState === "success") {
+        if (enableSearch && itemsLoadState === "success") {
             return (
                 <DropdownSearch
                     ref={searchInputRef}
@@ -497,7 +500,7 @@ export const NestedDropdownList = <T,>({
                             if (toggleable) {
                                 toggleCategory(i, !expanded);
                             } else {
-                                handleListItemClick(i, keyPath);
+                                handleListItemClick(i);
                             }
                         }}
                         onMouseEnter={() => handleListItemHover(i)}

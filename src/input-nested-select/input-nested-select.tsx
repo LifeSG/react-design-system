@@ -1,24 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import { OpenChangeReason } from "@floating-ui/react";
 import isEmpty from "lodash/isEmpty";
-import { NestedDropdownList } from "../shared/nested-dropdown-list/nested-dropdown-list";
-import { DropdownWrapper } from "../shared/dropdown-wrapper";
-import { CombinedFormattedOptionProps } from "../shared/nested-dropdown-list/types";
+import React, { useEffect, useRef, useState } from "react";
 import {
-    Divider,
-    IconContainer,
+    ExpandableElement,
+    NestedDropdownList,
+    NestedDropdownListItemProps,
+    NestedDropdownListLocalItem,
+    findItemByKeyPath,
+} from "../shared/dropdown-list-v2";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import {
     LabelContainer,
     PlaceholderLabel,
-    Selector,
-    StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { SimpleIdGenerator, StringHelper } from "../util";
 import {
     InputNestedSelectProps,
     L1OptionProps,
     L2OptionProps,
     L3OptionProps,
 } from "./types";
-import { StringHelper } from "../util";
 
 export type CombinedOptionProps<V1, V2, V3> =
     | L1OptionProps<V1, V2, V3>
@@ -32,7 +38,7 @@ interface SelectedItemType<V1, V2, V3> {
 
 export const InputNestedSelect = <V1, V2, V3>({
     placeholder = "Select",
-    options,
+    options: _options,
     disabled,
     error,
     className,
@@ -45,8 +51,8 @@ export const InputNestedSelect = <V1, V2, V3>({
     searchPlaceholder,
     selectableCategory,
     hideNoResultsDisplay,
-    listStyleWidth,
     readOnly,
+    onBlur,
     onSearch,
     onSelectOption,
     onShowOptions,
@@ -54,11 +60,14 @@ export const InputNestedSelect = <V1, V2, V3>({
     onRetry,
     optionsLoadState = "success",
     optionTruncationType = "end",
-    ...otherProps
+    variant,
+    alignment,
+    dropdownZIndex,
 }: InputNestedSelectProps<V1, V2, V3>): JSX.Element => {
-    // =============================================================================
+    // =========================================================================
     // CONST, STATE
-    // =============================================================================
+    // =========================================================================
+    const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
     const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
         _selectedKeyPath ? [_selectedKeyPath] : []
     );
@@ -66,72 +75,90 @@ export const InputNestedSelect = <V1, V2, V3>({
         useState<SelectedItemType<V1, V2, V3>>();
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
+    const nodeRef = useRef<HTMLDivElement>();
     const selectorRef = useRef<HTMLButtonElement>();
     const labelContainerRef = useRef<HTMLDivElement>();
 
-    // =============================================================================
+    // =========================================================================
     // EFFECTS
-    // =============================================================================
+    // =========================================================================
     useEffect(() => {
-        const newKeyPath = _selectedKeyPath ? [_selectedKeyPath] : [];
-
-        setSelectedKeyPaths(newKeyPath);
-        updateSelectedItemFromKey(options, _selectedKeyPath || []);
+        setSelectedKeyPaths(_selectedKeyPath ? [_selectedKeyPath] : []);
+        const selectedItem = findItemByKeyPath(options, _selectedKeyPath || []);
+        if (selectedItem) {
+            const { label, value } = selectedItem;
+            setSelectedItem({ label, value });
+        } else {
+            setSelectedItem(undefined);
+        }
     }, [_selectedKeyPath, options]);
 
-    // =============================================================================
+    // =========================================================================
     // EVENT HANDLERS
-    // =============================================================================
-    const handleSelectorClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-
-        if (disabled || readOnly) {
-            return;
-        }
-
-        setShowOptions(!showOptions);
-        triggerOptionDisplayCallback(!showOptions);
-    };
-
+    // =========================================================================
     const handleListItemClick = (
-        item: CombinedFormattedOptionProps<V1, V2, V3>
+        listItem: NestedDropdownListLocalItem<V1 | V2 | V3>
     ) => {
-        const { keyPath, value, label } = item;
+        const {
+            keyPath,
+            item: { label, value },
+        } = listItem;
 
         setSelectedKeyPaths([keyPath]);
         setSelectedItem({ label, value });
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
-        if (selectorRef.current) {
-            selectorRef.current.focus();
-        }
+        selectorRef.current?.focus();
+        onSelectOption?.(keyPath, value);
+    };
 
-        if (onSelectOption) {
-            onSelectOption(keyPath, value);
+    const handleNodeFocus = () => {
+        if (!focused && !showOptions) {
+            setFocused(true);
         }
     };
 
-    const handleListDismiss = (setSelectorFocus?: boolean | undefined) => {
-        if (showOptions) {
-            setShowOptions(false);
-            triggerOptionDisplayCallback(false);
-        }
-
-        if (setSelectorFocus && selectorRef.current) {
-            selectorRef.current.focus();
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !showOptions &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setFocused(false);
+            onBlur?.();
         }
     };
 
-    const handleWrapperBlur = () => {
+    const handleOpen = () => {
+        setShowOptions(true);
+        triggerOptionDisplayCallback(true);
+        setFocused(true);
+    };
+
+    const handleClose = (reason: OpenChangeReason) => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+
+        // click to toggle should not blur the input
+        if (reason !== "click") {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
+
+    const handleDismiss = () => {
+        selectorRef.current.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
 
-    // =============================================================================
+    // =========================================================================
     // HELPER FUNCTION
-    // =============================================================================
+    // =========================================================================
     const getDisplayValue = (): string => {
         const { label, value } = selectedItem;
 
@@ -139,39 +166,6 @@ export const InputNestedSelect = <V1, V2, V3>({
             return valueToStringFunction(value) || value.toString();
         } else {
             return label;
-        }
-    };
-
-    const updateSelectedItemFromKey = (
-        options: CombinedOptionProps<V1, V2, V3>[],
-        keyPaths: string[]
-    ) => {
-        const findSelectedItem = (
-            items: CombinedOptionProps<V1, V2, V3>[],
-            keyPaths: string[]
-        ): CombinedOptionProps<V1, V2, V3> | undefined => {
-            const [currentKey, ...nextKeyPath] = keyPaths;
-
-            if (isEmpty(items) || !currentKey) {
-                return undefined;
-            }
-
-            const item = items.find((item) => item.key === currentKey);
-
-            if (!item || !nextKeyPath.length) {
-                return item;
-            }
-
-            return findSelectedItem(item.subItems, nextKeyPath);
-        };
-
-        const selectedItem = findSelectedItem(options, keyPaths);
-
-        if (selectedItem) {
-            const { label, value } = selectedItem;
-            setSelectedItem({ label, value });
-        } else {
-            setSelectedItem(undefined);
         }
     };
 
@@ -198,9 +192,9 @@ export const InputNestedSelect = <V1, V2, V3>({
         }
     };
 
-    // =============================================================================
+    // =========================================================================
     // RENDER FUNCTION
-    // =============================================================================
+    // =========================================================================
     const renderLabel = () => {
         if (isEmpty(selectedItem)) {
             return (
@@ -218,67 +212,74 @@ export const InputNestedSelect = <V1, V2, V3>({
     };
 
     const renderSelectorContent = () => (
-        <>
-            <LabelContainer ref={labelContainerRef} $disabled={disabled}>
-                {renderLabel()}
-            </LabelContainer>
-            {!readOnly && (
-                <IconContainer expanded={showOptions}>
-                    <StyledChevronIcon />
-                </IconContainer>
-            )}
-        </>
+        <LabelContainer ref={labelContainerRef}>{renderLabel()}</LabelContainer>
     );
 
-    const renderOptionList = () => {
-        if ((options && options.length > 0) || onRetry) {
-            return (
-                <NestedDropdownList
-                    data-testid="nested-dropdown-list"
-                    listItems={options}
-                    listStyleWidth={listStyleWidth}
-                    visible={showOptions}
-                    mode={mode}
-                    selectedKeyPaths={selectedKeyPaths}
-                    selectableCategory={selectableCategory}
-                    itemsLoadState={optionsLoadState}
-                    itemTruncationType={optionTruncationType}
-                    enableSearch={enableSearch}
-                    searchPlaceholder={searchPlaceholder}
-                    hideNoResultsDisplay={hideNoResultsDisplay}
-                    onDismiss={handleListDismiss}
-                    onSelectItem={handleListItemClick}
-                    onSearch={onSearch}
-                    onRetry={onRetry}
-                />
-            );
-        }
+    const renderElement = () => {
+        return (
+            <InputBox
+                className={className}
+                data-testid={testId}
+                id={id}
+                ref={nodeRef}
+                tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={focused}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+            >
+                <ExpandableElement
+                    ref={selectorRef}
+                    disabled={disabled}
+                    expanded={showOptions}
+                    listboxId={internalId}
+                    readOnly={readOnly}
+                    variant={variant}
+                >
+                    {renderSelectorContent()}
+                </ExpandableElement>
+            </InputBox>
+        );
+    };
 
-        return null;
+    const renderDropdown = ({ elementWidth }: DropdownRenderProps) => {
+        return (
+            <NestedDropdownList
+                listboxId={internalId}
+                listItems={options}
+                selectedKeyPaths={selectedKeyPaths}
+                selectableCategory={selectableCategory}
+                itemsLoadState={optionsLoadState}
+                itemTruncationType={optionTruncationType}
+                enableSearch={enableSearch}
+                searchPlaceholder={searchPlaceholder}
+                hideNoResultsDisplay={hideNoResultsDisplay}
+                onSelectItem={handleListItemClick}
+                onRetry={onRetry}
+                onSearch={onSearch}
+                variant={variant}
+                mode={mode}
+                width={elementWidth}
+            />
+        );
     };
 
     return (
-        <DropdownWrapper
-            className={className}
-            show={showOptions}
-            error={error && !showOptions}
-            disabled={disabled}
-            readOnly={readOnly}
-            testId={testId}
-            onBlur={handleWrapperBlur}
-        >
-            <Selector
-                ref={selectorRef}
-                type="button"
-                data-testid={id || "selector"}
-                disabled={disabled}
-                onClick={handleSelectorClick}
-                {...otherProps}
-            >
-                {renderSelectorContent()}
-            </Selector>
-            {showOptions && <Divider />}
-            {renderOptionList()}
-        </DropdownWrapper>
+        <ElementWithDropdown
+            enabled={!readOnly && !disabled}
+            isOpen={showOptions}
+            renderElement={renderElement}
+            renderDropdown={renderDropdown}
+            onOpen={handleOpen}
+            onClose={handleClose}
+            onDismiss={handleDismiss}
+            clickToToggle
+            offset={8}
+            alignment={alignment}
+            fitAvailableHeight
+            customZIndex={dropdownZIndex}
+        />
     );
 };

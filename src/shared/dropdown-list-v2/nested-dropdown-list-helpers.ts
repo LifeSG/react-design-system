@@ -1,4 +1,5 @@
 import { produce } from "immer";
+import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import {
     NestedDropdownListItemProps,
@@ -257,4 +258,22 @@ export const findIndexFromEnd = <T>(
     }
 
     return -1;
+};
+
+export const findItemByKeyPath = <T>(
+    nestedList: NestedDropdownListItemProps<T>[],
+    keyPath: string[]
+) => {
+    const [currentKey, ...nextKeyPath] = keyPath;
+    if (isEmpty(nestedList) || isEmpty(currentKey)) {
+        return undefined;
+    }
+
+    const item = nestedList.find((item) => item.key === currentKey);
+
+    if (!item || !nextKeyPath.length) {
+        return item;
+    }
+
+    return findItemByKeyPath(item.subItems, nextKeyPath);
 };
