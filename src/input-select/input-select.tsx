@@ -231,6 +231,7 @@ export const InputSelect = <T, V>({
                     disabled={disabled}
                     expanded={showOptions}
                     listboxId={internalId}
+                    popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
                 >

@@ -235,6 +235,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                     disabled={disabled}
                     expanded={showOptions}
                     listboxId={internalId}
+                    popupRole="tree"
                     readOnly={readOnly}
                     variant={variant}
                 >
