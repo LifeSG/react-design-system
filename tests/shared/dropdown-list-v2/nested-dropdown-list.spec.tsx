@@ -488,7 +488,9 @@ describe("NestedDropdownList", () => {
 
             await user.click(screen.queryByText("Parent 1.1 item"));
 
-            expect(mockOnSelectItem).toHaveBeenCalledWith(["1", "1.1"]);
+            expect(mockOnSelectItem).toHaveBeenCalledWith(
+                expect.objectContaining({ keyPath: ["1", "1.1"] })
+            );
             expect(screen.queryByText("Child 1.1.1 item")).toBeVisible();
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1.1 item" })

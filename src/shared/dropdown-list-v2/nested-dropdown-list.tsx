@@ -540,7 +540,7 @@ export const NestedDropdownList = <T,>({
 
     const renderList = () => {
         return (
-            <List>
+            <List data-testid="nested-dropdown-list">
                 {renderSearchInput()}
                 {renderSelectAll()}
                 {renderNoResults()}
