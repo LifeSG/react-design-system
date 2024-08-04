@@ -489,7 +489,8 @@ export const NestedDropdownList = <T,>({
                         <UnexpandableIndicator />
                     )}
                     <ListItem
-                        aria-checked={checked}
+                        aria-checked={checked} // not working with safari voiceover
+                        aria-selected={!!checked} // required for safari voiceover
                         aria-expanded={hasSubItems ? expanded : undefined}
                         aria-level={level + 1}
                         aria-posinset={indexInParent + 1}
