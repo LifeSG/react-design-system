@@ -174,6 +174,7 @@ export const SelectHistogram = ({
                     disabled={disabled}
                     expanded={showOptions}
                     listboxId={internalId}
+                    popupRole="dialog"
                     readOnly={readOnly}
                     variant="default"
                 >
