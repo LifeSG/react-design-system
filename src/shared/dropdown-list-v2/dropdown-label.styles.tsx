@@ -11,6 +11,7 @@ import {
 // STYLE INTERFACE
 // =============================================================================
 interface LabelStyleProps {
+    $bold?: boolean;
     $labelDisplayType?: LabelDisplayType;
     $maxLines?: number;
     $selected?: boolean;
@@ -35,7 +36,7 @@ export const PrimaryText = styled.div<LabelStyleProps>`
     ${(props) =>
         TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
-            "regular"
+            props.$bold ? "semibold" : "regular"
         )}
     color: ${(props) => (props.$selected ? Color.Primary : Color.Neutral[1])};
     width: 100%;
