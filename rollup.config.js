@@ -53,6 +53,21 @@ const subfolderPlugins = (folderName) => [
     }),
 ];
 
+// Build for codemod scripts
+const folderCodemodBuildConfigs = getFolders("./codemods").map((folder) => {
+    return {
+        input: `codemods/${folder}/index.ts`,
+        output: {
+            file: `dist/codemods/${folder}/index.js`,
+            sourcemap: true,
+            exports: "named",
+            format: "esm",
+        },
+        plugins: subfolderPlugins(folder),
+        external: ["react", "react-dom", "styled-components"],
+    };
+});
+
 const folderBuildConfigs = getFolders("./src").map((folder) => {
     return {
         input: `src/${folder}/index.ts`,
@@ -92,5 +107,6 @@ export default [
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
+    ...folderCodemodBuildConfigs,
     ...folderBuildConfigs,
 ];
