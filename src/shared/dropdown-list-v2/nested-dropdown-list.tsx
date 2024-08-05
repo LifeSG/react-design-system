@@ -191,6 +191,15 @@ export const NestedDropdownList = <T,>({
         onRetry?.();
     };
 
+    const handleListItemClick = (index: number, keyPath: string[]) => {
+        setFocusedIndex(index);
+        onSelectItem?.(keyPath);
+    };
+
+    const handleListItemHover = (index: number) => {
+        setFocusedIndex(index);
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -488,9 +497,10 @@ export const NestedDropdownList = <T,>({
                             if (toggleable) {
                                 toggleCategory(i, !expanded);
                             } else {
-                                onSelectItem?.(keyPath);
+                                handleListItemClick(i, keyPath);
                             }
                         }}
+                        onMouseEnter={() => handleListItemHover(i)}
                         ref={(node) => (listItemRefs.current[i] = node)}
                         role="treeitem"
                         tabIndex={active ? 0 : -1}
