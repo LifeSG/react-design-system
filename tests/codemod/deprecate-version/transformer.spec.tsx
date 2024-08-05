@@ -29,7 +29,7 @@ describe("Codemod Transformer for updating version", () => {
         // do the jscodeshift command
         console.log(`Running jscodeshift command...`);
         execSync(
-            `jscodeshift -t ../react-design-system/codemods/v2_version_change.ts ${outputPath}`
+            `jscodeshift -t ../react-design-system/codemods/deprecate-version ${outputPath}`
         );
 
         // execSync(`jscodeshift -t ../../codemods/v2_version_change.ts ${outputPath}`);

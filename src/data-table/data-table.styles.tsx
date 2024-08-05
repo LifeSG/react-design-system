@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { ErrorDisplay } from "../error-display";
-import { DesignToken } from "../design-token";
+import { v2_DesignToken } from "../v2_design-token";
 import { Text } from "../text";
 
 // =============================================================================
@@ -146,12 +146,12 @@ export const ActionBar = styled.div<ActionBarProps>`
     padding: 1rem;
     border-top: 1px solid ${borderColor};
     border-radius: 0 0 4px 4px;
-    background-color: ${DesignToken.Table.Cell.Selected};
+    background-color: ${v2_DesignToken.Table.Cell.Selected};
     transition: all 300ms ease;
 `;
 
 export const HeaderRow = styled.tr`
-    background-color: ${DesignToken.Table.Header};
+    background-color: ${v2_DesignToken.Table.Header};
     height: 6rem;
     border-bottom: 1px solid ${borderColor};
 `;
@@ -188,15 +188,15 @@ export const BodyRow = styled.tr<BodyRowProps>`
     background-color: ${(props) => {
         if (props.$isSelected) {
             return css`
-                ${DesignToken.Table.Cell.Selected};
+                ${v2_DesignToken.Table.Cell.Selected};
             `;
         } else if (props.$alternating) {
             return css`
-                ${DesignToken.Table.Cell.Primary};
+                ${v2_DesignToken.Table.Cell.Primary};
             `;
         } else {
             return css`
-                ${DesignToken.Table.Cell.Secondary};
+                ${v2_DesignToken.Table.Cell.Secondary};
             `;
         }
     }};
@@ -205,7 +205,7 @@ export const BodyRow = styled.tr<BodyRowProps>`
         ${(props) => {
             if (!props.$isSelected && props.$isSelectable) {
                 return css`
-                    background-color: ${DesignToken.Table.Cell.Hover};
+                    background-color: ${v2_DesignToken.Table.Cell.Hover};
                 `;
             }
         }};

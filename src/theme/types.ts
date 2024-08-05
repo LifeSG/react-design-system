@@ -1,5 +1,9 @@
 import { ColorSet, ColorSetOptions } from "../color/types";
-import { DesignTokenSet, DesignTokenSetOptions } from "../design-token/types";
+
+import {
+    v2_DesignTokenSet,
+    v2_DesignTokenSetOptions,
+} from "../v2_design-token/types";
 import { TextStyleSetOptionsType, TextStyleSetType } from "../text/types";
 
 export type ThemeLayout = "normal";
@@ -31,7 +35,7 @@ export type FontStyleCollectionsMap = {
 // =============================================================================
 export type DesignTokenScheme = "base" | "rbs";
 export type DesignTokenCollectionsMap = {
-    [key in DesignTokenScheme]: DesignTokenSet;
+    [key in DesignTokenScheme]: v2_DesignTokenSet;
 };
 
 // =============================================================================
@@ -54,7 +58,7 @@ export interface ThemeSpecOptions {
     /** for color customisation, can specify subset of set */
     color?: ColorSetOptions | undefined;
     textStyle?: TextStyleSetOptionsType | undefined;
-    designToken?: DesignTokenSetOptions | undefined;
+    designToken?: v2_DesignTokenSetOptions | undefined;
 }
 
 export interface ThemeSpec {

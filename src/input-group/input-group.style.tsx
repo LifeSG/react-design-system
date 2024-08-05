@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DesignToken } from "../design-token";
+import { v2_DesignToken } from "../v2_design-token";
 import { Input } from "../input/input";
 import { TextStyleHelper } from "../text";
 import { InputGroupAddonPosition } from "./types";
@@ -35,7 +35,7 @@ export const Container = styled.div<AddonStyleProps>`
 
     :focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+        box-shadow: ${v2_DesignToken.InputBoxShadow};
     }
 
     ${(props) => {
@@ -68,7 +68,7 @@ export const Container = styled.div<AddonStyleProps>`
 
                 :focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                    box-shadow: ${v2_DesignToken.InputErrorBoxShadow};
                 }
             `;
         }

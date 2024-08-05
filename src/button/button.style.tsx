@@ -4,7 +4,7 @@ import { MediaQuery } from "../media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
 import { MainStyleProps } from "./types";
-import { DesignToken } from "../design-token";
+import { v2_DesignToken } from "../v2_design-token";
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
@@ -32,11 +32,11 @@ export const Main = styled.button<MainStyleProps>`
                     background-color: ${Color.Neutral[8]};
                     border: 1px solid
                         ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Border
+                            ? v2_DesignToken.Button.Danger.Border
                             : Color.Primary};
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
+                        ? v2_DesignToken.Button.Danger.Primary
                         : Color.Primary};
                 `;
             case "light":
@@ -45,7 +45,7 @@ export const Main = styled.button<MainStyleProps>`
                     border: 1px solid ${Color.Neutral[5]};
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
+                        ? v2_DesignToken.Button.Danger.Primary
                         : Color.Primary};
                 `;
             case "disabled":
@@ -71,20 +71,20 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
+                        ? v2_DesignToken.Button.Danger.Primary
                         : Color.Primary};
                     :hover,
                     :active,
                     :focus {
                         color: ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Hover
+                            ? v2_DesignToken.Button.Danger.Hover
                             : Color.Secondary};
                     }
                 `;
             default:
                 return css`
                     background-color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.BackgroundColor
+                        ? v2_DesignToken.Button.Danger.BackgroundColor
                         : Color.Primary};
                     border: 1px solid transparent;
 
@@ -128,7 +128,7 @@ export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     margin-right: 0.5rem;
     ${(props) => {
         let color = props.$buttonIsDanger
-            ? DesignToken.Button.Danger.Primary
+            ? v2_DesignToken.Button.Danger.Primary
             : Color.Primary(props);
         switch (props.$buttonStyle) {
             case "secondary":

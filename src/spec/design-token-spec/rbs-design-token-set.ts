@@ -1,8 +1,8 @@
 import { css } from "styled-components";
 import { Color } from "../../color/color";
-import { DesignTokenSet } from "../../design-token/types";
+import { v2_DesignTokenSet } from "../../v2_design-token/types";
 
-export const RBSDesignTokenSet: DesignTokenSet = {
+export const RBSDesignTokenSet: v2_DesignTokenSet = {
     InputBoxShadow: css`
         inset 0 0 3px 0px ${Color.Shadow.Accent}
     `,

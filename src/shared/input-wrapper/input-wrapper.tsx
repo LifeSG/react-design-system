@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
-import { DesignToken } from "../../design-token";
+import { v2_DesignToken } from "../../v2_design-token";
 import { TextStyleHelper } from "../../text";
 import { DropdownVariantType } from "../dropdown-list/types";
 
@@ -25,7 +25,7 @@ export interface InputStyleProps {
 // =============================================================================
 const defaultFocusCss = css`
     border: 1px solid ${Color.Accent.Light[1]};
-    box-shadow: ${DesignToken.InputBoxShadow};
+    box-shadow: ${v2_DesignToken.InputBoxShadow};
 `;
 
 const readOnlyFocusCss = css`
@@ -40,7 +40,7 @@ const disabledFocusCss = css`
 
 const errorFocusCss = css`
     border: 1px solid ${Color.Validation.Red.Border};
-    box-shadow: ${DesignToken.InputErrorBoxShadow};
+    box-shadow: ${v2_DesignToken.InputErrorBoxShadow};
 `;
 
 /**

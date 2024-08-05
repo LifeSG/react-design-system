@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { DesignToken } from "../design-token";
+import { v2_DesignToken } from "../v2_design-token";
 import { TextStyleHelper } from "../text";
 import { Transition } from "../transition";
 
@@ -36,7 +36,7 @@ export const Element = styled.textarea<StyleProps>`
     :active {
         outline: none;
         border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+        box-shadow: ${v2_DesignToken.InputBoxShadow};
     }
 
     ::placeholder,
@@ -76,7 +76,7 @@ export const Element = styled.textarea<StyleProps>`
                 :focus,
                 :active {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                    box-shadow: ${v2_DesignToken.InputErrorBoxShadow};
                 }
             `;
         }

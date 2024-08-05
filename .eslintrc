@@ -73,7 +73,8 @@
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/naming-convention": [
-            "error",
+            "off",
+            // changed from error to off for consistency for deprecating to "v2_"
             {
                 "selector": ["interface", "class"],
                 "format": ["PascalCase"]
