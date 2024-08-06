@@ -1,10 +1,24 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
-import * as babel from "@babel/core";
 
 const componentMap = [
     {
         oldName: "DesignToken",
         newName: "v2_DesignToken",
+        newPath: "v2_design-token",
+    },
+    {
+        oldName: "DesignTokenSet",
+        newName: "v2_DesignTokenSet",
+        newPath: "v2_design-token",
+    },
+    {
+        oldName: "CssValue",
+        newName: "v2_CssValue",
+        newPath: "v2_design-token",
+    },
+    {
+        oldName: "DesignTokenSetOptions",
+        newName: "v2_DesignTokenSetOptions",
         newPath: "v2_design-token",
     },
     {
@@ -26,21 +40,7 @@ const componentMap = [
 
 export default function transformer(file: FileInfo, api: API, options: any) {
     const j: JSCodeshift = api.jscodeshift;
-
-    // babel parser
-    const source = j(file.source, {
-        parser: {
-            parse: (source: string) =>
-                babel.parse(source, {
-                    sourceType: "module",
-                    presets: [
-                        "@babel/preset-typescript",
-                        "@babel/preset-react",
-                    ],
-                    plugins: [],
-                }),
-        },
-    });
+    const source = j(file.source);
 
     const componentsToChange = new Set();
 

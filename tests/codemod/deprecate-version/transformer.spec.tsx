@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
-import { expectedOutputCode, inputCode } from "./testData";
+import { expectedOutputCode, inputCode } from "./test-data";
 
 describe("Codemod Transformer for updating version", () => {
     const inputPath = path.join(__dirname, "input.tsx");
@@ -31,8 +31,6 @@ describe("Codemod Transformer for updating version", () => {
         execSync(
             `jscodeshift -t ../react-design-system/codemods/deprecate-version ${outputPath}`
         );
-
-        // execSync(`jscodeshift -t ../../codemods/v2_version_change.ts ${outputPath}`);
 
         // check the transformed code
         const transformedCode = fs.readFileSync(outputPath, "utf8");
