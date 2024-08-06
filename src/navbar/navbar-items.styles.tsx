@@ -1,6 +1,6 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
@@ -73,23 +73,23 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     position: relative;
     align-items: center;
     text-align: center;
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
     height: 100%;
     padding: 0 0.5rem;
 
     :active,
     :focus {
-        color: ${Color.Neutral[1]};
+        color: ${v2_Color.Neutral[1]};
     }
 
     ${v2_MediaQuery.MaxWidth.tablet} {
-        color: ${Color.Neutral[1]};
+        color: ${v2_Color.Neutral[1]};
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
         :hover {
-            color: ${Color.Neutral[1]};
+            color: ${v2_Color.Neutral[1]};
         }
     }
 `;
@@ -111,7 +111,7 @@ export const LinkIndicator = styled.div`
     height: 0.25rem;
     left: 0.5rem;
     right: 0.5rem;
-    background-color: ${Color.Primary};
+    background-color: ${v2_Color.Primary};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         left: 0;
@@ -120,7 +120,7 @@ export const LinkIndicator = styled.div`
         bottom: 0;
         height: 100%;
         width: 0.25rem;
-        background-color: ${Color.Primary};
+        background-color: ${v2_Color.Primary};
     }
 `;
 
@@ -139,8 +139,8 @@ export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
 export const ChevronIcon = styled(ChevronUpIcon)`
     height: 1.25rem;
     width: 1.25rem;
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
     :hover {
-        color: ${Color.Neutral[1]};
+        color: ${v2_Color.Neutral[1]};
     }
 `;

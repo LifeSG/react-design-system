@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { InputGroup } from "../input-group";
 import { Text, TextStyleHelper } from "../text";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
@@ -33,8 +33,8 @@ export const IconContainer = styled.div<IconProps>`
     cursor: ${({ $isDisabled }) => (!$isDisabled ? "pointer" : "initial")};
     color: ${({
         $isDisabled,
-        $inactiveColor = Color.Neutral[3],
-        $activeColor = Color.Primary,
+        $inactiveColor = v2_Color.Neutral[3],
+        $activeColor = v2_Color.Primary,
     }) => ($isDisabled ? $inactiveColor : $activeColor)};
 
     svg {
@@ -53,7 +53,7 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const LoadingLabel = styled(Text.Body)`
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
@@ -62,7 +62,7 @@ export const Spinner = styled(ComponentLoadingSpinner)`
     #inner2,
     #inner3,
     #inner4 {
-        border-color: ${Color.Neutral[3]} transparent transparent transparent;
+        border-color: ${v2_Color.Neutral[3]} transparent transparent transparent;
     }
 `;
 
@@ -71,7 +71,7 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 // -----------------------------------------------------------------------------
 
 export const TryAgainLabel = styled(Text.Body)`
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
     text-decoration: underline;
 `;
 
@@ -82,14 +82,14 @@ export const ErrorTextContainer = styled.div`
 `;
 
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
-    color: ${Color.Validation.Orange.Icon};
+    color: ${v2_Color.Validation.Orange.Icon};
     margin-right: 0.5rem;
     height: 1.125rem;
     width: 1.125rem;
 `;
 
 export const ErrorLabel = styled(Text.Body)`
-    color: ${Color.Validation.Orange.Text};
+    color: ${v2_Color.Validation.Orange.Text};
 `;
 
 export const ClickableErrorWrapper = styled.button`
@@ -106,7 +106,7 @@ export const ClickableErrorWrapper = styled.button`
     :active,
     :focus {
         ${TryAgainLabel} {
-            color: ${Color.Secondary};
+            color: ${v2_Color.Secondary};
         }
     }
 `;

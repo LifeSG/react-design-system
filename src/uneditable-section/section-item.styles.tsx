@@ -1,6 +1,6 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
@@ -50,7 +50,7 @@ export const IconContainer = styled.div`
     height: 100%;
     align-items: center;
     justify-content: center;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
     margin-left: 0.5rem;
 
     svg {
@@ -61,7 +61,7 @@ export const IconContainer = styled.div`
 
 export const Clickable = styled.button`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
     border: none;
     background: transparent;
     padding: 0;
@@ -81,7 +81,7 @@ export const Clickable = styled.button`
 // LOADING DISPLAY
 // -----------------------------------------------------------------------------
 export const LoadingLabel = styled.span`
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
@@ -90,7 +90,7 @@ export const Spinner = styled(ComponentLoadingSpinner)`
     #inner2,
     #inner3,
     #inner4 {
-        border-color: ${Color.Neutral[3]} transparent transparent transparent;
+        border-color: ${v2_Color.Neutral[3]} transparent transparent transparent;
     }
 `;
 
@@ -98,19 +98,19 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 // ERROR DISPLAY
 // -----------------------------------------------------------------------------
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
-    color: ${Color.Validation.Orange.Icon};
+    color: ${v2_Color.Validation.Orange.Icon};
     margin-right: 0.5rem;
     height: 1.125rem;
     width: 1.125rem;
 `;
 
 export const ErrorLabel = styled.span`
-    color: ${Color.Validation.Orange.Text};
+    color: ${v2_Color.Validation.Orange.Text};
 `;
 
 export const TryAgainLabel = styled.span`
     ${TextStyleHelper.getTextStyle("Body", "semibold")}
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
     text-decoration: underline;
     margin-left: 0.5rem;
 `;

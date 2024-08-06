@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Color } from "../../src/color";
+import { v2_Color } from "../../src/v2_color";
 import { v2_MediaQuery } from "../../src/v2_media";
 import { withPopover } from "../../src/popover";
 import { Text } from "../../src/text";
@@ -37,7 +37,7 @@ export const Item = styled.div`
 
 export const CustomDiv = styled.div`
     padding: 1rem;
-    background: ${Color.Neutral[6]};
+    background: ${v2_Color.Neutral[6]};
     border-radius: 4px;
 `;
 

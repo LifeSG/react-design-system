@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
+import { v2_Color } from "../v2_color/color";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 import { AlertSizeType, AlertType } from "./types";
@@ -35,28 +35,28 @@ export const Wrapper = styled.div<StyleProps>`
         let borderColor: string;
         switch (props.$type) {
             case "error":
-                backgroundColor = Color.Validation.Red.Background(props);
-                borderColor = Color.Validation.Red.Border(props);
+                backgroundColor = v2_Color.Validation.Red.Background(props);
+                borderColor = v2_Color.Validation.Red.Border(props);
                 break;
             case "success":
-                backgroundColor = Color.Validation.Green.Background(props);
-                borderColor = Color.Validation.Green.Border(props);
+                backgroundColor = v2_Color.Validation.Green.Background(props);
+                borderColor = v2_Color.Validation.Green.Border(props);
                 break;
             case "warning":
-                backgroundColor = Color.Validation.Orange.Background(props);
-                borderColor = Color.Validation.Orange.Border(props);
+                backgroundColor = v2_Color.Validation.Orange.Background(props);
+                borderColor = v2_Color.Validation.Orange.Border(props);
                 break;
             case "info":
-                backgroundColor = Color.Validation.Blue.Background(props);
-                borderColor = Color.Validation.Blue.Border(props);
+                backgroundColor = v2_Color.Validation.Blue.Background(props);
+                borderColor = v2_Color.Validation.Blue.Border(props);
                 break;
             case "description":
-                backgroundColor = Color.Neutral[7](props);
-                borderColor = Color.Neutral[4](props);
+                backgroundColor = v2_Color.Neutral[7](props);
+                borderColor = v2_Color.Neutral[4](props);
                 break;
             default:
-                backgroundColor = Color.Validation.Orange.Background(props);
-                borderColor = Color.Validation.Orange.Border(props);
+                backgroundColor = v2_Color.Validation.Orange.Background(props);
+                borderColor = v2_Color.Validation.Orange.Border(props);
                 break;
         }
 
@@ -66,7 +66,7 @@ export const Wrapper = styled.div<StyleProps>`
         `;
     }}
 
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
     ${(props) => {
         if (props.$sizeType === "small") {
             return applyHtmlContentStyle({ textSize: "H6" });
@@ -92,22 +92,22 @@ export const AlertIconWrapper = styled.div<StyleProps>`
         const iconSize = props.$sizeType === "small" ? "1.25rem" : "1.5rem";
         switch (props.$type) {
             case "error":
-                iconColor = Color.Validation.Red.Icon(props);
+                iconColor = v2_Color.Validation.Red.Icon(props);
                 break;
             case "success":
-                iconColor = Color.Validation.Green.Icon(props);
+                iconColor = v2_Color.Validation.Green.Icon(props);
                 break;
             case "warning":
-                iconColor = Color.Validation.Orange.Icon(props);
+                iconColor = v2_Color.Validation.Orange.Icon(props);
                 break;
             case "info":
-                iconColor = Color.Validation.Blue.Icon(props);
+                iconColor = v2_Color.Validation.Blue.Icon(props);
                 break;
             case "description":
-                iconColor = Color.Neutral[4](props);
+                iconColor = v2_Color.Neutral[4](props);
                 break;
             default:
-                iconColor = Color.Validation.Orange.Icon(props);
+                iconColor = v2_Color.Validation.Orange.Icon(props);
                 break;
         }
 
@@ -138,13 +138,13 @@ export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
     display: flex;
     align-items: center;
     align-self: flex-start;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 
     svg {
         height: 1rem;
         width: 1rem;
         margin-left: 0.25rem;
-        color: ${Color.Primary};
+        color: ${v2_Color.Primary};
     }
 `;
 
@@ -202,7 +202,7 @@ export const ShowMoreButton = styled.button<StyleProps>`
     border: none;
     background: transparent;
 
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 `;
 
 export const ChevronIcon = styled(ChevronDownIcon)<ShowMoreIconStyleProps>`

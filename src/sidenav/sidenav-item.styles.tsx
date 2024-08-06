@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Text, TextStyleHelper } from "../text";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { Button } from "../button";
 
 //=============================================================================
@@ -46,13 +46,13 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
     :focus {
         span {
             div {
-                background-color: ${Color.Accent.Light[5]};
-                color: ${Color.Primary} !important;
+                background-color: ${v2_Color.Accent.Light[5]};
+                color: ${v2_Color.Primary} !important;
             }
 
             span {
                 ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                color: ${Color.Primary} !important;
+                color: ${v2_Color.Primary} !important;
             }
         }
     }
@@ -62,12 +62,12 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         css`
             span {
                 div {
-                    background-color: ${Color.Accent.Light[5]};
+                    background-color: ${v2_Color.Accent.Light[5]};
                 }
 
                 span {
                     ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                    color: ${Color.Primary};
+                    color: ${v2_Color.Primary};
                 }
             }
         `}

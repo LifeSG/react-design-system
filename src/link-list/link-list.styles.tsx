@@ -3,7 +3,7 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { Text } from "../text";
 
 // =============================================================================
@@ -20,20 +20,20 @@ interface ToggleStyleProps {
 const iconStyle = css`
     height: 1.125rem;
     width: 1.125rem;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 `;
 
 export const Container = styled.div`
-    border-top: 1px solid ${Color.Neutral[5]};
-    border-bottom: 1px solid ${Color.Neutral[5]};
+    border-top: 1px solid ${v2_Color.Neutral[5]};
+    border-bottom: 1px solid ${v2_Color.Neutral[5]};
 `;
 
 export const ItemTitleDefault = styled(Text.H3)`
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
     margin-bottom: 0.5rem;
 `;
 export const ItemTitleSmall = styled(Text.Body)`
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 `;
 
 export const ItemIcon = styled(ChevronRightIcon)`
@@ -48,14 +48,14 @@ export const Item = styled.a`
     min-height: 4rem;
 
     :not(:last-of-type) {
-        border-bottom: 1px solid ${Color.Neutral[5]};
+        border-bottom: 1px solid ${v2_Color.Neutral[5]};
     }
 
     :hover {
         ${ItemTitleDefault},
         ${ItemTitleSmall},
         ${ItemIcon} {
-            color: ${Color.PrimaryDark};
+            color: ${v2_Color.PrimaryDark};
         }
     }
 `;
@@ -76,11 +76,11 @@ export const Expandable = styled(animated.div)`
 `;
 
 export const ExpandableChild = styled.div`
-    border-top: 1px solid ${Color.Neutral[5]};
+    border-top: 1px solid ${v2_Color.Neutral[5]};
 `;
 
 export const ToggleButtonLabel = styled(Text.H5)`
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
     margin-right: 0.5rem;
 `;
 
@@ -101,13 +101,13 @@ export const ToggleButton = styled.button<ToggleStyleProps>`
     background: none;
     cursor: pointer;
     transition: border-width 300ms linear;
-    border-top: 1px solid ${Color.Neutral[5]};
+    border-top: 1px solid ${v2_Color.Neutral[5]};
 
     :hover {
         ${ToggleButtonLabel},
         ${ViewMoreIcon},
         ${ViewLessIcon} {
-            color: ${Color.PrimaryDark};
+            color: ${v2_Color.PrimaryDark};
         }
     }
 `;

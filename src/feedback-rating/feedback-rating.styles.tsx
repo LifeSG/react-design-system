@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 
 export const Image = styled.img`
     width: 9.5rem;
@@ -14,8 +14,8 @@ export const Image = styled.img`
 `;
 
 export const MainContainer = styled.div`
-    border-top: 1px solid ${Color.Neutral[5]};
-    border-bottom: 1px solid ${Color.Neutral[5]};
+    border-top: 1px solid ${v2_Color.Neutral[5]};
+    border-bottom: 1px solid ${v2_Color.Neutral[5]};
     display: flex;
     flex-direction: row;
     align-items: center;

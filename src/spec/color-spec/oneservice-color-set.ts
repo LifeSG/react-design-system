@@ -1,6 +1,6 @@
-import { ColorSet, ValidationTypes } from "../../color/types";
+import { v2_ColorSet, v2_ValidationTypes } from "../../v2_color/types";
 
-export const OneServiceColorSet: ColorSet = {
+export const OneServiceColorSet: v2_ColorSet = {
     Brand: {
         1: "#009F97",
         2: "#49C3CA",
@@ -63,7 +63,7 @@ export const OneServiceColorSet: ColorSet = {
             Border: "#84B7DB",
             Background: "#E8F4FA", // Validation Background
         },
-    } as ValidationTypes,
+    } as v2_ValidationTypes,
     Shadow: {
         Accent: "rgba(45, 121, 144, 0.5)",
         Red: "rgba(221, 102, 102, 0.8)",

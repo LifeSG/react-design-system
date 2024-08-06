@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { TextStyleHelper } from "../../text/helper";
 import { Text } from "../../text/text";
 import { MonthVariant } from "./internal-calendar-month";
@@ -58,8 +58,8 @@ export const MonthCell = styled.div<StyleProps>`
             return css`
                 cursor: pointer;
                 &:hover {
-                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                    border: 1px solid ${Color.Accent.Light[1]};
+                    box-shadow: 0px 0px 4px 1px ${v2_Color.Shadow.Accent};
+                    border: 1px solid ${v2_Color.Accent.Light[1]};
                 }
             `;
         }
@@ -74,12 +74,12 @@ export const MonthCell = styled.div<StyleProps>`
         switch (props.$variant) {
             case "current-month":
                 return css`
-                    background-color: ${Color.Accent.Light[6](props)};
+                    background-color: ${v2_Color.Accent.Light[6](props)};
                 `;
             case "selected-month":
                 return css`
-                    background-color: ${Color.Accent.Light[5](props)};
-                    border: 1px solid ${Color.Primary(props)};
+                    background-color: ${v2_Color.Accent.Light[5](props)};
+                    border: 1px solid ${v2_Color.Primary(props)};
                 `;
             case "default":
                 break;
@@ -91,19 +91,19 @@ export const CellLabel = styled(Text.H5)<StyleProps>`
     ${(props) => {
         if (props.$disabledDisplay) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${v2_Color.Neutral[4]};
             `;
         }
 
         switch (props.$variant) {
             case "current-month":
                 return css`
-                    color: ${Color.Neutral[3](props)};
+                    color: ${v2_Color.Neutral[3](props)};
                 `;
             case "selected-month":
                 return css`
                     ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${Color.Primary(props)};
+                    color: ${v2_Color.Primary(props)};
                 `;
             case "default":
                 break;

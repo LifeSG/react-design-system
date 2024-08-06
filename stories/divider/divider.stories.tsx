@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Color } from "src/color";
+import { v2_Color } from "src/v2_color";
 import { Divider } from "src/divider";
 import { Layout } from "src/layout";
 import { DisplayText, Wrapper } from "./doc-elements";
@@ -84,13 +84,13 @@ export const Customisations: StoryObj<Component> = {
                 </DisplayText>
                 <Divider
                     layoutType="grid"
-                    color={Color.Primary}
+                    color={v2_Color.Primary}
                     style={{ marginBottom: "1.5rem" }}
                 />
                 <Divider
                     layoutType="grid"
                     lineStyle="dashed"
-                    color={Color.Primary}
+                    color={v2_Color.Primary}
                     style={{ marginBottom: "1.5rem" }}
                 />
                 <DisplayText>Changing the thickness</DisplayText>

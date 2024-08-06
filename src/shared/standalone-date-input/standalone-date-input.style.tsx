@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { BasicInput } from "../input-wrapper/input-wrapper";
 import { TextStyleHelper } from "../../text/helper";
 import { Text } from "../../text/text";
@@ -41,7 +41,7 @@ export const InputContainer = styled.div<InputContainerStyleProps>`
         if (props.$hover) {
             return css`
                 ${BaseInput}, ${Divider} {
-                    color: ${Color.Neutral[4]};
+                    color: ${v2_Color.Neutral[4]};
                 }
             `;
         }
@@ -71,7 +71,7 @@ export const Divider = styled(Text.Body)<DividerStyleProps>`
     ${(props) => {
         if (props.$inactive) {
             return css`
-                color: ${Color.Neutral[3](props)};
+                color: ${v2_Color.Neutral[3](props)};
             `;
         }
     }}
@@ -79,8 +79,8 @@ export const Divider = styled(Text.Body)<DividerStyleProps>`
 
 export const Placeholder = styled.div<PlaceholderStyleProps>`
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    background-color: ${Color.Neutral[8]};
-    color: ${Color.Neutral[3]};
+    background-color: ${v2_Color.Neutral[8]};
+    color: ${v2_Color.Neutral[3]};
     position: absolute;
     display: flex;
     align-items: center;
@@ -90,7 +90,7 @@ export const Placeholder = styled.div<PlaceholderStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                background-color: ${Color.Neutral[6](props)};
+                background-color: ${v2_Color.Neutral[6](props)};
                 cursor: not-allowed;
             `;
         } else if (props.$hide) {

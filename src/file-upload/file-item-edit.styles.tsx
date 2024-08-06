@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { v2_MediaQuery } from "../v2_media/media";
 import { Button } from "../button/button";
 import { Text } from "../text/text";
-import { Color } from "../color/color";
+import { v2_Color } from "../v2_color/color";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -21,7 +21,7 @@ export const Item = styled.li`
     background: transparent;
 
     :not(:last-child) {
-        border-bottom: 1px solid ${Color.Neutral[5]};
+        border-bottom: 1px solid ${v2_Color.Neutral[5]};
     }
 `;
 

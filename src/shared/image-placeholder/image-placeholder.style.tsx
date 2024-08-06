@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 
 export const Placeholder = styled.div`
-    background-color: ${Color.Neutral[6]};
+    background-color: ${v2_Color.Neutral[6]};
     display: flex;
     align-items: center;
     justify-content: center;

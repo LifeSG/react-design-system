@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { ErrorDisplay } from "../error-display";
 import { v2_DesignToken } from "../v2_design-token";
 import { Text } from "../text";
@@ -44,8 +44,8 @@ interface ActionBarProps {
 // =============================================================================
 // STYLES CONSTANTS
 // =============================================================================
-const borderColor = Color.Neutral[5];
-const fontColor = Color.Neutral[1];
+const borderColor = v2_Color.Neutral[5];
+const fontColor = v2_Color.Neutral[1];
 
 // =============================================================================
 // STYLES
@@ -179,7 +179,7 @@ export const HeaderCellWrapper = styled.div`
     align-items: center;
 
     svg {
-        color: ${Color.Neutral[1]};
+        color: ${v2_Color.Neutral[1]};
         margin-left: 0.5rem;
     }
 `;

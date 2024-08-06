@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { Text, TextStyleHelper } from "../text";
 import { v2_DesignToken } from "../v2_design-token";
@@ -24,7 +24,7 @@ export const Wrapper = styled.ul`
     position: absolute;
     max-height: 20rem;
 
-    background: ${Color.Neutral[8]};
+    background: ${v2_Color.Neutral[8]};
     border-radius: 0 0 0.5rem 0.5rem;
     box-shadow: ${v2_DesignToken.ElevationBoxShadow};
 `;
@@ -34,7 +34,7 @@ export const MobileWrapper = styled.ul`
     list-style: none;
 
     ${v2_MediaQuery.MaxWidth.tablet} {
-        border-left: 0.25rem solid ${Color.Primary};
+        border-left: 0.25rem solid ${v2_Color.Primary};
         display: flex;
         flex-direction: column;
     }
@@ -51,7 +51,7 @@ export const Link = styled(Text.Hyperlink.Small)`
     position: relative;
     align-items: flex-start;
     text-align: left;
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
 
     padding: 1px 1rem;
 
@@ -63,10 +63,10 @@ export const Link = styled(Text.Hyperlink.Small)`
 
     :active,
     :focus {
-        color: ${Color.Primary};
+        color: ${v2_Color.Primary};
     }
     :hover {
-        color: ${Color.Accent.Light[1]};
+        color: ${v2_Color.Accent.Light[1]};
     }
 
     ${v2_MediaQuery.MaxWidth.tablet} {

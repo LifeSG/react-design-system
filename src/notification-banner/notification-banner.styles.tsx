@@ -1,6 +1,6 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { Layout } from "../layout";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text, TextStyleHelper } from "../text";
@@ -23,19 +23,19 @@ interface ContentStyleProps {
 // STYLING
 // =============================================================================
 const commonLinkStyle = css`
-    color: ${Color.Validation.Orange.Icon};
+    color: ${v2_Color.Validation.Orange.Icon};
 
     svg {
-        color: ${Color.Validation.Orange.Icon};
+        color: ${v2_Color.Validation.Orange.Icon};
     }
 
     :hover,
     :active,
     :visited,
     :focus {
-        color: ${Color.Validation.Orange.Icon};
+        color: ${v2_Color.Validation.Orange.Icon};
         svg {
-            color: ${Color.Validation.Orange.Icon};
+            color: ${v2_Color.Validation.Orange.Icon};
         }
     }
 `;
@@ -46,7 +46,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     top: 0;
     width: 100%;
     transition: ${Transition.Base};
-    background: ${Color.Neutral[2]};
+    background: ${v2_Color.Neutral[2]};
     z-index: 25;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
@@ -69,7 +69,7 @@ export const Content = styled.div<ContentStyleProps>`
     width: 100%;
 
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[8]};
+    color: ${v2_Color.Neutral[8]};
 
     p {
         display: inline-block;
@@ -77,7 +77,7 @@ export const Content = styled.div<ContentStyleProps>`
 
     strong {
         ${TextStyleHelper.getFontFamily("Body", "semibold")}
-        color: ${Color.Neutral[8]};
+        color: ${v2_Color.Neutral[8]};
     }
 
     a {
@@ -113,7 +113,7 @@ export const StyledIconButton = styled(ClickableIcon)`
 export const StyledIcon = styled(CrossIcon)`
     height: 1.875rem;
     width: 1.875rem;
-    color: ${Color.Neutral[8]};
+    color: ${v2_Color.Neutral[8]};
 `;
 
 export const ActionButton = styled.button`
@@ -125,7 +125,7 @@ export const ActionButton = styled.button`
 
     border: none;
     background: transparent;
-    color: ${Color.Validation.Orange.Icon};
+    color: ${v2_Color.Validation.Orange.Icon};
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
 
     cursor: pointer;

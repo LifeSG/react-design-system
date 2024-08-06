@@ -1,4 +1,4 @@
-import { ColorSet, ColorSetOptions } from "../color/types";
+import { v2_ColorSet, v2_ColorSetOptions } from "../v2_color/types";
 
 import {
     v2_DesignTokenSet,
@@ -19,7 +19,7 @@ export type ColorScheme =
     | "ccube"
     | "oneservice";
 export type ColorCollectionsMap = {
-    [key in ColorScheme]: ColorSet;
+    [key in ColorScheme]: v2_ColorSet;
 };
 
 // =============================================================================
@@ -56,7 +56,7 @@ export enum ThemeContextKeys {
 
 export interface ThemeSpecOptions {
     /** for color customisation, can specify subset of set */
-    color?: ColorSetOptions | undefined;
+    color?: v2_ColorSetOptions | undefined;
     textStyle?: TextStyleSetOptionsType | undefined;
     designToken?: v2_DesignTokenSetOptions | undefined;
 }

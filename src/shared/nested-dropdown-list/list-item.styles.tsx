@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { Checkbox } from "../../checkbox";
 import { TextStyleHelper } from "../../text";
 import { TruncateType } from "./types";
@@ -61,19 +61,19 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     :visited,
     :focus,
     :active {
-        outline-color: ${Color.Accent.Light[3]};
+        outline-color: ${v2_Color.Accent.Light[3]};
     }
 
     :hover {
         background-color: ${(props) =>
-            props.$multiSelect ? "transparent" : Color.Accent.Light[5]};
+            props.$multiSelect ? "transparent" : v2_Color.Accent.Light[5]};
     }
 
     ${(props) => {
         const { $selected, $multiSelect } = props;
         if (!$multiSelect && $selected) {
             return css`
-                background: ${Color.Accent.Light[5]};
+                background: ${v2_Color.Accent.Light[5]};
             `;
         }
     }}
@@ -179,12 +179,12 @@ export const ArrowButton = styled(IconButton)<ArrowButtonProps>`
 `;
 
 export const TriangleIcon = styled(TriangleForwardFillIcon)`
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 `;
 
 export const TitleButton = styled.button`
     ${TextStyleHelper.getTextStyle("H4", "semibold")}
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
     text-align: left;
     line-height: 1.625rem;
     margin-left: 0.5rem;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Layout } from "../layout";
 import { v2_MediaQuery } from "../v2_media";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
@@ -9,11 +9,11 @@ import { Text, TextStyleHelper } from "../text";
 // =============================================================================
 
 export const BaseFooter = styled.footer`
-    background: ${Color.Neutral[7]};
+    background: ${v2_Color.Neutral[7]};
 `;
 
 export const StyledFooterLink = styled(Text.Hyperlink.Small)`
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
 `;
 
 // =============================================================================
@@ -22,7 +22,7 @@ export const StyledFooterLink = styled(Text.Hyperlink.Small)`
 
 export const TopSection = styled(Layout.Content)`
     padding: 4rem 0;
-    border-bottom: 1px solid ${Color.Neutral[5]};
+    border-bottom: 1px solid ${v2_Color.Neutral[5]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         padding: 2rem 0;
@@ -114,7 +114,7 @@ export const MobileOnlyBorder = styled.div`
     ${v2_MediaQuery.MaxWidth.tablet} {
         display: block;
         height: 1px;
-        background: ${Color.Neutral[6]};
+        background: ${v2_Color.Neutral[6]};
     }
 `;
 
@@ -166,20 +166,20 @@ export const CopyrightSection = styled(BottomSectionContent)`
 
 export const DisclaimerTextLink = styled(Text.Hyperlink.Small)`
     ${TextStyleHelper.getTextStyle("XSmall", "regular")}
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
     &:not(:last-child) {
         margin-right: 1.5rem;
     }
 
     svg {
-        color: ${Color.Neutral[1]};
+        color: ${v2_Color.Neutral[1]};
         vertical-align: sub;
     }
 
     &:hover {
-        color: ${Color.Neutral[3]};
+        color: ${v2_Color.Neutral[3]};
         svg {
-            color: ${Color.Neutral[3]};
+            color: ${v2_Color.Neutral[3]};
         }
     }
 

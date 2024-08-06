@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { InboxIcon } from "@lifesg/react-icons/inbox";
 import { Text } from "../../src/text/text";
-import { Color } from "../../src/color";
+import { v2_Color } from "../../src/v2_color";
 import { Button } from "../../src/button";
 import React from "react";
 
@@ -25,7 +25,7 @@ export const DesktopCustomComponentWrapper = styled.div`
 `;
 
 export const SubLabel = styled(Text.H6)`
-    color: ${Color.Neutral[4]};
+    color: ${v2_Color.Neutral[4]};
 `;
 
 // =============================================================================

@@ -1,6 +1,6 @@
-import { ColorSet, ValidationTypes } from "../../color/types";
+import { v2_ColorSet, v2_ValidationTypes } from "../../v2_color/types";
 
-export const RBSColorSet: ColorSet = {
+export const RBSColorSet: v2_ColorSet = {
     Brand: {
         1: "#3E4DFF",
         2: "#AEACFF",
@@ -63,7 +63,7 @@ export const RBSColorSet: ColorSet = {
             Border: "#84B7DB",
             Background: "#E8F4FA",
         },
-    } as ValidationTypes,
+    } as v2_ValidationTypes,
     Shadow: {
         Accent: "rgba(90, 87, 255, 0.5)",
         Red: "rgba(221, 102, 102, 0.8)",

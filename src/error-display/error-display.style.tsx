@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { Text, TextStyleHelper } from "../text";
 
@@ -49,7 +49,7 @@ export const DescriptionContainer = styled.div`
         "Body",
         "regular"
     )} // Follow styling of Text.Body
-    color: ${Color.Neutral[1]}; // Follow styling of Text.Body
+    color: ${v2_Color.Neutral[1]}; // Follow styling of Text.Body
     text-align: center;
 
     strong {
@@ -58,12 +58,12 @@ export const DescriptionContainer = styled.div`
 
     a {
         ${TextStyleHelper.getTextStyle("Body", "semibold")}
-        color: ${Color.Primary};
+        color: ${v2_Color.Primary};
 
         :hover,
         :active,
         :focus {
-            color: ${Color.Secondary};
+            color: ${v2_Color.Secondary};
         }
     }
 `;

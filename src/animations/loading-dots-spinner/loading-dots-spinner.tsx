@@ -1,5 +1,5 @@
 import styled, { useTheme } from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { BaseTheme } from "../../theme";
 import { CustomisableAnimationProps } from "../types";
 import { LottieLoadingDotsSpinner } from "./lottie-animation";
@@ -10,7 +10,7 @@ export const LoadingDotsSpinner = ({
 }: CustomisableAnimationProps) => {
     const theme = useTheme();
     const animationColor =
-        color || Color.Primary({ theme: theme || BaseTheme });
+        color || v2_Color.Primary({ theme: theme || BaseTheme });
     return (
         <Container {...otherProps}>
             <LottieLoadingDotsSpinner color={animationColor} />

@@ -1,6 +1,6 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
+import { v2_Color } from "../v2_color/color";
 import { TextStyleHelper } from "./helper";
 import { TextLinkProps, TextLinkStyleProps, TextProps } from "./types";
 
@@ -13,7 +13,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -31,7 +31,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -49,7 +49,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -67,7 +67,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -85,7 +85,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -103,7 +103,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -121,7 +121,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -139,7 +139,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -157,7 +157,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -175,7 +175,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -193,7 +193,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -211,7 +211,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -229,7 +229,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -247,7 +247,7 @@ export namespace Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${Color.Neutral[1]};
+                color: ${v2_Color.Neutral[1]};
                 ${TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -273,16 +273,16 @@ const HyperlinkBase = styled.a<TextLinkStyleProps>`
     ${(props) => {
         return css`
             ${TextStyleHelper.getTextStyle(props.textStyle, props.weight)}
-            color: ${Color.Primary};
+            color: ${v2_Color.Primary};
             text-decoration: none;
 
             :hover,
             :active,
             :focus {
-                color: ${Color.Secondary};
+                color: ${v2_Color.Secondary};
 
                 svg {
-                    color: ${Color.Secondary};
+                    color: ${v2_Color.Secondary};
                 }
             }
         `;

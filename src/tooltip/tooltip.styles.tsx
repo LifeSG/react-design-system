@@ -1,6 +1,6 @@
 import { Card } from "src/card";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { Transition } from "../transition";
 import { TooltipPosition } from "./types";
@@ -143,7 +143,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         left: calc(50% - 10px);
                         border-style: solid;
                         border-width: 16px 8px 0 8px;
-                        border-color: ${Color.Neutral[8]} transparent
+                        border-color: ${v2_Color.Neutral[8]} transparent
                             transparent transparent;
                     }
                 `;
@@ -174,7 +174,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         right: -10%;
                         border-style: solid;
                         border-width: 8px 16px 8px 0;
-                        border-color: transparent ${Color.Neutral[8]}
+                        border-color: transparent ${v2_Color.Neutral[8]}
                             transparent transparent;
                     }
                 `;
@@ -206,7 +206,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         border-style: solid;
                         border-width: 8px 0 8px 16px;
                         border-color: transparent transparent transparent
-                            ${Color.Neutral[8]};
+                            ${v2_Color.Neutral[8]};
                     }
                 `;
             case "bottom":
@@ -237,7 +237,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         border-style: solid;
                         border-width: 0 8px 16px 8px;
                         border-color: transparent transparent
-                            ${Color.Neutral[8]} transparent;
+                            ${v2_Color.Neutral[8]} transparent;
                     }
                 `;
         }

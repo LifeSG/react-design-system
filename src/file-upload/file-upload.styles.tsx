@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
@@ -20,17 +20,17 @@ export const Title = styled(Text.H4)`
 `;
 
 export const TitleContainer = styled.div`
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
     ${applyHtmlContentStyle({ textSize: "Body" })}
 `;
 
 export const Description = styled(Text.BodySmall)`
     margin-bottom: 0;
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
 `;
 
 export const DescriptionContainer = styled.div`
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 `;
 
@@ -58,7 +58,7 @@ export const UploadButton = styled(Button.Small)`
 `;
 export const UploadButtonLabel = styled.label`
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
     margin-top: 0.5rem;
     width: 10rem;
     text-align: center;

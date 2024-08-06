@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { Color } from "../../src/color";
+import { v2_Color } from "../../src/v2_color";
 import { Text, TextStyleHelper } from "../../src/text";
 
 export interface TabAttribute {
@@ -62,8 +62,8 @@ const Wrapper = styled.div`
     flex-direction: column;
     width: 100%;
     border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    border: 1px solid ${Color.Neutral[6]};
+    background: ${v2_Color.Neutral[8]};
+    border: 1px solid ${v2_Color.Neutral[6]};
     box-shadow: rgb(0 0 0 / 10%) 0 1px 3px 0;
     padding: 0 0 1rem;
 `;
@@ -89,7 +89,7 @@ const Button = styled.button<StyleProps>`
                     bottom: -0.5rem;
                     left: 0;
                     width: 100%;
-                    background: ${Color.Primary(props)};
+                    background: ${v2_Color.Primary(props)};
                     height: 4px;
                 }
             `;

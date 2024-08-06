@@ -1,7 +1,7 @@
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../../button";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
 import { Text } from "../../text";
 import { Toggle } from "../../toggle";
@@ -22,7 +22,7 @@ export const AnimatedDiv = styled(animated.div)`
     top: 3.5rem;
     left: 0;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    background: ${Color.Neutral[8]};
+    background: ${v2_Color.Neutral[8]};
     border-radius: ${BORDER_RADIUS};
     overflow: hidden;
     z-index: 1;
@@ -104,7 +104,7 @@ export const InputContainer = styled.div`
 export const SwitchButton = styled(ClickableIcon)`
     width: 5rem;
     padding: 1rem 0;
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
 
     svg {
         height: 1rem;
@@ -112,7 +112,7 @@ export const SwitchButton = styled(ClickableIcon)`
     }
 
     &:hover {
-        color: ${Color.Primary};
+        color: ${v2_Color.Primary};
     }
 `;
 
@@ -135,13 +135,13 @@ export const TimeInput = styled(BasicInput)`
     height: 3rem;
     width: 5rem;
     text-align: center;
-    border: 1px solid ${Color.Neutral[5]};
-    background: ${Color.Neutral[8]};
+    border: 1px solid ${v2_Color.Neutral[5]};
+    background: ${v2_Color.Neutral[8]};
 
     :focus,
     :active {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
+        border: 1px solid ${v2_Color.Accent.Light[1]};
+        box-shadow: inset 0 0 5px 1px ${v2_Color.Shadow.Accent};
     }
 
     :focus::placeholder {

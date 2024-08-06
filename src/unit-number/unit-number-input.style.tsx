@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { AddOnContainer } from "../input-group/input-group.style";
 import { Input } from "../input/input";
 import { Text } from "../text/text";
@@ -62,7 +62,7 @@ export const UnitNumberDivider = styled(Text.Body)<LabelStyleProps>`
     ${(props) => {
         if (props.$inactive) {
             return css`
-                color: ${Color.Neutral[3]};
+                color: ${v2_Color.Neutral[3]};
             `;
         }
     }}
@@ -76,7 +76,7 @@ export const ReadOnlyLabel = styled(Text.Body)<LabelStyleProps>`
     ${(props) => {
         if (props.$inactive) {
             return css`
-                color: ${Color.Neutral[3]};
+                color: ${v2_Color.Neutral[3]};
             `;
         }
     }}

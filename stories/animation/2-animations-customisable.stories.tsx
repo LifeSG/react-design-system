@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { LoadingDotsSpinner } from "src/animations";
-import { Color } from "src/color";
+import { v2_Color } from "src/v2_color";
 import { BaseTheme } from "src/theme";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 
@@ -24,7 +24,7 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
                 <AnimationItem>
                     <LoadingDotsSpinner
                         id="custom-1"
-                        color={Color.Accent.Light[2]({ theme: BaseTheme })}
+                        color={v2_Color.Accent.Light[2]({ theme: BaseTheme })}
                     />
                 </AnimationItem>
             </AnimationDisplay>

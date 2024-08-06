@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { Text } from "../text";
 
@@ -45,7 +45,9 @@ export const IndicatorBar = styled.div<IndicatorProps>`
     border-radius: 0.25rem;
     ${(props) => {
         const { highlighted } = props;
-        const color = highlighted ? Color.Accent.Light[1] : Color.Neutral[6];
+        const color = highlighted
+            ? v2_Color.Accent.Light[1]
+            : v2_Color.Neutral[6];
         return `
             background-color: ${color(props)};
         `;
@@ -56,14 +58,14 @@ export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
     overflow-wrap: anywhere;
     ${(props) => {
         const { highlighted } = props;
-        const color = highlighted ? Color.Primary : Color.Neutral[3];
+        const color = highlighted ? v2_Color.Primary : v2_Color.Neutral[3];
         return `color: ${color(props)};`;
     }};
 `;
 
 export const IndicatorTitleMobile = styled(Text.BodySmall)`
     overflow-wrap: anywhere;
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
 `;
 
 export const Indicator = styled.div`

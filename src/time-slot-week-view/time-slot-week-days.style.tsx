@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { DayLabel } from "../shared/internal-calendar/standard";
 import { TextStyleHelper } from "../text";
 
@@ -10,7 +10,7 @@ export const DayLabelWeek = styled(DayLabel)`
             case "default":
                 return css`
                     ${TextStyleHelper.getFontFamily("H5", "semibold")}
-                    color: ${Color.Neutral[3]};
+                    color: ${v2_Color.Neutral[3]};
                 `;
         }
     }}
@@ -44,7 +44,7 @@ export const TimeSlotText = styled.div`
     align-items: center;
     text-align: center;
     max-width: 2.5rem;
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
     span {
         display: block;
     }

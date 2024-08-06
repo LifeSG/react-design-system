@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button/button";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { Input } from "../input";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
@@ -47,7 +47,7 @@ export const NavigationItem = styled(ClickableIcon)`
     justify-content: center;
     align-items: center;
     border-radius: 0.25rem;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 
     svg {
         height: 1.25rem;
@@ -55,13 +55,13 @@ export const NavigationItem = styled(ClickableIcon)`
     }
 
     &:disabled {
-        color: ${Color.Neutral[4]};
+        color: ${v2_Color.Neutral[4]};
         cursor: not-allowed;
     }
     :active,
     :focus {
         outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
+        box-shadow: inset 0px 0px 4px 1px ${v2_Color.Accent.Light[1]};
     }
 `;
 
@@ -71,7 +71,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     justify-content: center;
     align-items: center;
     border-radius: 0.25rem;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 
     svg {
         height: 1.25rem;
@@ -79,13 +79,13 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     }
 
     &:disabled {
-        color: ${Color.Neutral[4]};
+        color: ${v2_Color.Neutral[4]};
         cursor: not-allowed;
     }
     :active,
     :focus {
         outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
+        box-shadow: inset 0px 0px 4px 1px ${v2_Color.Accent.Light[1]};
     }
     ${(props) => {
         if (props.$position === "left") {
@@ -109,11 +109,11 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
 
 export const PageItem = styled(Button.Default)<StyleProps>`
     background: ${(props) =>
-        props.$selected ? Color.Primary : Color.Neutral[8]};
+        props.$selected ? v2_Color.Primary : v2_Color.Neutral[8]};
     border: 1px solid
-        ${(props) => (props.$selected ? Color.Primary : Color.Neutral[5])};
+        ${(props) => (props.$selected ? v2_Color.Primary : v2_Color.Neutral[5])};
     color: ${(props) =>
-        props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
+        props.$selected ? v2_Color.Neutral[8] : v2_Color.Neutral[1]};
 
     min-width: 2.5rem;
     height: 2.5rem;
@@ -125,7 +125,7 @@ export const PageItem = styled(Button.Default)<StyleProps>`
 
     span {
         color: ${(props) =>
-            props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
+            props.$selected ? v2_Color.Neutral[8] : v2_Color.Neutral[1]};
         ${(props) => {
             if (props.$selected) {
                 return css`
@@ -142,13 +142,13 @@ export const PageItem = styled(Button.Default)<StyleProps>`
         box-shadow: none;
 
         background: ${(props) =>
-            props.$selected ? Color.Primary : Color.Accent.Light[5]};
+            props.$selected ? v2_Color.Primary : v2_Color.Accent.Light[5]};
         border: 1px solid
             ${(props) =>
-                props.$selected ? Color.Primary : Color.Accent.Light[5]};
+                props.$selected ? v2_Color.Primary : v2_Color.Accent.Light[5]};
         span {
             color: ${(props) =>
-                props.$selected ? Color.Neutral[8] : Color.Primary};
+                props.$selected ? v2_Color.Neutral[8] : v2_Color.Primary};
             ${(props) => {
                 if (props.$selected) {
                     return css`
@@ -166,12 +166,12 @@ export const PageItem = styled(Button.Default)<StyleProps>`
     :active,
     :focus {
         background: ${(props) =>
-            props.$selected ? Color.Primary : Color.Neutral[8]};
+            props.$selected ? v2_Color.Primary : v2_Color.Neutral[8]};
         outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
+        box-shadow: inset 0px 0px 4px 1px ${v2_Color.Accent.Light[1]};
         span {
             color: ${(props) =>
-                props.$selected ? Color.Neutral[8] : Color.Primary};
+                props.$selected ? v2_Color.Neutral[8] : v2_Color.Primary};
 
             ${(props) => {
                 if (props.$selected) {
@@ -192,7 +192,7 @@ export const EllipsisItem = styled(ClickableIcon)`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
     padding: 0.4rem 0.5rem;
     border-radius: 0.25rem;
     white-space: nowrap;
@@ -204,14 +204,14 @@ export const EllipsisItem = styled(ClickableIcon)`
 
     :hover {
         svg {
-            color: ${Color.Neutral[3]};
+            color: ${v2_Color.Neutral[3]};
         }
     }
 
     :active,
     :focus {
         outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
+        box-shadow: inset 0px 0px 4px 1px ${v2_Color.Accent.Light[1]};
     }
 `;
 
@@ -231,7 +231,7 @@ export const PaginationMobileInput = styled.div`
     justify-content: center;
     margin: 0.625rem;
     align-items: center;
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
 
     display: flex;
     justify-content: center;
@@ -252,7 +252,7 @@ export const InputView = styled(Input)`
     width: 3.5rem;
     height: 2.5rem;
     border-radius: 0.25rem;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${v2_Color.Neutral[5]};
     padding: 0.5rem 0.5rem;
 
     input {
@@ -267,10 +267,10 @@ export const InputView = styled(Input)`
 export const Hover = styled.div`
     ${TextStyleHelper.getTextStyle("XSmall", 400)};
 
-    background-color: ${Color.Primary};
+    background-color: ${v2_Color.Primary};
     border: none;
     border-radius: 0.25rem;
-    color: ${Color.Neutral[8]};
+    color: ${v2_Color.Neutral[8]};
     align-items: center;
     position: fixed;
     display: flex;

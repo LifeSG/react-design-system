@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button/button";
-import { Color } from "../color/color";
+import { v2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text, TextStyleHelper } from "../text";
@@ -26,17 +26,19 @@ interface DividerStyleProps {
 
 export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
-        props.$collapsible ? Color.Neutral[7](props) : Color.Neutral[8](props)};
+        props.$collapsible
+            ? v2_Color.Neutral[7](props)
+            : v2_Color.Neutral[8](props)};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
-        background-color: ${Color.Neutral[7]};
+        background-color: ${v2_Color.Neutral[7]};
     }
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     display: ${(props) => (props.$showDivider ? "block" : "none")};
     height: 1px;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${v2_Color.Neutral[5]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
@@ -52,7 +54,7 @@ export const FilterItemHeader = styled.div`
     display: flex;
     align-items: center;
 
-    background-color: ${Color.Neutral[8]};
+    background-color: ${v2_Color.Neutral[8]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         background-color: transparent;
@@ -66,13 +68,13 @@ export const FilterItemExpandButton = styled(ClickableIcon)`
 export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
     height: 1.125rem;
     width: 1.125rem;
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
 
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
     transition: transform 300ms ease-in-out;
 
     &:hover {
-        color: ${Color.Neutral[2]};
+        color: ${v2_Color.Neutral[2]};
     }
 `;
 

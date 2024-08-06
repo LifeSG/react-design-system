@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { v2_DesignToken } from "../../v2_design-token";
 import { TextStyle, TextStyleHelper } from "../../text";
 import { Transition } from "../../transition";
@@ -65,7 +65,7 @@ export const baseSelectorCSS = css<SelectorStyleProps>`
     }
 
     :focus-visible {
-        outline: 2px solid ${Color.Accent.Light[3]};
+        outline: 2px solid ${v2_Color.Accent.Light[3]};
     }
 `;
 
@@ -96,12 +96,12 @@ const zindexPositionHide = keyframes`
 
 export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     position: relative;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${v2_Color.Neutral[5]};
     border-radius: ${BORDER_RADIUS};
-    background: ${Color.Neutral[8]};
+    background: ${v2_Color.Neutral[8]};
 
     :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
+        border: 1px solid ${v2_Color.Accent.Light[1]};
         box-shadow: ${v2_DesignToken.InputBoxShadow};
     }
 
@@ -124,14 +124,14 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     ${(props) => {
         if (props.disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${v2_Color.Neutral[6](props)};
 
                 ${Selector} {
                     cursor: not-allowed;
                 }
 
                 :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    border: 1px solid ${v2_Color.Neutral[5](props)};
                     box-shadow: none;
                 }
             `;
@@ -151,10 +151,10 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
             `;
         } else if (props.error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
+                border: 1px solid ${v2_Color.Validation.Red.Border(props)};
 
                 :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
+                    border: 1px solid ${v2_Color.Validation.Red.Border(props)};
                     box-shadow: ${v2_DesignToken.InputErrorBoxShadow};
                 }
             `;
@@ -169,7 +169,7 @@ export const IconContainer = styled.div<DropdownWrapperStyleProps>`
 `;
 
 export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
     ${(props) => {
         let size = TextStyle.Body.fontSize;
         if (props.$variant === "small") {
@@ -184,7 +184,7 @@ export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
 
 export const Divider = styled.div`
     height: 1px;
-    background: ${Color.Neutral[5]};
+    background: ${v2_Color.Neutral[5]};
     margin: 0 0.5rem;
 `;
 
@@ -220,5 +220,5 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${Color.Neutral[3]};
+    color: ${v2_Color.Neutral[3]};
 `;

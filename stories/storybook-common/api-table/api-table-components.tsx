@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { Color } from "../../../src/color";
+import { v2_Color } from "../../../src/v2_color";
 import { DefaultColProps, DescriptionColProps } from "./types";
 
 // =============================================================================
@@ -33,7 +33,7 @@ const StyledTable = styled.table`
     line-height: 1.5;
 
     a {
-        color: ${Color.Primary};
+        color: ${v2_Color.Primary};
         cursor: pointer;
         text-decoration: none;
     }
@@ -77,20 +77,20 @@ const StyledTable = styled.table`
     tbody {
         tr {
             border: none;
-            border-bottom: 1px solid ${Color.Neutral[6]};
+            border-bottom: 1px solid ${v2_Color.Neutral[6]};
             :nth-child(even) {
-                background: ${Color.Neutral[7]};
+                background: ${v2_Color.Neutral[7]};
             }
         }
     }
 
     thead {
         tr {
-            border-bottom: 2px solid ${Color.Primary};
+            border-bottom: 2px solid ${v2_Color.Primary};
         }
 
         th {
-            color: ${Color.Primary};
+            color: ${v2_Color.Primary};
         }
     }
 `;
@@ -110,7 +110,7 @@ export const Section = ({ children }: SectionProps) => (
 );
 
 const SectionRow = styled.tr`
-    background: ${Color.Neutral[3]} !important;
+    background: ${v2_Color.Neutral[3]} !important;
     color: white;
     font-weight: bold;
 `;
@@ -143,7 +143,7 @@ const Label = styled.td<NameColStyleProps>`
     ${(props) => {
         if (props.$isFunction) {
             return css`
-                color: ${Color.PrimaryDark};
+                color: ${v2_Color.PrimaryDark};
             `;
         }
     }}
@@ -153,13 +153,13 @@ const Mandatory = styled.td<NameColStyleProps>`
     font-weight: bold;
     :after {
         content: " *";
-        color: ${Color.Validation.Red.Text};
+        color: ${v2_Color.Validation.Red.Text};
     }
 
     ${(props) => {
         if (props.$isFunction) {
             return css`
-                color: ${Color.PrimaryDark};
+                color: ${v2_Color.PrimaryDark};
             `;
         }
     }}

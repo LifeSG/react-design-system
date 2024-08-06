@@ -1,6 +1,6 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { Text } from "../text";
 
 // =============================================================================
@@ -75,9 +75,9 @@ export const Knob = styled.div<ThumbStyleProps>`
         left: 50%;
         transform: translate(-50%, -50%);
 
-        background-color: ${Color.Neutral[8]};
+        background-color: ${v2_Color.Neutral[8]};
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-        border: 1px solid ${Color.Neutral[4]};
+        border: 1px solid ${v2_Color.Neutral[4]};
         border-radius: 50%;
     }
 `;
@@ -89,7 +89,7 @@ export const SliderThumb = styled.div`
     outline: none;
 
     :focus-visible ${Knob}:after {
-        border: 1px solid ${Color.Primary};
+        border: 1px solid ${v2_Color.Primary};
     }
 `;
 
@@ -103,7 +103,7 @@ export const SliderTrack = styled.div<TrackStyleProps>`
         if (props.$color && typeof props.$color === "function") {
             return props.$color(props);
         } else {
-            return props.$color || Color.Neutral[4](props);
+            return props.$color || v2_Color.Neutral[4](props);
         }
     }};
 `;

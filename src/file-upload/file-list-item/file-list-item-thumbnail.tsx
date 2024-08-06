@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { TextStyleHelper } from "../../text";
@@ -55,7 +55,7 @@ export const Thumbnail = styled(ImageWithFallback)`
     height: 6rem;
     aspect-ratio: 1;
     border-radius: 4px;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${v2_Color.Neutral[5]};
     object-fit: cover;
 
     ${v2_MediaQuery.MaxWidth.mobileL} {
@@ -72,8 +72,8 @@ export const ReplaceButton = styled.button`
     background: transparent;
     cursor: pointer;
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
     :hover {
-        color: ${Color.PrimaryDark};
+        color: ${v2_Color.PrimaryDark};
     }
 `;

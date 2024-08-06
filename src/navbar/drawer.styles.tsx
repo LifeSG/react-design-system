@@ -1,6 +1,6 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 
@@ -95,10 +95,10 @@ export const CloseButton = styled(ClickableIcon)`
     position: absolute;
     right: -0.25rem;
     bottom: 0.65rem;
-    color: ${Color.Neutral[1]};
+    color: ${v2_Color.Neutral[1]};
 
     :active,
     :focus {
-        color: ${Color.Primary};
+        color: ${v2_Color.Primary};
     }
 `;

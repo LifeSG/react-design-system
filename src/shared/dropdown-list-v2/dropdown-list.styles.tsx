@@ -3,7 +3,7 @@ import { SquareIcon } from "@lifesg/react-icons/square";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
 import { TextStyleHelper } from "../../text";
 import { DropdownVariantType } from "../dropdown-list/types";
@@ -34,9 +34,9 @@ interface ListItemStyleProps {
 
 export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${v2_Color.Neutral[5]};
     border-radius: 4px;
-    background: ${Color.Neutral[8]};
+    background: ${v2_Color.Neutral[8]};
 
     min-width: 23rem;
     ${(props) => props.$width && `width: ${props.$width}px;`}
@@ -58,7 +58,7 @@ export const Container = styled.div<ContainerStyleProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${Color.Neutral[4]};
+        background: ${v2_Color.Neutral[4]};
         border: 5px solid transparent;
         border-radius: 9999px;
         background-clip: padding-box;
@@ -85,12 +85,12 @@ export const ListItem = styled.li<ListItemStyleProps>`
     padding: 0.75rem 0.5rem;
     cursor: pointer;
 
-    outline-color: ${Color.Accent.Light[3]};
+    outline-color: ${v2_Color.Accent.Light[3]};
 
     ${(props) =>
         props.$active &&
         css`
-            background: ${Color.Accent.Light[5]};
+            background: ${v2_Color.Accent.Light[5]};
         `}
 `;
 
@@ -98,7 +98,7 @@ export const SelectedIndicator = styled(TickIcon)`
     flex-shrink: 0;
     height: 1.625rem;
     width: 1rem;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 `;
 
 export const UnselectedIndicator = styled.div`
@@ -111,14 +111,14 @@ export const CheckboxSelectedIndicator = styled(SquareTickFillIcon)`
     flex-shrink: 0;
     height: 1.625rem;
     width: 1.625rem;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 `;
 
 export const CheckboxUnselectedIndicator = styled(SquareIcon)`
     flex-shrink: 0;
     height: 1.625rem;
     width: 1.625rem;
-    color: ${Color.Accent.Light[2]};
+    color: ${v2_Color.Accent.Light[2]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
         )}
     cursor: pointer;
     overflow: hidden;
-    color: ${Color.Primary};
+    color: ${v2_Color.Primary};
 `;
 
 export const TryAgainButton = styled(DropdownCommonButton)`
@@ -174,5 +174,5 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)<ListStyleProps>`
         `;
     }}
     margin-right: 0.625rem;
-    color: ${Color.Validation.Red.Icon};
+    color: ${v2_Color.Validation.Red.Icon};
 `;

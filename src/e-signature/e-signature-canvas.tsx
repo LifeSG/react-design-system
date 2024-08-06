@@ -8,7 +8,7 @@ import {
     useRef,
 } from "react";
 import { useTheme } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { BaseTheme } from "../theme";
 import {
     SignatureCanvas,
@@ -89,7 +89,7 @@ const Component = (
             fabricCanvas.current.isDrawingMode = true;
 
             pencilBrush.current = new fabric.PencilBrush(fabricCanvas.current);
-            pencilBrush.current.color = `#${Color.Neutral[8]({
+            pencilBrush.current.color = `#${v2_Color.Neutral[8]({
                 theme: theme || BaseTheme,
             })}`;
             pencilBrush.current.width = 3;

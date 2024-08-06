@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../button/button";
-import { Color } from "../../color/color";
+import { v2_Color } from "../../v2_color/color";
 import { v2_MediaQuery } from "../../v2_media/media";
 import { ToggleIcon } from "../../shared/toggle-icon/toggle-icon";
 import { TextStyleHelper } from "../../text/helper";
@@ -54,7 +54,7 @@ export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
     ${(props) =>
         props.$selected &&
         css`
-            color: ${Color.Primary};
+            color: ${v2_Color.Primary};
         `}
 `;
 
@@ -68,7 +68,7 @@ export const StyledToggleIcon = styled(ToggleIcon)`
     flex-shrink: 0;
 
     ${Input}:focus-visible + & {
-        outline: 2px solid ${Color.Primary};
+        outline: 2px solid ${v2_Color.Primary};
         outline-offset: -2px;
         border-radius: 4px;
     }

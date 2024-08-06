@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
@@ -7,7 +7,7 @@ import { Text, TextStyleHelper } from "../text";
 // =============================================================================
 export const Label = styled.label`
     ${TextStyleHelper.getTextStyle("H5", "semibold")}
-    color: ${Color.Neutral[2]};
+    color: ${v2_Color.Neutral[2]};
     margin-bottom: 0.5rem;
     display: inline-block;
 
@@ -18,23 +18,23 @@ export const Label = styled.label`
     }
 
     a {
-        color: ${Color.Primary};
+        color: ${v2_Color.Primary};
         text-decoration: none;
 
         :hover,
         :active,
         :focus {
-            color: ${Color.Secondary};
+            color: ${v2_Color.Secondary};
 
             svg {
-                color: ${Color.Secondary};
+                color: ${v2_Color.Secondary};
             }
         }
     }
 `;
 
 export const ErrorMessage = styled(Text.H6)`
-    color: ${Color.Validation.Red.Text};
+    color: ${v2_Color.Validation.Red.Text};
     margin-top: 0.5rem;
     margin-bottom: 0;
     outline: none;
@@ -42,7 +42,7 @@ export const ErrorMessage = styled(Text.H6)`
 
 export const Subtitle = styled(Text.BodySmall)`
     && {
-        color: ${Color.Neutral[3]};
+        color: ${v2_Color.Neutral[3]};
         ${TextStyleHelper.getFontFamily("BodySmall", "regular")}
     }
 `;

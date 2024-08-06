@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../../color";
+import { v2_Color } from "../../../v2_color";
 import { Text, TextStyleHelper } from "../../../text";
 import { DayVariant } from "./standard-calendar-day-view";
 
@@ -95,35 +95,35 @@ export const DayLabel = styled(Text.H5)<DayLabelStyleProps>`
         if ($disabledDisplay && $selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Accent.Light[2]};
+                color: ${v2_Color.Accent.Light[2]};
             `;
         }
 
         if ($disabledDisplay) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${v2_Color.Neutral[4]};
             `;
         }
 
         if ($selected) {
             return css`
                 ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${Color.Primary};
+                color: ${v2_Color.Primary};
             `;
         }
 
         switch ($variant) {
             case "other-month":
                 return css`
-                    color: ${Color.Neutral[4]};
+                    color: ${v2_Color.Neutral[4]};
                 `;
             case "today":
                 return css`
-                    color: ${Color.Neutral[3]};
+                    color: ${v2_Color.Neutral[3]};
                 `;
             case "default":
                 return css`
-                    color: ${Color.Neutral[1]};
+                    color: ${v2_Color.Neutral[1]};
                 `;
         }
     }}
@@ -138,9 +138,9 @@ export const OverflowDisplay = styled(BaseOverflowDisplay)`
 
         if ($selected) {
             return css`
-                border-top: 1px solid ${Color.Accent.Light[4]};
-                border-bottom: 1px solid ${Color.Accent.Light[4]};
-                background-color: ${Color.Accent.Light[5]};
+                border-top: 1px solid ${v2_Color.Accent.Light[4]};
+                border-bottom: 1px solid ${v2_Color.Accent.Light[4]};
+                background-color: ${v2_Color.Accent.Light[5]};
             `;
         }
     }}
@@ -150,15 +150,15 @@ export const OverflowDisplay = styled(BaseOverflowDisplay)`
 
         if ($hovered) {
             return css`
-                border-top: 1px dashed ${Color.Accent.Light[4]};
-                border-bottom: 1px dashed ${Color.Accent.Light[4]};
-                background-color: ${Color.Accent.Light[6]};
+                border-top: 1px dashed ${v2_Color.Accent.Light[4]};
+                border-bottom: 1px dashed ${v2_Color.Accent.Light[4]};
+                background-color: ${v2_Color.Accent.Light[6]};
             `;
         }
 
         if ($overlap) {
             return css`
-                background-color: ${Color.Accent.Light[4]};
+                background-color: ${v2_Color.Accent.Light[4]};
             `;
         }
     }}
@@ -170,16 +170,16 @@ export const InteractiveCircle = styled(BaseInteractiveCircle)`
 
         if ($selected) {
             return css`
-                background: ${Color.Accent.Light[5]};
-                border: 1px solid ${Color.Primary};
+                background: ${v2_Color.Accent.Light[5]};
+                border: 1px solid ${v2_Color.Primary};
             `;
         }
 
         if ($hovered) {
             return css`
-                box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                border: 1px solid ${Color.Accent.Light[1]};
-                background-color: ${Color.Neutral[8]};
+                box-shadow: 0px 0px 4px 1px ${v2_Color.Shadow.Accent};
+                border: 1px solid ${v2_Color.Accent.Light[1]};
+                background-color: ${v2_Color.Neutral[8]};
             `;
         }
     }}
@@ -191,9 +191,9 @@ export const InteractiveCircle = styled(BaseInteractiveCircle)`
             return css`
                 cursor: pointer;
                 :hover {
-                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                    border: 1px solid ${Color.Accent.Light[1]};
-                    background-color: ${Color.Neutral[8]};
+                    box-shadow: 0px 0px 4px 1px ${v2_Color.Shadow.Accent};
+                    border: 1px solid ${v2_Color.Accent.Light[1]};
+                    background-color: ${v2_Color.Neutral[8]};
                 }
             `;
         } else if ($disabledDisplay) {
@@ -208,25 +208,25 @@ export const InteractiveCircle = styled(BaseInteractiveCircle)`
 
         if ($overlap) {
             return css`
-                border: 1px solid ${Color.Accent.Light[1]};
-                background: ${Color.Accent.Light[4]};
+                border: 1px solid ${v2_Color.Accent.Light[1]};
+                background: ${v2_Color.Accent.Light[4]};
 
                 :hover {
-                    background: ${Color.Accent.Light[4]};
+                    background: ${v2_Color.Accent.Light[4]};
                 }
             `;
         }
 
         if ($disabledDisplay) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${v2_Color.Neutral[4]};
             `;
         }
 
         switch ($variant) {
             case "today":
                 return css`
-                    background: ${Color.Accent.Light[5]};
+                    background: ${v2_Color.Accent.Light[5]};
                 `;
             default:
                 break;

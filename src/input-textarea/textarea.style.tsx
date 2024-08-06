@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_DesignToken } from "../v2_design-token";
 import { TextStyleHelper } from "../text";
 import { Transition } from "../transition";
@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Element = styled.textarea<StyleProps>`
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${v2_Color.Neutral[5]};
     border-radius: 4px;
     display: block;
     padding: 0.75rem 1rem;
@@ -29,19 +29,19 @@ export const Element = styled.textarea<StyleProps>`
     transition: ${Transition.Base};
 
     ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
-    background: ${Color.Neutral[8]};
+    color: ${v2_Color.Neutral[1]};
+    background: ${v2_Color.Neutral[8]};
 
     :focus,
     :active {
         outline: none;
-        border: 1px solid ${Color.Accent.Light[1]};
+        border: 1px solid ${v2_Color.Accent.Light[1]};
         box-shadow: ${v2_DesignToken.InputBoxShadow};
     }
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
+        color: ${v2_Color.Neutral[3]};
     }
 
     ${(props) => {
@@ -59,23 +59,23 @@ export const Element = styled.textarea<StyleProps>`
             `;
         } else if (props.disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${v2_Color.Neutral[6](props)};
                 cursor: not-allowed;
 
                 :focus,
                 :active {
                     outline: none;
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    border: 1px solid ${v2_Color.Neutral[5](props)};
                     box-shadow: none;
                 }
             `;
         } else if (props.error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
+                border: 1px solid ${v2_Color.Validation.Red.Border(props)};
 
                 :focus,
                 :active {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
+                    border: 1px solid ${v2_Color.Validation.Red.Border(props)};
                     box-shadow: ${v2_DesignToken.InputErrorBoxShadow};
                 }
             `;

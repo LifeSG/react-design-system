@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { animated } from "react-spring";
 
@@ -29,8 +29,8 @@ const Container = styled.nav`
     align-items: center;
     overflow-y: auto;
     width: 8.5rem;
-    border: 1px solid ${Color.Neutral[5]};
-    background-color: ${Color.Accent.Light[6]};
+    border: 1px solid ${v2_Color.Neutral[5]};
+    background-color: ${v2_Color.Accent.Light[6]};
     padding: 0.5rem 0 1.5rem 0;
 `;
 
@@ -61,9 +61,9 @@ export const DesktopDrawer = styled(animated.ul)<DrawerStyleProps>`
     width: 15rem;
     z-index: 10;
     padding: 1rem 0.5rem;
-    background-color: ${Color.Accent.Light[6]};
+    background-color: ${v2_Color.Accent.Light[6]};
     border-radius: 0 8px 8px 0;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${v2_Color.Neutral[5]};
 
     ${(props) =>
         props.$showDrawer

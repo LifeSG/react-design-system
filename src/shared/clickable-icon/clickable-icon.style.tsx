@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color/color";
+import { v2_Color } from "../../v2_color/color";
 
 interface StyleProps {
     $outline: "none" | "browser";
@@ -32,7 +32,7 @@ export const Main = styled.button<StyleProps>`
         ${({ $highlight }) =>
             $highlight &&
             css`
-                background-color: ${Color.Neutral[7]};
+                background-color: ${v2_Color.Neutral[7]};
             `}
     }
 `;

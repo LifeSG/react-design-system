@@ -47,6 +47,26 @@ const componentMap = [
         newPath: "v2_color",
     },
     {
+        oldName: "ColorSet",
+        newName: "v2_ColorSet",
+        newPath: "v2_color",
+    },
+    {
+        oldName: "ValidationElementAttributes",
+        newName: "v2_ValidationElementAttributes",
+        newPath: "v2_color",
+    },
+    {
+        oldName: "ValidationTypes",
+        newName: "v2_ValidationTypes",
+        newPath: "v2_color",
+    },
+    {
+        oldName: "ColorSetOptions",
+        newName: "v2_ColorSetOptions",
+        newPath: "v2_color",
+    },
+    {
         oldName: "Text",
         newName: "v2_Text",
         newPath: "v2_text",

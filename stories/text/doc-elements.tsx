@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { TextStyleHelper } from "../../src";
-import { Color } from "../../src/color/color";
+import { v2_Color } from "../../src/v2_color/color";
 import { Text } from "../../src/text/text";
 
 // =============================================================================
@@ -72,7 +72,7 @@ interface LabelContainerStyleProps {
 export const DisplayContainer = styled.table`
     tr {
         :not(:last-child) {
-            border-bottom: 1px solid ${Color.Neutral[5]};
+            border-bottom: 1px solid ${v2_Color.Neutral[5]};
         }
     }
 
@@ -109,13 +109,13 @@ const LabelContainer = styled.div<LabelContainerStyleProps>`
         let color;
         switch (props.type) {
             case "display":
-                color = Color.Secondary(props);
+                color = v2_Color.Secondary(props);
                 break;
             case "header":
-                color = Color.Accent.Light[1](props);
+                color = v2_Color.Accent.Light[1](props);
                 break;
             default:
-                color = Color.Accent.Dark[2](props);
+                color = v2_Color.Accent.Dark[2](props);
                 break;
         }
 
@@ -126,7 +126,7 @@ const LabelContainer = styled.div<LabelContainerStyleProps>`
 `;
 
 const Label = styled(Text.BodySmall)`
-    color: ${Color.Neutral[8]};
+    color: ${v2_Color.Neutral[8]};
     margin: 0;
 `;
 

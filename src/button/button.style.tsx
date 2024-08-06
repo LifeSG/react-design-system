@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
+import { v2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
@@ -29,28 +29,28 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${Color.Neutral[8]};
+                    background-color: ${v2_Color.Neutral[8]};
                     border: 1px solid
                         ${props.$buttonIsDanger
                             ? v2_DesignToken.Button.Danger.Border
-                            : Color.Primary};
+                            : v2_Color.Primary};
 
                     color: ${props.$buttonIsDanger
                         ? v2_DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        : v2_Color.Primary};
                 `;
             case "light":
                 return css`
-                    background-color: ${Color.Neutral[8]};
-                    border: 1px solid ${Color.Neutral[5]};
+                    background-color: ${v2_Color.Neutral[8]};
+                    border: 1px solid ${v2_Color.Neutral[5]};
 
                     color: ${props.$buttonIsDanger
                         ? v2_DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        : v2_Color.Primary};
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Color.Neutral[6]};
+                    background-color: ${v2_Color.Neutral[6]};
                     border: 1px solid transparent;
                     cursor: not-allowed;
 
@@ -58,7 +58,7 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    color: ${Color.Neutral[3]};
+                    color: ${v2_Color.Neutral[3]};
                 `;
             case "link":
                 return css`
@@ -72,27 +72,27 @@ export const Main = styled.button<MainStyleProps>`
 
                     color: ${props.$buttonIsDanger
                         ? v2_DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        : v2_Color.Primary};
                     :hover,
                     :active,
                     :focus {
                         color: ${props.$buttonIsDanger
                             ? v2_DesignToken.Button.Danger.Hover
-                            : Color.Secondary};
+                            : v2_Color.Secondary};
                     }
                 `;
             default:
                 return css`
                     background-color: ${props.$buttonIsDanger
                         ? v2_DesignToken.Button.Danger.BackgroundColor
-                        : Color.Primary};
+                        : v2_Color.Primary};
                     border: 1px solid transparent;
 
                     ${v2_MediaQuery.MaxWidth.mobileL} {
                         width: 100%;
                     }
 
-                    color: ${Color.Neutral[8]};
+                    color: ${v2_Color.Neutral[8]};
                 `;
         }
     }}
@@ -129,17 +129,17 @@ export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     ${(props) => {
         let color = props.$buttonIsDanger
             ? v2_DesignToken.Button.Danger.Primary
-            : Color.Primary(props);
+            : v2_Color.Primary(props);
         switch (props.$buttonStyle) {
             case "secondary":
             case "light":
             case "link":
                 break;
             case "disabled":
-                color = Color.Neutral[3](props);
+                color = v2_Color.Neutral[3](props);
                 break;
             default:
-                color = Color.Neutral[8](props);
+                color = v2_Color.Neutral[8](props);
                 break;
         }
 
