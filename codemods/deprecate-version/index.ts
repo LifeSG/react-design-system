@@ -1,5 +1,5 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
-import { componentMap } from "./deprecate-data";
+import { componentMap, pathMap } from "./deprecate-data";
 
 export default function transformer(file: FileInfo, api: API, options: any) {
     const j: JSCodeshift = api.jscodeshift;
@@ -16,7 +16,7 @@ export default function transformer(file: FileInfo, api: API, options: any) {
             typeof importPath === "string" && importPath.startsWith("@lifesg/");
 
         if (isPathLib) {
-            componentMap.forEach(({ oldName, newName, newPath }) => {
+            componentMap.forEach(({ oldName, newName }) => {
                 let importChanged = false;
 
                 // change specifiers
@@ -50,8 +50,14 @@ export default function transformer(file: FileInfo, api: API, options: any) {
                         pathParts[pathParts.length - 1] !==
                         "react-design-system"
                     ) {
-                        pathParts[pathParts.length - 1] = newPath;
-                        path.node.source.value = pathParts.join("/");
+                        const lastPathPart = pathParts[pathParts.length - 1];
+                        // map with pathMap to find the new path
+                        pathMap.forEach(({ oldPath, newPath }) => {
+                            if (lastPathPart === oldPath) {
+                                pathParts[pathParts.length - 1] = newPath;
+                                path.node.source.value = pathParts.join("/");
+                            }
+                        });
                     }
                 }
             });

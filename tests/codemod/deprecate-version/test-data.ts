@@ -17,17 +17,17 @@ export default Component;
 `;
 
 export const expectedOutputCode = `
-import { v2_Color } from "@lifesg/react-design-system/v2_color";
-import { v2_MediaQuery } from "@lifesg/react-design-system";
-import { v2_Text } from "@lifesg/react-design-system/v2_text";
+import { V2_Color } from "@lifesg/react-design-system/v2_color";
+import { V2_MediaQuery } from "@lifesg/react-design-system";
+import { V2_Text } from "@lifesg/react-design-system/v2_text";
 import {DesignToken} from "../design-token";
 
 const Component = () => (
     <>
         <DesignToken />
-        <v2_Color />
-        <v2_MediaQuery />
-        <v2_Text />
+        <V2_Color />
+        <V2_MediaQuery />
+        <V2_Text />
     </>
 );
 
