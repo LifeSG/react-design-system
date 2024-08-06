@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media/media";
+import { v2_MediaQuery } from "../v2_media/media";
 import { Button } from "../button/button";
 import { Text } from "../text/text";
 import { Color } from "../color/color";
@@ -44,7 +44,7 @@ export const NameSection = styled.div`
     justify-content: space-between;
     margin-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         justify-content: flex-start;
     }
@@ -55,7 +55,7 @@ export const FileNameText = styled(Text.BodySmall)`
     flex: 1;
     margin-right: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         margin-right: 0;
         margin-bottom: 0.5rem;
     }
@@ -65,7 +65,7 @@ export const FileSizeText = styled(Text.BodySmall)``;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
     }
 
@@ -74,7 +74,7 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
             return css`
                 margin-left: 8rem; // 6rem width + 2rem gap
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${v2_MediaQuery.MaxWidth.mobileL} {
                     margin-left: 0;
                 }
             `;
@@ -88,7 +88,7 @@ export const ActionButton = styled(Button.Small)`
         margin-right: 1rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         :not(:last-of-type) {
             margin-bottom: 1rem;

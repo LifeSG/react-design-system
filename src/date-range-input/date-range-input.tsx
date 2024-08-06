@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../media";
+import { v2_MediaWidths } from "../v2_media";
 import {
     DropdownRenderProps,
     ElementWithDropdown,
@@ -189,7 +189,7 @@ export const DateRangeInput = ({
     const startInputRef = useRef<StandaloneDateInputRef>();
     const endInputRef = useRef<StandaloneDateInputRef>();
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: v2_MediaWidths.mobileL,
     });
     const shouldWrap = useContainerQuery({
         maxWidth: MOBILE_WRAP_WIDTH,

@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { FadeWrapper } from "../shared/fade-wrapper";
 import { Text } from "../text";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -37,7 +37,7 @@ export const ChainItem = styled.li<ChainStyleProps>`
         }
     }}
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         flex: 1;
         justify-content: center;
     }

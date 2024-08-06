@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 
 // =============================================================================
 // STYLE TYPES
@@ -33,7 +33,7 @@ export const BaseCountdown = styled.div<CountdownStyleProps>`
     border: 1px solid ${Color.Primary};
     background-color: ${Color.Neutral[8]};
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
     }
 
@@ -64,7 +64,7 @@ export const FixedCountdown = styled(BaseCountdown)`
             box-shadow: 0px 0px 4px 1px
                 ${$warn ? Color.Validation.Red.Border : Color.Accent.Light[2]};
 
-            ${MediaQuery.MaxWidth.mobileL} {
+            ${v2_MediaQuery.MaxWidth.mobileL} {
                 left: 0;
                 right: 0;
                 border-radius: 0;
@@ -80,7 +80,7 @@ export const TimeLeft = styled.div`
     margin-left: 0.5rem;
     margin-right: 1.5rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         margin-right: 3rem;
     }
 `;

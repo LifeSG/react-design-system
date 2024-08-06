@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
 import { Text } from "../text";
@@ -35,7 +35,7 @@ export const CloseButton = styled(IconButton)`
     right: 3rem;
     z-index: 5;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         top: 1.25rem;
         right: 1.25rem;
     }
@@ -52,7 +52,7 @@ export const MagnifierButton = styled(IconButton)`
     right: 6.5rem;
     z-index: 5;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         top: 1.25rem;
         right: 4.75rem;
     }
@@ -73,7 +73,7 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
         props.$position === "left" &&
         css`
             left: 3rem;
-            ${MediaQuery.MaxWidth.mobileL} {
+            ${v2_MediaQuery.MaxWidth.mobileL} {
                 left: 1.25rem;
             }
         `}
@@ -82,7 +82,7 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
         props.$position === "right" &&
         css`
             right: 3rem;
-            ${MediaQuery.MaxWidth.mobileL} {
+            ${v2_MediaQuery.MaxWidth.mobileL} {
                 right: 1.25rem;
             }
         `}
@@ -189,7 +189,7 @@ export const ThumbnailContainer = styled.div`
     background-color: ${Color.Neutral[1]};
     padding: 1.5rem 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         padding: 1rem 1.25rem;
     }
 `;
@@ -218,7 +218,7 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     height: 6.25rem;
     width: 6.25rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         height: 4rem;
         width: 4rem;
     }
@@ -228,7 +228,7 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
             ? css`
                   border: 4px solid ${Color.Primary};
 
-                  ${MediaQuery.MaxWidth.mobileL} {
+                  ${v2_MediaQuery.MaxWidth.mobileL} {
                       border: 2px solid ${Color.Primary};
                   }
               `

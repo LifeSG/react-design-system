@@ -1,7 +1,7 @@
 import { Card } from "src/card";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Transition } from "../transition";
 import { TooltipPosition } from "./types";
 
@@ -46,7 +46,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateY(-50%);
                 transform: translateY(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${v2_MediaQuery.MaxWidth.mobileL} {
                     width: auto;
                 }
             `;
@@ -60,7 +60,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateY(-50%);
                 transform: translateY(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${v2_MediaQuery.MaxWidth.mobileL} {
                     width: auto;
                 }
             `;
@@ -74,7 +74,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateX(-50%);
                 transform: translateX(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${v2_MediaQuery.MaxWidth.mobileL} {
                     max-width: 80vw;
                 }
             `;
@@ -89,7 +89,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateX(-50%);
                 transform: translateX(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${v2_MediaQuery.MaxWidth.mobileL} {
                     max-width: 80vw;
                 }
             `;

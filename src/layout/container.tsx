@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media/media";
+import { v2_MediaQuery } from "../v2_media/media";
 import { ContainerProps, ContainerType, DivRef } from "./types";
 
 const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
@@ -56,16 +56,16 @@ const StyledContainer = styled.div<StyleProps>`
                 /* Max width restrictions */
                 max-width: 1320px;
 
-                ${MediaQuery.MaxWidth.desktopM} {
+                ${v2_MediaQuery.MaxWidth.desktopM} {
                     max-width: 1140px;
                 }
             `;
         }
     }}
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         max-width: 720px;
     }
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         padding: 0;
         max-width: unset;
@@ -79,12 +79,12 @@ const StyledContainer = styled.div<StyleProps>`
                     display: grid;
                     grid-template-columns: repeat(12, minmax(0, 1fr));
 
-                    ${MediaQuery.MaxWidth.tablet} {
+                    ${v2_MediaQuery.MaxWidth.tablet} {
                         column-gap: 1.5rem;
                         grid-template-columns: repeat(8, minmax(0, 1fr));
                     }
 
-                    ${MediaQuery.MaxWidth.mobileL} {
+                    ${v2_MediaQuery.MaxWidth.mobileL} {
                         column-gap: 1rem;
                         grid-template-columns: repeat(4, minmax(0, 1fr));
                     }

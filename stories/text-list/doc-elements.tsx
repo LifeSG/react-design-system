@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MediaQuery } from "../../src/media";
+import { v2_MediaQuery } from "../../src/v2_media";
 import { TextList } from "../../src/text-list";
 
 // =============================================================================
@@ -34,7 +34,7 @@ export const CustomOrderedList = styled(TextList.Ol)`
         left: -3rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         li {
             margin-left: 1rem;
         }

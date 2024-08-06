@@ -1,6 +1,6 @@
 import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../media";
+import { v2_MediaWidths } from "../v2_media";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,
@@ -29,7 +29,7 @@ export const TabLinkChain = ({
     const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
         useContext(TabContext);
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: v2_MediaWidths.mobileL,
     });
 
     const activeLinkRef = useRef<HTMLLIElement>(null);
@@ -53,7 +53,7 @@ export const TabLinkChain = ({
         if (
             content &&
             wrapper &&
-            window.innerWidth <= MediaWidths.tablet &&
+            window.innerWidth <= v2_MediaWidths.tablet &&
             activeLinkRef
         ) {
             content.scrollLeft =

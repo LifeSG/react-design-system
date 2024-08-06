@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Text } from "../text";
 import { Variant } from "./types";
 import { Pill } from "../pill";
@@ -114,11 +114,11 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
     grid-column: ${(props) => (props.$startCol ? props.$startCol : 3)} / span
         ${(props) => (props.$colSpan ? props.$colSpan : 8)};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         grid-column: span 8;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         grid-column: span 4;
     }
 `;
@@ -126,7 +126,7 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
 export const TimelineTitle = styled(Text.H3)`
     margin-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         margin-bottom: 1.5rem;
     }
 `;

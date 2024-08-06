@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 
 // =============================================================================
@@ -37,7 +37,7 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
 export const Wrapper = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         display: flex;
     }
 `;
@@ -61,11 +61,11 @@ export const Container = styled.div<StyleProps>`
         `;
     }}
 
-	${MediaQuery.MaxWidth.tablet} {
+	${v2_MediaQuery.MaxWidth.tablet} {
         width: 75%;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
     }
 `;

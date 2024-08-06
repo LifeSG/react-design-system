@@ -9,7 +9,7 @@ import {
 } from "@floating-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../media";
+import { v2_MediaWidths } from "../v2_media";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
 import { PopoverV2TriggerProps } from "./types";
@@ -32,7 +32,7 @@ export const PopoverTrigger = ({
     const nodeRef = useRef<HTMLDivElement>();
     const popoverRef = useRef<HTMLDivElement>();
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: v2_MediaWidths.mobileL,
     });
     const { refs, floatingStyles } = useFloating({
         open: visible,

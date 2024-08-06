@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { MediaQuery } from "../../src/media";
+import { v2_MediaQuery } from "../../src/v2_media";
 
 const Page = styled.div`
     height: 160vh;
     width: 65vw;
     margin: auto;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 100vw;
     }
 `;
@@ -16,7 +16,7 @@ const Section = styled.div`
     justify-content: space-between;
     gap: 2rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         align-items: center;
     }

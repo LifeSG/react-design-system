@@ -1,26 +1,29 @@
 import { MediaWidths as MediaWidthsSpec } from "../spec/media-spec";
-import { MediaType, MediaWidth } from "./types";
+import { v2_MediaType, v2_MediaWidth } from "./types";
 
 // =============================================================================
 // HELPER FUNCTION
 // =============================================================================
 const getMediaQuerySpec = (type: "max-width" | "min-width") => {
     return Object.keys(MediaWidthsSpec).reduce((accumulator, key) => {
-        const mediaWidth = MediaWidthsSpec[key as keyof MediaWidth];
+        const mediaWidth = MediaWidthsSpec[key as keyof v2_MediaWidth];
         accumulator[
-            key as keyof MediaType
+            key as keyof v2_MediaType
         ] = `@media screen and (${type}: ${mediaWidth}px)`;
 
         return accumulator;
-    }, {} as MediaType);
+    }, {} as v2_MediaType);
 };
 
 // =============================================================================
 // EXPORTS
 // =============================================================================
-export const MediaQuery = {
+
+/** @deprecated */
+export const v2_MediaQuery = {
     MaxWidth: getMediaQuerySpec("max-width"),
     MinWidth: getMediaQuerySpec("min-width"),
 };
 
-export const MediaWidths = MediaWidthsSpec;
+/** @deprecated */
+export const v2_MediaWidths = MediaWidthsSpec;

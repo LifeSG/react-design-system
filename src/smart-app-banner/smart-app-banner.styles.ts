@@ -5,7 +5,7 @@ import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text, TextStyleHelper } from "../text";
 
@@ -77,7 +77,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: left;
     margin: 0.5rem;
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${v2_MediaQuery.MaxWidth.mobileM} {
         margin: 0 0.5rem;
     }
 `;
@@ -103,7 +103,7 @@ export const StyledButton = styled(Button.Small)`
 
 export const Title = styled(Text.H6)`
     overflow-wrap: anywhere;
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${v2_MediaQuery.MaxWidth.mobileM} {
         ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }
 `;

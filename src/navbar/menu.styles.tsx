@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Text, TextStyleHelper } from "../text";
 import { v2_DesignToken } from "../v2_design-token";
 // =============================================================================
@@ -33,7 +33,7 @@ export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         border-left: 0.25rem solid ${Color.Primary};
         display: flex;
         flex-direction: column;
@@ -69,7 +69,7 @@ export const Link = styled(Text.Hyperlink.Small)`
         color: ${Color.Accent.Light[1]};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         ${TextStyleHelper.getTextStyle("H5", "bold")}
         width: 100%;
         padding-left: 1.5rem;
@@ -96,7 +96,7 @@ export const MenuItem = styled.li`
         padding-bottom: 1rem;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         padding: 0.625rem 0;
 
         :first-child {

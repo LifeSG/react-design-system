@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 
@@ -44,7 +44,7 @@ export const UploadButtonContainer = styled.div`
     flex-direction: column;
     align-items: flex-end;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         align-items: flex-start;
     }
 `;
@@ -52,7 +52,7 @@ export const UploadButtonContainer = styled.div`
 export const UploadButton = styled(Button.Small)`
     width: 10rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
     }
 `;
@@ -62,7 +62,7 @@ export const UploadButtonLabel = styled.label`
     margin-top: 0.5rem;
     width: 10rem;
     text-align: center;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;
     }

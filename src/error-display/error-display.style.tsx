@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Text, TextStyleHelper } from "../text";
 
 export const Container = styled.div`
@@ -17,15 +17,15 @@ export const Img = styled.img`
     width: 25rem;
     height: auto;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 20rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${v2_MediaQuery.MaxWidth.mobileM} {
         width: 18rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${v2_MediaQuery.MaxWidth.mobileS} {
         width: 15rem;
     }
 `;
@@ -72,7 +72,7 @@ export const ActionButton = styled(Button.Default)`
     margin: 2rem auto 0;
     width: 21rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         margin: 2rem auto 0;
     }

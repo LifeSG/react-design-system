@@ -22,14 +22,29 @@ const componentMap = [
         newPath: "v2_design-token",
     },
     {
-        oldName: "Color",
-        newName: "v2_Color",
-        newPath: "v2_color",
-    },
-    {
         oldName: "MediaQuery",
         newName: "v2_MediaQuery",
         newPath: "v2_media",
+    },
+    {
+        oldName: "MediaWidths",
+        newName: "v2_MediaWidths",
+        newPath: "v2_media",
+    },
+    {
+        oldName: "MediaWidth",
+        newName: "v2_MediaWidth",
+        newPath: "v2_media",
+    },
+    {
+        oldName: "MediaType",
+        newName: "v2_MediaType",
+        newPath: "v2_media",
+    },
+    {
+        oldName: "Color",
+        newName: "v2_Color",
+        newPath: "v2_color",
     },
     {
         oldName: "Text",

@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { MediaQuery } from "../../src/media";
+import { v2_MediaQuery } from "../../src/v2_media";
 
 export const Wrapper = styled.div`
     width: 70%;
     margin: auto;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
     }
 `;

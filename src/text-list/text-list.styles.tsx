@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Color } from "../color";
 import { TextStyleHelper } from "../text/helper";
 import { OrderedListProps, UnorderedListProps } from "./types";
@@ -17,7 +17,7 @@ export const StyledOrderedList = styled.ol<OrderedListProps>`
     ${(props) => baseListStyle(props.bottomMargin)}
     margin-left: ${BASE_MARGIN}rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         margin-left: 2.5rem;
     }
 

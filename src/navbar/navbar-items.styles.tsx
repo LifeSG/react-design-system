@@ -1,7 +1,7 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled from "styled-components";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
 
@@ -32,7 +32,7 @@ export const Wrapper = styled.ul<WrapperStyleProps>`
 
     ${(props) => props.$alignLeft && "margin-right: auto;"}
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         display: none;
     }
 `;
@@ -41,7 +41,7 @@ export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -60,7 +60,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
         margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
         padding: 0.125rem 0;
         width: 100%;
@@ -82,7 +82,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         color: ${Color.Neutral[1]};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         color: ${Color.Neutral[1]};
         width: 100%;
         padding: 0.5rem 1rem;
@@ -113,7 +113,7 @@ export const LinkIndicator = styled.div`
     right: 0.5rem;
     background-color: ${Color.Primary};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         left: 0;
         right: unset;
         top: 0;

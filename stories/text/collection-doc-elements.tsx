@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { MediaQuery } from "../../src/media";
+import { v2_MediaQuery } from "../../src/v2_media";
 import { Text, TextStyleHelper, TextStyleSetType } from "../../src/text";
 import { BaseTheme, ThemeSpec } from "../../src";
 
@@ -144,7 +144,7 @@ const FontSizeItem = styled.li`
         padding-right: 0.5rem;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         width: 100%;
         :not(:last-child) {
             margin-bottom: 2rem;
@@ -168,7 +168,7 @@ const FontSpecContainerItem = styled.li`
 `;
 
 const SpecValueLabel = styled(Text.BodySmall)`
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${v2_MediaQuery.MaxWidth.mobileM} {
         font-size: 0.75rem !important;
     }
 `;
@@ -178,7 +178,7 @@ const FontSpecLabelContainer = styled.div`
     margin-right: 1rem;
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${v2_MediaQuery.MaxWidth.mobileM} {
         width: 5rem;
         ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }

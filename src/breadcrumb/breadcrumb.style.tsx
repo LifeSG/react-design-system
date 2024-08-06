@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled from "styled-components";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Text } from "../text/text";
 
 // =============================================================================
@@ -27,11 +27,11 @@ export const Wrapper = styled.div`
 
     margin: 2rem 0;
 
-    ${MediaQuery.MaxWidth.desktopM} {
+    ${v2_MediaQuery.MaxWidth.desktopM} {
         margin: 1.5rem 0;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         margin: 1rem 0;
     }
 `;
@@ -50,7 +50,7 @@ export const Content = styled.ul`
         display: none; /* Chrome/Safari/Webkit */
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         flex-wrap: nowrap;
     }
 `;
@@ -87,7 +87,7 @@ export const Fade = styled.div<FadeProps>`
         }
 
         return `
-			${MediaQuery.MaxWidth.tablet} {
+			${v2_MediaQuery.MaxWidth.tablet} {
 				${positionStyle}
 			}
 		`;

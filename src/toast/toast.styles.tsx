@@ -4,7 +4,7 @@ import { ValidationElementAttributes } from "src/color";
 import { PropertiesToType } from "src/util/utility-types";
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text";
 import { ToastType } from "./types";
@@ -50,7 +50,7 @@ export const Wrapper = styled(animated.div)<StyleProps>`
     align-items: center;
     gap: 2rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         left: 0;
     }
 
@@ -70,7 +70,7 @@ export const ContentWrapper = styled.div`
     flex: 1;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
@@ -129,7 +129,7 @@ export const ActionButton = styled(Button.Small)`
     width: fit-content;
     flex-shrink: 0;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         align-self: flex-start;
         margin-left: 2rem;
     }
@@ -150,7 +150,7 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
             :hover {
                 background: transparent;
             }
-            ${MediaQuery.MaxWidth.mobileL} {
+            ${v2_MediaQuery.MaxWidth.mobileL} {
                 align-self: center;
             }
         `;

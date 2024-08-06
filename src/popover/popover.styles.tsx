@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { ModalBox } from "../modal/modal-box";
 import { Transition } from "../transition";
 
@@ -102,7 +102,7 @@ export const BubbleWrap = styled.div<PopoverStyleProps>`
     ${(props) => getVisibilityStyle(props.$visible)}
     ${(props) => getBubblePosition(props.$offset)}
 
-	${MediaQuery.MaxWidth.mobileL} {
+	${v2_MediaQuery.MaxWidth.mobileL} {
         display: none;
     }
 `;

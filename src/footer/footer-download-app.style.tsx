@@ -1,4 +1,4 @@
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Text } from "../text";
 import styled from "styled-components";
 
@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
     align-items: flex-start;
     flex-direction: column;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         justify-content: flex-start;
         padding: 0;
     }
@@ -33,7 +33,7 @@ export const AppStoreLink = styled.a`
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         &:not(:last-child) {
             margin-right: 1rem;
         }

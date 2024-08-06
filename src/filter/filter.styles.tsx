@@ -2,7 +2,7 @@ import { FilterIcon } from "@lifesg/react-icons/filter";
 import styled from "styled-components";
 import { Button } from "../button/button";
 import { Color } from "../color/color";
-import { MediaQuery } from "../media/media";
+import { v2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text/text";
 
@@ -48,7 +48,7 @@ export const FilterHeader = styled.div`
 
     background-color: ${Color.Neutral[8]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         border-bottom: 1px solid ${Color.Neutral[5]};
     }
 `;
@@ -57,7 +57,7 @@ export const FilterTitle = styled(Text.H4)`
     flex: 1;
     margin: 1.5rem 0 1rem 1.25rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         text-align: center;
         margin: 1.5rem 0;
     }
@@ -83,7 +83,7 @@ export const FilterClearButton = styled(Button.Small)`
     padding: 1.5rem 1.25rem 1rem 1.25rem;
     height: auto;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         padding: 1.5rem 1.25rem;
     }
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Card } from "../card";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 
@@ -18,7 +18,7 @@ export const PopoverCard = styled(Card)`
     color: ${Color.Neutral[1]};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         display: none;
     }
 `;

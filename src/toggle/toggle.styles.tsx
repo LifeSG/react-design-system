@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Text, TextStyleHelper } from "../text";
 import { TextList } from "../text-list";
@@ -169,10 +169,10 @@ export const Label = styled.label<LabelStyleProps>`
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
     -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
     }
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
     color: ${Color.Neutral[1]};

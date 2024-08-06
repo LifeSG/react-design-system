@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button/button";
 import { Color } from "../color/color";
-import { MediaQuery } from "../media/media";
+import { v2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text, TextStyleHelper } from "../text";
 
@@ -28,7 +28,7 @@ export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
         props.$collapsible ? Color.Neutral[7](props) : Color.Neutral[8](props)};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         background-color: ${Color.Neutral[7]};
     }
 `;
@@ -38,7 +38,7 @@ export const Divider = styled.div<DividerStyleProps>`
     height: 1px;
     background-color: ${Color.Neutral[5]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
         margin: 0 1rem;
     }
@@ -54,7 +54,7 @@ export const FilterItemHeader = styled.div`
 
     background-color: ${Color.Neutral[8]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         background-color: transparent;
     }
 `;
@@ -79,7 +79,7 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
 export const FilterItemTitle = styled(Text.H4)`
     margin: 1.5rem 0 1.5rem 1.25rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         ${TextStyleHelper.getTextStyle("H5", "semibold")}
         margin: 1.5rem 1.25rem 0 1.25rem;
     }

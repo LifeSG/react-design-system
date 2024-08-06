@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../color";
-import { MediaQuery } from "../../media";
+import { v2_MediaQuery } from "../../v2_media";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { TextStyleHelper } from "../../text";
 
@@ -58,7 +58,7 @@ export const Thumbnail = styled(ImageWithFallback)`
     border: 1px solid ${Color.Neutral[5]};
     object-fit: cover;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         width: 4rem;
         height: 4rem;
     }

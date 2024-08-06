@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Color } from "../../src/color";
-import { MediaQuery } from "../../src/media";
+import { v2_MediaQuery } from "../../src/v2_media";
 import { withPopover } from "../../src/popover";
 import { Text } from "../../src/text";
 
@@ -13,7 +13,7 @@ export const Container = styled.div`
     justify-content: center;
     margin: 3rem 0;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
@@ -27,7 +27,7 @@ export const Item = styled.div`
         margin-right: 2.5rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         :not(:last-of-type) {
             margin-right: 0;
             margin-bottom: 2.5rem;

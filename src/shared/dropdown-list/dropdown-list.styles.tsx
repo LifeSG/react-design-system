@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
 import { Color } from "../../color";
-import { MediaQuery } from "../../media";
+import { v2_MediaQuery } from "../../v2_media";
 import { TextStyleHelper } from "../../text";
 import {
     DropdownVariantType,
@@ -78,7 +78,7 @@ export const List = styled.ul<ListContainerProps>`
         border-bottom-right-radius: 4px;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         max-height: 15rem;
     }
 `;

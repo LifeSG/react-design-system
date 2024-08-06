@@ -1,4 +1,5 @@
-export interface MediaWidth {
+/** @deprecated */
+export interface v2_MediaWidth {
     mobileS: number;
     mobileM: number;
     mobileL: number;
@@ -8,7 +9,8 @@ export interface MediaWidth {
     desktop4k: number;
 }
 
-export interface MediaType {
+/** @deprecated */
+export interface v2_MediaType {
     mobileS?: string | undefined;
     mobileM?: string | undefined;
     mobileL?: string | undefined;

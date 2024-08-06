@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 
 export const Wrapper = styled.div`
     background: hsl(0, 0%, 94%);
     padding: 0 0.5rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         padding: 0;
     }
 `;

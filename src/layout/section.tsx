@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { DivRef, SectionProps } from "./types";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 
 const Component = (props: SectionProps, ref: DivRef): JSX.Element => {
     const {
@@ -41,7 +41,7 @@ const StyledSection = styled.section<StyleProps>`
     ${(props) => {
         if (props.$stretch) {
             return css`
-                ${MediaQuery.MaxWidth.tablet} {
+                ${v2_MediaQuery.MaxWidth.tablet} {
                     padding: 0 1.5rem;
 
                     // Extra enforcement

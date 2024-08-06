@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Layout } from "../layout";
-import { MediaQuery } from "../media";
+import { v2_MediaQuery } from "../v2_media";
 import { Color } from "../color";
 import { Text, TextStyleHelper } from "../text";
 
@@ -24,7 +24,7 @@ export const TopSection = styled(Layout.Content)`
     padding: 4rem 0;
     border-bottom: 1px solid ${Color.Neutral[5]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         padding: 2rem 0;
     }
 `;
@@ -37,12 +37,12 @@ export const LogoSection = styled.div`
         width: auto;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         grid-column: 1 / span 8;
         margin-bottom: 2rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
         margin-bottom: 2rem;
     }
@@ -70,7 +70,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         // first col
         grid-column: 1 / span 4;
 
@@ -80,7 +80,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         // first col
         grid-column: 1 / span 2;
 
@@ -94,12 +94,12 @@ export const LinkSection = styled.ul`
 export const AddonSection = styled.div`
     grid-column: 9 / span 4;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         grid-column: 1 / span 8;
         margin-top: 2rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
     }
 `;
@@ -111,7 +111,7 @@ export const AddonSection = styled.div`
 export const MobileOnlyBorder = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         display: block;
         height: 1px;
         background: ${Color.Neutral[6]};
@@ -121,7 +121,7 @@ export const MobileOnlyBorder = styled.div`
 export const BottomSection = styled(Layout.Content)`
     padding: 1.375rem 0;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         border-top: none;
         flex-direction: column;
         padding: 1rem 0;
@@ -136,7 +136,7 @@ export const BottomSectionContent = styled.div`
         margin-right: 1rem;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         grid-column: 1 / span 8;
         flex-direction: column;
         &:not(:last-child) {
@@ -144,7 +144,7 @@ export const BottomSectionContent = styled.div`
         }
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
     }
 `;
@@ -153,13 +153,13 @@ export const CopyrightSection = styled(BottomSectionContent)`
     grid-column: 7 / span 6;
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         margin-top: 1rem;
         justify-content: flex-start;
         grid-column: 1 / span 8;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${v2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
     }
 `;
@@ -183,14 +183,14 @@ export const DisclaimerTextLink = styled(Text.Hyperlink.Small)`
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         margin-bottom: 1rem;
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${v2_MediaQuery.MaxWidth.tablet} {
         margin-bottom: 0.625rem;
     }
 `;

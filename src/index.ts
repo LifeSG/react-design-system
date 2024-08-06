@@ -44,7 +44,7 @@ export * from "./markup";
 export * from "./masked-input";
 export * from "./masonry";
 export * from "./masthead";
-export * from "./media";
+export * from "./v2_media";
 export * from "./modal";
 export * from "./navbar";
 export * from "./notification-banner";

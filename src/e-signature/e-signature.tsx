@@ -2,7 +2,7 @@ import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ButtonWithIcon } from "../button-with-icon";
-import { MediaWidths } from "../media";
+import { v2_MediaWidths } from "../v2_media";
 import { ProgressBar } from "../shared/progress-bar";
 import { Text } from "../text";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
@@ -47,7 +47,7 @@ export const ESignature = (props: EsignatureProps) => {
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string>(value);
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: v2_MediaWidths.mobileL,
     });
 
     // =============================================================================
