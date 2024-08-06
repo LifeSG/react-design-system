@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { animated } from "react-spring";
 
 //=============================================================================
@@ -38,7 +38,7 @@ export const DesktopContainer = styled(Container)`
     height: 100vh;
     left: 0;
     top: 0;
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;
     }
@@ -47,7 +47,7 @@ export const DesktopContainer = styled(Container)`
 export const MobileContainer = styled(Container)`
     display: none;
     visibility: hidden;
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: none; // NOTE: Since mobile view not supported yet
     }
 `;

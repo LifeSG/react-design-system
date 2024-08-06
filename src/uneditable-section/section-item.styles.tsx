@@ -1,7 +1,7 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { V2_TextStyleHelper } from "../v2_text";
 import { UneditableSectionItemDisplayWidth } from "./types";
@@ -34,11 +34,11 @@ export const Container = styled.li<ContainerStyleProps>`
         }
     }}
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         grid-column: auto / span 8;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-column: auto / span 4;
     }
 

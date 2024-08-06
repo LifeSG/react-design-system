@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button/button";
 import { V2_Color } from "../v2_color/color";
-import { v2_MediaQuery } from "../v2_media/media";
+import { V2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
@@ -30,7 +30,7 @@ export const FilterItemWrapper = styled.div<StyleProps>`
             ? V2_Color.Neutral[7](props)
             : V2_Color.Neutral[8](props)};
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         background-color: ${V2_Color.Neutral[7]};
     }
 `;
@@ -40,7 +40,7 @@ export const Divider = styled.div<DividerStyleProps>`
     height: 1px;
     background-color: ${V2_Color.Neutral[5]};
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
         margin: 0 1rem;
     }
@@ -56,7 +56,7 @@ export const FilterItemHeader = styled.div`
 
     background-color: ${V2_Color.Neutral[8]};
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         background-color: transparent;
     }
 `;
@@ -81,7 +81,7 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
 export const FilterItemTitle = styled(V2_Text.H4)`
     margin: 1.5rem 0 1.5rem 1.25rem;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
         margin: 1.5rem 1.25rem 0 1.25rem;
     }

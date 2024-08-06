@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { V2_Color } from "../../v2_color";
-import { v2_MediaQuery } from "../../v2_media";
+import { V2_MediaQuery } from "../../v2_media";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { V2_TextStyleHelper } from "../../v2_text";
 
@@ -58,7 +58,7 @@ export const Thumbnail = styled(ImageWithFallback)`
     border: 1px solid ${V2_Color.Neutral[5]};
     object-fit: cover;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 4rem;
         height: 4rem;
     }

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_Color } from "../v2_color";
 import { V2_Text } from "../v2_text/text";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
@@ -19,7 +19,7 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     align-items: ${(props) => (props.$hasTitle ? "center" : "flex-end")};
     padding-bottom: 1rem;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         justify-content: flex-end;
     }
 `;
@@ -28,14 +28,14 @@ export const Title = styled(V2_Text.H2)<TitleStyleProps>`
     display: flex;
     align-self: flex-start;
     flex: 1;
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         text-align: left;
     }
 
     ${(props) => {
         if (!props.$showInMobile) {
             return css`
-                ${v2_MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     display: none;
                     visibility: hidden;
                 }

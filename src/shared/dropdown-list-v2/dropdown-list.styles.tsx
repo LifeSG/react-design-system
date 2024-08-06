@@ -4,7 +4,7 @@ import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../../v2_color";
-import { v2_MediaQuery } from "../../v2_media";
+import { V2_MediaQuery } from "../../v2_media";
 import { V2_TextStyleHelper } from "../../v2_text";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicButton } from "../input-wrapper/input-wrapper";
@@ -43,7 +43,7 @@ export const Container = styled.div<ContainerStyleProps>`
     max-height: 27rem;
     overflow-y: auto;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         min-width: unset;
         width: calc(100vw - 2.5rem);
         max-height: 15rem;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text";
 
 // Units in rem
@@ -23,11 +23,11 @@ export const Wrapper = styled.div`
 
     margin: 2rem 0;
 
-    ${v2_MediaQuery.MaxWidth.desktopM} {
+    ${V2_MediaQuery.MaxWidth.desktopM} {
         margin: 1.5rem 0;
     }
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin: 1rem 0;
     }
 `;

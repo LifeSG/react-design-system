@@ -1,4 +1,4 @@
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color/color";
 import { V2_TextStyleHelper } from "../v2_text/helper";
@@ -31,7 +31,7 @@ export const Main = styled.button<{
         object-fit: contain;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
         ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}

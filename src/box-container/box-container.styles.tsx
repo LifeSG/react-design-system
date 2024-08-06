@@ -3,7 +3,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text/text";
 import { Transition } from "../transition";
 import { BoxContainerDisplayState } from "./types";
@@ -52,7 +52,7 @@ export const Header = styled.div<HeaderStyleProps>`
     align-items: center;
     justify-content: space-between;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         padding: 1rem 1.25rem;
         display: block;
     }
@@ -85,7 +85,7 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
     align-items: center;
     margin-right: 2.5rem;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         margin-right: 0rem;
     }
 
@@ -113,14 +113,14 @@ export const AlertIcon = styled(ExclamationCircleFillIcon)`
 export const CallToActionContainer = styled.div<StyleProps>`
     display: flex;
     margin-left: auto;
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
     }
     ${(props) => {
         if (props.$collapsible) {
             return css`
                 margin-right: 2.5rem;
-                ${v2_MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     margin-right: 0rem;
                     margin-top: 1rem;
                 }
@@ -138,7 +138,7 @@ export const Handle = styled.button`
     display: flex;
     align-items: center;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         margin: -1rem -1rem -1rem 0;
         margin-left: auto;
     }

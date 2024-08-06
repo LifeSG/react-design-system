@@ -2,7 +2,7 @@ import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-han
 import styled, { css } from "styled-components";
 import { V2_Color } from "../../v2_color";
 import { IconButton as DSIconButton } from "../../icon-button";
-import { v2_MediaQuery } from "../../v2_media";
+import { V2_MediaQuery } from "../../v2_media";
 import { V2_Text } from "../../v2_text";
 import { ClickableIcon } from "../../shared/clickable-icon";
 
@@ -107,7 +107,7 @@ export const Box = styled.div<BoxStyleProps>`
     align-items: center;
     width: 100%;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
     }
 
@@ -132,7 +132,7 @@ export const Box = styled.div<BoxStyleProps>`
     ${(props) => {
         if (!props.$error && (props.$loading || props.$editable)) {
             return css`
-                ${v2_MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     flex-direction: column;
                     align-items: flex-start;
                 }
@@ -146,7 +146,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
@@ -155,7 +155,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${v2_MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -176,7 +176,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -189,7 +189,7 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     margin-left: 0.5rem;
     justify-content: flex-end;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         ${(props) => {
             if (props.$hideInMobile) {
                 return css`
@@ -220,7 +220,7 @@ export const BaseErrorMessage = styled(V2_Text.XSmall)`
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
     margin-top: 0.25rem;
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;
     }
@@ -229,7 +229,7 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
 export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: block;
         visibility: visible;
         margin-top: 0.5rem;
@@ -243,7 +243,7 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
     justify-content: flex-end;
     align-items: center;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: fit-content;
 
         ${(props) => {

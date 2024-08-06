@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text";
 import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
 
@@ -28,7 +28,7 @@ export const Container = styled.div<StyleProps>`
                 border-radius: 4px;
                 padding: 2rem;
 
-                ${v2_MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     padding: 2rem 1.25rem;
                 }
             `;

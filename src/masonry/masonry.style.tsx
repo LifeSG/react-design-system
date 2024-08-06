@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { MasonryGridProps, MasonryTileProps } from "./types";
 
 // =============================================================================
@@ -34,14 +34,14 @@ export const GridContainer = styled.div<GridStyleProps>`
             gap: 2rem 2rem;
             justify-items: stretch;
 
-            ${v2_MediaQuery.MaxWidth.tablet} {
+            ${V2_MediaQuery.MaxWidth.tablet} {
                 grid-template-columns: repeat(
                     ${numOfCols.md || numOfCols.sm || "auto-fill"},
                     minmax(calc(${100 / mdColsDefault}% - 2rem), 1fr)
                 );
             }
 
-            ${v2_MediaQuery.MaxWidth.mobileL} {
+            ${V2_MediaQuery.MaxWidth.mobileL} {
                 grid-template-columns: repeat(
                     ${numOfSmCols || "auto-fill"},
                     minmax(calc(${100 / (numOfSmCols || 1)}% - 2rem), 1fr)
@@ -60,12 +60,12 @@ export const TileContainer = styled.div<TileStyleProps>`
             grid-column: ${startLg || startMd || "auto"} / span
                 ${colsLg || colsMd || 1};
 
-            ${v2_MediaQuery.MaxWidth.tablet} {
+            ${V2_MediaQuery.MaxWidth.tablet} {
                 grid-column: ${startMd || startSm || "auto"} / span
                     ${colsMd || colsSm || 1};
             }
 
-            ${v2_MediaQuery.MaxWidth.mobileL} {
+            ${V2_MediaQuery.MaxWidth.mobileL} {
                 grid-column: ${startSm || "auto"} / span ${colsSm || 1};
             }
         `;

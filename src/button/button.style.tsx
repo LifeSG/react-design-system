@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color/color";
-import { v2_MediaQuery } from "../v2_media/media";
+import { V2_MediaQuery } from "../v2_media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { V2_TextStyleHelper } from "../v2_text";
 import { MainStyleProps } from "./types";
@@ -88,7 +88,7 @@ export const Main = styled.button<MainStyleProps>`
                         : V2_Color.Primary};
                     border: 1px solid transparent;
 
-                    ${v2_MediaQuery.MaxWidth.mobileL} {
+                    ${V2_MediaQuery.MaxWidth.mobileL} {
                         width: 100%;
                     }
 
@@ -107,7 +107,7 @@ export const Main = styled.button<MainStyleProps>`
                     height: 2.5rem;
                     ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
 
-                    ${v2_MediaQuery.MaxWidth.mobileS} {
+                    ${V2_MediaQuery.MaxWidth.mobileS} {
                         height: auto;
                     }
                 `;
@@ -116,7 +116,7 @@ export const Main = styled.button<MainStyleProps>`
                     height: 3rem;
                     ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
 
-                    ${v2_MediaQuery.MaxWidth.mobileS} {
+                    ${V2_MediaQuery.MaxWidth.mobileS} {
                         height: auto;
                     }
                 `;

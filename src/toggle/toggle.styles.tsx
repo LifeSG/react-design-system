@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 import { TextList } from "../text-list";
@@ -169,10 +169,10 @@ export const Label = styled.label<LabelStyleProps>`
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
     -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
     }
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
     color: ${V2_Color.Neutral[1]};

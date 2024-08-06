@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_MediaQuery } from "../../v2_media";
+import { V2_MediaQuery } from "../../v2_media";
 import { ClickableIcon } from "../clickable-icon";
 import { V2_Color } from "../../v2_color";
 
@@ -65,7 +65,7 @@ export const Fade = styled.div<FadeProps>`
         }
 
         return `
-			${v2_MediaQuery.MaxWidth.tablet} {
+			${V2_MediaQuery.MaxWidth.tablet} {
 				${positionStyle}
 			}
 		`;
@@ -89,7 +89,7 @@ export const Content = styled.div`
 export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
     display: none;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         display: flex;
         height: 100%;
         width: 100%;

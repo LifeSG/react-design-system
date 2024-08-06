@@ -1,7 +1,7 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Transition } from "../transition";
 
@@ -51,7 +51,7 @@ export const Nav = styled.nav<StyleProps>`
     position: relative;
     transition: ${Transition.Base};
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         height: ${NAVBAR_MOBILE_HEIGHT}rem;
     }
 `;
@@ -63,7 +63,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
     flex: 1;
     justify-content: flex-end;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin-left: 0rem;
     }
 `;
@@ -71,7 +71,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
 export const MobileMenuButton = styled(ClickableIcon)`
     display: none;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
@@ -92,11 +92,11 @@ export const NavBrandContainer = styled.div<StyleProps>`
 
     height: ${(props) => (props.$compress ? 1.5 : 2)}rem;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         height: 1.5rem;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         height: 1.25rem;
     }
 `;
@@ -108,11 +108,11 @@ export const NavSeparator = styled.div<StyleProps>`
     width: 1px;
     margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin: 0 1rem;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 2px;
         margin: 0 0.75rem;
     }

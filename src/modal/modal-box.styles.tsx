@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 
 export const Box = styled.div`
@@ -14,7 +14,7 @@ export const Box = styled.div`
     border-radius: 0.75rem;
     overflow: hidden;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 90%;
         max-height: 70%;
     }
@@ -36,7 +36,7 @@ export const CloseButton = styled(ClickableIcon)`
         width: 2rem;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         right: 1.25rem;
     }
 `;

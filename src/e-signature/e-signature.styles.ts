@@ -4,14 +4,14 @@ import { V2_Color } from "../v2_color";
 import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
-import { v2_MediaQuery, v2_MediaWidths } from "../v2_media";
+import { V2_MediaQuery, V2_MediaWidths } from "../v2_media";
 
 // =============================================================================
 // CUSTOM MEDIA QUERIES
 // =============================================================================
 // for mobileL and below in both orientations
-const mobileMediaQuery = ` ${v2_MediaQuery.MaxWidth.mobileL}, (orientation: landscape) and (max-height: ${v2_MediaWidths.mobileL}px)`;
-const mobileLandscapeMediaQuery = `@media(orientation: landscape) and (max-height: ${v2_MediaWidths.mobileL}px)`;
+const mobileMediaQuery = ` ${V2_MediaQuery.MaxWidth.mobileL}, (orientation: landscape) and (max-height: ${V2_MediaWidths.mobileL}px)`;
+const mobileLandscapeMediaQuery = `@media(orientation: landscape) and (max-height: ${V2_MediaWidths.mobileL}px)`;
 
 // =============================================================================
 // STYLING
@@ -135,7 +135,7 @@ export const ESignatureDrawable = styled.div`
     ${mobileMediaQuery} {
         aspect-ratio: 4/3;
     }
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         height: auto;
     }
@@ -166,7 +166,7 @@ export const ModalButtons = styled.div`
     justify-content: space-between;
     margin-top: 1rem;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column-reverse;
         margin: 1rem 1.25rem 3rem;
         gap: 1rem;
@@ -179,7 +179,7 @@ export const ModalButtons = styled.div`
 `;
 export const ModalActionButton = styled(Button.Default)`
     width: 8.5rem;
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
     }
     ${mobileLandscapeMediaQuery} {

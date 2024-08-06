@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { V2_Text } from "../../src/v2_text";
-import { v2_MediaQuery } from "../../src/v2_media";
+import { V2_MediaQuery } from "../../src/v2_media";
 
 interface StyleProps {
     $layout?: "default" | "vertical";
@@ -31,7 +31,7 @@ export const Wrapper = styled.div<StyleProps>`
                     }
                 }
 
-                ${v2_MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     width: 100%;
                     display: flex;
                     flex-direction: column;
@@ -65,7 +65,7 @@ export const Wrapper = styled.div<StyleProps>`
 export const HeadingLabel = styled(V2_Text.H6)`
     text-align: center;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         text-align: left;
         align-self: center;
     }

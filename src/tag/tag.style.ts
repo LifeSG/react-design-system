@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color/color";
 import { TagColorType, TagType } from "./types";
 import { V2_TextStyleHelper } from "../v2_text";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 
 // =============================================================================
 // STYLING
@@ -113,7 +113,7 @@ export const Wrapper = styled.div<StyleProps>`
         `;
     }}
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         ${({ $interactive }) => {
             if ($interactive) {
                 return css`

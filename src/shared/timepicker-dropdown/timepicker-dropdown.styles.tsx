@@ -2,7 +2,7 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../../button";
 import { V2_Color } from "../../v2_color";
-import { v2_MediaQuery } from "../../v2_media";
+import { V2_MediaQuery } from "../../v2_media";
 import { V2_Text } from "../../v2_text";
 import { Toggle } from "../../toggle";
 import { ClickableIcon } from "../clickable-icon";
@@ -27,7 +27,7 @@ export const AnimatedDiv = styled(animated.div)`
     overflow: hidden;
     z-index: 1;
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         max-width: 100%;
     }
 `;
@@ -45,7 +45,7 @@ export const InputSection = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         flex-direction: column;
         width: 100%;
     }
@@ -57,7 +57,7 @@ export const ControlSection = styled.div`
     margin-top: 1rem;
     gap: 0.5rem 1rem;
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         flex-direction: column-reverse; // FIXME: this breaks tab focus
         margin-top: 2rem;
     }
@@ -71,7 +71,7 @@ export const HourMinuteSection = styled.div`
     align-items: center;
     margin-right: 2rem;
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         margin-right: 0;
         width: 100%;
     }
@@ -81,11 +81,11 @@ export const TimePeriodSection = styled.div`
     display: flex;
     gap: 0.5rem;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         flex-direction: row;
         width: 100%;
     }
@@ -96,7 +96,7 @@ export const InputContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 6rem;
     }
 `;
@@ -121,11 +121,11 @@ export const DividerLabel = styled(V2_Text.Body)`
     margin: 0 0.25rem;
     text-align: center;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin: 0;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         margin: 0 0.25rem;
     }
 `;
@@ -148,7 +148,7 @@ export const TimeInput = styled(BasicInput)`
         color: transparent;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 100%;
     }
 `;
@@ -164,11 +164,11 @@ export const TimePeriodToggle = styled(Toggle)`
 export const ControlButton = styled(Button.Small)`
     width: 7rem;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex: 1;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 100%;
     }
 `;

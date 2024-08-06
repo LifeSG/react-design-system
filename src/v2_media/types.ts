@@ -1,5 +1,5 @@
 /** @deprecated */
-export interface v2_MediaWidth {
+export interface V2_MediaWidth {
     mobileS: number;
     mobileM: number;
     mobileL: number;
@@ -10,7 +10,7 @@ export interface v2_MediaWidth {
 }
 
 /** @deprecated */
-export interface v2_MediaType {
+export interface V2_MediaType {
     mobileS?: string | undefined;
     mobileM?: string | undefined;
     mobileL?: string | undefined;

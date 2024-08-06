@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Card } from "../card";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 
@@ -18,7 +18,7 @@ export const PopoverCard = styled(Card)`
     color: ${V2_Color.Neutral[1]};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: none;
     }
 `;

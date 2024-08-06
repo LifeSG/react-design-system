@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_MediaQuery } from "../v2_media/media";
+import { V2_MediaQuery } from "../v2_media/media";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -33,12 +33,12 @@ export const StyledDiv = styled.div<StyledDivStyleProps>`
         return css`
             grid-column: ${$desktopStart || "auto"} / span ${$desktopSpan || 1};
 
-            ${v2_MediaQuery.MaxWidth.tablet} {
+            ${V2_MediaQuery.MaxWidth.tablet} {
                 grid-column: ${$tabletStart || "auto"} / span
                     ${$tabletSpan || 1};
             }
 
-            ${v2_MediaQuery.MaxWidth.mobileL} {
+            ${V2_MediaQuery.MaxWidth.mobileL} {
                 grid-column: ${$mobileStart || "auto"} / span
                     ${$mobileSpan || 1};
             }

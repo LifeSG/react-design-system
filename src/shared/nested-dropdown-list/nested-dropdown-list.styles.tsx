@@ -2,7 +2,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { V2_Color } from "../../v2_color";
-import { v2_MediaQuery } from "../../v2_media";
+import { V2_MediaQuery } from "../../v2_media";
 import { V2_Text, V2_TextStyleHelper } from "../../v2_text";
 
 // =============================================================================
@@ -45,7 +45,7 @@ export const List = styled.ul<ListContainerProps>`
         border-bottom-right-radius: 4px;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         max-height: 15rem;
     }
 `;

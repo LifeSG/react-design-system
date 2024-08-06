@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Button } from "../button/button";
 import { V2_Color } from "../v2_color";
 import { Input } from "../input";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
@@ -30,7 +30,7 @@ export const PaginationList = styled.div`
     align-self: flex-start;
     overflow: auto;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         align-self: center;
     }
 `;
@@ -101,7 +101,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
         }
     }}
 
-    ${v2_MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         margin-right: 0rem;
         margin-left: 0rem;
     }

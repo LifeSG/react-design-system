@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text } from "../v2_text";
 
@@ -52,12 +52,12 @@ export const Container = styled.div<StyleProps>`
     border-bottom-left-radius: 8px;
     overflow: hidden;
 
-    ${v2_MediaQuery.MaxWidth.desktopL} {
+    ${V2_MediaQuery.MaxWidth.desktopL} {
         width: 50%;
         min-width: 700px;
     }
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         width: 100%;
         min-width: unset;
         border-top-left-radius: 0;
@@ -76,7 +76,7 @@ export const Header = styled.div`
     background-color: ${V2_Color.Neutral[8]};
     border-bottom: 1px solid ${V2_Color.Neutral[5]};
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         gap: 0.5rem;
         padding: 2rem 1.25rem 1rem;
     }

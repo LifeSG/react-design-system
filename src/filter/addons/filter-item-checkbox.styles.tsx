@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../button/button";
 import { V2_Color } from "../../v2_color/color";
-import { v2_MediaQuery } from "../../v2_media/media";
+import { V2_MediaQuery } from "../../v2_media/media";
 import { ToggleIcon } from "../../shared/toggle-icon/toggle-icon";
 import { V2_TextStyleHelper } from "../../v2_text/helper";
 import { Toggle } from "../../toggle";
@@ -14,7 +14,7 @@ export const StyledFilterItem = styled(FilterItem)`
         position: relative; // to get the item position relative to this parent
         padding: 0.5rem 0.5rem 0;
 
-        ${v2_MediaQuery.MaxWidth.tablet} {
+        ${V2_MediaQuery.MaxWidth.tablet} {
             padding: 1rem 1.25rem 0.5rem;
         }
     }
@@ -22,7 +22,7 @@ export const StyledFilterItem = styled(FilterItem)`
     [data-id="minimise-button"] {
         margin: 0.5rem 1.25rem 0;
 
-        ${v2_MediaQuery.MaxWidth.tablet} {
+        ${V2_MediaQuery.MaxWidth.tablet} {
             margin: 0.5rem 1.25rem 0;
         }
     }
@@ -32,7 +32,7 @@ export const Group = styled.div`
     display: flex;
     flex-direction: column;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 1rem;
@@ -83,7 +83,7 @@ export const SelectAllButton = styled(Button.Small)`
     padding: 0;
     margin: 1rem 0 0.5rem 0.75rem;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin: 0 0 1rem 0;
     }
 `;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { v2_MediaQuery } from "../../src/v2_media";
+import { V2_MediaQuery } from "../../src/v2_media";
 import { StoryContainer } from "../storybook-common";
 
 export const AnimationDisplay = styled.div`
@@ -7,7 +7,7 @@ export const AnimationDisplay = styled.div`
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 1.25rem;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }
 `;

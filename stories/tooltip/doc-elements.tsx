@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, ButtonProps } from "../../src/button";
-import { v2_MediaQuery } from "../../src/v2_media";
+import { V2_MediaQuery } from "../../src/v2_media";
 import { TooltipPosition, withTooltip } from "../../src/tooltip";
 
 // =============================================================================
@@ -12,7 +12,7 @@ export const Container = styled.div`
     justify-content: center;
     margin: 3rem 0;
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
@@ -26,7 +26,7 @@ export const Item = styled.div`
         margin-right: 2.5rem;
     }
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         :not(:last-of-type) {
             margin-right: 0;
             margin-bottom: 2.5rem;

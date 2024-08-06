@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 import { v2_DesignToken } from "../v2_design-token";
 // =============================================================================
@@ -33,7 +33,7 @@ export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         border-left: 0.25rem solid ${V2_Color.Primary};
         display: flex;
         flex-direction: column;
@@ -69,7 +69,7 @@ export const Link = styled(V2_Text.Hyperlink.Small)`
         color: ${V2_Color.Accent.Light[1]};
     }
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         ${V2_TextStyleHelper.getTextStyle("H5", "bold")}
         width: 100%;
         padding-left: 1.5rem;
@@ -96,7 +96,7 @@ export const MenuItem = styled.li`
         padding-bottom: 1rem;
     }
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         padding: 0.625rem 0;
 
         :first-child {

@@ -2,7 +2,7 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { v2_MediaQuery } from "../v2_media";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text } from "../v2_text/text";
 import { Transition } from "../transition";
@@ -23,7 +23,7 @@ export const Container = styled.div<StyleProps>`
     border-top: 1px solid ${V2_Color.Neutral[6]};
     padding: ${(props) => (props.$isCollapsed ? "0 0 1rem" : "0")};
 
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         padding: ${(props) =>
             props.$isCollapsed ? ".25rem 0 1.05rem" : "0.5rem 0"};
     }
@@ -77,7 +77,7 @@ export const DescriptionContainer = styled.div`
     display: inline-block;
     padding-right: 4rem;
 
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         padding-right: 0;
     }
 `;

@@ -1,6 +1,6 @@
-import { v2_MediaWidth } from "../v2_media/types";
+import { V2_MediaWidth } from "../v2_media/types";
 
-export const MediaWidths: v2_MediaWidth = {
+export const MediaWidths: V2_MediaWidth = {
     mobileS: 320,
     mobileM: 375,
     mobileL: 480,

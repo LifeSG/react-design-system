@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { v2_MediaQuery } from "../v2_media/media";
+import { V2_MediaQuery } from "../v2_media/media";
 import { V2_ContainerProps, V2_ContainerType, V2_DivRef } from "./types";
 
 const Component = (props: V2_ContainerProps, ref: V2_DivRef): JSX.Element => {
@@ -57,16 +57,16 @@ const StyledContainer = styled.div<StyleProps>`
                 /* Max width restrictions */
                 max-width: 1320px;
 
-                ${v2_MediaQuery.MaxWidth.desktopM} {
+                ${V2_MediaQuery.MaxWidth.desktopM} {
                     max-width: 1140px;
                 }
             `;
         }
     }}
-    ${v2_MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         max-width: 720px;
     }
-    ${v2_MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         padding: 0;
         max-width: unset;
@@ -80,12 +80,12 @@ const StyledContainer = styled.div<StyleProps>`
                     display: grid;
                     grid-template-columns: repeat(12, minmax(0, 1fr));
 
-                    ${v2_MediaQuery.MaxWidth.tablet} {
+                    ${V2_MediaQuery.MaxWidth.tablet} {
                         column-gap: 1.5rem;
                         grid-template-columns: repeat(8, minmax(0, 1fr));
                     }
 
-                    ${v2_MediaQuery.MaxWidth.mobileL} {
+                    ${V2_MediaQuery.MaxWidth.mobileL} {
                         column-gap: 1rem;
                         grid-template-columns: repeat(4, minmax(0, 1fr));
                     }
