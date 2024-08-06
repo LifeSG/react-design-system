@@ -1,21 +1,21 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color/color";
-import { v2_TextStyleHelper } from "./helper";
-import { v2_TextLinkProps, v2_TextLinkStyleProps, v2_TextProps } from "./types";
+import { V2_TextStyleHelper } from "./helper";
+import { V2_TextLinkProps, V2_TextLinkStyleProps, V2_TextProps } from "./types";
 
 /** @deprecated */
-export namespace v2_Text {
-    export const D1 = styled.h1<v2_TextProps>`
+export namespace V2_Text {
+    export const D1 = styled.h1<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "D1",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -24,16 +24,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const D2 = styled.h1<v2_TextProps>`
+    export const D2 = styled.h1<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "D2",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -42,16 +42,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const D3 = styled.h1<v2_TextProps>`
+    export const D3 = styled.h1<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "D3",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -60,16 +60,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const D4 = styled.h1<v2_TextProps>`
+    export const D4 = styled.h1<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "D4",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -78,16 +78,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const DBody = styled.h1<v2_TextProps>`
+    export const DBody = styled.h1<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "DBody",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -96,16 +96,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const H1 = styled.h1<v2_TextProps>`
+    export const H1 = styled.h1<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "H1",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -114,16 +114,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const H2 = styled.h2<v2_TextProps>`
+    export const H2 = styled.h2<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "H2",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -132,16 +132,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const H3 = styled.h3<v2_TextProps>`
+    export const H3 = styled.h3<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "H3",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -150,16 +150,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const H4 = styled.h4<v2_TextProps>`
+    export const H4 = styled.h4<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "H4",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -168,16 +168,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const H5 = styled.h5<v2_TextProps>`
+    export const H5 = styled.h5<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "H5",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -186,16 +186,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const H6 = styled.h6<v2_TextProps>`
+    export const H6 = styled.h6<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "H6",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -204,16 +204,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const Body = styled.p<v2_TextProps>`
+    export const Body = styled.p<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "Body",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -222,16 +222,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const BodySmall = styled.p<v2_TextProps>`
+    export const BodySmall = styled.p<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "BodySmall",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -240,16 +240,16 @@ export namespace v2_Text {
         }}
     `;
 
-    export const XSmall = styled.span<v2_TextProps>`
+    export const XSmall = styled.span<V2_TextProps>`
         ${(props) => {
             return css`
-                ${v2_TextStyleHelper.getTextStyle(
+                ${V2_TextStyleHelper.getTextStyle(
                     "XSmall",
                     props.weight,
                     props.paragraph
                 )}
                 color: ${v2_Color.Neutral[1]};
-                ${v2_TextStyleHelper.getDisplayStyle(
+                ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
                     props.maxLines
@@ -259,9 +259,9 @@ export namespace v2_Text {
     `;
 
     export const Hyperlink = {
-        Default: (props: v2_TextLinkProps) =>
+        Default: (props: V2_TextLinkProps) =>
             HyperlinkComponent({ ...props, textStyle: "Body" }),
-        Small: (props: v2_TextLinkProps) =>
+        Small: (props: V2_TextLinkProps) =>
             HyperlinkComponent({ ...props, textStyle: "BodySmall" }),
     };
 }
@@ -270,10 +270,10 @@ export namespace v2_Text {
 // NON-EXPORTABLES
 // =============================================================================
 
-const HyperlinkBase = styled.a<v2_TextLinkStyleProps>`
+const HyperlinkBase = styled.a<V2_TextLinkStyleProps>`
     ${(props) => {
         return css`
-            ${v2_TextStyleHelper.getTextStyle(props.textStyle, props.weight)}
+            ${V2_TextStyleHelper.getTextStyle(props.textStyle, props.weight)}
             color: ${v2_Color.Primary};
             text-decoration: none;
 
@@ -301,7 +301,7 @@ const HyperlinkComponent = ({
     external = false,
     children,
     ...rest
-}: v2_TextLinkStyleProps) => {
+}: V2_TextLinkStyleProps) => {
     return (
         <HyperlinkBase {...rest}>
             {children}

@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { Button } from "../button";
 import { v2_Color } from "../v2_color";
-import { v2_TextStyleHelper } from "../v2_text";
+import { V2_TextStyleHelper } from "../v2_text";
 import { animated } from "react-spring";
 
 //=============================================================================
@@ -34,7 +34,7 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        ${v2_TextStyleHelper.getFontFamily("H5", "semibold")}
+        ${V2_TextStyleHelper.getFontFamily("H5", "semibold")}
         font-size: 1rem !important;
         color: ${v2_Color.Neutral[1]} !important;
     }

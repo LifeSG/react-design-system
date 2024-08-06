@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
 import { v2_Layout } from "src/v2_layout";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 
@@ -73,7 +73,7 @@ export const WithDifferentAddons: StoryObj<Component> = {
         return (
             <StoryContainer>
                 <Container>
-                    <v2_Text.H3>Static addon</v2_Text.H3>
+                    <V2_Text.H3>Static addon</V2_Text.H3>
                     <br />
                     <Form.InputGroup
                         label="With a static addon"
@@ -94,7 +94,7 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             },
                         }}
                     />
-                    <v2_Text.H3>List addon</v2_Text.H3>
+                    <V2_Text.H3>List addon</V2_Text.H3>
                     <br />
                     <Form.InputGroup
                         label="With a list addon"
@@ -222,7 +222,7 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             position: "right",
                         }}
                     />
-                    <v2_Text.H3>Custom addon</v2_Text.H3>
+                    <V2_Text.H3>Custom addon</V2_Text.H3>
                     <br />
                     <Form.InputGroup
                         label="With a custom addon"

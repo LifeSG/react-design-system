@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { v2_Color } from "../v2_color";
-import { v2_TextStyleHelper } from "../v2_text";
+import { V2_TextStyleHelper } from "../v2_text";
 
 //=============================================================================
 // STYLING
@@ -16,7 +16,7 @@ export const LinkButton = styled(Button.Default)`
     outline-offset: -0.125rem;
 
     span {
-        ${v2_TextStyleHelper.getFontFamily("H5", "regular")}
+        ${V2_TextStyleHelper.getFontFamily("H5", "regular")}
         font-size: 1rem !important;
         color: ${v2_Color.Neutral[1]} !important;
         overflow: hidden;
@@ -30,7 +30,7 @@ export const LinkButton = styled(Button.Default)`
     :focus {
         background-color: ${v2_Color.Accent.Light[5]};
         span {
-            ${v2_TextStyleHelper.getFontFamily("H5", "semibold")}
+            ${V2_TextStyleHelper.getFontFamily("H5", "semibold")}
             color: ${v2_Color.Primary} !important;
         }
     }

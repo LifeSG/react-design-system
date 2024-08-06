@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 import {
     Bar,
     Histogram,
@@ -93,11 +93,11 @@ export const HistogramSlider = ({
             return renderRangeLabel(value);
         }
         return (
-            <v2_Text.Body>
+            <V2_Text.Body>
                 {rangeLabelPrefix}
                 {value}
                 {rangeLabelSuffix}
-            </v2_Text.Body>
+            </V2_Text.Body>
         );
     };
 

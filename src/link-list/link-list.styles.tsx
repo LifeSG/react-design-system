@@ -4,7 +4,7 @@ import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -28,11 +28,11 @@ export const Container = styled.div`
     border-bottom: 1px solid ${v2_Color.Neutral[5]};
 `;
 
-export const ItemTitleDefault = styled(v2_Text.H3)`
+export const ItemTitleDefault = styled(V2_Text.H3)`
     color: ${v2_Color.Primary};
     margin-bottom: 0.5rem;
 `;
-export const ItemTitleSmall = styled(v2_Text.Body)`
+export const ItemTitleSmall = styled(V2_Text.Body)`
     color: ${v2_Color.Primary};
 `;
 
@@ -67,7 +67,7 @@ export const ItemContent = styled.div`
     margin-right: 1rem;
 `;
 
-export const Description = styled(v2_Text.BodySmall)`
+export const Description = styled(V2_Text.BodySmall)`
     margin-top: 0.25rem;
 `;
 
@@ -79,7 +79,7 @@ export const ExpandableChild = styled.div`
     border-top: 1px solid ${v2_Color.Neutral[5]};
 `;
 
-export const ToggleButtonLabel = styled(v2_Text.H5)`
+export const ToggleButtonLabel = styled(V2_Text.H5)`
     color: ${v2_Color.Primary};
     margin-right: 0.5rem;
 `;

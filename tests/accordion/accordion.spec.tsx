@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { Accordion, v2_Text } from "../../src";
+import { Accordion, V2_Text } from "../../src";
 
 describe("Accordion", () => {
     beforeEach(() => {
@@ -18,9 +18,9 @@ describe("Accordion", () => {
         render(
             <Accordion>
                 <Accordion.Item data-testid="item1" title={ITEM_TITLE}>
-                    <v2_Text.Body data-testid="item1-content">
+                    <V2_Text.Body data-testid="item1-content">
                         {DEFAULT_TEXT_CONTENT}
-                    </v2_Text.Body>
+                    </V2_Text.Body>
                 </Accordion.Item>
             </Accordion>
         );
@@ -38,9 +38,9 @@ describe("Accordion", () => {
         render(
             <Accordion title={ACCORDION_TITLE}>
                 <Accordion.Item data-testid="item1" title="Item title">
-                    <v2_Text.Body data-testid="item1-content">
+                    <V2_Text.Body data-testid="item1-content">
                         {DEFAULT_TEXT_CONTENT}
-                    </v2_Text.Body>
+                    </V2_Text.Body>
                 </Accordion.Item>
             </Accordion>
         );
@@ -55,9 +55,9 @@ describe("Accordion", () => {
         render(
             <Accordion>
                 <Accordion.Item data-testid="item1" title="Item title">
-                    <v2_Text.Body data-testid="item1-content">
+                    <V2_Text.Body data-testid="item1-content">
                         {DEFAULT_TEXT_CONTENT}
-                    </v2_Text.Body>
+                    </V2_Text.Body>
                 </Accordion.Item>
             </Accordion>
         );
@@ -71,9 +71,9 @@ describe("Accordion", () => {
                 render(
                     <Accordion>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <v2_Text.Body data-testid="item1-content">
+                            <V2_Text.Body data-testid="item1-content">
                                 {DEFAULT_TEXT_CONTENT}
-                            </v2_Text.Body>
+                            </V2_Text.Body>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -85,9 +85,9 @@ describe("Accordion", () => {
                 render(
                     <Accordion>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <v2_Text.Body data-testid="item1-content">
+                            <V2_Text.Body data-testid="item1-content">
                                 {DEFAULT_TEXT_CONTENT}
-                            </v2_Text.Body>
+                            </V2_Text.Body>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -108,10 +108,10 @@ describe("Accordion", () => {
                 render(
                     <Accordion>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <v2_Text.Body>{DEFAULT_TEXT_CONTENT}</v2_Text.Body>
+                            <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
                         </Accordion.Item>
                         <Accordion.Item data-testid="item2" title="Item title">
-                            <v2_Text.Body>{DEFAULT_TEXT_CONTENT}</v2_Text.Body>
+                            <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -140,9 +140,9 @@ describe("Accordion", () => {
                 render(
                     <Accordion enableExpandAll={false}>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <v2_Text.Body data-testid="item1-content">
+                            <V2_Text.Body data-testid="item1-content">
                                 {DEFAULT_TEXT_CONTENT}
-                            </v2_Text.Body>
+                            </V2_Text.Body>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -159,9 +159,9 @@ describe("Accordion", () => {
             render(
                 <Accordion>
                     <Accordion.Item data-testid="item1" title="Item title">
-                        <v2_Text.Body data-testid="my-content">
+                        <V2_Text.Body data-testid="my-content">
                             {DEFAULT_TEXT_CONTENT}
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Accordion.Item>
                 </Accordion>
             );
@@ -177,10 +177,10 @@ describe("Accordion", () => {
             render(
                 <Accordion>
                     <Accordion.Item data-testid="item1" title="Item title">
-                        <v2_Text.Body>{DEFAULT_TEXT_CONTENT}</v2_Text.Body>
+                        <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
                     </Accordion.Item>
                     <Accordion.Item data-testid="item2" title="Item title">
-                        <v2_Text.Body>{DEFAULT_TEXT_CONTENT}</v2_Text.Body>
+                        <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
                     </Accordion.Item>
                 </Accordion>
             );
@@ -196,7 +196,7 @@ describe("Accordion", () => {
             render(
                 <Accordion>
                     <Accordion.Item data-testid="item1" title="Item title">
-                        <v2_Text.Body>{DEFAULT_TEXT_CONTENT}</v2_Text.Body>
+                        <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
                     </Accordion.Item>
                 </Accordion>
             );
@@ -224,9 +224,9 @@ describe("Accordion", () => {
                         title="Item title"
                         collapsible={false}
                     >
-                        <v2_Text.Body data-testid="item1-content">
+                        <V2_Text.Body data-testid="item1-content">
                             {DEFAULT_TEXT_CONTENT}
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Accordion.Item>
                 </Accordion>
             );

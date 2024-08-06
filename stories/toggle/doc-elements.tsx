@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { v2_Text } from "../../src/v2_text";
+import { V2_Text } from "../../src/v2_text";
 import { v2_MediaQuery } from "../../src/v2_media";
 
 interface StyleProps {
@@ -62,7 +62,7 @@ export const Wrapper = styled.div<StyleProps>`
     }}
 `;
 
-export const HeadingLabel = styled(v2_Text.H6)`
+export const HeadingLabel = styled(V2_Text.H6)`
     text-align: center;
 
     ${v2_MediaQuery.MaxWidth.mobileL} {

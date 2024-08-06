@@ -3,7 +3,7 @@ import { Unstyled } from "@storybook/blocks";
 import React from "react";
 import styled from "styled-components";
 import { v2_Color } from "../../src/v2_color";
-import { v2_Text, v2_TextProps, v2_TextStyleHelper } from "../../src/v2_text";
+import { V2_Text, V2_TextProps, V2_TextStyleHelper } from "../../src/v2_text";
 
 interface HeadingProps {
     children: string;
@@ -13,7 +13,7 @@ interface HeadingProps {
 // HOC
 // =============================================================================
 const withLink =
-    (Component: React.ComponentType<v2_TextProps>) =>
+    (Component: React.ComponentType<V2_TextProps>) =>
     // eslint-disable-next-line react/display-name
     ({ children }: HeadingProps): JSX.Element => {
         const linkId = convertToLinkId(children);
@@ -61,7 +61,7 @@ const LinkIcon = styled(DSLinkIcon)`
     transform: rotate(-45deg);
 `;
 
-const StyledTitle = styled(v2_Text.D1)`
+const StyledTitle = styled(V2_Text.D1)`
     margin: 0 0 3rem;
     font-weight: bold;
 
@@ -72,7 +72,7 @@ const StyledTitle = styled(v2_Text.D1)`
     }
 `;
 
-const StyledSecondary = styled(v2_Text.H1)`
+const StyledSecondary = styled(V2_Text.H1)`
     margin: 1rem 0 1.5rem;
     :hover {
         ${Link} {
@@ -81,8 +81,8 @@ const StyledSecondary = styled(v2_Text.H1)`
     }
 `;
 
-const StyledTertiary = styled(v2_Text.H2)`
-    ${v2_TextStyleHelper.getFontFamily("H2", "semibold")}
+const StyledTertiary = styled(V2_Text.H2)`
+    ${V2_TextStyleHelper.getFontFamily("H2", "semibold")}
     margin: 1rem 0 1.5rem;
     :hover {
         ${Link} {
@@ -91,7 +91,7 @@ const StyledTertiary = styled(v2_Text.H2)`
     }
 `;
 
-const StyledQuaternary = styled(v2_Text.H4)`
+const StyledQuaternary = styled(V2_Text.H4)`
     margin: 1.5rem 0;
     :hover {
         ${Link} {

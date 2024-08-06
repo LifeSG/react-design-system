@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { ErrorDisplay } from "../error-display";
 import { v2_DesignToken } from "../v2_design-token";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -220,7 +220,7 @@ export const BodyCell = styled.td<BodyCellProps>`
     border-bottom: 1px solid ${borderColor};
 `;
 
-export const BodyCellContent = styled(v2_Text.Body)`
+export const BodyCellContent = styled(V2_Text.Body)`
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

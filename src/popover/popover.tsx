@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { Card } from "src/card";
 import { Modal } from "../modal/modal";
 import { MediaWidths } from "../spec/media-spec";
-import { v2_Text } from "../v2_text/text";
+import { V2_Text } from "../v2_text/text";
 import {
     BubbleWrap,
     ContentWrapper,
@@ -136,7 +136,7 @@ export const Popover = ({
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <v2_Text.BodySmall>{children}</v2_Text.BodySmall>
+            <V2_Text.BodySmall>{children}</V2_Text.BodySmall>
         ) : (
             children
         );

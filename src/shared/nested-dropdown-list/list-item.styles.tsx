@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { Checkbox } from "../../checkbox";
-import { v2_TextStyleHelper } from "../../v2_text";
+import { V2_TextStyleHelper } from "../../v2_text";
 import { TruncateType } from "./types";
 import { IconButton } from "../../icon-button";
 import { TriangleForwardFillIcon } from "@lifesg/react-icons/triangle-forward-fill";
@@ -90,7 +90,7 @@ export const Item = styled.li<ItemProps>`
 `;
 
 export const Label = styled.div<TruncateProps>`
-    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
     overflow: hidden;
 
     ${(props) => {
@@ -110,7 +110,7 @@ export const Label = styled.div<TruncateProps>`
 `;
 
 export const Bold = styled.span`
-    ${v2_TextStyleHelper.getTextStyle("Body", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
 `;
 
 export const TruncateContainer = styled.div`
@@ -183,7 +183,7 @@ export const TriangleIcon = styled(TriangleForwardFillIcon)`
 `;
 
 export const TitleButton = styled.button`
-    ${v2_TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     color: ${v2_Color.Neutral[1]};
     text-align: left;
     line-height: 1.625rem;

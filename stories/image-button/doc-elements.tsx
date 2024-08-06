@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { v2_MediaQuery } from "../../src/v2_media";
-import { v2_Text } from "../../src/v2_text";
+import { V2_Text } from "../../src/v2_text";
 
 // =============================================================================
 // STYLING
@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const HeadingLabel = styled(v2_Text.H6)`
+export const HeadingLabel = styled(V2_Text.H6)`
     text-align: center;
 
     ${v2_MediaQuery.MaxWidth.mobileL} {

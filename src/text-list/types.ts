@@ -1,9 +1,9 @@
-import { v2_TextSizeType } from "../v2_text/types";
+import { V2_TextSizeType } from "../v2_text/types";
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];
     bottomMargin?: number | undefined;
-    size?: v2_TextSizeType | undefined;
+    size?: V2_TextSizeType | undefined;
 }
 
 export type CounterType = "lower-alpha" | "decimal" | "lower-roman";

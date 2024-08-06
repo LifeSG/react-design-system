@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { v2_Layout } from "../v2_layout";
 import { v2_MediaQuery } from "../v2_media";
 import { v2_Color } from "../v2_color";
-import { v2_Text, v2_TextStyleHelper } from "../v2_text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // GENERIC
@@ -12,7 +12,7 @@ export const BaseFooter = styled.footer`
     background: ${v2_Color.Neutral[7]};
 `;
 
-export const StyledFooterLink = styled(v2_Text.Hyperlink.Small)`
+export const StyledFooterLink = styled(V2_Text.Hyperlink.Small)`
     color: ${v2_Color.Neutral[1]};
 `;
 
@@ -164,8 +164,8 @@ export const CopyrightSection = styled(BottomSectionContent)`
     }
 `;
 
-export const DisclaimerTextLink = styled(v2_Text.Hyperlink.Small)`
-    ${v2_TextStyleHelper.getTextStyle("XSmall", "regular")}
+export const DisclaimerTextLink = styled(V2_Text.Hyperlink.Small)`
+    ${V2_TextStyleHelper.getTextStyle("XSmall", "regular")}
     color: ${v2_Color.Neutral[1]};
     &:not(:last-child) {
         margin-right: 1.5rem;

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { v2_Layout } from "../../src/v2_layout";
-import { v2_Text } from "../../src/v2_text";
+import { V2_Text } from "../../src/v2_text";
 
 export const Wrapper = styled(v2_Layout.V2_Content)`
     padding: 5rem;
 `;
 
-export const TextComponent = styled(v2_Text.Body)`
+export const TextComponent = styled(V2_Text.Body)`
     margin-bottom: 1rem;
 `;
 

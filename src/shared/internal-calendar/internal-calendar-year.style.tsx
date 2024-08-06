@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
-import { v2_TextStyleHelper } from "../../v2_text/helper";
-import { v2_Text } from "../../v2_text/text";
+import { V2_TextStyleHelper } from "../../v2_text/helper";
+import { V2_Text } from "../../v2_text/text";
 import { YearVariant } from "./internal-calendar-year";
 import { CalendarType } from "./types";
 
@@ -89,7 +89,7 @@ export const YearCell = styled.div<StyleProps>`
     }};
 `;
 
-export const CellLabel = styled(v2_Text.H5)<StyleProps>`
+export const CellLabel = styled(V2_Text.H5)<StyleProps>`
     ${(props) => {
         if (props.$disabledDisplay) {
             return css`
@@ -104,7 +104,7 @@ export const CellLabel = styled(v2_Text.H5)<StyleProps>`
                 `;
             case "selected-year":
                 return css`
-                    ${v2_TextStyleHelper.getTextStyle("H5", "semibold")}
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
                     color: ${v2_Color.Primary(props)};
                 `;
             case "other-decade":

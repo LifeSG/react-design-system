@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_DesignToken } from "../v2_design-token";
-import { v2_TextStyleHelper } from "../v2_text";
+import { V2_TextStyleHelper } from "../v2_text";
 import { Transition } from "../transition";
 
 // =============================================================================
@@ -28,7 +28,7 @@ export const Element = styled.textarea<StyleProps>`
     width: 100%;
     transition: ${Transition.Base};
 
-    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${v2_Color.Neutral[1]};
     background: ${v2_Color.Neutral[8]};
 

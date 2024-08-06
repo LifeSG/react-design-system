@@ -1,10 +1,10 @@
 import { getThemeTextStyles } from "../theme/text-theme-helper";
 import { PropertiesToType } from "../util/utility-types";
-import { v2_TextStyleSetType } from "./types";
+import { V2_TextStyleSetType } from "./types";
 
 /** @deprecated */
-export const v2_TextStyle: PropertiesToType<
-    v2_TextStyleSetType,
+export const V2_TextStyle: PropertiesToType<
+    V2_TextStyleSetType,
     ReturnType<typeof getThemeTextStyles>
 > = {
     D1: {

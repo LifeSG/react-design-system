@@ -1,7 +1,7 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -33,7 +33,7 @@ export const IndicatorLabelContainer = styled.div`
     margin-bottom: 1rem;
 `;
 
-export const LabelText = styled(v2_Text.Body)`
+export const LabelText = styled(V2_Text.Body)`
     overflow-wrap: anywhere;
 `;
 

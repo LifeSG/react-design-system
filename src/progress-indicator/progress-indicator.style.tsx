@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 
 // Units in rem
 export const INDICATOR_BAR_MARGIN_RIGHT_MOBILE = 0.5;
@@ -54,7 +54,7 @@ export const IndicatorBar = styled.div<IndicatorProps>`
     }};
 `;
 
-export const IndicatorTitleDesktop = styled(v2_Text.BodySmall)<IndicatorProps>`
+export const IndicatorTitleDesktop = styled(V2_Text.BodySmall)<IndicatorProps>`
     overflow-wrap: anywhere;
     ${(props) => {
         const { highlighted } = props;
@@ -63,7 +63,7 @@ export const IndicatorTitleDesktop = styled(v2_Text.BodySmall)<IndicatorProps>`
     }};
 `;
 
-export const IndicatorTitleMobile = styled(v2_Text.BodySmall)`
+export const IndicatorTitleMobile = styled(V2_Text.BodySmall)`
     overflow-wrap: anywhere;
     color: ${v2_Color.Neutral[1]};
 `;

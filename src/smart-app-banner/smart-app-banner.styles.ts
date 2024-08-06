@@ -7,7 +7,7 @@ import { Button } from "../button";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { v2_Text, v2_TextStyleHelper } from "../v2_text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 const slideDown = keyframes`
 	from {
@@ -97,18 +97,18 @@ export const StyledButton = styled(Button.Small)`
     height: auto;
     & > span {
         overflow-wrap: anywhere;
-        ${v2_TextStyleHelper.getTextStyle("XSmall", "semibold")};
+        ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")};
     }
 `;
 
-export const Title = styled(v2_Text.H6)`
+export const Title = styled(V2_Text.H6)`
     overflow-wrap: anywhere;
     ${v2_MediaQuery.MaxWidth.mobileM} {
-        ${v2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
+        ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }
 `;
 
-export const Description = styled(v2_Text.XSmall)`
+export const Description = styled(V2_Text.XSmall)`
     overflow-wrap: anywhere;
 `;
 

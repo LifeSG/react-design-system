@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -98,7 +98,7 @@ export const CloseButton = styled(ClickableIcon)`
     }
 `;
 
-export const Heading = styled(v2_Text.H2)`
+export const Heading = styled(V2_Text.H2)`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

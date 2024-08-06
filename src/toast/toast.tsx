@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { easings, useSpring } from "react-spring";
 import { MediaWidths } from "../spec/media-spec";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 import {
     ActionButton,
     ContentWrapper,
@@ -112,9 +112,9 @@ export const Toast = ({
         if (React.isValidElement(label)) {
             return label;
         } else if (title) {
-            return <v2_Text.BodySmall>{label}</v2_Text.BodySmall>;
+            return <V2_Text.BodySmall>{label}</V2_Text.BodySmall>;
         } else {
-            return <v2_Text.Body>{label}</v2_Text.Body>;
+            return <V2_Text.Body>{label}</V2_Text.Body>;
         }
     };
 

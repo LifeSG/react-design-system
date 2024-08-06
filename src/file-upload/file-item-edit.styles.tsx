@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_MediaQuery } from "../v2_media/media";
 import { Button } from "../button/button";
-import { v2_Text } from "../v2_text/text";
+import { V2_Text } from "../v2_text/text";
 import { v2_Color } from "../v2_color/color";
 
 // =============================================================================
@@ -50,7 +50,7 @@ export const NameSection = styled.div`
     }
 `;
 
-export const FileNameText = styled(v2_Text.BodySmall)`
+export const FileNameText = styled(V2_Text.BodySmall)`
     display: flex;
     flex: 1;
     margin-right: 1rem;
@@ -61,7 +61,7 @@ export const FileNameText = styled(v2_Text.BodySmall)`
     }
 `;
 
-export const FileSizeText = styled(v2_Text.BodySmall)``;
+export const FileSizeText = styled(V2_Text.BodySmall)``;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { v2_Color } from "../v2_color";
 import { InputGroup } from "../input-group";
-import { v2_Text, v2_TextStyleHelper } from "../v2_text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 
@@ -52,7 +52,7 @@ export const LoadingWrapper = styled.div`
     height: 3rem;
 `;
 
-export const LoadingLabel = styled(v2_Text.Body)`
+export const LoadingLabel = styled(V2_Text.Body)`
     color: ${v2_Color.Neutral[3]};
 `;
 
@@ -70,7 +70,7 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 // ERROR DISPLAY
 // -----------------------------------------------------------------------------
 
-export const TryAgainLabel = styled(v2_Text.Body)`
+export const TryAgainLabel = styled(V2_Text.Body)`
     color: ${v2_Color.Primary};
     text-decoration: underline;
 `;
@@ -88,7 +88,7 @@ export const ErrorIcon = styled(ExclamationTriangleIcon)`
     width: 1.125rem;
 `;
 
-export const ErrorLabel = styled(v2_Text.Body)`
+export const ErrorLabel = styled(V2_Text.Body)`
     color: ${v2_Color.Validation.Orange.Text};
 `;
 

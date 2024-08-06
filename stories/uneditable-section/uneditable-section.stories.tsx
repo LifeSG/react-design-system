@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "src/alert";
 import { Button } from "src/button";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 import {
     UneditableSection,
     UneditableSectionItemMaskState,
@@ -307,7 +307,7 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             marginBottom: "2rem",
                         }}
                     >
-                        <v2_Text.H3>My custom content</v2_Text.H3>
+                        <V2_Text.H3>My custom content</V2_Text.H3>
                         <Button.Default styleType="light">
                             Pull latest records
                         </Button.Default>
@@ -318,12 +318,12 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             users.
                         </Alert>
                     </div>
-                    <v2_Text.Body style={{ marginBottom: "2rem" }}>
+                    <V2_Text.Body style={{ marginBottom: "2rem" }}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Etiam pellentesque enim eu neque gravida, ut pulvinar
                         magna tristique. Aenean sed malesuada arcu. Integer
                         convallis dapibus suscipit.
-                    </v2_Text.Body>
+                    </V2_Text.Body>
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Name (as in NRIC or passport)"
@@ -340,9 +340,9 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             value="Block 287, #05-11, Tampines street 22, Singapore 534788"
                         />
                     </UneditableSection.ItemSection>
-                    <v2_Text.H3 style={{ marginBottom: "2rem" }}>
+                    <V2_Text.H3 style={{ marginBottom: "2rem" }}>
                         Another section
-                    </v2_Text.H3>
+                    </V2_Text.H3>
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Spoken languages"

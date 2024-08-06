@@ -5,7 +5,7 @@ import { Button } from "../button/button";
 import { v2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { v2_Text, v2_TextStyleHelper } from "../v2_text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // STYLES INTERFACE
@@ -78,11 +78,11 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
     }
 `;
 
-export const FilterItemTitle = styled(v2_Text.H4)`
+export const FilterItemTitle = styled(V2_Text.H4)`
     margin: 1.5rem 0 1.5rem 1.25rem;
 
     ${v2_MediaQuery.MaxWidth.tablet} {
-        ${v2_TextStyleHelper.getTextStyle("H5", "semibold")}
+        ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
         margin: 1.5rem 1.25rem 0 1.25rem;
     }
 `;

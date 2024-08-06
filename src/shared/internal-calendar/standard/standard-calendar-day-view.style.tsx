@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../../v2_color";
-import { v2_Text, v2_TextStyleHelper } from "../../../v2_text";
+import { V2_Text, V2_TextStyleHelper } from "../../../v2_text";
 import { DayVariant } from "./standard-calendar-day-view";
 
 // =============================================================================
@@ -88,13 +88,13 @@ export const BaseInteractiveCircle = styled.div<BaseInteractiveCircleProps>`
     position: absolute;
 `;
 
-export const DayLabel = styled(v2_Text.H5)<DayLabelStyleProps>`
+export const DayLabel = styled(V2_Text.H5)<DayLabelStyleProps>`
     ${(props) => {
         const { $disabledDisplay, $selected, $variant } = props;
 
         if ($disabledDisplay && $selected) {
             return css`
-                ${v2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
                 color: ${v2_Color.Accent.Light[2]};
             `;
         }
@@ -107,7 +107,7 @@ export const DayLabel = styled(v2_Text.H5)<DayLabelStyleProps>`
 
         if ($selected) {
             return css`
-                ${v2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
                 color: ${v2_Color.Primary};
             `;
         }

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
-import { v2_TextStyle, v2_TextStyleHelper } from "../../v2_text";
+import { V2_TextStyle, V2_TextStyleHelper } from "../../v2_text";
 import { Transition } from "../../transition";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 import { DropdownVariantType } from "./types";
@@ -25,7 +25,7 @@ export const Selector = styled(BasicButton)<StyleProps>`
         props.$variant === "small" ? "0.4375rem 1rem" : "0.6875rem 1rem"};
 
     ${(props) =>
-        v2_TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
@@ -46,8 +46,8 @@ export const IconContainer = styled.div<StyleProps>`
         ${(props) => {
             const size =
                 props.$variant === "small"
-                    ? v2_TextStyle.BodySmall.fontSize
-                    : v2_TextStyle.Body.fontSize;
+                    ? V2_TextStyle.BodySmall.fontSize
+                    : V2_TextStyle.Body.fontSize;
             return css`
                 height: ${size}rem;
                 width: ${size}rem;

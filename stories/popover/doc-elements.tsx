@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { v2_Color } from "../../src/v2_color";
 import { v2_MediaQuery } from "../../src/v2_media";
 import { withPopover } from "../../src/popover";
-import { v2_Text } from "../../src/v2_text";
+import { V2_Text } from "../../src/v2_text";
 
 // =============================================================================
 // STYLING
@@ -46,7 +46,7 @@ export const CustomDiv = styled.div`
 // =============================================================================
 const Trigger = () => (
     <CustomDiv>
-        <v2_Text.Body>Hover me</v2_Text.Body>
+        <V2_Text.Body>Hover me</V2_Text.Body>
     </CustomDiv>
 );
 

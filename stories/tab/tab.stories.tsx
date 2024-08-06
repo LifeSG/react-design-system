@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Tab } from "src/tab";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 import { Content } from "./doc-elements";
 import { useState } from "react";
 
@@ -22,56 +22,56 @@ export const Default: StoryObj<Component> = {
             <Tab>
                 <Tab.Item title="Section A">
                     <Content>
-                        <v2_Text.H1>Section A</v2_Text.H1>
+                        <V2_Text.H1>Section A</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit. Nullam commodo eget turpis sit amet luctus.
                             Duis fringilla, libero ac eleifend vehicula, sem
                             arcu mattis diam, eget pellentesque urna libero
                             feugiat sem.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
                 <Tab.Item title="Section B">
                     <Content>
-                        <v2_Text.H1>Section B</v2_Text.H1>
+                        <V2_Text.H1>Section B</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Donec metus augue, vulputate ut laoreet pretium,
                             cursus sed odio. Aenean imperdiet sapien nec lectus
                             gravida, vitae tincidunt sem feugiat. Nullam sit
                             amet tortor purus. Sed eget nulla sapien. Proin a
                             lacus pellentesque, facilisis augue quis, vestibulum
                             sem.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
                 <Tab.Item title="Section C">
                     <Content>
-                        <v2_Text.H1>Section C</v2_Text.H1>
+                        <V2_Text.H1>Section C</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Maecenas tempor dolor sit amet turpis interdum
                             convallis. Nunc ut elit vitae justo placerat
                             vulputate. Mauris varius sem in lectus vestibulum,
                             sed porttitor nisi ultricies. Morbi quis commodo
                             ipsum.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
                 <Tab.Item title="Section D">
                     <Content>
-                        <v2_Text.H1>Section D</v2_Text.H1>
+                        <V2_Text.H1>Section D</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Nullam sit amet tortor purus. Sed eget nulla sapien.
                             Proin a lacus pellentesque, facilisis augue quis,
                             vestibulum sem. Nulla pretium gravida consectetur.
                             Curabitur vestibulum erat nisi. Proin et accumsan
                             purus. Donec blandit tortor risus, vitae tempus
                             magna egestas nec.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
             </Tab>
@@ -85,42 +85,42 @@ export const LongerLabels: StoryObj<Component> = {
             <Tab>
                 <Tab.Item title="This is a significantly longer label that will truncate">
                     <Content>
-                        <v2_Text.H1>Section A</v2_Text.H1>
+                        <V2_Text.H1>Section A</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit. Nullam commodo eget turpis sit amet luctus.
                             Duis fringilla, libero ac eleifend vehicula, sem
                             arcu mattis diam, eget pellentesque urna libero
                             feugiat sem.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
                 <Tab.Item title="Shorter label">
                     <Content>
-                        <v2_Text.H1>Section B</v2_Text.H1>
+                        <V2_Text.H1>Section B</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Donec metus augue, vulputate ut laoreet pretium,
                             cursus sed odio. Aenean imperdiet sapien nec lectus
                             gravida, vitae tincidunt sem feugiat. Nullam sit
                             amet tortor purus. Sed eget nulla sapien. Proin a
                             lacus pellentesque, facilisis augue quis, vestibulum
                             sem.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
                 <Tab.Item title="Section C">
                     <Content>
-                        <v2_Text.H1>Section C</v2_Text.H1>
+                        <V2_Text.H1>Section C</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Maecenas tempor dolor sit amet turpis interdum
                             convallis. Nunc ut elit vitae justo placerat
                             vulputate. Mauris varius sem in lectus vestibulum,
                             sed porttitor nisi ultricies. Morbi quis commodo
                             ipsum.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
             </Tab>
@@ -140,42 +140,42 @@ export const ControlledMode: StoryObj<Component> = {
             <Tab onTabClick={handleTabClick} currentActive={currentIndex}>
                 <Tab.Item title="Section A">
                     <Content>
-                        <v2_Text.H1>Section A</v2_Text.H1>
+                        <V2_Text.H1>Section A</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit. Nullam commodo eget turpis sit amet luctus.
                             Duis fringilla, libero ac eleifend vehicula, sem
                             arcu mattis diam, eget pellentesque urna libero
                             feugiat sem.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
                 <Tab.Item title="Section B">
                     <Content>
-                        <v2_Text.H1>Section B</v2_Text.H1>
+                        <V2_Text.H1>Section B</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Donec metus augue, vulputate ut laoreet pretium,
                             cursus sed odio. Aenean imperdiet sapien nec lectus
                             gravida, vitae tincidunt sem feugiat. Nullam sit
                             amet tortor purus. Sed eget nulla sapien. Proin a
                             lacus pellentesque, facilisis augue quis, vestibulum
                             sem.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
                 <Tab.Item title="Section C">
                     <Content>
-                        <v2_Text.H1>Section C</v2_Text.H1>
+                        <V2_Text.H1>Section C</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             Maecenas tempor dolor sit amet turpis interdum
                             convallis. Nunc ut elit vitae justo placerat
                             vulputate. Mauris varius sem in lectus vestibulum,
                             sed porttitor nisi ultricies. Morbi quis commodo
                             ipsum.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </Content>
                 </Tab.Item>
             </Tab>

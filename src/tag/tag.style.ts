@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color/color";
 import { TagColorType, TagType } from "./types";
-import { v2_TextStyleHelper } from "../v2_text";
+import { V2_TextStyleHelper } from "../v2_text";
 import { v2_MediaQuery } from "../v2_media";
 
 // =============================================================================
@@ -18,7 +18,7 @@ export const Wrapper = styled.div<StyleProps>`
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;
-    ${v2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
     transition: all 200ms ease;
     cursor: ${({ $interactive }) => ($interactive ? "pointer" : "default")};
     display: flex;
@@ -117,7 +117,7 @@ export const Wrapper = styled.div<StyleProps>`
         ${({ $interactive }) => {
             if ($interactive) {
                 return css`
-                    ${v2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
                     padding: calc(0.5rem - 1px) 1rem;
                 `;
             }

@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { v2_TextStyleHelper } from "../v2_text";
+import { V2_TextStyleHelper } from "../v2_text";
 import { MainStyleProps } from "./types";
 import { v2_DesignToken } from "../v2_design-token";
 
@@ -105,7 +105,7 @@ export const Main = styled.button<MainStyleProps>`
             case "small":
                 return css`
                     height: 2.5rem;
-                    ${v2_TextStyleHelper.getTextStyle("H5", "semibold")}
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
 
                     ${v2_MediaQuery.MaxWidth.mobileS} {
                         height: auto;
@@ -114,7 +114,7 @@ export const Main = styled.button<MainStyleProps>`
             default:
                 return css`
                     height: 3rem;
-                    ${v2_TextStyleHelper.getTextStyle("H4", "semibold")}
+                    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
 
                     ${v2_MediaQuery.MaxWidth.mobileS} {
                         height: auto;

@@ -2,7 +2,7 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Tag } from "src/tag";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 import { StoryContainer } from "../storybook-common";
 import { Grid, Row, Wrapper } from "./doc-elements";
 
@@ -81,15 +81,15 @@ export const Variations: StoryObj<Component> = {
                 <Grid>
                     <Row>
                         <span />
-                        <v2_Text.H6 weight="semibold">Black</v2_Text.H6>
-                        <v2_Text.H6 weight="semibold">Grey</v2_Text.H6>
-                        <v2_Text.H6 weight="semibold">Green</v2_Text.H6>
-                        <v2_Text.H6 weight="semibold">Yellow</v2_Text.H6>
-                        <v2_Text.H6 weight="semibold">Red</v2_Text.H6>
-                        <v2_Text.H6 weight="semibold">Blue</v2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Black</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Grey</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Green</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Yellow</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Red</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Blue</V2_Text.H6>
                     </Row>
                     <Row>
-                        <v2_Text.H6 weight="semibold">Outline</v2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Outline</V2_Text.H6>
                         <Tag type="outline" colorType="black">
                             Label
                         </Tag>
@@ -110,7 +110,7 @@ export const Variations: StoryObj<Component> = {
                         </Tag>
                     </Row>
                     <Row>
-                        <v2_Text.H6 weight="semibold">Solid</v2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Solid</V2_Text.H6>
                         <Tag type="solid" colorType="black">
                             Label
                         </Tag>

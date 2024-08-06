@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { v2_MediaQuery } from "../v2_media";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // WRAPPER
@@ -102,7 +102,7 @@ export const DownloadAppWrapper = styled.div`
     }
 `;
 
-export const DownloadAppTitle = styled(v2_Text.BodySmall)`
+export const DownloadAppTitle = styled(V2_Text.BodySmall)`
     margin-bottom: 0.5rem;
 `;
 

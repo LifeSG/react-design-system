@@ -2,7 +2,7 @@ import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
 import { useEffect, useState } from "react";
 import { FormLabel } from "../form/form-label";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 import { StringHelper } from "../util/string-helper";
 import {
     Clickable,
@@ -137,11 +137,11 @@ export const UneditableSectionItem = ({
 
     const renderContent = () => {
         if (!displayMaskState) {
-            return <v2_Text.Body>{value}</v2_Text.Body>;
+            return <V2_Text.Body>{value}</V2_Text.Body>;
         }
 
         if (disableMaskUnmask) {
-            return <v2_Text.Body>{getValue()}</v2_Text.Body>;
+            return <V2_Text.Body>{getValue()}</V2_Text.Body>;
         }
 
         return (

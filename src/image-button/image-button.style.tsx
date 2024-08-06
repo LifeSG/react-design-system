@@ -1,7 +1,7 @@
 import { v2_MediaQuery } from "../v2_media";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color/color";
-import { v2_TextStyleHelper } from "../v2_text/helper";
+import { V2_TextStyleHelper } from "../v2_text/helper";
 
 export const Main = styled.button<{
     $selected?: boolean;
@@ -20,7 +20,7 @@ export const Main = styled.button<{
     cursor: pointer;
     max-width: 13rem;
     transition: all 200ms ease;
-    ${v2_TextStyleHelper.getTextStyle("Body", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${({ $selected }) => $selected && v2_Color.Primary};
     overflow-wrap: anywhere;
 
@@ -34,7 +34,7 @@ export const Main = styled.button<{
     ${v2_MediaQuery.MaxWidth.mobileL} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
-        ${v2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+        ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
     }
 
     ${(props) => {

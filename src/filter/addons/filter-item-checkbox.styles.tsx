@@ -3,7 +3,7 @@ import { Button } from "../../button/button";
 import { v2_Color } from "../../v2_color/color";
 import { v2_MediaQuery } from "../../v2_media/media";
 import { ToggleIcon } from "../../shared/toggle-icon/toggle-icon";
-import { v2_TextStyleHelper } from "../../v2_text/helper";
+import { V2_TextStyleHelper } from "../../v2_text/helper";
 import { Toggle } from "../../toggle";
 import { FilterItem } from "../filter-item";
 
@@ -50,7 +50,7 @@ export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
     padding: 0.5rem;
 
     cursor: pointer;
-    ${v2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
     ${(props) =>
         props.$selected &&
         css`

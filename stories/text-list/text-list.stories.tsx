@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 import { TextList } from "src/text-list";
 import { Container, CustomOrderedList, SubContainer } from "./doc-elements";
 
@@ -102,7 +102,7 @@ export const OtherFeatures: StoryObj = {
         return (
             <Container>
                 <SubContainer>
-                    <v2_Text.H5>Reverse count</v2_Text.H5>
+                    <V2_Text.H5>Reverse count</V2_Text.H5>
                     <br />
                     <TextList.Ol reversed start={3}>
                         <li>Item A</li>
@@ -111,7 +111,7 @@ export const OtherFeatures: StoryObj = {
                     </TextList.Ol>
                 </SubContainer>
                 <SubContainer>
-                    <v2_Text.H5>Custom start count</v2_Text.H5>
+                    <V2_Text.H5>Custom start count</V2_Text.H5>
                     <br />
                     <TextList.Ol start={7}>
                         <li>First</li>

@@ -4,7 +4,7 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
-import { v2_Text } from "../v2_text/text";
+import { V2_Text } from "../v2_text/text";
 import { Transition } from "../transition";
 import { BoxContainerDisplayState } from "./types";
 
@@ -66,7 +66,7 @@ export const Header = styled.div<HeaderStyleProps>`
     }}
 `;
 
-export const LabelText = styled(v2_Text.H3)`
+export const LabelText = styled(V2_Text.H3)`
     word-wrap: break-word;
     overflow-wrap: anywhere;
     display: flex;
@@ -144,7 +144,7 @@ export const Handle = styled.button`
     }
 `;
 
-export const HandleLabel = styled(v2_Text.H4)`
+export const HandleLabel = styled(V2_Text.H4)`
     color: ${v2_Color.Primary};
 `;
 

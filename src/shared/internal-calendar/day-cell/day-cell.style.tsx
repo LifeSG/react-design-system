@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../../v2_color";
-import { v2_Text, v2_TextStyleHelper } from "../../../v2_text";
+import { V2_Text, V2_TextStyleHelper } from "../../../v2_text";
 import { CellType, LabelType } from "./types";
 
 // =============================================================================
@@ -168,7 +168,7 @@ export const RightCircle = styled(Circle)`
     }
 `;
 
-export const Label = styled(v2_Text.H5)<LabelStyleProps>`
+export const Label = styled(V2_Text.H5)<LabelStyleProps>`
     position: absolute;
     top: 0;
     bottom: 0;
@@ -197,7 +197,7 @@ export const Label = styled(v2_Text.H5)<LabelStyleProps>`
         if ($disabled) {
             if ($type === "selected") {
                 return css`
-                    ${v2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
                     color: ${v2_Color.Accent.Light[2]};
                 `;
             }
@@ -210,7 +210,7 @@ export const Label = styled(v2_Text.H5)<LabelStyleProps>`
         switch ($type) {
             case "selected":
                 return css`
-                    ${v2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
                     color: ${v2_Color.Primary};
                 `;
             case "current":

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { v2_Layout } from "src/v2_layout";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 import { Wrapper } from "./doc-elements";
 
 type Component = typeof v2_Layout.V2_ColDiv;
@@ -27,7 +27,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>1</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>1</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={2}
@@ -37,7 +37,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>2</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>2</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={3}
@@ -47,7 +47,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>3</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>3</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -57,7 +57,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>4</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>4</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -68,7 +68,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>5</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>5</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -79,7 +79,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>6</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>6</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -90,7 +90,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>7</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>7</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -101,7 +101,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>8</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>8</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -113,7 +113,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>9</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>9</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -125,7 +125,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>10</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>10</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -137,7 +137,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>11</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>11</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={4}
@@ -149,7 +149,7 @@ export const ColumnDivs: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>12</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>12</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
             </Wrapper>
         );
@@ -168,7 +168,7 @@ export const SpecifyingRanges: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>One</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>One</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={[3, 5]}
@@ -179,7 +179,7 @@ export const SpecifyingRanges: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>Two</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>Two</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
                 <v2_Layout.V2_ColDiv
                     mobileCols={[2, 4]}
@@ -191,7 +191,7 @@ export const SpecifyingRanges: StoryObj<Component> = {
                         padding: "0.5rem 0",
                     }}
                 >
-                    <v2_Text.BodySmall>Three</v2_Text.BodySmall>
+                    <V2_Text.BodySmall>Three</V2_Text.BodySmall>
                 </v2_Layout.V2_ColDiv>
             </Wrapper>
         );

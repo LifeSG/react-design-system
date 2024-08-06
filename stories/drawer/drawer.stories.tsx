@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Drawer } from "src/drawer";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 
 type Component = typeof Drawer;
 
@@ -29,13 +29,13 @@ export const Default: StoryObj<Component> = {
                     onOverlayClick={closeDrawer}
                     heading="Header text"
                 >
-                    <v2_Text.Body style={{ padding: "1rem" }}>
+                    <V2_Text.Body style={{ padding: "1rem" }}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea
                         commodo consequat.
-                    </v2_Text.Body>
+                    </V2_Text.Body>
                 </Drawer>
             </>
         );
@@ -63,7 +63,7 @@ export const HandlingContentOverflow: StoryObj<Component> = {
                             padding: "1rem",
                         }}
                     >
-                        <v2_Text.Body
+                        <V2_Text.Body
                             style={{
                                 height: "100vh",
                             }}
@@ -71,10 +71,10 @@ export const HandlingContentOverflow: StoryObj<Component> = {
                             Drawer content is scrollable when its height is
                             taller than the current screen. The header remains
                             at the top when scrolling down.
-                        </v2_Text.Body>
-                        <v2_Text.Body>
+                        </V2_Text.Body>
+                        <V2_Text.Body>
                             This line marks the end of content.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </div>
                 </Drawer>
             </>

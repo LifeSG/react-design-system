@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
 import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
-import { v2_TextStyleHelper } from "../../v2_text";
+import { V2_TextStyleHelper } from "../../v2_text";
 import {
     DropdownVariantType,
     IconProps,
@@ -159,7 +159,7 @@ const lineClampCss = css<LabelProps>`
 
 export const PrimaryText = styled.div<LabelProps>`
     ${(props) =>
-        v2_TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
@@ -179,12 +179,12 @@ export const SecondaryText = styled.div<LabelProps>`
         switch (props.$labelDisplayType) {
             case "next-line":
                 return css`
-                    ${v2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
                 `;
             case "inline":
             default:
                 return css`
-                    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
+                    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
                 `;
         }
     }}
@@ -253,7 +253,7 @@ export const SelectAllContainer = styled.div`
 
 export const DropdownCommonButton = styled.button<LabelProps>`
     ${(props) =>
-        v2_TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "semibold"
         )}
@@ -279,7 +279,7 @@ export const ResultStateContainer = styled.div`
 
 export const ResultStateText = styled.div<ResultStateProps>`
     ${(props) =>
-        v2_TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}

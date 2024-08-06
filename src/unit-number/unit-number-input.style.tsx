@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { AddOnContainer } from "../input-group/input-group.style";
 import { Input } from "../input/input";
-import { v2_Text } from "../v2_text/text";
+import { V2_Text } from "../v2_text/text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -57,7 +57,7 @@ export const UnitInput = styled(FloorInput)`
     }
 `;
 
-export const UnitNumberDivider = styled(v2_Text.Body)<LabelStyleProps>`
+export const UnitNumberDivider = styled(V2_Text.Body)<LabelStyleProps>`
     margin: 0 0.25rem;
     ${(props) => {
         if (props.$inactive) {
@@ -72,7 +72,7 @@ export const ReadOnlyContainer = styled.div`
     display: flex;
 `;
 
-export const ReadOnlyLabel = styled(v2_Text.Body)<LabelStyleProps>`
+export const ReadOnlyLabel = styled(V2_Text.Body)<LabelStyleProps>`
     ${(props) => {
         if (props.$inactive) {
             return css`

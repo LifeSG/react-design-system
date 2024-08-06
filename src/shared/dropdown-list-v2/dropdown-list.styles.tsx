@@ -5,7 +5,7 @@ import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
-import { v2_TextStyleHelper } from "../../v2_text";
+import { V2_TextStyleHelper } from "../../v2_text";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 
@@ -133,7 +133,7 @@ export const SelectAllContainer = styled.div`
 
 export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
     ${(props) =>
-        v2_TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "semibold"
         )}
@@ -159,7 +159,7 @@ export const ResultStateContainer = styled.div`
 
 export const ResultStateText = styled.div<ListStyleProps>`
     ${(props) =>
-        v2_TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}

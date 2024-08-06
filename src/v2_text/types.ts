@@ -1,5 +1,5 @@
 /** @deprecated */
-export type v2_TextSizeType =
+export type V2_TextSizeType =
     | "D1"
     | "D2"
     | "D3"
@@ -16,12 +16,12 @@ export type v2_TextSizeType =
     | "XSmall";
 
 /** @deprecated */
-export type v2_TextLinkSizeType =
+export type V2_TextLinkSizeType =
     | "Body" // Default
     | "BodySmall"; // Small
 
 /** @deprecated */
-export interface v2_TextStyleSpec {
+export interface V2_TextStyleSpec {
     fontFamily?: string | undefined;
     fontSize?: number | undefined;
     fontWeight?: number | undefined;
@@ -30,15 +30,15 @@ export interface v2_TextStyleSpec {
 }
 
 /** @deprecated */
-export type v2_TextStyleSetType = {
-    [key in v2_TextSizeType]: v2_TextStyleSpec;
+export type V2_TextStyleSetType = {
+    [key in V2_TextSizeType]: V2_TextStyleSpec;
 };
 
 /** @deprecated */
-export type v2_TextStyleSetOptionsType = Partial<v2_TextStyleSetType>;
+export type V2_TextStyleSetOptionsType = Partial<V2_TextStyleSetType>;
 
 /** @deprecated */
-export type v2_TextWeight =
+export type V2_TextWeight =
     | "regular"
     | "semibold"
     | "bold"
@@ -56,8 +56,8 @@ export enum RedirectScope {
 }
 
 /** @deprecated */
-export interface v2_TextProps extends React.HTMLAttributes<HTMLElement> {
-    weight?: v2_TextWeight | undefined;
+export interface V2_TextProps extends React.HTMLAttributes<HTMLElement> {
+    weight?: V2_TextWeight | undefined;
     inline?: boolean | undefined;
     /** This is applicable only to non-headers */
     paragraph?: boolean | undefined;
@@ -66,14 +66,14 @@ export interface v2_TextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** @deprecated */
-export interface v2_TextLinkProps
+export interface V2_TextLinkProps
     extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    weight?: v2_TextWeight | undefined;
+    weight?: V2_TextWeight | undefined;
     /** Specifying this will add the external indicator */
     external?: boolean | undefined;
 }
 
 /** @deprecated */
-export interface v2_TextLinkStyleProps extends v2_TextLinkProps {
-    textStyle: v2_TextLinkSizeType;
+export interface V2_TextLinkStyleProps extends V2_TextLinkProps {
+    textStyle: V2_TextLinkSizeType;
 }

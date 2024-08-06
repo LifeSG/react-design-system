@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { v2_Layout } from "src/v2_layout";
-import { v2_Text } from "src/v2_text";
+import { V2_Text } from "src/v2_text";
 
 const meta: Meta = {
     title: "Getting Started/Layout",
@@ -22,14 +22,14 @@ export const GeneralUsage: StoryObj = {
                         border: "2px dotted #A4A4A4",
                     }}
                 >
-                    <v2_Text.H1>My content</v2_Text.H1>
+                    <V2_Text.H1>My content</V2_Text.H1>
                     <br />
-                    <v2_Text.Body>
+                    <V2_Text.Body>
                         You can adjust the viewport to see how the maximum width
                         in the
                         <code>Layout.Container</code> affects how the content
                         looks.
-                    </v2_Text.Body>
+                    </V2_Text.Body>
                 </div>
             </v2_Layout.V2_Content>
         );
@@ -48,14 +48,14 @@ export const SplitUsage: StoryObj = {
                             border: "2px dotted #A4A4A4",
                         }}
                     >
-                        <v2_Text.H1>Split usage example</v2_Text.H1>
+                        <V2_Text.H1>Split usage example</V2_Text.H1>
                         <br />
-                        <v2_Text.Body>
+                        <V2_Text.Body>
                             You can adjust the viewport to see how the maximum
                             width in the
                             <code>Layout.Container</code> affects how the
                             content looks.
-                        </v2_Text.Body>
+                        </V2_Text.Body>
                     </div>
                 </v2_Layout.V2_Container>
             </v2_Layout.V2_Section>
@@ -79,8 +79,8 @@ export const FlexColumnLayout: StoryObj = {
         };
         return (
             <v2_Layout.V2_Content type="flex-column">
-                {renderContent(<v2_Text.Body>First item</v2_Text.Body>)}
-                {renderContent(<v2_Text.Body>Second item</v2_Text.Body>)}
+                {renderContent(<V2_Text.Body>First item</V2_Text.Body>)}
+                {renderContent(<V2_Text.Body>Second item</V2_Text.Body>)}
             </v2_Layout.V2_Content>
         );
     },
@@ -100,9 +100,9 @@ export const GridLayout: StoryObj = {
                 }}
                 key={index}
             >
-                <v2_Text.BodySmall weight="semibold">
+                <V2_Text.BodySmall weight="semibold">
                     {index + 1}
-                </v2_Text.BodySmall>
+                </V2_Text.BodySmall>
             </div>
         );
         const renderColumns = () => {

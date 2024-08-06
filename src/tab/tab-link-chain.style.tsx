@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { v2_Text } from "../v2_text";
+import { V2_Text } from "../v2_text";
 import { v2_MediaQuery } from "../v2_media";
 
 // =============================================================================
@@ -51,7 +51,7 @@ export const ChainLink = styled.button`
     cursor: pointer;
 `;
 
-export const Label = styled(v2_Text.Body)<LabelStyleProps>`
+export const Label = styled(V2_Text.Body)<LabelStyleProps>`
     position: absolute;
     top: 50%;
     left: 50%;
@@ -68,7 +68,7 @@ export const Label = styled(v2_Text.Body)<LabelStyleProps>`
     }}
 `;
 
-export const BoldLabel = styled(v2_Text.Body)<LabelStyleProps>`
+export const BoldLabel = styled(V2_Text.Body)<LabelStyleProps>`
     color: ${v2_Color.Primary};
     opacity: 0;
     ${(props) => {
