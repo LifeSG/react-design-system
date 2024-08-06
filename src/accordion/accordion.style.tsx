@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { v2_MediaQuery } from "../v2_media";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { V2_Text } from "../v2_text/text";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 
@@ -10,7 +10,7 @@ import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 // =============================================================================
 export const Content = styled.div`
     width: 100%;
-    border-bottom: 1px solid ${v2_Color.Neutral[6]};
+    border-bottom: 1px solid ${V2_Color.Neutral[6]};
 `;
 
 export const TitleWrapper = styled.div<TitleWrapperStyleProps>`

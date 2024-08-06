@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { v2_MediaQuery } from "../v2_media";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { V2_TextStyleHelper } from "../v2_text/helper";
 import { OrderedListProps, UnorderedListProps } from "./types";
 
@@ -27,7 +27,7 @@ export const StyledOrderedList = styled.ol<OrderedListProps>`
     li {
         ${(props) => V2_TextStyleHelper.getTextStyle(props.size, "regular")}
         position: relative;
-        color: ${v2_Color.Neutral[1]};
+        color: ${V2_Color.Neutral[1]};
     }
 
     ${(props) => {
@@ -81,7 +81,7 @@ export const StyledUnorderedList = styled.ul<UnorderedListProps>`
 
     li {
         ${(props) => V2_TextStyleHelper.getTextStyle(props.size, "regular")}
-        color: ${v2_Color.Neutral[1]};
+        color: ${V2_Color.Neutral[1]};
     }
 
     counter-reset: list;

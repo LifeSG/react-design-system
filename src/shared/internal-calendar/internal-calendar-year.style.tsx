@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { V2_TextStyleHelper } from "../../v2_text/helper";
 import { V2_Text } from "../../v2_text/text";
 import { YearVariant } from "./internal-calendar-year";
@@ -58,8 +58,8 @@ export const YearCell = styled.div<StyleProps>`
             return css`
                 cursor: pointer;
                 &:hover {
-                    box-shadow: 0px 0px 4px 1px ${v2_Color.Shadow.Accent};
-                    border: 1px solid ${v2_Color.Accent.Light[1]};
+                    box-shadow: 0px 0px 4px 1px ${V2_Color.Shadow.Accent};
+                    border: 1px solid ${V2_Color.Accent.Light[1]};
                 }
             `;
         }
@@ -75,12 +75,12 @@ export const YearCell = styled.div<StyleProps>`
         switch (props.$variant) {
             case "current-year":
                 return css`
-                    background: ${v2_Color.Accent.Light[6](props)};
+                    background: ${V2_Color.Accent.Light[6](props)};
                 `;
             case "selected-year":
                 return css`
-                    background: ${v2_Color.Accent.Light[5](props)};
-                    border: 1px solid ${v2_Color.Primary(props)};
+                    background: ${V2_Color.Accent.Light[5](props)};
+                    border: 1px solid ${V2_Color.Primary(props)};
                 `;
             case "other-decade":
             case "default":
@@ -93,23 +93,23 @@ export const CellLabel = styled(V2_Text.H5)<StyleProps>`
     ${(props) => {
         if (props.$disabledDisplay) {
             return css`
-                color: ${v2_Color.Neutral[4]};
+                color: ${V2_Color.Neutral[4]};
             `;
         }
 
         switch (props.$variant) {
             case "current-year":
                 return css`
-                    color: ${v2_Color.Neutral[3](props)};
+                    color: ${V2_Color.Neutral[3](props)};
                 `;
             case "selected-year":
                 return css`
                     ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${v2_Color.Primary(props)};
+                    color: ${V2_Color.Primary(props)};
                 `;
             case "other-decade":
                 return css`
-                    color: ${v2_Color.Neutral[4](props)};
+                    color: ${V2_Color.Neutral[4](props)};
                 `;
             case "default":
                 break;

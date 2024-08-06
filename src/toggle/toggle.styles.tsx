@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
@@ -67,10 +67,10 @@ export const Container = styled.div<ContainerStyleProps>`
             case "no-border": {
                 if (props.$error) {
                     return css`
-                        border-color: ${v2_Color.Validation.Red.Icon};
+                        border-color: ${V2_Color.Validation.Red.Icon};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Red};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Red};
                         }
                     `;
                 } else if (!props.$disabled) {
@@ -78,7 +78,7 @@ export const Container = styled.div<ContainerStyleProps>`
                         border-color: transparent;
 
                         :hover {
-                            background: ${v2_Color.Accent.Light[6]};
+                            background: ${V2_Color.Accent.Light[6]};
                         }
                     `;
                 } else {
@@ -91,36 +91,36 @@ export const Container = styled.div<ContainerStyleProps>`
             default: {
                 if (props.$disabled && !props.$selected) {
                     return css`
-                        border-color: ${v2_Color.Neutral[5]};
+                        border-color: ${V2_Color.Neutral[5]};
                     `;
                 } else if (props.$disabled && props.$selected) {
                     return css`
-                        border-color: ${v2_Color.Neutral[4]};
+                        border-color: ${V2_Color.Neutral[4]};
                     `;
                 } else if (props.$error) {
                     return css`
-                        border-color: ${v2_Color.Validation.Red.Border};
+                        border-color: ${V2_Color.Validation.Red.Border};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Red};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Red};
                         }
                     `;
                 } else if (props.$selected) {
                     return css`
-                        border-color: ${v2_Color.Primary};
+                        border-color: ${V2_Color.Primary};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Accent};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
                         }
                     `;
                 } else {
                     return css`
-                        background: ${v2_Color.Neutral[8]};
-                        border-color: ${v2_Color.Neutral[5]};
+                        background: ${V2_Color.Neutral[8]};
+                        border-color: ${V2_Color.Neutral[5]};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Accent};
-                            border-color: ${v2_Color.Accent.Light[1]};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
+                            border-color: ${V2_Color.Accent.Light[1]};
                         }
                     `;
                 }
@@ -175,16 +175,16 @@ export const Label = styled.label<LabelStyleProps>`
     ${v2_MediaQuery.MaxWidth.mobileL} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
 
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${v2_Color.Neutral[3]};
+                color: ${V2_Color.Neutral[3]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${v2_Color.Primary};
+                color: ${V2_Color.Primary};
             `;
         }
     }}
@@ -206,15 +206,15 @@ export const SubLabel = styled.div<LabelStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${v2_Color.Neutral[3]};
+                color: ${V2_Color.Neutral[3]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${v2_Color.Primary};
+                color: ${V2_Color.Primary};
             `;
         } else {
             return css`
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
             `;
         }
     }}
@@ -231,12 +231,12 @@ export const HeaderContainer = styled.div<ContainerStyleProps>`
             case "no-border": {
                 if (props.$error) {
                     return css`
-                        background: ${v2_Color.Neutral[8]};
+                        background: ${V2_Color.Neutral[8]};
                     `;
                 } else if (!props.$disabled) {
                     return css`
                         :hover {
-                            background: ${v2_Color.Accent.Light[6]};
+                            background: ${V2_Color.Accent.Light[6]};
                         }
                     `;
                 } else {
@@ -246,23 +246,23 @@ export const HeaderContainer = styled.div<ContainerStyleProps>`
             default: {
                 if (props.$disabled && !props.$selected) {
                     return css`
-                        background: ${v2_Color.Neutral[6]};
+                        background: ${V2_Color.Neutral[6]};
                     `;
                 } else if (props.$disabled && props.$selected) {
                     return css`
-                        background: ${v2_Color.Neutral[6]};
+                        background: ${V2_Color.Neutral[6]};
                     `;
                 } else if (props.$error) {
                     return css`
-                        background: ${v2_Color.Neutral[8]};
+                        background: ${V2_Color.Neutral[8]};
                     `;
                 } else if (props.$selected) {
                     return css`
-                        background: ${v2_Color.Accent.Light[5]};
+                        background: ${V2_Color.Accent.Light[5]};
                     `;
                 } else {
                     return css`
-                        background: ${v2_Color.Neutral[8]};
+                        background: ${V2_Color.Neutral[8]};
                     `;
                 }
             }
@@ -281,7 +281,7 @@ export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStylePr
 
 export const RemoveButton = styled.button<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? v2_Color.Neutral[3] : v2_Color.Validation.Red.Icon};
+        props.$disabled ? V2_Color.Neutral[3] : V2_Color.Validation.Red.Icon};
     white-space: nowrap;
     ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     height: fit-content;
@@ -294,7 +294,7 @@ export const RemoveButton = styled.button<StyleProps>`
 
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     color: ${(props) =>
-        props.disabled ? v2_Color.Neutral[3] : v2_Color.Primary};
+        props.disabled ? V2_Color.Neutral[3] : V2_Color.Primary};
     ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     display: flex;
     align-items: center;
@@ -317,7 +317,7 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
 export const ErrorContainer = styled.div<StyleProps>`
     width: 100%;
     color: ${(props) =>
-        props.$disabled ? v2_Color.Neutral[3] : v2_Color.Primary};
+        props.$disabled ? V2_Color.Neutral[3] : V2_Color.Primary};
     border: none;
     background: none;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
@@ -338,15 +338,15 @@ export const Children = styled.div<ChildrenStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${v2_Color.Neutral[3]};
+                color: ${V2_Color.Neutral[3]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${v2_Color.Primary};
+                color: ${V2_Color.Primary};
             `;
         } else {
             return css`
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
             `;
         }
     }}
@@ -354,14 +354,14 @@ export const Children = styled.div<ChildrenStyleProps>`
 
 export const ErrorText = styled(V2_Text.BodySmall)<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? v2_Color.Neutral[3] : v2_Color.Validation.Red.Text};
+        props.$disabled ? V2_Color.Neutral[3] : V2_Color.Validation.Red.Text};
 `;
 
 export const ErrorList = styled(TextList.Ul)<StyleProps>`
     li {
         color: ${(props) =>
             props.$disabled
-                ? v2_Color.Neutral[3]
-                : v2_Color.Validation.Red.Text};
+                ? V2_Color.Neutral[3]
+                : V2_Color.Validation.Red.Text};
     }
 `;

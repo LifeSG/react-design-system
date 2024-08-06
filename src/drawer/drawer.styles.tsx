@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text } from "../v2_text";
@@ -41,7 +41,7 @@ export const Container = styled.div<StyleProps>`
     flex-direction: column;
     height: 100%;
 
-    background-color: ${v2_Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     box-shadow: 0px 2px 12px rgba(104, 104, 104, 0.25);
 
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
@@ -73,8 +73,8 @@ export const Header = styled.div`
     gap: 1rem;
     height: 5rem;
     padding: 2rem 1rem 1rem;
-    background-color: ${v2_Color.Neutral[8]};
-    border-bottom: 1px solid ${v2_Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[8]};
+    border-bottom: 1px solid ${V2_Color.Neutral[5]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         gap: 0.5rem;
@@ -83,13 +83,13 @@ export const Header = styled.div`
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     padding: 0;
     order: -1; // show button on the left of the header
 
     :active,
     :focus {
-        color: ${v2_Color.Primary};
+        color: ${V2_Color.Primary};
     }
 
     svg {

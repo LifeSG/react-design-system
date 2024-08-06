@@ -1,9 +1,9 @@
 import { Button } from "../button";
 import { animated } from "react-spring";
-import { v2_ValidationElementAttributes } from "src/v2_color";
+import { V2_ValidationElementAttributes } from "src/v2_color";
 import { PropertiesToType } from "src/util/utility-types";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color/color";
+import { V2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text } from "../v2_text";
@@ -19,16 +19,16 @@ interface StyleProps {
 
 const getValidationColorAttributes = (
     props: any
-): PropertiesToType<v2_ValidationElementAttributes, (props) => string> => {
+): PropertiesToType<V2_ValidationElementAttributes, (props) => string> => {
     switch (props.$type) {
         case "success":
-            return v2_Color.Validation.Green;
+            return V2_Color.Validation.Green;
         case "warning":
-            return v2_Color.Validation.Orange;
+            return V2_Color.Validation.Orange;
         case "error":
-            return v2_Color.Validation.Red;
+            return V2_Color.Validation.Red;
         case "info":
-            return v2_Color.Validation.Blue;
+            return V2_Color.Validation.Blue;
         default:
             return;
     }

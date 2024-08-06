@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { V2_TextStyle, V2_TextStyleHelper } from "../../v2_text";
 import { Transition } from "../../transition";
 import { BasicButton } from "../input-wrapper/input-wrapper";
@@ -42,7 +42,7 @@ export const IconContainer = styled.div<StyleProps>`
     transition: ${Transition.Base};
 
     svg {
-        color: ${v2_Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
         ${(props) => {
             const size =
                 props.$variant === "small"

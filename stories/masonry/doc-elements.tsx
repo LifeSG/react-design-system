@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { v2_Color } from "../../src/v2_color";
+import { V2_Color } from "../../src/v2_color";
 import { V2_TextStyleHelper } from "../../src/v2_text";
 
 export const DemoContainer = styled.div`
@@ -7,7 +7,7 @@ export const DemoContainer = styled.div`
     width: 100%;
     justify-content: center;
     align-items: center;
-    background: ${v2_Color.Accent.Light[3]};
+    background: ${V2_Color.Accent.Light[3]};
     height: 6rem;
 
     ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}

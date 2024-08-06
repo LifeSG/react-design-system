@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { getThemeColors } from "../../theme/color-theme-helper";
 
 type ThemeColorFunctions = ReturnType<typeof getThemeColors>;
@@ -61,7 +61,7 @@ const Bar = styled.div<StyleProps>`
         } else if (color) {
             colorToUse = (color as ThemeColorFunctions)(props);
         } else {
-            colorToUse = v2_Color.Accent.Light[1](props);
+            colorToUse = V2_Color.Accent.Light[1](props);
         }
 
         return css`

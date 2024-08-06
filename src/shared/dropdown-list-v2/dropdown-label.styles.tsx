@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { V2_TextStyleHelper } from "../../v2_text";
 import {
     DropdownVariantType,
@@ -38,14 +38,14 @@ export const PrimaryText = styled.div<LabelStyleProps>`
             "regular"
         )}
     color: ${(props) =>
-        props.$selected ? v2_Color.Primary : v2_Color.Neutral[1]};
+        props.$selected ? V2_Color.Primary : V2_Color.Neutral[1]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}
 `;
 
 export const SecondaryText = styled.div<LabelStyleProps>`
-    color: ${v2_Color.Neutral[4]};
+    color: ${V2_Color.Neutral[4]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color/color";
+import { V2_Color } from "../v2_color/color";
 import { SizeType, StyleType } from "./types";
 
 interface StyleProps {
@@ -9,9 +9,9 @@ interface StyleProps {
 
 export const Main = styled.button<StyleProps>`
     align-items: center;
-    background-color: ${v2_Color.Primary};
+    background-color: ${V2_Color.Primary};
     border-radius: 0.25rem;
-    color: ${v2_Color.Neutral[8]};
+    color: ${V2_Color.Neutral[8]};
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -62,23 +62,23 @@ export const Main = styled.button<StyleProps>`
         switch (props.$styleType) {
             case "secondary":
                 return css`
-                    background-color: ${v2_Color.Neutral[8]};
-                    border: 1px solid ${v2_Color.Primary};
-                    color: ${v2_Color.Primary};
+                    background-color: ${V2_Color.Neutral[8]};
+                    border: 1px solid ${V2_Color.Primary};
+                    color: ${V2_Color.Primary};
                 `;
 
             case "light":
                 return css`
-                    background-color: ${v2_Color.Neutral[8]};
-                    border: 1px solid ${v2_Color.Neutral[5]};
-                    color: ${v2_Color.Primary};
+                    background-color: ${V2_Color.Neutral[8]};
+                    border: 1px solid ${V2_Color.Neutral[5]};
+                    color: ${V2_Color.Primary};
                 `;
             case "primary":
             default:
                 return css`
-                    background-color: ${v2_Color.Primary};
+                    background-color: ${V2_Color.Primary};
                     border: none;
-                    color: ${v2_Color.Neutral[8]};
+                    color: ${V2_Color.Neutral[8]};
                 `;
         }
     }}
@@ -86,9 +86,9 @@ export const Main = styled.button<StyleProps>`
         box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
     }
     &:disabled {
-        background-color: ${v2_Color.Neutral[6]};
-        border: 1px solid ${v2_Color.Neutral[6]};
-        color: ${v2_Color.Neutral[3]};
+        background-color: ${V2_Color.Neutral[6]};
+        border: 1px solid ${V2_Color.Neutral[6]};
+        color: ${V2_Color.Neutral[3]};
         cursor: not-allowed;
 
         &:hover {

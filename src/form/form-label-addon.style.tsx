@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 
 export const TriggerArea = styled.button`
     padding: 0.25rem 0.5rem 0.25rem 0.25rem;
@@ -11,7 +11,7 @@ export const TriggerArea = styled.button`
         vertical-align: text-bottom;
         height: 1rem;
         width: 1rem;
-        color: ${v2_Color.Primary};
+        color: ${V2_Color.Primary};
     }
 `;
 

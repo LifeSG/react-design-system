@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../../src/v2_color";
+import { V2_Color } from "../../../src/v2_color";
 import { DefaultColProps, DescriptionColProps } from "./types";
 
 // =============================================================================
@@ -33,7 +33,7 @@ const StyledTable = styled.table`
     line-height: 1.5;
 
     a {
-        color: ${v2_Color.Primary};
+        color: ${V2_Color.Primary};
         cursor: pointer;
         text-decoration: none;
     }
@@ -77,20 +77,20 @@ const StyledTable = styled.table`
     tbody {
         tr {
             border: none;
-            border-bottom: 1px solid ${v2_Color.Neutral[6]};
+            border-bottom: 1px solid ${V2_Color.Neutral[6]};
             :nth-child(even) {
-                background: ${v2_Color.Neutral[7]};
+                background: ${V2_Color.Neutral[7]};
             }
         }
     }
 
     thead {
         tr {
-            border-bottom: 2px solid ${v2_Color.Primary};
+            border-bottom: 2px solid ${V2_Color.Primary};
         }
 
         th {
-            color: ${v2_Color.Primary};
+            color: ${V2_Color.Primary};
         }
     }
 `;
@@ -110,7 +110,7 @@ export const Section = ({ children }: SectionProps) => (
 );
 
 const SectionRow = styled.tr`
-    background: ${v2_Color.Neutral[3]} !important;
+    background: ${V2_Color.Neutral[3]} !important;
     color: white;
     font-weight: bold;
 `;
@@ -143,7 +143,7 @@ const Label = styled.td<NameColStyleProps>`
     ${(props) => {
         if (props.$isFunction) {
             return css`
-                color: ${v2_Color.PrimaryDark};
+                color: ${V2_Color.PrimaryDark};
             `;
         }
     }}
@@ -153,13 +153,13 @@ const Mandatory = styled.td<NameColStyleProps>`
     font-weight: bold;
     :after {
         content: " *";
-        color: ${v2_Color.Validation.Red.Text};
+        color: ${V2_Color.Validation.Red.Text};
     }
 
     ${(props) => {
         if (props.$isFunction) {
             return css`
-                color: ${v2_Color.PrimaryDark};
+                color: ${V2_Color.PrimaryDark};
             `;
         }
     }}

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { v2_Layout } from "../v2_layout";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text";
 
@@ -16,7 +16,7 @@ interface WrapperStyleProps {
 // =============================================================================
 export const Wrapper = styled(v2_Layout.V2_Content)<WrapperStyleProps>`
     background: ${({ $background }) =>
-        $background ? v2_Color.Neutral[7] : "transparent"};
+        $background ? V2_Color.Neutral[7] : "transparent"};
     padding-top: 2rem;
     padding-bottom: 2rem;
 `;

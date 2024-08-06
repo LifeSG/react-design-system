@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Alert } from "../../src";
-import { v2_Color } from "../../src";
+import { V2_Color } from "../../src";
 import { StarIcon } from "@lifesg/react-icons/star";
 
 // =============================================================================
@@ -25,11 +25,11 @@ describe("Alert", () => {
     describe("type", () => {
         it.each`
             type             | backgroundColor                          | borderColor
-            ${"success"}     | ${v2_Color.Validation.Green.Background}  | ${v2_Color.Validation.Green.Border}
-            ${"warning"}     | ${v2_Color.Validation.Orange.Background} | ${v2_Color.Validation.Orange.Border}
-            ${"error"}       | ${v2_Color.Validation.Red.Background}    | ${v2_Color.Validation.Red.Border}
-            ${"info"}        | ${v2_Color.Validation.Blue.Background}   | ${v2_Color.Validation.Blue.Border}
-            ${"description"} | ${v2_Color.Neutral[7]}                   | ${v2_Color.Neutral[4]}
+            ${"success"}     | ${V2_Color.Validation.Green.Background}  | ${V2_Color.Validation.Green.Border}
+            ${"warning"}     | ${V2_Color.Validation.Orange.Background} | ${V2_Color.Validation.Orange.Border}
+            ${"error"}       | ${V2_Color.Validation.Red.Background}    | ${V2_Color.Validation.Red.Border}
+            ${"info"}        | ${V2_Color.Validation.Blue.Background}   | ${V2_Color.Validation.Blue.Border}
+            ${"description"} | ${V2_Color.Neutral[7]}                   | ${V2_Color.Neutral[4]}
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {

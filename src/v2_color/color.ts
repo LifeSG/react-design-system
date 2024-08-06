@@ -1,10 +1,10 @@
 import { getThemeColors } from "../theme/color-theme-helper";
 import { PropertiesToType } from "../util/utility-types";
-import { v2_ColorSet } from "./types";
+import { V2_ColorSet } from "./types";
 
 /** @deprecated */
-export const v2_Color: PropertiesToType<
-    v2_ColorSet,
+export const V2_Color: PropertiesToType<
+    V2_ColorSet,
     ReturnType<typeof getThemeColors>
 > = {
     Brand: {

@@ -4,7 +4,7 @@ import { StarFillIcon } from "@lifesg/react-icons/star-fill";
 import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
@@ -36,7 +36,7 @@ export const SmartAppBannerContainer = styled.div<{
     width: calc(100% - 2.5rem);
     min-height: 5.5rem;
     z-index: 9001;
-    background: ${v2_Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
     box-shadow: 0 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
     border-radius: 0.5rem;
     ${(props) => {
@@ -58,7 +58,7 @@ export const DismissButton = styled(ClickableIcon)`
 `;
 
 export const Cross = styled(CrossIcon)`
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     height: 1.25rem;
     width: 1.25rem;
 `;

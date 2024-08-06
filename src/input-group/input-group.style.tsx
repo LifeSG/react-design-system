@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_DesignToken } from "../v2_design-token";
 import { Input } from "../input/input";
 import { V2_TextStyleHelper } from "../v2_text";
@@ -24,9 +24,9 @@ export interface AddonStyleProps {
 export const Container = styled.div<AddonStyleProps>`
     display: flex;
     position: relative;
-    border: 1px solid ${v2_Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
-    background: ${v2_Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
     height: max-content;
     width: 100%;
     padding: 0 1rem;
@@ -34,7 +34,7 @@ export const Container = styled.div<AddonStyleProps>`
         props.$position === "right" ? "row-reverse" : "row"};
 
     :focus-within {
-        border: 1px solid ${v2_Color.Accent.Light[1]};
+        border: 1px solid ${V2_Color.Accent.Light[1]};
         box-shadow: ${v2_DesignToken.InputBoxShadow};
     }
 
@@ -52,22 +52,22 @@ export const Container = styled.div<AddonStyleProps>`
             `;
         } else if (props.disabled) {
             return css`
-                background: ${v2_Color.Neutral[6](props)};
+                background: ${V2_Color.Neutral[6](props)};
                 :hover {
                     cursor: not-allowed;
                 }
 
                 :focus-within {
-                    border: 1px solid ${v2_Color.Neutral[5](props)};
+                    border: 1px solid ${V2_Color.Neutral[5](props)};
                     box-shadow: none;
                 }
             `;
         } else if (props.$error) {
             return css`
-                border: 1px solid ${v2_Color.Validation.Red.Border(props)};
+                border: 1px solid ${V2_Color.Validation.Red.Border(props)};
 
                 :focus-within {
-                    border: 1px solid ${v2_Color.Validation.Red.Border(props)};
+                    border: 1px solid ${V2_Color.Validation.Red.Border(props)};
                     box-shadow: ${v2_DesignToken.InputErrorBoxShadow};
                 }
             `;
@@ -96,24 +96,24 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
     align-items: center;
 
     ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
 
     /* SVG Icon */
     svg {
         height: 1.5rem;
         width: 1.5rem;
         #path {
-            fill: ${v2_Color.Neutral[1]};
+            fill: ${V2_Color.Neutral[1]};
         }
     }
 
     ${(props) => {
         if (props.disabled) {
             return css`
-                color: ${v2_Color.Neutral[4](props)};
+                color: ${V2_Color.Neutral[4](props)};
                 svg {
                     #path {
-                        fill: ${v2_Color.Neutral[4](props)};
+                        fill: ${V2_Color.Neutral[4](props)};
                     }
                 }
             `;

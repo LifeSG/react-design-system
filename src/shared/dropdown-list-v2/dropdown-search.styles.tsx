@@ -1,6 +1,6 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { ClickableIcon } from "../clickable-icon";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicInput, InputStyleProps } from "../input-wrapper/input-wrapper";
@@ -27,7 +27,7 @@ const getIconDimensions = (variant?: DropdownVariantType) => {
 };
 
 export const Container = styled.div`
-    background: ${v2_Color.Neutral[7]};
+    background: ${V2_Color.Neutral[7]};
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@ export const SearchInput = styled(BasicInput)<InputStyleProps>`
 `;
 
 export const SearchIcon = styled(MagnifierIcon)<StyleProps>`
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     flex-shrink: 0;
     ${(props) => {
         return getIconDimensions(props.$variant);
@@ -62,7 +62,7 @@ export const ClearButton = styled(ClickableIcon)<StyleProps>`
     box-sizing: content-box;
     padding: 0 0.5rem;
     margin-left: -0.5rem;
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     cursor: pointer;
 
     ${(props) => {

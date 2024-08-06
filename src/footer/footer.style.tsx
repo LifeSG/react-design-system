@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { v2_Layout } from "../v2_layout";
 import { v2_MediaQuery } from "../v2_media";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
@@ -9,11 +9,11 @@ import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 // =============================================================================
 
 export const BaseFooter = styled.footer`
-    background: ${v2_Color.Neutral[7]};
+    background: ${V2_Color.Neutral[7]};
 `;
 
 export const StyledFooterLink = styled(V2_Text.Hyperlink.Small)`
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
 `;
 
 // =============================================================================
@@ -22,7 +22,7 @@ export const StyledFooterLink = styled(V2_Text.Hyperlink.Small)`
 
 export const TopSection = styled(v2_Layout.V2_Content)`
     padding: 4rem 0;
-    border-bottom: 1px solid ${v2_Color.Neutral[5]};
+    border-bottom: 1px solid ${V2_Color.Neutral[5]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         padding: 2rem 0;
@@ -114,7 +114,7 @@ export const MobileOnlyBorder = styled.div`
     ${v2_MediaQuery.MaxWidth.tablet} {
         display: block;
         height: 1px;
-        background: ${v2_Color.Neutral[6]};
+        background: ${V2_Color.Neutral[6]};
     }
 `;
 
@@ -166,20 +166,20 @@ export const CopyrightSection = styled(BottomSectionContent)`
 
 export const DisclaimerTextLink = styled(V2_Text.Hyperlink.Small)`
     ${V2_TextStyleHelper.getTextStyle("XSmall", "regular")}
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     &:not(:last-child) {
         margin-right: 1.5rem;
     }
 
     svg {
-        color: ${v2_Color.Neutral[1]};
+        color: ${V2_Color.Neutral[1]};
         vertical-align: sub;
     }
 
     &:hover {
-        color: ${v2_Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
         svg {
-            color: ${v2_Color.Neutral[3]};
+            color: ${V2_Color.Neutral[3]};
         }
     }
 

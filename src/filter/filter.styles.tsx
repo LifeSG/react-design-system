@@ -1,7 +1,7 @@
 import { FilterIcon } from "@lifesg/react-icons/filter";
 import styled from "styled-components";
 import { Button } from "../button/button";
-import { v2_Color } from "../v2_color/color";
+import { V2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text } from "../v2_text/text";
@@ -11,15 +11,15 @@ import { V2_Text } from "../v2_text/text";
 // =============================================================================
 
 export const DesktopContainer = styled.div`
-    background-color: ${v2_Color.Neutral[8]};
-    border: 1px solid ${v2_Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[8]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 0.5rem;
     overflow: hidden;
     width: 100%;
 `;
 
 export const MobileContainer = styled.div`
-    background-color: ${v2_Color.Neutral[7]};
+    background-color: ${V2_Color.Neutral[7]};
     height: 100%;
     width: 100%;
     display: flex;
@@ -27,7 +27,7 @@ export const MobileContainer = styled.div`
 `;
 
 export const MobileOverlayContainer = styled.div`
-    background-color: ${v2_Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     height: 100%;
     width: 100%;
 `;
@@ -46,10 +46,10 @@ export const FilterHeader = styled.div`
     display: flex;
     align-items: center;
 
-    background-color: ${v2_Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
-        border-bottom: 1px solid ${v2_Color.Neutral[5]};
+        border-bottom: 1px solid ${V2_Color.Neutral[5]};
     }
 `;
 
@@ -66,7 +66,7 @@ export const FilterTitle = styled(V2_Text.H4)`
 export const FilterHeaderButton = styled(ClickableIcon)`
     padding: 1.5rem 1.25rem;
     margin-right: auto;
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 
     svg {
         height: 1.5rem;
@@ -74,7 +74,7 @@ export const FilterHeaderButton = styled(ClickableIcon)`
     }
 
     &:hover {
-        color: ${v2_Color.Neutral[2]};
+        color: ${V2_Color.Neutral[2]};
     }
 `;
 
@@ -106,8 +106,8 @@ export const StyledFilterIcon = styled(FilterIcon)`
 
 export const FilterFooter = styled.div`
     padding: 1.5rem 1.25rem;
-    background-color: ${v2_Color.Neutral[8]};
-    border-top: 1px solid ${v2_Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[8]};
+    border-top: 1px solid ${V2_Color.Neutral[5]};
 `;
 
 export const FilterDoneButton = styled(Button.Default)`

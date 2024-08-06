@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { V2_Text } from "../v2_text/text";
 import { V2_TextStyleHelper } from "../v2_text";
 import { Button } from "../button";
@@ -42,7 +42,7 @@ export const CellWeekText = styled(V2_Text.XSmall)<CellWeekTextStyleProps>`
     ${(props) =>
         props.$disabled &&
         css`
-            color: ${v2_Color.Neutral[4]};
+            color: ${V2_Color.Neutral[4]};
         `}
 `;
 
@@ -91,7 +91,7 @@ export const TimeColumnWrapper = styled.div`
 
 export const TimeColumnText = styled.div`
     ${V2_TextStyleHelper.getFontFamily("Body", 700)}
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     font-size: 0.625rem !important;
     line-height: 0.75rem !important;
     text-align: center;
@@ -155,13 +155,13 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
                                 ? "transparent"
                                 : props.$bgColor}
                             50%,
-                        ${v2_Color.Neutral[5]} 0%
+                        ${V2_Color.Neutral[5]} 0%
                     )
                     ${props.$styleType === "stripes" &&
                     `, repeating-linear-gradient(
                             135deg,
-                            ${props.$bgColor2 || v2_Color.Neutral[5]} 0px,
-                            ${props.$bgColor2 || v2_Color.Neutral[5]} 10px,
+                            ${props.$bgColor2 || V2_Color.Neutral[5]} 0px,
+                            ${props.$bgColor2 || V2_Color.Neutral[5]} 10px,
                             ${props.$bgColor} 10px,
                             ${props.$bgColor} 20px
                         )`};

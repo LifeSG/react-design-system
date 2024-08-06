@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_MediaQuery } from "../../v2_media";
 import { ClickableIcon } from "../clickable-icon";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $
@@ -111,7 +111,7 @@ export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
         }}
 
         svg {
-            color: ${v2_Color.Neutral[3]};
+            color: ${V2_Color.Neutral[3]};
         }
     }
 `;

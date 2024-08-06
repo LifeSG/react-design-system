@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../src/v2_color";
+import { V2_Color } from "../../src/v2_color";
 import { v2_Layout } from "../../src/v2_layout";
 import { V2_Text } from "../../src/v2_text";
 
@@ -26,8 +26,8 @@ const LWrapper = styled.div`
     width: max-content;
     margin: 0 auto;
     padding: 5px;
-    background: ${v2_Color.Neutral[8]};
-    border: 1px solid ${v2_Color.Brand[3]};
+    background: ${V2_Color.Neutral[8]};
+    border: 1px solid ${V2_Color.Brand[3]};
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
     z-index: 2;
@@ -68,14 +68,14 @@ const PWrapper = styled.div<any>`
     }}
     width: 1.5rem;
     height: 100%;
-    background: ${v2_Color.Brand[3]};
+    background: ${V2_Color.Brand[3]};
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker = styled.div<any>`
     position: absolute;
     top: -1rem;
-    border: 1px solid ${v2_Color.Brand[3]};
+    border: 1px solid ${V2_Color.Brand[3]};
     ${(props) => {
         if (props.direction === "left") {
             return css`

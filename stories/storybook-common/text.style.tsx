@@ -2,7 +2,7 @@ import { LinkIcon as DSLinkIcon } from "@lifesg/react-icons/link";
 import { Unstyled } from "@storybook/blocks";
 import React from "react";
 import styled from "styled-components";
-import { v2_Color } from "../../src/v2_color";
+import { V2_Color } from "../../src/v2_color";
 import { V2_Text, V2_TextProps, V2_TextStyleHelper } from "../../src/v2_text";
 
 interface HeadingProps {
@@ -44,10 +44,10 @@ const Link = styled.a`
     font-size: 1.5rem;
     margin-left: -1.5rem;
     padding-right: 0.5rem;
-    color: ${v2_Color.Neutral[4]};
+    color: ${V2_Color.Neutral[4]};
 
     :hover {
-        color: ${v2_Color.Neutral[4]};
+        color: ${V2_Color.Neutral[4]};
     }
 `;
 
@@ -57,7 +57,7 @@ const LinkIcon = styled(DSLinkIcon)`
     height: 1rem;
     width: 1rem;
     vertical-align: baseline;
-    color: ${v2_Color.Primary};
+    color: ${V2_Color.Primary};
     transform: rotate(-45deg);
 `;
 

@@ -1,6 +1,6 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color/color";
+import { V2_Color } from "../v2_color/color";
 import { V2_TextStyleHelper } from "./helper";
 import { V2_TextLinkProps, V2_TextLinkStyleProps, V2_TextProps } from "./types";
 
@@ -14,7 +14,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -32,7 +32,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -50,7 +50,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -68,7 +68,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -86,7 +86,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -104,7 +104,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -122,7 +122,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -140,7 +140,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -158,7 +158,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -176,7 +176,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -194,7 +194,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -212,7 +212,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -230,7 +230,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -248,7 +248,7 @@ export namespace V2_Text {
                     props.weight,
                     props.paragraph
                 )}
-                color: ${v2_Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
                 ${V2_TextStyleHelper.getDisplayStyle(
                     props.inline,
                     props.paragraph,
@@ -274,16 +274,16 @@ const HyperlinkBase = styled.a<V2_TextLinkStyleProps>`
     ${(props) => {
         return css`
             ${V2_TextStyleHelper.getTextStyle(props.textStyle, props.weight)}
-            color: ${v2_Color.Primary};
+            color: ${V2_Color.Primary};
             text-decoration: none;
 
             :hover,
             :active,
             :focus {
-                color: ${v2_Color.Secondary};
+                color: ${V2_Color.Secondary};
 
                 svg {
-                    color: ${v2_Color.Secondary};
+                    color: ${V2_Color.Secondary};
                 }
             }
         `;

@@ -1,6 +1,6 @@
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { v2_MediaQuery } from "../../v2_media";
 import { V2_Text } from "../../v2_text";
@@ -92,15 +92,15 @@ export const DragHandleIcon = styled(
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${v2_Color.Neutral[4]};
+                color: ${V2_Color.Neutral[4]};
             `;
         }
     }}
 `;
 
 export const Box = styled.div<BoxStyleProps>`
-    background: ${v2_Color.Accent.Light[6]};
-    border: 1px solid ${v2_Color.Neutral[5]};
+    background: ${V2_Color.Accent.Light[6]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
     padding: 1rem 2rem;
     display: flex;
@@ -114,17 +114,17 @@ export const Box = styled.div<BoxStyleProps>`
     ${(props) => {
         if (props.$focused) {
             return css`
-                border-color: ${v2_Color.Accent.Light[1]};
-                box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Accent};
+                border-color: ${V2_Color.Accent.Light[1]};
+                box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${v2_Color.Neutral[7]};
+                background: ${V2_Color.Neutral[7]};
             `;
         } else if (props.$error) {
             return css`
-                background: ${v2_Color.Validation.Red.Background};
-                border-color: ${v2_Color.Validation.Red.Border};
+                background: ${V2_Color.Validation.Red.Background};
+                border-color: ${V2_Color.Validation.Red.Border};
             `;
         }
     }}
@@ -215,7 +215,7 @@ export const ItemDescriptionText = styled(ItemText)`
 
 export const BaseErrorMessage = styled(V2_Text.XSmall)`
     font-size: 0.875rem !important;
-    color: ${v2_Color.Validation.Red.Text};
+    color: ${V2_Color.Validation.Red.Text};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
@@ -278,6 +278,6 @@ export const ErrorIconButton = styled(ClickableIcon)`
     svg {
         height: 1.5rem;
         width: 1.5rem;
-        color: ${v2_Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
     }
 `;

@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { Selector as DropdownSelector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { V2_Text } from "../v2_text/text";
 import { V2_TextStyle } from "../v2_text/text-style";
@@ -34,7 +34,7 @@ export const DisplayContainer = styled.div<StyleProps>`
     ${(props) => {
         if (props.$expanded) {
             return css`
-                border-bottom: 1px solid ${v2_Color.Neutral[5](props)};
+                border-bottom: 1px solid ${V2_Color.Neutral[5](props)};
             `;
         }
     }}
@@ -82,7 +82,7 @@ export const IconContainer = styled.div<StyleProps>`
 `;
 
 export const StyledChevronIcon = styled(ChevronDownIcon)`
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     height: ${V2_TextStyle.Body.fontSize}rem;
     width: ${V2_TextStyle.Body.fontSize}rem;
     vertical-align: bottom;
@@ -103,12 +103,12 @@ export const ValueLabel = styled(V2_Text.Body)`
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     width: 1px;
-    background: ${v2_Color.Neutral[5]};
+    background: ${V2_Color.Neutral[5]};
     flex-shrink: 0;
     height: 1.25rem;
 

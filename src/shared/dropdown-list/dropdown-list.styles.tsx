@@ -2,7 +2,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
 import { V2_TextStyleHelper } from "../../v2_text";
 import {
@@ -72,8 +72,8 @@ export const List = styled.ul<ListContainerProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${v2_Color.Neutral[4]};
-        border-right: 5px solid ${v2_Color.Neutral[8]};
+        background: ${V2_Color.Neutral[4]};
+        border-right: 5px solid ${V2_Color.Neutral[8]};
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
     }
@@ -87,12 +87,12 @@ export const ListItem = styled.li<ListItemProps>`
     :hover,
     :focus,
     :active {
-        background: ${v2_Color.Accent.Light[5]};
+        background: ${V2_Color.Accent.Light[5]};
     }
     ${(props) => {
         if (props.$checked) {
             return css`
-                background: ${v2_Color.Accent.Light[5]};
+                background: ${V2_Color.Accent.Light[5]};
             `;
         }
     }}
@@ -136,7 +136,7 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     :visited,
     :focus,
     :active {
-        outline-color: ${v2_Color.Accent.Light[3]};
+        outline-color: ${V2_Color.Accent.Light[3]};
     }
 
     span {
@@ -163,14 +163,14 @@ export const PrimaryText = styled.div<LabelProps>`
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}
 `;
 
 export const SecondaryText = styled.div<LabelProps>`
-    color: ${v2_Color.Neutral[4]};
+    color: ${V2_Color.Neutral[4]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}
@@ -265,7 +265,7 @@ export const DropdownCommonButton = styled.button<LabelProps>`
     outline: none;
     ${(props) => {
         return `
-			color: ${v2_Color.Primary(props)};
+			color: ${V2_Color.Primary(props)};
 		`;
     }}
 `;
@@ -294,5 +294,5 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)<IconProps>`
         `;
     }}
     margin-right: 0.625rem;
-    color: ${v2_Color.Validation.Red.Icon};
+    color: ${V2_Color.Validation.Red.Icon};
 `;

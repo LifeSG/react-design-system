@@ -2,7 +2,7 @@ import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import isEmpty from "lodash/isEmpty";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { v2_Color } from "../../src/v2_color";
+import { V2_Color } from "../../src/v2_color";
 import { Filter, Mode } from "../../src/filter";
 import { Form } from "../../src/form";
 import { V2_Text } from "../../src/v2_text";
@@ -14,7 +14,7 @@ interface Props<T> {
 }
 
 const SearchIcon = styled(MagnifierIcon)`
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 `;
 
 export const StyledFilterItem = styled(Filter.Item)<{ $mode: Mode }>`

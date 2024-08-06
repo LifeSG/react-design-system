@@ -1,6 +1,6 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Transition } from "../transition";
@@ -81,7 +81,7 @@ export const MobileMenuButton = styled(ClickableIcon)`
 export const MobileMenuIcon = styled(MenuIcon)`
     height: 1.5rem;
     width: 1.5rem;
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
 `;
 
 export const NavBrandContainer = styled.div<StyleProps>`
@@ -103,7 +103,7 @@ export const NavBrandContainer = styled.div<StyleProps>`
 
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
-    background-color: ${v2_Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[5]};
     height: 100%;
     width: 1px;
     margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;

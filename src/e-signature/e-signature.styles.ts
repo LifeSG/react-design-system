@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
@@ -23,9 +23,9 @@ export const SignatureArea = styled.div`
     justify-content: center;
     background-image: ${(props) =>
         `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='4' ry='4' stroke='${encodeURIComponent(
-            v2_Color.Neutral[5](props)
+            V2_Color.Neutral[5](props)
         )}' stroke-width='4' stroke-dasharray='8%2c 8' stroke-dashoffset='8' stroke-linecap='round'/%3e%3c/svg%3e");`};
-    background-color: ${v2_Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     border-radius: 4px;
     height: 14.125rem;
 `;
@@ -47,8 +47,8 @@ export const SignaturePreviewImage = styled.img`
     height: 100%;
 `;
 export const ProgressBox = styled.div`
-    background: ${v2_Color.Accent.Light[6]};
-    border: 1px solid ${v2_Color.Neutral[5]};
+    background: ${V2_Color.Accent.Light[6]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
     margin: 0 2rem;
     padding: 1rem;
@@ -102,7 +102,7 @@ export const ModalBox = styled(Modal.Box)`
 export const ModalTitle = styled.h4`
     ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     margin-bottom: 1rem;
-    color: ${v2_Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     text-align: center;
 
     ${mobileMediaQuery} {
@@ -122,14 +122,14 @@ export const ESignatureContainer = styled.div`
     }
 
     ${mobileLandscapeMediaQuery} {
-        background: ${v2_Color.Neutral[7]};
+        background: ${V2_Color.Neutral[7]};
     }
 `;
 export const ESignatureDrawable = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    background: ${v2_Color.Neutral[6]};
+    background: ${V2_Color.Neutral[6]};
     margin: auto;
 
     ${mobileMediaQuery} {
@@ -151,7 +151,7 @@ export const SignatureLine = styled.div`
     width: 18.75rem;
     height: 2px;
     transform: translateX(-50%);
-    background-color: ${v2_Color.Neutral[4]};
+    background-color: ${V2_Color.Neutral[4]};
     pointer-events: none;
 
     ${mobileMediaQuery} {

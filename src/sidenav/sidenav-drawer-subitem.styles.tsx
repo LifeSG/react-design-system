@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { V2_TextStyleHelper } from "../v2_text";
 
 //=============================================================================
@@ -18,7 +18,7 @@ export const LinkButton = styled(Button.Default)`
     span {
         ${V2_TextStyleHelper.getFontFamily("H5", "regular")}
         font-size: 1rem !important;
-        color: ${v2_Color.Neutral[1]} !important;
+        color: ${V2_Color.Neutral[1]} !important;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -28,10 +28,10 @@ export const LinkButton = styled(Button.Default)`
 
     :hover,
     :focus {
-        background-color: ${v2_Color.Accent.Light[5]};
+        background-color: ${V2_Color.Accent.Light[5]};
         span {
             ${V2_TextStyleHelper.getFontFamily("H5", "semibold")}
-            color: ${v2_Color.Primary} !important;
+            color: ${V2_Color.Primary} !important;
         }
     }
 `;

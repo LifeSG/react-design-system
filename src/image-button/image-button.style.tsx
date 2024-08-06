@@ -1,6 +1,6 @@
 import { v2_MediaQuery } from "../v2_media";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color/color";
+import { V2_Color } from "../v2_color/color";
 import { V2_TextStyleHelper } from "../v2_text/helper";
 
 export const Main = styled.button<{
@@ -14,14 +14,14 @@ export const Main = styled.button<{
     justify-content: center;
     align-items: center;
     padding: 1.5rem 1rem;
-    background-color: ${v2_Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     border: 1px solid transparent;
     border-radius: 0.5rem;
     cursor: pointer;
     max-width: 13rem;
     transition: all 200ms ease;
     ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
-    color: ${({ $selected }) => $selected && v2_Color.Primary};
+    color: ${({ $selected }) => $selected && V2_Color.Primary};
     overflow-wrap: anywhere;
 
     img {
@@ -40,27 +40,27 @@ export const Main = styled.button<{
     ${(props) => {
         if (props.$error) {
             return css`
-                background: ${v2_Color.Neutral[8]};
-                border: 1px solid ${v2_Color.Validation.Red.Border};
+                background: ${V2_Color.Neutral[8]};
+                border: 1px solid ${V2_Color.Validation.Red.Border};
 
                 :hover {
-                    box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Red};
+                    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Red};
                 }
             `;
         } else if (props.$selected) {
             return css`
-                background: ${v2_Color.Accent.Light[5]};
-                border: 1px solid ${v2_Color.Primary};
+                background: ${V2_Color.Accent.Light[5]};
+                border: 1px solid ${V2_Color.Primary};
 
                 :hover {
-                    box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Accent};
+                    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
                 }
             `;
         } else {
             return css`
                 &:hover {
-                    border: 1px solid ${v2_Color.Accent.Light[1]};
-                    box-shadow: 0 0 4px 1px ${v2_Color.Shadow.Accent};
+                    border: 1px solid ${V2_Color.Accent.Light[1]};
+                    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
                 }
             `;
         }
@@ -74,7 +74,7 @@ export const Main = styled.button<{
         img {
             filter: grayscale(100%);
         }
-        color: ${v2_Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
 
         outline: none;
         cursor: not-allowed;

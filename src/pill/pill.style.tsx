@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color/color";
+import { V2_Color } from "../v2_color/color";
 import { PillColorType, PillType } from "./types";
 import { V2_TextStyleHelper } from "../v2_text";
 
@@ -31,64 +31,64 @@ export const Wrapper = styled.div<StyleProps>`
         let color: (props: any) => string;
 
         if (props.$type === "solid") {
-            color = v2_Color.Neutral[8];
+            color = V2_Color.Neutral[8];
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = v2_Color.Neutral[3];
-                    borderColor = v2_Color.Neutral[3];
+                    backgroundColor = V2_Color.Neutral[3];
+                    borderColor = V2_Color.Neutral[3];
                     break;
                 case "green":
-                    backgroundColor = v2_Color.Validation.Green.Text;
-                    borderColor = v2_Color.Validation.Green.Text;
+                    backgroundColor = V2_Color.Validation.Green.Text;
+                    borderColor = V2_Color.Validation.Green.Text;
                     break;
                 case "yellow":
-                    backgroundColor = v2_Color.Validation.Orange.Text;
-                    borderColor = v2_Color.Validation.Orange.Text;
+                    backgroundColor = V2_Color.Validation.Orange.Text;
+                    borderColor = V2_Color.Validation.Orange.Text;
                     break;
                 case "red":
-                    backgroundColor = v2_Color.Validation.Red.Text;
-                    borderColor = v2_Color.Validation.Red.Text;
+                    backgroundColor = V2_Color.Validation.Red.Text;
+                    borderColor = V2_Color.Validation.Red.Text;
                     break;
                 case "blue":
-                    backgroundColor = v2_Color.Validation.Blue.Text;
-                    borderColor = v2_Color.Validation.Blue.Text;
+                    backgroundColor = V2_Color.Validation.Blue.Text;
+                    borderColor = V2_Color.Validation.Blue.Text;
                     break;
                 default:
-                    backgroundColor = v2_Color.Neutral[1];
-                    borderColor = v2_Color.Neutral[1];
+                    backgroundColor = V2_Color.Neutral[1];
+                    borderColor = V2_Color.Neutral[1];
                     break;
             }
         } else {
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = v2_Color.Neutral[6];
-                    borderColor = v2_Color.Neutral[4];
-                    color = v2_Color.Neutral[3];
+                    backgroundColor = V2_Color.Neutral[6];
+                    borderColor = V2_Color.Neutral[4];
+                    color = V2_Color.Neutral[3];
                     break;
                 case "green":
-                    backgroundColor = v2_Color.Validation.Green.Background;
-                    borderColor = v2_Color.Validation.Green.Border;
-                    color = v2_Color.Validation.Green.Text;
+                    backgroundColor = V2_Color.Validation.Green.Background;
+                    borderColor = V2_Color.Validation.Green.Border;
+                    color = V2_Color.Validation.Green.Text;
                     break;
                 case "yellow":
-                    backgroundColor = v2_Color.Validation.Orange.Background;
-                    borderColor = v2_Color.Validation.Orange.Border;
-                    color = v2_Color.Validation.Orange.Text;
+                    backgroundColor = V2_Color.Validation.Orange.Background;
+                    borderColor = V2_Color.Validation.Orange.Border;
+                    color = V2_Color.Validation.Orange.Text;
                     break;
                 case "red":
-                    backgroundColor = v2_Color.Validation.Red.Background;
-                    borderColor = v2_Color.Validation.Red.Border;
-                    color = v2_Color.Validation.Red.Text;
+                    backgroundColor = V2_Color.Validation.Red.Background;
+                    borderColor = V2_Color.Validation.Red.Border;
+                    color = V2_Color.Validation.Red.Text;
                     break;
                 case "blue":
-                    backgroundColor = v2_Color.Validation.Blue.Background;
-                    borderColor = v2_Color.Validation.Blue.Border;
-                    color = v2_Color.Validation.Blue.Text;
+                    backgroundColor = V2_Color.Validation.Blue.Background;
+                    borderColor = V2_Color.Validation.Blue.Border;
+                    color = V2_Color.Validation.Blue.Text;
                     break;
                 default:
-                    backgroundColor = v2_Color.Neutral[8];
-                    borderColor = v2_Color.Neutral[5];
-                    color = v2_Color.Neutral[1];
+                    backgroundColor = V2_Color.Neutral[8];
+                    borderColor = V2_Color.Neutral[5];
+                    color = V2_Color.Neutral[1];
                     break;
             }
         }

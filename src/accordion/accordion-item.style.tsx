@@ -1,7 +1,7 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text } from "../v2_text/text";
@@ -19,8 +19,8 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 export const Container = styled.div<StyleProps>`
-    background-color: ${v2_Color.Neutral[8]} !important;
-    border-top: 1px solid ${v2_Color.Neutral[6]};
+    background-color: ${V2_Color.Neutral[8]} !important;
+    border-top: 1px solid ${V2_Color.Neutral[6]};
     padding: ${(props) => (props.$isCollapsed ? "0 0 1rem" : "0")};
 
     ${v2_MediaQuery.MaxWidth.mobileL} {
@@ -66,7 +66,7 @@ export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
 export const ChevronIcon = styled(ChevronUpIcon)`
     height: 1.25rem;
     width: 1.25rem;
-    color: ${v2_Color.Primary};
+    color: ${V2_Color.Primary};
 `;
 
 export const Expandable = styled(animated.div)<StyleProps>`

@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button/button";
-import { v2_Color } from "../v2_color/color";
+import { V2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
@@ -27,18 +27,18 @@ interface DividerStyleProps {
 export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
         props.$collapsible
-            ? v2_Color.Neutral[7](props)
-            : v2_Color.Neutral[8](props)};
+            ? V2_Color.Neutral[7](props)
+            : V2_Color.Neutral[8](props)};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
-        background-color: ${v2_Color.Neutral[7]};
+        background-color: ${V2_Color.Neutral[7]};
     }
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     display: ${(props) => (props.$showDivider ? "block" : "none")};
     height: 1px;
-    background-color: ${v2_Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[5]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
@@ -54,7 +54,7 @@ export const FilterItemHeader = styled.div`
     display: flex;
     align-items: center;
 
-    background-color: ${v2_Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
 
     ${v2_MediaQuery.MaxWidth.tablet} {
         background-color: transparent;
@@ -68,13 +68,13 @@ export const FilterItemExpandButton = styled(ClickableIcon)`
 export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
     height: 1.125rem;
     width: 1.125rem;
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
     transition: transform 300ms ease-in-out;
 
     &:hover {
-        color: ${v2_Color.Neutral[2]};
+        color: ${V2_Color.Neutral[2]};
     }
 `;
 

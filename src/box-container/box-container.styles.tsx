@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text/text";
 import { Transition } from "../transition";
@@ -29,7 +29,7 @@ interface HeaderStyleProps {
 // STYLING
 // =============================================================================
 export const Container = styled.div`
-    border: 1px solid ${v2_Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
     margin-bottom: 2rem;
 `;
@@ -43,7 +43,7 @@ export const NonExpandable = styled.div`
 `;
 
 export const ChildContainer = styled.div`
-    border-top: 1px solid ${v2_Color.Neutral[5]};
+    border-top: 1px solid ${V2_Color.Neutral[5]};
 `;
 
 export const Header = styled.div<HeaderStyleProps>`
@@ -93,11 +93,11 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
         switch (props.$displayState) {
             case "error":
                 return css`
-                    color: ${v2_Color.Validation.Red.Icon(props)};
+                    color: ${V2_Color.Validation.Red.Icon(props)};
                 `;
             case "warning":
                 return css`
-                    color: ${v2_Color.Validation.Orange.Icon(props)};
+                    color: ${V2_Color.Validation.Orange.Icon(props)};
                 `;
             default:
                 break;
@@ -145,7 +145,7 @@ export const Handle = styled.button`
 `;
 
 export const HandleLabel = styled(V2_Text.H4)`
-    color: ${v2_Color.Primary};
+    color: ${V2_Color.Primary};
 `;
 
 export const HandleIconContainer = styled.div<StyleProps>`
@@ -154,7 +154,7 @@ export const HandleIconContainer = styled.div<StyleProps>`
 `;
 
 export const HandleIcon = styled(ChevronDownIcon)`
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     height: 1.375rem;
     width: 1.375rem;
 `;

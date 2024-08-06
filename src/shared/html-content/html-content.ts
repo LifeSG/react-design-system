@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { FontFamily } from "../../spec/text-spec/font-spec";
 import { V2_TextSizeType, V2_TextStyleHelper } from "../../v2_text";
 
@@ -27,11 +27,11 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
         a {
             font-family: ${FontFamily.OpenSans.Semibold};
             ${textSize && V2_TextStyleHelper.getTextStyle(textSize, "semibold")}
-            color: ${v2_Color.Primary};
+            color: ${V2_Color.Primary};
             text-decoration: none;
 
             svg {
-                color: ${v2_Color.Primary};
+                color: ${V2_Color.Primary};
                 height: 1rem;
                 width: 1rem;
                 margin-left: 0.4rem;
@@ -42,10 +42,10 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
             :active,
             :visited,
             :focus {
-                color: ${v2_Color.Secondary};
+                color: ${V2_Color.Secondary};
 
                 svg {
-                    color: ${v2_Color.Secondary};
+                    color: ${V2_Color.Secondary};
                 }
             }
         }

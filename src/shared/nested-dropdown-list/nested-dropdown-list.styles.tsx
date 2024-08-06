@@ -1,7 +1,7 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled from "styled-components";
-import { v2_Color } from "../../v2_color";
+import { V2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
 import { V2_Text, V2_TextStyleHelper } from "../../v2_text";
 
@@ -39,8 +39,8 @@ export const List = styled.ul<ListContainerProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${v2_Color.Neutral[4]};
-        border-right: 5px solid ${v2_Color.Neutral[8]};
+        background: ${V2_Color.Neutral[4]};
+        border-right: 5px solid ${V2_Color.Neutral[8]};
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
     }
@@ -63,7 +63,7 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)`
     margin-right: 0.625rem;
     height: 1.5rem;
     width: 1.5rem;
-    color: ${v2_Color.Validation.Red.Icon};
+    color: ${V2_Color.Validation.Red.Icon};
 `;
 
 export const SelectAllContainer = styled.div`
@@ -75,7 +75,7 @@ export const SelectAllContainer = styled.div`
 
 export const DropdownCommonButton = styled.button`
     ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
-    color: ${v2_Color.Primary};
+    color: ${V2_Color.Primary};
     background-color: transparent;
     border: none;
     cursor: pointer;

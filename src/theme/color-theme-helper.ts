@@ -1,4 +1,4 @@
-import { v2_ColorSet } from "../v2_color/types";
+import { V2_ColorSet } from "../v2_color/types";
 import { BaseColorSet } from "../spec/color-spec/base-color-set";
 import { BookingSGColorSet } from "../spec/color-spec/bookingsg-color-set";
 import { CCubeColorSet } from "../spec/color-spec/ccube-color-set";
@@ -35,7 +35,7 @@ const ColorSpec: ThemeCollectionSpec<ColorCollectionsMap, ColorScheme> = {
 export const getThemeColors = (attributePath: string) => {
     return (props: any): string => {
         const theme = props.theme as ThemeSpec;
-        const colorSet: v2_ColorSet = getCollection(
+        const colorSet: V2_ColorSet = getCollection(
             ColorSpec,
             theme[ThemeContextKeys.colorScheme]
         );

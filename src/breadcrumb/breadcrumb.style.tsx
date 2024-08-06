@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text/text";
 
@@ -107,7 +107,7 @@ export const Item = styled.li<ItemStyleProps>`
 
 export const Caret = styled(ChevronRightIcon)`
     margin: 0.25rem 0.25rem 0.1rem 0.25rem;
-    color: ${v2_Color.Neutral[4]};
+    color: ${V2_Color.Neutral[4]};
 `;
 
 export const CurrentLabel = styled(V2_Text.BodySmall)`

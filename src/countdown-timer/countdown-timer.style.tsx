@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { V2_TextStyleHelper } from "../v2_text";
 import { v2_MediaQuery } from "../v2_media";
 
@@ -29,9 +29,9 @@ export const BaseCountdown = styled.div<CountdownStyleProps>`
     align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    color: ${v2_Color.Primary};
-    border: 1px solid ${v2_Color.Primary};
-    background-color: ${v2_Color.Neutral[8]};
+    color: ${V2_Color.Primary};
+    border: 1px solid ${V2_Color.Primary};
+    background-color: ${V2_Color.Neutral[8]};
 
     ${v2_MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
@@ -40,8 +40,8 @@ export const BaseCountdown = styled.div<CountdownStyleProps>`
     ${(props) => {
         if (props.$warn) {
             return css`
-                color: ${v2_Color.Validation.Red.Text};
-                border: 1px solid ${v2_Color.Validation.Red.Border};
+                color: ${V2_Color.Validation.Red.Text};
+                border: 1px solid ${V2_Color.Validation.Red.Border};
             `;
         }
     }}
@@ -63,8 +63,8 @@ export const FixedCountdown = styled(BaseCountdown)`
             ${{ top: $top, left: $left, right: $right }}
             box-shadow: 0px 0px 4px 1px
                 ${$warn
-                ? v2_Color.Validation.Red.Border
-                : v2_Color.Accent.Light[2]};
+                ? V2_Color.Validation.Red.Border
+                : V2_Color.Accent.Light[2]};
 
             ${v2_MediaQuery.MaxWidth.mobileL} {
                 left: 0;

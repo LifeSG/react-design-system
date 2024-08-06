@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
@@ -23,8 +23,8 @@ interface ThumbnailItemStyleProps {
 const IconButton = styled(ClickableIcon)`
     padding: 0;
     border-radius: 100%;
-    background: ${v2_Color.Neutral[8]};
-    color: ${v2_Color.Primary};
+    background: ${V2_Color.Neutral[8]};
+    color: ${V2_Color.Primary};
     height: 2.5rem;
     width: 2.5rem;
 `;
@@ -174,7 +174,7 @@ export const Chip = styled(V2_Text.XSmall)`
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    background-color: ${v2_Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     text-align: center;
 `;
 
@@ -186,7 +186,7 @@ export const ThumbnailContainer = styled.div`
     flex-shrink: 0;
     display: flex;
     overflow: auto;
-    background-color: ${v2_Color.Neutral[1]};
+    background-color: ${V2_Color.Neutral[1]};
     padding: 1.5rem 1rem;
 
     ${v2_MediaQuery.MaxWidth.mobileL} {
@@ -206,7 +206,7 @@ export const ThumbnailWrapper = styled.div`
 
 export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     cursor: pointer;
-    background-color: ${v2_Color.Neutral[1]};
+    background-color: ${V2_Color.Neutral[1]};
     border-radius: 10px;
 
     flex-shrink: 0;
@@ -226,15 +226,15 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     ${(props) =>
         props.$active
             ? css`
-                  border: 4px solid ${v2_Color.Primary};
+                  border: 4px solid ${V2_Color.Primary};
 
                   ${v2_MediaQuery.MaxWidth.mobileL} {
-                      border: 2px solid ${v2_Color.Primary};
+                      border: 2px solid ${V2_Color.Primary};
                   }
               `
             : css`
                   :hover {
-                      border: 1px solid ${v2_Color.Neutral[5]};
+                      border: 1px solid ${V2_Color.Neutral[5]};
                   }
               `};
 `;

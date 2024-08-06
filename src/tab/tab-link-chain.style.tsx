@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { v2_Color } from "../v2_color";
+import { V2_Color } from "../v2_color";
 import { FadeWrapper } from "../shared/fade-wrapper";
 import { V2_Text } from "../v2_text";
 import { v2_MediaQuery } from "../v2_media";
@@ -27,12 +27,12 @@ export const Chain = styled.ul`
 export const ChainItem = styled.li<ChainStyleProps>`
     display: flex;
     flex-shrink: 0;
-    border-bottom: 4px solid ${v2_Color.Neutral[5]};
+    border-bottom: 4px solid ${V2_Color.Neutral[5]};
 
     ${(props) => {
         if (props.$active) {
             return css`
-                border-bottom: 4px solid ${v2_Color.Primary};
+                border-bottom: 4px solid ${V2_Color.Primary};
             `;
         }
     }}
@@ -56,7 +56,7 @@ export const Label = styled(V2_Text.Body)<LabelStyleProps>`
     top: 50%;
     left: 50%;
     transform: translate(-50%, calc(-50% - 0.125rem)); // Based on testing
-    color: ${v2_Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     opacity: 1;
 
     ${(props) => {
@@ -69,7 +69,7 @@ export const Label = styled(V2_Text.Body)<LabelStyleProps>`
 `;
 
 export const BoldLabel = styled(V2_Text.Body)<LabelStyleProps>`
-    color: ${v2_Color.Primary};
+    color: ${V2_Color.Primary};
     opacity: 0;
     ${(props) => {
         if (props.$active) {

@@ -1,6 +1,6 @@
-import { v2_ColorSet, v2_ValidationTypes } from "../../v2_color/types";
+import { V2_ColorSet, V2_ValidationTypes } from "../../v2_color/types";
 
-export const BookingSGColorSet: v2_ColorSet = {
+export const BookingSGColorSet: V2_ColorSet = {
     Brand: {
         1: "#EF413D",
         2: "#F26664",
@@ -63,7 +63,7 @@ export const BookingSGColorSet: v2_ColorSet = {
             Border: "#84B7DB",
             Background: "#E8F4FA", // Validation Background
         },
-    } as v2_ValidationTypes,
+    } as V2_ValidationTypes,
     Shadow: {
         Accent: "rgba(161, 87, 255, 0.5)",
         Red: "rgba(221, 102, 102, 0.8)",
