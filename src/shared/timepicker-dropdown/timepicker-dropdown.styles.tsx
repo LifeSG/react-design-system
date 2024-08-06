@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Button } from "../../button";
 import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
-import { Text } from "../../text";
+import { v2_Text } from "../../v2_text";
 import { Toggle } from "../../toggle";
 import { ClickableIcon } from "../clickable-icon";
 import { BasicInput } from "../input-wrapper/input-wrapper";
@@ -116,7 +116,7 @@ export const SwitchButton = styled(ClickableIcon)`
     }
 `;
 
-export const DividerLabel = styled(Text.Body)`
+export const DividerLabel = styled(v2_Text.Body)`
     width: 1.5rem;
     margin: 0 0.25rem;
     text-align: center;

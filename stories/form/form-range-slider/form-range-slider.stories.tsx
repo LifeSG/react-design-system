@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { InputRangeSlider } from "src/input-range-slider";
 import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { v2_Text } from "src/v2_text";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 
@@ -105,13 +105,13 @@ export const WithLabels: StoryObj<Component> = {
                         showSliderLabels
                         renderSliderLabel={(val) =>
                             val === 1 ? (
-                                <Text.XSmall weight="semibold">
+                                <v2_Text.XSmall weight="semibold">
                                     1 photo
-                                </Text.XSmall>
+                                </v2_Text.XSmall>
                             ) : (
-                                <Text.XSmall weight="semibold">
+                                <v2_Text.XSmall weight="semibold">
                                     {val} photos
-                                </Text.XSmall>
+                                </v2_Text.XSmall>
                             )
                         }
                     />

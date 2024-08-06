@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../src/v2_color";
-import { Text, TextStyleHelper } from "../../src/text";
+import { v2_Text, v2_TextStyleHelper } from "../../src/v2_text";
 
 export interface TabAttribute {
     title: string;
@@ -36,7 +36,7 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
             return selectedTabItem.component;
         }
 
-        return <Text.BodySmall>No content</Text.BodySmall>;
+        return <v2_Text.BodySmall>No content</v2_Text.BodySmall>;
     };
 
     return (
@@ -74,7 +74,7 @@ const ButtonRow = styled.div`
 `;
 
 const Button = styled.button<StyleProps>`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${v2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
     border: none;
     background: none;
     cursor: pointer;

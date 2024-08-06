@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
-import { TextStyleHelper } from "../../text";
+import { v2_TextStyleHelper } from "../../v2_text";
 import {
     DropdownVariantType,
     LabelDisplayType,
@@ -33,7 +33,7 @@ const lineClampCss = css<LabelStyleProps>`
 
 export const PrimaryText = styled.div<LabelStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        v2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
@@ -54,12 +54,12 @@ export const SecondaryText = styled.div<LabelStyleProps>`
         switch (props.$labelDisplayType) {
             case "next-line":
                 return css`
-                    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                    ${v2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
                 `;
             case "inline":
             default:
                 return css`
-                    ${TextStyleHelper.getTextStyle("Body", "regular")}
+                    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
                 `;
         }
     }}

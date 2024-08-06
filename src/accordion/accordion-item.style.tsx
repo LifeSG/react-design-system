@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text/text";
+import { v2_Text } from "../v2_text/text";
 import { Transition } from "../transition";
 
 // =============================================================================
@@ -42,13 +42,13 @@ const TITLE_STYLE = (isCollapsed?: boolean) => css`
     transition: ${Transition.Base};
 `;
 
-export const Title = styled(Text.H3)<StyleProps>`
+export const Title = styled(v2_Text.H3)<StyleProps>`
     ${(props) => {
         return TITLE_STYLE(props.$isCollapsed);
     }}
 `;
 
-export const TitleH4 = styled(Text.H4)<StyleProps>`
+export const TitleH4 = styled(v2_Text.H4)<StyleProps>`
     ${(props) => {
         return TITLE_STYLE(props.$isCollapsed);
     }}

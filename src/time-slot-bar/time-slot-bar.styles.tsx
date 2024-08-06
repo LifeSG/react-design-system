@@ -3,7 +3,7 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
@@ -159,7 +159,7 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
     }}
 `;
 
-export const TimeLabel = styled(Text.XSmall)`
+export const TimeLabel = styled(v2_Text.XSmall)`
     color: ${v2_Color.Neutral[2]};
     position: absolute;
     bottom: 10%;
@@ -210,7 +210,7 @@ export const Border = styled.div<{ $variant: TimeSlotBarVariant }>`
     border-right: 1px solid ${v2_Color.Neutral[2]};
 `;
 
-export const CellText = styled(Text.XSmall)<CellTextStyleProps>`
+export const CellText = styled(v2_Text.XSmall)<CellTextStyleProps>`
     color: ${(props) => props.$color || v2_Color.Neutral[2](props)};
     position: absolute;
     bottom: 0;

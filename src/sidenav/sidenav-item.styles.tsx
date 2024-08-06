@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 import { v2_Color } from "../v2_color";
 import { Button } from "../button";
 
@@ -33,7 +33,7 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         }
 
         span {
-            ${TextStyleHelper.getFontFamily("XSmall", "regular")}
+            ${v2_TextStyleHelper.getFontFamily("XSmall", "regular")}
             font-size: 0.75rem !important;
             overflow: hidden;
             display: -webkit-box;
@@ -51,7 +51,7 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
             }
 
             span {
-                ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
+                ${v2_TextStyleHelper.getFontFamily("XSmall", "semibold")}
                 color: ${v2_Color.Primary} !important;
             }
         }
@@ -66,7 +66,7 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
                 }
 
                 span {
-                    ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
+                    ${v2_TextStyleHelper.getFontFamily("XSmall", "semibold")}
                     color: ${v2_Color.Primary};
                 }
             }
@@ -80,4 +80,4 @@ export const IconContainer = styled.div`
     margin-bottom: 0.25rem;
 `;
 
-export const TitleText = styled(Text.XSmall)``;
+export const TitleText = styled(v2_Text.XSmall)``;

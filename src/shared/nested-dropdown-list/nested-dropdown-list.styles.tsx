@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
-import { Text, TextStyleHelper } from "../../text";
+import { v2_Text, v2_TextStyleHelper } from "../../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -57,7 +57,7 @@ export const ResultStateContainer = styled.div`
     align-items: center;
 `;
 
-export const ResultStateText = styled(Text.Body)``;
+export const ResultStateText = styled(v2_Text.Body)``;
 
 export const LabelIcon = styled(ExclamationCircleFillIcon)`
     margin-right: 0.625rem;
@@ -74,7 +74,7 @@ export const SelectAllContainer = styled.div`
 `;
 
 export const DropdownCommonButton = styled.button`
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${v2_Color.Primary};
     background-color: transparent;
     border: none;

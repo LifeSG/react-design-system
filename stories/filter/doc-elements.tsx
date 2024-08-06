@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { v2_Color } from "../../src/v2_color";
 import { Filter, Mode } from "../../src/filter";
 import { Form } from "../../src/form";
-import { Text } from "../../src/text";
+import { v2_Text } from "../../src/v2_text";
 
 interface Props<T> {
     mode: Mode;
@@ -46,7 +46,7 @@ export const DateFilter = ({ value, onChange }: Props<string>) => {
 
 export const TextFilter = () => {
     return (
-        <Text.BodySmall>
+        <v2_Text.BodySmall>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
             venenatis neque felis, ac tempor erat iaculis et. Nam elementum at
             lectus et dapibus. Orci varius natoque penatibus et magnis dis
@@ -56,7 +56,7 @@ export const TextFilter = () => {
             interdum. Fusce auctor pharetra lorem eu rhoncus. Integer
             consectetur in odio sed vestibulum. Nunc imperdiet ligula non eros
             faucibus, non aliquam dui aliquet.
-        </Text.BodySmall>
+        </v2_Text.BodySmall>
     );
 };
 

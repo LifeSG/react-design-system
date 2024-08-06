@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Text } from "src/text";
+import { v2_Text } from "src/v2_text";
 import { ButtonContainer } from "./doc-elements";
 
 const meta: Meta = {
@@ -11,13 +11,13 @@ export default meta;
 export const Combined: StoryObj = {
     render: () => {
         return (
-            <Text.Body>
+            <v2_Text.Body>
                 The quick brown fox&nbsp;
-                <Text.Hyperlink.Default href="https://www.google.com">
+                <v2_Text.Hyperlink.Default href="https://www.google.com">
                     jumps over
-                </Text.Hyperlink.Default>
+                </v2_Text.Hyperlink.Default>
                 &nbsp;the lazy dog
-            </Text.Body>
+            </v2_Text.Body>
         );
     },
     tags: ["pattern"],
@@ -26,17 +26,17 @@ export const Combined: StoryObj = {
 export const Inline: StoryObj = {
     render: () => {
         return (
-            <Text.Body>
+            <v2_Text.Body>
                 The quick&nbsp;
-                <Text.Body weight="light" inline={true}>
+                <v2_Text.Body weight="light" inline={true}>
                     brown fox
-                </Text.Body>
+                </v2_Text.Body>
                 &nbsp;
-                <Text.Body weight="semibold" inline={true}>
+                <v2_Text.Body weight="semibold" inline={true}>
                     jumps over
-                </Text.Body>
+                </v2_Text.Body>
                 &nbsp;the lazy dog
-            </Text.Body>
+            </v2_Text.Body>
         );
     },
     tags: ["pattern"],
@@ -46,16 +46,16 @@ export const Paragraph: StoryObj = {
     render: () => {
         return (
             <>
-                <Text.Body paragraph={true}>
+                <v2_Text.Body paragraph={true}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Morbi euismod quam eget ex tincidunt dapibus. Donec vitae
                     leo vehicula, fermentum urna vitae, gravida ex.
-                </Text.Body>
-                <Text.Body paragraph={true}>
+                </v2_Text.Body>
+                <v2_Text.Body paragraph={true}>
                     Aenean imperdiet faucibus velit, eu maximus libero facilisis
                     ut. Donec nulla nisi, fermentum eget lorem at, feugiat
                     ultricies ex. Aliquam volutpat nibh non suscipit rhoncus.
-                </Text.Body>
+                </v2_Text.Body>
             </>
         );
     },
@@ -66,11 +66,11 @@ export const RenderAs: StoryObj = {
     render: () => {
         return (
             <>
-                <Text.Body>This is the original</Text.Body>
+                <v2_Text.Body>This is the original</v2_Text.Body>
                 <br />
-                <Text.Body as="span">
+                <v2_Text.Body as="span">
                     This becomes a span under the hood
-                </Text.Body>
+                </v2_Text.Body>
             </>
         );
     },

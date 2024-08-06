@@ -1,5 +1,5 @@
 import { ExclamationCircleFillIcon, TickIcon } from "@lifesg/react-icons";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import {
     CircleIndicator,
     LineIndicator,
@@ -30,9 +30,9 @@ export const Timeline = ({
     const renderContent = (content: string | JSX.Element): JSX.Element => {
         if (typeof content === "string") {
             return (
-                <Text.Body className="timeline-item-content-text">
+                <v2_Text.Body className="timeline-item-content-text">
                     {content}
-                </Text.Body>
+                </v2_Text.Body>
             );
         }
 

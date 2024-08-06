@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
 
 // =============================================================================
@@ -61,7 +61,7 @@ export const DragOverlay = styled.div`
     }}
 `;
 
-export const OverlayText = styled(Text.BodySmall)`
+export const OverlayText = styled(v2_Text.BodySmall)`
     color: ${v2_Color.Primary};
     text-align: center;
 `;

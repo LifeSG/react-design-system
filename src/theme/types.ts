@@ -4,7 +4,10 @@ import {
     v2_DesignTokenSet,
     v2_DesignTokenSetOptions,
 } from "../v2_design-token/types";
-import { TextStyleSetOptionsType, TextStyleSetType } from "../text/types";
+import {
+    v2_TextStyleSetOptionsType,
+    v2_TextStyleSetType,
+} from "../v2_text/types";
 
 export type ThemeLayout = "normal";
 
@@ -27,7 +30,7 @@ export type ColorCollectionsMap = {
 // =============================================================================
 export type TextStyleScheme = "base" | "oneservice";
 export type FontStyleCollectionsMap = {
-    [key in TextStyleScheme]: TextStyleSetType;
+    [key in TextStyleScheme]: v2_TextStyleSetType;
 };
 
 // =============================================================================
@@ -57,7 +60,7 @@ export enum ThemeContextKeys {
 export interface ThemeSpecOptions {
     /** for color customisation, can specify subset of set */
     color?: v2_ColorSetOptions | undefined;
-    textStyle?: TextStyleSetOptionsType | undefined;
+    textStyle?: v2_TextStyleSetOptionsType | undefined;
     designToken?: v2_DesignTokenSetOptions | undefined;
 }
 

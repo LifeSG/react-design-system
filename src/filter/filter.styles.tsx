@@ -4,7 +4,7 @@ import { Button } from "../button/button";
 import { v2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text/text";
+import { v2_Text } from "../v2_text/text";
 
 // =============================================================================
 // CONTAINER STYLES
@@ -53,7 +53,7 @@ export const FilterHeader = styled.div`
     }
 `;
 
-export const FilterTitle = styled(Text.H4)`
+export const FilterTitle = styled(v2_Text.H4)`
     flex: 1;
     margin: 1.5rem 0 1rem 1.25rem;
 

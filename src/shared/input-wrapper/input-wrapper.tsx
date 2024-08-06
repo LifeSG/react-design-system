@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { v2_DesignToken } from "../../v2_design-token";
-import { TextStyleHelper } from "../../text";
+import { v2_TextStyleHelper } from "../../v2_text";
 import { DropdownVariantType } from "../dropdown-list/types";
 
 // =============================================================================
@@ -109,7 +109,7 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
  */
 export const BasicInput = styled.input<InputStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        v2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}

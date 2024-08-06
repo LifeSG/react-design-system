@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Button } from "../button";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 
 export const Container = styled.div`
     display: flex;
@@ -39,13 +39,13 @@ export const TextContainer = styled.div`
     white-space: pre-wrap;
 `;
 
-export const Title = styled(Text.H2)`
+export const Title = styled(v2_Text.H2)`
     margin: 2rem 0 1rem;
     text-align: center;
 `;
 
 export const DescriptionContainer = styled.div`
-    ${TextStyleHelper.getTextStyle(
+    ${v2_TextStyleHelper.getTextStyle(
         "Body",
         "regular"
     )} // Follow styling of Text.Body
@@ -53,11 +53,11 @@ export const DescriptionContainer = styled.div`
     text-align: center;
 
     strong {
-        ${TextStyleHelper.getFontFamily("Body", "semibold")}
+        ${v2_TextStyleHelper.getFontFamily("Body", "semibold")}
     }
 
     a {
-        ${TextStyleHelper.getTextStyle("Body", "semibold")}
+        ${v2_TextStyleHelper.getTextStyle("Body", "semibold")}
         color: ${v2_Color.Primary};
 
         :hover,

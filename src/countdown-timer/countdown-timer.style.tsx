@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
-import { TextStyleHelper } from "../text";
+import { v2_TextStyleHelper } from "../v2_text";
 import { v2_MediaQuery } from "../v2_media";
 
 // =============================================================================
@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
 `;
 
 export const BaseCountdown = styled.div<CountdownStyleProps>`
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("H4", "semibold")}
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
@@ -78,7 +78,7 @@ export const FixedCountdown = styled(BaseCountdown)`
 `;
 
 export const TimeLeft = styled.div`
-    ${TextStyleHelper.getTextStyle("H4", "bold")}
+    ${v2_TextStyleHelper.getTextStyle("H4", "bold")}
     margin-left: 0.5rem;
     margin-right: 1.5rem;
 

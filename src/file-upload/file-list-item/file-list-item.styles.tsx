@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { v2_MediaQuery } from "../../v2_media";
-import { Text } from "../../text";
+import { v2_Text } from "../../v2_text";
 import { ClickableIcon } from "../../shared/clickable-icon";
 
 // =============================================================================
@@ -208,12 +208,12 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     }
 `;
 
-export const ItemText = styled(Text.BodySmall)``;
+export const ItemText = styled(v2_Text.BodySmall)``;
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: 0.25rem;
 `;
 
-export const BaseErrorMessage = styled(Text.XSmall)`
+export const BaseErrorMessage = styled(v2_Text.XSmall)`
     font-size: 0.875rem !important;
     color: ${v2_Color.Validation.Red.Text};
 `;

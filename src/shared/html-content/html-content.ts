@@ -1,10 +1,10 @@
 import { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { FontFamily } from "../../spec/text-spec/font-spec";
-import { TextSizeType, TextStyleHelper } from "../../text";
+import { v2_TextSizeType, v2_TextStyleHelper } from "../../v2_text";
 
 export interface HtmlContentStyleOptions {
-    textSize?: TextSizeType | undefined;
+    textSize?: v2_TextSizeType | undefined;
 }
 
 export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
@@ -12,11 +12,11 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
     return css`
         // Text styling
-        ${textSize && TextStyleHelper.getTextStyle(textSize, "regular")}
+        ${textSize && v2_TextStyleHelper.getTextStyle(textSize, "regular")}
 
         strong {
             font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
+            ${textSize && v2_TextStyleHelper.getTextStyle(textSize, "semibold")}
         }
 
         p {
@@ -26,7 +26,7 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
         // Link styling
         a {
             font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
+            ${textSize && v2_TextStyleHelper.getTextStyle(textSize, "semibold")}
             color: ${v2_Color.Primary};
             text-decoration: none;
 

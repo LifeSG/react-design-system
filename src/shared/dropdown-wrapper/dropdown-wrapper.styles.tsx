@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { v2_DesignToken } from "../../v2_design-token";
-import { TextStyle, TextStyleHelper } from "../../text";
+import { v2_TextStyle, v2_TextStyleHelper } from "../../v2_text";
 import { Transition } from "../../transition";
 import { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 
@@ -171,9 +171,9 @@ export const IconContainer = styled.div<DropdownWrapperStyleProps>`
 export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
     color: ${v2_Color.Neutral[3]};
     ${(props) => {
-        let size = TextStyle.Body.fontSize;
+        let size = v2_TextStyle.Body.fontSize;
         if (props.$variant === "small") {
-            size = TextStyle.BodySmall.fontSize;
+            size = v2_TextStyle.BodySmall.fontSize;
         }
         return css`
             height: ${size}rem;
@@ -196,7 +196,7 @@ export const LabelContainer = styled.div`
 
 export const ValueLabel = styled.div<ValueLabelStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        v2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}

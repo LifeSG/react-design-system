@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../src/v2_color";
 import { Layout } from "../../src/layout";
-import { Text } from "../../src/text";
+import { v2_Text } from "../../src/v2_text";
 
 interface LabelProps {
     children: string;
@@ -14,7 +14,7 @@ interface LabelProps {
 
 export const Label = ({ children }: LabelProps) => (
     <LWrapper>
-        <Text.XSmall weight="semibold">{children}</Text.XSmall>
+        <v2_Text.XSmall weight="semibold">{children}</v2_Text.XSmall>
     </LWrapper>
 );
 
@@ -46,7 +46,7 @@ export const PaddingLabel = ({
 }: PaddingLabelProps) => (
     <PWrapper direction={direction}>
         <Marker direction={direction}>
-            <Text.XSmall weight="semibold">{children}</Text.XSmall>
+            <v2_Text.XSmall weight="semibold">{children}</v2_Text.XSmall>
         </Marker>
     </PWrapper>
 );
@@ -90,7 +90,7 @@ const Marker = styled.div<any>`
     width: 1.5rem;
     height: 1rem;
 
-    ${Text.XSmall} {
+    ${v2_Text.XSmall} {
         position: absolute;
         top: -160%;
         left: -40%;

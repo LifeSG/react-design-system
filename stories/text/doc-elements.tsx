@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { TextStyleHelper } from "../../src";
+import { v2_TextStyleHelper } from "../../src";
 import { v2_Color } from "../../src/v2_color/color";
-import { Text } from "../../src/text/text";
+import { v2_Text } from "../../src/v2_text/text";
 
 // =============================================================================
 // TEXT DISPLAY LABEL
@@ -125,7 +125,7 @@ const LabelContainer = styled.div<LabelContainerStyleProps>`
     }}
 `;
 
-const Label = styled(Text.BodySmall)`
+const Label = styled(v2_Text.BodySmall)`
     color: ${v2_Color.Neutral[8]};
     margin: 0;
 `;
@@ -141,6 +141,6 @@ export const LinkDiv = styled.div`
 `;
 
 export const ButtonContainer = styled.button`
-    ${TextStyleHelper.getTextStyle("BodySmall", "bold")}
+    ${v2_TextStyleHelper.getTextStyle("BodySmall", "bold")}
     padding: 0.5rem;
 `;

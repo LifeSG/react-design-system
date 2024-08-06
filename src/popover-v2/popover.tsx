@@ -1,7 +1,7 @@
 import { useMediaQuery } from "react-responsive";
 import { Modal } from "../modal/modal";
 import { MediaWidths } from "../spec/media-spec";
-import { Text } from "../text/text";
+import { v2_Text } from "../v2_text/text";
 import {
     ContentWrapper,
     MobileModalBox,
@@ -38,7 +38,7 @@ export const PopoverV2 = ({
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <Text.BodySmall>{children}</Text.BodySmall>
+            <v2_Text.BodySmall>{children}</v2_Text.BodySmall>
         ) : (
             children
         );

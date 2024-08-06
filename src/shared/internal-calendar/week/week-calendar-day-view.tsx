@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { Text } from "../../../text/text";
+import { v2_Text } from "../../../v2_text/text";
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { HeaderCell, RowDayCell, Wrapper } from "../standard";
 import { CommonCalendarProps } from "../types";
@@ -64,7 +64,9 @@ export const WeekCalendarDayView = ({
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
             <HeaderCell key={`week-day-${index}`}>
-                <Text.H6 weight="semibold">{dayjs(day).format("ddd")}</Text.H6>
+                <v2_Text.H6 weight="semibold">
+                    {dayjs(day).format("ddd")}
+                </v2_Text.H6>
             </HeaderCell>
         ));
     };

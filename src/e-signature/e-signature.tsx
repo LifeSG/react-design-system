@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { ButtonWithIcon } from "../button-with-icon";
 import { v2_MediaWidths } from "../v2_media";
 import { ProgressBar } from "../shared/progress-bar";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
@@ -108,7 +108,7 @@ export const ESignature = (props: EsignatureProps) => {
         return (
             <ProgressBox>
                 {loadingLabel && (
-                    <Text.BodySmall>{loadingLabel}</Text.BodySmall>
+                    <v2_Text.BodySmall>{loadingLabel}</v2_Text.BodySmall>
                 )}
                 <ProgressBar
                     progress={loadingProgress}

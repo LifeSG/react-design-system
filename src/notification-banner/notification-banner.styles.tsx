@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { Layout } from "../layout";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 import { Transition } from "../transition";
 
 // =============================================================================
@@ -68,7 +68,7 @@ export const Content = styled.div<ContentStyleProps>`
     display: inline-block;
     width: 100%;
 
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${v2_Color.Neutral[8]};
 
     p {
@@ -76,12 +76,12 @@ export const Content = styled.div<ContentStyleProps>`
     }
 
     strong {
-        ${TextStyleHelper.getFontFamily("Body", "semibold")}
+        ${v2_TextStyleHelper.getFontFamily("Body", "semibold")}
         color: ${v2_Color.Neutral[8]};
     }
 
     a {
-        ${TextStyleHelper.getTextStyle("Body", "regular")}
+        ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
         ${commonLinkStyle}
     }
 
@@ -98,7 +98,7 @@ export const Content = styled.div<ContentStyleProps>`
     }}
 `;
 
-export const ContentLink = styled(Text.Hyperlink.Default)`
+export const ContentLink = styled(v2_Text.Hyperlink.Default)`
     position: relative;
 
     ${commonLinkStyle}
@@ -126,7 +126,7 @@ export const ActionButton = styled.button`
     border: none;
     background: transparent;
     color: ${v2_Color.Validation.Orange.Icon};
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
+    ${v2_TextStyleHelper.getTextStyle("BodySmall", "semibold")};
 
     cursor: pointer;
 `;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import { DownloadApp } from "./footer-download-app";
 import { FooterHelper } from "./footer-helper";
 import {
@@ -141,14 +141,14 @@ export const Footer = <T,>({
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>
                 <CopyrightSection key="copyright">
-                    <Text.XSmall data-testid={"copyright-text"}>
+                    <v2_Text.XSmall data-testid={"copyright-text"}>
                         {copyrightInfo || (
                             <>
                                 &copy;{" "}
                                 {FooterHelper.getCopyrightInfo(lastUpdated)}
                             </>
                         )}
-                    </Text.XSmall>
+                    </v2_Text.XSmall>
                 </CopyrightSection>
             </BottomSection>
         </BaseFooter>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 import { v2_DesignToken } from "../v2_design-token";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -44,8 +44,8 @@ export const MobileWrapper = styled.ul`
 // LINK ITEMS
 // =============================================================================
 
-export const Link = styled(Text.Hyperlink.Small)`
-    ${TextStyleHelper.getTextStyle("H6", "regular")};
+export const Link = styled(v2_Text.Hyperlink.Small)`
+    ${v2_TextStyleHelper.getTextStyle("H6", "regular")};
     width: 100%;
     display: flex;
     position: relative;
@@ -70,7 +70,7 @@ export const Link = styled(Text.Hyperlink.Small)`
     }
 
     ${v2_MediaQuery.MaxWidth.tablet} {
-        ${TextStyleHelper.getTextStyle("H5", "bold")}
+        ${v2_TextStyleHelper.getTextStyle("H5", "bold")}
         width: 100%;
         padding-left: 1.5rem;
         padding-right: 1.5rem;

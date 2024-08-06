@@ -1,8 +1,8 @@
 import { FontFamily } from "./font-spec";
-import { TextStyleSetType } from "../../text/types";
+import { v2_TextStyleSetType } from "../../v2_text/types";
 
 // In rem unit
-export const OneServiceTextStyleSet: TextStyleSetType = {
+export const OneServiceTextStyleSet: v2_TextStyleSetType = {
     D1: {
         fontFamily: FontFamily.OpenSans.Bold,
         fontSize: 2.5,

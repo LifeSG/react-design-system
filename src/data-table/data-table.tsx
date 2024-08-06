@@ -21,7 +21,7 @@ import {
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import { Checkbox } from "../checkbox";
 import { Button } from "../button";
 import { useEventListener } from "../util/use-event-listener";
@@ -236,7 +236,7 @@ export const DataTable = ({
             >
                 <HeaderCellWrapper>
                     {typeof label === "string" ? (
-                        <Text.H4 weight="bold">{label}</Text.H4>
+                        <v2_Text.H4 weight="bold">{label}</v2_Text.H4>
                     ) : (
                         label
                     )}
@@ -376,12 +376,12 @@ export const DataTable = ({
                 title={
                     emptyView?.title ? (
                         typeof emptyView.title === "string" ? (
-                            <Text.H3>{emptyView.title}</Text.H3>
+                            <v2_Text.H3>{emptyView.title}</v2_Text.H3>
                         ) : (
                             emptyView.title
                         )
                     ) : (
-                        <Text.H3>{"No <items> found"}</Text.H3>
+                        <v2_Text.H3>{"No <items> found"}</v2_Text.H3>
                     )
                 }
                 description={
@@ -419,9 +419,9 @@ export const DataTable = ({
                     }
                     $scrollable={scrollable}
                 >
-                    <Text.H5 weight="semibold">{`${selectedIds.length} item${
+                    <v2_Text.H5 weight="semibold">{`${selectedIds.length} item${
                         selectedIds.length > 1 ? "s" : ""
-                    } selected`}</Text.H5>
+                    } selected`}</v2_Text.H5>
                     <Button.Small
                         styleType="link"
                         onClick={onClearSelectionClick}

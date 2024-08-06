@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { TextStyleHelper } from "../text";
+import { v2_TextStyleHelper } from "../v2_text";
 import { UneditableSectionItemDisplayWidth } from "./types";
 import { Alert } from "../alert";
 
@@ -60,7 +60,7 @@ export const IconContainer = styled.div`
 `;
 
 export const Clickable = styled.button`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${v2_Color.Neutral[1]};
     border: none;
     background: transparent;
@@ -109,7 +109,7 @@ export const ErrorLabel = styled.span`
 `;
 
 export const TryAgainLabel = styled.span`
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("Body", "semibold")}
     color: ${v2_Color.Primary};
     text-decoration: underline;
     margin-left: 0.5rem;

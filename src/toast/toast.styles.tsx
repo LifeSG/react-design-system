@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color/color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import { ToastType } from "./types";
 
 //=============================================================================
@@ -102,7 +102,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Title = styled(Text.H4)<StyleProps>`
+export const Title = styled(v2_Text.H4)<StyleProps>`
     display: flex;
 
     ${(props) => {

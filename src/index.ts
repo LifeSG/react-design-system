@@ -62,7 +62,7 @@ export * from "./sidenav";
 export * from "./smart-app-banner";
 export * from "./tab";
 export * from "./tag";
-export * from "./text";
+export * from "./v2_text";
 export * from "./text-list";
 export * from "./theme";
 export * from "./time-range-picker";

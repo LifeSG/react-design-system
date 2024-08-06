@@ -3,7 +3,7 @@ import { Alert } from "../alert";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 import { TextList } from "../text-list";
 import { ToggleStyleType } from "./types";
 
@@ -155,11 +155,11 @@ export const Label = styled.label<LabelStyleProps>`
     ${(props) => {
         if (props.$selected && !props.$indicator) {
             return css`
-                ${TextStyleHelper.getTextStyle("H4", "semibold")}
+                ${v2_TextStyleHelper.getTextStyle("H4", "semibold")}
             `;
         } else {
             return css`
-                ${TextStyleHelper.getTextStyle("H4", "regular")}
+                ${v2_TextStyleHelper.getTextStyle("H4", "regular")}
             `;
         }
     }}
@@ -191,7 +191,7 @@ export const Label = styled.label<LabelStyleProps>`
 `;
 
 export const SubLabel = styled.div<LabelStyleProps>`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${v2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
     margin-top: 0.5rem;
 
     z-index: 1; // forces sublabel to render above the input
@@ -199,7 +199,7 @@ export const SubLabel = styled.div<LabelStyleProps>`
 
     strong,
     b {
-        ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
+        ${v2_TextStyleHelper.getFontFamily("BodySmall", "semibold")}
         color: inherit;
     }
 
@@ -283,7 +283,7 @@ export const RemoveButton = styled.button<StyleProps>`
     color: ${(props) =>
         props.$disabled ? v2_Color.Neutral[3] : v2_Color.Validation.Red.Icon};
     white-space: nowrap;
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("H4", "semibold")}
     height: fit-content;
     padding: 0.6875rem 1rem 0.6875rem 0.5rem;
     border: none;
@@ -295,7 +295,7 @@ export const RemoveButton = styled.button<StyleProps>`
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     color: ${(props) =>
         props.disabled ? v2_Color.Neutral[3] : v2_Color.Primary};
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("H4", "semibold")}
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -352,7 +352,7 @@ export const Children = styled.div<ChildrenStyleProps>`
     }}
 `;
 
-export const ErrorText = styled(Text.BodySmall)<StyleProps>`
+export const ErrorText = styled(v2_Text.BodySmall)<StyleProps>`
     color: ${(props) =>
         props.$disabled ? v2_Color.Neutral[3] : v2_Color.Validation.Red.Text};
 `;

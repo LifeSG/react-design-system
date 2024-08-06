@@ -1,5 +1,5 @@
 import { v2_MediaQuery } from "../v2_media";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Label = styled(Text.H5).attrs({ as: "p" })`
+export const Label = styled(v2_Text.H5).attrs({ as: "p" })`
     margin-bottom: 1rem;
 `;
 

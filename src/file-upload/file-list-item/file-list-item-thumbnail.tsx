@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { v2_MediaQuery } from "../../v2_media";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
-import { TextStyleHelper } from "../../text";
+import { v2_TextStyleHelper } from "../../v2_text";
 
 interface Props {
     thumbnailImageDataUrl: string;
@@ -71,7 +71,7 @@ export const ReplaceButton = styled.button`
     border: none;
     background: transparent;
     cursor: pointer;
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
+    ${v2_TextStyleHelper.getTextStyle("BodySmall", "semibold")};
     color: ${v2_Color.Primary};
     :hover {
         color: ${v2_Color.PrimaryDark};

@@ -2,8 +2,8 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { Selector as DropdownSelector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { Text } from "../text/text";
-import { TextStyle } from "../text/text-style";
+import { v2_Text } from "../v2_text/text";
+import { v2_TextStyle } from "../v2_text/text-style";
 import { Transition } from "../transition";
 import { InputGroupAddonPosition } from "./types";
 
@@ -83,8 +83,8 @@ export const IconContainer = styled.div<StyleProps>`
 
 export const StyledChevronIcon = styled(ChevronDownIcon)`
     color: ${v2_Color.Neutral[3]};
-    height: ${TextStyle.Body.fontSize}rem;
-    width: ${TextStyle.Body.fontSize}rem;
+    height: ${v2_TextStyle.Body.fontSize}rem;
+    width: ${v2_TextStyle.Body.fontSize}rem;
     vertical-align: bottom;
 `;
 
@@ -93,7 +93,7 @@ export const LabelContainer = styled.div`
     flex: 1 1 auto;
 `;
 
-export const ValueLabel = styled(Text.Body)`
+export const ValueLabel = styled(v2_Text.Body)`
     text-align: left;
     display: -webkit-box;
     -webkit-line-clamp: 2;

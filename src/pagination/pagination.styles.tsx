@@ -4,7 +4,7 @@ import { v2_Color } from "../v2_color";
 import { Input } from "../input";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -129,11 +129,11 @@ export const PageItem = styled(Button.Default)<StyleProps>`
         ${(props) => {
             if (props.$selected) {
                 return css`
-                    ${TextStyleHelper.getTextStyle("Body", 700)};
+                    ${v2_TextStyleHelper.getTextStyle("Body", 700)};
                 `;
             } else {
                 return css`
-                    ${TextStyleHelper.getTextStyle("Body", 400)};
+                    ${v2_TextStyleHelper.getTextStyle("Body", 400)};
                 `;
             }
         }}
@@ -152,11 +152,11 @@ export const PageItem = styled(Button.Default)<StyleProps>`
             ${(props) => {
                 if (props.$selected) {
                     return css`
-                        ${TextStyleHelper.getTextStyle("Body", 700)};
+                        ${v2_TextStyleHelper.getTextStyle("Body", 700)};
                     `;
                 } else {
                     return css`
-                        ${TextStyleHelper.getTextStyle("Body", 600)};
+                        ${v2_TextStyleHelper.getTextStyle("Body", 600)};
                     `;
                 }
             }}
@@ -176,11 +176,11 @@ export const PageItem = styled(Button.Default)<StyleProps>`
             ${(props) => {
                 if (props.$selected) {
                     return css`
-                        ${TextStyleHelper.getTextStyle("Body", 700)};
+                        ${v2_TextStyleHelper.getTextStyle("Body", 700)};
                     `;
                 } else {
                     return css`
-                        ${TextStyleHelper.getTextStyle("Body", 400)};
+                        ${v2_TextStyleHelper.getTextStyle("Body", 400)};
                     `;
                 }
             }}
@@ -237,17 +237,17 @@ export const PaginationMobileInput = styled.div`
     justify-content: center;
 `;
 
-export const Label = styled(Text.Body)`
+export const Label = styled(v2_Text.Body)`
     white-space: nowrap;
 `;
 
-export const LabelDivider = styled(Text.Body)`
+export const LabelDivider = styled(v2_Text.Body)`
     white-space: nowrap;
     margin: 0 1rem;
 `;
 
 export const InputView = styled(Input)`
-    ${TextStyleHelper.getTextStyle("Body", 400)};
+    ${v2_TextStyleHelper.getTextStyle("Body", 400)};
     justify-content: center;
     width: 3.5rem;
     height: 2.5rem;
@@ -259,13 +259,13 @@ export const InputView = styled(Input)`
         text-align: center;
 
         ::placeholder {
-            ${TextStyleHelper.getTextStyle("XSmall", 400)};
+            ${v2_TextStyleHelper.getTextStyle("XSmall", 400)};
         }
     }
 `;
 
 export const Hover = styled.div`
-    ${TextStyleHelper.getTextStyle("XSmall", 400)};
+    ${v2_TextStyleHelper.getTextStyle("XSmall", 400)};
 
     background-color: ${v2_Color.Primary};
     border: none;

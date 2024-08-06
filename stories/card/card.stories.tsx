@@ -2,7 +2,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "src/button";
 import { Card } from "src/card";
-import { Text } from "src/text";
+import { v2_Text } from "src/v2_text";
 
 type Component = typeof Card;
 
@@ -39,9 +39,9 @@ export const CustomContent: StoryObj<Component> = {
                     <ExclamationCircleFillIcon
                         style={{ height: "1.5rem", width: "1.5rem" }}
                     />
-                    <Text.BodySmall>
+                    <v2_Text.BodySmall>
                         This is a Card with a JSX.Element as its children.
-                    </Text.BodySmall>
+                    </v2_Text.BodySmall>
                     <Button.Small>Click me</Button.Small>
                 </div>
             </Card>

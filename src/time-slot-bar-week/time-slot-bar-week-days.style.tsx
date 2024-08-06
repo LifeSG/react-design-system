@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
-import { Text } from "../text/text";
-import { TextStyleHelper } from "../text";
+import { v2_Text } from "../v2_text/text";
+import { v2_TextStyleHelper } from "../v2_text";
 import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
 import { Transition } from "../transition";
@@ -38,7 +38,7 @@ export const HeaderCellWeek = styled.div`
     flex: 1;
 `;
 
-export const CellWeekText = styled(Text.XSmall)<CellWeekTextStyleProps>`
+export const CellWeekText = styled(v2_Text.XSmall)<CellWeekTextStyleProps>`
     ${(props) =>
         props.$disabled &&
         css`
@@ -90,7 +90,7 @@ export const TimeColumnWrapper = styled.div`
 `;
 
 export const TimeColumnText = styled.div`
-    ${TextStyleHelper.getFontFamily("Body", 700)}
+    ${v2_TextStyleHelper.getFontFamily("Body", 700)}
     color: ${v2_Color.Neutral[3]};
     font-size: 0.625rem !important;
     line-height: 0.75rem !important;

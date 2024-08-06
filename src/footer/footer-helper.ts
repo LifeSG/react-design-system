@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
-import { TextLinkProps } from "../text";
+import { v2_TextLinkProps } from "../v2_text";
 import { DisclaimerLinks } from "./types";
 
 /* Internally used.  Not to be exported */
 interface InternalDisclaimerLinks {
-    privacy?: TextLinkProps | undefined;
-    termsOfUse?: TextLinkProps | undefined;
-    reportVulnerability?: TextLinkProps | undefined;
+    privacy?: v2_TextLinkProps | undefined;
+    termsOfUse?: v2_TextLinkProps | undefined;
+    reportVulnerability?: v2_TextLinkProps | undefined;
 }
 
 export namespace FooterHelper {

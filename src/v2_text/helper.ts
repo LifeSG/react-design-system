@@ -1,12 +1,12 @@
 import { css } from "styled-components";
 import { FontFamily } from "../spec/text-spec/font-spec";
-import { TextLinkSizeType, TextSizeType, TextWeight } from "./types";
-import { TextStyle } from "./text-style";
+import { v2_TextLinkSizeType, v2_TextSizeType, v2_TextWeight } from "./types";
+import { v2_TextStyle } from "./text-style";
 
 // =============================================================================
 // FONT STYLE
 // =============================================================================
-const getFont = (weight: TextWeight) => {
+const getFont = (weight: v2_TextWeight) => {
     switch (weight) {
         case 700:
         case "bold":
@@ -26,14 +26,16 @@ const getFont = (weight: TextWeight) => {
 };
 
 const getFontFamily = (
-    type: TextSizeType | TextLinkSizeType,
-    weight?: TextWeight
+    type: v2_TextSizeType | v2_TextLinkSizeType,
+    weight?: v2_TextWeight
 ) => {
     return (props: any) => {
-        const fontFamilyFromTheme = TextStyle[type].fontFamily(props) as string;
-        const fontWeightFromTheme = TextStyle[type].fontWeight(
+        const fontFamilyFromTheme = v2_TextStyle[type].fontFamily(
             props
-        ) as TextWeight;
+        ) as string;
+        const fontWeightFromTheme = v2_TextStyle[type].fontWeight(
+            props
+        ) as v2_TextWeight;
 
         if (Object.values(FontFamily.OpenSans).includes(fontFamilyFromTheme)) {
             return css`
@@ -52,7 +54,7 @@ const getFontFamily = (
     };
 };
 
-const getFontWeight = (weight: TextWeight) => {
+const getFontWeight = (weight: v2_TextWeight) => {
     switch (weight) {
         case 300:
         case "light":
@@ -90,12 +92,12 @@ const getMaxLinesLineStyle = (maxLines: number | undefined) => {
 };
 
 const getTextStyle = (
-    type: TextSizeType | TextLinkSizeType,
-    weight: TextWeight,
+    type: v2_TextSizeType | v2_TextLinkSizeType,
+    weight: v2_TextWeight,
     paragraph = false
 ) => {
     return (props: any) => {
-        const attrs = TextStyle[type];
+        const attrs = v2_TextStyle[type];
         const fontSize = attrs.fontSize(props) as number;
 
         // Add extra margin for paragraphs
@@ -141,7 +143,8 @@ const getDisplayStyle = (
 // =============================================================================
 // EXPORTS
 // =============================================================================
-export const TextStyleHelper = {
+/** @deprecated */
+export const v2_TextStyleHelper = {
     getFontFamily,
     getTextStyle,
     getDisplayStyle,

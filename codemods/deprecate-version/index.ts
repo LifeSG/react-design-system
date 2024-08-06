@@ -71,6 +71,61 @@ const componentMap = [
         newName: "v2_Text",
         newPath: "v2_text",
     },
+    {
+        oldName: "TextStyleHelper",
+        newName: "v2_TextStyleHelper",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextStyle",
+        newName: "v2_TextStyle",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextSizeType",
+        newName: "v2_TextSizeType",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextLinkSizeType",
+        newName: "v2_TextLinkSizeType",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextStyleSpec",
+        newName: "v2_TextStyleSpec",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextStyleSetType",
+        newName: "v2_TextStyleSetType",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextStyleSetOptionsType",
+        newName: "v2_TextStyleSetOptionsType",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextWeight",
+        newName: "v2_TextWeight",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextProps",
+        newName: "v2_TextProps",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextLinkProps",
+        newName: "v2_TextLinkProps",
+        newPath: "v2_text",
+    },
+    {
+        oldName: "TextLinkStyleProps",
+        newName: "v2_TextLinkStyleProps",
+        newPath: "v2_text",
+    },
 ];
 
 export default function transformer(file: FileInfo, api: API, options: any) {

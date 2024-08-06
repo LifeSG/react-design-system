@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color/color";
 import { PillColorType, PillType } from "./types";
-import { TextStyleHelper } from "../text";
+import { v2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // STYLING
@@ -16,7 +16,7 @@ export const Wrapper = styled.div<StyleProps>`
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;
-    ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
     display: flex;
     align-items: center;
     gap: 0.25rem;

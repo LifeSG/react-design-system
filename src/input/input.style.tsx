@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
-import { TextStyleHelper } from "../text/helper";
+import { v2_TextStyleHelper } from "../v2_text/helper";
 
 // =============================================================================
 // STYLE INTERFACe
@@ -14,7 +14,7 @@ export interface InputStyleProps {
 // STYLING
 // =============================================================================
 export const InputElement = styled.input<InputStyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
     color: ${v2_Color.Neutral[1]};
 
     // overwrite default styles

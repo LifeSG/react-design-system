@@ -1,8 +1,8 @@
-import { Text } from "../../../src/text/text";
+import { v2_Text } from "../../../src/v2_text/text";
 import styled from "styled-components";
 import React from "react";
 
-const CustomCounterLabel = styled(Text.H6)`
+const CustomCounterLabel = styled(v2_Text.H6)`
     text-align: right;
     color: #a4a4a4 !important;
     font-size: 14px;

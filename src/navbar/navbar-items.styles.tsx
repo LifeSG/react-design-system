@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -68,7 +68,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
+export const Link = styled(v2_Text.Hyperlink.Small)<StyleProps>`
     display: flex;
     position: relative;
     align-items: center;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Toggle } from "../../src/toggle";
-import { Text } from "../../src/text";
+import { v2_Text } from "../../src/v2_text";
 
 const Container = styled.div<{ $height: Height }>`
     #table-wrapper {
@@ -41,7 +41,7 @@ export const DataTableWithCustomHeight = ({
         <Container $height={height} key={height}>
             <div>
                 <div>Modify the options to view the scroll behaviour</div>
-                <Text.H6>Number of rows</Text.H6>
+                <v2_Text.H6>Number of rows</v2_Text.H6>
                 <div>
                     <input
                         type="range"
@@ -54,7 +54,7 @@ export const DataTableWithCustomHeight = ({
                         }}
                     />
                 </div>
-                <Text.H6>Table height</Text.H6>
+                <v2_Text.H6>Table height</v2_Text.H6>
                 <ToggleContainer>
                     <Toggle
                         type="radio"

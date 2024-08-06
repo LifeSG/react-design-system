@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_MediaQuery } from "../v2_media";
 import { v2_Color } from "../v2_color";
-import { TextStyleHelper } from "../text/helper";
+import { v2_TextStyleHelper } from "../v2_text/helper";
 import { OrderedListProps, UnorderedListProps } from "./types";
 
 const baseListStyle = (bottomMargin: number) => `
@@ -25,7 +25,7 @@ export const StyledOrderedList = styled.ol<OrderedListProps>`
     counter-reset: list;
 
     li {
-        ${(props) => TextStyleHelper.getTextStyle(props.size, "regular")}
+        ${(props) => v2_TextStyleHelper.getTextStyle(props.size, "regular")}
         position: relative;
         color: ${v2_Color.Neutral[1]};
     }
@@ -80,7 +80,7 @@ export const StyledUnorderedList = styled.ul<UnorderedListProps>`
     list-style-type: ${(props) => props.bulletType || "disc"};
 
     li {
-        ${(props) => TextStyleHelper.getTextStyle(props.size, "regular")}
+        ${(props) => v2_TextStyleHelper.getTextStyle(props.size, "regular")}
         color: ${v2_Color.Neutral[1]};
     }
 

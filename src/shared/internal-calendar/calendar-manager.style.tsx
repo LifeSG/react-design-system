@@ -4,7 +4,7 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { Button } from "../../button";
 import { v2_Color } from "../../v2_color";
-import { TextStyleHelper } from "../../text";
+import { v2_TextStyleHelper } from "../../v2_text";
 import { ClickableIcon } from "../clickable-icon";
 
 // =============================================================================
@@ -122,7 +122,7 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
 `;
 
 export const DropdownText = styled.p`
-    ${TextStyleHelper.getTextStyle("H5", "regular")}
+    ${v2_TextStyleHelper.getTextStyle("H5", "regular")}
 `;
 
 export const HeaderArrows = styled.div`

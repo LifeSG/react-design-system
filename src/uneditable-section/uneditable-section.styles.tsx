@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Layout } from "../layout";
 import { v2_Color } from "../v2_color";
 import { v2_MediaQuery } from "../v2_media";
-import { Text } from "../text";
+import { v2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -21,12 +21,12 @@ export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
     padding-bottom: 2rem;
 `;
 
-export const Title = styled(Text.H3)`
+export const Title = styled(v2_Text.H3)`
     margin-bottom: 1rem;
     grid-column: span 8;
 `;
 
-export const Description = styled(Text.Body)`
+export const Description = styled(v2_Text.Body)`
     margin-bottom: 2rem;
     grid-column: span 8;
 `;

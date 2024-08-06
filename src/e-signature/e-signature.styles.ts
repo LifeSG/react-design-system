@@ -3,7 +3,7 @@ import { Button } from "../button";
 import { v2_Color } from "../v2_color";
 import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 import { v2_MediaQuery, v2_MediaWidths } from "../v2_media";
 
 // =============================================================================
@@ -58,7 +58,7 @@ export const ProgressBox = styled.div`
     flex-direction: column;
     align-items: center;
 `;
-export const Instructions = styled(Text.H6)`
+export const Instructions = styled(v2_Text.H6)`
     margin-top: 1rem;
 `;
 
@@ -100,13 +100,13 @@ export const ModalBox = styled(Modal.Box)`
 `;
 
 export const ModalTitle = styled.h4`
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("H4", "semibold")}
     margin-bottom: 1rem;
     color: ${v2_Color.Neutral[1]};
     text-align: center;
 
     ${mobileMediaQuery} {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
+        ${v2_TextStyleHelper.getTextStyle("H5", "semibold")}
         margin: 0.75rem 0;
     }
 `;

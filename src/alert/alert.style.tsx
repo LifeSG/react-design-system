@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color/color";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Text, TextStyleHelper } from "../text";
+import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 import { AlertSizeType, AlertType } from "./types";
 
 // =============================================================================
@@ -121,16 +121,16 @@ export const AlertIconWrapper = styled.div<StyleProps>`
     }}
 `;
 
-export const ActionLinkText = styled(Text.Hyperlink.Small)<StyleProps>`
+export const ActionLinkText = styled(v2_Text.Hyperlink.Small)<StyleProps>`
     ${(props) => {
         if (props.$sizeType === "small")
             return css`
-                ${TextStyleHelper.getTextStyle("H6", "semibold")}
+                ${v2_TextStyleHelper.getTextStyle("H6", "semibold")}
                 margin-top: 0.25rem;
             `;
         else {
             return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                ${v2_TextStyleHelper.getTextStyle("H5", "semibold")}
                 margin-top: 0.5rem;
             `;
         }
@@ -182,11 +182,11 @@ export const ShowMoreButton = styled.button<StyleProps>`
     ${(props) => {
         if (props.$sizeType === "small")
             return css`
-                ${TextStyleHelper.getTextStyle("H6", "semibold")}
+                ${v2_TextStyleHelper.getTextStyle("H6", "semibold")}
             `;
         else {
             return css`
-                ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                ${v2_TextStyleHelper.getTextStyle("H5", "semibold")}
             `;
         }
     }}

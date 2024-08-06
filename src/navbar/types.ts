@@ -1,5 +1,5 @@
 import { ButtonProps } from "../button";
-import { TextLinkProps } from "../text";
+import { v2_TextLinkProps } from "../v2_text";
 
 // =============================================================================
 // NAV ITEM TYPES
@@ -16,7 +16,7 @@ export interface NavItemComponentProps {
 
 export type NavItemProps<T> = NavItemLinkProps<T> | NavItemComponentProps;
 
-export interface NavItemCommonProps<T> extends TextLinkProps {
+export interface NavItemCommonProps<T> extends v2_TextLinkProps {
     id: string;
     "data-testid"?: string | undefined;
     options?: T | undefined;

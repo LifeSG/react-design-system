@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
-import { TextStyleHelper } from "../../text/helper";
-import { Text } from "../../text/text";
+import { v2_TextStyleHelper } from "../../v2_text/helper";
+import { v2_Text } from "../../v2_text/text";
 import { MonthVariant } from "./internal-calendar-month";
 import { CalendarType } from "./types";
 
@@ -87,7 +87,7 @@ export const MonthCell = styled.div<StyleProps>`
     }}
 `;
 
-export const CellLabel = styled(Text.H5)<StyleProps>`
+export const CellLabel = styled(v2_Text.H5)<StyleProps>`
     ${(props) => {
         if (props.$disabledDisplay) {
             return css`
@@ -102,7 +102,7 @@ export const CellLabel = styled(Text.H5)<StyleProps>`
                 `;
             case "selected-month":
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                    ${v2_TextStyleHelper.getTextStyle("H5", "semibold")}
                     color: ${v2_Color.Primary(props)};
                 `;
             case "default":

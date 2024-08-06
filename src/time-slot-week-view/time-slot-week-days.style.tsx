@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
 import { DayLabel } from "../shared/internal-calendar/standard";
-import { TextStyleHelper } from "../text";
+import { v2_TextStyleHelper } from "../v2_text";
 
 export const DayLabelWeek = styled(DayLabel)`
     ${(props) => {
@@ -9,7 +9,7 @@ export const DayLabelWeek = styled(DayLabel)`
         switch ($variant) {
             case "default":
                 return css`
-                    ${TextStyleHelper.getFontFamily("H5", "semibold")}
+                    ${v2_TextStyleHelper.getFontFamily("H5", "semibold")}
                     color: ${v2_Color.Neutral[3]};
                 `;
         }
@@ -37,7 +37,7 @@ export const ColumnWeekCell = styled.div`
     min-height: 7.625rem;
 `;
 export const TimeSlotText = styled.div`
-    ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    ${v2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
     margin: 1rem 0rem;
     display: flex;
     flex-direction: column;

@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { v2_Color } from "../../v2_color";
 import { BasicInput } from "../input-wrapper/input-wrapper";
-import { TextStyleHelper } from "../../text/helper";
-import { Text } from "../../text/text";
+import { v2_TextStyleHelper } from "../../v2_text/helper";
+import { v2_Text } from "../../v2_text/text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -67,7 +67,7 @@ export const YearInput = styled(BaseInput)`
     margin-left: 0.25rem;
 `;
 
-export const Divider = styled(Text.Body)<DividerStyleProps>`
+export const Divider = styled(v2_Text.Body)<DividerStyleProps>`
     ${(props) => {
         if (props.$inactive) {
             return css`
@@ -78,7 +78,7 @@ export const Divider = styled(Text.Body)<DividerStyleProps>`
 `;
 
 export const Placeholder = styled.div<PlaceholderStyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    ${v2_TextStyleHelper.getTextStyle("Body", "regular")}
     background-color: ${v2_Color.Neutral[8]};
     color: ${v2_Color.Neutral[3]};
     position: absolute;

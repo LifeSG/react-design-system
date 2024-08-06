@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "src/button";
-import { Text } from "src/text";
+import { v2_Text } from "src/v2_text";
 import { Timeline } from "src/timeline";
 import { StoryContainer } from "../storybook-common";
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
@@ -26,10 +26,10 @@ export const Default: StoryObj<Component> = {
                             title: "Item 1",
                             content: (
                                 <>
-                                    <Text.Body>
+                                    <v2_Text.Body>
                                         Just a regular text based item. Lorem
                                         ipsum dolor sit amet, consectetur.
-                                    </Text.Body>
+                                    </v2_Text.Body>
                                 </>
                             ),
                         },
@@ -37,13 +37,13 @@ export const Default: StoryObj<Component> = {
                             title: "Item 2",
                             content: (
                                 <>
-                                    <Text.Body>
+                                    <v2_Text.Body>
                                         An example with a&nbsp;
-                                        <Text.Hyperlink.Small>
+                                        <v2_Text.Hyperlink.Small>
                                             link
-                                        </Text.Hyperlink.Small>
+                                        </v2_Text.Hyperlink.Small>
                                         .
-                                    </Text.Body>
+                                    </v2_Text.Body>
                                 </>
                             ),
                         },
@@ -51,16 +51,16 @@ export const Default: StoryObj<Component> = {
                             title: "Item 3",
                             content: (
                                 <>
-                                    <Text.Body>
+                                    <v2_Text.Body>
                                         This one comes with an&nbsp;
-                                    </Text.Body>
-                                    <Text.Hyperlink.Default
+                                    </v2_Text.Body>
+                                    <v2_Text.Hyperlink.Default
                                         href="https://google.com.sg"
                                         rel="noreferrer"
                                         external
                                     >
                                         external link
-                                    </Text.Hyperlink.Default>
+                                    </v2_Text.Hyperlink.Default>
                                     .
                                 </>
                             ),
@@ -69,9 +69,9 @@ export const Default: StoryObj<Component> = {
                             title: "Item 4",
                             content: (
                                 <>
-                                    <Text.Body>
+                                    <v2_Text.Body>
                                         This item comes with an action button.
-                                    </Text.Body>
+                                    </v2_Text.Body>
                                     <Button.Default
                                         style={{ marginTop: "1rem" }}
                                         onClick={() => {
@@ -86,9 +86,9 @@ export const Default: StoryObj<Component> = {
                         {
                             title: "Item 5",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     This one comes with Pill DS icons.
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                             statuses: [
                                 {
@@ -108,10 +108,10 @@ export const Default: StoryObj<Component> = {
                         {
                             title: "Item 6",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     This one comes with Pill DS icons with long
                                     status text.
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                             statuses: [
                                 {
@@ -146,58 +146,58 @@ export const Variants: StoryObj<Component> = {
                             title: "Item 1",
                             variant: "completed",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     An example with <code>completed</code>{" "}
                                     variant
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                         },
                         {
                             title: "Item 2",
                             variant: "current",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     An example with <code>current</code> variant
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                         },
                         {
                             title: "Item 3",
                             variant: "upcoming-active",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     An example with <code>upcoming-active</code>{" "}
                                     variant
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                         },
                         {
                             title: "Item 4",
                             variant: "upcoming-inactive",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     An example with{" "}
                                     <code>upcoming-inactive</code> variant
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                         },
                         {
                             title: "Item 5",
                             variant: "error",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     An example with <code>error</code> variant
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                         },
                         {
                             title: "Item 6",
                             variant: "disabled",
                             content: (
-                                <Text.Body>
+                                <v2_Text.Body>
                                     An example with <code>disabled</code>{" "}
                                     variant
-                                </Text.Body>
+                                </v2_Text.Body>
                             ),
                         },
                     ]}
