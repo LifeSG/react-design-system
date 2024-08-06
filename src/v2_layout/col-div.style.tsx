@@ -4,6 +4,7 @@ import { v2_MediaQuery } from "../v2_media/media";
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
+
 export interface StyledDivStyleProps {
     $desktopStart?: number | undefined;
     $desktopSpan?: number | undefined;
@@ -16,6 +17,7 @@ export interface StyledDivStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+
 export const StyledDiv = styled.div<StyledDivStyleProps>`
     position: relative;
     ${(props) => {

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { v2_Color } from "src/v2_color";
 import { Divider } from "src/divider";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { DisplayText, Wrapper } from "./doc-elements";
 
 type Component = typeof Divider;
@@ -35,7 +35,7 @@ export const Default: StoryObj<Component> = {
 export const UsingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "5rem" }}>
+            <v2_Layout.V2_Content type="grid" style={{ padding: "5rem" }}>
                 <DisplayText>Dividers in the grid layout</DisplayText>
                 <Divider layoutType="grid" style={{ marginBottom: "1.5rem" }} />
                 <Divider
@@ -58,7 +58,7 @@ export const UsingInGridLayout: StoryObj<Component> = {
                     tabletCols={[1, 4]}
                     desktopCols={[1, 5]}
                 />
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
 };
@@ -66,7 +66,7 @@ export const UsingInGridLayout: StoryObj<Component> = {
 export const Customisations: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "5rem" }}>
+            <v2_Layout.V2_Content type="grid" style={{ padding: "5rem" }}>
                 <DisplayText>Changing the color (pure string)</DisplayText>
                 <Divider
                     layoutType="grid"
@@ -105,7 +105,7 @@ export const Customisations: StoryObj<Component> = {
                     thickness={5}
                     style={{ marginBottom: "1.5rem" }}
                 />
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
 };

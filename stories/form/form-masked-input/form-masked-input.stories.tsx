@@ -2,7 +2,7 @@ import { ToggleOffIcon } from "@lifesg/react-icons/toggle-off";
 import { ToggleOffFillIcon } from "@lifesg/react-icons/toggle-off-fill";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { MaskedInput, MaskedInputLoadState } from "src/masked-input";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
@@ -205,7 +205,7 @@ export const WithCustomizations: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
                 <Form.MaskedInput
                     label="A shorter form input"
                     value="S1234567D"
@@ -219,7 +219,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
     parameters: {

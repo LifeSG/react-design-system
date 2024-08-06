@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { v2_Text } from "src/v2_text";
 
 const meta: Meta = {
@@ -14,7 +14,7 @@ export default meta;
 export const GeneralUsage: StoryObj = {
     render: () => {
         return (
-            <Layout.Content>
+            <v2_Layout.V2_Content>
                 <div
                     style={{
                         width: "100%",
@@ -31,7 +31,7 @@ export const GeneralUsage: StoryObj = {
                         looks.
                     </v2_Text.Body>
                 </div>
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
 };
@@ -39,8 +39,8 @@ export const GeneralUsage: StoryObj = {
 export const SplitUsage: StoryObj = {
     render: () => {
         return (
-            <Layout.Section>
-                <Layout.Container>
+            <v2_Layout.V2_Section>
+                <v2_Layout.V2_Container>
                     <div
                         style={{
                             width: "100%",
@@ -57,8 +57,8 @@ export const SplitUsage: StoryObj = {
                             content looks.
                         </v2_Text.Body>
                     </div>
-                </Layout.Container>
-            </Layout.Section>
+                </v2_Layout.V2_Container>
+            </v2_Layout.V2_Section>
         );
     },
 };
@@ -78,10 +78,10 @@ export const FlexColumnLayout: StoryObj = {
             );
         };
         return (
-            <Layout.Content type="flex-column">
+            <v2_Layout.V2_Content type="flex-column">
                 {renderContent(<v2_Text.Body>First item</v2_Text.Body>)}
                 {renderContent(<v2_Text.Body>Second item</v2_Text.Body>)}
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
 };
@@ -113,9 +113,9 @@ export const GridLayout: StoryObj = {
             return columns;
         };
         return (
-            <Layout.Content type="grid" style={{ background: "#FDDDD7" }}>
+            <v2_Layout.V2_Content type="grid" style={{ background: "#FDDDD7" }}>
                 {renderColumns()}
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
 };

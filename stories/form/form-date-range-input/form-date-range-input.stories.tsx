@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { DateRangeInput } from "src/date-range-input";
 import { Form } from "src/form";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { StoryContainer } from "../../storybook-common";
 
 type Component = typeof Form.DateRangeInput;
@@ -213,7 +213,7 @@ export const AllowDisabledSelection: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
                 <Form.DateRangeInput
                     label="Using grid columns"
                     mobileCols={[1, 5]}
@@ -224,7 +224,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
     parameters: {

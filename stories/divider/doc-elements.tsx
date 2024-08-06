@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Layout } from "../../src/layout";
+import { v2_Layout } from "../../src/v2_layout";
 import { v2_Text } from "../../src/v2_text";
 
-export const Wrapper = styled(Layout.Content)`
+export const Wrapper = styled(v2_Layout.V2_Content)`
     padding: 5rem;
 `;
 
@@ -12,8 +12,8 @@ export const TextComponent = styled(v2_Text.Body)`
 
 export const DisplayText = ({ children }: { children: React.ReactNode }) => {
     return (
-        <Layout.ColDiv desktopCols={12} tabletCols={8} mobileCols={4}>
+        <v2_Layout.V2_ColDiv desktopCols={12} tabletCols={8} mobileCols={4}>
             <TextComponent>{children}</TextComponent>
-        </Layout.ColDiv>
+        </v2_Layout.V2_ColDiv>
     );
 };

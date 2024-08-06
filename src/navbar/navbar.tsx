@@ -6,7 +6,7 @@ import React, {
     useState,
 } from "react";
 import { ButtonProps } from "../button/types";
-import { Layout } from "../layout";
+import { v2_Layout } from "../v2_layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
 import { MediaWidths } from "../spec/media-spec";
@@ -268,7 +268,7 @@ const Component = <T,>(
 
     const renderNavbar = () => {
         return (
-            <Layout.Content stretch={isStretch}>
+            <v2_Layout.V2_Content stretch={isStretch}>
                 <Nav $compress={compress}>
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
@@ -291,7 +291,7 @@ const Component = <T,>(
                 </Nav>
 
                 {!hideNavElements && renderDrawer()}
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     };
 

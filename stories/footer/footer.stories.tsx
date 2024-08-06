@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Footer } from "src/footer";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 
 type Component = typeof Footer;
 
@@ -67,7 +67,7 @@ export const WithCustomContent: StoryObj<Component> = {
     render: () => {
         return (
             <Footer lastUpdated={new Date()}>
-                <Layout.Content>
+                <v2_Layout.V2_Content>
                     <div
                         style={{
                             padding: "2rem 0",
@@ -80,7 +80,7 @@ export const WithCustomContent: StoryObj<Component> = {
                     >
                         My custom content
                     </div>
-                </Layout.Content>
+                </v2_Layout.V2_Content>
             </Footer>
         );
     },

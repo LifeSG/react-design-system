@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
 import { Input } from "src/input";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 
@@ -68,14 +68,14 @@ export const Default: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
                 <Form.Input label="A shorter form input" mobileCols={[1, 5]} />
                 <Form.Input
                     label="A longer form input"
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
     parameters: {

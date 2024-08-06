@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { ESignature } from "src/e-signature";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import { signatureDataURL } from "./doc-elements";
@@ -64,7 +64,7 @@ export const WithLoadingIndicator: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
                 <Form.ESignature
                     label="A shorter form input"
                     mobileCols={[1, 5]}
@@ -74,7 +74,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
 };

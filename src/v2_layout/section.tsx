@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { DivRef, SectionProps } from "./types";
+import { V2_DivRef, V2_SectionProps } from "./types";
 import { v2_MediaQuery } from "../v2_media";
 
-const Component = (props: SectionProps, ref: DivRef): JSX.Element => {
+const Component = (props: V2_SectionProps, ref: V2_DivRef): JSX.Element => {
     const {
         children,
         "data-testid": testId = "section",
@@ -26,7 +26,8 @@ const Component = (props: SectionProps, ref: DivRef): JSX.Element => {
 // =============================================================================
 // EXPORT
 // =============================================================================
-export const Section = React.forwardRef(Component);
+/** @deprecated */
+export const V2_Section = React.forwardRef(Component);
 
 // =============================================================================
 // STYLING

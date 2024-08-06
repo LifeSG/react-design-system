@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { v2_MediaQuery } from "../v2_media/media";
-import { ContainerProps, ContainerType, DivRef } from "./types";
+import { V2_ContainerProps, V2_ContainerType, V2_DivRef } from "./types";
 
-const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
+const Component = (props: V2_ContainerProps, ref: V2_DivRef): JSX.Element => {
     const {
         children,
         "data-testid": testId = "container",
@@ -28,13 +28,14 @@ const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
 // =============================================================================
 // EXPORT
 // =============================================================================
-export const Container = React.forwardRef(Component);
+/** @deprecated */
+export const V2_Container = React.forwardRef(Component);
 
 // =============================================================================
 // STYLING
 // =============================================================================
 interface StyleProps {
-    $type: ContainerType;
+    $type: V2_ContainerType;
     $stretch: boolean;
 }
 

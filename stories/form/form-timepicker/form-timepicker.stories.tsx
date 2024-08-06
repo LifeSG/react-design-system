@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { Timepicker } from "src/timepicker";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
@@ -71,7 +71,7 @@ export const TwelveHourFormat: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
                 <Form.Timepicker
                     label="A shorter form input"
                     format="12hr"
@@ -83,7 +83,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </v2_Layout.V2_Content>
         );
     },
     parameters: {

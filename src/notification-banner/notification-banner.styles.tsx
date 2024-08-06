@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { v2_Color } from "../v2_color";
-import { Layout } from "../layout";
+import { v2_Layout } from "../v2_layout";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { v2_Text, v2_TextStyleHelper } from "../v2_text";
 import { Transition } from "../transition";
@@ -51,7 +51,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
 
-export const Container = styled(Layout.Content)`
+export const Container = styled(v2_Layout.V2_Content)`
     display: flex;
 `;
 

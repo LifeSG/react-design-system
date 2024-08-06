@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Layout } from "src/layout";
+import { v2_Layout } from "src/v2_layout";
 import { v2_Text } from "src/v2_text";
 import { Wrapper } from "./doc-elements";
 
-type Component = typeof Layout.ColDiv;
+type Component = typeof v2_Layout.V2_ColDiv;
 
 const meta: Meta<Component> = {
     title: "Getting Started/Layout/Column Divs",
-    component: Layout.ColDiv,
+    component: v2_Layout.V2_ColDiv,
     parameters: {
         layout: "fullscreen",
     },
@@ -19,7 +19,7 @@ export const ColumnDivs: StoryObj<Component> = {
     render: () => {
         return (
             <Wrapper>
-                <Layout.ColDiv
+                <v2_Layout.V2_ColDiv
                     mobileCols={1}
                     style={{
                         background: "#FDDDD7",
@@ -28,8 +28,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>1</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={2}
                     style={{
                         background: "#FDDDD7",
@@ -38,8 +38,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>2</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={3}
                     style={{
                         background: "#FDDDD7",
@@ -48,8 +48,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>3</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     style={{
                         background: "#FDDDD7",
@@ -58,8 +58,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>4</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={5}
                     style={{
@@ -69,8 +69,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>5</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={6}
                     style={{
@@ -80,8 +80,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>6</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={7}
                     style={{
@@ -91,8 +91,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>7</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={8}
                     style={{
@@ -102,8 +102,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>8</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={8}
                     desktopCols={9}
@@ -114,8 +114,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>9</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={8}
                     desktopCols={10}
@@ -126,8 +126,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>10</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={8}
                     desktopCols={11}
@@ -138,8 +138,8 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>11</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={4}
                     tabletCols={8}
                     desktopCols={12}
@@ -150,7 +150,7 @@ export const ColumnDivs: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>12</v2_Text.BodySmall>
-                </Layout.ColDiv>
+                </v2_Layout.V2_ColDiv>
             </Wrapper>
         );
     },
@@ -160,7 +160,7 @@ export const SpecifyingRanges: StoryObj<Component> = {
     render: () => {
         return (
             <Wrapper>
-                <Layout.ColDiv
+                <v2_Layout.V2_ColDiv
                     mobileCols={[1, 5]}
                     style={{
                         background: "#FDDDD7",
@@ -169,8 +169,8 @@ export const SpecifyingRanges: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>One</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={[3, 5]}
                     tabletCols={[2, 6]}
                     style={{
@@ -180,8 +180,8 @@ export const SpecifyingRanges: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>Two</v2_Text.BodySmall>
-                </Layout.ColDiv>
-                <Layout.ColDiv
+                </v2_Layout.V2_ColDiv>
+                <v2_Layout.V2_ColDiv
                     mobileCols={[2, 4]}
                     tabletCols={[6, 9]}
                     desktopCols={[7, 12]}
@@ -192,7 +192,7 @@ export const SpecifyingRanges: StoryObj<Component> = {
                     }}
                 >
                     <v2_Text.BodySmall>Three</v2_Text.BodySmall>
-                </Layout.ColDiv>
+                </v2_Layout.V2_ColDiv>
             </Wrapper>
         );
     },
