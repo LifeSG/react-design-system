@@ -1,4 +1,4 @@
-import { v2_CssValue, v2_DesignTokenSet } from "../v2_design-token/types";
+import { CssValue, V2_DesignTokenSet } from "../v2_design-token/types";
 
 import { BaseDesignTokenSet } from "../spec/design-token-spec/base-design-token-set";
 import { RBSDesignTokenSet } from "../spec/design-token-spec/rbs-design-token-set";
@@ -29,9 +29,9 @@ const DesignTokenSpec: ThemeCollectionSpec<
 // HELPER FUNCTIONS
 // =============================================================================
 export const getThemeDesignToken = (attributePath: string) => {
-    return (props: any): v2_CssValue => {
+    return (props: any): CssValue => {
         const theme = props.theme as ThemeSpec;
-        const DesignTokenSet: v2_DesignTokenSet = getCollection(
+        const DesignTokenSet: V2_DesignTokenSet = getCollection(
             DesignTokenSpec,
             theme[ThemeContextKeys.designTokenScheme]
         );

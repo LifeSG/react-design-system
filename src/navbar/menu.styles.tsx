@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { V2_Color } from "../v2_color";
 import { V2_MediaQuery } from "../v2_media";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
-import { v2_DesignToken } from "../v2_design-token";
+import { V2_DesignToken } from "../v2_design-token";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -26,7 +26,7 @@ export const Wrapper = styled.ul`
 
     background: ${V2_Color.Neutral[8]};
     border-radius: 0 0 0.5rem 0.5rem;
-    box-shadow: ${v2_DesignToken.ElevationBoxShadow};
+    box-shadow: ${V2_DesignToken.ElevationBoxShadow};
 `;
 
 export const MobileWrapper = styled.ul`

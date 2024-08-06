@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
 import { ErrorDisplay } from "../error-display";
-import { v2_DesignToken } from "../v2_design-token";
+import { V2_DesignToken } from "../v2_design-token";
 import { V2_Text } from "../v2_text";
 
 // =============================================================================
@@ -146,12 +146,12 @@ export const ActionBar = styled.div<ActionBarProps>`
     padding: 1rem;
     border-top: 1px solid ${borderColor};
     border-radius: 0 0 4px 4px;
-    background-color: ${v2_DesignToken.Table.Cell.Selected};
+    background-color: ${V2_DesignToken.Table.Cell.Selected};
     transition: all 300ms ease;
 `;
 
 export const HeaderRow = styled.tr`
-    background-color: ${v2_DesignToken.Table.Header};
+    background-color: ${V2_DesignToken.Table.Header};
     height: 6rem;
     border-bottom: 1px solid ${borderColor};
 `;
@@ -188,15 +188,15 @@ export const BodyRow = styled.tr<BodyRowProps>`
     background-color: ${(props) => {
         if (props.$isSelected) {
             return css`
-                ${v2_DesignToken.Table.Cell.Selected};
+                ${V2_DesignToken.Table.Cell.Selected};
             `;
         } else if (props.$alternating) {
             return css`
-                ${v2_DesignToken.Table.Cell.Primary};
+                ${V2_DesignToken.Table.Cell.Primary};
             `;
         } else {
             return css`
-                ${v2_DesignToken.Table.Cell.Secondary};
+                ${V2_DesignToken.Table.Cell.Secondary};
             `;
         }
     }};
@@ -205,7 +205,7 @@ export const BodyRow = styled.tr<BodyRowProps>`
         ${(props) => {
             if (!props.$isSelected && props.$isSelectable) {
                 return css`
-                    background-color: ${v2_DesignToken.Table.Cell.Hover};
+                    background-color: ${V2_DesignToken.Table.Cell.Hover};
                 `;
             }
         }};

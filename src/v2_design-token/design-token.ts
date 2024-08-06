@@ -1,11 +1,11 @@
 import { getThemeDesignToken } from "../theme/design-token-helper";
 import { PropertiesToType } from "../util/utility-types";
 /** @deprecated */
-import { v2_DesignTokenSet } from "./types";
+import { V2_DesignTokenSet } from "./types";
 
 /** @deprecated */
-export const v2_DesignToken: PropertiesToType<
-    v2_DesignTokenSet,
+export const V2_DesignToken: PropertiesToType<
+    V2_DesignTokenSet,
     ReturnType<typeof getThemeDesignToken>
 > = {
     InputBoxShadow: getThemeDesignToken("InputBoxShadow"),

@@ -1,8 +1,8 @@
 import { css } from "styled-components";
 import { V2_Color } from "../../v2_color/color";
-import { v2_DesignTokenSet } from "../../v2_design-token/types";
+import { V2_DesignTokenSet } from "../../v2_design-token/types";
 
-export const BaseDesignTokenSet: v2_DesignTokenSet = {
+export const BaseDesignTokenSet: V2_DesignTokenSet = {
     InputBoxShadow: css`
         inset 0 0 4px 0px ${V2_Color.Shadow.Accent}
     `,
