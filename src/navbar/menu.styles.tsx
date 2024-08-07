@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
-import { DesignToken } from "../design-token";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { V2_DesignToken } from "../v2_design-token";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -24,17 +24,17 @@ export const Wrapper = styled.ul`
     position: absolute;
     max-height: 20rem;
 
-    background: ${Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
     border-radius: 0 0 0.5rem 0.5rem;
-    box-shadow: ${DesignToken.ElevationBoxShadow};
+    box-shadow: ${V2_DesignToken.ElevationBoxShadow};
 `;
 
 export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        border-left: 0.25rem solid ${Color.Primary};
+    ${V2_MediaQuery.MaxWidth.tablet} {
+        border-left: 0.25rem solid ${V2_Color.Primary};
         display: flex;
         flex-direction: column;
     }
@@ -44,14 +44,14 @@ export const MobileWrapper = styled.ul`
 // LINK ITEMS
 // =============================================================================
 
-export const Link = styled(Text.Hyperlink.Small)`
-    ${TextStyleHelper.getTextStyle("H6", "regular")};
+export const Link = styled(V2_Text.Hyperlink.Small)`
+    ${V2_TextStyleHelper.getTextStyle("H6", "regular")};
     width: 100%;
     display: flex;
     position: relative;
     align-items: flex-start;
     text-align: left;
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
 
     padding: 1px 1rem;
 
@@ -63,14 +63,14 @@ export const Link = styled(Text.Hyperlink.Small)`
 
     :active,
     :focus {
-        color: ${Color.Primary};
+        color: ${V2_Color.Primary};
     }
     :hover {
-        color: ${Color.Accent.Light[1]};
+        color: ${V2_Color.Accent.Light[1]};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
-        ${TextStyleHelper.getTextStyle("H5", "bold")}
+    ${V2_MediaQuery.MaxWidth.tablet} {
+        ${V2_TextStyleHelper.getTextStyle("H5", "bold")}
         width: 100%;
         padding-left: 1.5rem;
         padding-right: 1.5rem;
@@ -96,7 +96,7 @@ export const MenuItem = styled.li`
         padding-bottom: 1rem;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         padding: 0.625rem 0;
 
         :first-child {

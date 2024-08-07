@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Toggle } from "../../src";
 import { Form } from "../../src/form";
-import { Text } from "../../src/text";
+import { V2_Text } from "../../src/v2_text";
 
 type Component = typeof Toggle;
 
@@ -106,14 +106,14 @@ export const InteractiveSublabel: StoryObj<Component> = {
                         Clicking here toggles the button.
                         <div style={{ pointerEvents: "auto" }}>
                             Clicking here does not and{" "}
-                            <Text.Hyperlink.Small
+                            <V2_Text.Hyperlink.Small
                                 href="https://example.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 external
                             >
                                 this link
-                            </Text.Hyperlink.Small>{" "}
+                            </V2_Text.Hyperlink.Small>{" "}
                             is accessible
                         </div>
                     </div>

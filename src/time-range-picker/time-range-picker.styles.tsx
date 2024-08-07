@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { V2_Color } from "../v2_color";
 import {
     BasicInput,
     InputWrapper,

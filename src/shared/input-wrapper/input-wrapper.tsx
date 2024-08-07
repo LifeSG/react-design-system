@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { DesignToken } from "../../design-token";
-import { TextStyleHelper } from "../../text";
+import { V2_Color } from "../../v2_color";
+import { V2_DesignToken } from "../../v2_design-token";
+import { V2_TextStyleHelper } from "../../v2_text";
 import { DropdownVariantType } from "../dropdown-list/types";
 
 // =============================================================================
@@ -24,23 +24,23 @@ export interface InputStyleProps {
 // STYLING
 // =============================================================================
 const defaultFocusCss = css`
-    border: 1px solid ${Color.Accent.Light[1]};
-    box-shadow: ${DesignToken.InputBoxShadow};
+    border: 1px solid ${V2_Color.Accent.Light[1]};
+    box-shadow: ${V2_DesignToken.InputBoxShadow};
 `;
 
 const readOnlyFocusCss = css`
-    border: 1px solid ${Color.Accent.Light[1]};
+    border: 1px solid ${V2_Color.Accent.Light[1]};
     box-shadow: none;
 `;
 
 const disabledFocusCss = css`
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     box-shadow: none;
 `;
 
 const errorFocusCss = css`
-    border: 1px solid ${Color.Validation.Red.Border};
-    box-shadow: ${DesignToken.InputErrorBoxShadow};
+    border: 1px solid ${V2_Color.Validation.Red.Border};
+    box-shadow: ${V2_DesignToken.InputErrorBoxShadow};
 `;
 
 /**
@@ -48,9 +48,9 @@ const errorFocusCss = css`
  * prescibe any layout for content
  */
 export const InputBox = styled.div<InputWrapperStyleProps>`
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
-    background: ${Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
 
     :focus-within {
         ${defaultFocusCss}
@@ -71,7 +71,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[6]};
+                background: ${V2_Color.Neutral[6]};
                 cursor: not-allowed;
 
                 :focus-within {
@@ -81,7 +81,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
             `;
         } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border};
+                border: 1px solid ${V2_Color.Validation.Red.Border};
 
                 :focus-within {
                     ${errorFocusCss}
@@ -109,11 +109,11 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
  */
 export const BasicInput = styled.input<InputStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     display: block;
     background: transparent;
     border: none;
@@ -130,7 +130,7 @@ export const BasicInput = styled.input<InputStyleProps>`
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
     }
 
     // Chrome, Safari, Edge, Opera
@@ -161,6 +161,6 @@ export const BasicButton = styled.button<InputStyleProps>`
     }
 
     :focus-visible {
-        outline: 2px auto ${Color.Primary};
+        outline: 2px auto ${V2_Color.Primary};
     }
 `;

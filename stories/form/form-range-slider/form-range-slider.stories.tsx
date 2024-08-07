@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { InputRangeSlider } from "src/input-range-slider";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { V2_Layout } from "src/v2_layout";
+import { V2_Text } from "src/v2_text";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 
@@ -105,13 +105,13 @@ export const WithLabels: StoryObj<Component> = {
                         showSliderLabels
                         renderSliderLabel={(val) =>
                             val === 1 ? (
-                                <Text.XSmall weight="semibold">
+                                <V2_Text.XSmall weight="semibold">
                                     1 photo
-                                </Text.XSmall>
+                                </V2_Text.XSmall>
                             ) : (
-                                <Text.XSmall weight="semibold">
+                                <V2_Text.XSmall weight="semibold">
                                     {val} photos
-                                </Text.XSmall>
+                                </V2_Text.XSmall>
                             )
                         }
                     />
@@ -132,7 +132,7 @@ export const WithLabels: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.RangeSlider
                     label="A shorter form input"
                     mobileCols={[1, 5]}
@@ -144,7 +144,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     tabletCols={[1, 9]}
                     value={[25, 50]}
                 />
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

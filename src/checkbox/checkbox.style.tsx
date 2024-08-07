@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { Color } from "../color/color";
+import { V2_Color } from "../v2_color/color";
 import { CheckboxProps, CheckboxSize } from "./types";
 
 // =============================================================================
@@ -57,10 +57,10 @@ export const Container = styled.div<StyleProps>`
         height: 100%;
         color: ${(props) =>
             props.$disabled
-                ? Color.Neutral[4](props)
+                ? V2_Color.Neutral[4](props)
                 : props.$unchecked
-                ? Color.Accent.Light[2](props)
-                : Color.Primary(props)};
+                ? V2_Color.Accent.Light[2](props)
+                : V2_Color.Primary(props)};
     }
 `;
 

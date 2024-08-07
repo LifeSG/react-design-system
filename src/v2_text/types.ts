@@ -1,4 +1,5 @@
-export type TextSizeType =
+/** @deprecated */
+export type V2_TextSizeType =
     | "D1"
     | "D2"
     | "D3"
@@ -14,11 +15,13 @@ export type TextSizeType =
     | "BodySmall"
     | "XSmall";
 
-export type TextLinkSizeType =
+/** @deprecated */
+export type V2_TextLinkSizeType =
     | "Body" // Default
     | "BodySmall"; // Small
 
-export interface TextStyleSpec {
+/** @deprecated */
+export interface V2_TextStyleSpec {
     fontFamily?: string | undefined;
     fontSize?: number | undefined;
     fontWeight?: number | undefined;
@@ -26,11 +29,16 @@ export interface TextStyleSpec {
     letterSpacing?: number | undefined;
 }
 
-export type TextStyleSetType = { [key in TextSizeType]: TextStyleSpec };
+/** @deprecated */
+export type V2_TextStyleSetType = {
+    [key in V2_TextSizeType]: V2_TextStyleSpec;
+};
 
-export type TextStyleSetOptionsType = Partial<TextStyleSetType>;
+/** @deprecated */
+export type V2_TextStyleSetOptionsType = Partial<V2_TextStyleSetType>;
 
-export type TextWeight =
+/** @deprecated */
+export type V2_TextWeight =
     | "regular"
     | "semibold"
     | "bold"
@@ -47,8 +55,9 @@ export enum RedirectScope {
     Domain, // Pages not in the project but under the same domain name
 }
 
-export interface TextProps extends React.HTMLAttributes<HTMLElement> {
-    weight?: TextWeight | undefined;
+/** @deprecated */
+export interface V2_TextProps extends React.HTMLAttributes<HTMLElement> {
+    weight?: V2_TextWeight | undefined;
     inline?: boolean | undefined;
     /** This is applicable only to non-headers */
     paragraph?: boolean | undefined;
@@ -56,13 +65,15 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
     maxLines?: number | undefined;
 }
 
-export interface TextLinkProps
+/** @deprecated */
+export interface V2_TextLinkProps
     extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    weight?: TextWeight | undefined;
+    weight?: V2_TextWeight | undefined;
     /** Specifying this will add the external indicator */
     external?: boolean | undefined;
 }
 
-export interface TextLinkStyleProps extends TextLinkProps {
-    textStyle: TextLinkSizeType;
+/** @deprecated */
+export interface V2_TextLinkStyleProps extends V2_TextLinkProps {
+    textStyle: V2_TextLinkSizeType;
 }

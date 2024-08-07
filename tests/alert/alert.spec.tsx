@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Alert } from "../../src";
-import { Color } from "../../src";
+import { V2_Color } from "../../src";
 import { StarIcon } from "@lifesg/react-icons/star";
 
 // =============================================================================
@@ -8,7 +8,6 @@ import { StarIcon } from "@lifesg/react-icons/star";
 // =============================================================================
 describe("Alert", () => {
     beforeEach(() => {
-        
         jest.resetAllMocks();
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -25,12 +24,12 @@ describe("Alert", () => {
 
     describe("type", () => {
         it.each`
-            type             | backgroundColor                       | borderColor
-            ${"success"}     | ${Color.Validation.Green.Background}  | ${Color.Validation.Green.Border}
-            ${"warning"}     | ${Color.Validation.Orange.Background} | ${Color.Validation.Orange.Border}
-            ${"error"}       | ${Color.Validation.Red.Background}    | ${Color.Validation.Red.Border}
-            ${"info"}        | ${Color.Validation.Blue.Background}   | ${Color.Validation.Blue.Border}
-            ${"description"} | ${Color.Neutral[7]}                   | ${Color.Neutral[4]}
+            type             | backgroundColor                          | borderColor
+            ${"success"}     | ${V2_Color.Validation.Green.Background}  | ${V2_Color.Validation.Green.Border}
+            ${"warning"}     | ${V2_Color.Validation.Orange.Background} | ${V2_Color.Validation.Orange.Border}
+            ${"error"}       | ${V2_Color.Validation.Red.Background}    | ${V2_Color.Validation.Red.Border}
+            ${"info"}        | ${V2_Color.Validation.Blue.Background}   | ${V2_Color.Validation.Blue.Border}
+            ${"description"} | ${V2_Color.Neutral[7]}                   | ${V2_Color.Neutral[4]}
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {
@@ -94,7 +93,6 @@ describe("Alert", () => {
 
             expect(getCustomIcon()).toBeInTheDocument();
         });
-
     });
 
     it("should render custom display if required", () => {

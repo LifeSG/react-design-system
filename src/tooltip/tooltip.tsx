@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
-import { Text } from "../text/text";
+import { V2_Text } from "../v2_text/text";
 import { Arrow, Bubble, BubbleWrap } from "./tooltip.styles";
 import { TooltipPosition, TooltipProps } from "./types";
 
@@ -85,7 +85,7 @@ export const Tooltip = ({
 
     const renderContent = () =>
         typeof children === "string" ? (
-            <Text.BodySmall>{children}</Text.BodySmall>
+            <V2_Text.BodySmall>{children}</V2_Text.BodySmall>
         ) : (
             children
         );

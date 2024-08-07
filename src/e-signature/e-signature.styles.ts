@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { Color } from "../color";
+import { V2_Color } from "../v2_color";
 import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
-import { Text, TextStyleHelper } from "../text";
-import { MediaQuery, MediaWidths } from "../media";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { V2_MediaQuery, V2_MediaWidths } from "../v2_media";
 
 // =============================================================================
 // CUSTOM MEDIA QUERIES
 // =============================================================================
 // for mobileL and below in both orientations
-const mobileMediaQuery = ` ${MediaQuery.MaxWidth.mobileL}, (orientation: landscape) and (max-height: ${MediaWidths.mobileL}px)`;
-const mobileLandscapeMediaQuery = `@media(orientation: landscape) and (max-height: ${MediaWidths.mobileL}px)`;
+const mobileMediaQuery = ` ${V2_MediaQuery.MaxWidth.mobileL}, (orientation: landscape) and (max-height: ${V2_MediaWidths.mobileL}px)`;
+const mobileLandscapeMediaQuery = `@media(orientation: landscape) and (max-height: ${V2_MediaWidths.mobileL}px)`;
 
 // =============================================================================
 // STYLING
@@ -23,9 +23,9 @@ export const SignatureArea = styled.div`
     justify-content: center;
     background-image: ${(props) =>
         `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='4' ry='4' stroke='${encodeURIComponent(
-            Color.Neutral[5](props)
+            V2_Color.Neutral[5](props)
         )}' stroke-width='4' stroke-dasharray='8%2c 8' stroke-dashoffset='8' stroke-linecap='round'/%3e%3c/svg%3e");`};
-    background-color: ${Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     border-radius: 4px;
     height: 14.125rem;
 `;
@@ -47,8 +47,8 @@ export const SignaturePreviewImage = styled.img`
     height: 100%;
 `;
 export const ProgressBox = styled.div`
-    background: ${Color.Accent.Light[6]};
-    border: 1px solid ${Color.Neutral[5]};
+    background: ${V2_Color.Accent.Light[6]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
     margin: 0 2rem;
     padding: 1rem;
@@ -58,7 +58,7 @@ export const ProgressBox = styled.div`
     flex-direction: column;
     align-items: center;
 `;
-export const Instructions = styled(Text.H6)`
+export const Instructions = styled(V2_Text.H6)`
     margin-top: 1rem;
 `;
 
@@ -100,13 +100,13 @@ export const ModalBox = styled(Modal.Box)`
 `;
 
 export const ModalTitle = styled.h4`
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     margin-bottom: 1rem;
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     text-align: center;
 
     ${mobileMediaQuery} {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
+        ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
         margin: 0.75rem 0;
     }
 `;
@@ -122,20 +122,20 @@ export const ESignatureContainer = styled.div`
     }
 
     ${mobileLandscapeMediaQuery} {
-        background: ${Color.Neutral[7]};
+        background: ${V2_Color.Neutral[7]};
     }
 `;
 export const ESignatureDrawable = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    background: ${Color.Neutral[6]};
+    background: ${V2_Color.Neutral[6]};
     margin: auto;
 
     ${mobileMediaQuery} {
         aspect-ratio: 4/3;
     }
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         height: auto;
     }
@@ -151,7 +151,7 @@ export const SignatureLine = styled.div`
     width: 18.75rem;
     height: 2px;
     transform: translateX(-50%);
-    background-color: ${Color.Neutral[4]};
+    background-color: ${V2_Color.Neutral[4]};
     pointer-events: none;
 
     ${mobileMediaQuery} {
@@ -166,7 +166,7 @@ export const ModalButtons = styled.div`
     justify-content: space-between;
     margin-top: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column-reverse;
         margin: 1rem 1.25rem 3rem;
         gap: 1rem;
@@ -179,7 +179,7 @@ export const ModalButtons = styled.div`
 `;
 export const ModalActionButton = styled(Button.Default)`
     width: 8.5rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
     }
     ${mobileLandscapeMediaQuery} {

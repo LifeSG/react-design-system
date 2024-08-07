@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Color } from "../v2_color";
+import { V2_TextStyleHelper } from "../v2_text/helper";
 import { OrderedListProps, UnorderedListProps } from "./types";
 
 const baseListStyle = (bottomMargin: number) => `
@@ -17,7 +17,7 @@ export const StyledOrderedList = styled.ol<OrderedListProps>`
     ${(props) => baseListStyle(props.bottomMargin)}
     margin-left: ${BASE_MARGIN}rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin-left: 2.5rem;
     }
 
@@ -25,9 +25,9 @@ export const StyledOrderedList = styled.ol<OrderedListProps>`
     counter-reset: list;
 
     li {
-        ${(props) => TextStyleHelper.getTextStyle(props.size, "regular")}
+        ${(props) => V2_TextStyleHelper.getTextStyle(props.size, "regular")}
         position: relative;
-        color: ${Color.Neutral[1]};
+        color: ${V2_Color.Neutral[1]};
     }
 
     ${(props) => {
@@ -80,8 +80,8 @@ export const StyledUnorderedList = styled.ul<UnorderedListProps>`
     list-style-type: ${(props) => props.bulletType || "disc"};
 
     li {
-        ${(props) => TextStyleHelper.getTextStyle(props.size, "regular")}
-        color: ${Color.Neutral[1]};
+        ${(props) => V2_TextStyleHelper.getTextStyle(props.size, "regular")}
+        color: ${V2_Color.Neutral[1]};
     }
 
     counter-reset: list;

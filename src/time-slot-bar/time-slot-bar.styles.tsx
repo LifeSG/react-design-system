@@ -1,9 +1,9 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { V2_Color } from "../v2_color";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import { V2_Text } from "../v2_text";
 import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
@@ -74,7 +74,7 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     z-index: 2;
     position: absolute;
     bottom: ${({ $variant }) => ($variant === "default" ? "0.25rem" : "0rem")};
-    background-color: ${Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     box-shadow: 0px 2px 8px rgba(104, 104, 104, 0.5);
     border-radius: 50%;
     padding: 0.5rem;
@@ -104,12 +104,12 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
 export const ArrowIconRight = styled(ChevronRightIcon)`
     width: 1rem;
     height: 1rem;
-    color: ${Color.Primary};
+    color: ${V2_Color.Primary};
 `;
 
 export const ArrowIconLeft = styled(ChevronLeftIcon)`
     font-size: 1rem;
-    color: ${Color.Primary};
+    color: ${V2_Color.Primary};
 `;
 
 export const TimeSlotBarContainer = styled.div<{
@@ -137,7 +137,7 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
     display: inline-block;
     width: ${({ $variant }) => `${getCellWidth($variant)}px`};
     position: relative;
-    border-left: 1px solid ${Color.Neutral[2]};
+    border-left: 1px solid ${V2_Color.Neutral[2]};
     ${(props) => {
         let markerHeight = 0;
 
@@ -159,8 +159,8 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
     }}
 `;
 
-export const TimeLabel = styled(Text.XSmall)`
-    color: ${Color.Neutral[2]};
+export const TimeLabel = styled(V2_Text.XSmall)`
+    color: ${V2_Color.Neutral[2]};
     position: absolute;
     bottom: 10%;
     left: 10%;
@@ -194,8 +194,8 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
         css`
             background: repeating-linear-gradient(
                 135deg,
-                ${props.$bgColor2 || Color.Neutral[5]} 0px,
-                ${props.$bgColor2 || Color.Neutral[5]} 10px,
+                ${props.$bgColor2 || V2_Color.Neutral[5]} 0px,
+                ${props.$bgColor2 || V2_Color.Neutral[5]} 10px,
                 ${props.$bgColor} 10px,
                 ${props.$bgColor} 20px
             );
@@ -207,11 +207,11 @@ export const Border = styled.div<{ $variant: TimeSlotBarVariant }>`
     top: ${MAX_LINE_HEIGHT}rem;
     height: ${({ $variant }) => `${getCellHeight($variant)}px`};
     z-index: 1;
-    border-right: 1px solid ${Color.Neutral[2]};
+    border-right: 1px solid ${V2_Color.Neutral[2]};
 `;
 
-export const CellText = styled(Text.XSmall)<CellTextStyleProps>`
-    color: ${(props) => props.$color || Color.Neutral[2](props)};
+export const CellText = styled(V2_Text.XSmall)<CellTextStyleProps>`
+    color: ${(props) => props.$color || V2_Color.Neutral[2](props)};
     position: absolute;
     bottom: 0;
     padding-left: 4px;

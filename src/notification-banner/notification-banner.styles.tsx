@@ -1,9 +1,9 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { Layout } from "../layout";
+import { V2_Color } from "../v2_color";
+import { V2_Layout } from "../v2_layout";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 import { Transition } from "../transition";
 
 // =============================================================================
@@ -23,19 +23,19 @@ interface ContentStyleProps {
 // STYLING
 // =============================================================================
 const commonLinkStyle = css`
-    color: ${Color.Validation.Orange.Icon};
+    color: ${V2_Color.Validation.Orange.Icon};
 
     svg {
-        color: ${Color.Validation.Orange.Icon};
+        color: ${V2_Color.Validation.Orange.Icon};
     }
 
     :hover,
     :active,
     :visited,
     :focus {
-        color: ${Color.Validation.Orange.Icon};
+        color: ${V2_Color.Validation.Orange.Icon};
         svg {
-            color: ${Color.Validation.Orange.Icon};
+            color: ${V2_Color.Validation.Orange.Icon};
         }
     }
 `;
@@ -46,12 +46,12 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     top: 0;
     width: 100%;
     transition: ${Transition.Base};
-    background: ${Color.Neutral[2]};
+    background: ${V2_Color.Neutral[2]};
     z-index: 25;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
 
-export const Container = styled(Layout.Content)`
+export const Container = styled(V2_Layout.Content)`
     display: flex;
 `;
 
@@ -68,20 +68,20 @@ export const Content = styled.div<ContentStyleProps>`
     display: inline-block;
     width: 100%;
 
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[8]};
+    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${V2_Color.Neutral[8]};
 
     p {
         display: inline-block;
     }
 
     strong {
-        ${TextStyleHelper.getFontFamily("Body", "semibold")}
-        color: ${Color.Neutral[8]};
+        ${V2_TextStyleHelper.getFontFamily("Body", "semibold")}
+        color: ${V2_Color.Neutral[8]};
     }
 
     a {
-        ${TextStyleHelper.getTextStyle("Body", "regular")}
+        ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
         ${commonLinkStyle}
     }
 
@@ -98,7 +98,7 @@ export const Content = styled.div<ContentStyleProps>`
     }}
 `;
 
-export const ContentLink = styled(Text.Hyperlink.Default)`
+export const ContentLink = styled(V2_Text.Hyperlink.Default)`
     position: relative;
 
     ${commonLinkStyle}
@@ -113,7 +113,7 @@ export const StyledIconButton = styled(ClickableIcon)`
 export const StyledIcon = styled(CrossIcon)`
     height: 1.875rem;
     width: 1.875rem;
-    color: ${Color.Neutral[8]};
+    color: ${V2_Color.Neutral[8]};
 `;
 
 export const ActionButton = styled.button`
@@ -125,8 +125,8 @@ export const ActionButton = styled.button`
 
     border: none;
     background: transparent;
-    color: ${Color.Validation.Orange.Icon};
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
+    color: ${V2_Color.Validation.Orange.Icon};
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")};
 
     cursor: pointer;
 `;

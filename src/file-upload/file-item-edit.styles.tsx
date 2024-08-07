@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media/media";
+import { V2_MediaQuery } from "../v2_media/media";
 import { Button } from "../button/button";
-import { Text } from "../text/text";
-import { Color } from "../color/color";
+import { V2_Text } from "../v2_text/text";
+import { V2_Color } from "../v2_color/color";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -21,7 +21,7 @@ export const Item = styled.li`
     background: transparent;
 
     :not(:last-child) {
-        border-bottom: 1px solid ${Color.Neutral[5]};
+        border-bottom: 1px solid ${V2_Color.Neutral[5]};
     }
 `;
 
@@ -44,28 +44,28 @@ export const NameSection = styled.div`
     justify-content: space-between;
     margin-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         justify-content: flex-start;
     }
 `;
 
-export const FileNameText = styled(Text.BodySmall)`
+export const FileNameText = styled(V2_Text.BodySmall)`
     display: flex;
     flex: 1;
     margin-right: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         margin-right: 0;
         margin-bottom: 0.5rem;
     }
 `;
 
-export const FileSizeText = styled(Text.BodySmall)``;
+export const FileSizeText = styled(V2_Text.BodySmall)``;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
     }
 
@@ -74,7 +74,7 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
             return css`
                 margin-left: 8rem; // 6rem width + 2rem gap
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     margin-left: 0;
                 }
             `;
@@ -88,7 +88,7 @@ export const ActionButton = styled(Button.Small)`
         margin-right: 1rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         :not(:last-of-type) {
             margin-bottom: 1rem;

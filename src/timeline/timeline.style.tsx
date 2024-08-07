@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Text } from "../v2_text";
 import { Variant } from "./types";
 import { Pill } from "../pill";
 
@@ -34,21 +34,21 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
         switch (props.$variant) {
             case "current":
                 return css`
-                    background-color: ${Color.Accent.Light[1]};
+                    background-color: ${V2_Color.Accent.Light[1]};
                 `;
             case "upcoming-active":
                 return css`
-                    border: 4px solid ${Color.Accent.Light[1]};
+                    border: 4px solid ${V2_Color.Accent.Light[1]};
                 `;
             case "upcoming-inactive":
                 return css`
-                    border: 4px solid ${Color.Neutral[4]};
+                    border: 4px solid ${V2_Color.Neutral[4]};
                 `;
             case "completed":
                 return css`
-                    background-color: ${Color.Validation.Green.Icon};
+                    background-color: ${V2_Color.Validation.Green.Icon};
                     svg {
-                        color: ${Color.Neutral[8]};
+                        color: ${V2_Color.Neutral[8]};
                     }
                 `;
             case "error":
@@ -58,14 +58,14 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                     margin: -0.15rem 0 -0.15rem -0.15rem;
 
                     svg {
-                        color: ${Color.Validation.Red.Icon};
+                        color: ${V2_Color.Validation.Red.Icon};
                         height: 100%;
                         width: 100%;
                     }
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Color.Neutral[4]};
+                    background-color: ${V2_Color.Neutral[4]};
                 `;
         }
     }}
@@ -83,21 +83,21 @@ export const LineIndicator = styled.div<VariantStyleProps>`
             case "current":
             case "upcoming-active":
                 return css`
-                    background-color: ${Color.Accent.Light[1]};
+                    background-color: ${V2_Color.Accent.Light[1]};
                 `;
             case "upcoming-inactive":
             case "disabled":
                 return css`
-                    background-color: ${Color.Neutral[4]};
+                    background-color: ${V2_Color.Neutral[4]};
                 `;
             case "completed":
                 return css`
-                    background-color: ${Color.Validation.Green.Icon};
+                    background-color: ${V2_Color.Validation.Green.Icon};
                 `;
             case "error":
                 return css`
                     margin-left: -0.15rem;
-                    background-color: ${Color.Validation.Red.Icon};
+                    background-color: ${V2_Color.Validation.Red.Icon};
                 `;
         }
     }}
@@ -114,24 +114,24 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
     grid-column: ${(props) => (props.$startCol ? props.$startCol : 3)} / span
         ${(props) => (props.$colSpan ? props.$colSpan : 8)};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         grid-column: span 8;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-column: span 4;
     }
 `;
 
-export const TimelineTitle = styled(Text.H3)`
+export const TimelineTitle = styled(V2_Text.H3)`
     margin-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin-bottom: 1.5rem;
     }
 `;
 
-export const TimelineItemTitle = styled(Text.H4)`
+export const TimelineItemTitle = styled(V2_Text.H4)`
     margin-top: -0.125rem;
     margin-bottom: 0.5rem;
 `;
@@ -150,7 +150,7 @@ export const TimelineItemContent = styled.div`
     width: 100%;
 `;
 
-export const TimelinePills = styled(Text.H3)`
+export const TimelinePills = styled(V2_Text.H3)`
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 0.5rem;

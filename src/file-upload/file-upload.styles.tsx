@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // STYLING
@@ -15,22 +15,22 @@ export const TextContainer = styled.div`
     margin-bottom: 2rem;
 `;
 
-export const Title = styled(Text.H4)`
+export const Title = styled(V2_Text.H4)`
     margin-bottom: 0.5rem;
 `;
 
 export const TitleContainer = styled.div`
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     ${applyHtmlContentStyle({ textSize: "Body" })}
 `;
 
-export const Description = styled(Text.BodySmall)`
+export const Description = styled(V2_Text.BodySmall)`
     margin-bottom: 0;
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 `;
 
 export const DescriptionContainer = styled.div`
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 `;
 
@@ -44,7 +44,7 @@ export const UploadButtonContainer = styled.div`
     flex-direction: column;
     align-items: flex-end;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         align-items: flex-start;
     }
 `;
@@ -52,17 +52,17 @@ export const UploadButtonContainer = styled.div`
 export const UploadButton = styled(Button.Small)`
     width: 10rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
     }
 `;
 export const UploadButtonLabel = styled.label`
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-    color: ${Color.Neutral[3]};
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+    color: ${V2_Color.Neutral[3]};
     margin-top: 0.5rem;
     width: 10rem;
     text-align: center;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;
     }

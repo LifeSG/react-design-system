@@ -1,6 +1,6 @@
-import { ColorSet, ValidationTypes } from "../../color";
+import { V2_ColorSet, V2_ValidationTypes } from "../../v2_color";
 
-export const CCubeColorSet: ColorSet = {
+export const CCubeColorSet: V2_ColorSet = {
     Brand: {
         1: "#8D5197",
         2: "#FE3399",
@@ -63,7 +63,7 @@ export const CCubeColorSet: ColorSet = {
             Border: "#84B7DB",
             Background: "#E8F4FA", // Validation Background
         },
-    } as ValidationTypes,
+    } as V2_ValidationTypes,
     Shadow: {
         Accent: "rgba(210, 77, 255, 0.5)",
         Red: "rgba(221, 102, 102, 0.8)",

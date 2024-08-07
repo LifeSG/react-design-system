@@ -1,6 +1,6 @@
-import { TextLinkProps } from "../text/types";
+import { V2_TextLinkProps } from "../v2_text/types";
 
-type DisclaimerTextLinkProps = Omit<TextLinkProps, "children">;
+type DisclaimerTextLinkProps = Omit<V2_TextLinkProps, "children">;
 
 export interface DisclaimerLinks {
     privacy?: DisclaimerTextLinkProps | undefined;
@@ -8,7 +8,7 @@ export interface DisclaimerLinks {
     reportVulnerability?: DisclaimerTextLinkProps | undefined;
 }
 
-export interface FooterLinkProps<T = void> extends TextLinkProps {
+export interface FooterLinkProps<T = void> extends V2_TextLinkProps {
     /** Any custom attributes you would like to pass to the link */
     "data-options"?: T | undefined;
     "data-testid"?: string | undefined;

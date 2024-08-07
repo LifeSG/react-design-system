@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { Text } from "../text";
+import { V2_Color } from "../v2_color";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -12,14 +12,14 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const CounterLabel = styled(Text.H6)<StyleProps>`
+export const CounterLabel = styled(V2_Text.H6)<StyleProps>`
     text-align: right;
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 
     ${(props) => {
         if (props.disabled) {
             return css`
-                color: ${Color.Neutral[4](props)};
+                color: ${V2_Color.Neutral[4](props)};
             `;
         }
     }}

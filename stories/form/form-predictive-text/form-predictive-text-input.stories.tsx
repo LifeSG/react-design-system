@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
-import { Layout } from "src/layout";
+import { V2_Layout } from "src/v2_layout";
 import { PredictiveTextInput } from "src/predictive-text-input";
 import { Container } from "../shared-doc-elements";
 import {
@@ -108,7 +108,7 @@ export const WithSecondaryLabel: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.PredictiveTextInput
                     label="A shorter form input"
                     placeholder="Start typing..."
@@ -128,7 +128,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { TextStyleHelper } from "../../text/helper";
-import { Text } from "../../text/text";
+import { V2_Color } from "../../v2_color";
+import { V2_TextStyleHelper } from "../../v2_text/helper";
+import { V2_Text } from "../../v2_text/text";
 import { YearVariant } from "./internal-calendar-year";
 import { CalendarType } from "./types";
 
@@ -58,8 +58,8 @@ export const YearCell = styled.div<StyleProps>`
             return css`
                 cursor: pointer;
                 &:hover {
-                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                    border: 1px solid ${Color.Accent.Light[1]};
+                    box-shadow: 0px 0px 4px 1px ${V2_Color.Shadow.Accent};
+                    border: 1px solid ${V2_Color.Accent.Light[1]};
                 }
             `;
         }
@@ -75,12 +75,12 @@ export const YearCell = styled.div<StyleProps>`
         switch (props.$variant) {
             case "current-year":
                 return css`
-                    background: ${Color.Accent.Light[6](props)};
+                    background: ${V2_Color.Accent.Light[6](props)};
                 `;
             case "selected-year":
                 return css`
-                    background: ${Color.Accent.Light[5](props)};
-                    border: 1px solid ${Color.Primary(props)};
+                    background: ${V2_Color.Accent.Light[5](props)};
+                    border: 1px solid ${V2_Color.Primary(props)};
                 `;
             case "other-decade":
             case "default":
@@ -89,27 +89,27 @@ export const YearCell = styled.div<StyleProps>`
     }};
 `;
 
-export const CellLabel = styled(Text.H5)<StyleProps>`
+export const CellLabel = styled(V2_Text.H5)<StyleProps>`
     ${(props) => {
         if (props.$disabledDisplay) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${V2_Color.Neutral[4]};
             `;
         }
 
         switch (props.$variant) {
             case "current-year":
                 return css`
-                    color: ${Color.Neutral[3](props)};
+                    color: ${V2_Color.Neutral[3](props)};
                 `;
             case "selected-year":
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${Color.Primary(props)};
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
+                    color: ${V2_Color.Primary(props)};
                 `;
             case "other-decade":
                 return css`
-                    color: ${Color.Neutral[4](props)};
+                    color: ${V2_Color.Neutral[4](props)};
                 `;
             case "default":
                 break;

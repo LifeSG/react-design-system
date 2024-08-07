@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 
 // =============================================================================
@@ -37,7 +37,7 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
 export const Wrapper = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         display: flex;
     }
 `;
@@ -61,11 +61,11 @@ export const Container = styled.div<StyleProps>`
         `;
     }}
 
-	${MediaQuery.MaxWidth.tablet} {
+	${V2_MediaQuery.MaxWidth.tablet} {
         width: 75%;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
     }
 `;
@@ -95,10 +95,10 @@ export const CloseButton = styled(ClickableIcon)`
     position: absolute;
     right: -0.25rem;
     bottom: 0.65rem;
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
 
     :active,
     :focus {
-        color: ${Color.Primary};
+        color: ${V2_Color.Primary};
     }
 `;

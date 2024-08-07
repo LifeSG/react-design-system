@@ -1,6 +1,6 @@
 import { BaseTextStyleSet } from "../spec/text-spec/base-text-style-set";
 import { OneServiceTextStyleSet } from "../spec/text-spec/oneservice-text-style-set";
-import { TextStyleSetType } from "../text/types";
+import { V2_TextStyleSetType } from "../v2_text/types";
 import { getCollection, getValue } from "./helper";
 import {
     FontStyleCollectionsMap,
@@ -30,7 +30,7 @@ const TextStyleSpec: ThemeCollectionSpec<
 export const getThemeTextStyles = (attributePath: string) => {
     return (props: any): string | number => {
         const theme = props.theme as ThemeSpec;
-        const textStyleSet: TextStyleSetType = getCollection(
+        const textStyleSet: V2_TextStyleSetType = getCollection(
             TextStyleSpec,
             theme[ThemeContextKeys.textStyleScheme]
         );

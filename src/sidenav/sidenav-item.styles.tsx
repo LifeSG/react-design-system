@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Text, TextStyleHelper } from "../text";
-import { Color } from "../color";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { V2_Color } from "../v2_color";
 import { Button } from "../button";
 
 //=============================================================================
@@ -33,7 +33,7 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         }
 
         span {
-            ${TextStyleHelper.getFontFamily("XSmall", "regular")}
+            ${V2_TextStyleHelper.getFontFamily("XSmall", "regular")}
             font-size: 0.75rem !important;
             overflow: hidden;
             display: -webkit-box;
@@ -46,13 +46,13 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
     :focus {
         span {
             div {
-                background-color: ${Color.Accent.Light[5]};
-                color: ${Color.Primary} !important;
+                background-color: ${V2_Color.Accent.Light[5]};
+                color: ${V2_Color.Primary} !important;
             }
 
             span {
-                ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                color: ${Color.Primary} !important;
+                ${V2_TextStyleHelper.getFontFamily("XSmall", "semibold")}
+                color: ${V2_Color.Primary} !important;
             }
         }
     }
@@ -62,12 +62,12 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         css`
             span {
                 div {
-                    background-color: ${Color.Accent.Light[5]};
+                    background-color: ${V2_Color.Accent.Light[5]};
                 }
 
                 span {
-                    ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                    color: ${Color.Primary};
+                    ${V2_TextStyleHelper.getFontFamily("XSmall", "semibold")}
+                    color: ${V2_Color.Primary};
                 }
             }
         `}
@@ -80,4 +80,4 @@ export const IconContainer = styled.div`
     margin-bottom: 0.25rem;
 `;
 
-export const TitleText = styled(Text.XSmall)``;
+export const TitleText = styled(V2_Text.XSmall)``;

@@ -1,6 +1,6 @@
-import { ColorSet, ValidationTypes } from "../../color/types";
+import { V2_ColorSet, V2_ValidationTypes } from "../../v2_color/types";
 
-export const MyLegacyColorSet: ColorSet = {
+export const MyLegacyColorSet: V2_ColorSet = {
     Brand: {
         1: "#24588D",
         2: "#FFC166",
@@ -63,7 +63,7 @@ export const MyLegacyColorSet: ColorSet = {
             Border: "#84B7DB",
             Background: "#E8F4FA", // Validation Background
         },
-    } as ValidationTypes,
+    } as V2_ValidationTypes,
     Shadow: {
         Accent: "rgba(34, 154, 214, 0.6)",
         Red: "rgba(203, 34, 19, 0.5)",

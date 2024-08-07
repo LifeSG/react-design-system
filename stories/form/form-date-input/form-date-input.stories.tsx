@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { DateInput } from "src/date-input";
 import { Form } from "src/form";
-import { Layout } from "src/layout";
+import { V2_Layout } from "src/v2_layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 
@@ -105,7 +105,7 @@ export const AllowDisabledSelection: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.DateInput
                     label="A shorter form input"
                     mobileCols={[1, 5]}
@@ -115,7 +115,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

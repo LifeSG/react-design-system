@@ -1,22 +1,27 @@
-export interface CommonLayoutProps
+/** @deprecated */
+export interface V2_CommonLayoutProps
     extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     "data-testid"?: string | undefined;
     stretch?: boolean;
 }
 
-export interface SectionProps extends CommonLayoutProps {}
+/** @deprecated */
+export interface V2_SectionProps extends V2_CommonLayoutProps {}
 
-export type ContainerType = "flex" | "flex-column" | "grid";
+/** @deprecated */
+export type V2_ContainerType = "flex" | "flex-column" | "grid";
 
-export interface ContainerProps extends CommonLayoutProps {
+/** @deprecated */
+export interface V2_ContainerProps extends V2_CommonLayoutProps {
     /** The type of display style. Values: "flex" | "flex-column" | "grid" */
-    type?: ContainerType | undefined;
+    type?: V2_ContainerType | undefined;
 }
+/** @deprecated */
+export interface V2_ContentProps extends V2_ContainerProps {}
 
-export interface ContentProps extends ContainerProps {}
-
-export type DivRef = React.Ref<HTMLDivElement>;
+/** @deprecated */
+export type V2_DivRef = React.Ref<HTMLDivElement>;
 
 type MobileCol = 1 | 2 | 3 | 4;
 type MobileColRange = MobileCol | 5;
@@ -27,7 +32,8 @@ type TabletColRange = TabletCol | 9;
 type DesktopCol = TabletCol | 9 | 10 | 11 | 12;
 type DesktopColRange = DesktopCol | 13;
 
-export interface ColProps {
+/** @deprecated */
+export interface V2_ColProps {
     /**
      * Specifies the number of columns to be span across in mobile viewports.
      * If an array is specified, the format is as such [startCol, endCol].
@@ -58,8 +64,9 @@ export interface ColProps {
     desktopCols?: DesktopCol | [DesktopColRange, DesktopColRange] | undefined;
 }
 
-export interface ColDivProps
+/** @deprecated */
+export interface V2_ColDivProps
     extends React.HTMLAttributes<HTMLDivElement>,
-        ColProps {
+        V2_ColProps {
     "data-testid"?: string | undefined;
 }

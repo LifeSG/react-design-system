@@ -1,30 +1,30 @@
 import styled from "styled-components";
-import { Layout } from "../layout";
-import { MediaQuery } from "../media";
-import { Color } from "../color";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Layout } from "../v2_layout";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Color } from "../v2_color";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // GENERIC
 // =============================================================================
 
 export const BaseFooter = styled.footer`
-    background: ${Color.Neutral[7]};
+    background: ${V2_Color.Neutral[7]};
 `;
 
-export const StyledFooterLink = styled(Text.Hyperlink.Small)`
-    color: ${Color.Neutral[1]};
+export const StyledFooterLink = styled(V2_Text.Hyperlink.Small)`
+    color: ${V2_Color.Neutral[1]};
 `;
 
 // =============================================================================
 // TOP SECTION
 // =============================================================================
 
-export const TopSection = styled(Layout.Content)`
+export const TopSection = styled(V2_Layout.Content)`
     padding: 4rem 0;
-    border-bottom: 1px solid ${Color.Neutral[5]};
+    border-bottom: 1px solid ${V2_Color.Neutral[5]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         padding: 2rem 0;
     }
 `;
@@ -37,12 +37,12 @@ export const LogoSection = styled.div`
         width: auto;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         grid-column: 1 / span 8;
         margin-bottom: 2rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
         margin-bottom: 2rem;
     }
@@ -70,7 +70,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         // first col
         grid-column: 1 / span 4;
 
@@ -80,7 +80,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         // first col
         grid-column: 1 / span 2;
 
@@ -94,12 +94,12 @@ export const LinkSection = styled.ul`
 export const AddonSection = styled.div`
     grid-column: 9 / span 4;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         grid-column: 1 / span 8;
         margin-top: 2rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
     }
 `;
@@ -111,17 +111,17 @@ export const AddonSection = styled.div`
 export const MobileOnlyBorder = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         display: block;
         height: 1px;
-        background: ${Color.Neutral[6]};
+        background: ${V2_Color.Neutral[6]};
     }
 `;
 
-export const BottomSection = styled(Layout.Content)`
+export const BottomSection = styled(V2_Layout.Content)`
     padding: 1.375rem 0;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         border-top: none;
         flex-direction: column;
         padding: 1rem 0;
@@ -136,7 +136,7 @@ export const BottomSectionContent = styled.div`
         margin-right: 1rem;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         grid-column: 1 / span 8;
         flex-direction: column;
         &:not(:last-child) {
@@ -144,7 +144,7 @@ export const BottomSectionContent = styled.div`
         }
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
     }
 `;
@@ -153,44 +153,44 @@ export const CopyrightSection = styled(BottomSectionContent)`
     grid-column: 7 / span 6;
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin-top: 1rem;
         justify-content: flex-start;
         grid-column: 1 / span 8;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 1 / span 4;
     }
 `;
 
-export const DisclaimerTextLink = styled(Text.Hyperlink.Small)`
-    ${TextStyleHelper.getTextStyle("XSmall", "regular")}
-    color: ${Color.Neutral[1]};
+export const DisclaimerTextLink = styled(V2_Text.Hyperlink.Small)`
+    ${V2_TextStyleHelper.getTextStyle("XSmall", "regular")}
+    color: ${V2_Color.Neutral[1]};
     &:not(:last-child) {
         margin-right: 1.5rem;
     }
 
     svg {
-        color: ${Color.Neutral[1]};
+        color: ${V2_Color.Neutral[1]};
         vertical-align: sub;
     }
 
     &:hover {
-        color: ${Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
         svg {
-            color: ${Color.Neutral[3]};
+            color: ${V2_Color.Neutral[3]};
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin-bottom: 1rem;
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin-bottom: 0.625rem;
     }
 `;

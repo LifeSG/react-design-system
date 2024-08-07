@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { MediaQuery } from "../media";
-import { Color } from "../color";
-import { Text } from "../text/text";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Color } from "../v2_color";
+import { V2_Text } from "../v2_text/text";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 
 // ============================================================================
@@ -10,7 +10,7 @@ import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 // =============================================================================
 export const Content = styled.div`
     width: 100%;
-    border-bottom: 1px solid ${Color.Neutral[6]};
+    border-bottom: 1px solid ${V2_Color.Neutral[6]};
 `;
 
 export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
@@ -19,23 +19,23 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     align-items: ${(props) => (props.$hasTitle ? "center" : "flex-end")};
     padding-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         justify-content: flex-end;
     }
 `;
 
-export const Title = styled(Text.H2)<TitleStyleProps>`
+export const Title = styled(V2_Text.H2)<TitleStyleProps>`
     display: flex;
     align-self: flex-start;
     flex: 1;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         text-align: left;
     }
 
     ${(props) => {
         if (!props.$showInMobile) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     display: none;
                     visibility: hidden;
                 }

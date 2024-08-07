@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
+import { V2_Color } from "../../v2_color";
+import { V2_MediaQuery } from "../../v2_media";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
-import { TextStyleHelper } from "../../text";
+import { V2_TextStyleHelper } from "../../v2_text";
 
 interface Props {
     thumbnailImageDataUrl: string;
@@ -55,10 +55,10 @@ export const Thumbnail = styled(ImageWithFallback)`
     height: 6rem;
     aspect-ratio: 1;
     border-radius: 4px;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     object-fit: cover;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 4rem;
         height: 4rem;
     }
@@ -71,9 +71,9 @@ export const ReplaceButton = styled.button`
     border: none;
     background: transparent;
     cursor: pointer;
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
-    color: ${Color.Primary};
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")};
+    color: ${V2_Color.Primary};
     :hover {
-        color: ${Color.PrimaryDark};
+        color: ${V2_Color.PrimaryDark};
     }
 `;

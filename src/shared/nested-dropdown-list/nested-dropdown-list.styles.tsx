@@ -1,9 +1,9 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled from "styled-components";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
-import { Text, TextStyleHelper } from "../../text";
+import { V2_Color } from "../../v2_color";
+import { V2_MediaQuery } from "../../v2_media";
+import { V2_Text, V2_TextStyleHelper } from "../../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -39,13 +39,13 @@ export const List = styled.ul<ListContainerProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${Color.Neutral[4]};
-        border-right: 5px solid ${Color.Neutral[8]};
+        background: ${V2_Color.Neutral[4]};
+        border-right: 5px solid ${V2_Color.Neutral[8]};
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         max-height: 15rem;
     }
 `;
@@ -57,13 +57,13 @@ export const ResultStateContainer = styled.div`
     align-items: center;
 `;
 
-export const ResultStateText = styled(Text.Body)``;
+export const ResultStateText = styled(V2_Text.Body)``;
 
 export const LabelIcon = styled(ExclamationCircleFillIcon)`
     margin-right: 0.625rem;
     height: 1.5rem;
     width: 1.5rem;
-    color: ${Color.Validation.Red.Icon};
+    color: ${V2_Color.Validation.Red.Icon};
 `;
 
 export const SelectAllContainer = styled.div`
@@ -74,8 +74,8 @@ export const SelectAllContainer = styled.div`
 `;
 
 export const DropdownCommonButton = styled.button`
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
-    color: ${Color.Primary};
+    ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
+    color: ${V2_Color.Primary};
     background-color: transparent;
     border: none;
     cursor: pointer;

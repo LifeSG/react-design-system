@@ -18,3 +18,15 @@ export const getFolders = (entry) => {
 
     return dirsToUse;
 };
+
+export const getCodemodFolders = (entry) => {
+    const dirs = fs.readdirSync(entry);
+
+    const dirsToIgnore = [];
+
+    const dirsToUse = dirs
+        .filter((dirName) => path.extname(dirName) === "")
+        .filter((dirName) => dirsToIgnore.indexOf(dirName) === -1);
+
+    return dirsToUse;
+};

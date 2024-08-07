@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 import { TextList } from "../text-list";
 import { ToggleStyleType } from "./types";
 
@@ -67,10 +67,10 @@ export const Container = styled.div<ContainerStyleProps>`
             case "no-border": {
                 if (props.$error) {
                     return css`
-                        border-color: ${Color.Validation.Red.Icon};
+                        border-color: ${V2_Color.Validation.Red.Icon};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Red};
                         }
                     `;
                 } else if (!props.$disabled) {
@@ -78,7 +78,7 @@ export const Container = styled.div<ContainerStyleProps>`
                         border-color: transparent;
 
                         :hover {
-                            background: ${Color.Accent.Light[6]};
+                            background: ${V2_Color.Accent.Light[6]};
                         }
                     `;
                 } else {
@@ -91,36 +91,36 @@ export const Container = styled.div<ContainerStyleProps>`
             default: {
                 if (props.$disabled && !props.$selected) {
                     return css`
-                        border-color: ${Color.Neutral[5]};
+                        border-color: ${V2_Color.Neutral[5]};
                     `;
                 } else if (props.$disabled && props.$selected) {
                     return css`
-                        border-color: ${Color.Neutral[4]};
+                        border-color: ${V2_Color.Neutral[4]};
                     `;
                 } else if (props.$error) {
                     return css`
-                        border-color: ${Color.Validation.Red.Border};
+                        border-color: ${V2_Color.Validation.Red.Border};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Red};
                         }
                     `;
                 } else if (props.$selected) {
                     return css`
-                        border-color: ${Color.Primary};
+                        border-color: ${V2_Color.Primary};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
                         }
                     `;
                 } else {
                     return css`
-                        background: ${Color.Neutral[8]};
-                        border-color: ${Color.Neutral[5]};
+                        background: ${V2_Color.Neutral[8]};
+                        border-color: ${V2_Color.Neutral[5]};
 
                         :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
-                            border-color: ${Color.Accent.Light[1]};
+                            box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
+                            border-color: ${V2_Color.Accent.Light[1]};
                         }
                     `;
                 }
@@ -155,11 +155,11 @@ export const Label = styled.label<LabelStyleProps>`
     ${(props) => {
         if (props.$selected && !props.$indicator) {
             return css`
-                ${TextStyleHelper.getTextStyle("H4", "semibold")}
+                ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
             `;
         } else {
             return css`
-                ${TextStyleHelper.getTextStyle("H4", "regular")}
+                ${V2_TextStyleHelper.getTextStyle("H4", "regular")}
             `;
         }
     }}
@@ -169,29 +169,29 @@ export const Label = styled.label<LabelStyleProps>`
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
     -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
     }
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
 
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[3]};
+                color: ${V2_Color.Neutral[3]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${Color.Primary};
+                color: ${V2_Color.Primary};
             `;
         }
     }}
 `;
 
 export const SubLabel = styled.div<LabelStyleProps>`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
     margin-top: 0.5rem;
 
     z-index: 1; // forces sublabel to render above the input
@@ -199,22 +199,22 @@ export const SubLabel = styled.div<LabelStyleProps>`
 
     strong,
     b {
-        ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
+        ${V2_TextStyleHelper.getFontFamily("BodySmall", "semibold")}
         color: inherit;
     }
 
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[3]};
+                color: ${V2_Color.Neutral[3]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${Color.Primary};
+                color: ${V2_Color.Primary};
             `;
         } else {
             return css`
-                color: ${Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
             `;
         }
     }}
@@ -231,12 +231,12 @@ export const HeaderContainer = styled.div<ContainerStyleProps>`
             case "no-border": {
                 if (props.$error) {
                     return css`
-                        background: ${Color.Neutral[8]};
+                        background: ${V2_Color.Neutral[8]};
                     `;
                 } else if (!props.$disabled) {
                     return css`
                         :hover {
-                            background: ${Color.Accent.Light[6]};
+                            background: ${V2_Color.Accent.Light[6]};
                         }
                     `;
                 } else {
@@ -246,23 +246,23 @@ export const HeaderContainer = styled.div<ContainerStyleProps>`
             default: {
                 if (props.$disabled && !props.$selected) {
                     return css`
-                        background: ${Color.Neutral[6]};
+                        background: ${V2_Color.Neutral[6]};
                     `;
                 } else if (props.$disabled && props.$selected) {
                     return css`
-                        background: ${Color.Neutral[6]};
+                        background: ${V2_Color.Neutral[6]};
                     `;
                 } else if (props.$error) {
                     return css`
-                        background: ${Color.Neutral[8]};
+                        background: ${V2_Color.Neutral[8]};
                     `;
                 } else if (props.$selected) {
                     return css`
-                        background: ${Color.Accent.Light[5]};
+                        background: ${V2_Color.Accent.Light[5]};
                     `;
                 } else {
                     return css`
-                        background: ${Color.Neutral[8]};
+                        background: ${V2_Color.Neutral[8]};
                     `;
                 }
             }
@@ -281,9 +281,9 @@ export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStylePr
 
 export const RemoveButton = styled.button<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Icon};
+        props.$disabled ? V2_Color.Neutral[3] : V2_Color.Validation.Red.Icon};
     white-space: nowrap;
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     height: fit-content;
     padding: 0.6875rem 1rem 0.6875rem 0.5rem;
     border: none;
@@ -293,8 +293,9 @@ export const RemoveButton = styled.button<StyleProps>`
 `;
 
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
-    color: ${(props) => (props.disabled ? Color.Neutral[3] : Color.Primary)};
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    color: ${(props) =>
+        props.disabled ? V2_Color.Neutral[3] : V2_Color.Primary};
+    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -315,7 +316,8 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
 
 export const ErrorContainer = styled.div<StyleProps>`
     width: 100%;
-    color: ${(props) => (props.$disabled ? Color.Neutral[3] : Color.Primary)};
+    color: ${(props) =>
+        props.$disabled ? V2_Color.Neutral[3] : V2_Color.Primary};
     border: none;
     background: none;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
@@ -336,28 +338,30 @@ export const Children = styled.div<ChildrenStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[3]};
+                color: ${V2_Color.Neutral[3]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${Color.Primary};
+                color: ${V2_Color.Primary};
             `;
         } else {
             return css`
-                color: ${Color.Neutral[1]};
+                color: ${V2_Color.Neutral[1]};
             `;
         }
     }}
 `;
 
-export const ErrorText = styled(Text.BodySmall)<StyleProps>`
+export const ErrorText = styled(V2_Text.BodySmall)<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Text};
+        props.$disabled ? V2_Color.Neutral[3] : V2_Color.Validation.Red.Text};
 `;
 
 export const ErrorList = styled(TextList.Ul)<StyleProps>`
     li {
         color: ${(props) =>
-            props.$disabled ? Color.Neutral[3] : Color.Validation.Red.Text};
+            props.$disabled
+                ? V2_Color.Neutral[3]
+                : V2_Color.Validation.Red.Text};
     }
 `;

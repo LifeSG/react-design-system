@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
-import { MediaQuery } from "../media/media";
+import { V2_Color } from "../v2_color/color";
+import { V2_MediaQuery } from "../v2_media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { TextStyleHelper } from "../text";
+import { V2_TextStyleHelper } from "../v2_text";
 import { MainStyleProps } from "./types";
-import { DesignToken } from "../design-token";
+import { V2_DesignToken } from "../v2_design-token";
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
@@ -29,28 +29,28 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${Color.Neutral[8]};
+                    background-color: ${V2_Color.Neutral[8]};
                     border: 1px solid
                         ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Border
-                            : Color.Primary};
+                            ? V2_DesignToken.Button.Danger.Border
+                            : V2_Color.Primary};
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        ? V2_DesignToken.Button.Danger.Primary
+                        : V2_Color.Primary};
                 `;
             case "light":
                 return css`
-                    background-color: ${Color.Neutral[8]};
-                    border: 1px solid ${Color.Neutral[5]};
+                    background-color: ${V2_Color.Neutral[8]};
+                    border: 1px solid ${V2_Color.Neutral[5]};
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        ? V2_DesignToken.Button.Danger.Primary
+                        : V2_Color.Primary};
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Color.Neutral[6]};
+                    background-color: ${V2_Color.Neutral[6]};
                     border: 1px solid transparent;
                     cursor: not-allowed;
 
@@ -58,7 +58,7 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    color: ${Color.Neutral[3]};
+                    color: ${V2_Color.Neutral[3]};
                 `;
             case "link":
                 return css`
@@ -71,28 +71,28 @@ export const Main = styled.button<MainStyleProps>`
                     }
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        ? V2_DesignToken.Button.Danger.Primary
+                        : V2_Color.Primary};
                     :hover,
                     :active,
                     :focus {
                         color: ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Hover
-                            : Color.Secondary};
+                            ? V2_DesignToken.Button.Danger.Hover
+                            : V2_Color.Secondary};
                     }
                 `;
             default:
                 return css`
                     background-color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.BackgroundColor
-                        : Color.Primary};
+                        ? V2_DesignToken.Button.Danger.BackgroundColor
+                        : V2_Color.Primary};
                     border: 1px solid transparent;
 
-                    ${MediaQuery.MaxWidth.mobileL} {
+                    ${V2_MediaQuery.MaxWidth.mobileL} {
                         width: 100%;
                     }
 
-                    color: ${Color.Neutral[8]};
+                    color: ${V2_Color.Neutral[8]};
                 `;
         }
     }}
@@ -105,18 +105,18 @@ export const Main = styled.button<MainStyleProps>`
             case "small":
                 return css`
                     height: 2.5rem;
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
 
-                    ${MediaQuery.MaxWidth.mobileS} {
+                    ${V2_MediaQuery.MaxWidth.mobileS} {
                         height: auto;
                     }
                 `;
             default:
                 return css`
                     height: 3rem;
-                    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+                    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
 
-                    ${MediaQuery.MaxWidth.mobileS} {
+                    ${V2_MediaQuery.MaxWidth.mobileS} {
                         height: auto;
                     }
                 `;
@@ -128,18 +128,18 @@ export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     margin-right: 0.5rem;
     ${(props) => {
         let color = props.$buttonIsDanger
-            ? DesignToken.Button.Danger.Primary
-            : Color.Primary(props);
+            ? V2_DesignToken.Button.Danger.Primary
+            : V2_Color.Primary(props);
         switch (props.$buttonStyle) {
             case "secondary":
             case "light":
             case "link":
                 break;
             case "disabled":
-                color = Color.Neutral[3](props);
+                color = V2_Color.Neutral[3](props);
                 break;
             default:
-                color = Color.Neutral[8](props);
+                color = V2_Color.Neutral[8](props);
                 break;
         }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TextWeight } from "../text";
+import { V2_TextWeight } from "../v2_text";
 import { Menu } from "./menu";
 import {
     ChevronIcon,
@@ -109,7 +109,7 @@ export const NavbarItems = <T,>({
                     const selected = checkSelected(item);
                     const { children, options, ...otherItemAttrs } = item;
 
-                    const textWeight: TextWeight = selected
+                    const textWeight: V2_TextWeight = selected
                         ? mobile
                             ? "bold"
                             : "semibold"

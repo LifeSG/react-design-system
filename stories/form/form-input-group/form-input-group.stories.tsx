@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { V2_Layout } from "src/v2_layout";
+import { V2_Text } from "src/v2_text";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 
@@ -73,7 +73,7 @@ export const WithDifferentAddons: StoryObj<Component> = {
         return (
             <StoryContainer>
                 <Container>
-                    <Text.H3>Static addon</Text.H3>
+                    <V2_Text.H3>Static addon</V2_Text.H3>
                     <br />
                     <Form.InputGroup
                         label="With a static addon"
@@ -94,7 +94,7 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             },
                         }}
                     />
-                    <Text.H3>List addon</Text.H3>
+                    <V2_Text.H3>List addon</V2_Text.H3>
                     <br />
                     <Form.InputGroup
                         label="With a list addon"
@@ -222,7 +222,7 @@ export const WithDifferentAddons: StoryObj<Component> = {
                             position: "right",
                         }}
                     />
-                    <Text.H3>Custom addon</Text.H3>
+                    <V2_Text.H3>Custom addon</V2_Text.H3>
                     <br />
                     <Form.InputGroup
                         label="With a custom addon"
@@ -279,7 +279,7 @@ export const AllowClear: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.InputGroup
                     label="A shorter form input"
                     placeholder="Enter an amount"
@@ -301,7 +301,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { Color } from "../../src/color";
-import { Text, TextStyleHelper } from "../../src/text";
+import { V2_Color } from "../../src/v2_color";
+import { V2_Text, V2_TextStyleHelper } from "../../src/v2_text";
 
 export interface TabAttribute {
     title: string;
@@ -36,7 +36,7 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
             return selectedTabItem.component;
         }
 
-        return <Text.BodySmall>No content</Text.BodySmall>;
+        return <V2_Text.BodySmall>No content</V2_Text.BodySmall>;
     };
 
     return (
@@ -62,8 +62,8 @@ const Wrapper = styled.div`
     flex-direction: column;
     width: 100%;
     border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    border: 1px solid ${Color.Neutral[6]};
+    background: ${V2_Color.Neutral[8]};
+    border: 1px solid ${V2_Color.Neutral[6]};
     box-shadow: rgb(0 0 0 / 10%) 0 1px 3px 0;
     padding: 0 0 1rem;
 `;
@@ -74,7 +74,7 @@ const ButtonRow = styled.div`
 `;
 
 const Button = styled.button<StyleProps>`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
     border: none;
     background: none;
     cursor: pointer;
@@ -89,7 +89,7 @@ const Button = styled.button<StyleProps>`
                     bottom: -0.5rem;
                     left: 0;
                     width: 100%;
-                    background: ${Color.Primary(props)};
+                    background: ${V2_Color.Primary(props)};
                     height: 4px;
                 }
             `;

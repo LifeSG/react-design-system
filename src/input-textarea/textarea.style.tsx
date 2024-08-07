@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { DesignToken } from "../design-token";
-import { TextStyleHelper } from "../text";
+import { V2_Color } from "../v2_color";
+import { V2_DesignToken } from "../v2_design-token";
+import { V2_TextStyleHelper } from "../v2_text";
 import { Transition } from "../transition";
 
 // =============================================================================
@@ -21,27 +21,27 @@ export const Wrapper = styled.div`
 `;
 
 export const Element = styled.textarea<StyleProps>`
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
     display: block;
     padding: 0.75rem 1rem;
     width: 100%;
     transition: ${Transition.Base};
 
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
-    background: ${Color.Neutral[8]};
+    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${V2_Color.Neutral[1]};
+    background: ${V2_Color.Neutral[8]};
 
     :focus,
     :active {
         outline: none;
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+        border: 1px solid ${V2_Color.Accent.Light[1]};
+        box-shadow: ${V2_DesignToken.InputBoxShadow};
     }
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
     }
 
     ${(props) => {
@@ -59,24 +59,24 @@ export const Element = styled.textarea<StyleProps>`
             `;
         } else if (props.disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${V2_Color.Neutral[6](props)};
                 cursor: not-allowed;
 
                 :focus,
                 :active {
                     outline: none;
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    border: 1px solid ${V2_Color.Neutral[5](props)};
                     box-shadow: none;
                 }
             `;
         } else if (props.error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
+                border: 1px solid ${V2_Color.Validation.Red.Border(props)};
 
                 :focus,
                 :active {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                    border: 1px solid ${V2_Color.Validation.Red.Border(props)};
+                    box-shadow: ${V2_DesignToken.InputErrorBoxShadow};
                 }
             `;
         }

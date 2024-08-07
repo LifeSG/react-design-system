@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NotificationBanner } from "src/notification-banner";
-import { Text } from "src/text";
+import { V2_Text } from "src/v2_text";
 import { StyledContent } from "./doc-elements";
 import { useState } from "react";
 import { GearFillIcon } from "@lifesg/react-icons/gear-fill";
@@ -30,7 +30,7 @@ export const Default: StoryObj<Component> = {
                     default.
                 </NotificationBanner>
                 <StyledContent>
-                    <Text.Body paragraph>
+                    <V2_Text.Body paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -40,8 +40,8 @@ export const Default: StoryObj<Component> = {
                         fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
-                    </Text.Body>
-                    <Text.Body paragraph>
+                    </V2_Text.Body>
+                    <V2_Text.Body paragraph>
                         Sed ut perspiciatis unde omnis iste natus error sit
                         voluptatem accusantium doloremque laudantium, totam rem
                         aperiam, eaque ipsa quae ab illo inventore veritatis et
@@ -59,7 +59,7 @@ export const Default: StoryObj<Component> = {
                         voluptate velit esse quam nihil molestiae consequatur,
                         vel illum qui dolorem eum fugiat quo voluptas nulla
                         pariatur?
-                    </Text.Body>
+                    </V2_Text.Body>
                 </StyledContent>
             </div>
         );
@@ -80,7 +80,7 @@ export const NonSticky: StoryObj<Component> = {
                     This is a non sticky banner
                 </NotificationBanner>
                 <StyledContent>
-                    <Text.Body paragraph>
+                    <V2_Text.Body paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -90,8 +90,8 @@ export const NonSticky: StoryObj<Component> = {
                         fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
-                    </Text.Body>
-                    <Text.Body paragraph>
+                    </V2_Text.Body>
+                    <V2_Text.Body paragraph>
                         Sed ut perspiciatis unde omnis iste natus error sit
                         voluptatem accusantium doloremque laudantium, totam rem
                         aperiam, eaque ipsa quae ab illo inventore veritatis et
@@ -109,7 +109,7 @@ export const NonSticky: StoryObj<Component> = {
                         voluptate velit esse quam nihil molestiae consequatur,
                         vel illum qui dolorem eum fugiat quo voluptas nulla
                         pariatur?
-                    </Text.Body>
+                    </V2_Text.Body>
                 </StyledContent>
             </div>
         );
@@ -130,7 +130,7 @@ export const NonDismissible: StoryObj<Component> = {
                     This is a non dismissible banner
                 </NotificationBanner>
                 <StyledContent>
-                    <Text.Body paragraph>
+                    <V2_Text.Body paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -140,7 +140,7 @@ export const NonDismissible: StoryObj<Component> = {
                         fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </StyledContent>
             </div>
         );
@@ -176,7 +176,7 @@ export const TextStylingOptions: StoryObj<Component> = {
                     </>
                 </NotificationBanner>
                 <StyledContent>
-                    <Text.Body paragraph>
+                    <V2_Text.Body paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -186,7 +186,7 @@ export const TextStylingOptions: StoryObj<Component> = {
                         fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </StyledContent>
             </div>
         );
@@ -219,7 +219,7 @@ export const CustomContent: StoryObj<Component> = {
                     </div>
                 </NotificationBanner>
                 <StyledContent>
-                    <Text.Body paragraph>
+                    <V2_Text.Body paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -229,7 +229,7 @@ export const CustomContent: StoryObj<Component> = {
                         fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </StyledContent>
             </div>
         );
@@ -246,7 +246,7 @@ export const ClickableBanner: StoryObj<Component> = {
                     an action.
                 </NotificationBanner>
                 <StyledContent $color={swapColor ? "green" : "yellow"}>
-                    <Text.Body paragraph>
+                    <V2_Text.Body paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -256,7 +256,7 @@ export const ClickableBanner: StoryObj<Component> = {
                         fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                         non proident, sunt in culpa qui officia deserunt mollit
                         anim id est laborum.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </StyledContent>
             </div>
         );
@@ -267,19 +267,21 @@ export const HandlingLongContent: StoryObj<Component> = {
     render: () => {
         return (
             <div>
-                <NotificationBanner maxCollapsedHeight={100}
-                actionButton={{
-                    children: (
-                        <>
-                            View more
-                            <ArrowRightIcon />
-                        </>
-                    ),
-                    onClick: (event) => {
-                        event.preventDefault();
-                        alert("I got clicked");
-                    },
-                }}>
+                <NotificationBanner
+                    maxCollapsedHeight={100}
+                    actionButton={{
+                        children: (
+                            <>
+                                View more
+                                <ArrowRightIcon />
+                            </>
+                        ),
+                        onClick: (event) => {
+                            event.preventDefault();
+                            alert("I got clicked");
+                        },
+                    }}
+                >
                     This is a notification banner with maxCollapsedHeight set.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
-import { Text } from "src/text";
+import { V2_Text } from "src/v2_text";
 import { Toast } from "src/toast";
 
 type Component = typeof Toast;
@@ -181,15 +181,15 @@ export const WithCustomDisplay: StoryObj<Component> = {
             <Toast
                 type="warning"
                 title={
-                    <Text.H4 weight="regular" style={{ color: "grey" }}>
+                    <V2_Text.H4 weight="regular" style={{ color: "grey" }}>
                         This is a <strong>JSX Element</strong>
-                    </Text.H4>
+                    </V2_Text.H4>
                 }
                 label={
-                    <Text.BodySmall>
+                    <V2_Text.BodySmall>
                         This is a JSX element that contains a{" "}
-                        <Text.Hyperlink.Small>link</Text.Hyperlink.Small>
-                    </Text.BodySmall>
+                        <V2_Text.Hyperlink.Small>link</V2_Text.Hyperlink.Small>
+                    </V2_Text.BodySmall>
                 }
                 fixed={false}
             />

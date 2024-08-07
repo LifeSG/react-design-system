@@ -1,48 +1,48 @@
 import styled from "styled-components";
-import { Color } from "../color";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Color } from "../v2_color";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Label = styled.label`
-    ${TextStyleHelper.getTextStyle("H5", "semibold")}
-    color: ${Color.Neutral[2]};
+    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
+    color: ${V2_Color.Neutral[2]};
     margin-bottom: 0.5rem;
     display: inline-block;
 
     a,
     span,
     p {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
+        ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
     }
 
     a {
-        color: ${Color.Primary};
+        color: ${V2_Color.Primary};
         text-decoration: none;
 
         :hover,
         :active,
         :focus {
-            color: ${Color.Secondary};
+            color: ${V2_Color.Secondary};
 
             svg {
-                color: ${Color.Secondary};
+                color: ${V2_Color.Secondary};
             }
         }
     }
 `;
 
-export const ErrorMessage = styled(Text.H6)`
-    color: ${Color.Validation.Red.Text};
+export const ErrorMessage = styled(V2_Text.H6)`
+    color: ${V2_Color.Validation.Red.Text};
     margin-top: 0.5rem;
     margin-bottom: 0;
     outline: none;
 `;
 
-export const Subtitle = styled(Text.BodySmall)`
+export const Subtitle = styled(V2_Text.BodySmall)`
     && {
-        color: ${Color.Neutral[3]};
-        ${TextStyleHelper.getFontFamily("BodySmall", "regular")}
+        color: ${V2_Color.Neutral[3]};
+        ${V2_TextStyleHelper.getFontFamily("BodySmall", "regular")}
     }
 `;

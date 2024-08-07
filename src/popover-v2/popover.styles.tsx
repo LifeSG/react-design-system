@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Card } from "../card";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 
@@ -15,10 +15,10 @@ export const PopoverContainer = styled.div`
 `;
 
 export const PopoverCard = styled(Card)`
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: none;
     }
 `;
@@ -34,6 +34,6 @@ export const ContentWrapper = styled.div`
         display: none; /* Chrome/Safari/Webkit */
     }
 
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 `;

@@ -1,4 +1,5 @@
-export interface ValidationElementAttributes {
+/** @deprecated */
+export interface V2_ValidationElementAttributes {
     Text: string;
     Icon?: string | undefined;
     Border?: string | undefined;
@@ -6,14 +7,16 @@ export interface ValidationElementAttributes {
     Badge?: string | undefined;
 }
 
-export interface ValidationTypes {
-    Green: ValidationElementAttributes;
-    Orange: ValidationElementAttributes;
-    Red: ValidationElementAttributes;
-    Blue: ValidationElementAttributes;
+/** @deprecated */
+export interface V2_ValidationTypes {
+    Green: V2_ValidationElementAttributes;
+    Orange: V2_ValidationElementAttributes;
+    Red: V2_ValidationElementAttributes;
+    Blue: V2_ValidationElementAttributes;
 }
 
-export interface ColorSet {
+/** @deprecated */
+export interface V2_ColorSet {
     Brand: {
         1: string;
         2: string;
@@ -50,7 +53,7 @@ export interface ColorSet {
         7: string;
         8: string;
     };
-    Validation: ValidationTypes;
+    Validation: V2_ValidationTypes;
     Shadow: {
         Accent: string;
         Red: string;
@@ -58,4 +61,5 @@ export interface ColorSet {
     };
 }
 
-export type ColorSetOptions = Partial<ColorSet>;
+/** @deprecated */
+export type V2_ColorSetOptions = Partial<V2_ColorSet>;

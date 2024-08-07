@@ -1,6 +1,13 @@
-import { ColorSet, ColorSetOptions } from "../color/types";
-import { DesignTokenSet, DesignTokenSetOptions } from "../design-token/types";
-import { TextStyleSetOptionsType, TextStyleSetType } from "../text/types";
+import { V2_ColorSet, V2_ColorSetOptions } from "../v2_color/types";
+
+import {
+    V2_DesignTokenSet,
+    V2_DesignTokenSetOptions,
+} from "../v2_design-token/types";
+import {
+    V2_TextStyleSetOptionsType,
+    V2_TextStyleSetType,
+} from "../v2_text/types";
 
 export type ThemeLayout = "normal";
 
@@ -15,7 +22,7 @@ export type ColorScheme =
     | "ccube"
     | "oneservice";
 export type ColorCollectionsMap = {
-    [key in ColorScheme]: ColorSet;
+    [key in ColorScheme]: V2_ColorSet;
 };
 
 // =============================================================================
@@ -23,7 +30,7 @@ export type ColorCollectionsMap = {
 // =============================================================================
 export type TextStyleScheme = "base" | "oneservice";
 export type FontStyleCollectionsMap = {
-    [key in TextStyleScheme]: TextStyleSetType;
+    [key in TextStyleScheme]: V2_TextStyleSetType;
 };
 
 // =============================================================================
@@ -31,7 +38,7 @@ export type FontStyleCollectionsMap = {
 // =============================================================================
 export type DesignTokenScheme = "base" | "rbs";
 export type DesignTokenCollectionsMap = {
-    [key in DesignTokenScheme]: DesignTokenSet;
+    [key in DesignTokenScheme]: V2_DesignTokenSet;
 };
 
 // =============================================================================
@@ -52,9 +59,9 @@ export enum ThemeContextKeys {
 
 export interface ThemeSpecOptions {
     /** for color customisation, can specify subset of set */
-    color?: ColorSetOptions | undefined;
-    textStyle?: TextStyleSetOptionsType | undefined;
-    designToken?: DesignTokenSetOptions | undefined;
+    color?: V2_ColorSetOptions | undefined;
+    textStyle?: V2_TextStyleSetOptionsType | undefined;
+    designToken?: V2_DesignTokenSetOptions | undefined;
 }
 
 export interface ThemeSpec {

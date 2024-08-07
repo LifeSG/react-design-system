@@ -8,7 +8,7 @@ import postcss from "rollup-plugin-postcss";
 import terser from "@rollup/plugin-terser";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import pkg from "./package.json";
-import { getFolders } from "./scripts/build-util";
+import { getFolders, getCodemodFolders } from "./scripts/build-util";
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
@@ -53,6 +53,23 @@ const subfolderPlugins = (folderName) => [
     }),
 ];
 
+// Build for codemod scripts
+const folderCodemodBuildConfigs = getCodemodFolders("./codemods").map(
+    (folder) => {
+        return {
+            input: `codemods/${folder}/index.ts`,
+            output: {
+                file: `dist/codemods/${folder}/index.js`,
+                sourcemap: true,
+                exports: "named",
+                format: "esm",
+            },
+            plugins: subfolderPlugins(folder),
+            external: ["react", "react-dom", "styled-components"],
+        };
+    }
+);
+
 const folderBuildConfigs = getFolders("./src").map((folder) => {
     return {
         input: `src/${folder}/index.ts`,
@@ -92,5 +109,6 @@ export default [
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
+    ...folderCodemodBuildConfigs,
     ...folderBuildConfigs,
 ];

@@ -2,9 +2,9 @@ import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ButtonWithIcon } from "../button-with-icon";
-import { MediaWidths } from "../media";
+import { V2_MediaWidths } from "../v2_media";
 import { ProgressBar } from "../shared/progress-bar";
-import { Text } from "../text";
+import { V2_Text } from "../v2_text";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
@@ -47,7 +47,7 @@ export const ESignature = (props: EsignatureProps) => {
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string>(value);
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: V2_MediaWidths.mobileL,
     });
 
     // =============================================================================
@@ -108,7 +108,7 @@ export const ESignature = (props: EsignatureProps) => {
         return (
             <ProgressBox>
                 {loadingLabel && (
-                    <Text.BodySmall>{loadingLabel}</Text.BodySmall>
+                    <V2_Text.BodySmall>{loadingLabel}</V2_Text.BodySmall>
                 )}
                 <ProgressBar
                     progress={loadingProgress}

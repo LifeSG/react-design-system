@@ -1,7 +1,7 @@
 import { StarIcon } from "@lifesg/react-icons/star";
 import { StarFillIcon } from "@lifesg/react-icons/star-fill";
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
+import { V2_Color } from "../v2_color/color";
 
 export const Input = styled.input`
     position: absolute;
@@ -13,9 +13,9 @@ export const Input = styled.input`
 const starStyle = css`
     width: 2.75rem;
     height: 2.75rem;
-    color: ${Color.Primary};
+    color: ${V2_Color.Primary};
     ${Input}:focus-visible + & {
-        outline: 0.125rem solid ${Color.Primary};
+        outline: 0.125rem solid ${V2_Color.Primary};
         outline-offset: -0.0625rem;
         border-radius: 0.25rem;
     }

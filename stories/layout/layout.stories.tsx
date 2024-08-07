@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { V2_Layout } from "src/v2_layout";
+import { V2_Text } from "src/v2_text";
 
 const meta: Meta = {
     title: "Getting Started/Layout",
@@ -14,7 +14,7 @@ export default meta;
 export const GeneralUsage: StoryObj = {
     render: () => {
         return (
-            <Layout.Content>
+            <V2_Layout.Content>
                 <div
                     style={{
                         width: "100%",
@@ -22,16 +22,16 @@ export const GeneralUsage: StoryObj = {
                         border: "2px dotted #A4A4A4",
                     }}
                 >
-                    <Text.H1>My content</Text.H1>
+                    <V2_Text.H1>My content</V2_Text.H1>
                     <br />
-                    <Text.Body>
+                    <V2_Text.Body>
                         You can adjust the viewport to see how the maximum width
                         in the
                         <code>Layout.Container</code> affects how the content
                         looks.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </div>
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
 };
@@ -39,8 +39,8 @@ export const GeneralUsage: StoryObj = {
 export const SplitUsage: StoryObj = {
     render: () => {
         return (
-            <Layout.Section>
-                <Layout.Container>
+            <V2_Layout.Section>
+                <V2_Layout.Container>
                     <div
                         style={{
                             width: "100%",
@@ -48,17 +48,17 @@ export const SplitUsage: StoryObj = {
                             border: "2px dotted #A4A4A4",
                         }}
                     >
-                        <Text.H1>Split usage example</Text.H1>
+                        <V2_Text.H1>Split usage example</V2_Text.H1>
                         <br />
-                        <Text.Body>
+                        <V2_Text.Body>
                             You can adjust the viewport to see how the maximum
                             width in the
                             <code>Layout.Container</code> affects how the
                             content looks.
-                        </Text.Body>
+                        </V2_Text.Body>
                     </div>
-                </Layout.Container>
-            </Layout.Section>
+                </V2_Layout.Container>
+            </V2_Layout.Section>
         );
     },
 };
@@ -78,10 +78,10 @@ export const FlexColumnLayout: StoryObj = {
             );
         };
         return (
-            <Layout.Content type="flex-column">
-                {renderContent(<Text.Body>First item</Text.Body>)}
-                {renderContent(<Text.Body>Second item</Text.Body>)}
-            </Layout.Content>
+            <V2_Layout.Content type="flex-column">
+                {renderContent(<V2_Text.Body>First item</V2_Text.Body>)}
+                {renderContent(<V2_Text.Body>Second item</V2_Text.Body>)}
+            </V2_Layout.Content>
         );
     },
 };
@@ -100,7 +100,9 @@ export const GridLayout: StoryObj = {
                 }}
                 key={index}
             >
-                <Text.BodySmall weight="semibold">{index + 1}</Text.BodySmall>
+                <V2_Text.BodySmall weight="semibold">
+                    {index + 1}
+                </V2_Text.BodySmall>
             </div>
         );
         const renderColumns = () => {
@@ -111,9 +113,9 @@ export const GridLayout: StoryObj = {
             return columns;
         };
         return (
-            <Layout.Content type="grid" style={{ background: "#FDDDD7" }}>
+            <V2_Layout.Content type="grid" style={{ background: "#FDDDD7" }}>
                 {renderColumns()}
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
 };

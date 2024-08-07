@@ -2,9 +2,9 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
-import { TextStyleHelper } from "../../text";
+import { V2_Color } from "../../v2_color";
+import { V2_MediaQuery } from "../../v2_media";
+import { V2_TextStyleHelper } from "../../v2_text";
 import {
     DropdownVariantType,
     IconProps,
@@ -72,13 +72,13 @@ export const List = styled.ul<ListContainerProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${Color.Neutral[4]};
-        border-right: 5px solid ${Color.Neutral[8]};
+        background: ${V2_Color.Neutral[4]};
+        border-right: 5px solid ${V2_Color.Neutral[8]};
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         max-height: 15rem;
     }
 `;
@@ -87,12 +87,12 @@ export const ListItem = styled.li<ListItemProps>`
     :hover,
     :focus,
     :active {
-        background: ${Color.Accent.Light[5]};
+        background: ${V2_Color.Accent.Light[5]};
     }
     ${(props) => {
         if (props.$checked) {
             return css`
-                background: ${Color.Accent.Light[5]};
+                background: ${V2_Color.Accent.Light[5]};
             `;
         }
     }}
@@ -136,7 +136,7 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     :visited,
     :focus,
     :active {
-        outline-color: ${Color.Accent.Light[3]};
+        outline-color: ${V2_Color.Accent.Light[3]};
     }
 
     span {
@@ -159,18 +159,18 @@ const lineClampCss = css<LabelProps>`
 
 export const PrimaryText = styled.div<LabelProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}
 `;
 
 export const SecondaryText = styled.div<LabelProps>`
-    color: ${Color.Neutral[4]};
+    color: ${V2_Color.Neutral[4]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}
@@ -179,12 +179,12 @@ export const SecondaryText = styled.div<LabelProps>`
         switch (props.$labelDisplayType) {
             case "next-line":
                 return css`
-                    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
                 `;
             case "inline":
             default:
                 return css`
-                    ${TextStyleHelper.getTextStyle("Body", "regular")}
+                    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
                 `;
         }
     }}
@@ -253,7 +253,7 @@ export const SelectAllContainer = styled.div`
 
 export const DropdownCommonButton = styled.button<LabelProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "semibold"
         )}
@@ -265,7 +265,7 @@ export const DropdownCommonButton = styled.button<LabelProps>`
     outline: none;
     ${(props) => {
         return `
-			color: ${Color.Primary(props)};
+			color: ${V2_Color.Primary(props)};
 		`;
     }}
 `;
@@ -279,7 +279,7 @@ export const ResultStateContainer = styled.div`
 
 export const ResultStateText = styled.div<ResultStateProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
@@ -294,5 +294,5 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)<IconProps>`
         `;
     }}
     margin-right: 0.625rem;
-    color: ${Color.Validation.Red.Icon};
+    color: ${V2_Color.Validation.Red.Icon};
 `;

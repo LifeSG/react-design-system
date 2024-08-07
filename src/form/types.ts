@@ -12,7 +12,7 @@ import { InputSelectPartialProps } from "../input-select/types";
 import { InputSliderProps } from "../input-slider";
 import { TextareaPartialProps } from "../input-textarea/types";
 import { InputPartialProps } from "../input/types";
-import { ColProps } from "../layout/types";
+import { V2_ColProps } from "../v2_layout/types";
 import { MaskedInputPartialProps } from "../masked-input/types";
 import { PhoneNumberInputProps } from "../phone-number-input/types";
 import { PredictiveTextInputProps } from "../predictive-text-input/types";
@@ -47,7 +47,7 @@ export interface FormLabelProps
 
 export type FormElementLayoutType = "flex" | "grid";
 
-export interface BaseFormElementProps extends ColProps {
+export interface BaseFormElementProps extends V2_ColProps {
     label?: FormLabelProps | string | undefined;
     errorMessage?: string | undefined;
     "data-error-testid"?: string | undefined;

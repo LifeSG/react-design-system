@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { V2_Color } from "../../v2_color";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -56,7 +56,7 @@ export const ElementContainer = styled.div`
 `;
 
 export const ArrowRight = styled(ArrowRightIcon)`
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     width: 1.125rem;
     height: 1.125rem;
     flex-shrink: 0;
@@ -68,8 +68,8 @@ export const Indicator = styled.div<IndicatorStyleProps>`
     position: absolute;
     background: ${(props) =>
         props.$error
-            ? Color.Validation.Red.Border(props)
-            : Color.Primary(props)};
+            ? V2_Color.Validation.Red.Border(props)
+            : V2_Color.Primary(props)};
     height: 0.125rem;
     // half - half padding - half icon width
     width: calc(50% - 0.5rem - (1.125rem / 2));

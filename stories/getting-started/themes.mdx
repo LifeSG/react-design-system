@@ -87,17 +87,17 @@ In this example, here is how we usually specify properties that are dependent on
 
 ```tsx
 import styled, { css } from "styled-components";
-import { Color } from "@lifesg/react-design-system/color";
+import { V2_Color } from "@lifesg/react-design-system/V2_color";
 
 const SomeComponent = styled.div`
-    background: ${Color.Primary};
+    background: ${V2_Color.Primary};
 `;
 
 // Or if you extract the props
 const AnotherComponent = styled.div`
     ${(props) => {
         return css`
-            background: ${Color.Primary(props)};
+            background: ${V2_Color.Primary(props)};
         `;
     }}
 `;
@@ -117,7 +117,7 @@ const SomeComponent = styled.div`
         };
 
         return css`
-            background: ${Color.Primary(modifiedProps)};
+            background: ${V2_Color.Primary(modifiedProps)};
         `;
     }}
 `;

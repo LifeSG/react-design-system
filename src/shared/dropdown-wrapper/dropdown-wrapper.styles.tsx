@@ -1,8 +1,8 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
-import { Color } from "../../color";
-import { DesignToken } from "../../design-token";
-import { TextStyle, TextStyleHelper } from "../../text";
+import { V2_Color } from "../../v2_color";
+import { V2_DesignToken } from "../../v2_design-token";
+import { V2_TextStyle, V2_TextStyleHelper } from "../../v2_text";
 import { Transition } from "../../transition";
 import { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 
@@ -65,7 +65,7 @@ export const baseSelectorCSS = css<SelectorStyleProps>`
     }
 
     :focus-visible {
-        outline: 2px solid ${Color.Accent.Light[3]};
+        outline: 2px solid ${V2_Color.Accent.Light[3]};
     }
 `;
 
@@ -96,13 +96,13 @@ const zindexPositionHide = keyframes`
 
 export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     position: relative;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: ${BORDER_RADIUS};
-    background: ${Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
 
     :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+        border: 1px solid ${V2_Color.Accent.Light[1]};
+        box-shadow: ${V2_DesignToken.InputBoxShadow};
     }
 
     ${(props) => {
@@ -124,14 +124,14 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     ${(props) => {
         if (props.disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${V2_Color.Neutral[6](props)};
 
                 ${Selector} {
                     cursor: not-allowed;
                 }
 
                 :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
+                    border: 1px solid ${V2_Color.Neutral[5](props)};
                     box-shadow: none;
                 }
             `;
@@ -151,11 +151,11 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
             `;
         } else if (props.error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
+                border: 1px solid ${V2_Color.Validation.Red.Border(props)};
 
                 :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                    border: 1px solid ${V2_Color.Validation.Red.Border(props)};
+                    box-shadow: ${V2_DesignToken.InputErrorBoxShadow};
                 }
             `;
         }
@@ -169,11 +169,11 @@ export const IconContainer = styled.div<DropdownWrapperStyleProps>`
 `;
 
 export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     ${(props) => {
-        let size = TextStyle.Body.fontSize;
+        let size = V2_TextStyle.Body.fontSize;
         if (props.$variant === "small") {
-            size = TextStyle.BodySmall.fontSize;
+            size = V2_TextStyle.BodySmall.fontSize;
         }
         return css`
             height: ${size}rem;
@@ -184,7 +184,7 @@ export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
 
 export const Divider = styled.div`
     height: 1px;
-    background: ${Color.Neutral[5]};
+    background: ${V2_Color.Neutral[5]};
     margin: 0 0.5rem;
 `;
 
@@ -196,7 +196,7 @@ export const LabelContainer = styled.div`
 
 export const ValueLabel = styled.div<ValueLabelStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
@@ -220,5 +220,5 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 `;

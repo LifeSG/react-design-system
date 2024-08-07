@@ -2,7 +2,7 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Tag } from "src/tag";
-import { Text } from "src/text";
+import { V2_Text } from "src/v2_text";
 import { StoryContainer } from "../storybook-common";
 import { Grid, Row, Wrapper } from "./doc-elements";
 
@@ -81,15 +81,15 @@ export const Variations: StoryObj<Component> = {
                 <Grid>
                     <Row>
                         <span />
-                        <Text.H6 weight="semibold">Black</Text.H6>
-                        <Text.H6 weight="semibold">Grey</Text.H6>
-                        <Text.H6 weight="semibold">Green</Text.H6>
-                        <Text.H6 weight="semibold">Yellow</Text.H6>
-                        <Text.H6 weight="semibold">Red</Text.H6>
-                        <Text.H6 weight="semibold">Blue</Text.H6>
+                        <V2_Text.H6 weight="semibold">Black</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Grey</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Green</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Yellow</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Red</V2_Text.H6>
+                        <V2_Text.H6 weight="semibold">Blue</V2_Text.H6>
                     </Row>
                     <Row>
-                        <Text.H6 weight="semibold">Outline</Text.H6>
+                        <V2_Text.H6 weight="semibold">Outline</V2_Text.H6>
                         <Tag type="outline" colorType="black">
                             Label
                         </Tag>
@@ -110,7 +110,7 @@ export const Variations: StoryObj<Component> = {
                         </Tag>
                     </Row>
                     <Row>
-                        <Text.H6 weight="semibold">Solid</Text.H6>
+                        <V2_Text.H6 weight="semibold">Solid</V2_Text.H6>
                         <Tag type="solid" colorType="black">
                             Label
                         </Tag>

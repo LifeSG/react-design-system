@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { InboxIcon } from "@lifesg/react-icons/inbox";
-import { Text } from "../../src/text/text";
-import { Color } from "../../src/color";
+import { V2_Text } from "../../src/v2_text/text";
+import { V2_Color } from "../../src/v2_color";
 import { Button } from "../../src/button";
 import React from "react";
 
@@ -24,8 +24,8 @@ export const DesktopCustomComponentWrapper = styled.div`
     margin-left: 1rem;
 `;
 
-export const SubLabel = styled(Text.H6)`
-    color: ${Color.Neutral[4]};
+export const SubLabel = styled(V2_Text.H6)`
+    color: ${V2_Color.Neutral[4]};
 `;
 
 // =============================================================================
@@ -53,7 +53,7 @@ export const MobileCustomComponent = ({ onClick }: Props) => {
     return (
         <>
             <MobileCustomComponentWrapper>
-                <Text.BodySmall>John Smith</Text.BodySmall>
+                <V2_Text.BodySmall>John Smith</V2_Text.BodySmall>
                 <SubLabel>john_smith@tech.gov.sg</SubLabel>
                 <Button.Small
                     style={{
