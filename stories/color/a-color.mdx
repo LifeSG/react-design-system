@@ -10,7 +10,7 @@ import { Secondary, Title } from "../storybook-common";
 Colors provide a visual identity to the user interface in the LifeSG and BookingSG apps.
 
 ```tsx
-import { Color } from "@lifesg/react-design-system/color";
+import { V2_Color } from "@lifesg/react-design-system/v2_color";
 ```
 
 <Secondary>Usage</Secondary>
@@ -18,23 +18,23 @@ import { Color } from "@lifesg/react-design-system/color";
 You can use the `Color` component to declare colours within style declarations.
 
 ```tsx
-import { Color } from "@lifesg/react-design-system/color";
+import { V2_Color } from "@lifesg/react-design-system/v2_Color";
 import styled, { css } from "styled-components";
 
 const Container = styled.div`
-    background: ${Color.Primary};
+    background: ${V2_Color.Primary};
 
     // If you extract props, remember to wrap nested interpolations with the css helper
     ${(props) => {
         return css`
-            color: ${Color.Secondary};
+            color: ${V2_Color.Secondary};
         `;
     }}
 
     // Otherwise, you have to pass the props down manually (not recommended)
 	${(props) => {
         return `
-			color: ${Color.Secondary(props)};
+			color: ${V2_Color.Secondary(props)};
 		`;
     }}
 `;
@@ -43,10 +43,10 @@ const Container = styled.div`
 If you require the color as a constant value, you could do this
 
 ```tsx
-import { Color } from "@lifesg/react-design-system/color";
+import { V2_Color } from "@lifesg/react-design-system/v2_color";
 import { BaseTheme } from "@lifesg/react-design-system/theme";
 
-const PrimaryColor = Color.Primary({ theme: BaseTheme });
+const PrimaryColor = V2_Color.Primary({ theme: BaseTheme });
 ```
 
 <Secondary>Collections</Secondary>
