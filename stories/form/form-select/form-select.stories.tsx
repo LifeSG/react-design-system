@@ -3,7 +3,7 @@ import { ComponentProps, useEffect, useState } from "react";
 import { Button } from "src/button";
 import { Form } from "src/form";
 import { InputSelect } from "src/input-select";
-import { v2_Layout } from "src/v2_layout";
+import { V2_Layout } from "src/v2_layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import {
@@ -276,7 +276,7 @@ export const LoadState: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.Select
                     label="A shorter form input"
                     options={OPTIONS_DATA}
@@ -299,7 +299,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </v2_Layout.V2_Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

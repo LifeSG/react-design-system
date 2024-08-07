@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { v2_Layout } from "src/v2_layout";
+import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
 
 const meta: Meta = {
@@ -14,7 +14,7 @@ export default meta;
 export const GeneralUsage: StoryObj = {
     render: () => {
         return (
-            <v2_Layout.V2_Content>
+            <V2_Layout.Content>
                 <div
                     style={{
                         width: "100%",
@@ -31,7 +31,7 @@ export const GeneralUsage: StoryObj = {
                         looks.
                     </V2_Text.Body>
                 </div>
-            </v2_Layout.V2_Content>
+            </V2_Layout.Content>
         );
     },
 };
@@ -39,8 +39,8 @@ export const GeneralUsage: StoryObj = {
 export const SplitUsage: StoryObj = {
     render: () => {
         return (
-            <v2_Layout.V2_Section>
-                <v2_Layout.V2_Container>
+            <V2_Layout.Section>
+                <V2_Layout.Container>
                     <div
                         style={{
                             width: "100%",
@@ -57,8 +57,8 @@ export const SplitUsage: StoryObj = {
                             content looks.
                         </V2_Text.Body>
                     </div>
-                </v2_Layout.V2_Container>
-            </v2_Layout.V2_Section>
+                </V2_Layout.Container>
+            </V2_Layout.Section>
         );
     },
 };
@@ -78,10 +78,10 @@ export const FlexColumnLayout: StoryObj = {
             );
         };
         return (
-            <v2_Layout.V2_Content type="flex-column">
+            <V2_Layout.Content type="flex-column">
                 {renderContent(<V2_Text.Body>First item</V2_Text.Body>)}
                 {renderContent(<V2_Text.Body>Second item</V2_Text.Body>)}
-            </v2_Layout.V2_Content>
+            </V2_Layout.Content>
         );
     },
 };
@@ -113,9 +113,9 @@ export const GridLayout: StoryObj = {
             return columns;
         };
         return (
-            <v2_Layout.V2_Content type="grid" style={{ background: "#FDDDD7" }}>
+            <V2_Layout.Content type="grid" style={{ background: "#FDDDD7" }}>
                 {renderColumns()}
-            </v2_Layout.V2_Content>
+            </V2_Layout.Content>
         );
     },
 };

@@ -1,5 +1,5 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
-import { componentMap, pathMap } from "./deprecate-data";
+import { componentMap, pathMap } from "./data";
 
 export default function transformer(file: FileInfo, api: API, options: any) {
     const j: JSCodeshift = api.jscodeshift;

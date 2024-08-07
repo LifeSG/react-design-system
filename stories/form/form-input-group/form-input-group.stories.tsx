@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
-import { v2_Layout } from "src/v2_layout";
+import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
@@ -279,7 +279,7 @@ export const AllowClear: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.InputGroup
                     label="A shorter form input"
                     placeholder="Enter an amount"
@@ -301,7 +301,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </v2_Layout.V2_Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

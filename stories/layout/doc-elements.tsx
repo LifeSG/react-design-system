@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../../src/v2_color";
-import { v2_Layout } from "../../src/v2_layout";
+import { V2_Layout } from "../../src/v2_layout";
 import { V2_Text } from "../../src/v2_text";
 
 interface LabelProps {
@@ -101,12 +101,12 @@ const Marker = styled.div<any>`
 // =============================================================================
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Wrapper = ({ children }: any) => (
-    <v2_Layout.V2_Section>
-        <v2_Layout.V2_Container
+    <V2_Layout.Section>
+        <V2_Layout.Container
             type="grid"
             style={{ padding: "2rem 0", rowGap: "1rem" }}
         >
             {children}
-        </v2_Layout.V2_Container>
-    </v2_Layout.V2_Section>
+        </V2_Layout.Container>
+    </V2_Layout.Section>
 );

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { InputRangeSelect } from "src/input-range-select";
-import { v2_Layout } from "src/v2_layout";
+import { V2_Layout } from "src/v2_layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import {
@@ -225,7 +225,7 @@ export const WithSearch: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <v2_Layout.V2_Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.RangeSelect
                     label="A shorter form input"
                     options={{
@@ -265,7 +265,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </v2_Layout.V2_Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

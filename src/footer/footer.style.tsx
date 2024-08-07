@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { v2_Layout } from "../v2_layout";
+import { V2_Layout } from "../v2_layout";
 import { V2_MediaQuery } from "../v2_media";
 import { V2_Color } from "../v2_color";
 import { V2_Text, V2_TextStyleHelper } from "../v2_text";
@@ -20,7 +20,7 @@ export const StyledFooterLink = styled(V2_Text.Hyperlink.Small)`
 // TOP SECTION
 // =============================================================================
 
-export const TopSection = styled(v2_Layout.V2_Content)`
+export const TopSection = styled(V2_Layout.Content)`
     padding: 4rem 0;
     border-bottom: 1px solid ${V2_Color.Neutral[5]};
 
@@ -118,7 +118,7 @@ export const MobileOnlyBorder = styled.div`
     }
 `;
 
-export const BottomSection = styled(v2_Layout.V2_Content)`
+export const BottomSection = styled(V2_Layout.Content)`
     padding: 1.375rem 0;
 
     ${V2_MediaQuery.MaxWidth.tablet} {
