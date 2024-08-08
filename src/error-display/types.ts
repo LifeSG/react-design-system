@@ -1,5 +1,5 @@
 import { ButtonProps } from "../button";
-import { ResourceScheme } from "../theme";
+import { V2_ResourceScheme } from "../v2_theme";
 
 export type ErrorDisplayType =
     | "400"
@@ -46,7 +46,7 @@ export interface ErrorDisplayAttributes {
     /** Specifies if only the image is rendered */
     imageOnly?: boolean | undefined;
     /** Use specific resource scheme instead of theme resource scheme */
-    illustrationScheme?: ResourceScheme | undefined;
+    illustrationScheme?: V2_ResourceScheme | undefined;
 }
 
 export interface ErrorDisplayProps

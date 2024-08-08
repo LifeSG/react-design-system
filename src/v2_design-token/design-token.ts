@@ -1,4 +1,4 @@
-import { getThemeDesignToken } from "../theme/design-token-helper";
+import { getThemeDesignToken } from "../v2_theme/design-token-helper";
 import { PropertiesToType } from "../util/utility-types";
 /** @deprecated */
 import { V2_DesignTokenSet } from "./types";
