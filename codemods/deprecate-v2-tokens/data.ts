@@ -147,6 +147,80 @@ export const componentMap = [
         oldName: "ColDivProps",
         newName: "V2_ColDivProps",
     },
+    // Added theme name mappings
+    {
+        oldName: "BaseTheme",
+        newName: "V2_BaseTheme",
+    },
+    {
+        oldName: "BookingSGTheme",
+        newName: "V2_BookingSGTheme",
+    },
+    {
+        oldName: "RBSTheme",
+        newName: "V2_RBSTheme",
+    },
+    {
+        oldName: "MyLegacyTheme",
+        newName: "V2_MyLegacyTheme",
+    },
+    {
+        oldName: "CCubeTheme",
+        newName: "V2_CCubeTheme",
+    },
+    {
+        oldName: "OneServiceTheme",
+        newName: "V2_OneServiceTheme",
+    },
+    // Added type name mappings
+    {
+        oldName: "ThemeSpec",
+        newName: "V2_ThemeSpec",
+    },
+    {
+        oldName: "ThemeSpecOptions",
+        newName: "V2_ThemeSpecOptions",
+    },
+    {
+        oldName: "ThemeCollectionSpec",
+        newName: "V2_ThemeCollectionSpec",
+    },
+    {
+        oldName: "ColorScheme",
+        newName: "V2_ColorScheme",
+    },
+    {
+        oldName: "TextStyleScheme",
+        newName: "V2_TextStyleScheme",
+    },
+    {
+        oldName: "DesignTokenScheme",
+        newName: "V2_DesignTokenScheme",
+    },
+    {
+        oldName: "ResourceScheme",
+        newName: "V2_ResourceScheme",
+    },
+    {
+        oldName: "ColorCollectionsMap",
+        newName: "V2_ColorCollectionsMap",
+    },
+    {
+        oldName: "FontStyleCollectionsMap",
+        newName: "V2_FontStyleCollectionsMap",
+    },
+    {
+        oldName: "DesignTokenCollectionsMap",
+        newName: "V2_DesignTokenCollectionsMap",
+    },
+    {
+        oldName: "ThemeContextKeys",
+        newName: "V2_ThemeContextKeys",
+    },
+    {
+        oldName: "ThemeLayout",
+        newName: "V2_ThemeLayout",
+    },
 ];
 
 export const pathMap = [
@@ -169,5 +243,9 @@ export const pathMap = [
     {
         oldPath: "layout",
         newPath: "v2_layout",
+    },
+    {
+        oldPath: "theme",
+        newPath: "v2_theme",
     },
 ];

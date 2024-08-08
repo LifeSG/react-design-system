@@ -14,7 +14,6 @@
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
         "test": "jest --coverage",
-        "test:codemods": "jest --coverage tests/codemod",
         "test-watch": "jest --watch",
         "test-e2e": "playwright test",
         "prepare": "(test -d ./.git && npx husky install) || true",
@@ -42,6 +41,7 @@
         "fabric": "^5.3.0",
         "immer": "^10.0.2",
         "react-slider": "^2.0.6",
+        "@lifesg/react-design-system": "^2.7.0-canary.3",
         "react-zoom-pan-pinch": "^3.3.0"
     },
     "devDependencies": {

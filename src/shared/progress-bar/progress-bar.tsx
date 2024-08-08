@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../../v2_color";
-import { getThemeColors } from "../../theme/color-theme-helper";
+import { getThemeColors } from "../../v2_theme/color-theme-helper";
 
 type ThemeColorFunctions = ReturnType<typeof getThemeColors>;
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { V2_ColorSet, V2_ColorSetOptions } from "../v2_color/types";
 
 import {
@@ -9,47 +10,47 @@ import {
     V2_TextStyleSetType,
 } from "../v2_text/types";
 
-export type ThemeLayout = "normal";
+export type V2_ThemeLayout = "normal";
 
 // =============================================================================
 // COLOR THEMES
 // =============================================================================
-export type ColorScheme =
+export type V2_ColorScheme =
     | "base"
     | "bookingsg"
     | "rbs"
     | "mylegacy"
     | "ccube"
     | "oneservice";
-export type ColorCollectionsMap = {
-    [key in ColorScheme]: V2_ColorSet;
+export type V2_ColorCollectionsMap = {
+    [key in V2_ColorScheme]: V2_ColorSet;
 };
 
 // =============================================================================
 // FONT STYLE THEMES
 // =============================================================================
-export type TextStyleScheme = "base" | "oneservice";
-export type FontStyleCollectionsMap = {
-    [key in TextStyleScheme]: V2_TextStyleSetType;
+export type V2_TextStyleScheme = "base" | "oneservice";
+export type V2_FontStyleCollectionsMap = {
+    [key in V2_TextStyleScheme]: V2_TextStyleSetType;
 };
 
 // =============================================================================
 // DESIGN TOKEN THEMES
 // =============================================================================
-export type DesignTokenScheme = "base" | "rbs";
-export type DesignTokenCollectionsMap = {
-    [key in DesignTokenScheme]: V2_DesignTokenSet;
+export type V2_DesignTokenScheme = "base" | "rbs";
+export type V2_DesignTokenCollectionsMap = {
+    [key in V2_DesignTokenScheme]: V2_DesignTokenSet;
 };
 
 // =============================================================================
 // RESOURCE THEMES
 // =============================================================================
-export type ResourceScheme = "base" | "bookingsg" | "rbs" | "ccube";
+export type V2_ResourceScheme = "base" | "bookingsg" | "rbs" | "ccube";
 
 // =============================================================================
 // GENERAL
 // =============================================================================
-export enum ThemeContextKeys {
+export enum V2_ThemeContextKeys {
     colorScheme = "colorScheme",
     layout = "layout",
     textStyleScheme = "textStyleScheme",
@@ -57,29 +58,29 @@ export enum ThemeContextKeys {
     resourceScheme = "resourceScheme",
 }
 
-export interface ThemeSpecOptions {
+export interface V2_ThemeSpecOptions {
     /** for color customisation, can specify subset of set */
     color?: V2_ColorSetOptions | undefined;
     textStyle?: V2_TextStyleSetOptionsType | undefined;
     designToken?: V2_DesignTokenSetOptions | undefined;
 }
 
-export interface ThemeSpec {
+export interface V2_ThemeSpec {
     /** Sets the color scheme of the theme */
-    [ThemeContextKeys.colorScheme]: ColorScheme;
+    [V2_ThemeContextKeys.colorScheme]: V2_ColorScheme;
     /** Sets the text style scheme of the theme */
-    [ThemeContextKeys.textStyleScheme]: TextStyleScheme;
+    [V2_ThemeContextKeys.textStyleScheme]: V2_TextStyleScheme;
     /** Sets the design token scheme of the theme */
-    [ThemeContextKeys.designTokenScheme]: DesignTokenScheme;
+    [V2_ThemeContextKeys.designTokenScheme]: V2_DesignTokenScheme;
     /** Sets the layout scheme of the theme */
-    [ThemeContextKeys.layout]?: ThemeLayout | undefined;
+    [V2_ThemeContextKeys.layout]?: V2_ThemeLayout | undefined;
     /** Sets the resource scheme (e.g. images, text) of the theme */
-    [ThemeContextKeys.resourceScheme]: ResourceScheme;
+    [V2_ThemeContextKeys.resourceScheme]: V2_ResourceScheme;
     /** For specific customisations to any schemes */
-    options?: ThemeSpecOptions | undefined;
+    options?: V2_ThemeSpecOptions | undefined;
 }
 
-export interface ThemeCollectionSpec<T, V> {
+export interface V2_ThemeCollectionSpec<T, V> {
     collections: T;
     defaultValue: V;
 }

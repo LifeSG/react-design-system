@@ -1,5 +1,5 @@
 import get from "lodash/get";
-import { ThemeCollectionSpec } from "./types";
+import { V2_ThemeCollectionSpec } from "./types";
 
 /**
  *
@@ -25,7 +25,7 @@ export const getValue = <C, T>(
  * @returns the selected collection
  */
 export const getCollection = <T, V, C>(
-    collectionSpec: ThemeCollectionSpec<T, V>,
+    collectionSpec: V2_ThemeCollectionSpec<T, V>,
     contextValue?: string
 ): C => {
     const themeContextValue = contextValue || collectionSpec.defaultValue;

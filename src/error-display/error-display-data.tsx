@@ -1,4 +1,4 @@
-import { ResourceScheme } from "../theme/types";
+import { V2_ResourceScheme } from "../v2_theme/types";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
 import { ErrorDisplayHelper } from "./helper";
 import {
@@ -528,7 +528,7 @@ export const generateErrorDisplayData = (
 
 export const getErrorDisplayData = (
     type: ErrorDisplayType,
-    resourceScheme: ResourceScheme
+    resourceScheme: V2_ResourceScheme
 ) => {
     switch (resourceScheme) {
         case "bookingsg":

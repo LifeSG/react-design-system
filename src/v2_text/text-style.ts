@@ -1,4 +1,4 @@
-import { getThemeTextStyles } from "../theme/text-theme-helper";
+import { getThemeTextStyles } from "../v2_theme/text-theme-helper";
 import { PropertiesToType } from "../util/utility-types";
 import { V2_TextStyleSetType } from "./types";
 

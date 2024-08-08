@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useTheme } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { BaseTheme } from "../theme";
+import { V2_BaseTheme } from "../v2_theme";
 import {
     SignatureCanvas,
     SignatureCanvasContainer,
@@ -90,7 +90,7 @@ const Component = (
 
             pencilBrush.current = new fabric.PencilBrush(fabricCanvas.current);
             pencilBrush.current.color = `#${V2_Color.Neutral[8]({
-                theme: theme || BaseTheme,
+                theme: theme || V2_BaseTheme,
             })}`;
             pencilBrush.current.width = 3;
 

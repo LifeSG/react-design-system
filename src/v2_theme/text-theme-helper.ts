@@ -3,19 +3,19 @@ import { OneServiceTextStyleSet } from "../spec/text-spec/oneservice-text-style-
 import { V2_TextStyleSetType } from "../v2_text/types";
 import { getCollection, getValue } from "./helper";
 import {
-    FontStyleCollectionsMap,
-    TextStyleScheme,
-    ThemeCollectionSpec,
-    ThemeContextKeys,
-    ThemeSpec,
+    V2_FontStyleCollectionsMap,
+    V2_TextStyleScheme,
+    V2_ThemeCollectionSpec,
+    V2_ThemeContextKeys,
+    V2_ThemeSpec,
 } from "./types";
 
 // =============================================================================
 // THEME SPECIFICATION
 // =============================================================================
-const TextStyleSpec: ThemeCollectionSpec<
-    FontStyleCollectionsMap,
-    TextStyleScheme
+const TextStyleSpec: V2_ThemeCollectionSpec<
+    V2_FontStyleCollectionsMap,
+    V2_TextStyleScheme
 > = {
     collections: {
         base: BaseTextStyleSet,
@@ -29,10 +29,10 @@ const TextStyleSpec: ThemeCollectionSpec<
 // =============================================================================
 export const getThemeTextStyles = (attributePath: string) => {
     return (props: any): string | number => {
-        const theme = props.theme as ThemeSpec;
+        const theme = props.theme as V2_ThemeSpec;
         const textStyleSet: V2_TextStyleSetType = getCollection(
             TextStyleSpec,
-            theme[ThemeContextKeys.textStyleScheme]
+            theme[V2_ThemeContextKeys.textStyleScheme]
         );
 
         return theme.options && theme.options.textStyle

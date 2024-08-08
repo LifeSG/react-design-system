@@ -6,7 +6,7 @@ import {
     V2_TextStyleHelper,
     V2_TextStyleSetType,
 } from "../../src/v2_text";
-import { BaseTheme, ThemeSpec } from "../../src";
+import { V2_BaseTheme, V2_ThemeSpec } from "../../src";
 
 export const FontDisplay = () => {
     return (
@@ -35,7 +35,7 @@ const FontDisplayContainer = styled.div`
 // =============================================================================
 interface FontSizeDisplayProps {
     textStyles: V2_TextStyleSetType;
-    theme?: ThemeSpec;
+    theme?: V2_ThemeSpec;
 }
 
 export const FontSizeDisplay = ({
@@ -120,7 +120,7 @@ export const FontSizeDisplay = ({
 
     return (
         <FontSizeDisplayWrapper>
-            <ThemeProvider theme={theme || BaseTheme}>
+            <ThemeProvider theme={theme || V2_BaseTheme}>
                 <FontSizeList>{renderFontSizes()}</FontSizeList>
             </ThemeProvider>
         </FontSizeDisplayWrapper>

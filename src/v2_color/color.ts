@@ -1,4 +1,4 @@
-import { getThemeColors } from "../theme/color-theme-helper";
+import { getThemeColors } from "../v2_theme/color-theme-helper";
 import { PropertiesToType } from "../util/utility-types";
 import { V2_ColorSet } from "./types";
 
