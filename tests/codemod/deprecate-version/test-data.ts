@@ -7,13 +7,15 @@ import { Layout } from "@lifesg/react-design-system/layout";
 import { DesignToken } from "@lifesg/react-design-system/design-token";
 import { ColDiv } from "@lifesg/react-design-system/layout";
 import {ContainerType} from "@lifesg/react-design-system/layout"
+import {BaseColorSet} from "@lifesg/react-design-system/layout"
 
+const Container = styled.div\`
+   color: \${DesignToken.Table.Cell.Primary};
+\`
 
-<ContainerType type="flex" stretch={true}>
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-</ContainerType>
+interface Props {
+    foo : ContainerType;
+}
 
 const Component = () => (
     <>
@@ -21,6 +23,11 @@ const Component = () => (
         <Color />
         <MediaQuery />
         <Text.body />
+        <Layout.Content type="flex" stretch={true}>
+            <div>Item 1</div>
+            <div>Item 2</div>
+            <div>Item 3</div>
+        </Layout.Content>
     </>
 );
 
@@ -28,6 +35,7 @@ export default Component;
 `;
 
 export const expectedOutputCode = `
+
 import { V2_Color } from "@lifesg/react-design-system/v2_color";
 import { V2_MediaQuery } from "@lifesg/react-design-system";
 import { V2_MediaWidths as DSMediaWidth } from "@lifesg/react-design-system"
@@ -36,13 +44,15 @@ import { V2_Layout } from "@lifesg/react-design-system/v2_layout";
 import { V2_DesignToken } from "@lifesg/react-design-system/v2_design-token";
 import { V2_ColDiv } from "@lifesg/react-design-system/v2_layout";
 import {V2_ContainerType} from "@lifesg/react-design-system/v2_layout"
+import {BaseColorSet} from "@lifesg/react-design-system/layout"
 
+const Container = styled.div\`
+   color: \${V2_DesignToken.Table.Cell.Primary};
+\`
 
-<V2_ContainerType type="flex" stretch={true}>
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-</V2_ContainerType>
+interface Props {
+    foo : V2_ContainerType;
+}
 
 const Component = () => (
     <>
@@ -50,6 +60,11 @@ const Component = () => (
         <V2_Color />
         <V2_MediaQuery />
         <V2_Text.body />
+        <V2_Layout.Content type="flex" stretch={true}>
+            <div>Item 1</div>
+            <div>Item 2</div>
+            <div>Item 3</div>
+        </V2_Layout.Content>
     </>
 );
 

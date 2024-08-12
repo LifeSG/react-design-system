@@ -24,14 +24,14 @@ describe("Codemod Transformer for updating version", () => {
         fs.copyFileSync(inputPath, outputPath);
 
         // do the jscodeshift command
-        execSync(`jscodeshift -t ./codemods/deprecate-v2-tokens ${outputPath}`);
+        execSync(
+            `jscodeshift --parser=tsx -t ./codemods/deprecate-v2-tokens ${outputPath}`
+        );
 
         // check the transformed code
         const transformedCode = fs.readFileSync(outputPath, "utf8");
 
         // compare the transformed code with the expected output
-        expect(transformedCode.trim().split("\n")).toMatchObject(
-            expectedOutputCode.trim().split("\n")
-        );
+        expect(transformedCode.trim()).toEqual(expectedOutputCode.trim());
     });
 });
