@@ -39,9 +39,7 @@ export const flattenList = <T>(
                     ? [...parentItem.keyPath, option.key]
                     : [option.key],
                 parentIndex: parentItem ? parentItem.index : -1,
-                parentKeyPath: parentItem
-                    ? [...parentItem.parentKeyPath, parentItem.item.key]
-                    : [],
+                parentKeyPath: parentItem ? parentItem.keyPath : [],
                 level,
                 visible: level === 0 || initialExpanded || parentItem.expanded,
                 expanded: initialExpanded,
@@ -64,12 +62,12 @@ export const flattenList = <T>(
                 const children = flatten(option.subItems, item);
 
                 if (multiSelect && item.checked !== true) {
-                    const allChildrenSelected =
-                        children.filter((child) => child.checked === true)
-                            .length === children.length;
-                    const mixed =
-                        children.filter((child) => child.checked !== false)
-                            .length > 0;
+                    const allChildrenSelected = children.every(
+                        (child) => child.checked === true
+                    );
+                    const mixed = children.some(
+                        (child) => child.checked !== false
+                    );
 
                     if (allChildrenSelected) {
                         item.checked = true;
