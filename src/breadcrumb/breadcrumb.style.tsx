@@ -1,8 +1,8 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text/text";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Text } from "../v2_text/text";
 
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $
@@ -27,11 +27,11 @@ export const Wrapper = styled.div`
 
     margin: 2rem 0;
 
-    ${MediaQuery.MaxWidth.desktopM} {
+    ${V2_MediaQuery.MaxWidth.desktopM} {
         margin: 1.5rem 0;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin: 1rem 0;
     }
 `;
@@ -50,7 +50,7 @@ export const Content = styled.ul`
         display: none; /* Chrome/Safari/Webkit */
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         flex-wrap: nowrap;
     }
 `;
@@ -87,7 +87,7 @@ export const Fade = styled.div<FadeProps>`
         }
 
         return `
-			${MediaQuery.MaxWidth.tablet} {
+			${V2_MediaQuery.MaxWidth.tablet} {
 				${positionStyle}
 			}
 		`;
@@ -107,13 +107,13 @@ export const Item = styled.li<ItemStyleProps>`
 
 export const Caret = styled(ChevronRightIcon)`
     margin: 0.25rem 0.25rem 0.1rem 0.25rem;
-    color: ${Color.Neutral[4]};
+    color: ${V2_Color.Neutral[4]};
 `;
 
-export const CurrentLabel = styled(Text.BodySmall)`
+export const CurrentLabel = styled(V2_Text.BodySmall)`
     margin: 0.25rem !important;
 `;
 
-export const PreviousLink = styled(Text.Hyperlink.Small)`
+export const PreviousLink = styled(V2_Text.Hyperlink.Small)`
     margin: 0.25rem !important;
 `;

@@ -1,9 +1,9 @@
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { V2_Color } from "../../v2_color";
 import { IconButton as DSIconButton } from "../../icon-button";
-import { MediaQuery } from "../../media";
-import { Text } from "../../text";
+import { V2_MediaQuery } from "../../v2_media";
+import { V2_Text } from "../../v2_text";
 import { ClickableIcon } from "../../shared/clickable-icon";
 
 // =============================================================================
@@ -92,39 +92,39 @@ export const DragHandleIcon = styled(
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${V2_Color.Neutral[4]};
             `;
         }
     }}
 `;
 
 export const Box = styled.div<BoxStyleProps>`
-    background: ${Color.Accent.Light[6]};
-    border: 1px solid ${Color.Neutral[5]};
+    background: ${V2_Color.Accent.Light[6]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
     width: 100%;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
     }
 
     ${(props) => {
         if (props.$focused) {
             return css`
-                border-color: ${Color.Accent.Light[1]};
-                box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                border-color: ${V2_Color.Accent.Light[1]};
+                box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[7]};
+                background: ${V2_Color.Neutral[7]};
             `;
         } else if (props.$error) {
             return css`
-                background: ${Color.Validation.Red.Background};
-                border-color: ${Color.Validation.Red.Border};
+                background: ${V2_Color.Validation.Red.Background};
+                border-color: ${V2_Color.Validation.Red.Border};
             `;
         }
     }}
@@ -132,7 +132,7 @@ export const Box = styled.div<BoxStyleProps>`
     ${(props) => {
         if (!props.$error && (props.$loading || props.$editable)) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     flex-direction: column;
                     align-items: flex-start;
                 }
@@ -146,7 +146,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
@@ -155,7 +155,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -176,7 +176,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -189,7 +189,7 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     margin-left: 0.5rem;
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         ${(props) => {
             if (props.$hideInMobile) {
                 return css`
@@ -208,19 +208,19 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     }
 `;
 
-export const ItemText = styled(Text.BodySmall)``;
+export const ItemText = styled(V2_Text.BodySmall)``;
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: 0.25rem;
 `;
 
-export const BaseErrorMessage = styled(Text.XSmall)`
+export const BaseErrorMessage = styled(V2_Text.XSmall)`
     font-size: 0.875rem !important;
-    color: ${Color.Validation.Red.Text};
+    color: ${V2_Color.Validation.Red.Text};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
     margin-top: 0.25rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: none;
         visibility: hidden;
     }
@@ -229,7 +229,7 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
 export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: block;
         visibility: visible;
         margin-top: 0.5rem;
@@ -243,7 +243,7 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
     justify-content: flex-end;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: fit-content;
 
         ${(props) => {
@@ -278,6 +278,6 @@ export const ErrorIconButton = styled(ClickableIcon)`
     svg {
         height: 1.5rem;
         width: 1.5rem;
-        color: ${Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
     }
 `;

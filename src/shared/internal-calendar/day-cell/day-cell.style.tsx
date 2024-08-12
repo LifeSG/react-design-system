@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../../color";
-import { Text, TextStyleHelper } from "../../../text";
+import { V2_Color } from "../../../v2_color";
+import { V2_Text, V2_TextStyleHelper } from "../../../v2_text";
 import { CellType, LabelType } from "./types";
 
 // =============================================================================
@@ -21,36 +21,36 @@ interface LabelStyleProps {
 // HELPERS
 // =============================================================================
 const getCellStyle = (props: StyleProps) => {
-    let color = Color.Neutral[8];
+    let color = V2_Color.Neutral[8];
     let border = "1px solid transparent";
 
     switch (props.$type) {
         case "current":
-            color = Color.Accent.Light[5];
+            color = V2_Color.Accent.Light[5];
             break;
         case "hover-dash":
-            color = Color.Accent.Light[6];
-            border = `1px dashed ${Color.Accent.Light[4](props)}`;
+            color = V2_Color.Accent.Light[6];
+            border = `1px dashed ${V2_Color.Accent.Light[4](props)}`;
             break;
         case "hover-current":
-            color = Color.Neutral[8];
-            border = `1px solid ${Color.Primary(props)}`;
+            color = V2_Color.Neutral[8];
+            border = `1px solid ${V2_Color.Primary(props)}`;
             break;
         case "selected":
-            color = Color.Accent.Light[5];
-            border = `1px solid ${Color.Accent.Light[4](props)}`;
+            color = V2_Color.Accent.Light[5];
+            border = `1px solid ${V2_Color.Accent.Light[4](props)}`;
             break;
         case "selected-outline":
-            color = Color.Accent.Light[5];
-            border = `1px solid ${Color.Primary(props)}`;
+            color = V2_Color.Accent.Light[5];
+            border = `1px solid ${V2_Color.Primary(props)}`;
             break;
         case "overlap":
-            color = Color.Accent.Light[4];
-            border = `1px solid ${Color.Accent.Light[4](props)}`;
+            color = V2_Color.Accent.Light[4];
+            border = `1px solid ${V2_Color.Accent.Light[4](props)}`;
             break;
         case "overlap-outline":
-            color = Color.Accent.Light[4];
-            border = `1px solid ${Color.Primary(props)}`;
+            color = V2_Color.Accent.Light[4];
+            border = `1px solid ${V2_Color.Primary(props)}`;
             break;
     }
 
@@ -98,7 +98,7 @@ export const RightHalf = styled(Half)`
 
 const HalfShadow = styled.div<StyleProps>`
     z-index: -1;
-    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
     position: absolute;
     height: 100%;
     width: 50%;
@@ -156,7 +156,7 @@ export const LeftCircle = styled(Circle)`
     right: calc(50% - 1.25rem);
     clip-path: inset(-3px 1.25rem -3px -3px);
     &:before {
-        box-shadow: -1px 0 4px 1px ${Color.Shadow.Accent};
+        box-shadow: -1px 0 4px 1px ${V2_Color.Shadow.Accent};
     }
 `;
 
@@ -164,11 +164,11 @@ export const RightCircle = styled(Circle)`
     left: calc(50% - 1.25rem);
     clip-path: inset(-3px -3px -3px 1.25rem);
     &:before {
-        box-shadow: 1px 0 4px 1px ${Color.Shadow.Accent};
+        box-shadow: 1px 0 4px 1px ${V2_Color.Shadow.Accent};
     }
 `;
 
-export const Label = styled(Text.H5)<LabelStyleProps>`
+export const Label = styled(V2_Text.H5)<LabelStyleProps>`
     position: absolute;
     top: 0;
     bottom: 0;
@@ -197,34 +197,34 @@ export const Label = styled(Text.H5)<LabelStyleProps>`
         if ($disabled) {
             if ($type === "selected") {
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${Color.Accent.Light[2]};
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                    color: ${V2_Color.Accent.Light[2]};
                 `;
             }
 
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${V2_Color.Neutral[4]};
             `;
         }
 
         switch ($type) {
             case "selected":
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${Color.Primary};
+                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                    color: ${V2_Color.Primary};
                 `;
             case "current":
                 return css`
-                    color: ${Color.Neutral[3]};
+                    color: ${V2_Color.Neutral[3]};
                 `;
             case "unavailable":
                 return css`
-                    color: ${Color.Neutral[4]};
+                    color: ${V2_Color.Neutral[4]};
                 `;
             case "available":
             default:
                 return css`
-                    color: ${Color.Neutral[1]};
+                    color: ${V2_Color.Neutral[1]};
                 `;
         }
     }}

@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
+import { V2_Color } from "../v2_color";
+import { V2_TextStyleHelper } from "../v2_text/helper";
 
 // =============================================================================
 // STYLE INTERFACe
@@ -14,8 +14,8 @@ export interface InputStyleProps {
 // STYLING
 // =============================================================================
 export const InputElement = styled.input<InputStyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
+    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+    color: ${V2_Color.Neutral[1]};
 
     // overwrite default styles
     background: transparent;
@@ -33,7 +33,7 @@ export const InputElement = styled.input<InputStyleProps>`
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
     }
 
     ${(props) => {
@@ -68,7 +68,7 @@ export const ClearContainer = styled.button<InputStyleProps>`
     margin-right: -1rem; // offset the padding
     cursor: pointer;
 
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     background-color: transparent;
     border: none;
 `;

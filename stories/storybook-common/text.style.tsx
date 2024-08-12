@@ -2,8 +2,8 @@ import { LinkIcon as DSLinkIcon } from "@lifesg/react-icons/link";
 import { Unstyled } from "@storybook/blocks";
 import React from "react";
 import styled from "styled-components";
-import { Color } from "../../src/color";
-import { Text, TextProps, TextStyleHelper } from "../../src/text";
+import { V2_Color } from "../../src/v2_color";
+import { V2_Text, V2_TextProps, V2_TextStyleHelper } from "../../src/v2_text";
 
 interface HeadingProps {
     children: string;
@@ -13,7 +13,7 @@ interface HeadingProps {
 // HOC
 // =============================================================================
 const withLink =
-    (Component: React.ComponentType<TextProps>) =>
+    (Component: React.ComponentType<V2_TextProps>) =>
     // eslint-disable-next-line react/display-name
     ({ children }: HeadingProps): JSX.Element => {
         const linkId = convertToLinkId(children);
@@ -44,10 +44,10 @@ const Link = styled.a`
     font-size: 1.5rem;
     margin-left: -1.5rem;
     padding-right: 0.5rem;
-    color: ${Color.Neutral[4]};
+    color: ${V2_Color.Neutral[4]};
 
     :hover {
-        color: ${Color.Neutral[4]};
+        color: ${V2_Color.Neutral[4]};
     }
 `;
 
@@ -57,11 +57,11 @@ const LinkIcon = styled(DSLinkIcon)`
     height: 1rem;
     width: 1rem;
     vertical-align: baseline;
-    color: ${Color.Primary};
+    color: ${V2_Color.Primary};
     transform: rotate(-45deg);
 `;
 
-const StyledTitle = styled(Text.D1)`
+const StyledTitle = styled(V2_Text.D1)`
     margin: 0 0 3rem;
     font-weight: bold;
 
@@ -72,7 +72,7 @@ const StyledTitle = styled(Text.D1)`
     }
 `;
 
-const StyledSecondary = styled(Text.H1)`
+const StyledSecondary = styled(V2_Text.H1)`
     margin: 1rem 0 1.5rem;
     :hover {
         ${Link} {
@@ -81,8 +81,8 @@ const StyledSecondary = styled(Text.H1)`
     }
 `;
 
-const StyledTertiary = styled(Text.H2)`
-    ${TextStyleHelper.getFontFamily("H2", "semibold")}
+const StyledTertiary = styled(V2_Text.H2)`
+    ${V2_TextStyleHelper.getFontFamily("H2", "semibold")}
     margin: 1rem 0 1.5rem;
     :hover {
         ${Link} {
@@ -91,7 +91,7 @@ const StyledTertiary = styled(Text.H2)`
     }
 `;
 
-const StyledQuaternary = styled(Text.H4)`
+const StyledQuaternary = styled(V2_Text.H4)`
     margin: 1.5rem 0;
     :hover {
         ${Link} {

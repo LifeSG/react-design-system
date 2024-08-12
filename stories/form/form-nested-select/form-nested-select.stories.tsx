@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
 import { InputNestedSelect } from "src/input-nested-select";
-import { Layout } from "src/layout";
+import { V2_Layout } from "src/v2_layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import { options, twoTierOptions } from "./nested-data-list";
@@ -109,7 +109,7 @@ export const WithSearch: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.NestedSelect
                     label="A shorter form input"
                     options={options}
@@ -121,7 +121,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { Input } from "../input";
-import { MediaQuery } from "../media";
+import { V2_MediaQuery } from "../v2_media";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -31,7 +31,7 @@ export const InputField = styled(Input)`
         -moz-appearance: textfield;
     }
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${V2_MediaQuery.MaxWidth.mobileM} {
         padding: 0 0.5rem;
     }
 `;

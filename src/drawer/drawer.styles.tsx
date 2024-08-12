@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -41,7 +41,7 @@ export const Container = styled.div<StyleProps>`
     flex-direction: column;
     height: 100%;
 
-    background-color: ${Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     box-shadow: 0px 2px 12px rgba(104, 104, 104, 0.25);
 
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
@@ -52,12 +52,12 @@ export const Container = styled.div<StyleProps>`
     border-bottom-left-radius: 8px;
     overflow: hidden;
 
-    ${MediaQuery.MaxWidth.desktopL} {
+    ${V2_MediaQuery.MaxWidth.desktopL} {
         width: 50%;
         min-width: 700px;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         width: 100%;
         min-width: unset;
         border-top-left-radius: 0;
@@ -73,23 +73,23 @@ export const Header = styled.div`
     gap: 1rem;
     height: 5rem;
     padding: 2rem 1rem 1rem;
-    background-color: ${Color.Neutral[8]};
-    border-bottom: 1px solid ${Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[8]};
+    border-bottom: 1px solid ${V2_Color.Neutral[5]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         gap: 0.5rem;
         padding: 2rem 1.25rem 1rem;
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     padding: 0;
     order: -1; // show button on the left of the header
 
     :active,
     :focus {
-        color: ${Color.Primary};
+        color: ${V2_Color.Primary};
     }
 
     svg {
@@ -98,7 +98,7 @@ export const CloseButton = styled(ClickableIcon)`
     }
 `;
 
-export const Heading = styled(Text.H2)`
+export const Heading = styled(V2_Text.H2)`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

@@ -10,7 +10,7 @@ import { Heading3, Secondary, Title } from "../storybook-common";
 To target different media widths, you can make use of this component.
 
 ```tsx
-import { MediaQuery } from "@lifesg/react-design-system/media";
+import { V2_MediaQuery } from "@lifesg/react-design-system/v2_media";
 ```
 
 Here are the list of media width breakpoints that the design system is using
@@ -35,7 +35,7 @@ You can either target styles using the `max-width` or `min-width` breakpoints. D
 
 ```tsx
 import styled from "styled-components";
-import { MediaQuery } from "@lifesg/react-design-system/media";
+import { V2_MediaQuery } from "@lifesg/react-design-system/v2_media";
 
 const Components = styled.div`
 	${MediaQuery.MaxWidth.mobileL} {
@@ -53,7 +53,7 @@ const Components = styled.div`
 
 ```tsx
 import styled from "styled-components";
-import { MediaQuery } from "@lifesg/react-design-system/media";
+import { V2_MediaQuery } from "@lifesg/react-design-system/v2_media";
 
 const Components = styled.div`
 	${MediaQuery.MinWidth.mobileL} {
@@ -70,13 +70,13 @@ const Components = styled.div`
 <Heading3>Using media width values</Heading3>
 
 ```tsx
-import { MediaWidths } from "@lifesg/react-design-system/media";
+import { V2_MediaWidths } from "@lifesg/react-design-system/v2_media";
 ```
 
 You can import `MediaWidths` and use the value as required. It will return the various breakpoint values.
 
 ```tsx
-import { MediaWidths } from "@lifesg/react-design-system/media";
+import { V2_MediaWidths } from "@lifesg/react-design-system/v2_media";
 
 export const MyComponent = () => {
     const { innerWidth } = window;

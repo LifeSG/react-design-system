@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { TextStyleHelper } from "../../src";
-import { Color } from "../../src/color/color";
-import { Text } from "../../src/text/text";
+import { V2_TextStyleHelper } from "../../src";
+import { V2_Color } from "../../src/v2_color/color";
+import { V2_Text } from "../../src/v2_text/text";
 
 // =============================================================================
 // TEXT DISPLAY LABEL
@@ -72,7 +72,7 @@ interface LabelContainerStyleProps {
 export const DisplayContainer = styled.table`
     tr {
         :not(:last-child) {
-            border-bottom: 1px solid ${Color.Neutral[5]};
+            border-bottom: 1px solid ${V2_Color.Neutral[5]};
         }
     }
 
@@ -109,13 +109,13 @@ const LabelContainer = styled.div<LabelContainerStyleProps>`
         let color;
         switch (props.type) {
             case "display":
-                color = Color.Secondary(props);
+                color = V2_Color.Secondary(props);
                 break;
             case "header":
-                color = Color.Accent.Light[1](props);
+                color = V2_Color.Accent.Light[1](props);
                 break;
             default:
-                color = Color.Accent.Dark[2](props);
+                color = V2_Color.Accent.Dark[2](props);
                 break;
         }
 
@@ -125,8 +125,8 @@ const LabelContainer = styled.div<LabelContainerStyleProps>`
     }}
 `;
 
-const Label = styled(Text.BodySmall)`
-    color: ${Color.Neutral[8]};
+const Label = styled(V2_Text.BodySmall)`
+    color: ${V2_Color.Neutral[8]};
     margin: 0;
 `;
 
@@ -141,6 +141,6 @@ export const LinkDiv = styled.div`
 `;
 
 export const ButtonContainer = styled.button`
-    ${TextStyleHelper.getTextStyle("BodySmall", "bold")}
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "bold")}
     padding: 0.5rem;
 `;

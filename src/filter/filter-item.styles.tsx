@@ -2,10 +2,10 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button/button";
-import { Color } from "../color/color";
-import { MediaQuery } from "../media/media";
+import { V2_Color } from "../v2_color/color";
+import { V2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 // =============================================================================
 // STYLES INTERFACE
@@ -26,19 +26,21 @@ interface DividerStyleProps {
 
 export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
-        props.$collapsible ? Color.Neutral[7](props) : Color.Neutral[8](props)};
+        props.$collapsible
+            ? V2_Color.Neutral[7](props)
+            : V2_Color.Neutral[8](props)};
 
-    ${MediaQuery.MaxWidth.tablet} {
-        background-color: ${Color.Neutral[7]};
+    ${V2_MediaQuery.MaxWidth.tablet} {
+        background-color: ${V2_Color.Neutral[7]};
     }
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     display: ${(props) => (props.$showDivider ? "block" : "none")};
     height: 1px;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[5]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
         margin: 0 1rem;
     }
@@ -52,9 +54,9 @@ export const FilterItemHeader = styled.div`
     display: flex;
     align-items: center;
 
-    background-color: ${Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         background-color: transparent;
     }
 `;
@@ -66,21 +68,21 @@ export const FilterItemExpandButton = styled(ClickableIcon)`
 export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
     height: 1.125rem;
     width: 1.125rem;
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
     transition: transform 300ms ease-in-out;
 
     &:hover {
-        color: ${Color.Neutral[2]};
+        color: ${V2_Color.Neutral[2]};
     }
 `;
 
-export const FilterItemTitle = styled(Text.H4)`
+export const FilterItemTitle = styled(V2_Text.H4)`
     margin: 1.5rem 0 1.5rem 1.25rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
+    ${V2_MediaQuery.MaxWidth.tablet} {
+        ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
         margin: 1.5rem 1.25rem 0 1.25rem;
     }
 `;

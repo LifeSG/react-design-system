@@ -1,4 +1,4 @@
-import { Color } from "../../color/color";
+import { V2_Color } from "../../v2_color/color";
 import styled, { keyframes } from "styled-components";
 
 // =============================================================================
@@ -45,7 +45,7 @@ export const InnerRing1 = styled.div<InnerStyleProps>`
     border-width: ${(props) => props.$borderWidth}px;
     border-style: solid;
     border-radius: 50%;
-    border-color: ${(props) => props.$color || Color.Neutral[8](props)}
+    border-color: ${(props) => props.$color || V2_Color.Neutral[8](props)}
         transparent transparent transparent;
     animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 `;

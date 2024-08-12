@@ -1,9 +1,9 @@
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../../button";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
-import { Text } from "../../text";
+import { V2_Color } from "../../v2_color";
+import { V2_MediaQuery } from "../../v2_media";
+import { V2_Text } from "../../v2_text";
 import { Toggle } from "../../toggle";
 import { ClickableIcon } from "../clickable-icon";
 import { BasicInput } from "../input-wrapper/input-wrapper";
@@ -22,12 +22,12 @@ export const AnimatedDiv = styled(animated.div)`
     top: 3.5rem;
     left: 0;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    background: ${Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
     border-radius: ${BORDER_RADIUS};
     overflow: hidden;
     z-index: 1;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         max-width: 100%;
     }
 `;
@@ -45,7 +45,7 @@ export const InputSection = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         flex-direction: column;
         width: 100%;
     }
@@ -57,7 +57,7 @@ export const ControlSection = styled.div`
     margin-top: 1rem;
     gap: 0.5rem 1rem;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         flex-direction: column-reverse; // FIXME: this breaks tab focus
         margin-top: 2rem;
     }
@@ -71,7 +71,7 @@ export const HourMinuteSection = styled.div`
     align-items: center;
     margin-right: 2rem;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         margin-right: 0;
         width: 100%;
     }
@@ -81,11 +81,11 @@ export const TimePeriodSection = styled.div`
     display: flex;
     gap: 0.5rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         flex-direction: column;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         flex-direction: row;
         width: 100%;
     }
@@ -96,7 +96,7 @@ export const InputContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 6rem;
     }
 `;
@@ -104,7 +104,7 @@ export const InputContainer = styled.div`
 export const SwitchButton = styled(ClickableIcon)`
     width: 5rem;
     padding: 1rem 0;
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
 
     svg {
         height: 1rem;
@@ -112,20 +112,20 @@ export const SwitchButton = styled(ClickableIcon)`
     }
 
     &:hover {
-        color: ${Color.Primary};
+        color: ${V2_Color.Primary};
     }
 `;
 
-export const DividerLabel = styled(Text.Body)`
+export const DividerLabel = styled(V2_Text.Body)`
     width: 1.5rem;
     margin: 0 0.25rem;
     text-align: center;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         margin: 0;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         margin: 0 0.25rem;
     }
 `;
@@ -135,20 +135,20 @@ export const TimeInput = styled(BasicInput)`
     height: 3rem;
     width: 5rem;
     text-align: center;
-    border: 1px solid ${Color.Neutral[5]};
-    background: ${Color.Neutral[8]};
+    border: 1px solid ${V2_Color.Neutral[5]};
+    background: ${V2_Color.Neutral[8]};
 
     :focus,
     :active {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
+        border: 1px solid ${V2_Color.Accent.Light[1]};
+        box-shadow: inset 0 0 5px 1px ${V2_Color.Shadow.Accent};
     }
 
     :focus::placeholder {
         color: transparent;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 100%;
     }
 `;
@@ -164,11 +164,11 @@ export const TimePeriodToggle = styled(Toggle)`
 export const ControlButton = styled(Button.Small)`
     width: 7rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         flex: 1;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 100%;
     }
 `;

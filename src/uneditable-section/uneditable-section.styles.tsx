@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Layout } from "../layout";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
+import { V2_Layout } from "../v2_layout";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -14,19 +14,19 @@ interface WrapperStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
+export const Wrapper = styled(V2_Layout.Content)<WrapperStyleProps>`
     background: ${({ $background }) =>
-        $background ? Color.Neutral[7] : "transparent"};
+        $background ? V2_Color.Neutral[7] : "transparent"};
     padding-top: 2rem;
     padding-bottom: 2rem;
 `;
 
-export const Title = styled(Text.H3)`
+export const Title = styled(V2_Text.H3)`
     margin-bottom: 1rem;
     grid-column: span 8;
 `;
 
-export const Description = styled(Text.Body)`
+export const Description = styled(V2_Text.Body)`
     margin-bottom: 2rem;
     grid-column: span 8;
 `;
@@ -42,11 +42,11 @@ export const GridUl = styled.ul`
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         column-gap: 1.5rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         grid-column: 0 / span 4;
         column-gap: 1rem;
         grid-template-columns: repeat(4, minmax(0, 1fr));

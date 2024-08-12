@@ -1,7 +1,7 @@
-import { MediaQuery } from "../media";
+import { V2_MediaQuery } from "../v2_media";
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
-import { TextStyleHelper } from "../text/helper";
+import { V2_Color } from "../v2_color/color";
+import { V2_TextStyleHelper } from "../v2_text/helper";
 
 export const Main = styled.button<{
     $selected?: boolean;
@@ -14,14 +14,14 @@ export const Main = styled.button<{
     justify-content: center;
     align-items: center;
     padding: 1.5rem 1rem;
-    background-color: ${Color.Neutral[8]};
+    background-color: ${V2_Color.Neutral[8]};
     border: 1px solid transparent;
     border-radius: 0.5rem;
     cursor: pointer;
     max-width: 13rem;
     transition: all 200ms ease;
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
-    color: ${({ $selected }) => $selected && Color.Primary};
+    ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
+    color: ${({ $selected }) => $selected && V2_Color.Primary};
     overflow-wrap: anywhere;
 
     img {
@@ -31,36 +31,36 @@ export const Main = styled.button<{
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
-        ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+        ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
     }
 
     ${(props) => {
         if (props.$error) {
             return css`
-                background: ${Color.Neutral[8]};
-                border: 1px solid ${Color.Validation.Red.Border};
+                background: ${V2_Color.Neutral[8]};
+                border: 1px solid ${V2_Color.Validation.Red.Border};
 
                 :hover {
-                    box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
+                    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Red};
                 }
             `;
         } else if (props.$selected) {
             return css`
-                background: ${Color.Accent.Light[5]};
-                border: 1px solid ${Color.Primary};
+                background: ${V2_Color.Accent.Light[5]};
+                border: 1px solid ${V2_Color.Primary};
 
                 :hover {
-                    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
                 }
             `;
         } else {
             return css`
                 &:hover {
-                    border: 1px solid ${Color.Accent.Light[1]};
-                    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                    border: 1px solid ${V2_Color.Accent.Light[1]};
+                    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
                 }
             `;
         }
@@ -74,7 +74,7 @@ export const Main = styled.button<{
         img {
             filter: grayscale(100%);
         }
-        color: ${Color.Neutral[3]};
+        color: ${V2_Color.Neutral[3]};
 
         outline: none;
         cursor: not-allowed;

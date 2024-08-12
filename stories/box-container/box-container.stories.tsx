@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
-import { Text } from "src/text";
+import { V2_Text } from "src/v2_text";
 
 type Component = typeof BoxContainer;
 
@@ -17,13 +17,13 @@ export const Default: StoryObj<Component> = {
         return (
             <BoxContainer title="This is the title">
                 <div style={{ padding: "2rem" }}>
-                    <Text.Body>
+                    <V2_Text.Body>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea
                         commodo consequat.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </div>
             </BoxContainer>
         );
@@ -36,13 +36,13 @@ export const NonCollapsible: StoryObj<Component> = {
         return (
             <BoxContainer title="This is not collapsible" collapsible={false}>
                 <div style={{ padding: "2rem" }}>
-                    <Text.Body>
+                    <V2_Text.Body>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea
                         commodo consequat.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </div>
             </BoxContainer>
         );
@@ -55,13 +55,13 @@ export const WithDisplayState: StoryObj<Component> = {
             <>
                 <BoxContainer title="Error icon" displayState="error">
                     <div style={{ padding: "2rem" }}>
-                        <Text.Body>
+                        <V2_Text.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
                             dolore magna aliqua. Ut enim ad minim veniam, quis
                             nostrud exercitation ullamco laboris nisi ut aliquip
                             ex ea commodo consequat.
-                        </Text.Body>
+                        </V2_Text.Body>
                     </div>
                 </BoxContainer>
                 <BoxContainer
@@ -69,13 +69,13 @@ export const WithDisplayState: StoryObj<Component> = {
                     displayState="warning"
                 >
                     <div style={{ padding: "2rem" }}>
-                        <Text.Body>
+                        <V2_Text.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
                             dolore magna aliqua. Ut enim ad minim veniam, quis
                             nostrud exercitation ullamco laboris nisi ut aliquip
                             ex ea commodo consequat.
-                        </Text.Body>
+                        </V2_Text.Body>
                     </div>
                 </BoxContainer>
             </>
@@ -94,13 +94,13 @@ export const WithCustomCallToAction: StoryObj<Component> = {
                 }
             >
                 <div style={{ padding: "2rem" }}>
-                    <Text.Body>
+                    <V2_Text.Body>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea
                         commodo consequat.
-                    </Text.Body>
+                    </V2_Text.Body>
                 </div>
             </BoxContainer>
         );

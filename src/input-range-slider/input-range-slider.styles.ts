@@ -1,7 +1,7 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { Text } from "../text";
+import { V2_Color } from "../v2_color";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -33,7 +33,7 @@ export const IndicatorLabelContainer = styled.div`
     margin-bottom: 1rem;
 `;
 
-export const LabelText = styled(Text.Body)`
+export const LabelText = styled(V2_Text.Body)`
     overflow-wrap: anywhere;
 `;
 
@@ -75,9 +75,9 @@ export const Knob = styled.div<ThumbStyleProps>`
         left: 50%;
         transform: translate(-50%, -50%);
 
-        background-color: ${Color.Neutral[8]};
+        background-color: ${V2_Color.Neutral[8]};
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-        border: 1px solid ${Color.Neutral[4]};
+        border: 1px solid ${V2_Color.Neutral[4]};
         border-radius: 50%;
     }
 `;
@@ -89,7 +89,7 @@ export const SliderThumb = styled.div`
     outline: none;
 
     :focus-visible ${Knob}:after {
-        border: 1px solid ${Color.Primary};
+        border: 1px solid ${V2_Color.Primary};
     }
 `;
 
@@ -103,7 +103,7 @@ export const SliderTrack = styled.div<TrackStyleProps>`
         if (props.$color && typeof props.$color === "function") {
             return props.$color(props);
         } else {
-            return props.$color || Color.Neutral[4](props);
+            return props.$color || V2_Color.Neutral[4](props);
         }
     }};
 `;

@@ -1,16 +1,16 @@
 import { css } from "styled-components";
-import { Color } from "../../color/color";
-import { DesignTokenSet } from "../../design-token/types";
+import { V2_Color } from "../../v2_color/color";
+import { V2_DesignTokenSet } from "../../v2_design-token/types";
 
-export const RBSDesignTokenSet: DesignTokenSet = {
+export const RBSDesignTokenSet: V2_DesignTokenSet = {
     InputBoxShadow: css`
-        inset 0 0 3px 0px ${Color.Shadow.Accent}
+        inset 0 0 3px 0px ${V2_Color.Shadow.Accent}
     `,
     InputErrorBoxShadow: css`
-        inset 0 0 3px 0px ${Color.Shadow.Red}
+        inset 0 0 3px 0px ${V2_Color.Shadow.Red}
     `,
     ElevationBoxShadow: css`
-      0px 2px 8px ${Color.Shadow.Elevation}
+      0px 2px 8px ${V2_Color.Shadow.Elevation}
     `,
     Table: {
         Header: "#F5F5F5",

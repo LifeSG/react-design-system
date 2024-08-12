@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { HistogramSlider } from "src/histogram-slider";
-import { Layout } from "src/layout";
-import { Text } from "src/text";
+import { V2_Layout } from "src/v2_layout";
+import { V2_Text } from "src/v2_text";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import { BIN_DATA, LARGE_BIN_DATA } from "./histogram-data";
@@ -121,13 +121,13 @@ export const WithLabels: StoryObj<Component> = {
                         showRangeLabels
                         renderRangeLabel={(val) =>
                             val === 1 ? (
-                                <Text.XSmall weight="semibold">
+                                <V2_Text.XSmall weight="semibold">
                                     1 photo
-                                </Text.XSmall>
+                                </V2_Text.XSmall>
                             ) : (
-                                <Text.XSmall weight="semibold">
+                                <V2_Text.XSmall weight="semibold">
                                     {val} photos
-                                </Text.XSmall>
+                                </V2_Text.XSmall>
                             )
                         }
                     />
@@ -140,7 +140,7 @@ export const WithLabels: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.HistogramSlider
                     label="A shorter form input"
                     mobileCols={[1, 5]}
@@ -154,7 +154,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     bins={LARGE_BIN_DATA}
                     interval={100}
                 />
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

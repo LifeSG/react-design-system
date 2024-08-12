@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useTheme } from "styled-components";
-import { TextStyle } from "../../text";
+import { V2_TextStyle } from "../../v2_text";
 import { BaseTheme } from "../../theme";
 import { StringHelper } from "../../util/string-helper";
 import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
@@ -33,8 +33,8 @@ export const DropdownLabel = ({
     variant,
 }: DropdownLabelProps): JSX.Element => {
     const theme = useTheme() || BaseTheme;
-    const fontSize = TextStyle.Body.fontSize({ theme });
-    const fontFamily = TextStyle.Body.fontFamily({ theme });
+    const fontSize = V2_TextStyle.Body.fontSize({ theme });
+    const fontFamily = V2_TextStyle.Body.fontFamily({ theme });
     const { ref, width } = useResizeDetector();
 
     // =========================================================================

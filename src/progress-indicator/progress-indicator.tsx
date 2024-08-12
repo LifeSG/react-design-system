@@ -1,4 +1,4 @@
-import { MediaWidths } from "../media";
+import { V2_MediaWidths } from "../v2_media";
 import {
     Content,
     Indicator,
@@ -23,7 +23,7 @@ export const ProgressIndicator = <T,>({
     // CONST, STATE, REFS
     // =============================================================================
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.tablet,
+        maxWidth: V2_MediaWidths.tablet,
     });
 
     // =============================================================================

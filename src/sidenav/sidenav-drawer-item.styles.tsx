@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { Button } from "../button";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text";
+import { V2_Color } from "../v2_color";
+import { V2_TextStyleHelper } from "../v2_text";
 import { animated } from "react-spring";
 
 //=============================================================================
@@ -34,20 +34,20 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        ${TextStyleHelper.getFontFamily("H5", "semibold")}
+        ${V2_TextStyleHelper.getFontFamily("H5", "semibold")}
         font-size: 1rem !important;
-        color: ${Color.Neutral[1]} !important;
+        color: ${V2_Color.Neutral[1]} !important;
     }
 
     :hover,
     :focus {
-        background-color: ${Color.Accent.Light[4]};
+        background-color: ${V2_Color.Accent.Light[4]};
 
         span {
             ${(props) =>
                 props.$noChildren &&
                 css`
-                    color: ${Color.Primary} !important;
+                    color: ${V2_Color.Primary} !important;
                 `}
         }
     }
@@ -55,7 +55,7 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
     ${(props) =>
         props.$highlight &&
         css`
-            background-color: ${Color.Accent.Light[4]};
+            background-color: ${V2_Color.Accent.Light[4]};
         `}
 `;
 
@@ -73,7 +73,7 @@ export const ChevronIcon = styled(ChevronUpIcon)<IconStyleProp>`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
 `;

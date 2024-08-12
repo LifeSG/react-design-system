@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../../media";
+import { V2_MediaQuery } from "../../v2_media";
 import { ClickableIcon } from "../clickable-icon";
-import { Color } from "../../color";
+import { V2_Color } from "../../v2_color";
 
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $
@@ -65,7 +65,7 @@ export const Fade = styled.div<FadeProps>`
         }
 
         return `
-			${MediaQuery.MaxWidth.tablet} {
+			${V2_MediaQuery.MaxWidth.tablet} {
 				${positionStyle}
 			}
 		`;
@@ -89,7 +89,7 @@ export const Content = styled.div`
 export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         display: flex;
         height: 100%;
         width: 100%;
@@ -111,7 +111,7 @@ export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
         }}
 
         svg {
-            color: ${Color.Neutral[3]};
+            color: ${V2_Color.Neutral[3]};
         }
     }
 `;

@@ -4,10 +4,10 @@ import { StarFillIcon } from "@lifesg/react-icons/star-fill";
 import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 const slideDown = keyframes`
 	from {
@@ -36,7 +36,7 @@ export const SmartAppBannerContainer = styled.div<{
     width: calc(100% - 2.5rem);
     min-height: 5.5rem;
     z-index: 9001;
-    background: ${Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
     box-shadow: 0 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
     border-radius: 0.5rem;
     ${(props) => {
@@ -58,7 +58,7 @@ export const DismissButton = styled(ClickableIcon)`
 `;
 
 export const Cross = styled(CrossIcon)`
-    color: ${Color.Neutral[1]};
+    color: ${V2_Color.Neutral[1]};
     height: 1.25rem;
     width: 1.25rem;
 `;
@@ -77,7 +77,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: left;
     margin: 0.5rem;
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${V2_MediaQuery.MaxWidth.mobileM} {
         margin: 0 0.5rem;
     }
 `;
@@ -97,18 +97,18 @@ export const StyledButton = styled(Button.Small)`
     height: auto;
     & > span {
         overflow-wrap: anywhere;
-        ${TextStyleHelper.getTextStyle("XSmall", "semibold")};
+        ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")};
     }
 `;
 
-export const Title = styled(Text.H6)`
+export const Title = styled(V2_Text.H6)`
     overflow-wrap: anywhere;
-    ${MediaQuery.MaxWidth.mobileM} {
-        ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    ${V2_MediaQuery.MaxWidth.mobileM} {
+        ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }
 `;
 
-export const Description = styled(Text.XSmall)`
+export const Description = styled(V2_Text.XSmall)`
     overflow-wrap: anywhere;
 `;
 

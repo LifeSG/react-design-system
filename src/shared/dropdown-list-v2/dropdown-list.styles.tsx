@@ -3,9 +3,9 @@ import { SquareIcon } from "@lifesg/react-icons/square";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
-import { TextStyleHelper } from "../../text";
+import { V2_Color } from "../../v2_color";
+import { V2_MediaQuery } from "../../v2_media";
+import { V2_TextStyleHelper } from "../../v2_text";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 
@@ -34,16 +34,16 @@ interface ListItemStyleProps {
 
 export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
-    border: 1px solid ${Color.Neutral[5]};
+    border: 1px solid ${V2_Color.Neutral[5]};
     border-radius: 4px;
-    background: ${Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
 
     min-width: 23rem;
     ${(props) => props.$width && `width: ${props.$width}px;`}
     max-height: 27rem;
     overflow-y: auto;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         min-width: unset;
         width: calc(100vw - 2.5rem);
         max-height: 15rem;
@@ -58,7 +58,7 @@ export const Container = styled.div<ContainerStyleProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${Color.Neutral[4]};
+        background: ${V2_Color.Neutral[4]};
         border: 5px solid transparent;
         border-radius: 9999px;
         background-clip: padding-box;
@@ -85,12 +85,12 @@ export const ListItem = styled.li<ListItemStyleProps>`
     padding: 0.75rem 0.5rem;
     cursor: pointer;
 
-    outline-color: ${Color.Accent.Light[3]};
+    outline-color: ${V2_Color.Accent.Light[3]};
 
     ${(props) =>
         props.$active &&
         css`
-            background: ${Color.Accent.Light[5]};
+            background: ${V2_Color.Accent.Light[5]};
         `}
 `;
 
@@ -98,7 +98,7 @@ export const SelectedIndicator = styled(TickIcon)`
     flex-shrink: 0;
     height: 1.625rem;
     width: 1rem;
-    color: ${Color.Primary};
+    color: ${V2_Color.Primary};
 `;
 
 export const UnselectedIndicator = styled.div`
@@ -111,14 +111,14 @@ export const CheckboxSelectedIndicator = styled(SquareTickFillIcon)`
     flex-shrink: 0;
     height: 1.625rem;
     width: 1.625rem;
-    color: ${Color.Primary};
+    color: ${V2_Color.Primary};
 `;
 
 export const CheckboxUnselectedIndicator = styled(SquareIcon)`
     flex-shrink: 0;
     height: 1.625rem;
     width: 1.625rem;
-    color: ${Color.Accent.Light[2]};
+    color: ${V2_Color.Accent.Light[2]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -133,13 +133,13 @@ export const SelectAllContainer = styled.div`
 
 export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "semibold"
         )}
     cursor: pointer;
     overflow: hidden;
-    color: ${Color.Primary};
+    color: ${V2_Color.Primary};
 `;
 
 export const TryAgainButton = styled(DropdownCommonButton)`
@@ -159,7 +159,7 @@ export const ResultStateContainer = styled.div`
 
 export const ResultStateText = styled.div<ListStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
+        V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
             "regular"
         )}
@@ -174,5 +174,5 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)<ListStyleProps>`
         `;
     }}
     margin-right: 0.625rem;
-    color: ${Color.Validation.Red.Icon};
+    color: ${V2_Color.Validation.Red.Icon};
 `;

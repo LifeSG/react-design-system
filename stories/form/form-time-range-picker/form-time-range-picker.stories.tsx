@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
-import { Layout } from "src/layout";
+import { V2_Layout } from "src/v2_layout";
 import { TimeRangePicker } from "src/time-range-picker";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
@@ -84,7 +84,7 @@ export const TwelveHourFormat: StoryObj<Component> = {
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: () => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.TimeRangePicker
                     label="A shorter form input"
                     format="12hr"
@@ -96,7 +96,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
-            </Layout.Content>
+            </V2_Layout.Content>
         );
     },
     parameters: {

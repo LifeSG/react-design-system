@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { MediaQuery } from "../../src/media";
-import { Text } from "../../src/text";
+import { V2_MediaQuery } from "../../src/v2_media";
+import { V2_Text } from "../../src/v2_text";
 
 // =============================================================================
 // STYLING
@@ -12,17 +12,17 @@ export const Wrapper = styled.div`
     gap: 2rem;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         grid-template-columns: min-content 1fr;
         grid-template-rows: repeat(5, 1fr);
         grid-auto-flow: column dense;
     }
 `;
 
-export const HeadingLabel = styled(Text.H6)`
+export const HeadingLabel = styled(V2_Text.H6)`
     text-align: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         text-align: left;
         align-self: center;
     }

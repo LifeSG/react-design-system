@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color";
+import { V2_TextStyleHelper } from "../v2_text";
+import { V2_MediaQuery } from "../v2_media";
 
 // =============================================================================
 // STYLE TYPES
@@ -24,24 +24,24 @@ export const Wrapper = styled.div`
 `;
 
 export const BaseCountdown = styled.div<CountdownStyleProps>`
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    color: ${Color.Primary};
-    border: 1px solid ${Color.Primary};
-    background-color: ${Color.Neutral[8]};
+    color: ${V2_Color.Primary};
+    border: 1px solid ${V2_Color.Primary};
+    background-color: ${V2_Color.Neutral[8]};
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
     }
 
     ${(props) => {
         if (props.$warn) {
             return css`
-                color: ${Color.Validation.Red.Text};
-                border: 1px solid ${Color.Validation.Red.Border};
+                color: ${V2_Color.Validation.Red.Text};
+                border: 1px solid ${V2_Color.Validation.Red.Border};
             `;
         }
     }}
@@ -62,9 +62,11 @@ export const FixedCountdown = styled(BaseCountdown)`
             /* style object will be converted to px */
             ${{ top: $top, left: $left, right: $right }}
             box-shadow: 0px 0px 4px 1px
-                ${$warn ? Color.Validation.Red.Border : Color.Accent.Light[2]};
+                ${$warn
+                ? V2_Color.Validation.Red.Border
+                : V2_Color.Accent.Light[2]};
 
-            ${MediaQuery.MaxWidth.mobileL} {
+            ${V2_MediaQuery.MaxWidth.mobileL} {
                 left: 0;
                 right: 0;
                 border-radius: 0;
@@ -76,11 +78,11 @@ export const FixedCountdown = styled(BaseCountdown)`
 `;
 
 export const TimeLeft = styled.div`
-    ${TextStyleHelper.getTextStyle("H4", "bold")}
+    ${V2_TextStyleHelper.getTextStyle("H4", "bold")}
     margin-left: 0.5rem;
     margin-right: 1.5rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         margin-right: 3rem;
     }
 `;

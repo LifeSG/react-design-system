@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
+import { V2_Color } from "../v2_color";
 import { ErrorDisplay } from "../error-display";
-import { DesignToken } from "../design-token";
-import { Text } from "../text";
+import { V2_DesignToken } from "../v2_design-token";
+import { V2_Text } from "../v2_text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -44,8 +44,8 @@ interface ActionBarProps {
 // =============================================================================
 // STYLES CONSTANTS
 // =============================================================================
-const borderColor = Color.Neutral[5];
-const fontColor = Color.Neutral[1];
+const borderColor = V2_Color.Neutral[5];
+const fontColor = V2_Color.Neutral[1];
 
 // =============================================================================
 // STYLES
@@ -146,12 +146,12 @@ export const ActionBar = styled.div<ActionBarProps>`
     padding: 1rem;
     border-top: 1px solid ${borderColor};
     border-radius: 0 0 4px 4px;
-    background-color: ${DesignToken.Table.Cell.Selected};
+    background-color: ${V2_DesignToken.Table.Cell.Selected};
     transition: all 300ms ease;
 `;
 
 export const HeaderRow = styled.tr`
-    background-color: ${DesignToken.Table.Header};
+    background-color: ${V2_DesignToken.Table.Header};
     height: 6rem;
     border-bottom: 1px solid ${borderColor};
 `;
@@ -179,7 +179,7 @@ export const HeaderCellWrapper = styled.div`
     align-items: center;
 
     svg {
-        color: ${Color.Neutral[1]};
+        color: ${V2_Color.Neutral[1]};
         margin-left: 0.5rem;
     }
 `;
@@ -188,15 +188,15 @@ export const BodyRow = styled.tr<BodyRowProps>`
     background-color: ${(props) => {
         if (props.$isSelected) {
             return css`
-                ${DesignToken.Table.Cell.Selected};
+                ${V2_DesignToken.Table.Cell.Selected};
             `;
         } else if (props.$alternating) {
             return css`
-                ${DesignToken.Table.Cell.Primary};
+                ${V2_DesignToken.Table.Cell.Primary};
             `;
         } else {
             return css`
-                ${DesignToken.Table.Cell.Secondary};
+                ${V2_DesignToken.Table.Cell.Secondary};
             `;
         }
     }};
@@ -205,7 +205,7 @@ export const BodyRow = styled.tr<BodyRowProps>`
         ${(props) => {
             if (!props.$isSelected && props.$isSelectable) {
                 return css`
-                    background-color: ${DesignToken.Table.Cell.Hover};
+                    background-color: ${V2_DesignToken.Table.Cell.Hover};
                 `;
             }
         }};
@@ -220,7 +220,7 @@ export const BodyCell = styled.td<BodyCellProps>`
     border-bottom: 1px solid ${borderColor};
 `;
 
-export const BodyCellContent = styled(Text.Body)`
+export const BodyCellContent = styled(V2_Text.Body)`
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

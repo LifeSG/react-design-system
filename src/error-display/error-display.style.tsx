@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text, TextStyleHelper } from "../text";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Text, V2_TextStyleHelper } from "../v2_text";
 
 export const Container = styled.div`
     display: flex;
@@ -17,15 +17,15 @@ export const Img = styled.img`
     width: 25rem;
     height: auto;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 20rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${V2_MediaQuery.MaxWidth.mobileM} {
         width: 18rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${V2_MediaQuery.MaxWidth.mobileS} {
         width: 15rem;
     }
 `;
@@ -39,31 +39,31 @@ export const TextContainer = styled.div`
     white-space: pre-wrap;
 `;
 
-export const Title = styled(Text.H2)`
+export const Title = styled(V2_Text.H2)`
     margin: 2rem 0 1rem;
     text-align: center;
 `;
 
 export const DescriptionContainer = styled.div`
-    ${TextStyleHelper.getTextStyle(
+    ${V2_TextStyleHelper.getTextStyle(
         "Body",
         "regular"
     )} // Follow styling of Text.Body
-    color: ${Color.Neutral[1]}; // Follow styling of Text.Body
+    color: ${V2_Color.Neutral[1]}; // Follow styling of Text.Body
     text-align: center;
 
     strong {
-        ${TextStyleHelper.getFontFamily("Body", "semibold")}
+        ${V2_TextStyleHelper.getFontFamily("Body", "semibold")}
     }
 
     a {
-        ${TextStyleHelper.getTextStyle("Body", "semibold")}
-        color: ${Color.Primary};
+        ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
+        color: ${V2_Color.Primary};
 
         :hover,
         :active,
         :focus {
-            color: ${Color.Secondary};
+            color: ${V2_Color.Secondary};
         }
     }
 `;
@@ -72,7 +72,7 @@ export const ActionButton = styled(Button.Default)`
     margin: 2rem auto 0;
     width: 21rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         width: 100%;
         margin: 2rem auto 0;
     }

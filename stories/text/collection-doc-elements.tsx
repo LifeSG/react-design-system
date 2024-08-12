@@ -1,16 +1,20 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { MediaQuery } from "../../src/media";
-import { Text, TextStyleHelper, TextStyleSetType } from "../../src/text";
+import { V2_MediaQuery } from "../../src/v2_media";
+import {
+    V2_Text,
+    V2_TextStyleHelper,
+    V2_TextStyleSetType,
+} from "../../src/v2_text";
 import { BaseTheme, ThemeSpec } from "../../src";
 
 export const FontDisplay = () => {
     return (
         <FontDisplayContainer>
-            <Text.H2 weight="light">Light</Text.H2>
-            <Text.H2 weight="regular">Regular</Text.H2>
-            <Text.H2 weight="semibold">Semibold</Text.H2>
-            <Text.H2 weight="bold">Bold</Text.H2>
+            <V2_Text.H2 weight="light">Light</V2_Text.H2>
+            <V2_Text.H2 weight="regular">Regular</V2_Text.H2>
+            <V2_Text.H2 weight="semibold">Semibold</V2_Text.H2>
+            <V2_Text.H2 weight="bold">Bold</V2_Text.H2>
         </FontDisplayContainer>
     );
 };
@@ -30,7 +34,7 @@ const FontDisplayContainer = styled.div`
 // FONT SIZE DISPLAY
 // =============================================================================
 interface FontSizeDisplayProps {
-    textStyles: TextStyleSetType;
+    textStyles: V2_TextStyleSetType;
     theme?: ThemeSpec;
 }
 
@@ -41,33 +45,33 @@ export const FontSizeDisplay = ({
     const getComponent = (key: string) => {
         switch (key) {
             case "D1":
-                return Text.D1;
+                return V2_Text.D1;
             case "D2":
-                return Text.D2;
+                return V2_Text.D2;
             case "D3":
-                return Text.D3;
+                return V2_Text.D3;
             case "D4":
-                return Text.D4;
+                return V2_Text.D4;
             case "DBody":
-                return Text.DBody;
+                return V2_Text.DBody;
             case "H1":
-                return Text.H1;
+                return V2_Text.H1;
             case "H2":
-                return Text.H2;
+                return V2_Text.H2;
             case "H3":
-                return Text.H3;
+                return V2_Text.H3;
             case "H4":
-                return Text.H4;
+                return V2_Text.H4;
             case "H5":
-                return Text.H5;
+                return V2_Text.H5;
             case "H6":
-                return Text.H6;
+                return V2_Text.H6;
             case "BodySmall":
-                return Text.BodySmall;
+                return V2_Text.BodySmall;
             case "XSmall":
-                return Text.XSmall;
+                return V2_Text.XSmall;
             default:
-                return Text.Body;
+                return V2_Text.Body;
         }
     };
 
@@ -144,7 +148,7 @@ const FontSizeItem = styled.li`
         padding-right: 0.5rem;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         width: 100%;
         :not(:last-child) {
             margin-bottom: 2rem;
@@ -167,8 +171,8 @@ const FontSpecContainerItem = styled.li`
     display: flex;
 `;
 
-const SpecValueLabel = styled(Text.BodySmall)`
-    ${MediaQuery.MaxWidth.mobileM} {
+const SpecValueLabel = styled(V2_Text.BodySmall)`
+    ${V2_MediaQuery.MaxWidth.mobileM} {
         font-size: 0.75rem !important;
     }
 `;
@@ -176,10 +180,10 @@ const SpecValueLabel = styled(Text.BodySmall)`
 const FontSpecLabelContainer = styled.div`
     width: 8rem;
     margin-right: 1rem;
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
 
-    ${MediaQuery.MaxWidth.mobileM} {
+    ${V2_MediaQuery.MaxWidth.mobileM} {
         width: 5rem;
-        ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+        ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
     }
 `;

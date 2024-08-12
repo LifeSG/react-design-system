@@ -1,8 +1,10 @@
 import { SimpleInterpolation, css } from "styled-components";
 
+/** @deprecated */
 export type CssValue = SimpleInterpolation | ReturnType<typeof css>;
 
-export interface DesignTokenSet {
+/** @deprecated */
+export interface V2_DesignTokenSet {
     InputBoxShadow: CssValue;
     InputErrorBoxShadow: CssValue;
     ElevationBoxShadow: CssValue;
@@ -25,4 +27,5 @@ export interface DesignTokenSet {
     };
 }
 
-export type DesignTokenSetOptions = Partial<DesignTokenSet>;
+/** @deprecated */
+export type V2_DesignTokenSetOptions = Partial<V2_DesignTokenSet>;

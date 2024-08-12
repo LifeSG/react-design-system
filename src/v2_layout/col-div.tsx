@@ -1,8 +1,8 @@
 import React from "react";
-import { ColDivProps, DivRef } from "./types";
+import { V2_ColDivProps, V2_DivRef } from "./types";
 import { StyledDiv, StyledDivStyleProps } from "./col-div.style";
 
-const Component = (props: ColDivProps, ref: DivRef): JSX.Element => {
+const Component = (props: V2_ColDivProps, ref: V2_DivRef): JSX.Element => {
     const { mobileCols, tabletCols, desktopCols, ...otherProps } = props;
 
     const getStyleProps = (): StyledDivStyleProps => {
@@ -29,7 +29,8 @@ const Component = (props: ColDivProps, ref: DivRef): JSX.Element => {
     return <StyledDiv ref={ref} {...getStyleProps()} {...otherProps} />;
 };
 
-export const ColDiv = React.forwardRef(Component);
+/** @deprecated */
+export const V2_ColDiv = React.forwardRef(Component);
 
 // =============================================================================
 // HELPER FUNCTIONS

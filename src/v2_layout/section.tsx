@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { DivRef, SectionProps } from "./types";
-import { MediaQuery } from "../media";
+import { V2_DivRef, V2_SectionProps } from "./types";
+import { V2_MediaQuery } from "../v2_media";
 
-const Component = (props: SectionProps, ref: DivRef): JSX.Element => {
+const Component = (props: V2_SectionProps, ref: V2_DivRef): JSX.Element => {
     const {
         children,
         "data-testid": testId = "section",
@@ -26,7 +26,8 @@ const Component = (props: SectionProps, ref: DivRef): JSX.Element => {
 // =============================================================================
 // EXPORT
 // =============================================================================
-export const Section = React.forwardRef(Component);
+/** @deprecated */
+export const V2_Section = React.forwardRef(Component);
 
 // =============================================================================
 // STYLING
@@ -41,7 +42,7 @@ const StyledSection = styled.section<StyleProps>`
     ${(props) => {
         if (props.$stretch) {
             return css`
-                ${MediaQuery.MaxWidth.tablet} {
+                ${V2_MediaQuery.MaxWidth.tablet} {
                     padding: 0 1.5rem;
 
                     // Extra enforcement

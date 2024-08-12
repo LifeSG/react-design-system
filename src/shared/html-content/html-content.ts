@@ -1,10 +1,10 @@
 import { css } from "styled-components";
-import { Color } from "../../color";
+import { V2_Color } from "../../v2_color";
 import { FontFamily } from "../../spec/text-spec/font-spec";
-import { TextSizeType, TextStyleHelper } from "../../text";
+import { V2_TextSizeType, V2_TextStyleHelper } from "../../v2_text";
 
 export interface HtmlContentStyleOptions {
-    textSize?: TextSizeType | undefined;
+    textSize?: V2_TextSizeType | undefined;
 }
 
 export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
@@ -12,11 +12,11 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
     return css`
         // Text styling
-        ${textSize && TextStyleHelper.getTextStyle(textSize, "regular")}
+        ${textSize && V2_TextStyleHelper.getTextStyle(textSize, "regular")}
 
         strong {
             font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
+            ${textSize && V2_TextStyleHelper.getTextStyle(textSize, "semibold")}
         }
 
         p {
@@ -26,12 +26,12 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
         // Link styling
         a {
             font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
-            color: ${Color.Primary};
+            ${textSize && V2_TextStyleHelper.getTextStyle(textSize, "semibold")}
+            color: ${V2_Color.Primary};
             text-decoration: none;
 
             svg {
-                color: ${Color.Primary};
+                color: ${V2_Color.Primary};
                 height: 1rem;
                 width: 1rem;
                 margin-left: 0.4rem;
@@ -42,10 +42,10 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
             :active,
             :visited,
             :focus {
-                color: ${Color.Secondary};
+                color: ${V2_Color.Secondary};
 
                 svg {
-                    color: ${Color.Secondary};
+                    color: ${V2_Color.Secondary};
                 }
             }
         }

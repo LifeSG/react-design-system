@@ -1,4 +1,4 @@
-import { Text } from "../text/text";
+import { V2_Text } from "../v2_text/text";
 import { StyledCard } from "./card.style";
 import { CardProps } from "./types";
 
@@ -13,7 +13,7 @@ export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <Text.Body>{children}</Text.Body>
+            <V2_Text.Body>{children}</V2_Text.Body>
         ) : (
             children
         );

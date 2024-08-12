@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../color";
+import { V2_Color } from "../v2_color";
 
 //=============================================================================
 // STYLING
@@ -15,5 +15,5 @@ export const Divider = styled.div`
     margin: 0.5rem 0;
     width: 6.5rem;
     height: 1px;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${V2_Color.Neutral[5]};
 `;

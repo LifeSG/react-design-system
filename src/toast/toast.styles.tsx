@@ -1,12 +1,12 @@
 import { Button } from "../button";
 import { animated } from "react-spring";
-import { ValidationElementAttributes } from "src/color";
+import { V2_ValidationElementAttributes } from "src/v2_color";
 import { PropertiesToType } from "src/util/utility-types";
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
-import { MediaQuery } from "../media";
+import { V2_Color } from "../v2_color/color";
+import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import { V2_Text } from "../v2_text";
 import { ToastType } from "./types";
 
 //=============================================================================
@@ -19,16 +19,16 @@ interface StyleProps {
 
 const getValidationColorAttributes = (
     props: any
-): PropertiesToType<ValidationElementAttributes, (props) => string> => {
+): PropertiesToType<V2_ValidationElementAttributes, (props) => string> => {
     switch (props.$type) {
         case "success":
-            return Color.Validation.Green;
+            return V2_Color.Validation.Green;
         case "warning":
-            return Color.Validation.Orange;
+            return V2_Color.Validation.Orange;
         case "error":
-            return Color.Validation.Red;
+            return V2_Color.Validation.Red;
         case "info":
-            return Color.Validation.Blue;
+            return V2_Color.Validation.Blue;
         default:
             return;
     }
@@ -50,7 +50,7 @@ export const Wrapper = styled(animated.div)<StyleProps>`
     align-items: center;
     gap: 2rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${V2_MediaQuery.MaxWidth.tablet} {
         left: 0;
     }
 
@@ -70,7 +70,7 @@ export const ContentWrapper = styled.div`
     flex: 1;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
@@ -102,7 +102,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Title = styled(Text.H4)<StyleProps>`
+export const Title = styled(V2_Text.H4)<StyleProps>`
     display: flex;
 
     ${(props) => {
@@ -129,7 +129,7 @@ export const ActionButton = styled(Button.Small)`
     width: fit-content;
     flex-shrink: 0;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         align-self: flex-start;
         margin-left: 2rem;
     }
@@ -150,7 +150,7 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
             :hover {
                 background: transparent;
             }
-            ${MediaQuery.MaxWidth.mobileL} {
+            ${V2_MediaQuery.MaxWidth.mobileL} {
                 align-self: center;
             }
         `;

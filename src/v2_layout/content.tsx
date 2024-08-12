@@ -1,9 +1,9 @@
 import React from "react";
-import { Container } from "./container";
-import { Section } from "./section";
-import { ContentProps, DivRef } from "./types";
+import { V2_Container } from "./container";
+import { V2_Section } from "./section";
+import { V2_ContentProps, V2_DivRef } from "./types";
 
-const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
+const Component = (props: V2_ContentProps, ref: V2_DivRef): JSX.Element => {
     const {
         children,
         "data-testid": testId = "content",
@@ -14,26 +14,27 @@ const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
     } = props;
 
     return (
-        <Section
+        <V2_Section
             ref={ref}
             data-testid={testId}
             className={className}
             stretch={stretch}
             {...otherProps}
         >
-            <Container
+            <V2_Container
                 data-testid={`${testId}-container`}
                 type={type}
                 data-id="container"
                 stretch={stretch}
             >
                 {children}
-            </Container>
-        </Section>
+            </V2_Container>
+        </V2_Section>
     );
 };
 
 // =============================================================================
 // EXPORT
 // =============================================================================
-export const Content = React.forwardRef(Component);
+/** @deprecated */
+export const V2_Content = React.forwardRef(Component);

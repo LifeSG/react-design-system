@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TextStyleHelper } from "src/text";
+import { V2_TextStyleHelper } from "src/v2_text";
 
 // =============================================================================
 // STYLING
@@ -17,6 +17,6 @@ export const OptionContainer = styled.div`
 `;
 
 export const Label = styled.label`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
     margin-left: 1rem;
 `;

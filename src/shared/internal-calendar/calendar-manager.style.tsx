@@ -3,8 +3,8 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { Button } from "../../button";
-import { Color } from "../../color";
-import { TextStyleHelper } from "../../text";
+import { V2_Color } from "../../v2_color";
+import { V2_TextStyleHelper } from "../../v2_text";
 import { ClickableIcon } from "../clickable-icon";
 
 // =============================================================================
@@ -26,7 +26,7 @@ interface OverlayStyleProps {
 // ICONS
 // -----------------------------------------------------------------------------
 const iconStyle = css`
-    color: ${Color.Neutral[3]};
+    color: ${V2_Color.Neutral[3]};
     height: 1rem;
     width: 1rem;
 `;
@@ -72,7 +72,7 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
     left: 0;
     height: 100%;
     width: 100%;
-    background: ${Color.Neutral[8]};
+    background: ${V2_Color.Neutral[8]};
 
     ${(props) => {
         if (!props.$visible) {
@@ -122,7 +122,7 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
 `;
 
 export const DropdownText = styled.p`
-    ${TextStyleHelper.getTextStyle("H5", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("H5", "regular")}
 `;
 
 export const HeaderArrows = styled.div`
