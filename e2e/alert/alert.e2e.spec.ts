@@ -18,6 +18,23 @@ test(
 );
 
 test(
+    "Without icon (small)",
+    {
+        annotation: {
+            type: "description",
+            description: "Alert type variants (small, without icon)",
+        },
+    },
+    async ({ page }) => {
+        await page.goto("/iframe.html?args=&id=e2e-alert--without-icon-small");
+
+        await expect(page.getByTestId("e2e")).toHaveCount(5);
+
+        await expect(page).toHaveScreenshot("without-icon-small--mount.png");
+    }
+);
+
+test(
     "With icon",
     {
         annotation: {
@@ -35,6 +52,23 @@ test(
 );
 
 test(
+    "With icon (small)",
+    {
+        annotation: {
+            type: "description",
+            description: "Alert type variants (small, with icon)",
+        },
+    },
+    async ({ page }) => {
+        await page.goto("/iframe.html?args=&id=e2e-alert--with-icon-small");
+
+        await expect(page.getByTestId("e2e")).toHaveCount(5);
+
+        await expect(page).toHaveScreenshot("with-icon-small--mount.png");
+    }
+);
+
+test(
     "With link",
     {
         annotation: {
@@ -46,6 +80,7 @@ test(
         await page.goto("/iframe.html?args=&id=e2e-alert--with-link");
 
         await expect(page.getByTestId("e2e")).toBeVisible();
+        await expect(page.getByTestId("e2e-small")).toBeVisible();
 
         await expect(page).toHaveScreenshot("with-link--mount.png");
     }
@@ -65,9 +100,11 @@ test(
         );
 
         const component = page.getByTestId("e2e");
+        const componentSmall = page.getByTestId("e2e-small");
 
         await test.step("Collapsed state", async () => {
             await expect(component).toBeVisible();
+            await expect(componentSmall).toBeVisible();
 
             await expect(page).toHaveScreenshot(
                 "with-max-collapsed-height--collapsed.png"
@@ -75,7 +112,10 @@ test(
         });
 
         await test.step("Expanded state", async () => {
-            await page.getByRole("button", { name: "Show more" }).click();
+            await component.getByRole("button", { name: "Show more" }).click();
+            await componentSmall
+                .getByRole("button", { name: "Show more" })
+                .click();
 
             await expect(page).toHaveScreenshot(
                 "with-max-collapsed-height--expanded.png"

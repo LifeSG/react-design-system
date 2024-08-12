@@ -19,21 +19,16 @@ const meta: Meta<Component> = {
 
 export default meta;
 
+const TITLE = "Odio facilisis mauris sit amet massa vitae tortor";
+const BODY =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+
 export const Collapsible: StoryObj<Component> = {
     render: () => {
         return (
-            <Accordion
-                data-testid="e2e"
-                title="Odio facilisis mauris sit amet massa vitae tortor"
-            >
-                <Accordion.Item title="Odio facilisis mauris sit amet massa vitae tortor">
-                    <Text.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                    </Text.Body>
+            <Accordion data-testid="e2e" title={TITLE}>
+                <Accordion.Item title={TITLE}>
+                    <Text.Body>{BODY}</Text.Body>
                 </Accordion.Item>
             </Accordion>
         );
@@ -43,24 +38,30 @@ export const Collapsible: StoryObj<Component> = {
 export const Uncollapsible: StoryObj<Component> = {
     render: () => {
         return (
-            <Accordion
-                data-testid="e2e"
-                title="Odio facilisis mauris sit amet massa vitae tortor"
-                enableExpandAll={false}
-            >
-                <Accordion.Item
-                    title="Odio facilisis mauris sit amet massa vitae tortor"
-                    collapsible={false}
-                >
-                    <Text.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                    </Text.Body>
+            <Accordion data-testid="e2e" title={TITLE} enableExpandAll={false}>
+                <Accordion.Item title={TITLE} collapsible={false}>
+                    <Text.Body>{BODY}</Text.Body>
                 </Accordion.Item>
             </Accordion>
+        );
+    },
+};
+
+export const StyleType: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Accordion data-testid="e2e" title={TITLE}>
+                    <Accordion.Item title={TITLE}>
+                        <Text.Body>{BODY}</Text.Body>
+                    </Accordion.Item>
+                </Accordion>
+                <Accordion data-testid="e2e-small" title={TITLE}>
+                    <Accordion.Item title={TITLE} type="small">
+                        <Text.Body>{BODY}</Text.Body>
+                    </Accordion.Item>
+                </Accordion>
+            </>
         );
     },
 };

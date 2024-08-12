@@ -45,6 +45,30 @@ export const WithoutIcon: StoryObj<Component> = {
     },
 };
 
+export const WithoutIconSmall: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Alert data-testid="e2e" type="error" sizeType="small">
+                    {BODY}
+                </Alert>
+                <Alert data-testid="e2e" type="warning" sizeType="small">
+                    {BODY}
+                </Alert>
+                <Alert data-testid="e2e" type="success" sizeType="small">
+                    {BODY}
+                </Alert>
+                <Alert data-testid="e2e" type="info" sizeType="small">
+                    {BODY}
+                </Alert>
+                <Alert data-testid="e2e" type="description" sizeType="small">
+                    {BODY}
+                </Alert>
+            </>
+        );
+    },
+};
+
 export const WithIcon: StoryObj<Component> = {
     render: () => {
         return (
@@ -69,17 +93,68 @@ export const WithIcon: StoryObj<Component> = {
     },
 };
 
+export const WithIconSmall: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Alert data-testid="e2e" type="error" showIcon sizeType="small">
+                    {BODY}
+                </Alert>
+                <Alert
+                    data-testid="e2e"
+                    type="warning"
+                    showIcon
+                    sizeType="small"
+                >
+                    {BODY}
+                </Alert>
+                <Alert
+                    data-testid="e2e"
+                    type="success"
+                    showIcon
+                    sizeType="small"
+                >
+                    {BODY}
+                </Alert>
+                <Alert data-testid="e2e" type="info" showIcon sizeType="small">
+                    {BODY}
+                </Alert>
+                <Alert
+                    data-testid="e2e"
+                    type="description"
+                    showIcon
+                    sizeType="small"
+                >
+                    {BODY}
+                </Alert>
+            </>
+        );
+    },
+};
+
 export const WithLink: StoryObj<Component> = {
     render: () => {
         return (
-            <Alert
-                data-testid="e2e"
-                type="warning"
-                showIcon
-                actionLink={{ children: "Hyperlink" }}
-            >
-                {BODY}
-            </Alert>
+            <>
+                <Alert
+                    data-testid="e2e"
+                    type="warning"
+                    showIcon
+                    actionLink={{ children: "Hyperlink" }}
+                >
+                    {BODY}
+                </Alert>
+                <br />
+                <Alert
+                    data-testid="e2e-small"
+                    type="warning"
+                    showIcon
+                    actionLink={{ children: "Hyperlink" }}
+                    sizeType="small"
+                >
+                    {BODY}
+                </Alert>
+            </>
         );
     },
 };
@@ -87,17 +162,32 @@ export const WithLink: StoryObj<Component> = {
 export const WithMaxCollapsedHeight: StoryObj<Component> = {
     render: () => {
         return (
-            <Alert
-                data-testid="e2e"
-                type="warning"
-                showIcon
-                maxCollapsedHeight={50}
-            >
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error
-                doloribus porro dolore dolor nulla est. Deleniti quasi
-                consequuntur magni, maxime, fuga molestias vero adipisci
-                quibusdam facere quisquam blanditiis? Corrupti, mollitia?
-            </Alert>
+            <>
+                <Alert
+                    data-testid="e2e"
+                    type="warning"
+                    showIcon
+                    maxCollapsedHeight={50}
+                >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Error doloribus porro dolore dolor nulla est. Deleniti quasi
+                    consequuntur magni, maxime, fuga molestias vero adipisci
+                    quibusdam facere quisquam blanditiis? Corrupti, mollitia?
+                </Alert>
+                <br />
+                <Alert
+                    data-testid="e2e-small"
+                    type="warning"
+                    showIcon
+                    maxCollapsedHeight={50}
+                    sizeType="small"
+                >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Error doloribus porro dolore dolor nulla est. Deleniti quasi
+                    consequuntur magni, maxime, fuga molestias vero adipisci
+                    quibusdam facere quisquam blanditiis? Corrupti, mollitia?
+                </Alert>
+            </>
         );
     },
 };
