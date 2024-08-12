@@ -57,12 +57,9 @@ export const ListItem = styled.div<ListItemStyleProps>`
 export const Indent = styled.div<IndentStyleProps>`
     height: 1px;
     width: ${(props) => {
-        let total = 0;
-        for (let i = 0; i < props.$level; i++) {
-            total += 1.625; // expand button
-            total += 0.5; // space
-        }
-        return total;
+        const expandButtonWidth = 1.625;
+        const spaceWidth = 0.5;
+        return (expandButtonWidth + spaceWidth) * props.$level;
     }}rem;
 `;
 
