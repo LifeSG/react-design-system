@@ -213,12 +213,12 @@ export const updateSelectedState = <T>(
                         (index) => draft[index]
                     );
 
-                    const allChildrenSelected =
-                        children.filter((child) => child.checked === true)
-                            .length === children.length;
-                    const mixed =
-                        children.filter((child) => child.checked !== false)
-                            .length > 0;
+                    const allChildrenSelected = children.every(
+                        (child) => child.checked === true
+                    );
+                    const mixed = children.some(
+                        (child) => child.checked !== false
+                    );
 
                     if (allChildrenSelected) {
                         item.checked = true;
