@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SelectHistogram } from "../../src";
 
-const SELECTOR_TESTID = "select-histogram-selector";
+const SELECTOR_TESTID = "selector";
 const FIELD_TESTID = "select-histogram";
 
 const MOCK_BIN_DATA = [
@@ -94,8 +94,8 @@ describe("SelectHistogram", () => {
                 histogramSlider={{
                     bins: MOCK_BIN_DATA,
                     interval: 1,
-                    onChange: mockChange,
                 }}
+                onChange={mockChange}
             />
         );
 
@@ -119,8 +119,8 @@ describe("SelectHistogram", () => {
                 histogramSlider={{
                     bins: MOCK_BIN_DATA,
                     interval: 1,
-                    onChange: mockChange,
                 }}
+                onChange={mockChange}
             />
         );
 
@@ -133,7 +133,12 @@ describe("SelectHistogram", () => {
         await user.click(screen.queryByTestId(SELECTOR_TESTID));
 
         await waitFor(() => {
-            expect(screen.queryByTestId(FIELD_TESTID)).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("slider-track-0")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("slider-track-1")
+            ).not.toBeInTheDocument();
         });
     });
 
@@ -156,8 +161,8 @@ describe("SelectHistogram", () => {
                     histogramSlider={{
                         bins: MOCK_BIN_DATA,
                         interval: 1,
-                        rangeLabelPrefix: "test",
                     }}
+                    rangeLabelPrefix="test"
                 />
             );
 
@@ -171,8 +176,8 @@ describe("SelectHistogram", () => {
                     histogramSlider={{
                         bins: MOCK_BIN_DATA,
                         interval: 1,
-                        rangeLabelSuffix: "test",
                     }}
+                    rangeLabelSuffix="test"
                 />
             );
 
@@ -186,8 +191,8 @@ describe("SelectHistogram", () => {
                     histogramSlider={{
                         bins: MOCK_BIN_DATA,
                         interval: 1,
-                        renderRangeLabel: (val) => <div>${val}.00</div>,
                     }}
+                    renderRangeLabel={(val) => <div>${val}.00</div>}
                 />
             );
 

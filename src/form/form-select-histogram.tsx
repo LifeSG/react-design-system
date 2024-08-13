@@ -5,7 +5,7 @@ import { FormSelectHistogramSliderProps } from "./types";
 export const FormSelectHistogram = ({
     label,
     errorMessage,
-    id = "select-histogram",
+    id = "form-select-histogram",
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -17,7 +17,7 @@ export const FormSelectHistogram = ({
 }: FormSelectHistogramSliderProps): JSX.Element => {
     return (
         <FormWrapper
-            id={`${id}-wrapper`}
+            id={id}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -31,7 +31,7 @@ export const FormSelectHistogram = ({
                 histogramSlider={histogramSlider}
                 error={!!errorMessage}
                 data-testid={testId || id}
-                id={id}
+                id={`${id}-base`}
                 {...otherProps}
             />
         </FormWrapper>

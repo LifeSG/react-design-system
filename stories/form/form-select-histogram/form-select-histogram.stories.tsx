@@ -1,4 +1,3 @@
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
@@ -37,10 +36,10 @@ export const Default: StoryObj<Component> = {
                     />
                     <Form.SelectHistogram
                         label="This is the disabled state"
+                        disabled={true}
                         histogramSlider={{
                             bins: BINS_DATA,
                             interval: 100,
-                            disabled: true,
                         }}
                     />
                     <Form.SelectHistogram
@@ -56,8 +55,8 @@ export const Default: StoryObj<Component> = {
                         histogramSlider={{
                             bins: BINS_DATA,
                             interval: 100,
-                            value: [100, 400],
                         }}
+                        value={[100, 400]}
                     />
                 </Container>
             </StoryContainer>
@@ -104,39 +103,37 @@ export const WithLabels: StoryObj<Component> = {
                         histogramSlider={{
                             bins: BINS_DATA,
                             interval: 100,
-                            value: [100, 400],
-
-                            rangeLabelPrefix: "$",
                         }}
+                        rangeLabelPrefix="$"
+                        value={[100, 400]}
                     />
                     <Form.SelectHistogram
                         label="With unit as suffix"
                         histogramSlider={{
                             bins: BINS_DATA,
                             interval: 100,
-                            value: [100, 400],
-
-                            rangeLabelSuffix: "km",
                         }}
+                        value={[100, 400]}
+                        rangeLabelSuffix="km"
                     />
                     <Form.SelectHistogram
                         label="With custom rendering"
                         histogramSlider={{
                             bins: BINS_DATA,
                             interval: 100,
-                            value: [100, 400],
-
-                            renderRangeLabel: (val) =>
-                                val === 1 ? (
-                                    <Text.XSmall weight="semibold">
-                                        1 photo
-                                    </Text.XSmall>
-                                ) : (
-                                    <Text.XSmall weight="semibold">
-                                        {val} photos
-                                    </Text.XSmall>
-                                ),
                         }}
+                        value={[100, 400]}
+                        renderRangeLabel={(val) =>
+                            val === 1 ? (
+                                <Text.XSmall weight="semibold">
+                                    1 photo
+                                </Text.XSmall>
+                            ) : (
+                                <Text.XSmall weight="semibold">
+                                    {val} photos
+                                </Text.XSmall>
+                            )
+                        }
                     />
                 </Container>
             </StoryContainer>
@@ -152,20 +149,22 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     label="A shorter form select histogram"
                     histogramSlider={{
                         bins: BINS_DATA,
-                        rangeLabelPrefix: "$",
+
                         interval: 100,
-                        value: [100, 400],
                     }}
+                    value={[100, 400]}
+                    rangeLabelPrefix="$"
                     mobileCols={[1, 5]}
                 />
                 <Form.SelectHistogram
                     label="A longer form select histogram"
                     histogramSlider={{
                         bins: BINS_DATA,
-                        rangeLabelPrefix: "$",
+
                         interval: 100,
-                        value: [100, 400],
                     }}
+                    value={[100, 400]}
+                    rangeLabelPrefix="$"
                     mobileCols={[1, 5]}
                     tabletCols={[1, 9]}
                 />
@@ -185,10 +184,11 @@ export const StandaloneUsage: StoryObj<Component> = {
                     <SelectHistogram
                         histogramSlider={{
                             bins: BINS_DATA,
-                            rangeLabelPrefix: "$",
+
                             interval: 100,
-                            value: [100, 200],
                         }}
+                        value={[100, 200]}
+                        rangeLabelPrefix="$"
                     />
                 </Container>
             </StoryContainer>

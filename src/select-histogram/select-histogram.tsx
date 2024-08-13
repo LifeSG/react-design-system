@@ -18,28 +18,26 @@ import {
 import { SelectHistogramSliderProps } from "./types";
 
 export const SelectHistogram = ({
-    placeholder = "Select",
-    optionTruncationType = "end",
-    error,
     alignment = "left",
+    className,
+    disabled,
     dropdownZIndex,
+    error,
     histogramSlider,
+    id,
+    onBlur,
+    onChange,
+    onChangeEnd,
+    optionTruncationType = "end",
+    placeholder = "Select",
+    rangeLabelPrefix,
+    rangeLabelSuffix,
+    readOnly,
+    renderRangeLabel,
+    value,
     ...otherProps
 }: SelectHistogramSliderProps): JSX.Element => {
-    const {
-        className,
-        disabled,
-        readOnly,
-        interval,
-        value,
-        bins = [],
-        onChange,
-        onChangeEnd,
-        rangeLabelPrefix,
-        rangeLabelSuffix,
-        renderRangeLabel,
-        renderEmptyView,
-    } = histogramSlider;
+    const { interval, bins = [], renderEmptyView } = histogramSlider;
     // =============================================================================
     // CONST, STATE
     // =============================================================================
@@ -47,6 +45,7 @@ export const SelectHistogram = ({
         initSelection()
     );
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const values = bins.map((item) => item.minValue);
     const minValue = Math.min(...values);
@@ -55,6 +54,7 @@ export const SelectHistogram = ({
     const selectorRef = useRef<HTMLButtonElement>();
     const labelContainerRef = useRef<HTMLDivElement>();
 
+    const testId = otherProps["data-testid"] || "select-histogram";
     // =========================================================================
     // EFFECTS
     // =========================================================================
@@ -91,6 +91,22 @@ export const SelectHistogram = ({
         onChangeEnd?.(values);
     };
 
+    const handleNodeFocus = () => {
+        if (!focused && !showOptions) {
+            setFocused(true);
+        }
+    };
+
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !showOptions &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -142,10 +158,13 @@ export const SelectHistogram = ({
         return (
             <InputBox
                 className={className}
-                data-testid={"select-histogram-selector"}
-                id="select-histogram-selector"
+                data-testid={testId}
+                id={id}
                 ref={nodeRef}
                 tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={focused}
                 $disabled={disabled}
                 $readOnly={readOnly}
                 $error={error}
@@ -174,8 +193,6 @@ export const SelectHistogram = ({
                 onChangeEnd={onSliderChangeEnd}
                 showRangeLabels={false}
                 renderEmptyView={renderEmptyView}
-                {...histogramSlider}
-                {...otherProps}
             />
         </HistogramSliderDropdownContainer>
     );
