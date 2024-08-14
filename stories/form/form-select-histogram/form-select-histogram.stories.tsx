@@ -5,7 +5,9 @@ import { Text } from "src/text";
 import { SelectHistogram } from "../../../src/select-histogram";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
+
 type Component = typeof Form.SelectHistogram;
+
 const meta: Meta<Component> = {
     title: "Form/SelectHistogram",
     component: Form.SelectHistogram,
@@ -36,7 +38,15 @@ export const Default: StoryObj<Component> = {
                     />
                     <Form.SelectHistogram
                         label="This is the disabled state"
-                        disabled={true}
+                        disabled
+                        histogramSlider={{
+                            bins: BINS_DATA,
+                            interval: 100,
+                        }}
+                    />
+                    <Form.SelectHistogram
+                        label="This is the readonly state"
+                        readOnly
                         histogramSlider={{
                             bins: BINS_DATA,
                             interval: 100,
@@ -49,14 +59,6 @@ export const Default: StoryObj<Component> = {
                             interval: 100,
                         }}
                         errorMessage="Out of range"
-                    />
-                    <Form.SelectHistogram
-                        label="This has preselected items"
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                        value={[100, 400]}
                     />
                 </Container>
             </StoryContainer>
@@ -146,10 +148,9 @@ export const RenderingInGridLayout: StoryObj<Component> = {
         return (
             <Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.SelectHistogram
-                    label="A shorter form select histogram"
+                    label="A shorter form input"
                     histogramSlider={{
                         bins: BINS_DATA,
-
                         interval: 100,
                     }}
                     value={[100, 400]}
@@ -157,7 +158,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     mobileCols={[1, 5]}
                 />
                 <Form.SelectHistogram
-                    label="A longer form select histogram"
+                    label="A longer form input"
                     histogramSlider={{
                         bins: BINS_DATA,
 

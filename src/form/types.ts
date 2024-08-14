@@ -16,7 +16,7 @@ import { ColProps } from "../layout/types";
 import { MaskedInputPartialProps } from "../masked-input/types";
 import { PhoneNumberInputProps } from "../phone-number-input/types";
 import { PredictiveTextInputProps } from "../predictive-text-input/types";
-import { SelectHistogramSliderProps } from "../select-histogram";
+import { SelectHistogramProps } from "../select-histogram";
 import { TimeRangePickerProps } from "../time-range-picker/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
@@ -146,6 +146,6 @@ export interface FormESignatureProps
     extends EsignatureProps,
         BaseFormElementProps {}
 
-export interface FormSelectHistogramSliderProps
-    extends SelectHistogramSliderProps,
+export interface FormSelectHistogramProps
+    extends SelectHistogramProps,
         BaseFormElementProps {}

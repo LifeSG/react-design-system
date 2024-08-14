@@ -15,7 +15,7 @@ import {
     PlaceholderLabel,
     Separator,
 } from "./select-histogram.styles";
-import { SelectHistogramSliderProps } from "./types";
+import { SelectHistogramProps } from "./types";
 
 export const SelectHistogram = ({
     alignment = "left",
@@ -36,7 +36,7 @@ export const SelectHistogram = ({
     renderRangeLabel,
     value,
     ...otherProps
-}: SelectHistogramSliderProps): JSX.Element => {
+}: SelectHistogramProps): JSX.Element => {
     const { interval, bins = [], renderEmptyView } = histogramSlider;
     // =============================================================================
     // CONST, STATE

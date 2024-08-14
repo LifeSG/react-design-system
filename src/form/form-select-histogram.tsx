@@ -1,6 +1,6 @@
 import { SelectHistogram } from "../select-histogram/select-histogram";
 import { FormWrapper } from "./form-wrapper";
-import { FormSelectHistogramSliderProps } from "./types";
+import { FormSelectHistogramProps } from "./types";
 
 export const FormSelectHistogram = ({
     label,
@@ -14,7 +14,7 @@ export const FormSelectHistogram = ({
     desktopCols,
     histogramSlider,
     ...otherProps
-}: FormSelectHistogramSliderProps): JSX.Element => {
+}: FormSelectHistogramProps): JSX.Element => {
     return (
         <FormWrapper
             id={id}
