@@ -148,12 +148,11 @@ function Component(
             $isCollapsed={expand}
             ref={elementRef}
         >
-            <TitleContainer>
+            <TitleContainer onClick={handleExpandCollapseClick}>
                 {renderTitle()}
                 {collapsible && (
                     <ExpandCollapseButton
                         data-testid={`${testId}-expand-collapse-button`}
-                        onClick={handleExpandCollapseClick}
                         $isCollapsed={expand}
                         focusHighlight={false}
                         focusOutline="browser"
