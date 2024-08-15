@@ -14,6 +14,8 @@ export interface FileItemDownloadProps {
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */
     truncateText?: boolean | undefined;
+    /** Indicate if file is ready for download, defaults to true */
+    isReady?: boolean;
 }
 
 export type FileDownloadStyle = "bordered" | "no-border";
@@ -30,4 +32,6 @@ export interface FileDownloadProps {
     id?: string | undefined;
     /** Called when file item is clicked  */
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
+    /** controlled loading state*/
+    isLoading?: boolean;
 }

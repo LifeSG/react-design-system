@@ -33,6 +33,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         errorMessage,
         thumbnailImageDataUrl,
         truncateText = true,
+        isReady = true,
     } = fileItem;
 
     // Local variables
@@ -44,6 +45,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     });
     const [displayText, setDisplayText] = useState<string>();
     const containerRef = useRef<HTMLDivElement>();
+    const downloadButtonRef = useRef<HTMLDivElement>();
 
     // =========================================================================
     // EFFECTS
@@ -72,6 +74,10 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     };
 
     const handleDownload = async () => {
+        if (!isReady || isLoading) {
+            return;
+        }
+
         setIsLoading(true);
         try {
             setIsError(false);
@@ -165,7 +171,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     sizeType="small"
                     aria-label={`download ${name}`}
                 >
-                    {isLoading ? (
+                    {isLoading || !isReady ? (
                         <Spinner
                             $buttonStyle="light"
                             $buttonSizeStyle="small"
@@ -182,7 +188,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
 
     return (
         <Item data-testid={id}>
-            <Box onClick={handleDownload}>
+            <Box ref={downloadButtonRef} onClick={handleDownload}>
                 {renderContents()}
                 {renderActions()}
             </Box>

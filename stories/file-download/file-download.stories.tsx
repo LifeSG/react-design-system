@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileDownload, FileItemDownloadProps } from "../../src/file-download";
 
 type Component = typeof FileDownload;
@@ -52,7 +52,7 @@ export const Default: StoryObj<Component> = {
 
         return (
             <FileDownload
-                fileItems={fileItems}
+                fileItems={[fileItems[2]]}
                 onDownload={handleDemoDownload}
                 title={"Content title"}
                 description={
@@ -113,6 +113,45 @@ export const WithCustomError: StoryObj<Component> = {
                     "File download will fail after 3 seconds. A custom error message can be set"
                 }
                 onDownload={handleDemoError}
+            />
+        );
+    },
+};
+
+export const WithReadyState: StoryObj<Component> = {
+    render: () => {
+        const [fileItems, setFileItem] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "not-ready.txt",
+                mimeType: "application/txt",
+                filePath: "",
+                errorMessage: "This is custom error message!",
+                isReady: false,
+            },
+        ]);
+
+        useEffect(() => {
+            setInterval(() => {
+                const isReadyFileItem = structuredClone(fileItems);
+                isReadyFileItem[0] = {
+                    ...isReadyFileItem[0],
+                    isReady: true,
+                    name: "ready.txt",
+                };
+
+                setFileItem(isReadyFileItem);
+            }, 10000);
+        }, []);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                title={"Content title"}
+                description={
+                    "File will not be avaialble until 10 seconds later"
+                }
+                onDownload={handleDemoDownload}
             />
         );
     },
