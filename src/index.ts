@@ -77,3 +77,4 @@ export * from "./tooltip";
 export * from "./transition";
 export * from "./uneditable-section";
 export * from "./unit-number";
+export * from "./theme";
