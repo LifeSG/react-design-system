@@ -1,0 +1,36 @@
+import { Meta, Unstyled } from "@storybook/blocks";
+import { Text } from "src/text";
+import { BasePlusSansJakartaStyleSet } from "src/spec/text-spec/base-plus-jakarta-sans-text-style-set";
+import { Secondary, Title } from "../storybook-common";
+import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
+import { OneServiceTheme } from "../../src";
+
+<Meta title="General/Text/PlusSansJakarta Style" />
+
+<Title>Plus Sans Jakarta Style</Title>
+
+<Secondary>Overview</Secondary>
+
+This will be the collection used when the `textStyleScheme` is `plusJakartaSans`.
+
+```tsx
+const theme: ThemeSpec = {
+    textStyleScheme: "plusJakartaSans",
+    // ...other specifications
+};
+```
+
+<Secondary>Font Family</Secondary>
+
+<Text.D1>Open Sans</Text.D1>
+<Unstyled>
+    <FontDisplay />
+</Unstyled>
+
+<Secondary>Text Styles</Secondary>
+<Unstyled>
+    <FontSizeDisplay
+        textStyles={BasePlusSansJakartaStyleSet}
+        theme={OneServiceTheme}
+    />
+</Unstyled>
