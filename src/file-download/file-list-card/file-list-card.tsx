@@ -45,7 +45,6 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     });
     const [displayText, setDisplayText] = useState<string>();
     const containerRef = useRef<HTMLDivElement>();
-    const downloadButtonRef = useRef<HTMLDivElement>();
 
     // =========================================================================
     // EFFECTS
@@ -188,7 +187,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
 
     return (
         <Item data-testid={id}>
-            <Box ref={downloadButtonRef} onClick={handleDownload}>
+            <Box onClick={handleDownload}>
                 {renderContents()}
                 {renderActions()}
             </Box>

@@ -32,6 +32,4 @@ export interface FileDownloadProps {
     id?: string | undefined;
     /** Called when file item is clicked  */
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
-    /** controlled loading state*/
-    isLoading?: boolean;
 }
