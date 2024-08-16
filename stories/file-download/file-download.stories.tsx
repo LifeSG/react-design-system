@@ -123,7 +123,7 @@ export const DownloadReadinessControl: StoryObj<Component> = {
         const [fileItems, setFileItem] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
-                name: "not-ready.pdf",
+                name: "Your file is being generate...",
                 mimeType: "application/pdf",
                 filePath: "",
                 errorMessage: "This is custom error message!",
@@ -132,7 +132,7 @@ export const DownloadReadinessControl: StoryObj<Component> = {
         ]);
 
         useEffect(() => {
-            setInterval(() => {
+            setTimeout(() => {
                 const isReadyFileItem = structuredClone(fileItems);
                 isReadyFileItem[0] = {
                     ...isReadyFileItem[0],
