@@ -29,12 +29,12 @@ export const Container = styled.div<StyleProps>`
     }
 `;
 
-export const TitleContainer = styled.div`
+export const TitleContainer = styled.div<StyleProps>`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
+    cursor: ${(props) => (props.$isCollapsed ? "pointer" : "unset")};
 `;
 
 const TITLE_STYLE = (isCollapsed?: boolean) => css`

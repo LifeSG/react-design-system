@@ -148,7 +148,10 @@ function Component(
             $isCollapsed={expand}
             ref={elementRef}
         >
-            <TitleContainer onClick={handleExpandCollapseClick}>
+            <TitleContainer
+                $isCollapsed={collapsible}
+                onClick={collapsible ? handleExpandCollapseClick : undefined}
+            >
                 {renderTitle()}
                 {collapsible && (
                     <ExpandCollapseButton
