@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useEffect, useState } from "react";
-import { Text } from "../../src";
 import { FileDownload, FileItemDownloadProps } from "../../src/file-download";
 
 type Component = typeof FileDownload;
@@ -48,14 +47,6 @@ export const Default: StoryObj<Component> = {
                 filePath: "https://picsum.photos/200",
                 thumbnailImageDataUrl:
                     "https://picsum.photos/seed/picsum/200/300",
-            },
-            {
-                id: "5",
-                name: "not-ready.pdf",
-                mimeType: "application/pdf",
-                filePath: "",
-                errorMessage: "This is custom error message!",
-                ready: false,
             },
         ]);
 
@@ -163,17 +154,7 @@ export const DownloadReadinessControl: StoryObj<Component> = {
                     fileItems={fileItems}
                     title={"Download Readiness Control"}
                     description={
-                        <Text.XSmall>
-                            The ready prop allows users to manage the
-                            availability of a file.
-                            <br />
-                            This can be used in scenarios where an image needs
-                            time to be generated and is not immediately
-                            available.
-                            <br />
-                            This demo shows the ready prop change after 5
-                            seconds
-                        </Text.XSmall>
+                        "Ready status will be set to true after 5 seconds."
                     }
                     onDownload={handleDemoDownload}
                 />
