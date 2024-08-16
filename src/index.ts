@@ -59,6 +59,7 @@ export * from "./popover-v2";
 export * from "./predictive-text-input";
 export * from "./progress-indicator";
 export * from "./radio-button";
+export * from "./select-histogram";
 export * from "./sidenav";
 export * from "./smart-app-banner";
 export * from "./tab";
