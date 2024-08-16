@@ -1,7 +1,8 @@
 import get from "lodash/get";
+import { CSSProp } from "styled-components";
 
 // For ColorSet:
-export type ColorSet = {
+export type ColourSet = {
     "brand-10": string;
     "brand-20": string;
     "brand-30": string;
@@ -95,7 +96,7 @@ export type ColorSet = {
 };
 
 // For SematicColorSet:
-export type SematicColorSet = {
+export type SematicColourSet = {
     text: string | ((props: any) => string);
     "text-hover": string | ((props: any) => string);
     "text-selected": string | ((props: any) => string);
@@ -181,28 +182,33 @@ export type SematicColorSet = {
     "focus-ring-inverse": string | ((props: any) => string);
 };
 
-export type ColorScheme = "lifesg" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
+export type ColourScheme =
+    | "lifesg"
+    | "bookingsg"
+    | "rbs"
+    | "mylegacy"
+    | "ccube";
 
-export type ColorCollectionsMap = {
-    [key in ColorScheme]: ColorSet;
+export type ColourCollectionsMap = {
+    [key in ColourScheme]: ColourSet;
 };
 
-export type SematicColorCollectionMap = {
-    [key in ColorScheme]: SematicColorSet;
+export type SematicColourCollectionMap = {
+    [key in ColourScheme]: SematicColourSet;
 };
 
 export enum ThemeContextKeys {
-    colorScheme = "colorScheme",
+    colourScheme = "colourScheme",
 }
 
-export type ColorSetOptions = Partial<ColorSet> | Partial<SematicColorSet>;
+export type ColourSetOptions = Partial<ColourSet> | Partial<SematicColourSet>;
 
 export interface ThemeSpecOptions {
-    color?: ColorSetOptions | undefined;
+    color?: ColourSetOptions | undefined;
 }
 
 export interface ThemeSpec {
-    [ThemeContextKeys.colorScheme]: ColorScheme;
+    [ThemeContextKeys.colourScheme]?: ColourScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 

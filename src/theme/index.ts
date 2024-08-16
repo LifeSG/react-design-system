@@ -1,7 +1,7 @@
-import { PrimitiveColor } from "./color-primitive/theme-helper";
-import { ColorSemantic } from "./color-semantic/theme-helper";
+import { PrimitiveColour } from "./colour-primitive/theme-helper";
+import { ColourSemantic } from "./colour-semantic/theme-helper";
 
-export const Color = {
-    ...ColorSemantic,
-    Primitive: PrimitiveColor,
+export const Colour = {
+    ...ColourSemantic,
+    Primitive: PrimitiveColour,
 };
