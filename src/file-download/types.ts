@@ -15,7 +15,7 @@ export interface FileItemDownloadProps {
     /** Indicates if text should be truncated */
     truncateText?: boolean | undefined;
     /** Indicate if file is ready for download, defaults to true */
-    isReady?: boolean;
+    ready?: boolean | undefined;
 }
 
 export type FileDownloadStyle = "bordered" | "no-border";

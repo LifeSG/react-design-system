@@ -33,7 +33,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         errorMessage,
         thumbnailImageDataUrl,
         truncateText = true,
-        isReady = true,
+        ready = true,
     } = fileItem;
 
     // Local variables
@@ -73,7 +73,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     };
 
     const handleDownload = async () => {
-        if (!isReady || isLoading) {
+        if (!ready || isLoading) {
             return;
         }
 
@@ -170,7 +170,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     sizeType="small"
                     aria-label={`download ${name}`}
                 >
-                    {isLoading || !isReady ? (
+                    {isLoading || !ready ? (
                         <Spinner
                             $buttonStyle="light"
                             $buttonSizeStyle="small"

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useEffect, useState } from "react";
+import { Text } from "../../src";
 import { FileDownload, FileItemDownloadProps } from "../../src/file-download";
 
 type Component = typeof FileDownload;
@@ -48,11 +49,19 @@ export const Default: StoryObj<Component> = {
                 thumbnailImageDataUrl:
                     "https://picsum.photos/seed/picsum/200/300",
             },
+            {
+                id: "5",
+                name: "not-ready.pdf",
+                mimeType: "application/pdf",
+                filePath: "",
+                errorMessage: "This is custom error message!",
+                ready: false,
+            },
         ]);
 
         return (
             <FileDownload
-                fileItems={[fileItems[2]]}
+                fileItems={fileItems}
                 onDownload={handleDemoDownload}
                 title={"Content title"}
                 description={
@@ -118,16 +127,16 @@ export const WithCustomError: StoryObj<Component> = {
     },
 };
 
-export const WithReadyState: StoryObj<Component> = {
+export const DownloadReadinessControl: StoryObj<Component> = {
     render: () => {
         const [fileItems, setFileItem] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
-                name: "not-ready.txt",
-                mimeType: "application/txt",
+                name: "not-ready.pdf",
+                mimeType: "application/pdf",
                 filePath: "",
                 errorMessage: "This is custom error message!",
-                isReady: false,
+                ready: false,
             },
         ]);
 
@@ -136,23 +145,39 @@ export const WithReadyState: StoryObj<Component> = {
                 const isReadyFileItem = structuredClone(fileItems);
                 isReadyFileItem[0] = {
                     ...isReadyFileItem[0],
-                    isReady: true,
-                    name: "ready.txt",
+                    ready: true,
+                    name: "ready.pdf",
+                    size: 6000,
+                    filePath: "https://picsum.photos/200",
+                    thumbnailImageDataUrl:
+                        "https://picsum.photos/seed/picsum/200/300",
                 };
 
                 setFileItem(isReadyFileItem);
-            }, 10000);
+            }, 5000);
         }, []);
 
         return (
-            <FileDownload
-                fileItems={fileItems}
-                title={"Content title"}
-                description={
-                    "File will not be avaialble until 10 seconds later"
-                }
-                onDownload={handleDemoDownload}
-            />
+            <>
+                <FileDownload
+                    fileItems={fileItems}
+                    title={"Download Readiness Control"}
+                    description={
+                        <Text.XSmall>
+                            The ready prop allows users to manage the
+                            availability of a file.
+                            <br />
+                            This can be used in scenarios where an image needs
+                            time to be generated and is not immediately
+                            available.
+                            <br />
+                            This demo shows the ready prop change after 5
+                            seconds
+                        </Text.XSmall>
+                    }
+                    onDownload={handleDemoDownload}
+                />
+            </>
         );
     },
 };
