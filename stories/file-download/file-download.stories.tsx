@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileDownload, FileItemDownloadProps } from "../../src/file-download";
 
 type Component = typeof FileDownload;
@@ -113,6 +113,48 @@ export const WithCustomError: StoryObj<Component> = {
                     "File download will fail after 3 seconds. A custom error message can be set"
                 }
                 onDownload={handleDemoError}
+            />
+        );
+    },
+};
+
+export const DownloadReadiness: StoryObj<Component> = {
+    render: () => {
+        const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "Your file is being generated...",
+                mimeType: "application/pdf",
+                filePath: "",
+                ready: false,
+            },
+        ]);
+
+        useEffect(() => {
+            setTimeout(() => {
+                const readyFileItems = structuredClone(fileItems);
+                readyFileItems[0] = {
+                    ...readyFileItems[0],
+                    ready: true,
+                    name: "ready.pdf",
+                    size: 6000,
+                    filePath: "https://picsum.photos/200",
+                    thumbnailImageDataUrl:
+                        "https://picsum.photos/seed/picsum/200/300",
+                };
+
+                setFileItems(readyFileItems);
+            }, 5000);
+        }, []);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                title={"Download readiness"}
+                description={
+                    "Ready status will be set to true after 5 seconds."
+                }
+                onDownload={handleDemoDownload}
             />
         );
     },
