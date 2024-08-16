@@ -1,6 +1,6 @@
 import "styled-components";
-import { ThemeSpec } from "../src/theme/types";
+import { V2_ThemeSpec } from "../src/v2_theme/types";
 
 declare module "styled-components" {
-    export interface DefaultTheme extends ThemeSpec {}
+    export interface DefaultTheme extends V2_ThemeSpec {}
 }

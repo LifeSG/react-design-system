@@ -64,7 +64,7 @@ export * from "./tab";
 export * from "./tag";
 export * from "./v2_text";
 export * from "./text-list";
-export * from "./theme";
+export * from "./v2_theme";
 export * from "./time-range-picker";
 export * from "./time-slot-bar";
 export * from "./time-slot-bar-week";
