@@ -118,24 +118,23 @@ export const WithCustomError: StoryObj<Component> = {
     },
 };
 
-export const DownloadReadinessControl: StoryObj<Component> = {
+export const DownloadReadiness: StoryObj<Component> = {
     render: () => {
-        const [fileItems, setFileItem] = useState<FileItemDownloadProps[]>([
+        const [fileItems, setFileItems] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
-                name: "Your file is being generate...",
+                name: "Your file is being generated...",
                 mimeType: "application/pdf",
                 filePath: "",
-                errorMessage: "This is custom error message!",
                 ready: false,
             },
         ]);
 
         useEffect(() => {
             setTimeout(() => {
-                const isReadyFileItem = structuredClone(fileItems);
-                isReadyFileItem[0] = {
-                    ...isReadyFileItem[0],
+                const readyFileItems = structuredClone(fileItems);
+                readyFileItems[0] = {
+                    ...readyFileItems[0],
                     ready: true,
                     name: "ready.pdf",
                     size: 6000,
@@ -144,21 +143,19 @@ export const DownloadReadinessControl: StoryObj<Component> = {
                         "https://picsum.photos/seed/picsum/200/300",
                 };
 
-                setFileItem(isReadyFileItem);
+                setFileItems(readyFileItems);
             }, 5000);
         }, []);
 
         return (
-            <>
-                <FileDownload
-                    fileItems={fileItems}
-                    title={"Download Readiness Control"}
-                    description={
-                        "Ready status will be set to true after 5 seconds."
-                    }
-                    onDownload={handleDemoDownload}
-                />
-            </>
+            <FileDownload
+                fileItems={fileItems}
+                title={"Download readiness"}
+                description={
+                    "Ready status will be set to true after 5 seconds."
+                }
+                onDownload={handleDemoDownload}
+            />
         );
     },
 };
