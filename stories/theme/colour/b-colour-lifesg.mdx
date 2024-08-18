@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/blocks";
+import { LifeSGTheme } from "src/theme";
+import { PrimitiveColourDisplay, SemanticColourDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Colours/LifeSG" />
+
+# LifeSG colours
+
+These are the palettes used when the `colourScheme` is `"lifesg"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colourScheme: "lifesg",
+    // ...other specifications
+};
+```
+
+## Primitive colours
+
+<PrimitiveColourDisplay theme={LifeSGTheme} />
+
+## Semantic colours
+
+<SemanticColourDisplay theme={LifeSGTheme} />
