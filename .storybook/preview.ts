@@ -31,6 +31,7 @@ const preview: Preview = {
                 order: [
                     "Getting started",
                     ["Installation", "Themes", "Media Query", "Layout"],
+                    "Foundations",
                     "General",
                     ["Animations", "Button", ["Base", "With Icon"], "*"],
                     "Form",
