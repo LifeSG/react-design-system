@@ -12,11 +12,11 @@ const StyledComponentTest = styled.div`
 describe("Colour Themeing Test", () => {
     it("should apply correct styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
-            colourScheme: "lifesg",
+            colourScheme: "bookingsg",
         };
 
-        const bgColor = "#001731";
-        const textColor = "#1768BE";
+        const bgColor = "#1A122C";
+        const textColor = "#7654BC";
 
         const { container } = render(
             <ThemeProvider theme={mockTheme}>
@@ -31,7 +31,7 @@ describe("Colour Themeing Test", () => {
         expect(container.firstChild).toHaveStyleRule("color", textColor);
     });
 
-    it("should apply correct styles based on the theme", () => {
+    it("should apply correct styles based on the theme with override", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             overrides: {

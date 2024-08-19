@@ -1,3 +1,6 @@
+import { PrimitiveColourSetOptions } from "./colour-primitive/types";
+import { SemanticColourSetOptions } from "./colour-semantic/types";
+
 export type PrimitiveColourSet = {
     "brand-10": string;
     "brand-20": string;
@@ -191,28 +194,13 @@ export type ColourScheme =
     | "mylegacy"
     | "ccube";
 
-export type ColourCollectionsMap = {
-    [key in ColourScheme]: PrimitiveColourSet;
-};
-
-export type SematicColourCollectionMap = {
-    [key in ColourScheme]: SemanticColourSet;
-};
-
-export enum ThemeContextKeys {
-    colourScheme = "colourScheme",
-}
-
-export type ColourSetOptions = Partial<PrimitiveColourSet>;
-export type SematicColourSetOptions = Partial<SemanticColourSet>;
-
 export interface ThemeSpecOptions {
-    colour?: ColourSetOptions | undefined;
-    sematiccolour?: SematicColourSetOptions | undefined;
+    colour?: PrimitiveColourSetOptions | undefined;
+    sematiccolour?: SemanticColourSetOptions | undefined;
 }
 
 export interface ThemeSpec {
-    [ThemeContextKeys.colourScheme]: ColourScheme;
+    colourScheme: ColourScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 

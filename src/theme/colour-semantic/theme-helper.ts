@@ -1,15 +1,10 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import {
-    ColourScheme,
-    SemanticColourSet,
-    SematicColourCollectionMap,
-    ThemeCollectionSpec,
-    ThemeContextKeys,
-} from "../types";
+import { ColourScheme, SemanticColourSet, ThemeCollectionSpec } from "../types";
 import { LifeSGColourSet } from "./specs/lifesg-semantic-tokens";
+import { SemanticColourCollectionMap } from "./types";
 
 const ColourSpec: ThemeCollectionSpec<
-    SematicColourCollectionMap,
+    SemanticColourCollectionMap,
     ColourScheme
 > = {
     collections: {
@@ -27,7 +22,7 @@ export const getSemanticColour = (key: keyof SemanticColourSet) => {
         const theme = props.theme;
         const colorSet: SemanticColourSet = getCollection(
             ColourSpec,
-            theme[ThemeContextKeys.colourScheme]
+            theme["colourScheme"]
         );
 
         // check for an override

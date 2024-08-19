@@ -1,9 +1,7 @@
 import {
-    ColourCollectionsMap,
     ColourScheme,
     PrimitiveColourSet,
     ThemeCollectionSpec,
-    ThemeContextKeys,
 } from "../types";
 import { BookingSgColourSet } from "./specs/bookingsg-colour-set";
 import { CCubeColourSet } from "./specs/ccube-colour-set";
@@ -11,6 +9,7 @@ import { LifeSgColourSet } from "./specs/lifesg-colour-set";
 import { MyLegacyColourSet } from "./specs/mylegacy-colour-set";
 import { RBSColourSet } from "./specs/rbs-colour-set";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { ColourCollectionsMap } from "./types";
 
 const ColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> = {
     collections: {
@@ -28,12 +27,11 @@ export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
         const theme = props.theme;
         const colorSet: PrimitiveColourSet = getCollection(
             ColourSpec,
-            theme[ThemeContextKeys.colourScheme]
+            theme["colourScheme"]
         );
 
         if (theme.overrides && theme.overrides.colour) {
-            const a = getValue(colorSet, key, theme.overrides.colour);
-            return a;
+            return getValue(colorSet, key, theme.overrides.colour);
         } else {
             return colorSet[key];
         }
