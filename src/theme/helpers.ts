@@ -1,5 +1,9 @@
 import { get } from "lodash";
-import { ThemeCollectionSpec } from "./types";
+import { ThemeCollectionSpec, ThemeSpec } from "./types";
+
+export interface StyledComponentProps {
+    theme: ThemeSpec;
+}
 
 export const getValue = <C, T, K extends keyof C | keyof T>(
     collection: C,

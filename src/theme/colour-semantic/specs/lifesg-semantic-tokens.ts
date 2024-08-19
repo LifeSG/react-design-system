@@ -1,7 +1,7 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
-import { SematicColourSet } from "../../types";
+import { SemanticColourSet } from "../../types";
 
-export const LifeSGColourSet: SematicColourSet = {
+export const LifeSGColourSet: SemanticColourSet = {
     text: getPrimitiveColour("neutral-20"),
     "text-hover": getPrimitiveColour("primary-40"),
     "text-selected": getPrimitiveColour("primary-50"),
@@ -16,7 +16,7 @@ export const LifeSGColourSet: SematicColourSet = {
     "text-selected-disabled": getPrimitiveColour("primary-60"),
     "text-warning": getPrimitiveColour("warning-40"),
     "text-error": getPrimitiveColour("error-40"),
-    "text-info": getPrimitiveColour("information-40"),
+    "text-info": getPrimitiveColour("info-40"),
 
     icon: getPrimitiveColour("neutral-50"),
     "icon-hover": getPrimitiveColour("primary-40"),
@@ -25,6 +25,7 @@ export const LifeSGColourSet: SematicColourSet = {
     "icon-success": getPrimitiveColour("success-50"),
     "icon-inverse": getPrimitiveColour("white"),
     "icon-subtle": getPrimitiveColour("neutral-60"),
+    "icon-strongest": getPrimitiveColour("neutral-20"),
     "icon-primary": getPrimitiveColour("primary-50"),
     "icon-primary-subtle": getPrimitiveColour("primary-60"),
     "icon-primary-subtlest": getPrimitiveColour("primary-70"),
@@ -32,7 +33,8 @@ export const LifeSGColourSet: SematicColourSet = {
     "icon-selected-disabled": getPrimitiveColour("primary-60"),
     "icon-warning": getPrimitiveColour("warning-60"),
     "icon-error": getPrimitiveColour("error-50"),
-    "icon-info": getPrimitiveColour("information-50"),
+    "icon-error-strong": getPrimitiveColour("error-40"),
+    "icon-info": getPrimitiveColour("info-50"),
 
     border: getPrimitiveColour("neutral-90"),
     "border-hover": getPrimitiveColour("primary-90"),
@@ -52,7 +54,7 @@ export const LifeSGColourSet: SematicColourSet = {
     "border-warning": getPrimitiveColour("warning-60"),
     "border-error": getPrimitiveColour("error-60"),
     "border-error-focus": getPrimitiveColour("error-60"),
-    "border-info": getPrimitiveColour("information-60"),
+    "border-info": getPrimitiveColour("info-60"),
 
     background: getPrimitiveColour("white"),
     "background-hover": getPrimitiveColour("primary-95"),
@@ -60,9 +62,10 @@ export const LifeSGColourSet: SematicColourSet = {
     "background-disabled": getPrimitiveColour("neutral-95"),
     "background-success": getPrimitiveColour("success-100"),
     "background-inverse": getPrimitiveColour("neutral-40"),
-    "background-subtle": getPrimitiveColour("neutral-100"),
+    "background-strong": getPrimitiveColour("neutral-100"),
+    "background-stronger": getPrimitiveColour("neutral-95"),
     "background-hover-strong": getPrimitiveColour("primary-90"),
-    "background-hover-subtle": getPrimitiveColour("primary-100"),
+    "background-hover-subtle": getPrimitiveColour("primary-95"),
     "background-hover-neutral": getPrimitiveColour("neutral-95"),
     "background-primary": getPrimitiveColour("primary-50"),
     "background-primary-hover": getPrimitiveColour("primary-40"),
@@ -75,7 +78,9 @@ export const LifeSGColourSet: SematicColourSet = {
     "background-selected-disabled": getPrimitiveColour("primary-90"),
     "background-warning": getPrimitiveColour("warning-100"),
     "background-error": getPrimitiveColour("error-100"),
-    "background-info": getPrimitiveColour("information-100"),
+    "background-info": getPrimitiveColour("info-100"),
+    "background-error-strong": getPrimitiveColour("error-50"),
+    "background-error-strong-hover": getPrimitiveColour("error-30"),
 
     "overlay-strong": "rgba(40, 40, 40, 0.95)",
     "overlay-subtle": "rgba(40, 40, 40, 0.20)",

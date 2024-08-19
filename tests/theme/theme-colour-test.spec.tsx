@@ -9,7 +9,7 @@ const StyledComponentTest = styled.div`
     color: ${Colour["border-primary"]};
 `;
 
-describe("StyledComponent", () => {
+describe("Colour Themeing Test", () => {
     it("should apply correct styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
@@ -35,7 +35,7 @@ describe("StyledComponent", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             overrides: {
-                color: {
+                colour: {
                     "primary-10": "#fefefe",
                 },
             },
@@ -43,6 +43,32 @@ describe("StyledComponent", () => {
 
         const bgColor = "#fefefe";
         const textColor = "#1768BE";
+
+        const { container } = render(
+            <ThemeProvider theme={overrideTheme}>
+                <StyledComponentTest />
+            </ThemeProvider>
+        );
+
+        expect(container.firstChild).toHaveStyleRule(
+            "background-color",
+            bgColor
+        );
+        expect(container.firstChild).toHaveStyleRule("color", textColor);
+    });
+
+    it("should apply correct styles based on the theme", () => {
+        const overrideTheme: ThemeSpec = {
+            colourScheme: "lifesg",
+            overrides: {
+                sematiccolour: {
+                    "border-primary": "#fefefe",
+                },
+            },
+        };
+
+        const bgColor = "#001731";
+        const textColor = "#fefefe";
 
         const { container } = render(
             <ThemeProvider theme={overrideTheme}>

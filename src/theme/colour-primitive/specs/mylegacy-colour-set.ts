@@ -1,6 +1,6 @@
-import { ColourSet } from "../../types";
+import { PrimitiveColourSet } from "../../types";
 
-export const MyLegacyColourSet: ColourSet = {
+export const MyLegacyColourSet: PrimitiveColourSet = {
     // brand,secondary from lifesg
     "brand-10": "#2C0C0B",
     "brand-20": "#4C1513",
@@ -41,7 +41,7 @@ export const MyLegacyColourSet: ColourSet = {
     "neutral-40": "#4E4E4E",
     "neutral-50": "#686868",
     "neutral-60": "#8E8E8E",
-    "neutral-70": "#AFAFBO",
+    "neutral-70": "#AFAFB0",
     "neutral-80": "#C7CACA",
     "neutral-90": "#DDE1E2",
     "neutral-95": "#EDEFEF",
@@ -79,15 +79,17 @@ export const MyLegacyColourSet: ColourSet = {
     "error-90": "#F5D9D9",
     "error-95": "#F9ECEC",
     "error-100": "#FCF7F7",
-    "information-10": "#021824",
-    "information-20": "#032B3F",
-    "information-30": "#053D59",
-    "information-40": "#065478",
-    "information-50": "#176E9B",
-    "information-60": "#5296BE",
-    "information-70": "#82B5DA",
-    "information-80": "#ACCFE7",
-    "information-90": "#CCE3F1",
-    "information-95": "#E3F1F8",
-    "information-100": "#F4FAFD",
+    "info-10": "#021824",
+    "info-20": "#032B3F",
+    "info-30": "#053D59",
+    "info-40": "#065478",
+    "info-50": "#176E9B",
+    "info-60": "#5296BE",
+    "info-70": "#82B5DA",
+    "info-80": "#ACCFE7",
+    "info-90": "#CCE3F1",
+    "info-95": "#E3F1F8",
+    "info-100": "#F4FAFD",
+    white: "#FFFFFF",
+    black: "#000000",
 };

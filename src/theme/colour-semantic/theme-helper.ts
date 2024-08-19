@@ -1,16 +1,11 @@
-import { getPrimitiveColour } from "../colour-primitive/theme-helper";
-import { getCollection, getValue } from "../helpers";
-import { Colour } from "../index";
+import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import {
     ColourScheme,
-    ColourSet,
+    SemanticColourSet,
     SematicColourCollectionMap,
-    SematicColourSet,
     ThemeCollectionSpec,
     ThemeContextKeys,
-    ThemeSpec,
 } from "../types";
-import { BookingSGColourSet } from "./specs/bookingsg-semantic-tokens";
 import { LifeSGColourSet } from "./specs/lifesg-semantic-tokens";
 
 const ColourSpec: ThemeCollectionSpec<
@@ -27,18 +22,18 @@ const ColourSpec: ThemeCollectionSpec<
     defaultValue: "lifesg",
 };
 
-export const getSemanticColour = (key: keyof SematicColourSet) => {
-    return (props: any): string => {
-        const theme = props.theme as ThemeSpec;
-        const colorSet: SematicColourSet = getCollection(
+export const getSemanticColour = (key: keyof SemanticColourSet) => {
+    return (props: StyledComponentProps): string => {
+        const theme = props.theme;
+        const colorSet: SemanticColourSet = getCollection(
             ColourSpec,
             theme[ThemeContextKeys.colourScheme]
         );
 
         // check for an override
-        let colorValue =
-            theme.overrides && theme.overrides.color
-                ? getValue(colorSet, key, theme.overrides.color)
+        const colorValue =
+            theme.overrides && theme.overrides.sematiccolour
+                ? getValue(colorSet, key, theme.overrides.sematiccolour)
                 : colorSet[key];
 
         // If function, resolve with props
@@ -74,6 +69,7 @@ export const ColourSemantic = {
     "icon-success": getSemanticColour("icon-success"),
     "icon-inverse": getSemanticColour("icon-inverse"),
     "icon-subtle": getSemanticColour("icon-subtle"),
+    "icon-strongest": getSemanticColour("icon-strongest"),
     "icon-primary": getSemanticColour("icon-primary"),
     "icon-primary-subtle": getSemanticColour("icon-primary-subtle"),
     "icon-primary-subtlest": getSemanticColour("icon-primary-subtlest"),
@@ -81,6 +77,7 @@ export const ColourSemantic = {
     "icon-selected-disabled": getSemanticColour("icon-selected-disabled"),
     "icon-warning": getSemanticColour("icon-warning"),
     "icon-error": getSemanticColour("icon-error"),
+    "icon-error-strong": getSemanticColour("icon-error-strong"),
     "icon-info": getSemanticColour("icon-info"),
 
     border: getSemanticColour("border"),
@@ -109,7 +106,8 @@ export const ColourSemantic = {
     "background-disabled": getSemanticColour("background-disabled"),
     "background-success": getSemanticColour("background-success"),
     "background-inverse": getSemanticColour("background-inverse"),
-    "background-subtle": getSemanticColour("background-subtle"),
+    "background-strong": getSemanticColour("background-strong"),
+    "background-stronger": getSemanticColour("background-stronger"),
     "background-hover-strong": getSemanticColour("background-hover-strong"),
     "background-hover-subtle": getSemanticColour("background-hover-subtle"),
     "background-hover-neutral": getSemanticColour("background-hover-neutral"),
@@ -135,6 +133,10 @@ export const ColourSemantic = {
     "background-warning": getSemanticColour("background-warning"),
     "background-error": getSemanticColour("background-error"),
     "background-info": getSemanticColour("background-info"),
+    "background-error-strong": getSemanticColour("background-error-strong"),
+    "background-error-strong-hover": getSemanticColour(
+        "background-error-strong-hover"
+    ),
 
     "overlay-strong": getSemanticColour("overlay-strong"),
     "overlay-subtle": getSemanticColour("overlay-subtle"),

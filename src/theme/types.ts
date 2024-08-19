@@ -1,8 +1,4 @@
-import get from "lodash/get";
-import { CSSProp } from "styled-components";
-
-// For ColorSet:
-export type ColourSet = {
+export type PrimitiveColourSet = {
     "brand-10": string;
     "brand-20": string;
     "brand-30": string;
@@ -80,106 +76,112 @@ export type ColourSet = {
     "error-90": string;
     "error-95": string;
     "error-100": string;
-    "information-10": string;
-    "information-20": string;
-    "information-30": string;
-    "information-40": string;
-    "information-50": string;
-    "information-60": string;
-    "information-70": string;
-    "information-80": string;
-    "information-90": string;
-    "information-95": string;
-    "information-100": string;
-    white?: string | undefined;
-    black?: string | undefined;
+    "info-10": string;
+    "info-20": string;
+    "info-30": string;
+    "info-40": string;
+    "info-50": string;
+    "info-60": string;
+    "info-70": string;
+    "info-80": string;
+    "info-90": string;
+    "info-95": string;
+    "info-100": string;
+    white: string;
+    black: string;
 };
 
-// For SematicColorSet:
-export type SematicColourSet = {
-    text: string | ((props: any) => string);
-    "text-hover": string | ((props: any) => string);
-    "text-selected": string | ((props: any) => string);
-    "text-disabled": string | ((props: any) => string);
-    "text-success": string | ((props: any) => string);
-    "text-inverse": string | ((props: any) => string);
-    "text-subtle": string | ((props: any) => string);
-    "text-subtler": string | ((props: any) => string);
-    "text-subtlest": string | ((props: any) => string);
-    "text-disabled-subtle": string | ((props: any) => string);
-    "text-disabled-subtlest": string | ((props: any) => string);
-    "text-selected-disabled": string | ((props: any) => string);
-    "text-warning": string | ((props: any) => string);
-    "text-error": string | ((props: any) => string);
-    "text-info": string | ((props: any) => string);
+export type SemanticColourValue = string | ((props: any) => string);
 
-    icon: string | ((props: any) => string);
-    "icon-hover": string | ((props: any) => string);
-    "icon-selected": string | ((props: any) => string);
-    "icon-disabled": string | ((props: any) => string);
-    "icon-success": string | ((props: any) => string);
-    "icon-inverse": string | ((props: any) => string);
-    "icon-subtle": string | ((props: any) => string);
-    "icon-primary": string | ((props: any) => string);
-    "icon-primary-subtle": string | ((props: any) => string);
-    "icon-primary-subtlest": string | ((props: any) => string);
-    "icon-disabled-subtle": string | ((props: any) => string);
-    "icon-selected-disabled": string | ((props: any) => string);
-    "icon-warning": string | ((props: any) => string);
-    "icon-error": string | ((props: any) => string);
-    "icon-info": string | ((props: any) => string);
+export type SemanticColourSet = {
+    text: SemanticColourValue;
+    "text-hover": SemanticColourValue;
+    "text-selected": SemanticColourValue;
+    "text-disabled": SemanticColourValue;
+    "text-success": SemanticColourValue;
+    "text-inverse": SemanticColourValue;
+    "text-subtle": SemanticColourValue;
+    "text-subtler": SemanticColourValue;
+    "text-subtlest": SemanticColourValue;
+    "text-disabled-subtle": SemanticColourValue;
+    "text-disabled-subtlest": SemanticColourValue;
+    "text-selected-disabled": SemanticColourValue;
+    "text-warning": SemanticColourValue;
+    "text-error": SemanticColourValue;
+    "text-info": SemanticColourValue;
 
-    border: string | ((props: any) => string);
-    "border-hover": string | ((props: any) => string);
-    "border-selected": string | ((props: any) => string);
-    "border-disabled": string | ((props: any) => string);
-    "border-success": string | ((props: any) => string);
-    "border-inverse": string | ((props: any) => string);
-    "border-strong": string | ((props: any) => string);
-    "border-primary": string | ((props: any) => string);
-    "border-primary-subtle": string | ((props: any) => string);
-    "border-hover-strong": string | ((props: any) => string);
-    "border-selected-subtle": string | ((props: any) => string);
-    "border-selected-subtlest": string | ((props: any) => string);
-    "border-focus": string | ((props: any) => string);
-    "border-focus-strong": string | ((props: any) => string);
-    "border-selected-disabled": string | ((props: any) => string);
-    "border-warning": string | ((props: any) => string);
-    "border-error": string | ((props: any) => string);
-    "border-error-focus": string | ((props: any) => string);
-    "border-info": string | ((props: any) => string);
+    icon: SemanticColourValue;
+    "icon-hover": SemanticColourValue;
+    "icon-selected": SemanticColourValue;
+    "icon-disabled": SemanticColourValue;
+    "icon-success": SemanticColourValue;
+    "icon-inverse": SemanticColourValue;
+    "icon-subtle": SemanticColourValue;
+    "icon-strongest": SemanticColourValue;
+    "icon-primary": SemanticColourValue;
+    "icon-primary-subtle": SemanticColourValue;
+    "icon-primary-subtlest": SemanticColourValue;
+    "icon-disabled-subtle": SemanticColourValue;
+    "icon-selected-disabled": SemanticColourValue;
+    "icon-warning": SemanticColourValue;
+    "icon-error": SemanticColourValue;
+    "icon-error-strong": SemanticColourValue;
+    "icon-info": SemanticColourValue;
 
-    background: string | ((props: any) => string);
-    "background-hover": string | ((props: any) => string);
-    "background-selected": string | ((props: any) => string);
-    "background-disabled": string | ((props: any) => string);
-    "background-success": string | ((props: any) => string);
-    "background-inverse": string | ((props: any) => string);
-    "background-subtle": string | ((props: any) => string);
-    "background-hover-strong": string | ((props: any) => string);
-    "background-hover-subtle": string | ((props: any) => string);
-    "background-hover-neutral": string | ((props: any) => string);
-    "background-primary": string | ((props: any) => string);
-    "background-primary-hover": string | ((props: any) => string);
-    "background-primary-subtle": string | ((props: any) => string);
-    "background-primary-subtlest": string | ((props: any) => string);
-    "background-primary-subtlest-hover": string | ((props: any) => string);
-    "background-primary-subtlest-selected": string | ((props: any) => string);
-    "background-selected-strong": string | ((props: any) => string);
-    "background-selected-hover": string | ((props: any) => string);
-    "background-selected-disabled": string | ((props: any) => string);
-    "background-warning": string | ((props: any) => string);
-    "background-error": string | ((props: any) => string);
-    "background-info": string | ((props: any) => string);
+    border: SemanticColourValue;
+    "border-hover": SemanticColourValue;
+    "border-selected": SemanticColourValue;
+    "border-disabled": SemanticColourValue;
+    "border-success": SemanticColourValue;
+    "border-inverse": SemanticColourValue;
+    "border-strong": SemanticColourValue;
+    "border-primary": SemanticColourValue;
+    "border-primary-subtle": SemanticColourValue;
+    "border-hover-strong": SemanticColourValue;
+    "border-selected-subtle": SemanticColourValue;
+    "border-selected-subtlest": SemanticColourValue;
+    "border-focus": SemanticColourValue;
+    "border-focus-strong": SemanticColourValue;
+    "border-selected-disabled": SemanticColourValue;
+    "border-warning": SemanticColourValue;
+    "border-error": SemanticColourValue;
+    "border-error-focus": SemanticColourValue;
+    "border-info": SemanticColourValue;
 
-    "overlay-strong": string | ((props: any) => string);
-    "overlay-subtle": string | ((props: any) => string);
-    "overlay-inverse-gradient": string | ((props: any) => string);
+    background: SemanticColourValue;
+    "background-hover": SemanticColourValue;
+    "background-selected": SemanticColourValue;
+    "background-disabled": SemanticColourValue;
+    "background-success": SemanticColourValue;
+    "background-inverse": SemanticColourValue;
+    "background-strong": SemanticColourValue;
+    "background-stronger": SemanticColourValue;
+    "background-hover-strong": SemanticColourValue;
+    "background-hover-subtle": SemanticColourValue;
+    "background-hover-neutral": SemanticColourValue;
+    "background-primary": SemanticColourValue;
+    "background-primary-hover": SemanticColourValue;
+    "background-primary-subtle": SemanticColourValue;
+    "background-primary-subtlest": SemanticColourValue;
+    "background-primary-subtlest-hover": SemanticColourValue;
+    "background-primary-subtlest-selected": SemanticColourValue;
+    "background-selected-strong": SemanticColourValue;
+    "background-selected-hover": SemanticColourValue;
+    "background-selected-disabled": SemanticColourValue;
+    "background-warning": SemanticColourValue;
+    "background-error": SemanticColourValue;
+    "background-info": SemanticColourValue;
+    "background-error-strong": SemanticColourValue;
+    "background-error-strong-hover": SemanticColourValue;
 
-    hyperlink: string | ((props: any) => string);
-    "hyperlink-inverse": string | ((props: any) => string);
-    "focus-ring": string | ((props: any) => string);
-    "focus-ring-inverse": string | ((props: any) => string);
+    "overlay-strong": SemanticColourValue;
+    "overlay-subtle": SemanticColourValue;
+    "overlay-inverse-gradient": SemanticColourValue;
+
+    hyperlink: SemanticColourValue;
+    "hyperlink-inverse": SemanticColourValue;
+    "focus-ring": SemanticColourValue;
+    "focus-ring-inverse": SemanticColourValue;
 };
 
 export type ColourScheme =
@@ -190,25 +192,27 @@ export type ColourScheme =
     | "ccube";
 
 export type ColourCollectionsMap = {
-    [key in ColourScheme]: ColourSet;
+    [key in ColourScheme]: PrimitiveColourSet;
 };
 
 export type SematicColourCollectionMap = {
-    [key in ColourScheme]: SematicColourSet;
+    [key in ColourScheme]: SemanticColourSet;
 };
 
 export enum ThemeContextKeys {
     colourScheme = "colourScheme",
 }
 
-export type ColourSetOptions = Partial<ColourSet> | Partial<SematicColourSet>;
+export type ColourSetOptions = Partial<PrimitiveColourSet>;
+export type SematicColourSetOptions = Partial<SemanticColourSet>;
 
 export interface ThemeSpecOptions {
-    color?: ColourSetOptions | undefined;
+    colour?: ColourSetOptions | undefined;
+    sematiccolour?: SematicColourSetOptions | undefined;
 }
 
 export interface ThemeSpec {
-    [ThemeContextKeys.colourScheme]?: ColourScheme;
+    [ThemeContextKeys.colourScheme]: ColourScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 

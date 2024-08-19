@@ -1,18 +1,16 @@
-import { get } from "lodash";
 import {
     ColourCollectionsMap,
     ColourScheme,
-    ColourSet,
+    PrimitiveColourSet,
     ThemeCollectionSpec,
     ThemeContextKeys,
-    ThemeSpec,
 } from "../types";
 import { BookingSgColourSet } from "./specs/bookingsg-colour-set";
 import { CCubeColourSet } from "./specs/ccube-colour-set";
 import { LifeSgColourSet } from "./specs/lifesg-colour-set";
 import { MyLegacyColourSet } from "./specs/mylegacy-colour-set";
 import { RBSColourSet } from "./specs/rbs-colour-set";
-import { getCollection, getValue } from "../helpers";
+import { StyledComponentProps, getCollection, getValue } from "../helpers";
 
 const ColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> = {
     collections: {
@@ -25,16 +23,16 @@ const ColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> = {
     defaultValue: "lifesg",
 };
 
-export const getPrimitiveColour = (key: keyof ColourSet) => {
-    return (props: any): string => {
-        const theme = props.theme as ThemeSpec;
-        const colorSet: ColourSet = getCollection(
+export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
+    return (props: StyledComponentProps): string => {
+        const theme = props.theme;
+        const colorSet: PrimitiveColourSet = getCollection(
             ColourSpec,
             theme[ThemeContextKeys.colourScheme]
         );
 
-        if (theme.overrides && theme.overrides.color) {
-            const a = getValue(colorSet, key, theme.overrides.color);
+        if (theme.overrides && theme.overrides.colour) {
+            const a = getValue(colorSet, key, theme.overrides.colour);
             return a;
         } else {
             return colorSet[key];
@@ -109,17 +107,17 @@ export const PrimitiveColour = {
     "error-90": getPrimitiveColour("error-90"),
     "error-95": getPrimitiveColour("error-95"),
     "error-100": getPrimitiveColour("error-100"),
-    "information-10": getPrimitiveColour("information-10"),
-    "information-20": getPrimitiveColour("information-20"),
-    "information-30": getPrimitiveColour("information-30"),
-    "information-40": getPrimitiveColour("information-40"),
-    "information-50": getPrimitiveColour("information-50"),
-    "information-60": getPrimitiveColour("information-60"),
-    "information-70": getPrimitiveColour("information-70"),
-    "information-80": getPrimitiveColour("information-80"),
-    "information-90": getPrimitiveColour("information-90"),
-    "information-95": getPrimitiveColour("information-95"),
-    "information-100": getPrimitiveColour("information-100"),
+    "info-10": getPrimitiveColour("info-10"),
+    "info-20": getPrimitiveColour("info-20"),
+    "info-30": getPrimitiveColour("info-30"),
+    "info-40": getPrimitiveColour("info-40"),
+    "info-50": getPrimitiveColour("info-50"),
+    "info-60": getPrimitiveColour("info-60"),
+    "info-70": getPrimitiveColour("info-70"),
+    "info-80": getPrimitiveColour("info-80"),
+    "info-90": getPrimitiveColour("info-90"),
+    "info-95": getPrimitiveColour("info-95"),
+    "info-100": getPrimitiveColour("info-100"),
     white: getPrimitiveColour("white"),
     black: getPrimitiveColour("black"),
 };
