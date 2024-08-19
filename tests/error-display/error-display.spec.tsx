@@ -19,7 +19,7 @@ describe("ErrorDisplay", () => {
 
     it("should render the component", () => {
         render(
-            <ThemeProvider theme={V2_BaseTheme}>
+            <ThemeProvider theme={V2_BaseTheme as any}>
                 <ErrorDisplay type="404" />
             </ThemeProvider>
         );
@@ -37,7 +37,7 @@ describe("ErrorDisplay", () => {
         };
 
         render(
-            <ThemeProvider theme={V2_BaseTheme}>
+            <ThemeProvider theme={V2_BaseTheme as any}>
                 <ErrorDisplay type="404" actionButton={actionButton} />
             </ThemeProvider>
         );
@@ -49,7 +49,7 @@ describe("ErrorDisplay", () => {
 
     it("should be able to render custom title if specified", () => {
         render(
-            <ThemeProvider theme={V2_BaseTheme}>
+            <ThemeProvider theme={V2_BaseTheme as any}>
                 <ErrorDisplay type="404" title={CUSTOM_TITLE} />
             </ThemeProvider>
         );
@@ -61,7 +61,7 @@ describe("ErrorDisplay", () => {
 
     it("should not render any text content if the imageOnly prop is specified", () => {
         render(
-            <ThemeProvider theme={V2_BaseTheme}>
+            <ThemeProvider theme={V2_BaseTheme as any}>
                 <ErrorDisplay
                     type="404"
                     title={CUSTOM_TITLE}
@@ -80,7 +80,7 @@ describe("ErrorDisplay", () => {
     describe("description", () => {
         it("should be able to render custom description", () => {
             render(
-                <ThemeProvider theme={V2_BaseTheme}>
+                <ThemeProvider theme={V2_BaseTheme as any}>
                     <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
                 </ThemeProvider>
             );
@@ -90,7 +90,7 @@ describe("ErrorDisplay", () => {
 
         it("should be able to render JSX.Element", () => {
             render(
-                <ThemeProvider theme={V2_BaseTheme}>
+                <ThemeProvider theme={V2_BaseTheme as any}>
                     <ErrorDisplay
                         type="404"
                         description={<div>{CUSTOM_DESCRIPTION}</div>}
@@ -130,7 +130,7 @@ describe("ErrorDisplay", () => {
             "should render %s error correctly",
             (type: ErrorDisplayType) => {
                 render(
-                    <ThemeProvider theme={V2_BaseTheme}>
+                    <ThemeProvider theme={V2_BaseTheme as any}>
                         <ErrorDisplay type={type} />
                     </ThemeProvider>
                 );
@@ -156,7 +156,7 @@ describe("ErrorDisplay", () => {
             "should render bookingsg %s error correctly",
             (type: ErrorDisplayType) => {
                 render(
-                    <ThemeProvider theme={V2_BookingSGTheme}>
+                    <ThemeProvider theme={V2_BookingSGTheme as any}>
                         <ErrorDisplay type={type} />
                     </ThemeProvider>
                 );
@@ -183,7 +183,7 @@ describe("ErrorDisplay", () => {
 
         test("should use the specified illustration based on the illustrationScheme prop", () => {
             render(
-                <ThemeProvider theme={V2_BookingSGTheme}>
+                <ThemeProvider theme={V2_BookingSGTheme as any}>
                     <ErrorDisplay type={"400"} illustrationScheme="base" />
                 </ThemeProvider>
             );
@@ -214,7 +214,7 @@ describe("ErrorDisplay", () => {
             const additionalProps = { dateString: "01/01/2023" };
 
             render(
-                <ThemeProvider theme={V2_BaseTheme}>
+                <ThemeProvider theme={V2_BaseTheme as any}>
                     <ErrorDisplay
                         type={type}
                         additionalProps={additionalProps}

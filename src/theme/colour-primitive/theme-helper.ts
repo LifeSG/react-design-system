@@ -7,11 +7,11 @@ import {
     ThemeContextKeys,
     ThemeSpec,
 } from "../types";
-import { BookingSgColourSet } from "./specs/bookingsg-color-set";
-import { CCubeColourSet } from "./specs/ccube-color-set";
-import { LifeSgColourSet } from "./specs/lifesg-color-set";
-import { MyLegacyColourSet } from "./specs/mylegacy-color-set";
-import { RBSColourSet } from "./specs/rbs-color-set";
+import { BookingSgColourSet } from "./specs/bookingsg-colour-set";
+import { CCubeColourSet } from "./specs/ccube-colour-set";
+import { LifeSgColourSet } from "./specs/lifesg-colour-set";
+import { MyLegacyColourSet } from "./specs/mylegacy-colour-set";
+import { RBSColourSet } from "./specs/rbs-colour-set";
 import { getCollection, getValue } from "../helpers";
 
 const ColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> = {
