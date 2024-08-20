@@ -1,5 +1,18 @@
-import { TypographySet } from "../../types";
-import { generateTypographyCSS } from "../helper";
+import { css } from "styled-components";
+import { FontSet, TypographySet } from "../../types";
+import { getFontValues } from "../../font/helper";
+
+const generateTypographyCSS = (
+    fontSizeKey: keyof FontSet,
+    fontWeightKey: keyof FontSet,
+    lineHeightKey: keyof FontSet,
+    letterSpacingKey: keyof FontSet
+) => css`
+    font-size: ${getFontValues(fontSizeKey)};
+    font-weight: ${getFontValues(fontWeightKey)};
+    line-height: ${getFontValues(lineHeightKey)};
+    letter-spacing: ${getFontValues(letterSpacingKey)};
+`;
 
 export const LifeSgTypographySet: TypographySet = {
     "header-xxl-light": generateTypographyCSS(
