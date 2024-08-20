@@ -1,4 +1,4 @@
-import { FontSet } from "../../types";
+import { FontSet } from "../types";
 
 // Pending for different font styling
 export const LifeSgFontSet: FontSet = {

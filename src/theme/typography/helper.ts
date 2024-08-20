@@ -1,8 +1,8 @@
 import { css } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { FontScheme, ThemeCollectionSpec, TypographySet } from "../types";
+import { FontScheme, ThemeCollectionSpec } from "../types";
 import { LifeSgTypographySet } from "./specs/typography-set";
-import { TypoGraphyCollectionMap } from "./types";
+import { TypoGraphyCollectionMap, TypographySet } from "./types";
 
 const TypographySpec: ThemeCollectionSpec<TypoGraphyCollectionMap, FontScheme> =
     {

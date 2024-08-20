@@ -1,6 +1,8 @@
 import { css } from "styled-components";
-import { FontSet, TypographySet } from "../../types";
+
 import { getFontValues } from "../../font/helper";
+import { FontSet } from "../../font/types";
+import { TypographySet } from "../types";
 
 const generateTypographyCSS = (
     fontSizeKey: keyof FontSet,
