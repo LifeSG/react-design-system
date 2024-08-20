@@ -120,7 +120,7 @@ export const FontSizeDisplay = ({
 
     return (
         <FontSizeDisplayWrapper>
-            <ThemeProvider theme={theme || V2_BaseTheme}>
+            <ThemeProvider theme={theme || (V2_BaseTheme as any)}>
                 <FontSizeList>{renderFontSizes()}</FontSizeList>
             </ThemeProvider>
         </FontSizeDisplayWrapper>

@@ -38,6 +38,7 @@
     "dependencies": {
         "@floating-ui/dom": "^1.5.4",
         "@floating-ui/react": "^0.26.6",
+        "@lifesg/react-design-system": "^2.7.0-canary.3",
         "fabric": "^5.3.0",
         "immer": "^10.0.2",
         "react-slider": "^2.0.6",
@@ -101,7 +102,7 @@
         "jest-canvas-mock": "^2.3.1",
         "jest-environment-jsdom": "^29.7.0",
         "jest-junit": "^16.0.0",
-        "jest-styled-components": "^7.0.8",
+        "jest-styled-components": "^7.2.0",
         "jscodeshift": "^0.16.1",
         "lint-staged": "^12.3.7",
         "lodash": "^4.17.21",

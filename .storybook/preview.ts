@@ -3,24 +3,24 @@ import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
 import {
-    BaseTheme,
-    BookingSGTheme,
-    CCubeTheme,
-    MyLegacyTheme,
-    OneServiceTheme,
-    RBSTheme,
-} from "../src/theme";
+    V2_BaseTheme,
+    V2_BookingSGTheme,
+    V2_CCubeTheme,
+    V2_MyLegacyTheme,
+    V2_OneServiceTheme,
+    V2_RBSTheme,
+} from "../src/v2_theme";
 
 const preview: Preview = {
     decorators: [
         withThemeFromJSXProvider({
             themes: {
-                LifeSG: BaseTheme,
-                BookingSG: BookingSGTheme,
-                CCube: CCubeTheme,
-                MyLegacy: MyLegacyTheme,
-                RBS: RBSTheme,
-                OneService: OneServiceTheme,
+                LifeSG: V2_BaseTheme,
+                BookingSG: V2_BookingSGTheme,
+                CCube: V2_CCubeTheme,
+                MyLegacy: V2_MyLegacyTheme,
+                RBS: V2_RBSTheme,
+                OneService: V2_OneServiceTheme,
             },
             Provider: ThemeProvider,
         }),
