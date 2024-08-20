@@ -41,7 +41,7 @@ describe("StyledTypographyTest", () => {
         );
     });
 
-    it("should apply correct typography styles based on the overridden theme", () => {
+    it("should apply correct typography styles when overriding typography token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -77,7 +77,7 @@ describe("StyledTypographyTest", () => {
         );
     });
 
-    it("should apply correct typography styles based on the overridden theme", () => {
+    it("should apply correct font styles based on the theme", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
         };
