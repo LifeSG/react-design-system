@@ -18,6 +18,7 @@ export const FilterItemCheckbox = <T,>({
     onSelect,
     labelExtractor,
     valueExtractor,
+    useContentWidth,
     ...filterItemProps
 }: FilterItemCheckboxProps<T>) => {
     // =============================================================================
@@ -180,6 +181,7 @@ export const FilterItemCheckbox = <T,>({
                     (minimisedHeight && index <= lastVisibleElementIndex)
                 }
                 onChange={handleItemClick(option)}
+                useContentWidth={useContentWidth}
             >
                 {optionLabel}
             </StyledToggle>

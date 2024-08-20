@@ -38,6 +38,13 @@ const FILTER_CHECKBOX_DATA: ApiTableSectionProps[] = [
                 propTypes: ["(options: T[]) => void"],
             },
             {
+                name: "useContentWidth",
+                description:
+                    "Changes the minimum width of the container to fit its content",
+                propTypes: ["boolean"],
+                defaultValue: `false`,
+            },
+            {
                 name: "labelExtractor",
                 description: (
                     <>
