@@ -1,8 +1,14 @@
 import { css } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { FontScheme, ThemeCollectionSpec, TypographySet } from "../types";
+import {
+    FontScheme,
+    FontSet,
+    ThemeCollectionSpec,
+    TypographySet,
+} from "../types";
 import { LifeSgTypographySet } from "./specs/typography-set";
 import { TypoGraphyCollectionMap } from "./types";
+import { getFontValues } from "../font/helper";
 
 const TypographySpec: ThemeCollectionSpec<TypoGraphyCollectionMap, FontScheme> =
     {
@@ -42,6 +48,18 @@ export const getTypography = (key: keyof TypographySet) => {
         `;
     };
 };
+
+export const generateTypographyCSS = (
+    fontsizeKey: keyof FontSet,
+    fontweightKey: keyof FontSet,
+    lineHeightKey: keyof FontSet,
+    letterSpacingKey: keyof FontSet
+) => css`
+    font-size: ${getFontValues(fontsizeKey)};
+    font-weight: ${getFontValues(fontweightKey)};
+    line-height: ${getFontValues(lineHeightKey)};
+    letter-spacing: ${getFontValues(letterSpacingKey)};
+`;
 
 export const TypographyValues = {
     "header-xxl-light": getTypography("header-xxl-light"),

@@ -1,269 +1,257 @@
-import { css } from "styled-components";
-import { getFontValues } from "../../font/helper";
 import { TypographySet } from "../../types";
+import { generateTypographyCSS } from "../helper";
 
 export const LifeSgTypographySet: TypographySet = {
-    "header-xxl-light": css`
-        font-size: ${getFontValues("header-size-xxl")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("header-lh-xxl")};
-        letter-spacing: ${getFontValues("header-ls-xxl")};
-    `,
-    "header-xxl-regular": css`
-        font-size: ${getFontValues("header-size-xxl")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("header-lh-xxl")};
-        letter-spacing: ${getFontValues("header-ls-xxl")};
-    `,
-    "header-xxl-semibold": css`
-        font-size: ${getFontValues("header-size-xxl")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("header-lh-xxl")};
-        letter-spacing: ${getFontValues("header-ls-xxl")};
-    `,
-    "header-xxl-bold": css`
-        font-size: ${getFontValues("header-size-xxl")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("header-lh-xxl")};
-        letter-spacing: ${getFontValues("header-ls-xxl")};
-    `,
-
-    "header-xl-light": css`
-        font-size: ${getFontValues("header-size-xl")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("header-lh-xl")};
-        letter-spacing: ${getFontValues("header-ls-xl")};
-    `,
-    "header-xl-regular": css`
-        font-size: ${getFontValues("header-size-xl")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("header-lh-xl")};
-        letter-spacing: ${getFontValues("header-ls-xl")};
-    `,
-    "header-xl-semibold": css`
-        font-size: ${getFontValues("header-size-xl")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("header-lh-xl")};
-        letter-spacing: ${getFontValues("header-ls-xl")};
-    `,
-    "header-xl-bold": css`
-        font-size: ${getFontValues("header-size-xl")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("header-lh-xl")};
-        letter-spacing: ${getFontValues("header-ls-xl")};
-    `,
-
-    "header-lg-light": css`
-        font-size: ${getFontValues("header-size-lg")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("header-lh-lg")};
-        letter-spacing: ${getFontValues("header-ls-lg")};
-    `,
-    "header-lg-regular": css`
-        font-size: ${getFontValues("header-size-lg")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("header-lh-lg")};
-        letter-spacing: ${getFontValues("header-ls-lg")};
-    `,
-    "header-lg-semibold": css`
-        font-size: ${getFontValues("header-size-lg")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("header-lh-lg")};
-        letter-spacing: ${getFontValues("header-ls-lg")};
-    `,
-    "header-lg-bold": css`
-        font-size: ${getFontValues("header-size-lg")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("header-lh-lg")};
-        letter-spacing: ${getFontValues("header-ls-lg")};
-    `,
-
-    "header-md-light": css`
-        font-size: ${getFontValues("header-size-md")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("header-lh-md")};
-        letter-spacing: ${getFontValues("header-ls-md")};
-    `,
-    "header-md-regular": css`
-        font-size: ${getFontValues("header-size-md")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("header-lh-md")};
-        letter-spacing: ${getFontValues("header-ls-md")};
-    `,
-    "header-md-semibold": css`
-        font-size: ${getFontValues("header-size-md")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("header-lh-md")};
-        letter-spacing: ${getFontValues("header-ls-md")};
-    `,
-    "header-md-bold": css`
-        font-size: ${getFontValues("header-size-md")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("header-lh-md")};
-        letter-spacing: ${getFontValues("header-ls-md")};
-    `,
-
-    "header-sm-light": css`
-        font-size: ${getFontValues("header-size-sm")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("header-lh-sm")};
-        letter-spacing: ${getFontValues("header-ls-sm")};
-    `,
-    "header-sm-regular": css`
-        font-size: ${getFontValues("header-size-sm")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("header-lh-sm")};
-        letter-spacing: ${getFontValues("header-ls-sm")};
-    `,
-    "header-sm-semibold": css`
-        font-size: ${getFontValues("header-size-sm")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("header-lh-sm")};
-        letter-spacing: ${getFontValues("header-ls-sm")};
-    `,
-    "header-sm-bold": css`
-        font-size: ${getFontValues("header-size-sm")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("header-lh-sm")};
-        letter-spacing: ${getFontValues("header-ls-sm")};
-    `,
-
-    "header-xs-light": css`
-        font-size: ${getFontValues("header-size-xs")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("header-lh-xs")};
-        letter-spacing: ${getFontValues("header-ls-xs")};
-    `,
-    "header-xs-regular": css`
-        font-size: ${getFontValues("header-size-xs")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("header-lh-xs")};
-        letter-spacing: ${getFontValues("header-ls-xs")};
-    `,
-    "header-xs-semibold": css`
-        font-size: ${getFontValues("header-size-xs")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("header-lh-xs")};
-        letter-spacing: ${getFontValues("header-ls-xs")};
-    `,
-    "header-xs-bold": css`
-        font-size: ${getFontValues("header-size-xs")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("header-lh-xs")};
-        letter-spacing: ${getFontValues("header-ls-xs")};
-    `,
-
-    "body-baseline-light": css`
-        font-size: ${getFontValues("body-size-baseline")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("body-lh-baseline")};
-        letter-spacing: ${getFontValues("body-ls-baseline")};
-    `,
-    "body-baseline-regular": css`
-        font-size: ${getFontValues("body-size-baseline")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("body-lh-baseline")};
-        letter-spacing: ${getFontValues("body-ls-baseline")};
-    `,
-    "body-baseline-semibold": css`
-        font-size: ${getFontValues("body-size-baseline")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("body-lh-baseline")};
-        letter-spacing: ${getFontValues("body-ls-baseline")};
-    `,
-    "body-baseline-bold": css`
-        font-size: ${getFontValues("body-size-baseline")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("body-lh-baseline")};
-        letter-spacing: ${getFontValues("body-ls-baseline")};
-    `,
-
-    "body-lg-light": css`
-        font-size: ${getFontValues("body-size-lg")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("body-lh-lg")};
-        letter-spacing: ${getFontValues("body-ls-lg")};
-    `,
-    "body-lg-regular": css`
-        font-size: ${getFontValues("body-size-lg")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("body-lh-lg")};
-        letter-spacing: ${getFontValues("body-ls-lg")};
-    `,
-    "body-lg-semibold": css`
-        font-size: ${getFontValues("body-size-lg")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("body-lh-lg")};
-        letter-spacing: ${getFontValues("body-ls-lg")};
-    `,
-    "body-lg-bold": css`
-        font-size: ${getFontValues("body-size-lg")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("body-lh-lg")};
-        letter-spacing: ${getFontValues("body-ls-lg")};
-    `,
-
-    "body-md-light": css`
-        font-size: ${getFontValues("body-size-md")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("body-lh-md")};
-        letter-spacing: ${getFontValues("body-ls-md")};
-    `,
-    "body-md-regular": css`
-        font-size: ${getFontValues("body-size-md")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("body-lh-md")};
-        letter-spacing: ${getFontValues("body-ls-md")};
-    `,
-    "body-md-semibold": css`
-        font-size: ${getFontValues("body-size-md")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("body-lh-md")};
-        letter-spacing: ${getFontValues("body-ls-md")};
-    `,
-    "body-md-bold": css`
-        font-size: ${getFontValues("body-size-md")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("body-lh-md")};
-        letter-spacing: ${getFontValues("body-ls-md")};
-    `,
-
-    "body-sm-light": css`
-        font-size: ${getFontValues("body-size-sm")};
-        font-weight: ${getFontValues("weight-light")};
-        line-height: ${getFontValues("body-lh-sm")};
-        letter-spacing: ${getFontValues("body-ls-sm")};
-    `,
-    "body-sm-regular": css`
-        font-size: ${getFontValues("body-size-sm")};
-        font-weight: ${getFontValues("weight-regular")};
-        line-height: ${getFontValues("body-lh-sm")};
-        letter-spacing: ${getFontValues("body-ls-sm")};
-    `,
-    "body-sm-semibold": css`
-        font-size: ${getFontValues("body-size-sm")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("body-lh-sm")};
-        letter-spacing: ${getFontValues("body-ls-sm")};
-    `,
-    "body-sm-bold": css`
-        font-size: ${getFontValues("body-size-sm")};
-        font-weight: ${getFontValues("weight-bold")};
-        line-height: ${getFontValues("body-lh-sm")};
-        letter-spacing: ${getFontValues("body-ls-sm")};
-    `,
-
-    "formlabel-baseline-semibold": css`
-        font-size: ${getFontValues("formlabel-size-baseline")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("formlabel-size-baseline")};
-        letter-spacing: ${getFontValues("body-ls-baseline")};
-    `,
-
-    "formlabel-lg-semibold": css`
-        font-size: ${getFontValues("formlabel-size-lg")};
-        font-weight: ${getFontValues("weight-semibold")};
-        line-height: ${getFontValues("formlabel-size-lg")};
-        letter-spacing: ${getFontValues("body-ls-lg")};
-    `,
+    "header-xxl-light": generateTypographyCSS(
+        "header-size-xxl",
+        "weight-light",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xxl-regular": generateTypographyCSS(
+        "header-size-xxl",
+        "weight-regular",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xxl-semibold": generateTypographyCSS(
+        "header-size-xxl",
+        "weight-semibold",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xxl-bold": generateTypographyCSS(
+        "header-size-xxl",
+        "weight-bold",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xl-light": generateTypographyCSS(
+        "header-size-xl",
+        "weight-light",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-xl-regular": generateTypographyCSS(
+        "header-size-xl",
+        "weight-regular",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-xl-semibold": generateTypographyCSS(
+        "header-size-xl",
+        "weight-semibold",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-xl-bold": generateTypographyCSS(
+        "header-size-xl",
+        "weight-bold",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-lg-light": generateTypographyCSS(
+        "header-size-lg",
+        "weight-light",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-lg-regular": generateTypographyCSS(
+        "header-size-lg",
+        "weight-regular",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-lg-semibold": generateTypographyCSS(
+        "header-size-lg",
+        "weight-semibold",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-lg-bold": generateTypographyCSS(
+        "header-size-lg",
+        "weight-bold",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-md-light": generateTypographyCSS(
+        "header-size-md",
+        "weight-light",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-md-regular": generateTypographyCSS(
+        "header-size-md",
+        "weight-regular",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-md-semibold": generateTypographyCSS(
+        "header-size-md",
+        "weight-semibold",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-md-bold": generateTypographyCSS(
+        "header-size-md",
+        "weight-bold",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-sm-light": generateTypographyCSS(
+        "header-size-sm",
+        "weight-light",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-sm-regular": generateTypographyCSS(
+        "header-size-sm",
+        "weight-regular",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-sm-semibold": generateTypographyCSS(
+        "header-size-sm",
+        "weight-semibold",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-sm-bold": generateTypographyCSS(
+        "header-size-sm",
+        "weight-bold",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-xs-light": generateTypographyCSS(
+        "header-size-xs",
+        "weight-light",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "header-xs-regular": generateTypographyCSS(
+        "header-size-xs",
+        "weight-regular",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "header-xs-semibold": generateTypographyCSS(
+        "header-size-xs",
+        "weight-semibold",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "header-xs-bold": generateTypographyCSS(
+        "header-size-xs",
+        "weight-bold",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "body-baseline-light": generateTypographyCSS(
+        "body-size-baseline",
+        "weight-light",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-baseline-regular": generateTypographyCSS(
+        "body-size-baseline",
+        "weight-regular",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-baseline-semibold": generateTypographyCSS(
+        "body-size-baseline",
+        "weight-semibold",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-baseline-bold": generateTypographyCSS(
+        "body-size-baseline",
+        "weight-bold",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-lg-light": generateTypographyCSS(
+        "body-size-lg",
+        "weight-light",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-lg-regular": generateTypographyCSS(
+        "body-size-lg",
+        "weight-regular",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-lg-semibold": generateTypographyCSS(
+        "body-size-lg",
+        "weight-semibold",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-lg-bold": generateTypographyCSS(
+        "body-size-lg",
+        "weight-bold",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-md-light": generateTypographyCSS(
+        "body-size-md",
+        "weight-light",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-md-regular": generateTypographyCSS(
+        "body-size-md",
+        "weight-regular",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-md-semibold": generateTypographyCSS(
+        "body-size-md",
+        "weight-semibold",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-md-bold": generateTypographyCSS(
+        "body-size-md",
+        "weight-bold",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-sm-light": generateTypographyCSS(
+        "body-size-sm",
+        "weight-light",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "body-sm-regular": generateTypographyCSS(
+        "body-size-sm",
+        "weight-regular",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "body-sm-semibold": generateTypographyCSS(
+        "body-size-sm",
+        "weight-semibold",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "body-sm-bold": generateTypographyCSS(
+        "body-size-sm",
+        "weight-bold",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "formlabel-baseline-semibold": generateTypographyCSS(
+        "formlabel-size-baseline",
+        "weight-semibold",
+        "formlabel-size-baseline",
+        "body-ls-baseline"
+    ),
+    "formlabel-lg-semibold": generateTypographyCSS(
+        "formlabel-size-lg",
+        "weight-semibold",
+        "formlabel-size-lg",
+        "body-ls-lg"
+    ),
 };
