@@ -1,12 +1,4 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
-import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { Overlay } from "../overlay/overlay";
-import { MediaWidths } from "../spec/media-spec";
-import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
-import { FilterContext } from "./filter-context";
-import { FilterItem } from "./filter-item";
-import { FilterItemPage } from "./filter-item-page";
+import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import {
     DesktopContainer,
     FilterBody,
@@ -20,8 +12,15 @@ import {
     MobileContainer,
     MobileOverlayContainer,
 } from "./filter.styles";
+import { FilterContext } from "./filter-context";
+import { FilterItem } from "./filter-item";
+import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
+import { FilterItemPage } from "./filter-item-page";
 import { FilterProps, Mode } from "./types";
-import { FilterIcon } from "@lifesg/react-icons";
+import { MediaWidths } from "../spec/media-spec";
+import { Overlay } from "../overlay/overlay";
+import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const FilterBase = ({
     toggleFilterButtonLabel = "Filters",
