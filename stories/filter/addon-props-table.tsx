@@ -40,7 +40,7 @@ const FILTER_CHECKBOX_DATA: ApiTableSectionProps[] = [
             {
                 name: "useContentWidth",
                 description:
-                    "Changes the minimum width of the container to fit its content",
+                    "Changes the minimum width of the checkbox toggle to fit its content (on mobile)",
                 propTypes: ["boolean"],
                 defaultValue: `false`,
             },
