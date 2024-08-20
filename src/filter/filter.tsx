@@ -19,12 +19,13 @@ import {
     FilterTitle,
     MobileContainer,
     MobileOverlayContainer,
-    StyledFilterIcon,
 } from "./filter.styles";
 import { FilterProps, Mode } from "./types";
+import { FilterIcon } from "@lifesg/react-icons";
 
 const FilterBase = ({
     toggleFilterButtonLabel = "Filters",
+    toggleFilterButtonStyle = "light",
     headerTitle = "Filters",
     clearButtonDisabled = false,
     onClear,
@@ -117,11 +118,12 @@ const FilterBase = ({
             <>
                 <FilterButton
                     data-testid="filter-show-button"
-                    styleType="light"
+                    styleType={toggleFilterButtonStyle}
                     onClick={handleShowFilter}
                     type="button"
+                    icon={<FilterIcon />}
                 >
-                    <StyledFilterIcon /> {toggleFilterButtonLabel}
+                    {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
                     <MobileOverlayContainer

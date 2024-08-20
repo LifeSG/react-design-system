@@ -40,6 +40,13 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 defaultValue: `"Filters"`,
             },
             {
+                name: "toggleFilterButtonType",
+                description:
+                    "The style type of the filter toggle button (in mobile)",
+                propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
+                defaultValue: `"light"`,
+            },
+            {
                 name: "onDismiss",
                 description:
                     "Called when dismiss button is pressed (mobile only)",
