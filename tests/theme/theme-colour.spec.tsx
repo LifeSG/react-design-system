@@ -31,11 +31,11 @@ describe("Colour Themeing Test", () => {
         expect(container.firstChild).toHaveStyleRule("color", textColor);
     });
 
-    it("should apply correct styles based on the theme with override", () => {
+    it("should apply correct styles when overriding primitive colour token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             overrides: {
-                colour: {
+                primitiveColour: {
                     "primary-10": "#fefefe",
                 },
             },
@@ -57,11 +57,11 @@ describe("Colour Themeing Test", () => {
         expect(container.firstChild).toHaveStyleRule("color", textColor);
     });
 
-    it("should apply correct styles based on the theme", () => {
+    it("should apply correct styles when overriding semantic colour token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             overrides: {
-                sematiccolour: {
+                semanticColour: {
                     "border-primary": "#fefefe",
                 },
             },

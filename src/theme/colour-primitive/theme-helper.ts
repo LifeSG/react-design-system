@@ -27,11 +27,11 @@ export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
         const theme = props.theme;
         const colorSet: PrimitiveColourSet = getCollection(
             ColourSpec,
-            theme["colourScheme"]
+            theme.colourScheme
         );
 
-        if (theme.overrides && theme.overrides.colour) {
-            return getValue(colorSet, key, theme.overrides.colour);
+        if (theme.overrides && theme.overrides.primitiveColour) {
+            return getValue(colorSet, key, theme.overrides.primitiveColour);
         } else {
             return colorSet[key];
         }

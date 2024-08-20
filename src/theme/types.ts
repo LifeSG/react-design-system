@@ -195,8 +195,8 @@ export type ColourScheme =
     | "ccube";
 
 export interface ThemeSpecOptions {
-    colour?: PrimitiveColourSetOptions | undefined;
-    sematiccolour?: SemanticColourSetOptions | undefined;
+    primitiveColour?: PrimitiveColourSetOptions | undefined;
+    semanticColour?: SemanticColourSetOptions | undefined;
 }
 
 export interface ThemeSpec {

@@ -22,13 +22,13 @@ export const getSemanticColour = (key: keyof SemanticColourSet) => {
         const theme = props.theme;
         const colorSet: SemanticColourSet = getCollection(
             ColourSpec,
-            theme["colourScheme"]
+            theme.colourScheme
         );
 
         // check for an override
         const colorValue =
-            theme.overrides && theme.overrides.sematiccolour
-                ? getValue(colorSet, key, theme.overrides.sematiccolour)
+            theme.overrides && theme.overrides.semanticColour
+                ? getValue(colorSet, key, theme.overrides.semanticColour)
                 : colorSet[key];
 
         // If function, resolve with props
