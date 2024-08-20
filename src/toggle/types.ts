@@ -46,6 +46,8 @@ export interface ToggleProps
     /** Specifies if the remove button should be displayed */
     removable?: boolean | undefined;
     onRemove?: (() => void) | undefined;
+    /** Changes min-width to fit content */
+    useContentWidth?: boolean | undefined;
 }
 
 export interface ToggleCompositeSectionProps {
