@@ -2,6 +2,7 @@ import { PrimitiveColourSetOptions } from "./colour-primitive/types";
 import { SemanticColourSetOptions } from "./colour-semantic/types";
 import { TypographySetOptions } from "./typography/types";
 import { FontSetOptions } from "./font/types";
+import { AnimationSetOptions } from "./animation/types";
 
 export type {
     PrimitiveColourSet,
@@ -24,17 +25,20 @@ export type ColourScheme =
     | "ccube";
 
 export type FontScheme = "lifesg" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
+export type AnimationScheme = "lifesg";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
     font?: FontSetOptions | undefined;
+    animation?: AnimationSetOptions | undefined;
     typography?: TypographySetOptions | undefined;
 }
 
 export interface ThemeSpec {
     colourScheme: ColourScheme;
     fontScheme: FontScheme;
+    animationScheme?: AnimationScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 
