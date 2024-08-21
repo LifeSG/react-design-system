@@ -60,6 +60,6 @@ export interface FilterItemCheckboxProps<T>
     labelExtractor?: ((item: T) => React.ReactNode) | undefined;
     /** Function to derive value from an item. If not set, checks `item.value`. */
     valueExtractor?: ((item: T) => string) | undefined;
-    /** Changes min-width to fit content */
-    useContentWidth?: boolean | undefined;
+    /** Changes min-width of toggle in mobile view to fit content */
+    useToggleContentWidth?: boolean | undefined;
 }

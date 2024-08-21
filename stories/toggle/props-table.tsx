@@ -129,7 +129,6 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Changes the minimum width of the container to fit its content",
                 propTypes: ["boolean"],
-                defaultValue: `false`,
             },
         ],
     },

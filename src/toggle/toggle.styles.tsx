@@ -66,7 +66,7 @@ export const Container = styled.div<ContainerStyleProps>`
     ${(props) => {
         if (props.$useContentWidth) {
             return css`
-                min-width: fit-content;
+                min-width: unset;
             `;
         }
     }}
