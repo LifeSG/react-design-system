@@ -38,6 +38,12 @@ const FILTER_CHECKBOX_DATA: ApiTableSectionProps[] = [
                 propTypes: ["(options: T[]) => void"],
             },
             {
+                name: "useToggleContentWidth",
+                description:
+                    "Changes the minimum width of the checkbox toggle to fit its content (on mobile)",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "labelExtractor",
                 description: (
                     <>
