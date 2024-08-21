@@ -5,6 +5,7 @@ import { Color } from "../color/color";
 import { MediaQuery } from "../media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Text } from "../text/text";
+import { ButtonWithIcon } from "../button-with-icon";
 
 // =============================================================================
 // CONTAINER STYLES
@@ -92,16 +93,8 @@ export const FilterClearButton = styled(Button.Small)`
 // COMPONENT STYLES
 // =============================================================================
 
-export const FilterButton = styled(Button.Default)`
+export const FilterButton = styled(ButtonWithIcon.Default)`
     width: 100%;
-    span {
-        display: flex;
-        align-items: center;
-    }
-`;
-
-export const StyledFilterIcon = styled(FilterIcon)`
-    margin-right: 0.625rem;
 `;
 
 export const FilterFooter = styled.div`

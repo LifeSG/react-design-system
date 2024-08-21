@@ -1,12 +1,4 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
-import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { Overlay } from "../overlay/overlay";
-import { MediaWidths } from "../spec/media-spec";
-import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
-import { FilterContext } from "./filter-context";
-import { FilterItem } from "./filter-item";
-import { FilterItemPage } from "./filter-item-page";
+import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import {
     DesktopContainer,
     FilterBody,
@@ -19,12 +11,20 @@ import {
     FilterTitle,
     MobileContainer,
     MobileOverlayContainer,
-    StyledFilterIcon,
 } from "./filter.styles";
+import { FilterContext } from "./filter-context";
+import { FilterItem } from "./filter-item";
+import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
+import { FilterItemPage } from "./filter-item-page";
 import { FilterProps, Mode } from "./types";
+import { MediaWidths } from "../spec/media-spec";
+import { Overlay } from "../overlay/overlay";
+import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const FilterBase = ({
     toggleFilterButtonLabel = "Filters",
+    toggleFilterButtonStyle = "light",
     headerTitle = "Filters",
     clearButtonDisabled = false,
     onClear,
@@ -117,11 +117,12 @@ const FilterBase = ({
             <>
                 <FilterButton
                     data-testid="filter-show-button"
-                    styleType="light"
+                    styleType={toggleFilterButtonStyle}
                     onClick={handleShowFilter}
                     type="button"
+                    icon={<FilterIcon />}
                 >
-                    <StyledFilterIcon /> {toggleFilterButtonLabel}
+                    {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
                     <MobileOverlayContainer
