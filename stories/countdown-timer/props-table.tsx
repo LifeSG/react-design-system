@@ -30,8 +30,14 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "timestamp",
-                description:
-                    "Specifies the timestamp at which the countdown ends (milliseconds since Jan 1, 1970)",
+                description: (
+                    <>
+                        Specifies the timestamp at which the countdown ends
+                        (milliseconds since Jan 1, 1970),
+                        <br />
+                        <strong>Note:</strong> required if timer is not provided
+                    </>
+                ),
                 propTypes: ["number"],
             },
             {

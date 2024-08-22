@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export const useTimer = (
     seconds: number,
     isPlaying: boolean,
-    endTime?: number // Takes precedence over seconds
+    endTime?: number | undefined // Takes precedence over seconds
 ) => {
     // =============================================================================
     // CONST, STATE, REF

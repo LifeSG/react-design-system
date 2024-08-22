@@ -84,7 +84,6 @@ export const Timestamp: StoryObj<Component> = {
                 </Button.Default>
                 <CountdownTimer
                     show={showTimer}
-                    timer={5}
                     notifyTimer={10}
                     timestamp={timestamp}
                 />
