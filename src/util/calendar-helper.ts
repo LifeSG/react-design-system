@@ -12,6 +12,25 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(customParseFormat);
 dayjs.extend(timezone);
 export namespace CalendarHelper {
+    export const generateHourlyIntervals = (
+        startTime: string,
+        endTime: string,
+        generatedFormat = "ha"
+    ) => {
+        const format = "HH:mm";
+        let start = dayjs(startTime, format);
+        const end = dayjs(endTime, format);
+
+        const intervals: string[] = [];
+
+        while (start.isBefore(end) || start.isSame(end)) {
+            intervals.push(start.format(generatedFormat));
+            start = start.add(1, "hour");
+        }
+
+        return intervals;
+    };
+
     export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
         const firstDayOfTheMonth = calendarDate.startOf("month");
 
