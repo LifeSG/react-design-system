@@ -72,3 +72,23 @@ export const CustomOffset: StoryObj<Component> = {
         docs: { story: { inline: false, iframeHeight: 500 } },
     },
 };
+
+export const Timestamp: StoryObj<Component> = {
+    render: () => {
+        const [showTimer, setShowTimer] = useState(false);
+        const timestamp = Date.now() + 20000;
+        return (
+            <div>
+                <Button.Default onClick={() => setShowTimer(true)}>
+                    Start
+                </Button.Default>
+                <CountdownTimer
+                    show={showTimer}
+                    timer={5}
+                    notifyTimer={10}
+                    timestamp={timestamp}
+                />
+            </div>
+        );
+    },
+};

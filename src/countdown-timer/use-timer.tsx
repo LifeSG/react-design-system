@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const useTimer = (seconds: number, isPlaying: boolean) => {
+export const useTimer = (
+    seconds: number,
+    isPlaying: boolean,
+    endTime?: number // Takes precedence over seconds
+) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -11,31 +15,29 @@ export const useTimer = (seconds: number, isPlaying: boolean) => {
     // =============================================================================
     useEffect(() => {
         if (!isPlaying) return;
-        const cleanup = start();
+        if (endTime)
+            setRemainingSeconds(
+                calculateRemainingSecondsFromTimestamp(endTime)
+            );
 
-        return () => cleanup();
-    }, [isPlaying, seconds]);
+        const startTime = Date.now();
+        const intervalId = setInterval(() => {
+            const countdown = calculateRemainingSecondsFromTimestamp(
+                endTime ?? startTime + seconds * 1000
+            );
+
+            setRemainingSeconds(countdown);
+            if (countdown <= 0) clearInterval(intervalId);
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [endTime, isPlaying, seconds]);
 
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const start = () => {
-        const timestamp = Date.now();
-
-        const interval = setInterval(() => {
-            const currentTime = Date.now();
-            const milliseconds = seconds * 1000;
-
-            const countdown = Math.ceil(
-                (timestamp + milliseconds - currentTime) / 1000
-            );
-
-            setRemainingSeconds(Math.max(countdown, 0));
-            if (countdown <= 0) clearInterval(interval);
-        }, 1000);
-
-        return () => clearInterval(interval);
-    };
+    const calculateRemainingSecondsFromTimestamp = (timestamp: number) =>
+        Math.max(Math.ceil((timestamp - Date.now()) / 1000), 0);
 
     return [remainingSeconds] as const;
 };

@@ -20,6 +20,8 @@ export interface CountdownTimerProps
     fixed?: boolean | undefined;
     /** Specifies the countdown timer (in seconds) */
     timer: number;
+    /** Specifies the timestamp at which the countdown ends (milliseconds since Jan 1, 1970) */
+    timestamp?: number;
     /** Specifies a timer (in seconds) for notifications */
     notifyTimer?: number | undefined;
     /** Allows customization of the sticky position in tablet/desktop view */
