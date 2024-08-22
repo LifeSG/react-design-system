@@ -91,6 +91,11 @@ export const StandardCell = ({
         const isStart = date.isSame(startDate, "day");
         const isEnd = date.isSame(endDate, "day");
 
+        if (showCurrentMonthOnly && calendarDate.month() !== date.month()) {
+            props.labelType = "hidden";
+            return props;
+        }
+
         if ((startDate && isStart) || (endDate && isEnd)) {
             props.labelType = "selected";
             props.circleLeft = "selected-outline";
