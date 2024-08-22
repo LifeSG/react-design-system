@@ -1,4 +1,6 @@
+import { Border } from "../time-slot-bar/time-slot-bar.styles";
 import { AnimationValues } from "./animation/theme-helper";
+import { BorderValues } from "./border/helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
 import { FontValues } from "./font/theme-helper";
