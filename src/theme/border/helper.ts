@@ -41,63 +41,13 @@ export const dashedBorderStyle =
         );
 
         return css`
+            z-index: 1;
             background-color: transparent;
             height: ${resolvedThickness};
             background-repeat: repeat-x;
             background-image: url('data:image/svg+xml,<svg width="8" height="${resolvedThickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>');
         `;
     };
-
-// export const getBorder = (key: keyof BorderSet) => {
-//     return (...args: any[]) =>
-//         (props: StyledComponentProps) => {
-//             const theme = props.theme;
-//             const borderSet: BorderSet = getCollection(
-//                 BorderSpec,
-//                 theme.borderScheme
-//             );
-
-//             // Check for an override
-//             const borderValue =
-//                 theme.overrides && theme.overrides.border
-//                     ? getValue(borderSet, key, theme.overrides.border)
-//                     : borderSet[key];
-
-//             // Log the border value and its type
-//             console.log("borderValue:", borderValue);
-//             console.log("borderValue type:", typeof borderValue);
-
-//             // If function type check for arguments and then resolve it with props
-//             if (typeof borderValue === "function") {
-//                 console.log("Arguments passed:", args);
-//                 console.log("Props passed to function:", props);
-
-//                 const result = (borderValue as (...args: any[]) => any)(
-//                     ...(args.length ? args : [undefined, undefined])
-//                 )(props);
-
-//                 console.log("Result of function call:", result);
-
-//                 return css`
-//                     ${result}
-//                 `;
-//             }
-
-//             // If number make it return a pixel string
-//             if (typeof borderValue === "number") {
-//                 const pixelBorderValue = `${borderValue}px`;
-//                 console.log("Number borderValue:", pixelBorderValue);
-//                 return css`
-//                     ${pixelBorderValue}
-//                 `;
-//             }
-
-//             console.log("Final borderValue:", borderValue);
-//             return css`
-//                 ${borderValue}
-//             `;
-//         };
-// };
 
 export const getBorder = (key: keyof BorderSet) => {
     return (...args: any[]) =>
@@ -114,17 +64,16 @@ export const getBorder = (key: keyof BorderSet) => {
                     ? getValue(borderSet, key, theme.overrides.border)
                     : borderSet[key];
 
-            // If function type check for arguments and then resolve it with props
+            // If function resolve it with props
             if (typeof borderValue === "function") {
                 console.log("borderValue:", borderValue);
                 console.log("borderValue type:", typeof borderValue);
                 console.log("Arguments passed:", args);
                 console.log("Props passed to function:", props);
 
-                // Distinguish between props being passed as the first argument or actual arguments
-                const isArgsActuallyProps =
-                    args.length === 1 && "theme" in args[0];
-                const resolvedArgs = isArgsActuallyProps
+                // Check if props being passed as the arg
+                const isArgsProps = args.length === 1 && "theme" in args[0];
+                const resolvedArgs = isArgsProps
                     ? [undefined, undefined]
                     : args;
 

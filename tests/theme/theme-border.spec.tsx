@@ -36,10 +36,10 @@ describe("Border Theming Test", () => {
 
         expect(receivedBorderStyle).toBe("1px solid");
 
-        // expect(container.firstChild).toHaveStyleRule(
-        //     "background-color",
-        //     "transparent"
-        // );
+        expect(container.firstChild).toHaveStyleRule(
+            "background-color",
+            "transparent"
+        );
         expect(container.firstChild).toHaveStyleRule("height", thickness);
         expect(container.firstChild).toHaveStyleRule(
             "background-repeat",
@@ -79,10 +79,10 @@ describe("Border Theming Test", () => {
 
         expect(receivedBorderStyle).toBe("1px solid");
 
-        // expect(container.firstChild).toHaveStyleRule(
-        //     "background-color",
-        //     "transparent"
-        // );
+        expect(container.firstChild).toHaveStyleRule(
+            "background-color",
+            "transparent"
+        );
         expect(container.firstChild).toHaveStyleRule("height", dashThickness);
         expect(container.firstChild).toHaveStyleRule(
             "background-repeat",
@@ -124,10 +124,10 @@ describe("Border Theming Test", () => {
 
         expect(receivedBorderStyle).toBe("3px solid");
 
-        // expect(container.firstChild).toHaveStyleRule(
-        //     "background-color",
-        //     "transparent"
-        // );
+        expect(container.firstChild).toHaveStyleRule(
+            "background-color",
+            "transparent"
+        );
         expect(container.firstChild).toHaveStyleRule("height", thickness);
         expect(container.firstChild).toHaveStyleRule(
             "background-repeat",
