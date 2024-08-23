@@ -2480,7 +2480,6 @@ export const mockMapper: TimeTableProps = {
             rowMaxTime: resource.timelines[0].endTime,
             subtitle: (
                 <>
-                    {" "}
                     <Person2Icon />
                     {resource.capacity}
                 </>

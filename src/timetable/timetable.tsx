@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import throttle from "lodash/throttle";
+import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { Button } from "../button";
 import { CalendarHelper, DateHelper } from "../util";
@@ -8,6 +9,7 @@ import {
     ClickableRowHeaderTitle,
     ColumnHeader,
     ColumnHeaderTitle,
+    FirstRowColumn,
     Loader,
     RowHeader,
     RowHeaderSubtitle,
@@ -38,11 +40,27 @@ export const TimeTable = ({
         timetableMinTime,
         timetableMaxTime
     );
+    const resizeDetector = useResizeDetector();
+    const tableContainerRef = useRef<HTMLDivElement>(null);
+    const [scrollX, setScrollX] = useState(0);
+    const [scrollY, setScrollY] = useState(0);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    const resizeDetector = useResizeDetector();
+    useEffect(() => {
+        const tableContainer = tableContainerRef.current;
+        if (tableContainer) {
+            tableContainer.addEventListener("scroll", handleScroll);
+        }
+
+        return () => {
+            if (tableContainer) {
+                tableContainer.removeEventListener("scroll", handleScroll);
+            }
+        };
+    }, []);
+
     useEffect(() => {
         const numberOfIntervalsPerRowBar = Math.ceil(
             (hourlyIntervals.length * 60) / interval
@@ -59,7 +77,12 @@ export const TimeTable = ({
     // EVENT HANDLERS
     // =============================================================================
     // TODO - Paginated scrolling and resizing
-    useResizeDetector();
+    const handleScroll = throttle(() => {
+        if (tableContainerRef.current) {
+            setScrollX(tableContainerRef.current.scrollLeft);
+            setScrollY(tableContainerRef.current.scrollTop);
+        }
+    }, 100);
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -118,7 +141,7 @@ export const TimeTable = ({
                             key={`${rowData.id}-row-key`}
                             $loading={loading}
                         >
-                            <RowHeader>
+                            <RowHeader $isScrolled={scrollX > 0}>
                                 <ClickableRowHeaderTitle
                                     onClick={() =>
                                         optionalProps.onNameClick(rowData.id)
@@ -165,15 +188,24 @@ export const TimeTable = ({
             <Button.Default onClick={() => setLoading(!loading)}>
                 Load
             </Button.Default>
-            <TimeTableContainer id="timetable-container-id" $loading={loading}>
-                <TimeTableColumns $numOfColumns={hourlyIntervals.length}>
-                    <TimeTableNavigator
-                        selectedDate={selectedDate}
-                        variant={headerVariant}
-                        isLoading={loading}
-                        setSelectedDate={setSelectedDate}
-                        {...optionalProps}
-                    />
+            <TimeTableContainer
+                ref={tableContainerRef}
+                id="timetable-container-id"
+                $loading={loading}
+            >
+                <TimeTableColumns
+                    $numOfColumns={hourlyIntervals.length}
+                    $isScrolled={scrollY > 0}
+                >
+                    <FirstRowColumn $isScrolled={scrollY > 0 || scrollX > 0}>
+                        <TimeTableNavigator
+                            selectedDate={selectedDate}
+                            variant={headerVariant}
+                            isLoading={loading}
+                            setSelectedDate={setSelectedDate}
+                            {...optionalProps}
+                        />
+                    </FirstRowColumn>
                     {renderColumnHeaders()}
                 </TimeTableColumns>
                 {renderRows()}

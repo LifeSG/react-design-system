@@ -23,7 +23,7 @@ export namespace CalendarHelper {
 
         const intervals: string[] = [];
 
-        while (start.isBefore(end) || start.isSame(end)) {
+        while (start.isBefore(end)) {
             intervals.push(start.format(generatedFormat));
             start = start.add(1, "hour");
         }

@@ -3,8 +3,9 @@ import { LoadingDotsSpinner } from "../animations";
 import { Color } from "../color";
 import { Text } from "../text";
 
-interface StyledTableProps {
+interface TimeTableColumnsProps {
     $numOfColumns: number;
+    $isScrolled: boolean;
 }
 
 interface TimeTableProps {
@@ -19,13 +20,21 @@ interface LoaderProps {
     $numOfRows: number;
 }
 
+interface FirstRowFirstColumnProps {
+    $isScrolled: boolean;
+}
+
+interface RowHeaderProps {
+    $isScrolled: boolean;
+}
+
 export const Container = styled.div`
     width: 100%;
 `;
 
 export const TimeTableContainer = styled.div<TimeTableProps>`
     display: grid;
-    overflow: auto;
+    overflow: scroll;
     height: 80vh;
     width: 80vw;
     min-height: 80vh;
@@ -41,11 +50,11 @@ export const TimeTableContainer = styled.div<TimeTableProps>`
     }}
 `;
 
-export const TimeTableColumns = styled.div<StyledTableProps>`
+export const TimeTableColumns = styled.div<TimeTableColumnsProps>`
     display: grid;
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 1;
     background-color: white;
     grid-template-columns: 252px repeat(
             ${(props) => props.$numOfColumns + 1},
@@ -53,7 +62,14 @@ export const TimeTableColumns = styled.div<StyledTableProps>`
         );
     width: 100%;
     border-bottom: 1px solid ${Color.Neutral[5]};
-    box-shadow: ${Color.Neutral[5]} 0px 0.125rem 0.25rem;
+    transition: all 0.5s ease-in-out;
+    ${(props) => {
+        if (props.$isScrolled) {
+            return css`
+                box-shadow: 0.125rem 0.125rem 0.25rem ${Color.Neutral[5]};
+            `;
+        }
+    }};
 `;
 
 export const TimeTableRow = styled.div<TimeTableProps>`
@@ -73,7 +89,19 @@ export const TimeTableRow = styled.div<TimeTableProps>`
     }}
 `;
 
-export const TableBody = styled.div``;
+export const FirstRowColumn = styled.div<FirstRowFirstColumnProps>`
+    position: sticky;
+    left: 0;
+    background-color: white;
+    transition: all 0.5s ease-in-out;
+    ${(props) => {
+        if (props.$isScrolled) {
+            return css`
+                box-shadow: 0.125rem 0.375rem 0.25rem ${Color.Neutral[5]};
+            `;
+        }
+    }};
+`;
 
 export const ColumnHeader = styled.div`
     min-width: 84px;
@@ -96,10 +124,9 @@ export const RowWrapper = styled.div<TimeTableProps>`
     }}
 `;
 
-export const RowHeader = styled.div`
+export const RowHeader = styled.div<RowHeaderProps>`
     position: sticky;
     background-color: white;
-    z-index: 1;
     left: 0;
     width: 252px;
     min-width: 252px;
@@ -109,7 +136,14 @@ export const RowHeader = styled.div`
     padding-right: 1rem;
     border-bottom: 1px solid ${Color.Neutral[5]};
     border-left: 1px solid ${Color.Accent.Light[1]};
-    box-shadow: ${Color.Neutral[5]} 0.125rem 0.125rem 0.25rem;
+    transition: all 0.5s ease-in-out;
+    ${(props) => {
+        if (props.$isScrolled) {
+            return css`
+                box-shadow: 0.125rem 0.125rem 0.25rem ${Color.Neutral[5]};
+            `;
+        }
+    }};
 `;
 
 // FIXME
