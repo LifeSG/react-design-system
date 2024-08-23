@@ -5,7 +5,7 @@ export const FontFamily = {
         Bold: "Open Sans Bold",
         Light: "Open Sans Light",
     },
-    PlusSansJakarta: {
+    PlusJakartaSans: {
         Regular: "Plus Jakarta Sans",
         Semibold: "Plus Jakarta Sans Semibold",
         Bold: "Plus Jakarta Sans Bold",
