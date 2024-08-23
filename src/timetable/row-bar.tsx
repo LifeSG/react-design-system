@@ -1,43 +1,42 @@
 import dayjs from "dayjs";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell, RowCellProps } from "./row-cell";
-import { RowBlock, RowData } from "./types";
+import { RowBarData, RowCellData } from "./types";
 
-export interface RowBarProps extends RowData {
-    rowBlocks: RowBlock[];
+export interface RowBarProps extends RowBarData {
+    rowCells: RowCellData[];
     timetableMinTime: string;
     timetableMaxTime: string;
     bgColour: string;
-    blockUnit: number;
-    isFirst?: boolean | undefined;
+    intervalWidth: number;
     // Redirect user to url (resource detail page)
     onNameClick?: (() => void) | undefined;
 }
 
 export const RowBar = ({
-    id,
+    id, //resource id
     name,
     subtitle,
     rowMinTime,
     rowMaxTime,
-    rowBlocks,
+    rowCells,
     bgColour,
-    blockUnit,
-    isFirst,
+    intervalWidth,
     onNameClick,
     timetableMinTime,
     timetableMaxTime,
 }: RowBarProps) => {
-    const bookings = rowBlocks.filter((block) => block.status === "OCCUPIED");
-
+    const bookings = rowCells.filter((cell) => cell.status === "OCCUPIED");
     const rowCellArray: RowCellProps[] = [];
+
     // Handle non-op before hours
     if (dayjs(timetableMinTime, "HH:mm").isBefore(dayjs(rowMinTime, "HH:mm"))) {
         rowCellArray.push({
+            id: "",
             startTime: timetableMinTime,
             endTime: rowMinTime,
             status: "DISABLED",
-            blockUnit,
+            intervalWidth,
             bgColour,
         });
     }
@@ -61,22 +60,24 @@ export const RowBar = ({
             // If available slot ends on the hour, push to array
             if (currentTime.add(15, "minutes").get("minutes") === 0) {
                 rowCellArray.push({
+                    id: "",
                     startTime: availableSlotStartTime,
                     endTime: currentTime
                         .add(15, "minutes")
                         .format("HH:mm")
                         .toString(),
                     status: "DEFAULT",
-                    blockUnit,
+                    intervalWidth,
                     bgColour,
                 });
                 availableSlotStartTime = "";
             } else if (currentTime.add(15, "minutes").isSame(endTime)) {
                 rowCellArray.push({
+                    id: "",
                     startTime: availableSlotStartTime,
                     endTime: rowMaxTime,
                     status: "DEFAULT",
-                    blockUnit,
+                    intervalWidth,
                     bgColour,
                 });
             }
@@ -84,16 +85,17 @@ export const RowBar = ({
             // If there is an available slot before the found booking, we push to the rowCellArray
             availableSlotStartTime !== "" &&
                 rowCellArray.push({
+                    id,
                     startTime: availableSlotStartTime,
                     endTime: foundBooking.startTime,
                     status: "DEFAULT",
-                    blockUnit,
+                    intervalWidth,
                     bgColour,
                 });
             // Reset availableSlotStartTime
             availableSlotStartTime = "";
             // Push the found booking
-            rowCellArray.push({ ...foundBooking, blockUnit, bgColour });
+            rowCellArray.push({ ...foundBooking, intervalWidth, bgColour });
             // Set current time to the end of the found booking
             currentTime = dayjs(foundBooking.endTime, "HH:mm");
             continue; // Go to the next iteration
@@ -106,26 +108,29 @@ export const RowBar = ({
     // Handle non-op after hours
     if (dayjs(timetableMaxTime, "HH:mm").isAfter(dayjs(rowMaxTime, "HH:mm"))) {
         rowCellArray.push({
+            id: "",
             startTime: rowMaxTime,
             endTime: timetableMaxTime,
             status: "DISABLED",
-            blockUnit,
+            intervalWidth,
             bgColour,
         });
     }
 
     return (
-        <RowCellContainer $isFirst={isFirst}>
-            {rowCellArray.map((cell) => {
+        <RowCellContainer>
+            {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
-                        key={`${cell.title}-key`}
+                        //FIXME: might need an id for each cell for onClick behaviour?
+                        id={cell.id}
+                        key={`${index}-row-cell-key`}
                         startTime={cell.startTime}
                         endTime={cell.endTime}
                         title={cell.title}
                         subtitle={cell.subtitle}
                         status={cell.status}
-                        blockUnit={cell.blockUnit}
+                        intervalWidth={cell.intervalWidth}
                         bgColour={cell.bgColour}
                     />
                 );

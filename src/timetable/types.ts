@@ -1,13 +1,15 @@
 export interface TimeTableProps {
     // YYYY-MM-DD format?
     date: string;
-    // hh:mm format?
+    // HH:mm format
     timetableMinTime: string;
-    // hh:mm format?
+    // HH:mm format
     timetableMaxTime: string;
+    // HH:mm format
     minDate?: string | undefined;
+    // HH:mm format
     maxDate?: string | undefined;
-    rows: RowData[];
+    rowBars: RowBarData[];
     // Boolean to determine if should have pagination, defaults to false
     paginate?: boolean | undefined;
     // What to show when no results
@@ -33,19 +35,22 @@ export type TimeTableHeaderVariants =
     | "records-only"
     | "none";
 
-export interface RowData {
+export interface RowBarData {
     id: string;
     name: string | JSX.Element;
     subtitle?: string | JSX.Element | undefined;
-    rowBlocks: RowBlock[];
+    rowCells: RowCellData[];
+    // HH:mm format
     rowMinTime: string;
+    // HH:mm format
     rowMaxTime: string;
 }
 
-export interface RowBlock {
-    // hh:mm format?
+export interface RowCellData {
+    id: string;
+    // HH:mm format
     startTime: string;
-    // hh:mm format?
+    // HH:mm format
     endTime: string;
     title?: string | undefined;
     subtitle?: string | undefined;

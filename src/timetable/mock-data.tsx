@@ -447,13 +447,8 @@ export const mockResourceListingResultsData = {
                         },
                         {
                             startTime: "11:00:00",
-                            endTime: "12:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "12:00:00",
                             endTime: "13:00:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "13:00:00",
@@ -473,7 +468,7 @@ export const mockResourceListingResultsData = {
                         {
                             startTime: "16:00:00",
                             endTime: "17:00:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "17:00:00",
@@ -675,13 +670,13 @@ export const mockResourceListingResultsData = {
                         },
                         {
                             startTime: "14:00",
-                            endTime: "14:30",
+                            endTime: "13:30",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "14:30",
+                            startTime: "13:30",
                             endTime: "15:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "15:00",
@@ -714,7 +709,7 @@ export const mockResourceListingResultsData = {
                             status: "DEFAULT",
                         },
                     ],
-                    startTime: "08:00",
+                    startTime: "07:00",
                     endTime: "18:00",
                 },
             ],
@@ -957,12 +952,12 @@ export const mockResourceListingResultsData = {
                         {
                             startTime: "09:30",
                             endTime: "10:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "10:00",
                             endTime: "10:30",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "10:30",
@@ -2477,7 +2472,7 @@ export const mockMapper: TimeTableProps = {
     maxDate: "2024-08-31",
     minDate: "2024-08-01",
     totalRecords: mockResourceListingResultsData.totalRows,
-    rows: mockResourceListingResultsData.resources.map((resource) => {
+    rowBars: mockResourceListingResultsData.resources.map((resource) => {
         return {
             id: resource.id,
             name: resource.title,
@@ -2490,8 +2485,10 @@ export const mockMapper: TimeTableProps = {
                     {resource.capacity}
                 </>
             ),
-            rowBlocks: resource.timelines[0].slots.map((slot) => {
+            rowCells: resource.timelines[0].slots.map((slot) => {
                 return {
+                    //REVIEW: booking id? for onClick to render booking details
+                    id: slot.id,
                     startTime: slot.startTime,
                     endTime: slot.endTime,
                     title: slot.label,

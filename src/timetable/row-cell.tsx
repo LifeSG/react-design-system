@@ -8,37 +8,45 @@ import {
     Gap,
     Wrapper,
 } from "./row-cell.style";
-import { RowBlock } from "./types";
+import { RowCellData } from "./types";
 
-export interface RowCellProps extends RowBlock {
-    blockUnit: number;
+export interface RowCellProps extends RowCellData {
+    intervalWidth: number;
     bgColour: string;
 }
 
 const gap = 2;
+const interval = 15;
 
 export const RowCell = ({
+    id,
     startTime,
     endTime,
     title,
     subtitle,
     status,
-    blockUnit,
+    intervalWidth,
     bgColour,
 }: RowCellProps) => {
     const isOnTheHour = dayjs(endTime, "HH:mm").get("minutes") === 0;
-    const isNotAvailableCell = status !== "DEFAULT";
-    const numberOfBlocks =
-        DateHelper.getTimeDiffInMinutes(startTime, endTime) / 15;
-    const width = numberOfBlocks * blockUnit;
-    const adjustedWidth = isNotAvailableCell ? width - gap : width;
+    const isNotAvailable = status !== "DEFAULT";
+    const numberOfIntervals =
+        DateHelper.getTimeDiffInMinutes(startTime, endTime) / interval;
+    const totalCellWidth = numberOfIntervals * intervalWidth;
+    const adjustedCellWidth = isNotAvailable
+        ? totalCellWidth - gap
+        : totalCellWidth;
 
     return (
         <>
-            <BlockContainer $isOnTheHour={isOnTheHour}>
+            <BlockContainer
+                key={`block-container-key`}
+                data-testid={`block-container`}
+                $isOnTheHour={isOnTheHour}
+            >
                 <Wrapper>
                     <Block
-                        $width={adjustedWidth}
+                        $width={adjustedCellWidth}
                         $status={status}
                         $bgColour={bgColour}
                     >
@@ -47,7 +55,7 @@ export const RowCell = ({
                             {subtitle}
                         </BlockDescription>
                     </Block>
-                    {isNotAvailableCell && <Gap />}
+                    {isNotAvailable && <Gap />}
                 </Wrapper>
             </BlockContainer>
         </>

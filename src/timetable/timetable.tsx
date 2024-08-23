@@ -22,7 +22,7 @@ export const TimeTable = ({
     date,
     timetableMinTime,
     timetableMaxTime,
-    rows,
+    rowBars,
     isLoading = false,
     headerVariant = "all",
     ...optionalProps
@@ -30,30 +30,29 @@ export const TimeTable = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const interval = 15;
     const [selectedDate, setSelectedDate] = useState<string>(date);
     const [loading, setLoading] = useState<boolean>(isLoading);
+    const [intervalWidth, setIntervalWidth] = useState(0);
     const hourlyIntervals = CalendarHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
-    const [widthOf15minBlock, setWidthOf15minBlock] = useState(0);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     const resizeDetector = useResizeDetector();
     useEffect(() => {
-        const numberOfCells = Math.ceil(
-            DateHelper.getTimeDiffInMinutes(
-                timetableMinTime,
-                timetableMaxTime
-            ) / 15
+        const numberOfIntervalsPerRowBar = Math.ceil(
+            (hourlyIntervals.length * 60) / interval
         );
+        const widthOfRowBar = resizeDetector.width;
         const width =
-            resizeDetector.width / numberOfCells > 21
-                ? resizeDetector.width / numberOfCells
+            widthOfRowBar / numberOfIntervalsPerRowBar > 21
+                ? widthOfRowBar / numberOfIntervalsPerRowBar
                 : 21;
-        setWidthOf15minBlock(width);
+        setIntervalWidth(width);
     }, [resizeDetector]);
 
     // =============================================================================
@@ -65,7 +64,7 @@ export const TimeTable = ({
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
-    const backgroundColourSequence = [
+    const rowBarBgColourSequence = [
         "#FFE6BB",
         "#D8EFEB",
         "#E6EAFE",
@@ -73,11 +72,11 @@ export const TimeTable = ({
         "#D3EEFC",
     ];
     let colourIndex = 0;
-    const mappedRowCellsWithBgColour: RowBarProps[] = rows.map((row) => {
-        const bgColour = backgroundColourSequence[colourIndex];
+    const mappedRowBarWithBgColour: RowBarProps[] = rowBars.map((row) => {
+        const bgColour = rowBarBgColourSequence[colourIndex];
         // Increment the colourIndex and reset it if it reaches the end of the sequence
         colourIndex++;
-        if (colourIndex >= backgroundColourSequence.length) {
+        if (colourIndex >= rowBarBgColourSequence.length) {
             colourIndex = 0;
         }
         return {
@@ -87,7 +86,7 @@ export const TimeTable = ({
             rowMinTime: row.rowMinTime,
             rowMaxTime: row.rowMaxTime,
             bgColour,
-            blockUnit: widthOf15minBlock,
+            intervalWidth,
         };
     });
 
@@ -113,7 +112,7 @@ export const TimeTable = ({
     const renderRows = () => {
         return (
             <RowWrapper $loading={loading}>
-                {mappedRowCellsWithBgColour.map((rowData, index) => {
+                {mappedRowBarWithBgColour.map((rowData, index) => {
                     return (
                         <TimeTableRow
                             key={`${rowData.id}-row-key`}
@@ -140,23 +139,23 @@ export const TimeTable = ({
                             </RowHeader>
                             {!loading && (
                                 <RowBar
-                                    isFirst={index === 0}
-                                    key={rowData.id}
+                                    key={`${rowData.id}-row-bar-key`}
                                     id={rowData.id}
+                                    data-testid={`${rowData.id}-row-bar`}
                                     name={rowData.name}
                                     rowMinTime={rowData.rowMinTime}
                                     rowMaxTime={rowData.rowMaxTime}
-                                    rowBlocks={rowData.rowBlocks}
+                                    rowCells={rowData.rowCells}
                                     timetableMinTime={timetableMinTime}
                                     timetableMaxTime={timetableMaxTime}
                                     bgColour={rowData.bgColour}
-                                    blockUnit={rowData.blockUnit}
+                                    intervalWidth={rowData.intervalWidth}
                                 />
                             )}
                         </TimeTableRow>
                     );
                 })}
-                {loading && <Loader $numOfRows={rows.length} />}
+                {loading && <Loader $numOfRows={rowBars.length} />}
             </RowWrapper>
         );
     };
