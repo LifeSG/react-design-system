@@ -3,15 +3,16 @@ import { Text } from "src/text";
 import { BasePlusSansJakartaStyleSet } from "src/spec/text-spec/base-plus-jakarta-sans-text-style-set";
 import { Secondary, Title } from "../storybook-common";
 import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
-import { OneServiceTheme } from "../../src";
+import { BaseTheme } from "../../src";
+import { ThemeProvider } from "styled-components";
 
 <Meta title="General/Text/PlusSansJakarta Style" />
 
-<Title>Plus Sans Jakarta Style</Title>
+<Title>Plus Jakarta Sans Style</Title>
 
 <Secondary>Overview</Secondary>
 
-This will be the collection used when the `textStylepublic/plusJakartaSans`.
+This will be the collection used when the `textStyleScheme` is `plusJakartaSans`.
 
 ```tsx
 const theme: ThemeSpec = {
@@ -21,13 +22,17 @@ const theme: ThemeSpec = {
 ```
 
 <Secondary>Font Family</Secondary>
-<Text.D1>Plus Sans Jakarta</Text.D1>
 
-<Unstyled>
-    <FontDisplay />
-</Unstyled>
+<ThemeProvider theme={{ ...BaseTheme, textStyleScheme: "plusJakartaSans" }}>
 
-<Secondary>Text Styles</Secondary>
-<Unstyled>
-    <FontSizeDisplay textStyles={BasePlusSansJakartaStyleSet} />
-</Unstyled>
+    <Text.D1>Plus Jakarta Sans</Text.D1>
+    <Unstyled>
+        <FontDisplay />
+    </Unstyled>
+
+    <Secondary>Text Styles</Secondary>
+    <Unstyled>
+        <FontSizeDisplay textStyles={BasePlusSansJakartaStyleSet} />
+    </Unstyled>
+
+</ThemeProvider>
