@@ -30,7 +30,7 @@ export const Component = (
         selectWithinRange = true,
         initialCalendarDate,
         numberOfDays,
-        showCurrentMonthOnly = false,
+        showActiveMonthDaysOnly = false,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -172,7 +172,7 @@ export const Component = (
                         maxDate={maxDate}
                         isNewSelection={selectWithinRange}
                         allowDisabledSelection={allowDisabledSelection}
-                        showCurrentMonthOnly={showCurrentMonthOnly}
+                        showActiveMonthDaysOnly={showActiveMonthDaysOnly}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
                     />
