@@ -1,3 +1,5 @@
+import { TFontFamily } from "./types";
+
 export const FontFamily = {
     OpenSans: {
         Regular: "Open Sans",
@@ -12,4 +14,4 @@ export const FontFamily = {
         Light: "Plus Jakarta Sans Light",
     },
     MerriWeather: "Merriweather",
-};
+} satisfies TFontFamily;
