@@ -1,0 +1,3 @@
+/// <reference types="react" />
+import { InputSelectProps } from "./types";
+export declare const InputSelect: <T, V>({ selectedOption, placeholder, options, disabled, error, className, "data-testid": testId, id, enableSearch, searchFunction, searchPlaceholder, valueExtractor, valueToStringFunction, listExtractor, displayValueExtractor, onSelectOption, onShowOptions, onHideOptions, onRetry, optionsLoadState, optionTruncationType, renderCustomSelectedOption, renderListItem, hideNoResultsDisplay, renderCustomCallToAction, onBlur, variant, readOnly, alignment, dropdownZIndex, }: InputSelectProps<T, V>) => JSX.Element;
