@@ -1,6 +1,6 @@
 import { RefreshIcon } from "@lifesg/react-icons";
 import { TimeTableHeaderVariants } from "../types";
-import { DateNavigator } from "./date-navigator";
+import { DateNavigator } from "../../date-navigator/date-navigator";
 import {
     NavigationHeaderSubtitleWrapper,
     NavigationHeaderWrapper,
@@ -15,7 +15,6 @@ interface TimeTableNavigatorProps {
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
-    setSelectedDate: (newDate: string) => void;
     onLeftArrowClick?: (() => void) | undefined;
     onRightArrowClick?: (() => void) | undefined;
     onRefresh?: (() => void) | undefined;
@@ -25,7 +24,6 @@ export const TimeTableNavigator = ({
     selectedDate,
     variant,
     isLoading,
-    setSelectedDate,
     ...optionalProps
 }: TimeTableNavigatorProps) => {
     if (variant === "none") {
@@ -38,7 +36,6 @@ export const TimeTableNavigator = ({
     const DateNavigatorSection = (
         <DateNavigator
             selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
             isLoading={isLoading}
             {...optionalProps}
         />

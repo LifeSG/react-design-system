@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Color } from "../../color";
-import { ClickableIcon } from "../../shared/clickable-icon";
-import { Text } from "../../text";
+import { Color } from "../color";
+import { ClickableIcon } from "../shared/clickable-icon";
+import { Text } from "../text";
 
 export const HeaderArrowButton = styled(ClickableIcon)`
     height: 2.5rem;

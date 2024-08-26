@@ -202,7 +202,6 @@ export const TimeTable = ({
                             selectedDate={selectedDate}
                             variant={headerVariant}
                             isLoading={loading}
-                            setSelectedDate={setSelectedDate}
                             {...optionalProps}
                         />
                     </FirstRowColumn>

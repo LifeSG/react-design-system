@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import {
     ArrowLeft,
     ArrowRight,
-} from "../../shared/internal-calendar/calendar-manager.style";
-import { CalendarHelper, DateHelper } from "../../util";
+} from "../shared/internal-calendar/calendar-manager.style";
+import { CalendarHelper, DateHelper } from "../util";
 import {
     Container,
     HeaderArrowButton,
@@ -17,27 +18,33 @@ export interface DateNavigatorProps {
     minDate?: string | undefined;
     maxDate?: string | undefined;
     isLoading?: boolean | undefined;
-    setSelectedDate: (newDate: string) => void;
-    onLeftArrowClick?: (() => void) | undefined;
-    onRightArrowClick?: (() => void) | undefined;
+    onLeftArrowClick?: (currentDate: string) => void | undefined;
+    onRightArrowClick?: (currentDate: string) => void | undefined;
 }
 
 export const DateNavigator = ({
     selectedDate,
-    setSelectedDate,
     ...otherProps
 }: DateNavigatorProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const date = DateHelper.toDayjs(selectedDate);
-    const dateText = DateHelper.toDayjs(selectedDate)
+    const [currentDate, setCurrentDate] = useState<string>(selectedDate);
+    const date = DateHelper.toDayjs(currentDate);
+    const dateText = DateHelper.toDayjs(currentDate)
         .format("D MMMM YYYY")
         .toString();
-    const isToday = DateHelper.isSame(selectedDate, dayjs());
+    const isToday = DateHelper.isSame(currentDate, dayjs());
     const dayText = isToday
         ? "Today"
-        : DateHelper.toDayjs(selectedDate).format("dddd");
+        : DateHelper.toDayjs(currentDate).format("dddd");
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        setCurrentDate(selectedDate);
+    }, [selectedDate]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -66,11 +73,17 @@ export const DateNavigator = ({
     };
 
     const handleLeftArrowClick = () => {
-        setSelectedDate(date.add(-1, "day").format());
+        if (otherProps.onLeftArrowClick) {
+            return otherProps.onLeftArrowClick(currentDate);
+        }
+        setCurrentDate(date.add(-1, "day").format());
     };
 
     const handleRightArrowClick = () => {
-        setSelectedDate(date.add(1, "day").format());
+        if (otherProps.onRightArrowClick) {
+            return otherProps.onRightArrowClick(currentDate);
+        }
+        setCurrentDate(date.add(1, "day").format());
     };
 
     // =============================================================================
@@ -84,7 +97,7 @@ export const DateNavigator = ({
                 disabled={otherProps.isLoading || isLeftArrowDisabled()}
                 focusHighlight={false}
                 tabIndex={-1}
-                onClick={otherProps.onLeftArrowClick ?? handleLeftArrowClick}
+                onClick={handleLeftArrowClick}
             >
                 <ArrowLeft />
             </HeaderArrowButton>
@@ -110,7 +123,7 @@ export const DateNavigator = ({
                 disabled={otherProps.isLoading || isRightArrowDisabled()}
                 focusHighlight={false}
                 tabIndex={-1}
-                onClick={otherProps.onRightArrowClick ?? handleRightArrowClick}
+                onClick={handleRightArrowClick}
             >
                 <ArrowRight />
             </HeaderArrowButton>
