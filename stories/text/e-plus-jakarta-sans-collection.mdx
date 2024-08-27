@@ -1,40 +1,38 @@
 import { Meta, Unstyled } from "@storybook/blocks";
 import { Text } from "src/text";
-import { OneServiceTextStyleSet } from "src/spec/text-spec/oneservice-text-style-set";
+import { BasePlusSansJakartaStyleSet } from "src/spec/text-spec/base-plus-jakarta-sans-text-style-set";
 import { Secondary, Title } from "../storybook-common";
 import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
-import { OneServiceTheme } from "../../src";
+import { BaseTheme } from "../../src";
 import { ThemeProvider } from "styled-components";
 
-<Meta title="General/Text/OneService Style" />
+<Meta title="General/Text/PlusSansJakarta Style" />
 
-<Title>OneService Style</Title>
+<Title>Plus Jakarta Sans Style</Title>
 
 <Secondary>Overview</Secondary>
 
-This will be the collection used when the `textStyleScheme` is `oneservice`.
+This will be the collection used when the `textStyleScheme` is `plusJakartaSans`.
 
 ```tsx
 const theme: ThemeSpec = {
-    textStyleScheme: "oneservice",
+    textStyleScheme: "plusJakartaSans",
     // ...other specifications
 };
 ```
 
 <Secondary>Font Family</Secondary>
 
-<ThemeProvider theme={OneServiceTheme}>
+<ThemeProvider theme={{ ...BaseTheme, textStyleScheme: "plusJakartaSans" }}>
 
-    <Text.D1>Open Sans</Text.D1>
+    <Text.D1>Plus Jakarta Sans</Text.D1>
     <Unstyled>
         <FontDisplay />
     </Unstyled>
 
     <Secondary>Text Styles</Secondary>
     <Unstyled>
-        <FontSizeDisplay
-            textStyles={OneServiceTextStyleSet}
-        />
+        <FontSizeDisplay textStyles={BasePlusSansJakartaStyleSet} />
     </Unstyled>
 
 </ThemeProvider>
