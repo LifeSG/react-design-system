@@ -15,7 +15,7 @@ export const BasePlusSansJakartaStyleSet: TextStyleSetType = {
         fontSize: 2.5,
         fontWeight: 700,
         lineHeight: 3,
-        letterSpacing: -0.32,
+        letterSpacing: -0.032,
     },
     D3: {
         fontFamily: FontFamily.PlusJakartaSans.Bold,
