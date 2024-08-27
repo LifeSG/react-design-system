@@ -9,13 +9,9 @@ export const Colour = {
     Primitive: PrimitiveColour,
 };
 
-export const Font = {
-    ...FontValues,
-};
+export const Font = FontValues;
 
-export const Typo = {
-    ...TypographyValues,
-};
+export const Typo = TypographyValues;
 
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",

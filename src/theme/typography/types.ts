@@ -1,11 +1,11 @@
 import { CSSProp } from "styled-components";
 import { FontScheme } from "../types";
 
-export type TypoGraphyCollectionMap = {
+export type TypographyCollectionMap = {
     [key in FontScheme]: TypographySet;
 };
 
-export type TypoSetOptions = Partial<TypographySet>;
+export type TypographySetOptions = Partial<TypographySet>;
 
 export type TypographySet = {
     "header-xxl-light": CSSProp | string;

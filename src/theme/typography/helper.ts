@@ -1,10 +1,10 @@
-import { css } from "styled-components";
+import { CSSProp, css } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
 import { LifeSgTypographySet } from "./specs/typography-set";
-import { TypoGraphyCollectionMap, TypographySet } from "./types";
+import { TypographyCollectionMap, TypographySet } from "./types";
 
-const TypographySpec: ThemeCollectionSpec<TypoGraphyCollectionMap, FontScheme> =
+const TypographySpec: ThemeCollectionSpec<TypographyCollectionMap, FontScheme> =
     {
         collections: {
             lifesg: LifeSgTypographySet,
@@ -21,7 +21,7 @@ export const getTypography = (key: keyof TypographySet) => {
         const theme = props.theme;
         const typographySet: TypographySet = getCollection(
             TypographySpec,
-            theme["fontScheme"]
+            theme.fontScheme
         );
 
         // Check for an override
@@ -43,7 +43,9 @@ export const getTypography = (key: keyof TypographySet) => {
     };
 };
 
-export const TypographyValues = {
+export const TypographyValues: {
+    [key in keyof TypographySet]: (props: StyledComponentProps) => CSSProp;
+} = {
     "header-xxl-light": getTypography("header-xxl-light"),
     "header-xxl-regular": getTypography("header-xxl-regular"),
     "header-xxl-semibold": getTypography("header-xxl-semibold"),

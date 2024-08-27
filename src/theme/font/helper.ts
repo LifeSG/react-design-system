@@ -18,7 +18,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
 export const getFontValues = (key: keyof FontSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
-        const fontSet: FontSet = getCollection(FontSpec, theme["fontScheme"]);
+        const fontSet: FontSet = getCollection(FontSpec, theme.fontScheme);
 
         if (theme.overrides && theme.overrides.font) {
             return getValue(fontSet, key, theme.overrides.font);
@@ -28,7 +28,9 @@ export const getFontValues = (key: keyof FontSet) => {
     };
 };
 
-export const FontValues = {
+export const FontValues: {
+    [key in keyof FontSet]: (props: StyledComponentProps) => string;
+} = {
     "header-size-xxl": getFontValues("header-size-xxl"),
     "header-size-xl": getFontValues("header-size-xl"),
     "header-size-lg": getFontValues("header-size-lg"),
@@ -54,6 +56,7 @@ export const FontValues = {
     "weight-regular": getFontValues("weight-regular"),
     "weight-semibold": getFontValues("weight-semibold"),
     "weight-bold": getFontValues("weight-bold"),
+    "font-family": getFontValues("font-family"),
 
     "body-size-baseline": getFontValues("body-size-baseline"),
     "body-size-lg": getFontValues("body-size-lg"),

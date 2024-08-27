@@ -1,7 +1,6 @@
-import { CSSProp } from "styled-components";
 import { PrimitiveColourSetOptions } from "./colour-primitive/types";
 import { SemanticColourSetOptions } from "./colour-semantic/types";
-import { TypoSetOptions } from "./typography/types";
+import { TypographySetOptions } from "./typography/types";
 import { FontSetOptions } from "./font/types";
 
 export type {
@@ -15,7 +14,10 @@ export type {
 
 export type { FontSet, FontSetOptions } from "./font/types";
 
-export type { TypographySet, TypoSetOptions } from "./typography/types";
+export type {
+    TypographySet,
+    TypographySetOptions as TypoSetOptions,
+} from "./typography/types";
 
 export type ColourScheme =
     | "lifesg"
@@ -30,12 +32,12 @@ export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
     font?: FontSetOptions | undefined;
-    typography?: TypoSetOptions | undefined;
+    typography?: TypographySetOptions | undefined;
 }
 
 export interface ThemeSpec {
     colourScheme: ColourScheme;
-    fontScheme?: FontScheme;
+    fontScheme?: FontScheme | undefined;
     overrides?: ThemeSpecOptions | undefined;
 }
 

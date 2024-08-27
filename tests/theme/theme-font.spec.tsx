@@ -12,8 +12,6 @@ const StyledFontSet = styled.div`
     font-size: ${Font["header-size-xs"]};
 `;
 
-// "header-size-xs": "1.125rem",
-
 describe("StyledTypographyTest", () => {
     it("should apply correct typography styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
