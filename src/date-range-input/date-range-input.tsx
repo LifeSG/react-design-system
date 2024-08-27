@@ -316,6 +316,16 @@ export const DateRangeInput = ({
             return;
         }
 
+        const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
+
+        // if date range is invalid, set selected value as start and reselect end
+        if (isInvalidRange) {
+            actions.changeStart(val);
+            calendarRef.current.setCalendarDate(val);
+            actions.reselectEnd();
+            return;
+        }
+
         actions.changeEnd(val);
         calendarRef.current.setCalendarDate(val);
 
@@ -331,25 +341,10 @@ export const DateRangeInput = ({
 
         /*
         - if next input is empty, focus it
-        - else if date range is invalid, clear and focus the next input
-        - else if date range is valid
-            - if next input is still pristine, focus it
-            - else if !withButton, confirm the selection and "blur" the field
+        - else if !withButton, confirm the selection and "blur" the field
         */
 
         if (!selectedStart) {
-            actions.focus("start");
-            return;
-        }
-
-        const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
-
-        if (isInvalidRange) {
-            actions.reselectStart();
-            return;
-        }
-
-        if (!isStartDirty) {
             actions.focus("start");
             return;
         }
