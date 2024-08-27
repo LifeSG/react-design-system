@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-import { getFontValues } from "../../font/helper";
+import { getFontValues } from "../../font/theme-helper";
 import { FontSet } from "../../font/types";
 import { TypographySet } from "../types";
 

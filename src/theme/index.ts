@@ -1,8 +1,8 @@
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
-import { FontValues } from "./font/helper";
+import { FontValues } from "./font/theme-helper";
 import { ThemeSpec } from "./types";
-import { TypographyValues } from "./typography/helper";
+import { TypographyValues } from "./typography/theme-helper";
 
 export const Colour = {
     ...ColourSemantic,

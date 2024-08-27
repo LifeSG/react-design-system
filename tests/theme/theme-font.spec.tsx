@@ -1,8 +1,9 @@
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-import { Font, Typo } from "../../src/theme";
+
 import { ThemeSpec } from "../../src/theme/types";
 import "jest-styled-components";
+import { Font, Typo } from "../../src";
 
 const StyledTypographyTest = styled.div`
     ${Typo["header-xxl-bold"]};
@@ -78,6 +79,7 @@ describe("StyledTypographyTest", () => {
     it("should apply correct font styles based on the theme", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
         };
 
         const fontSize = "1.125rem";

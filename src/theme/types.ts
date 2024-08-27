@@ -37,7 +37,7 @@ export interface ThemeSpecOptions {
 
 export interface ThemeSpec {
     colourScheme: ColourScheme;
-    fontScheme?: FontScheme | undefined;
+    fontScheme: FontScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 

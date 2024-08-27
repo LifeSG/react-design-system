@@ -13,6 +13,7 @@ describe("Colour Themeing Test", () => {
     it("should apply correct styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "bookingsg",
+            fontScheme: "lifesg",
         };
 
         const bgColor = "#1A122C";
@@ -34,6 +35,7 @@ describe("Colour Themeing Test", () => {
     it("should apply correct styles when overriding primitive colour token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
             overrides: {
                 primitiveColour: {
                     "primary-10": "#fefefe",
@@ -60,6 +62,7 @@ describe("Colour Themeing Test", () => {
     it("should apply correct styles when overriding semantic colour token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
             overrides: {
                 semanticColour: {
                     "border-primary": "#fefefe",

@@ -1,6 +1,6 @@
 import { StyledComponentProps, getCollection } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgFontSet } from "./specs/font-set";
+import { LifeSgFontSet } from "./specs/lifesg-font-set";
 import { getValue } from "../helpers";
 import { FontCollectionMap, FontSet } from "./types";
 

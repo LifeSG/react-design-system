@@ -1,7 +1,7 @@
 import { CSSProp, css } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgTypographySet } from "./specs/typography-set";
+import { LifeSgTypographySet } from "./specs/lifesg-typography-set";
 import { TypographyCollectionMap, TypographySet } from "./types";
 
 const TypographySpec: ThemeCollectionSpec<TypographyCollectionMap, FontScheme> =
@@ -17,7 +17,7 @@ const TypographySpec: ThemeCollectionSpec<TypographyCollectionMap, FontScheme> =
     };
 
 export const getTypography = (key: keyof TypographySet) => {
-    return (props: StyledComponentProps) => {
+    return (props: StyledComponentProps): CSSProp | string => {
         const theme = props.theme;
         const typographySet: TypographySet = getCollection(
             TypographySpec,
@@ -31,15 +31,9 @@ export const getTypography = (key: keyof TypographySet) => {
                 : typographySet[key];
 
         // If function, resolve with props
-        if (typeof typographyValue === "function") {
-            return css`
-                ${(typographyValue as (props: any) => string)(props)}
-            `;
-        }
-
-        return css`
-            ${typographyValue}
-        `;
+        return typeof typographyValue === "function"
+            ? (typographyValue as (props: any) => string)(props)
+            : typographyValue;
     };
 };
 
