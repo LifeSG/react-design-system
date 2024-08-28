@@ -32,6 +32,9 @@ interface RowHeaderProps {
 interface LoadingCellWrapperProps {
     $width: number;
 }
+interface NoResultsFoundProps {
+    $show: boolean;
+}
 
 export const Container = styled.div`
     width: 100%;
@@ -186,11 +189,19 @@ export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
     justify-content: center;
 `;
 
-export const NoResultsFound = styled(ErrorDisplay)`
+export const NoResultsFound = styled(ErrorDisplay)<NoResultsFoundProps>`
     height: 100%;
     width: 100%;
     padding: 5rem 0 5rem 0;
+    ${(props) => {
+        if (!props.$show) {
+            return css`
+                display: none;
+            `;
+        }
+    }}
 `;
+
 const gradientAnimation = keyframes`
   0% {
         background-position: -468px 0;

@@ -13,6 +13,7 @@ import {
     Loader,
     LoadingCell,
     LoadingCellWrapper,
+    NoResultsFound,
     RowHeader,
     RowHeaderSubtitle,
     RowWrapper,
@@ -275,11 +276,14 @@ export const TimeTable = ({
                     {renderColumnHeaders()}
                 </TimeTableColumns>
                 {renderRows()}
-                {/* <NoResultsFound
-                    show={optionalProps.totalRecords === 0}
+                <NoResultsFound
+                    $show={optionalProps.totalRecords === 0}
                     type="no-item-found"
-                    illustrationScheme={optionalProps.emptyContent.illustrationScheme}
-                    description={optionalProps.emptyContent.description} /> */}
+                    illustrationScheme={
+                        optionalProps.emptyContent.illustrationScheme
+                    }
+                    description={optionalProps.emptyContent.description}
+                />
             </TimeTableContainer>
         </>
     );
