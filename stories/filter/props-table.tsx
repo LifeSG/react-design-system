@@ -40,7 +40,7 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 defaultValue: `"Filters"`,
             },
             {
-                name: "toggleFilterButtonType",
+                name: "toggleFilterButtonStyle",
                 description:
                     "The style type of the filter toggle button (in mobile)",
                 propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
