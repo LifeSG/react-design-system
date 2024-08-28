@@ -17,6 +17,8 @@ export type { FontSet, FontSetOptions } from "./font/types";
 
 export type { TypographySet, TypographySetOptions } from "./typography/types";
 
+export type { AnimationSet, AnimationSetOptions } from "./animation/types";
+
 export type ColourScheme =
     | "lifesg"
     | "bookingsg"

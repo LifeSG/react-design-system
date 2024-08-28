@@ -1,4 +1,4 @@
-import { AnimationSetValues } from "./animation/helper";
+import { AnimationSetValues } from "./animation/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
 import { FontValues } from "./font/theme-helper";
@@ -14,9 +14,7 @@ export const Font = FontValues;
 
 export const Typography = TypographyValues;
 
-export const AnimationSet = {
-    ...AnimationSetValues,
-};
+export const AnimationSet = AnimationSetValues;
 
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",

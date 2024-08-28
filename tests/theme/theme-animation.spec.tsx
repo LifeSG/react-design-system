@@ -13,6 +13,7 @@ describe("StyledAnimationTest", () => {
     it("should apply correct animation styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
             animationScheme: "lifesg",
         };
 
@@ -34,6 +35,7 @@ describe("StyledAnimationTest", () => {
     it("should apply correct animation styles when overriding animation token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
             animationScheme: "lifesg",
             overrides: {
                 animation: {
