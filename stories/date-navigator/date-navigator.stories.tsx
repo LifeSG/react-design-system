@@ -9,19 +9,24 @@ const meta: Meta<Component> = {
     title: "Modules/DateNavigator",
     component: DateNavigator,
 };
+const today = dayjs().format("YYYY-MM-DD");
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const today = dayjs().format("YYYY-MM-DD");
         return <DateNavigator selectedDate={today} />;
+    },
+};
+
+export const DisableNavigationWhenLoading: StoryObj<Component> = {
+    render: () => {
+        return <DateNavigator selectedDate={today} isLoading />;
     },
 };
 
 export const WithMinAndMaxDate: StoryObj<Component> = {
     render: () => {
-        const today = dayjs().format("YYYY-MM-DD");
         return (
             <DateNavigator
                 selectedDate={today}
