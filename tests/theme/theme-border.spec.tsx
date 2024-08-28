@@ -2,17 +2,18 @@ import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
 import { ThemeSpec } from "../../src/theme/types";
-import { BorderValues } from "../../src/theme/border/helper";
+import { BorderSet } from "../../src";
 
 const StyledBorderComponent = styled.div`
-    border: ${BorderValues["width-sm"]} ${BorderValues.solid};
-    border-top: ${BorderValues["dashed-default"]};
+    border: ${BorderSet["width-sm"]} ${BorderSet.solid};
+    border-top: ${BorderSet["dashed-default"]};
 `;
 
 describe("Border Theming Test", () => {
     it("should apply correct border styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
             borderScheme: "lifesg",
         };
 
@@ -53,12 +54,13 @@ describe("Border Theming Test", () => {
 
     it("should apply correct border styles when overriding border color in dashed-default", () => {
         const StyledBorderComponentDash = styled.div`
-            border: ${BorderValues["width-sm"]} ${BorderValues.solid};
-            border-top: ${BorderValues["dashed-default"](2, "red")};
+            border: ${BorderSet["width-sm"]} ${BorderSet.solid};
+            border-top: ${BorderSet["dashed-default"](2, "red")};
         `;
 
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
             borderScheme: "lifesg",
         };
 
@@ -97,6 +99,7 @@ describe("Border Theming Test", () => {
     it("should apply correct border styles based on the override for the border", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
+            fontScheme: "lifesg",
             borderScheme: "lifesg",
             overrides: {
                 border: {

@@ -30,18 +30,9 @@ export const dashedBorderStyle =
         const encodedColor = encodeURIComponent(resolvedColor);
         const strokeWidth = parseInt(resolvedThickness) + 1;
 
-        console.log(
-            "TO CHECK CSS BLOCK AND SEE IF ITS WORKING:",
-            `
-            background-color: transparent;
-            height: ${resolvedThickness};
-            background-repeat: repeat-x;
-            background-image: url('data:image/svg+xml,<svg width="8" height="${resolvedThickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>');
-        `
-        );
-
         return css`
-            z-index: 1;
+            /* Added extra background-color styling to resolve improper wrapping of css styling when used. */
+            background-color: transparent;
             background-color: transparent;
             height: ${resolvedThickness};
             background-repeat: repeat-x;
@@ -66,11 +57,6 @@ export const getBorder = (key: keyof BorderSet) => {
 
             // If function resolve it with props
             if (typeof borderValue === "function") {
-                console.log("borderValue:", borderValue);
-                console.log("borderValue type:", typeof borderValue);
-                console.log("Arguments passed:", args);
-                console.log("Props passed to function:", props);
-
                 // Check if props being passed as the arg
                 const isArgsProps = args.length === 1 && "theme" in args[0];
                 const resolvedArgs = isArgsProps
@@ -82,8 +68,6 @@ export const getBorder = (key: keyof BorderSet) => {
                         ? resolvedArgs
                         : [undefined, undefined])
                 )(props);
-
-                console.log("Result of function call:", result);
 
                 return css`
                     ${result}
@@ -98,7 +82,6 @@ export const getBorder = (key: keyof BorderSet) => {
                 `;
             }
 
-            console.log("Final borderValue:", borderValue);
             return css`
                 ${borderValue}
             `;

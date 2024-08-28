@@ -4,6 +4,8 @@ import { BorderValues } from "./border/helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
 import { FontValues } from "./font/theme-helper";
+import { RadiusSetValue } from "./radius/helper";
+import { SpacingSetValue } from "./spacing/helper";
 import { ThemeSpec } from "./types";
 import { TypographyValues } from "./typography/theme-helper";
 
@@ -17,6 +19,8 @@ export const Font = FontValues;
 export const Typography = TypographyValues;
 
 export const Animation = AnimationValues;
+
+export const BorderSet = BorderValues;
 
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",
