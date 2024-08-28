@@ -4,6 +4,8 @@ import { TypographySetOptions } from "./typography/types";
 import { FontSetOptions } from "./font/types";
 import { AnimationSetOptions } from "./animation/types";
 import { BorderSetOptions } from "./border/types";
+import { SpacingSetOptions } from "./spacing/types";
+import { RadiusSetSetOptions } from "./radius/types";
 
 export type {
     PrimitiveColourSet,
@@ -22,6 +24,10 @@ export type { AnimationSet, AnimationSetOptions } from "./animation/types";
 
 export type { BorderSet, BorderSetOptions } from "./border/types";
 
+export type { RadiusSet, RadiusSetSetOptions } from "./radius/types";
+
+export type { SpacingSetType, SpacingSetOptions } from "./spacing/types";
+
 export type ColourScheme =
     | "lifesg"
     | "bookingsg"
@@ -32,13 +38,17 @@ export type ColourScheme =
 export type FontScheme = "lifesg" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
 export type AnimationScheme = "lifesg";
 export type BorderScheme = "lifesg";
+export type SpacingScheme = "lifesg";
+export type RadiusScheme = "lifesg";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
     font?: FontSetOptions | undefined;
     animation?: AnimationSetOptions | undefined;
+    spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
+    radius?: RadiusSetSetOptions | undefined;
     typography?: TypographySetOptions | undefined;
 }
 
@@ -47,6 +57,8 @@ export interface ThemeSpec {
     fontScheme: FontScheme;
     animationScheme: AnimationScheme;
     borderScheme: BorderScheme;
+    spacingScheme?: SpacingScheme | undefined;
+    radiusScheme?: RadiusScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 
