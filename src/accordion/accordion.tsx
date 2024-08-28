@@ -39,20 +39,30 @@ const AccordionBase = ({
         );
     };
 
+    const renderTitleWrapper = () => {
+        if (!title && !enableExpandAll) {
+            return null;
+        }
+
+        return (
+            <TitleWrapper $hasTitle={!!title || showTitleInMobile}>
+                {title && (
+                    <Title
+                        $showInMobile={showTitleInMobile}
+                        data-testid={"accordion-title"}
+                    >
+                        {title}
+                    </Title>
+                )}
+                {enableExpandAll && renderCollapseExpandAll()}
+            </TitleWrapper>
+        );
+    };
+
     return (
         <AccordionContext.Provider value={expandAll}>
             <Content className={className}>
-                <TitleWrapper $hasTitle={!!title || showTitleInMobile}>
-                    {title && (
-                        <Title
-                            $showInMobile={showTitleInMobile}
-                            data-testid={"accordion-title"}
-                        >
-                            {title}
-                        </Title>
-                    )}
-                    {enableExpandAll && renderCollapseExpandAll()}
-                </TitleWrapper>
+                {renderTitleWrapper()}
                 {children}
             </Content>
         </AccordionContext.Provider>
