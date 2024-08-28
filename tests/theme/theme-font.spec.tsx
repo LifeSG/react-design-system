@@ -3,10 +3,10 @@ import { render } from "@testing-library/react";
 
 import { ThemeSpec } from "../../src/theme/types";
 import "jest-styled-components";
-import { Font, Typo } from "../../src";
+import { Font, Typography } from "../../src";
 
 const StyledTypographyTest = styled.div`
-    ${Typo["header-xxl-bold"]};
+    ${Typography["header-xxl-bold"]};
 `;
 
 const StyledFontSet = styled.div`

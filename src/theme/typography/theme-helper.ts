@@ -1,4 +1,4 @@
-import { CSSProp, css } from "styled-components";
+import { CSSProp } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
 import { LifeSgTypographySet } from "./specs/lifesg-typography-set";

@@ -14,10 +14,7 @@ export type {
 
 export type { FontSet, FontSetOptions } from "./font/types";
 
-export type {
-    TypographySet,
-    TypographySetOptions as TypoSetOptions,
-} from "./typography/types";
+export type { TypographySet, TypographySetOptions } from "./typography/types";
 
 export type ColourScheme =
     | "lifesg"

@@ -11,7 +11,7 @@ export const Colour = {
 
 export const Font = FontValues;
 
-export const Typo = TypographyValues;
+export const Typography = TypographyValues;
 
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",
