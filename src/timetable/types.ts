@@ -1,3 +1,5 @@
+import { ResourceScheme } from "../theme";
+
 export interface TimeTableProps {
     // YYYY-MM-DD format?
     date: string;
@@ -13,7 +15,7 @@ export interface TimeTableProps {
     // Boolean to determine if should have pagination, defaults to false
     paginate?: boolean | undefined;
     // What to show when no results
-    emptyContent?: string | JSX.Element | undefined;
+    emptyContent: EmptyContentProps;
     isLoading: boolean;
     totalRecords?: number | undefined;
     // defaults to all
@@ -27,6 +29,11 @@ export interface TimeTableProps {
     // Override date navigate left/right function to custom function (eg: to have callbacks etc.)
     onRightArrowClick?: () => void;
     onNameClick?: (rowId: string) => void;
+}
+
+interface EmptyContentProps {
+    description: string;
+    illustrationScheme: ResourceScheme;
 }
 
 export type TimeTableHeaderVariants =

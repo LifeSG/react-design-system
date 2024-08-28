@@ -1,8 +1,7 @@
-import throttle from "lodash/throttle";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { Button } from "../button";
-import { CalendarHelper, DateHelper } from "../util";
+import { CalendarHelper } from "../util";
 import { RowBar, RowBarProps } from "./row-bar";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import {
@@ -10,7 +9,10 @@ import {
     ColumnHeader,
     ColumnHeaderTitle,
     FirstRowColumn,
+    LazyLoadContainer,
     Loader,
+    LoadingCell,
+    LoadingCellWrapper,
     RowHeader,
     RowHeaderSubtitle,
     RowWrapper,
@@ -40,11 +42,11 @@ export const TimeTable = ({
         timetableMinTime,
         timetableMaxTime
     );
-    const resizeDetector = useResizeDetector();
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [scrollX, setScrollX] = useState(0);
     const [scrollY, setScrollY] = useState(0);
-
+    const [results, setResults] = useState(rowBars);
+    const [loadingMoreRows, setLoadingMoreRows] = useState(false);
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -62,27 +64,62 @@ export const TimeTable = ({
     }, []);
 
     useEffect(() => {
-        const numberOfIntervalsPerRowBar = Math.ceil(
-            (hourlyIntervals.length * 60) / interval
-        );
-        const widthOfRowBar = resizeDetector.width;
-        const width =
-            widthOfRowBar / numberOfIntervalsPerRowBar > 21
-                ? widthOfRowBar / numberOfIntervalsPerRowBar
-                : 21;
-        setIntervalWidth(width);
-    }, [resizeDetector]);
+        setResults(rowBars);
+        setLoadingMoreRows(false);
+    }, [rowBars]);
+
+    useEffect(() => {
+        if (!loadingMoreRows) return;
+        if (tableContainerRef.current) {
+            tableContainerRef.current.scrollTop =
+                tableContainerRef.current.scrollHeight;
+        }
+        optionalProps.onPage();
+    }, [loadingMoreRows]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    // TODO - Paginated scrolling and resizing
-    const handleScroll = throttle(() => {
+
+    const handleResize = () => {
+        if (tableContainerRef.current) {
+            const numberOfIntervalsPerRowBar = Math.ceil(
+                (hourlyIntervals.length * 60) / interval
+            );
+            const tableContainerWidth =
+                tableContainerRef.current.clientWidth - 252;
+            const width =
+                tableContainerWidth / numberOfIntervalsPerRowBar > 21
+                    ? tableContainerWidth / numberOfIntervalsPerRowBar
+                    : 21;
+            setIntervalWidth(width);
+        }
+    };
+
+    useResizeDetector({
+        onResize: handleResize,
+        targetRef: tableContainerRef,
+        refreshMode: "debounce",
+        refreshRate: 50,
+    });
+
+    const handleScroll = useCallback(() => {
         if (tableContainerRef.current) {
             setScrollX(tableContainerRef.current.scrollLeft);
             setScrollY(tableContainerRef.current.scrollTop);
         }
-    }, 100);
+
+        const { scrollTop, clientHeight, scrollHeight } =
+            tableContainerRef.current;
+        const isEndOfTableContainerReached =
+            Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+        const allRowsLoaded = results.length === optionalProps.totalRecords;
+
+        if (loadingMoreRows) return;
+        if (isEndOfTableContainerReached && !allRowsLoaded) {
+            setLoadingMoreRows(true);
+        }
+    }, [results]);
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -95,7 +132,7 @@ export const TimeTable = ({
         "#D3EEFC",
     ];
     let colourIndex = 0;
-    const mappedRowBarWithBgColour: RowBarProps[] = rowBars.map((row) => {
+    const mappedRowBarWithBgColour: RowBarProps[] = results.map((row) => {
         const bgColour = rowBarBgColourSequence[colourIndex];
         // Increment the colourIndex and reset it if it reaches the end of the sequence
         colourIndex++;
@@ -118,6 +155,8 @@ export const TimeTable = ({
     // =============================================================================
 
     const renderColumnHeaders = () => {
+        // Dont render first column if there are no rows
+        if (optionalProps.totalRecords === 0) return;
         return hourlyIntervals.map((columnHeader: string) => {
             return (
                 <ColumnHeader
@@ -133,6 +172,7 @@ export const TimeTable = ({
         });
     };
     const renderRows = () => {
+        if (mappedRowBarWithBgColour.length === 0) return;
         return (
             <RowWrapper $loading={loading}>
                 {mappedRowBarWithBgColour.map((rowData, index) => {
@@ -178,7 +218,34 @@ export const TimeTable = ({
                         </TimeTableRow>
                     );
                 })}
-                {loading && <Loader $numOfRows={rowBars.length} />}
+                {loading && <Loader $numOfRows={results.length} />}
+                {loadingMoreRows && (
+                    <TimeTableRow
+                        key={`lazy-loading-row-key`}
+                        $loading={loading}
+                    >
+                        <RowHeader $isScrolled={scrollX > 0}>
+                            <LoadingCell />
+                        </RowHeader>
+                        <LazyLoadContainer>
+                            {Array.from(
+                                {
+                                    length: hourlyIntervals.length,
+                                },
+                                (_, index) => {
+                                    return (
+                                        <LoadingCellWrapper
+                                            key={`lazy-load-cell-${index}`}
+                                            $width={intervalWidth * 4}
+                                        >
+                                            <LoadingCell />
+                                        </LoadingCellWrapper>
+                                    );
+                                }
+                            )}
+                        </LazyLoadContainer>
+                    </TimeTableRow>
+                )}
             </RowWrapper>
         );
     };
@@ -208,6 +275,11 @@ export const TimeTable = ({
                     {renderColumnHeaders()}
                 </TimeTableColumns>
                 {renderRows()}
+                {/* <NoResultsFound
+                    show={optionalProps.totalRecords === 0}
+                    type="no-item-found"
+                    illustrationScheme={optionalProps.emptyContent.illustrationScheme}
+                    description={optionalProps.emptyContent.description} /> */}
             </TimeTableContainer>
         </>
     );

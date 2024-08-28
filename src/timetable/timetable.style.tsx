@@ -1,7 +1,8 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
 import { Color } from "../color";
 import { Text } from "../text";
+import { ErrorDisplay } from "../error-display";
 
 interface TimeTableColumnsProps {
     $numOfColumns: number;
@@ -26,6 +27,10 @@ interface FirstRowFirstColumnProps {
 
 interface RowHeaderProps {
     $isScrolled: boolean;
+}
+
+interface LoadingCellWrapperProps {
+    $width: number;
 }
 
 export const Container = styled.div`
@@ -56,10 +61,7 @@ export const TimeTableColumns = styled.div<TimeTableColumnsProps>`
     top: 0;
     z-index: 1;
     background-color: white;
-    grid-template-columns: 252px repeat(
-            ${(props) => props.$numOfColumns + 1},
-            1fr
-        );
+    grid-template-columns: 252px repeat(${(props) => props.$numOfColumns}, 1fr);
     width: 100%;
     border-bottom: 1px solid ${Color.Neutral[5]};
     transition: all 0.5s ease-in-out;
@@ -133,7 +135,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
     border-right: 1px solid ${Color.Accent.Light[1]};
     align-content: center;
     text-align: right;
-    padding-right: 1rem;
+    padding: 0 1rem 0 2rem;
     border-bottom: 1px solid ${Color.Neutral[5]};
     border-left: 1px solid ${Color.Accent.Light[1]};
     transition: all 0.5s ease-in-out;
@@ -160,6 +162,9 @@ export const RowData = styled.div<RowDataProps>`
 `;
 
 export const ClickableRowHeaderTitle = styled(Text.H5)`
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     color: ${Color.Primary};
     :hover {
         cursor: pointer;
@@ -179,4 +184,43 @@ export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+export const NoResultsFound = styled(ErrorDisplay)`
+    height: 100%;
+    width: 100%;
+    padding: 5rem 0 5rem 0;
+`;
+const gradientAnimation = keyframes`
+  0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
+`;
+
+export const LoadingCell = styled.div`
+    height: 28px;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        ${Color.Neutral[6]} 8%,
+        ${Color.Neutral[7]} 18%,
+        ${Color.Neutral[6]} 33%
+    );
+    background-size: 800px 104px;
+    animation: ${gradientAnimation} 1.5s forwards infinite;
+`;
+
+export const LazyLoadContainer = styled.div`
+    display: flex;
+    border-bottom: 1px solid ${Color.Neutral[5]};
+`;
+
+export const LoadingCellWrapper = styled.div<LoadingCellWrapperProps>`
+    border-right: 0.5px solid ${Color.Accent.Light[1]};
+    width: ${(props) => `${props.$width}px`};
+    height: 100%;
+    padding: 20px 12px 20px 12px;
 `;

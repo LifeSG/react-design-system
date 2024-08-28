@@ -4,8 +4,8 @@ import { TimeTableProps } from "./types";
 export const mockResourceListingResultsData = {
     page: 1,
     rowsPerPage: 10,
-    totalPages: 9,
-    totalRows: 82,
+    totalPages: 2,
+    totalRows: 20,
     resources: [
         {
             _provider: "rmbme",
@@ -2503,9 +2503,14 @@ export const mockMapper: TimeTableProps = {
         alert("Refreshed");
     },
     onPage: function (): void {
-        alert("Paginated");
+        console.log("Paginated");
     },
     onNameClick: function (rowId: string): void {
         alert(`Clicked on ${rowId}`);
+    },
+    emptyContent: {
+        illustrationScheme: "bookingsg",
+        description:
+            "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
     },
 };

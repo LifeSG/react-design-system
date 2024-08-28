@@ -16,7 +16,7 @@ export const BlockContainer = styled.div<BlockContainerProps>`
     ${(props) => {
         if (props.$isOnTheHour) {
             return css`
-                box-shadow: inset -0.5px 0px ${Color.Accent.Light[1]};
+                box-shadow: inset -1px 0px ${Color.Accent.Light[1]};
             `;
         }
     }}
