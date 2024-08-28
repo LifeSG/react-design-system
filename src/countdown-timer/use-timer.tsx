@@ -8,7 +8,10 @@ export const useTimer = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [remainingSeconds, setRemainingSeconds] = useState<number>(seconds);
+    // -1 to match Math.floor behavior (initial state only affects first displayed number)
+    const [remainingSeconds, setRemainingSeconds] = useState<number>(
+        seconds - 1
+    );
 
     // =============================================================================
     // EFFECTS
@@ -37,7 +40,7 @@ export const useTimer = (
     // HELPER FUNCTIONS
     // =========================================================================
     const calculateRemainingSecondsFromTimestamp = (timestamp: number) =>
-        Math.max(Math.ceil((timestamp - Date.now()) / 1000), 0);
+        Math.max(Math.floor((timestamp - Date.now()) / 1000), 0);
 
     return [remainingSeconds] as const;
 };
