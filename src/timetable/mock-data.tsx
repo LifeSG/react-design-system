@@ -5,7 +5,7 @@ export const mockResourceListingResultsData = {
     page: 1,
     rowsPerPage: 8,
     totalPages: 2,
-    totalRows: 10,
+    totalRows: 30,
     resources: [
         {
             _provider: "rmbme",

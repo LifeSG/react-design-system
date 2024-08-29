@@ -32,6 +32,7 @@ interface RowHeaderProps {
 interface LoadingCellWrapperProps {
     $width: number;
 }
+
 interface NoResultsFoundProps {
     $show: boolean;
 }
@@ -78,6 +79,8 @@ export const TimeTableColumns = styled.div<TimeTableColumnsProps>`
 `;
 
 export const TimeTableRow = styled.div<TimeTableProps>`
+    position: sticky;
+    left: 0;
     display: grid;
     width: 100%;
     height: 65px;
@@ -204,6 +207,18 @@ export const NoResultsFound = styled(ErrorDisplay)<NoResultsFoundProps>`
     }}
 `;
 
+export const LoadingWrapper = styled.div`
+    display: flex;
+    border-bottom: 1px solid ${Color.Neutral[5]};
+`;
+
+export const LoadingCell = styled.div<LoadingCellWrapperProps>`
+    border-right: 0.5px solid ${Color.Accent.Light[1]};
+    width: ${(props) => `${props.$width}px`};
+    height: 100%;
+    padding: 20px 12px 20px 12px;
+`;
+
 const gradientAnimation = keyframes`
   0% {
         background-position: -468px 0;
@@ -213,7 +228,7 @@ const gradientAnimation = keyframes`
     }
 `;
 
-export const LoadingCell = styled.div`
+export const LoadingBar = styled.div`
     height: 28px;
     width: 100%;
     background: linear-gradient(
@@ -224,16 +239,4 @@ export const LoadingCell = styled.div`
     );
     background-size: 800px 104px;
     animation: ${gradientAnimation} 1.5s forwards infinite;
-`;
-
-export const LazyLoadContainer = styled.div`
-    display: flex;
-    border-bottom: 1px solid ${Color.Neutral[5]};
-`;
-
-export const LoadingCellWrapper = styled.div<LoadingCellWrapperProps>`
-    border-right: 0.5px solid ${Color.Accent.Light[1]};
-    width: ${(props) => `${props.$width}px`};
-    height: 100%;
-    padding: 20px 12px 20px 12px;
 `;

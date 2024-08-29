@@ -4,7 +4,6 @@ import { RowCell, RowCellProps } from "./row-cell";
 import { RowBarProps } from "./types";
 
 export const RowBar = ({
-    id, //resource id
     name,
     subtitle,
     rowMinTime,
@@ -22,7 +21,6 @@ export const RowBar = ({
     // Handle non-op before hours
     if (dayjs(timetableMinTime, "HH:mm").isBefore(dayjs(rowMinTime, "HH:mm"))) {
         rowCellArray.push({
-            id: "",
             startTime: timetableMinTime,
             endTime: rowMinTime,
             status: "DISABLED",
@@ -50,7 +48,6 @@ export const RowBar = ({
             // If available slot ends on the hour, push to array
             if (currentTime.add(15, "minutes").get("minutes") === 0) {
                 rowCellArray.push({
-                    id: "",
                     startTime: availableSlotStartTime,
                     endTime: currentTime
                         .add(15, "minutes")
@@ -63,7 +60,6 @@ export const RowBar = ({
                 availableSlotStartTime = "";
             } else if (currentTime.add(15, "minutes").isSame(endTime)) {
                 rowCellArray.push({
-                    id: "",
                     startTime: availableSlotStartTime,
                     endTime: rowMaxTime,
                     status: "DEFAULT",
@@ -75,7 +71,6 @@ export const RowBar = ({
             // If there is an available slot before the found booking, we push to the rowCellArray
             availableSlotStartTime !== "" &&
                 rowCellArray.push({
-                    id,
                     startTime: availableSlotStartTime,
                     endTime: foundBooking.startTime,
                     status: "DEFAULT",
@@ -98,7 +93,6 @@ export const RowBar = ({
     // Handle non-op after hours
     if (dayjs(timetableMaxTime, "HH:mm").isAfter(dayjs(rowMaxTime, "HH:mm"))) {
         rowCellArray.push({
-            id: "",
             startTime: rowMaxTime,
             endTime: timetableMaxTime,
             status: "DISABLED",
@@ -112,8 +106,6 @@ export const RowBar = ({
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
-                        //FIXME: might need an id for each cell for onClick behaviour?
-                        id={cell.id}
                         key={`${index}-row-cell-key`}
                         startTime={cell.startTime}
                         endTime={cell.endTime}

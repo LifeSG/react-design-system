@@ -16,7 +16,6 @@ export interface RowCellProps extends RowCellData {
 }
 
 export const RowCell = ({
-    id,
     startTime,
     endTime,
     title,

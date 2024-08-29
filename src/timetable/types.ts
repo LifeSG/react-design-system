@@ -62,7 +62,6 @@ export interface RowBarProps extends RowBarData {
 }
 
 export interface RowCellData {
-    id: string;
     // HH:mm format
     startTime: string;
     // HH:mm format
@@ -78,3 +77,4 @@ export interface RowCellData {
     onDisabledHover?: (() => void) | undefined;
     onHover?: (() => void) | undefined;
 }
+

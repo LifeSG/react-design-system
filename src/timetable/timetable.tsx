@@ -9,10 +9,10 @@ import {
     ColumnHeader,
     ColumnHeaderTitle,
     FirstRowColumn,
-    LazyLoadContainer,
     Loader,
+    LoadingBar,
     LoadingCell,
-    LoadingCellWrapper,
+    LoadingWrapper,
     NoResultsFound,
     RowHeader,
     RowHeaderSubtitle,
@@ -21,7 +21,7 @@ import {
     TimeTableContainer,
     TimeTableRow,
 } from "./timetable.style";
-import { ROW_BAR_COLOR_SEQUENCE, RowBarProps, TimeTableProps } from "./types";
+import { ROW_BAR_COLOR_SEQUENCE, ROW_INTERVAL, RowBarProps, TimeTableProps } from "./types";
 
 export const TimeTable = ({
     date,
@@ -29,46 +29,54 @@ export const TimeTable = ({
     timetableMaxTime,
     rowBars,
     isLoading = false,
+    onPage,
     ...optionalProps
 }: TimeTableProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const interval = 15;
-    const [intervalWidth, setIntervalWidth] = useState(0);
     const hourlyIntervals = CalendarHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
-    const tableContainerRef = useRef<HTMLDivElement>(null);
+    const allRecordsLoaded = rowBars.length === optionalProps.totalRecords;
+
+    const [loading, setLoading] = useState<boolean>(isLoading);
+    const [intervalWidth, setIntervalWidth] = useState(0);
     const [scrollX, setScrollX] = useState(0);
     const [scrollY, setScrollY] = useState(0);
-    const [results, setResults] = useState(rowBars);
     const [loadMore, setLoadMore] = useState(false);
+
+    const tableContainerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
+
     useEffect(() => {
-        const tableContainer = tableContainerRef.current;
         const handleScroll = () => {
             if (tableContainerRef.current) {
                 setScrollX(tableContainerRef.current.scrollLeft);
                 setScrollY(tableContainerRef.current.scrollTop);
             }
 
-            const { scrollTop, clientHeight, scrollHeight } =
-                tableContainerRef.current;
-            const isEndOfTableContainerReached =
-                Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-            const allRowsLoaded = results.length >= optionalProps.totalRecords;
-
             if (loadMore) return;
 
-            if (isEndOfTableContainerReached && !allRowsLoaded && !isLoading) {
+            const { scrollTop, clientHeight, scrollHeight } =
+                tableContainerRef.current;
+            const isEndReached =
+                Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+            const shouldLoadMore =
+                isEndReached && !allRecordsLoaded && onPage && !loading;
+
+            if (shouldLoadMore) {
                 setLoadMore(true);
+                onPage();
             }
         };
+
+        const tableContainer = tableContainerRef.current;
+
         if (tableContainer) {
             tableContainer.addEventListener("scroll", handleScroll);
         }
@@ -78,17 +86,11 @@ export const TimeTable = ({
                 tableContainer.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [results]);
+    }, [allRecordsLoaded, loadMore, loading, onPage]);
 
     useEffect(() => {
-        setResults(rowBars);
         setLoadMore(false);
     }, [rowBars]);
-
-    useEffect(() => {
-        if (!loadMore) return;
-        optionalProps.onPage();
-    }, [loadMore]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -97,7 +99,7 @@ export const TimeTable = ({
     const handleResize = () => {
         if (tableContainerRef.current) {
             const numberOfIntervalsPerRowBar = Math.ceil(
-                (hourlyIntervals.length * 60) / interval
+                (hourlyIntervals.length * 60) / ROW_INTERVAL
             );
             const tableContainerWidth =
                 tableContainerRef.current.clientWidth - 252;
@@ -121,7 +123,7 @@ export const TimeTable = ({
     // ===========================================================================
     let colorIndex = 0;
     const colorSequenceLength = ROW_BAR_COLOR_SEQUENCE.length;
-    const mappedRowBarWithColor: RowBarProps[] = results.map((row) => {
+    const mappedRowBarWithColor: RowBarProps[] = rowBars.map((row) => {
         const rowBarColor = ROW_BAR_COLOR_SEQUENCE[colorIndex];
         colorIndex = (colorIndex + 1) % colorSequenceLength;
         return {
@@ -204,35 +206,30 @@ export const TimeTable = ({
                         </TimeTableRow>
                     );
                 })}
-                {isLoading && <Loader $numOfRows={results.length} />}
-                {loadMore && (
-                    <TimeTableRow
-                        key={`lazy-loading-row-key`}
-                        $loading={isLoading}
-                    >
-                        <RowHeader $isScrolled={scrollX > 0}>
-                            <LoadingCell />
-                        </RowHeader>
-                        <LazyLoadContainer>
-                            {Array.from(
-                                {
-                                    length: hourlyIntervals.length,
-                                },
-                                (_, index) => {
-                                    return (
-                                        <LoadingCellWrapper
-                                            key={`lazy-load-cell-${index}`}
-                                            $width={intervalWidth * 4}
-                                        >
-                                            <LoadingCell />
-                                        </LoadingCellWrapper>
-                                    );
-                                }
-                            )}
-                        </LazyLoadContainer>
-                    </TimeTableRow>
-                )}
-            </RowWrapper>
+                {loading && <Loader $numOfRows={rowBars.length} />}
+                {renderLazyLoad()}
+            </RowWrapper >
+        );
+    };
+
+    const renderLazyLoad = () => {
+        if (loading || !loadMore) return;
+        return (
+            <TimeTableRow key={`lazy-loading-row-key`} $loading={loading}>
+                <RowHeader $isScrolled={scrollX > 0}>
+                    <LoadingBar />
+                </RowHeader>
+                <LoadingWrapper>
+                    {hourlyIntervals.map((_, index) => (
+                        <LoadingCell
+                            key={`lazy-load-cell-${index}`}
+                            $width={intervalWidth * 4}
+                        >
+                            <LoadingBar />
+                        </LoadingCell>
+                    ))}
+                </LoadingWrapper>
+            </TimeTableRow>
         );
     };
 
