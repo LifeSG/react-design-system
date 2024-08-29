@@ -142,7 +142,7 @@ export const NoTitle: StoryObj<Component> = {
     },
 };
 
-export const NoExpandCollapse: StoryObj<Component> = {
+export const NoExpandCollapseAll: StoryObj<Component> = {
     render: () => {
         return (
             <Accordion title="No expand/collapse all" enableExpandAll={false}>
