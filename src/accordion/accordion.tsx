@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AccordionContext } from "./accordion-context";
 import { AccordionItem } from "./accordion-item";
 import {
     Content,
@@ -7,7 +8,6 @@ import {
     TitleWrapper,
 } from "./accordion.style";
 import { AccordionProps } from "./types";
-import { AccordionContext } from "./accordion-context";
 
 const AccordionBase = ({
     children,
@@ -45,7 +45,10 @@ const AccordionBase = ({
         }
 
         return (
-            <TitleWrapper $hasTitle={!!title || showTitleInMobile}>
+            <TitleWrapper
+                $showTitleInMobile={showTitleInMobile}
+                $hasExpandAll={enableExpandAll}
+            >
                 {title && (
                     <Title
                         $showInMobile={showTitleInMobile}
