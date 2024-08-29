@@ -15,29 +15,34 @@ export const useTimer = (
     // =============================================================================
     useEffect(() => {
         if (!isPlaying) return;
-        if (endTime)
-            setRemainingSeconds(
-                calculateRemainingSecondsFromTimestamp(endTime)
-            );
 
-        const startTime = Date.now();
-        const intervalId = setInterval(() => {
-            const countdown = calculateRemainingSecondsFromTimestamp(
-                endTime ?? startTime + seconds * 1000
-            );
+        const targetTime = endTime ?? Date.now() + seconds * 1000;
+        const timeoutId = runCountdown(targetTime);
 
-            setRemainingSeconds(countdown);
-            if (countdown <= 0) clearInterval(intervalId);
-        }, 1000);
-
-        return () => clearInterval(intervalId);
+        return () => clearTimeout(timeoutId);
     }, [endTime, isPlaying, seconds]);
 
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const calculateRemainingSecondsFromTimestamp = (timestamp: number) =>
-        Math.max(Math.ceil((timestamp - Date.now()) / 1000), 0);
+    const runCountdown = (timestamp: number) => {
+        const updateCountdown = () => {
+            const msToEnd = timestamp - Date.now();
+            const driftTime = msToEnd % 1000;
+            const countdown = Math.max(Math.round(msToEnd / 1000), 0);
+
+            setRemainingSeconds(countdown);
+            if (countdown === 0) return;
+
+            const timeoutId = setTimeout(
+                updateCountdown,
+                driftTime > 500 ? driftTime : driftTime + 1000
+            );
+
+            return timeoutId;
+        };
+        return updateCountdown();
+    };
 
     return [remainingSeconds] as const;
 };
