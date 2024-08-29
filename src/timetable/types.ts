@@ -12,15 +12,15 @@ export const ROW_INTERVAL = 15;
 export type RowBarColors = (typeof ROW_BAR_COLOR_SEQUENCE)[number];
 
 export interface TimeTableProps {
-    // YYYY-MM-DD format?
+    // YYYY-MM-DD format
     date: string;
-    // HH:mm format
-    timetableMinTime: string;
-    // HH:mm format
-    timetableMaxTime: string;
-    // HH:mm format
+    // HH:mm format, defaults to 06:00
+    minTime?: string;
+    // HH:mm format, defaults to 22:00
+    maxTime?: string;
+    // YYYY-MM-DD format
     minDate?: string | undefined;
-    // HH:mm format
+    // YYYY-MM-DD format
     maxDate?: string | undefined;
     rowBars: RowBarData[];
     emptyContent: EmptyContentProps;
@@ -58,7 +58,7 @@ export interface RowBarProps extends RowBarData {
     timetableMaxTime: string;
     rowBarColor: RowBarColors;
     intervalWidth: number;
-    onNameClick?: (() => void) | undefined;
+    onNameClick?: () => void | undefined;
 }
 
 export interface RowCellData {
@@ -70,11 +70,10 @@ export interface RowCellData {
     subtitle?: string | undefined;
     status: string;
     // Redirect user to url (resource booking page)
-    onEmptyBlockClick?: (() => void) | undefined;
+    onEmptyBlockClick?: () => void | undefined;
     // Show popover for booking details
-    onFilledBlockClick?: (() => void) | undefined;
+    onFilledBlockClick?: () => void | undefined;
     // Show popover with text
-    onDisabledHover?: (() => void) | undefined;
-    onHover?: (() => void) | undefined;
+    onDisabledHover?: () => void | undefined;
+    onHover?: () => void | undefined;
 }
-

@@ -21,33 +21,40 @@ import {
     TimeTableContainer,
     TimeTableRow,
 } from "./timetable.style";
-import { ROW_BAR_COLOR_SEQUENCE, ROW_INTERVAL, RowBarProps, TimeTableProps } from "./types";
+import {
+    ROW_BAR_COLOR_SEQUENCE,
+    ROW_INTERVAL,
+    RowBarProps,
+    TimeTableProps,
+} from "./types";
 
 export const TimeTable = ({
     date,
-    timetableMinTime,
-    timetableMaxTime,
     rowBars,
     isLoading = false,
     onPage,
+    minTime = "06:00",
+    maxTime = "22:00",
     ...optionalProps
 }: TimeTableProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const timetableMinTime = CalendarHelper.roundToNearestHour(minTime);
+    const timetableMaxTime = CalendarHelper.roundToNearestHour(maxTime);
     const hourlyIntervals = CalendarHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
-    const allRecordsLoaded = rowBars.length === optionalProps.totalRecords;
-
-    const [loading, setLoading] = useState<boolean>(isLoading);
+    const allRecordsLoaded =
+        !optionalProps.totalRecords ||
+        rowBars.length === 0 ||
+        rowBars.length === optionalProps.totalRecords;
+    const tableContainerRef = useRef<HTMLDivElement>(null);
     const [intervalWidth, setIntervalWidth] = useState(0);
     const [scrollX, setScrollX] = useState(0);
     const [scrollY, setScrollY] = useState(0);
     const [loadMore, setLoadMore] = useState(false);
-
-    const tableContainerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -67,7 +74,7 @@ export const TimeTable = ({
             const isEndReached =
                 Math.ceil(scrollTop + clientHeight) >= scrollHeight;
             const shouldLoadMore =
-                isEndReached && !allRecordsLoaded && onPage && !loading;
+                isEndReached && !allRecordsLoaded && onPage && !isLoading;
 
             if (shouldLoadMore) {
                 setLoadMore(true);
@@ -86,7 +93,7 @@ export const TimeTable = ({
                 tableContainer.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [allRecordsLoaded, loadMore, loading, onPage]);
+    }, [allRecordsLoaded, loadMore, isLoading, onPage]);
 
     useEffect(() => {
         setLoadMore(false);
@@ -206,16 +213,16 @@ export const TimeTable = ({
                         </TimeTableRow>
                     );
                 })}
-                {loading && <Loader $numOfRows={rowBars.length} />}
+                {isLoading && <Loader $numOfRows={rowBars.length} />}
                 {renderLazyLoad()}
-            </RowWrapper >
+            </RowWrapper>
         );
     };
 
     const renderLazyLoad = () => {
-        if (loading || !loadMore) return;
+        if (isLoading || !loadMore) return;
         return (
-            <TimeTableRow key={`lazy-loading-row-key`} $loading={loading}>
+            <TimeTableRow key={`lazy-loading-row-key`} $loading={isLoading}>
                 <RowHeader $isScrolled={scrollX > 0}>
                     <LoadingBar />
                 </RowHeader>

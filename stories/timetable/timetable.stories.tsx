@@ -61,7 +61,6 @@ export const Default: StoryObj<Component> = {
                     date={date}
                     onRightArrowClick={onRightArrowClick}
                     onLeftArrowClick={onLeftArrowClick}
-                    timetableMinTime="06:00"
                     isLoading={loading}
                 />
             </>

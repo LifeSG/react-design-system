@@ -5,7 +5,7 @@ export const mockResourceListingResultsData = {
     page: 1,
     rowsPerPage: 8,
     totalPages: 2,
-    totalRows: 30,
+    totalRows: 10,
     resources: [
         {
             _provider: "rmbme",
@@ -2294,8 +2294,8 @@ export const mockResourceListingResultsData = {
 
 export const mockMapper: TimeTableProps = {
     date: "2024-08-19",
-    timetableMinTime: "06:00",
-    timetableMaxTime: "22:00",
+    minTime: "06:20",
+    maxTime: "22:15",
     maxDate: "2024-08-31",
     minDate: "2024-08-01",
     totalRecords: mockResourceListingResultsData.totalRows,
