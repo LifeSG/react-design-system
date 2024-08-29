@@ -1,5 +1,16 @@
 import { ResourceScheme } from "../theme";
 
+export const ROW_BAR_COLOR_SEQUENCE = [
+    "#FFE6BB",
+    "#D8EFEB",
+    "#E6EAFE",
+    "#FAE4E5",
+    "#D3EEFC",
+] as const; // Assert to be a readonly tuple
+export const ROW_CELL_GAP = 2;
+export const ROW_INTERVAL = 15;
+export type RowBarColors = (typeof ROW_BAR_COLOR_SEQUENCE)[number];
+
 export interface TimeTableProps {
     // YYYY-MM-DD format?
     date: string;
@@ -12,22 +23,17 @@ export interface TimeTableProps {
     // HH:mm format
     maxDate?: string | undefined;
     rowBars: RowBarData[];
-    // Boolean to determine if should have pagination, defaults to false
-    paginate?: boolean | undefined;
-    // What to show when no results
     emptyContent: EmptyContentProps;
     isLoading: boolean;
     totalRecords?: number | undefined;
-    // defaults to all
-    headerVariant?: TimeTableHeaderVariants;
     // Callback to invoke on refresh click
     onRefresh?: () => void;
     // Callback to invoke on pagination, will invoke when reach end of listing
     onPage?: () => void;
     // Override date navigate left/right function to custom function (eg: to have callbacks etc.)
-    onLeftArrowClick?: () => void;
+    onLeftArrowClick?: (currentDate: string) => void;
     // Override date navigate left/right function to custom function (eg: to have callbacks etc.)
-    onRightArrowClick?: () => void;
+    onRightArrowClick?: (currentDate: string) => void;
     onNameClick?: (rowId: string) => void;
 }
 
@@ -35,12 +41,6 @@ interface EmptyContentProps {
     description: string;
     illustrationScheme: ResourceScheme;
 }
-
-export type TimeTableHeaderVariants =
-    | "all"
-    | "date-navigator-only"
-    | "records-only"
-    | "none";
 
 export interface RowBarData {
     id: string;
@@ -51,6 +51,14 @@ export interface RowBarData {
     rowMinTime: string;
     // HH:mm format
     rowMaxTime: string;
+}
+
+export interface RowBarProps extends RowBarData {
+    timetableMinTime: string;
+    timetableMaxTime: string;
+    rowBarColor: RowBarColors;
+    intervalWidth: number;
+    onNameClick?: (() => void) | undefined;
 }
 
 export interface RowCellData {

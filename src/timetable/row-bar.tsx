@@ -1,17 +1,7 @@
 import dayjs from "dayjs";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell, RowCellProps } from "./row-cell";
-import { RowBarData, RowCellData } from "./types";
-
-export interface RowBarProps extends RowBarData {
-    rowCells: RowCellData[];
-    timetableMinTime: string;
-    timetableMaxTime: string;
-    bgColour: string;
-    intervalWidth: number;
-    // Redirect user to url (resource detail page)
-    onNameClick?: (() => void) | undefined;
-}
+import { RowBarProps } from "./types";
 
 export const RowBar = ({
     id, //resource id
@@ -20,7 +10,7 @@ export const RowBar = ({
     rowMinTime,
     rowMaxTime,
     rowCells,
-    bgColour,
+    rowBarColor,
     intervalWidth,
     onNameClick,
     timetableMinTime,
@@ -37,7 +27,7 @@ export const RowBar = ({
             endTime: rowMinTime,
             status: "DISABLED",
             intervalWidth,
-            bgColour,
+            rowBarColor,
         });
     }
 
@@ -68,7 +58,7 @@ export const RowBar = ({
                         .toString(),
                     status: "DEFAULT",
                     intervalWidth,
-                    bgColour,
+                    rowBarColor,
                 });
                 availableSlotStartTime = "";
             } else if (currentTime.add(15, "minutes").isSame(endTime)) {
@@ -78,7 +68,7 @@ export const RowBar = ({
                     endTime: rowMaxTime,
                     status: "DEFAULT",
                     intervalWidth,
-                    bgColour,
+                    rowBarColor,
                 });
             }
         } else {
@@ -90,12 +80,12 @@ export const RowBar = ({
                     endTime: foundBooking.startTime,
                     status: "DEFAULT",
                     intervalWidth,
-                    bgColour,
+                    rowBarColor,
                 });
             // Reset availableSlotStartTime
             availableSlotStartTime = "";
             // Push the found booking
-            rowCellArray.push({ ...foundBooking, intervalWidth, bgColour });
+            rowCellArray.push({ ...foundBooking, intervalWidth, rowBarColor });
             // Set current time to the end of the found booking
             currentTime = dayjs(foundBooking.endTime, "HH:mm");
             continue; // Go to the next iteration
@@ -113,7 +103,7 @@ export const RowBar = ({
             endTime: timetableMaxTime,
             status: "DISABLED",
             intervalWidth,
-            bgColour,
+            rowBarColor,
         });
     }
 
@@ -131,7 +121,7 @@ export const RowBar = ({
                         subtitle={cell.subtitle}
                         status={cell.status}
                         intervalWidth={cell.intervalWidth}
-                        bgColour={cell.bgColour}
+                        rowBarColor={cell.rowBarColor}
                     />
                 );
             })}

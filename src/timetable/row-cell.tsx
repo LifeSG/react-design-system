@@ -8,15 +8,12 @@ import {
     Gap,
     Wrapper,
 } from "./row-cell.style";
-import { RowCellData } from "./types";
+import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "./types";
 
 export interface RowCellProps extends RowCellData {
     intervalWidth: number;
-    bgColour: string;
+    rowBarColor: string;
 }
-
-const gap = 2;
-const interval = 15;
 
 export const RowCell = ({
     id,
@@ -26,15 +23,15 @@ export const RowCell = ({
     subtitle,
     status,
     intervalWidth,
-    bgColour,
+    rowBarColor,
 }: RowCellProps) => {
     const isOnTheHour = dayjs(endTime, "HH:mm").get("minutes") === 0;
     const isNotAvailable = status !== "DEFAULT";
     const numberOfIntervals =
-        DateHelper.getTimeDiffInMinutes(startTime, endTime) / interval;
+        DateHelper.getTimeDiffInMinutes(startTime, endTime) / ROW_INTERVAL;
     const totalCellWidth = numberOfIntervals * intervalWidth;
     const adjustedCellWidth = isNotAvailable
-        ? totalCellWidth - gap
+        ? totalCellWidth - ROW_CELL_GAP
         : totalCellWidth;
 
     return (
@@ -48,7 +45,7 @@ export const RowCell = ({
                     <Block
                         $width={adjustedCellWidth}
                         $status={status}
-                        $bgColour={bgColour}
+                        $bgColour={rowBarColor}
                     >
                         <BlockTitle weight={"semibold"}>{title}</BlockTitle>
                         <BlockDescription weight={"bold"}>

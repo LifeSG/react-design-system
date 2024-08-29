@@ -3,9 +3,9 @@ import { TimeTableProps } from "./types";
 
 export const mockResourceListingResultsData = {
     page: 1,
-    rowsPerPage: 10,
+    rowsPerPage: 8,
     totalPages: 2,
-    totalRows: 20,
+    totalRows: 10,
     resources: [
         {
             _provider: "rmbme",
@@ -1501,33 +1501,9 @@ export const mockResourceListingResultsData = {
                         },
                         {
                             startTime: "15:00:00",
-                            endTime: "15:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:15:00",
-                            endTime: "15:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:30:00",
-                            endTime: "15:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:45:00",
-                            endTime: "16:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:00:00",
-                            endTime: "16:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:15:00",
                             endTime: "16:30:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
+                            label: "booking label",
                         },
                         {
                             startTime: "16:30:00",
@@ -1685,158 +1661,9 @@ export const mockResourceListingResultsData = {
                     slots: [
                         {
                             startTime: "08:00:00",
-                            endTime: "08:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "08:15:00",
-                            endTime: "08:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "08:30:00",
-                            endTime: "08:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "08:45:00",
-                            endTime: "09:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "09:00:00",
-                            endTime: "09:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "09:15:00",
-                            endTime: "09:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "09:30:00",
-                            endTime: "09:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "09:45:00",
-                            endTime: "10:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "10:00:00",
-                            endTime: "10:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "10:15:00",
-                            endTime: "10:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "10:30:00",
-                            endTime: "10:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "10:45:00",
-                            endTime: "11:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "11:00:00",
-                            endTime: "11:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "11:15:00",
-                            endTime: "11:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "11:30:00",
-                            endTime: "11:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "11:45:00",
-                            endTime: "12:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "12:00:00",
-                            endTime: "13:00:00",
-                            status: "DISABLED",
-                        },
-                        {
-                            startTime: "13:00:00",
-                            endTime: "13:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "13:15:00",
-                            endTime: "13:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "13:30:00",
-                            endTime: "13:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "13:45:00",
-                            endTime: "14:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "14:00:00",
-                            endTime: "14:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "14:15:00",
-                            endTime: "14:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "14:30:00",
-                            endTime: "14:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "14:45:00",
-                            endTime: "15:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:00:00",
-                            endTime: "15:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:15:00",
-                            endTime: "15:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:30:00",
-                            endTime: "15:45:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:45:00",
-                            endTime: "16:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:00:00",
-                            endTime: "16:15:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:15:00",
                             endTime: "16:30:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
+                            label: "a very long booking text that spans across the entire universe beyond the horizon into the blackhole transcending time and space",
                         },
                         {
                             startTime: "16:30:00",
@@ -2498,13 +2325,6 @@ export const mockMapper: TimeTableProps = {
         };
     }),
     // headerVariant: "records-only",
-    isLoading: false,
-    onRefresh: function (): void {
-        alert("Refreshed");
-    },
-    onPage: function (): void {
-        console.log("Paginated");
-    },
     onNameClick: function (rowId: string): void {
         alert(`Clicked on ${rowId}`);
     },
@@ -2513,4 +2333,5 @@ export const mockMapper: TimeTableProps = {
         description:
             "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
     },
+    isLoading: false,
 };

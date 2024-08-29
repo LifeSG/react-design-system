@@ -81,6 +81,8 @@ export const TimeTableRow = styled.div<TimeTableProps>`
     display: grid;
     width: 100%;
     height: 65px;
+    position: sticky;
+    left: 0;
     ${(props) => {
         if (props.$loading) {
             return css`
@@ -131,8 +133,8 @@ export const RowWrapper = styled.div<TimeTableProps>`
 
 export const RowHeader = styled.div<RowHeaderProps>`
     position: sticky;
-    background-color: white;
     left: 0;
+    background-color: white;
     width: 252px;
     min-width: 252px;
     border-right: 1px solid ${Color.Accent.Light[1]};

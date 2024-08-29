@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { isEmpty } from "lodash";
+import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { Button } from "../button";
 import { CalendarHelper } from "../util";
-import { RowBar, RowBarProps } from "./row-bar";
+import { RowBar } from "./row-bar";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import {
     ClickableRowHeaderTitle,
@@ -21,7 +21,7 @@ import {
     TimeTableContainer,
     TimeTableRow,
 } from "./timetable.style";
-import { TimeTableProps } from "./types";
+import { ROW_BAR_COLOR_SEQUENCE, RowBarProps, TimeTableProps } from "./types";
 
 export const TimeTable = ({
     date,
@@ -29,15 +29,12 @@ export const TimeTable = ({
     timetableMaxTime,
     rowBars,
     isLoading = false,
-    headerVariant = "all",
     ...optionalProps
 }: TimeTableProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const interval = 15;
-    const [selectedDate, setSelectedDate] = useState<string>(date);
-    const [loading, setLoading] = useState<boolean>(isLoading);
     const [intervalWidth, setIntervalWidth] = useState(0);
     const hourlyIntervals = CalendarHelper.generateHourlyIntervals(
         timetableMinTime,
@@ -47,12 +44,31 @@ export const TimeTable = ({
     const [scrollX, setScrollX] = useState(0);
     const [scrollY, setScrollY] = useState(0);
     const [results, setResults] = useState(rowBars);
-    const [loadingMoreRows, setLoadingMoreRows] = useState(false);
+    const [loadMore, setLoadMore] = useState(false);
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
         const tableContainer = tableContainerRef.current;
+        const handleScroll = () => {
+            if (tableContainerRef.current) {
+                setScrollX(tableContainerRef.current.scrollLeft);
+                setScrollY(tableContainerRef.current.scrollTop);
+            }
+
+            const { scrollTop, clientHeight, scrollHeight } =
+                tableContainerRef.current;
+            const isEndOfTableContainerReached =
+                Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+            const allRowsLoaded = results.length >= optionalProps.totalRecords;
+
+            if (loadMore) return;
+
+            if (isEndOfTableContainerReached && !allRowsLoaded && !isLoading) {
+                setLoadMore(true);
+            }
+        };
         if (tableContainer) {
             tableContainer.addEventListener("scroll", handleScroll);
         }
@@ -62,21 +78,17 @@ export const TimeTable = ({
                 tableContainer.removeEventListener("scroll", handleScroll);
             }
         };
-    }, []);
+    }, [results]);
 
     useEffect(() => {
         setResults(rowBars);
-        setLoadingMoreRows(false);
+        setLoadMore(false);
     }, [rowBars]);
 
     useEffect(() => {
-        if (!loadingMoreRows) return;
-        if (tableContainerRef.current) {
-            tableContainerRef.current.scrollTop =
-                tableContainerRef.current.scrollHeight;
-        }
+        if (!loadMore) return;
         optionalProps.onPage();
-    }, [loadingMoreRows]);
+    }, [loadMore]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -104,49 +116,21 @@ export const TimeTable = ({
         refreshRate: 50,
     });
 
-    const handleScroll = useCallback(() => {
-        if (tableContainerRef.current) {
-            setScrollX(tableContainerRef.current.scrollLeft);
-            setScrollY(tableContainerRef.current.scrollTop);
-        }
-
-        const { scrollTop, clientHeight, scrollHeight } =
-            tableContainerRef.current;
-        const isEndOfTableContainerReached =
-            Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-        const allRowsLoaded = results.length === optionalProps.totalRecords;
-
-        if (loadingMoreRows) return;
-        if (isEndOfTableContainerReached && !allRowsLoaded) {
-            setLoadingMoreRows(true);
-        }
-    }, [results]);
-
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
-    const rowBarBgColourSequence = [
-        "#FFE6BB",
-        "#D8EFEB",
-        "#E6EAFE",
-        "#FAE4E5",
-        "#D3EEFC",
-    ];
-    let colourIndex = 0;
-    const mappedRowBarWithBgColour: RowBarProps[] = results.map((row) => {
-        const bgColour = rowBarBgColourSequence[colourIndex];
-        // Increment the colourIndex and reset it if it reaches the end of the sequence
-        colourIndex++;
-        if (colourIndex >= rowBarBgColourSequence.length) {
-            colourIndex = 0;
-        }
+    let colorIndex = 0;
+    const colorSequenceLength = ROW_BAR_COLOR_SEQUENCE.length;
+    const mappedRowBarWithColor: RowBarProps[] = results.map((row) => {
+        const rowBarColor = ROW_BAR_COLOR_SEQUENCE[colorIndex];
+        colorIndex = (colorIndex + 1) % colorSequenceLength;
         return {
             ...row,
             timetableMaxTime,
             timetableMinTime,
             rowMinTime: row.rowMinTime,
             rowMaxTime: row.rowMaxTime,
-            bgColour,
+            rowBarColor,
             intervalWidth,
         };
     });
@@ -156,7 +140,7 @@ export const TimeTable = ({
     // =============================================================================
 
     const renderColumnHeaders = () => {
-        // Dont render first column if there are no rows
+        // REVIEW - Dont render first column if there are no rows (why ah?)
         if (optionalProps.totalRecords === 0) return;
         return hourlyIntervals.map((columnHeader: string) => {
             return (
@@ -172,15 +156,16 @@ export const TimeTable = ({
             );
         });
     };
+
     const renderRows = () => {
-        if (mappedRowBarWithBgColour.length === 0) return;
+        if (mappedRowBarWithColor.length === 0) return;
         return (
-            <RowWrapper $loading={loading}>
-                {mappedRowBarWithBgColour.map((rowData, index) => {
+            <RowWrapper $loading={isLoading}>
+                {mappedRowBarWithColor.map((rowData, index) => {
                     return (
                         <TimeTableRow
                             key={`${rowData.id}-row-key`}
-                            $loading={loading}
+                            $loading={isLoading}
                         >
                             <RowHeader $isScrolled={scrollX > 0}>
                                 <ClickableRowHeaderTitle
@@ -201,7 +186,7 @@ export const TimeTable = ({
                                     {rowData.subtitle}
                                 </RowHeaderSubtitle>
                             </RowHeader>
-                            {!loading && (
+                            {!isLoading && (
                                 <RowBar
                                     key={`${rowData.id}-row-bar-key`}
                                     id={rowData.id}
@@ -212,18 +197,18 @@ export const TimeTable = ({
                                     rowCells={rowData.rowCells}
                                     timetableMinTime={timetableMinTime}
                                     timetableMaxTime={timetableMaxTime}
-                                    bgColour={rowData.bgColour}
+                                    rowBarColor={rowData.rowBarColor}
                                     intervalWidth={rowData.intervalWidth}
                                 />
                             )}
                         </TimeTableRow>
                     );
                 })}
-                {loading && <Loader $numOfRows={results.length} />}
-                {loadingMoreRows && (
+                {isLoading && <Loader $numOfRows={results.length} />}
+                {loadMore && (
                     <TimeTableRow
                         key={`lazy-loading-row-key`}
-                        $loading={loading}
+                        $loading={isLoading}
                     >
                         <RowHeader $isScrolled={scrollX > 0}>
                             <LoadingCell />
@@ -253,13 +238,10 @@ export const TimeTable = ({
 
     return (
         <>
-            <Button.Default onClick={() => setLoading(!loading)}>
-                Load
-            </Button.Default>
             <TimeTableContainer
                 ref={tableContainerRef}
                 id="timetable-container-id"
-                $loading={loading}
+                $loading={isLoading}
             >
                 <TimeTableColumns
                     $numOfColumns={hourlyIntervals.length}
@@ -267,9 +249,8 @@ export const TimeTable = ({
                 >
                     <FirstRowColumn $isScrolled={scrollY > 0 || scrollX > 0}>
                         <TimeTableNavigator
-                            selectedDate={selectedDate}
-                            variant={headerVariant}
-                            isLoading={loading}
+                            selectedDate={date}
+                            isLoading={isLoading}
                             {...optionalProps}
                         />
                     </FirstRowColumn>
@@ -277,7 +258,7 @@ export const TimeTable = ({
                 </TimeTableColumns>
                 {renderRows()}
                 <NoResultsFound
-                    $show={optionalProps.totalRecords === 0}
+                    $show={optionalProps.totalRecords === 0 || isEmpty(rowBars)}
                     type="no-item-found"
                     illustrationScheme={
                         optionalProps.emptyContent.illustrationScheme
