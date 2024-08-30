@@ -27,8 +27,9 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     ${(props) => {
         if (!props.$showTitleInMobile && !props.$hasExpandAll) {
             return css`
-                display: none;
-                visibility: hidden;
+                ${MediaQuery.MaxWidth.mobileL} {
+                    display: none;
+                }
             `;
         }
     }}

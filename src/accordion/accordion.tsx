@@ -52,7 +52,7 @@ const AccordionBase = ({
                 {title && (
                     <Title
                         $showInMobile={showTitleInMobile}
-                        data-testid={"accordion-title"}
+                        data-testid="accordion-title"
                     >
                         {title}
                     </Title>
