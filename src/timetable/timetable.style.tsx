@@ -9,16 +9,17 @@ interface TimeTableColumnsProps {
     $isScrolled: boolean;
 }
 
+interface TimeTableFirstColumnProps {
+    $numOfRows: number;
+    $isScrolled: boolean;
+}
+
 interface TimeTableProps {
     $loading: boolean;
 }
 
 interface RowDataProps {
     $isFirst: boolean;
-}
-
-interface LoaderProps {
-    $numOfRows: number;
 }
 
 interface FirstRowFirstColumnProps {
@@ -44,6 +45,8 @@ export const Container = styled.div`
 export const TimeTableContainer = styled.div<TimeTableProps>`
     display: grid;
     overflow: scroll;
+    position: relative;
+    grid-template-columns: 252px fit-content(100%);
     height: 80vh;
     width: 80vw;
     min-height: 80vh;
@@ -59,20 +62,41 @@ export const TimeTableContainer = styled.div<TimeTableProps>`
     }}
 `;
 
+export const TimeTableFirstColumn = styled.div<TimeTableFirstColumnProps>`
+    display: grid;
+    position: sticky;
+    grid-column: 1 / 1;
+    left: 0;
+    z-index: 2;
+    background-color: white;
+    width: 100%;
+    grid-template-rows: repeat(${(props) => props.$numOfRows}, 65px);
+    transition: all 0.5s ease-in-out;
+    ${(props) => {
+        if (props.$isScrolled) {
+            return css`
+                box-shadow: 0.125rem 0.125rem 0.125rem ${Color.Neutral[5]};
+            `;
+        }
+    }};
+`;
+
 export const TimeTableColumns = styled.div<TimeTableColumnsProps>`
     display: grid;
     position: sticky;
+    grid-column: 2 / 2;
+    grid-row: 1 / 1;
     top: 0;
     z-index: 1;
     background-color: white;
-    grid-template-columns: 252px repeat(${(props) => props.$numOfColumns}, 1fr);
+    grid-template-columns: repeat(${(props) => props.$numOfColumns}, 1fr);
     width: 100%;
     border-bottom: 1px solid ${Color.Neutral[5]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.25rem ${Color.Neutral[5]};
+                box-shadow: 0.125rem 0.125rem 0.125rem ${Color.Neutral[5]};
             `;
         }
     }};
@@ -84,30 +108,23 @@ export const TimeTableRow = styled.div<TimeTableProps>`
     display: grid;
     width: 100%;
     height: 65px;
-    position: sticky;
     left: 0;
-    ${(props) => {
-        if (props.$loading) {
-            return css`
-                grid-column: 1 / 1;
-            `;
-        } else {
-            return css`
-                grid-template-columns: 252px auto;
-            `;
-        }
-    }}
 `;
 
 export const FirstRowColumn = styled.div<FirstRowFirstColumnProps>`
     position: sticky;
+    top: 0;
     left: 0;
     background-color: white;
+    transition: all 0.5s ease-in-out;
+    width: 252px;
+    z-index: 3;
+    border-bottom: 1px solid ${Color.Neutral[5]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.375rem 0.25rem ${Color.Neutral[5]};
+                box-shadow: 0.125rem 0.375rem 0.125rem ${Color.Neutral[5]};
             `;
         }
     }};
@@ -123,20 +140,14 @@ export const ColumnHeaderTitle = styled(Text.H6)`
     color: ${Color.Neutral[3]};
 `;
 
-export const RowWrapper = styled.div<TimeTableProps>`
+export const ContentContainer = styled.div<TimeTableProps>`
     display: grid;
-    ${(props) => {
-        if (props.$loading) {
-            return css`
-                grid-template-columns: 252px auto;
-            `;
-        }
-    }}
 `;
 
 export const RowHeader = styled.div<RowHeaderProps>`
     position: sticky;
     left: 0;
+    z-index: 2;
     background-color: white;
     width: 252px;
     min-width: 252px;
@@ -150,7 +161,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.25rem ${Color.Neutral[5]};
+                box-shadow: 0.125rem 0.125rem 0.125rem ${Color.Neutral[5]};
             `;
         }
     }};
@@ -159,7 +170,6 @@ export const RowHeader = styled.div<RowHeaderProps>`
 // FIXME
 export const RowData = styled.div<RowDataProps>`
     border-right: 1px solid ${Color.Accent.Light[1]};
-    border-bottom: 1px solid ${Color.Neutral[5]};
     ${(props) => {
         if (props.$isFirst) {
             return css`
@@ -186,9 +196,7 @@ export const RowHeaderSubtitle = styled(Text.XSmall)`
     color: ${Color.Neutral[3]};
 `;
 
-export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
-    grid-column: 2 / -1;
-    grid-row: 1 / ${(props) => props.$numOfRows};
+export const Loader = styled(LoadingDotsSpinner)`
     display: flex;
     align-items: center;
     justify-content: center;

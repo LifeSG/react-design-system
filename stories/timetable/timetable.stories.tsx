@@ -51,17 +51,24 @@ export const Default: StoryObj<Component> = {
             }, 5000);
         };
 
+        const onEmptyCellClick = (id: string, start: string, end: string) => {
+            alert(
+                `Clicked on cell for ${id}, start: ${start}, end: ${end}, should redirect user to booking form with these data`
+            );
+        };
+
         return (
             <>
                 <TimeTable
                     {...mockMapper}
-                    onRefresh={onRefresh}
-                    onPage={onPage}
                     rowBars={results}
                     date={date}
+                    isLoading={loading}
+                    onRefresh={onRefresh}
+                    onPage={onPage}
                     onRightArrowClick={onRightArrowClick}
                     onLeftArrowClick={onLeftArrowClick}
-                    isLoading={loading}
+                    onEmptyCellClick={onEmptyCellClick}
                 />
             </>
         );

@@ -1,11 +1,13 @@
 import styled, { css } from "styled-components";
 import { Text } from "../text";
 import { Color } from "../color";
+import { PopoverTrigger, PopoverV2 } from "../popover-v2";
 
 interface BlockStyleProps {
     $width: number;
     $status: string;
     $bgColour: string;
+    $clickableEmptyCell: boolean;
 }
 
 interface BlockContainerProps {
@@ -13,10 +15,12 @@ interface BlockContainerProps {
 }
 
 export const BlockContainer = styled.div<BlockContainerProps>`
+    position: relative;
+    border-bottom: 1px solid ${Color.Neutral[5]};
     ${(props) => {
         if (props.$isOnTheHour) {
             return css`
-                box-shadow: inset -1px 0px ${Color.Accent.Light[1]};
+                box-shadow: inset -0.5px 0px ${Color.Accent.Light[1]};
             `;
         }
     }}
@@ -24,21 +28,26 @@ export const BlockContainer = styled.div<BlockContainerProps>`
 
 export const Wrapper = styled.div`
     display: flex;
+    position: relative;
     margin-bottom: 2px;
     height: 62px;
 `;
 
 export const Gap = styled.div`
     width: 2px;
+    position: relative;
     height: 100%;
 `;
 
 export const Block = styled.div<BlockStyleProps>`
     height: 100%;
+    position: relative;
     width: ${({ $width }) => `${$width}px`};
     font-size: 11px;
     border-radius: 4px;
-    ${({ $status, $bgColour }) => {
+    box-sizing: border-box;
+    padding: 4px;
+    ${({ $status, $bgColour, $clickableEmptyCell }) => {
         switch ($status) {
             case "DISABLED":
                 return css`
@@ -61,13 +70,11 @@ export const Block = styled.div<BlockStyleProps>`
             default:
                 return css`
                     &:hover {
-                        cursor: pointer;
+                        cursor: ${$clickableEmptyCell ? "pointer" : "default"};
                     }
                 `;
         }
     }}
-    box-sizing: border-box;
-    padding: 4px;
 `;
 
 export const BlockTitle = styled(Text.H6)`
@@ -81,4 +88,12 @@ export const BlockDescription = styled(Text.XSmall)`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+`;
+
+export const StyledPopoverTrigger = styled(PopoverTrigger)`
+    padding: 0;
+    max-height: 62px;
+    &:hover {
+        cursor: pointer;
+    }
 `;

@@ -1,3 +1,4 @@
+import { MutableRefObject } from "react";
 import { ResourceScheme } from "../theme";
 
 export const ROW_BAR_COLOR_SEQUENCE = [
@@ -26,6 +27,8 @@ export interface TimeTableProps {
     emptyContent: EmptyContentProps;
     isLoading: boolean;
     totalRecords?: number | undefined;
+    width?: number | undefined;
+    height?: number | undefined;
     // Callback to invoke on refresh click
     onRefresh?: () => void;
     // Callback to invoke on pagination, will invoke when reach end of listing
@@ -35,6 +38,12 @@ export interface TimeTableProps {
     // Override date navigate left/right function to custom function (eg: to have callbacks etc.)
     onRightArrowClick?: (currentDate: string) => void;
     onNameClick?: (rowId: string) => void;
+    // Redirect user to url (resource booking page)
+    onEmptyCellClick?: (
+        id: string,
+        intervalStart: string,
+        intervalEnd: string
+    ) => void | undefined;
 }
 
 interface EmptyContentProps {
@@ -42,7 +51,7 @@ interface EmptyContentProps {
     illustrationScheme: ResourceScheme;
 }
 
-export interface RowBarData {
+interface RowBarData {
     id: string;
     name: string | JSX.Element;
     subtitle?: string | JSX.Element | undefined;
@@ -58,22 +67,39 @@ export interface RowBarProps extends RowBarData {
     timetableMaxTime: string;
     rowBarColor: RowBarColors;
     intervalWidth: number;
+    containerRef?: MutableRefObject<HTMLDivElement> | undefined;
     onNameClick?: () => void | undefined;
+    onEmptyCellClick?: (
+        id: string,
+        intervalStart: string,
+        intervalEnd: string
+    ) => void | undefined;
 }
 
-export interface RowCellData {
+interface RowCellData {
+    id: string;
     // HH:mm format
     startTime: string;
     // HH:mm format
     endTime: string;
     title?: string | undefined;
     subtitle?: string | undefined;
-    status: string;
+    status: string; // REVIEW - Maybe can have a type for this
     // Redirect user to url (resource booking page)
-    onEmptyBlockClick?: () => void | undefined;
+    onEmptyCellClick?: (
+        id: string,
+        intervalStart: string,
+        intervalEnd: string
+    ) => void | undefined;
     // Show popover for booking details
     onFilledBlockClick?: () => void | undefined;
     // Show popover with text
     onDisabledHover?: () => void | undefined;
     onHover?: () => void | undefined;
+}
+
+export interface RowCellProps extends RowCellData {
+    containerRef?: MutableRefObject<HTMLDivElement>;
+    intervalWidth: number;
+    rowBarColor: string;
 }

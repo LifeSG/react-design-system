@@ -65,7 +65,7 @@ export const TimeTableNavigator = ({
     return (
         <NavigationHeaderWrapper id="timetable-navigation-header-wrapper-id">
             {DateNavigatorSection}
-            {optionalProps.totalRecords && RecordsSection}
+            {optionalProps.totalRecords !== undefined && RecordsSection}
         </NavigationHeaderWrapper>
     );
 };

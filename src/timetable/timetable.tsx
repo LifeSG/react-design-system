@@ -8,6 +8,7 @@ import {
     ClickableRowHeaderTitle,
     ColumnHeader,
     ColumnHeaderTitle,
+    ContentContainer,
     FirstRowColumn,
     Loader,
     LoadingBar,
@@ -16,9 +17,9 @@ import {
     NoResultsFound,
     RowHeader,
     RowHeaderSubtitle,
-    RowWrapper,
     TimeTableColumns,
     TimeTableContainer,
+    TimeTableFirstColumn,
     TimeTableRow,
 } from "./timetable.style";
 import {
@@ -46,11 +47,11 @@ export const TimeTable = ({
         timetableMinTime,
         timetableMaxTime
     );
+    const isEmptyContent = optionalProps.totalRecords === 0 || isEmpty(rowBars);
     const allRecordsLoaded =
-        !optionalProps.totalRecords ||
-        rowBars.length === 0 ||
-        rowBars.length === optionalProps.totalRecords;
+        isEmptyContent || rowBars.length === optionalProps.totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);
+    const contentContainerRef = useRef<HTMLDivElement>(null);
     const [intervalWidth, setIntervalWidth] = useState(0);
     const [scrollX, setScrollX] = useState(0);
     const [scrollY, setScrollY] = useState(0);
@@ -149,8 +150,8 @@ export const TimeTable = ({
     // =============================================================================
 
     const renderColumnHeaders = () => {
-        // REVIEW - Dont render first column if there are no rows (why ah?)
-        if (optionalProps.totalRecords === 0) return;
+        // Don't render first column if there are no rows
+        if (isEmptyContent) return;
         return hourlyIntervals.map((columnHeader: string) => {
             return (
                 <ColumnHeader
@@ -167,37 +168,19 @@ export const TimeTable = ({
     };
 
     const renderRows = () => {
-        if (mappedRowBarWithColor.length === 0) return;
+        if (isEmptyContent) return;
+        if (isLoading) return <Loader />;
         return (
-            <RowWrapper $loading={isLoading}>
+            <ContentContainer $loading={isLoading} ref={contentContainerRef}>
                 {mappedRowBarWithColor.map((rowData, index) => {
                     return (
                         <TimeTableRow
-                            key={`${rowData.id}-row-key`}
+                            key={`${index}-row-key`}
                             $loading={isLoading}
                         >
-                            <RowHeader $isScrolled={scrollX > 0}>
-                                <ClickableRowHeaderTitle
-                                    onClick={() =>
-                                        optionalProps.onNameClick(rowData.id)
-                                    }
-                                    weight="semibold"
-                                    id={`${rowData.id}-row-header-title-id`}
-                                    data-testid={`${rowData.id}-row-header-title`}
-                                >
-                                    {rowData.name}
-                                </ClickableRowHeaderTitle>
-                                <RowHeaderSubtitle
-                                    weight="bold"
-                                    id={`${rowData.id}-row-header-subtitle-id`}
-                                    data-testid={`${rowData.id}-row-header-subtitle`}
-                                >
-                                    {rowData.subtitle}
-                                </RowHeaderSubtitle>
-                            </RowHeader>
                             {!isLoading && (
                                 <RowBar
-                                    key={`${rowData.id}-row-bar-key`}
+                                    key={`${index}-row-bar-key`}
                                     id={rowData.id}
                                     data-testid={`${rowData.id}-row-bar`}
                                     name={rowData.name}
@@ -208,35 +191,77 @@ export const TimeTable = ({
                                     timetableMaxTime={timetableMaxTime}
                                     rowBarColor={rowData.rowBarColor}
                                     intervalWidth={rowData.intervalWidth}
+                                    onEmptyCellClick={
+                                        optionalProps.onEmptyCellClick
+                                    }
+                                    containerRef={contentContainerRef}
                                 />
                             )}
                         </TimeTableRow>
                     );
                 })}
-                {isLoading && <Loader $numOfRows={rowBars.length} />}
                 {renderLazyLoad()}
-            </RowWrapper>
+            </ContentContainer>
+        );
+    };
+
+    const renderFirstColumn = () => {
+        if (isEmptyContent) return;
+        return (
+            <>
+                {mappedRowBarWithColor.map((rowData, index) => {
+                    return (
+                        <RowHeader
+                            $isScrolled={scrollX > 0}
+                            key={`${index}-row`}
+                        >
+                            <ClickableRowHeaderTitle
+                                onClick={() =>
+                                    optionalProps.onNameClick(rowData.id)
+                                }
+                                weight="semibold"
+                                id={`${rowData.id}-row-header-title-id`}
+                                data-testid={`${rowData.id}-row-header-title`}
+                            >
+                                {rowData.name}
+                            </ClickableRowHeaderTitle>
+                            <RowHeaderSubtitle
+                                weight="bold"
+                                id={`${rowData.id}-row-header-subtitle-id`}
+                                data-testid={`${rowData.id}-row-header-subtitle`}
+                            >
+                                {rowData.subtitle}
+                            </RowHeaderSubtitle>
+                        </RowHeader>
+                    );
+                })}
+                {renderLazyLoadForFirstColumn()}
+            </>
+        );
+    };
+
+    const renderLazyLoadForFirstColumn = () => {
+        if (isLoading || !loadMore) return;
+        return (
+            <RowHeader $isScrolled={scrollX > 0}>
+                <LoadingBar />
+            </RowHeader>
         );
     };
 
     const renderLazyLoad = () => {
         if (isLoading || !loadMore) return;
         return (
-            <TimeTableRow key={`lazy-loading-row-key`} $loading={isLoading}>
-                <RowHeader $isScrolled={scrollX > 0}>
-                    <LoadingBar />
-                </RowHeader>
-                <LoadingWrapper>
-                    {hourlyIntervals.map((_, index) => (
-                        <LoadingCell
-                            key={`lazy-load-cell-${index}`}
-                            $width={intervalWidth * 4}
-                        >
-                            <LoadingBar />
-                        </LoadingCell>
-                    ))}
-                </LoadingWrapper>
-            </TimeTableRow>
+            <LoadingWrapper>
+                {hourlyIntervals.map((_, index) => (
+                    <LoadingCell
+                        key={`lazy-load-cell-${index}`}
+                        $width={intervalWidth * 4}
+                    >
+                        <LoadingBar />
+                    </LoadingCell>
+                ))}
+            </LoadingWrapper>
         );
     };
 
@@ -247,22 +272,29 @@ export const TimeTable = ({
                 id="timetable-container-id"
                 $loading={isLoading}
             >
+                {/* REVIEW - Tentatively here, can put into renderFirstColumn() as well? */}
+                <FirstRowColumn $isScrolled={scrollY > 0 || scrollX > 0}>
+                    <TimeTableNavigator
+                        selectedDate={date}
+                        isLoading={isLoading}
+                        {...optionalProps}
+                    />
+                </FirstRowColumn>
+                <TimeTableFirstColumn
+                    $numOfRows={mappedRowBarWithColor.length}
+                    $isScrolled={scrollY > 0 || scrollX > 0}
+                >
+                    {renderFirstColumn()}
+                </TimeTableFirstColumn>
                 <TimeTableColumns
                     $numOfColumns={hourlyIntervals.length}
                     $isScrolled={scrollY > 0}
                 >
-                    <FirstRowColumn $isScrolled={scrollY > 0 || scrollX > 0}>
-                        <TimeTableNavigator
-                            selectedDate={date}
-                            isLoading={isLoading}
-                            {...optionalProps}
-                        />
-                    </FirstRowColumn>
                     {renderColumnHeaders()}
                 </TimeTableColumns>
                 {renderRows()}
                 <NoResultsFound
-                    $show={optionalProps.totalRecords === 0 || isEmpty(rowBars)}
+                    $show={isEmptyContent}
                     type="no-item-found"
                     illustrationScheme={
                         optionalProps.emptyContent.illustrationScheme
