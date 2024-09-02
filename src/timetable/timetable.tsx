@@ -7,20 +7,19 @@ import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import {
     ClickableRowHeaderTitle,
     ColumnHeader,
+    ColumnHeaderRow,
     ColumnHeaderTitle,
     ContentContainer,
-    FirstRowColumn,
     Loader,
     LoadingBar,
     LoadingCell,
     LoadingWrapper,
     NoResultsFound,
+    RowColumnHeader,
     RowHeader,
+    RowHeaderColumn,
     RowHeaderSubtitle,
-    TimeTableColumns,
     TimeTableContainer,
-    TimeTableFirstColumn,
-    TimeTableRow,
 } from "./timetable.style";
 import {
     ROW_BAR_COLOR_SEQUENCE,
@@ -52,11 +51,11 @@ export const TimeTable = ({
         isEmptyContent || rowBars.length === optionalProps.totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const contentContainerRef = useRef<HTMLDivElement>(null);
+    const scrollX = useRef(0);
+    const scrollY = useRef(0);
     const [intervalWidth, setIntervalWidth] = useState(0);
-    const [scrollX, setScrollX] = useState(0);
-    const [scrollY, setScrollY] = useState(0);
     const [loadMore, setLoadMore] = useState(false);
-
+    const [isScrolled, setIsScrolled] = useState<boolean>(false);
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -64,8 +63,13 @@ export const TimeTable = ({
     useEffect(() => {
         const handleScroll = () => {
             if (tableContainerRef.current) {
-                setScrollX(tableContainerRef.current.scrollLeft);
-                setScrollY(tableContainerRef.current.scrollTop);
+                scrollX.current = tableContainerRef.current.scrollLeft;
+                scrollY.current = tableContainerRef.current.scrollTop;
+                if (scrollX.current > 0 || scrollY.current > 0) {
+                    setIsScrolled(true);
+                } else {
+                    setIsScrolled(false);
+                }
             }
 
             if (loadMore) return;
@@ -103,7 +107,6 @@ export const TimeTable = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-
     const handleResize = () => {
         if (tableContainerRef.current) {
             const numberOfIntervalsPerRowBar = Math.ceil(
@@ -142,12 +145,56 @@ export const TimeTable = ({
             rowMaxTime: row.rowMaxTime,
             rowBarColor,
             intervalWidth,
+            containerRef: contentContainerRef,
         };
     });
 
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const renderRowHeaderColumn = () => {
+        if (isEmptyContent) return;
+        return (
+            <>
+                {mappedRowBarWithColor.map((rowBarData, index) => {
+                    return (
+                        <RowHeader
+                            $isScrolled={scrollX.current > 0}
+                            key={`${index}-row`}
+                        >
+                            <ClickableRowHeaderTitle
+                                onClick={() =>
+                                    optionalProps.onNameClick(rowBarData.id)
+                                }
+                                weight="semibold"
+                                id={`${rowBarData.id}-row-header-title-id`}
+                                data-testid={`${rowBarData.id}-row-header-title`}
+                            >
+                                {rowBarData.name}
+                            </ClickableRowHeaderTitle>
+                            <RowHeaderSubtitle
+                                weight="bold"
+                                id={`${rowBarData.id}-row-header-subtitle-id`}
+                                data-testid={`${rowBarData.id}-row-header-subtitle`}
+                            >
+                                {rowBarData.subtitle}
+                            </RowHeaderSubtitle>
+                        </RowHeader>
+                    );
+                })}
+                {renderRowHeaderColumnLazyLoad()}
+            </>
+        );
+    };
+
+    const renderRowHeaderColumnLazyLoad = () => {
+        if (isLoading || !loadMore) return;
+        return (
+            <RowHeader $isScrolled={scrollX.current > 0}>
+                <LoadingBar />
+            </RowHeader>
+        );
+    };
 
     const renderColumnHeaders = () => {
         // Don't render first column if there are no rows
@@ -167,89 +214,42 @@ export const TimeTable = ({
         });
     };
 
-    const renderRows = () => {
+    const renderRowBarData = () => {
         if (isEmptyContent) return;
         if (isLoading) return <Loader />;
         return (
-            <ContentContainer $loading={isLoading} ref={contentContainerRef}>
-                {mappedRowBarWithColor.map((rowData, index) => {
+            <ContentContainer ref={contentContainerRef}>
+                {mappedRowBarWithColor.map((rowBarData, index) => {
                     return (
-                        <TimeTableRow
-                            key={`${index}-row-key`}
-                            $loading={isLoading}
-                        >
-                            {!isLoading && (
-                                <RowBar
-                                    key={`${index}-row-bar-key`}
-                                    id={rowData.id}
-                                    data-testid={`${rowData.id}-row-bar`}
-                                    name={rowData.name}
-                                    rowMinTime={rowData.rowMinTime}
-                                    rowMaxTime={rowData.rowMaxTime}
-                                    rowCells={rowData.rowCells}
-                                    timetableMinTime={timetableMinTime}
-                                    timetableMaxTime={timetableMaxTime}
-                                    rowBarColor={rowData.rowBarColor}
-                                    intervalWidth={rowData.intervalWidth}
-                                    onEmptyCellClick={
-                                        optionalProps.onEmptyCellClick
-                                    }
-                                    containerRef={contentContainerRef}
-                                />
-                            )}
-                        </TimeTableRow>
+                        <RowBar
+                            key={`${index}-row-bar-key`}
+                            id={rowBarData.id}
+                            data-testid={`${rowBarData.id}-row-bar`}
+                            name={rowBarData.name}
+                            rowMinTime={rowBarData.rowMinTime}
+                            rowMaxTime={rowBarData.rowMaxTime}
+                            rowCells={rowBarData.rowCells}
+                            timetableMinTime={timetableMinTime}
+                            timetableMaxTime={timetableMaxTime}
+                            rowBarColor={rowBarData.rowBarColor}
+                            intervalWidth={rowBarData.intervalWidth}
+                            onEmptyCellClick={optionalProps.onEmptyCellClick}
+                            containerRef={rowBarData.containerRef}
+                            disabledCellHoverContent={
+                                optionalProps.disabledCellHoverContent
+                            }
+                            emptyCellClickContent={
+                                optionalProps.emptyCellClickContent
+                            }
+                        />
                     );
                 })}
-                {renderLazyLoad()}
+                {renderRowDataLazyLoad()}
             </ContentContainer>
         );
     };
 
-    const renderFirstColumn = () => {
-        if (isEmptyContent) return;
-        return (
-            <>
-                {mappedRowBarWithColor.map((rowData, index) => {
-                    return (
-                        <RowHeader
-                            $isScrolled={scrollX > 0}
-                            key={`${index}-row`}
-                        >
-                            <ClickableRowHeaderTitle
-                                onClick={() =>
-                                    optionalProps.onNameClick(rowData.id)
-                                }
-                                weight="semibold"
-                                id={`${rowData.id}-row-header-title-id`}
-                                data-testid={`${rowData.id}-row-header-title`}
-                            >
-                                {rowData.name}
-                            </ClickableRowHeaderTitle>
-                            <RowHeaderSubtitle
-                                weight="bold"
-                                id={`${rowData.id}-row-header-subtitle-id`}
-                                data-testid={`${rowData.id}-row-header-subtitle`}
-                            >
-                                {rowData.subtitle}
-                            </RowHeaderSubtitle>
-                        </RowHeader>
-                    );
-                })}
-                {renderLazyLoadForFirstColumn()}
-            </>
-        );
-    };
-
-    const renderLazyLoadForFirstColumn = () => {
-        if (isLoading || !loadMore) return;
-        return (
-            <RowHeader $isScrolled={scrollX > 0}>
-                <LoadingBar />
-            </RowHeader>
-        );
-    };
-
-    const renderLazyLoad = () => {
+    const renderRowDataLazyLoad = () => {
         if (isLoading || !loadMore) return;
         return (
             <LoadingWrapper>
@@ -266,42 +266,41 @@ export const TimeTable = ({
     };
 
     return (
-        <>
-            <TimeTableContainer
-                ref={tableContainerRef}
-                id="timetable-container-id"
-                $loading={isLoading}
+        <TimeTableContainer
+            ref={tableContainerRef}
+            id="timetable-container-id"
+            $loading={isLoading}
+        >
+            <RowColumnHeader
+                $isScrolled={scrollY.current > 0 || scrollX.current > 0}
             >
-                {/* REVIEW - Tentatively here, can put into renderFirstColumn() as well? */}
-                <FirstRowColumn $isScrolled={scrollY > 0 || scrollX > 0}>
-                    <TimeTableNavigator
-                        selectedDate={date}
-                        isLoading={isLoading}
-                        {...optionalProps}
-                    />
-                </FirstRowColumn>
-                <TimeTableFirstColumn
-                    $numOfRows={mappedRowBarWithColor.length}
-                    $isScrolled={scrollY > 0 || scrollX > 0}
-                >
-                    {renderFirstColumn()}
-                </TimeTableFirstColumn>
-                <TimeTableColumns
-                    $numOfColumns={hourlyIntervals.length}
-                    $isScrolled={scrollY > 0}
-                >
-                    {renderColumnHeaders()}
-                </TimeTableColumns>
-                {renderRows()}
-                <NoResultsFound
-                    $show={isEmptyContent}
-                    type="no-item-found"
-                    illustrationScheme={
-                        optionalProps.emptyContent.illustrationScheme
-                    }
-                    description={optionalProps.emptyContent.description}
+                <TimeTableNavigator
+                    selectedDate={date}
+                    isLoading={isLoading}
+                    {...optionalProps}
                 />
-            </TimeTableContainer>
-        </>
+            </RowColumnHeader>
+            <RowHeaderColumn
+                $numOfRows={mappedRowBarWithColor.length}
+                $isScrolled={scrollY.current > 0 || scrollX.current > 0}
+            >
+                {renderRowHeaderColumn()}
+            </RowHeaderColumn>
+            <ColumnHeaderRow
+                $numOfColumns={hourlyIntervals.length}
+                $isScrolled={scrollY.current > 0}
+            >
+                {renderColumnHeaders()}
+            </ColumnHeaderRow>
+            {renderRowBarData()}
+            <NoResultsFound
+                $show={isEmptyContent}
+                type="no-item-found"
+                illustrationScheme={
+                    optionalProps.emptyContent.illustrationScheme
+                }
+                description={optionalProps.emptyContent.description}
+            />
+        </TimeTableContainer>
     );
 };

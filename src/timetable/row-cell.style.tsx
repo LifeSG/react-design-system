@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Text } from "../text";
 import { Color } from "../color";
-import { PopoverTrigger, PopoverV2 } from "../popover-v2";
+import { PopoverTrigger } from "../popover-v2";
+import { Text } from "../text";
 
 interface BlockStyleProps {
     $width: number;
@@ -15,7 +15,6 @@ interface BlockContainerProps {
 }
 
 export const BlockContainer = styled.div<BlockContainerProps>`
-    position: relative;
     border-bottom: 1px solid ${Color.Neutral[5]};
     ${(props) => {
         if (props.$isOnTheHour) {
@@ -28,20 +27,17 @@ export const BlockContainer = styled.div<BlockContainerProps>`
 
 export const Wrapper = styled.div`
     display: flex;
-    position: relative;
     margin-bottom: 2px;
     height: 62px;
 `;
 
 export const Gap = styled.div`
     width: 2px;
-    position: relative;
     height: 100%;
 `;
 
 export const Block = styled.div<BlockStyleProps>`
     height: 100%;
-    position: relative;
     width: ${({ $width }) => `${$width}px`};
     font-size: 11px;
     border-radius: 4px;

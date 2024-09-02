@@ -1,28 +1,24 @@
 import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
 import { Color } from "../color";
-import { Text } from "../text";
 import { ErrorDisplay } from "../error-display";
+import { Text } from "../text";
 
-interface TimeTableColumnsProps {
+interface ColumnHeaderRowProps {
     $numOfColumns: number;
     $isScrolled: boolean;
 }
 
-interface TimeTableFirstColumnProps {
+interface RowHeaderColumnProps {
     $numOfRows: number;
     $isScrolled: boolean;
 }
 
-interface TimeTableProps {
+interface TimeTableContainerProps {
     $loading: boolean;
 }
 
-interface RowDataProps {
-    $isFirst: boolean;
-}
-
-interface FirstRowFirstColumnProps {
+interface RowColumnHeaderProps {
     $isScrolled: boolean;
 }
 
@@ -38,11 +34,7 @@ interface NoResultsFoundProps {
     $show: boolean;
 }
 
-export const Container = styled.div`
-    width: 100%;
-`;
-
-export const TimeTableContainer = styled.div<TimeTableProps>`
+export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     display: grid;
     overflow: scroll;
     position: relative;
@@ -62,12 +54,31 @@ export const TimeTableContainer = styled.div<TimeTableProps>`
     }}
 `;
 
-export const TimeTableFirstColumn = styled.div<TimeTableFirstColumnProps>`
+export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: white;
+    transition: all 0.5s ease-in-out;
+    width: 252px;
+    z-index: 2;
+    border-bottom: 1px solid ${Color.Neutral[5]};
+    transition: all 0.5s ease-in-out;
+    ${(props) => {
+        if (props.$isScrolled) {
+            return css`
+                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
+            `;
+        }
+    }};
+`;
+
+export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
     display: grid;
     position: sticky;
     grid-column: 1 / 1;
     left: 0;
-    z-index: 2;
+    z-index: 1;
     background-color: white;
     width: 100%;
     grid-template-rows: repeat(${(props) => props.$numOfRows}, 65px);
@@ -75,13 +86,13 @@ export const TimeTableFirstColumn = styled.div<TimeTableFirstColumnProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.125rem ${Color.Neutral[5]};
+                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
             `;
         }
     }};
 `;
 
-export const TimeTableColumns = styled.div<TimeTableColumnsProps>`
+export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     display: grid;
     position: sticky;
     grid-column: 2 / 2;
@@ -96,35 +107,7 @@ export const TimeTableColumns = styled.div<TimeTableColumnsProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.125rem ${Color.Neutral[5]};
-            `;
-        }
-    }};
-`;
-
-export const TimeTableRow = styled.div<TimeTableProps>`
-    position: sticky;
-    left: 0;
-    display: grid;
-    width: 100%;
-    height: 65px;
-    left: 0;
-`;
-
-export const FirstRowColumn = styled.div<FirstRowFirstColumnProps>`
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: white;
-    transition: all 0.5s ease-in-out;
-    width: 252px;
-    z-index: 3;
-    border-bottom: 1px solid ${Color.Neutral[5]};
-    transition: all 0.5s ease-in-out;
-    ${(props) => {
-        if (props.$isScrolled) {
-            return css`
-                box-shadow: 0.125rem 0.375rem 0.125rem ${Color.Neutral[5]};
+                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
             `;
         }
     }};
@@ -140,7 +123,7 @@ export const ColumnHeaderTitle = styled(Text.H6)`
     color: ${Color.Neutral[3]};
 `;
 
-export const ContentContainer = styled.div<TimeTableProps>`
+export const ContentContainer = styled.div`
     display: grid;
 `;
 
@@ -161,22 +144,10 @@ export const RowHeader = styled.div<RowHeaderProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.125rem ${Color.Neutral[5]};
+                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
             `;
         }
     }};
-`;
-
-// FIXME
-export const RowData = styled.div<RowDataProps>`
-    border-right: 1px solid ${Color.Accent.Light[1]};
-    ${(props) => {
-        if (props.$isFirst) {
-            return css`
-                border-top: 1px solid ${Color.Neutral[5]};
-            `;
-        }
-    }}
 `;
 
 export const ClickableRowHeaderTitle = styled(Text.H5)`

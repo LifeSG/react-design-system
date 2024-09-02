@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { useRef } from "react";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";
 import { RowBarProps, RowCellProps } from "./types";
@@ -16,11 +15,11 @@ export const RowBar = ({
     timetableMinTime,
     timetableMaxTime,
     containerRef,
-    onNameClick,
+    disabledCellHoverContent,
+    emptyCellClickContent,
     onEmptyCellClick,
 }: RowBarProps) => {
-    const rowBarRef = useRef<HTMLDivElement>(null);
-    const bookings = rowCells.filter((cell) => cell.status === "OCCUPIED");
+    const occupiedCells = rowCells.filter((cell) => cell.status === "OCCUPIED");
     const rowCellArray: RowCellProps[] = [];
 
     // Handle non-op before hours
@@ -32,30 +31,31 @@ export const RowBar = ({
             status: "DISABLED",
             intervalWidth,
             rowBarColor,
+            containerRef,
         });
     }
 
     let currentTime = dayjs(rowMinTime, "HH:mm");
     const endTime = dayjs(rowMaxTime, "HH:mm");
-    // Pointer for available slot
-    let availableSlotStartTime = "";
+    // Pointer for default cell
+    let defaultCellStartTime = "";
     while (currentTime.isBefore(endTime)) {
-        // Find a booking in current time
-        const foundBooking = bookings.find((booking) =>
-            currentTime.isSame(dayjs(booking.startTime, "HH:mm"))
+        // Find an occupied cell in current time
+        const foundCell = occupiedCells.find((occupiedCell) =>
+            currentTime.isSame(dayjs(occupiedCell.startTime, "HH:mm"))
         );
 
-        // If no booking found, it must be an available slot
-        if (!foundBooking) {
-            // If availableSlotStart is empty, update it
-            if (availableSlotStartTime === "") {
-                availableSlotStartTime = currentTime.format("HH:mm");
+        // If no cell found, it must be a default cell
+        if (!foundCell) {
+            // If defaultCellStartTime is empty, update it
+            if (defaultCellStartTime === "") {
+                defaultCellStartTime = currentTime.format("HH:mm");
             }
-            // If available slot ends on the hour, push to array
+            // If default cell ends on the hour, push to array
             if (currentTime.add(15, "minutes").get("minutes") === 0) {
                 rowCellArray.push({
                     id,
-                    startTime: availableSlotStartTime,
+                    startTime: defaultCellStartTime,
                     endTime: currentTime
                         .add(15, "minutes")
                         .format("HH:mm")
@@ -63,39 +63,47 @@ export const RowBar = ({
                     status: "DEFAULT",
                     intervalWidth,
                     rowBarColor,
+                    containerRef,
                 });
-                availableSlotStartTime = "";
+                defaultCellStartTime = "";
             } else if (currentTime.add(15, "minutes").isSame(endTime)) {
                 rowCellArray.push({
                     id,
-                    startTime: availableSlotStartTime,
+                    startTime: defaultCellStartTime,
                     endTime: rowMaxTime,
                     status: "DEFAULT",
                     intervalWidth,
                     rowBarColor,
+                    containerRef,
                 });
             }
         } else {
-            // If there is an available slot before the found booking, we push to the rowCellArray
-            availableSlotStartTime !== "" &&
+            // If there is a default cell before the found occupied cell, we push to the rowCellArray
+            defaultCellStartTime !== "" &&
                 rowCellArray.push({
                     id,
-                    startTime: availableSlotStartTime,
-                    endTime: foundBooking.startTime,
+                    startTime: defaultCellStartTime,
+                    endTime: foundCell.startTime,
                     status: "DEFAULT",
                     intervalWidth,
                     rowBarColor,
+                    containerRef,
                 });
-            // Reset availableSlotStartTime
-            availableSlotStartTime = "";
-            // Push the found booking
-            rowCellArray.push({ ...foundBooking, intervalWidth, rowBarColor });
-            // Set current time to the end of the found booking
-            currentTime = dayjs(foundBooking.endTime, "HH:mm");
+            // Reset defaultCellStartTime
+            defaultCellStartTime = "";
+            // Push the found cell
+            rowCellArray.push({
+                ...foundCell,
+                intervalWidth,
+                rowBarColor,
+                containerRef,
+            });
+            // Set current time to the end of the found occupied cell
+            currentTime = dayjs(foundCell.endTime, "HH:mm");
             continue; // Go to the next iteration
         }
 
-        // Increment current time by 15 minutes if no booking found
+        // Increment current time by 15 minutes if no occupied cell found
         currentTime = currentTime.add(15, "minutes");
     }
 
@@ -108,6 +116,7 @@ export const RowBar = ({
             status: "DISABLED",
             intervalWidth,
             rowBarColor,
+            containerRef,
         });
     }
 
@@ -127,6 +136,8 @@ export const RowBar = ({
                         rowBarColor={cell.rowBarColor}
                         onEmptyCellClick={onEmptyCellClick}
                         containerRef={containerRef}
+                        disabledCellHoverContent={disabledCellHoverContent}
+                        emptyCellClickContent={emptyCellClickContent}
                     />
                 );
             })}

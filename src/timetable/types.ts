@@ -29,6 +29,9 @@ export interface TimeTableProps {
     totalRecords?: number | undefined;
     width?: number | undefined;
     height?: number | undefined;
+    disabledCellHoverContent?: string | JSX.Element | undefined;
+    emptyCellClickContent?: string | JSX.Element | undefined;
+    nameClickContent?: string | JSX.Element | undefined;
     // Callback to invoke on refresh click
     onRefresh?: () => void;
     // Callback to invoke on pagination, will invoke when reach end of listing
@@ -67,7 +70,10 @@ export interface RowBarProps extends RowBarData {
     timetableMaxTime: string;
     rowBarColor: RowBarColors;
     intervalWidth: number;
-    containerRef?: MutableRefObject<HTMLDivElement> | undefined;
+    containerRef: MutableRefObject<HTMLDivElement>;
+    disabledCellHoverContent?: string | JSX.Element | undefined;
+    emptyCellClickContent?: string | JSX.Element | undefined;
+    nameClickContent?: string | JSX.Element;
     onNameClick?: () => void | undefined;
     onEmptyCellClick?: (
         id: string,
@@ -99,7 +105,9 @@ interface RowCellData {
 }
 
 export interface RowCellProps extends RowCellData {
-    containerRef?: MutableRefObject<HTMLDivElement>;
+    containerRef: MutableRefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: string;
+    disabledCellHoverContent?: string | JSX.Element | undefined;
+    emptyCellClickContent?: string | JSX.Element | undefined;
 }

@@ -1174,6 +1174,7 @@ export const mockResourceListingResultsData = {
                             status: "DEFAULT",
                         },
                         {
+                            id: "jingzhi-id",
                             startTime: "13:00",
                             endTime: "14:00",
                             status: "OCCUPIED",
@@ -2334,4 +2335,5 @@ export const mockMapper: TimeTableProps = {
             "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
     },
     isLoading: false,
+    disabledCellHoverContent: "Outside operating hours",
 };

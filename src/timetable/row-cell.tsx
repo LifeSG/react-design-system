@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import React, { useRef, useState } from "react";
+import React from "react";
 import { PopoverTrigger } from "../popover-v2";
 import { Text } from "../text";
 import { DateHelper } from "../util";
@@ -23,6 +23,8 @@ export const RowCell = ({
     intervalWidth,
     rowBarColor,
     containerRef,
+    disabledCellHoverContent,
+    emptyCellClickContent,
     onEmptyCellClick,
 }: RowCellProps) => {
     // =============================================================================
@@ -40,7 +42,7 @@ export const RowCell = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleCellClick = (event: React.MouseEvent, status: string) => {
+    const handleCellClick = (event: React.MouseEvent) => {
         switch (status) {
             case "OCCUPIED": {
                 // TODO - Call OCCUPIED slot callback
@@ -59,54 +61,92 @@ export const RowCell = ({
         }
     };
 
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+
+    const ConditionalCellWrapper = ({
+        wrapper,
+        children,
+    }: {
+        wrapper: (child: JSX.Element) => JSX.Element;
+        children: JSX.Element;
+    }) => {
+        switch (status) {
+            case "OCCUPIED": {
+                return wrapper(children);
+            }
+            case "DISABLED": {
+                return wrapper(children);
+            }
+            default: {
+                return children;
+            }
+        }
+    };
+
+    const renderPopoverContent = () => {
+        switch (status) {
+            case "OCCUPIED": {
+                return <>{popoverContent}</>;
+            }
+            case "DISABLED": {
+                return <>{disabledCellHoverContent}</>;
+            }
+            default: {
+                return <></>;
+            }
+        }
+    };
+
+    // FIXME - To remove
     const popoverContent = (
         <div>
-            <Text.H5>Apple</Text.H5>
+            <Text.H5>{id}</Text.H5>
             <Text.H6>Available</Text.H6>
         </div>
     );
 
     return (
-        <>
-            <PopoverTrigger
-                className="pop-test"
-                popoverContent={popoverContent}
-                position="bottom-start"
-                removePadding
-                rootNode={containerRef}
-                offset={0}
-                zIndex={0}
-            >
-                <BlockContainer
-                    key={`block-container-key`}
-                    data-testid={`block-container`}
-                    $isOnTheHour={isOnTheHour}
+        <ConditionalCellWrapper
+            wrapper={(child: JSX.Element) => (
+                <PopoverTrigger
+                    popoverContent={renderPopoverContent()}
+                    position="bottom-start"
+                    rootNode={containerRef}
+                    removePadding
+                    offset={0}
+                    trigger={status === "DISABLED" ? "hover" : "click"}
                 >
-                    <Wrapper>
-                        <Block
-                            $width={adjustedCellWidth}
-                            $status={status}
-                            $bgColour={rowBarColor}
-                            $clickableEmptyCell={!!onEmptyCellClick}
-                            onClick={(e: React.MouseEvent) =>
-                                handleCellClick(e, status)
-                            }
-                        >
-                            {title && (
-                                <BlockTitle weight={"semibold"}>
-                                    {title}
-                                </BlockTitle>
-                            )}
-                            {subtitle && (
-                                <BlockDescription weight={"bold"}>
-                                    {subtitle}
-                                </BlockDescription>
-                            )}
-                        </Block>
-                        {isNotAvailable && <Gap />}
-                    </Wrapper>
-                </BlockContainer>
-            </PopoverTrigger>
-        </>
+                    {child}
+                </PopoverTrigger>
+            )}
+        >
+            <BlockContainer
+                key={`block-container-key`}
+                data-testid={`block-container`}
+                $isOnTheHour={isOnTheHour}
+            >
+                <Wrapper>
+                    <Block
+                        $width={adjustedCellWidth}
+                        $status={status}
+                        $bgColour={rowBarColor}
+                        $clickableEmptyCell={!!onEmptyCellClick}
+                        onClick={(e: React.MouseEvent) => handleCellClick(e)}
+                    >
+                        {title && (
+                            <BlockTitle weight={"semibold"}>{title}</BlockTitle>
+                        )}
+                        {subtitle && (
+                            <BlockDescription weight={"bold"}>
+                                {subtitle}
+                            </BlockDescription>
+                        )}
+                    </Block>
+                    {isNotAvailable && <Gap />}
+                </Wrapper>
+            </BlockContainer>
+        </ConditionalCellWrapper>
     );
 };
