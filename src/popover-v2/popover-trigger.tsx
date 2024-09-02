@@ -5,6 +5,7 @@ import {
     limitShift,
     offset,
     shift,
+    size,
     useFloating,
 } from "@floating-ui/react";
 import { useEffect, useRef, useState } from "react";
@@ -39,7 +40,7 @@ export const PopoverTrigger = ({
         placement: position,
         whileElementsMounted: autoUpdate,
         middleware: [
-            offset(16),
+            offset(otherProps.offset ?? 16),
             flip(),
             shift({
                 limiter: limitShift(),
@@ -112,7 +113,11 @@ export const PopoverTrigger = ({
         }
 
         return (
-            <PopoverV2 visible onMobileClose={handlePopoverMobileClose}>
+            <PopoverV2
+                visible
+                onMobileClose={handlePopoverMobileClose}
+                removePadding={otherProps.removePadding}
+            >
                 {popoverContent}
             </PopoverV2>
         );

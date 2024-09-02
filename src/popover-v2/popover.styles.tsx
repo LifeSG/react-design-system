@@ -8,10 +8,10 @@ import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 // =============================================================================
 // STYLING
 // =============================================================================
-export const PopoverContainer = styled.div`
+export const PopoverContainer = styled.div<{ removePadding?: boolean }>`
     max-width: 30rem;
-    padding: 0 1rem;
     pointer-events: auto;
+    padding: ${({ removePadding }) => (removePadding ? `0` : ` 0 1rem`)};
 `;
 
 export const PopoverCard = styled(Card)`

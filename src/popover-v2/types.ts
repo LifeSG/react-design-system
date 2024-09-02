@@ -6,6 +6,7 @@ export interface PopoverV2Props {
     id?: string | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
+    removePadding?: boolean | undefined;
     onMobileClose?: (() => void) | undefined;
 }
 
@@ -33,6 +34,8 @@ export interface PopoverV2TriggerProps {
      * the popover may not be visible. Specify the parent element here instead
      */
     rootNode?: RefObject<HTMLElement> | undefined;
+    offset?: number | undefined;
+    removePadding?: boolean;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }
