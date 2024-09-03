@@ -15,38 +15,49 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [results, setResults] = useState(mockMapper.rowBars.slice(0, 8));
-        const [date, setDate] = useState(mockMapper.date);
-        const [loading, setLoading] = useState(mockMapper.isLoading);
+        const [results, setResults] = useState(
+            mockMapper().rowBars.slice(0, 8)
+        );
+        const [date, setDate] = useState(mockMapper().date);
+        const [loading, setLoading] = useState(mockMapper().isLoading);
 
         const onLeftArrowClick = (currentDate: string) => {
-            setDate(dayjs(currentDate).add(-1, "day").format("YYYY-MM-DD"));
+            const newDate = dayjs(currentDate)
+                .add(-1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper.rowBars.slice(0, 8));
+                setResults(mockMapper(newDate).rowBars.slice(0, 8));
                 setLoading(false);
             }, 1000);
         };
 
         const onRightArrowClick = (currentDate: string) => {
-            setDate(dayjs(currentDate).add(1, "day").format("YYYY-MM-DD"));
+            const newDate = dayjs(currentDate)
+                .add(1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper.rowBars.slice(0, 8));
+                setResults(mockMapper(newDate).rowBars.slice(0, 8));
                 setLoading(false);
             }, 1000);
         };
 
         const onPage = () => {
             setTimeout(() => {
-                setResults((prev) => [...prev, ...mockMapper.rowBars.slice(8)]);
+                setResults((prev) => [
+                    ...prev,
+                    ...mockMapper(date).rowBars.slice(8),
+                ]);
             }, 2000);
         };
 
         const onRefresh = () => {
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper.rowBars.slice(0, 8));
+                setResults(mockMapper(date).rowBars.slice(0, 8));
                 setLoading(false);
             }, 5000);
         };
@@ -60,7 +71,7 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <TimeTable
-                    {...mockMapper}
+                    {...mockMapper()}
                     rowBars={results}
                     date={date}
                     isLoading={loading}

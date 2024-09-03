@@ -13,7 +13,7 @@ import {
 } from "./row-cell.style";
 import { ROW_CELL_GAP, ROW_INTERVAL, RowCellProps } from "./types";
 
-export const RowCell = ({
+const Component = ({
     id,
     startTime,
     endTime,
@@ -150,3 +150,5 @@ export const RowCell = ({
         </ConditionalCellWrapper>
     );
 };
+
+export const RowCell = React.memo(Component);

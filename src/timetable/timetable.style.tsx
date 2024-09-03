@@ -19,7 +19,8 @@ interface TimeTableContainerProps {
 }
 
 interface RowColumnHeaderProps {
-    $isScrolled: boolean;
+    $isScrolledY: boolean;
+    $isScrolledX: boolean;
 }
 
 interface RowHeaderProps {
@@ -65,11 +66,12 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     border-bottom: 1px solid ${Color.Neutral[5]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
-        if (props.$isScrolled) {
-            return css`
-                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
-            `;
-        }
+        return css`
+            box-shadow: ${props.$isScrolledX ? "0.125rem" : "0"}
+                ${props.$isScrolledY ? "0.125rem" : "0"}
+                ${props.$isScrolledX || props.$isScrolledY ? "0.5rem" : "0"}
+                ${Color.Neutral[5]};
+        `;
     }};
 `;
 
@@ -86,7 +88,7 @@ export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
+                box-shadow: 0.125rem 0rem 0.5rem ${Color.Neutral[5]};
             `;
         }
     }};

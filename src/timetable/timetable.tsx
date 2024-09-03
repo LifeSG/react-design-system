@@ -51,11 +51,11 @@ export const TimeTable = ({
         isEmptyContent || rowBars.length === optionalProps.totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const contentContainerRef = useRef<HTMLDivElement>(null);
-    const scrollX = useRef(0);
-    const scrollY = useRef(0);
+    const [scrollX, setScrollX] = useState(0);
+    const [scrollY, setScrollY] = useState(0);
     const [intervalWidth, setIntervalWidth] = useState(0);
     const [loadMore, setLoadMore] = useState(false);
-    const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -63,13 +63,8 @@ export const TimeTable = ({
     useEffect(() => {
         const handleScroll = () => {
             if (tableContainerRef.current) {
-                scrollX.current = tableContainerRef.current.scrollLeft;
-                scrollY.current = tableContainerRef.current.scrollTop;
-                if (scrollX.current > 0 || scrollY.current > 0) {
-                    setIsScrolled(true);
-                } else {
-                    setIsScrolled(false);
-                }
+                setScrollX(tableContainerRef.current.scrollLeft);
+                setScrollY(tableContainerRef.current.scrollTop);
             }
 
             if (loadMore) return;
@@ -159,7 +154,7 @@ export const TimeTable = ({
                 {mappedRowBarWithColor.map((rowBarData, index) => {
                     return (
                         <RowHeader
-                            $isScrolled={scrollX.current > 0}
+                            $isScrolled={scrollX > 0}
                             key={`${index}-row`}
                         >
                             <ClickableRowHeaderTitle
@@ -190,7 +185,7 @@ export const TimeTable = ({
     const renderRowHeaderColumnLazyLoad = () => {
         if (isLoading || !loadMore) return;
         return (
-            <RowHeader $isScrolled={scrollX.current > 0}>
+            <RowHeader $isScrolled={scrollX > 0}>
                 <LoadingBar />
             </RowHeader>
         );
@@ -272,7 +267,8 @@ export const TimeTable = ({
             $loading={isLoading}
         >
             <RowColumnHeader
-                $isScrolled={scrollY.current > 0 || scrollX.current > 0}
+                $isScrolledY={scrollY > 0}
+                $isScrolledX={scrollX > 0}
             >
                 <TimeTableNavigator
                     selectedDate={date}
@@ -282,13 +278,13 @@ export const TimeTable = ({
             </RowColumnHeader>
             <RowHeaderColumn
                 $numOfRows={mappedRowBarWithColor.length}
-                $isScrolled={scrollY.current > 0 || scrollX.current > 0}
+                $isScrolled={scrollY > 0 || scrollX > 0}
             >
                 {renderRowHeaderColumn()}
             </RowHeaderColumn>
             <ColumnHeaderRow
                 $numOfColumns={hourlyIntervals.length}
-                $isScrolled={scrollY.current > 0}
+                $isScrolled={scrollY > 0}
             >
                 {renderColumnHeaders()}
             </ColumnHeaderRow>
