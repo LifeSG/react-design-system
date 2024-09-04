@@ -24,7 +24,6 @@ const Component = ({
     rowBarColor,
     containerRef,
     disabledCellHoverContent,
-    emptyCellClickContent,
     onEmptyCellClick,
 }: RowCellProps) => {
     // =============================================================================

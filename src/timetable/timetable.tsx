@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import { isEmpty, throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { CalendarHelper } from "../util";
@@ -62,7 +62,7 @@ export const TimeTable = ({
     // =============================================================================
 
     useEffect(() => {
-        const handleScroll = () => {
+        const handleScroll = throttle(() => {
             if (tableContainerRef.current) {
                 setScrollX(tableContainerRef.current.scrollLeft);
                 setScrollY(tableContainerRef.current.scrollTop);
@@ -81,7 +81,7 @@ export const TimeTable = ({
                 setLoadMore(true);
                 onPage();
             }
-        };
+        }, 100);
 
         const tableContainer = tableContainerRef.current;
 
@@ -245,9 +245,6 @@ export const TimeTable = ({
                             disabledCellHoverContent={
                                 optionalProps.disabledCellHoverContent
                             }
-                            emptyCellClickContent={
-                                optionalProps.emptyCellClickContent
-                            }
                         />
                     );
                 })}
@@ -285,6 +282,7 @@ export const TimeTable = ({
                 <TimeTableNavigator
                     selectedDate={date}
                     isLoading={isLoading}
+                    tableContainerRef={tableContainerRef}
                     {...optionalProps}
                 />
             </RowColumnHeader>

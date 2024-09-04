@@ -16,7 +16,6 @@ export const RowBar = ({
     timetableMaxTime,
     containerRef,
     disabledCellHoverContent,
-    emptyCellClickContent,
     onEmptyCellClick,
 }: RowBarProps) => {
     const occupiedCells = rowCells.filter((cell) => cell.status === "OCCUPIED");
@@ -137,7 +136,6 @@ export const RowBar = ({
                         onEmptyCellClick={onEmptyCellClick}
                         containerRef={containerRef}
                         disabledCellHoverContent={disabledCellHoverContent}
-                        emptyCellClickContent={emptyCellClickContent}
                     />
                 );
             })}

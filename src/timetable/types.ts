@@ -30,7 +30,6 @@ export interface TimeTableProps {
     width?: number | undefined;
     height?: number | undefined;
     disabledCellHoverContent?: string | JSX.Element | undefined;
-    emptyCellClickContent?: string | JSX.Element | undefined;
     nameClickContent?: string | JSX.Element | undefined;
     // Callback to invoke on refresh click
     onRefresh?: () => void;
@@ -73,7 +72,6 @@ export interface RowBarProps extends RowBarData {
     intervalWidth: number;
     containerRef: MutableRefObject<HTMLDivElement>;
     disabledCellHoverContent?: string | JSX.Element | undefined;
-    emptyCellClickContent?: string | JSX.Element | undefined;
     nameClickContent?: string | JSX.Element;
     onNameClick?: () => void | undefined;
     onEmptyCellClick?: (
@@ -110,5 +108,4 @@ export interface RowCellProps extends RowCellData {
     intervalWidth: number;
     rowBarColor: string;
     disabledCellHoverContent?: string | JSX.Element | undefined;
-    emptyCellClickContent?: string | JSX.Element | undefined;
 }

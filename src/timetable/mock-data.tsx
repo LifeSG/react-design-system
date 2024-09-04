@@ -594,126 +594,42 @@ export const mockResourceListingResultsData = {
         },
         {
             _provider: "rmbme",
-            id: "B0XrnV9rmz",
-            title: "add-on hannah test 1",
+            id: "B8E79Z6Pbp",
+            title: "Fixed Session Resource1",
             organisationId: "0B8E79PbpK",
             subtitle: "Eclipse",
             resourceSubtype: "Meeting Room",
             resourceType: "Rooms",
             resourceTypeId: "kd6PRJPJzZ",
             images: [
-                "https://mol-dev-rbs-backend-files.s3.ap-southeast-1.amazonaws.com/resource/B0XrnV9rmz/3be74a40-1932-4a44-b571-59259d3b256c/2ddd56f0-5a22-462a-87b9-7bc145ef1b68/4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAXKS4ZZQSOOIGMMFT%2F20240819%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20240819T052315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDUaDmFwLXNvdXRoZWFzdC0xIkcwRQIhAJv2SAwVoSPwMmO2O807cHLgX8nvXY1H0MpDoy8Xc3DzAiA5IPjHSx6AxZHWErHkEIGxCR5DAJUOAJEomVw2sVhw9irqAwg%2BEAIaDDUwMzc3OTU0NDEwMCIMaWFQ1Y1utrGnRt5zKscDV7EQ0Ur1oIbCtKQGh3T3qKebL%2BksKpPUEFIo7Svys2a91MSBqFh7CJiFF%2BZjLPGi10Oz9mg668pEQHde9LPmVNkxwDrYoerHXwW3BgNyNzB4OYuR8Q4C6gWDpr%2Fds5pdyZFHcL2pBoeuD96zyNlXWp368PU0pbB1U0N0Xh9jY4sjEdu%2FnaMFy9zzDEl3upQj3f7XBATFb1jWV0Xqubtd4jPuyBAIc7QAsG6s3na27fdyZQrsoX1tcp44190zOpzY5%2FO51%2BgkrhX0RDNS%2B1gDG6EwME%2FH727Pnzci8OO%2BSIoKdyrIEm4%2BkOpxZpI8SucM98RNE9LRVd%2FItYXtaQNrJjVlYM0IzEHJrJ0qyVLoKbmfEEmgKpTVd7aogdzViI5RGEOts%2BI1eRl2CLOjYRuVYKT6dplep1EYA%2FmeaJWdR4Azg5IWlAvQimZ1lBhUck%2B9qXswbIF%2BBwH2jmu9n9z6Uh7dVeP3enQ95Po8SSoRwJxA4CzMpgYVGS%2B59wTrPY7gAft%2Fdc2fWjIhdRMITTtZad3%2Bhp%2FSyLV14q69J7My44wI94K%2Fj7cCNMXmY6MsJBuFnjkq1%2BFQ%2B5ZZi8%2FweDoSFtGexlagUYEwxqaLtgY6pQFCrOyo2wcQqBHqu9mMp2Yg7FuzJn7o9Pw9LOqbxkEXfMDEdffdSsXnGxHq%2BelGL1YEeM6GAp57B1k6RSngsX%2BACZlVvmCA1oiHq6FLuNdCEefrbI9teD9LzQDZxKEouU4doZyA%2FZEnQi8YWbWJZvd1tluUT%2FRgYhgHhl%2FV%2Bqf3Mk%2FB7bHUJJMCE5UXcz45J4NCvwFUK2qzDRsS6eS4gpgLoHwo1YQ%3D&X-Amz-Signature=3d34b079ac62f32a595dce5e389e92678d6a06edac59855ecb1749eaaaa484d5&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "https://mol-dev-rbs-backend-files.s3.ap-southeast-1.amazonaws.com/resource/B8E79Z6Pbp/3be74a40-1932-4a44-b571-59259d3b256c/b782ddaa-65a4-46a9-a6e5-42d9753f100b/jagabee_stik.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAXKS4ZZQSG3HXRZB6%2F20240904%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20240904T053142Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjELb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDmFwLXNvdXRoZWFzdC0xIkYwRAIgDwWdoPPRGUkF1Xr9DCkR1zgC%2BBuswSfwuvYoMm8%2Ba48CICRBaUNXTVGdXcsIa4YUIV7A8Z1vYKYHKkH1Cy9aYngmKvMDCM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQAhoMNTAzNzc5NTQ0MTAwIgyKZ0dmAk0xnfTAzCQqxwMbp9YqdBCEwz7tSyhmZ1xIdWAsD52yCyNw5%2FaMR6YWKeJHHyJb8kgWvuOt2p1LWLSi2N2JzhdguFIDRlBcby%2BHxzQ%2FUXZRBd9bz9CZN0XIhCh5Znmck1KLzuzO5uDJgfPYG1Fs71DNo2sK5HIfbHJnE5fNQwht5P68cbAnZ4PSLkBgJbnU09mU6AxhJmOlssURyKcyCKoNAfjpBv3HLwQwADBh6cf4rwIR0T4HYV31Z5wvvRufp4pQezWL6x6fLNKTuxl94lpraooooGU0imMqg0XWh1Hg86tXESl0mV3nz2xfHBVAcked3gixp9K%2BZASuy90sKZaMK%2FKH3HnG8tEI8Ih%2FUthiE47f6ylthOHaRfzr%2FPLSPQo5aeH0hMq%2BzFu10oS0YCZZBgUHRFiaghWKCzgxqmiUSZoc7ABqqR5%2BdTVwy9XgdcQQgmsFYdjaDBbedUA3Bfy6BjYub%2FLPcYlITqCnQQjpxGMkPpBRBnzxHIquTTrL1kQ8%2BEgbVqMJLg5W0UItqwLPV4kP88HIbbjqQb3Tfd%2Fc7le3G%2BlWhCaE3p8sIVwiymCARjhBxWUiGAlg3j6HGXKHGzWxGRK0Rl1oUYR09kSMITCv39%2B2BjqmAQgIDZfwIghilh3PXOP3eqbc5KQ0CrIJECqfRHGW8%2BZV8nh5RHcnA4iCo%2FgqXIZ0bqucKOMn2LEosCPjD62FkDaTnKw4n9OmePfUBRQEi3etlVN6YgXAyhxH6hX931uI8FKdlK%2B4oP2blLsSHPzFx%2FLZbh0Fpim7EszB4A63Yeq%2FvZ8prv8IQB75R0UlXX23nmlznmhnbqSf%2F4E7B2jQ5JU%2FIR79XBc%3D&X-Amz-Signature=cf58bfb464bf84e43096aa85073cfb5c6f6101b9b67542f4d746903ef5bbb212&X-Amz-SignedHeaders=host&x-id=GetObject",
             ],
             tags: {
                 "Approval required": false,
-                "Manual start": true,
+                "Manual start": false,
             },
-            unavailableAfterDays: "",
+            unavailableAfterDays: "30",
             availableAfterDays: "",
-            capacity: "5",
-            additionalDescription: [
-                {
-                    key: "Additional amenities",
-                    title: "Additional services",
-                    description: "Only available upon request.",
-                    items: [
-                        {
-                            label: "Coffee",
-                        },
-                        {
-                            label: "AV Support",
-                        },
-                    ],
-                },
-            ],
+            capacity: "3",
+            additionalDescription: [],
             timelines: [
                 {
-                    date: "2024-08-19",
+                    date: "2024-09-04",
                     disabled: false,
                     slots: [
                         {
-                            startTime: "08:00",
-                            endTime: "08:30",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "08:30",
-                            endTime: "09:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "09:00",
-                            endTime: "09:30",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "09:30",
-                            endTime: "10:00",
-                            status: "DEFAULT",
-                        },
-                        {
                             startTime: "10:00",
-                            endTime: "10:30",
+                            endTime: "12:00",
                             status: "DEFAULT",
-                        },
-                        {
-                            startTime: "10:30",
-                            endTime: "11:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "13:00",
-                            endTime: "13:30",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "13:30",
-                            endTime: "14:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "14:00",
-                            endTime: "13:30",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "13:30",
-                            endTime: "15:00",
-                            status: "OCCUPIED",
                         },
                         {
                             startTime: "15:00",
-                            endTime: "15:30",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:30",
-                            endTime: "16:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:00",
-                            endTime: "16:30",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:30",
                             endTime: "17:00",
                             status: "DEFAULT",
                         },
-                        {
-                            startTime: "17:00",
-                            endTime: "17:30",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "17:30",
-                            endTime: "18:00",
-                            status: "DEFAULT",
-                        },
                     ],
-                    startTime: "07:00",
-                    endTime: "18:00",
+                    startTime: "10:00",
+                    endTime: "17:00",
                 },
             ],
             itemTemplate: "rooms-fixedSessions",
@@ -734,7 +650,7 @@ export const mockResourceListingResultsData = {
                             {
                                 type: "REDIRECT",
                                 payload: {
-                                    path: "https://dev.rbs.ccubesg.io/rbs/web/book/B0XrnV9rmz?date=2024-08-19&startTime=&endTime=",
+                                    path: "https://dev.rbs.ccubesg.io/rbs/web/book/B8E79Z6Pbp?date=2024-09-04&startTime=&endTime=",
                                 },
                                 continueOnError: null,
                             },
@@ -762,7 +678,7 @@ export const mockResourceListingResultsData = {
                             {
                                 type: "REDIRECT",
                                 payload: {
-                                    path: "https://dev.rbs.ccubesg.io/listing/rbs/detail?provider=rmbme&resourceId=B0XrnV9rmz&selectedDate=2024-08-19&calendarMode=day",
+                                    path: "https://dev.rbs.ccubesg.io/listing/rbs/detail?provider=rmbme&resourceId=B8E79Z6Pbp&selectedDate=2024-09-04&calendarMode=day",
                                 },
                                 continueOnError: null,
                             },
@@ -785,7 +701,7 @@ export const mockResourceListingResultsData = {
                             {
                                 type: "REDIRECT",
                                 payload: {
-                                    path: "https://dev.rbs.ccubesg.io/rbs/web/book/B0XrnV9rmz?date=2024-08-19&startTime=&endTime=",
+                                    path: "https://dev.rbs.ccubesg.io/rbs/web/book/B8E79Z6Pbp?date=2024-09-04&startTime=&endTime=",
                                 },
                                 continueOnError: null,
                             },
@@ -800,7 +716,7 @@ export const mockResourceListingResultsData = {
                             {
                                 type: "REDIRECT",
                                 payload: {
-                                    path: "https://dev.rbs.ccubesg.io/listing/rbs/detail?provider=rmbme&resourceId=B0XrnV9rmz&selectedDate=2024-08-19&calendarMode=day",
+                                    path: "https://dev.rbs.ccubesg.io/listing/rbs/detail?provider=rmbme&resourceId=B8E79Z6Pbp&selectedDate=2024-09-04&calendarMode=day",
                                 },
                                 continueOnError: null,
                             },
