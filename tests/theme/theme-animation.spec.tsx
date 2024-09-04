@@ -1,12 +1,12 @@
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-import { AnimationSet } from "../../src";
+import { Animation } from "../../src";
 import { ThemeSpec } from "../../src/theme/types";
 
 const StyledAnimationTest = styled.div`
-    transition: transform ${AnimationSet["duration-500"]},
-        ${AnimationSet["ease-default"]};
+    transition: transform ${Animation["duration-500"]},
+        ${Animation["ease-default"]};
 `;
 
 describe("StyledAnimationTest", () => {

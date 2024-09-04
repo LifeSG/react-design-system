@@ -14,6 +14,7 @@ describe("Colour Themeing Test", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "bookingsg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
         };
 
         const bgColor = "#1A122C";
@@ -36,6 +37,7 @@ describe("Colour Themeing Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
             overrides: {
                 primitiveColour: {
                     "primary-10": "#fefefe",
@@ -63,6 +65,7 @@ describe("Colour Themeing Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
             overrides: {
                 semanticColour: {
                     "border-primary": "#fefefe",

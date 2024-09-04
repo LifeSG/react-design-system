@@ -14,7 +14,7 @@ export type AnimationSet = {
     "ease-exit": string;
 };
 
-export type AnimationSetCollectionsMap = {
+export type AnimationCollectionsMap = {
     [key in AnimationScheme]: AnimationSet;
 };
 

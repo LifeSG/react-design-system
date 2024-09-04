@@ -18,6 +18,7 @@ describe("StyledTypographyTest", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
         };
 
         const fontSize = "3rem";
@@ -44,6 +45,7 @@ describe("StyledTypographyTest", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
             overrides: {
                 typography: {
                     "header-xxl-bold": {
@@ -80,6 +82,7 @@ describe("StyledTypographyTest", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
         };
 
         const fontSize = "1.125rem";

@@ -40,7 +40,7 @@ export interface ThemeSpecOptions {
 export interface ThemeSpec {
     colourScheme: ColourScheme;
     fontScheme: FontScheme;
-    animationScheme?: AnimationScheme;
+    animationScheme: AnimationScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 
