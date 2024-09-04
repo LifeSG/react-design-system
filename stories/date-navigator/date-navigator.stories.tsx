@@ -21,19 +21,15 @@ export const Default: StoryObj<Component> = {
 
 export const WithNavigation: StoryObj<Component> = {
     render: () => {
-        const today = dayjs().format("YYYY-MM-DD");
+        const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
         const onLeftArrowClick = (currentDate: string) => {
-            setSelectedDate(
-                dayjs(currentDate).add(-1, "day").format("YYYY-MM-DD")
-            );
+            setSelectedDate(dayjs(currentDate).add(-1, "day").toString());
         };
 
         const onRightArrowClick = (currentDate: string) => {
-            setSelectedDate(
-                dayjs(currentDate).add(1, "day").format("YYYY-MM-DD")
-            );
+            setSelectedDate(dayjs(currentDate).add(1, "day").toString());
         };
 
         return (
@@ -48,19 +44,15 @@ export const WithNavigation: StoryObj<Component> = {
 
 export const LoadingState: StoryObj<Component> = {
     render: () => {
-        const today = dayjs().format("YYYY-MM-DD");
+        const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
         const onLeftArrowClick = (currentDate: string) => {
-            setSelectedDate(
-                dayjs(currentDate).add(-1, "day").format("YYYY-MM-DD")
-            );
+            setSelectedDate(dayjs(currentDate).add(-1, "day").toString());
         };
 
         const onRightArrowClick = (currentDate: string) => {
-            setSelectedDate(
-                dayjs(currentDate).add(1, "day").format("YYYY-MM-DD")
-            );
+            setSelectedDate(dayjs(currentDate).add(1, "day").toString());
         };
         return (
             <DateNavigator
@@ -75,21 +67,17 @@ export const LoadingState: StoryObj<Component> = {
 
 export const WithMinAndMaxDate: StoryObj<Component> = {
     render: () => {
-        const today = dayjs().format("YYYY-MM-DD");
-        const minDate = dayjs(today).add(-6, "day").format("YYYY-MM-DD");
-        const maxDate = dayjs(today).add(6, "day").format("YYYY-MM-DD");
+        const today = dayjs().toString();
+        const minDate = dayjs(today).add(-6, "day").toString();
+        const maxDate = dayjs(today).add(6, "day").toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
         const onLeftArrowClick = (currentDate: string) => {
-            setSelectedDate(
-                dayjs(currentDate).add(-1, "day").format("YYYY-MM-DD")
-            );
+            setSelectedDate(dayjs(currentDate).add(-1, "day").toString());
         };
 
         const onRightArrowClick = (currentDate: string) => {
-            setSelectedDate(
-                dayjs(currentDate).add(1, "day").format("YYYY-MM-DD")
-            );
+            setSelectedDate(dayjs(currentDate).add(1, "day").toString());
         };
 
         return (
