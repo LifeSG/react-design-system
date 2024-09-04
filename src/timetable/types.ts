@@ -58,6 +58,7 @@ interface RowBarData {
     id: string;
     name: string | JSX.Element;
     subtitle?: string | JSX.Element | undefined;
+    rowHeaderHoverContent?: string | JSX.Element | undefined;
     rowCells: RowCellData[];
     // HH:mm format
     rowMinTime: string;

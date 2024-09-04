@@ -19,6 +19,7 @@ import {
     RowHeader,
     RowHeaderColumn,
     RowHeaderSubtitle,
+    StyledPopoverTrigger,
     TimeTableContainer,
 } from "./timetable.style";
 import {
@@ -153,28 +154,39 @@ export const TimeTable = ({
             <>
                 {mappedRowBarWithColor.map((rowBarData, index) => {
                     return (
-                        <RowHeader
-                            $isScrolled={scrollX > 0}
+                        <StyledPopoverTrigger
                             key={`${index}-row`}
+                            popoverContent={rowBarData.rowHeaderHoverContent}
+                            position="bottom-start"
+                            rootNode={tableContainerRef}
+                            zIndex={2}
+                            removePadding
+                            offset={0}
+                            trigger="hover"
                         >
-                            <ClickableRowHeaderTitle
-                                onClick={() =>
-                                    optionalProps.onNameClick(rowBarData.id)
-                                }
-                                weight="semibold"
-                                id={`${rowBarData.id}-row-header-title-id`}
-                                data-testid={`${rowBarData.id}-row-header-title`}
+                            <RowHeader
+                                $isScrolled={scrollX > 0}
+                                key={`${index}-row`}
                             >
-                                {rowBarData.name}
-                            </ClickableRowHeaderTitle>
-                            <RowHeaderSubtitle
-                                weight="bold"
-                                id={`${rowBarData.id}-row-header-subtitle-id`}
-                                data-testid={`${rowBarData.id}-row-header-subtitle`}
-                            >
-                                {rowBarData.subtitle}
-                            </RowHeaderSubtitle>
-                        </RowHeader>
+                                <ClickableRowHeaderTitle
+                                    onClick={() =>
+                                        optionalProps.onNameClick(rowBarData.id)
+                                    }
+                                    weight="semibold"
+                                    id={`${rowBarData.id}-row-header-title-id`}
+                                    data-testid={`${rowBarData.id}-row-header-title`}
+                                >
+                                    {rowBarData.name}
+                                </ClickableRowHeaderTitle>
+                                <RowHeaderSubtitle
+                                    weight="bold"
+                                    id={`${rowBarData.id}-row-header-subtitle-id`}
+                                    data-testid={`${rowBarData.id}-row-header-subtitle`}
+                                >
+                                    {rowBarData.subtitle}
+                                </RowHeaderSubtitle>
+                            </RowHeader>
+                        </StyledPopoverTrigger>
                     );
                 })}
                 {renderRowHeaderColumnLazyLoad()}

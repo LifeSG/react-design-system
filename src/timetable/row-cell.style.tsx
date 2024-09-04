@@ -28,7 +28,7 @@ export const BlockContainer = styled.div<BlockContainerProps>`
 export const Wrapper = styled.div`
     display: flex;
     margin-bottom: 2px;
-    height: 62px;
+    height: 65px;
 `;
 
 export const Gap = styled.div`

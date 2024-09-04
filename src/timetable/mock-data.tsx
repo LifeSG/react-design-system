@@ -1,6 +1,8 @@
-import { Person2Icon } from "@lifesg/react-icons";
+import { Person2Icon, PinIcon } from "@lifesg/react-icons";
 import { TimeTableProps } from "./types";
 import dayjs, { Dayjs } from "dayjs";
+import { Text } from "../text";
+import styled from "styled-components";
 
 export const mockResourceListingResultsData = {
     page: 1,
@@ -5108,6 +5110,12 @@ export const anotherMockData = {
     ],
 };
 
+const StyledHoverContent = styled.div`
+    display: flex;
+    align-items: center; /* Center items vertically within the container */
+    justify-content: center; /* Center items horizontally within the container */
+    column-gap: 5px;
+`;
 const mockFetchData = (date: Dayjs) => {
     const isEven = date.day() % 2 === 0;
 
@@ -5122,6 +5130,19 @@ const mockFetchData = (date: Dayjs) => {
                     <>
                         <Person2Icon />
                         {resource.capacity}
+                    </>
+                ),
+                rowHeaderHoverContent: (
+                    <>
+                        <Text.Body weight={"regular"}>
+                            {resource.title}
+                        </Text.Body>
+                        <StyledHoverContent>
+                            <PinIcon />
+                            <Text.H6 weight={"semibold"}>
+                                {resource.subtitle}
+                            </Text.H6>
+                        </StyledHoverContent>
                     </>
                 ),
                 rowCells: resource.timelines[0].slots.map((slot) => {
@@ -5144,6 +5165,19 @@ const mockFetchData = (date: Dayjs) => {
                 name: resource.title,
                 rowMinTime: resource.timelines[0].startTime,
                 rowMaxTime: resource.timelines[0].endTime,
+                rowHeaderHoverContent: (
+                    <>
+                        <Text.Body weight={"regular"}>
+                            {resource.title}
+                        </Text.Body>
+                        <StyledHoverContent>
+                            <PinIcon />
+                            <Text.H6 weight={"semibold"}>
+                                {resource.subtitle}
+                            </Text.H6>
+                        </StyledHoverContent>
+                    </>
+                ),
                 subtitle: (
                     <>
                         <Person2Icon />

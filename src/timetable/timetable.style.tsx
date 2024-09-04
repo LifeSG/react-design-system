@@ -3,6 +3,7 @@ import { LoadingDotsSpinner } from "../animations";
 import { Color } from "../color";
 import { ErrorDisplay } from "../error-display";
 import { Text } from "../text";
+import { PopoverTrigger } from "../popover-v2";
 
 interface ColumnHeaderRowProps {
     $numOfColumns: number;
@@ -82,8 +83,7 @@ export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
     left: 0;
     z-index: 1;
     background-color: white;
-    width: 100%;
-    grid-template-rows: repeat(${(props) => props.$numOfRows}, 65px);
+    grid-template-rows: repeat(${(props) => props.$numOfRows}, 68px);
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
@@ -132,10 +132,9 @@ export const ContentContainer = styled.div`
 export const RowHeader = styled.div<RowHeaderProps>`
     position: sticky;
     left: 0;
-    z-index: 2;
     background-color: white;
     width: 252px;
-    min-width: 252px;
+    height: 68px;
     border-right: 1px solid ${Color.Accent.Light[1]};
     align-content: center;
     text-align: right;
@@ -220,4 +219,8 @@ export const LoadingBar = styled.div`
     );
     background-size: 800px 104px;
     animation: ${gradientAnimation} 1.5s forwards infinite;
+`;
+
+export const StyledPopoverTrigger = styled(PopoverTrigger)`
+    max-width: 24rem !important;
 `;
