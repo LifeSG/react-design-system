@@ -59,7 +59,11 @@ export const DateNavigator = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Container id="date-navigator-container-id">
+        <Container
+            id="date-navigator-container-id"
+            className={optionalProps.className}
+            data-testid={optionalProps["data-testid"]}
+        >
             {optionalProps.onLeftArrowClick && (
                 <HeaderArrowButton
                     id="date-navigator-left-arrow-btn-id"
@@ -91,7 +95,7 @@ export const DateNavigator = ({
             {optionalProps.onRightArrowClick && (
                 <HeaderArrowButton
                     id="date-navigator-right-arrow-btn-id"
-                    data-testid="date-navigator-right-arrow-btn"
+                    data-testid={"date-navigator-right-arrow-btn"}
                     disabled={optionalProps.isLoading || isRightArrowDisabled()}
                     focusHighlight={false}
                     tabIndex={-1}

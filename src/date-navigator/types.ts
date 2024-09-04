@@ -1,4 +1,6 @@
 export interface DateNavigatorProps {
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
     selectedDate: string;
     minDate?: string | undefined;
     maxDate?: string | undefined;

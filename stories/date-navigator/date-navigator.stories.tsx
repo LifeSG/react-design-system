@@ -10,12 +10,18 @@ const meta: Meta<Component> = {
     component: DateNavigator,
 };
 
-const today = dayjs().format("YYYY-MM-DD");
-
 export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
+        const today = dayjs().toString();
+        return <DateNavigator selectedDate={today} />;
+    },
+};
+
+export const WithNavigation: StoryObj<Component> = {
+    render: () => {
+        const today = dayjs().format("YYYY-MM-DD");
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
         const onLeftArrowClick = (currentDate: string) => {
@@ -40,8 +46,9 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const DisableNavigationWhenLoading: StoryObj<Component> = {
+export const LoadingState: StoryObj<Component> = {
     render: () => {
+        const today = dayjs().format("YYYY-MM-DD");
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
         const onLeftArrowClick = (currentDate: string) => {
@@ -68,6 +75,9 @@ export const DisableNavigationWhenLoading: StoryObj<Component> = {
 
 export const WithMinAndMaxDate: StoryObj<Component> = {
     render: () => {
+        const today = dayjs().format("YYYY-MM-DD");
+        const minDate = dayjs(today).add(-6, "day").format("YYYY-MM-DD");
+        const maxDate = dayjs(today).add(6, "day").format("YYYY-MM-DD");
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
         const onLeftArrowClick = (currentDate: string) => {
@@ -87,15 +97,9 @@ export const WithMinAndMaxDate: StoryObj<Component> = {
                 selectedDate={selectedDate}
                 onLeftArrowClick={onLeftArrowClick}
                 onRightArrowClick={onRightArrowClick}
-                minDate={dayjs(today).add(-1, "month").format("YYYY-MM-DD")}
-                maxDate={dayjs(today).add(1, "month").format("YYYY-MM-DD")}
+                minDate={minDate}
+                maxDate={maxDate}
             />
         );
-    },
-};
-
-export const DateOnly: StoryObj<Component> = {
-    render: () => {
-        return <DateNavigator selectedDate={today} />;
     },
 };
