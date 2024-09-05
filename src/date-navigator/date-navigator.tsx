@@ -36,10 +36,12 @@ export const DateNavigator = ({
         if (!optionalProps.minDate) {
             return false;
         }
-        return CalendarHelper.isDisabledDay(
-            date,
-            undefined,
-            optionalProps.minDate
+        return (
+            CalendarHelper.isDisabledDay(
+                date,
+                undefined,
+                optionalProps.minDate
+            ) || DateHelper.isSame(date, optionalProps.minDate)
         );
     };
 
@@ -47,11 +49,13 @@ export const DateNavigator = ({
         if (!optionalProps.maxDate) {
             return false;
         }
-        return CalendarHelper.isDisabledDay(
-            date,
-            undefined,
-            undefined,
-            optionalProps.maxDate
+        return (
+            CalendarHelper.isDisabledDay(
+                date,
+                undefined,
+                undefined,
+                optionalProps.maxDate
+            ) || DateHelper.isSame(date, optionalProps.maxDate)
         );
     };
 
@@ -95,7 +99,7 @@ export const DateNavigator = ({
             {optionalProps.onRightArrowClick && (
                 <HeaderArrowButton
                     id="date-navigator-right-arrow-btn-id"
-                    data-testid={"date-navigator-right-arrow-btn"}
+                    data-testid="date-navigator-right-arrow-btn"
                     disabled={optionalProps.isLoading || isRightArrowDisabled()}
                     focusHighlight={false}
                     tabIndex={-1}
