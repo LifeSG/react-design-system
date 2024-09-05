@@ -90,6 +90,7 @@ interface RowCellData {
     title?: string | undefined;
     subtitle?: string | undefined;
     status: string; // REVIEW - Maybe can have a type for this
+    filledBlockClickContent?: string | JSX.Element | undefined;
     // Redirect user to url (resource booking page)
     onEmptyCellClick?: (
         id: string,

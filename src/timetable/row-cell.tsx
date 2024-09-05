@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React from "react";
-import { PopoverTrigger } from "../popover-v2";
+import { PopoverTrigger, PopoverV2TriggerProps } from "../popover-v2";
 import { Text } from "../text";
 import { DateHelper } from "../util";
 import {
@@ -24,6 +24,7 @@ const Component = ({
     rowBarColor,
     containerRef,
     disabledCellHoverContent,
+    filledBlockClickContent,
     onEmptyCellClick,
 }: RowCellProps) => {
     // =============================================================================
@@ -87,7 +88,7 @@ const Component = ({
     const renderPopoverContent = () => {
         switch (status) {
             case "OCCUPIED": {
-                return <>{popoverContent}</>;
+                return <>{filledBlockClickContent}</>;
             }
             case "DISABLED": {
                 return <>{disabledCellHoverContent}</>;
@@ -98,28 +99,48 @@ const Component = ({
         }
     };
 
-    // FIXME - To remove
-    const popoverContent = (
-        <div>
-            <Text.H5>{id}</Text.H5>
-            <Text.H6>Available</Text.H6>
-        </div>
-    );
+    const buildPopoverTrigger = (child: JSX.Element) => {
+        const popoverTriggerProps: PopoverV2TriggerProps = {
+            position: "bottom-start",
+            rootNode: containerRef,
+            removePadding: true,
+            offset: 0,
+            children: child,
+            popoverContent: renderPopoverContent(),
+        };
+
+        switch (status) {
+            case "OCCUPIED": {
+                return (
+                    <PopoverTrigger
+                        {...popoverTriggerProps}
+                        trigger="click"
+                        popoverClassName="filledPopover"
+                    >
+                        {child}
+                    </PopoverTrigger>
+                );
+            }
+            case "DISABLED": {
+                return (
+                    <PopoverTrigger
+                        {...popoverTriggerProps}
+                        trigger="hover"
+                        popoverClassName="disabledPopover"
+                    >
+                        {child}
+                    </PopoverTrigger>
+                );
+            }
+            default: {
+                return <>{child}</>;
+            }
+        }
+    };
 
     return (
         <ConditionalCellWrapper
-            wrapper={(child: JSX.Element) => (
-                <PopoverTrigger
-                    popoverContent={renderPopoverContent()}
-                    position="bottom-start"
-                    rootNode={containerRef}
-                    removePadding
-                    offset={0}
-                    trigger={status === "DISABLED" ? "hover" : "click"}
-                >
-                    {child}
-                </PopoverTrigger>
-            )}
+            wrapper={(child: JSX.Element) => buildPopoverTrigger(child)}
         >
             <BlockContainer
                 key={`block-container-key`}

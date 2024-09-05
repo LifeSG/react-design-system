@@ -127,6 +127,22 @@ export const ColumnHeaderTitle = styled(Text.H6)`
 
 export const ContentContainer = styled.div`
     display: grid;
+
+    .filledPopover {
+        width: 400px;
+
+        > div {
+            padding: 2rem;
+        }
+    }
+
+    .disabledPopover {
+        /* width: 400px; */
+
+        > div {
+            /* padding: 2rem */
+        }
+    }
 `;
 
 export const RowHeader = styled.div<RowHeaderProps>`

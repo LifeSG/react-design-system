@@ -136,6 +136,7 @@ export const RowBar = ({
                         onEmptyCellClick={onEmptyCellClick}
                         containerRef={containerRef}
                         disabledCellHoverContent={disabledCellHoverContent}
+                        filledBlockClickContent={cell.filledBlockClickContent}
                     />
                 );
             })}

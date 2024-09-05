@@ -3,6 +3,7 @@ import { TimeTableProps } from "./types";
 import dayjs, { Dayjs } from "dayjs";
 import { Text } from "../text";
 import styled from "styled-components";
+import { Color } from "../color";
 
 export const mockResourceListingResultsData = {
     page: 1,
@@ -5029,9 +5030,9 @@ export const anotherMockData = {
 const StyledHoverContent = styled.div`
     display: flex;
     align-items: center; /* Center items vertically within the container */
-    justify-content: center; /* Center items horizontally within the container */
     column-gap: 5px;
 `;
+
 const mockFetchData = (date: Dayjs) => {
     const isEven = date.day() % 2 === 0;
 
@@ -5070,6 +5071,63 @@ const mockFetchData = (date: Dayjs) => {
                         title: slot.label,
                         subtitle: slot.label,
                         status: slot.status,
+                        ...(slot.status === "OCCUPIED" && {
+                            filledBlockClickContent: (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        rowGap: "2rem",
+                                        padding: "16px, 16px, 32px, 32px",
+                                    }}
+                                >
+                                    <div>
+                                        <Text.H3 weight={"semibold"}>
+                                            {resource.title}
+                                        </Text.H3>
+                                        <Text.H4 weight={"semibold"}>
+                                            {date.format("D MMM YYYY, ddd")}{" "}
+                                            {`${dayjs(
+                                                slot.startTime,
+                                                "HH:mm"
+                                            ).format("HH:mma")} - ${dayjs(
+                                                slot.endTime,
+                                                "HH:mm"
+                                            ).format("HH:mma")}`}
+                                        </Text.H4>
+                                    </div>
+                                    <div>
+                                        <Text.H5
+                                            style={{
+                                                color: `${Color.Neutral[3]}`,
+                                            }}
+                                        >
+                                            Booking owner
+                                        </Text.H5>
+                                        <Text.Body>{slot.label}</Text.Body>
+                                        <a
+                                            onClick={() =>
+                                                alert(
+                                                    "email copied to clipboard"
+                                                )
+                                            }
+                                        >
+                                            name@gmail.com
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <Text.H5
+                                            style={{
+                                                color: `${Color.Neutral[3]}`,
+                                            }}
+                                        >
+                                            Booking title
+                                        </Text.H5>
+                                        <Text.Body>{slot.title}</Text.Body>
+                                    </div>
+                                </div>
+                            ),
+                        }),
                     };
                 }),
             };
@@ -5109,6 +5167,63 @@ const mockFetchData = (date: Dayjs) => {
                         title: slot.label,
                         subtitle: slot.label,
                         status: slot.status,
+                        ...(slot.status === "OCCUPIED" && {
+                            filledBlockClickContent: (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        rowGap: "2rem",
+                                        padding: "16px, 16px, 32px, 32px",
+                                    }}
+                                >
+                                    <div>
+                                        <Text.H3 weight={"semibold"}>
+                                            {resource.title}
+                                        </Text.H3>
+                                        <Text.H4 weight={"semibold"}>
+                                            {date.format("D MMM YYYY, ddd")}{" "}
+                                            {`${dayjs(
+                                                slot.startTime,
+                                                "HH:mm"
+                                            ).format("HH:mma")} - ${dayjs(
+                                                slot.endTime,
+                                                "HH:mm"
+                                            ).format("HH:mma")}`}
+                                        </Text.H4>
+                                    </div>
+                                    <div>
+                                        <Text.H5
+                                            style={{
+                                                color: `${Color.Neutral[3]}`,
+                                            }}
+                                        >
+                                            Booking owner
+                                        </Text.H5>
+                                        <Text.Body>{slot.label}</Text.Body>
+                                        <a
+                                            onClick={() =>
+                                                alert(
+                                                    "email copied to clipboard"
+                                                )
+                                            }
+                                        >
+                                            name@gmail.com
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <Text.H5
+                                            style={{
+                                                color: `${Color.Neutral[3]}`,
+                                            }}
+                                        >
+                                            Booking title
+                                        </Text.H5>
+                                        <Text.Body>{slot.title}</Text.Body>
+                                    </div>
+                                </div>
+                            ),
+                        }),
                     };
                 }),
             };
