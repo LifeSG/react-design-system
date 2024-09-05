@@ -31,8 +31,6 @@ export const dashedBorderStyle =
         const strokeWidth = parseInt(resolvedThickness) + 1;
 
         return css`
-            /* Added extra background-color styling to resolve improper wrapping of css styling when used. */
-            background-color: transparent;
             background-color: transparent;
             height: ${resolvedThickness};
             background-repeat: repeat-x;
@@ -89,7 +87,8 @@ export const getBorder = (key: keyof BorderSet) => {
 };
 
 export const BorderValues = {
-    "width-sm": getBorder("width-sm"),
+    "width-010": getBorder("width-010"),
+    "width-020": getBorder("width-020"),
     solid: getBorder("solid"),
     "dashed-default": getBorder("dashed-default"),
 };

@@ -2,7 +2,8 @@ import { CSSProp } from "styled-components";
 import { BorderScheme } from "../types";
 
 export interface BorderSet {
-    "width-sm": number;
+    "width-010": number;
+    "width-020": number;
     solid: string;
     "dashed-default": (
         thickness?: number,

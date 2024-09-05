@@ -19,6 +19,7 @@ describe("StyledTypographyTest", () => {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
             animationScheme: "lifesg",
+            borderScheme: "lifesg",
         };
 
         const fontSize = "3rem";
@@ -46,6 +47,7 @@ describe("StyledTypographyTest", () => {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
             animationScheme: "lifesg",
+            borderScheme: "lifesg",
             overrides: {
                 typography: {
                     "header-xxl-bold": {
@@ -83,6 +85,7 @@ describe("StyledTypographyTest", () => {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
             animationScheme: "lifesg",
+            borderScheme: "lifesg",
         };
 
         const fontSize = "1.125rem";

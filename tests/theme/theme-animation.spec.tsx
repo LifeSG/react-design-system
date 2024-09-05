@@ -15,6 +15,7 @@ describe("StyledAnimationTest", () => {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
             animationScheme: "lifesg",
+            borderScheme: "lifesg",
         };
 
         const duration = "500ms";
@@ -37,6 +38,7 @@ describe("StyledAnimationTest", () => {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
             animationScheme: "lifesg",
+            borderScheme: "lifesg",
             overrides: {
                 animation: {
                     "duration-500": "700ms",

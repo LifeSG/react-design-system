@@ -46,7 +46,7 @@ export interface ThemeSpec {
     colourScheme: ColourScheme;
     fontScheme: FontScheme;
     animationScheme: AnimationScheme;
-    borderScheme?: BorderScheme | undefined;
+    borderScheme: BorderScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 

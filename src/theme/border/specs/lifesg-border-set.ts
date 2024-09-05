@@ -1,9 +1,9 @@
-import { css } from "styled-components";
 import { BorderSet } from "../types";
-import { dashedBorderStyle } from "../helper";
+import { dashedBorderStyle } from "../theme-helper";
 
 export const LifeSgBorderSet: BorderSet = {
-    "width-sm": 1,
+    "width-010": 1,
+    "width-020": 2,
 
     solid: "solid",
 
