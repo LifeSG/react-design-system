@@ -58,6 +58,8 @@ export interface InputSelectProps<T, V>
     onBlur?: (() => void) | undefined;
     variant?: DropdownVariantType | undefined;
     alignment?: DropdownAlignmentType | undefined;
+    /* the distance between the reference element and the dropdown */
+    offset?: number | undefined;
     dropdownZIndex?: number | undefined;
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;

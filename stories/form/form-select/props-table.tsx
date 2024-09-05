@@ -196,6 +196,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
                 defaultValue: "50",
             },
+            {
+                name: "offset",
+                description:
+                    "The distance between the reference element and the dropdown",
+                propTypes: ["number"],
+                defaultValue: "8",
+            },
         ],
     },
     {

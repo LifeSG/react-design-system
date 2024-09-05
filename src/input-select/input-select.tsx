@@ -50,6 +50,7 @@ export const InputSelect = <T, V>({
     readOnly,
     alignment,
     dropdownZIndex,
+    offset = 8,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -274,7 +275,7 @@ export const InputSelect = <T, V>({
                 onClose={handleClose}
                 onDismiss={handleDismiss}
                 clickToToggle
-                offset={8}
+                offset={offset}
                 alignment={alignment}
                 fitAvailableHeight
                 zIndex={dropdownZIndex}
