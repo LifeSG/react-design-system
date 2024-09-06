@@ -37,8 +37,4 @@ export const DocNote = ({ children }: Props) => {
 
 const StyledAlert = styled(Alert)`
     margin-bottom: 16px;
-
-    a {
-        font-size: 14px;
-    }
 `;
