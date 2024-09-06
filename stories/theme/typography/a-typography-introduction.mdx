@@ -1,0 +1,93 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo, DocNote } from "stories/storybook-common";
+
+<Meta title="Foundations/Typography/Introduction" />
+
+# Typography
+
+```tsx
+import { Font, Typography } from "@lifesg/react-design-system/theme";
+```
+
+The **font** tokens define these font styling properties:
+
+-   font family
+-   font size
+-   font weight
+-   line height
+-   letter spacing
+
+A **typography** token is a combination of these font tokens.
+
+## Collections
+
+[LifeSG](/docs/foundations-typography-lifesg--docs) |
+[BookingSG](/docs/foundations-typography-bookingsg--docs) |
+[RBS](/docs/foundations-typography-rbs--docs) |
+[CCUBE](/docs/foundations-typography-ccube--docs) |
+[MyLegacy](/docs/foundations-typography-mylegacy--docs) |
+[OneService](/docs/foundations-typography-oneservice--docs)
+
+## Usage
+
+{/* TODO: update link to Typography component docs */}
+
+<DocInfo storybookLink={"../?path=/docs/general-text-introduction--docs"}>
+    In most cases, you can simply use the `Typography` component to render text
+    elements
+</DocInfo>
+
+The `Typography` namespace provides tokens to apply text styling within style
+declarations. You will rarely need to use the `Font` tokens directly.
+
+```tsx
+import { Typography } from "@lifesg/react-design-system/theme";
+import styled, { css } from "styled-components";
+
+// A common use case is to initialise text style in a parent container to be inherited by child elements
+const Container = styled.div`
+    ${Typography["header-xxl-bold"]}
+`;
+
+// A common use case is to match an image, such as an icon, to the text size
+const Icon = styled.svg`
+    height: ${Font["header-size-xxl"]};
+`;
+```
+
+<DocNote>
+    For inline icons, you can use the `em` and `lh` units instead to scale them
+    based on font
+</DocNote>
+
+## Overriding
+
+When you modify a font token, any typography token referring to it will also
+reflect the new specification.
+
+Font tokens should be `rem`-based to scale with the user's preferred font size.
+
+While not recommended, typography tokens can be overridden separately. You are
+responsible for ensuring all relevant properties are included.
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        font: {
+            "header-size-xxl": "5rem", // specify a custom value
+        },
+        typography: {
+            "header-body-light": css`
+                font-family: serif;
+                font-size: 1rem;
+                font-weight: 300;
+                line-height: 1.4rem;
+                letter-spacing: 0;
+            `, // specify a custom set of styles
+        },
+    },
+};
+```

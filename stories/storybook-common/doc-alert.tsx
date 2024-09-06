@@ -4,31 +4,55 @@ import { Alert } from "../../src/alert";
 
 interface Props {
     children: React.ReactNode;
+    storybookLink?: string;
 }
 
-export const DocAlert = ({ children }: Props) => {
+export const DocAlert = ({ children, storybookLink }: Props) => {
     return (
-        <StyledAlert type="warning" showIcon sizeType="small">
+        <StyledAlert
+            type="warning"
+            showIcon
+            sizeType="small"
+            actionLink={
+                storybookLink
+                    ? { href: storybookLink, children: "View documentation" }
+                    : undefined
+            }
+        >
             {children}
         </StyledAlert>
     );
 };
 
-export const DocInfo = ({ children }: Props) => {
+export const DocInfo = ({ children, storybookLink }: Props) => {
     return (
-        <StyledAlert type="info" showIcon sizeType="small">
+        <StyledAlert
+            type="info"
+            showIcon
+            sizeType="small"
+            actionLink={
+                storybookLink
+                    ? { href: storybookLink, children: "View documentation" }
+                    : undefined
+            }
+        >
             {children}
         </StyledAlert>
     );
 };
 
-export const DocNote = ({ children }: Props) => {
+export const DocNote = ({ children, storybookLink }: Props) => {
     return (
         <StyledAlert
             type="description"
             showIcon
             sizeType="small"
             customIcon={<LightbulbFillIcon />}
+            actionLink={
+                storybookLink
+                    ? { href: storybookLink, children: "View documentation" }
+                    : undefined
+            }
         >
             {children}
         </StyledAlert>
