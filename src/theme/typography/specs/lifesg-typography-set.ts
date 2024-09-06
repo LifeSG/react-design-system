@@ -10,6 +10,7 @@ const generateTypographyCSS = (
     lineHeightKey: keyof FontSet,
     letterSpacingKey: keyof FontSet
 ) => css`
+    font-family: ${getFontValues("font-family")};
     font-size: ${getFontValues(fontSizeKey)};
     font-weight: ${getFontValues(fontWeightKey)};
     line-height: ${getFontValues(lineHeightKey)};
@@ -260,13 +261,13 @@ export const LifeSgTypographySet: TypographySet = {
     "formlabel-baseline-semibold": generateTypographyCSS(
         "formlabel-size-baseline",
         "weight-semibold",
-        "formlabel-size-baseline",
-        "body-ls-baseline"
+        "formlabel-lh-baseline",
+        "formlabel-ls-baseline"
     ),
     "formlabel-lg-semibold": generateTypographyCSS(
         "formlabel-size-lg",
         "weight-semibold",
-        "formlabel-size-lg",
-        "body-ls-lg"
+        "formlabel-lh-lg",
+        "formlabel-ls-lg"
     ),
 };

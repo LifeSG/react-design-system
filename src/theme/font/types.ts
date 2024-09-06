@@ -61,4 +61,12 @@ export type FontSet = {
     // Form label sizes
     "formlabel-size-baseline": string;
     "formlabel-size-lg": string;
+
+    // Form label line heights
+    "formlabel-lh-baseline": string;
+    "formlabel-lh-lg": string;
+
+    // Form label letter spacing
+    "formlabel-ls-baseline": string;
+    "formlabel-ls-lg": string;
 };

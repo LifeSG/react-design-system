@@ -46,4 +46,10 @@ export const LifeSgFontSet: FontSet = {
 
     "formlabel-size-baseline": "1rem",
     "formlabel-size-lg": "1.125rem",
+
+    "formlabel-lh-baseline": "1.5rem",
+    "formlabel-lh-lg": "1.625rem",
+
+    "formlabel-ls-baseline": "0.014rem",
+    "formlabel-ls-lg": "0rem",
 };
