@@ -225,7 +225,11 @@ export const TimeTable = ({
         if (isEmptyContent) return;
         if (isLoading) return <Loader />;
         return (
-            <ContentContainer ref={contentContainerRef}>
+            <ContentContainer
+                ref={contentContainerRef}
+                $filledCellPopover={optionalProps.filledCellPopoverSize}
+                $disabledCellPopover={optionalProps.disabledCellPopoverSize}
+            >
                 {mappedRowBarWithColor.map((rowBarData, index) => {
                     return (
                         <RowBar

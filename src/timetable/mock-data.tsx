@@ -5253,5 +5253,13 @@ export const mockMapper = (currentDate?: string): TimeTableProps => {
         },
         isLoading: false,
         disabledCellHoverContent: "Outside operating hours",
+        // filledCellPopoverSize: {
+        //     width: "500px",
+        //     padding: "5rem"
+        // },
+        // disabledCellPopoverSize: {
+        //     width: "500px",
+        //     padding: "5rem"
+        // }
     };
 };

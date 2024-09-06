@@ -27,10 +27,12 @@ export interface TimeTableProps {
     emptyContent: EmptyContentProps;
     isLoading: boolean;
     totalRecords?: number | undefined;
-    width?: number | undefined;
-    height?: number | undefined;
+    width?: string | undefined;
+    height?: string | undefined;
     disabledCellHoverContent?: string | JSX.Element | undefined;
     nameClickContent?: string | JSX.Element | undefined;
+    filledCellPopoverSize?: OverwritePopoverCustomSizeProps;
+    disabledCellPopoverSize?: OverwritePopoverCustomSizeProps;
     // Callback to invoke on refresh click
     onRefresh?: () => void;
     // Callback to invoke on pagination, will invoke when reach end of listing
@@ -46,6 +48,11 @@ export interface TimeTableProps {
         intervalStart: string,
         intervalEnd: string
     ) => void | undefined;
+}
+
+export interface OverwritePopoverCustomSizeProps {
+    width?: string | undefined;
+    padding?: string | undefined;
 }
 
 interface EmptyContentProps {

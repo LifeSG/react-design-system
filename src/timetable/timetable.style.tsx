@@ -4,6 +4,7 @@ import { Color } from "../color";
 import { ErrorDisplay } from "../error-display";
 import { Text } from "../text";
 import { PopoverTrigger } from "../popover-v2";
+import { OverwritePopoverCustomSizeProps } from "./types";
 
 interface ColumnHeaderRowProps {
     $numOfColumns: number;
@@ -34,6 +35,11 @@ interface LoadingCellWrapperProps {
 
 interface NoResultsFoundProps {
     $show: boolean;
+}
+
+interface ContentContainerPopoverProps {
+    $disabledCellPopover: OverwritePopoverCustomSizeProps;
+    $filledCellPopover: OverwritePopoverCustomSizeProps;
 }
 
 export const TimeTableContainer = styled.div<TimeTableContainerProps>`
@@ -125,22 +131,32 @@ export const ColumnHeaderTitle = styled(Text.H6)`
     color: ${Color.Neutral[3]};
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<ContentContainerPopoverProps>`
     display: grid;
 
     .filledPopover {
-        width: 400px;
-
+        width: ${(props) =>
+            props.$filledCellPopover?.width
+                ? `${props.$filledCellPopover.width}`
+                : "400px"};
         > div {
-            padding: 2rem;
+            padding: ${(props) =>
+                props.$filledCellPopover?.padding
+                    ? `${props.$filledCellPopover.padding}`
+                    : "2rem"};
         }
     }
 
     .disabledPopover {
-        /* width: 400px; */
-
+        width: ${(props) =>
+            props.$disabledCellPopover?.width
+                ? `${props.$disabledCellPopover.width}`
+                : ""};
         > div {
-            /* padding: 2rem */
+            padding: ${(props) =>
+                props.$disabledCellPopover?.padding
+                    ? `${props.$disabledCellPopover.padding}`
+                    : ""};
         }
     }
 `;
