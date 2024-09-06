@@ -1,5 +1,5 @@
 import { Person2Icon, PinIcon } from "@lifesg/react-icons";
-import { TimeTableProps } from "./types";
+import { RowData, TimeTableProps } from "./types";
 import dayjs, { Dayjs } from "dayjs";
 import { Text } from "../text";
 import styled from "styled-components";
@@ -621,7 +621,7 @@ export const mockResourceListingResultsData = {
                         {
                             startTime: "10:00",
                             endTime: "12:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "15:00",
@@ -907,17 +907,17 @@ export const mockResourceListingResultsData = {
                         {
                             startTime: "15:00",
                             endTime: "15:30",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "15:30",
                             endTime: "16:00",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "16:00",
                             endTime: "16:30",
-                            status: "DEFAULT",
+                            status: "OCCUPIED",
                         },
                         {
                             startTime: "16:30",
@@ -5236,15 +5236,15 @@ export const mockMapper = (currentDate?: string): TimeTableProps => {
 
     return {
         date: date.format("YYYY-MM-DD"),
-        minTime: "06:20",
-        maxTime: "22:15",
+        minTime: "06:20:00",
+        maxTime: "22:00:00",
         maxDate: date.add(1, "month").format("YYYY-MM-DD"),
         minDate: date.add(-11, "month").format("YYYY-MM-DD"),
         totalRecords: 10,
-        rowBars: mockFetchData(date),
+        rowData: mockFetchData(date),
         // headerVariant: "records-only",
-        onNameClick: function (rowId: string): void {
-            alert(`Clicked on ${rowId}`);
+        onNameClick: function (rowData: RowData): void {
+            alert(`Clicked on ${JSON.stringify(rowData)}`);
         },
         emptyContent: {
             illustrationScheme: "bookingsg",

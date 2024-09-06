@@ -2,8 +2,8 @@ import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
 import { Color } from "../color";
 import { ErrorDisplay } from "../error-display";
-import { Text } from "../text";
 import { PopoverTrigger } from "../popover-v2";
+import { Text } from "../text";
 import { OverwritePopoverCustomSizeProps } from "./types";
 
 interface ColumnHeaderRowProps {
@@ -18,6 +18,8 @@ interface RowHeaderColumnProps {
 
 interface TimeTableContainerProps {
     $loading: boolean;
+    $width: string;
+    $height: string;
 }
 
 interface RowColumnHeaderProps {
@@ -38,6 +40,7 @@ interface NoResultsFoundProps {
 }
 
 interface ContentContainerPopoverProps {
+    $numOfRows: number;
     $disabledCellPopover: OverwritePopoverCustomSizeProps;
     $filledCellPopover: OverwritePopoverCustomSizeProps;
 }
@@ -47,10 +50,11 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     overflow: scroll;
     position: relative;
     grid-template-columns: 252px fit-content(100%);
-    height: 80vh;
-    width: 80vw;
-    min-height: 80vh;
-    min-width: 80vh;
+    height: ${(props) => props.$height};
+    width: ${(props) => props.$width};
+    padding-bottom: 128px;
+    min-height: 600px; // REVIEW
+    min-width: 1000px; // REVIEW
     ${(props) => {
         if (props.$loading) {
             return css`
@@ -133,7 +137,7 @@ export const ColumnHeaderTitle = styled(Text.H6)`
 
 export const ContentContainer = styled.div<ContentContainerPopoverProps>`
     display: grid;
-
+    grid-template-rows: repeat(${(props) => props.$numOfRows}, 68px);
     .filledPopover {
         width: ${(props) =>
             props.$filledCellPopover?.width
@@ -162,13 +166,16 @@ export const ContentContainer = styled.div<ContentContainerPopoverProps>`
 `;
 
 export const RowHeader = styled.div<RowHeaderProps>`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
     position: sticky;
     left: 0;
     background-color: white;
     width: 252px;
     height: 68px;
     border-right: 1px solid ${Color.Accent.Light[1]};
-    align-content: center;
     text-align: right;
     padding: 0 1rem 0 2rem;
     border-bottom: 1px solid ${Color.Neutral[5]};
@@ -184,6 +191,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
 `;
 
 export const ClickableRowHeaderTitle = styled(Text.H5)`
+    display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -193,11 +201,18 @@ export const ClickableRowHeaderTitle = styled(Text.H5)`
     }
 `;
 
-export const RowHeaderSubtitle = styled(Text.XSmall)`
+export const RowHeaderSubtitle = styled(Text.XSmall)<{ $show: boolean }>`
     display: inline-flex;
     gap: 6px;
     align-items: center;
     color: ${Color.Neutral[3]};
+    ${(props) => {
+        if (!props.$show) {
+            return css`
+                display: none;
+            `;
+        }
+    }}
 `;
 
 export const Loader = styled(LoadingDotsSpinner)`
@@ -255,4 +270,7 @@ export const LoadingBar = styled.div`
 
 export const StyledPopoverTrigger = styled(PopoverTrigger)`
     max-width: 24rem !important;
+    :hover {
+        cursor: default;
+    }
 `;

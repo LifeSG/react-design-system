@@ -16,7 +16,7 @@ export default meta;
 export const Default: StoryObj<Component> = {
     render: () => {
         const [results, setResults] = useState(
-            mockMapper().rowBars.slice(0, 8)
+            mockMapper().rowData.slice(0, 8)
         );
         const [date, setDate] = useState(mockMapper().date);
         const [loading, setLoading] = useState(mockMapper().isLoading);
@@ -28,7 +28,7 @@ export const Default: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper(newDate).rowBars.slice(0, 8));
+                setResults(mockMapper(newDate).rowData.slice(0, 8));
                 setLoading(false);
             }, 1000);
         };
@@ -40,7 +40,7 @@ export const Default: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper(newDate).rowBars.slice(0, 8));
+                setResults(mockMapper(newDate).rowData.slice(0, 8));
                 setLoading(false);
             }, 1000);
         };
@@ -49,7 +49,7 @@ export const Default: StoryObj<Component> = {
             setTimeout(() => {
                 setResults((prev) => [
                     ...prev,
-                    ...mockMapper(date).rowBars.slice(8),
+                    ...mockMapper(date).rowData.slice(8),
                 ]);
             }, 2000);
         };
@@ -57,7 +57,7 @@ export const Default: StoryObj<Component> = {
         const onRefresh = () => {
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper(date).rowBars.slice(0, 8));
+                setResults(mockMapper(date).rowData.slice(0, 8));
                 setLoading(false);
             }, 5000);
         };
@@ -72,11 +72,13 @@ export const Default: StoryObj<Component> = {
             <>
                 <TimeTable
                     {...mockMapper()}
-                    rowBars={results}
+                    rowData={results}
                     date={date}
                     isLoading={loading}
                     onRefresh={onRefresh}
                     onPage={onPage}
+                    height="95vh"
+                    width="95vw"
                     onRightArrowClick={onRightArrowClick}
                     onLeftArrowClick={onLeftArrowClick}
                     onEmptyCellClick={onEmptyCellClick}

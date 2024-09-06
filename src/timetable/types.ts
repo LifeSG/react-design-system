@@ -12,9 +12,33 @@ export const ROW_CELL_GAP = 2;
 export const ROW_INTERVAL = 15;
 export type RowBarColors = (typeof ROW_BAR_COLOR_SEQUENCE)[number];
 
+interface EmptyContentProps {
+    description: string;
+    illustrationScheme: ResourceScheme;
+}
+
+export interface RowData {
+    id: string;
+    name: string;
+    rowCells: RowCellData[];
+    subtitle?: string | JSX.Element | undefined;
+    rowHeaderHoverContent?: string | JSX.Element | undefined;
+    // HH:mm format, defaults to timetableMinTime
+    rowMinTime?: string;
+    // HH:mm format, defaults to timetableMaxTime
+    rowMaxTime?: string;
+}
+
+export interface OverwritePopoverCustomSizeProps {
+    width?: string | undefined;
+    padding?: string | undefined;
+}
+
 export interface TimeTableProps {
-    // YYYY-MM-DD format
     date: string;
+    emptyContent: EmptyContentProps;
+    rowData: RowData[];
+    isLoading: boolean;
     // HH:mm format, defaults to 06:00
     minTime?: string;
     // HH:mm format, defaults to 22:00
@@ -23,14 +47,10 @@ export interface TimeTableProps {
     minDate?: string | undefined;
     // YYYY-MM-DD format
     maxDate?: string | undefined;
-    rowBars: RowBarData[];
-    emptyContent: EmptyContentProps;
-    isLoading: boolean;
     totalRecords?: number | undefined;
     width?: string | undefined;
     height?: string | undefined;
     disabledCellHoverContent?: string | JSX.Element | undefined;
-    nameClickContent?: string | JSX.Element | undefined;
     filledCellPopoverSize?: OverwritePopoverCustomSizeProps;
     disabledCellPopoverSize?: OverwritePopoverCustomSizeProps;
     // Callback to invoke on refresh click
@@ -41,79 +61,36 @@ export interface TimeTableProps {
     onLeftArrowClick?: (currentDate: string) => void;
     // Override date navigate left/right function to custom function (eg: to have callbacks etc.)
     onRightArrowClick?: (currentDate: string) => void;
-    onNameClick?: (rowId: string) => void;
+    onNameClick?: (rowData: RowData, e: React.MouseEvent) => void;
     // Redirect user to url (resource booking page)
     onEmptyCellClick?: (
         id: string,
         intervalStart: string,
-        intervalEnd: string
-    ) => void | undefined;
+        intervalEnd: string,
+        e: React.MouseEvent
+    ) => void;
 }
 
-export interface OverwritePopoverCustomSizeProps {
-    width?: string | undefined;
-    padding?: string | undefined;
-}
-
-interface EmptyContentProps {
-    description: string;
-    illustrationScheme: ResourceScheme;
-}
-
-interface RowBarData {
-    id: string;
-    name: string | JSX.Element;
-    subtitle?: string | JSX.Element | undefined;
-    rowHeaderHoverContent?: string | JSX.Element | undefined;
-    rowCells: RowCellData[];
-    // HH:mm format
-    rowMinTime: string;
-    // HH:mm format
-    rowMaxTime: string;
-}
-
-export interface RowBarProps extends RowBarData {
-    timetableMinTime: string;
-    timetableMaxTime: string;
-    rowBarColor: RowBarColors;
-    intervalWidth: number;
-    containerRef: MutableRefObject<HTMLDivElement>;
-    disabledCellHoverContent?: string | JSX.Element | undefined;
-    nameClickContent?: string | JSX.Element;
-    onNameClick?: () => void | undefined;
-    onEmptyCellClick?: (
-        id: string,
-        intervalStart: string,
-        intervalEnd: string
-    ) => void | undefined;
-}
-
-interface RowCellData {
+export interface RowCellData {
     id: string;
     // HH:mm format
     startTime: string;
     // HH:mm format
     endTime: string;
+    status: string; // REVIEW - Maybe can have a type for this
     title?: string | undefined;
     subtitle?: string | undefined;
-    status: string; // REVIEW - Maybe can have a type for this
     filledBlockClickContent?: string | JSX.Element | undefined;
     // Redirect user to url (resource booking page)
     onEmptyCellClick?: (
         id: string,
         intervalStart: string,
-        intervalEnd: string
-    ) => void | undefined;
+        intervalEnd: string,
+        e: React.MouseEvent
+    ) => void;
     // Show popover for booking details
-    onFilledBlockClick?: () => void | undefined;
+    onFilledBlockClick?: () => void;
     // Show popover with text
-    onDisabledHover?: () => void | undefined;
-    onHover?: () => void | undefined;
-}
-
-export interface RowCellProps extends RowCellData {
-    containerRef: MutableRefObject<HTMLDivElement>;
-    intervalWidth: number;
-    rowBarColor: string;
-    disabledCellHoverContent?: string | JSX.Element | undefined;
+    onDisabledHover?: () => void;
+    onHover?: () => void;
 }

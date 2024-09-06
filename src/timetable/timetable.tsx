@@ -25,37 +25,37 @@ import {
 import {
     ROW_BAR_COLOR_SEQUENCE,
     ROW_INTERVAL,
-    RowBarProps,
+    RowData,
     TimeTableProps,
 } from "./types";
 
 export const TimeTable = ({
     date,
-    rowBars,
-    isLoading = false,
+    rowData,
+    isLoading,
+    minTime = "00:00",
+    maxTime = "23:00",
     onPage,
-    minTime = "06:00",
-    maxTime = "22:00",
     ...optionalProps
 }: TimeTableProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const timetableMinTime = CalendarHelper.roundToNearestHour(minTime);
-    const timetableMaxTime = CalendarHelper.roundToNearestHour(maxTime);
+    const timetableMaxTime = CalendarHelper.roundToNearestHour(maxTime, true);
     const hourlyIntervals = CalendarHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
-    const isEmptyContent = optionalProps.totalRecords === 0 || isEmpty(rowBars);
+    const isEmptyContent = optionalProps.totalRecords === 0 || isEmpty(rowData);
     const allRecordsLoaded =
-        isEmptyContent || rowBars.length === optionalProps.totalRecords;
+        isEmptyContent || rowData.length === optionalProps.totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const contentContainerRef = useRef<HTMLDivElement>(null);
-    const [scrollX, setScrollX] = useState(0);
-    const [scrollY, setScrollY] = useState(0);
-    const [intervalWidth, setIntervalWidth] = useState(0);
-    const [loadMore, setLoadMore] = useState(false);
+    const [scrollX, setScrollX] = useState<number>(0);
+    const [scrollY, setScrollY] = useState<number>(0);
+    const [intervalWidth, setIntervalWidth] = useState<number>(0);
+    const [loadMore, setLoadMore] = useState<boolean>(false);
 
     // =============================================================================
     // EFFECTS
@@ -98,7 +98,7 @@ export const TimeTable = ({
 
     useEffect(() => {
         setLoadMore(false);
-    }, [rowBars]);
+    }, [rowData]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -125,26 +125,29 @@ export const TimeTable = ({
         refreshRate: 50,
     });
 
+    const handleRowNameClick = (rowBarData: RowData, e: React.MouseEvent) => {
+        if (optionalProps.onNameClick) {
+            optionalProps.onNameClick(rowBarData, e);
+        }
+    };
+
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
-    let colorIndex = 0;
-    const colorSequenceLength = ROW_BAR_COLOR_SEQUENCE.length;
-    const mappedRowBarWithColor: RowBarProps[] = rowBars.map((row) => {
-        const rowBarColor = ROW_BAR_COLOR_SEQUENCE[colorIndex];
-        colorIndex = (colorIndex + 1) % colorSequenceLength;
-        return {
-            ...row,
-            timetableMaxTime,
-            timetableMinTime,
-            rowMinTime: row.rowMinTime,
-            rowMaxTime: row.rowMaxTime,
-            rowBarColor,
-            intervalWidth,
-            containerRef: contentContainerRef,
-        };
-    });
+    /**
+     * Using closures to more efficiently loop through and wrap the color sequencing instead of modding large numbers repeatedly
+     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#closure
+     */
+    const getColorFromSequence = (() => {
+        let colorIndex = 0;
+        const colorSequenceLength = ROW_BAR_COLOR_SEQUENCE.length;
 
+        return () => {
+            const color = ROW_BAR_COLOR_SEQUENCE[colorIndex];
+            colorIndex = (colorIndex + 1) % colorSequenceLength;
+            return color;
+        };
+    })();
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -152,38 +155,40 @@ export const TimeTable = ({
         if (isEmptyContent) return;
         return (
             <>
-                {mappedRowBarWithColor.map((rowBarData, index) => {
+                {rowData.map((data, _) => {
                     return (
                         <StyledPopoverTrigger
-                            key={`${index}-row`}
-                            popoverContent={rowBarData.rowHeaderHoverContent}
+                            key={`${data.id}-popover-trigger`}
+                            popoverContent={data.rowHeaderHoverContent}
                             position="bottom-start"
                             rootNode={tableContainerRef}
                             zIndex={2}
                             removePadding
-                            offset={0}
+                            offset={6}
                             trigger="hover"
                         >
                             <RowHeader
                                 $isScrolled={scrollX > 0}
-                                key={`${index}-row`}
+                                key={`${data.id}-row-header`}
                             >
                                 <ClickableRowHeaderTitle
-                                    onClick={() =>
-                                        optionalProps.onNameClick(rowBarData.id)
+                                    onClick={(e: React.MouseEvent) =>
+                                        handleRowNameClick(data, e)
                                     }
                                     weight="semibold"
-                                    id={`${rowBarData.id}-row-header-title-id`}
-                                    data-testid={`${rowBarData.id}-row-header-title`}
+                                    id={`${data.id}-row-header-title-id`}
+                                    data-testid={`${data.id}-row-header-title`}
                                 >
-                                    {rowBarData.name}
+                                    {data.name}
                                 </ClickableRowHeaderTitle>
+
                                 <RowHeaderSubtitle
                                     weight="bold"
-                                    id={`${rowBarData.id}-row-header-subtitle-id`}
-                                    data-testid={`${rowBarData.id}-row-header-subtitle`}
+                                    $show={!!data.subtitle}
+                                    id={`${data.id}-row-header-subtitle-id`}
+                                    data-testid={`${data.id}-row-header-subtitle`}
                                 >
-                                    {rowBarData.subtitle}
+                                    {data.subtitle}
                                 </RowHeaderSubtitle>
                             </RowHeader>
                         </StyledPopoverTrigger>
@@ -227,28 +232,25 @@ export const TimeTable = ({
         return (
             <ContentContainer
                 ref={contentContainerRef}
+                $numOfRows={rowData.length}
                 $filledCellPopover={optionalProps.filledCellPopoverSize}
                 $disabledCellPopover={optionalProps.disabledCellPopoverSize}
             >
-                {mappedRowBarWithColor.map((rowBarData, index) => {
+                {rowData.map((data, _) => {
                     return (
                         <RowBar
-                            key={`${index}-row-bar-key`}
-                            id={rowBarData.id}
-                            data-testid={`${rowBarData.id}-row-bar`}
-                            name={rowBarData.name}
-                            rowMinTime={rowBarData.rowMinTime}
-                            rowMaxTime={rowBarData.rowMaxTime}
-                            rowCells={rowBarData.rowCells}
+                            key={`${data.id}-row-bar`}
+                            data-testid={`${data.id}-row-bar-test`}
                             timetableMinTime={timetableMinTime}
                             timetableMaxTime={timetableMaxTime}
-                            rowBarColor={rowBarData.rowBarColor}
-                            intervalWidth={rowBarData.intervalWidth}
+                            rowBarColor={getColorFromSequence()}
+                            intervalWidth={intervalWidth}
                             onEmptyCellClick={optionalProps.onEmptyCellClick}
-                            containerRef={rowBarData.containerRef}
+                            containerRef={contentContainerRef}
                             disabledCellHoverContent={
                                 optionalProps.disabledCellHoverContent
                             }
+                            {...data}
                         />
                     );
                 })}
@@ -278,6 +280,8 @@ export const TimeTable = ({
             ref={tableContainerRef}
             id="timetable-container-id"
             $loading={isLoading}
+            $height={optionalProps.height}
+            $width={optionalProps.width}
         >
             <RowColumnHeader
                 $isScrolledY={scrollY > 0}
@@ -285,13 +289,13 @@ export const TimeTable = ({
             >
                 <TimeTableNavigator
                     selectedDate={date}
-                    isLoading={isLoading}
+                    isLoading={isLoading || loadMore}
                     tableContainerRef={tableContainerRef}
                     {...optionalProps}
                 />
             </RowColumnHeader>
             <RowHeaderColumn
-                $numOfRows={mappedRowBarWithColor.length}
+                $numOfRows={rowData.length}
                 $isScrolled={scrollY > 0 || scrollX > 0}
             >
                 {renderRowHeaderColumn()}

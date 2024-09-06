@@ -1,25 +1,39 @@
 import dayjs from "dayjs";
+import { MutableRefObject } from "react";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";
-import { RowBarProps, RowCellProps } from "./types";
+import { RowBarColors, RowCellData, RowData } from "./types";
+
+interface RowBarProps extends RowData {
+    timetableMinTime: string;
+    timetableMaxTime: string;
+    intervalWidth: number;
+    containerRef: MutableRefObject<HTMLDivElement>;
+    rowBarColor: RowBarColors;
+    disabledCellHoverContent?: string | JSX.Element | undefined;
+    onEmptyCellClick?: (
+        id: string,
+        intervalStart: string,
+        intervalEnd: string,
+        e: React.MouseEvent
+    ) => void;
+}
 
 export const RowBar = ({
     id,
-    name,
-    subtitle,
-    rowMinTime,
-    rowMaxTime,
+    timetableMinTime,
+    timetableMaxTime,
+    rowMinTime = timetableMinTime,
+    rowMaxTime = timetableMaxTime,
     rowCells,
     rowBarColor,
     intervalWidth,
-    timetableMinTime,
-    timetableMaxTime,
-    containerRef,
     disabledCellHoverContent,
+    containerRef,
     onEmptyCellClick,
 }: RowBarProps) => {
-    const occupiedCells = rowCells.filter((cell) => cell.status === "OCCUPIED");
-    const rowCellArray: RowCellProps[] = [];
+    const filledCells = rowCells.filter((cell) => cell.status === "OCCUPIED");
+    const rowCellArray: RowCellData[] = [];
 
     // Handle non-op before hours
     if (dayjs(timetableMinTime, "HH:mm").isBefore(dayjs(rowMinTime, "HH:mm"))) {
@@ -28,9 +42,6 @@ export const RowBar = ({
             startTime: timetableMinTime,
             endTime: rowMinTime,
             status: "DISABLED",
-            intervalWidth,
-            rowBarColor,
-            containerRef,
         });
     }
 
@@ -40,8 +51,8 @@ export const RowBar = ({
     let defaultCellStartTime = "";
     while (currentTime.isBefore(endTime)) {
         // Find an occupied cell in current time
-        const foundCell = occupiedCells.find((occupiedCell) =>
-            currentTime.isSame(dayjs(occupiedCell.startTime, "HH:mm"))
+        const foundCell = filledCells.find((filledCell) =>
+            currentTime.isSame(dayjs(filledCell.startTime, "HH:mm"))
         );
 
         // If no cell found, it must be a default cell
@@ -60,9 +71,6 @@ export const RowBar = ({
                         .format("HH:mm")
                         .toString(),
                     status: "DEFAULT",
-                    intervalWidth,
-                    rowBarColor,
-                    containerRef,
                 });
                 defaultCellStartTime = "";
             } else if (currentTime.add(15, "minutes").isSame(endTime)) {
@@ -71,9 +79,6 @@ export const RowBar = ({
                     startTime: defaultCellStartTime,
                     endTime: rowMaxTime,
                     status: "DEFAULT",
-                    intervalWidth,
-                    rowBarColor,
-                    containerRef,
                 });
             }
         } else {
@@ -84,18 +89,12 @@ export const RowBar = ({
                     startTime: defaultCellStartTime,
                     endTime: foundCell.startTime,
                     status: "DEFAULT",
-                    intervalWidth,
-                    rowBarColor,
-                    containerRef,
                 });
             // Reset defaultCellStartTime
             defaultCellStartTime = "";
             // Push the found cell
             rowCellArray.push({
                 ...foundCell,
-                intervalWidth,
-                rowBarColor,
-                containerRef,
             });
             // Set current time to the end of the found occupied cell
             currentTime = dayjs(foundCell.endTime, "HH:mm");
@@ -113,9 +112,6 @@ export const RowBar = ({
             startTime: rowMaxTime,
             endTime: timetableMaxTime,
             status: "DISABLED",
-            intervalWidth,
-            rowBarColor,
-            containerRef,
         });
     }
 
@@ -124,19 +120,13 @@ export const RowBar = ({
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
-                        id={cell.id}
                         key={`${index}-row-cell-key`}
-                        startTime={cell.startTime}
-                        endTime={cell.endTime}
-                        title={cell.title}
-                        subtitle={cell.subtitle}
-                        status={cell.status}
-                        intervalWidth={cell.intervalWidth}
-                        rowBarColor={cell.rowBarColor}
-                        onEmptyCellClick={onEmptyCellClick}
+                        {...cell}
+                        intervalWidth={intervalWidth}
+                        rowBarColor={rowBarColor}
                         containerRef={containerRef}
                         disabledCellHoverContent={disabledCellHoverContent}
-                        filledBlockClickContent={cell.filledBlockClickContent}
+                        onEmptyCellClick={onEmptyCellClick}
                     />
                 );
             })}

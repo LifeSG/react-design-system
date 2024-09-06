@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { MutableRefObject } from "react";
 import { PopoverTrigger, PopoverV2TriggerProps } from "../popover-v2";
-import { Text } from "../text";
 import { DateHelper } from "../util";
 import {
     Block,
@@ -11,7 +10,14 @@ import {
     Gap,
     Wrapper,
 } from "./row-cell.style";
-import { ROW_CELL_GAP, ROW_INTERVAL, RowCellProps } from "./types";
+import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "./types";
+
+interface RowCellProps extends RowCellData {
+    containerRef: MutableRefObject<HTMLDivElement>;
+    intervalWidth: number;
+    rowBarColor: string;
+    disabledCellHoverContent?: string | JSX.Element | undefined;
+}
 
 const Component = ({
     id,
@@ -42,7 +48,7 @@ const Component = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleCellClick = (event: React.MouseEvent) => {
+    const handleCellClick = (e: React.MouseEvent) => {
         switch (status) {
             case "OCCUPIED": {
                 // TODO - Call OCCUPIED slot callback
@@ -54,7 +60,7 @@ const Component = ({
             }
             default: {
                 if (onEmptyCellClick) {
-                    onEmptyCellClick(id, startTime, endTime);
+                    onEmptyCellClick(id, startTime, endTime, e);
                 }
                 break;
             }

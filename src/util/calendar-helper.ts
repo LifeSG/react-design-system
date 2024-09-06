@@ -36,7 +36,11 @@ export namespace CalendarHelper {
     ) => {
         const format = "HH:mm";
         let start = dayjs(startTime, format);
-        const end = dayjs(endTime, format);
+        let end = dayjs(endTime, format);
+
+        if (start.isSame(end)) {
+            end = end.add(1, "day");
+        }
 
         const intervals: string[] = [];
 
