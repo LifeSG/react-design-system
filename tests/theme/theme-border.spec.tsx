@@ -20,7 +20,7 @@ describe("Border Theming Test", () => {
 
         // Constants for border-top (dashed-default)
         const thickness = "1px";
-        const color = "black";
+        const color = "#DDE1E2";
         const strokeWidth = 2;
         // Stroke width is thickeness + 1
 
@@ -113,7 +113,7 @@ describe("Border Theming Test", () => {
 
         // Constants for border-top (dashed-default)
         const thickness = "1px";
-        const color = "black";
+        const color = "#DDE1E2";
         const strokeWidth = 2;
 
         const expectedSvg = `<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${color}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>`;

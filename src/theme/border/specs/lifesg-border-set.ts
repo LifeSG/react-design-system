@@ -1,5 +1,7 @@
 import { BorderSet } from "../types";
 import { dashedBorderStyle } from "../theme-helper";
+import { StyledComponentProps } from "../../helpers";
+import { Colour } from "../../index";
 
 export const LifeSgBorderSet: BorderSet = {
     "width-010": 1,
@@ -8,9 +10,11 @@ export const LifeSgBorderSet: BorderSet = {
     solid: "solid",
 
     "dashed-default": (
-        thickness: number | ((props: any) => string) = 1,
-        color: string | ((props: any) => string) = "black"
+        thickness: number | ((props: StyledComponentProps) => number) = 1,
+        colour:
+            | string
+            | ((props: StyledComponentProps) => string) = Colour.border
     ) => {
-        return dashedBorderStyle(thickness, color);
+        return dashedBorderStyle(thickness, colour);
     },
 };

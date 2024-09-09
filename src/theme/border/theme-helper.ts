@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { BorderScheme, ThemeCollectionSpec } from "../types";
-import { BorderCollectionMap, BorderSet, StyleProps } from "./types";
+import { BorderCollectionMap, BorderSet } from "./types";
 import { LifeSgBorderSet } from "./specs/lifesg-border-set";
 
 const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
@@ -10,31 +10,35 @@ const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
     },
     defaultValue: "lifesg",
 };
+// to check if hex colour
+const isHexColor = (color: string): boolean => {
+    return /^#([0-9A-F]{3}){1,2}$/i.test(color);
+};
 
 export const dashedBorderStyle =
     (
-        thickness: number | ((props: any) => string),
-        color: string | ((props: any) => string)
+        thickness: number | ((props: StyledComponentProps) => number),
+        colour: string | ((props: StyledComponentProps) => string)
     ) =>
-    (props: StyleProps) => {
+    (props: StyledComponentProps) => {
         // Resolve thickness
         const resolvedThickness =
-            typeof thickness === "function"
-                ? thickness(props)
-                : `${thickness}px`;
+            typeof thickness === "function" ? thickness(props) : thickness;
 
         // Resolve color
         const resolvedColor =
-            typeof color === "function" ? color(props) : color;
+            typeof colour === "function" ? colour(props) : colour;
 
-        const encodedColor = encodeURIComponent(resolvedColor);
-        const strokeWidth = parseInt(resolvedThickness) + 1;
+        const encodedColor = isHexColor(resolvedColor)
+            ? resolvedColor
+            : encodeURIComponent(resolvedColor);
+        const strokeWidth = resolvedThickness + 1;
 
         return css`
             background-color: transparent;
-            height: ${resolvedThickness};
+            height: ${resolvedThickness}px;
             background-repeat: repeat-x;
-            background-image: url('data:image/svg+xml,<svg width="8" height="${resolvedThickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>');
+            background-image: url('data:image/svg+xml,<svg width="8" height="${resolvedThickness}px" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>');
         `;
     };
 
@@ -74,15 +78,10 @@ export const getBorder = (key: keyof BorderSet) => {
 
             // If number make it return a pixel string
             if (typeof borderValue === "number") {
-                const pixelBorderValue = `${borderValue}px`;
-                return css`
-                    ${pixelBorderValue}
-                `;
+                return `${borderValue}px`;
             }
 
-            return css`
-                ${borderValue}
-            `;
+            return borderValue;
         };
 };
 
