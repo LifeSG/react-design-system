@@ -31,7 +31,9 @@ export const TimeTableNavigator = ({
     // =============================================================================
 
     const scrollToTop = () => {
-        tableContainerRef.current.scrollTop = 0;
+        if (tableContainerRef.current) {
+            tableContainerRef.current.scrollTop = 0;
+        }
     };
 
     const onRefresh = () => {

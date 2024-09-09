@@ -24,6 +24,7 @@ export const StyledRefreshButton = styled(IconButton)<{ $isLoading: boolean }>`
 `;
 
 export const NavigationHeaderWrapper = styled.div`
+    width: 252px;
     padding-bottom: 1rem;
 `;
 

@@ -20,6 +20,12 @@ interface TimeTableContainerProps {
     $loading: boolean;
     $width: string;
     $height: string;
+    $allRecordsLoaded: boolean;
+}
+
+interface EmptyTableContainerProps {
+    $width: string;
+    $height: string;
 }
 
 interface RowColumnHeaderProps {
@@ -35,15 +41,31 @@ interface LoadingCellWrapperProps {
     $width: number;
 }
 
-interface NoResultsFoundProps {
-    $show: boolean;
-}
-
 interface ContentContainerPopoverProps {
     $numOfRows: number;
     $disabledCellPopover: OverwritePopoverCustomSizeProps;
     $filledCellPopover: OverwritePopoverCustomSizeProps;
 }
+
+interface LoaderProps {
+    $isEmptyContent: boolean;
+}
+
+export const EmptyTableContainer = styled.div<EmptyTableContainerProps>`
+    display: grid;
+    grid-template-columns: 252px auto;
+    min-height: 600px; // REVIEW
+    min-width: 1000px; // REVIEW
+    height: ${(props) => props.$height};
+    width: ${(props) => props.$width};
+`;
+
+export const EmptyTableRowHeader = styled.div`
+    display: flex;
+    height: fit-content;
+    grid-column: 1 / -1;
+    border-bottom: 1px solid ${Color.Neutral[5]};
+`;
 
 export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     display: grid;
@@ -52,7 +74,7 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     grid-template-columns: 252px fit-content(100%);
     height: ${(props) => props.$height};
     width: ${(props) => props.$width};
-    padding-bottom: 128px;
+    padding-bottom: ${(props) => (props.$allRecordsLoaded ? "0" : "128px")};
     min-height: 600px; // REVIEW
     min-width: 1000px; // REVIEW
     ${(props) => {
@@ -60,6 +82,7 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
             return css`
                 :hover {
                     cursor: not-allowed;
+                    padding-bottom: 0;
                 }
             `;
         }
@@ -71,18 +94,28 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     top: 0;
     left: 0;
     background-color: white;
-    transition: all 0.5s ease-in-out;
     width: 252px;
     z-index: 2;
     border-bottom: 1px solid ${Color.Neutral[5]};
-    transition: all 0.5s ease-in-out;
     ${(props) => {
-        return css`
-            box-shadow: ${props.$isScrolledX ? "0.125rem" : "0"}
-                ${props.$isScrolledY ? "0.125rem" : "0"}
-                ${props.$isScrolledX || props.$isScrolledY ? "0.5rem" : "0"}
-                ${Color.Neutral[5]};
-        `;
+        if (props.$isScrolledX || props.$isScrolledY) {
+            return css`
+                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
+                clip-path: inset(
+                    0 ${props.$isScrolledX ? "-0.75rem" : "0"}
+                        ${props.$isScrolledY ? "-0.75rem" : "0"} 0
+                );
+                transition: box-shadow 0.5s ease-in-out,
+                    clip-path 0.5s ease-in-out;
+            `;
+        } else {
+            return css`
+                box-shadow: none;
+                clip-path: inset(0);
+                transition: box-shadow 0.5s ease-in-out,
+                    clip-path 0.5s ease-in-out;
+            `;
+        }
     }};
 `;
 
@@ -94,14 +127,6 @@ export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
     z-index: 1;
     background-color: white;
     grid-template-rows: repeat(${(props) => props.$numOfRows}, 68px);
-    transition: all 0.5s ease-in-out;
-    ${(props) => {
-        if (props.$isScrolled) {
-            return css`
-                box-shadow: 0.125rem 0rem 0.5rem ${Color.Neutral[5]};
-            `;
-        }
-    }};
 `;
 
 export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
@@ -119,7 +144,7 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
+                box-shadow: 0rem 0.125rem 0.5rem ${Color.Neutral[5]};
             `;
         }
     }};
@@ -175,7 +200,6 @@ export const RowHeader = styled.div<RowHeaderProps>`
     background-color: white;
     width: 252px;
     height: 68px;
-    border-right: 1px solid ${Color.Accent.Light[1]};
     text-align: right;
     padding: 0 1rem 0 2rem;
     border-bottom: 1px solid ${Color.Neutral[5]};
@@ -185,6 +209,10 @@ export const RowHeader = styled.div<RowHeaderProps>`
         if (props.$isScrolled) {
             return css`
                 box-shadow: 0.125rem 0.125rem 0.5rem ${Color.Neutral[5]};
+            `;
+        } else {
+            return css`
+                box-shadow: inset -0.5px 0px ${Color.Accent.Light[1]};
             `;
         }
     }};
@@ -215,23 +243,20 @@ export const RowHeaderSubtitle = styled(Text.XSmall)<{ $show: boolean }>`
     }}
 `;
 
-export const Loader = styled(LoadingDotsSpinner)`
+export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
     display: flex;
     align-items: center;
     justify-content: center;
+    grid-column: ${(props) => (props.$isEmptyContent ? "1 / -1" : "2 / -1")};
+    grid-row: 2;
+    width: 100%;
+    height: 100%;
 `;
 
-export const NoResultsFound = styled(ErrorDisplay)<NoResultsFoundProps>`
-    height: 100%;
-    width: 100%;
+export const NoResultsFound = styled(ErrorDisplay)`
+    grid-column: 1 / -1;
+    grid-row: 2;
     padding: 5rem 0 5rem 0;
-    ${(props) => {
-        if (!props.$show) {
-            return css`
-                display: none;
-            `;
-        }
-    }}
 `;
 
 export const LoadingWrapper = styled.div`

@@ -10,6 +10,8 @@ import {
     ColumnHeaderRow,
     ColumnHeaderTitle,
     ContentContainer,
+    EmptyTableContainer,
+    EmptyTableRowHeader,
     Loader,
     LoadingBar,
     LoadingCell,
@@ -52,8 +54,8 @@ export const TimeTable = ({
         isEmptyContent || rowData.length === optionalProps.totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const contentContainerRef = useRef<HTMLDivElement>(null);
-    const [scrollX, setScrollX] = useState<number>(0);
-    const [scrollY, setScrollY] = useState<number>(0);
+    const [isScrolledX, setIsScrolledX] = useState<boolean>(false);
+    const [isScrolledY, setIsScrolledY] = useState<boolean>(false);
     const [intervalWidth, setIntervalWidth] = useState<number>(0);
     const [loadMore, setLoadMore] = useState<boolean>(false);
 
@@ -64,8 +66,8 @@ export const TimeTable = ({
     useEffect(() => {
         const handleScroll = throttle(() => {
             if (tableContainerRef.current) {
-                setScrollX(tableContainerRef.current.scrollLeft);
-                setScrollY(tableContainerRef.current.scrollTop);
+                setIsScrolledX(tableContainerRef.current.scrollLeft > 0);
+                setIsScrolledY(tableContainerRef.current.scrollTop > 0);
             }
 
             if (loadMore) return;
@@ -148,11 +150,11 @@ export const TimeTable = ({
             return color;
         };
     })();
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderRowHeaderColumn = () => {
-        if (isEmptyContent) return;
         return (
             <>
                 {rowData.map((data, _) => {
@@ -168,7 +170,7 @@ export const TimeTable = ({
                             trigger="hover"
                         >
                             <RowHeader
-                                $isScrolled={scrollX > 0}
+                                $isScrolled={isScrolledX}
                                 key={`${data.id}-row-header`}
                             >
                                 <ClickableRowHeaderTitle
@@ -202,7 +204,7 @@ export const TimeTable = ({
     const renderRowHeaderColumnLazyLoad = () => {
         if (isLoading || !loadMore) return;
         return (
-            <RowHeader $isScrolled={scrollX > 0}>
+            <RowHeader $isScrolled={isScrolledX}>
                 <LoadingBar />
             </RowHeader>
         );
@@ -210,7 +212,6 @@ export const TimeTable = ({
 
     const renderColumnHeaders = () => {
         // Don't render first column if there are no rows
-        if (isEmptyContent) return;
         return hourlyIntervals.map((columnHeader: string) => {
             return (
                 <ColumnHeader
@@ -227,8 +228,7 @@ export const TimeTable = ({
     };
 
     const renderRowBarData = () => {
-        if (isEmptyContent) return;
-        if (isLoading) return <Loader />;
+        if (isLoading) return <Loader $isEmptyContent={isEmptyContent} />;
         return (
             <ContentContainer
                 ref={contentContainerRef}
@@ -275,6 +275,36 @@ export const TimeTable = ({
         );
     };
 
+    if (isEmptyContent) {
+        return (
+            <EmptyTableContainer
+                className="empty-container"
+                $width={optionalProps.width}
+                $height={optionalProps.height}
+            >
+                <EmptyTableRowHeader>
+                    <TimeTableNavigator
+                        selectedDate={date}
+                        isLoading={isLoading || loadMore}
+                        tableContainerRef={tableContainerRef}
+                        {...optionalProps}
+                    />
+                </EmptyTableRowHeader>
+                {!isLoading ? (
+                    <NoResultsFound
+                        type="no-item-found"
+                        illustrationScheme={
+                            optionalProps.emptyContent.illustrationScheme
+                        }
+                        description={optionalProps.emptyContent.description}
+                    />
+                ) : (
+                    <Loader $isEmptyContent={isEmptyContent}></Loader>
+                )}
+            </EmptyTableContainer>
+        );
+    }
+
     return (
         <TimeTableContainer
             ref={tableContainerRef}
@@ -282,10 +312,11 @@ export const TimeTable = ({
             $loading={isLoading}
             $height={optionalProps.height}
             $width={optionalProps.width}
+            $allRecordsLoaded={allRecordsLoaded}
         >
             <RowColumnHeader
-                $isScrolledY={scrollY > 0}
-                $isScrolledX={scrollX > 0}
+                $isScrolledY={isScrolledY}
+                $isScrolledX={isScrolledX}
             >
                 <TimeTableNavigator
                     selectedDate={date}
@@ -296,25 +327,17 @@ export const TimeTable = ({
             </RowColumnHeader>
             <RowHeaderColumn
                 $numOfRows={rowData.length}
-                $isScrolled={scrollY > 0 || scrollX > 0}
+                $isScrolled={isScrolledX}
             >
                 {renderRowHeaderColumn()}
             </RowHeaderColumn>
             <ColumnHeaderRow
                 $numOfColumns={hourlyIntervals.length}
-                $isScrolled={scrollY > 0}
+                $isScrolled={isScrolledY}
             >
                 {renderColumnHeaders()}
             </ColumnHeaderRow>
             {renderRowBarData()}
-            <NoResultsFound
-                $show={isEmptyContent}
-                type="no-item-found"
-                illustrationScheme={
-                    optionalProps.emptyContent.illustrationScheme
-                }
-                description={optionalProps.emptyContent.description}
-            />
         </TimeTableContainer>
     );
 };
