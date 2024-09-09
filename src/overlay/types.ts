@@ -17,6 +17,9 @@ export interface OverlayProps {
  * Transient props are denoted with $
  * https://styled-components.com/docs/api#transient-props
  */
+/**
+ * @deprecated For library internal use only
+ */
 export interface StyleProps {
     $show: boolean;
     $backgroundOpacity?: number | undefined;

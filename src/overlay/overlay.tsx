@@ -196,7 +196,6 @@ const OverlayComponent = ({
                 }
                 $backgroundBlur={backgroundBlur}
                 $disableTransition={disableTransition}
-                $enableOverlayClick={enableOverlayClick}
                 onClick={handleWrapperClick}
             >
                 {childWithRef}
@@ -209,8 +208,7 @@ const OverlayComponent = ({
             id={overlayRootId}
             data-testid={overlayRootId}
             $show={show}
-            zIndex={zIndex}
-            $stacked={isStacked}
+            $zIndex={zIndex}
         >
             {children && renderWrapper()}
         </Root>
