@@ -19,14 +19,18 @@ export const Masthead = (): JSX.Element => {
     };
 
     const addAssets = () => {
-        if (!document.getElementById(SCRIPT_ID)) {
-            const script = document.createElement("script");
-            script.id = SCRIPT_ID;
-            script.type = "module";
-            script.src = SCRIPT_SRC;
+        const script = document.createElement("script");
+        script.id = SCRIPT_ID;
+        script.type = "module";
+        script.src = SCRIPT_SRC;
 
-            document.head.appendChild(script);
-        }
+        document.head.appendChild(script);
+
+        const link = document.createElement("link");
+        link.href = LINK_HREF;
+        link.rel = "stylesheet";
+
+        document.head.appendChild(link);
     };
 
     const createContent = () => {
@@ -52,4 +56,6 @@ export const Masthead = (): JSX.Element => {
 // =============================================================================
 const SCRIPT_ID = "lifesg-ds-masthead-script";
 const SCRIPT_SRC =
-    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component/Masthead/index.js";
+    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-masthead/dist/sgds-masthead/sgds-masthead.js";
+const LINK_HREF =
+    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-masthead/dist/sgds-masthead/sgds-masthead.css";
