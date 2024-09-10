@@ -43,13 +43,11 @@ export const TimeTableNavigator = ({
     };
 
     const handleRightArrowClick = (date: string) => {
-        if (!optionalProps.onRightArrowClick) return;
         scrollToTop();
         optionalProps.onRightArrowClick(date);
     };
 
     const handleLeftArrowClick = (date: string) => {
-        if (!optionalProps.onLeftArrowClick) return;
         scrollToTop();
         optionalProps.onLeftArrowClick(date);
     };
@@ -91,8 +89,16 @@ export const TimeTableNavigator = ({
                     selectedDate={selectedDate}
                     isLoading={isLoading}
                     {...optionalProps}
-                    onRightArrowClick={handleRightArrowClick}
-                    onLeftArrowClick={handleLeftArrowClick}
+                    onRightArrowClick={
+                        optionalProps.onRightArrowClick
+                            ? handleRightArrowClick
+                            : undefined
+                    }
+                    onLeftArrowClick={
+                        optionalProps.onLeftArrowClick
+                            ? handleLeftArrowClick
+                            : undefined
+                    }
                 />
             }
             {renderRecordsSection()}

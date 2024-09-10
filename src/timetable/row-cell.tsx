@@ -44,7 +44,10 @@ const Component = ({
     const adjustedCellWidth = isNotAvailable
         ? totalCellWidth - ROW_CELL_GAP
         : totalCellWidth;
-
+    const contentMap = {
+        OCCUPIED: filledBlockClickContent,
+        DISABLED: disabledCellHoverContent,
+    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -91,28 +94,19 @@ const Component = ({
         }
     };
 
-    const renderPopoverContent = () => {
-        switch (status) {
-            case "OCCUPIED": {
-                return <>{filledBlockClickContent}</>;
-            }
-            case "DISABLED": {
-                return <>{disabledCellHoverContent}</>;
-            }
-            default: {
-                return <></>;
-            }
-        }
-    };
-
     const buildPopoverTrigger = (child: JSX.Element) => {
+        const content = contentMap[status];
+        if (!content) {
+            return child;
+        }
+
         const popoverTriggerProps: PopoverV2TriggerProps = {
             position: "bottom-start",
             rootNode: containerRef,
             removePadding: true,
             offset: 0,
             children: child,
-            popoverContent: renderPopoverContent(),
+            popoverContent: content,
         };
 
         switch (status) {
@@ -139,7 +133,7 @@ const Component = ({
                 );
             }
             default: {
-                return <>{child}</>;
+                return child;
             }
         }
     };
