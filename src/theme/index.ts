@@ -1,4 +1,3 @@
-import { Border } from "../time-slot-bar/time-slot-bar.styles";
 import { AnimationValues } from "./animation/theme-helper";
 import { BorderValues } from "./border/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
@@ -18,7 +17,7 @@ export const Typography = TypographyValues;
 
 export const Animation = AnimationValues;
 
-export const BorderSet = BorderValues;
+export const Border = BorderValues;
 
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",

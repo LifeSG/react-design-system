@@ -2,11 +2,11 @@ import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
 import { ThemeSpec } from "../../src/theme/types";
-import { BorderSet } from "../../src";
+import { Border } from "../../src";
 
 const StyledBorderComponent = styled.div`
-    border: ${BorderSet["width-010"]} ${BorderSet.solid};
-    ${BorderSet["dashed-default"]};
+    border: ${Border["width-010"]} ${Border.solid};
+    ${Border["dashed-default"]};
 `;
 
 describe("Border Theming Test", () => {
@@ -55,8 +55,8 @@ describe("Border Theming Test", () => {
 
     it("should apply correct border styles when overriding border color in dashed-default", () => {
         const StyledBorderComponentDash = styled.div`
-            border: ${BorderSet["width-010"]} ${BorderSet.solid};
-            ${BorderSet["dashed-default"](2, "red")};
+            border: ${Border["width-010"]} ${Border.solid};
+            ${Border["dashed-default"](2, "red")};
         `;
 
         const mockTheme: ThemeSpec = {
