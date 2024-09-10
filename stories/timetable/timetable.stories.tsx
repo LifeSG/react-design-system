@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { mockMapper } from "./mock-data";
 import { TimeTable } from "../../src/timetable/timetable";
-import { lazyLoad } from "./mock-data";
+import { lazyLoad, mockMapper } from "./mock-data";
 
 type Component = typeof TimeTable;
 
@@ -207,7 +206,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
             width: "500px",
             padding: "3rem",
         };
-        const disabledCellPopoverSize = {
+        const blockedCellPopoverSize = {
             width: "500px",
             padding: "2rem",
         };
@@ -221,7 +220,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                     rowData={mockMapper().rowData.slice(0, 8)}
                     onEmptyCellClick={onEmptyCellClick}
                     filledCellPopoverSize={filledCellPopoverSize}
-                    disabledCellPopoverSize={disabledCellPopoverSize}
+                    blockedCellPopoverSize={blockedCellPopoverSize}
                 />
             </>
         );

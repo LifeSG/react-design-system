@@ -1,4 +1,3 @@
-import { MutableRefObject } from "react";
 import { ResourceScheme } from "../theme";
 
 export const ROW_BAR_COLOR_SEQUENCE = [
@@ -11,6 +10,7 @@ export const ROW_BAR_COLOR_SEQUENCE = [
 export const ROW_CELL_GAP = 2;
 export const ROW_INTERVAL = 15;
 export type RowBarColors = (typeof ROW_BAR_COLOR_SEQUENCE)[number];
+export type CellType = "filled" | "blocked" | "default";
 
 interface EmptyContentProps {
     description: string;
@@ -39,30 +39,23 @@ export interface TimeTableProps {
     emptyContent: EmptyContentProps;
     rowData: RowData[];
     isLoading: boolean;
-    // HH:mm format, defaults to 06:00
+    // HH:mm format
     minTime?: string;
-    // HH:mm format, defaults to 22:00
+    // HH:mm format
     maxTime?: string;
-    // YYYY-MM-DD format
     minDate?: string | undefined;
-    // YYYY-MM-DD format
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
     width?: string | undefined;
     height?: string | undefined;
-    disabledCellHoverContent?: string | JSX.Element | undefined;
+    blockedCellHoverContent?: string | JSX.Element | undefined;
     filledCellPopoverSize?: OverwritePopoverCustomSizeProps;
-    disabledCellPopoverSize?: OverwritePopoverCustomSizeProps;
-    // Callback to invoke on refresh click
+    blockedCellPopoverSize?: OverwritePopoverCustomSizeProps;
     onRefresh?: () => void;
-    // Callback to invoke on pagination, will invoke when reach end of listing
     onPage?: () => void;
-    // Override date navigate left/right function to custom function (eg: to have callbacks etc.)
     onLeftArrowClick?: (currentDate: string) => void;
-    // Override date navigate left/right function to custom function (eg: to have callbacks etc.)
     onRightArrowClick?: (currentDate: string) => void;
     onNameClick?: (rowData: RowData, e: React.MouseEvent) => void;
-    // Redirect user to url (resource booking page)
     onEmptyCellClick?: (
         id: string,
         intervalStart: string,
@@ -77,20 +70,8 @@ export interface RowCellData {
     startTime: string;
     // HH:mm format
     endTime: string;
-    status: string; // REVIEW - Maybe can have a type for this
+    status: CellType;
     title?: string | undefined;
     subtitle?: string | undefined;
     filledBlockClickContent?: string | JSX.Element | undefined;
-    // Redirect user to url (resource booking page)
-    onEmptyCellClick?: (
-        id: string,
-        intervalStart: string,
-        intervalEnd: string,
-        e: React.MouseEvent
-    ) => void;
-    // Show popover for booking details
-    onFilledBlockClick?: () => void;
-    // Show popover with text
-    onDisabledHover?: () => void;
-    onHover?: () => void;
 }

@@ -2,7 +2,7 @@ import { isEmpty, throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { CalendarHelper } from "../util";
-import { RowBar } from "./row-bar";
+import { RowBar } from "./timetable-row/row-bar";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import {
     ClickableRowHeaderTitle,
@@ -154,6 +154,7 @@ export const TimeTable = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    // FIXME - Conditional wrap for popover here too
     const renderRowHeaderColumn = () => {
         return (
             <>
@@ -234,7 +235,7 @@ export const TimeTable = ({
                 ref={contentContainerRef}
                 $numOfRows={rowData.length}
                 $filledCellPopover={optionalProps.filledCellPopoverSize}
-                $disabledCellPopover={optionalProps.disabledCellPopoverSize}
+                $blockedCellPopover={optionalProps.blockedCellPopoverSize}
             >
                 {rowData.map((data, _) => {
                     return (
@@ -247,8 +248,8 @@ export const TimeTable = ({
                             intervalWidth={intervalWidth}
                             onEmptyCellClick={optionalProps.onEmptyCellClick}
                             containerRef={contentContainerRef}
-                            disabledCellHoverContent={
-                                optionalProps.disabledCellHoverContent
+                            blockedCellHoverContent={
+                                optionalProps.blockedCellHoverContent
                             }
                             {...data}
                         />

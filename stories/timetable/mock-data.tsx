@@ -1,9 +1,9 @@
 import { Person2Icon, PinIcon } from "@lifesg/react-icons";
-import { RowData, TimeTableProps } from "../../src/timetable/types";
 import dayjs, { Dayjs } from "dayjs";
-import { Text } from "../../src/text";
 import styled from "styled-components";
 import { Color } from "../../src/color";
+import { Text } from "../../src/text";
+import { CellType, RowData, TimeTableProps } from "../../src/timetable/types";
 import lazyLoadData from "./lazy-load-data.json";
 
 export const mockResourceListingResultsData = {
@@ -5034,6 +5034,12 @@ const StyledHoverContent = styled.div`
     column-gap: 5px;
 `;
 
+const cellTypeMap: Record<string, CellType> = {
+    OCCUPIED: "filled",
+    DISABLED: "blocked",
+    DEFAULT: "default",
+};
+
 const mockFetchData = (date: Dayjs) => {
     const isEven = date.day() % 2 === 0;
 
@@ -5071,7 +5077,7 @@ const mockFetchData = (date: Dayjs) => {
                         endTime: slot.endTime,
                         title: slot.label,
                         subtitle: slot.label,
-                        status: slot.status,
+                        status: cellTypeMap[slot.status],
                         ...(slot.status === "OCCUPIED" && {
                             filledBlockClickContent: (
                                 <div
@@ -5167,7 +5173,7 @@ const mockFetchData = (date: Dayjs) => {
                         endTime: slot.endTime,
                         title: slot.label,
                         subtitle: slot.label,
-                        status: slot.status,
+                        status: cellTypeMap[slot.status],
                         ...(slot.status === "OCCUPIED" && {
                             filledBlockClickContent: (
                                 <div
@@ -5252,16 +5258,15 @@ export const mockMapper = (currentDate?: string): TimeTableProps => {
                 "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
         },
         isLoading: false,
-        disabledCellHoverContent: "Outside operating hours",
+        blockedCellHoverContent: "Outside operating hours",
     };
 };
 
-
 export const lazyLoad = (page: number) => {
     const limit = 10;
-    console.log('page', page);
+    console.log("page", page);
     const pageStart = (page - 1) * limit;
-    const pageEnd = (page) * limit;
+    const pageEnd = page * limit;
 
     const rows = lazyLoadData.resources.slice(pageStart, pageEnd);
 
@@ -5279,9 +5284,7 @@ export const lazyLoad = (page: number) => {
             ),
             rowHeaderHoverContent: (
                 <>
-                    <Text.Body weight={"regular"}>
-                        {resource.title}
-                    </Text.Body>
+                    <Text.Body weight={"regular"}>{resource.title}</Text.Body>
                     <StyledHoverContent>
                         <PinIcon />
                         <Text.H6 weight={"semibold"}>
@@ -5298,7 +5301,7 @@ export const lazyLoad = (page: number) => {
                     endTime: slot.endTime,
                     title: slot.label,
                     subtitle: slot.label,
-                    status: slot.status,
+                    status: cellTypeMap[slot.status],
                     ...(slot.status === "OCCUPIED" && {
                         filledBlockClickContent: (
                             <div
@@ -5335,9 +5338,7 @@ export const lazyLoad = (page: number) => {
                                     <Text.Body>{slot.label}</Text.Body>
                                     <a
                                         onClick={() =>
-                                            alert(
-                                                "email copied to clipboard"
-                                            )
+                                            alert("email copied to clipboard")
                                         }
                                     >
                                         name@gmail.com

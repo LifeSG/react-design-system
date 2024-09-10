@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import React, { MutableRefObject } from "react";
-import { PopoverTrigger, PopoverV2TriggerProps } from "../popover-v2";
-import { DateHelper } from "../util";
+import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
+import { DateHelper } from "../../util";
 import {
     Block,
     BlockContainer,
@@ -10,13 +10,19 @@ import {
     Gap,
     Wrapper,
 } from "./row-cell.style";
-import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "./types";
+import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "../types";
 
 interface RowCellProps extends RowCellData {
     containerRef: MutableRefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: string;
-    disabledCellHoverContent?: string | JSX.Element | undefined;
+    blockedCellHoverContent?: string | JSX.Element | undefined;
+    onEmptyCellClick?: (
+        id: string,
+        intervalStart: string,
+        intervalEnd: string,
+        e: React.MouseEvent
+    ) => void;
 }
 
 const Component = ({
@@ -29,7 +35,7 @@ const Component = ({
     intervalWidth,
     rowBarColor,
     containerRef,
-    disabledCellHoverContent,
+    blockedCellHoverContent,
     filledBlockClickContent,
     onEmptyCellClick,
 }: RowCellProps) => {
@@ -37,7 +43,7 @@ const Component = ({
     // CONST, STATE, REF
     // =============================================================================
     const isOnTheHour = dayjs(endTime, "HH:mm").get("minutes") === 0;
-    const isNotAvailable = status !== "DEFAULT";
+    const isNotAvailable = status !== "default";
     const numberOfIntervals =
         DateHelper.getTimeDiffInMinutes(startTime, endTime) / ROW_INTERVAL;
     const totalCellWidth = numberOfIntervals * intervalWidth;
@@ -45,19 +51,20 @@ const Component = ({
         ? totalCellWidth - ROW_CELL_GAP
         : totalCellWidth;
     const contentMap = {
-        OCCUPIED: filledBlockClickContent,
-        DISABLED: disabledCellHoverContent,
+        filled: filledBlockClickContent,
+        blocked: blockedCellHoverContent,
     };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    // NOTE - Only handling empty cell clicks for now,
     const handleCellClick = (e: React.MouseEvent) => {
         switch (status) {
-            case "OCCUPIED": {
-                // TODO - Call OCCUPIED slot callback
+            case "filled": {
                 break;
             }
-            case "DISABLED": {
+            case "blocked": {
                 // NOTE - Disabled slots should not have interactivity
                 break;
             }
@@ -82,10 +89,10 @@ const Component = ({
         children: JSX.Element;
     }) => {
         switch (status) {
-            case "OCCUPIED": {
+            case "filled": {
                 return wrapper(children);
             }
-            case "DISABLED": {
+            case "blocked": {
                 return wrapper(children);
             }
             default: {
@@ -110,7 +117,7 @@ const Component = ({
         };
 
         switch (status) {
-            case "OCCUPIED": {
+            case "filled": {
                 return (
                     <PopoverTrigger
                         {...popoverTriggerProps}
@@ -121,12 +128,12 @@ const Component = ({
                     </PopoverTrigger>
                 );
             }
-            case "DISABLED": {
+            case "blocked": {
                 return (
                     <PopoverTrigger
                         {...popoverTriggerProps}
                         trigger="hover"
-                        popoverClassName="disabledPopover"
+                        popoverClassName="blockedPopover"
                     >
                         {child}
                     </PopoverTrigger>

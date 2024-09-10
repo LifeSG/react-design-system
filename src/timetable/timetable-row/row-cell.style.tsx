@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { PopoverTrigger } from "../popover-v2";
-import { Text } from "../text";
+import { Color } from "../../color";
+import { PopoverTrigger } from "../../popover-v2";
+import { Text } from "../../text";
+import { CellType } from "../types";
 
 interface BlockStyleProps {
     $width: number;
-    $status: string;
+    $status: CellType;
     $bgColour: string;
     $clickableEmptyCell: boolean;
 }
@@ -45,7 +46,7 @@ export const Block = styled.div<BlockStyleProps>`
     padding: 4px;
     ${({ $status, $bgColour, $clickableEmptyCell }) => {
         switch ($status) {
-            case "DISABLED":
+            case "blocked":
                 return css`
                     background: repeating-linear-gradient(
                         135deg,
@@ -56,7 +57,7 @@ export const Block = styled.div<BlockStyleProps>`
                         cursor: not-allowed;
                     }
                 `;
-            case "OCCUPIED":
+            case "filled":
                 return css`
                     background: ${$bgColour};
                     &:hover {

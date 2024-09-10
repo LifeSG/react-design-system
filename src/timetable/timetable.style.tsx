@@ -43,7 +43,7 @@ interface LoadingCellWrapperProps {
 
 interface ContentContainerPopoverProps {
     $numOfRows: number;
-    $disabledCellPopover: OverwritePopoverCustomSizeProps;
+    $blockedCellPopover: OverwritePopoverCustomSizeProps;
     $filledCellPopover: OverwritePopoverCustomSizeProps;
 }
 
@@ -176,15 +176,15 @@ export const ContentContainer = styled.div<ContentContainerPopoverProps>`
         }
     }
 
-    .disabledPopover {
+    .blockedPopover {
         width: ${(props) =>
-            props.$disabledCellPopover?.width
-                ? `${props.$disabledCellPopover.width}`
+            props.$blockedCellPopover?.width
+                ? `${props.$blockedCellPopover.width}`
                 : ""};
         > div {
             padding: ${(props) =>
-                props.$disabledCellPopover?.padding
-                    ? `${props.$disabledCellPopover.padding}`
+                props.$blockedCellPopover?.padding
+                    ? `${props.$blockedCellPopover.padding}`
                     : ""};
         }
     }

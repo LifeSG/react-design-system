@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { MutableRefObject } from "react";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";
-import { RowBarColors, RowCellData, RowData } from "./types";
+import { RowBarColors, RowCellData, RowData } from "../types";
 
 interface RowBarProps extends RowData {
     timetableMinTime: string;
@@ -10,7 +10,7 @@ interface RowBarProps extends RowData {
     intervalWidth: number;
     containerRef: MutableRefObject<HTMLDivElement>;
     rowBarColor: RowBarColors;
-    disabledCellHoverContent?: string | JSX.Element | undefined;
+    blockedCellHoverContent?: string | JSX.Element | undefined;
     onEmptyCellClick?: (
         id: string,
         intervalStart: string,
@@ -28,11 +28,11 @@ export const RowBar = ({
     rowCells,
     rowBarColor,
     intervalWidth,
-    disabledCellHoverContent,
+    blockedCellHoverContent,
     containerRef,
     onEmptyCellClick,
 }: RowBarProps) => {
-    const filledCells = rowCells.filter((cell) => cell.status === "OCCUPIED");
+    const filledCells = rowCells.filter((cell) => cell.status === "filled");
     const rowCellArray: RowCellData[] = [];
 
     // Handle non-op before hours
@@ -41,7 +41,7 @@ export const RowBar = ({
             id,
             startTime: timetableMinTime,
             endTime: rowMinTime,
-            status: "DISABLED",
+            status: "blocked",
         });
     }
 
@@ -70,7 +70,7 @@ export const RowBar = ({
                         .add(15, "minutes")
                         .format("HH:mm")
                         .toString(),
-                    status: "DEFAULT",
+                    status: "default",
                 });
                 defaultCellStartTime = "";
             } else if (currentTime.add(15, "minutes").isSame(endTime)) {
@@ -78,7 +78,7 @@ export const RowBar = ({
                     id,
                     startTime: defaultCellStartTime,
                     endTime: rowMaxTime,
-                    status: "DEFAULT",
+                    status: "default",
                 });
             }
         } else {
@@ -88,7 +88,7 @@ export const RowBar = ({
                     id,
                     startTime: defaultCellStartTime,
                     endTime: foundCell.startTime,
-                    status: "DEFAULT",
+                    status: "default",
                 });
             // Reset defaultCellStartTime
             defaultCellStartTime = "";
@@ -111,7 +111,7 @@ export const RowBar = ({
             id,
             startTime: rowMaxTime,
             endTime: timetableMaxTime,
-            status: "DISABLED",
+            status: "blocked",
         });
     }
 
@@ -125,7 +125,7 @@ export const RowBar = ({
                         intervalWidth={intervalWidth}
                         rowBarColor={rowBarColor}
                         containerRef={containerRef}
-                        disabledCellHoverContent={disabledCellHoverContent}
+                        blockedCellHoverContent={blockedCellHoverContent}
                         onEmptyCellClick={onEmptyCellClick}
                     />
                 );
