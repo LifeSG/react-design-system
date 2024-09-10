@@ -76,7 +76,7 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     width: ${(props) => props.$width};
     padding-bottom: ${(props) => (props.$allRecordsLoaded ? "0" : "128px")};
     min-height: 600px; // REVIEW
-    min-width: 1000px; // REVIEW
+    min-width: 900px; // REVIEW
     ${(props) => {
         if (props.$loading) {
             return css`
@@ -165,27 +165,27 @@ export const ContentContainer = styled.div<ContentContainerPopoverProps>`
     grid-template-rows: repeat(${(props) => props.$numOfRows}, 68px);
     .filledPopover {
         width: ${(props) =>
-        props.$filledCellPopover?.width
-            ? `${props.$filledCellPopover.width}`
-            : "400px"};
+            props.$filledCellPopover?.width
+                ? `${props.$filledCellPopover.width}`
+                : "400px"};
         > div {
             padding: ${(props) =>
-        props.$filledCellPopover?.padding
-            ? `${props.$filledCellPopover.padding}`
-            : "2rem"};
+                props.$filledCellPopover?.padding
+                    ? `${props.$filledCellPopover.padding}`
+                    : "2rem"};
         }
     }
 
     .disabledPopover {
         width: ${(props) =>
-        props.$disabledCellPopover?.width
-            ? `${props.$disabledCellPopover.width}`
-            : ""};
+            props.$disabledCellPopover?.width
+                ? `${props.$disabledCellPopover.width}`
+                : ""};
         > div {
             padding: ${(props) =>
-        props.$disabledCellPopover?.padding
-            ? `${props.$disabledCellPopover.padding}`
-            : ""};
+                props.$disabledCellPopover?.padding
+                    ? `${props.$disabledCellPopover.padding}`
+                    : ""};
         }
     }
 `;
@@ -229,7 +229,7 @@ export const ClickableRowHeaderTitle = styled(Text.H5)`
     }
 `;
 
-export const RowHeaderSubtitle = styled(Text.XSmall) <{ $show: boolean }>`
+export const RowHeaderSubtitle = styled(Text.XSmall)<{ $show: boolean }>`
     display: inline-flex;
     gap: 6px;
     align-items: center;
@@ -243,7 +243,7 @@ export const RowHeaderSubtitle = styled(Text.XSmall) <{ $show: boolean }>`
     }}
 `;
 
-export const Loader = styled(LoadingDotsSpinner) <LoaderProps>`
+export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
     display: flex;
     align-items: center;
     justify-content: center;
