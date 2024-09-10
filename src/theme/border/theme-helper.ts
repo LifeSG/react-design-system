@@ -10,10 +10,6 @@ const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
     },
     defaultValue: "lifesg",
 };
-// to check if hex colour
-const isHexColor = (color: string): boolean => {
-    return /^#([0-9A-F]{3}){1,2}$/i.test(color);
-};
 
 export const dashedBorderStyle =
     (
@@ -29,9 +25,7 @@ export const dashedBorderStyle =
         const resolvedColor =
             typeof colour === "function" ? colour(props) : colour;
 
-        const encodedColor = isHexColor(resolvedColor)
-            ? resolvedColor
-            : encodeURIComponent(resolvedColor);
+        const encodedColor = encodeURIComponent(resolvedColor);
         const strokeWidth = resolvedThickness + 1;
 
         return css`

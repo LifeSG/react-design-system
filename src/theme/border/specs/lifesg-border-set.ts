@@ -1,7 +1,7 @@
 import { BorderSet } from "../types";
 import { dashedBorderStyle } from "../theme-helper";
 import { StyledComponentProps } from "../../helpers";
-import { Colour } from "../../index";
+import { ColourSemantic } from "../../colour-semantic/theme-helper";
 
 export const LifeSgBorderSet: BorderSet = {
     "width-010": 1,
@@ -13,7 +13,7 @@ export const LifeSgBorderSet: BorderSet = {
         thickness: number | ((props: StyledComponentProps) => number) = 1,
         colour:
             | string
-            | ((props: StyledComponentProps) => string) = Colour.border
+            | ((props: StyledComponentProps) => string) = ColourSemantic.border
     ) => {
         return dashedBorderStyle(thickness, colour);
     },
