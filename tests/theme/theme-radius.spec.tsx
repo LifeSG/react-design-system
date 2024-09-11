@@ -13,6 +13,8 @@ describe("Radius Theming Test", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
+            borderScheme: "lifesg",
             radiusScheme: "lifesg",
         };
 
@@ -34,6 +36,8 @@ describe("Radius Theming Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
+            borderScheme: "lifesg",
             radiusScheme: "lifesg",
             overrides: {
                 radius: {
@@ -65,6 +69,8 @@ describe("Radius Theming Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
+            borderScheme: "lifesg",
             radiusScheme: "lifesg",
             overrides: {
                 radius: {

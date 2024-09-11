@@ -14,6 +14,8 @@ describe("Spacing Themeing Test", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
+            borderScheme: "lifesg",
             spacingScheme: "lifesg",
         };
 
@@ -34,6 +36,8 @@ describe("Spacing Themeing Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
+            borderScheme: "lifesg",
             spacingScheme: "lifesg",
             overrides: {
                 spacing: {
@@ -59,6 +63,8 @@ describe("Spacing Themeing Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
+            animationScheme: "lifesg",
+            borderScheme: "lifesg",
             spacingScheme: "lifesg",
             overrides: {
                 spacing: {
