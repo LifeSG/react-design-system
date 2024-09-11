@@ -10,7 +10,7 @@ const RadiusSpec: ThemeCollectionSpec<RadiusCollectionsMap, RadiusScheme> = {
     defaultValue: "lifesg",
 };
 
-export const getSpaceValue = (key: keyof RadiusSet) => {
+export const getSpace = (key: keyof RadiusSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
         const spacingset: RadiusSet = getCollection(
@@ -26,11 +26,11 @@ export const getSpaceValue = (key: keyof RadiusSet) => {
     };
 };
 
-export const RadiusSetValue = {
-    none: getSpaceValue("none"),
-    xs: getSpaceValue("xs"),
-    sm: getSpaceValue("sm"),
-    md: getSpaceValue("md"),
-    lg: getSpaceValue("lg"),
-    full: getSpaceValue("full"),
+export const RadiusValues = {
+    none: getSpace("none"),
+    xs: getSpace("xs"),
+    sm: getSpace("sm"),
+    md: getSpace("md"),
+    lg: getSpace("lg"),
+    full: getSpace("full"),
 };

@@ -9,7 +9,7 @@ export type RadiusSet = {
     full: string;
 };
 
-export type RadiusSetSetOptions = Partial<RadiusSet>;
+export type RadiusSetOptions = Partial<RadiusSet>;
 
 export type RadiusCollectionsMap = {
     [key in RadiusScheme]: RadiusSet;

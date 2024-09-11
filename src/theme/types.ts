@@ -5,7 +5,7 @@ import { FontSetOptions } from "./font/types";
 import { AnimationSetOptions } from "./animation/types";
 import { BorderSetOptions } from "./border/types";
 import { SpacingSetOptions } from "./spacing/types";
-import { RadiusSetSetOptions } from "./radius/types";
+import { RadiusSetOptions } from "./radius/types";
 
 export type {
     PrimitiveColourSet,
@@ -24,9 +24,15 @@ export type { AnimationSet, AnimationSetOptions } from "./animation/types";
 
 export type { BorderSet, BorderSetOptions } from "./border/types";
 
-export type { RadiusSet, RadiusSetSetOptions } from "./radius/types";
+export type {
+    RadiusSet,
+    RadiusSetOptions as RadiusSetSetOptions,
+} from "./radius/types";
 
-export type { SpacingSetType, SpacingSetOptions } from "./spacing/types";
+export type {
+    SpacingSet as SpacingSetType,
+    SpacingSetOptions,
+} from "./spacing/types";
 
 export type ColourScheme =
     | "lifesg"
@@ -48,7 +54,7 @@ export interface ThemeSpecOptions {
     animation?: AnimationSetOptions | undefined;
     spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
-    radius?: RadiusSetSetOptions | undefined;
+    radius?: RadiusSetOptions | undefined;
     typography?: TypographySetOptions | undefined;
 }
 
@@ -57,8 +63,8 @@ export interface ThemeSpec {
     fontScheme: FontScheme;
     animationScheme: AnimationScheme;
     borderScheme: BorderScheme;
-    spacingScheme?: SpacingScheme | undefined;
-    radiusScheme?: RadiusScheme;
+    spacingScheme: SpacingScheme;
+    radiusScheme: RadiusScheme;
     overrides?: ThemeSpecOptions | undefined;
 }
 

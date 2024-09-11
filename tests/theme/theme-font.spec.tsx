@@ -20,6 +20,8 @@ describe("StyledTypographyTest", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
         };
 
         const fontSize = "3rem";
@@ -48,6 +50,8 @@ describe("StyledTypographyTest", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
             overrides: {
                 typography: {
                     "header-xxl-bold": {
@@ -86,6 +90,8 @@ describe("StyledTypographyTest", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
         };
 
         const fontSize = "1.125rem";

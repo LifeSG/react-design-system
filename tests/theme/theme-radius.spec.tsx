@@ -15,6 +15,7 @@ describe("Radius Theming Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
             radiusScheme: "lifesg",
         };
 
@@ -38,6 +39,7 @@ describe("Radius Theming Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
             radiusScheme: "lifesg",
             overrides: {
                 radius: {
@@ -71,6 +73,7 @@ describe("Radius Theming Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
             radiusScheme: "lifesg",
             overrides: {
                 radius: {

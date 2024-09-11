@@ -1,6 +1,6 @@
 import { SpacingScheme } from "../types";
 
-export type SpacingSetType = {
+export type SpacingSet = {
     "spacing-0": string;
     "spacing-4": string;
     "spacing-8": string;
@@ -23,8 +23,8 @@ export type SpacingSetType = {
     "layout-xxxl": string;
 };
 
-export type SpacingSetOptions = Partial<SpacingSetType>;
+export type SpacingSetOptions = Partial<SpacingSet>;
 
 export type SpacingCollectionsMap = {
-    [key in SpacingScheme]: SpacingSetType;
+    [key in SpacingScheme]: SpacingSet;
 };

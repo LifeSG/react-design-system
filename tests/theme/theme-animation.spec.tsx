@@ -16,6 +16,8 @@ describe("StyledAnimationTest", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
         };
 
         const duration = "500ms";
@@ -39,6 +41,8 @@ describe("StyledAnimationTest", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
             overrides: {
                 animation: {
                     "duration-500": "700ms",

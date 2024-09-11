@@ -16,6 +16,8 @@ describe("Colour Themeing Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
         };
 
         const bgColor = "#1A122C";
@@ -40,6 +42,8 @@ describe("Colour Themeing Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
             overrides: {
                 primitiveColour: {
                     "primary-10": "#fefefe",
@@ -69,6 +73,8 @@ describe("Colour Themeing Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
             overrides: {
                 semanticColour: {
                     "border-primary": "#fefefe",

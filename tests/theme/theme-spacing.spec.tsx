@@ -17,6 +17,7 @@ describe("Spacing Themeing Test", () => {
             animationScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
         };
 
         const marginValue = "1rem";
@@ -39,6 +40,7 @@ describe("Spacing Themeing Test", () => {
             animationScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
             overrides: {
                 spacing: {
                     "spacing-16": "2rem",
@@ -66,6 +68,7 @@ describe("Spacing Themeing Test", () => {
             animationScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
             overrides: {
                 spacing: {
                     "spacing-16": "3rem",
