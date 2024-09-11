@@ -6,6 +6,7 @@ import { AnimationSetOptions } from "./animation/types";
 import { BorderSetOptions } from "./border/types";
 import { SpacingSetOptions } from "./spacing/types";
 import { RadiusSetOptions } from "./radius/types";
+import { BreakPointSetOptions } from "./breakpoint/types";
 
 export type {
     PrimitiveColourSet,
@@ -46,6 +47,7 @@ export type AnimationScheme = "lifesg";
 export type BorderScheme = "lifesg";
 export type SpacingScheme = "lifesg";
 export type RadiusScheme = "lifesg";
+export type BreakpointScheme = "lifesg";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
@@ -55,6 +57,7 @@ export interface ThemeSpecOptions {
     spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
     radius?: RadiusSetOptions | undefined;
+    breakpoint?: BreakPointSetOptions | undefined;
     typography?: TypographySetOptions | undefined;
 }
 
@@ -65,7 +68,10 @@ export interface ThemeSpec {
     borderScheme: BorderScheme;
     spacingScheme: SpacingScheme;
     radiusScheme: RadiusScheme;
+    breakpointScheme: BreakpointScheme;
     overrides?: ThemeSpecOptions | undefined;
+
+    maxColumns?: any;
 }
 
 export interface ThemeCollectionSpec<T, V> {

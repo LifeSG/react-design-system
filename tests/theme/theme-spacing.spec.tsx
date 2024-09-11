@@ -18,6 +18,7 @@ describe("Spacing Themeing Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         const marginValue = "1rem";
@@ -41,6 +42,7 @@ describe("Spacing Themeing Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 spacing: {
                     "spacing-16": "2rem",
@@ -69,6 +71,7 @@ describe("Spacing Themeing Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 spacing: {
                     "spacing-16": "3rem",

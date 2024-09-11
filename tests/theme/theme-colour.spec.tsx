@@ -18,6 +18,7 @@ describe("Colour Themeing Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         const bgColor = "#1A122C";
@@ -44,6 +45,7 @@ describe("Colour Themeing Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 primitiveColour: {
                     "primary-10": "#fefefe",
@@ -75,6 +77,7 @@ describe("Colour Themeing Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 semanticColour: {
                     "border-primary": "#fefefe",

@@ -22,6 +22,7 @@ describe("StyledTypographyTest", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         const fontSize = "3rem";
@@ -52,6 +53,7 @@ describe("StyledTypographyTest", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 typography: {
                     "header-xxl-bold": {
@@ -92,6 +94,7 @@ describe("StyledTypographyTest", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         const fontSize = "1.125rem";

@@ -18,6 +18,7 @@ describe("StyledAnimationTest", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         const duration = "500ms";
@@ -43,6 +44,7 @@ describe("StyledAnimationTest", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 animation: {
                     "duration-500": "700ms",

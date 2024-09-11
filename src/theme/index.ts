@@ -1,3 +1,4 @@
+import { BreakpointValues } from "./breakpoint/theme-helper";
 import { AnimationValues } from "./animation/theme-helper";
 import { BorderValues } from "./border/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
@@ -25,6 +26,8 @@ export const Spacing = SpacingValues;
 
 export const Radius = RadiusValues;
 
+export const Breakpoint = BreakpointValues;
+
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",
     fontScheme: "lifesg",
@@ -32,6 +35,7 @@ export const LifeSGTheme: ThemeSpec = {
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const BookingSGTheme: ThemeSpec = {
@@ -41,6 +45,7 @@ export const BookingSGTheme: ThemeSpec = {
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const CcubeTheme: ThemeSpec = {
@@ -50,6 +55,7 @@ export const CcubeTheme: ThemeSpec = {
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const MyLegacyTheme: ThemeSpec = {
@@ -59,6 +65,7 @@ export const MyLegacyTheme: ThemeSpec = {
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const RBSTheme: ThemeSpec = {
@@ -68,4 +75,5 @@ export const RBSTheme: ThemeSpec = {
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };

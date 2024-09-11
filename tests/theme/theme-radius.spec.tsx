@@ -17,6 +17,7 @@ describe("Radius Theming Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         const radiusValue = "4px";
@@ -41,6 +42,7 @@ describe("Radius Theming Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 radius: {
                     sm: "6px",
@@ -75,6 +77,7 @@ describe("Radius Theming Test", () => {
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 radius: {
                     sm: "6px",
