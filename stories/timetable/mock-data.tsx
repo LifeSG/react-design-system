@@ -5264,13 +5264,12 @@ export const mockMapper = (currentDate?: string): TimeTableProps => {
 
 export const lazyLoad = (page: number) => {
     const limit = 10;
-    console.log("page", page);
     const pageStart = (page - 1) * limit;
     const pageEnd = page * limit;
 
-    const rows = lazyLoadData.resources.slice(pageStart, pageEnd);
+    const currentPageItems = lazyLoadData.resources.slice(pageStart, pageEnd);
 
-    return rows.map((resource: any) => {
+    return currentPageItems.map((resource) => {
         return {
             id: resource.id,
             name: resource.title,
