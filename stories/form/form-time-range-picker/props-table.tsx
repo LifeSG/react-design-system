@@ -8,6 +8,8 @@ const TIME_FORMAT = (
         24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
         <br />
         12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
+        <br />
+        Note: alt variant uses {quote("h:mma")} instead
     </>
 );
 
@@ -83,6 +85,48 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onFocus",
                 description: "Called when the field is focused",
                 propTypes: ["() => void"],
+            },
+        ],
+    },
+    {
+        name: "TimeRangePickerAlt specific props",
+        attributes: [
+            {
+                name: "variant",
+                description:
+                    "Specifies the variant for the component, uses the default TimeRangePicker if undefined",
+                propTypes: [`"alt"`],
+            },
+            {
+                name: "interval",
+                description:
+                    "The interval (minutes) between each dropdown option",
+                propTypes: ["number"],
+                defaultValue: "15",
+            },
+            {
+                name: "startLimit",
+                description: "The starting time for the dropdown options",
+                propTypes: ["string"],
+            },
+            {
+                name: "endLimit",
+                description: "The ending time for the dropdown options",
+                propTypes: ["string"],
+            },
+            {
+                name: "alignment",
+                description:
+                    "Specifies if the dropdown is aligned to the left or right of the main field",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
             },
         ],
     },

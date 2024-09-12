@@ -115,3 +115,55 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
         );
     },
 };
+
+export const AltVariant: StoryObj<Component> = {
+    render: () => {
+        const emptyTime = { start: "", end: "" };
+        const [time1, setTime1] = useState(emptyTime);
+        const [time2, setTime2] = useState(emptyTime);
+        const [time3, setTime3] = useState(emptyTime);
+        const [time4, setTime4] = useState(emptyTime);
+        const [time5, setTime5] = useState({ start: "2:00pm", end: "1:00pm" });
+
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.TimeRangePicker
+                        label="Alternate time range picker variant"
+                        value={time1}
+                        onChange={(value) => setTime1(value)}
+                        variant="alt"
+                    />
+                    <Form.TimeRangePicker
+                        label="Interval between each dropdown option"
+                        value={time2}
+                        onChange={(value) => setTime2(value)}
+                        variant="alt"
+                        interval={60}
+                    />
+                    <Form.TimeRangePicker
+                        label="24hr format"
+                        value={time3}
+                        onChange={(value) => setTime3(value)}
+                        variant="alt"
+                        format="24hr"
+                    />
+                    <Form.TimeRangePicker
+                        label="Start and end option limits"
+                        value={time4}
+                        onChange={(value) => setTime4(value)}
+                        variant="alt"
+                        startLimit="10:00am"
+                        endLimit="2:00pm"
+                    />
+                    <Form.TimeRangePicker
+                        label="Automatic time range error validation"
+                        value={time5}
+                        onChange={(value) => setTime5(value)}
+                        variant="alt"
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
