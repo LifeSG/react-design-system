@@ -1,3 +1,5 @@
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
+
 export type TimeRangePickerFormat = "12hr" | "24hr";
 
 export interface TimeRangePickerValue {
@@ -20,6 +22,8 @@ export interface TimeRangePickerProps {
      * 24 hour uses "hh:mm" e.g. `{ start: "13:00", end: "14:00" }`
      *
      * 12 hour uses "hh:mmA" e.g. `{ start: "01:00PM", end: "02:00PM" }`
+     *
+     * Note: alt variant uses "h:mma" instead.
      */
     value?: TimeRangePickerValue | undefined;
     /**
@@ -29,6 +33,22 @@ export interface TimeRangePickerProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     error?: boolean | undefined;
+
+    /**
+     * Alt variant-specific attributes
+     */
+    variant?: "alt" | undefined;
+    /** Specifies the interval (minutes) between each dropdown option */
+    interval?: number | undefined;
+    /** Specifies the starting time for the dropdown options */
+    startLimit?: string | undefined;
+    /** Specifies the ending time for the dropdown options */
+    endLimit?: string | undefined;
+    /** Specifies the alignment of the dropdown to the left or right of the reference element */
+    alignment?: DropdownAlignmentType | undefined;
+    /** Specifies the z-index of the dropdown element */
+    dropdownZIndex?: number | undefined;
+
     /**
      * Called when a selection is made. Returns an object with `start` and
      * `end` values as an empty string or a string based format.
@@ -47,3 +67,5 @@ export interface TimeRangePickerProps {
      */
     onBlur?: (() => void) | undefined;
 }
+
+export interface TimeRangePickerAltProps extends TimeRangePickerProps {}

@@ -193,6 +193,147 @@ export namespace TimeHelper {
             seconds,
         };
     };
+
+    // Converts h:mma/hh:mma to 24hr (eg. 13:00)
+    export const to24Hour = (time: string) => {
+        if (time.includes("am") || time.includes("pm")) {
+            const [t, p] = time.split(/(am|pm)/i);
+            const [hr, m] = t.split(":").map(Number);
+            let h = hr;
+            if (p === "pm" && h < 12) h += 12;
+            if (p === "am" && h === 12) h = 0;
+            return `${h.toString().padStart(2, "0")}:${m
+                .toString()
+                .padStart(2, "0")}`;
+        }
+        return time; // No conversion if string alr has am/pm
+    };
+
+    // Generates an array of timings based on given startTime/interval/format
+    export const generateTimings = (
+        interval: number, // In minutes
+        format: TimeFormat = "12hr",
+        startTime?: string | undefined,
+        endTime?: string | undefined // Inclusive
+    ): string[] => {
+        const timings = [];
+        let currentMinutes = 0;
+        let endMinutes = 1440 - interval; // Do not include next day's 12am
+
+        const convertToMinutes = (time: string) => {
+            const [startHourMin, ampm] = time.toLowerCase().split(/(am|pm)/);
+            const [startHoursRaw, startMinutes] = startHourMin
+                .split(":")
+                .map(Number);
+            let startHours = startHoursRaw;
+
+            if (ampm === "pm" && startHours !== 12) {
+                startHours += 12; // Convert PM hours to 24-hour format
+            }
+            if (ampm === "am" && startHours === 12) {
+                startHours = 0; // Convert 12am to 0 hours
+            }
+
+            return startHours * 60 + startMinutes;
+        };
+
+        // Convert startTime (h:mma) to minutes
+        if (startTime) {
+            currentMinutes = convertToMinutes(startTime);
+        }
+        if (endTime) {
+            endMinutes = convertToMinutes(endTime);
+        }
+
+        while (currentMinutes <= endMinutes) {
+            let hours = Math.floor(currentMinutes / 60);
+            const minutes = currentMinutes % 60;
+
+            if (format === "12hr") {
+                const ampm = hours >= 12 ? "pm" : "am";
+
+                hours = hours % 12;
+                hours = hours ? hours : 12; // Convert hour 0 to 12
+
+                const timeString = `${hours}:${minutes
+                    .toString()
+                    .padStart(2, "0")}${ampm}`;
+                timings.push(timeString);
+            } else {
+                const timeString = `${hours
+                    .toString()
+                    .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+                timings.push(timeString);
+            }
+
+            currentMinutes += interval;
+        }
+
+        return timings;
+    };
+
+    // Return undefined = invalid field, "" = empty field, else returns h:mma
+    export const parseInput = (
+        input: string,
+        format: TimeFormat = "12hr"
+    ): string | undefined => {
+        if (input === "") return input;
+
+        const sanitizedInput = input.trim().toLowerCase();
+        const timeRegex = /^(?:(\d{1,2})([:.])?(\d{2})?)?(a|p|am|pm)?$/;
+        const match = timeRegex.exec(sanitizedInput);
+
+        if (!match) return;
+
+        let hours = parseInt(match[1] || "0", 10);
+        const minutes = parseInt(match[3] || "0", 10);
+        let period = match[4];
+
+        // Ensure hours/mins are valid
+        if (hours > 24 || minutes > 59) return;
+
+        // Convert single-character periods to full am/pm
+        if (period === "a") {
+            period = "am";
+        } else if (period === "p") {
+            period = "pm";
+        }
+
+        if (format === "24hr") {
+            // Convert 12-hour input to 24-hour format if period is present
+            if (period === "pm" && hours < 12) {
+                hours += 12;
+            } else if ((period === "am" && hours === 12) || hours === 24) {
+                hours = 0; // Midnight case
+            }
+
+            // Return time in 24-hour format (HH:mm)
+            return `${hours.toString().padStart(2, "0")}:${minutes
+                .toString()
+                .padStart(2, "0")}`;
+        }
+
+        // Handle 24-hour times or AM/PM conversion
+        if (period) {
+            if (hours === 0 || hours === 24) {
+                period = "am";
+                hours = 12;
+            } else if (hours > 12) {
+                period = "pm";
+                hours -= 12;
+            }
+        } else {
+            period = hours < 12 || hours === 24 ? "am" : "pm";
+            hours = hours % 12 || 12;
+        }
+
+        // Format the time as h:mma
+        const formattedTime = `${hours}:${minutes
+            .toString()
+            .padStart(2, "0")}${period}`;
+
+        return formattedTime;
+    };
 }
 
 // =============================================================================

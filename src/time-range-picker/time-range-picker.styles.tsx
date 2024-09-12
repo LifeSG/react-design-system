@@ -1,19 +1,9 @@
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
-import styled, { css } from "styled-components";
-import { Color } from "../color";
+import styled from "styled-components";
 import {
     BasicInput,
     InputWrapper,
 } from "../shared/input-wrapper/input-wrapper";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-
-interface IndicatorStyleProps {
-    $position: "start" | "end" | "none";
-    $error: boolean;
-}
+import { ClearContainer } from "../input/input.style";
 
 // =============================================================================
 // STYLING
@@ -31,4 +21,11 @@ export const SelectorInput = styled(BasicInput)`
     display: block;
     width: 100%;
     flex: 1;
+`;
+
+export const ClearIconContainer = styled(ClearContainer)`
+    position: absolute;
+    right: 0;
+    padding-left: 0.5rem;
+    margin-right: 0;
 `;
