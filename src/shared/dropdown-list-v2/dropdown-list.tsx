@@ -44,6 +44,7 @@ export const DropdownList = <T, V>({
     variant = "default",
     listboxId,
     width,
+    topScrollItem,
     onSelectItem,
     onSelectAll,
     onDismiss,
@@ -151,6 +152,7 @@ export const DropdownList = <T, V>({
                 }
                 break;
             case "Space":
+            case "Enter":
                 if (
                     document.activeElement ===
                     listItemRefs.current[focusedIndex]
@@ -202,6 +204,21 @@ export const DropdownList = <T, V>({
     // EFFECTS
     // =========================================================================
     useEventListener("keydown", handleKeyboardPress);
+
+    useEffect(() => {
+        if (topScrollItem === undefined) return;
+
+        // Delay to ensure render is complete
+        setTimeout(() => {
+            const index = listItems.indexOf(topScrollItem);
+            const focusedItem = listItemRefs.current[index];
+            // Align the item to top of scrollable container
+            if (nodeRef.current) {
+                nodeRef.current.scrollTop = focusedItem?.offsetTop;
+            }
+            setFocusedIndex(index);
+        }, 0);
+    }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
         if (mounted) {
