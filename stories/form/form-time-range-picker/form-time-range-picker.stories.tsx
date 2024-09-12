@@ -116,7 +116,7 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     },
 };
 
-export const AltVariant: StoryObj<Component> = {
+export const DropdownVariant: StoryObj<Component> = {
     render: () => {
         const emptyTime = { start: "", end: "" };
         const [time1, setTime1] = useState(emptyTime);
@@ -129,30 +129,30 @@ export const AltVariant: StoryObj<Component> = {
             <StoryContainer>
                 <Container>
                     <Form.TimeRangePicker
-                        label="Alternate time range picker variant"
+                        label="Dropdown time range picker variant"
                         value={time1}
                         onChange={(value) => setTime1(value)}
-                        variant="alt"
+                        variant="dropdown"
                     />
                     <Form.TimeRangePicker
                         label="Interval between each dropdown option"
                         value={time2}
                         onChange={(value) => setTime2(value)}
-                        variant="alt"
+                        variant="dropdown"
                         interval={60}
                     />
                     <Form.TimeRangePicker
                         label="24hr format"
                         value={time3}
                         onChange={(value) => setTime3(value)}
-                        variant="alt"
+                        variant="dropdown"
                         format="24hr"
                     />
                     <Form.TimeRangePicker
                         label="Start and end option limits"
                         value={time4}
                         onChange={(value) => setTime4(value)}
-                        variant="alt"
+                        variant="dropdown"
                         startLimit="10:00am"
                         endLimit="2:00pm"
                     />
@@ -160,7 +160,7 @@ export const AltVariant: StoryObj<Component> = {
                         label="Automatic time range error validation"
                         value={time5}
                         onChange={(value) => setTime5(value)}
-                        variant="alt"
+                        variant="dropdown"
                     />
                 </Container>
             </StoryContainer>

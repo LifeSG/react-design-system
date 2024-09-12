@@ -1,4 +1,3 @@
-import React from "react";
 import { ApiTable, code, quote } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
@@ -9,7 +8,7 @@ const TIME_FORMAT = (
         <br />
         12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
         <br />
-        Note: alt variant uses {quote("h:mma")} instead
+        Note: dropdown variant uses {quote("h:mma")} instead
     </>
 );
 
@@ -89,13 +88,13 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "TimeRangePickerAlt specific props",
+        name: "Dropdown variant specific props",
         attributes: [
             {
                 name: "variant",
-                description:
-                    "Specifies the variant for the component, uses the default TimeRangePicker if undefined",
-                propTypes: [`"alt"`],
+                description: "Specifies the variant for the component",
+                propTypes: [`"card", "dropdown"`],
+                defaultValue: `"card"`,
             },
             {
                 name: "interval",

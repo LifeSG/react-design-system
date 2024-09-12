@@ -1,25 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ClearIcon } from "../input/input.style";
-import {
-    ClearIconContainer,
-    SelectorInput,
-    TimeContainer,
-    Wrapper,
-} from "./time-range-picker.styles";
-import { DropdownList } from "../shared/dropdown-list-v2/dropdown-list";
-import { DropdownListState } from "../shared/dropdown-list-v2";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import { ErrorMessage } from "../form/form-label.style";
-import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
-import { TimeHelper } from "../util/time-helper";
-import {
-    TimeRangePickerProps,
-    TimeRangePickerValue,
-} from "../time-range-picker/types";
+import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
+import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
+import { DropdownListState } from "../../shared/dropdown-list-v2";
+import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
+import { ErrorMessage } from "../../form/form-label.style";
+import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
+import { TimeHelper } from "../../util/time-helper";
+import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
+import { ClearContainer, ClearIcon } from "../../input/input.style";
 
 type TimeRangeInputType = "start" | "end";
 
-export const TimeRangePickerAlt = ({
+export const DropdownPicker = ({
     id,
     disabled = false,
     error,
@@ -223,13 +215,13 @@ export const TimeRangePickerAlt = ({
             (startTimeVal?.length > 0 || endTimeVal?.length > 0)
         ) {
             return (
-                <ClearIconContainer
+                <ClearContainer
                     onClick={handleClear}
                     type="button"
                     aria-label="Clear"
                 >
                     <ClearIcon aria-hidden />
-                </ClearIconContainer>
+                </ClearContainer>
             );
         }
     };
