@@ -1,7 +1,7 @@
 import { StyledComponentProps } from "../helpers";
 import { BreakpointScheme } from "../types";
 
-export interface MediaWidth {
+export interface BreakpointSet {
     "xxs-min": number;
     "xxs-max": number;
     "xs-min": number;
@@ -39,7 +39,7 @@ export interface MediaWidth {
 }
 
 export type BreakPointCollectionsMap = {
-    [key in BreakpointScheme]: MediaWidth;
+    [key in BreakpointScheme]: BreakpointSet;
 };
 
-export type BreakPointSetOptions = Partial<MediaWidth>;
+export type BreakPointSetOptions = Partial<BreakpointSet>;

@@ -1,12 +1,17 @@
 import { BreakpointValues } from "../breakpoint/theme-helper";
 import { StyledComponentProps } from "../helpers";
 
-// Two separate types for max and min breakpoints
+// Typings for MedaiQuery
 type MaxWidthBreakpoints = "xxs" | "xs" | "sm" | "md" | "lg" | "xl";
 type MinWidthBreakpoints = MaxWidthBreakpoints | "xxl";
+type MediaQueryMinMax = "max-width" | "min-width";
+type MediaQuerySpec<T extends string> = Record<
+    T,
+    (props: StyledComponentProps) => string
+>;
 
 const createMediaQueryFunction = <T extends string>(
-    type: "max-width" | "min-width",
+    type: MediaQueryMinMax,
     key: T
 ) => {
     const mappedKey = type === "max-width" ? `${key}-max` : `${key}-min`;
@@ -21,7 +26,7 @@ const createMediaQueryFunction = <T extends string>(
 
 const getMediaQuerySpec = <T extends string>(
     type: "max-width" | "min-width"
-): Record<T, (props: StyledComponentProps) => string> => {
+): MediaQuerySpec<T> => {
     // Conditional breakpoints for max and min widths
     const breakpoints = (
         type === "max-width"
@@ -32,7 +37,7 @@ const getMediaQuerySpec = <T extends string>(
     return breakpoints.reduce((accumulator, key) => {
         accumulator[key] = createMediaQueryFunction(type, key);
         return accumulator;
-    }, {} as Record<T, (props: StyledComponentProps) => string>);
+    }, {} as MediaQuerySpec<T>);
 };
 
 // Export with typing

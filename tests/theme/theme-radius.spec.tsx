@@ -45,7 +45,7 @@ describe("Radius Theming Test", () => {
             breakpointScheme: "lifesg",
             overrides: {
                 radius: {
-                    sm: "6px",
+                    sm: 6,
                 },
             },
         };
@@ -80,8 +80,8 @@ describe("Radius Theming Test", () => {
             breakpointScheme: "lifesg",
             overrides: {
                 radius: {
-                    sm: "6px",
-                    md: "10px",
+                    sm: 6,
+                    md: 10,
                 },
             },
         };

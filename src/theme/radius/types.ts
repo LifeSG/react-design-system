@@ -1,12 +1,12 @@
 import { RadiusScheme } from "../types";
 
 export type RadiusSet = {
-    none: string;
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    full: string;
+    none: number;
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    full: number;
 };
 
 export type RadiusSetOptions = Partial<RadiusSet>;

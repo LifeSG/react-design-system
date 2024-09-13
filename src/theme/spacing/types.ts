@@ -1,26 +1,26 @@
 import { SpacingScheme } from "../types";
 
 export type SpacingSet = {
-    "spacing-0": string;
-    "spacing-4": string;
-    "spacing-8": string;
-    "spacing-12": string;
-    "spacing-16": string;
-    "spacing-20": string;
-    "spacing-24": string;
-    "spacing-32": string;
-    "spacing-40": string;
-    "spacing-48": string;
-    "spacing-64": string;
-    "spacing-72": string;
+    "spacing-0": number;
+    "spacing-4": number;
+    "spacing-8": number;
+    "spacing-12": number;
+    "spacing-16": number;
+    "spacing-20": number;
+    "spacing-24": number;
+    "spacing-32": number;
+    "spacing-40": number;
+    "spacing-48": number;
+    "spacing-64": number;
+    "spacing-72": number;
 
-    "layout-xs": string;
-    "layout-sm": string;
-    "layout-md": string;
-    "layout-lg": string;
-    "layout-xl": string;
-    "layout-xxl": string;
-    "layout-xxxl": string;
+    "layout-xs": number;
+    "layout-sm": number;
+    "layout-md": number;
+    "layout-lg": number;
+    "layout-xl": number;
+    "layout-xxl": number;
+    "layout-xxxl": number;
 };
 
 export type SpacingSetOptions = Partial<SpacingSet>;

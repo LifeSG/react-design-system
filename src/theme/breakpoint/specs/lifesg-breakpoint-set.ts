@@ -1,6 +1,6 @@
-import { MediaWidth } from "../types";
+import { BreakpointSet } from "../types";
 
-export const LifeSgMediaWidths: MediaWidth = {
+export const LifeSgBreakpointSet: BreakpointSet = {
     "xxs-min": 0,
     "xxs-max": 320,
     "xs-min": 321,

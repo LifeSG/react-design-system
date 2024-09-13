@@ -19,9 +19,9 @@ export const getSpace = (key: keyof SpacingSet) => {
         );
 
         if (theme.overrides && theme.overrides.spacing) {
-            return getValue(spacingset, key, theme.overrides.spacing);
+            return `${getValue(spacingset, key, theme.overrides.spacing)}px`;
         } else {
-            return spacingset[key];
+            return `${spacingset[key]}px`;
         }
     };
 };

@@ -1,22 +1,22 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { BreakpointScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgMediaWidths } from "./specs/lifesg-breakpoint-set";
-import { BreakPointCollectionsMap, MediaWidth } from "./types";
+import { LifeSgBreakpointSet } from "./specs/lifesg-breakpoint-set";
+import { BreakPointCollectionsMap, BreakpointSet } from "./types";
 
 const BreakpointSpec: ThemeCollectionSpec<
     BreakPointCollectionsMap,
     BreakpointScheme
 > = {
     collections: {
-        lifesg: LifeSgMediaWidths,
+        lifesg: LifeSgBreakpointSet,
     },
     defaultValue: "lifesg",
 };
 
-export const getBreakpoint = (key: keyof MediaWidth) => {
+export const getBreakpoint = (key: keyof BreakpointSet) => {
     return (props: StyledComponentProps): number => {
         const theme = props.theme;
-        const breakpointSet: MediaWidth = getCollection(
+        const breakpointSet: BreakpointSet = getCollection(
             BreakpointSpec,
             theme?.breakpointScheme
         );

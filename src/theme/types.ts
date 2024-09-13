@@ -25,15 +25,9 @@ export type { AnimationSet, AnimationSetOptions } from "./animation/types";
 
 export type { BorderSet, BorderSetOptions } from "./border/types";
 
-export type {
-    RadiusSet,
-    RadiusSetOptions as RadiusSetSetOptions,
-} from "./radius/types";
+export type { RadiusSet, RadiusSetOptions } from "./radius/types";
 
-export type {
-    SpacingSet as SpacingSetType,
-    SpacingSetOptions,
-} from "./spacing/types";
+export type { SpacingSet, SpacingSetOptions } from "./spacing/types";
 
 export type ColourScheme =
     | "lifesg"

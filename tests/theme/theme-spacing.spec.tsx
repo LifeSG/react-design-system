@@ -21,7 +21,7 @@ describe("Spacing Themeing Test", () => {
             breakpointScheme: "lifesg",
         };
 
-        const marginValue = "1rem";
+        const marginValue = "1px";
         const paddingValue = "32px";
 
         const { container } = render(
@@ -45,12 +45,12 @@ describe("Spacing Themeing Test", () => {
             breakpointScheme: "lifesg",
             overrides: {
                 spacing: {
-                    "spacing-16": "2rem",
+                    "spacing-16": 2,
                 },
             },
         };
 
-        const marginValue = "2rem";
+        const marginValue = "2px";
         const paddingValue = "32px";
 
         const { container } = render(
@@ -74,13 +74,13 @@ describe("Spacing Themeing Test", () => {
             breakpointScheme: "lifesg",
             overrides: {
                 spacing: {
-                    "spacing-16": "3rem",
-                    "layout-lg": "40px",
+                    "spacing-16": 3,
+                    "layout-lg": 40,
                 },
             },
         };
 
-        const marginValue = "3rem";
+        const marginValue = "3px";
         const paddingValue = "40px";
 
         const { container } = render(
