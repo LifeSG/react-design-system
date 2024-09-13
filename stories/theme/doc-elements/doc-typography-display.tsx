@@ -195,11 +195,7 @@ const Display = styled.div`
     grid-template-columns: repeat(4, minmax(max-content, 1fr));
     flex-wrap: wrap;
 
-    margin-bottom: 2.5rem;
-
-    &:last-child {
-        margin-bottom: 1rem;
-    }
+    margin-bottom: 1rem;
 
     overflow-x: auto;
 `;
