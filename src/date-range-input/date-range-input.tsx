@@ -69,7 +69,7 @@ export const DateRangeInput = ({
     readOnly,
     id,
     allowDisabledSelection,
-    zIndex = 50,
+    zIndex,
     ...otherProps
 }: DateRangeInputProps) => {
     // =============================================================================
@@ -667,7 +667,7 @@ export const DateRangeInput = ({
             onDismiss={handleDismiss}
             renderElement={renderInput}
             renderDropdown={renderCalendar}
-            zIndex={zIndex}
+            customZIndex={zIndex}
             offset={16}
         />
     );

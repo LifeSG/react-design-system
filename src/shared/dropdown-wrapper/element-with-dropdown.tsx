@@ -17,6 +17,7 @@ import {
 } from "@floating-ui/react";
 import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { useFloatingChild } from "../../overlay/use-floating-context";
 import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 
@@ -32,7 +33,8 @@ interface ElementWithDropdownProps {
     onDismiss?: () => void | undefined;
     renderElement: () => React.ReactNode;
     renderDropdown: (props: DropdownRenderProps) => React.ReactNode;
-    zIndex?: number | undefined;
+    customZIndex?: number | undefined;
+    defaultZIndex?: number | undefined;
     clickToToggle?: boolean | undefined;
     /* the distance between the reference element and the dropdown */
     offset?: number | undefined;
@@ -59,7 +61,8 @@ export const ElementWithDropdown = ({
     onDismiss,
     renderElement,
     renderDropdown,
-    zIndex = 50,
+    customZIndex,
+    defaultZIndex = 50,
     clickToToggle = false,
     offset: dropdownOffset = 0,
     alignment = "left",
@@ -109,6 +112,7 @@ export const ElementWithDropdown = ({
             }),
         ],
     });
+    const parentZIndex = useFloatingChild();
 
     const { isMounted, styles } = useTransitionStyles(context, {
         initial: { opacity: 0 },
@@ -150,7 +154,10 @@ export const ElementWithDropdown = ({
                             ref={refs.setFloating}
                             style={{
                                 ...floatingStyles,
-                                zIndex,
+                                zIndex:
+                                    customZIndex ??
+                                    parentZIndex ??
+                                    defaultZIndex,
                             }}
                             {...getFloatingProps()}
                         >
