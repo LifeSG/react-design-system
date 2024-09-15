@@ -75,4 +75,10 @@ export const FontValues: {
 
     "formlabel-size-baseline": getFontValues("formlabel-size-baseline"),
     "formlabel-size-lg": getFontValues("formlabel-size-lg"),
+
+    "formlabel-lh-baseline": getFontValues("formlabel-lh-baseline"),
+    "formlabel-lh-lg": getFontValues("formlabel-lh-lg"),
+
+    "formlabel-ls-baseline": getFontValues("formlabel-ls-baseline"),
+    "formlabel-ls-lg": getFontValues("formlabel-ls-lg"),
 };
