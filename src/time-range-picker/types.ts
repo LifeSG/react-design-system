@@ -1,7 +1,7 @@
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export type TimeRangePickerFormat = "12hr" | "24hr";
-export type TimeRangePickerVariant = "card" | "dropdown";
+export type TimeRangePickerVariant = "dial" | "combobox";
 
 export interface TimeRangePickerValue {
     start: string;
@@ -24,7 +24,7 @@ export interface TimeRangePickerProps {
      *
      * 12 hour uses "hh:mmA" e.g. `{ start: "01:00PM", end: "02:00PM" }`
      *
-     * Note: dropdown variant uses "h:mma" instead.
+     * Note: combobox variant uses "h:mma" instead.
      */
     value?: TimeRangePickerValue | undefined;
     /**
@@ -36,7 +36,7 @@ export interface TimeRangePickerProps {
     error?: boolean | undefined;
 
     /**
-     * Dropdown variant-specific attributes
+     * Combobox variant specific attributes
      */
     /** Specifies the variant for the time range picker */
     variant?: TimeRangePickerVariant | undefined;

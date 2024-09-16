@@ -8,7 +8,7 @@ const TIME_FORMAT = (
         <br />
         12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
         <br />
-        Note: dropdown variant uses {quote("h:mma")} instead
+        Note: combobox variant uses {quote("h:mma")} instead
     </>
 );
 
@@ -88,13 +88,13 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "Dropdown variant specific props",
+        name: "Combobox variant specific props",
         attributes: [
             {
                 name: "variant",
                 description: "Specifies the variant for the component",
-                propTypes: [`"card", "dropdown"`],
-                defaultValue: `"card"`,
+                propTypes: [`"dial"`, `"combobox"`],
+                defaultValue: `"dial"`,
             },
             {
                 name: "interval",
