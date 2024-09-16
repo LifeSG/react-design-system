@@ -10,6 +10,11 @@ interface OverlayContextChangeData {
     zIndex: number;
 }
 
+/**
+ * Called by the component that renders modal or overlay content, and expects
+ * to have floating elements as children
+ * @param zIndex - the z-index of the main container
+ */
 export const useFloatingParent = (zIndex: number) => {
     const tree = useFloatingTree();
 
@@ -41,6 +46,10 @@ export const useFloatingParent = (zIndex: number) => {
     }, [tree, zIndex]);
 };
 
+/**
+ * Called by the component that renders a floating element
+ * @returns parentZIndex - the z-index of the parent container, if present
+ */
 export const useFloatingChild = () => {
     const [parentZIndex, setParentZIndex] = useState<number | undefined>(
         undefined
