@@ -232,6 +232,7 @@ export const TimeTable = ({
         if (isLoading) return <Loader $isEmptyContent={isEmptyContent} />;
         return (
             <ContentContainer
+                data-testid="content-container-id"
                 ref={contentContainerRef}
                 $numOfRows={rowData.length}
                 $filledCellPopover={optionalProps.filledCellPopoverSize}
@@ -241,7 +242,7 @@ export const TimeTable = ({
                     return (
                         <RowBar
                             key={`${data.id}-row-bar`}
-                            data-testid={`${data.id}-row-bar-test`}
+                            data-testid={`${data.id}-row-bar`}
                             timetableMinTime={timetableMinTime}
                             timetableMaxTime={timetableMaxTime}
                             rowBarColor={getColorFromSequence()}
@@ -310,6 +311,7 @@ export const TimeTable = ({
         <TimeTableContainer
             ref={tableContainerRef}
             id="timetable-container-id"
+            data-testid="timetable-container-id"
             $loading={isLoading}
             $height={optionalProps.height}
             $width={optionalProps.width}

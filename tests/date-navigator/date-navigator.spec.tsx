@@ -37,7 +37,7 @@ describe("DateNavigator", () => {
     });
 
     it("should render the new date if it changes on rerender", () => {
-        const { rerender } = render(<DateNavigator selectedDate={today} />);
+        render(<DateNavigator selectedDate={today} />);
     });
 
     it("should render a date navigator with navigation arrows", () => {

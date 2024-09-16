@@ -11,6 +11,7 @@ interface RowBarProps extends RowData {
     containerRef: MutableRefObject<HTMLDivElement>;
     rowBarColor: RowBarColors;
     blockedCellHoverContent?: string | JSX.Element | undefined;
+    "data-testid"?: string | undefined;
     onEmptyCellClick?: (
         id: string,
         intervalStart: string,
@@ -28,9 +29,8 @@ export const RowBar = ({
     rowCells,
     rowBarColor,
     intervalWidth,
-    blockedCellHoverContent,
     containerRef,
-    onEmptyCellClick,
+    ...optionalProps
 }: RowBarProps) => {
     const filledCells = rowCells.filter((cell) => cell.status === "filled");
     const rowCellArray: RowCellData[] = [];
@@ -116,7 +116,7 @@ export const RowBar = ({
     }
 
     return (
-        <RowCellContainer>
+        <RowCellContainer data-testid={optionalProps["data-testid"]}>
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
@@ -125,8 +125,10 @@ export const RowBar = ({
                         intervalWidth={intervalWidth}
                         rowBarColor={rowBarColor}
                         containerRef={containerRef}
-                        blockedCellHoverContent={blockedCellHoverContent}
-                        onEmptyCellClick={onEmptyCellClick}
+                        blockedCellHoverContent={
+                            optionalProps.blockedCellHoverContent
+                        }
+                        onEmptyCellClick={optionalProps.onEmptyCellClick}
                     />
                 );
             })}
