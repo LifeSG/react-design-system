@@ -1,7 +1,5 @@
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../media";
 import {
     DropdownRenderProps,
     ElementWithDropdown,
@@ -63,7 +61,7 @@ export const DateRangeInput = ({
     onFocus,
     onBlur,
     onYearMonthDisplayChange,
-    withButton: _withButton = true,
+    withButton = true,
     variant = "range",
     numberOfDays = 7,
     readOnly,
@@ -188,16 +186,10 @@ export const DateRangeInput = ({
     const calendarRef = useRef<InternalCalendarRef>();
     const startInputRef = useRef<StandaloneDateInputRef>();
     const endInputRef = useRef<StandaloneDateInputRef>();
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
     const shouldWrap = useContainerQuery({
         maxWidth: MOBILE_WRAP_WIDTH,
         targetRef: nodeRef,
     });
-
-    // show button if it is mobile view
-    const withButton = _withButton || isMobile;
 
     // =============================================================================
     // EFFECTS
