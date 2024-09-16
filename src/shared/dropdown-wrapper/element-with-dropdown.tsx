@@ -34,7 +34,6 @@ interface ElementWithDropdownProps {
     renderElement: () => React.ReactNode;
     renderDropdown: (props: DropdownRenderProps) => React.ReactNode;
     customZIndex?: number | undefined;
-    defaultZIndex?: number | undefined;
     clickToToggle?: boolean | undefined;
     /* the distance between the reference element and the dropdown */
     offset?: number | undefined;
@@ -53,6 +52,8 @@ const getFloatingPlacement = (alignment: DropdownAlignmentType): Placement => {
     }
 };
 
+const DEFAULT_Z_INDEX = 50;
+
 export const ElementWithDropdown = ({
     enabled,
     isOpen,
@@ -62,7 +63,6 @@ export const ElementWithDropdown = ({
     renderElement,
     renderDropdown,
     customZIndex,
-    defaultZIndex = 50,
     clickToToggle = false,
     offset: dropdownOffset = 0,
     alignment = "left",
@@ -157,7 +157,7 @@ export const ElementWithDropdown = ({
                                 zIndex:
                                     customZIndex ??
                                     parentZIndex ??
-                                    defaultZIndex,
+                                    DEFAULT_Z_INDEX,
                             }}
                             {...getFloatingProps()}
                         >
