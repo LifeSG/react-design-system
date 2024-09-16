@@ -1,10 +1,16 @@
+import {
+    FloatingNode,
+    FloatingTree,
+    useFloatingNodeId,
+} from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { SimpleIdGenerator } from "../util";
 import { Root, Wrapper } from "./overlay.styles";
 import { OverlayProps } from "./types";
+import { useFloatingParent } from "./use-floating-context";
 
-export const Overlay = ({
+const OverlayComponent = ({
     show = false,
     rootId,
     onOverlayClick,
@@ -13,7 +19,7 @@ export const Overlay = ({
     backgroundBlur = true,
     disableTransition = false,
     enableOverlayClick = false,
-    zIndex,
+    zIndex: customZIndex,
     id,
 }: OverlayProps): JSX.Element | null => {
     // =============================================================================
@@ -22,6 +28,7 @@ export const Overlay = ({
     const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
     const [isStacked, _setIsStacked] = useState<boolean>();
     const [uid] = useState(() => SimpleIdGenerator.generate());
+    const nodeId = useFloatingNodeId();
 
     const stacked = useRef<boolean>();
 
@@ -32,6 +39,9 @@ export const Overlay = ({
     const overlayRootId = id
         ? `lifesg-ds-overlay-root-${id}`
         : "lifesg-ds-overlay-root";
+    const zIndex = customZIndex ?? isStacked ? 99999 : 99998;
+
+    useFloatingParent(zIndex);
 
     // =============================================================================
     // EFFECTS
@@ -177,17 +187,20 @@ export const Overlay = ({
     // RENDER
     // =============================================================================
     const renderWrapper = () => (
-        <Wrapper
-            data-testid={"overlay-wrapper"}
-            $show={show}
-            $backgroundOpacity={backgroundOpacity || (isStacked ? 0.5 : 0.8)}
-            $backgroundBlur={backgroundBlur}
-            $disableTransition={disableTransition}
-            $enableOverlayClick={enableOverlayClick}
-            onClick={handleWrapperClick}
-        >
-            {childWithRef}
-        </Wrapper>
+        <FloatingNode id={nodeId}>
+            <Wrapper
+                data-testid={"overlay-wrapper"}
+                $show={show}
+                $backgroundOpacity={
+                    backgroundOpacity || (isStacked ? 0.5 : 0.8)
+                }
+                $backgroundBlur={backgroundBlur}
+                $disableTransition={disableTransition}
+                onClick={handleWrapperClick}
+            >
+                {childWithRef}
+            </Wrapper>
+        </FloatingNode>
     );
 
     const renderComponent = () => (
@@ -195,8 +208,7 @@ export const Overlay = ({
             id={overlayRootId}
             data-testid={overlayRootId}
             $show={show}
-            zIndex={zIndex}
-            $stacked={isStacked}
+            $zIndex={zIndex}
         >
             {children && renderWrapper()}
         </Root>
@@ -205,6 +217,14 @@ export const Overlay = ({
     return rootElement
         ? ReactDOM.createPortal(renderComponent(), rootElement)
         : null;
+};
+
+export const Overlay = (props: OverlayProps) => {
+    return (
+        <FloatingTree>
+            <OverlayComponent {...props} />
+        </FloatingTree>
+    );
 };
 
 // =============================================================================

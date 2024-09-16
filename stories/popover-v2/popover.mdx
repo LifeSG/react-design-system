@@ -40,4 +40,18 @@ You can opt out of the default appearance to display custom content such as menu
 
 <Canvas of={PopoverStories.Customisation} />
 
+<Heading3>Z-index conflicts</Heading3>
+
+The popover uses z-index to display above elements. It may end up rendering
+below another element with a higher z-index.
+
+The popover is `Modal` and `Overlay`-aware by default; when rendered as a child
+of either component, it will automatically adjust its z-index to remain visible.
+The story below illustrates the default behaviour.
+
+If you still encounter z-index issues, try setting a custom `zIndex` or
+`rootNode`.
+
+<Canvas of={PopoverStories.UsageInOverlay} />
+
 <PropsTable />
