@@ -202,7 +202,8 @@ export const ComboboxPicker = ({
             onChange?.(timeValue);
         }
 
-        if (goToNextInput) {
+        // Go to end input only if start is a valid time
+        if (goToNextInput && parseInput(startInput) !== undefined) {
             setActiveTimeSelector("end");
             endInputRef.current.select();
         }
