@@ -11,6 +11,11 @@ import { TimeHelper } from "../../util/time-helper";
 import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 
 type TimeRangeInputType = "start" | "end";
+interface TimeChangeOptions {
+    goToNextInput?: boolean | undefined;
+    skipRangeCheck?: boolean | undefined;
+    triggerOnBlur?: boolean | undefined;
+}
 
 export const ComboboxPicker = ({
     id,
@@ -140,8 +145,9 @@ export const ComboboxPicker = ({
         switch (event.code) {
             case "Enter":
             case "Tab":
+                event.preventDefault();
                 if (activeTimeSelector === "start") {
-                    handleStartTime(startTimeVal, event.code !== "Tab");
+                    handleStartTime(startTimeVal);
                 } else if (activeTimeSelector === "end") {
                     handleEndTime(endTimeVal);
                     endInputRef.current.blur();
@@ -152,23 +158,29 @@ export const ComboboxPicker = ({
         }
     }
 
-    const handleStartTime = (input: string, goToNextInput = true) => {
-        handleTimeChange(input, endTimeVal, goToNextInput);
+    const handleStartTime = (input: string) => {
+        handleTimeChange(input, endTimeVal, { goToNextInput: true });
     };
 
     const handleEndTime = (input: string) => {
-        handleTimeChange(startTimeVal, input, false, true);
+        handleTimeChange(startTimeVal, input, {
+            skipRangeCheck: true,
+            triggerOnBlur: true,
+        });
     };
 
     const handleOnBlur = () => {
-        handleTimeChange(startTimeVal, endTimeVal);
+        handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
     };
 
     const handleTimeChange = (
         startInput: string,
         endInput: string,
-        goToNextInput?: boolean, // Used by tab behavior to not double skip
-        skipRangeCheck?: boolean // Used by handleEndTime to keep invalid end value
+        {
+            goToNextInput, // Used by handleStart to move to end input automatically
+            skipRangeCheck, // Used by handleEnd to preserve invalid end value
+            triggerOnBlur, // Used by handleEnd/handleClear to trigger onBlur
+        }: TimeChangeOptions
     ) => {
         const start = parseInput(startInput) ?? initialStartTimeVal;
         const end = parseInput(endInput) ?? initialEndTimeVal;
@@ -187,16 +199,17 @@ export const ComboboxPicker = ({
 
         // Trigger onChange if values have changed
         if (start !== initialStartTimeVal || end !== initialEndTimeVal) {
-            onChange && onChange(timeValue);
+            onChange?.(timeValue);
         }
 
-        // Focus end if start field was just changed
         if (goToNextInput) {
             setActiveTimeSelector("end");
             endInputRef.current.select();
-        } else {
+        }
+
+        if (triggerOnBlur) {
             setActiveTimeSelector(null);
-            onBlur && onBlur();
+            onBlur?.();
         }
 
         setInitialStartTimeVal(start);
@@ -215,7 +228,7 @@ export const ComboboxPicker = ({
             end: "",
         };
 
-        onChange && onChange(timeValue);
+        onChange?.(timeValue);
         setActiveTimeSelector(null);
     };
 
