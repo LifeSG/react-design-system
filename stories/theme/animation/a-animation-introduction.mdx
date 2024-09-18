@@ -1,0 +1,64 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo, DocNote } from "stories/storybook-common";
+
+<Meta title="Foundations/Animation/Introduction" />
+
+# Animation
+
+```tsx
+import { Animation } from "@lifesg/react-design-system/theme";
+```
+
+Animations help to signal a change in state.
+
+For positioning, movement, or property changes, use CSS animations or transitions.
+The design system provides tokens to control **duration** and **speed**.
+
+For content that can be expanded or collapsed, use the `react-spring`
+[library](https://www.npmjs.com/package/react-spring) to animate height or width.
+
+## Collections
+
+[LifeSG](/docs/foundations-motion-lifesg--docs)
+
+## Usage
+
+Apply the `Animation` tokens when defining a transition or animation.
+
+```tsx
+import { Animation } from "@lifesg/react-design-system/theme";
+import styled, { css } from "styled-components";
+
+const Container = styled.div`
+    color: lightgrey;
+
+    &:hover {
+        color: darkgrey;
+    }
+
+    transition: color ${Animation["duration-150"]} ${Animation["ease-default"]};
+    animation: spinning ${Animation["duration-150"]} ${Animation["ease-default"]};
+`;
+```
+
+## Overriding
+
+The token values are based on CSS animation and transition properties, which are
+documented here:
+
+-   [duration](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration)
+-   [easing](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function)
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        animation: {
+            "duration-150": "1s", // specify a custom time-based value
+            "ease-default": "steps(10, jump-both)", // specify a custom easing
+        },
+    },
+};
+```
