@@ -38,8 +38,8 @@ export interface BreakpointSet {
     "xxl-margin": number;
 }
 
-export type BreakPointCollectionsMap = {
+export type BreakpointCollectionsMap = {
     [key in BreakpointScheme]: BreakpointSet;
 };
 
-export type BreakPointSetOptions = Partial<BreakpointSet>;
+export type BreakpointSetOptions = Partial<BreakpointSet>;

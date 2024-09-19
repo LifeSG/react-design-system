@@ -6,7 +6,7 @@ import { AnimationSetOptions } from "./animation/types";
 import { BorderSetOptions } from "./border/types";
 import { SpacingSetOptions } from "./spacing/types";
 import { RadiusSetOptions } from "./radius/types";
-import { BreakPointSetOptions } from "./breakpoint/types";
+import { BreakpointSetOptions } from "./breakpoint/types";
 
 export type {
     PrimitiveColourSet,
@@ -28,6 +28,8 @@ export type { BorderSet, BorderSetOptions } from "./border/types";
 export type { RadiusSet, RadiusSetOptions } from "./radius/types";
 
 export type { SpacingSet, SpacingSetOptions } from "./spacing/types";
+
+export type { BreakpointSet, BreakpointSetOptions } from "./breakpoint/types";
 
 export type ColourScheme =
     | "lifesg"
@@ -51,7 +53,7 @@ export interface ThemeSpecOptions {
     spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
     radius?: RadiusSetOptions | undefined;
-    breakpoint?: BreakPointSetOptions | undefined;
+    breakpoint?: BreakpointSetOptions | undefined;
     typography?: TypographySetOptions | undefined;
 }
 

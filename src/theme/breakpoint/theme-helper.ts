@@ -1,10 +1,10 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { BreakpointScheme, ThemeCollectionSpec } from "../types";
 import { LifeSgBreakpointSet } from "./specs/lifesg-breakpoint-set";
-import { BreakPointCollectionsMap, BreakpointSet } from "./types";
+import { BreakpointCollectionsMap, BreakpointSet } from "./types";
 
 const BreakpointSpec: ThemeCollectionSpec<
-    BreakPointCollectionsMap,
+    BreakpointCollectionsMap,
     BreakpointScheme
 > = {
     collections: {
