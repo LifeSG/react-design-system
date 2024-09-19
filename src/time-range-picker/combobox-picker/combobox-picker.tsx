@@ -304,6 +304,7 @@ export const ComboboxPicker = ({
             $disabled={disabled}
             $error={error || !!validationError}
             $readOnly={readOnly}
+            style={{ paddingRight: "2.75rem" }}
         >
             <RangeInputInnerContainer
                 error={error || !!validationError}
