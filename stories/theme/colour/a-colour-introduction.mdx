@@ -13,12 +13,7 @@ There are two types of colour tokens: **primitive** and **semantic**. Primitive
 tokens define raw colour values. Semantic tokens are meaningful aliases of
 primitive tokens.
 
-{/* TODO: Update this image */}
-
-<img
-    src="/img/colour-tokens.svg"
-    style={{ margin: "32px 0", maxWidth: "400px" }}
-/>
+<img src="/img/colour-tokens.png" style={{ maxWidth: "800px" }} />
 
 <DocInfo>
     Use semantic tokens whenever possible to maintain a consistent look and feel
@@ -47,20 +42,6 @@ import styled, { css } from "styled-components";
 const Container = styled.div`
     color: ${Colour["text"]};
     color: ${Colour.Primitve["neutral-100"]};
-
-    // If you extract props, remember to wrap nested interpolations with the css helper
-    ${(props) => {
-        return css`
-            color: ${Colour["text"]};
-        `;
-    }}
-
-    // Otherwise, you have to pass the props down manually (not recommended)
-    ${(props) => {
-        return `
-            color: ${Colour["text"](props)};
-        `;
-    }}
 `;
 ```
 

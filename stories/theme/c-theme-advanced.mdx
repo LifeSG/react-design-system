@@ -101,7 +101,7 @@ const SomeComponent = styled.div`
     background: ${Colour["background-error"]};
 `;
 
-// Or if you extract the props
+// If you extract the props, remember to wrap nested interpolations with the css helper
 const AnotherComponent = styled.div`
     ${(props) => {
         return css`
@@ -124,7 +124,7 @@ const SomeComponent = styled.div`
             },
         };
 
-        return css`
+        return `
             background: ${Colour["background-error"](modifiedProps)};
         `;
     }}
