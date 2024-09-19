@@ -11,6 +11,12 @@ import { PropsTable } from "./props-table";
 
 A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.
 
+This module contains:
+
+-   PopoverV2 - the presentational component
+-   PopoverTrigger - a utility component that handles triggering of the popover
+-   [PopoverInline](/docs/modules-popoverv2-popoverinline--docs) - a utility component that displays a text or icon-based trigger
+
 ```tsx
 import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 ```
@@ -53,5 +59,7 @@ If you still encounter z-index issues, try setting a custom `zIndex` or
 `rootNode`.
 
 <Canvas of={PopoverStories.UsageInOverlay} />
+
+<Secondary>Component API</Secondary>
 
 <PropsTable />
