@@ -212,10 +212,13 @@ export const DropdownList = <T, V>({
         setTimeout(() => {
             const index = listItems.indexOf(topScrollItem);
             const focusedItem = listItemRefs.current[index];
+
             // Align the item to top of scrollable container
             if (nodeRef.current) {
-                nodeRef.current.scrollTop = focusedItem?.offsetTop - 8;
+                const scrollOffset = focusedItem?.offsetTop ?? 0;
+                nodeRef.current.scrollTop = scrollOffset - 8;
             }
+
             setFocusedIndex(index);
         }, 0);
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
