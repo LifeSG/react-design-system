@@ -233,19 +233,15 @@ export namespace TimeHelper {
             const minutes = currentMinutes % 60;
 
             if (format === "12hr") {
-                const ampm = hours >= 12 ? "pm" : "am";
+                const period = hours >= 12 ? "pm" : "am";
 
                 hours = hours % 12;
                 hours = hours ? hours : 12; // Convert hour 0 to 12
 
-                const timeString = `${hours}:${minutes
-                    .toString()
-                    .padStart(2, "0")}${ampm}`;
+                const timeString = toTimeString(hours, minutes, period);
                 timings.push(timeString);
             } else {
-                const timeString = `${hours
-                    .toString()
-                    .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+                const timeString = toTimeString(hours, minutes);
                 timings.push(timeString);
             }
 
@@ -291,9 +287,7 @@ export namespace TimeHelper {
             }
 
             // Return time in 24-hour format (HH:mm)
-            return `${hours.toString().padStart(2, "0")}:${minutes
-                .toString()
-                .padStart(2, "0")}`;
+            return toTimeString(hours, minutes);
         }
 
         // Handle 24-hour times or AM/PM conversion
@@ -315,9 +309,7 @@ export namespace TimeHelper {
         }
 
         // Format the time as h:mma
-        const formattedTime = `${hours}:${minutes
-            .toString()
-            .padStart(2, "0")}${period}`;
+        const formattedTime = toTimeString(hours, minutes, period);
 
         return formattedTime;
     };
@@ -430,4 +422,12 @@ const convertToPlain = (value: string, format: TimeFormat): TimeValuesPlain => {
             minute: timeArr[1],
         };
     }
+};
+
+const toTimeString = (hours: number, minutes: number, period?: string) => {
+    return period
+        ? `${hours}:${minutes.toString().padStart(2, "0")}${period}`
+        : `${hours.toString().padStart(2, "0")}:${minutes
+              .toString()
+              .padStart(2, "0")}`;
 };
