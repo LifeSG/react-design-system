@@ -238,6 +238,10 @@ export const ComboboxPicker = ({
         setDropdownOpen(false);
     };
 
+    const handleDismiss = () => {
+        setDropdownOpen(false);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -385,6 +389,7 @@ export const ComboboxPicker = ({
                     renderElement={renderElement}
                     renderDropdown={renderDropdown}
                     onClose={handleOnBlur}
+                    onDismiss={handleDismiss}
                     offset={8}
                     alignment={alignment}
                     fitAvailableHeight
