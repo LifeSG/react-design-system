@@ -13,15 +13,15 @@ const RadiusSpec: ThemeCollectionSpec<RadiusCollectionsMap, RadiusScheme> = {
 export const getRadius = (key: keyof RadiusSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
-        const spacingset: RadiusSet = getCollection(
+        const radiusset: RadiusSet = getCollection(
             RadiusSpec,
             theme.radiusScheme
         );
 
         if (theme.overrides && theme.overrides.radius) {
-            return `${getValue(spacingset, key, theme.overrides.radius)}px`;
+            return `${getValue(radiusset, key, theme.overrides.radius)}px`;
         } else {
-            return `${spacingset[key]}px`;
+            return `${radiusset[key]}px`;
         }
     };
 };
