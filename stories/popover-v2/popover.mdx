@@ -25,12 +25,20 @@ import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 
 <Canvas of={PopoverStories.HoverInteraction} />
 
-<Heading4>Appearance information</Heading4>
+<Heading4>Behaviour</Heading4>
+
+**Appearance**
 
 -   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself at the preferred position by default
 -   The `Popover` appears as a modal in mobile viewports
 
-The example below illustrates the default behaviour.
+**Keyboard support**
+
+The trigger should be included in the page's tab sequence. This way, users who
+navigate via keyboard can open the popover with `Space`/`Enter`. On open, focus
+will move to the popover. Press `Escape` to dismiss the popover.
+
+The example below illustrates the positioning behaviour when viewed on desktop.
 
 <Canvas of={PopoverStories.Appearance} />
 
