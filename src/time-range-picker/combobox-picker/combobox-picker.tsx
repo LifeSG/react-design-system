@@ -127,28 +127,15 @@ export const ComboboxPicker = ({
     const handleInputFocus = (selector: TimeRangeInputType) => {
         if (disabled || readOnly) return;
 
-        // Force start input if both fields are empty
-        if (selector === "end" && startTimeVal === "" && endTimeVal === "") {
-            selector = "start";
-            startInputRef.current.focus();
-            return;
-        }
-
         // Only run onFocus if not already focused
-        if (!activeTimeSelector) {
-            setActiveTimeSelector(selector);
-            setDropdownOpen(true);
-            onFocus && onFocus();
-        }
+        if (!activeTimeSelector && !dropdownOpen) onFocus?.();
+
+        setActiveTimeSelector(selector);
+        setDropdownOpen(true);
     };
 
     const handleInputClick = (selector: TimeRangeInputType) => {
         if (disabled || readOnly) return;
-
-        // Force start input if both fields are empty
-        if (selector === "end" && startTimeVal === "" && endTimeVal === "") {
-            selector = "start";
-        }
 
         setActiveTimeSelector(selector);
         setDropdownOpen(true);
@@ -158,14 +145,16 @@ export const ComboboxPicker = ({
     function handleKeyDownEvent(event: React.KeyboardEvent<HTMLInputElement>) {
         switch (event.code) {
             case "Enter":
-            case "Tab":
-                event.preventDefault();
                 if (activeTimeSelector === "start") {
                     handleStartTime(startTimeVal);
                 } else if (activeTimeSelector === "end") {
                     handleEndTime(endTimeVal);
                     endInputRef.current.blur();
                 }
+                break;
+            case "Tab":
+                // No input-specific behaviors, use native tab interaction
+                handleTimeChange(startTimeVal, endTimeVal, {});
                 break;
             default:
                 break;
@@ -224,6 +213,7 @@ export const ComboboxPicker = ({
 
         if (triggerOnBlur) {
             setActiveTimeSelector(null);
+            setDropdownOpen(false);
             onBlur?.();
         }
 
@@ -245,6 +235,7 @@ export const ComboboxPicker = ({
 
         onChange?.(timeValue);
         setActiveTimeSelector(null);
+        setDropdownOpen(false);
     };
 
     // =============================================================================
@@ -390,7 +381,7 @@ export const ComboboxPicker = ({
             <DropdownListState>
                 <ElementWithDropdown
                     enabled={!readOnly && !disabled}
-                    isOpen={!!activeTimeSelector}
+                    isOpen={dropdownOpen}
                     renderElement={renderElement}
                     renderDropdown={renderDropdown}
                     onClose={handleOnBlur}
