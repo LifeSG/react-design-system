@@ -1,4 +1,4 @@
-import { BreakpointValues } from "../breakpoint/theme-helper";
+import { BreakpointValues } from "./theme-helper";
 import { StyledComponentProps } from "../helpers";
 
 // Typings for MedaiQuery

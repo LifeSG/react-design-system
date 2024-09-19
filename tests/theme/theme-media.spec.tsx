@@ -1,6 +1,5 @@
 import styled, { ThemeProvider } from "styled-components";
-import { Breakpoint } from "../../src";
-import { MediaQuery } from "../../src/theme/media-query/media-query-helper";
+import { MediaQuery } from "../../src/theme/breakpoint/media-query-helper";
 import { ThemeSpec } from "../../src/theme/types";
 import { render } from "@testing-library/react";
 import "jest-styled-components";

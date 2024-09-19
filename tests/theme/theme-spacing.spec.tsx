@@ -21,7 +21,7 @@ describe("Spacing Themeing Test", () => {
             breakpointScheme: "lifesg",
         };
 
-        const marginValue = "1px";
+        const marginValue = "16px";
         const paddingValue = "32px";
 
         const { container } = render(
