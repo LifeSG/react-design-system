@@ -7,6 +7,7 @@ import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { ErrorMessage } from "../../form/form-label.style";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
+import { SimpleIdGenerator } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 
@@ -37,6 +38,7 @@ export const ComboboxPicker = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const [activeTimeSelector, setActiveTimeSelector] =
         useState<TimeRangeInputType>(null);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -280,6 +282,7 @@ export const ComboboxPicker = ({
                         parseInput(startTimeVal),
                         startOptions
                     )}
+                    listboxId={internalId}
                 />
             );
         } else {
@@ -293,6 +296,7 @@ export const ComboboxPicker = ({
                         parseInput(endTimeVal),
                         endOptions
                     )}
+                    listboxId={internalId}
                 />
             );
         }
@@ -331,6 +335,12 @@ export const ComboboxPicker = ({
                     onClick={() => handleInputClick("start")}
                     onKeyDown={handleKeyDownEvent}
                     autoComplete="off"
+                    aria-label="Start time input"
+                    type="text"
+                    role="combobox"
+                    aria-expanded={dropdownOpen}
+                    aria-controls={internalId}
+                    aria-autocomplete="list"
                 />
                 {/* To */}
                 <SelectorInput
@@ -349,6 +359,12 @@ export const ComboboxPicker = ({
                     onClick={() => handleInputClick("end")}
                     onKeyDown={handleKeyDownEvent}
                     autoComplete="off"
+                    aria-label="End time input"
+                    type="text"
+                    role="combobox"
+                    aria-expanded={dropdownOpen}
+                    aria-controls={internalId}
+                    aria-autocomplete="list"
                 />
             </RangeInputInnerContainer>
             {renderClearButton()}
