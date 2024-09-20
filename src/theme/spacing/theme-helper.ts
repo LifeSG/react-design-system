@@ -13,15 +13,15 @@ const SpacingSpec: ThemeCollectionSpec<SpacingCollectionsMap, SpacingScheme> = {
 export const getSpace = (key: keyof SpacingSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
-        const spacingset: SpacingSet = getCollection(
+        const spacingSet: SpacingSet = getCollection(
             SpacingSpec,
             theme.spacingScheme
         );
 
         if (theme.overrides && theme.overrides.spacing) {
-            return `${getValue(spacingset, key, theme.overrides.spacing)}px`;
+            return `${getValue(spacingSet, key, theme.overrides.spacing)}px`;
         } else {
-            return `${spacingset[key]}px`;
+            return `${spacingSet[key]}px`;
         }
     };
 };
