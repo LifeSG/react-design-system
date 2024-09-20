@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { VisuallyHiddenInput } from "../shared/input-wrapper/input-wrapper";
 import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -13,7 +14,6 @@ import {
     ExpandButton,
     HeaderContainer,
     IndicatorLabelContainer,
-    Input,
     Label,
     RemoveButton,
     SubLabel,
@@ -101,6 +101,17 @@ export const Toggle = ({
                     break;
             }
         }
+    };
+
+    const handleToggleClick = () => {
+        // simulate change event on the input
+        inputRef.current.click();
+    };
+
+    const handleLabelClick = (e: React.MouseEvent) => {
+        // the associated input is automatically toggled, this prevents the
+        // parent container from receiving the click and triggering change twice
+        e.stopPropagation();
     };
 
     const handleExpandCollapseClick = () => {
@@ -213,17 +224,20 @@ export const Toggle = ({
                 $indicator={indicator}
                 $styleType={styleType}
             >
-                <IndicatorLabelContainer $addPadding={removable}>
-                    <Input
-                        ref={inputRef}
-                        name={name}
-                        id={`${generatedId}-input`}
-                        type={type === "checkbox" ? "checkbox" : "radio"}
-                        data-testid="toggle-input"
-                        disabled={disabled}
-                        onChange={handleOnChange}
-                        checked={selected}
-                    />
+                <VisuallyHiddenInput
+                    ref={inputRef}
+                    name={name}
+                    id={`${generatedId}-input`}
+                    type={type === "checkbox" ? "checkbox" : "radio"}
+                    data-testid="toggle-input"
+                    disabled={disabled}
+                    onChange={handleOnChange}
+                    checked={selected}
+                />
+                <IndicatorLabelContainer
+                    $addPadding={removable}
+                    onClick={handleToggleClick}
+                >
                     {indicator && renderIndicator()}
                     <TextContainer>
                         <Label
@@ -233,13 +247,13 @@ export const Toggle = ({
                             $disabled={disabled}
                             data-testid={`${generatedId}-toggle-label`}
                             $maxLines={childrenMaxLines}
+                            onClick={handleLabelClick}
                         >
                             {children}
                         </Label>
                         {subLabel && renderSubLabel()}
                     </TextContainer>
                 </IndicatorLabelContainer>
-
                 {removable && (
                     <RemoveButton
                         type="button"

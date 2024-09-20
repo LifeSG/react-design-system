@@ -164,3 +164,17 @@ export const BasicButton = styled.button<InputStyleProps>`
         outline: 2px auto ${Color.Primary};
     }
 `;
+
+/**
+ * visually hide input while keeping it accessible to screen readers
+ * referenced from https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html
+ * */
+export const VisuallyHiddenInput = styled.input`
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+`;

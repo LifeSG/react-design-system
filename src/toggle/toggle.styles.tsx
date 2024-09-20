@@ -3,6 +3,7 @@ import { Alert } from "../alert";
 import { Color } from "../color";
 import { MediaQuery } from "../media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { VisuallyHiddenInput } from "../shared/input-wrapper/input-wrapper";
 import { Text, TextStyleHelper } from "../text";
 import { TextList } from "../text-list";
 import { ToggleStyleType } from "./types";
@@ -79,7 +80,8 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: ${Color.Validation.Red.Icon};
 
-                        :hover {
+                        :hover,
+                        :has(${VisuallyHiddenInput}:focus-visible) {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
                         }
                     `;
@@ -87,7 +89,8 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: transparent;
 
-                        :hover {
+                        :hover,
+                        :has(${VisuallyHiddenInput}:focus-visible) {
                             background: ${Color.Accent.Light[6]};
                         }
                     `;
@@ -111,7 +114,8 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: ${Color.Validation.Red.Border};
 
-                        :hover {
+                        :hover,
+                        :has(${VisuallyHiddenInput}:focus-visible) {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
                         }
                     `;
@@ -119,7 +123,8 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: ${Color.Primary};
 
-                        :hover {
+                        :hover,
+                        :has(${VisuallyHiddenInput}:focus-visible) {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
                         }
                     `;
@@ -128,7 +133,8 @@ export const Container = styled.div<ContainerStyleProps>`
                         background: ${Color.Neutral[8]};
                         border-color: ${Color.Neutral[5]};
 
-                        :hover {
+                        :hover,
+                        :has(${VisuallyHiddenInput}:focus-visible) {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
                             border-color: ${Color.Accent.Light[1]};
                         }
@@ -137,20 +143,6 @@ export const Container = styled.div<ContainerStyleProps>`
             }
         }
     }}
-`;
-
-export const Input = styled.input`
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-    top: 0;
-    left: 0;
-
-    /* Hide appearance but keep it focusable using keyboard interactions */
-    appearance: none;
-    background: transparent;
-    border: none;
 `;
 
 export const TextContainer = styled.div`
@@ -162,6 +154,9 @@ export const TextContainer = styled.div`
 `;
 
 export const Label = styled.label<LabelStyleProps>`
+    flex: 1;
+    color: ${Color.Neutral[1]};
+
     ${(props) => {
         if (props.$selected && !props.$indicator) {
             return css`
@@ -173,6 +168,7 @@ export const Label = styled.label<LabelStyleProps>`
             `;
         }
     }}
+
     overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;
@@ -185,7 +181,6 @@ export const Label = styled.label<LabelStyleProps>`
     ${MediaQuery.MaxWidth.mobileL} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
-    color: ${Color.Neutral[1]};
 
     ${(props) => {
         if (props.$disabled) {
@@ -203,9 +198,6 @@ export const Label = styled.label<LabelStyleProps>`
 export const SubLabel = styled.div<LabelStyleProps>`
     ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
     margin-top: 0.5rem;
-
-    z-index: 1; // forces sublabel to render above the input
-    pointer-events: none; // to allow click events to be passed to the input
 
     strong,
     b {
