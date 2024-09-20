@@ -16,6 +16,9 @@ describe("Border Theming Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         // Constants for border-top (dashed-default)
@@ -64,6 +67,9 @@ describe("Border Theming Test", () => {
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
         };
 
         const dashThickness = "2px";
@@ -104,6 +110,9 @@ describe("Border Theming Test", () => {
             fontScheme: "lifesg",
             borderScheme: "lifesg",
             animationScheme: "lifesg",
+            spacingScheme: "lifesg",
+            radiusScheme: "lifesg",
+            breakpointScheme: "lifesg",
             overrides: {
                 border: {
                     "width-010": 3,

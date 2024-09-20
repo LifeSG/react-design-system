@@ -1,8 +1,11 @@
+import { BreakpointValues } from "./breakpoint/theme-helper";
 import { AnimationValues } from "./animation/theme-helper";
 import { BorderValues } from "./border/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
 import { FontValues } from "./font/theme-helper";
+import { RadiusValues } from "./radius/theme-helper";
+import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
 import { TypographyValues } from "./typography/theme-helper";
 
@@ -19,11 +22,20 @@ export const Animation = AnimationValues;
 
 export const Border = BorderValues;
 
+export const Spacing = SpacingValues;
+
+export const Radius = RadiusValues;
+
+export const Breakpoint = BreakpointValues;
+
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",
     fontScheme: "lifesg",
     animationScheme: "lifesg",
     borderScheme: "lifesg",
+    spacingScheme: "lifesg",
+    radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const BookingSGTheme: ThemeSpec = {
@@ -31,6 +43,9 @@ export const BookingSGTheme: ThemeSpec = {
     fontScheme: "bookingsg",
     animationScheme: "lifesg",
     borderScheme: "lifesg",
+    spacingScheme: "lifesg",
+    radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const CcubeTheme: ThemeSpec = {
@@ -38,6 +53,9 @@ export const CcubeTheme: ThemeSpec = {
     fontScheme: "ccube",
     animationScheme: "lifesg",
     borderScheme: "lifesg",
+    spacingScheme: "lifesg",
+    radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const MyLegacyTheme: ThemeSpec = {
@@ -45,6 +63,9 @@ export const MyLegacyTheme: ThemeSpec = {
     fontScheme: "mylegacy",
     animationScheme: "lifesg",
     borderScheme: "lifesg",
+    spacingScheme: "lifesg",
+    radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };
 
 export const RBSTheme: ThemeSpec = {
@@ -52,4 +73,7 @@ export const RBSTheme: ThemeSpec = {
     fontScheme: "rbs",
     animationScheme: "lifesg",
     borderScheme: "lifesg",
+    spacingScheme: "lifesg",
+    radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
 };

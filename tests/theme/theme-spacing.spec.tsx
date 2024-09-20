@@ -1,18 +1,18 @@
 import { render } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
-import { Colour } from "../../src/theme";
 import { ThemeSpec } from "../../src/theme/types";
+import { Spacing } from "../../src";
 
-const StyledComponentTest = styled.div`
-    background-color: ${Colour.Primitive["primary-10"]};
-    color: ${Colour["border-primary"]};
+const SpacingTestComponent = styled.div`
+    margin: ${Spacing["spacing-16"]};
+    padding: ${Spacing["layout-lg"]};
 `;
 
-describe("Colour Themeing Test", () => {
-    it("should apply correct styles based on the theme", () => {
+describe("Spacing Themeing Test", () => {
+    it("should apply correct spacing based on the theme", () => {
         const mockTheme: ThemeSpec = {
-            colourScheme: "bookingsg",
+            colourScheme: "lifesg",
             fontScheme: "lifesg",
             animationScheme: "lifesg",
             borderScheme: "lifesg",
@@ -21,23 +21,20 @@ describe("Colour Themeing Test", () => {
             breakpointScheme: "lifesg",
         };
 
-        const bgColor = "#1A122C";
-        const textColor = "#7654BC";
+        const marginValue = "16px";
+        const paddingValue = "32px";
 
         const { container } = render(
             <ThemeProvider theme={mockTheme}>
-                <StyledComponentTest />
+                <SpacingTestComponent />
             </ThemeProvider>
         );
 
-        expect(container.firstChild).toHaveStyleRule(
-            "background-color",
-            bgColor
-        );
-        expect(container.firstChild).toHaveStyleRule("color", textColor);
+        expect(container.firstChild).toHaveStyleRule("margin", marginValue);
+        expect(container.firstChild).toHaveStyleRule("padding", paddingValue);
     });
 
-    it("should apply correct styles when overriding primitive colour token", () => {
+    it("should apply correct spacing when overriding spacing token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -47,29 +44,26 @@ describe("Colour Themeing Test", () => {
             radiusScheme: "lifesg",
             breakpointScheme: "lifesg",
             overrides: {
-                primitiveColour: {
-                    "primary-10": "#fefefe",
+                spacing: {
+                    "spacing-16": 2,
                 },
             },
         };
 
-        const bgColor = "#fefefe";
-        const textColor = "#1768BE";
+        const marginValue = "2px";
+        const paddingValue = "32px";
 
         const { container } = render(
             <ThemeProvider theme={overrideTheme}>
-                <StyledComponentTest />
+                <SpacingTestComponent />
             </ThemeProvider>
         );
 
-        expect(container.firstChild).toHaveStyleRule(
-            "background-color",
-            bgColor
-        );
-        expect(container.firstChild).toHaveStyleRule("color", textColor);
+        expect(container.firstChild).toHaveStyleRule("margin", marginValue);
+        expect(container.firstChild).toHaveStyleRule("padding", paddingValue);
     });
 
-    it("should apply correct styles when overriding semantic colour token", () => {
+    it("should apply correct spacing when overriding spacing token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -79,25 +73,23 @@ describe("Colour Themeing Test", () => {
             radiusScheme: "lifesg",
             breakpointScheme: "lifesg",
             overrides: {
-                semanticColour: {
-                    "border-primary": "#fefefe",
+                spacing: {
+                    "spacing-16": 3,
+                    "layout-lg": 40,
                 },
             },
         };
 
-        const bgColor = "#001731";
-        const textColor = "#fefefe";
+        const marginValue = "3px";
+        const paddingValue = "40px";
 
         const { container } = render(
             <ThemeProvider theme={overrideTheme}>
-                <StyledComponentTest />
+                <SpacingTestComponent />
             </ThemeProvider>
         );
 
-        expect(container.firstChild).toHaveStyleRule(
-            "background-color",
-            bgColor
-        );
-        expect(container.firstChild).toHaveStyleRule("color", textColor);
+        expect(container.firstChild).toHaveStyleRule("margin", marginValue);
+        expect(container.firstChild).toHaveStyleRule("padding", paddingValue);
     });
 });
