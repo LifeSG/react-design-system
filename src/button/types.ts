@@ -1,12 +1,12 @@
 import React from "react";
 import { ComponentLoadingSpinnerProps } from "../shared/component-loading-spinner/component-loading-spinner";
 
-type StyleType = "default" | "secondary" | "light" | "link";
+export type ButtonStyleType = "default" | "secondary" | "light" | "link";
 
 export interface ButtonBaseProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     /** The style type of the button. Values: "default" | "secondary" | "light" | "link" */
-    styleType?: StyleType | undefined;
+    styleType?: ButtonStyleType | undefined;
     /** If specified, the component will have a red color scheme being applied */
     danger?: boolean | undefined;
 }

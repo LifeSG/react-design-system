@@ -39,6 +39,7 @@ export const Toggle = ({
     onRemove,
     "data-testid": testId,
     onChange,
+    useContentWidth,
 }: ToggleProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -324,6 +325,7 @@ export const Toggle = ({
             $styleType={styleType}
             $error={error}
             $indicator={indicator}
+            $useContentWidth={useContentWidth}
             id={id}
             data-testid={testId}
         >

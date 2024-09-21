@@ -1,7 +1,5 @@
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../media";
 import {
     DropdownRenderProps,
     ElementWithDropdown,
@@ -63,13 +61,13 @@ export const DateRangeInput = ({
     onFocus,
     onBlur,
     onYearMonthDisplayChange,
-    withButton: _withButton = true,
+    withButton = true,
     variant = "range",
     numberOfDays = 7,
     readOnly,
     id,
     allowDisabledSelection,
-    zIndex = 50,
+    zIndex,
     ...otherProps
 }: DateRangeInputProps) => {
     // =============================================================================
@@ -188,16 +186,10 @@ export const DateRangeInput = ({
     const calendarRef = useRef<InternalCalendarRef>();
     const startInputRef = useRef<StandaloneDateInputRef>();
     const endInputRef = useRef<StandaloneDateInputRef>();
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
     const shouldWrap = useContainerQuery({
         maxWidth: MOBILE_WRAP_WIDTH,
         targetRef: nodeRef,
     });
-
-    // show button if it is mobile view
-    const withButton = _withButton || isMobile;
 
     // =============================================================================
     // EFFECTS
@@ -316,6 +308,16 @@ export const DateRangeInput = ({
             return;
         }
 
+        const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
+
+        // if date range is invalid, set selected value as start and reselect end
+        if (isInvalidRange) {
+            actions.changeStart(val);
+            calendarRef.current.setCalendarDate(val);
+            actions.reselectEnd();
+            return;
+        }
+
         actions.changeEnd(val);
         calendarRef.current.setCalendarDate(val);
 
@@ -331,25 +333,10 @@ export const DateRangeInput = ({
 
         /*
         - if next input is empty, focus it
-        - else if date range is invalid, clear and focus the next input
-        - else if date range is valid
-            - if next input is still pristine, focus it
-            - else if !withButton, confirm the selection and "blur" the field
+        - else if !withButton, confirm the selection and "blur" the field
         */
 
         if (!selectedStart) {
-            actions.focus("start");
-            return;
-        }
-
-        const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
-
-        if (isInvalidRange) {
-            actions.reselectStart();
-            return;
-        }
-
-        if (!isStartDirty) {
             actions.focus("start");
             return;
         }
@@ -672,7 +659,7 @@ export const DateRangeInput = ({
             onDismiss={handleDismiss}
             renderElement={renderInput}
             renderDropdown={renderCalendar}
-            zIndex={zIndex}
+            customZIndex={zIndex}
             offset={16}
         />
     );

@@ -1,3 +1,4 @@
+import { ButtonStyleType } from "../button/types";
 import { FormLabelAddonProps } from "../form/types";
 
 export type Mode = "default" | "mobile";
@@ -7,6 +8,7 @@ export interface FilterProps {
     clearButtonDisabled?: boolean | undefined;
     headerTitle?: string | undefined;
     toggleFilterButtonLabel?: string | undefined;
+    toggleFilterButtonStyle?: ButtonStyleType | undefined;
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -60,4 +62,6 @@ export interface FilterItemCheckboxProps<T>
     labelExtractor?: ((item: T) => React.ReactNode) | undefined;
     /** Function to derive value from an item. If not set, checks `item.value`. */
     valueExtractor?: ((item: T) => string) | undefined;
+    /** Changes min-width of toggle in mobile view to fit content */
+    useToggleContentWidth?: boolean | undefined;
 }

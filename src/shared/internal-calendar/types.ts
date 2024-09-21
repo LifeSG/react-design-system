@@ -13,6 +13,8 @@ export interface CommonCalendarProps {
     disabledDates?: string[] | undefined;
     /** Specifies if dates normally disabled by `minDate`, `maxDate` and `disabledDates` are still selectable */
     allowDisabledSelection?: boolean | undefined;
+    /** Specifies if the calendar should display only dates for the selected month */
+    showActiveMonthDaysOnly?: boolean | undefined;
 }
 
 // =============================================================================

@@ -1,5 +1,21 @@
 import styled, { css } from "styled-components";
-import { StyleProps } from "./types";
+
+// =============================================================================
+// STYLE INTERFACE, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
+
+export interface StyleProps {
+    $show: boolean;
+    $backgroundOpacity?: number | undefined;
+    $backgroundBlur?: boolean | undefined;
+    $disableTransition?: boolean | undefined;
+    $zIndex?: number | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 
 const getBackdropFilter = (blur: boolean) => {
     let styleString = "";
@@ -18,9 +34,7 @@ export const Root = styled.div<StyleProps>`
     height: 0;
     width: 0;
     visibility: hidden;
-    z-index: ${(props) => {
-        return props.zIndex || (props.$stacked ? 99999 : 99998);
-    }};
+    z-index: ${(props) => props.$zIndex};
 
     ${(props) => {
         if (props.$show) {

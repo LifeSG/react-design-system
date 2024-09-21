@@ -16,6 +16,7 @@ interface Props {
     allowDisabledSelection?: boolean | undefined;
     isNewSelection?: boolean | undefined;
     currentFocus?: FocusType | undefined;
+    showActiveMonthDaysOnly?: boolean | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
 }
@@ -32,6 +33,7 @@ export const StandardCell = ({
     disabledDates,
     allowDisabledSelection,
     isNewSelection,
+    showActiveMonthDaysOnly,
     onSelect,
     onHover,
 }: Props) => {
@@ -64,7 +66,9 @@ export const StandardCell = ({
         const props: CellStyleProps = {};
 
         if (calendarDate.month() !== date.month()) {
-            props.labelType = "unavailable";
+            props.labelType = showActiveMonthDaysOnly
+                ? "hidden"
+                : "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
             props.labelType = "current";
             props.circleLeft = "current";
@@ -88,6 +92,11 @@ export const StandardCell = ({
 
         const isStart = date.isSame(startDate, "day");
         const isEnd = date.isSame(endDate, "day");
+
+        if (showActiveMonthDaysOnly && calendarDate.month() !== date.month()) {
+            props.labelType = "hidden";
+            return props;
+        }
 
         if ((startDate && isStart) || (endDate && isEnd)) {
             props.labelType = "selected";

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AccordionContext } from "./accordion-context";
 import { AccordionItem } from "./accordion-item";
 import {
     Content,
@@ -7,7 +8,6 @@ import {
     TitleWrapper,
 } from "./accordion.style";
 import { AccordionProps } from "./types";
-import { AccordionContext } from "./accordion-context";
 
 const AccordionBase = ({
     children,
@@ -39,20 +39,33 @@ const AccordionBase = ({
         );
     };
 
+    const renderTitleWrapper = () => {
+        if (!title && !enableExpandAll) {
+            return null;
+        }
+
+        return (
+            <TitleWrapper
+                $showTitleInMobile={showTitleInMobile}
+                $hasExpandAll={enableExpandAll}
+            >
+                {title && (
+                    <Title
+                        $showInMobile={showTitleInMobile}
+                        data-testid="accordion-title"
+                    >
+                        {title}
+                    </Title>
+                )}
+                {enableExpandAll && renderCollapseExpandAll()}
+            </TitleWrapper>
+        );
+    };
+
     return (
         <AccordionContext.Provider value={expandAll}>
             <Content className={className}>
-                <TitleWrapper $hasTitle={!!title || showTitleInMobile}>
-                    {title && (
-                        <Title
-                            $showInMobile={showTitleInMobile}
-                            data-testid={"accordion-title"}
-                        >
-                            {title}
-                        </Title>
-                    )}
-                    {enableExpandAll && renderCollapseExpandAll()}
-                </TitleWrapper>
+                {renderTitleWrapper()}
                 {children}
             </Content>
         </AccordionContext.Provider>

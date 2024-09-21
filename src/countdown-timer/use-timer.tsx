@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const useTimer = (seconds: number, isPlaying: boolean) => {
+export const useTimer = (
+    seconds: number,
+    isPlaying: boolean,
+    endTime?: number | undefined // Takes precedence over seconds
+) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -11,30 +15,33 @@ export const useTimer = (seconds: number, isPlaying: boolean) => {
     // =============================================================================
     useEffect(() => {
         if (!isPlaying) return;
-        const cleanup = start();
 
-        return () => cleanup();
-    }, [isPlaying, seconds]);
+        const targetTime = endTime ?? Date.now() + seconds * 1000;
+        const timeoutId = runCountdown(targetTime);
+
+        return () => clearTimeout(timeoutId);
+    }, [endTime, isPlaying, seconds]);
 
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const start = () => {
-        const timestamp = Date.now();
+    const runCountdown = (timestamp: number) => {
+        const updateCountdown = () => {
+            const msToEnd = timestamp - Date.now();
+            const driftTime = msToEnd % 1000;
+            const countdown = Math.max(Math.round(msToEnd / 1000), 0);
 
-        const interval = setInterval(() => {
-            const currentTime = Date.now();
-            const milliseconds = seconds * 1000;
+            setRemainingSeconds(countdown);
+            if (countdown === 0) return;
 
-            const countdown = Math.ceil(
-                (timestamp + milliseconds - currentTime) / 1000
+            const timeoutId = setTimeout(
+                updateCountdown,
+                driftTime > 500 ? driftTime : driftTime + 1000
             );
 
-            setRemainingSeconds(Math.max(countdown, 0));
-            if (countdown <= 0) clearInterval(interval);
-        }, 1000);
-
-        return () => clearInterval(interval);
+            return timeoutId;
+        };
+        return updateCountdown();
     };
 
     return [remainingSeconds] as const;

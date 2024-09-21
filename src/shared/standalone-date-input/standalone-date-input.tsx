@@ -87,6 +87,15 @@ export const Component = (
         setDayValue(day);
         setMonthValue(month);
         setYearValue(year);
+
+        // re-focus on day input if all 3 inputs get cleared while typing
+        if (
+            !day &&
+            !month &&
+            !year &&
+            nodeRef.current.contains(document.activeElement)
+        )
+            dayInputRef.current.focus();
     }, [value]);
 
     useEffect(() => {

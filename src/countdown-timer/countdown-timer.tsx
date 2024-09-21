@@ -19,6 +19,7 @@ export const CountdownTimer = ({
     className,
     align = "right",
     timer,
+    timestamp,
     notifyTimer,
     offset,
     mobileOffset,
@@ -41,7 +42,7 @@ export const CountdownTimer = ({
     const [clientRectX, setClientRectX] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    const [remainingSeconds] = useTimer(timer, isPlaying);
+    const [remainingSeconds] = useTimer(timer, isPlaying, timestamp);
     const { ref: stickyRef, inView } = useInView({
         threshold: 1,
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,

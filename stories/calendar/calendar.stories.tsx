@@ -69,3 +69,13 @@ export const AllowDisabledSelection: StoryObj<Component> = {
         );
     },
 };
+
+export const ShowActiveMonthDaysOnly: StoryObj<Component> = {
+    render: () => {
+        return (
+            <FullWidthStoryContainer>
+                <Calendar showActiveMonthDaysOnly={true} />
+            </FullWidthStoryContainer>
+        );
+    },
+};

@@ -21,7 +21,7 @@ export type ColorCollectionsMap = {
 // =============================================================================
 // FONT STYLE THEMES
 // =============================================================================
-export type TextStyleScheme = "base" | "oneservice";
+export type TextStyleScheme = "base" | "oneservice" | "plusJakartaSans";
 export type FontStyleCollectionsMap = {
     [key in TextStyleScheme]: TextStyleSetType;
 };

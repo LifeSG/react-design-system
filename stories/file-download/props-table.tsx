@@ -1,4 +1,3 @@
-import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
@@ -99,6 +98,12 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "truncateText",
                 description: "Indicates if text should be truncated",
+                propTypes: ["boolean"],
+                defaultValue: `true`,
+            },
+            {
+                name: "ready",
+                description: "Indicates if the file is ready for download",
                 propTypes: ["boolean"],
                 defaultValue: `true`,
             },

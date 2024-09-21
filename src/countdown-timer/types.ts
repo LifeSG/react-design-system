@@ -12,14 +12,11 @@ interface MobileOffset {
     top?: number | undefined;
 }
 
-export interface CountdownTimerProps
-    extends React.HTMLAttributes<HTMLDivElement> {
+interface CountdownTimerBaseProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
     /** To show/play the countdown timer */
     show: boolean;
     fixed?: boolean | undefined;
-    /** Specifies the countdown timer (in seconds) */
-    timer: number;
     /** Specifies a timer (in seconds) for notifications */
     notifyTimer?: number | undefined;
     /** Allows customization of the sticky position in tablet/desktop view */
@@ -35,3 +32,17 @@ export interface CountdownTimerProps
     /** Called when countdown reaches 0 */
     onFinish?: (() => void) | undefined;
 }
+
+interface TimerProps extends CountdownTimerBaseProps {
+    /** Specifies the countdown timer (in seconds) */
+    timer: number;
+    timestamp?: number | undefined;
+}
+
+interface TimestampProps extends CountdownTimerBaseProps {
+    /** Specifies the timestamp at which the countdown ends (milliseconds since Jan 1, 1970) */
+    timestamp: number;
+    timer?: number | undefined;
+}
+
+export type CountdownTimerProps = TimerProps | TimestampProps;

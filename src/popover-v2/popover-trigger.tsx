@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { MediaWidths } from "../media";
+import { useFloatingChild } from "../overlay/use-floating-context";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
 import { PopoverV2TriggerProps } from "./types";
@@ -46,6 +47,7 @@ export const PopoverTrigger = ({
             }),
         ],
     });
+    const parentZIndex = useFloatingChild();
 
     // =========================================================================
     // EFFECTS
@@ -127,7 +129,10 @@ export const PopoverTrigger = ({
                             popoverRef.current = node;
                             refs.setFloating(node);
                         }}
-                        style={{ ...floatingStyles, zIndex }}
+                        style={{
+                            ...floatingStyles,
+                            zIndex: zIndex ?? parentZIndex,
+                        }}
                     >
                         {renderPopover()}
                     </div>
