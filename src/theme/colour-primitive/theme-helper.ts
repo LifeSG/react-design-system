@@ -11,7 +11,10 @@ import { RBSColourSet } from "./specs/rbs-colour-set";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ColourCollectionsMap } from "./types";
 
-const ColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> = {
+export const ColourSpec: ThemeCollectionSpec<
+    ColourCollectionsMap,
+    ColourScheme
+> = {
     collections: {
         lifesg: LifeSgColourSet,
         bookingsg: BookingSgColourSet,

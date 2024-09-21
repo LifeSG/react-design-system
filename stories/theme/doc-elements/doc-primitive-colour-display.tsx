@@ -244,4 +244,5 @@ const SwatchLabel = styled.span`
 
 const SwatchValue = styled.span`
     font-size: 0.875rem;
+    color: #787878;
 `;
