@@ -202,9 +202,7 @@ export namespace TimeHelper {
             let h = hr;
             if (p === "pm" && h < 12) h += 12;
             if (p === "am" && h === 12) h = 0;
-            return `${h.toString().padStart(2, "0")}:${m
-                .toString()
-                .padStart(2, "0")}`;
+            return toTimeString(h, m);
         }
         return time; // No conversion if string alr has am/pm
     };
