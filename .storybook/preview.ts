@@ -5,7 +5,7 @@ import { ThemeProvider } from "styled-components";
 import {
     LifeSGTheme,
     BookingSGTheme,
-    CcubeTheme,
+    CCubeTheme,
     MyLegacyTheme,
     RBSTheme,
 } from "../src/theme";
@@ -16,7 +16,7 @@ const preview: Preview = {
             themes: {
                 LifeSG: LifeSGTheme,
                 BookingSG: BookingSGTheme,
-                CCube: CcubeTheme,
+                CCube: CCubeTheme,
                 MyLegacy: MyLegacyTheme,
                 RBS: RBSTheme,
                 // TODO: update when OS theme is added

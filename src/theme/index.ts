@@ -48,7 +48,7 @@ export const BookingSGTheme: ThemeSpec = {
     breakpointScheme: "lifesg",
 };
 
-export const CcubeTheme: ThemeSpec = {
+export const CCubeTheme: ThemeSpec = {
     colourScheme: "ccube",
     fontScheme: "ccube",
     animationScheme: "lifesg",
