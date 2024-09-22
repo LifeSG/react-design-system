@@ -32,6 +32,13 @@ const preview: Preview = {
                     "Getting started",
                     ["Installation", "Themes", "Media Query", "Layout"],
                     "Foundations",
+                    [
+                        "Introduction",
+                        "Themes",
+                        "Colours",
+                        "Typography",
+                        "Animation",
+                    ],
                     "General",
                     ["Animations", "Button", ["Base", "With Icon"], "*"],
                     "Form",
