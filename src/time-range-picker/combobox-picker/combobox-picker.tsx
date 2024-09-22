@@ -6,8 +6,9 @@ import { DropdownListState } from "../../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { ErrorMessage } from "../../form/form-label.style";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
-import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
+import { SelectorInput, Wrapper } from "../common.styles";
 import { SimpleIdGenerator } from "../../util";
+import { TimeFieldContainer } from "./combobox-picker.styles.tsx";
 import { TimeHelper } from "../../util/time-helper";
 import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 
@@ -239,6 +240,10 @@ export const ComboboxPicker = ({
     };
 
     const handleDismiss = () => {
+        (activeTimeSelector === "start"
+            ? startInputRef
+            : endInputRef
+        ).current.focus();
         setDropdownOpen(false);
     };
 
@@ -298,12 +303,11 @@ export const ComboboxPicker = ({
     };
 
     const renderElement = () => (
-        <TimeContainer
+        <TimeFieldContainer
             ref={nodeRef}
             $disabled={disabled}
             $error={error || !!validationError}
             $readOnly={readOnly}
-            style={{ paddingRight: "2.75rem" }}
         >
             <RangeInputInnerContainer
                 error={error || !!validationError}
@@ -363,7 +367,7 @@ export const ComboboxPicker = ({
                 />
             </RangeInputInnerContainer>
             {renderClearButton()}
-        </TimeContainer>
+        </TimeFieldContainer>
     );
 
     const renderError = () =>
