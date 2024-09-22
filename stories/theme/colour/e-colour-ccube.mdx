@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/blocks";
+import { CCubeTheme } from "src/theme";
+import { PrimitiveColourDisplay, SemanticColourDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Colours/CCube" />
+
+# CCube colours
+
+These are the palettes used when the `colourScheme` is `"ccube"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colourScheme: "ccube",
+    // ...other specifications
+};
+```
+
+## Semantic colours
+
+<SemanticColourDisplay theme={CCubeTheme} />
+
+## Primitive colours
+
+<PrimitiveColourDisplay theme={CCubeTheme} />
