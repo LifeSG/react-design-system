@@ -4,7 +4,6 @@ import { Color } from "../color";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
 import { Text } from "../text";
-import { OverwritePopoverCustomSizeProps } from "./types";
 
 interface ColumnHeaderRowProps {
     $numOfColumns: number;
@@ -43,8 +42,6 @@ interface LoadingCellWrapperProps {
 
 interface ContentContainerPopoverProps {
     $numOfRows: number;
-    $blockedCellPopover: OverwritePopoverCustomSizeProps;
-    $filledCellPopover: OverwritePopoverCustomSizeProps;
 }
 
 interface LoaderProps {
@@ -163,31 +160,6 @@ export const ColumnHeaderTitle = styled(Text.H6)`
 export const ContentContainer = styled.div<ContentContainerPopoverProps>`
     display: grid;
     grid-template-rows: repeat(${(props) => props.$numOfRows}, 68px);
-    .filledPopover {
-        width: ${(props) =>
-            props.$filledCellPopover?.width
-                ? `${props.$filledCellPopover.width}`
-                : "400px"};
-        > div {
-            padding: ${(props) =>
-                props.$filledCellPopover?.padding
-                    ? `${props.$filledCellPopover.padding}`
-                    : "2rem"};
-        }
-    }
-
-    .blockedPopover {
-        width: ${(props) =>
-            props.$blockedCellPopover?.width
-                ? `${props.$blockedCellPopover.width}`
-                : ""};
-        > div {
-            padding: ${(props) =>
-                props.$blockedCellPopover?.padding
-                    ? `${props.$blockedCellPopover.padding}`
-                    : ""};
-        }
-    }
 `;
 
 export const RowHeader = styled.div<RowHeaderProps>`

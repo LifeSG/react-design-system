@@ -3,12 +3,13 @@ import { Color } from "../../color";
 import { PopoverTrigger } from "../../popover-v2";
 import { Text } from "../../text";
 import { CellType } from "../types";
+import { PopoverCard } from "../../popover-v2/popover.styles";
 
 interface BlockStyleProps {
     $width: number;
     $status: CellType;
     $bgColour: string;
-    $clickableEmptyCell: boolean;
+    $clickableEmptyCell?: boolean;
 }
 
 interface BlockContainerProps {
@@ -66,6 +67,7 @@ export const Block = styled.div<BlockStyleProps>`
                 `;
             default:
                 return css`
+                    background: ${$clickableEmptyCell ? "" : Color.Neutral[6]};
                     &:hover {
                         cursor: ${$clickableEmptyCell ? "pointer" : "default"};
                     }
@@ -93,4 +95,16 @@ export const StyledPopoverTrigger = styled(PopoverTrigger)`
     &:hover {
         cursor: pointer;
     }
+`;
+
+interface StyledPopoverContentProps {
+    $width?: string;
+    $padding?: string;
+}
+
+export const StyledPopoverContent = styled(
+    PopoverCard
+)<StyledPopoverContentProps>`
+    width: ${(props) => props.$width ?? ""};
+    padding: ${(props) => props.$padding ?? ""};
 `;

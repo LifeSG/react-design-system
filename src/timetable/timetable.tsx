@@ -154,21 +154,51 @@ export const TimeTable = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    // FIXME - Conditional wrap for popover here too
+
+    const ConditionalCellWrapper = ({
+        wrapper,
+        children,
+    }: {
+        wrapper: (child: JSX.Element) => JSX.Element | undefined;
+        children: JSX.Element;
+    }) => {
+        if (wrapper) {
+            return wrapper(children);
+        }
+        return children;
+    };
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     const renderRowHeaderColumn = () => {
         return (
             <>
-                {rowData.map((data, _) => {
+                {rowData.map((data, index) => {
                     return (
-                        <StyledPopoverTrigger
-                            key={`${data.id}-popover-trigger`}
-                            popoverContent={data.rowHeaderHoverContent}
-                            position="bottom-start"
-                            rootNode={tableContainerRef}
-                            zIndex={2}
-                            removePadding
-                            offset={6}
-                            trigger="hover"
+                        <ConditionalCellWrapper
+                            key={index}
+                            wrapper={(child: JSX.Element) => {
+                                if (!data.rowHeaderCustomPopover) {
+                                    return child;
+                                }
+                                return (
+                                    <StyledPopoverTrigger
+                                        key={`${data.id}-popover-trigger`}
+                                        popoverContent={
+                                            data.rowHeaderCustomPopover.content
+                                        }
+                                        position="bottom-start"
+                                        rootNode={tableContainerRef}
+                                        zIndex={2}
+                                        offset={6} // REVIEW - TBC with UX
+                                        trigger={
+                                            data.rowHeaderCustomPopover.trigger
+                                        }
+                                    >
+                                        {child}
+                                    </StyledPopoverTrigger>
+                                );
+                            }}
                         >
                             <RowHeader
                                 $isScrolled={isScrolledX}
@@ -194,7 +224,7 @@ export const TimeTable = ({
                                     {data.subtitle}
                                 </RowHeaderSubtitle>
                             </RowHeader>
-                        </StyledPopoverTrigger>
+                        </ConditionalCellWrapper>
                     );
                 })}
                 {renderRowHeaderColumnLazyLoad()}
@@ -235,8 +265,6 @@ export const TimeTable = ({
                 data-testid="content-container-id"
                 ref={contentContainerRef}
                 $numOfRows={rowData.length}
-                $filledCellPopover={optionalProps.filledCellPopoverSize}
-                $blockedCellPopover={optionalProps.blockedCellPopoverSize}
             >
                 {rowData.map((data, _) => {
                     return (
@@ -247,11 +275,8 @@ export const TimeTable = ({
                             timetableMaxTime={timetableMaxTime}
                             rowBarColor={getColorFromSequence()}
                             intervalWidth={intervalWidth}
-                            onEmptyCellClick={optionalProps.onEmptyCellClick}
+                            onCellClick={optionalProps.onCellClick}
                             containerRef={contentContainerRef}
-                            blockedCellHoverContent={
-                                optionalProps.blockedCellHoverContent
-                            }
                             {...data}
                         />
                     );
@@ -264,7 +289,7 @@ export const TimeTable = ({
     const renderRowDataLazyLoad = () => {
         if (isLoading || !loadMore) return;
         return (
-            <LoadingWrapper>
+            <LoadingWrapper data-testid="lazy-loader">
                 {hourlyIntervals.map((_, index) => (
                     <LoadingCell
                         key={`lazy-load-cell-${index}`}
@@ -331,6 +356,7 @@ export const TimeTable = ({
             <RowHeaderColumn
                 $numOfRows={rowData.length}
                 $isScrolled={isScrolledX}
+                data-testid={"row-header-column-id"}
             >
                 {renderRowHeaderColumn()}
             </RowHeaderColumn>

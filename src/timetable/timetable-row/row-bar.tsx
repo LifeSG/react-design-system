@@ -10,14 +10,8 @@ interface RowBarProps extends RowData {
     intervalWidth: number;
     containerRef: MutableRefObject<HTMLDivElement>;
     rowBarColor: RowBarColors;
-    blockedCellHoverContent?: string | JSX.Element | undefined;
     "data-testid"?: string | undefined;
-    onEmptyCellClick?: (
-        id: string,
-        intervalStart: string,
-        intervalEnd: string,
-        e: React.MouseEvent
-    ) => void;
+    onCellClick?: (data: RowCellData, e: React.MouseEvent) => void;
 }
 
 export const RowBar = ({
@@ -30,10 +24,24 @@ export const RowBar = ({
     rowBarColor,
     intervalWidth,
     containerRef,
+    outsideOpHoursCellCustomPopover,
     ...optionalProps
 }: RowBarProps) => {
-    const filledCells = rowCells.filter((cell) => cell.status === "filled");
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
     const rowCellArray: RowCellData[] = [];
+
+    // ===========================================================================
+    // HELPER FUNCTIONS
+    // ===========================================================================
+
+    const isOnTheSameHour = (
+        time1: dayjs.Dayjs,
+        time2: dayjs.Dayjs
+    ): boolean => {
+        return time1.get("hour") == time2.get("hour");
+    };
 
     // Handle non-op before hours
     if (dayjs(timetableMinTime, "HH:mm").isBefore(dayjs(rowMinTime, "HH:mm"))) {
@@ -42,68 +50,42 @@ export const RowBar = ({
             startTime: timetableMinTime,
             endTime: rowMinTime,
             status: "blocked",
+            customPopover: outsideOpHoursCellCustomPopover,
         });
     }
 
-    let currentTime = dayjs(rowMinTime, "HH:mm");
-    const endTime = dayjs(rowMaxTime, "HH:mm");
-    // Pointer for default cell
-    let defaultCellStartTime = "";
-    while (currentTime.isBefore(endTime)) {
-        // Find an occupied cell in current time
-        const foundCell = filledCells.find((filledCell) =>
-            currentTime.isSame(dayjs(filledCell.startTime, "HH:mm"))
+    rowCells.forEach((cell, index) => {
+        const { endTime } = cell;
+        rowCellArray.push(cell);
+
+        const nextSlotStartTime = dayjs(
+            rowCells[index + 1]?.startTime,
+            "HH:mm"
         );
+        const parsedEndTime = dayjs(endTime, "HH:mm");
 
-        // If no cell found, it must be a default cell
-        if (!foundCell) {
-            // If defaultCellStartTime is empty, update it
-            if (defaultCellStartTime === "") {
-                defaultCellStartTime = currentTime.format("HH:mm");
+        let curr = parsedEndTime;
+        while (curr.isBefore(nextSlotStartTime)) {
+            if (!isOnTheSameHour(curr, nextSlotStartTime)) {
+                const nextHour = curr.add(1, "hour").startOf("hour"); // Round to the next hour
+                rowCellArray.push({
+                    id,
+                    startTime: curr.format("HH:mm").toString(),
+                    endTime: nextHour.format("HH:mm").toString(),
+                    status: undefined,
+                });
+                curr = nextHour;
+            } else {
+                rowCellArray.push({
+                    id,
+                    startTime: curr.format("HH:mm").toString(),
+                    endTime: nextSlotStartTime.format("HH:mm").toString(),
+                    status: undefined,
+                });
+                curr = nextSlotStartTime;
             }
-            // If default cell ends on the hour, push to array
-            if (currentTime.add(15, "minutes").get("minutes") === 0) {
-                rowCellArray.push({
-                    id,
-                    startTime: defaultCellStartTime,
-                    endTime: currentTime
-                        .add(15, "minutes")
-                        .format("HH:mm")
-                        .toString(),
-                    status: "default",
-                });
-                defaultCellStartTime = "";
-            } else if (currentTime.add(15, "minutes").isSame(endTime)) {
-                rowCellArray.push({
-                    id,
-                    startTime: defaultCellStartTime,
-                    endTime: rowMaxTime,
-                    status: "default",
-                });
-            }
-        } else {
-            // If there is a default cell before the found occupied cell, we push to the rowCellArray
-            defaultCellStartTime !== "" &&
-                rowCellArray.push({
-                    id,
-                    startTime: defaultCellStartTime,
-                    endTime: foundCell.startTime,
-                    status: "default",
-                });
-            // Reset defaultCellStartTime
-            defaultCellStartTime = "";
-            // Push the found cell
-            rowCellArray.push({
-                ...foundCell,
-            });
-            // Set current time to the end of the found occupied cell
-            currentTime = dayjs(foundCell.endTime, "HH:mm");
-            continue; // Go to the next iteration
         }
-
-        // Increment current time by 15 minutes if no occupied cell found
-        currentTime = currentTime.add(15, "minutes");
-    }
+    });
 
     // Handle non-op after hours
     if (dayjs(timetableMaxTime, "HH:mm").isAfter(dayjs(rowMaxTime, "HH:mm"))) {
@@ -112,6 +94,7 @@ export const RowBar = ({
             startTime: rowMaxTime,
             endTime: timetableMaxTime,
             status: "blocked",
+            customPopover: outsideOpHoursCellCustomPopover,
         });
     }
 
@@ -125,10 +108,7 @@ export const RowBar = ({
                         intervalWidth={intervalWidth}
                         rowBarColor={rowBarColor}
                         containerRef={containerRef}
-                        blockedCellHoverContent={
-                            optionalProps.blockedCellHoverContent
-                        }
-                        onEmptyCellClick={optionalProps.onEmptyCellClick}
+                        onCellClick={optionalProps.onCellClick}
                     />
                 );
             })}

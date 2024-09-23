@@ -1,7 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import { TimeTable } from "../../src/timetable/timetable";
 import { RowData, TimeTableProps } from "../../src/timetable/types";
+import { lazyLoad } from "../../stories/timetable/mock-data";
+import { lazy } from "react";
 
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");
@@ -24,7 +26,6 @@ describe("TimeTable", () => {
                 "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
         },
         isLoading: false,
-        blockedCellHoverContent: "Outside operating hours",
     } as TimeTableProps;
 
     beforeEach(() => {
@@ -79,55 +80,141 @@ describe("TimeTable", () => {
         expect(rightBtn).toBeVisible();
     });
 
-    //FIXME: skip popover test for now as there will be changes to it
-    // it("should have popover appear if mouse hovers on a disabled cell", () => {
-    //     const onEmptyCellClick = jest.fn();
-    //     const filledCellPopoverSize = {
-    //         width: "500px",
-    //         padding: "3rem",
-    //     };
-    //     const blockedCellPopoverSize = {
-    //         width: "500px",
-    //         padding: "2rem",
-    //     };
+    it("should not have have popover appear if there's no popover content", () => {
+        render(
+            <TimeTable
+                date={timeTableMockData.date}
+                minTime="07:00:00"
+                maxTime="09:00:00"
+                rowData={[
+                    {
+                        id: "1",
+                        name: "Test",
+                        rowMinTime: "08:00:00",
+                        rowMaxTime: "09:00:00",
+                        rowCells: [
+                            {
+                                id: "1",
+                                startTime: "08:00:00",
+                                endTime: "09:00:00",
+                                status: "filled",
+                            },
+                        ],
+                    },
+                ]}
+                isLoading={false}
+                emptyContent={timeTableMockData.emptyContent}
+            />
+        );
+        const rowHeaderParent = screen.getByTestId("row-header-column-id");
+        const firstRowHeader = rowHeaderParent.firstElementChild;
 
-    //     render(
-    //         <TimeTable
-    //             {timeTableMockData}
-    //             height="650px"
-    //             width="900px"
-    //             rowData={mockMapper().rowData.slice(0, 8)}
-    //             onEmptyCellClick={onEmptyCellClick}
-    //             filledCellPopoverSize={filledCellPopoverSize}
-    //             blockedCellPopoverSize={blockedCellPopoverSize}
-    //         />
-    //     );
-    //     const rowBarElement = screen.getByTestId("9l4P1dOr16-row-bar");
-    //     const disabledCell = rowBarElement.firstElementChild;
+        const contentContainer = screen.getByTestId("content-container-id");
+        const firstRowBar = contentContainer.firstElementChild;
+        const disabledCell = firstRowBar.children[0];
+        const filledCell = firstRowBar.children[1];
 
-    //     fireEvent.mouseOver(disabledCell);
-    //     expect(screen.getByTestId("popover")).toBeVisible();
+        fireEvent.mouseOver(firstRowHeader);
+        fireEvent.mouseOver(disabledCell);
+        fireEvent.mouseOver(filledCell);
 
-    // });
+        expect(screen.queryByTestId("popover")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("popover")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("popover")).not.toBeInTheDocument();
+    });
 
-    // it("should have popover appear if mouse clicks on a filled cell", () => {
-    //     const onEmptyCellClick = jest.fn();
+    it("should have popover appear if there's popover content", () => {
+        render(
+            <TimeTable
+                date={timeTableMockData.date}
+                minTime="07:00:00"
+                maxTime="09:00:00"
+                rowData={[
+                    {
+                        id: "1",
+                        name: "Test",
+                        rowMinTime: "08:00:00",
+                        rowMaxTime: "09:00:00",
+                        rowCells: [
+                            {
+                                id: "1",
+                                startTime: "08:00:00",
+                                endTime: "09:00:00",
+                                status: "filled",
+                                customPopover: {
+                                    trigger: "hover",
+                                    content: "test",
+                                },
+                            },
+                        ],
+                        rowHeaderCustomPopover: {
+                            trigger: "hover",
+                            content: "test",
+                        },
+                        outsideOpHoursCellCustomPopover: {
+                            trigger: "hover",
+                            content: "outside op hours",
+                        },
+                    },
+                ]}
+                isLoading={false}
+                emptyContent={timeTableMockData.emptyContent}
+            />
+        );
+        const rowHeaderParent = screen.getByTestId("row-header-column-id");
+        const firstRowHeader = rowHeaderParent.firstElementChild;
 
-    //     render(
-    //         <TimeTable
+        const contentContainer = screen.getByTestId("content-container-id");
+        const firstRowBar = contentContainer.firstElementChild;
+        const disabledCell = firstRowBar.children[0];
+        const filledCell = firstRowBar.children[1];
 
-    //             height="650px"
-    //             width="900px"
-    //             rowData={mockMapper().rowData.slice(0, 8)}
-    //             onEmptyCellClick={onEmptyCellClick}
-    //         />
-    //     );
-    //     const rowBarElement = screen.getByTestId("9l4P1dOr16-row-bar");
-    //     // just target the first element
-    //     const filledCell = rowBarElement.querySelector(':nth-child(5)');
-    //     console.log('filledCell', filledCell);
-    //     fireEvent.click(filledCell);
-    //     expect(screen.getByTestId("popover")).toBeVisible();
+        fireEvent.mouseOver(firstRowHeader);
+        expect(screen.queryByTestId("popover")).toBeVisible();
 
-    // });
+        fireEvent.mouseOver(disabledCell);
+        expect(screen.queryByTestId("popover")).toBeVisible();
+
+        fireEvent.mouseOver(filledCell);
+        expect(screen.queryByTestId("popover")).toBeVisible();
+    });
+
+    it("should have show empty content display if no rowData is passed into TimeTable", () => {
+        render(
+            <TimeTable
+                date={timeTableMockData.date}
+                rowData={[]}
+                isLoading={false}
+                emptyContent={timeTableMockData.emptyContent}
+            />
+        );
+        const emptyContent = screen.getByTestId("error-display");
+        expect(screen.getByText("No results found")).toBeVisible();
+        expect(emptyContent).toBeVisible();
+    });
+
+    it("should have lazy load and a lazy loader should appear when user scrolls to the bottom of the TimeTable", async () => {
+        render(
+            <TimeTable
+                date={timeTableMockData.date}
+                minDate={timeTableMockData.minTime}
+                maxDate={timeTableMockData.maxDate}
+                rowData={lazyLoad(1)}
+                totalRecords={20}
+                isLoading={false}
+                emptyContent={timeTableMockData.emptyContent}
+                onPage={() => lazyLoad(2)}
+            />
+        );
+        const container = screen.getByTestId("timetable-container-id");
+        expect(screen.queryByTestId("lazy-loader")).toBeNull();
+
+        // Scroll to the bottom of the container
+        act(() => {
+            container.scrollTop = container.scrollHeight;
+            container.dispatchEvent(new Event("scroll")); // Trigger scroll event
+        });
+
+        expect(await screen.findByTestId("lazy-loader")).toBeInTheDocument();
+    });
 });

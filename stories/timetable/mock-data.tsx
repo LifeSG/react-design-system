@@ -84,56 +84,64 @@ export const mockResourceListingResultsData = {
                     disabled: false,
                     slots: [
                         {
-                            startTime: "08:00",
-                            endTime: "08:15",
+                            startTime: "08:00:00",
+                            endTime: "08:15:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
-                            startTime: "08:15",
-                            endTime: "08:30",
+                            startTime: "08:15:00",
+                            endTime: "08:30:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
-                            startTime: "08:30",
-                            endTime: "08:45",
+                            startTime: "08:30:00",
+                            endTime: "08:45:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
-                            startTime: "08:45",
-                            endTime: "09:00",
+                            startTime: "08:45:00",
+                            endTime: "09:00:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
-                            startTime: "09:30",
-                            endTime: "10:30",
+                            startTime: "09:30:00",
+                            endTime: "10:30:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
-                            startTime: "10:45",
-                            endTime: "11:00",
+                            startTime: "10:45:00",
+                            endTime: "11:00:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
-                            startTime: "11:00",
-                            endTime: "11:30",
+                            startTime: "11:00:00",
+                            endTime: "11:30:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
-                            startTime: "16:00",
-                            endTime: "16:30",
+                            startTime: "16:00:00",
+                            endTime: "16:30:00",
                             status: "OCCUPIED",
-                            label: "booking desc",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                     ],
-                    startTime: "08:00",
-                    endTime: "20:00",
+                    startTime: "08:00:00",
+                    endTime: "16:30:00",
                     interval: 120,
                 },
             ],
@@ -264,6 +272,8 @@ export const mockResourceListingResultsData = {
                             startTime: "12:00:00",
                             endTime: "16:00:00",
                             status: "OCCUPIED",
+                            label: "booking owner name",
+                            title: "booking title",
                         },
                         {
                             startTime: "16:00:00",
@@ -2293,33 +2303,18 @@ export const anotherMockData = {
                     disabled: false,
                     slots: [
                         {
-                            startTime: "08:00:00",
-                            endTime: "08:30:00",
+                            startTime: "08:00",
+                            endTime: "08:45",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "08:30:00",
-                            endTime: "09:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "09:00:00",
+                            startTime: "08:45:00",
                             endTime: "09:30:00",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "09:30:00",
-                            endTime: "10:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "10:00:00",
-                            endTime: "10:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "10:30:00",
-                            endTime: "11:00:00",
+                            startTime: "11:00:00",
+                            endTime: "11:45:00",
                             status: "DEFAULT",
                         },
                         {
@@ -2327,8 +2322,8 @@ export const anotherMockData = {
                             title: "Weekly Huddle #7",
                             label: "Shawn TAY (GOVTECH)",
                             hosts: [],
-                            startTime: "11:00",
-                            endTime: "12:00",
+                            startTime: "12:00:00",
+                            endTime: "13:00:00",
                             status: "OCCUPIED",
                             action: [
                                 {
@@ -2347,108 +2342,63 @@ export const anotherMockData = {
                             ],
                         },
                         {
-                            startTime: "12:00:00",
-                            endTime: "12:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "12:30:00",
-                            endTime: "13:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
                             startTime: "13:00:00",
-                            endTime: "13:30:00",
+                            endTime: "13:45:00",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "13:30:00",
-                            endTime: "14:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "14:00:00",
+                            startTime: "13:45:00",
                             endTime: "14:30:00",
                             status: "DEFAULT",
                         },
                         {
                             startTime: "14:30:00",
-                            endTime: "15:00:00",
+                            endTime: "15:15:00",
+                            status: "OCCUPIED",
+                        },
+                        {
+                            startTime: "16:45:00",
+                            endTime: "17:15:00",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "15:00:00",
-                            endTime: "15:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "15:30:00",
-                            endTime: "16:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:00:00",
-                            endTime: "16:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "16:30:00",
-                            endTime: "17:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "17:00:00",
-                            endTime: "17:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "17:30:00",
+                            startTime: "17:15:00",
                             endTime: "18:00:00",
                             status: "DEFAULT",
                         },
                         {
                             startTime: "18:00:00",
-                            endTime: "18:30:00",
+                            endTime: "18:45:00",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "18:30:00",
-                            endTime: "19:00:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "19:00:00",
+                            startTime: "18:45:00",
                             endTime: "19:30:00",
                             status: "DEFAULT",
                         },
                         {
                             startTime: "19:30:00",
-                            endTime: "20:00:00",
+                            endTime: "20:15:00",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "20:00:00",
-                            endTime: "20:30:00",
-                            status: "DEFAULT",
-                        },
-                        {
-                            startTime: "20:30:00",
+                            startTime: "20:15:00",
                             endTime: "21:00:00",
                             status: "DEFAULT",
                         },
                         {
                             startTime: "21:00:00",
-                            endTime: "21:30:00",
+                            endTime: "21:45:00",
                             status: "DEFAULT",
                         },
                         {
-                            startTime: "21:30:00",
+                            startTime: "21:45:00",
                             endTime: "22:00:00",
                             status: "DEFAULT",
                         },
                     ],
                     startTime: "08:00:00",
-                    endTime: "22:00:00",
+                    endTime: "22:30:00",
                     interval: 30,
                 },
             ],
@@ -5028,7 +4978,7 @@ export const anotherMockData = {
     ],
 };
 
-const StyledHoverContent = styled.div`
+export const StyledHoverContent = styled.div`
     display: flex;
     align-items: center; /* Center items vertically within the container */
     column-gap: 5px;
@@ -5050,91 +5000,20 @@ const mockFetchData = (date: Dayjs) => {
                 name: resource.title,
                 rowMinTime: resource.timelines[0].startTime,
                 rowMaxTime: resource.timelines[0].endTime,
-                subtitle: (
-                    <>
-                        <Person2Icon />
-                        {resource.capacity}
-                    </>
-                ),
-                rowHeaderHoverContent: (
-                    <>
-                        <Text.Body weight={"regular"}>
-                            {resource.title}
-                        </Text.Body>
-                        <StyledHoverContent>
-                            <PinIcon />
-                            <Text.H6 weight={"semibold"}>
-                                {resource.subtitle}
-                            </Text.H6>
-                        </StyledHoverContent>
-                    </>
-                ),
+                // subtitle: (
+                //     <>
+                //         <Person2Icon />
+                //         {resource.capacity}
+                //     </>
+                // ),
                 rowCells: resource.timelines[0].slots.map((slot) => {
                     return {
-                        //REVIEW: booking id? for onClick to render booking details
                         id: slot.id,
                         startTime: slot.startTime,
                         endTime: slot.endTime,
-                        title: slot.label,
+                        title: slot.title,
                         subtitle: slot.label,
                         status: cellTypeMap[slot.status],
-                        ...(slot.status === "OCCUPIED" && {
-                            filledBlockClickContent: (
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        rowGap: "2rem",
-                                        padding: "16px, 16px, 32px, 32px",
-                                    }}
-                                >
-                                    <div>
-                                        <Text.H3 weight={"semibold"}>
-                                            {resource.title}
-                                        </Text.H3>
-                                        <Text.H4 weight={"semibold"}>
-                                            {date.format("D MMM YYYY, ddd")}{" "}
-                                            {`${dayjs(
-                                                slot.startTime,
-                                                "HH:mm"
-                                            ).format("HH:mma")} - ${dayjs(
-                                                slot.endTime,
-                                                "HH:mm"
-                                            ).format("HH:mma")}`}
-                                        </Text.H4>
-                                    </div>
-                                    <div>
-                                        <Text.H5
-                                            style={{
-                                                color: `${Color.Neutral[3]}`,
-                                            }}
-                                        >
-                                            Booking owner
-                                        </Text.H5>
-                                        <Text.Body>{slot.label}</Text.Body>
-                                        <a
-                                            onClick={() =>
-                                                alert(
-                                                    "email copied to clipboard"
-                                                )
-                                            }
-                                        >
-                                            name@gmail.com
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <Text.H5
-                                            style={{
-                                                color: `${Color.Neutral[3]}`,
-                                            }}
-                                        >
-                                            Booking title
-                                        </Text.H5>
-                                        <Text.Body>{slot.title}</Text.Body>
-                                    </div>
-                                </div>
-                            ),
-                        }),
                     };
                 }),
             };
@@ -5146,91 +5025,21 @@ const mockFetchData = (date: Dayjs) => {
                 name: resource.title,
                 rowMinTime: resource.timelines[0].startTime,
                 rowMaxTime: resource.timelines[0].endTime,
-                rowHeaderHoverContent: (
-                    <>
-                        <Text.Body weight={"regular"}>
-                            {resource.title}
-                        </Text.Body>
-                        <StyledHoverContent>
-                            <PinIcon />
-                            <Text.H6 weight={"semibold"}>
-                                {resource.subtitle}
-                            </Text.H6>
-                        </StyledHoverContent>
-                    </>
-                ),
-                subtitle: (
-                    <>
-                        <Person2Icon />
-                        {resource.capacity}
-                    </>
-                ),
+                // subtitle: (
+                //     <>
+                //         <Person2Icon />
+                //         {resource.capacity}
+                //     </>
+                // ),
                 rowCells: resource.timelines[0].slots.map((slot) => {
                     return {
-                        //REVIEW: booking id? for onClick to render booking details
                         id: slot.id,
                         startTime: slot.startTime,
                         endTime: slot.endTime,
                         title: slot.label,
                         subtitle: slot.label,
                         status: cellTypeMap[slot.status],
-                        ...(slot.status === "OCCUPIED" && {
-                            filledBlockClickContent: (
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        rowGap: "2rem",
-                                        padding: "16px, 16px, 32px, 32px",
-                                    }}
-                                >
-                                    <div>
-                                        <Text.H3 weight={"semibold"}>
-                                            {resource.title}
-                                        </Text.H3>
-                                        <Text.H4 weight={"semibold"}>
-                                            {date.format("D MMM YYYY, ddd")}{" "}
-                                            {`${dayjs(
-                                                slot.startTime,
-                                                "HH:mm"
-                                            ).format("HH:mma")} - ${dayjs(
-                                                slot.endTime,
-                                                "HH:mm"
-                                            ).format("HH:mma")}`}
-                                        </Text.H4>
-                                    </div>
-                                    <div>
-                                        <Text.H5
-                                            style={{
-                                                color: `${Color.Neutral[3]}`,
-                                            }}
-                                        >
-                                            Booking owner
-                                        </Text.H5>
-                                        <Text.Body>{slot.label}</Text.Body>
-                                        <a
-                                            onClick={() =>
-                                                alert(
-                                                    "email copied to clipboard"
-                                                )
-                                            }
-                                        >
-                                            name@gmail.com
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <Text.H5
-                                            style={{
-                                                color: `${Color.Neutral[3]}`,
-                                            }}
-                                        >
-                                            Booking title
-                                        </Text.H5>
-                                        <Text.Body>{slot.title}</Text.Body>
-                                    </div>
-                                </div>
-                            ),
-                        }),
+                        capacity: slot.capacity,
                     };
                 }),
             };
@@ -5258,7 +5067,6 @@ export const mockMapper = (currentDate?: string): TimeTableProps => {
                 "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
         },
         isLoading: false,
-        blockedCellHoverContent: "Outside operating hours",
     };
 };
 

@@ -1,3 +1,4 @@
+import { PopoverV2TriggerType } from "../popover-v2";
 import { ResourceScheme } from "../theme";
 
 export const ROW_BAR_COLOR_SEQUENCE = [
@@ -21,15 +22,19 @@ export interface RowData {
     id: string;
     name: string;
     rowCells: RowCellData[];
+    title?: string | JSX.Element | undefined;
     subtitle?: string | JSX.Element | undefined;
-    rowHeaderHoverContent?: string | JSX.Element | undefined;
+    rowHeaderCustomPopover?: CustomPopoverProps;
     // HH:mm format, defaults to timetableMinTime
     rowMinTime?: string;
     // HH:mm format, defaults to timetableMaxTime
     rowMaxTime?: string;
+    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
 }
 
-export interface OverwritePopoverCustomSizeProps {
+export interface CustomPopoverProps {
+    trigger: PopoverV2TriggerType;
+    content: string | JSX.Element;
     width?: string | undefined;
     padding?: string | undefined;
 }
@@ -48,20 +53,13 @@ export interface TimeTableProps {
     totalRecords?: number | undefined;
     width?: string | undefined;
     height?: string | undefined;
-    blockedCellHoverContent?: string | JSX.Element | undefined;
-    filledCellPopoverSize?: OverwritePopoverCustomSizeProps;
-    blockedCellPopoverSize?: OverwritePopoverCustomSizeProps;
     onRefresh?: () => void;
     onPage?: () => void;
     onLeftArrowClick?: (currentDate: string) => void;
     onRightArrowClick?: (currentDate: string) => void;
     onNameClick?: (rowData: RowData, e: React.MouseEvent) => void;
-    onEmptyCellClick?: (
-        id: string,
-        intervalStart: string,
-        intervalEnd: string,
-        e: React.MouseEvent
-    ) => void;
+    onCellClick?: (data: RowCellData, e: React.MouseEvent) => void;
+    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
 }
 
 export interface RowCellData {
@@ -70,8 +68,8 @@ export interface RowCellData {
     startTime: string;
     // HH:mm format
     endTime: string;
-    status: CellType;
+    status?: CellType | undefined;
     title?: string | undefined;
     subtitle?: string | undefined;
-    filledBlockClickContent?: string | JSX.Element | undefined;
+    customPopover?: CustomPopoverProps | undefined;
 }

@@ -1,8 +1,11 @@
+import { Person2Icon, PinIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { Color, PopoverV2TriggerType, Text } from "../../src";
 import { TimeTable } from "../../src/timetable/timetable";
-import { lazyLoad, mockMapper } from "./mock-data";
+import { RowCellData } from "../../src/timetable/types";
+import { StyledHoverContent, lazyLoad, mockMapper } from "./mock-data";
 
 type Component = typeof TimeTable;
 
@@ -63,9 +66,9 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
             }, 1000);
         };
 
-        const onEmptyCellClick = (id: string, start: string, end: string) => {
+        const onCellClick = (data: RowCellData) => {
             alert(
-                `Clicked on cell for ${id}, start: ${start}, end: ${end}, should redirect user to booking form with these data`
+                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
             );
         };
 
@@ -86,7 +89,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
                     isLoading={loading}
                     onRightArrowClick={onRightArrowClick}
                     onLeftArrowClick={onLeftArrowClick}
-                    onEmptyCellClick={onEmptyCellClick}
+                    onCellClick={onCellClick}
                 />
             </>
         );
@@ -139,9 +142,9 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
             }, 5000);
         };
 
-        const onEmptyCellClick = (id: string, start: string, end: string) => {
+        const onCellClick = (data: RowCellData) => {
             alert(
-                `Clicked on cell for ${id}, start: ${start}, end: ${end}, should redirect user to booking form with these data`
+                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
             );
         };
 
@@ -163,7 +166,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
                     onRefresh={onRefresh}
                     onPage={() => setPage(page + 1)}
                     totalRecords={50}
-                    onEmptyCellClick={onEmptyCellClick}
+                    onCellClick={onCellClick}
                     onRightArrowClick={onRightArrowClick}
                     onLeftArrowClick={onLeftArrowClick}
                 />
@@ -174,20 +177,18 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
 
 export const TimeTableWithNoPopoverContent: StoryObj<Component> = {
     render: () => {
-        const onEmptyCellClick = (id: string, start: string, end: string) => {
+        const onCellClick = (data: RowCellData) => {
             alert(
-                `Clicked on cell for ${id}, start: ${start}, end: ${end}, should redirect user to booking form with these data`
+                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
             );
         };
-
         return (
             <>
                 <TimeTable
                     {...mockMapper()}
                     height="650px"
                     width="900px"
-                    rowData={mockMapper().rowData.slice(0, 8)}
-                    onEmptyCellClick={onEmptyCellClick}
+                    onCellClick={onCellClick}
                 />
             </>
         );
@@ -196,20 +197,109 @@ export const TimeTableWithNoPopoverContent: StoryObj<Component> = {
 
 export const TimeTableWithStyledPopovers: StoryObj<Component> = {
     render: () => {
-        const onEmptyCellClick = (id: string, start: string, end: string) => {
+        const onCellClick = (data: RowCellData) => {
             alert(
-                `Clicked on cell for ${id}, start: ${start}, end: ${end}, should redirect user to booking form with these data`
+                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
             );
         };
 
-        const filledCellPopoverSize = {
-            width: "500px",
-            padding: "3rem",
-        };
-        const blockedCellPopoverSize = {
-            width: "500px",
-            padding: "2rem",
-        };
+        const rowData = mockMapper().rowData.map((row) => {
+            return {
+                ...row,
+                rowHeaderCustomPopover: {
+                    trigger: "hover" as PopoverV2TriggerType,
+                    content: (
+                        <>
+                            <Text.Body weight={"regular"}>Eclipse</Text.Body>
+                            <StyledHoverContent>
+                                <PinIcon />
+                                <Text.H6 weight={"semibold"}>
+                                    <>
+                                        <Person2Icon />
+                                        10
+                                    </>
+                                </Text.H6>
+                            </StyledHoverContent>
+                        </>
+                    ),
+                },
+                outsideOpHoursCellCustomPopover: {
+                    trigger: "hover" as PopoverV2TriggerType,
+                    content: "Outside operating hours",
+                },
+                rowCells: row.rowCells.map((cell) => {
+                    return {
+                        ...cell,
+                        ...(cell.status === "filled" && {
+                            customPopover: {
+                                trigger: "hover" as PopoverV2TriggerType,
+                                content: (
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            rowGap: "2rem",
+                                            padding: "16px, 16px, 32px, 32px",
+                                        }}
+                                    >
+                                        <div>
+                                            <Text.H3 weight={"semibold"}>
+                                                {row.name}
+                                            </Text.H3>
+                                            <Text.H4 weight={"semibold"}>
+                                                {dayjs().format(
+                                                    "D MMM YYYY, ddd"
+                                                )}{" "}
+                                                {`${dayjs(
+                                                    cell.startTime,
+                                                    "HH:mm"
+                                                ).format("HH:mma")} - ${dayjs(
+                                                    cell.endTime,
+                                                    "HH:mm"
+                                                ).format("HH:mma")}`}
+                                            </Text.H4>
+                                        </div>
+                                        <div>
+                                            <Text.H5
+                                                style={{
+                                                    color: `${Color.Neutral[3]}`,
+                                                }}
+                                            >
+                                                Booking owner
+                                            </Text.H5>
+                                            <Text.Body>
+                                                {cell.subtitle}
+                                            </Text.Body>
+                                            <a
+                                                onClick={() =>
+                                                    alert(
+                                                        "email copied to clipboard"
+                                                    )
+                                                }
+                                            >
+                                                name@gmail.com
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <Text.H5
+                                                style={{
+                                                    color: `${Color.Neutral[3]}`,
+                                                }}
+                                            >
+                                                Booking title
+                                            </Text.H5>
+                                            <Text.Body>{cell.title}</Text.Body>
+                                        </div>
+                                    </div>
+                                ),
+                                width: "400px",
+                                padding: "3rem",
+                            },
+                        }),
+                    };
+                }),
+            };
+        });
 
         return (
             <>
@@ -217,10 +307,8 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                     {...mockMapper()}
                     height="650px"
                     width="900px"
-                    rowData={mockMapper().rowData.slice(0, 8)}
-                    onEmptyCellClick={onEmptyCellClick}
-                    filledCellPopoverSize={filledCellPopoverSize}
-                    blockedCellPopoverSize={blockedCellPopoverSize}
+                    rowData={rowData}
+                    onCellClick={onCellClick}
                 />
             </>
         );

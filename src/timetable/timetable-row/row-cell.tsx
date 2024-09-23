@@ -8,6 +8,7 @@ import {
     BlockDescription,
     BlockTitle,
     Gap,
+    StyledPopoverContent,
     Wrapper,
 } from "./row-cell.style";
 import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "../types";
@@ -16,12 +17,10 @@ interface RowCellProps extends RowCellData {
     containerRef: MutableRefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: string;
-    blockedCellHoverContent?: string | JSX.Element | undefined;
-    onEmptyCellClick?: (
-        id: string,
-        intervalStart: string,
-        intervalEnd: string,
+    onCellClick?: (
+        data: RowCellData,
         e: React.MouseEvent
+        //cellStart/cellEnd
     ) => void;
 }
 
@@ -35,47 +34,24 @@ const Component = ({
     intervalWidth,
     rowBarColor,
     containerRef,
-    blockedCellHoverContent,
-    filledBlockClickContent,
-    onEmptyCellClick,
+    customPopover,
+    onCellClick,
 }: RowCellProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const isOnTheHour = dayjs(endTime, "HH:mm").get("minutes") === 0;
-    const isNotAvailable = status !== "default";
+    const isNotAvailable = status !== "default" || !status;
     const numberOfIntervals =
         DateHelper.getTimeDiffInMinutes(startTime, endTime) / ROW_INTERVAL;
     const totalCellWidth = numberOfIntervals * intervalWidth;
     const adjustedCellWidth = isNotAvailable
         ? totalCellWidth - ROW_CELL_GAP
         : totalCellWidth;
-    const contentMap = {
-        filled: filledBlockClickContent,
-        blocked: blockedCellHoverContent,
-    };
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    // NOTE - Only handling empty cell clicks for now,
-    const handleCellClick = (e: React.MouseEvent) => {
-        switch (status) {
-            case "filled": {
-                break;
-            }
-            case "blocked": {
-                // NOTE - Disabled slots should not have interactivity
-                break;
-            }
-            default: {
-                if (onEmptyCellClick) {
-                    onEmptyCellClick(id, startTime, endTime, e);
-                }
-                break;
-            }
-        }
-    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -101,9 +77,19 @@ const Component = ({
         }
     };
 
+    const buildPopoverContent = (content: string | JSX.Element) => {
+        return (
+            <StyledPopoverContent
+                $padding={customPopover.padding}
+                $width={customPopover.width}
+            >
+                {content}
+            </StyledPopoverContent>
+        );
+    };
+
     const buildPopoverTrigger = (child: JSX.Element) => {
-        const content = contentMap[status];
-        if (!content) {
+        if (!customPopover) {
             return child;
         }
 
@@ -113,36 +99,13 @@ const Component = ({
             removePadding: true,
             offset: 0,
             children: child,
-            popoverContent: content,
+            trigger: customPopover.trigger,
+            popoverContent: () => buildPopoverContent(customPopover.content),
         };
 
-        switch (status) {
-            case "filled": {
-                return (
-                    <PopoverTrigger
-                        {...popoverTriggerProps}
-                        trigger="click"
-                        popoverClassName="filledPopover"
-                    >
-                        {child}
-                    </PopoverTrigger>
-                );
-            }
-            case "blocked": {
-                return (
-                    <PopoverTrigger
-                        {...popoverTriggerProps}
-                        trigger="hover"
-                        popoverClassName="blockedPopover"
-                    >
-                        {child}
-                    </PopoverTrigger>
-                );
-            }
-            default: {
-                return child;
-            }
-        }
+        return (
+            <PopoverTrigger {...popoverTriggerProps}>{child}</PopoverTrigger>
+        );
     };
 
     return (
@@ -159,8 +122,24 @@ const Component = ({
                         $width={adjustedCellWidth}
                         $status={status}
                         $bgColour={rowBarColor}
-                        $clickableEmptyCell={!!onEmptyCellClick}
-                        onClick={(e: React.MouseEvent) => handleCellClick(e)}
+                        $clickableEmptyCell={!!status}
+                        onClick={
+                            status
+                                ? (e: React.MouseEvent) =>
+                                      onCellClick(
+                                          {
+                                              id,
+                                              startTime,
+                                              endTime,
+                                              status,
+                                              title,
+                                              subtitle,
+                                              customPopover,
+                                          },
+                                          e
+                                      )
+                                : undefined
+                        }
                     >
                         {title && (
                             <BlockTitle weight={"semibold"}>{title}</BlockTitle>
