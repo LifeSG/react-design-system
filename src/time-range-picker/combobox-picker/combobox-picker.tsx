@@ -81,8 +81,8 @@ export const ComboboxPicker = ({
 
     useEffect(() => {
         if (value) {
-            const start = parseInput(value.start);
-            const end = parseInput(value.end);
+            const start = parseInput(value.start) ?? "";
+            const end = parseInput(value.end) ?? "";
 
             setStartTimeVal(start);
             setEndTimeVal(end);

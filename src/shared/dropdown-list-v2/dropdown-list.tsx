@@ -209,7 +209,7 @@ export const DropdownList = <T, V>({
         if (topScrollItem === undefined) return;
 
         // Delay to ensure render is complete
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             const index = listItems.indexOf(topScrollItem);
             const focusedItem = listItemRefs.current[index];
 
@@ -221,6 +221,8 @@ export const DropdownList = <T, V>({
 
             setFocusedIndex(index);
         }, 0);
+
+        return () => clearTimeout(timer);
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
