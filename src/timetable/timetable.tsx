@@ -190,9 +190,13 @@ export const TimeTable = ({
                                         position="bottom-start"
                                         rootNode={tableContainerRef}
                                         zIndex={2}
-                                        offset={6} // REVIEW - TBC with UX
+                                        offset={0}
                                         trigger={
                                             data.rowHeaderCustomPopover.trigger
+                                        }
+                                        delay={
+                                            data.rowHeaderCustomPopover.delay ??
+                                            1250
                                         }
                                     >
                                         {child}

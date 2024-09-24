@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Color, PopoverV2TriggerType, Text } from "../../src";
 import { TimeTable } from "../../src/timetable/timetable";
 import { RowCellData } from "../../src/timetable/types";
-import { StyledHoverContent, lazyLoad, mockMapper } from "./mock-data";
+import { StyledHoverContent, getTimeTableData, lazyLoad } from "./mock-data";
 
 type Component = typeof TimeTable;
 
@@ -21,11 +21,11 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <TimeTable
-                    {...mockMapper()}
+                    {...getTimeTableData()}
                     totalRecords={undefined}
                     height="650px"
                     width="900px"
-                    rowData={mockMapper().rowData.slice(0, 8)}
+                    rowData={getTimeTableData().rowData.slice(0, 8)}
                     date={""}
                     isLoading={false}
                 />
@@ -36,11 +36,11 @@ export const Default: StoryObj<Component> = {
 
 export const TimeTableWithNavigation: StoryObj<Component> = {
     render: () => {
-        const [results, setResults] = useState(
-            mockMapper().rowData.slice(0, 8)
-        );
-        const [date, setDate] = useState(mockMapper().date);
-        const [loading, setLoading] = useState(mockMapper().isLoading);
+        const timeTableData = getTimeTableData();
+
+        const [results, setResults] = useState(getTimeTableData().rowData);
+        const [date, setDate] = useState(timeTableData.date);
+        const [loading, setLoading] = useState(timeTableData.isLoading);
 
         const onLeftArrowClick = (currentDate: string) => {
             const newDate = dayjs(currentDate)
@@ -49,7 +49,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper(newDate).rowData.slice(0, 8));
+                setResults(getTimeTableData(newDate).rowData);
                 setLoading(false);
             }, 1000);
         };
@@ -61,7 +61,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(mockMapper(newDate).rowData.slice(0, 8));
+                setResults(getTimeTableData(newDate).rowData);
                 setLoading(false);
             }, 1000);
         };
@@ -75,14 +75,14 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
         return (
             <>
                 <TimeTable
-                    {...mockMapper()}
+                    {...timeTableData}
                     height="650px"
                     width="900px"
                     date={date}
-                    minDate={dayjs(mockMapper().date)
+                    minDate={dayjs(timeTableData.date)
                         .subtract(2, "days")
                         .format("YYYY-MM-DD")}
-                    maxDate={dayjs(mockMapper().date)
+                    maxDate={dayjs(timeTableData.date)
                         .add(2, "days")
                         .format("YYYY-MM-DD")}
                     rowData={results}
@@ -98,8 +98,9 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
 
 export const TimeTableWithLazyLoad: StoryObj<Component> = {
     render: () => {
+        const timeTableData = getTimeTableData();
         const [results, setResults] = useState([]);
-        const [date, setDate] = useState(mockMapper().date);
+        const [date, setDate] = useState(timeTableData.date);
         const [loading, setLoading] = useState(false);
         const [page, setPage] = useState(1);
 
@@ -151,12 +152,12 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
         return (
             <>
                 <TimeTable
-                    {...mockMapper()}
+                    {...timeTableData}
                     date={date}
-                    minDate={dayjs(mockMapper().date)
+                    minDate={dayjs(timeTableData.date)
                         .subtract(2, "days")
                         .format("YYYY-MM-DD")}
-                    maxDate={dayjs(mockMapper().date)
+                    maxDate={dayjs(timeTableData.date)
                         .add(2, "days")
                         .format("YYYY-MM-DD")}
                     height="650px"
@@ -185,7 +186,7 @@ export const TimeTableWithNoPopoverContent: StoryObj<Component> = {
         return (
             <>
                 <TimeTable
-                    {...mockMapper()}
+                    {...getTimeTableData()}
                     height="650px"
                     width="900px"
                     onCellClick={onCellClick}
@@ -203,7 +204,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
             );
         };
 
-        const rowData = mockMapper().rowData.map((row) => {
+        const rowData = getTimeTableData().rowData.map((row) => {
             return {
                 ...row,
                 rowHeaderCustomPopover: {
@@ -304,7 +305,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
         return (
             <>
                 <TimeTable
-                    {...mockMapper()}
+                    {...getTimeTableData()}
                     height="650px"
                     width="900px"
                     rowData={rowData}
@@ -319,7 +320,11 @@ export const TimeTableWithEmptyContent: StoryObj<Component> = {
     render: () => {
         return (
             <>
-                <TimeTable {...mockMapper()} totalRecords={0} rowData={[]} />
+                <TimeTable
+                    {...getTimeTableData()}
+                    totalRecords={0}
+                    rowData={[]}
+                />
             </>
         );
     },

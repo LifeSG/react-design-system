@@ -6,7 +6,6 @@ import { Text } from "../text";
 export const HeaderArrowButton = styled(ClickableIcon)`
     height: 2.5rem;
     padding: 1rem;
-
     :disabled {
         cursor: not-allowed;
         > svg {
@@ -18,8 +17,9 @@ export const HeaderArrowButton = styled(ClickableIcon)`
 export const Container = styled.div`
     display: flex;
     align-items: center;
-    margin: 0.625rem;
+    margin: 0.625rem 0 0.625rem 0;
     justify-content: center;
+    width: 100%;
 `;
 
 export const Wrapper = styled.div`
@@ -29,6 +29,8 @@ export const Wrapper = styled.div`
 
 export const StyledDateText = styled(Text.H4)`
     color: ${Color.Neutral[1]};
+    white-space: nowrap;
+    display: inline-block;
 `;
 
 export const StyledDayText = styled(Text.XSmall)`

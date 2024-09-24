@@ -100,6 +100,7 @@ const Component = ({
             offset: 0,
             children: child,
             trigger: customPopover.trigger,
+            delay: customPopover.delay ?? 1250,
             popoverContent: () => buildPopoverContent(customPopover.content),
         };
 

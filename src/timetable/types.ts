@@ -37,6 +37,8 @@ export interface CustomPopoverProps {
     content: string | JSX.Element;
     width?: string | undefined;
     padding?: string | undefined;
+    // in milliseconds
+    delay?: number | undefined;
 }
 
 export interface TimeTableProps {
@@ -71,5 +73,6 @@ export interface RowCellData {
     status?: CellType | undefined;
     title?: string | undefined;
     subtitle?: string | undefined;
+    // do note that if the custom popover trigger is set to click, it will override the behaviour with the onClick callback for each cell
     customPopover?: CustomPopoverProps | undefined;
 }

@@ -1,4 +1,10 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor,
+} from "@testing-library/react";
 import dayjs from "dayjs";
 import { TimeTable } from "../../src/timetable/timetable";
 import { RowData, TimeTableProps } from "../../src/timetable/types";
@@ -144,16 +150,19 @@ describe("TimeTable", () => {
                                 customPopover: {
                                     trigger: "hover",
                                     content: "test",
+                                    delay: 0,
                                 },
                             },
                         ],
                         rowHeaderCustomPopover: {
                             trigger: "hover",
                             content: "test",
+                            delay: 0,
                         },
                         outsideOpHoursCellCustomPopover: {
                             trigger: "hover",
                             content: "outside op hours",
+                            delay: 0,
                         },
                     },
                 ]}

@@ -37,6 +37,8 @@ export interface PopoverV2TriggerProps {
     rootNode?: RefObject<HTMLElement> | undefined;
     offset?: number | undefined;
     removePadding?: boolean;
+    // in milliseconds
+    delay?: number;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }

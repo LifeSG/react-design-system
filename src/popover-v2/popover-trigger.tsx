@@ -30,6 +30,8 @@ export const PopoverTrigger = ({
     // CONST, STATE, REF
     // =========================================================================
     const [visible, setVisible] = useState<boolean>(false);
+    const [timerId, setTimerId] = useState(null);
+
     const nodeRef = useRef<HTMLDivElement>();
     const popoverRef = useRef<HTMLDivElement>();
     const isMobile = useMediaQuery({
@@ -89,12 +91,24 @@ export const PopoverTrigger = ({
     };
 
     const handleOnMouseEnter = () => {
+        if (timerId) {
+            clearTimeout(timerId);
+        }
+
         if (trigger === "hover" && !isMobile) {
-            setVisible(true);
+            if (otherProps.delay) {
+                const id = setTimeout(() => setVisible(true), otherProps.delay);
+                setTimerId(id);
+            } else {
+                setVisible(true);
+            }
         }
     };
 
     const handleOnMouseLeave = () => {
+        if (timerId) {
+            clearTimeout(timerId);
+        }
         if (trigger === "hover" && visible && !isMobile) {
             setVisible(false);
         }
