@@ -326,6 +326,36 @@ describe("TimeRangePicker", () => {
                 expect(mockOnBlur).toHaveBeenCalledTimes(1);
             });
 
+            it("should call onBlur via outside click, if dropdown was dismissed", async () => {
+                const user = userEvent.setup();
+                const mockOnBlur = jest.fn();
+
+                render(
+                    <TimeRangePicker variant={"combobox"} onBlur={mockOnBlur} />
+                );
+
+                user.click(screen.getByLabelText(START_LABEL));
+                await waitFor(() => screen.queryByTestId(DROPDOWN_TESTID));
+                expect(mockOnBlur).toHaveBeenCalledTimes(0);
+
+                await act(async () => {
+                    await user.click(screen.queryByText("1:00am"));
+                });
+                expect(mockOnBlur).toHaveBeenCalledTimes(0);
+
+                // Dismiss dropdown
+                await act(async () => await user.keyboard("{Esc}"));
+                expect(
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                ).not.toBeInTheDocument();
+                expect(mockOnBlur).toHaveBeenCalledTimes(0);
+
+                await act(async () => {
+                    await user.click(document.body);
+                });
+                expect(mockOnBlur).toHaveBeenCalledTimes(1);
+            });
+
             it("should dismiss dropdown via Esc key", async () => {
                 const user = userEvent.setup();
                 const mockOnBlur = jest.fn();

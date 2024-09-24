@@ -5,6 +5,7 @@ import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
 import { DropdownListState } from "../../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { ErrorMessage } from "../../form/form-label.style";
+import { OpenChangeReason } from "@floating-ui/react";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { SelectorInput, Wrapper } from "../common.styles";
 import { SimpleIdGenerator } from "../../util";
@@ -173,10 +174,6 @@ export const ComboboxPicker = ({
         });
     };
 
-    const handleOnBlur = () => {
-        handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
-    };
-
     const handleTimeChange = (
         startInput: string,
         endInput: string,
@@ -247,6 +244,29 @@ export const ComboboxPicker = ({
         setDropdownOpen(false);
     };
 
+    const handleBlur = (event: React.FocusEvent<HTMLDivElement, Element>) => {
+        if (
+            nodeRef.current &&
+            !nodeRef.current.contains(event.relatedTarget) &&
+            !dropdownOpen
+        ) {
+            // Call only when blur triggered while dropdown is dismissed
+            handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
+        }
+    };
+
+    // NOTE: Dropdown dismissal (esc) does not trigger onClose
+    const handleClose = (reason: OpenChangeReason) => {
+        if (reason === "outside-press") {
+            // No handleTimeChange to avoid duplicate call from handleBlur
+            setActiveTimeSelector(null);
+            setDropdownOpen(false);
+        } else {
+            // Dropdown closed via exiting component (eg. tab)
+            handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
+        }
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -308,6 +328,7 @@ export const ComboboxPicker = ({
             $disabled={disabled}
             $error={error || !!validationError}
             $readOnly={readOnly}
+            onBlur={handleBlur}
         >
             <RangeInputInnerContainer
                 error={error || !!validationError}
@@ -392,7 +413,7 @@ export const ComboboxPicker = ({
                     isOpen={dropdownOpen}
                     renderElement={renderElement}
                     renderDropdown={renderDropdown}
-                    onClose={handleOnBlur}
+                    onClose={handleClose}
                     onDismiss={handleDismiss}
                     offset={8}
                     alignment={alignment}
