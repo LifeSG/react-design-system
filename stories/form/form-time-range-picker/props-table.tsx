@@ -4,11 +4,27 @@ import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const TIME_FORMAT = (
     <>
-        24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
+        <strong>Dial variant:</strong>
         <br />
-        12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
+        <ul style={{ marginLeft: "2rem" }}>
+            <li>
+                24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
+            </li>
+            <li>
+                12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
+            </li>
+        </ul>
         <br />
-        Note: combobox variant uses {quote("h:mma")} instead
+        <strong>Combobox variant:</strong>
+        <br />
+        <ul style={{ marginLeft: "2rem" }}>
+            <li>
+                24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
+            </li>
+            <li>
+                12 hours uses {quote("h:mma")} e.g. {code(quote("1:00pm"))}
+            </li>
+        </ul>
     </>
 );
 
@@ -70,6 +86,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "variant",
+                description: "Specifies the variant for the component",
+                propTypes: [`"dial"`, `"combobox"`],
+                defaultValue: `"dial"`,
+            },
+            {
                 name: "onChange",
                 description:
                     "Called when the user clicks on the 'Done' button in the time selection box. Returns the time range values in the format specified",
@@ -90,12 +112,6 @@ const DATA: ApiTableSectionProps[] = [
     {
         name: "Combobox variant specific props",
         attributes: [
-            {
-                name: "variant",
-                description: "Specifies the variant for the component",
-                propTypes: [`"dial"`, `"combobox"`],
-                defaultValue: `"dial"`,
-            },
             {
                 name: "interval",
                 description:
@@ -139,6 +155,7 @@ const DATA: ApiTableSectionProps[] = [
                         The selected start time value as an empty string or a
                         string-based format.
                         <br />
+                        <br />
                         {TIME_FORMAT}
                     </>
                 ),
@@ -150,6 +167,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The selected start time value as an empty string or a
                         string-based format.
+                        <br />
                         <br />
                         {TIME_FORMAT}
                     </>

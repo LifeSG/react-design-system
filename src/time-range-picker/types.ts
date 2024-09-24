@@ -34,12 +34,12 @@ export interface TimeRangePickerProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     error?: boolean | undefined;
+    /** Specifies the variant for the time range picker */
+    variant?: TimeRangePickerVariant | undefined;
 
     /**
      * Combobox variant specific attributes
      */
-    /** Specifies the variant for the time range picker */
-    variant?: TimeRangePickerVariant | undefined;
     /** Specifies the interval (minutes) between each dropdown option */
     interval?: number | undefined;
     /** Specifies the starting time for the dropdown options */

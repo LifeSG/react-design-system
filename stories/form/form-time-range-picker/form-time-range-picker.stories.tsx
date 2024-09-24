@@ -162,6 +162,16 @@ export const ComboboxVariant: StoryObj<Component> = {
                         onChange={(value) => setTime5(value)}
                         variant="combobox"
                     />
+                    <Form.TimeRangePicker
+                        label="This is the disabled state"
+                        variant="combobox"
+                        disabled
+                    />
+                    <Form.TimeRangePicker
+                        label="This is the readonly state"
+                        variant="combobox"
+                        readOnly
+                    />
                 </Container>
             </StoryContainer>
         );
