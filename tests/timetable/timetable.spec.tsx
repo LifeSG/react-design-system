@@ -1,15 +1,8 @@
-import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor,
-} from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import { TimeTable } from "../../src/timetable/timetable";
 import { RowData, TimeTableProps } from "../../src/timetable/types";
 import { lazyLoad } from "../../stories/timetable/mock-data";
-import { lazy } from "react";
 
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");
@@ -172,20 +165,52 @@ describe("TimeTable", () => {
         );
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
         const firstRowHeader = rowHeaderParent.firstElementChild;
-
         const contentContainer = screen.getByTestId("content-container-id");
         const firstRowBar = contentContainer.firstElementChild;
-        const disabledCell = firstRowBar.children[0];
+        const blockedCell = firstRowBar.children[0];
         const filledCell = firstRowBar.children[1];
 
         fireEvent.mouseOver(firstRowHeader);
-        expect(screen.queryByTestId("popover")).toBeVisible();
+        expect(screen.queryByTestId("row-header-popover-card")).toBeVisible();
 
-        fireEvent.mouseOver(disabledCell);
-        expect(screen.queryByTestId("popover")).toBeVisible();
+        fireEvent.mouseOver(blockedCell);
+        expect(screen.queryByTestId("blocked-popover-card")).toBeVisible();
 
         fireEvent.mouseOver(filledCell);
-        expect(screen.queryByTestId("popover")).toBeVisible();
+        expect(screen.queryByTestId("filled-popover-card")).toBeVisible();
+    });
+
+    it("should trigger onNameClick if row header name are clicked", () => {
+        const onNameClick = jest.fn();
+
+        render(
+            <TimeTable
+                date={timeTableMockData.date}
+                rowData={[
+                    {
+                        id: "1",
+                        name: "Test",
+                        rowMinTime: "08:00:00",
+                        rowMaxTime: "09:00:00",
+                        rowCells: [
+                            {
+                                id: "1",
+                                startTime: "08:00:00",
+                                endTime: "09:00:00",
+                                status: "filled",
+                            },
+                        ],
+                    },
+                ]}
+                isLoading={false}
+                emptyContent={timeTableMockData.emptyContent}
+                onNameClick={onNameClick}
+            />
+        );
+        const rowHeaderName = screen.getByTestId("1-row-header-title");
+
+        fireEvent.click(rowHeaderName);
+        expect(onNameClick).toHaveBeenCalledTimes(1);
     });
 
     it("should have show empty content display if no rowData is passed into TimeTable", () => {

@@ -26,6 +26,12 @@ const mapper = (resource) => {
         name: resource.title,
         rowMinTime: resource.timelines[0].startTime,
         rowMaxTime: resource.timelines[0].endTime,
+        subtitle: (
+            <>
+                <Person2Icon />
+                {resource.capacity}
+            </>
+        ),
         rowCells: resource.timelines[0].slots.map((slot) => {
             return {
                 id: slot.id,

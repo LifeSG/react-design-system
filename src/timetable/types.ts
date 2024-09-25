@@ -20,9 +20,8 @@ interface EmptyContentProps {
 
 export interface RowData {
     id: string;
-    name: string;
+    name: string | JSX.Element;
     rowCells: RowCellData[];
-    title?: string | JSX.Element | undefined;
     subtitle?: string | JSX.Element | undefined;
     rowHeaderCustomPopover?: CustomPopoverProps;
     // HH:mm format, defaults to timetableMinTime
@@ -39,6 +38,7 @@ export interface CustomPopoverProps {
     padding?: string | undefined;
     // in milliseconds
     delay?: number | undefined;
+    offset?: number | undefined;
 }
 
 export interface TimeTableProps {

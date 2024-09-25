@@ -17,11 +17,7 @@ interface RowCellProps extends RowCellData {
     containerRef: MutableRefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: string;
-    onCellClick?: (
-        data: RowCellData,
-        e: React.MouseEvent
-        //cellStart/cellEnd
-    ) => void;
+    onCellClick?: (data: RowCellData, e: React.MouseEvent) => void;
 }
 
 const Component = ({
@@ -64,17 +60,11 @@ const Component = ({
         wrapper: (child: JSX.Element) => JSX.Element;
         children: JSX.Element;
     }) => {
-        switch (status) {
-            case "filled": {
-                return wrapper(children);
-            }
-            case "blocked": {
-                return wrapper(children);
-            }
-            default: {
-                return children;
-            }
+        if (!customPopover) {
+            return children;
         }
+
+        return wrapper(children);
     };
 
     const buildPopoverContent = (content: string | JSX.Element) => {
@@ -82,6 +72,7 @@ const Component = ({
             <StyledPopoverContent
                 $padding={customPopover.padding}
                 $width={customPopover.width}
+                data-testid={`${status}-popover-card`}
             >
                 {content}
             </StyledPopoverContent>
@@ -89,18 +80,13 @@ const Component = ({
     };
 
     const buildPopoverTrigger = (child: JSX.Element) => {
-        if (!customPopover) {
-            return child;
-        }
-
         const popoverTriggerProps: PopoverV2TriggerProps = {
             position: "bottom-start",
             rootNode: containerRef,
-            removePadding: true,
-            offset: 0,
+            offset: customPopover.offset,
             children: child,
             trigger: customPopover.trigger,
-            delay: customPopover.delay ?? 1250,
+            delay: customPopover.delay,
             popoverContent: () => buildPopoverContent(customPopover.content),
         };
 
@@ -125,7 +111,7 @@ const Component = ({
                         $bgColour={rowBarColor}
                         $clickableEmptyCell={!!status}
                         onClick={
-                            status
+                            status && status !== "blocked"
                                 ? (e: React.MouseEvent) =>
                                       onCellClick(
                                           {

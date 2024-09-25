@@ -2,8 +2,9 @@ import { isEmpty, throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { CalendarHelper } from "../util";
-import { RowBar } from "./timetable-row/row-bar";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
+import { RowBar } from "./timetable-row/row-bar";
+import { StyledPopoverContent } from "./timetable-row/row-cell.style";
 import {
     ClickableRowHeaderTitle,
     ColumnHeader,
@@ -25,11 +26,13 @@ import {
     TimeTableContainer,
 } from "./timetable.style";
 import {
+    CustomPopoverProps,
     ROW_BAR_COLOR_SEQUENCE,
     ROW_INTERVAL,
     RowData,
     TimeTableProps,
 } from "./types";
+import { PopoverV2TriggerProps } from "../popover-v2";
 
 export const TimeTable = ({
     date,
@@ -151,6 +154,45 @@ export const TimeTable = ({
         };
     })();
 
+    const buildPopoverContent = (customPopoverProps: CustomPopoverProps) => {
+        return (
+            <StyledPopoverContent
+                $padding={customPopoverProps.padding}
+                $width={customPopoverProps.width}
+                data-testid={`row-header-popover-card`}
+            >
+                {customPopoverProps.content}
+            </StyledPopoverContent>
+        );
+    };
+
+    const buildPopoverTrigger = (data: RowData, child: JSX.Element) => {
+        if (!data.rowHeaderCustomPopover) {
+            return child;
+        }
+
+        const popoverTriggerProps: PopoverV2TriggerProps = {
+            position: "bottom-start",
+            rootNode: tableContainerRef,
+            offset: data.rowHeaderCustomPopover.offset,
+            children: child,
+            trigger: data.rowHeaderCustomPopover.trigger,
+            delay: data.rowHeaderCustomPopover.delay,
+            popoverContent: () =>
+                buildPopoverContent(data.rowHeaderCustomPopover),
+        };
+
+        return (
+            <StyledPopoverTrigger
+                {...popoverTriggerProps}
+                key={`${data.id}-popover-trigger`}
+                zIndex={2}
+            >
+                {child}
+            </StyledPopoverTrigger>
+        );
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -159,17 +201,12 @@ export const TimeTable = ({
         wrapper,
         children,
     }: {
-        wrapper: (child: JSX.Element) => JSX.Element | undefined;
+        wrapper: (child: JSX.Element) => JSX.Element;
         children: JSX.Element;
     }) => {
-        if (wrapper) {
-            return wrapper(children);
-        }
-        return children;
+        return wrapper(children);
     };
-    // =============================================================================
-    // RENDER FUNCTIONS
-    // =============================================================================
+
     const renderRowHeaderColumn = () => {
         return (
             <>
@@ -177,32 +214,9 @@ export const TimeTable = ({
                     return (
                         <ConditionalCellWrapper
                             key={index}
-                            wrapper={(child: JSX.Element) => {
-                                if (!data.rowHeaderCustomPopover) {
-                                    return child;
-                                }
-                                return (
-                                    <StyledPopoverTrigger
-                                        key={`${data.id}-popover-trigger`}
-                                        popoverContent={
-                                            data.rowHeaderCustomPopover.content
-                                        }
-                                        position="bottom-start"
-                                        rootNode={tableContainerRef}
-                                        zIndex={2}
-                                        offset={0}
-                                        trigger={
-                                            data.rowHeaderCustomPopover.trigger
-                                        }
-                                        delay={
-                                            data.rowHeaderCustomPopover.delay ??
-                                            1250
-                                        }
-                                    >
-                                        {child}
-                                    </StyledPopoverTrigger>
-                                );
-                            }}
+                            wrapper={(child: JSX.Element) =>
+                                buildPopoverTrigger(data, child)
+                            }
                         >
                             <RowHeader
                                 $isScrolled={isScrolledX}
@@ -344,7 +358,7 @@ export const TimeTable = ({
             $loading={isLoading}
             $height={optionalProps.height}
             $width={optionalProps.width}
-            $allRecordsLoaded={allRecordsLoaded}
+            $allRecordsLoaded={allRecordsLoaded || !onPage}
         >
             <RowColumnHeader
                 $isScrolledY={isScrolledY}

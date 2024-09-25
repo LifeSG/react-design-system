@@ -130,7 +130,6 @@ export const PopoverTrigger = ({
             <PopoverV2
                 visible
                 onMobileClose={handlePopoverMobileClose}
-                removePadding={otherProps.removePadding}
                 className={otherProps.popoverClassName}
             >
                 {popoverContent}

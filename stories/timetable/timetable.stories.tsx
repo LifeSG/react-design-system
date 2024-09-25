@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Color, PopoverV2TriggerType, Text } from "../../src";
 import { TimeTable } from "../../src/timetable/timetable";
-import { RowCellData } from "../../src/timetable/types";
+import { RowCellData, RowData } from "../../src/timetable/types";
 import { StyledHoverContent, getTimeTableData, lazyLoad } from "./mock-data";
 
 type Component = typeof TimeTable;
@@ -199,9 +199,94 @@ export const TimeTableWithNoPopoverContent: StoryObj<Component> = {
 export const TimeTableWithStyledPopovers: StoryObj<Component> = {
     render: () => {
         const onCellClick = (data: RowCellData) => {
+            if (data.status === "filled") return;
             alert(
                 `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
             );
+        };
+
+        const onNameClick = (rowData: RowData, e: React.MouseEvent) => {
+            alert(`Clicked on row header for ${rowData.name}`);
+        };
+
+        const buildCustomPopover = (row: RowData, cell: RowCellData) => {
+            switch (cell.status) {
+                case "filled": {
+                    return {
+                        customPopover: {
+                            trigger: "click" as PopoverV2TriggerType,
+                            content: (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        rowGap: "2rem",
+                                    }}
+                                >
+                                    <div>
+                                        <Text.H3 weight={"semibold"}>
+                                            {row.name}
+                                        </Text.H3>
+                                        <Text.H4 weight={"semibold"}>
+                                            {dayjs().format("D MMM YYYY, ddd")}{" "}
+                                            {`${dayjs(
+                                                cell.startTime,
+                                                "HH:mm"
+                                            ).format("HH:mma")} - ${dayjs(
+                                                cell.endTime,
+                                                "HH:mm"
+                                            ).format("HH:mma")}`}
+                                        </Text.H4>
+                                    </div>
+                                    <div>
+                                        <Text.H5
+                                            style={{
+                                                color: `${Color.Neutral[3]}`,
+                                            }}
+                                        >
+                                            Booking owner
+                                        </Text.H5>
+                                        <Text.Body>{cell.subtitle}</Text.Body>
+                                        <a
+                                            onClick={() =>
+                                                alert(
+                                                    "email copied to clipboard"
+                                                )
+                                            }
+                                        >
+                                            name@gmail.com
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <Text.H5
+                                            style={{
+                                                color: `${Color.Neutral[3]}`,
+                                            }}
+                                        >
+                                            Booking title
+                                        </Text.H5>
+                                        <Text.Body>{cell.title}</Text.Body>
+                                    </div>
+                                </div>
+                            ),
+                            width: "400px",
+                            padding: "3rem",
+                            offset: 0,
+                            delay: 1250,
+                        },
+                    };
+                }
+                case "default": {
+                    return {
+                        customPopover: {
+                            trigger: "hover" as PopoverV2TriggerType,
+                            content: "Available",
+                            offset: 0,
+                            delay: 0,
+                        },
+                    };
+                }
+            }
         };
 
         const rowData = getTimeTableData().rowData.map((row) => {
@@ -211,92 +296,25 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                     trigger: "hover" as PopoverV2TriggerType,
                     content: (
                         <>
-                            <Text.Body weight={"regular"}>Eclipse</Text.Body>
+                            <Text.Body weight={"regular"}>{row.name}</Text.Body>
                             <StyledHoverContent>
                                 <PinIcon />
-                                <Text.H6 weight={"semibold"}>
-                                    <>
-                                        <Person2Icon />
-                                        10
-                                    </>
-                                </Text.H6>
+                                Eclipse
                             </StyledHoverContent>
                         </>
                     ),
+                    offset: 0,
+                    delay: 500,
                 },
                 outsideOpHoursCellCustomPopover: {
                     trigger: "hover" as PopoverV2TriggerType,
                     content: "Outside operating hours",
+                    offset: 0,
                 },
                 rowCells: row.rowCells.map((cell) => {
                     return {
                         ...cell,
-                        ...(cell.status === "filled" && {
-                            customPopover: {
-                                trigger: "hover" as PopoverV2TriggerType,
-                                content: (
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            rowGap: "2rem",
-                                            padding: "16px, 16px, 32px, 32px",
-                                        }}
-                                    >
-                                        <div>
-                                            <Text.H3 weight={"semibold"}>
-                                                {row.name}
-                                            </Text.H3>
-                                            <Text.H4 weight={"semibold"}>
-                                                {dayjs().format(
-                                                    "D MMM YYYY, ddd"
-                                                )}{" "}
-                                                {`${dayjs(
-                                                    cell.startTime,
-                                                    "HH:mm"
-                                                ).format("HH:mma")} - ${dayjs(
-                                                    cell.endTime,
-                                                    "HH:mm"
-                                                ).format("HH:mma")}`}
-                                            </Text.H4>
-                                        </div>
-                                        <div>
-                                            <Text.H5
-                                                style={{
-                                                    color: `${Color.Neutral[3]}`,
-                                                }}
-                                            >
-                                                Booking owner
-                                            </Text.H5>
-                                            <Text.Body>
-                                                {cell.subtitle}
-                                            </Text.Body>
-                                            <a
-                                                onClick={() =>
-                                                    alert(
-                                                        "email copied to clipboard"
-                                                    )
-                                                }
-                                            >
-                                                name@gmail.com
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <Text.H5
-                                                style={{
-                                                    color: `${Color.Neutral[3]}`,
-                                                }}
-                                            >
-                                                Booking title
-                                            </Text.H5>
-                                            <Text.Body>{cell.title}</Text.Body>
-                                        </div>
-                                    </div>
-                                ),
-                                width: "400px",
-                                padding: "3rem",
-                            },
-                        }),
+                        ...buildCustomPopover(row, cell),
                     };
                 }),
             };
@@ -310,6 +328,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                     width="900px"
                     rowData={rowData}
                     onCellClick={onCellClick}
+                    onNameClick={onNameClick}
                 />
             </>
         );
