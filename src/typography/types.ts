@@ -1,18 +1,14 @@
 export type TypographySizeType =
-    | "HeaderXXL"
-    | "HeaderXL"
-    | "HeaderLG"
-    | "HeaderMD"
-    | "HeaderSM"
-    | "HeaderXS"
-    | "BodyBL"
-    | "BodyLG"
-    | "BodyMD"
-    | "BodySM"
-    | "LinkBL"
-    | "LinkMD"
-    | "LinkLG"
-    | "LinkSM";
+    | "header-xxl"
+    | "header-xl"
+    | "header-lg"
+    | "header-md"
+    | "header-sm"
+    | "header-xs"
+    | "body-baseline"
+    | "body-lg"
+    | "body-md"
+    | "body-sm";
 
 export interface TypographyStyleSpec {
     fontSize?: number | undefined;
@@ -31,21 +27,16 @@ export type TypographyWeight =
     | 700
     | 300;
 
-export type TextStyleSetType = {
-    [key in TypographySizeType]: TypographyStyleSpec;
-};
-
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
     // Can be any weight such as regular or 400
-    weight?: TypographyWeight;
+    weight?: TypographyWeight | undefined;
     // For consumer to choose if they want the text to be inline for example
-    inline?: boolean;
+    inline?: boolean | undefined;
     // For consumer to choose for block level style
-    paragraph?: boolean;
+    paragraph?: boolean | undefined;
 }
 
 export interface LinkProps extends TypographyProps {
     // If the link is external
     external?: boolean;
-    textStyle?: TypographySizeType;
 }

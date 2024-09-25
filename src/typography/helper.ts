@@ -1,7 +1,6 @@
 import { css } from "styled-components";
 import { TypographyProps, TypographySizeType, TypographyWeight } from "./types";
-import { TypographyStyle } from "./typography-style";
-import { Colour, Font } from "../theme";
+import { Colour, Font, Typography } from "../theme";
 import { StyledComponentProps } from "../theme/helpers";
 
 const getResolvedTypographyWeight = (
@@ -35,15 +34,22 @@ export const getTypographyStyle = (
     paragraph = false
 ) => {
     return (props: any) => {
-        const attrs = TypographyStyle[type];
-
         const resolvedWeight = getResolvedTypographyWeight(weight, props);
+
+        // to make it eg: header-xxl-light
+        const typographyKey = `${type}-${resolvedWeight.toLowerCase()}`;
+
+        // to get the font size from Font token eg header-size-lg
+        const retrieveSize = (type: string) => {
+            const [firstPart, secondPart] = type.split("-");
+            return `${firstPart}-size-${secondPart}`;
+        };
+
+        const fontValue = Font[retrieveSize(type)];
 
         // Check if function if so resolve with props
         const fontSize =
-            typeof attrs.fontSize === "function"
-                ? attrs.fontSize(props)
-                : attrs.fontSize;
+            typeof fontValue === "function" ? fontValue(props) : fontValue;
 
         // Make it a int for calc
         const fontSizeValue = parseFloat(fontSize);
@@ -58,10 +64,7 @@ export const getTypographyStyle = (
         };
 
         return css`
-            font-size: ${fontSize};
-            line-height: ${attrs.lineHeight};
-            letter-spacing: ${attrs.letterSpacing || 0};
-            font-weight: ${resolvedWeight};
+            ${Typography[typographyKey]}
             ${getMarginBottomStyle()}
         `;
     };
@@ -93,6 +96,6 @@ export const createTypographyStyles = (
         props.weight || "regular",
         props.paragraph
     )(props)}
-    color: ${Colour.Primitive["neutral-20"]};
+    color: ${Colour.text};
     ${getDisplayStyle(props.inline, props.paragraph)}
 `;

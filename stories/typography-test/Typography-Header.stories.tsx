@@ -1,6 +1,4 @@
-import { ThemeProvider } from "styled-components";
 import { Typography } from "../../src/typography/typography";
-import { mockTheme } from "./mock-theme";
 
 export default {
     title: "Typography-Test/Header",
@@ -9,7 +7,7 @@ export default {
 
 // HeaderXXL with bold weight and inline display
 export const Header_Inline = () => (
-    <ThemeProvider theme={mockTheme}>
+    <>
         <Typography.HeaderXXL weight="bold" inline>
             Testing for HeaderXXL and Bold with inline
         </Typography.HeaderXXL>
@@ -19,11 +17,11 @@ export const Header_Inline = () => (
         <Typography.HeaderLG weight="light" inline>
             Testing for HeaderSM and Bold with inline
         </Typography.HeaderLG>
-    </ThemeProvider>
+    </>
 );
 
 export const Header_Paragraph = () => (
-    <ThemeProvider theme={mockTheme}>
+    <>
         <Typography.HeaderXXL weight="bold" paragraph>
             Testing for HeaderXXL and Bold with paragraph
         </Typography.HeaderXXL>
@@ -33,5 +31,5 @@ export const Header_Paragraph = () => (
         <Typography.HeaderLG weight="light" paragraph>
             Testing for HeaderSM and Light with paragraph
         </Typography.HeaderLG>
-    </ThemeProvider>
+    </>
 );
