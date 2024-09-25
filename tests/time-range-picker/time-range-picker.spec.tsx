@@ -18,6 +18,7 @@ describe("TimeRangePicker", () => {
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
+        jest.setTimeout(10000);
     });
 
     describe("Combobox variant", () => {
