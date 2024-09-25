@@ -91,6 +91,7 @@ const zindexPositionHide = keyframes`
 
 	to {
 		position: relative;
+        width: 100%;
 	}
 `;
 
