@@ -95,43 +95,31 @@ export const ColourSemantic = {
     "border-error-focus": getSemanticColour("border-error-focus"),
     "border-info": getSemanticColour("border-info"),
 
-    background: getSemanticColour("background"),
-    "background-hover": getSemanticColour("background-hover"),
-    "background-selected": getSemanticColour("background-selected"),
-    "background-disabled": getSemanticColour("background-disabled"),
-    "background-success": getSemanticColour("background-success"),
-    "background-inverse": getSemanticColour("background-inverse"),
-    "background-strong": getSemanticColour("background-strong"),
-    "background-stronger": getSemanticColour("background-stronger"),
-    "background-hover-strong": getSemanticColour("background-hover-strong"),
-    "background-hover-subtle": getSemanticColour("background-hover-subtle"),
-    "background-hover-neutral": getSemanticColour("background-hover-neutral"),
-    "background-primary": getSemanticColour("background-primary"),
-    "background-primary-hover": getSemanticColour("background-primary-hover"),
-    "background-primary-subtle": getSemanticColour("background-primary-subtle"),
-    "background-primary-subtlest": getSemanticColour(
-        "background-primary-subtlest"
+    "bg-hover": getSemanticColour("bg-hover"),
+    "bg-selected": getSemanticColour("bg-selected"),
+    "bg-disabled": getSemanticColour("bg-disabled"),
+    "bg-success": getSemanticColour("bg-success"),
+    "bg-inverse": getSemanticColour("bg-inverse"),
+    "bg-stronger": getSemanticColour("bg-stronger"),
+    "bg-hover-strong": getSemanticColour("bg-hover-strong"),
+    "bg-hover-subtle": getSemanticColour("bg-hover-subtle"),
+    "bg-hover-neutral": getSemanticColour("bg-hover-neutral"),
+    "bg-primary": getSemanticColour("bg-primary"),
+    "bg-primary-hover": getSemanticColour("bg-primary-hover"),
+    "bg-primary-subtle": getSemanticColour("bg-primary-subtle"),
+    "bg-primary-subtlest": getSemanticColour("bg-primary-subtlest"),
+    "bg-primary-subtlest-hover": getSemanticColour("bg-primary-subtlest-hover"),
+    "bg-primary-subtlest-selected": getSemanticColour(
+        "bg-primary-subtlest-selected"
     ),
-    "background-primary-subtlest-hover": getSemanticColour(
-        "background-primary-subtlest-hover"
-    ),
-    "background-primary-subtlest-selected": getSemanticColour(
-        "background-primary-subtlest-selected"
-    ),
-    "background-selected-strong": getSemanticColour(
-        "background-selected-strong"
-    ),
-    "background-selected-hover": getSemanticColour("background-selected-hover"),
-    "background-selected-disabled": getSemanticColour(
-        "background-selected-disabled"
-    ),
-    "background-warning": getSemanticColour("background-warning"),
-    "background-error": getSemanticColour("background-error"),
-    "background-info": getSemanticColour("background-info"),
-    "background-error-strong": getSemanticColour("background-error-strong"),
-    "background-error-strong-hover": getSemanticColour(
-        "background-error-strong-hover"
-    ),
+    "bg-selected-strong": getSemanticColour("bg-selected-strong"),
+    "bg-selected-hover": getSemanticColour("bg-selected-hover"),
+    "bg-selected-disabled": getSemanticColour("bg-selected-disabled"),
+    "bg-warning": getSemanticColour("bg-warning"),
+    "bg-error": getSemanticColour("bg-error"),
+    "bg-info": getSemanticColour("bg-info"),
+    "bg-error-strong": getSemanticColour("bg-error-strong"),
+    "bg-error-strong-hover": getSemanticColour("bg-error-strong-hover"),
 
     "overlay-strong": getSemanticColour("overlay-strong"),
     "overlay-subtle": getSemanticColour("overlay-subtle"),
@@ -141,4 +129,22 @@ export const ColourSemantic = {
     "hyperlink-inverse": getSemanticColour("hyperlink-inverse"),
     "focus-ring": getSemanticColour("focus-ring"),
     "focus-ring-inverse": getSemanticColour("focus-ring-inverse"),
+
+    // new changes:
+    "text-primary": getSemanticColour("text-primary"),
+    "text-selected-hover": getSemanticColour("text-selected-hover"),
+    "icon-selected-hover": getSemanticColour("icon-selected-hover"),
+    "border-selected-hover": getSemanticColour("border-selected-hover"),
+    bg: getSemanticColour("bg"),
+    "bg-primary-subtler": getSemanticColour("bg-primary-subtler"),
+    "bg-success-strong": getSemanticColour("bg-success-strong"),
+    "bg-inverse-subtle": getSemanticColour("bg-inverse-subtle"),
+    "bg-inverse-subtler": getSemanticColour("bg-inverse-subtler"),
+    "bg-inverse-subtlest": getSemanticColour("bg-inverse-subtlest"),
+    "bg-strong": getSemanticColour("bg-strong"),
+    "bg-strongest": getSemanticColour("bg-strongest"),
+    "bg-selected-strongest": getSemanticColour("bg-selected-strongest"),
+    "bg-warning-strong": getSemanticColour("bg-warning-strong"),
+    "bg-info-strong": getSemanticColour("bg-info-strong"),
+    "border-error-strong": getSemanticColour("border-error-strong"),
 };

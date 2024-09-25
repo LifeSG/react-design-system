@@ -1,4 +1,3 @@
-import { ColourSpec } from "src/theme/colour-primitive/theme-helper";
 import { getSemanticColour } from "src/theme/colour-semantic/theme-helper";
 import { SemanticColourSet, ThemeSpec } from "src/theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
@@ -10,44 +9,21 @@ interface SemanticColourPalette {
 const SemanticColourPalette = ({ tokens }: SemanticColourPalette) => {
     const theme = useTheme();
 
-    // apply proxy to spy on the primitive token being accessed
-    let colourToken: string;
-    const proxy = {
-        get(target, prop) {
-            colourToken = prop;
-            return target[prop];
-        },
-    };
-    const scheme = theme.colourScheme;
-    const original = ColourSpec.collections[scheme];
-    ColourSpec.collections[scheme] = new Proxy(original, proxy);
-
-    const component = (
+    return (
         <Palette>
             <Swatch>
                 {tokens.map((token) => {
-                    colourToken = undefined;
                     const colour = getSemanticColour(token)({ theme });
-                    const reference = colourToken || colour;
-                    colourToken = undefined;
                     return (
                         <SwatchItem key={token}>
                             <SwatchColour $colour={colour} />
-                            <div>
-                                <SwatchLabel>{token}</SwatchLabel>
-                                <SwatchReference>{reference}</SwatchReference>
-                            </div>
+                            <SwatchLabel>{token}</SwatchLabel>
                         </SwatchItem>
                     );
                 })}
             </Swatch>
         </Palette>
     );
-
-    // clean up proxy
-    ColourSpec.collections[scheme] = original;
-
-    return component;
 };
 
 interface SemanticColourDisplayProps {
@@ -67,6 +43,7 @@ export const SemanticColourDisplay = ({
                         "text-subtle",
                         "text-subtler",
                         "text-subtlest",
+                        "text-primary",
                     ]}
                 />
                 <SemanticColourPalette
@@ -87,6 +64,7 @@ export const SemanticColourDisplay = ({
                 />
                 <SemanticColourPalette tokens={["text-hover"]} />
                 <SemanticColourPalette tokens={["text-selected"]} />
+                <SemanticColourPalette tokens={["text-selected-hover"]} />
                 <SemanticColourPalette tokens={["text-inverse"]} />
             </Display>
 
@@ -101,13 +79,14 @@ export const SemanticColourDisplay = ({
                     ]}
                 />
                 <SemanticColourPalette
-                    tokens={["border-hover", "border-hover-strong"]}
+                    tokens={["border-hover", "border-hover-strong"]} // border-hover-strong might not be there
                 />
                 <SemanticColourPalette
                     tokens={[
                         "border-selected",
                         "border-selected-subtle",
                         "border-selected-subtlest",
+                        "border-selected-hover",
                     ]}
                 />
                 <SemanticColourPalette
@@ -122,6 +101,7 @@ export const SemanticColourDisplay = ({
                         "border-warning",
                         "border-error",
                         "border-error-focus",
+                        "border-error-strong",
                         "border-info",
                     ]}
                 />
@@ -130,47 +110,62 @@ export const SemanticColourDisplay = ({
             <PaletteLabel>Background</PaletteLabel>
             <Display>
                 <SemanticColourPalette
+                    tokens={["bg", "bg-strong", "bg-stronger", "bg-strongest"]}
+                />
+                <SemanticColourPalette
                     tokens={[
-                        "background",
-                        "background-strong",
-                        "background-stronger",
+                        "bg-hover",
+                        "bg-hover-strong",
+                        "bg-hover-subtle",
+                        "bg-hover-neutral",
+                        "bg-primary-hover",
                     ]}
                 />
                 <SemanticColourPalette
                     tokens={[
-                        "background-hover",
-                        "background-hover-strong",
-                        "background-hover-subtle",
-                        "background-hover-neutral",
-                        "background-primary-hover",
+                        "bg-selected",
+                        "bg-selected-strong",
+                        "bg-selected-hover",
+                        "bg-selected-strongest",
+                    ]}
+                />
+                <SemanticColourPalette
+                    tokens={["bg-disabled", "bg-selected-disabled"]}
+                />
+                <SemanticColourPalette
+                    tokens={[
+                        "bg-primary",
+                        "bg-primary-hover",
+                        "bg-primary-subtle",
+                        "bg-primary-subtlest-hover",
+                        "bg-primary-subtler",
+                        "bg-primary-subtlest",
+                    ]}
+                />
+                <SemanticColourPalette tokens={["bg-primary-subtlest-hover"]} />
+                <SemanticColourPalette
+                    tokens={["bg-primary-subtlest-selected"]}
+                />
+                <SemanticColourPalette
+                    tokens={[
+                        "bg-success",
+                        "bg-success-strong",
+                        "bg-warning",
+                        "bg-warning-strong",
+                        "bg-info",
+                        "bg-info-strong",
+                        "bg-error",
+                        "bg-error-strong",
+                        "bg-error-strong-hover",
                     ]}
                 />
                 <SemanticColourPalette
                     tokens={[
-                        "background-selected",
-                        "background-selected-strong",
-                        "background-selected-hover",
+                        "bg-inverse",
+                        "bg-inverse-subtle",
+                        "bg-inverse-subtler",
+                        "bg-inverse-subtlest",
                     ]}
-                />
-                <SemanticColourPalette
-                    tokens={[
-                        "background-disabled",
-                        "background-selected-disabled",
-                    ]}
-                />
-                <SemanticColourPalette
-                    tokens={[
-                        "background-primary",
-                        "background-primary-hover",
-                        "background-primary-subtle",
-                        "background-primary-subtlest",
-                    ]}
-                />
-                <SemanticColourPalette
-                    tokens={["background-primary-subtlest-hover"]}
-                />
-                <SemanticColourPalette
-                    tokens={["background-primary-subtlest-selected"]}
                 />
             </Display>
 
@@ -220,7 +215,7 @@ const Display = styled.div`
     margin-bottom: 2.5rem;
 
     &:last-child {
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
     }
 `;
 
@@ -229,7 +224,7 @@ const Palette = styled.div``;
 const PaletteLabel = styled.div`
     font-size: 1.25rem;
     font-weight: bolder;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 `;
 
 const Swatch = styled.ul`
@@ -237,13 +232,13 @@ const Swatch = styled.ul`
     flex-direction: column;
     margin: 0;
     padding: 0;
-    gap: 0.25rem;
+    gap: 0.5rem;
 `;
 
 const SwatchItem = styled.li`
     display: flex;
     justify-items: flex-start;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.5rem;
 `;
 
@@ -264,17 +259,9 @@ const SwatchColour = styled.div<SwatchColourProps>`
     background: ${(props) => props.$colour};
 `;
 
-const SwatchLabel = styled.div`
+const SwatchLabel = styled.span`
     font-family: monospace;
     font-size: 1rem;
     border-radius: 4px;
     padding: 0 0.5rem;
-`;
-
-const SwatchReference = styled.div`
-    font-family: monospace;
-    font-size: 0.875rem;
-    border-radius: 4px;
-    padding: 0 0.5rem;
-    color: #787878;
 `;
