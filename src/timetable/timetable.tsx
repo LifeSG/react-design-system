@@ -130,9 +130,9 @@ export const TimeTable = ({
         refreshRate: 50,
     });
 
-    const handleRowNameClick = (rowBarData: RowData, e: React.MouseEvent) => {
+    const handleRowNameClick = (data: RowData, event: React.MouseEvent) => {
         if (optionalProps.onNameClick) {
-            optionalProps.onNameClick(rowBarData, e);
+            optionalProps.onNameClick(data, event);
         }
     };
 
@@ -223,8 +223,9 @@ export const TimeTable = ({
                                 key={`${data.id}-row-header`}
                             >
                                 <ClickableRowHeaderTitle
-                                    onClick={(e: React.MouseEvent) =>
-                                        handleRowNameClick(data, e)
+                                    $isClickable={!!optionalProps.onNameClick}
+                                    onClick={(event: React.MouseEvent) =>
+                                        handleRowNameClick(data, event)
                                     }
                                     weight="semibold"
                                     id={`${data.id}-row-header-title-id`}
@@ -295,6 +296,9 @@ export const TimeTable = ({
                             intervalWidth={intervalWidth}
                             onCellClick={optionalProps.onCellClick}
                             containerRef={contentContainerRef}
+                            outsideOpHoursCellCustomPopover={
+                                optionalProps.outsideOpHoursCellCustomPopover
+                            }
                             {...data}
                         />
                     );

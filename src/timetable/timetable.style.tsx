@@ -190,14 +190,16 @@ export const RowHeader = styled.div<RowHeaderProps>`
     }};
 `;
 
-export const ClickableRowHeaderTitle = styled(Text.H5)`
+export const ClickableRowHeaderTitle = styled(Text.H5)<{
+    $isClickable: boolean;
+}>`
     display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     color: ${Color.Primary};
     :hover {
-        cursor: pointer;
+        cursor: ${(props) => (props.$isClickable ? "pointer" : "default")};
     }
 `;
 

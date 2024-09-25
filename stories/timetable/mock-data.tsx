@@ -64,9 +64,6 @@ export const getTimeTableData = (currentDate?: string): TimeTableProps => {
         minDate: date.add(-11, "month").format("YYYY-MM-DD"),
         totalRecords: 10,
         rowData: fetchRowData(date),
-        onNameClick: function (rowData: RowData): void {
-            alert(`Clicked on ${JSON.stringify(rowData)}`);
-        },
         emptyContent: {
             illustrationScheme: "bookingsg",
             description:

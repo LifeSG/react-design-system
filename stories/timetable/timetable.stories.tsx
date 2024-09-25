@@ -1,4 +1,4 @@
-import { Person2Icon, PinIcon } from "@lifesg/react-icons";
+import { PinIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -272,7 +272,6 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                             width: "400px",
                             padding: "3rem",
                             offset: 0,
-                            delay: 1250,
                         },
                     };
                 }

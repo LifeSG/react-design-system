@@ -20,15 +20,14 @@ interface EmptyContentProps {
 
 export interface RowData {
     id: string;
-    name: string | JSX.Element;
+    name: string;
     rowCells: RowCellData[];
     subtitle?: string | JSX.Element | undefined;
     rowHeaderCustomPopover?: CustomPopoverProps;
-    // HH:mm format, defaults to timetableMinTime
+    // HH:mm format, defaults to minTime
     rowMinTime?: string;
-    // HH:mm format, defaults to timetableMaxTime
+    // HH:mm format, defaults to maxTime
     rowMaxTime?: string;
-    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
 }
 
 export interface CustomPopoverProps {
@@ -36,7 +35,6 @@ export interface CustomPopoverProps {
     content: string | JSX.Element;
     width?: string | undefined;
     padding?: string | undefined;
-    // in milliseconds
     delay?: number | undefined;
     offset?: number | undefined;
 }
@@ -55,13 +53,13 @@ export interface TimeTableProps {
     totalRecords?: number | undefined;
     width?: string | undefined;
     height?: string | undefined;
+    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
     onRefresh?: () => void;
     onPage?: () => void;
     onLeftArrowClick?: (currentDate: string) => void;
     onRightArrowClick?: (currentDate: string) => void;
     onNameClick?: (rowData: RowData, e: React.MouseEvent) => void;
     onCellClick?: (data: RowCellData, e: React.MouseEvent) => void;
-    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
 }
 
 export interface RowCellData {
@@ -73,6 +71,5 @@ export interface RowCellData {
     status?: CellType | undefined;
     title?: string | undefined;
     subtitle?: string | undefined;
-    // do note that if the custom popover trigger is set to click, it will override the behaviour with the onClick callback for each cell
     customPopover?: CustomPopoverProps | undefined;
 }

@@ -152,13 +152,13 @@ describe("TimeTable", () => {
                             content: "test",
                             delay: 0,
                         },
-                        outsideOpHoursCellCustomPopover: {
-                            trigger: "hover",
-                            content: "outside op hours",
-                            delay: 0,
-                        },
                     },
                 ]}
+                outsideOpHoursCellCustomPopover={{
+                    trigger: "hover",
+                    content: "outside op hours",
+                    delay: 0,
+                }}
                 isLoading={false}
                 emptyContent={timeTableMockData.emptyContent}
             />

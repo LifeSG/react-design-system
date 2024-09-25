@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import React, { MutableRefObject } from "react";
 import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
 import { DateHelper } from "../../util";
+import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "../types";
 import {
     Block,
     BlockContainer,
@@ -11,7 +12,6 @@ import {
     StyledPopoverContent,
     Wrapper,
 } from "./row-cell.style";
-import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "../types";
 
 interface RowCellProps extends RowCellData {
     containerRef: MutableRefObject<HTMLDivElement>;
@@ -48,6 +48,22 @@ const Component = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const handleCellClick = (event: React.MouseEvent) => {
+        if (status && status !== "blocked" && onCellClick) {
+            onCellClick(
+                {
+                    id,
+                    startTime,
+                    endTime,
+                    status,
+                    title,
+                    subtitle,
+                    customPopover,
+                },
+                event
+            );
+        }
+    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -109,24 +125,8 @@ const Component = ({
                         $width={adjustedCellWidth}
                         $status={status}
                         $bgColour={rowBarColor}
-                        $clickableEmptyCell={!!status}
-                        onClick={
-                            status && status !== "blocked"
-                                ? (e: React.MouseEvent) =>
-                                      onCellClick(
-                                          {
-                                              id,
-                                              startTime,
-                                              endTime,
-                                              status,
-                                              title,
-                                              subtitle,
-                                              customPopover,
-                                          },
-                                          e
-                                      )
-                                : undefined
-                        }
+                        $clickableCell={!!handleCellClick && !!customPopover}
+                        onClick={handleCellClick}
                     >
                         {title && (
                             <BlockTitle weight={"semibold"}>{title}</BlockTitle>

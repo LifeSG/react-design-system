@@ -1,6 +1,7 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import * as TimeTableStories from "./timetable.stories";
+import { PropsTable } from "./props-table";
 
 <Meta of={TimeTableStories} />
 
@@ -53,3 +54,7 @@ If there's no `blockedCellHoverContent` or `filledBlockClickContent` provided, t
 <Secondary>No results found</Secondary>
 
 <Canvas of={TimeTableStories.TimeTableWithEmptyContent} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

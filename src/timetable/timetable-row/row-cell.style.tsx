@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { PopoverTrigger } from "../../popover-v2";
+import { PopoverCard } from "../../popover-v2/popover.styles";
 import { Text } from "../../text";
 import { CellType } from "../types";
-import { PopoverCard } from "../../popover-v2/popover.styles";
 
 interface BlockStyleProps {
     $width: number;
     $status: CellType;
     $bgColour: string;
-    $clickableEmptyCell?: boolean;
+    $clickableCell?: boolean;
 }
 
 interface BlockContainerProps {
@@ -45,7 +45,7 @@ export const Block = styled.div<BlockStyleProps>`
     border-radius: 4px;
     box-sizing: border-box;
     padding: 4px;
-    ${({ $status, $bgColour, $clickableEmptyCell }) => {
+    ${({ $status, $bgColour, $clickableCell }) => {
         switch ($status) {
             case "blocked":
                 return css`
@@ -55,21 +55,27 @@ export const Block = styled.div<BlockStyleProps>`
                         #ecefef 6px 12px
                     );
                     &:hover {
-                        cursor: not-allowed;
+                        cursor: ${$clickableCell ? "pointer" : "not-allowed"};
                     }
                 `;
             case "filled":
                 return css`
                     background: ${$bgColour};
                     &:hover {
-                        cursor: pointer;
+                        cursor: ${$clickableCell ? "pointer" : "default"};
+                    }
+                `;
+            case "default":
+                return css`
+                    &:hover {
+                        cursor: ${$clickableCell ? "pointer" : "default"};
                     }
                 `;
             default:
                 return css`
-                    background: ${$clickableEmptyCell ? "" : Color.Neutral[6]};
+                    background: ${Color.Neutral[6]};
                     &:hover {
-                        cursor: ${$clickableEmptyCell ? "pointer" : "default"};
+                        cursor: not-allowed;
                     }
                 `;
         }
