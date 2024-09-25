@@ -33,13 +33,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "underlineStyle",
                 description: "The underline style of the text",
-                propTypes: ["React.ReactNode"],
+                propTypes: [`"default"`, `"underline"`, `"underline-dashed"`],
                 defaultValue: `"default"`,
             },
             {
                 name: "underlineHoverStyle",
                 description: "The underline style of the text when hovered",
-                propTypes: ["React.ReactNode"],
+                propTypes: [`"default"`, `"underline"`, `"underline-dashed"`],
                 defaultValue: `"default"`,
             },
             ...COMMON_POPOVER_ATTRIBUTES,
