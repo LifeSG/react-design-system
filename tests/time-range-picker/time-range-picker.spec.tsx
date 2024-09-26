@@ -18,7 +18,6 @@ describe("TimeRangePicker", () => {
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
-        jest.setTimeout(10000);
     });
 
     describe("Combobox variant", () => {
@@ -495,7 +494,7 @@ describe("TimeRangePicker", () => {
                 expect(mockOnBlur).toHaveBeenCalledTimes(1);
                 expect(mockOnFocus).toHaveBeenCalledTimes(2);
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            }, 10000);
         });
 
         describe("readonly/disabled behavior", () => {
