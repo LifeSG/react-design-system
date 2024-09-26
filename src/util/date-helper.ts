@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs, { Dayjs, OpUnitType } from "dayjs";
 
 const MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
 const MONTHS_WITH_30_DAYS = [4, 6, 9, 11];
@@ -100,5 +100,20 @@ export namespace DateHelper {
             .add(minutes, "minutes")
             .format(format);
         return newTime;
+    };
+
+    /**
+     * Compares two date params to check if they are the same, to a precision level
+     * @param date1 The first date input param
+     * @param date2 The second date input param
+     * @param precision The precision/granular level to check if dates are the same, defaults to "day"
+     * @returns
+     */
+    export const isSame = (
+        date1: string | Dayjs,
+        date2: string | Dayjs,
+        precision: OpUnitType = "day"
+    ) => {
+        return dayjs(date1).isSame(dayjs(date2), precision);
     };
 }
