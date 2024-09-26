@@ -1,0 +1,60 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as TimeTableStories from "./timetable.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={TimeTableStories} />
+
+<Title>TimeTable</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that displays a timetable to view a schedule for a specific day
+
+```tsx
+import { TimeTable } from "@lifesg/react-design-system/timetable";
+```
+
+<Canvas of={TimeTableStories.Default} />
+
+<Secondary>TimeTable with navigation arrows</Secondary>
+The timetable is using the `DateNavigator` component when `onRightArrowClick` and
+`onLeftArrowClick` props are passed in.
+
+You may use `minDate` and `maxDate` to specify
+how far in the future or past the timetable can be viewed until.
+
+_(In this example,
+the user can only view the timetable 2 days before today and 2 days after today)_
+
+<Canvas of={TimeTableStories.TimeTableWithNavigation} />
+
+<Secondary>Lazy Load</Secondary>
+
+Clicking onto the refresh icon on the top left-hand corner will trigger a refresh on the component level.
+
+Lazy load is also enabled if `onPage` callback is passed in
+
+<Canvas of={TimeTableStories.TimeTableWithLazyLoad} />
+
+<Secondary>Customisable popover width and padding</Secondary>
+
+You may choose to customise the padding and width of the popover for filled and disabled cells through `filledCellPopoverSize` and `blockedCellPopoverSize` respectively
+
+Do note that if the custom popover trigger is set to click, it will override the behaviour with the onClick callback for each cell
+
+<Canvas of={TimeTableStories.TimeTableWithStyledPopovers} />
+
+<Secondary>TimeTable with no popover content</Secondary>
+
+If there's no `blockedCellHoverContent` or `filledBlockClickContent` provided, the popover will not appear
+
+<Canvas of={TimeTableStories.TimeTableWithNoPopoverContent} />
+
+<Secondary>No results found</Secondary>
+
+<Canvas of={TimeTableStories.TimeTableWithEmptyContent} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
