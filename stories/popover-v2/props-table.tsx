@@ -2,6 +2,102 @@ import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
+export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
+    {
+        name: "popoverContent",
+        description: (
+            <>
+                The content of the <code>Popover</code>
+            </>
+        ),
+        propTypes: ["string", "JSX.Element", "() => React.ReactNode"],
+        mandatory: true,
+    },
+    {
+        name: "trigger",
+        description: (
+            <>
+                The trigger for the appearance of the <code>Popover</code>
+            </>
+        ),
+        propTypes: [`"click"`, `"hover"`],
+        defaultValue: `"click"`,
+    },
+    {
+        name: "position",
+        description: (
+            <>
+                The visual position of the <code>Popover</code> in relation to
+                its trigger
+            </>
+        ),
+        propTypes: [
+            `"top"`,
+            `"top-start"`,
+            `"top-end"`,
+            `"bottom"`,
+            `"bottom-start"`,
+            `"bottom-end"`,
+            `"left"`,
+            `"left-start"`,
+            `"left-end"`,
+            `"right"`,
+            `"right-start"`,
+            `"right-end"`,
+        ],
+        defaultValue: `"top"`,
+    },
+    {
+        name: "zIndex",
+        description: (
+            <>
+                The custom z-index of the <code>Popover</code>. Try specifying
+                this if you encounter z-index conflicts.
+            </>
+        ),
+        propTypes: ["number"],
+    },
+    {
+        name: "rootNode",
+        description: (
+            <>
+                The root element that hosts the popover element. Try specifying
+                this if <code>zIndex</code> does not work.
+                <br />
+                <br />
+                For example, if the parent of the trigger element has a higher
+                z-index than the popover, the popover may not be visible.
+                Specify the parent here instead so that they share the same
+                stacking context.
+            </>
+        ),
+        propTypes: ["RefObject<HTMLElement>"],
+        defaultValue: (
+            <>
+                document<code>body</code>
+            </>
+        ),
+    },
+    {
+        name: "onPopoverAppear",
+        description: (
+            <>
+                The callback when the <code>Popover</code> appears
+            </>
+        ),
+        propTypes: ["() => void"],
+    },
+    {
+        name: "onPopoverDismiss",
+        description: (
+            <>
+                The callback when the <code>Popover</code> dismisses
+            </>
+        ),
+        propTypes: ["() => void"],
+    },
+];
+
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
@@ -31,100 +127,7 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 propTypes: ["React.ReactNode"],
                 mandatory: true,
             },
-            {
-                name: "popoverContent",
-                description: (
-                    <>
-                        The content of the <code>Popover</code>
-                    </>
-                ),
-                propTypes: ["string", "JSX.Element", "() => React.ReactNode"],
-                mandatory: true,
-            },
-            {
-                name: "trigger",
-                description: (
-                    <>
-                        The trigger for the appearance of the{" "}
-                        <code>Popover</code>
-                    </>
-                ),
-                propTypes: [`"click"`, `"hover"`],
-                defaultValue: `"click"`,
-            },
-            {
-                name: "position",
-                description: (
-                    <>
-                        The visual position of the <code>Popover</code> in
-                        relation to it&rsquo;s trigger
-                    </>
-                ),
-                propTypes: [
-                    `"top"`,
-                    `"top-start"`,
-                    `"top-end"`,
-                    `"bottom"`,
-                    `"bottom-start"`,
-                    `"bottom-end"`,
-                    `"left"`,
-                    `"left-start"`,
-                    `"left-end"`,
-                    `"right"`,
-                    `"right-start"`,
-                    `"right-end"`,
-                ],
-                defaultValue: `"top"`,
-            },
-            {
-                name: "zIndex",
-                description: (
-                    <>
-                        The custom z-index of the <code>Popover</code>. Try
-                        specifying this if you encounter z-index conflicts.
-                    </>
-                ),
-                propTypes: ["number"],
-            },
-            {
-                name: "rootNode",
-                description: (
-                    <>
-                        The root element that hosts the popover element. Try
-                        specifying this if <code>zIndex</code> does not work.
-                        <br />
-                        <br />
-                        For example, if the parent of the trigger element has a
-                        higher z-index than the popover, the popover may not be
-                        visible. Specify the parent here instead so that they
-                        share the same stacking context.
-                    </>
-                ),
-                propTypes: ["RefObject<HTMLElement>"],
-                defaultValue: (
-                    <>
-                        document<code>body</code>
-                    </>
-                ),
-            },
-            {
-                name: "onPopoverAppear",
-                description: (
-                    <>
-                        The callback when the <code>Popover</code> appears
-                    </>
-                ),
-                propTypes: ["() => void"],
-            },
-            {
-                name: "onPopoverDismiss",
-                description: (
-                    <>
-                        The callback when the <code>Popover</code> dismisses
-                    </>
-                ),
-                propTypes: ["() => void"],
-            },
+            ...COMMON_POPOVER_ATTRIBUTES,
         ],
     },
 ];
