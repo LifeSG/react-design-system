@@ -310,6 +310,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                     trigger: "hover" as PopoverV2TriggerType,
                     content: "Outside operating hours",
                     offset: 0,
+                    delay: { open: 0, close: 0 },
                 },
                 rowCells: row.rowCells.map((cell) => {
                     return {

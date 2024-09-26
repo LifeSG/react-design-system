@@ -35,7 +35,6 @@ export const PopoverTrigger = ({
     // CONST, STATE, REF
     // =========================================================================
     const [visible, setVisible] = useState<boolean>(false);
-    const [timerId, setTimerId] = useState(null);
 
     const nodeRef = useRef<HTMLDivElement>();
     const popoverRef = useRef<HTMLDivElement>();
@@ -145,6 +144,7 @@ export const PopoverTrigger = ({
                             }}
                             style={{
                                 ...floatingStyles,
+                                outline: "none",
                                 zIndex: zIndex ?? parentZIndex,
                             }}
                             {...getFloatingProps()}
