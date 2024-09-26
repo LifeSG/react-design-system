@@ -74,6 +74,7 @@ export * from "./time-slot-bar-week";
 export * from "./time-slot-week-view";
 export * from "./timeline";
 export * from "./timepicker";
+export * from "./timetable";
 export * from "./toast";
 export * from "./toggle";
 export * from "./tooltip";
