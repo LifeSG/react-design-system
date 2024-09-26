@@ -182,14 +182,13 @@ export const SemanticColourDisplay = ({
                         "bg-hover-strong",
                         "bg-hover-subtle",
                         "bg-hover-neutral",
-                        "bg-primary-hover",
                     ]}
                 />
                 <SemanticColourPalette
                     tokens={[
                         "bg-selected",
-                        "bg-selected-strong",
                         "bg-selected-hover",
+                        "bg-selected-strong",
                         "bg-selected-strongest",
                     ]}
                 />
@@ -199,15 +198,13 @@ export const SemanticColourDisplay = ({
                 <SemanticColourPalette
                     tokens={[
                         "bg-primary",
-                        "bg-primary-hover",
                         "bg-primary-subtle",
-                        "bg-primary-subtlest-hover",
                         "bg-primary-subtler",
                         "bg-primary-subtlest",
+                        "bg-primary-hover",
+                        "bg-primary-subtlest-hover",
+                        "bg-primary-subtlest-selected",
                     ]}
-                />
-                <SemanticColourPalette
-                    tokens={["bg-primary-subtlest-selected"]}
                 />
                 <SemanticColourPalette
                     tokens={[
@@ -235,11 +232,7 @@ export const SemanticColourDisplay = ({
             <PaletteLabel>Overlay</PaletteLabel>
             <Display>
                 <SemanticColourPalette
-                    tokens={[
-                        "overlay-strong",
-                        "overlay-subtle",
-                        "overlay-inverse-gradient",
-                    ]}
+                    tokens={["overlay-strong", "overlay-subtle"]}
                 />
             </Display>
 

@@ -61,6 +61,7 @@ export type SemanticColourSet = {
     "border-primary-subtle": SemanticColourValue;
 
     "border-hover": SemanticColourValue;
+
     "border-selected": SemanticColourValue;
     "border-selected-subtle": SemanticColourValue;
     "border-selected-subtlest": SemanticColourValue;
@@ -68,6 +69,7 @@ export type SemanticColourSet = {
 
     "border-focus": SemanticColourValue;
     "border-focus-strong": SemanticColourValue;
+
     "border-disabled": SemanticColourValue;
     "border-selected-disabled": SemanticColourValue;
 
@@ -90,11 +92,12 @@ export type SemanticColourSet = {
     "bg-hover-neutral": SemanticColourValue;
 
     "bg-selected": SemanticColourValue;
-    "bg-selected-strong": SemanticColourValue;
     "bg-selected-hover": SemanticColourValue;
-    "bg-selected-disabled": SemanticColourValue;
+    "bg-selected-strong": SemanticColourValue;
     "bg-selected-strongest": SemanticColourValue;
+
     "bg-disabled": SemanticColourValue;
+    "bg-selected-disabled": SemanticColourValue;
 
     "bg-success": SemanticColourValue;
     "bg-success-strong": SemanticColourValue;
@@ -122,11 +125,12 @@ export type SemanticColourSet = {
     // overlay
     "overlay-strong": SemanticColourValue;
     "overlay-subtle": SemanticColourValue;
-    "overlay-inverse-gradient": SemanticColourValue;
 
-    // hyperlink, focus ring
+    // hyperlink
     hyperlink: SemanticColourValue;
     "hyperlink-inverse": SemanticColourValue;
+
+    // focus ring
     "focus-ring": SemanticColourValue;
     "focus-ring-inverse": SemanticColourValue;
 };

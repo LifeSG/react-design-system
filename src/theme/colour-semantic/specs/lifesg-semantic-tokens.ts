@@ -52,6 +52,7 @@ export const LifeSGColourSet: SemanticColourSet = {
     "border-strong": getPrimitiveColour("neutral-70"),
     "border-primary": getPrimitiveColour("primary-50"),
     "border-primary-subtle": getPrimitiveColour("primary-60"),
+
     "border-hover": getPrimitiveColour("primary-90"),
 
     "border-selected": getPrimitiveColour("primary-50"),
@@ -61,6 +62,7 @@ export const LifeSGColourSet: SemanticColourSet = {
 
     "border-focus": getPrimitiveColour("primary-60"),
     "border-focus-strong": getPrimitiveColour("primary-50"),
+
     "border-disabled": getPrimitiveColour("neutral-90"),
     "border-selected-disabled": getPrimitiveColour("neutral-70"),
 
@@ -83,11 +85,12 @@ export const LifeSGColourSet: SemanticColourSet = {
     "bg-hover-neutral": getPrimitiveColour("neutral-95"),
 
     "bg-selected": getPrimitiveColour("primary-95"),
-    "bg-selected-strong": getPrimitiveColour("primary-90"),
     "bg-selected-hover": getPrimitiveColour("primary-90"),
-    "bg-selected-disabled": getPrimitiveColour("neutral-95"),
-    "bg-disabled": getPrimitiveColour("neutral-95"),
+    "bg-selected-strong": getPrimitiveColour("primary-90"),
     "bg-selected-strongest": getPrimitiveColour("primary-90"),
+
+    "bg-disabled": getPrimitiveColour("neutral-95"),
+    "bg-selected-disabled": getPrimitiveColour("neutral-95"),
 
     "bg-success": getPrimitiveColour("success-100"),
     "bg-success-strong": getPrimitiveColour("success-50"),
@@ -115,11 +118,12 @@ export const LifeSGColourSet: SemanticColourSet = {
     // overlay
     "overlay-strong": "rgba(40, 40, 40, 0.95)",
     "overlay-subtle": "rgba(40, 40, 40, 0.20)",
-    "overlay-inverse-gradient": "rgba(255, 255, 255, 1)",
 
-    // hyperlink, focus ring
+    // hyperlink
     hyperlink: getPrimitiveColour("primary-50"),
     "hyperlink-inverse": "#FFCB6A",
+
+    // focus ring
     "focus-ring": getPrimitiveColour("black"),
     "focus-ring-inverse": getPrimitiveColour("white"),
 };

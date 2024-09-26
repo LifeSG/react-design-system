@@ -93,6 +93,7 @@ export const ColourSemantic = {
     "border-primary-subtle": getSemanticColour("border-primary-subtle"),
 
     "border-hover": getSemanticColour("border-hover"),
+
     "border-selected": getSemanticColour("border-selected"),
     "border-selected-subtle": getSemanticColour("border-selected-subtle"),
     "border-selected-subtlest": getSemanticColour("border-selected-subtlest"),
@@ -100,6 +101,7 @@ export const ColourSemantic = {
 
     "border-focus": getSemanticColour("border-focus"),
     "border-focus-strong": getSemanticColour("border-focus-strong"),
+
     "border-disabled": getSemanticColour("border-disabled"),
     "border-selected-disabled": getSemanticColour("border-selected-disabled"),
 
@@ -122,11 +124,12 @@ export const ColourSemantic = {
     "bg-hover-neutral": getSemanticColour("bg-hover-neutral"),
 
     "bg-selected": getSemanticColour("bg-selected"),
-    "bg-selected-strong": getSemanticColour("bg-selected-strong"),
     "bg-selected-hover": getSemanticColour("bg-selected-hover"),
-    "bg-selected-disabled": getSemanticColour("bg-selected-disabled"),
+    "bg-selected-strong": getSemanticColour("bg-selected-strong"),
     "bg-selected-strongest": getSemanticColour("bg-selected-strongest"),
+
     "bg-disabled": getSemanticColour("bg-disabled"),
+    "bg-selected-disabled": getSemanticColour("bg-selected-disabled"),
 
     "bg-success": getSemanticColour("bg-success"),
     "bg-success-strong": getSemanticColour("bg-success-strong"),
@@ -156,11 +159,12 @@ export const ColourSemantic = {
     // overlay
     "overlay-strong": getSemanticColour("overlay-strong"),
     "overlay-subtle": getSemanticColour("overlay-subtle"),
-    "overlay-inverse-gradient": getSemanticColour("overlay-inverse-gradient"),
 
-    // hyperlink, focus ring
+    // hyperlink
     hyperlink: getSemanticColour("hyperlink"),
     "hyperlink-inverse": getSemanticColour("hyperlink-inverse"),
+
+    // focus ring
     "focus-ring": getSemanticColour("focus-ring"),
     "focus-ring-inverse": getSemanticColour("focus-ring-inverse"),
 };
