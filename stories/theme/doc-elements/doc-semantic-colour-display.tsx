@@ -48,6 +48,13 @@ export const SemanticColourDisplay = ({
                 />
                 <SemanticColourPalette
                     tokens={[
+                        "text-hover",
+                        "text-selected",
+                        "text-selected-hover",
+                    ]}
+                />
+                <SemanticColourPalette
+                    tokens={[
                         "text-disabled",
                         "text-disabled-subtle",
                         "text-disabled-subtlest",
@@ -62,10 +69,45 @@ export const SemanticColourDisplay = ({
                         "text-info",
                     ]}
                 />
-                <SemanticColourPalette tokens={["text-hover"]} />
-                <SemanticColourPalette tokens={["text-selected"]} />
-                <SemanticColourPalette tokens={["text-selected-hover"]} />
                 <SemanticColourPalette tokens={["text-inverse"]} />
+            </Display>
+
+            <PaletteLabel>Icon</PaletteLabel>
+            <Display>
+                <SemanticColourPalette
+                    tokens={[
+                        "icon",
+                        "icon-subtle",
+                        "icon-strongest",
+                        "icon-primary",
+                        "icon-primary-subtle",
+                        "icon-primary-subtlest",
+                    ]}
+                />
+                <SemanticColourPalette
+                    tokens={[
+                        "icon-hover",
+                        "icon-selected",
+                        "icon-selected-hover",
+                    ]}
+                />
+                <SemanticColourPalette
+                    tokens={[
+                        "icon-disabled",
+                        "icon-disabled-subtle",
+                        "icon-selected-disabled",
+                    ]}
+                />
+                <SemanticColourPalette
+                    tokens={[
+                        "icon-success",
+                        "icon-warning",
+                        "icon-error",
+                        "icon-error-strong",
+                        "icon-info",
+                        "icon-inverse",
+                    ]}
+                />
             </Display>
 
             <PaletteLabel>Border</PaletteLabel>
@@ -78,9 +120,7 @@ export const SemanticColourDisplay = ({
                         "border-primary-subtle",
                     ]}
                 />
-                <SemanticColourPalette
-                    tokens={["border-hover", "border-hover-strong"]} // border-hover-strong might not be there
-                />
+                <SemanticColourPalette tokens={["border-hover"]} />
                 <SemanticColourPalette
                     tokens={[
                         "border-selected",
@@ -142,7 +182,6 @@ export const SemanticColourDisplay = ({
                         "bg-primary-subtlest",
                     ]}
                 />
-                <SemanticColourPalette tokens={["bg-primary-subtlest-hover"]} />
                 <SemanticColourPalette
                     tokens={["bg-primary-subtlest-selected"]}
                 />
@@ -259,7 +298,7 @@ const SwatchColour = styled.div<SwatchColourProps>`
     background: ${(props) => props.$colour};
 `;
 
-const SwatchLabel = styled.span`
+const SwatchLabel = styled.div`
     font-family: monospace;
     font-size: 1rem;
     border-radius: 4px;
