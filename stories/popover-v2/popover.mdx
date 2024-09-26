@@ -11,6 +11,12 @@ import { PropsTable } from "./props-table";
 
 A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.
 
+This module contains:
+
+-   PopoverV2 - the presentational component
+-   PopoverTrigger - a utility component that handles triggering of the popover
+-   [PopoverInline](/docs/modules-popoverv2-popoverinline--docs) - a utility component that displays a text or icon-based trigger
+
 ```tsx
 import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 ```
@@ -19,12 +25,20 @@ import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 
 <Canvas of={PopoverStories.HoverInteraction} />
 
-<Heading4>Appearance information</Heading4>
+<Heading4>Behaviour</Heading4>
+
+**Appearance**
 
 -   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself at the preferred position by default
 -   The `Popover` appears as a modal in mobile viewports
 
-The example below illustrates the default behaviour.
+**Keyboard support**
+
+The trigger should be included in the page's tab sequence. This way, users who
+navigate via keyboard can open the popover with `Space`/`Enter`. On open, focus
+will move to the popover. Press `Escape` to dismiss the popover.
+
+The example below illustrates the positioning behaviour when viewed on desktop.
 
 <Canvas of={PopoverStories.Appearance} />
 
@@ -39,5 +53,21 @@ The component comes with basic styling for commonly used markup such as `<strong
 You can opt out of the default appearance to display custom content such as menus and dialogs.
 
 <Canvas of={PopoverStories.Customisation} />
+
+<Heading3>Z-index conflicts</Heading3>
+
+The popover uses z-index to display above elements. It may end up rendering
+below another element with a higher z-index.
+
+The popover is `Modal` and `Overlay`-aware by default; when rendered as a child
+of either component, it will automatically adjust its z-index to remain visible.
+The story below illustrates the default behaviour.
+
+If you still encounter z-index issues, try setting a custom `zIndex` or
+`rootNode`.
+
+<Canvas of={PopoverStories.UsageInOverlay} />
+
+<Secondary>Component API</Secondary>
 
 <PropsTable />

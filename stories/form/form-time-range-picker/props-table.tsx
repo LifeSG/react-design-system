@@ -1,13 +1,30 @@
-import React from "react";
 import { ApiTable, code, quote } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const TIME_FORMAT = (
     <>
-        24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
+        <strong>Dial variant:</strong>
         <br />
-        12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
+        <ul style={{ marginLeft: "2rem" }}>
+            <li>
+                24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
+            </li>
+            <li>
+                12 hour uses {quote("hh:mmA")} e.g. {code(quote("01:00PM"))}
+            </li>
+        </ul>
+        <br />
+        <strong>Combobox variant:</strong>
+        <br />
+        <ul style={{ marginLeft: "2rem" }}>
+            <li>
+                24 hour uses {quote("hh:mm")} e.g. {code(quote("13:00"))}
+            </li>
+            <li>
+                12 hours uses {quote("h:mma")} e.g. {code(quote("1:00pm"))}
+            </li>
+        </ul>
     </>
 );
 
@@ -69,6 +86,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "variant",
+                description: "Specifies the variant for the component",
+                propTypes: [`"dial"`, `"combobox"`],
+                defaultValue: `"dial"`,
+            },
+            {
                 name: "onChange",
                 description:
                     "Called when the user clicks on the 'Done' button in the time selection box. Returns the time range values in the format specified",
@@ -87,6 +110,42 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
+        name: "Combobox variant specific props",
+        attributes: [
+            {
+                name: "interval",
+                description:
+                    "The interval (minutes) between each dropdown option",
+                propTypes: ["number"],
+                defaultValue: "15",
+            },
+            {
+                name: "startLimit",
+                description: "The starting time for the dropdown options",
+                propTypes: ["string"],
+            },
+            {
+                name: "endLimit",
+                description: "The ending time for the dropdown options",
+                propTypes: ["string"],
+            },
+            {
+                name: "alignment",
+                description:
+                    "Specifies if the dropdown is aligned to the left or right of the main field",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
+            },
+        ],
+    },
+    {
         name: "TimeRangePickerValue",
         attributes: [
             {
@@ -95,6 +154,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The selected start time value as an empty string or a
                         string-based format.
+                        <br />
                         <br />
                         {TIME_FORMAT}
                     </>
@@ -107,6 +167,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The selected start time value as an empty string or a
                         string-based format.
+                        <br />
                         <br />
                         {TIME_FORMAT}
                     </>

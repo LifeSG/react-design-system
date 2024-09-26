@@ -9,7 +9,12 @@ export type CellType =
     | "hover-dash"
     | "hover-current";
 
-export type LabelType = "available" | "unavailable" | "current" | "selected";
+export type LabelType =
+    | "available"
+    | "unavailable"
+    | "current"
+    | "selected"
+    | "hidden";
 
 export interface CellStyleProps {
     bgLeft?: CellType | undefined;

@@ -36,7 +36,17 @@ export interface PopoverV2TriggerProps {
     rootNode?: RefObject<HTMLElement> | undefined;
     offset?: number | undefined;
     // in milliseconds
-    delay?: number;
+    delay?: { open: number; close: number };
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
+}
+
+export type PopoverInlineStyle = "default" | "underline" | "underline-dashed";
+
+export interface PopoverInlineProps
+    extends Omit<PopoverV2TriggerProps, "children"> {
+    content?: React.ReactNode | undefined;
+    icon?: JSX.Element | undefined;
+    underlineStyle?: PopoverInlineStyle | undefined;
+    underlineHoverStyle?: PopoverInlineStyle | undefined;
 }

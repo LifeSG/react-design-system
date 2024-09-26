@@ -35,7 +35,7 @@ export interface CustomPopoverProps {
     content: string | JSX.Element;
     width?: string | undefined;
     padding?: string | undefined;
-    delay?: number | undefined;
+    delay?: { open: number; close: number } | undefined;
     offset?: number | undefined;
 }
 

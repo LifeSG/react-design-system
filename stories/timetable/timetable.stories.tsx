@@ -214,7 +214,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                 case "filled": {
                     return {
                         customPopover: {
-                            trigger: "click" as PopoverV2TriggerType,
+                            trigger: "hover" as PopoverV2TriggerType,
                             content: (
                                 <div
                                     style={{
@@ -272,6 +272,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                             width: "400px",
                             padding: "3rem",
                             offset: 0,
+                            delay: { open: 1250, close: 1250 },
                         },
                     };
                 }
@@ -281,7 +282,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                             trigger: "hover" as PopoverV2TriggerType,
                             content: "Available",
                             offset: 0,
-                            delay: 0,
+                            delay: { open: 0, close: 0 },
                         },
                     };
                 }
@@ -303,7 +304,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                         </>
                     ),
                     offset: 0,
-                    delay: 500,
+                    delay: { open: 500, close: 0 },
                 },
                 outsideOpHoursCellCustomPopover: {
                     trigger: "hover" as PopoverV2TriggerType,

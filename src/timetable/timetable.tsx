@@ -1,6 +1,7 @@
 import { isEmpty, throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { PopoverV2TriggerProps } from "../popover-v2";
 import { CalendarHelper } from "../util";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import { RowBar } from "./timetable-row/row-bar";
@@ -32,7 +33,6 @@ import {
     RowData,
     TimeTableProps,
 } from "./types";
-import { PopoverV2TriggerProps } from "../popover-v2";
 
 export const TimeTable = ({
     date,
