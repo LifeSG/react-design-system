@@ -1,0 +1,40 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as DateNavigatorStories from "./date-navigator.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={DateNavigatorStories} />
+
+<Title>DateNavigator</Title>
+
+<Secondary>Overview</Secondary>
+
+A component that displays the current date and day, with optional callbacks for navigating the dates.
+
+```tsx
+import { DateNavigator } from "@lifesg/react-design-system/date-navigator";
+```
+
+<Canvas of={DateNavigatorStories.Default} />
+
+<Secondary>With Navigation</Secondary>
+
+With the optional callbacks defined for left right arrow button clicks, the buttons will appear and the behavior of these button depends on the implementation.
+
+<Canvas of={DateNavigatorStories.WithNavigation} />
+
+<Secondary>Loading State</Secondary>
+
+If there is a need to disable button clicks due to loading states, there is an optional prop to to do so.
+
+<Canvas of={DateNavigatorStories.LoadingState} />
+
+<Secondary>With date range</Secondary>
+
+If min and max date props are passed in, the component will disable the corresponding navigation buttons when the current date falls out of the range.
+
+<Canvas of={DateNavigatorStories.WithMinAndMaxDate} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
