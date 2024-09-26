@@ -352,7 +352,7 @@ const DATA: ApiTableSectionProps[] = [
                         trigger type is of type<code>hover</code>.
                     </>
                 ),
-                propTypes: ["number"],
+                propTypes: ["{ open: number, close: number }"],
             },
             {
                 name: "offset",

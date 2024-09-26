@@ -106,11 +106,7 @@ export const PopoverTrigger = ({
         }
 
         return (
-            <PopoverV2
-                visible
-                onMobileClose={handlePopoverMobileClose}
-                className={otherProps.popoverClassName}
-            >
+            <PopoverV2 visible onMobileClose={handlePopoverMobileClose}>
                 {popoverContent}
             </PopoverV2>
         );

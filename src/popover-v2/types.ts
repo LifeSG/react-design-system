@@ -25,7 +25,6 @@ export interface PopoverV2TriggerProps {
     id?: string | undefined;
     zIndex?: number | undefined;
     className?: string | undefined;
-    popoverClassName?: string | undefined;
     "data-testid"?: string | undefined;
     /**
      * The root element that contains the popover element. Defaults to the document body.
