@@ -33,6 +33,9 @@ export interface PopoverV2TriggerProps {
      * the popover may not be visible. Specify the parent element here instead
      */
     rootNode?: RefObject<HTMLElement> | undefined;
+    offset?: number | undefined;
+    // in milliseconds
+    delay?: { open: number; close: number } | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }
