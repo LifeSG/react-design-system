@@ -127,6 +127,24 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 propTypes: ["React.ReactNode"],
                 mandatory: true,
             },
+            {
+                name: "offset",
+                description: "How much offset to apply for the popover (in px)",
+                propTypes: ["number"],
+                defaultValue: "16",
+            },
+            {
+                name: "delay",
+                description: (
+                    <>
+                        How much delay for popover to appear/dismiss <br />
+                        <b>Note</b>: When trigger is of type <code>click</code>,
+                        delay is not applied.
+                    </>
+                ),
+                propTypes: ["{ open: number, close: number }"],
+                defaultValue: "{ open: 0, close: 500 }",
+            },
             ...COMMON_POPOVER_ATTRIBUTES,
         ],
     },
