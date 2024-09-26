@@ -1,3 +1,4 @@
+import { ColourSpec } from "src/theme/colour-primitive/theme-helper";
 import { getSemanticColour } from "src/theme/colour-semantic/theme-helper";
 import { SemanticColourSet, ThemeSpec } from "src/theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
@@ -9,21 +10,44 @@ interface SemanticColourPalette {
 const SemanticColourPalette = ({ tokens }: SemanticColourPalette) => {
     const theme = useTheme();
 
-    return (
+    // apply proxy to spy on the primitive token being accessed
+    let colourToken: string;
+    const proxy = {
+        get(target, prop) {
+            colourToken = prop;
+            return target[prop];
+        },
+    };
+    const scheme = theme.colourScheme;
+    const original = ColourSpec.collections[scheme];
+    ColourSpec.collections[scheme] = new Proxy(original, proxy);
+
+    const component = (
         <Palette>
             <Swatch>
                 {tokens.map((token) => {
+                    colourToken = undefined;
                     const colour = getSemanticColour(token)({ theme });
+                    const reference = colourToken || colour;
+                    colourToken = undefined;
                     return (
                         <SwatchItem key={token}>
                             <SwatchColour $colour={colour} />
-                            <SwatchLabel>{token}</SwatchLabel>
+                            <div>
+                                <SwatchLabel>{token}</SwatchLabel>
+                                <SwatchReference>{reference}</SwatchReference>
+                            </div>
                         </SwatchItem>
                     );
                 })}
             </Swatch>
         </Palette>
     );
+
+    // clean up proxy
+    ColourSpec.collections[scheme] = original;
+
+    return component;
 };
 
 interface SemanticColourDisplayProps {
@@ -254,7 +278,7 @@ const Display = styled.div`
     margin-bottom: 2.5rem;
 
     &:last-child {
-        margin-bottom: 1rem;
+        margin-bottom: 3rem;
     }
 `;
 
@@ -263,7 +287,7 @@ const Palette = styled.div``;
 const PaletteLabel = styled.div`
     font-size: 1.25rem;
     font-weight: bolder;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 `;
 
 const Swatch = styled.ul`
@@ -271,13 +295,13 @@ const Swatch = styled.ul`
     flex-direction: column;
     margin: 0;
     padding: 0;
-    gap: 0.5rem;
+    gap: 0.25rem;
 `;
 
 const SwatchItem = styled.li`
     display: flex;
     justify-items: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
 `;
 
@@ -303,4 +327,12 @@ const SwatchLabel = styled.div`
     font-size: 1rem;
     border-radius: 4px;
     padding: 0 0.5rem;
+`;
+
+const SwatchReference = styled.div`
+    font-family: monospace;
+    font-size: 0.875rem;
+    border-radius: 4px;
+    padding: 0 0.5rem;
+    color: #787878;
 `;
