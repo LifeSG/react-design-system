@@ -7,7 +7,6 @@ import { lazyLoad } from "../../stories/timetable/mock-data";
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");
 
-    //REVIEW - is there a way to mock this const ? kiv for when we have time
     const timeTableMockData = {
         date: date.format("YYYY-MM-DD"),
         minTime: "06:20:00",
