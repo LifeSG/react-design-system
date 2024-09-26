@@ -7,93 +7,130 @@ export type SemanticColourCollectionMap = {
 export type SemanticColourSetOptions = Partial<SemanticColourSet>;
 
 type SemanticColourValue = string | ((props: any) => string);
+
 export type SemanticColourSet = {
+    // text
     text: SemanticColourValue;
-    "text-hover": SemanticColourValue;
-    "text-selected": SemanticColourValue;
-    "text-disabled": SemanticColourValue;
-    "text-success": SemanticColourValue;
-    "text-inverse": SemanticColourValue;
     "text-subtle": SemanticColourValue;
     "text-subtler": SemanticColourValue;
     "text-subtlest": SemanticColourValue;
+    "text-primary": SemanticColourValue;
+
+    "text-hover": SemanticColourValue;
+    "text-selected": SemanticColourValue;
+    "text-selected-hover": SemanticColourValue;
+
+    "text-disabled": SemanticColourValue;
     "text-disabled-subtle": SemanticColourValue;
     "text-disabled-subtlest": SemanticColourValue;
     "text-selected-disabled": SemanticColourValue;
+
+    "text-success": SemanticColourValue;
     "text-warning": SemanticColourValue;
     "text-error": SemanticColourValue;
     "text-info": SemanticColourValue;
+    "text-inverse": SemanticColourValue;
 
+    // icon
     icon: SemanticColourValue;
-    "icon-hover": SemanticColourValue;
-    "icon-selected": SemanticColourValue;
-    "icon-disabled": SemanticColourValue;
-    "icon-success": SemanticColourValue;
-    "icon-inverse": SemanticColourValue;
     "icon-subtle": SemanticColourValue;
     "icon-strongest": SemanticColourValue;
     "icon-primary": SemanticColourValue;
     "icon-primary-subtle": SemanticColourValue;
     "icon-primary-subtlest": SemanticColourValue;
+
+    "icon-hover": SemanticColourValue;
+    "icon-selected": SemanticColourValue;
+    "icon-selected-hover": SemanticColourValue;
+
+    "icon-disabled": SemanticColourValue;
     "icon-disabled-subtle": SemanticColourValue;
     "icon-selected-disabled": SemanticColourValue;
+
+    "icon-success": SemanticColourValue;
     "icon-warning": SemanticColourValue;
     "icon-error": SemanticColourValue;
     "icon-error-strong": SemanticColourValue;
     "icon-info": SemanticColourValue;
+    "icon-inverse": SemanticColourValue;
 
+    // border
     border: SemanticColourValue;
-    "border-hover": SemanticColourValue;
-    "border-selected": SemanticColourValue;
-    "border-disabled": SemanticColourValue;
-    "border-success": SemanticColourValue;
-    "border-inverse": SemanticColourValue;
     "border-strong": SemanticColourValue;
     "border-primary": SemanticColourValue;
     "border-primary-subtle": SemanticColourValue;
-    "border-hover-strong": SemanticColourValue;
+
+    "border-hover": SemanticColourValue;
+
+    "border-selected": SemanticColourValue;
     "border-selected-subtle": SemanticColourValue;
     "border-selected-subtlest": SemanticColourValue;
+    "border-selected-hover": SemanticColourValue;
+
     "border-focus": SemanticColourValue;
     "border-focus-strong": SemanticColourValue;
+
+    "border-disabled": SemanticColourValue;
     "border-selected-disabled": SemanticColourValue;
+
+    "border-success": SemanticColourValue;
     "border-warning": SemanticColourValue;
     "border-error": SemanticColourValue;
     "border-error-focus": SemanticColourValue;
+    "border-error-strong": SemanticColourValue;
     "border-info": SemanticColourValue;
 
-    background: SemanticColourValue;
-    "background-hover": SemanticColourValue;
-    "background-selected": SemanticColourValue;
-    "background-disabled": SemanticColourValue;
-    "background-success": SemanticColourValue;
-    "background-inverse": SemanticColourValue;
-    "background-strong": SemanticColourValue;
-    "background-stronger": SemanticColourValue;
-    "background-hover-strong": SemanticColourValue;
-    "background-hover-subtle": SemanticColourValue;
-    "background-hover-neutral": SemanticColourValue;
-    "background-primary": SemanticColourValue;
-    "background-primary-hover": SemanticColourValue;
-    "background-primary-subtle": SemanticColourValue;
-    "background-primary-subtlest": SemanticColourValue;
-    "background-primary-subtlest-hover": SemanticColourValue;
-    "background-primary-subtlest-selected": SemanticColourValue;
-    "background-selected-strong": SemanticColourValue;
-    "background-selected-hover": SemanticColourValue;
-    "background-selected-disabled": SemanticColourValue;
-    "background-warning": SemanticColourValue;
-    "background-error": SemanticColourValue;
-    "background-info": SemanticColourValue;
-    "background-error-strong": SemanticColourValue;
-    "background-error-strong-hover": SemanticColourValue;
+    // background
+    bg: SemanticColourValue;
+    "bg-strong": SemanticColourValue;
+    "bg-stronger": SemanticColourValue;
+    "bg-strongest": SemanticColourValue;
 
+    "bg-hover": SemanticColourValue;
+    "bg-hover-strong": SemanticColourValue;
+    "bg-hover-subtle": SemanticColourValue;
+    "bg-hover-neutral": SemanticColourValue;
+
+    "bg-selected": SemanticColourValue;
+    "bg-selected-hover": SemanticColourValue;
+    "bg-selected-strong": SemanticColourValue;
+    "bg-selected-strongest": SemanticColourValue;
+
+    "bg-disabled": SemanticColourValue;
+    "bg-selected-disabled": SemanticColourValue;
+
+    "bg-success": SemanticColourValue;
+    "bg-success-strong": SemanticColourValue;
+    "bg-warning": SemanticColourValue;
+    "bg-warning-strong": SemanticColourValue;
+    "bg-info": SemanticColourValue;
+    "bg-info-strong": SemanticColourValue;
+    "bg-error": SemanticColourValue;
+    "bg-error-strong": SemanticColourValue;
+    "bg-error-strong-hover": SemanticColourValue;
+
+    "bg-inverse": SemanticColourValue;
+    "bg-inverse-subtle": SemanticColourValue;
+    "bg-inverse-subtler": SemanticColourValue;
+    "bg-inverse-subtlest": SemanticColourValue;
+
+    "bg-primary": SemanticColourValue;
+    "bg-primary-subtle": SemanticColourValue;
+    "bg-primary-subtler": SemanticColourValue;
+    "bg-primary-subtlest": SemanticColourValue;
+    "bg-primary-hover": SemanticColourValue;
+    "bg-primary-subtlest-hover": SemanticColourValue;
+    "bg-primary-subtlest-selected": SemanticColourValue;
+
+    // overlay
     "overlay-strong": SemanticColourValue;
     "overlay-subtle": SemanticColourValue;
-    "overlay-inverse-gradient": SemanticColourValue;
 
+    // hyperlink
     hyperlink: SemanticColourValue;
     "hyperlink-inverse": SemanticColourValue;
+
+    // focus ring
     "focus-ring": SemanticColourValue;
     "focus-ring-inverse": SemanticColourValue;
 };
