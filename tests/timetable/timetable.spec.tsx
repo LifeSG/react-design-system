@@ -110,16 +110,23 @@ describe("TimeTable", () => {
 
         const contentContainer = screen.getByTestId("content-container-id");
         const firstRowBar = contentContainer.firstElementChild;
-        const disabledCell = firstRowBar.children[0];
+        const blockedCell = firstRowBar.children[0];
         const filledCell = firstRowBar.children[1];
 
         fireEvent.mouseOver(firstRowHeader);
-        fireEvent.mouseOver(disabledCell);
-        fireEvent.mouseOver(filledCell);
+        expect(
+            screen.queryByTestId("row-header-popover-card")
+        ).not.toBeInTheDocument();
 
-        expect(screen.queryByTestId("popover")).not.toBeInTheDocument();
-        expect(screen.queryByTestId("popover")).not.toBeInTheDocument();
-        expect(screen.queryByTestId("popover")).not.toBeInTheDocument();
+        fireEvent.mouseOver(blockedCell);
+        expect(
+            screen.queryByTestId("blocked-popover-card")
+        ).not.toBeInTheDocument();
+
+        fireEvent.mouseOver(filledCell);
+        expect(
+            screen.queryByTestId("filled-popover-card")
+        ).not.toBeInTheDocument();
     });
 
     it("should have popover appear if there's popover content", () => {
@@ -142,21 +149,21 @@ describe("TimeTable", () => {
                                 status: "filled",
                                 customPopover: {
                                     trigger: "hover",
-                                    content: "test",
+                                    content: "beeeboobeebooo",
                                     delay: { open: 0, close: 0 },
                                 },
                             },
                         ],
                         rowHeaderCustomPopover: {
                             trigger: "hover",
-                            content: "test",
+                            content: "hello world123",
                             delay: { open: 0, close: 0 },
                         },
                     },
                 ]}
                 outsideOpHoursCellCustomPopover={{
                     trigger: "hover",
-                    content: "outside op hours",
+                    content: "skibididiidi ohio",
                     delay: { open: 0, close: 0 },
                 }}
                 isLoading={false}
@@ -170,14 +177,23 @@ describe("TimeTable", () => {
         const blockedCell = firstRowBar.children[0];
         const filledCell = firstRowBar.children[1];
 
-        fireEvent.mouseOver(firstRowHeader);
-        expect(screen.queryByTestId("row-header-popover-card")).toBeVisible();
+        fireEvent.mouseEnter(firstRowHeader);
+        expect(screen.queryByText("hello world123")).toBeVisible();
+        expect(
+            screen.queryByTestId("row-header-popover-card")
+        ).toBeInTheDocument();
 
-        fireEvent.mouseOver(blockedCell);
-        expect(screen.queryByTestId("blocked-popover-card")).toBeVisible();
+        fireEvent.mouseEnter(blockedCell);
+        expect(screen.queryByText("skibididiidi ohio")).toBeVisible();
+        expect(
+            screen.queryByTestId("blocked-popover-card")
+        ).toBeInTheDocument();
 
-        fireEvent.mouseOver(filledCell);
-        expect(screen.queryByTestId("filled-popover-card")).toBeVisible();
+        fireEvent.mouseEnter(filledCell);
+        expect(screen.queryByText("beeeboobeebooo")).toBeVisible();
+        expect(
+            screen.queryByTestId("blocked-popover-card")
+        ).toBeInTheDocument();
     });
 
     it("should trigger onNameClick if row header name are clicked", () => {
