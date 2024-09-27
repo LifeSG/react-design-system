@@ -2,105 +2,114 @@ import { API, FileInfo, JSCodeshift } from "jscodeshift";
 import { mediaQueryMap } from "./data";
 
 // ======= Constants ======= //
-// Import Paths
-const importPathV2Media = "@lifesg/react-design-system/v2_media";
-const importPathDesignSystem = "@lifesg/react-design-system";
-const importPathTheme = "@lifesg/react-design-system/theme";
 
-// Import Specifiers
-const specifierV2MediaQuery = "V2_MediaQuery";
-const specifierMediaQuery = "MediaQuery";
-const specifierV2MediaWidths = "V2_MediaWidths";
+const IMPORT_PATHS = {
+    V2_MEDIA: "@lifesg/react-design-system/v2_media",
+    DESIGN_SYSTEM: "@lifesg/react-design-system",
+    THEME: "@lifesg/react-design-system/theme",
+};
 
-// Member Expression Properties
-const memberExpMaxWidth = "MaxWidth";
-const memberExpMinWidth = "MinWidth";
+const IMPORT_SPECIFIERS = {
+    V2_MEDIA_QUERY: "V2_MediaQuery",
+    MEDIA_QUERY: "MediaQuery",
+    V2_MEDIA_WIDTHS: "V2_MediaWidths",
+};
 
-// Deprecated Warning
-const deprecatedUsageWarning = `\x1b[31mDeprecated usage detected: V2_MediaWidths is deprecated and needs adjustment.\x1b[0m`;
+const MEMBER_EXPRESSION_PROPERTIES = {
+    MAX_WIDTH: "MaxWidth",
+    MIN_WIDTH: "MinWidth",
+};
 
-// Identifier Names
-const identifierMediaQuery = "MediaQuery";
+const WARNINGS = {
+    DEPRECATED_USAGE: `\x1b[31mDeprecated usage detected: V2_MediaWidths is deprecated and needs adjustment.\x1b[0m`,
+};
+
+const IDENTIFIERS = {
+    MEDIA_QUERY: "MediaQuery",
+};
 
 // ======= Transformer Function ======= //
 export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let isMediaQueryImportUpdated = false;
-    let isV2MediaWidthsUsed = false;
+    let IS_MEDIA_QUERY_IMPORT_UPDATED = false;
+    let IS_V2_MEDIA_WIDTHS_USED = false;
 
-    // Change Import Declarations
+    // Process Import Declarations
     source.find(j.ImportDeclaration).forEach((path) => {
         const importPath = path.node.source.value;
 
         if (
-            importPath === importPathV2Media ||
-            importPath === importPathDesignSystem
+            importPath === IMPORT_PATHS.V2_MEDIA ||
+            importPath === IMPORT_PATHS.DESIGN_SYSTEM
         ) {
             const specifiers = path.node.specifiers;
-            let hasMediaQuerySpecifier = false;
+            let HAS_MEDIA_QUERY_SPECIFIER = false;
 
             if (specifiers && specifiers.length > 0) {
                 specifiers.forEach((specifier) => {
                     if (j.ImportSpecifier.check(specifier)) {
                         // Handle V2_MediaQuery
-                        if (specifier.imported.name === specifierV2MediaQuery) {
-                            specifier.imported.name = specifierMediaQuery;
+                        if (
+                            specifier.imported.name ===
+                            IMPORT_SPECIFIERS.V2_MEDIA_QUERY
+                        ) {
+                            specifier.imported.name =
+                                IMPORT_SPECIFIERS.MEDIA_QUERY;
                             if (
                                 specifier.local &&
-                                specifier.local.name === specifierV2MediaQuery
+                                specifier.local.name ===
+                                    IMPORT_SPECIFIERS.V2_MEDIA_QUERY
                             ) {
-                                specifier.local.name = specifierMediaQuery;
+                                specifier.local.name =
+                                    IMPORT_SPECIFIERS.MEDIA_QUERY;
                             }
-                            hasMediaQuerySpecifier = true;
+                            HAS_MEDIA_QUERY_SPECIFIER = true;
                         }
 
                         // Detect usage of V2_MediaWidths
                         if (
-                            specifier.imported.name === specifierV2MediaWidths
+                            specifier.imported.name ===
+                            IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS
                         ) {
-                            isV2MediaWidthsUsed = true;
+                            IS_V2_MEDIA_WIDTHS_USED = true;
                         }
                     }
                 });
 
                 // If MediaQuery was imported, set flag to update usages
-                if (hasMediaQuerySpecifier) {
-                    isMediaQueryImportUpdated = true;
+                if (HAS_MEDIA_QUERY_SPECIFIER) {
+                    IS_MEDIA_QUERY_IMPORT_UPDATED = true;
                 }
 
-                // Update import path
-                if (importPath === importPathV2Media) {
-                    path.node.source.value = importPathTheme;
+                // Update import path if necessary
+                if (importPath === IMPORT_PATHS.V2_MEDIA) {
+                    path.node.source.value = IMPORT_PATHS.THEME;
                 }
             }
         }
     });
 
     // Handle Deprecated V2_MediaWidths Usage
-    if (isV2MediaWidthsUsed) {
-        let hasLoggedV2MediaWidthsWarning = false;
+    if (IS_V2_MEDIA_WIDTHS_USED) {
+        const hasV2MediaWidths =
+            source.find(j.Identifier, {
+                name: IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS,
+            }).length > 0;
 
-        source
-            .find(j.Identifier, { name: specifierV2MediaWidths })
-            .forEach((path) => {
-                if (!hasLoggedV2MediaWidthsWarning) {
-                    console.error(
-                        `File: ${file.path}\n${deprecatedUsageWarning}`
-                    );
-                    hasLoggedV2MediaWidthsWarning = true;
-                }
-            });
+        if (hasV2MediaWidths) {
+            console.error(`File: ${file.path}\n${WARNINGS.DEPRECATED_USAGE}`);
+        }
     }
 
     // Update MediaQuery Imports and Usages
-    if (isMediaQueryImportUpdated) {
+    if (IS_MEDIA_QUERY_IMPORT_UPDATED) {
         // Rename all instances of V2_MediaQuery to MediaQuery
         source
-            .find(j.Identifier, { name: specifierV2MediaQuery })
+            .find(j.Identifier, { name: IMPORT_SPECIFIERS.V2_MEDIA_QUERY })
             .forEach((path) => {
-                path.node.name = specifierMediaQuery;
+                path.node.name = IMPORT_SPECIFIERS.MEDIA_QUERY;
             });
 
         // Update Member Expressions related to MediaQuery
@@ -111,10 +120,12 @@ export default function transformer(file: FileInfo, api: API) {
             if (
                 j.MemberExpression.check(object) &&
                 j.Identifier.check(object.object) &&
-                object.object.name === identifierMediaQuery &&
+                object.object.name === IDENTIFIERS.MEDIA_QUERY &&
                 j.Identifier.check(object.property) &&
-                (object.property.name === memberExpMaxWidth ||
-                    object.property.name === memberExpMinWidth) &&
+                (object.property.name ===
+                    MEMBER_EXPRESSION_PROPERTIES.MAX_WIDTH ||
+                    object.property.name ===
+                        MEMBER_EXPRESSION_PROPERTIES.MIN_WIDTH) &&
                 j.Identifier.check(property)
             ) {
                 const queryType = object.property.name;
@@ -125,8 +136,8 @@ export default function transformer(file: FileInfo, api: API) {
                     mediaQueryMap[queryType] &&
                     mediaQueryMap[queryType][mediaKey]
                 ) {
-                    const newMediaKey = mediaQueryMap[queryType][mediaKey];
-                    property.name = newMediaKey;
+                    const NEW_MEDIA_KEY = mediaQueryMap[queryType][mediaKey];
+                    property.name = NEW_MEDIA_KEY;
                 }
             }
         });

@@ -3,18 +3,21 @@ import { textComponentMap } from "./data";
 
 // ======= Constants ======= //
 
-// Import Paths
-const importPathV2Text = "@lifesg/react-design-system/v2_text";
-const importPathLib = "@lifesg/react-design-system";
-const importPathTypography = "@lifesg/react-design-system/typography";
+const IMPORT_PATHS = {
+    V2_TEXT: "@lifesg/react-design-system/v2_text",
+    DESIGN_SYSTEM: "@lifesg/react-design-system",
+    TYPOGRAPHY: "@lifesg/react-design-system/typography",
+};
 
-// Import Specifiers
-const specifierV2Text = "V2_Text";
-const specifierTypography = "Typography";
+const IMPORT_SPECIFIERS = {
+    V2_TEXT: "V2_Text",
+    TYPOGRAPHY: "Typography",
+};
 
-// JSX Identifiers
-const jsxIdentifierV2Text = "V2_Text";
-const jsxIdentifierTypography = "Typography";
+const JSX_IDENTIFIERS = {
+    V2_TEXT: "V2_Text",
+    TYPOGRAPHY: "Typography",
+};
 
 // ======= Transformer Function ======= //
 
@@ -29,26 +32,29 @@ export default function transformer(file: FileInfo, api: API) {
         const importPath = path.node.source.value;
 
         // Check if the import is from the target design system path
-        if (importPath === importPathV2Text || importPath === importPathLib) {
+        if (
+            importPath === IMPORT_PATHS.V2_TEXT ||
+            importPath === IMPORT_PATHS.DESIGN_SYSTEM
+        ) {
             // Iterate over each specifier in the import declaration
             path.node.specifiers?.forEach((specifier) => {
                 if (
                     j.ImportSpecifier.check(specifier) &&
-                    specifier.imported.name === specifierV2Text
+                    specifier.imported.name === IMPORT_SPECIFIERS.V2_TEXT
                 ) {
                     // Rename imported specifier from V2_Text to Typography
-                    specifier.imported.name = specifierTypography;
+                    specifier.imported.name = IMPORT_SPECIFIERS.TYPOGRAPHY;
 
                     // Rename local specifier if it matches V2_Text
                     if (
                         specifier.local &&
-                        specifier.local.name === specifierV2Text
+                        specifier.local.name === IMPORT_SPECIFIERS.V2_TEXT
                     ) {
-                        specifier.local.name = specifierTypography;
+                        specifier.local.name = IMPORT_SPECIFIERS.TYPOGRAPHY;
                     }
 
                     // Update the import path to the new typography module
-                    path.node.source.value = importPathTypography;
+                    path.node.source.value = IMPORT_PATHS.TYPOGRAPHY;
                     isLifesgImport = true;
                 }
             });
@@ -59,7 +65,7 @@ export default function transformer(file: FileInfo, api: API) {
     const replaceWithNewComponent = (path: any, newComponentValue: string) => {
         path.replace(
             j.memberExpression(
-                j.identifier(jsxIdentifierTypography),
+                j.identifier(JSX_IDENTIFIERS.TYPOGRAPHY),
                 j.identifier(newComponentValue)
             )
         );
@@ -68,9 +74,9 @@ export default function transformer(file: FileInfo, api: API) {
     if (isLifesgImport) {
         // Rename Identifiers from V2_Text to Typography
         source
-            .find(j.Identifier, { name: jsxIdentifierV2Text })
+            .find(j.Identifier, { name: JSX_IDENTIFIERS.V2_TEXT })
             .forEach((path) => {
-                path.node.name = jsxIdentifierTypography;
+                path.node.name = JSX_IDENTIFIERS.TYPOGRAPHY;
             });
 
         // Update Member Expressions
@@ -91,7 +97,7 @@ export default function transformer(file: FileInfo, api: API) {
                 if (j.MemberExpression.check(object)) {
                     currentPath = object;
                 } else if (j.Identifier.check(object)) {
-                    if (object.name === jsxIdentifierTypography) {
+                    if (object.name === JSX_IDENTIFIERS.TYPOGRAPHY) {
                         startsWithTypography = true;
                     }
                     break;
