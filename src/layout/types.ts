@@ -2,7 +2,7 @@ export interface CommonLayoutProps
     extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     "data-testid"?: string | undefined;
-    stretch?: boolean;
+    stretch?: boolean | undefined;
 }
 
 export type ContainerType = "flex" | "flex-column" | "grid";
