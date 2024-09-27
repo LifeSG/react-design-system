@@ -1,34 +1,7 @@
-export type TypographySizeType =
-    | "header-xxl"
-    | "header-xl"
-    | "header-lg"
-    | "header-md"
-    | "header-sm"
-    | "header-xs"
-    | "body-baseline"
-    | "body-lg"
-    | "body-md"
-    | "body-sm";
-
-export interface TypographyStyleSpec {
-    fontSize?: number | undefined;
-    fontWeight?: number | undefined;
-    lineHeight?: number | undefined;
-    letterSpacing?: number | undefined;
-}
-
-export type TypographyWeight =
-    | "regular"
-    | "semibold"
-    | "bold"
-    | "light"
-    | 400
-    | 600
-    | 700
-    | 300;
+export type TypographyWeight = "regular" | "semibold" | "bold" | "light";
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
-    // Can be any weight such as regular or 400
+    //Weight prop such as regular, bold
     weight?: TypographyWeight | undefined;
     // For consumer to choose if they want the text to be inline for example
     inline?: boolean | undefined;
@@ -36,7 +9,8 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
     paragraph?: boolean | undefined;
 }
 
-export interface LinkProps extends TypographyProps {
+export interface LinkProps extends React.HTMLAttributes<HTMLElement> {
     // If the link is external
-    external?: boolean;
+    weight?: TypographyWeight | undefined;
+    external?: boolean | undefined;
 }

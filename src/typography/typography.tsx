@@ -1,12 +1,9 @@
 import styled, { css } from "styled-components";
-import {
-    createTypographyStyles,
-    getDisplayStyle,
-    getTypographyStyle,
-} from "./helper";
+import { createTypographyStyles, getTypographyStyle } from "./helper";
 import { Colour } from "../theme";
-import { LinkProps, TypographyProps, TypographySizeType } from "./types";
+import { LinkProps, TypographyProps } from "./types";
 import { ExternalIcon } from "@lifesg/react-icons/external";
+import { TypographySizeType } from "../theme/typography/types";
 
 export namespace Typography {
     const createHeader = (
@@ -61,8 +58,6 @@ export namespace Typography {
                         color: ${Colour["text-hover"]};
                     }
                 }
-
-                ${getDisplayStyle(props.inline, props.paragraph)}
             `}
         `;
 
@@ -87,8 +82,6 @@ export namespace Typography {
     export const LinkLG = createLinkComponent("body-lg");
     export const LinkSM = createLinkComponent("body-sm");
 }
-
-console.log("Hello");
 
 // FOR LINK :
 export const StyledExternalIcon = styled(ExternalIcon)`

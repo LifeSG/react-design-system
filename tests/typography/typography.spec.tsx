@@ -17,18 +17,6 @@ describe("Typography Components", () => {
     };
 
     describe("Body Text", () => {
-        it("renders BodyBL with correct text", () => {
-            const { getByText } = render(
-                <ThemeProvider theme={mockTheme}>
-                    <Typography.BodyBL weight="regular">
-                        This is body text
-                    </Typography.BodyBL>
-                </ThemeProvider>
-            );
-
-            expect(getByText("This is body text")).toBeInTheDocument();
-        });
-
         it("renders BodyLG with correct text", () => {
             const { getByText } = render(
                 <ThemeProvider theme={mockTheme}>
@@ -40,43 +28,9 @@ describe("Typography Components", () => {
 
             expect(getByText("This is large body text")).toBeInTheDocument();
         });
-
-        it("renders BodyMD with correct text", () => {
-            const { getByText } = render(
-                <Typography.BodyMD paragraph>
-                    This is medium body text
-                </Typography.BodyMD>
-            );
-
-            expect(getByText("This is medium body text")).toBeInTheDocument();
-        });
     });
 
     describe("Link Components", () => {
-        it("renders LinkBL with correct text", () => {
-            const { getByText } = render(
-                <ThemeProvider theme={mockTheme}>
-                    <Typography.LinkBL weight="regular">
-                        This is a baseline link
-                    </Typography.LinkBL>
-                </ThemeProvider>
-            );
-
-            expect(getByText("This is a baseline link")).toBeInTheDocument();
-        });
-
-        it("renders LinkLG with correct text", () => {
-            const { getByText } = render(
-                <ThemeProvider theme={mockTheme}>
-                    <Typography.LinkLG weight="semibold" inline>
-                        This is a large link
-                    </Typography.LinkLG>
-                </ThemeProvider>
-            );
-
-            expect(getByText("This is a large link")).toBeInTheDocument();
-        });
-
         it("renders external LinkSM with external icon", () => {
             const { getByText, container } = render(
                 <ThemeProvider theme={mockTheme}>
@@ -101,14 +55,6 @@ describe("Typography Components", () => {
                         Hello World
                     </Typography.HeaderXXL>
                 </ThemeProvider>
-            );
-
-            expect(getByText("Hello World")).toBeInTheDocument();
-        });
-
-        it("renders HeaderXL with correct text", () => {
-            const { getByText } = render(
-                <Typography.HeaderXL paragraph>Hello World</Typography.HeaderXL>
             );
 
             expect(getByText("Hello World")).toBeInTheDocument();

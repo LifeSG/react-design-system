@@ -8,15 +8,15 @@ export default {
 export const LinkBL_Regular = () => (
     <>
         <Typography.LinkBL weight="regular">
-            This is a baseline link
+            This is a baseline link.
         </Typography.LinkBL>
     </>
 );
 
 export const LinkLG_Bold_Inline = () => (
     <>
-        <Typography.LinkLG weight="bold" inline>
-            This is a bold link with inline display
+        <Typography.LinkLG weight="bold">
+            This is a bold link.
         </Typography.LinkLG>
     </>
 );
