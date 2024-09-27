@@ -13,8 +13,8 @@ describe("DateNavigator", () => {
         jest.useRealTimers();
     });
 
-    it("should render a simple date displaying the selectedDate prop without navigation arrows", () => {
-        const { rerender } = render(<DateNavigator selectedDate={today} />);
+    it("should render current date as today", () => {
+        render(<DateNavigator selectedDate={today} />);
         expect(screen.getByText("5 September 2024")).toBeVisible();
         expect(screen.getByText("Today")).toBeVisible();
         expect(
@@ -23,9 +23,11 @@ describe("DateNavigator", () => {
         expect(
             screen.queryByTestId("date-navigator-right-arrow-btn")
         ).not.toBeInTheDocument();
+    });
 
+    it("should render other date in full", () => {
         const tomorrow = "2024-09-06";
-        rerender(<DateNavigator selectedDate={tomorrow} />);
+        render(<DateNavigator selectedDate={tomorrow} />);
         expect(screen.getByText("6 September 2024")).toBeVisible();
         expect(screen.getByText("Friday")).toBeVisible();
         expect(
@@ -34,10 +36,6 @@ describe("DateNavigator", () => {
         expect(
             screen.queryByTestId("date-navigator-right-arrow-btn")
         ).not.toBeInTheDocument();
-    });
-
-    it("should render the new date if it changes on rerender", () => {
-        render(<DateNavigator selectedDate={today} />);
     });
 
     it("should render a date navigator with navigation arrows", () => {
@@ -85,32 +83,35 @@ describe("DateNavigator", () => {
         expect(rightArrowButton).toBeDisabled();
     });
 
-    it("should disable the corresponding buttons when the current date is ", () => {
+    it("should disable the left arrow button when the current date is at minDate", () => {
         const onRightArrowClick = jest.fn();
         const onLeftArrowClick = jest.fn();
         const minDate = "2024-08-05";
-        const maxDate = "2024-10-05";
-        const { rerender } = render(
+        render(
             <DateNavigator
                 selectedDate={minDate}
                 onRightArrowClick={onRightArrowClick}
                 onLeftArrowClick={onLeftArrowClick}
                 minDate={minDate}
-                maxDate={maxDate}
             />
         );
         const leftArrowButton = screen.getByTestId(
             "date-navigator-left-arrow-btn"
         );
         expect(leftArrowButton).toBeDisabled();
-        rerender(
+    });
+
+    it("should disable the right arrow button when the current date is at maxDate", () => {
+        const onRightArrowClick = jest.fn();
+        const onLeftArrowClick = jest.fn();
+        const maxDate = "2024-10-05";
+        render(
             <DateNavigator
                 selectedDate={maxDate}
                 onRightArrowClick={onRightArrowClick}
                 onLeftArrowClick={onLeftArrowClick}
-                minDate={minDate}
                 maxDate={maxDate}
-            ></DateNavigator>
+            />
         );
         const rightArrowButton = screen.getByTestId(
             "date-navigator-right-arrow-btn"

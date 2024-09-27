@@ -15,7 +15,12 @@ import { DateNavigatorProps } from "./types";
 
 export const DateNavigator = ({
     selectedDate,
-    ...optionalProps
+    minDate,
+    maxDate,
+    isLoading,
+    onLeftArrowClick,
+    onRightArrowClick,
+    ...otherProps
 }: DateNavigatorProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -30,32 +35,25 @@ export const DateNavigator = ({
         : DateHelper.toDayjs(selectedDate).format("dddd");
 
     // =============================================================================
-    // EVENT HANDLERS
+    // HELPER FUNCTIONS
     // =============================================================================
     const isLeftArrowDisabled = () => {
-        if (!optionalProps.minDate) {
+        if (!minDate) {
             return false;
         }
         return (
-            CalendarHelper.isDisabledDay(
-                date,
-                undefined,
-                optionalProps.minDate
-            ) || DateHelper.isSame(date, optionalProps.minDate)
+            CalendarHelper.isDisabledDay(date, undefined, minDate) ||
+            DateHelper.isSame(date, minDate)
         );
     };
 
     const isRightArrowDisabled = () => {
-        if (!optionalProps.maxDate) {
+        if (!maxDate) {
             return false;
         }
         return (
-            CalendarHelper.isDisabledDay(
-                date,
-                undefined,
-                undefined,
-                optionalProps.maxDate
-            ) || DateHelper.isSame(date, optionalProps.maxDate)
+            CalendarHelper.isDisabledDay(date, undefined, undefined, maxDate) ||
+            DateHelper.isSame(date, maxDate)
         );
     };
 
@@ -63,19 +61,15 @@ export const DateNavigator = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Container
-            id="date-navigator-container-id"
-            className={optionalProps.className}
-            data-testid={optionalProps["data-testid"]}
-        >
-            {optionalProps.onLeftArrowClick && (
+        <Container {...otherProps}>
+            {onLeftArrowClick && (
                 <HeaderArrowButton
                     id="date-navigator-left-arrow-btn-id"
                     data-testid="date-navigator-left-arrow-btn"
-                    disabled={optionalProps.isLoading || isLeftArrowDisabled()}
+                    disabled={isLoading || isLeftArrowDisabled()}
                     focusHighlight={false}
-                    tabIndex={-1}
-                    onClick={() => optionalProps.onLeftArrowClick(selectedDate)}
+                    aria-label="Previous day"
+                    onClick={() => onLeftArrowClick(selectedDate)}
                 >
                     <ArrowLeft />
                 </HeaderArrowButton>
@@ -96,16 +90,14 @@ export const DateNavigator = ({
                     {dayText}
                 </StyledDayText>
             </Wrapper>
-            {optionalProps.onRightArrowClick && (
+            {onRightArrowClick && (
                 <HeaderArrowButton
                     id="date-navigator-right-arrow-btn-id"
                     data-testid="date-navigator-right-arrow-btn"
-                    disabled={optionalProps.isLoading || isRightArrowDisabled()}
+                    disabled={isLoading || isRightArrowDisabled()}
                     focusHighlight={false}
-                    tabIndex={-1}
-                    onClick={() =>
-                        optionalProps.onRightArrowClick(selectedDate)
-                    }
+                    aria-label="Next day"
+                    onClick={() => onRightArrowClick(selectedDate)}
                 >
                     <ArrowRight />
                 </HeaderArrowButton>
