@@ -5,6 +5,11 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "id",
+                description: "The identifier of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],
