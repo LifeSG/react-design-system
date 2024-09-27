@@ -24,7 +24,7 @@ describe("Codemod Transformer for V2_Layout to Layout", () => {
 
         // Execute the jscodeshift command for the codemod
         execSync(
-            `jscodeshift --parser=tsx -t ./codemods/migrate-mediaquery ${outputPath}`
+            `jscodeshift --parser=tsx -t ./codemods/migrate-media-query ${outputPath}`
         );
 
         // Check the transformed code

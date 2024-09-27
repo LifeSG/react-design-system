@@ -1,57 +1,110 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
 import { textComponentMap } from "./data";
 
-export default function transformer(file: FileInfo, api: API, options: any) {
+// ======= Constants ======= //
+
+// Import Paths
+const importPathV2Text = "@lifesg/react-design-system/v2_text";
+const importPathLib = "@lifesg/react-design-system";
+const importPathTypography = "@lifesg/react-design-system/typography";
+
+// Import Specifiers
+const specifierV2Text = "V2_Text";
+const specifierTypography = "Typography";
+
+// JSX Identifiers
+const jsxIdentifierV2Text = "V2_Text";
+const jsxIdentifierTypography = "Typography";
+
+// ======= Transformer Function ======= //
+
+export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
     let isLifesgImport = false;
 
-    // Check import declarations
+    // Process Import Declarations
     source.find(j.ImportDeclaration).forEach((path) => {
         const importPath = path.node.source.value;
 
-        // If the import is from lifesg ds , set to true
-        if (importPath === "@lifesg/react-design-system/v2_text") {
-            isLifesgImport = true;
+        // Check if the import is from the target design system path
+        if (importPath === importPathV2Text || importPath === importPathLib) {
+            // Iterate over each specifier in the import declaration
+            path.node.specifiers?.forEach((specifier) => {
+                if (
+                    j.ImportSpecifier.check(specifier) &&
+                    specifier.imported.name === specifierV2Text
+                ) {
+                    // Rename imported specifier from V2_Text to Typography
+                    specifier.imported.name = specifierTypography;
 
-            // Check if specifiers exist and iterate over them
-            if (path.node.specifiers && path.node.specifiers.length > 0) {
-                path.node.specifiers.forEach((specifier) => {
+                    // Rename local specifier if it matches V2_Text
                     if (
-                        j.ImportSpecifier.check(specifier) &&
-                        specifier.imported.name === "V2_Text"
+                        specifier.local &&
+                        specifier.local.name === specifierV2Text
                     ) {
-                        specifier.imported.name = "Typography";
-                        if (
-                            specifier.local &&
-                            specifier.local.name === "V2_Text"
-                        ) {
-                            specifier.local.name = "Typography";
-                        }
-
-                        // Update the import path
-                        path.node.source.value =
-                            "@lifesg/react-design-system/typography";
+                        specifier.local.name = specifierTypography;
                     }
-                });
-            }
+
+                    // Update the import path to the new typography module
+                    path.node.source.value = importPathTypography;
+                    isLifesgImport = true;
+                }
+            });
         }
     });
 
-    // change if import from @lifesg/react-design-system
+    // Helper Function to Replace Member Expressions
+    const replaceWithNewComponent = (path: any, newComponentValue: string) => {
+        path.replace(
+            j.memberExpression(
+                j.identifier(jsxIdentifierTypography),
+                j.identifier(newComponentValue)
+            )
+        );
+    };
+
     if (isLifesgImport) {
-        // update JSX and identifiers
-        source.find(j.JSXMemberExpression).forEach((path) => {
-            const { object, property } = path.node;
+        // Rename Identifiers from V2_Text to Typography
+        source
+            .find(j.Identifier, { name: jsxIdentifierV2Text })
+            .forEach((path) => {
+                path.node.name = jsxIdentifierTypography;
+            });
 
-            // Change V2_text to typography
-            if (j.JSXIdentifier.check(object) && object.name === "V2_Text") {
-                object.name = "Typography";
+        // Update Member Expressions
+        source.find(j.MemberExpression).forEach((path) => {
+            let currentPath = path.node;
+            const propertyNameParts: string[] = [];
+            let startsWithTypography = false;
 
-                // Map properties (e.g., Body -> BodyBL)
-                if (textComponentMap[property.name]) {
-                    property.name = textComponentMap[property.name];
+            // Traverse the member expression to collect property names
+            while (j.MemberExpression.check(currentPath)) {
+                const property = currentPath.property;
+                const object = currentPath.object;
+
+                if (j.Identifier.check(property)) {
+                    propertyNameParts.unshift(property.name);
+                }
+
+                if (j.MemberExpression.check(object)) {
+                    currentPath = object;
+                } else if (j.Identifier.check(object)) {
+                    if (object.name === jsxIdentifierTypography) {
+                        startsWithTypography = true;
+                    }
+                    break;
+                } else {
+                    break;
+                }
+            }
+
+            if (startsWithTypography) {
+                const propertyName = propertyNameParts.join(".");
+                const newTypographyValue = textComponentMap[propertyName];
+                if (newTypographyValue) {
+                    replaceWithNewComponent(path, newTypographyValue);
                 }
             }
         });
