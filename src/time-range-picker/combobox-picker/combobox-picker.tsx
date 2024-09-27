@@ -418,7 +418,7 @@ export const ComboboxPicker = ({
                     offset={8}
                     alignment={alignment}
                     fitAvailableHeight
-                    zIndex={dropdownZIndex}
+                    customZIndex={dropdownZIndex}
                 />
             </DropdownListState>
             {renderError()}
