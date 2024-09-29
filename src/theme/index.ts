@@ -1,6 +1,7 @@
-import { BreakpointValues } from "./breakpoint/theme-helper";
 import { AnimationValues } from "./animation/theme-helper";
 import { BorderValues } from "./border/theme-helper";
+import { MediaQuery as MediaQueryValues } from "./breakpoint/media-query-helper";
+import { BreakpointValues } from "./breakpoint/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
 import { FontValues } from "./font/theme-helper";
@@ -8,6 +9,10 @@ import { RadiusValues } from "./radius/theme-helper";
 import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
 import { TypographyValues } from "./typography/theme-helper";
+
+// =============================================================================
+// TOKENS
+// =============================================================================
 
 export const Colour = {
     ...ColourSemantic,
@@ -27,6 +32,12 @@ export const Spacing = SpacingValues;
 export const Radius = RadiusValues;
 
 export const Breakpoint = BreakpointValues;
+
+export const MediaQuery = MediaQueryValues;
+
+// =============================================================================
+// THEME PRESETS
+// =============================================================================
 
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",
