@@ -16,7 +16,6 @@ import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 type TimeRangeInputType = "start" | "end";
 interface TimeChangeOptions {
     goToNextInput?: boolean | undefined;
-    skipRangeCheck?: boolean | undefined;
     triggerOnBlur?: boolean | undefined;
 }
 
@@ -94,6 +93,11 @@ export const ComboboxPicker = ({
 
     // Validation for keyboard input
     useEffect(() => {
+        if (error) {
+            setDropdownOpen(false);
+            return;
+        }
+
         const start = parseInput(startTimeVal);
         const end = parseInput(endTimeVal);
 
@@ -121,7 +125,7 @@ export const ComboboxPicker = ({
 
         // Hide dropdown so error message is visible
         setDropdownOpen(false);
-    }, [startTimeVal, endTimeVal, parseInput]);
+    }, [startTimeVal, endTimeVal, parseInput, error]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -150,12 +154,12 @@ export const ComboboxPicker = ({
                 if (activeTimeSelector === "start") {
                     handleStartTime(startTimeVal);
                 } else if (activeTimeSelector === "end") {
-                    handleEndTime(endTimeVal);
+                    // Let handleBlur call handleTimeChange instead
+                    if (dropdownOpen) handleEndTime(endTimeVal);
                     endInputRef.current.blur();
                 }
                 break;
             case "Tab":
-                // No input-specific behaviors, use native tab interaction
                 handleTimeChange(startTimeVal, endTimeVal, {});
                 break;
             default:
@@ -168,10 +172,7 @@ export const ComboboxPicker = ({
     };
 
     const handleEndTime = (input: string) => {
-        handleTimeChange(startTimeVal, input, {
-            skipRangeCheck: true,
-            triggerOnBlur: true,
-        });
+        handleTimeChange(startTimeVal, input, { triggerOnBlur: true });
     };
 
     const handleTimeChange = (
@@ -179,24 +180,16 @@ export const ComboboxPicker = ({
         endInput: string,
         {
             goToNextInput, // Used by handleStart to move to end input automatically
-            skipRangeCheck, // Used by handleEnd to preserve invalid end value
             triggerOnBlur, // Used by handleEnd/handleClear to trigger onBlur
         }: TimeChangeOptions
     ) => {
         const start = parseInput(startInput) ?? initialStartTimeVal;
         const end = parseInput(endInput) ?? initialEndTimeVal;
 
-        // If start time is after end time, clear end time
-        const isInvalidRange =
-            !skipRangeCheck &&
-            TimeHelper.timeToMinutes(start) > TimeHelper.timeToMinutes(end);
-        setEndTimeVal(isInvalidRange ? "" : end);
         setStartTimeVal(start);
+        setEndTimeVal(end);
 
-        const timeValue: TimeRangePickerValue = {
-            start,
-            end: isInvalidRange ? "" : end,
-        };
+        const timeValue: TimeRangePickerValue = { start, end };
 
         // Trigger onChange if values have changed
         if (start !== initialStartTimeVal || end !== initialEndTimeVal) {
@@ -248,9 +241,8 @@ export const ComboboxPicker = ({
         if (
             nodeRef.current &&
             !nodeRef.current.contains(event.relatedTarget) &&
-            !dropdownOpen
+            !dropdownOpen // Necessary because dropdown floating ui is not a child
         ) {
-            // Call only when blur triggered while dropdown is dismissed
             handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
         }
     };
@@ -406,7 +398,7 @@ export const ComboboxPicker = ({
         );
 
     return (
-        <Wrapper ref={nodeRef} id={id} {...otherProps}>
+        <Wrapper id={id} {...otherProps}>
             <DropdownListState>
                 <ElementWithDropdown
                     enabled={!readOnly && !disabled}
