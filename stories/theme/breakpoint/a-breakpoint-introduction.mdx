@@ -1,0 +1,97 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo } from "stories/storybook-common";
+
+<Meta title="Foundations/Breakpoint/Introduction" />
+
+# Breakpoint
+
+```tsx
+import { Breakpoint } from "@lifesg/react-design-system/theme";
+```
+
+Build responsive content across different screen widths using the **breakpoint**
+and **media query** tokens. For grid-based page layouts, **column number** and
+**column gutter** tokens are also available.
+
+{/* TODO: update link to Layout component docs */}
+
+<DocInfo storybookLink={"../?path=/docs/general-layout-introduction--docs"}>
+    The `Layout` components let you compose page layouts based on the design
+    tokens
+</DocInfo>
+
+## Collections
+
+[LifeSG](/docs/foundations-breakpoint-lifesg--docs)
+
+## Usage
+
+Use `MediaQuery` to target styles based on max width (desktop-first approach) or
+min width (mobile-first approach).
+
+### Max width
+
+```tsx
+import { MediaQuery } from "@lifesg/react-design-system/theme";
+import styled from "styled-components";
+
+const Container = styled.div`
+    ${MediaQuery.MaxWidth.xs} {
+        // styles
+    }
+`;
+
+/* @media screen and (max-width: 375px) */
+```
+
+### Min width
+
+```tsx
+import { MediaQuery } from "@lifesg/react-design-system/theme";
+import styled from "styled-components";
+
+const Container = styled.div`
+    ${MediaQuery.MinWidth.xs} {
+        // styles
+    }
+`;
+
+/* @media screen and (min-width: 321px) */
+```
+
+### Width as constant
+
+```tsx
+import { Breakpoint } from "@lifesg/react-design-system/theme";
+import styled from "styled-components";
+
+export const MyComponent = () => {
+    const theme = useTheme();
+    const tablet = Breakpoint["md-min"]({ theme });
+
+    if (window.innerWidth > tablet) {
+        // render something
+    } else {
+        // render something else
+    }
+};
+```
+
+## Overriding
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        breakpoint: {
+            "sm-max": 480, // specify a custom pixel-based value
+            "md-min": 481,
+            "xxs-column": 4, // specify a custom integer value
+            "xxs-gutter": 8, // specify a custom pixel-based value
+            "xxs-margin": 20, // specify a custom pixel-based value
+        },
+    },
+};
+```

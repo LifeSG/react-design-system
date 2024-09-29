@@ -37,6 +37,7 @@ const preview: Preview = {
                         "Themes",
                         "Colours",
                         "Typography",
+                        "Breakpoint",
                         "Animation",
                     ],
                     "Core",
