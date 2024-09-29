@@ -38,6 +38,7 @@ const preview: Preview = {
                         "Colours",
                         "Typography",
                         "Breakpoint",
+                        "Spacing",
                         "Animation",
                     ],
                     "Core",
