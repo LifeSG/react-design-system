@@ -10,7 +10,7 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export interface LinkProps extends React.HTMLAttributes<HTMLElement> {
-    /** Props such as weight for font weight and external for icon*/
+    /** Weight prop for font weight and External prop for icon rendering*/
     weight?: TypographyWeight | undefined;
     external?: boolean | undefined;
 }

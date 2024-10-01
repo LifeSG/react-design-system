@@ -6,12 +6,6 @@ import { ExternalIcon } from "@lifesg/react-icons/external";
 import { TypographySizeType } from "../theme/typography/types";
 
 export namespace Typography {
-    /**
-     * Create a styled component with the given tag and typography style.
-     *
-     * @param {keyof JSX.IntrinsicElements} tag - The HTML tag to use for the header (e.g., 'h1', 'h2').
-     * @param {TypographySizeType} textStyle - The typography style such as "header-xxl", "body-lh" to apply from typography token.
-     */
     const createHeader = (
         tag: keyof JSX.IntrinsicElements,
         textStyle: TypographySizeType
@@ -67,7 +61,6 @@ export namespace Typography {
             `}
         `;
 
-        /** Define the component that uses HyperlinkBase styling for Link with additional props.*/
         const Component = ({
             external = false,
             children,
@@ -89,7 +82,6 @@ export namespace Typography {
     export const LinkSM = createLinkComponent("body-sm");
 }
 
-/** Icon for Link */
 export const StyledExternalIcon = styled(ExternalIcon)`
     height: 1lh;
     width: 1em;

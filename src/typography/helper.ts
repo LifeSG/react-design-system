@@ -10,7 +10,6 @@ export const getTypographyStyle = (
     paragraph = false
 ) => {
     return (props: any) => {
-        /** Define the typography Key eg: header-xxl-light.*/
         const typographyKey = `${type}-${weight.toLowerCase()}`;
 
         return css`
@@ -36,7 +35,6 @@ export const getDisplayStyle = (inline = false, paragraph = false) => {
     }
 };
 
-/** Helper Function to create the Base Styling for the Components*/
 export const createTypographyStyles = (
     textStyle: TypographySizeType,
     props: TypographyProps
