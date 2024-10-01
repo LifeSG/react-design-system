@@ -1,9 +1,12 @@
 import React from "react";
 import { Container } from "./container";
-import { ContentProps, DivRef } from "./types";
+import { ContentProps } from "./types";
 import { Section } from "./section";
 
-const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
+const Component = (
+    props: ContentProps,
+    ref: React.Ref<HTMLDivElement>
+): JSX.Element => {
     const {
         children,
         "data-testid": testId = "content",

@@ -18,38 +18,50 @@ export const StyledContainer = styled.div<StyleProps>`
     ${(props) => {
         if (props.$stretch) {
             return css`
-                padding: 0 3rem;
+                padding: 0 32px;
             `;
         } else {
             return css`
-                padding: 0 0.75rem;
-                /* Max width restrictions */
+                padding: 0 32px;
                 max-width: 1440px;
-
-                ${MediaQuery.MaxWidth.xl} {
-                    max-width: 1140px;
-                }
             `;
         }
     }}
 
+    ${MediaQuery.MaxWidth.xl} {
+        padding: 0 ${Breakpoint["xl-margin"]};
+    }
+
+    ${MediaQuery.MaxWidth.lg} {
+        padding: 0 ${Breakpoint["lg-margin"]};
+    }
+
     ${MediaQuery.MaxWidth.md} {
-        max-width: 720px;
+        padding: 0 ${Breakpoint["md-margin"]};
     }
+
     ${MediaQuery.MaxWidth.sm} {
-        width: 100%;
-        padding: 0;
-        max-width: unset;
+        padding: 0 ${Breakpoint["sm-margin"]};
     }
+
+    ${MediaQuery.MaxWidth.xs} {
+        padding: 0 ${Breakpoint["xs-margin"]};
+    }
+
+    ${MediaQuery.MaxWidth.xxs} {
+        padding: 0 ${Breakpoint["xxs-margin"]};
+    }
+
+    /* add the mediquery breakpoint for margin for all */
 
     ${(props) => {
         switch (props.$type) {
             case "grid":
                 return css`
-                    column-gap: 2rem;
+                    column-gap: ${Breakpoint["xxl-gutter"]};
                     display: grid;
                     grid-template-columns: repeat(
-                        ${Breakpoint["xxl-gutter"]},
+                        ${Breakpoint["xxl-column"]},
                         minmax(0, 1fr)
                     );
 

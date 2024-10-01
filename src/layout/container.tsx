@@ -1,8 +1,11 @@
 import React from "react";
-import { ContainerProps, DivRef } from "./types";
-import { StyledContainer } from "./container-style";
+import { ContainerProps } from "./types";
+import { StyledContainer } from "./container.styles";
 
-const Component = (props: ContainerProps, ref: DivRef): JSX.Element => {
+const Component = (
+    props: ContainerProps,
+    ref: React.Ref<HTMLDivElement>
+): JSX.Element => {
     const {
         children,
         "data-testid": testId = "container",

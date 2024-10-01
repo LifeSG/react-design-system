@@ -1,5 +1,4 @@
-export interface CommonLayoutProps
-    extends React.HTMLAttributes<HTMLDivElement> {
+interface CommonLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     "data-testid"?: string | undefined;
     stretch?: boolean | undefined;
@@ -13,7 +12,5 @@ export interface ContainerProps extends CommonLayoutProps {
 }
 
 export interface SectionProps extends CommonLayoutProps {}
-
-export type DivRef = React.Ref<HTMLDivElement>;
 
 export interface ContentProps extends ContainerProps {}
