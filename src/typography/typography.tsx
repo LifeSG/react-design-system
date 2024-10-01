@@ -52,10 +52,6 @@ export namespace Typography {
                 :active,
                 :focus {
                     color: ${Colour["text-hover"]};
-
-                    svg {
-                        color: ${Colour["text-hover"]};
-                    }
                 }
             `}
         `;
