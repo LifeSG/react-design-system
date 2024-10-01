@@ -7,6 +7,18 @@ export type TypographyCollectionMap = {
 
 export type TypographySetOptions = Partial<TypographySet>;
 
+export type TypographySizeType =
+    | "header-xxl"
+    | "header-xl"
+    | "header-lg"
+    | "header-md"
+    | "header-sm"
+    | "header-xs"
+    | "body-baseline"
+    | "body-lg"
+    | "body-md"
+    | "body-sm";
+
 export type TypographySet = {
     "header-xxl-light": CSSProp | string;
     "header-xxl-regular": CSSProp | string;
