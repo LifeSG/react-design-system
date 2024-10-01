@@ -39,6 +39,7 @@ const preview: Preview = {
                         "Typography",
                         "Animation",
                     ],
+                    "Core",
                     "General",
                     ["Animations", "Button", ["Base", "With Icon"], "*"],
                     "Form",
