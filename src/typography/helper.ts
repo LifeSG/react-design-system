@@ -6,15 +6,12 @@ import { TypographySizeType } from "../theme/typography/types";
 
 export const getTypographyStyle = (
     type: TypographySizeType,
-    weight: TypographyWeight | ((props: StyledComponentProps) => string),
+    weight: TypographyWeight,
     paragraph = false
 ) => {
     return (props: any) => {
-        const resolvedWeight =
-            typeof weight === "function" ? weight(props) : weight;
-
-        // to make it eg: header-xxl-light
-        const typographyKey = `${type}-${resolvedWeight.toLowerCase()}`;
+        /** Define the typography Key eg: header-xxl-light.*/
+        const typographyKey = `${type}-${weight.toLowerCase()}`;
 
         return css`
             ${Typography[typographyKey]}
@@ -39,7 +36,7 @@ export const getDisplayStyle = (inline = false, paragraph = false) => {
     }
 };
 
-// Helper func to refactor code
+/** Helper Function to create the Base Styling for the Components*/
 export const createTypographyStyles = (
     textStyle: TypographySizeType,
     props: TypographyProps
