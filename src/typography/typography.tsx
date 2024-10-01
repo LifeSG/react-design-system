@@ -8,40 +8,44 @@ import { TypographyLinkProps, TypographyProps } from "./types";
 export namespace Typography {
     const createHeader = (
         tag: keyof JSX.IntrinsicElements,
-        textStyle: TypographySizeType
+        textStyle: TypographySizeType,
+        displayName: string
     ) => {
         const Header = styled(tag).attrs<TypographyProps>(({ inline }) => ({
             as: inline ? "span" : undefined,
         }))<TypographyProps>`
             ${(props) => createTypographyStyles(textStyle, props)}
         `;
-        Header.displayName = `Header-${textStyle}`;
+        Header.displayName = `Typography.${displayName}`;
         return Header;
     };
 
-    export const HeaderXXL = createHeader("h1", "header-xxl");
-    export const HeaderXL = createHeader("h2", "header-xl");
-    export const HeaderLG = createHeader("h3", "header-lg");
-    export const HeaderMD = createHeader("h4", "header-md");
-    export const HeaderSM = createHeader("h5", "header-sm");
-    export const HeaderXS = createHeader("h6", "header-xs");
+    export const HeaderXXL = createHeader("h1", "header-xxl", "HeaderXXL");
+    export const HeaderXL = createHeader("h2", "header-xl", "HeaderXL");
+    export const HeaderLG = createHeader("h3", "header-lg", "HeaderLG");
+    export const HeaderMD = createHeader("h4", "header-md", "HeaderMD");
+    export const HeaderSM = createHeader("h5", "header-sm", "HeaderSM");
+    export const HeaderXS = createHeader("h6", "header-xs", "HeaderXS");
 
-    const createBody = (textStyle: TypographySizeType) => {
+    const createBody = (textStyle: TypographySizeType, displayName: string) => {
         const Body = styled.p.attrs<TypographyProps>(({ inline }) => ({
             as: inline ? "span" : undefined,
         }))<TypographyProps>`
             ${(props) => createTypographyStyles(textStyle, props)}
         `;
-        Body.displayName = `Body-${textStyle}`;
+        Body.displayName = `Typography.${displayName}`;
         return Body;
     };
 
-    export const BodyBL = createBody("body-baseline");
-    export const BodyLG = createBody("body-lg");
-    export const BodyMD = createBody("body-md");
-    export const BodySM = createBody("body-sm");
+    export const BodyBL = createBody("body-baseline", "BodyBL");
+    export const BodyLG = createBody("body-lg", "BodyLG");
+    export const BodyMD = createBody("body-md", "BodyMD");
+    export const BodySM = createBody("body-sm", "BodySM");
 
-    const createLinkComponent = (textStyle: TypographySizeType) => {
+    const createLinkComponent = (
+        textStyle: TypographySizeType,
+        displayName: string
+    ) => {
         const HyperlinkBase = styled.a<TypographyLinkProps>`
             ${(props) => css`
                 ${getTextStyle(textStyle, props.weight || "regular")}
@@ -66,15 +70,14 @@ export namespace Typography {
                 {external && <StyledExternalIcon />}
             </HyperlinkBase>
         );
-
-        Component.displayName = `Link-${textStyle}`;
+        Component.displayName = `Typography.${displayName}`;
         return Component;
     };
 
-    export const LinkBL = createLinkComponent("body-baseline");
-    export const LinkMD = createLinkComponent("body-md");
-    export const LinkLG = createLinkComponent("body-lg");
-    export const LinkSM = createLinkComponent("body-sm");
+    export const LinkBL = createLinkComponent("body-baseline", "LinkBL");
+    export const LinkMD = createLinkComponent("body-md", "LinkMD");
+    export const LinkLG = createLinkComponent("body-lg", "LinkLG");
+    export const LinkSM = createLinkComponent("body-sm", "LinkSM");
 }
 
 const StyledExternalIcon = styled(ExternalIcon)`

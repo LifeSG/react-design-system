@@ -7,7 +7,7 @@ const meta: Meta = {
 export default meta;
 
 export const InlineText: StoryObj = {
-    render: () => (
+    render: (_args) => (
         <Typography.BodySM>
             The quick brown fox{" "}
             <Typography.BodyBL inline>jumps</Typography.BodyBL> over the lazy
@@ -17,7 +17,7 @@ export const InlineText: StoryObj = {
 };
 
 export const InlineLink: StoryObj = {
-    render: () => (
+    render: (_args) => (
         <Typography.BodyBL>
             The quick brown fox{" "}
             <Typography.LinkBL href="https://www.google.com">
@@ -29,7 +29,7 @@ export const InlineLink: StoryObj = {
 };
 
 export const MixedFontWeights: StoryObj = {
-    render: () => (
+    render: (_args) => (
         <Typography.BodyBL>
             The{" "}
             <Typography.BodyBL weight="light" inline>
@@ -47,7 +47,7 @@ export const MixedFontWeights: StoryObj = {
 };
 
 export const Paragraphs: StoryObj = {
-    render: () => (
+    render: (_args) => (
         <>
             <Typography.BodyBL paragraph>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
@@ -64,7 +64,7 @@ export const Paragraphs: StoryObj = {
 };
 
 export const ExternalLink: StoryObj = {
-    render: () => (
+    render: (_args) => (
         <Typography.BodyBL>
             The quick brown fox{" "}
             <Typography.LinkBL href="https://www.google.com" external>
@@ -84,7 +84,7 @@ export const TypographySet: StoryObj = {
         ),
     ],
     tags: ["pattern"],
-    render: () => (
+    render: (_args) => (
         <>
             <Typography.HeaderXXL>HeaderXXL: Lorem ipsum</Typography.HeaderXXL>
             <Typography.HeaderXL>HeaderXL: Lorem ipsum</Typography.HeaderXL>
