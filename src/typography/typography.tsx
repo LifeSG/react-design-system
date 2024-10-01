@@ -10,7 +10,9 @@ export namespace Typography {
         tag: keyof JSX.IntrinsicElements,
         textStyle: TypographySizeType
     ) => {
-        const Header = styled(tag)<TypographyProps>`
+        const Header = styled(tag).attrs<TypographyProps>(({ inline }) => ({
+            as: inline ? "span" : undefined,
+        }))<TypographyProps>`
             ${(props) => createTypographyStyles(textStyle, props)}
         `;
         Header.displayName = `Header-${textStyle}`;
@@ -25,7 +27,9 @@ export namespace Typography {
     export const HeaderXS = createHeader("h6", "header-xs");
 
     const createBody = (textStyle: TypographySizeType) => {
-        const Body = styled.p<TypographyProps>`
+        const Body = styled.p.attrs<TypographyProps>(({ inline }) => ({
+            as: inline ? "span" : undefined,
+        }))<TypographyProps>`
             ${(props) => createTypographyStyles(textStyle, props)}
         `;
         Body.displayName = `Body-${textStyle}`;
