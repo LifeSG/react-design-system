@@ -21,7 +21,7 @@ const MEMBER_EXPRESSION_PROPERTIES = {
 };
 
 const WARNINGS = {
-    DEPRECATED_USAGE: `\x1b[31mDeprecated usage detected: V2_MediaWidths is deprecated and needs adjustment.\x1b[0m`,
+    DEPRECATED_USAGE: `\x1b[31m[MIGRATION] V2_MediaWidths requires manual migration to Breakpoint. Refer to <"https://github.com/LifeSG/react-design-system/wiki/Migration-to-V3-(WIP)">. File:\x1b[0m`,
 };
 
 const IDENTIFIERS = {
@@ -33,10 +33,9 @@ export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let IS_MEDIA_QUERY_IMPORT_UPDATED = false;
-    let IS_V2_MEDIA_WIDTHS_USED = false;
+    let isMediaQueryImportUpdated = false;
+    let isV2MediaWidthsUsed = false;
 
-    // Process Import Declarations
     source.find(j.ImportDeclaration).forEach((path) => {
         const importPath = path.node.source.value;
 
@@ -45,12 +44,12 @@ export default function transformer(file: FileInfo, api: API) {
             importPath === IMPORT_PATHS.DESIGN_SYSTEM
         ) {
             const specifiers = path.node.specifiers;
-            let HAS_MEDIA_QUERY_SPECIFIER = false;
+            let hasMediaQuerySpecifier = false;
 
             if (specifiers && specifiers.length > 0) {
                 specifiers.forEach((specifier) => {
                     if (j.ImportSpecifier.check(specifier)) {
-                        // Handle V2_MediaQuery
+                        // Change import path for V2_Media to updated V3 Media
                         if (
                             specifier.imported.name ===
                             IMPORT_SPECIFIERS.V2_MEDIA_QUERY
@@ -65,7 +64,7 @@ export default function transformer(file: FileInfo, api: API) {
                                 specifier.local.name =
                                     IMPORT_SPECIFIERS.MEDIA_QUERY;
                             }
-                            HAS_MEDIA_QUERY_SPECIFIER = true;
+                            hasMediaQuerySpecifier = true;
                         }
 
                         // Detect usage of V2_MediaWidths
@@ -73,17 +72,39 @@ export default function transformer(file: FileInfo, api: API) {
                             specifier.imported.name ===
                             IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS
                         ) {
-                            IS_V2_MEDIA_WIDTHS_USED = true;
+                            isV2MediaWidthsUsed = true;
                         }
                     }
                 });
 
                 // If MediaQuery was imported, set flag to update usages
-                if (HAS_MEDIA_QUERY_SPECIFIER) {
-                    IS_MEDIA_QUERY_IMPORT_UPDATED = true;
+                if (hasMediaQuerySpecifier) {
+                    isMediaQueryImportUpdated = true;
+                }
+                // Create seperate import for deprecated MediaWidths
+                if (hasMediaQuerySpecifier && isV2MediaWidthsUsed) {
+                    path.node.specifiers = specifiers.filter((specifier) => {
+                        if (j.ImportSpecifier.check(specifier)) {
+                            return (
+                                specifier.imported.name !==
+                                IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS
+                            );
+                        }
+                        return true;
+                    });
+                    const newImportDeclaration = j.importDeclaration(
+                        [
+                            j.importSpecifier(
+                                j.identifier(IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS)
+                            ),
+                        ],
+                        j.literal(IMPORT_PATHS.V2_MEDIA)
+                    );
+
+                    j(path).insertAfter(newImportDeclaration);
                 }
 
-                // Update import path if necessary
+                // Update import path
                 if (importPath === IMPORT_PATHS.V2_MEDIA) {
                     path.node.source.value = IMPORT_PATHS.THEME;
                 }
@@ -91,20 +112,20 @@ export default function transformer(file: FileInfo, api: API) {
         }
     });
 
-    // Handle Deprecated V2_MediaWidths Usage
-    if (IS_V2_MEDIA_WIDTHS_USED) {
+    // Link to migration docs for V2_MediaWidths deprecation
+    if (isV2MediaWidthsUsed) {
         const hasV2MediaWidths =
             source.find(j.Identifier, {
                 name: IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS,
             }).length > 0;
 
         if (hasV2MediaWidths) {
-            console.error(`File: ${file.path}\n${WARNINGS.DEPRECATED_USAGE}`);
+            console.error(`${WARNINGS.DEPRECATED_USAGE} ${file.path}`);
         }
     }
 
-    // Update MediaQuery Imports and Usages
-    if (IS_MEDIA_QUERY_IMPORT_UPDATED) {
+    // Update MediaQuery usages
+    if (isMediaQueryImportUpdated) {
         // Rename all instances of V2_MediaQuery to MediaQuery
         source
             .find(j.Identifier, { name: IMPORT_SPECIFIERS.V2_MEDIA_QUERY })
@@ -112,7 +133,7 @@ export default function transformer(file: FileInfo, api: API) {
                 path.node.name = IMPORT_SPECIFIERS.MEDIA_QUERY;
             });
 
-        // Update Member Expressions related to MediaQuery
+        // Map V2 Breakpoints of MediaQuery to V3
         source.find(j.MemberExpression).forEach((path) => {
             const object = path.node.object;
             const property = path.node.property;
@@ -131,13 +152,12 @@ export default function transformer(file: FileInfo, api: API) {
                 const queryType = object.property.name;
                 const mediaKey = property.name;
 
-                // Check and replace mediaKey using mediaQueryMap
                 if (
                     mediaQueryMap[queryType] &&
                     mediaQueryMap[queryType][mediaKey]
                 ) {
-                    const NEW_MEDIA_KEY = mediaQueryMap[queryType][mediaKey];
-                    property.name = NEW_MEDIA_KEY;
+                    const newMediaKey = mediaQueryMap[queryType][mediaKey];
+                    property.name = newMediaKey;
                 }
             }
         });

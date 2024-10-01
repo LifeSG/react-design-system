@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { expectedOutputCode, inputCode } from "./test-data";
 
-describe("Codemod Transformer for V2_Layout to Layout", () => {
+describe("Codemod Transformer for V2_MediaQuery to MediaQuery", () => {
     const inputPath = path.join(__dirname, "input.tsx");
     const outputPath = path.join(__dirname, "output.tsx");
 
@@ -19,7 +19,7 @@ describe("Codemod Transformer for V2_Layout to Layout", () => {
         fs.unlinkSync(outputPath);
     });
 
-    it("should transform V2_Layout components to Layout components and map props correctly", () => {
+    it("should transform V2_MediaQuery to MediaQuery and map the breakpoints correctly", () => {
         fs.copyFileSync(inputPath, outputPath);
 
         // Execute the jscodeshift command for the codemod

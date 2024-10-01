@@ -27,25 +27,21 @@ export default function transformer(file: FileInfo, api: API) {
 
     let isLifesgImport = false;
 
-    // Process Import Declarations
     source.find(j.ImportDeclaration).forEach((path) => {
         const importPath = path.node.source.value;
 
-        // Check if the import is from the target design system path
         if (
             importPath === IMPORT_PATHS.V2_TEXT ||
             importPath === IMPORT_PATHS.DESIGN_SYSTEM
         ) {
-            // Iterate over each specifier in the import declaration
+            // Update V2 imports to V3 updated imports
             path.node.specifiers?.forEach((specifier) => {
                 if (
                     j.ImportSpecifier.check(specifier) &&
                     specifier.imported.name === IMPORT_SPECIFIERS.V2_TEXT
                 ) {
-                    // Rename imported specifier from V2_Text to Typography
                     specifier.imported.name = IMPORT_SPECIFIERS.TYPOGRAPHY;
 
-                    // Rename local specifier if it matches V2_Text
                     if (
                         specifier.local &&
                         specifier.local.name === IMPORT_SPECIFIERS.V2_TEXT
@@ -53,7 +49,6 @@ export default function transformer(file: FileInfo, api: API) {
                         specifier.local.name = IMPORT_SPECIFIERS.TYPOGRAPHY;
                     }
 
-                    // Update the import path to the new typography module
                     path.node.source.value = IMPORT_PATHS.TYPOGRAPHY;
                     isLifesgImport = true;
                 }
@@ -61,7 +56,7 @@ export default function transformer(file: FileInfo, api: API) {
         }
     });
 
-    // Helper Function to Replace Member Expressions
+    // Create updated Typography component
     const replaceWithNewComponent = (path: any, newComponentValue: string) => {
         path.replace(
             j.memberExpression(
@@ -79,13 +74,12 @@ export default function transformer(file: FileInfo, api: API) {
                 path.node.name = JSX_IDENTIFIERS.TYPOGRAPHY;
             });
 
-        // Update Member Expressions
+        // Map V2 Text component usage to respective V3 Typography component usage
         source.find(j.MemberExpression).forEach((path) => {
             let currentPath = path.node;
             const propertyNameParts: string[] = [];
             let startsWithTypography = false;
 
-            // Traverse the member expression to collect property names
             while (j.MemberExpression.check(currentPath)) {
                 const property = currentPath.property;
                 const object = currentPath.object;
