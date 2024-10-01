@@ -1,22 +1,19 @@
 import { css } from "styled-components";
-import { TypographyProps, TypographyWeight } from "./types";
 import { Colour, Typography } from "../theme";
-import { StyledComponentProps } from "../theme/helpers";
 import { TypographySizeType } from "../theme/typography/types";
+import { TypographyProps, TypographyWeight } from "./types";
 
-export const getTypographyStyle = (
+export const getTextStyle = (
     type: TypographySizeType,
     weight: TypographyWeight,
     paragraph = false
 ) => {
-    return (props: any) => {
-        const typographyKey = `${type}-${weight.toLowerCase()}`;
+    const token = `${type}-${weight.toLowerCase()}`;
 
-        return css`
-            ${Typography[typographyKey]}
-            ${paragraph ? "margin-bottom: 1.05em;" : "margin-bottom: 0;"}
-        `;
-    };
+    return css`
+        ${Typography[token]}
+        ${paragraph ? "margin-bottom: 1.05em;" : "margin-bottom: 0;"}
+    `;
 };
 
 export const getDisplayStyle = (inline = false, paragraph = false) => {
@@ -39,11 +36,7 @@ export const createTypographyStyles = (
     textStyle: TypographySizeType,
     props: TypographyProps
 ) => css`
-    ${getTypographyStyle(
-        textStyle,
-        props.weight || "regular",
-        props.paragraph
-    )(props)}
-    color: ${Colour.text};
+    ${getTextStyle(textStyle, props.weight || "regular", props.paragraph)}
     ${getDisplayStyle(props.inline, props.paragraph)}
+    color: ${Colour.text};
 `;

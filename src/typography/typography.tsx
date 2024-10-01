@@ -1,18 +1,17 @@
-import styled, { css } from "styled-components";
-import { createTypographyStyles, getTypographyStyle } from "./helper";
-import { Colour } from "../theme";
-import { LinkProps, TypographyProps } from "./types";
 import { ExternalIcon } from "@lifesg/react-icons/external";
+import styled, { css } from "styled-components";
+import { Colour } from "../theme";
 import { TypographySizeType } from "../theme/typography/types";
+import { createTypographyStyles, getTextStyle } from "./helper";
+import { TypographyLinkProps, TypographyProps } from "./types";
 
 export namespace Typography {
     const createHeader = (
         tag: keyof JSX.IntrinsicElements,
         textStyle: TypographySizeType
     ) => {
-        const Header = styled(tag)`
-            ${(props: TypographyProps) =>
-                createTypographyStyles(textStyle, props)}
+        const Header = styled(tag)<TypographyProps>`
+            ${(props) => createTypographyStyles(textStyle, props)}
         `;
         Header.displayName = `Header-${textStyle}`;
         return Header;
@@ -26,9 +25,8 @@ export namespace Typography {
     export const HeaderXS = createHeader("h6", "header-xs");
 
     const createBody = (textStyle: TypographySizeType) => {
-        const Body = styled.p`
-            ${(props: TypographyProps) =>
-                createTypographyStyles(textStyle, props)}
+        const Body = styled.p<TypographyProps>`
+            ${(props) => createTypographyStyles(textStyle, props)}
         `;
         Body.displayName = `Body-${textStyle}`;
         return Body;
@@ -40,12 +38,9 @@ export namespace Typography {
     export const BodySM = createBody("body-sm");
 
     const createLinkComponent = (textStyle: TypographySizeType) => {
-        const HyperlinkBase = styled.a<LinkProps>`
+        const HyperlinkBase = styled.a<TypographyLinkProps>`
             ${(props) => css`
-                ${getTypographyStyle(
-                    textStyle,
-                    props.weight || "regular"
-                )(props)}
+                ${getTextStyle(textStyle, props.weight || "regular")}
                 color: ${Colour.hyperlink};
                 text-decoration: none;
 
@@ -65,7 +60,7 @@ export namespace Typography {
             external = false,
             children,
             ...rest
-        }: LinkProps) => (
+        }: TypographyLinkProps) => (
             <HyperlinkBase {...rest}>
                 {children}
                 {external && <StyledExternalIcon />}
@@ -82,7 +77,7 @@ export namespace Typography {
     export const LinkSM = createLinkComponent("body-sm");
 }
 
-export const StyledExternalIcon = styled(ExternalIcon)`
+const StyledExternalIcon = styled(ExternalIcon)`
     height: 1lh;
     width: 1em;
     margin-left: 0.4em;

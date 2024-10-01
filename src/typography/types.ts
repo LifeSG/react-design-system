@@ -1,16 +1,18 @@
 export type TypographyWeight = "regular" | "semibold" | "bold" | "light";
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
-    /** Define the Weight prop such as regular, bold*/
+    /** The font weight */
     weight?: TypographyWeight | undefined;
-    /** For Inline Styling of Typography text*/
+    /** Specifies if text is displayed inline */
     inline?: boolean | undefined;
-    /** For Block Level Styling of Typography text*/
+    /** Specifies if text has a bottom margin */
     paragraph?: boolean | undefined;
 }
 
-export interface LinkProps extends React.HTMLAttributes<HTMLElement> {
-    /** Weight prop for font weight and External prop for icon rendering*/
+export interface TypographyLinkProps
+    extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+    /** The font weight */
     weight?: TypographyWeight | undefined;
+    /** Displays indicator to signal that link leads to an external site */
     external?: boolean | undefined;
 }
