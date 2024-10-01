@@ -17,14 +17,12 @@ export const HeaderArrowButton = styled(ClickableIcon)`
 export const Container = styled.div`
     display: flex;
     align-items: center;
-    margin: 0.625rem 0 0.625rem 0;
     justify-content: center;
     width: 100%;
 `;
 
 export const Wrapper = styled.div`
     text-align: center;
-    padding: 0 !important;
 `;
 
 export const StyledDateText = styled(Text.H4)`

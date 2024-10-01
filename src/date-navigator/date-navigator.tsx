@@ -64,26 +64,24 @@ export const DateNavigator = ({
         <Container {...otherProps}>
             {onLeftArrowClick && (
                 <HeaderArrowButton
-                    id="date-navigator-left-arrow-btn-id"
                     data-testid="date-navigator-left-arrow-btn"
                     disabled={isLoading || isLeftArrowDisabled()}
                     focusHighlight={false}
+                    focusOutline="browser"
                     aria-label="Previous day"
                     onClick={() => onLeftArrowClick(selectedDate)}
                 >
                     <ArrowLeft />
                 </HeaderArrowButton>
             )}
-            <Wrapper id="date-navigator-display-wrapper-id">
+            <Wrapper>
                 <StyledDateText
-                    id="date-navigator-date-text-id"
                     data-testid="date-navigator-date-text"
                     weight={"semibold"}
                 >
                     {dateText}
                 </StyledDateText>
                 <StyledDayText
-                    id="date-navigator-day-text-id"
                     data-testid="date-navigator-day-text"
                     weight={"bold"}
                 >
@@ -92,10 +90,10 @@ export const DateNavigator = ({
             </Wrapper>
             {onRightArrowClick && (
                 <HeaderArrowButton
-                    id="date-navigator-right-arrow-btn-id"
                     data-testid="date-navigator-right-arrow-btn"
                     disabled={isLoading || isRightArrowDisabled()}
                     focusHighlight={false}
+                    focusOutline="browser"
                     aria-label="Next day"
                     onClick={() => onRightArrowClick(selectedDate)}
                 >

@@ -6,6 +6,6 @@ export interface DateNavigatorProps {
     minDate?: string | undefined;
     maxDate?: string | undefined;
     isLoading?: boolean | undefined;
-    onLeftArrowClick?: (currentDate: string) => void | undefined;
-    onRightArrowClick?: (currentDate: string) => void | undefined;
+    onLeftArrowClick?: ((currentDate: string) => void) | undefined;
+    onRightArrowClick?: ((currentDate: string) => void) | undefined;
 }
