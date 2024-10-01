@@ -241,6 +241,7 @@ export const ComboboxPicker = ({
         if (
             nodeRef.current &&
             !nodeRef.current.contains(event.relatedTarget) &&
+            activeTimeSelector &&
             !dropdownOpen // Necessary because dropdown floating ui is not a child
         ) {
             handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
@@ -253,6 +254,7 @@ export const ComboboxPicker = ({
             // No handleTimeChange to avoid duplicate call from handleBlur
             setActiveTimeSelector(null);
             setDropdownOpen(false);
+            onBlur?.();
         } else {
             // Dropdown closed via exiting component (eg. tab)
             handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
