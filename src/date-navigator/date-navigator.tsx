@@ -17,7 +17,7 @@ export const DateNavigator = ({
     selectedDate,
     minDate,
     maxDate,
-    isLoading,
+    loading,
     onLeftArrowClick,
     onRightArrowClick,
     ...otherProps
@@ -65,7 +65,7 @@ export const DateNavigator = ({
             {onLeftArrowClick && (
                 <HeaderArrowButton
                     data-testid="date-navigator-left-arrow-btn"
-                    disabled={isLoading || isLeftArrowDisabled()}
+                    disabled={loading || isLeftArrowDisabled()}
                     focusHighlight={false}
                     focusOutline="browser"
                     aria-label="Previous day"
@@ -91,7 +91,7 @@ export const DateNavigator = ({
             {onRightArrowClick && (
                 <HeaderArrowButton
                     data-testid="date-navigator-right-arrow-btn"
-                    disabled={isLoading || isRightArrowDisabled()}
+                    disabled={loading || isRightArrowDisabled()}
                     focusHighlight={false}
                     focusOutline="browser"
                     aria-label="Next day"

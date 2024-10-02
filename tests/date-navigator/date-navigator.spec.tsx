@@ -68,7 +68,7 @@ describe("DateNavigator", () => {
         render(
             <DateNavigator
                 selectedDate={today}
-                isLoading
+                loading
                 onRightArrowClick={onRightArrowClick}
                 onLeftArrowClick={onLeftArrowClick}
             />

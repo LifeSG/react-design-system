@@ -57,7 +57,7 @@ export const LoadingState: StoryObj<Component> = {
         return (
             <DateNavigator
                 selectedDate={selectedDate}
-                isLoading
+                loading
                 onLeftArrowClick={onLeftArrowClick}
                 onRightArrowClick={onRightArrowClick}
             />
