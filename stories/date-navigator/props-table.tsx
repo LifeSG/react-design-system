@@ -1,6 +1,11 @@
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
+const DATE_FORMAT = (
+    <>
+        string-based <code>YYYY-MM-DD</code> format
+    </>
+);
 const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
@@ -22,42 +27,41 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "selectedDate",
                 mandatory: true,
+                description: <>The current displayed date in {DATE_FORMAT}</>,
+                propTypes: ["string"],
+            },
+            {
+                name: "minDate",
                 description: (
                     <>
-                        The date string to display, any format that is
-                        acceptable by <code>Dayjs</code> will work.
+                        The minimum date allowed for navigation in {DATE_FORMAT}{" "}
+                        (inclusive)
                     </>
                 ),
                 propTypes: ["string"],
             },
             {
-                name: "minDate",
-                description:
-                    "The minimum date that is allowed to be navigated to.",
-                propTypes: ["string"],
-            },
-            {
                 name: "maxDate",
-                description:
-                    "The maximum date that is allowed to be navigated to.",
+                description: (
+                    <>
+                        The maximum date allowed for navigation in {DATE_FORMAT}{" "}
+                        (inclusive)
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
-                name: "isLoading",
-                description: "The loading state to disable navigation buttons.",
-                defaultValue: "false",
-                propTypes: ["boolean"],
+                name: "loading",
+                description: "The loading state to disable navigation buttons",
             },
             {
                 name: "onLeftArrowClick",
-                description:
-                    "The callback function which will be called on left arrow navigation button click.",
+                description: "Called on left arrow navigation button click",
                 propTypes: ["(currentDate: string) => void"],
             },
             {
                 name: "onRightArrowClick",
-                description:
-                    "The callback function which will be called on right arrow navigation button click.",
+                description: "Called on right arrow navigation button click",
                 propTypes: ["(currentDate: string) => void"],
             },
         ],
