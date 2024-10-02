@@ -22,37 +22,35 @@ export const StyledContainer = styled.div<StyleProps>`
             `;
         } else {
             return css`
-                padding: 0 32px;
+                padding: 0 ${Breakpoint["xxl-margin"]};
                 max-width: 1440px;
+
+                ${MediaQuery.MaxWidth.xl} {
+                    padding: 0 ${Breakpoint["xl-margin"]};
+                }
+
+                ${MediaQuery.MaxWidth.lg} {
+                    padding: 0 ${Breakpoint["lg-margin"]};
+                }
+
+                ${MediaQuery.MaxWidth.md} {
+                    padding: 0 ${Breakpoint["md-margin"]};
+                }
+
+                ${MediaQuery.MaxWidth.sm} {
+                    padding: 0 ${Breakpoint["sm-margin"]};
+                }
+
+                ${MediaQuery.MaxWidth.xs} {
+                    padding: 0 ${Breakpoint["xs-margin"]};
+                }
+
+                ${MediaQuery.MaxWidth.xxs} {
+                    padding: 0 ${Breakpoint["xxs-margin"]};
+                }
             `;
         }
     }}
-
-    ${MediaQuery.MaxWidth.xl} {
-        padding: 0 ${Breakpoint["xl-margin"]};
-    }
-
-    ${MediaQuery.MaxWidth.lg} {
-        padding: 0 ${Breakpoint["lg-margin"]};
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        padding: 0 ${Breakpoint["md-margin"]};
-    }
-
-    ${MediaQuery.MaxWidth.sm} {
-        padding: 0 ${Breakpoint["sm-margin"]};
-    }
-
-    ${MediaQuery.MaxWidth.xs} {
-        padding: 0 ${Breakpoint["xs-margin"]};
-    }
-
-    ${MediaQuery.MaxWidth.xxs} {
-        padding: 0 ${Breakpoint["xxs-margin"]};
-    }
-
-    /* add the mediquery breakpoint for margin for all */
 
     ${(props) => {
         switch (props.$type) {
