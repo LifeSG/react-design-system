@@ -1,270 +1,270 @@
 import { css } from "styled-components";
 
-import { getFontValues } from "../../font/theme-helper";
-import { FontSet } from "../../font/types";
-import { TypographySet } from "../types";
+import { getFontSpecValues } from "../../font-spec/theme-helper";
+import { FontSpecSet } from "../../font-spec/types";
+import { FontSet } from "../types";
 
-const generateTypographyCSS = (
-    fontSizeKey: keyof FontSet,
-    fontWeightKey: keyof FontSet,
-    lineHeightKey: keyof FontSet,
-    letterSpacingKey: keyof FontSet
+const generateFontCSS = (
+    fontSizeKey: keyof FontSpecSet,
+    fontWeightKey: keyof FontSpecSet,
+    lineHeightKey: keyof FontSpecSet,
+    letterSpacingKey: keyof FontSpecSet
 ) => css`
-    font-family: ${getFontValues("font-family")};
-    font-size: ${getFontValues(fontSizeKey)};
-    font-weight: ${getFontValues(fontWeightKey)};
-    line-height: ${getFontValues(lineHeightKey)};
-    letter-spacing: ${getFontValues(letterSpacingKey)};
+    font-family: ${getFontSpecValues("font-family")};
+    font-size: ${getFontSpecValues(fontSizeKey)};
+    font-weight: ${getFontSpecValues(fontWeightKey)};
+    line-height: ${getFontSpecValues(lineHeightKey)};
+    letter-spacing: ${getFontSpecValues(letterSpacingKey)};
 `;
 
-export const LifeSgTypographySet: TypographySet = {
-    "header-xxl-light": generateTypographyCSS(
+export const LifeSgFontSet: FontSet = {
+    "header-xxl-light": generateFontCSS(
         "header-size-xxl",
         "weight-light",
         "header-lh-xxl",
         "header-ls-xxl"
     ),
-    "header-xxl-regular": generateTypographyCSS(
+    "header-xxl-regular": generateFontCSS(
         "header-size-xxl",
         "weight-regular",
         "header-lh-xxl",
         "header-ls-xxl"
     ),
-    "header-xxl-semibold": generateTypographyCSS(
+    "header-xxl-semibold": generateFontCSS(
         "header-size-xxl",
         "weight-semibold",
         "header-lh-xxl",
         "header-ls-xxl"
     ),
-    "header-xxl-bold": generateTypographyCSS(
+    "header-xxl-bold": generateFontCSS(
         "header-size-xxl",
         "weight-bold",
         "header-lh-xxl",
         "header-ls-xxl"
     ),
-    "header-xl-light": generateTypographyCSS(
+    "header-xl-light": generateFontCSS(
         "header-size-xl",
         "weight-light",
         "header-lh-xl",
         "header-ls-xl"
     ),
-    "header-xl-regular": generateTypographyCSS(
+    "header-xl-regular": generateFontCSS(
         "header-size-xl",
         "weight-regular",
         "header-lh-xl",
         "header-ls-xl"
     ),
-    "header-xl-semibold": generateTypographyCSS(
+    "header-xl-semibold": generateFontCSS(
         "header-size-xl",
         "weight-semibold",
         "header-lh-xl",
         "header-ls-xl"
     ),
-    "header-xl-bold": generateTypographyCSS(
+    "header-xl-bold": generateFontCSS(
         "header-size-xl",
         "weight-bold",
         "header-lh-xl",
         "header-ls-xl"
     ),
-    "header-lg-light": generateTypographyCSS(
+    "header-lg-light": generateFontCSS(
         "header-size-lg",
         "weight-light",
         "header-lh-lg",
         "header-ls-lg"
     ),
-    "header-lg-regular": generateTypographyCSS(
+    "header-lg-regular": generateFontCSS(
         "header-size-lg",
         "weight-regular",
         "header-lh-lg",
         "header-ls-lg"
     ),
-    "header-lg-semibold": generateTypographyCSS(
+    "header-lg-semibold": generateFontCSS(
         "header-size-lg",
         "weight-semibold",
         "header-lh-lg",
         "header-ls-lg"
     ),
-    "header-lg-bold": generateTypographyCSS(
+    "header-lg-bold": generateFontCSS(
         "header-size-lg",
         "weight-bold",
         "header-lh-lg",
         "header-ls-lg"
     ),
-    "header-md-light": generateTypographyCSS(
+    "header-md-light": generateFontCSS(
         "header-size-md",
         "weight-light",
         "header-lh-md",
         "header-ls-md"
     ),
-    "header-md-regular": generateTypographyCSS(
+    "header-md-regular": generateFontCSS(
         "header-size-md",
         "weight-regular",
         "header-lh-md",
         "header-ls-md"
     ),
-    "header-md-semibold": generateTypographyCSS(
+    "header-md-semibold": generateFontCSS(
         "header-size-md",
         "weight-semibold",
         "header-lh-md",
         "header-ls-md"
     ),
-    "header-md-bold": generateTypographyCSS(
+    "header-md-bold": generateFontCSS(
         "header-size-md",
         "weight-bold",
         "header-lh-md",
         "header-ls-md"
     ),
-    "header-sm-light": generateTypographyCSS(
+    "header-sm-light": generateFontCSS(
         "header-size-sm",
         "weight-light",
         "header-lh-sm",
         "header-ls-sm"
     ),
-    "header-sm-regular": generateTypographyCSS(
+    "header-sm-regular": generateFontCSS(
         "header-size-sm",
         "weight-regular",
         "header-lh-sm",
         "header-ls-sm"
     ),
-    "header-sm-semibold": generateTypographyCSS(
+    "header-sm-semibold": generateFontCSS(
         "header-size-sm",
         "weight-semibold",
         "header-lh-sm",
         "header-ls-sm"
     ),
-    "header-sm-bold": generateTypographyCSS(
+    "header-sm-bold": generateFontCSS(
         "header-size-sm",
         "weight-bold",
         "header-lh-sm",
         "header-ls-sm"
     ),
-    "header-xs-light": generateTypographyCSS(
+    "header-xs-light": generateFontCSS(
         "header-size-xs",
         "weight-light",
         "header-lh-xs",
         "header-ls-xs"
     ),
-    "header-xs-regular": generateTypographyCSS(
+    "header-xs-regular": generateFontCSS(
         "header-size-xs",
         "weight-regular",
         "header-lh-xs",
         "header-ls-xs"
     ),
-    "header-xs-semibold": generateTypographyCSS(
+    "header-xs-semibold": generateFontCSS(
         "header-size-xs",
         "weight-semibold",
         "header-lh-xs",
         "header-ls-xs"
     ),
-    "header-xs-bold": generateTypographyCSS(
+    "header-xs-bold": generateFontCSS(
         "header-size-xs",
         "weight-bold",
         "header-lh-xs",
         "header-ls-xs"
     ),
-    "body-baseline-light": generateTypographyCSS(
+    "body-baseline-light": generateFontCSS(
         "body-size-baseline",
         "weight-light",
         "body-lh-baseline",
         "body-ls-baseline"
     ),
-    "body-baseline-regular": generateTypographyCSS(
+    "body-baseline-regular": generateFontCSS(
         "body-size-baseline",
         "weight-regular",
         "body-lh-baseline",
         "body-ls-baseline"
     ),
-    "body-baseline-semibold": generateTypographyCSS(
+    "body-baseline-semibold": generateFontCSS(
         "body-size-baseline",
         "weight-semibold",
         "body-lh-baseline",
         "body-ls-baseline"
     ),
-    "body-baseline-bold": generateTypographyCSS(
+    "body-baseline-bold": generateFontCSS(
         "body-size-baseline",
         "weight-bold",
         "body-lh-baseline",
         "body-ls-baseline"
     ),
-    "body-lg-light": generateTypographyCSS(
+    "body-lg-light": generateFontCSS(
         "body-size-lg",
         "weight-light",
         "body-lh-lg",
         "body-ls-lg"
     ),
-    "body-lg-regular": generateTypographyCSS(
+    "body-lg-regular": generateFontCSS(
         "body-size-lg",
         "weight-regular",
         "body-lh-lg",
         "body-ls-lg"
     ),
-    "body-lg-semibold": generateTypographyCSS(
+    "body-lg-semibold": generateFontCSS(
         "body-size-lg",
         "weight-semibold",
         "body-lh-lg",
         "body-ls-lg"
     ),
-    "body-lg-bold": generateTypographyCSS(
+    "body-lg-bold": generateFontCSS(
         "body-size-lg",
         "weight-bold",
         "body-lh-lg",
         "body-ls-lg"
     ),
-    "body-md-light": generateTypographyCSS(
+    "body-md-light": generateFontCSS(
         "body-size-md",
         "weight-light",
         "body-lh-md",
         "body-ls-md"
     ),
-    "body-md-regular": generateTypographyCSS(
+    "body-md-regular": generateFontCSS(
         "body-size-md",
         "weight-regular",
         "body-lh-md",
         "body-ls-md"
     ),
-    "body-md-semibold": generateTypographyCSS(
+    "body-md-semibold": generateFontCSS(
         "body-size-md",
         "weight-semibold",
         "body-lh-md",
         "body-ls-md"
     ),
-    "body-md-bold": generateTypographyCSS(
+    "body-md-bold": generateFontCSS(
         "body-size-md",
         "weight-bold",
         "body-lh-md",
         "body-ls-md"
     ),
-    "body-sm-light": generateTypographyCSS(
+    "body-sm-light": generateFontCSS(
         "body-size-sm",
         "weight-light",
         "body-lh-sm",
         "body-ls-sm"
     ),
-    "body-sm-regular": generateTypographyCSS(
+    "body-sm-regular": generateFontCSS(
         "body-size-sm",
         "weight-regular",
         "body-lh-sm",
         "body-ls-sm"
     ),
-    "body-sm-semibold": generateTypographyCSS(
+    "body-sm-semibold": generateFontCSS(
         "body-size-sm",
         "weight-semibold",
         "body-lh-sm",
         "body-ls-sm"
     ),
-    "body-sm-bold": generateTypographyCSS(
+    "body-sm-bold": generateFontCSS(
         "body-size-sm",
         "weight-bold",
         "body-lh-sm",
         "body-ls-sm"
     ),
-    "formlabel-baseline-semibold": generateTypographyCSS(
+    "formlabel-baseline-semibold": generateFontCSS(
         "formlabel-size-baseline",
         "weight-semibold",
         "formlabel-lh-baseline",
         "formlabel-ls-baseline"
     ),
-    "formlabel-lg-semibold": generateTypographyCSS(
+    "formlabel-lg-semibold": generateFontCSS(
         "formlabel-size-lg",
         "weight-semibold",
         "formlabel-lh-lg",

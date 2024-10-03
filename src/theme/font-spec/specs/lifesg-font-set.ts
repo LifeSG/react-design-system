@@ -1,7 +1,7 @@
-import { FontSet } from "../types";
+import { FontSpecSet } from "../types";
 
 // Pending for different font styling
-export const LifeSgFontSet: FontSet = {
+export const LifeSgFontSpecSet: FontSpecSet = {
     "header-size-xxl": "3rem",
     "header-size-xl": "2.5rem",
     "header-size-lg": "2rem",

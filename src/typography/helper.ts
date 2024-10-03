@@ -1,6 +1,6 @@
 import { css } from "styled-components";
-import { Colour, Typography } from "../theme";
-import { TypographySizeType } from "../theme/typography/types";
+import { Colour, Font } from "../theme";
+import { TypographySizeType } from "../theme/font/types";
 import { TypographyProps, TypographyWeight } from "./types";
 
 export const getTextStyle = (
@@ -11,7 +11,7 @@ export const getTextStyle = (
     const token = `${type}-${weight.toLowerCase()}`;
 
     return css`
-        ${Typography[token]}
+        ${Font[token]}
         ${paragraph ? "margin-bottom: 1.05em;" : "margin-bottom: 0;"}
     `;
 };
