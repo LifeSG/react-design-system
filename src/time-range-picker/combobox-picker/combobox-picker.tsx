@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ClearIcon } from "../../input/input.style";
-import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
-import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
-import { DropdownListState } from "../../shared/dropdown-list-v2";
-import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
-import { ErrorMessage } from "../../form/form-label.style";
 import { OpenChangeReason } from "@floating-ui/react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ErrorMessage } from "../../form/form-label.style";
+import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
+import { ClearIcon } from "../../input/input.style";
+import { DropdownListState } from "../../shared/dropdown-list-v2";
+import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
+import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
-import { SelectorInput, Wrapper } from "../common.styles";
 import { SimpleIdGenerator } from "../../util";
-import { TimeFieldContainer } from "./combobox-picker.styles.tsx";
 import { TimeHelper } from "../../util/time-helper";
+import { SelectorInput, Wrapper } from "../common.styles";
 import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
+import { TimeFieldContainer } from "./combobox-picker.styles.tsx";
 
 type TimeRangeInputType = "start" | "end";
 interface TimeChangeOptions {

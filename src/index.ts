@@ -13,6 +13,7 @@ export * from "./color";
 export * from "./countdown-timer";
 export * from "./data-table";
 export * from "./date-input";
+export * from "./date-navigator";
 export * from "./date-range-input";
 export * from "./design-token";
 export * from "./divider";
