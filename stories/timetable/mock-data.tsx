@@ -3,8 +3,8 @@ import dayjs, { Dayjs } from "dayjs";
 import styled from "styled-components";
 import { Text } from "../../src/text";
 import { CellType, TimeTableProps } from "../../src/timetable/types";
-import { evenDaysData } from "./new-even-days";
-import { oddDaysData } from "./new-odd-days";
+import { evenDaysData } from "./timetable-even-days-data";
+import { oddDaysData } from "./timetable-odd-days-data";
 import lazyLoadData from "./timetable-lazy-load-data.json";
 
 export const StyledHoverContent = styled.div`
