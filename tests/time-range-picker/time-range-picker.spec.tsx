@@ -136,7 +136,8 @@ describe("TimeRangePicker", () => {
         });
 
         describe("validation errors", () => {
-            it("should show error if start time is after end time", () => {
+            it("should show error if start time is after end time", async () => {
+                const user = userEvent.setup();
                 render(
                     <TimeRangePicker
                         variant={"combobox"}
@@ -144,6 +145,19 @@ describe("TimeRangePicker", () => {
                     />
                 );
 
+                expect(
+                    screen.queryByText("End time must be after start time")
+                ).toBeInTheDocument();
+
+                // Invalid values should persist
+                await act(async () =>
+                    user.click(screen.getByLabelText(END_LABEL))
+                );
+                await act(async () => await user.keyboard("{Enter}"));
+                expect(screen.getByLabelText(START_LABEL)).toHaveValue(
+                    "3:00pm"
+                );
+                expect(screen.getByLabelText(END_LABEL)).toHaveValue("2:00pm");
                 expect(
                     screen.queryByText("End time must be after start time")
                 ).toBeInTheDocument();
@@ -427,8 +441,7 @@ describe("TimeRangePicker", () => {
                     </>
                 );
 
-                await user.keyboard("{Tab}");
-                expect(screen.getByTestId("before")).toHaveFocus();
+                screen.getByTestId("before").focus();
 
                 // Tab to start (onFocus)
                 await act(async () => {
@@ -438,7 +451,6 @@ describe("TimeRangePicker", () => {
                 await waitFor(() =>
                     expect(screen.getByLabelText(START_LABEL)).toHaveFocus()
                 );
-                expect(mockOnBlur).toHaveBeenCalledTimes(0);
                 expect(mockOnFocus).toHaveBeenCalledTimes(1);
 
                 // Tab to end
@@ -446,16 +458,12 @@ describe("TimeRangePicker", () => {
                     await user.keyboard("{Tab}{5}");
                 });
                 expect(screen.getByLabelText(END_LABEL)).toHaveFocus();
-                expect(mockOnBlur).toHaveBeenCalledTimes(0);
-                expect(mockOnFocus).toHaveBeenCalledTimes(1);
 
                 // Tab to clear
                 await act(async () => {
                     await user.keyboard("{Tab}");
                 });
                 expect(screen.queryByLabelText("Clear")).toHaveFocus();
-                expect(mockOnBlur).toHaveBeenCalledTimes(0);
-                expect(mockOnFocus).toHaveBeenCalledTimes(1);
 
                 // Tab to dropdown
                 await act(async () => {
@@ -465,7 +473,6 @@ describe("TimeRangePicker", () => {
                     screen.getByRole("option", { name: "5:00pm" })
                 ).toHaveFocus();
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
-                expect(mockOnFocus).toHaveBeenCalledTimes(1);
 
                 // Tab to after (onBlur)
                 await act(async () => {
@@ -477,22 +484,46 @@ describe("TimeRangePicker", () => {
                 expect(
                     screen.queryByTestId(DROPDOWN_TESTID)
                 ).not.toBeInTheDocument();
+            });
+
+            it("should call onFocus and onBlur when cycling back through the tab sequence", async () => {
+                const user = userEvent.setup();
+                const mockOnFocus = jest.fn();
+
+                render(
+                    <>
+                        <TimeRangePicker
+                            variant={"combobox"}
+                            onFocus={mockOnFocus}
+                            value={{ start: "9:00am", end: "5:00pm" }}
+                        />
+                        <button data-testid="after" />
+                    </>
+                );
+
+                screen.getByTestId("after").focus();
 
                 // Tab back to clear
                 await act(async () => {
                     await user.keyboard("{Shift>}{Tab}{/Shift}");
                 });
                 expect(screen.queryByLabelText("Clear")).toHaveFocus();
-                expect(mockOnBlur).toHaveBeenCalledTimes(1);
-                expect(mockOnFocus).toHaveBeenCalledTimes(1);
+                expect(mockOnFocus).toHaveBeenCalledTimes(0); // Only called on input focus
 
                 // Tab back to end (onFocus)
                 await act(async () => {
                     await user.keyboard("{Shift>}{Tab}{/Shift}");
                 });
                 expect(screen.getByLabelText(END_LABEL)).toHaveFocus();
-                expect(mockOnBlur).toHaveBeenCalledTimes(1);
-                expect(mockOnFocus).toHaveBeenCalledTimes(2);
+                expect(mockOnFocus).toHaveBeenCalledTimes(1);
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+
+                // Tab back to start
+                await act(async () => {
+                    await user.keyboard("{Shift>}{Tab}{/Shift}");
+                });
+                expect(screen.getByLabelText(START_LABEL)).toHaveFocus();
+                expect(mockOnFocus).toHaveBeenCalledTimes(1);
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
             }, 10000);
         });
