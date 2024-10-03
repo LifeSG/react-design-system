@@ -14,7 +14,7 @@ describe("Border Theming Test", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            animationScheme: "lifesg",
+            motion: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
@@ -65,7 +65,7 @@ describe("Border Theming Test", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            animationScheme: "lifesg",
+            motion: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
@@ -109,7 +109,7 @@ describe("Border Theming Test", () => {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
             borderScheme: "lifesg",
-            animationScheme: "lifesg",
+            motion: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
             breakpointScheme: "lifesg",

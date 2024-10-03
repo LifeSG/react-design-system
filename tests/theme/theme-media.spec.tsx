@@ -19,7 +19,7 @@ describe("MediaQuery Helper Function Test", () => {
     const mockTheme: ThemeSpec = {
         colourScheme: "lifesg",
         fontScheme: "lifesg",
-        animationScheme: "lifesg",
+        motion: "lifesg",
         borderScheme: "lifesg",
         spacingScheme: "lifesg",
         radiusScheme: "lifesg",
@@ -28,8 +28,6 @@ describe("MediaQuery Helper Function Test", () => {
 
     const xsMin = "321px";
     const xsMax = "375px";
-    const mdMin = "421px";
-    const lgMin = "768px";
 
     it("should apply correct styles based on media query spec", () => {
         const { container } = render(

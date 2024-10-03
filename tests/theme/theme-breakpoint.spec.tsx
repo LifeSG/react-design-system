@@ -20,7 +20,7 @@ describe("Media Width Breakpoints Test", () => {
     const mockTheme: ThemeSpec = {
         colourScheme: "lifesg",
         fontScheme: "lifesg",
-        animationScheme: "lifesg",
+        motion: "lifesg",
         borderScheme: "lifesg",
         spacingScheme: "lifesg",
         radiusScheme: "lifesg",

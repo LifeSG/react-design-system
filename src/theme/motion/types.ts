@@ -1,6 +1,6 @@
-import { AnimationScheme } from "../types";
+import { MotionScheme } from "../types";
 
-export type AnimationSet = {
+export type MotionSet = {
     "duration-150": string;
     "duration-250": string;
     "duration-350": string;
@@ -14,8 +14,8 @@ export type AnimationSet = {
     "ease-exit": string;
 };
 
-export type AnimationCollectionsMap = {
-    [key in AnimationScheme]: AnimationSet;
+export type MotionCollectionsMap = {
+    [key in MotionScheme]: MotionSet;
 };
 
-export type AnimationSetOptions = Partial<AnimationSet>;
+export type MotionSetOptions = Partial<MotionSet>;

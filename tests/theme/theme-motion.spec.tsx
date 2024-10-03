@@ -1,12 +1,11 @@
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-import { Animation } from "../../src";
+import { Motion } from "../../src";
 import { ThemeSpec } from "../../src/theme/types";
 
 const StyledAnimationTest = styled.div`
-    transition: transform ${Animation["duration-500"]},
-        ${Animation["ease-default"]};
+    transition: transform ${Motion["duration-500"]}, ${Motion["ease-default"]};
 `;
 
 describe("StyledAnimationTest", () => {
@@ -14,7 +13,7 @@ describe("StyledAnimationTest", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            animationScheme: "lifesg",
+            motion: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
@@ -32,7 +31,7 @@ describe("StyledAnimationTest", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "transition",
-            `transform ${duration}, ${easing}`
+            `transform ${duration},${easing}`
         );
     });
 
@@ -40,13 +39,13 @@ describe("StyledAnimationTest", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            animationScheme: "lifesg",
+            motion: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
             breakpointScheme: "lifesg",
             overrides: {
-                animation: {
+                motion: {
                     "duration-500": "700ms",
                     "ease-default": "cubic-bezier(0.25,0.1,0.25,1)",
                 },
@@ -64,7 +63,7 @@ describe("StyledAnimationTest", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "transition",
-            `transform ${duration}, ${easing}`
+            `transform ${duration},${easing}`
         );
     });
 });
