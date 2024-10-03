@@ -1,6 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import { MediaQuery } from "../theme/mediaquery/mediaquery-helper";
+import styled from "styled-components";
 import { SectionProps } from "./types";
 
 const Component = (
