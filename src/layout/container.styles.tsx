@@ -18,7 +18,7 @@ export const StyledContainer = styled.div<StyleProps>`
     ${(props) => {
         if (props.$stretch) {
             return css`
-                padding: 0 32px;
+                padding: 0 ${Breakpoint["xxl-margin"]};
             `;
         } else {
             return css`
